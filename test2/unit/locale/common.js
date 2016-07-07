@@ -345,6 +345,8 @@ define([
       expect(Locale.formatNumber(12345.123, {style: 'decimal', maximumFractionDigits:2})).to.equal('12,345.12');
       expect(Locale.formatNumber(12345.123456, {style: 'decimal', maximumFractionDigits:3})).to.equal('12,345.123');
       expect(Locale.formatNumber(0.0000004, {style: 'decimal', maximumFractionDigits:7})).to.equal('0.0000004');
+      expect(Locale.formatNumber(20.1, {style: 'decimal', round: true, minimumFractionDigits: 2})).to.equal('20.10');
+      expect(Locale.formatNumber(20.1, {style: 'decimal', round: true})).to.equal('20.10');
 
       Locale.set('de-DE');
       expect(Locale.formatNumber(12345.1)).to.equal('12.345,10');

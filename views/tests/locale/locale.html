@@ -13,17 +13,12 @@
           output.append('<span>' + value + '</span><br>');
         };
         setTimeout(function () {
-          var value = '2016-01-01';
-          var date = Locale.parseDate(value, 'yyyy-MM-dd');
-          append(date);
 
-          var value = '2016-01-03';
-          var date = Locale.parseDate(value, 'yyyy-MM-dd');
-          append(date);
+          var value = Locale.formatNumber(20.1, {style: 'decimal', round: true, minimumFractionDigits: 2});
+          append(value);
 
-          var value = '2016-01-31';
-          var date = Locale.parseDate(value, 'yyyy-MM-dd');
-          append(date);
+          var value =  Locale.formatNumber(20.1, {style: 'decimal', round: true});
+          append(value);
 
 
         }, 300);

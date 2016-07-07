@@ -584,10 +584,12 @@
     truncateDecimals: function (number, minDigits, maxDigits, round) {
       var multiplier = Math.pow(10, maxDigits),
         adjustedNum = number * multiplier,
-        truncatedNum = Math[adjustedNum < 0 ? 'ceil' : 'floor'](adjustedNum);
+        truncatedNum;
 
       //Round Decimals
       var decimals = this.decimalPlaces(number);
+        truncatedNum = Math[adjustedNum < 0 ? 'ceil' : 'floor'](adjustedNum);
+
       if (round && decimals >= maxDigits && adjustedNum > 0) {
         truncatedNum = Math.ceil(adjustedNum);
       }
@@ -596,8 +598,8 @@
         truncatedNum = Math.ceil(adjustedNum);
       }
 
-      if (decimals <= maxDigits && decimals > 0) {
-        truncatedNum = Math.ceil(adjustedNum);
+      if (decimals < maxDigits && decimals > 0) {
+        truncatedNum = Math.floor(adjustedNum);
         maxDigits = Math.max(decimals, minDigits);
       }
 
