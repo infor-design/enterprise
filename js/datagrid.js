@@ -318,6 +318,10 @@ window.Editors = {
         this.input.addClass('l-'+ column.align +'-text');
       }
 
+      if (column.maxLength) {
+        this.input.attr('maxlength', column.maxLength);
+      }
+
       if (column.mask && typeof column.mask === 'function') {
         var mask = column.mask(row, cell, value, column, item);
         this.input.mask({pattern: mask, mode: column.maskMode});
@@ -347,13 +351,18 @@ window.Editors = {
     this.init();
   },
 
-  Textarea: function(row, cell, value, container) {
+  Textarea: function(row, cell, value, container, column) {
 
     this.name = 'textarea';
     this.originalValue = value;
 
     this.init = function () {
       this.input = $('<textarea class="textarea"></textarea>').appendTo(container);
+
+      if (column.maxLength) {
+        this.input.attr('maxlength', column.maxLength);
+      }
+
     };
 
     this.val = function (value) {
@@ -582,6 +591,11 @@ window.Editors = {
 
     this.init = function () {
       this.input = $('<input class="lookup" data-init="false" />').appendTo(container);
+
+      if (column.maxLength) {
+        this.input.attr('maxlength', column.maxLength);
+      }
+
       this.input.lookup(column.editorOptions);
     };
 
@@ -651,6 +665,10 @@ window.Editors = {
       column.editorOptions.offset = {};
       column.editorOptions.offset.left = -20;
       column.editorOptions.offset.top = 11;
+
+      if (column.maxLength) {
+        this.input.attr('maxlength', column.maxLength);
+      }
 
       this.input.autocomplete(column.editorOptions);
     };
