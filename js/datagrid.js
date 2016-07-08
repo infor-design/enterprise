@@ -3246,7 +3246,7 @@ $.fn.datagrid = function(options) {
     updateCell: function(row, cell, value) {
       var col = this.columnSettings(cell);
 
-      if (!value) {
+      if (value === undefined) {
         value = this.settings.dataset[row][col.field];
       }
 
