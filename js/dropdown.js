@@ -917,6 +917,7 @@
           var rowHeight = this.pseudoElem.closest('.datagrid-row').attr('class').replace('datagrid-row  ', '');
           this.list.addClass('datagrid-dropdown-list ' + rowHeight);
         }
+
         var cssClass = this.settings.cssClass;
         if (cssClass && typeof cssClass === 'string') {
           this.list.addClass(cssClass);
@@ -1167,7 +1168,7 @@
 
         //let grow or to field size.
         this.list.find('input').outerWidth(this.pseudoElem.outerWidth()-2);
-        if (this.list.width() > this.pseudoElem.outerWidth()) {
+        if (this.list.width() > this.pseudoElem.outerWidth() && !this.isInGrid) {
            this.list.css('width', '');
            this.list.css({'width': this.list.outerWidth() + 35});
            this.list.find('input').css({'width': this.list.outerWidth() + 35});
