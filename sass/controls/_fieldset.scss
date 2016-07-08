@@ -2,12 +2,16 @@
 //================================================== //
 
 fieldset {
+  margin-top: 20px;
+  padding-top: 50px;
+
   > legend {
     @include font-size(16);
     @include antialiased();
     color: $fieldset-title-color;
     font-weight: normal;
-    padding-bottom: 25px;
+    margin-top: -43px;
+    position: absolute;
   }
 
   &[disabled] {
@@ -33,15 +37,24 @@ fieldset {
   color: $fieldset-title-color;
   font-weight: normal;
   margin-bottom: 0;
-  padding-bottom: 25px;
-  padding-top: 15px;
+  padding-bottom: 20px;
+  padding-top: 30px;
 }
 
 .row fieldset:not(.radio-group):nth-child(n + 2),
 .row .fieldset:not(.radio-group):nth-child(n + 2) {
   border-top: 1px solid $fieldset-border-top-color;
-  margin-top: 30px;
-  padding-top: 20px;
+  margin-top: 28px;
+}
+
+.row fieldset:not(.radio-group):nth-child(n + 2) {
+  margin-top: 10px;
+  padding-top: 70px;
+}
+
+fieldset:first-child,
+.fieldset:first-child {
+  margin-top: 0;
 }
 
 .fieldset-hr {
