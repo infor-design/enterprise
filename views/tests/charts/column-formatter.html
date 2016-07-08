@@ -1,0 +1,78 @@
+
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Grouped Column Chart</h2>
+        </div>
+        <div class="widget-content">
+          <div id="column-grouped-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+    var dataset = [{
+        data: [{
+            name: 'Overall score',
+            value: 54.03554
+        }, {
+            name: 'Sales Volume',
+            value: 84.92903999999999
+        }, {
+            name: 'Profitability',
+            value: 63.696780000000004
+        }, {
+            name: 'Loyalty',
+            value: 18.87312
+        }, {
+            name: 'Cost-to-serve',
+            value: 50.777680000000004
+        }],
+        name: '1'
+      }, {
+        data: [{
+          name: 'Overall score',
+          value: 34
+      }, {
+          name: 'Sales Volume',
+          value: 23
+      }, {
+          name: 'Profitability',
+          value: 44.69678000
+      }, {
+          name: 'Loyalty',
+          value: 38.87312
+      }, {
+          name: 'Cost-to-serve',
+          value: 29
+        }],
+        name: '2'
+      }, {
+        data: [{
+          name: 'Overall score',
+          value: 20
+      }, {
+          name: 'Sales Volume',
+          value: 14.2
+      }, {
+          name: 'Profitability',
+          value: 43
+      }, {
+          name: 'Loyalty',
+          value: 2.4
+      }, {
+          name: 'Cost-to-serve',
+          value: 30
+        }],
+        name: '3'
+      }];
+
+  $('#column-grouped-example').chart({
+    type: 'column-grouped',
+    dataset: dataset,
+    formatterString: '.2f'
+  });
+</script>
