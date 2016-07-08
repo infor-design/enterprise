@@ -129,6 +129,10 @@
         if (subNode.is('ul')) {
           subNode.attr('role', 'group').parent().addClass('folder');
           a.find('use').attr('xlink:href', subNode.hasClass('is-open') ? '#icon-open-folder' : '#icon-closed-folder');
+
+          if (a.is('[class^="icon"]')) {
+            a.find('use').attr('xlink:href', subNode.hasClass('is-open') ? '#' + a.attr('class') : '#' + a.attr('class').replace('open', 'closed'));
+          }
         }
 
         a.addClass('hide-focus');
@@ -142,6 +146,11 @@
           var node = $(this);
           node.addClass('is-open');
           node.prev('a').find('svg use').attr('xlink:href', '#icon-open-folder');
+
+          if (node.prev('a').is('[class^="icon"]')) {
+            node.prev('svg use').find('use').attr('xlink:href', '#' + node.prev('a').attr('class'));
+          }
+
         });
       },
 
@@ -152,6 +161,15 @@
           var node = $(this);
           node.removeClass('is-open');
           node.prev('a').find('svg use').attr('xlink:href', '#icon-closed-folder');
+
+          if (node.prev('a').is('[class^="icon"]')) {
+            node.prev('a').find('svg use').attr('xlink:href', '#' + node.prev('a').attr('class').replace('open', 'closed').replace(' hide-focus', ''));
+          }
+
+          if (node.prev('a').is('[class^="icon"]')) {
+            node.prev('svg use').find('use').attr('xlink:href', '#' + node.prev('a').attr('class').replace('open', 'closed'));
+          }
+
         });
       },
 
@@ -199,6 +217,10 @@
           if (next.hasClass('is-open')) {
             node.closest('.folder').removeClass('is-open').end()
               .find('use').attr('xlink:href', '#icon-closed-folder');
+
+            if (node.closest('.folder a').is('[class^="icon"]')) {
+              node.closest('.folder a').find('use').attr('xlink:href', '#' + node.closest('.folder a').attr('class').replace('open', 'closed').replace(' hide-focus', ''));
+            }
 
             self.isAnimating = true;
             node.find('.is-selected').removeClass('is-selected');
@@ -248,6 +270,10 @@
 
         node.closest('.folder').addClass('is-open').end()
             .find('use').attr('xlink:href', '#icon-open-folder');
+
+        if (node.is('[class^="icon"]')) {
+          node.find('use').attr('xlink:href', '#' + node.attr('class').replace(' hide-focus', ''));
+        }
 
         self.isAnimating = true;
 
