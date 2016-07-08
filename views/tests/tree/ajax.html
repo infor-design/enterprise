@@ -1,11 +1,11 @@
 <div class="row top-padding">
   <div class="six columns">
 
-    <h2>Tree Control: Ajax</h2>
+    <h3>Tree Control: Ajax</h3>
 
     <p>This example shows how to use the source callback to load child nodes.
-       Clicking the node two to open should after a simulated delay, load a result with the children for this node </p>
-
+       Clicking the node two to open should after a simulated delay; load a result with the children for this node </p>
+    <br />
   </div>
 </div>
 
@@ -58,7 +58,9 @@
       response(nodes);
     }, 1000);
 
-  }});
+  }}).on('selected', function (e, args) {
+    console.log(args);
+  });
 
 
 </script>

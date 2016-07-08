@@ -64,6 +64,7 @@
         });
       },
 
+      //Focus first tree node
       focusFirst: function () {
         this.element.find('a:first').attr('tabindex', '0');
       },
@@ -168,7 +169,7 @@
 
         var jsonData = node.data('jsonData') ? node.data('jsonData') : [];
 
-        var top = this.getAbsoluteOffsetFromGivenElement(node[0], this.container[0]).top;
+        var top = this.getAbsoluteOffset(node[0], this.container[0]).top;
         if (this.selectedIndicator.length) {
           this.selectedIndicator.css({top: top});
         }
@@ -178,7 +179,7 @@
 
       // Finds the offset of el from relativeEl
       // http://stackoverflow.com/questions/442404/retrieve-the-position-x-y-of-an-html-element
-      getAbsoluteOffsetFromGivenElement: function(el, relativeEl) {
+      getAbsoluteOffset: function(el, relativeEl) {
         var x = 0, y = 0;
 
         while(el && el !== relativeEl && !isNaN(el.offsetLeft) && !isNaN(el.offsetTop)) {
@@ -241,6 +242,7 @@
         }
       },
 
+      //Open the node
       openNode: function(next, node) {
         var self = this;
 
@@ -504,6 +506,7 @@
         return ((node.parent && !elem) ? false : true);
       },
 
+      //Find the Node (Dataset) By Id
       findById: function (id, source) {
         var key,
           self = this;
@@ -529,12 +532,13 @@
         return null;
       },
 
-      syncDataset: function (elem) {
+      //Sync the tree with the underlying dataset
+      syncDataset: function (node) {
 
         var json = [],
           self = this;
 
-        elem.children('li').each(function () {
+        node.children('li').each(function () {
           var elem = $(this),
             tag = elem.find('a:first');
 
@@ -546,36 +550,37 @@
         this.settings.dataset = json;
       },
 
-      syncNode: function (tag) {
+      //Sync a node with its dataset 'record'
+      syncNode: function (node) {
         var entry = {},
           self = this;
 
         entry = {
-          node: tag,
-          id: tag.attr('id'),
-          text: tag.find('.tree-text').text()
+          node: node,
+          id: node.attr('id'),
+          text: node.find('.tree-text').text()
         };
 
-        if (tag.hasClass('is-open')) {
+        if (node.hasClass('is-open')) {
           entry.open = true;
         }
 
-        if (tag.attr('href')) {
-          entry.href = tag.attr('href');
+        if (node.attr('href')) {
+          entry.href = node.attr('href');
         }
 
-        if (tag.parent().is('.is-selected')) {
+        if (node.parent().is('.is-selected')) {
           entry.selected = true;
         }
 
         //icon
-        var clazz =tag.attr('class');
+        var clazz = node.attr('class');
         if (clazz && clazz.indexOf('icon') > -1) {
-          entry.icon = tag.attr('class');
+          entry.icon = node.attr('class');
         }
 
-        if (tag.next().is('ul')) {
-          var ul = tag.next();
+        if (node.next().is('ul')) {
+          var ul = node.next();
           entry.children = [];
 
           ul.children('li').each(function () {
@@ -589,100 +594,101 @@
         return entry;
       },
 
-      // Node Construction Functions
-      addNode: function (node, location) {
+      // Add a node and all its related markup
+      addNode: function (nodeData, location) {
         var li = $('<li></li>'),
             a = $('<a href="#"></a>').appendTo(li);
 
         location = (!location ? 'bottom' : location); //supports button or top or jquery node
 
         a.attr({
-          'id': node.id,
-          'href': node.href
-        }).text(node.text);
+          'id': nodeData.id,
+          'href': nodeData.href
+        }).text(nodeData.text);
 
-        if (node.open) {
+        if (nodeData.open) {
           a.parent().addClass('is-open');
         }
 
-        if (node.disabled) {
+        if (nodeData.disabled) {
           a.addClass('is-disabled');
         }
 
-        if (node.icon) {
-          a.addClass(node.icon);
+        if (nodeData.icon) {
+          a.addClass(nodeData.icon);
         }
 
         //Handle Location
-        var found = this.loading ? true : this.addToDataset(node, location);
+        var found = this.loading ? true : this.addToDataset(nodeData, location);
 
-        if (node.parent instanceof jQuery) {
+        if (nodeData.parent instanceof jQuery) {
           found = true;
         }
 
-        if (location instanceof jQuery && (!node.parent || !found) && !(node.parent instanceof jQuery)) {
+        if (location instanceof jQuery && (!nodeData.parent || !found) && !(nodeData.parent instanceof jQuery)) {
           location.append(li);
           found = true;
         }
 
-        if (location === 'bottom' && (!node.parent || !found)) {
+        if (location === 'bottom' && (!nodeData.parent || !found)) {
           this.element.append(li);
         }
 
-        if (location === 'top' && (!node.parent || !found)) {
+        if (location === 'top' && (!nodeData.parent || !found)) {
           this.element.prepend(li);
         }
 
         // Support ParentId in JSON Like jsTree
-        if (node.parent) {
+        if (nodeData.parent) {
 
-          if (found && typeof node.parent === 'string') {
-            li = this.element.find('#'+node.parent).parent();
-            this.addAsChild(node, li);
+          if (found && typeof nodeData.parent === 'string') {
+            li = this.element.find('#'+nodeData.parent).parent();
+            this.addAsChild(nodeData, li);
           }
 
-          if (node.parent && node.parent instanceof jQuery) {
-            li = node.parent;
-            if (node.parent.is('a')) {
-              li = node.parent.parent();
+          if (nodeData.parent && nodeData.parent instanceof jQuery) {
+            li = nodeData.parent;
+            if (nodeData.parent.is('a')) {
+              li = nodeData.parent.parent();
             }
-            this.addAsChild(node, li);
+            this.addAsChild(nodeData, li);
           }
-          node.node = li.find('ul li a').first();
+          nodeData.node = li.find('ul li a').first();
 
         } else {
-          this.addChildNodes(node, li);
-          node.node = li.children('a').first();
+          this.addChildNodes(nodeData, li);
+          nodeData.node = li.children('a').first();
         }
 
         this.decorateNode(a);
 
-        if (node.selected) {
-          this.setSelectedNode(a, node.focus);
+        if (nodeData.selected) {
+          this.setSelectedNode(a, nodeData.focus);
         }
 
-        a.data('jsonData', node);
+        a.data('jsonData', nodeData);
         return li;
       },
 
       //Add a node to an exiting node, making it a folder if need be
-      addAsChild: function (node, li) {
+      addAsChild: function (nodeData, li) {
         var ul = li.find('ul').first();
         if (ul.length === 0) {
           ul = $('<ul></ul>').appendTo(li);
           ul.addClass('folder');
         }
 
-        ul.addClass(node.open ? 'is-open' : '');
+        ul.addClass(nodeData.open ? 'is-open' : '');
         this.decorateNode(li.find('a').first());
 
-        node.parent = '';
-        this.addNode(node, ul);
+        nodeData.parent = '';
+        this.addNode(nodeData, ul);
       },
 
-      addChildNodes: function (node, li) {
+      //Add the children for the specified node element
+      addChildNodes: function (nodeData, li) {
         var self = this;
-        if (!node.children) {
+        if (!nodeData.children) {
           return;
         }
 
@@ -690,60 +696,60 @@
 
         if (ul.length === 0) {
           ul = $('<ul></ul>').appendTo(li);
-          ul.addClass(node.open ? 'is-open' : '');
+          ul.addClass(nodeData.open ? 'is-open' : '');
           ul.addClass('folder');
         }
 
         ul.empty();
 
-        for (var i = 0; i < node.children.length; i++) {
-          var elem = node.children[i];
+        for (var i = 0; i < nodeData.children.length; i++) {
+          var elem = nodeData.children[i];
           self.addNode(elem, ul);
         }
       },
 
       //Update fx rename a node
-      updateNode: function (node) {
+      updateNode: function (nodeData) {
         //Find the node in the dataset and ui and sync it
-        var elem = this.findById(node.id);
+        var elem = this.findById(nodeData.id);
 
         //Passed in the node element
-        if (node.node) {
+        if (nodeData.node) {
           elem = {};
-          elem.node = node.node;
+          elem.node = nodeData.node;
         }
 
         if (!elem) {
           return;
         }
 
-        if (node.text) {
-          elem.node.find('.tree-text').first().text(node.text);
-          elem.text = node.text;
+        if (nodeData.text) {
+          elem.node.find('.tree-text').first().text(nodeData.text);
+          elem.text = nodeData.text;
         }
 
-        if (node.icon) {
-          elem.node.find('use').first().attr('xlink:href','#'+ node.icon);
-          elem.icon = node.icon;
+        if (nodeData.icon) {
+          elem.node.find('use').first().attr('xlink:href','#'+ nodeData.icon);
+          elem.icon = nodeData.icon;
         }
 
-        if (node.disabled) {
+        if (nodeData.disabled) {
           elem.node.addClass('is-disabled');
           elem.node.attr('aria-disabled','true');
         }
 
-        if (node.node) {
+        if (nodeData.node) {
           this.syncDataset(this.element);
         }
 
       },
 
       //Delete a node from the dataset or tree
-      removeNode: function (node) {
-        var elem = this.findById(node.id);
+      removeNode: function (nodeData) {
+        var elem = this.findById(nodeData.id);
 
-        if (node instanceof jQuery) {
-          elem = node;
+        if (nodeData instanceof jQuery) {
+          elem = nodeData;
           elem.parent().remove();
         } else if (elem) {
           elem.node.parent().remove();
