@@ -24,6 +24,10 @@
     var pluginName = 'datepicker',
         defaults = {
           showTime: false,
+          timeFormat: undefined, // The time format
+          minuteInterval: undefined, // Integer from 1 to 60. Multiples of this value are displayed as options in the minutes dropdown.
+          mode: undefined, // options: 'standard', 'range',
+          roundToInterval: undefined, // If a non-matching minutes value is entered, rounds the minutes value to the nearest interval when the field is blurred.
           forceHourMode: undefined, // Can be used to force timepicker to use only 12-hour or 24-hour display modes. Defaults to whatever the current Globalize locale requires if left undefined.
           timepickerMarkup: '<label class="label"><input class="timepicker" name="calendar-timepicker" type="text"></label>',
           dateFormat: 'locale', //or can be a specific format like 'yyyy-MM-dd' iso8601 format
@@ -72,9 +76,11 @@
         }
 
         //Append a Button
-        this.trigger = $('<svg class="icon" focusable="false" aria-hidden="true" role="presentation">' +
-                         '<use xlink:href="#icon-calendar"/>' +
-                         '</svg>').insertAfter(this.element);
+        this.trigger = $(
+          '<svg class="icon" focusable="false" aria-hidden="true" role="presentation">'+
+            '<use xlink:href="#icon-calendar"/>'+
+          '</svg>').insertAfter(this.element);
+
         this.addAria();
       },
 
@@ -266,15 +272,18 @@
         var localeDateFormat = ((typeof Locale === 'object' && Locale.calendar().dateFormat) ? Locale.calendar().dateFormat : null);
 
         if (this.settings.dateFormat === 'locale') {
-          this.show24Hours = parseInt(this.element.attr('data-force-hour-mode')) === 24 ? true :
-            parseInt(this.settings.forceHourMode) === 24 ? true : false;
-          this.pattern = localeDateFormat.short + (this.settings.showTime ? (this.show24Hours ? ' HH:mm' : ' h:mm a') : '');
+          this.show24Hours = (
+            parseInt(this.element.attr('data-force-hour-mode')) === 24 ||
+            parseInt(this.settings.forceHourMode) === 24);
+          this.pattern = localeDateFormat.short + (this.settings.showTime ? (' '+
+            (this.settings.timeFormat || (this.show24Hours ? 'HH:mm' : 'h:mm a'))) : '');
         } else {
           this.pattern = this.settings.dateFormat;
         }
 
-        this.show24Hours = parseInt(this.element.attr('data-force-hour-mode')) === 24 ? true :
-          parseInt(this.settings.forceHourMode) === 24 ? true : (this.pattern.match('HH') || []).length > 0;
+        this.show24Hours = (
+          parseInt(this.element.attr('data-force-hour-mode')) === 24 ||
+          parseInt(this.settings.forceHourMode) === 24) ? true : (this.pattern.match('HH') || []).length > 0;
       },
 
       // Add masking with the mask function
@@ -347,8 +356,26 @@
         this.timepickerInput = $(this.settings.timepickerMarkup);
         this.footer = $('<div class="popup-footer"> <button type="button" class="cancel btn-tertiary" tabindex="-1">'+ Locale.translate('Clear') +'</button> <button type="button" tabindex="-1" class="is-today btn-tertiary">'+Locale.translate('Today')+'</button> </div>');
 
-        if (this.show24Hours) {
-          $('.timepicker', this.timepickerInput).attr('data-force-hour-mode', 24);
+        // Timepicker options
+        if (this.settings.showTime) {
+          var timeOptions = {};
+
+          if (this.settings.timeFormat !== undefined) {
+            timeOptions.timeFormat = this.settings.timeFormat;
+          }
+          if (this.settings.minuteInterval !== undefined) {
+            timeOptions.minuteInterval = this.settings.minuteInterval;
+          }
+          if (this.settings.mode !== undefined) {
+            timeOptions.mode = this.settings.mode;
+          }
+          if (this.settings.roundToInterval !== undefined) {
+            timeOptions.roundToInterval = this.settings.roundToInterval;
+          }
+          if (this.settings.forceHourMode !== undefined) {
+            timeOptions.forceHourMode = this.settings.forceHourMode;
+          }
+          $('.timepicker', this.timepickerInput).attr('data-options', JSON.stringify(timeOptions));
         }
 
         this.calendar = $('<div class="calendar'+ (this.settings.showTime ? ' is-timepicker' : '') +'"></div')
