@@ -588,13 +588,6 @@ div.dropdown-lg {
 // Firefox needs a nudge on the list items
 .is-firefox {
 
-  div.dropdown,
-  div.multiselect {
-    > span {
-      padding-top: 1px;
-    }
-  }
-
   .dropdown-list {
     &.multiple li {
       &::before {
