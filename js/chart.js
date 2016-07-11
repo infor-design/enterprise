@@ -269,7 +269,7 @@ window.Chart = function(container) {
       return isFormatter ? d3.format(settings.formatterString)(value) : value;
     };
 
-    var dataset, maxTextWidth, width, height, series, rects, svg, stack, xMax,
+    var dataset, maxTextWidth, width, height, series, rects, svg, stack, xMin, xMax,
         xScale, yScale, yAxis, yMap, xAxis, groups, isGrouped, isSingle, legendMap,
         gindex, totalBarsInGroup, totalGroupArea, totalHeight, gap, barHeight;
 
@@ -352,6 +352,12 @@ window.Chart = function(container) {
       .attr('class', 'group')
       .attr('transform', 'translate(' + (textWidth) + ',' + margins.top + ')');
 
+    xMin = d3.min(dataset, function (group) {
+      return d3.min(group, function (d) {
+          return isStacked ? (d.x + d.x0) : d.x;
+      });
+    });
+
     xMax = d3.max(dataset, function (group) {
       return d3.max(group, function (d) {
           return isStacked ? (d.x + d.x0) : d.x;
@@ -378,11 +384,11 @@ window.Chart = function(container) {
       xMax = 100;
     }
 
-    //Width of he bar minus the margin
+    //Width of the bar minus the margin
     var barWith = w - textWidth - margins.left;
 
     xScale = d3.scale.linear()
-      .domain([0, xMax])
+      .domain([(xMin < 0 ? xMin : 0), xMax])
       .nice()
       .range([0, barWith]).nice();
 
@@ -490,7 +496,7 @@ window.Chart = function(container) {
       }
     })
     .attr('x', function (d) {
-      return isStacked ? (xScale(d.x0)) : 0;
+      return (isStacked && !isSingle) ? xScale(d.x0) : (d.x < 0 ? xScale(d.x) : xScale(0));
     })
     .attr('y', function (d) {
       return isStacked ? yScale(d.y) :
@@ -610,7 +616,7 @@ window.Chart = function(container) {
     svg.selectAll('.bar')
       .transition().duration(1000)
       .attr('width', function (d) {
-        return xScale(d.x);
+        return Math.abs(xScale(d.x) - xScale(0));
       });
 
     //Add Legends
@@ -1476,7 +1482,20 @@ window.Chart = function(container) {
       margin = {top: 40, right: 40, bottom: (isSingular && chartData[0].name === undefined ? (isStacked ? 20 : 50) : 35), left: 45},
       legendHeight = 40,
       width = parent.width() - margin.left - margin.right - 10,
-      height = parent.height() - margin.top - margin.bottom - (isSingular && chartData[0].name === undefined ? (isStacked ? legendHeight : 0) : legendHeight);
+      height = parent.height() - margin.top - margin.bottom - (isSingular && chartData[0].name === undefined ? (isStacked ? legendHeight : 0) : legendHeight),
+      yMin, yMax;
+
+    yMin = d3.min(dataset, function (group) {
+      return d3.min(group.data, function (d) {
+          return d.value;
+      });
+    });
+
+    yMax = d3.max(dataset, function (group) {
+      return d3.max(group.data, function (d) {
+          return d.value;
+      });
+    });
 
     $(container).addClass('column-chart');
 
@@ -1586,7 +1605,7 @@ window.Chart = function(container) {
 
     x0.domain(isStacked ? xAxisValues : names);
     x1.domain(xAxisValues).rangeRoundBands([0, (isSingular||isStacked) ? width : x0.rangeBand()]);
-    y.domain([charts.settings.minValue ? charts.settings.minValue : 0, d3.max(isStacked ? maxesStacked : maxes)]).nice();
+    y.domain([(yMin < 0 ? yMin : (charts.settings.minValue || 0)), d3.max(isStacked ? maxesStacked : maxes)]).nice();
 
     if (!isSingular || (isSingular && !isStacked)) {
       svg.append('g')
@@ -1639,10 +1658,23 @@ window.Chart = function(container) {
 
         bars.transition().duration(1000)
           .attr('y', function(d) {
-            return isStacked ? (height - yScale(d[0].y) - yScale(d[0].y0)) : y(d.value);
+            return isStacked ? (height - yScale(d[0].y) - yScale(d[0].y0)) :
+            (d.value < 0 ? y(0) : y(d.value));
           })
           .attr('height', function(d) {
-            return isStacked ? yScale(d[0].y) : (height - y(d.value));
+            var r;
+            if (isStacked) {
+              r = yScale(d[0].y);
+            }
+            else {
+              if (d.value < 0) {
+                r = (height-y(0)) - (height-y(d.value));
+              }
+              else {
+                r = (height-y(d.value)) - (height-y(0));
+              }
+            }
+            return r;
           });
     } else {
 
@@ -1677,8 +1709,24 @@ window.Chart = function(container) {
             .attr('height', function() {return 0;});
 
         bars.transition().duration(1000)
-          .attr('y', function(d) { return isStacked ? (height-yScale(d.y)-yScale(d.y0)) : (y(d.value)); })
-          .attr('height', function(d) { return isStacked ? yScale(d.y) : (height-y(d.value)); });
+          .attr('y', function(d) {
+            return isStacked ? (height-yScale(d.y)-yScale(d.y0)) : (d.value < 0 ? y(0) : y(d.value));
+          })
+          .attr('height', function(d) {
+            var r;
+           if (isStacked) {
+             r = yScale(d.y);
+           }
+           else {
+             if (d.value < 0) {
+               r = (height-y(0)) - (height-y(d.value));
+             }
+             else {
+               r = (height-y(d.value)) - (height-y(0));
+             }
+           }
+           return r;
+          });
       }
 
       //Style the bars and add interactivity
