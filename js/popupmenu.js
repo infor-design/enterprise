@@ -127,10 +127,9 @@
 
         });
 
-        // If action button menu, append arrow markup
+        // If a button with no border append arrow markup
         var containerClass = this.element.parent().attr('class');
-        if (containerClass !== undefined &&
-           (this.element.hasClass('btn-menu') ||
+        if ((this.element.hasClass('btn-menu') ||
             this.element.hasClass('btn-actions') ||
             this.settings.menu === 'colorpicker-menu' ||
             this.element.closest('.toolbar').length > 0 ||
@@ -138,7 +137,8 @@
             this.element.is('.searchfield-category-button') ||
             (containerClass.indexOf('more') >= 0 && this.element.is(':not(.tab-more)')) ||
             containerClass.indexOf('btn-group') >= 0)) {
-         var arrow = $('<div class="arrow"></div>'),
+
+          var arrow = $('<div class="arrow"></div>'),
             wrapper = this.menu.parent('.popupmenu-wrapper');
 
           wrapper.addClass('bottom').append(arrow);
@@ -245,7 +245,7 @@
             e.preventDefault();
             return false;
           }).on('mousedown.popupmenu', function (e) {
-            if (e.button === 2) {
+            if (e.button === 2 || e.button === 0 && e.ctrlKey) {
               self.open(e);
               e.stopPropagation();
             }
@@ -499,7 +499,7 @@
                         'top': target.offset().top + 10 + target.outerHeight() });
         }
 
-        if (wrapper.closest('.modal').length > 0) {
+        if (wrapper.closest('.modal').length > 0 && !this.isIe11) {
           wrapper.css('left', target.offset().left + 2 - xOffset - wrapper.closest('.modal').offset().left );
           wrapper.css('top', target.offset().top + 10 + target.outerHeight() - wrapper.closest('.modal').offset().top);
         }

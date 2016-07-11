@@ -489,8 +489,13 @@ input.dropdown.error:focus {
 
 // Different Width Dropdowns
 .dropdown-lg,
+
 .field-short .dropdown-lg {
   width: 403px;
+}
+
+div.dropdown-lg {
+  width: 400px;
 }
 
 .dropdown-md,
