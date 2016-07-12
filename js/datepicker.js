@@ -311,6 +311,10 @@
           validation = customValidation + ' ' + validation;
           $.extend(events, {'required': 'change blur'});
         }
+        else if (!!customValidation && !!customEvents) {
+          validation = customValidation + ' ' + validation;
+          $.extend(events, $.fn.parseOptions(this.element, 'data-validation-events'));
+        }
 
         this.element
           .attr({
