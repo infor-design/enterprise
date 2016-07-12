@@ -60,18 +60,12 @@
           this.element.parent().find('label').first().attr('for', orgId);
         }
 
-        var id = orgId + prefix, //The Shadow Input Element. We use the dropdown to serialize.
-          cssClass = this.element.is('.dropdown-xs') ? 'dropdown input-xs' :
+        var cssClass = this.element.is('.dropdown-xs') ? 'dropdown input-xs' :
             this.element.is('.dropdown-sm') ? 'dropdown input-sm' :
             this.element.is('.dropdown-lg') ? 'dropdown input-lg' : 'dropdown';
 
         this.isHidden = this.element.css('display') === 'none';
         this.element.hide();
-
-        // Grab a reference to the original label, if it exists
-        this.orgLabel = orgId !== undefined ? $('label[for="' + orgId + '"]') :
-          (this.element.prev('label, .label').length ? this.element.prev('label, .label') :
-            (this.isInlineLabel ? this.element.parent() : $()));
 
         // Build the wrapper if it doesn't exist
         var baseElement = this.isInlineLabel ? this.inlineLabel : this.element;
@@ -81,10 +75,7 @@
         }
 
         // Build sub-elements if they don't exist
-        this.label = $('label[for="'+ orgId +'-shdo"]');
-        if (!this.label.length) {
-          this.label = $('<label class="label"></label>').attr('for', id).html(this.orgLabel.html());
-        }
+        this.label = $('label[for="'+ orgId +'"]');
 
         this.pseudoElem = $('div#'+ orgId + '-shdo');
         if (!this.pseudoElem.length) {
@@ -94,7 +85,7 @@
             'aria-controls': 'dropdown-list',
             'aria-readonly': 'true',
             'aria-expanded': 'false',
-            'id': (orgId ? id : name + prefix)
+            'aria-label': this.label.text()
           });
         }
         this.pseudoElem.append($('<span></span>'));
@@ -118,34 +109,20 @@
         handleStates(this);
 
         // Place the elements depending on the configuration
-        if (this.orgLabel.length === 1 && this.orgLabel.closest('table').length === 1) {
-          this.wrapper.append(this.pseudoElem, this.trigger);
-          this.orgLabel.after(this.label);
-        } else if (this.orgLabel.length === 1) {
-          if (this.isInlineLabel) {
-            this.wrapper
-              .append($('<label></label>')
-                .attr('for', name + prefix)
-                .html(this.label.find('.label-text').html())
-              );
-          }
-          else {
-            this.element.after(this.label);
-          }
-          this.wrapper.append(this.pseudoElem, this.trigger);
-        } else {
-          this.wrapper.append(this.pseudoElem, this.trigger);
+        if (this.isInlineLabel) {
+          this.wrapper
+            .append($('<label></label>')
+              .attr('for', name + prefix)
+              .html(this.label.find('.label-text').html())
+            );
         }
+        this.wrapper.append(this.pseudoElem, this.trigger);
 
         // Check for and add the icon
         this.icon = this.wrapper.find('.icon');
         if (!this.icon.length) {
           this.icon = $('<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"/></svg>');
           this.wrapper.append(this.icon);
-        }
-
-        if (this.orgLabel.length) {
-          this.label.attr('class', this.orgLabel.attr('class'));
         }
 
         // Setup the incoming options that can be set as properties/attributes
@@ -184,7 +161,6 @@
         this.setValue();
         this.setInitial();
         this.setWidth();
-        this.orgLabel.hide();
 
         this.element.triggerHandler('rendered');
 
@@ -210,17 +186,13 @@
 
       // Set Field Width
       setWidth: function() {
-        var style = this.element[0].style,
-          labelStyle = (this.orgLabel[0] === undefined ? null : this.orgLabel[0].style);
+        var style = this.element[0].style;
 
         if (style.width) {
           this.pseudoElem.width(style.width);
         }
         if (style.position === 'absolute') {
           this.pseudoElem.css({position: 'absolute', left: style.left, top: style.top, bottom: style.bottom, right: style.right});
-        }
-        if (labelStyle && labelStyle.position === 'absolute') {
-          this.label.css({position: 'absolute', left: labelStyle.left, top: labelStyle.top, bottom: labelStyle.bottom, right: labelStyle.right});
         }
       },
 
@@ -379,12 +351,7 @@
 
       // Copy initial stuff from the drop down.
       setInitial: function() {
-        this.copyClass(this.orgLabel, this.label, 'sr-only');
-        this.copyClass(this.orgLabel, this.label, 'audible');
 
-        if (this.orgLabel.attr('style')) {
-          this.label.attr('style', this.orgLabel.attr('style'));
-        }
         if (this.element.is(':disabled')) {
           this.disable();
         }
@@ -898,6 +865,7 @@
           .attr('aria-expanded', 'true')
           .addClass('is-open');
 
+        this.pseudoElem.attr('aria-label', this.label.text());
         this.searchInput.attr('aria-activedescendant', current.children('a').attr('id'));
 
         //Close oother drop downs.
@@ -1637,7 +1605,6 @@
         this.icon.remove();
         this.wrapper.remove();
         this.element.removeAttr('style');
-        this.orgLabel.removeAttr('style');
       }
 
     };
