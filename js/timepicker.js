@@ -45,7 +45,8 @@
         this
           .setup()
           .build()
-          .handleEvents();
+          .handleEvents()
+          .roundMinutes();
       },
 
       // Configure any settings for the Timepicker
@@ -75,6 +76,13 @@
         function sanitizeMode(value) {
           var modes = ['standard', 'range'];
           return $.inArray(value, modes) > -1 ? value : defaults.mode;
+        }
+
+        if (this.element.is('[data-round-to-interval]')) {
+          this.settings.roundToInterval = this.getBoolean(this.element.attr('data-round-to-interval'));
+        }
+        if (this.element.is('[data-minute-interval]')) {
+          this.settings.minuteInterval = parseInt(this.element.attr('data-minute-interval'), 10);
         }
 
         this.settings.forceHourMode = this.settings.forceHourMode || this.element.attr('data-force-hour-mode');
@@ -180,7 +188,7 @@
       },
 
       roundMinutes: function() {
-        if (!this.settings.roundToInterval) {
+        if (!this.getBoolean(this.settings.roundToInterval)) {
           return;
         }
 
@@ -584,6 +592,12 @@
 
       isDisabled: function() {
         return this.element.prop('disabled');
+      },
+
+      // Convert a string to boolean
+      getBoolean: function(val) {
+        var num = +val;
+        return !isNaN(num) ? !!num : !!String(val).toLowerCase().replace(!!0, '');
       },
 
       updated: function() {
