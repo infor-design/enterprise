@@ -65,6 +65,8 @@
         //Prevent browser typahead
         this.element.attr('autocomplete','off');
 
+        this.element.addClass('hide-close-button');
+
         this.wrapper = this.element.parent('.searchfield-wrapper');
         if (!this.wrapper || !this.wrapper.length) {
           if (this.isInlineLabel) {
@@ -289,7 +291,7 @@
         var self = this;
 
         // Activate
-        this.element.addClass('active');
+        this.element.addClass('active').addClass('hide-close-button');
         var toolbar = this.element.closest('.toolbar, [class$="-toolbar"]');
         if (toolbar.length) {
           toolbar.addClass('searchfield-active');
@@ -326,10 +328,13 @@
       },
 
       handleBlur: function() {
+        var self = this;
         this.recalculateParent();
 
         if (!this.wrapper.is('.toolbar-searchfield-wrapper')) {
-          this.wrapper.removeClass('has-focus');
+          setTimeout(function() {
+            self.wrapper.removeClass('has-focus');
+          }, 10);
         }
 
         this.checkContents();
@@ -427,7 +432,7 @@
         if (!text || !text.length) {
           this.element.addClass('empty');
         } else {
-          this.element.removeClass('empty');
+          this.element.removeClass('empty').removeClass('hide-close-button');
         }
 
         this.element.trigger('contents-checked');
