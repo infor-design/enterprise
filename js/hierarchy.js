@@ -240,7 +240,7 @@
           processData(this, obj, newDataObject);
         }
 
-        function checkForChildren(self, obj, newDataObject) {
+        function checkForChildren(self, obj, newDataObject) { //jshint ignore:line
           for (var prop in obj) {
             if (prop === 'id' && nodeId === obj.id) {
               if (!obj.isLoaded && !obj.isRootNode) {
@@ -259,7 +259,7 @@
           }
         }
 
-        function addChildrenToObject(obj, params) {
+        function addChildrenToObject(obj, params) { //jshint ignore:line
           if (params.insert) {
             delete obj.isLeaf;
             delete obj.displayClass;
@@ -431,7 +431,7 @@
           }
         }
 
-        function subArrayChildren(self, obj, data) {
+        function subArrayChildren(self, obj, data) { //jshint ignore:line
           for(var prop in obj) {
             if (prop === 'children') {
               var nodeId = obj.id;

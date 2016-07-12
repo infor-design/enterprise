@@ -13,6 +13,7 @@
   "scripts": {
     "start": "node server.js",
     "stop": "./bin/stop.sh",
+    "jshint": "jshint gruntfile.js app.js js/*.js",
     "eslint": "eslint src -f node_modules/eslint-bamboo-formatter/reporter.js",
     "build": "grunt",
     "install-test-deps": "npm install selenium-standalone@latest && npm run install-drivers",
@@ -42,7 +43,7 @@
     "grunt-contrib-concat": "^0.4.0",
     "grunt-contrib-copy": "^0.5.0",
     "grunt-contrib-cssmin": "^0.11.0",
-    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-jshint": "^1.0.0",
     "grunt-contrib-uglify": "^0.8.1",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-git-revision": "0.0.1",
