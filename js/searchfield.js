@@ -65,6 +65,8 @@
         //Prevent browser typahead
         this.element.attr('autocomplete','off');
 
+        this.element.addClass('hide-close-button');
+
         this.wrapper = this.element.parent('.searchfield-wrapper');
         if (!this.wrapper || !this.wrapper.length) {
           if (this.isInlineLabel) {
