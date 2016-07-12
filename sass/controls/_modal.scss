@@ -37,7 +37,7 @@
     }
   }
 
-  .field:last-child input:not(.spinbox),
+  .field:last-child input:not(.spinbox, .colorpicker),
   .field:last-child textarea {
     margin-bottom: 10px;
   }
