@@ -202,10 +202,12 @@
           self.teardown();
         });
 
-        this.toolbar.children('.buttonset').children('.btn-close, [name="close"], .icon-close')
-          .onTouchClick('contextualactionpanel').on('click.contextualactionpanel', function() {
-          self.handleToolbarSelected();
-        });
+        if (this.toolbar)  {
+          this.toolbar.children('.buttonset').children('.btn-close, [name="close"], .icon-close')
+            .onTouchClick('contextualactionpanel').on('click.contextualactionpanel', function() {
+            self.handleToolbarSelected();
+          });
+        }
 
         return this;
       },
