@@ -299,13 +299,13 @@
             return;
           }
 
-          tick.label.css('left', -(self.ticks[i].label.outerWidth()/2 - self.ticks[i].element.width()/2) + 'px');
+          tick.label.css('left', -(tick.label.outerWidth()/2 - tick.element.width()/2) + 'px');
         }
 
         // Ticks
-        for (var i = 0; i < self.ticks.length; i++) {
-          positionTick(self.ticks[i]);
-        }
+        self.ticks.forEach(function(tick) {
+          positionTick(tick);
+        });
 
         self.value(self.settings.value);
         self.updateRange();

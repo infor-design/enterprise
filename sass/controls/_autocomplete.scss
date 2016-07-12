@@ -61,8 +61,4 @@ input.autocomplete.is-open {
   border: 1px solid $dropdown-menu-border-color;
   border-bottom: 1px solid $dropdown-menu-separator-color;
   border-radius: 3px 3px 0 0;
-
-  ~ .icon:not(.close) {
-    fill: $primary-color;
-  }
 }
