@@ -232,7 +232,7 @@
         var bp = bpXL, //1340,
           elemWidth = self.element.outerWidth(); //Math min against window.screen.width for single line mobile support
 
-        elemWidth -= 30; //extra break space
+        // elemWidth -= 30; //extra break space
 
         // Find the Breakpoints
         var xl    = (elemWidth >= bpXL),
