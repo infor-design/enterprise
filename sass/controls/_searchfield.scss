@@ -194,10 +194,6 @@
       &:focus,
       &:active {
         color: $input-focus-border-color;
-
-        .icon {
-          fill: $input-focus-border-color;
-        }
       }
     }
 
