@@ -312,8 +312,16 @@
           $.extend(events, {'required': 'change blur'});
         }
         else if (!!customValidation && !!customEvents) {
-          validation = customValidation + ' ' + validation;
-          $.extend(events, $.fn.parseOptions(this.element, 'data-validation-events'));
+          // Remove default validation, if found "no-default-validation" string in "data-validate" attribute
+          if (customValidation.indexOf('no-default-validation') > -1) {
+            validation = customValidation.replace(/no-default-validation/g, '');
+            events = $.fn.parseOptions(this.element, 'data-validation-events');
+          }
+          // Keep default validation along custom validation
+          else {
+            validation = customValidation + ' ' + validation;
+            $.extend(events, $.fn.parseOptions(this.element, 'data-validation-events'));
+          }
         }
 
         this.element
@@ -467,21 +475,23 @@
 
                 // On change time
                 self.timepickerControl.element.on('change.datepicker', function() {
-                  var t, fields, orgRoundToInterval = self.timepickerControl.roundToInterval;
+                  var t, fields;
 
-                  self.timepickerControl.roundToInterval = true;
+                  self.timepickerControl.settings.roundToInterval = self.settings.roundToInterval;
                   self.timepickerControl.roundMinutes();
                   t = self.timepickerControl.getTimeFromField();
-                  self.timepickerControl.roundToInterval = orgRoundToInterval;
                   fields = {
                     '#timepicker-hours': t.hours,
-                    '#timepicker-minutes': t.minutes,
                     '#timepicker-period': t.period
                   };
+                  if (self.getBoolean(self.settings.roundToInterval)) {
+                    fields['#timepicker-minutes'] = t.minutes;
+                  }
                   $.each(fields, function(key, val) {
                     $(key, timepickerPopup).val(val).triggerHandler('updated');
                   });
                 });
+                self.timepickerControl.element.trigger('change.datepicker');
               }
 
             }, 1);
@@ -774,6 +784,12 @@
           this.days.find('.is-selected').removeClass('is-selected').removeAttr('aria-selected').removeAttr('tabindex');
           dateTd.addClass('is-selected').attr({'aria-selected': true, 'tabindex': 0}).focus();
         }
+      },
+
+      // Convert a string to boolean
+      getBoolean: function(val) {
+        var num = +val;
+        return !isNaN(num) ? !!num : !!String(val).toLowerCase().replace(!!0, '');
       },
 
       // Helper Function
