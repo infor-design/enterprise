@@ -39,8 +39,12 @@
 
     &.close {
       cursor: pointer;
-      right: 0;
+      right: 5px;
       top: 11px;
+
+      &:hover {
+        fill: $trigger-hover-color;
+      }
     }
 
     &.icon-error {
@@ -57,20 +61,17 @@
     }
   }
 
+  .icon.close {
+    display: none;
+  }
+
   .searchfield {
     padding-left: 34px;
     padding-right: 34px;
 
-    &.empty {
-      + .icon + .icon.close {
-        display: none;
-      }
-    }
-
-    &:not(.empty) {
+    &:not(.hide-close-button) {
       + .icon + .icon.close {
         display: inline-block;
-        right: 5px;
       }
     }
   }
