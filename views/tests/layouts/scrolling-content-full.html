@@ -1,0 +1,17 @@
+<div class="page-container two-column fixed scrollable" style="height: 1000px">
+    <section class="main " role="main" style="height: 10000px">
+      <div class="content" style="height: 10000px">
+
+      </div>
+    </section>
+    <nav class="sidebar">
+      <div class="splitter" data-options="{axis: 'x'}"></div>
+      <div class="content " style="height: 10000px">
+      </div>
+    </nav>
+</div>
+<script type="text/javascript">
+    $('.splitter').on('split', function (e, args) {
+        console.log(e, args);
+    });
+</script>
