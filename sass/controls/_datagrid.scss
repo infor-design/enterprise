@@ -27,6 +27,10 @@ $datagrid-short-row-height: 30px;
   }
 }
 
+.toolbar + .datagrid-wrapper {
+  top: 5px;
+}
+
 //The scrollable header
 .datagrid-scrollable-header {
   overflow: hidden;
