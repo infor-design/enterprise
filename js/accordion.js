@@ -210,8 +210,14 @@
         var self = this,
           headerWhereMouseDown = null;
 
-        this.headers.onTouchClick('accordion').on('click.accordion', function(e) {
-          self.handleHeaderClick(e, $(this));
+        this.headers.on('touchend.accordion touchcancel.accordion', function(e) {
+          var result = self.handleHeaderClick(e, $(this));
+          if (!result) {
+            e.preventDefault();
+          }
+          return result;
+        }).on('click.accordion', function(e) {
+          return self.handleHeaderClick(e, $(this));
         }).on('focusin.accordion', function(e) {
           var target = $(e.target);
 
@@ -235,12 +241,26 @@
           headerWhereMouseDown = null;
         });
 
-        this.anchors.on('click.accordion', function(e) {
+        this.anchors.on('touchend.accordion touchcancel.accordion', function(e) {
+          var result = self.handleAnchorClick(e, $(this));
+          if (!result) {
+            e.preventDefault();
+          }
+          return result;
+        }).on('click.accordion', function(e) {
           return self.handleAnchorClick(e, $(this));
         });
 
-        this.headers.children('[class^="btn"]').onTouchClick('accordion').on('click.accordion', function(e) {
-          self.handleExpanderClick(e, $(this));
+        this.headers.children('[class^="btn"]')
+          .on('touchend.accordion touchcancel.accordion', function(e) {
+            var result = self.handleExpanderClick(e, $(this));
+            if (!result) {
+              e.preventDefault();
+            }
+            return result;
+          })
+          .on('click.accordion', function(e) {
+          return self.handleExpanderClick(e, $(this));
         }).on('keydown.accordion', function(e) {
           self.handleKeys(e);
         });
@@ -267,22 +287,20 @@
         }
 
         var anchor = header.children('a');
-        this.handleAnchorClick(e, anchor);
+        return this.handleAnchorClick(e, anchor);
       },
 
       handleAnchorClick: function(e, anchor) {
         var self = this,
           header = anchor.parent('.accordion-header'),
-          pane = header.next('.accordion-pane');
+          pane = header.next('.accordion-pane'),
+          ngLink = anchor.attr('ng-reflect-href');
 
-        if (e) {
+        if (e && !ngLink) {
           e.preventDefault();
         }
 
         if (!header.length || this.isDisabled(header)) {
-          if (e) {
-            e.preventDefault();
-          }
           return false;
         }
 
@@ -294,12 +312,12 @@
         this.select(anchor);
 
         function followLink() {
-          if (!self.settings.rerouteOnLinkClick) {
-            return true;
-          }
-
           var href = anchor.attr('href');
           if (href && href !== '' && href !== '#') {
+            if (!self.settings.rerouteOnLinkClick) {
+              return true;
+            }
+
             window.location.href = href;
             return true;
           }
@@ -353,7 +371,7 @@
         }
 
         // If there's no accordion pane, attempt to simply follow the link.
-        this.handleAnchorClick(null, header.children('a'));
+        return this.handleAnchorClick(null, header.children('a'));
       },
 
       handleKeys: function(e) {
