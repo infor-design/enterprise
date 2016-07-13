@@ -208,15 +208,21 @@
 
       handleEvents: function() {
         var self = this,
-          headerWhereMouseDown = null;
+          headerWhereMouseDown = null,
+          linkFollowedByTouch = null;
 
-        this.headers.on('touchend.accordion touchcancel.accordion', function(e) {
+        this.headers.on('touchend.accordion', function(e) {
+          linkFollowedByTouch = true;
           var result = self.handleHeaderClick(e, $(this));
           if (!result) {
             e.preventDefault();
           }
           return result;
         }).on('click.accordion', function(e) {
+          if (linkFollowedByTouch) {
+            linkFollowedByTouch = null;
+            return false;
+          }
           return self.handleHeaderClick(e, $(this));
         }).on('focusin.accordion', function(e) {
           var target = $(e.target);
@@ -241,18 +247,24 @@
           headerWhereMouseDown = null;
         });
 
-        this.anchors.on('touchend.accordion touchcancel.accordion', function(e) {
+        this.anchors.on('touchend.accordion', function(e) {
+          linkFollowedByTouch = true;
           var result = self.handleAnchorClick(e, $(this));
           if (!result) {
             e.preventDefault();
           }
           return result;
         }).on('click.accordion', function(e) {
+          if (linkFollowedByTouch) {
+            linkFollowedByTouch = null;
+            return false;
+          }
           return self.handleAnchorClick(e, $(this));
         });
 
         this.headers.children('[class^="btn"]')
-          .on('touchend.accordion touchcancel.accordion', function(e) {
+          .on('touchend.accordion', function(e) {
+            linkFollowedByTouch = true;
             var result = self.handleExpanderClick(e, $(this));
             if (!result) {
               e.preventDefault();
@@ -260,12 +272,19 @@
             return result;
           })
           .on('click.accordion', function(e) {
-          return self.handleExpanderClick(e, $(this));
-        }).on('keydown.accordion', function(e) {
-          self.handleKeys(e);
-        });
+            if (linkFollowedByTouch) {
+              linkFollowedByTouch = null;
+              return false;
+            }
+            return self.handleExpanderClick(e, $(this));
+          }).on('keydown.accordion', function(e) {
+            self.handleKeys(e);
+          });
 
-        this.element.on('updated.accordion', function(e) {
+        this.element.on('selected.accordion', function(e) {
+          // Don't propagate this event above the accordion element
+          e.stopPropagation();
+        }).on('updated.accordion', function(e) {
           // Don't propagate just in case this is contained by an Application Menu
           e.stopPropagation();
           self.updated();
@@ -863,8 +882,7 @@
 
       teardown: function() {
         this.headers
-          .offTouchClick('accordion')
-          .off('click.accordion focusin.accordion focusout.accordion keydown.accordion')
+          .off('touchend.accordion click.accordion focusin.accordion focusout.accordion keydown.accordion')
           .each(function() {
             var expander = $(this).data('addedExpander');
             if (expander) {
@@ -873,11 +891,10 @@
             }
           });
 
-        this.anchors.off('keydown.accordion click.accordion');
+        this.anchors.off('touchend.accordion keydown.accordion click.accordion');
 
         this.headers.children('[class^="btn"]')
-          .offTouchClick('accordion')
-          .off('click.accordion keydown.accordion');
+          .off('touchend.accordion click.accordion keydown.accordion');
 
         this.element.off('updated.accordion');
 
