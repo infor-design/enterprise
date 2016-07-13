@@ -1396,15 +1396,41 @@
           return;
         }
 
-        var self = this,
-          tab = this.getTabFromId(tabId);
+        var tab = this.getTabFromId(tabId),
+          hasCounts = this.settings.tabCounts,
+          anchor = tab.children('a'),
+          count;
 
-        tab.children('a').text(name.toString());
+        if (hasCounts) {
+          count = anchor.find('.count').clone();
+        }
+
+        anchor.text(name.toString());
+
+        if (hasCounts) {
+          anchor.prepend(count);
+        }
 
         var doesTabExist = this.tablist.children('li').length < 2 ? tab : undefined;
 
-        self.positionFocusState(doesTabExist);
-        self.focusBar(doesTabExist);
+        this.positionFocusState(doesTabExist);
+        this.focusBar(doesTabExist);
+      },
+
+      // For tabs with counts, updates the count and resets the focusable bar/animation
+      updateCount: function(tabId, count) {
+        if (!this.settings.tabCounts || !tabId || !count) {
+          return;
+        }
+
+        var tab = this.getTabFromId(tabId);
+
+        tab.children('a').find('.count').text(count.toString() + ' ');
+
+        var doesTabExist = this.tablist.children('li').length < 2 ? tab : undefined;
+
+        this.positionFocusState(doesTabExist);
+        this.focusBar(doesTabExist);
       },
 
       // returns the currently active tab
