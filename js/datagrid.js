@@ -1175,12 +1175,15 @@ $.fn.datagrid = function(options) {
           isSelection = column.id === 'selectionCheckbox',
           alignmentClass = (column.align === undefined ? false : '');// Disable for now as this was acting wierd ' l-'+ column.align +'-text');
 
-        headerRow += '<th scope="col" role="columnheader" class="' + (isSortable ? 'is-sortable' : '') + (isResizable ? ' is-resizable' : '') + (column.hidden ? ' is-hidden' : '') +  (alignmentClass ? alignmentClass : '') + '"' +
+        headerRow += '<th scope="col" role="columnheader" class="' + (isSortable ? 'is-sortable' : '') + (isResizable ? ' is-resizable' : '') + (column.hidden ? ' is-hidden' : '') + (column.filterType ? ' is-filterable' : '') + (alignmentClass ? alignmentClass : '') + '"' +
          ' id="' + id + '" data-column-id="'+ column.id + '"' + (column.field ? ' data-field="'+ column.field +'"' : '') +
          (column.headerTooltip ? 'title="' + column.headerTooltip + '"' : '') +
          (colGroups ? ' headers="' + self.getColumnGroup(j) + '"' : '') +
          (column.width ? ' style="width:'+ (typeof column.width ==='number' ? column.width+'px': column.width) +'"' : '') + '>';
-         headerRow += '<div class="' + (isSelection ? 'datagrid-checkbox-wrapper ': 'datagrid-column-wrapper ') + (column.align === undefined ? false : ' l-'+ column.align +'-text') + '"><span class="datagrid-header-text">' + self.headerText(settings.columns[j]) + '</span>';
+         headerRow += '<div class="' + (isSelection ? 'datagrid-checkbox-wrapper ': 'datagrid-column-wrapper ') + '"><span class="datagrid-header-text">' + self.headerText(settings.columns[j]) + '</span>';
+
+        //Removed the alignment - even if the column is right aligned data keep the header left aligned
+        //+ (column.align === undefined ? false : ' l-'+ column.align +'-text')
 
         if (isSelection) {
           headerRow += '<span aria-checked="false" class="datagrid-checkbox" aria-label="Selection" role="checkbox"></span>';
@@ -1225,7 +1228,7 @@ $.fn.datagrid = function(options) {
             id = self.uniqueId( '-header-' + j),
             header = this.headerRow.find('#'+id),
             filterId = self.uniqueId( '-header-filter-' + j),
-            filterMarkup = '<div class="datagrid-filter-wrapper"><label class="audible" for="'+ filterId +'">' +
+            filterMarkup = '<div class="datagrid-filter-wrapper">'+ this.renderFilterButton() +'<label class="audible" for="'+ filterId +'">' +
               col.name + '</label><input placeholder="Search" type="text" id="'+ filterId +'"/></div>';
 
           header.find('.datagrid-column-wrapper').after(filterMarkup);
@@ -1233,6 +1236,24 @@ $.fn.datagrid = function(options) {
       }
 
       this.headerRow.addClass('is-filterable');
+      this.headerRow.find('.btn-filter').popupmenu({});
+    },
+
+    renderFilterItem: function (icon, text, checked) {
+      return '<li ' + (checked ? 'class="is-checked"' : '') + '><a href="#"><svg class="icon icon-filter" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-filter-'+ icon +'"></use></svg><span>'+ text +'</span></a></li>';
+    },
+
+    renderFilterButton: function () {
+      var btnMarkup = '<button class="btn-menu btn-filter" data-init="false" type="button"><span class="audible">Filter</span></button>' +
+        '<ul class="popupmenu has-icons is-translatable is-selectable">' +
+        this.renderFilterItem('equals', 'Equals', true) +
+        this.renderFilterItem('doesnt-equal', 'DoesNotEqual') +
+        this.renderFilterItem('contains', 'Contains') +
+        this.renderFilterItem('is-empty', 'IsEmpty') +
+        this.renderFilterItem('is-not-empty', 'IsNotEmpty') +
+        '</ul>';
+
+      return btnMarkup ;
     },
 
     // Create draggable columns
@@ -1940,7 +1961,7 @@ $.fn.datagrid = function(options) {
       }
 
       //Handles min width on some browsers
-      if (width < 40) {
+      if (width < 50) {
         return;
       }
 

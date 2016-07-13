@@ -338,25 +338,58 @@ $datagrid-short-row-height: 30px;
     th {
       height: 59px;
 
-      .datagrid-column-wrapper {
-        position: relative;
-        top: -11px;
+      &.is-filterable {
+        .datagrid-column-wrapper {
+          position: relative;
+          top: -2px;
+        }
       }
     }
 
     .datagrid-filter-wrapper {
       display: block;
+      line-height: 30px;
+      max-height: 22px;
       max-width: calc(100% - 20px);
       position: relative;
-      top: -11px;
+      top: -14px;
       width: calc(100% - 20px);
 
       input {
         border-color: $slate04;
         color: $white;
-        height: 20px;
-        padding: 4px 0 1px 5px;
-        width: 100%;
+        height: 23px;
+        left: 12px;
+        padding: 3px 0 3px 5px;
+        position: relative;
+        width: calc(100% - 44px);
+
+        &:focus {
+          border-color: $primary-color;
+        }
+
+      }
+
+      .btn-filter {
+        height: 21px;
+        left: 15px;
+        min-width: 34px;
+        top: -2px;
+        width: 34px;
+
+        .icon-dropdown {
+          // scss-lint:disable ImportantRule
+          fill: $slate04 !important;
+          // scss-lint:enable ImportantRule
+          left: -8px;
+          position: relative;
+
+          + .icon-dropdown {
+            height: 14px;
+            left: -12px;
+            width: 14px;
+          }
+        }
       }
     }
   }
@@ -752,7 +785,7 @@ $datagrid-short-row-height: 30px;
 // Sorting
 .sort-indicator {
   display: inline-block;
-  margin: 6px 6px 0;
+  margin: 5px 1px 0;
   vertical-align: top;
 
   .icon {

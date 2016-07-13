@@ -171,6 +171,7 @@
             var text = $(item).text();
             item.html('<span>' + text + '</span>');
           }
+
           if (item.find('svg.arrow').length === 0) {
             item.append('<svg class="icon arrow icon-dropdown" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></svg>');
           }
@@ -179,7 +180,7 @@
         });
 
         var anchor = this.menu.find('a'),
-          isTranslate = this.menu.hasClass('is-translate');
+          isTranslatable = this.menu.hasClass('is-translatable');
 
         anchor.attr('tabindex', '-1').attr('role', (this.settings.ariaListbox ? 'option' : 'menuitem'));
 
@@ -187,7 +188,7 @@
         anchor.each(function () {
           var a = $(this);
 
-          if (isTranslate) {//is-translate
+          if (isTranslatable) {
             var span = $('span', a);
             span.text(Locale.translate(span.text()) || span.text());
           }
@@ -461,22 +462,26 @@
       iconFilteringSetup: function(alink) {
         if (this.element.hasClass('btn-filter')) {
           var icon = $('use', this.element),
-            link = alink || $('li:first a', this.menu);
+            link = alink || $('li:first a', this.menu),
+            audibleText = link.find('span').text();
 
-          if(!icon.length) {
-            this.element.append($('<svg class="icon icon-filter" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></use></svg>'));
+          if (!icon.length) {
+            this.element.append($('<svg class="icon icon-dropdown" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></use></svg>'));
             icon = $('use', this.element);
           }
           $('use', this.element).attr('xlink:href', $('use', link).attr('xlink:href'));
+          this.element.find('.audible').text(audibleText);
         }
       },
 
       // Filtering icon update
       iconFilteringUpdate: function(alink) {
         if (this.element.hasClass('btn-filter')) {
-          var link = alink || $('li:first a', this.menu);
+          var link = alink || $('li:first a', this.menu),
+            audibleText = link.find('span').text();
 
-          $('use', this.element).attr('xlink:href', $('use', link).attr('xlink:href'));
+          this.element.find('.audible').text(audibleText);
+          $('use:first', this.element).attr('xlink:href', $('use', link).attr('xlink:href'));
         }
       },
 
@@ -486,6 +491,11 @@
           menuWidth = this.menu.outerWidth(),
           menuHeight = this.menu.outerHeight(),
           xOffset = this.element.hasClass('btn-actions') ? (menuWidth) - 36 : 0;
+
+        //Adjust width for filter button
+        if (this.element.hasClass('btn-filter')) {
+          xOffset = +10;
+        }
 
         if (target.is('svg, .icon') && target.closest('.tab').length) {
           target = target.closest('.tab');

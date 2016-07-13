@@ -149,10 +149,20 @@
       padding-left: 40px;
     }
 
+    &.is-selectable {
+      a {
+        padding-left: 57px;
+      }
+
+      .icon {
+        left: 18px;
+      }
+    }
+
     .icon {
-      left: 1px;
+      left: 2px;
       position: absolute;
-      top: 5.5px;
+      top: 6.5px;
 
       &:not(.arrow) {
         height: 16px;
@@ -456,44 +466,6 @@
       &:hover {
         border: 1px solid transparent;
         border-left: 1px solid $popover-separator-color;
-      }
-    }
-  }
-}
-
-// Not sure why these don't line up in Firefox
-.is-firefox {
-  .popupmenu {
-    &.is-selectable {
-      li {
-        &.is-checked > a::before,
-        &.is-checked.is-selected > a::before {
-          margin-left: -4px;
-          margin-top: 4px;
-        }
-      }
-    }
-
-    &.is-multiselectable {
-      li {
-        &::before,
-        &.is-focused::before {
-          top: 7px;
-        }
-
-        &.is-checked::before {
-          top: 7px;
-        }
-
-        &.is-checked::after {
-          top: 1px;
-        }
-
-        &.is-disabled {
-          &::before {
-            top: 7px;
-          }
-        }
       }
     }
   }
