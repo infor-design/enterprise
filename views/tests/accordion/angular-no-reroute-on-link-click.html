@@ -2,7 +2,10 @@
   <div class="six columns">
 
     <h2>Accordion Test: No Reroute on Clicked Links</h2>
-    <p><a class="hyperlink" href="http://jira/browse/HFC-3585" target="_blank">Related JIRA Ticket</a>.</p>
+    <p>
+      <a class="hyperlink" href="http://jira/browse/SOHO-3585" target="_blank">Original JIRA Ticket</a><br />
+      <a class="hyperlink" href="http://jira/browse/SOHO-4098" target="_blank">Angular-related JIRA Ticket</a><br />
+    </p>
     <p></p>
 
   </div>
@@ -16,25 +19,25 @@
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use xlink:href="#icon-link"></use>
         </svg>
-        <a href="/my-nonworking-link"><span>Non-working Link #1</span></a>
+        <a ng-reflect-href="/my-nonworking-link" href="/my-nonworking-link"><span>Non-working Link #1</span></a>
       </div>
 
       <div class="accordion-header">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use xlink:href="#icon-link"></use>
         </svg>
-        <a href="/my-nonworking-link"><span>Non-working Link #2</span></a>
+        <a ng-reflect-href="/my-nonworking-link" href="/my-nonworking-link"><span>Non-working Link #2</span></a>
       </div>
 
       <div class="accordion-header">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use xlink:href="#icon-link"></use>
         </svg>
-        <a href="/my-nonworking-link"><span>Non-working Link #3</span></a>
+        <a ng-reflect-href="/my-nonworking-link" href="/my-nonworking-link"><span>Non-working Link #3</span></a>
       </div>
 
       <div class="accordion-header">
-        <a href="/my-nonworking-link"><span>Non-working Link #4 (Now with sub-content!)</span></a>
+        <a ng-reflect-href="/my-nonworking-link" href="/my-nonworking-link"><span>Non-working Link #4 (Now with sub-content!)</span></a>
       </div>
       <div class="accordion-pane">
         <div class="accordion-content">
