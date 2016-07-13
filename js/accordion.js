@@ -211,19 +211,46 @@
           headerWhereMouseDown = null,
           linkFollowedByTouch = null;
 
-        this.headers.on('touchend.accordion', function(e) {
+        // Returns "Header", "Anchor", or "Expander" based on the element's tag
+        function getElementType(element) {
+          var elementType = 'Header';
+          if (element.is('a')) {
+            elementType = 'Anchor';
+          }
+          if (element.is('button')) {
+            elementType = 'Expander';
+          }
+          return elementType;
+        }
+
+        // Intercepts a 'touchend' event in order to either prevent a link from being followed,
+        // or allows it to continue.
+        function touchendInterceptor(e, element) {
           linkFollowedByTouch = true;
-          var result = self.handleHeaderClick(e, $(this));
+          var type = getElementType(element),
+            result = self['handle' + type + 'Click'](e, element);
+
           if (!result) {
             e.preventDefault();
           }
           return result;
-        }).on('click.accordion', function(e) {
+        }
+
+        // Intercepts a 'click' event in order to either prevent a link from being followed,
+        // or allows it to continue.
+        function clickInterceptor(e, element) {
+          var type = getElementType(element);
           if (linkFollowedByTouch) {
             linkFollowedByTouch = null;
             return false;
           }
-          return self.handleHeaderClick(e, $(this));
+          return self['handle' + type + 'Click'](e, element);
+        }
+
+        this.headers.on('touchend.accordion', function(e) {
+          return touchendInterceptor(e, $(this));
+        }).on('click.accordion', function(e) {
+          return clickInterceptor(e, $(this));
         }).on('focusin.accordion', function(e) {
           var target = $(e.target);
 
@@ -248,35 +275,17 @@
         });
 
         this.anchors.on('touchend.accordion', function(e) {
-          linkFollowedByTouch = true;
-          var result = self.handleAnchorClick(e, $(this));
-          if (!result) {
-            e.preventDefault();
-          }
-          return result;
+          return touchendInterceptor(e, $(this));
         }).on('click.accordion', function(e) {
-          if (linkFollowedByTouch) {
-            linkFollowedByTouch = null;
-            return false;
-          }
-          return self.handleAnchorClick(e, $(this));
+          return clickInterceptor(e, $(this));
         });
 
         this.headers.children('[class^="btn"]')
           .on('touchend.accordion', function(e) {
-            linkFollowedByTouch = true;
-            var result = self.handleExpanderClick(e, $(this));
-            if (!result) {
-              e.preventDefault();
-            }
-            return result;
+            return touchendInterceptor(e, $(this));
           })
           .on('click.accordion', function(e) {
-            if (linkFollowedByTouch) {
-              linkFollowedByTouch = null;
-              return false;
-            }
-            return self.handleExpanderClick(e, $(this));
+            return clickInterceptor(e, $(this));
           }).on('keydown.accordion', function(e) {
             self.handleKeys(e);
           });
