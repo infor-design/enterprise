@@ -1014,7 +1014,7 @@ td .btn-actions {
 .datagrid-result-count {
   @include font-size(14);
   // scss-lint:disable ImportantRule
-  vertical-align: top !important;
+  vertical-align: middle !important;
   // scss-lint:enable ImportantRule
 }
 

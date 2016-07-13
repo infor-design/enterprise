@@ -97,9 +97,10 @@
         var self = this;
 
         setTimeout(function () {
-          var el = self.isInlineLabel ? self.inlineLabelText : $('label[for="'+ self.element.attr('id') + '"]');
-          if(el.length) {
-            el.append('<span class="audible">' + Locale.translate('UseEnter') + '</span>');
+          self.label = self.isInlineLabel ? self.inlineLabelText : $('label[for="'+ self.element.attr('id') + '"]');
+
+          if (self.label) {
+            self.label.append('<span class="audible">' + Locale.translate('UseEnter') + '</span>');
           }
         }, 500);
       },
@@ -426,6 +427,10 @@
       destroy: function() {
         $.removeData(this.element[0], pluginName);
         this.element.off('click.dropdown keypress.dropdown');
+
+        this.icon.remove();
+        this.element.unwrap();
+        this.label.find('.audible').remove();
       }
     };
 

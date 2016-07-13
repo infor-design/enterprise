@@ -2353,7 +2353,7 @@ $.fn.datagrid = function(options) {
           buttonSet.append(labelMarkup);
 
           if (!settings.toolbar.collapsibleFilter) {
-            searchfieldMarkup.attr('data-options', '{ collapsible: true }');
+            searchfieldMarkup.attr('data-options', '{ collapsible: false }');
           }
 
           buttonSet.append(searchfieldMarkup);
