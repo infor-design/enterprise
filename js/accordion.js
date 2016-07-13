@@ -137,7 +137,8 @@
             if (self.settings.displayChevron && isTopLevel) {
               expanderIcon = $('<svg class="icon chevron" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-caret-down"></use></svg>');
             } else {
-              expanderIcon = $('<span class="icon plus-minus" aria-hidden="true" role="presentation"></span>');
+              var isActive = self.isExpanded(header) ? ' active' : '';
+              expanderIcon = $('<span class="icon plus-minus'+ isActive +'" aria-hidden="true" role="presentation"></span>');
             }
             expanderIcon.appendTo(expander);
           }
