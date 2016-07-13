@@ -559,7 +559,7 @@
           }
 
           if (btn.hasClass('is-today')) {
-            self.insertDate(new Date());
+            self.insertDate(new Date(), true);
             self.closeCalendar();
           }
           self.element.focus();
@@ -774,6 +774,11 @@
             if (isReset) {
               this.time = this.getTimeString(date, this.show24Hours);
               this.timepickerInput.find('.timepicker').val(this.time).trigger('change');
+
+              if (this.settings.roundToInterval) {
+                $('#timepicker-minutes').val('');
+                date = this.setTime(date);
+              }
             }
             else {
               date = this.setTime(date);
@@ -803,6 +808,15 @@
         var hours = $('#timepicker-hours').val(),
           minutes = $('#timepicker-minutes').val(),
           period = $('#timepicker-period');
+
+        var timepicker = $('.timepicker.is-active');
+        if (!minutes && timepicker.length) {
+          var d = new Date(date);
+          var time = timepicker.val().match(/(\d+)(?::(\d\d))?\s*(p?)/);
+          d.setHours( parseInt(time[1]) + (time[3] ? 12 : 0) );
+          d.setMinutes( parseInt(time[2]) || 0 );
+          minutes = d.getMinutes();
+        }
 
         hours = (period.length && period.val() === 'PM' && hours < 12) ? (parseInt(hours, 10) + 12) : hours;
         hours = (period.length && period.val() === 'AM' && parseInt(hours, 10) === 12) ? 0 : hours;
