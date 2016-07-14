@@ -289,6 +289,8 @@ var express = require('express'),
 
     if (path.match(/\/site/)) {
       return base + 'site/layout';
+    } else if (path.match(/\/container/)) {
+      return base + 'container/layout';
     } else if (path.match(/\/different-header-types/)) {
       return base + 'different-header-types/layout';
     } else if (path.match(/\/lms/)) {

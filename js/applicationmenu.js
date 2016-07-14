@@ -90,23 +90,6 @@
           this.accordion.accordion(accOpts);
         }
 
-        // Reposition the Application Menu to somewhere directly in the 'body' tag if it isn't already there.
-        // Don't mess with it if it's already in the body.
-        this.originalParent = this.menu.parent();
-        if (this.originalParent[0] !== $('body')[0]) {
-          var target = $('body').children('.svg-icons, .svg-empty, .svg-icons-extended'),
-            mainHeader = $('body').children('.header').first();
-
-          masthead = $('body').children('.masthead');
-
-          if (masthead && masthead.length) {
-            target = masthead;
-          }
-          if (mainHeader && mainHeader.length) {
-            target = mainHeader;
-          }
-          this.menu.detach().insertAfter(target.last());
-        }
         this.adjustHeight();
 
         return this;
