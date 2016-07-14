@@ -34,7 +34,8 @@
         firstHeader: 'h3',
         secondHeader: 'h4',
         placeholder: null,
-        anchor: {url: 'http://www.example.com', class: 'hyperlink', target: ''},
+        // anchor > target: 'Same window'|'New window'| any string value
+        anchor: {url: 'http://www.example.com', class: 'hyperlink', target: 'New window'},
         image: {url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}
       },
       settings = $.extend({}, defaults, options);
@@ -43,6 +44,9 @@
     function Editor(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
+
+      this.isMac = $('html').is('.is-mac');
+      this.isFirefox = $('html').is('.is-firefox');
       this.init();
     }
 
@@ -56,8 +60,26 @@
         this.element.parent('.field').addClass('editor-container');
         settings.anchor.defaultUrl = settings.anchor.url;
         settings.anchor.defaultClass = settings.anchor.class;
-        settings.anchor.defaultTarget = settings.anchor.target;
+        settings.anchor.defaultTargetText = settings.anchor.target;
 
+        settings.anchor.targets = {
+          'Same window': '',
+          'New window': '_blank'
+        };
+        $.each(settings.anchor.targets, function(key, val) {
+          if ((settings.anchor.defaultTargetText).toLowerCase() === (key).toLowerCase()) {
+            settings.anchor.target = val;
+            settings.anchor.defaultTarget = val;
+          }
+        });
+        if (!settings.anchor.defaultTarget) {
+          if(settings.anchor.target && $.trim(settings.anchor.target).length) {
+            settings.anchor.defaultTarget = settings.anchor.target;
+          } else {
+            settings.anchor.defaultTargetText = 'Same window';
+            settings.anchor.defaultTarget = settings.anchor.targets[settings.anchor.defaultTargetText];
+          }
+        }
         return this.setup();
       },
 
@@ -355,6 +377,15 @@
           }
         });
 
+        // Open link in new windows/tab, if clicked with command-key(for mac) or ctrl-key(for windows)
+        self.element.on('mousedown.editor', 'a', function(e) {
+          var href = $(this).attr('href');
+          if(!self.isFirefox && ((self.isMac && e.metaKey) || (!self.isMac && e.ctrlKey))) {
+            window.open(href, '_blank');
+            e.preventDefault();
+          }
+        });
+
         return self;
       },
 
@@ -625,8 +656,9 @@
 
             $('[name="em-url"]').val(settings.anchor.url);
             $('[name="em-class"]').val(settings.anchor.class);
-            $('[name="em-target"]').val(settings.anchor.target);
-            $('[id="em-target-shdo"]').val($('[name="em-target"] option:selected').text());
+            $('[name="em-target"]').val(settings.anchor.target).trigger('updated');
+
+            // $('[id="em-target-shdo"]').val($('[name="em-target"] option:selected').text());
 
             setTimeout(function () {
               if (isTouch && id === 'editor-modal-image') {
@@ -647,7 +679,12 @@
 
             //insert image or link
             if ($(this).attr('id') === 'editor-modal-url') {
-              self.createLink($('[name="em-url"]', this));
+              var currentLink = $(self.findElementInSelection('a', self.element[0]));
+              if (currentLink.length) {
+                self.updateCurrentLink(currentLink);
+              } else {
+                self.createLink($('[name="em-url"]', this));
+              }
             } else {
               self.insertImage($('#image').val());
             }
@@ -657,10 +694,24 @@
       },
 
       createURLModal: function() {
-        var urlModal = $('#editor-modal-url');
+        var targetOptions = '',
+          isTargetCustom = true,
+          urlModal = $('#editor-modal-url');
+
         if (urlModal.length > 0) {
           return urlModal;
         }
+
+        $.each(settings.anchor.targets, function(key, val) {
+          targetOptions += '<option value="'+ val +'">'+ key +'</option>';
+          if ((settings.anchor.defaultTargetText).toLowerCase() === (key).toLowerCase()) {
+            isTargetCustom = false;
+          }
+        });
+        if (isTargetCustom) {
+          targetOptions += '<option value="'+ settings.anchor.target +'">'+ settings.anchor.target +'</option>';
+        }
+
         return $('<div class="modal editor-modal-url" id="editor-modal-url"></div>')
           .html('<div class="modal-content">' +
             '<div class="modal-header">' +
@@ -678,11 +729,7 @@
               '<div class="field">' +
                 '<label for="em-target" class="label">Target</label>' +
                 '<select id="em-target" name="em-target" class="dropdown">' +
-                  '<option value="">None</option>' +
-                  '<option value="_blank">_blank</option>' +
-                  '<option value="_self">_self</option>' +
-                  '<option value="_parent">_parent</option>' +
-                  '<option value="_top">_top</option>' +
+                  targetOptions +
                 '</select>' +
               '</div>' +
               '<div class="modal-buttonset">' +
@@ -721,6 +768,21 @@
           return $(this).attr('href');
         }});
         return;
+      },
+
+      updateCurrentLink: function (alink) {
+        var emUrl = $('[name="em-url"]').val(),
+          emClass = $('[name="em-class"]').val(),
+          emTarget = $('[name="em-target"]').val();
+
+        alink.attr('href', (emUrl && $.trim(emUrl).length ? emUrl : settings.anchor.defaultUrl));
+        alink.attr('class', (emClass && $.trim(emClass).length ? emClass : settings.anchor.defaultClass));
+
+        if (emTarget && $.trim(emTarget).length) {
+          alink.attr('target', emTarget);
+        } else {
+          alink.removeAttr('target');
+        }
       },
 
       createLink: function (input) {
@@ -846,8 +908,6 @@
         } else {
           this.checkSelectionElement(newSelection, selectionElement);
         }
-
-
         return this;
       },
 
@@ -987,7 +1047,6 @@
             return this;
           }
 
-
           if (paste && !e.defaultPrevented) {
             e.preventDefault();
             paragraphs = paste.split(/[\r\n]/g);
@@ -1021,41 +1080,41 @@
       },
 
       pasteHtmlAtCaret: function(html) {
-          var sel, range;
-          if (window.getSelection) {
-            // IE9 and non-IE
-            sel = window.getSelection();
-            if (sel.getRangeAt && sel.rangeCount) {
-                range = sel.getRangeAt(0);
-                range.deleteContents();
+        var sel, range;
+        if (window.getSelection) {
+          // IE9 and non-IE
+          sel = window.getSelection();
+          if (sel.getRangeAt && sel.rangeCount) {
+              range = sel.getRangeAt(0);
+              range.deleteContents();
 
-                // Range.createContextualFragment() would be useful here but is
-                // only relatively recently standardized and is not supported in
-                // some browsers (IE9, for one)
-                var el = document.createElement('div');
+              // Range.createContextualFragment() would be useful here but is
+              // only relatively recently standardized and is not supported in
+              // some browsers (IE9, for one)
+              var el = document.createElement('div');
 
-                //IE copy will append a p we should remove
-                html = html.replace('<p>', '').replace('</p>', '');
-                el.innerHTML = html;
-                var frag = document.createDocumentFragment(), node, lastNode;
-                while ( (node = el.firstChild) ) {
-                  lastNode = frag.appendChild(node);
-                }
-                range.insertNode(frag);
+              //IE copy will append a p we should remove
+              html = html.replace('<p>', '').replace('</p>', '');
+              el.innerHTML = html;
+              var frag = document.createDocumentFragment(), node, lastNode;
+              while ( (node = el.firstChild) ) {
+                lastNode = frag.appendChild(node);
+              }
+              range.insertNode(frag);
 
-                // Preserve the selection
-                if (lastNode) {
-                  range = range.cloneRange();
-                  range.setStartAfter(lastNode);
-                  range.collapse(true);
-                  sel.removeAllRanges();
-                  sel.addRange(range);
-                }
-            }
-          } else if (document.selection && document.selection.type !== 'Control') {
-            // IE < 9
-            document.selection.createRange().pasteHTML(html);
+              // Preserve the selection
+              if (lastNode) {
+                range = range.cloneRange();
+                range.setStartAfter(lastNode);
+                range.collapse(true);
+                sel.removeAllRanges();
+                sel.addRange(range);
+              }
           }
+        } else if (document.selection && document.selection.type !== 'Control') {
+          // IE < 9
+          document.selection.createRange().pasteHTML(html);
+        }
       },
 
       htmlEntities: function (str) {
@@ -1140,16 +1199,16 @@
       //Save Text Selection
       saveSelection: function() {
         var i,
-            len,
-            ranges,
-            sel = window.getSelection();
+          len,
+          ranges,
+          sel = window.getSelection();
 
         if (sel.getRangeAt && sel.rangeCount) {
-            ranges = [];
-            for (i = 0, len = sel.rangeCount; i < len; i += 1) {
-                ranges.push(sel.getRangeAt(i));
-            }
-            return ranges;
+          ranges = [];
+          for (i = 0, len = sel.rangeCount; i < len; i += 1) {
+              ranges.push(sel.getRangeAt(i));
+          }
+          return ranges;
         }
         return null;
       },
@@ -1157,40 +1216,68 @@
       // Get the Element the Caret idea from http://bit.ly/1kRmZIL
       getSelectionStart: function() {
         var node = document.getSelection().anchorNode,
-            startNode = (node && node.nodeType === 3 ? node.parentNode : node);
+          startNode = (node && node.nodeType === 3 ? node.parentNode : node);
         return startNode;
       },
 
-      isLinkSelected: function() {
-        var rtn = false,
-          node = window.getSelection(),
-          selectedParentElement = this.getSelectedParentElement();
+      getrange: function() {
+        return window.getSelection().getRangeAt(0);
+      },
 
-        if (node && node.anchorNode && $(node.anchorNode.nextSibling).is('a')) {
-          rtn = $(node.anchorNode.nextSibling);
-        }
-        else if (selectedParentElement.tagName && selectedParentElement.tagName.toLowerCase() === 'a') {
-          rtn = $(selectedParentElement);
-        }
+      // Find element within the selection
+      // http://stackoverflow.com/questions/6052870/how-to-know-if-there-is-a-link-element-within-the-selection
+      findElementInSelection: function(tagname, container) {
+        var i, len, el, comprng, selparent,
+          rng = this.getrange();
 
-        return rtn;
+        if (rng) {
+          selparent = rng.commonAncestorContainer || rng.parentElement();
+          // Look for an element *around* the selected range
+          for (el = selparent; el !== container; el = el.parentNode) {
+            if (el.tagName && el.tagName.toLowerCase() === tagname) {
+              return el;
+            }
+          }
+
+          // Look for an element *within* the selected range
+          if (!rng.collapsed && (rng.text === undefined || rng.text) && selparent.getElementsByTagName) {
+            el = selparent.getElementsByTagName(tagname);
+            comprng = document.createRange ? document.createRange() : document.body.createTextRange();
+
+            for (i = 0, len = el.length; i < len; i++) {
+              // determine if element el[i] is within the range
+              if (document.createRange) { // w3c
+                comprng.selectNodeContents(el[i]);
+                if (rng.compareBoundaryPoints(Range.END_TO_START, comprng) < 0 && rng.compareBoundaryPoints(Range.START_TO_END, comprng) > 0) {
+                  return el[i];
+                }
+              }
+              else { // microsoft
+                comprng.moveToElementText(el[i]);
+                if (rng.compareEndPoints('StartToEnd', comprng) < 0 && rng.compareEndPoints('EndToStart', comprng) > 0) {
+                  return el[i];
+                }
+              }
+            }
+          }
+        }
       },
 
       // Restore if Selection is a Link
       restoreLinkSelection: function () {
-        var currentLink = this.isLinkSelected();
+        var currentLink = $(this.findElementInSelection('a', this.element[0]));
 
         settings.anchor.url = settings.anchor.defaultUrl;
         settings.anchor.class = settings.anchor.defaultClass;
         settings.anchor.target = settings.anchor.defaultTarget;
 
-        if (!!currentLink) {
+        if (currentLink.length) {
           settings.anchor.url = currentLink.attr('href');
           settings.anchor.class = currentLink.attr('class');
           settings.anchor.target = currentLink.attr('target');
 
-          currentLink.removeAttr('class target');
-          document.execCommand('unlink', false, null);
+          // currentLink.removeAttr('class target');
+          // document.execCommand('unlink', false, null);
         }
 
       },
