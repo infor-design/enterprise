@@ -20,6 +20,7 @@
 | Cl Wizard | New Designs  | Shelwin Wu  | 4x |
 | CRM | Shared Repo  | Jason Best  | 4x |
 | GFC  | Lawson App | Tiffany Kai King, Jon Cadag | 3x |
+| Graphical Lot Tracker  | M3 App - Shared Angular Repo | Dan McOdrum | 4x |
 | GT Nexus | Citrusbyte, React  | Tom Sorgie | 4x |
 | Hansen 8  | An ASP Application interested in accessibility  | Ovidiu Petruescu | 3x moving to 4x future|
 | Healthcare Clinical  |   | Charlie Price | 3X
@@ -70,7 +71,7 @@
 | Softbrands FourthShift ERP | ASP | Steve Duepner | 3x |
 | S3 Worklist | Webpart (Black) | Jeremy Spring | 3x to 4x |
 | Sunsystems Transfer Desk | Alexander Taylor | MVC3 | 3x |
-| Supply Chain Execution | Anindhya Sharma | Reviewing | 3x |
+| Supply Chain Execution | Mark Schaible, Anindhya Sharma | Apache, Jboss - Many Screens - Reviewing Upgrade | 3x to 4x |
 | SupplyWeb | Eric Andrews | Reviewing | 3x |
 | System Console | New app by S3 team  | Andy Buboltz | 4x |
 | System I |   | Richard Sankey | 3x |
