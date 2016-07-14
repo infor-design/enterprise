@@ -150,8 +150,10 @@ label.side,
   @include rem(margin-bottom, 1rem);
   @include rem(line-height, 2.2rem);
   @include font-size(16);
+  @include ellipsis();
   color: $cardlist-header-color;
   margin-top: 2px;
+  max-width: calc(100% - 45px);
 }
 
 .list-title {
