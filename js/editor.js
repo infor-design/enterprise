@@ -44,6 +44,9 @@
     function Editor(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
+
+      this.isMac = $('html').is('.is-mac');
+      this.isFirefox = $('html').is('.is-firefox');
       this.init();
     }
 
@@ -371,6 +374,15 @@
             case keys.sv:
               self.triggerClick(e, currentElement === self.element ? 'source' : 'visual');
               break;
+          }
+        });
+
+        // Open link in new windows/tab, if clicked with command-key(for mac) or ctrl-key(for windows)
+        self.element.on('mousedown.editor', 'a', function(e) {
+          var href = $(this).attr('href');
+          if(!self.isFirefox && ((self.isMac && e.metaKey) || (!self.isMac && e.ctrlKey))) {
+            window.open(href, '_blank');
+            e.preventDefault();
           }
         });
 
