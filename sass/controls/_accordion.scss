@@ -557,6 +557,10 @@
   }
 }
 
+.accordion-content {
+  @include font-size(14);
+}
+
 .accordion-header {
   border: 1px solid transparent;
   border-bottom-color: $accordion-border-color;

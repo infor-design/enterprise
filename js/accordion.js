@@ -137,7 +137,8 @@
             if (self.settings.displayChevron && isTopLevel) {
               expanderIcon = $('<svg class="icon chevron" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-caret-down"></use></svg>');
             } else {
-              expanderIcon = $('<span class="icon plus-minus" aria-hidden="true" role="presentation"></span>');
+              var isActive = self.isExpanded(header) ? ' active' : '';
+              expanderIcon = $('<span class="icon plus-minus'+ isActive +'" aria-hidden="true" role="presentation"></span>');
             }
             expanderIcon.appendTo(expander);
           }
@@ -208,10 +209,49 @@
 
       handleEvents: function() {
         var self = this,
-          headerWhereMouseDown = null;
+          headerWhereMouseDown = null,
+          linkFollowedByTouch = null;
 
-        this.headers.onTouchClick('accordion').on('click.accordion', function(e) {
-          self.handleHeaderClick(e, $(this));
+        // Returns "Header", "Anchor", or "Expander" based on the element's tag
+        function getElementType(element) {
+          var elementType = 'Header';
+          if (element.is('a')) {
+            elementType = 'Anchor';
+          }
+          if (element.is('button')) {
+            elementType = 'Expander';
+          }
+          return elementType;
+        }
+
+        // Intercepts a 'touchend' event in order to either prevent a link from being followed,
+        // or allows it to continue.
+        function touchendInterceptor(e, element) {
+          linkFollowedByTouch = true;
+          var type = getElementType(element),
+            result = self['handle' + type + 'Click'](e, element);
+
+          if (!result) {
+            e.preventDefault();
+          }
+          return result;
+        }
+
+        // Intercepts a 'click' event in order to either prevent a link from being followed,
+        // or allows it to continue.
+        function clickInterceptor(e, element) {
+          var type = getElementType(element);
+          if (linkFollowedByTouch) {
+            linkFollowedByTouch = null;
+            return false;
+          }
+          return self['handle' + type + 'Click'](e, element);
+        }
+
+        this.headers.on('touchend.accordion', function(e) {
+          return touchendInterceptor(e, $(this));
+        }).on('click.accordion', function(e) {
+          return clickInterceptor(e, $(this));
         }).on('focusin.accordion', function(e) {
           var target = $(e.target);
 
@@ -235,17 +275,26 @@
           headerWhereMouseDown = null;
         });
 
-        this.anchors.on('click.accordion', function(e) {
-          return self.handleAnchorClick(e, $(this));
+        this.anchors.on('touchend.accordion', function(e) {
+          return touchendInterceptor(e, $(this));
+        }).on('click.accordion', function(e) {
+          return clickInterceptor(e, $(this));
         });
 
-        this.headers.children('[class^="btn"]').onTouchClick('accordion').on('click.accordion', function(e) {
-          self.handleExpanderClick(e, $(this));
-        }).on('keydown.accordion', function(e) {
-          self.handleKeys(e);
-        });
+        this.headers.children('[class^="btn"]')
+          .on('touchend.accordion', function(e) {
+            return touchendInterceptor(e, $(this));
+          })
+          .on('click.accordion', function(e) {
+            return clickInterceptor(e, $(this));
+          }).on('keydown.accordion', function(e) {
+            self.handleKeys(e);
+          });
 
-        this.element.on('updated.accordion', function(e) {
+        this.element.on('selected.accordion', function(e) {
+          // Don't propagate this event above the accordion element
+          e.stopPropagation();
+        }).on('updated.accordion', function(e) {
           // Don't propagate just in case this is contained by an Application Menu
           e.stopPropagation();
           self.updated();
@@ -267,22 +316,20 @@
         }
 
         var anchor = header.children('a');
-        this.handleAnchorClick(e, anchor);
+        return this.handleAnchorClick(e, anchor);
       },
 
       handleAnchorClick: function(e, anchor) {
         var self = this,
           header = anchor.parent('.accordion-header'),
-          pane = header.next('.accordion-pane');
+          pane = header.next('.accordion-pane'),
+          ngLink = anchor.attr('ng-reflect-href');
 
-        if (e) {
+        if (e && !ngLink) {
           e.preventDefault();
         }
 
         if (!header.length || this.isDisabled(header)) {
-          if (e) {
-            e.preventDefault();
-          }
           return false;
         }
 
@@ -294,12 +341,12 @@
         this.select(anchor);
 
         function followLink() {
-          if (!self.settings.rerouteOnLinkClick) {
-            return true;
-          }
-
           var href = anchor.attr('href');
           if (href && href !== '' && href !== '#') {
+            if (!self.settings.rerouteOnLinkClick) {
+              return true;
+            }
+
             window.location.href = href;
             return true;
           }
@@ -353,7 +400,7 @@
         }
 
         // If there's no accordion pane, attempt to simply follow the link.
-        this.handleAnchorClick(null, header.children('a'));
+        return this.handleAnchorClick(null, header.children('a'));
       },
 
       handleKeys: function(e) {
@@ -845,8 +892,7 @@
 
       teardown: function() {
         this.headers
-          .offTouchClick('accordion')
-          .off('click.accordion focusin.accordion focusout.accordion keydown.accordion')
+          .off('touchend.accordion click.accordion focusin.accordion focusout.accordion keydown.accordion')
           .each(function() {
             var expander = $(this).data('addedExpander');
             if (expander) {
@@ -855,11 +901,10 @@
             }
           });
 
-        this.anchors.off('keydown.accordion click.accordion');
+        this.anchors.off('touchend.accordion keydown.accordion click.accordion');
 
         this.headers.children('[class^="btn"]')
-          .offTouchClick('accordion')
-          .off('click.accordion keydown.accordion');
+          .off('touchend.accordion click.accordion keydown.accordion');
 
         this.element.off('updated.accordion');
 

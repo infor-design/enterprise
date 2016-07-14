@@ -22,7 +22,7 @@
 </div>
 
 <script type="text/javascript">
-  $('#application-menu').on('selected.tests', function(e, target) {
+  $('#application-menu > .accordion').on('selected.tests', function(e, target) {
     if (!e.defaultPrevented) {
       $('body').toast({
         'title': 'Application Menu Link Clicked',
