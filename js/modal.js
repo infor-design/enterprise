@@ -84,6 +84,7 @@
       },
 
       appendContent: function () {
+        var isAppended = false;
 
         this.element = $(
           '<div class="modal">' +
@@ -99,17 +100,26 @@
           this.element.attr('id', this.settings.id);
         }
 
+
         if ($(this.settings.content).is('.modal')) {
           this.element = $(this.settings.content);
         } else if (this.settings.content && this.settings.content.length > 0) {
-          this.element.find('.modal-body').append(this.settings.content);
+
+          if (this.settings.content.parent().is('.modal-body')) {
+            isAppended = true;
+            this.element = this.settings.content.closest('.modal');
+          } else {
+            this.element.find('.modal-body').append(this.settings.content);
+          }
 
           if (this.settings.content instanceof jQuery){
             this.settings.content.show();
           }
         }
 
-        this.element.appendTo('body');
+        if (!isAppended) {
+          this.element.appendTo('body');
+        }
 
         if (this.settings.cssClass) {
           this.element.addClass(this.settings.cssClass);
@@ -119,8 +129,9 @@
           this.element.find('.modal-title').text(this.settings.title);
         }
 
-        this.addButtons(this.settings.buttons);
-
+        if (!isAppended) {
+          this.addButtons(this.settings.buttons);
+        }
       },
 
       reStructure: function() {
@@ -557,9 +568,11 @@
 
         this.overlay.attr('aria-hidden', 'true');
         this.element.attr('aria-hidden', 'true');
+
         if ($('.modal[aria-hidden="false"]').length < 1) {
           $('body').removeClass('modal-engaged');
           $('body > *').not(this.element).removeAttr('aria-hidden');
+          $('.overlay').remove();
         }
 
         //Fire Events
