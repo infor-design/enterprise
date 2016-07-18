@@ -593,9 +593,11 @@
           this.timepickerControl.closeTimePopup();
         }
 
-        this.popup.hide();
+        if (this.popup && this.popup.length) {
+          this.popup.hide().remove();
+        }
+
         this.element.removeClass('is-active');
-        this.popup.remove();
         this.element.trigger('listclosed');
       },
 
