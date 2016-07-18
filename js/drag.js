@@ -34,13 +34,13 @@
       settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
-    function Plugin(element) {
+    function Drag(element) {
       this.element = $(element);
       this.init();
     }
 
     // Plugin Methods
-    Plugin.prototype = {
+    Drag.prototype = {
 
       init: function() {
         this.handleEvents();
@@ -286,7 +286,7 @@
       if (instance) {
         instance.settings = $.extend({}, defaults, options);
       } else {
-        instance = $.data(this, pluginName, new Plugin(this, settings));
+        instance = $.data(this, pluginName, new Drag(this, settings));
       }
     });
   };

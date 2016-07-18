@@ -1161,6 +1161,11 @@
         }
       },
 
+      // Alias that works with the global "closeChildren" method.  See "js/lifecycle.js"
+      close: function() {
+        return this.closeList();
+      },
+
       //Close list and detach events
       closeList: function() {
         if (!this.list || !this.list.is(':visible') || !this.isListClosable()) {

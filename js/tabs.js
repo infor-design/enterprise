@@ -996,6 +996,7 @@
           return;
         }
 
+        oldPanel.closeChildren();
         self.panels.hide();
         self.element.trigger('activated', [a]);
 
