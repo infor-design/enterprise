@@ -343,6 +343,10 @@
           !this.popup.hasClass('is-hidden'));
       },
 
+      open: function() {
+        return this.openCalendar();
+      },
+
       // Open the calendar in a popup
       openCalendar: function () {
         var self = this;
@@ -575,6 +579,11 @@
           self.setFocusAfterOpen();
         }, 200);
 
+      },
+
+      // Alias for _closeCalendar()_ that works with the global "closeChildren" method
+      close: function() {
+        return this.closeCalendar();
       },
 
       // Close the calendar in a popup

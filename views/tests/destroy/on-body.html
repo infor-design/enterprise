@@ -68,7 +68,7 @@
       return html;
     }
 
-    b.on('destroyed', function(e, results) {
+    b.on('sift-destroy-complete', function(e, results) {
       $('#results-panel').html(listToHtml(results));
     });
 
