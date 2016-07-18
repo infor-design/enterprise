@@ -105,7 +105,7 @@
           this.element = $(this.settings.content);
         } else if (this.settings.content && this.settings.content.length > 0) {
 
-          if (this.settings.content.parent().is('.modal-body')) {
+          if (this.settings.content instanceof jQuery && this.settings.content.parent().is('.modal-body')) {
             isAppended = true;
             this.element = this.settings.content.closest('.modal');
           } else {
