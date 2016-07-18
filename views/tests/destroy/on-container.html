@@ -160,7 +160,7 @@
       return html;
     }
 
-    $('#destroyable-controls-container').on('destroyed', function(e, results) {
+    $('#destroyable-controls-container').on('sift-destroy-complete', function(e, results) {
       $('#results-panel').html(listToHtml(results));
     });
 

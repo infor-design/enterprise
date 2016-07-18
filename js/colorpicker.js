@@ -118,13 +118,13 @@
         settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
-    function Plugin(element) {
+    function ColorPicker(element) {
       this.element = $(element);
       this.init();
     }
 
     // Plugin Methods
-    Plugin.prototype = {
+    ColorPicker.prototype = {
 
       init: function() {
         this.inlineLabel = this.element.closest('label');
@@ -375,7 +375,7 @@
       if (instance) {
         instance.settings = $.extend({}, defaults, options);
       } else {
-        instance = $.data(this, pluginName, new Plugin(this, settings));
+        instance = $.data(this, pluginName, new ColorPicker(this, settings));
       }
     });
   };

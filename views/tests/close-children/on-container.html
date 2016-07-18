@@ -1,0 +1,178 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Close Children Test:  On Tabs</h2>
+
+    <p><a class="hyperlink" href="http://jira/browse/SOHO-4059" target="_blank">Related JIRA Ticket</a></p>
+
+    <p>Click the button below to close all open controls. Javascript will programatically open some of the Xi Controls, and attempt to close them with this method.  If the menus/dropdowns/tooltips remain open, something is wrong.</p>
+
+  </div>
+  <div class="six columns">
+    <p id="reset-counter-time">
+      <b>0</b>
+    </p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+
+    <div class="field" style="margin-top: 20px;">
+      <button id="go-for-closechildren" class="btn-primary">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-close"></use>
+        </svg>
+        <span>Open Controls, pause, then Close Controls.</span>
+      </button>
+    </div>
+
+    <div class="card" style="margin-top: 20px;">
+      <div class="card-header">
+        <h2 class="widget-title">Closed Controls will list here:</h2>
+      </div>
+      <div id="results-panel" class="card-content" style="padding: 13px 20px;"></div>
+    </div>
+
+  </div>
+  <div class="six columns">
+
+    <div id="closable-controls-container">
+
+      <!-- begin #inside-grid -->
+      <div id="inside-grid" class="row">
+        <div class="six columns">
+
+          <div class="field">
+            <button id="tooltip-button" class="btn-secondary" title="Button With Tooltip">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-alert"></use>
+              </svg>
+              <span>Launch Tooltip</span>
+            </button>
+          </div>
+
+          <div class="field top-padding">
+            <label for="multiselect">Multiselect</label>
+            <select id="multiselect" class="multiselect" data-options="{ source: '/api/states' }"></select>
+          </div>
+
+        </div>
+        <div class="six columns">
+
+          <div class="field">
+
+          </div>
+          <div class="field">
+            <label for="datepicker">Datepicker</label>
+            <input id="datepicker" class="datepicker" />
+          </div>
+
+        </div>
+      </div>
+      <!--   end #inside-grid -->
+
+
+
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+// http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+// http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
+
+// requestAnimationFrame polyfill by Erik Möller. fixes from Paul Irish and Tino Zijdel
+
+// MIT license
+
+(function() {
+    var lastTime = 0;
+    var vendors = ['ms', 'moz', 'webkit', 'o'];
+    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+        window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+        window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame']
+                                   || window[vendors[x]+'CancelRequestAnimationFrame'];
+    }
+
+    if (!window.requestAnimationFrame)
+        window.requestAnimationFrame = function(callback, element) {
+            var currTime = new Date().getTime();
+            var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+            var id = window.setTimeout(function() { callback(currTime + timeToCall); },
+              timeToCall);
+            lastTime = currTime + timeToCall;
+            return id;
+        };
+
+    if (!window.cancelAnimationFrame)
+        window.cancelAnimationFrame = function(id) {
+            clearTimeout(id);
+        };
+}());
+</script>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+    var b = $(this);
+    function listToHtml(items) {
+      var html = '';
+
+      function getTextSelector(item) {
+        if (!item.length) {
+          return '';
+        }
+
+        var id = item[0].getAttribute('id'),
+          tagName = item[0].tagName,
+          className = item[0].getAttribute('class');
+
+        if (tagName) {
+          tagName = tagName.toLowerCase();
+        }
+
+        return tagName + (id ? '<b>#' + id + '</b>' : '') + (className ? '.' + className.split(' ').join('.') : '');
+      }
+
+      html += '<p>';
+      $.each(items, function(i, item) {
+        html += getTextSelector(item.elem) + '<br>';
+      });
+      html += '</p>';
+
+      return html;
+    }
+
+    var countTimer = 0;
+
+    function count() {
+      countTimer = countTimer - 1;
+      $('#reset-counter-time').html('<b>'+countTimer+'</b>');
+
+      while(countTimer > 0) {
+        return requestAnimationFrame(count);
+      }
+
+      $('#go-for-closechildren').trigger('done');
+    }
+
+    $('#closable-controls-container').on('sift-close-complete.test', function(e, results) {
+      $('#results-panel').html(listToHtml(results));
+    });
+
+    $('#go-for-closechildren').on('click.test', function() {
+      $(this).disable();
+
+      $('#tooltip-button').data('tooltip').show();
+      $('#multiselect').data('dropdown').open();
+      $('#datepicker').data('datepicker').open();
+
+      countTimer = 100;
+      count();
+    }).on('done.test', function() {
+      $('#closable-controls-container').closeChildren();
+      $(this).enable();
+    });
+  });
+</script>

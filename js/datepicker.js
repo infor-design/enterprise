@@ -53,14 +53,14 @@
         settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
-    function Plugin(element) {
+    function DatePicker(element) {
       this.element = $(element);
       this.settings = settings;
       this.init();
     }
 
     // Plugin Methods
-    Plugin.prototype = {
+    DatePicker.prototype = {
 
       init: function() {
         this.build();
@@ -343,6 +343,10 @@
           !this.popup.hasClass('is-hidden'));
       },
 
+      open: function() {
+        return this.openCalendar();
+      },
+
       // Open the calendar in a popup
       openCalendar: function () {
         var self = this;
@@ -577,6 +581,11 @@
 
       },
 
+      // Alias for _closeCalendar()_ that works with the global "closeChildren" method
+      close: function() {
+        return this.closeCalendar();
+      },
+
       // Close the calendar in a popup
       closeCalendar: function () {
         // Close timepicker
@@ -584,9 +593,11 @@
           this.timepickerControl.closeTimePopup();
         }
 
-        this.popup.hide();
+        if (this.popup && this.popup.length) {
+          this.popup.hide().remove();
+        }
+
         this.element.removeClass('is-active');
-        this.popup.remove();
         this.element.trigger('listclosed');
       },
 
@@ -861,7 +872,7 @@
       if (instance) {
         instance.settings = $.extend({}, defaults, options);
       } else {
-        instance = $.data(this, pluginName, new Plugin(this, settings));
+        instance = $.data(this, pluginName, new DatePicker(this, settings));
       }
     });
   };
