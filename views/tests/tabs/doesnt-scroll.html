@@ -1,11 +1,11 @@
 
-<div id="sce-admin-tabs" class="tab-container" >
+<div class="tab-container alternate" style="margin: 0 20px; height: calc(100% - 20px)">
 	<ul class="tab-list">
 		<li class="tab is-selected"><a href="#first-tab">First Tab</a></li>
 		<li class="tab"><a href="#second-tab">Second Tab</a></li>
 	</ul>
-	<div id="first-tab" class="tab-panel no-scroll">
-		<div class="contained" style="height: 700px; margin: 0 20px;">
+	<div id="first-tab" class="tab-panel no-scroll" style="margin: 0 20px; height: calc(100% - 40px)">
+		<div class="contained" style="height: inherit; margin: 0 20px;">
       <div id="datagrid" class="datagrid-contained">
   		</div>
     </div>
@@ -15,12 +15,13 @@
 	</div>
 </div>
 
-
 <script>
   var grid;
+
   $(function() {
     $('body').initialize('en-US');
   });
+
   $('body').one('initialized', function () {
 
 	  var columns = [],
