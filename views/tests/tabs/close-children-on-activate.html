@@ -4,8 +4,8 @@
     <div class="row">
       <div class="twelve columns">
 
-        <h2>Accordion Test: Close Children on Collapse</h2>
-        <p><a class="hyperlink" href="http://jira/browse/SOHO-4059" target="_blank">Related JIRA Ticket</a>. The Accordion Control takes advantage of one of the Xi Controls' lifecycle methods, <em>closeChildren()</em>, which will fire whenever an accordion pane is collapsed.  This will close any Xi Controls that have menus, tooltips, popovers, etc. that reside inside of an Accordion.</p>
+        <h2>Tabs Test: Close Children on <em>activate()</em></h2>
+        <p>Related JIRA Tickets: <a class="hyperlink" href="http://jira/browse/SOHO-4059" target="_blank">SOHO-4059</a> and <a class="hyperlink" href="http://jira/browse/SOHO-4113" target="_blank">SOHO-4113</a>. The Tabs Control takes advantage of one of the Xi Controls' lifecycle methods, <em>closeChildren()</em>, which will fire whenever a new tab panel is selected.  This will close any Xi Controls that have menus, tooltips, popovers, etc. that reside inside of the old tab panel.</p>
         <p></p>
 
       </div>
@@ -30,44 +30,47 @@
       </button>
     </div>
 
-    <div id="test-accordion" class="accordion panel alternate" style="margin-top: 20px;">
-      <div id="controls-header" class="accordion-header">
-        <a href="#"><span>First Header with Controls</span></a>
-      </div>
-      <div id="controls-pane" class="accordion-pane is-expanded">
-        <div class="accordion-content">
+    <div id="test-tabs" class="tab-container">
+      <ul class="tab-list">
+        <li class="tab"><a href="#tab-one">Tab #1</a></li>
+        <li class="tab"><a href="#tab-two">Tab #2</a></li>
+        <li class="tab"><a href="#tab-three">Tab #3</a></li>
+      </ul>
+      <div id="tab-one" class="tab-panel">
+        <h3>Tab One</h3>
+        <p>
+          This tab contains a bunch of controls that can be closed.
+        </p>
 
-          <div class="field">
-            <button id="tooltip-button" class="btn-secondary" title="Button With Tooltip">
-              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                <use xlink:href="#icon-alert"></use>
-              </svg>
-              <span>Launch Tooltip</span>
-            </button>
-          </div>
-
-          <div class="field top-padding">
-            <label for="multiselect">Multiselect</label>
-            <select id="multiselect" class="multiselect" data-options="{ source: '/api/states' }"></select>
-          </div>
-
-          <div class="field top-padding">
-            <label for="datepicker">Datepicker</label>
-            <input id="datepicker" class="datepicker" />
-          </div>
-
+        <div class="field">
+          <button id="tooltip-button" class="btn-secondary" title="Button With Tooltip">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-alert"></use>
+            </svg>
+            <span>Launch Tooltip</span>
+          </button>
         </div>
+
+        <div class="field top-padding">
+          <label for="multiselect">Multiselect</label>
+          <select id="multiselect" class="multiselect" data-options="{ source: '/api/states' }"></select>
+        </div>
+
+        <div class="field top-padding">
+          <label for="datepicker">Datepicker</label>
+          <input id="datepicker" class="datepicker" />
+        </div>
+
       </div>
 
-      <div class="accordion-header">
-        <a href="#"><span>Second Header with No Controls</span></a>
+      <div id="tab-two" class="tab-panel">
+        <h3>Tab Two</h3>
+        <p>Switch to Tab One to see controls that can be closed.</p>
       </div>
-      <div class="accordion-pane">
-        <div class="accordion-content">
-          <p>
-            Open up the header above this one to see controls that are capable of being closed.
-          </p>
-        </div>
+
+      <div id="tab-three" class="tab-panel">
+        <h3>Tab Three</h3>
+        <p>Switch to Tab One to see controls that can be closed.</p>
       </div>
     </div>
 
@@ -118,9 +121,9 @@
   $('body').on('initialized', function() {
     var b = $(this),
       countTimer = 0,
-      testHeader = $('#controls-header'),
-      accordion = $('#test-accordion'),
-      accordionAPI = accordion.data('accordion');
+      testTab = $('[href="#tab-one"]'),
+      tabs = $('#test-tabs'),
+      tabsAPI = tabs.data('tabs');
 
     function count() {
       countTimer = countTimer - 1;
@@ -146,20 +149,23 @@
         count();
       });
 
-      if (accordionAPI.isExpanded(testHeader)) {
+      if (tabsAPI.getActiveTab().is(testTab)) {
         return dfd.resolve();
       }
 
-      accordion.one('afterexpand', function() {
+      tabs.one('afteractivate', function() {
         return dfd.resolve();
       });
-      accordionAPI.expand(testHeader);
+      tabsAPI.select('#tab-one');
 
     }).on('done.test', function() {
-      accordionAPI.collapse(testHeader);
+      var self = $(this);
 
-      $('#controls-pane').closeChildren();
-      $(this).enable();
+      tabs.one('afteractivate', function() {
+        self.enable();
+      });
+
+      tabsAPI.select('#tab-two');
     });
   });
 </script>
