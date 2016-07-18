@@ -1238,7 +1238,15 @@ $.fn.datagrid = function(options) {
           if (col.filterType === 'date') {
             filterMarkup += '<input type="text" class="datepicker" id="'+ filterId +'"/>';
           } else if (col.filterType === 'select') {
-            filterMarkup += '<select class="dropdown" id="'+ filterId +'"><option>One</option><option>Two</option></select>';
+            filterMarkup += '<select class="dropdown" id="'+ filterId +'">';
+            if (col.options) {
+              for (var i = 0; i < col.options.length; i++) {
+                var option = col.options[i],
+                optionValue = col.caseInsensitive && typeof option.value === 'string' ? option.value.toLowerCase() : option.value;
+                filterMarkup += '<option value = "' +optionValue + '">' + option.label + '</option>';
+              }
+            }
+            filterMarkup += '</select>';
           } else {
             filterMarkup += '<input type="text" id="'+ filterId +'"/>';
           }
@@ -1264,6 +1272,10 @@ $.fn.datagrid = function(options) {
         }
 
       }).on('blur.datagrid', '.datagrid-filter-wrapper input', function () {
+        self.applyFilter();
+      });
+
+      this.headerRow.find('.dropdown').on('selected.datagrid', function () {
         self.applyFilter();
       });
 
@@ -1335,7 +1347,7 @@ $.fn.datagrid = function(options) {
               isMatch = (rowValue !== conditionValue && rowValue !== '');
               break;
             case 'contains':
-              isMatch = (rowValue.indexOf(conditionValue) > -1 && rowValue !== '');
+              isMatch = (rowValue.toString().indexOf(conditionValue) > -1 && rowValue.toString() !== '');
               break;
             case 'is-empty':
               isMatch = (rowValue === '');

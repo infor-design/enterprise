@@ -380,6 +380,8 @@
         }).on('keypress.dropdown', function(e) {
           self.ignoreKeys($(this), e);
           self.handleAutoComplete(e);
+        }).on('click.dropdown', function(e) {
+          e.stopPropagation();
         }).on('mouseup.dropdown', function(e) {
           if (e.button === 2) {
             return;

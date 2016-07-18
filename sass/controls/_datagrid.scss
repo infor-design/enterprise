@@ -388,6 +388,10 @@ $datagrid-short-row-height: 30px;
           }
         }
 
+        > span {
+          width: calc(100% - 16px);
+        }
+
         + .icon {
           right: 4px;
         }
@@ -1376,7 +1380,7 @@ html[dir='rtl'] {
 
   li {
     height: 30px;
-    padding: 5px 14px;
+    padding: 7px 14px;
 
     &:first-child {
       margin-top: 5px;
@@ -1387,6 +1391,37 @@ html[dir='rtl'] {
     width: 360px;
   }
 
+}
+
+//Filter Dropdown Style
+.datagrid-filter-dropdown {
+  .dropdown-search {
+    height: 24px;
+    padding: 4px 32px 1px 7px;
+  }
+
+  .trigger .icon {
+    height: 24px;
+    left: 4px;
+    width: 16px;
+  }
+
+  .dropdown-list {
+    li {
+      min-height: 28px;
+    }
+
+    ul {
+      line-height: 28px;
+      text-indent: 7px;
+    }
+
+    .icon.search {
+      height: 14px;
+      margin-top: 6px;
+      width: 16px;
+    }
+  }
 }
 
 //Ios Hack
