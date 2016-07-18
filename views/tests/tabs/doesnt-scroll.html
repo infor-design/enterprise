@@ -1,0 +1,43 @@
+
+<div id="sce-admin-tabs" class="tab-container" >
+	<ul class="tab-list">
+		<li class="tab is-selected"><a href="#first-tab">First Tab</a></li>
+		<li class="tab"><a href="#second-tab">Second Tab</a></li>
+	</ul>
+	<div id="first-tab" class="tab-panel no-scroll">
+		<div class="contained" style="height: 700px; margin: 0 20px;">
+      <div id="datagrid" class="datagrid-contained">
+  		</div>
+    </div>
+
+	</div>
+	<div id="second-tab" class="tab-panel no-scroll">
+	</div>
+</div>
+
+
+<script>
+  var grid;
+  $(function() {
+    $('body').initialize('en-US');
+  });
+  $('body').one('initialized', function () {
+
+	  var columns = [],
+		data = [];
+
+	  for (var idx=0; idx < 50; idx++) {
+		data.push({ id: idx, productId: 999, productName: 'Stuff', activity: 'Stuff'});
+	  }
+
+	  columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 300});
+	  columns.push({ id: 'productName', name: 'Product Name', field: 'productName', width: 300});
+	  columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 300});
+
+	  grid = $('#datagrid').datagrid({
+		columns: columns,
+		dataset: data,
+		selectable: 'single'
+	  });
+  });
+</script>

@@ -27,10 +27,6 @@ $datagrid-short-row-height: 30px;
   }
 }
 
-.toolbar + .datagrid-wrapper {
-  top: 5px;
-}
-
 //The scrollable header
 .datagrid-scrollable-header {
   overflow: hidden;
@@ -371,19 +367,25 @@ $datagrid-short-row-height: 30px;
         &:focus {
           border-color: $primary-color;
         }
+      }
 
+      .datepicker + .icon {
+        fill: $slate03;
+        height: 14px;
+        margin-left: -9px;
+        width: 14px;
       }
 
       .btn-filter {
         height: 21px;
         left: 15px;
         min-width: 34px;
-        top: -2px;
+        top: 0;
         width: 34px;
 
         .icon-dropdown {
           // scss-lint:disable ImportantRule
-          fill: $slate04 !important;
+          fill: $slate03 !important;
           // scss-lint:enable ImportantRule
           left: -8px;
           position: relative;
@@ -394,6 +396,13 @@ $datagrid-short-row-height: 30px;
             width: 14px;
           }
         }
+
+        &:hover .icon {
+          // scss-lint:disable ImportantRule
+          fill: $slate02 !important;
+          // scss-lint:enable ImportantRule
+        }
+
       }
     }
   }

@@ -538,7 +538,7 @@ window.Editors = {
 
     this.init = function () {
       this.input = $('<input class="datepicker"/>').appendTo(container);
-      this.input.datepicker(column.editorOptions);
+      this.input.datepicker(column.editorOptions ? column.editoroptions : {dateFormat: column.dateFormat});
     };
 
     this.val = function (value) {
@@ -710,7 +710,6 @@ $.fn.datagrid = function(options) {
         columnReorder: false, // Allow Column reorder
         saveColumns: true, //Save Column Reorder and resize
         editable: false,
-        filterable: false,
         isList: false, // Makes a readonly "list"
         menuId: null,  //Id to the right click context menu
         rowHeight: 'normal', //(short, medium or normal)
@@ -722,7 +721,9 @@ $.fn.datagrid = function(options) {
         pagesize: 25,
         pagesizes: [10, 25, 50, 75],
         indeterminate: false, //removed ability to go to a specific page.
-        source: null //callback for paging
+        source: null, //callback for paging
+        //Filtering Options
+        filterable: false
       },
       settings = $.extend({}, defaults, options);
 
@@ -1180,7 +1181,7 @@ $.fn.datagrid = function(options) {
          (column.headerTooltip ? 'title="' + column.headerTooltip + '"' : '') +
          (colGroups ? ' headers="' + self.getColumnGroup(j) + '"' : '') +
          (column.width ? ' style="width:'+ (typeof column.width ==='number' ? column.width+'px': column.width) +'"' : '') + '>';
-         headerRow += '<div class="' + (isSelection ? 'datagrid-checkbox-wrapper ': 'datagrid-column-wrapper ') + '"><span class="datagrid-header-text">' + self.headerText(settings.columns[j]) + '</span>';
+         headerRow += '<div class="' + (isSelection ? 'datagrid-checkbox-wrapper ': 'datagrid-column-wrapper ') + (column.align === undefined || column.filterType ? false : ' l-'+ column.align +'-text') + '"><span class="datagrid-header-text">' + self.headerText(settings.columns[j]) + '</span>';
 
         //Removed the alignment - even if the column is right aligned data keep the header left aligned
         //+ (column.align === undefined ? false : ' l-'+ column.align +'-text')
@@ -1228,32 +1229,179 @@ $.fn.datagrid = function(options) {
             id = self.uniqueId( '-header-' + j),
             header = this.headerRow.find('#'+id),
             filterId = self.uniqueId( '-header-filter-' + j),
-            filterMarkup = '<div class="datagrid-filter-wrapper">'+ this.renderFilterButton() +'<label class="audible" for="'+ filterId +'">' +
-              col.name + '</label><input placeholder="Search" type="text" id="'+ filterId +'"/></div>';
+            filterMarkup = '<div class="datagrid-filter-wrapper">'+ this.renderFilterButton(col.filterType) +'<label class="audible" for="'+ filterId +'">' +
+              col.name + '</label>';
 
+          if (col.filterType === 'date') {
+            filterMarkup += '<input type="text" class="datepicker" id="'+ filterId +'"/>';
+          } else {
+            filterMarkup += '<input type="text" id="'+ filterId +'"/>';
+          }
+
+          filterMarkup += '</div>';
           header.find('.datagrid-column-wrapper').after(filterMarkup);
+          header.find('.datepicker').datepicker(col.editorOptions ? col.editoroptions : {dateFormat: col.dateFormat});
         }
       }
 
       this.headerRow.addClass('is-filterable');
-      this.headerRow.find('.btn-filter').popupmenu({});
+      this.headerRow.find('.btn-filter').popupmenu({}).on('selected.datagrid', function () {
+        self.applyFilter();
+      });
+
+      //Attach Keys
+      this.headerRow.on('keydown.datagrid', '.datagrid-filter-wrapper input', function (e) {
+        e.stopPropagation();
+
+        if (e.which === 13) {
+          self.applyFilter();
+        }
+
+      }).on('blur.datagrid', '.datagrid-filter-wrapper input', function () {
+        self.applyFilter();
+      });
+
     },
 
+    //Render one filter item as used in renderFilterButton
     renderFilterItem: function (icon, text, checked) {
       return '<li ' + (checked ? 'class="is-checked"' : '') + '><a href="#"><svg class="icon icon-filter" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-filter-'+ icon +'"></use></svg><span>'+ text +'</span></a></li>';
     },
 
-    renderFilterButton: function () {
+    //Render the Filter Button and Menu based on filterType - which determines the options
+    renderFilterButton: function (filterType) {
       var btnMarkup = '<button class="btn-menu btn-filter" data-init="false" type="button"><span class="audible">Filter</span></button>' +
-        '<ul class="popupmenu has-icons is-translatable is-selectable">' +
-        this.renderFilterItem('equals', 'Equals', true) +
-        this.renderFilterItem('doesnt-equal', 'DoesNotEqual') +
-        this.renderFilterItem('contains', 'Contains') +
-        this.renderFilterItem('is-empty', 'IsEmpty') +
-        this.renderFilterItem('is-not-empty', 'IsNotEmpty') +
-        '</ul>';
+        '<ul class="popupmenu has-icons is-translatable is-selectable">';
+
+        if (filterType === 'text') {
+          btnMarkup += this.renderFilterItem('contains', 'Contains', true);
+        }
+
+        btnMarkup += this.renderFilterItem('equals', 'Equals', (filterType === 'integer' || filterType === 'date' ? true : false)) +
+          this.renderFilterItem('doesnt-equal', 'DoesNotEqual');
+
+        btnMarkup += this.renderFilterItem('is-empty', 'IsEmpty') +
+        this.renderFilterItem('is-not-empty', 'IsNotEmpty');
+
+        if (filterType === 'integer' || filterType === 'date') {
+          btnMarkup += this.renderFilterItem('less-than', 'LessThan');
+          btnMarkup += this.renderFilterItem('less-equals', 'LessOrEquals');
+          btnMarkup += this.renderFilterItem('greater-than', 'GreaterThan');
+          btnMarkup += this.renderFilterItem('greater-equals', 'GreaterOrEquals');
+        }
+
+        btnMarkup += '</ul>';
 
       return btnMarkup ;
+    },
+
+    //Except conditions from outside or pull from filter row
+    applyFilter: function (conditions) {
+
+      this.filteredDataset = null;
+
+      if (!conditions) {
+        conditions = this.filterConditions();
+      }
+
+      var checkRow = function (row) {
+        var isMatch = true;
+
+        for (var i = 0; i < conditions.length; i++) {
+          var rowValue = (row[conditions[i].columnId] === null ||row[conditions[i].columnId] === undefined) ? '' : row[conditions[i].columnId].toString().toLowerCase(),
+            conditionValue = conditions[i].value.toString().toLowerCase();
+
+          if (typeof row[conditions[i].columnId] === 'number') {
+            rowValue = row[conditions[i].columnId];
+            conditionValue = parseFloat(conditions[i].value);
+          }
+
+          if (row[conditions[i].columnId] instanceof Date) {
+            rowValue = row[conditions[i].columnId].getTime();
+            conditionValue = Locale.parseDate(conditions[i].value, conditions[i].format).getTime();
+          }
+
+          switch (conditions[i].operator) {
+            case 'equals':
+              isMatch = (rowValue === conditionValue && rowValue !== '');
+              break;
+            case 'doesnt-equal':
+              isMatch = (rowValue !== conditionValue && rowValue !== '');
+              break;
+            case 'contains':
+              isMatch = (rowValue.indexOf(conditionValue) > -1 && rowValue !== '');
+              break;
+            case 'is-empty':
+              isMatch = (rowValue === '');
+              break;
+            case 'is-not-empty':
+              isMatch = (rowValue !== '');
+              break;
+            case 'less-than':
+              isMatch = (rowValue < conditionValue && rowValue !== '');
+              break;
+            case 'less-equals':
+              isMatch = (rowValue <= conditionValue && rowValue !== '');
+              break;
+            case 'greater-than':
+              isMatch = (rowValue > conditionValue && rowValue !== '');
+              break;
+            case 'greater-equals':
+              isMatch = (rowValue <= conditionValue && rowValue !== '');
+              break;
+            default:
+          }
+        }
+        return isMatch;
+      };
+
+      for (var i = 0; i < this.settings.dataset.length; i++) {
+        var isFiltered = !checkRow(this.settings.dataset[i]);
+        this.settings.dataset[i].isFiltered = isFiltered;
+    }
+
+      this.renderRows();
+    },
+
+    //Get filter conditions in array form from the UI
+    filterConditions: function () {
+      var self = this;
+      this.filterExpr = [];
+
+      //Create an array of objects with: field, id, filterType, operator, value
+      this.headerRow.find('th').each(function () {
+        var rowElem = $(this),
+          btn = rowElem.find('.btn-filter'),
+          input = rowElem.find('input'),
+          op;
+
+        if (!btn.length || !input.length) {
+          return;
+        }
+
+        op = btn.find('use:first').attr('xlink:href').replace('#icon-filter-', '');
+
+        if (input.val() === '' && op !== 'is-empty' && op !== 'is-not-empty') {
+          return;
+        }
+
+        var condition = {columnId: rowElem.attr('data-column-id'),
+          operator: op,
+          value: input.val(), lowercase: 'no'};
+
+        if (input.data('datepicker')) {
+          var format = input.data('datepicker').settings.dateFormat;
+          if (format === 'locale') {
+            format = Locale.calendar().dateFormat.short;
+          }
+          condition.format = format;
+        }
+
+        self.filterExpr.push(condition);
+
+      });
+
+      return self.filterExpr;
     },
 
     // Create draggable columns
@@ -1443,7 +1591,8 @@ $.fn.datagrid = function(options) {
     //Render the Rows
     renderRows: function() {
       var rowHtml, tableHtml = '',
-        self=this;
+        self = this,
+        dataset = self.settings.dataset;
 
       var body = self.table.find('tbody');
       if (body.length === 0) {
@@ -1456,7 +1605,8 @@ $.fn.datagrid = function(options) {
 
       self.tableBody.empty();
 
-      for (var i = 0; i < self.settings.dataset.length; i++) {
+
+      for (var i = 0; i < dataset.length; i++) {
         var isEven = (i % 2 === 0);
 
         //For performance dont render out of page
@@ -1473,6 +1623,10 @@ $.fn.datagrid = function(options) {
           }
         }
 
+        if (dataset[i].isFiltered) {
+          continue;
+        }
+
         rowHtml = '<tr role="row" aria-rowindex="' + (i+1) + '" class="datagrid-row '+
                   (self.settings.rowHeight !== 'normal' ? ' ' + self.settings.rowHeight + '-rowheight' : '') +
                   (self.settings.alternateRowShading && !isEven ? ' alt-shading' : '') +
@@ -1486,9 +1640,9 @@ $.fn.datagrid = function(options) {
               formatted = '';
 
           if (typeof formatter ==='string') {
-            formatted = window.Formatters[formatter](i, j, self.fieldValue(self.settings.dataset[i], self.settings.columns[j].field), self.settings.columns[j], self.settings.dataset[i], self).toString();
+            formatted = window.Formatters[formatter](i, j, self.fieldValue(dataset[i], self.settings.columns[j].field), self.settings.columns[j], dataset[i], self).toString();
           } else {
-            formatted = formatter(i, j, self.fieldValue(self.settings.dataset[i], self.settings.columns[j].field), self.settings.columns[j], self.settings.dataset[i], self).toString();
+            formatted = formatter(i, j, self.fieldValue(dataset[i], self.settings.columns[j].field), self.settings.columns[j], dataset[i], self).toString();
           }
 
           if (formatted.indexOf('<span class="is-readonly">') === 0) {
@@ -1520,7 +1674,7 @@ $.fn.datagrid = function(options) {
 
           //Run a function that helps check if editable
           if (col.isEditable && !col.readonly) {
-            var canEdit = col.isEditable(i, j, self.fieldValue(self.settings.dataset[i], self.settings.columns[j].field), col, self.settings.dataset[i]);
+            var canEdit = col.isEditable(i, j, self.fieldValue(dataset[i], self.settings.columns[j].field), col, dataset[i]);
 
             if (!canEdit) {
               cssClass += ' is-readonly';
@@ -1531,7 +1685,7 @@ $.fn.datagrid = function(options) {
           var ariaReadonly = ((col.readonly || col.editor === undefined) ? 'aria-readonly="true"': '');
 
           if (col.isReadonly && !col.readonly) {
-            var isReadonly = col.isReadonly(i, j, self.fieldValue(self.settings.dataset[i], self.settings.columns[j].field), col, self.settings.dataset[i]);
+            var isReadonly = col.isReadonly(i, j, self.fieldValue(dataset[i], self.settings.columns[j].field), col, dataset[i]);
 
             if (isReadonly) {
               cssClass += ' is-cell-readonly';
@@ -1539,11 +1693,11 @@ $.fn.datagrid = function(options) {
             }
           }
 
-          var cellValue = self.fieldValue(self.settings.dataset[i], self.settings.columns[j].field);
+          var cellValue = self.fieldValue(dataset[i], self.settings.columns[j].field);
 
           //Run a function that dynamically adds a class
           if (col.cssClass && typeof col.cssClass === 'function') {
-            cssClass += col.cssClass(i, j, cellValue, col, self.settings.dataset[i]);
+            cssClass += col.cssClass(i, j, cellValue, col,dataset[i]);
           }
 
           cssClass += (col.focusable ? ' is-focusable' : '');
@@ -1552,12 +1706,12 @@ $.fn.datagrid = function(options) {
               ' aria-describedby="' + self.uniqueId( '-header-' + j) + '"' +
              (cssClass ? ' class="' + cssClass + '"' : '') + 'data-idx="' + (j) + '"' +
              (col.tooltip ? ' title="' + col.tooltip.replace('{{value}}', cellValue) + '"' : '') +
-             (col.id === 'rowStatus' && self.settings.dataset[i].rowStatus && self.settings.dataset[i].rowStatus.tooltip ? ' title="' + self.settings.dataset[i].rowStatus.tooltip + '"' : '') +
+             (col.id === 'rowStatus' && dataset[i].rowStatus && dataset[i].rowStatus.tooltip ? ' title="' + dataset[i].rowStatus.tooltip + '"' : '') +
                (self.settings.columnGroups ? 'headers = "' + self.uniqueId( '-header-' + j) + ' ' + self.getColumnGroup(j) + '"' : '') +
              '><div class="datagrid-cell-wrapper">';
 
           if (col.contentVisible) {
-            var canShow = col.contentVisible(i, j, cellValue, col, self.settings.dataset[i]);
+            var canShow = col.contentVisible(i, j, cellValue, col, dataset[i]);
             if (!canShow) {
               formatted = '';
             }
@@ -1570,7 +1724,7 @@ $.fn.datagrid = function(options) {
 
         if (self.settings.rowTemplate) {
           var tmpl = self.settings.rowTemplate,
-            item = self.settings.dataset[i],
+            item = dataset[i],
             renderedTmpl = '';
 
           if (Tmpl && item) {
@@ -2023,6 +2177,10 @@ $.fn.datagrid = function(options) {
       this.resizeHandle = $('<div class="resize-handle" aria-hidden="true"></div>');
       if (this.settings.columnGroups) {
         this.resizeHandle.css('height', '80px');
+      }
+
+      if (this.settings.filterable) {
+        this.resizeHandle.css('height', '62px');
       }
 
       this.table.before(this.resizeHandle);
@@ -2831,6 +2989,10 @@ $.fn.datagrid = function(options) {
           last = self.visibleColumns().length -1,
           triggerEl, move;
 
+        if ($(e.target).closest('.popupmenu').length > 0) {
+          return;
+        }
+
         // Enter or Space
         if (key === 13 || key === 32) {
           triggerEl = (isMultiple && index === 0) ? $('.datagrid-checkbox', th) : th;
@@ -3635,6 +3797,8 @@ $.fn.datagrid = function(options) {
       //Remove the toolbar, clean the div out and remove the pager
       this.element.off().empty().removeClass('datagrid-container').unwrap();
       this.element.prev('.toolbar').remove();
+      this.element.prev('.datagrid-scrollable-header').prev('.toolbar').remove();
+      this.element.prev('.datagrid-scrollable-header').remove();
       this.element.next('.pager-toolbar').remove();
       $.removeData(this.element[0], pluginName);
     }

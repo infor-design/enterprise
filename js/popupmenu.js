@@ -348,15 +348,19 @@
 
           //Close on escape
           if (key === 27) {
+            e.stopPropagation();
             self.close(true);
           }
 
           if (key === 9) {
+            e.stopPropagation();
             self.close(true);
           }
 
           //Select Checkboxes
           if (key === 32) {
+            e.stopPropagation();
+
             var target = $(e.target),
               checkbox = target.find('input:checkbox');
             if (checkbox.length) {
@@ -372,12 +376,15 @@
               e.preventDefault();
               return;
             }
+
             if (target.is('li')) {
               a = target.children('a');
             }
+
             if (target.is('a')) {
               a = target;
             }
+
             if (a.length) {
               a.trigger('click');
               return;
@@ -391,6 +398,7 @@
 
           //Left Close Submenu
           if (key === 37 && !isAutocomplete) {
+            e.stopPropagation();
             e.preventDefault();
 
             if (focus.closest('.popupmenu')[0] !== self.menu[0] && focus.closest('.popupmenu').length > 0) {
@@ -401,6 +409,7 @@
 
           //Up on Up
           if ((!isPicker && key === 38) || (isPicker && key === 37)) {
+             e.stopPropagation();
              e.preventDefault();
 
             //Go back to Top on the last one
@@ -417,7 +426,9 @@
 
           //Up a square
           if (isPicker && key === 38) {
+            e.stopPropagation();
             e.preventDefault();
+
             if (focus.parent().prevAll(excludes).length > 0) {
               self.highlight($(focus.parent().prevAll(excludes)[9]).find('a'));
             }
@@ -425,7 +436,9 @@
 
           //Right Open Submenu
           if (key === 39  && !isAutocomplete) {
+            e.stopPropagation();
             e.preventDefault();
+
             if (focus.parent().hasClass('submenu')) {
               self.showSubmenu(focus.parent());
               self.highlight(focus.parent().find('.popupmenu a:first'));
@@ -434,7 +447,9 @@
 
           //Down
           if ((!isPicker && key === 40) || (isPicker && key === 39 && !isAutocomplete)) {
+            e.stopPropagation();
             e.preventDefault();
+
             //Go back to Top on the last one
             if (focus.parent().nextAll(excludes).length === 0) {
               if (focus.length === 0) {
@@ -449,7 +464,9 @@
 
           //Down a square
           if ((isPicker && key === 40)) {
+            e.stopPropagation();
             e.preventDefault();
+
             if (focus.parent().nextAll(excludes).length > 0) {
               self.highlight($(focus.parent().nextAll(excludes)[9]).find('a'));
             }
