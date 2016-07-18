@@ -34,6 +34,15 @@
     }
   }
 
+  //Error message - validation adjustments
+  .error-message {
+    margin-top: 0;
+  }
+
+  .editor-source.hidden + .editor + .error-message {
+    margin-top: -10px;
+  }
+
   // Customize the formatter toolbar if it's inside an editor
   .formatter-toolbar {
     // border-bottom: 1px solid $editor-middle-border-color;
@@ -46,18 +55,18 @@
   }
 
   &:hover {
-    .toolbar.formatter-toolbar {
+    .toolbar.formatter-toolbar:not(.error) {
       border-color: $editor-hover-border-color $editor-hover-border-color $editor-border-color;
     }
 
-    .editor,
-    .editor-source {
+    .editor:not(.error),
+    .editor-source:not(.error) {
       border-color: transparent $editor-hover-border-color $editor-hover-border-color;
     }
   }
 
   &.is-active,
-  &.is-active:hover {
+  &.is-active:hover:not(.error) {
     .toolbar.formatter-toolbar {
       border-left-color: $editor-focus-border-color;
       border-right-color: $editor-focus-border-color;
@@ -77,18 +86,6 @@
       &.error {
         border-color: transparent $error-color $error-color;
       }
-    }
-  }
-
-  &.is-error,
-  &.is-error:hover {
-    .toolbar.formatter-toolbar {
-      border-color: $error-color $error-color $editor-border-color;
-    }
-
-    .editor,
-    .editor-source {
-      border-color: transparent $error-color $error-color;
     }
   }
 
@@ -261,7 +258,7 @@
     }
 
     &:focus:not(.hide-focus),
-    &.is-active {
+    &.is-active:not(.error) {
       box-shadow: $editor-btn-active-box-shadow;
       color: $editor-btn-active-color;
 
@@ -447,13 +444,23 @@
   }
 }
 
-//Placeholder
+//Error Text
 .editor-placeholder {
   color: $input-placeholder-color;
 
   &.error {
-    border-color: $error-color;
+    border-color: transparent $error-color $error-color;
     color: $error-color;
+  }
+}
+
+.editor-toolbar {
+  &.error {
+    border-color: $error-color $error-color $editor-border-color;
+
+    + .editor-source {
+      border-color: transparent $error-color $error-color;
+    }
   }
 }
 

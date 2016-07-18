@@ -398,11 +398,11 @@
           }
         }).on('focus.editor', function() {
           self.sourceView.addClass('is-focused');
-        }).on('blur.editor', function() {
+        }).on('blur.editor', function(e) {
           self.sourceView.removeClass('is-focused');
           self.element.empty().html(self.textarea.val());
           if (self.element.data('validate')) {
-            self.element.data('validate').validate(self.element);
+            self.element.data('validate').validate(self.element, true, e);
           }
         });
 
@@ -1159,14 +1159,20 @@
 
         editorContainer
           .on('focus.editor', '.editor, .editor-source', function () {
+            var elem = $(this);
+
             editorContainer.addClass('is-active');
-            if ($(this).hasClass('error')) {
-              editorContainer.parent().find('.editor-toolbar').addClass('error');
-            }
+            setTimeout(function () {
+              if (elem.hasClass('error')) {
+                editorContainer.parent().find('.editor-toolbar').addClass('error');
+                editorContainer.parent().find('.editor-source').addClass('error');
+              }
+            }, 100);
           })
           .on('blur.editor', '.editor, .editor-source', function() {
             editorContainer.removeClass('is-active');
             editorContainer.parent().find('.editor-toolbar').removeClass('error');
+            editorContainer.parent().find('.editor-source').removeClass('error');
           });
 
         //Attach Label

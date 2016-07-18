@@ -164,9 +164,8 @@
         selects.filter(function() {
           return $(this).data('dropdown') !== undefined;
         }).data('dropdown').pseudoElem.on('blur.validate', function(e) {
-          var selectId = $(this).attr('id');
-          selectId = selectId.substring(0, selectId.length - 5);
-          self.validate($('#' + selectId), true, e);
+          var select = $(this).closest('.field').find('select');
+          self.validate(select, true, e);
         });
       }
 
@@ -228,6 +227,7 @@
     },
 
     getTypes: function(field, e) {
+
       var filters = this.filterValidations(field.attr('data-validation-events'), e.type),
         validations;
 
