@@ -126,4 +126,13 @@
     color: $expandable-area-title-color;
   }
 
+  //Push the switch out a big
+  .switch {
+    margin: 12px 4px;
+
+    &:first-child {
+      margin-top: 15px;
+    }
+  }
+
 }
