@@ -93,7 +93,7 @@
       'CapsLockOn': {id: 'CapsLockOn', value: '大寫鎖定已啟用', comment: 'Caps Lock On message'},
       'Cart': {id: 'Cart', value: '購物車', comment: 'Cart tooltip'},
       'CenterText': {id: 'CenterText', value: '置中', comment: 'An Icon Tooltip'},
-      'CharactersLeft': {id: 'CharactersLeft', value: '個字元剩餘 ', comment: 'indicator showing how many more characters you can type.'},
+      'CharactersLeft': {id: 'CharactersLeft', value: '個字元剩餘 {0}', comment: 'indicator showing how many more characters you can type.'},
       'CharactersMax': {id: 'CharactersMax', value: '字元數上限為 ', comment: 'indicator showing how many max characters you can type.'},
       'ChangeSelection': {id: 'ChangeSelection', value: '若要變更選取項目，請使用方向鍵。', comment: 'Audible Text for drop down list help'},
       'Checkbox': {id: 'Checkbox', value: '核取方塊', comment: 'Checkbox tooltip'},

@@ -92,7 +92,7 @@
       'CapsLockOn': {id: 'CapsLockOn', value: 'Caps Lock đang bật', comment: 'Caps Lock On message'},
       'Cart': {id: 'Cart', value: 'Giỏ hàng', comment: 'Cart tooltip'},
       'CenterText': {id: 'CenterText', value: 'Trung tâm', comment: 'An Icon Tooltip'},
-      'CharactersLeft': {id: 'CharactersLeft', value: 'Số ký tự bên trái ', comment: 'indicator showing how many more characters you can type.'},
+      'CharactersLeft': {id: 'CharactersLeft', value: 'Số ký tự bên trái {0}', comment: 'indicator showing how many more characters you can type.'},
       'CharactersMax': {id: 'CharactersMax', value: 'Số ký tự tối đa của ', comment: 'indicator showing how many max characters you can type.'},
       'ChangeSelection': {id: 'ChangeSelection', value: '. Để thay đổi lựa chọn, hãy sử dụng các phím mũi tên.', comment: 'Audible Text for drop down list help'},
       'Checkbox': {id: 'Checkbox', value: 'Hộp kiểm', comment: 'Checkbox tooltip'},

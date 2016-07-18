@@ -93,7 +93,7 @@
       'CapsLockOn': {id: 'CapsLockOn', value: 'Caps Lock 켜짐', comment: 'Caps Lock On message'},
       'Cart': {id: 'Cart', value: '장바구니', comment: 'Cart tooltip'},
       'CenterText': {id: 'CenterText', value: '가운데', comment: 'An Icon Tooltip'},
-      'CharactersLeft': {id: 'CharactersLeft', value: '남은 글자 수 ', comment: 'indicator showing how many more characters you can type.'},
+      'CharactersLeft': {id: 'CharactersLeft', value: '남은 글자 수 {0}', comment: 'indicator showing how many more characters you can type.'},
       'CharactersMax': {id: 'CharactersMax', value: '최대 글자 수 ', comment: 'indicator showing how many max characters you can type.'},
       'ChangeSelection': {id: 'ChangeSelection', value: '. 선택 사항을 변경하려면 화살표를 이용하십시오.', comment: 'Audible Text for drop down list help'},
       'Checkbox': {id: 'Checkbox', value: '확인란', comment: 'Checkbox tooltip'},

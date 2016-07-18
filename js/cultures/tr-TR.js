@@ -92,7 +92,7 @@
       'CapsLockOn': {id: 'CapsLockOn', value: 'Caps Lock Açık', comment: 'Caps Lock On message'},
       'Cart': {id: 'Cart', value: 'Alışveriş sepeti', comment: 'Cart tooltip'},
       'CenterText': {id: 'CenterText', value: 'Merkez', comment: 'An Icon Tooltip'},
-      'CharactersLeft': {id: 'CharactersLeft', value: 'Kalan karakter ', comment: 'indicator showing how many more characters you can type.'},
+      'CharactersLeft': {id: 'CharactersLeft', value: 'Kalan karakter {0}', comment: 'indicator showing how many more characters you can type.'},
       'CharactersMax': {id: 'CharactersMax', value: 'Maksimum karakter sayısı ', comment: 'indicator showing how many max characters you can type.'},
       'ChangeSelection': {id: 'ChangeSelection', value: '. Seçimi değiştirmek için ok tuşlarını kullanın.', comment: 'Audible Text for drop down list help'},
       'Checkbox': {id: 'Checkbox', value: 'Onay kutusu', comment: 'Checkbox tooltip'},

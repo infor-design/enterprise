@@ -1216,6 +1216,7 @@ $.fn.datagrid = function(options) {
 
     },
 
+    //Render the Filter Row
     renderFilterRow: function () {
       var self = this;
 
@@ -1223,6 +1224,8 @@ $.fn.datagrid = function(options) {
         return;
       }
 
+    //Loop the columns looking at the filter types and generate the markup for the various Types
+    //Supported Filter Types: text, integer, date, select, decimal, lookup, percent, checkbox, contents
       for (var j = 0; j < this.settings.columns.length; j++) {
         if (this.settings.columns[j].filterType) {
           var col = this.settings.columns[j],
@@ -1234,6 +1237,8 @@ $.fn.datagrid = function(options) {
 
           if (col.filterType === 'date') {
             filterMarkup += '<input type="text" class="datepicker" id="'+ filterId +'"/>';
+          } else if (col.filterType === 'select') {
+            filterMarkup += '<select class="dropdown" id="'+ filterId +'"><option>One</option><option>Two</option></select>';
           } else {
             filterMarkup += '<input type="text" id="'+ filterId +'"/>';
           }
@@ -1241,15 +1246,16 @@ $.fn.datagrid = function(options) {
           filterMarkup += '</div>';
           header.find('.datagrid-column-wrapper').after(filterMarkup);
           header.find('.datepicker').datepicker(col.editorOptions ? col.editoroptions : {dateFormat: col.dateFormat});
+          header.find('.dropdown').dropdown(col.editorOptions);
         }
       }
 
+      //Attach Keyboard support
       this.headerRow.addClass('is-filterable');
       this.headerRow.find('.btn-filter').popupmenu({}).on('selected.datagrid', function () {
         self.applyFilter();
       });
 
-      //Attach Keys
       this.headerRow.on('keydown.datagrid', '.datagrid-filter-wrapper input', function (e) {
         e.stopPropagation();
 

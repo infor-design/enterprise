@@ -92,7 +92,7 @@
       'CapsLockOn': {id: 'CapsLockOn', value: 'เปิด Caps Lock', comment: 'Caps Lock On message'},
       'Cart': {id: 'Cart', value: 'รถเข็น', comment: 'Cart tooltip'},
       'CenterText': {id: 'CenterText', value: 'ตรงกลาง', comment: 'An Icon Tooltip'},
-      'CharactersLeft': {id: 'CharactersLeft', value: 'ตัวอักษรที่เหลือ ', comment: 'indicator showing how many more characters you can type.'},
+      'CharactersLeft': {id: 'CharactersLeft', value: 'ตัวอักษรที่เหลือ {0}', comment: 'indicator showing how many more characters you can type.'},
       'CharactersMax': {id: 'CharactersMax', value: 'จำนวนตัวอักษรมากสุดของ ', comment: 'indicator showing how many max characters you can type.'},
       'ChangeSelection': {id: 'ChangeSelection', value: 'เปลี่ยนการเลือกโดยการใช้ปุ่มลูกศร', comment: 'Audible Text for drop down list help'},
       'Checkbox': {id: 'Checkbox', value: 'กล่องกาเครื่องหมาย', comment: 'Checkbox tooltip'},

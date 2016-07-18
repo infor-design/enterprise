@@ -93,7 +93,7 @@
       'CapsLockOn': {id: 'CapsLockOn', value: 'Velká písmena zapnuta', comment: 'Caps Lock On message'},
       'Cart': {id: 'Cart', value: 'Vozík', comment: 'Cart tooltip'},
       'CenterText': {id: 'CenterText', value: 'Na střed', comment: 'An Icon Tooltip'},
-      'CharactersLeft': {id: 'CharactersLeft', value: 'Zbývající počet znaků ', comment: 'indicator showing how many more characters you can type.'},
+      'CharactersLeft': {id: 'CharactersLeft', value: 'Zbývající počet znaků {0}', comment: 'indicator showing how many more characters you can type.'},
       'CharactersMax': {id: 'CharactersMax', value: 'Maximální počet znaků ', comment: 'indicator showing how many max characters you can type.'},
       'ChangeSelection': {id: 'ChangeSelection', value: 'Chcete-li změnit výběr, použijte klávesy se šipkami.', comment: 'Audible Text for drop down list help'},
       'Checkbox': {id: 'Checkbox', value: 'Zaškrtávací políčko', comment: 'Checkbox tooltip'},

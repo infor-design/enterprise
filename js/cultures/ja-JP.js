@@ -94,7 +94,7 @@
       'CapsLockOn': {id: 'CapsLockOn', value: 'CapsLock キーがオン', comment: 'Caps Lock On message'},
       'Cart': {id: 'Cart', value: 'カート', comment: 'Cart tooltip'},
       'CenterText': {id: 'CenterText', value: '中央', comment: 'An Icon Tooltip'},
-      'CharactersLeft': {id: 'CharactersLeft', value: '残り文字数 ', comment: 'indicator showing how many more characters you can type.'},
+      'CharactersLeft': {id: 'CharactersLeft', value: '残り文字数 {0}', comment: 'indicator showing how many more characters you can type.'},
       'CharactersMax': {id: 'CharactersMax', value: '最大文字数 ', comment: 'indicator showing how many max characters you can type.'},
       'ChangeSelection': {id: 'ChangeSelection', value: '. 選択項目を変更するには矢印キーを使用します。', comment: 'Audible Text for drop down list help'},
       'Checkbox': {id: 'Checkbox', value: 'チェックボックス', comment: 'Checkbox tooltip'},

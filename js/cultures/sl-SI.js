@@ -92,7 +92,7 @@
       'CapsLockOn': {id: 'CapsLockOn', value: 'Tipka Caps Lock vklopljena', comment: 'Caps Lock On message'},
       'Cart': {id: 'Cart', value: 'Voziček', comment: 'Cart tooltip'},
       'CenterText': {id: 'CenterText', value: 'Središče', comment: 'An Icon Tooltip'},
-      'CharactersLeft': {id: 'CharactersLeft', value: 'Št. preostalih znakov ', comment: 'indicator showing how many more characters you can type.'},
+      'CharactersLeft': {id: 'CharactersLeft', value: 'Št. preostalih znakov {0}', comment: 'indicator showing how many more characters you can type.'},
       'CharactersMax': {id: 'CharactersMax', value: 'Največje št. znakov ', comment: 'indicator showing how many max characters you can type.'},
       'ChangeSelection': {id: 'ChangeSelection', value: '. Za spremembo izbire uporabite puščične tipke.', comment: 'Audible Text for drop down list help'},
       'Checkbox': {id: 'Checkbox', value: 'Potrditveno polje', comment: 'Checkbox tooltip'},

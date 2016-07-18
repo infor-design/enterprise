@@ -94,7 +94,7 @@
       'CapsLockOn': {id: 'CapsLockOn', value: 'Включване на Caps Lock ', comment: 'Caps Lock On message'},
       'Cart': {id: 'Cart', value: 'Количка', comment: 'Cart tooltip'},
       'CenterText': {id: 'CenterText', value: 'Центриране', comment: 'An Icon Tooltip'},
-      'CharactersLeft': {id: 'CharactersLeft', value: 'Ляво знаци ', comment: 'indicator showing how many more characters you can type.'},
+      'CharactersLeft': {id: 'CharactersLeft', value: 'Ляво знаци {0}', comment: 'indicator showing how many more characters you can type.'},
       'CharactersMax': {id: 'CharactersMax', value: 'Максимално брой знаци ', comment: 'indicator showing how many max characters you can type.'},
       'ChangeSelection': {id: 'ChangeSelection', value: '. За да промените селекцията, използвайте стрелките за придвижване нагоре и надолу.', comment: 'Audible Text for drop down list help'},
       'Checkbox': {id: 'Checkbox', value: 'Квадратче отметка', comment: 'Checkbox tooltip'},

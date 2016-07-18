@@ -93,7 +93,7 @@
       'CapsLockOn': {id: 'CapsLockOn', value: 'Įjungtos didžiosios raidės', comment: 'Caps Lock On message'},
       'Cart': {id: 'Cart', value: 'Krepšelis', comment: 'Cart tooltip'},
       'CenterText': {id: 'CenterText', value: 'Centruoti', comment: 'An Icon Tooltip'},
-      'CharactersLeft': {id: 'CharactersLeft', value: 'Liko simbolių ', comment: 'indicator showing how many more characters you can type.'},
+      'CharactersLeft': {id: 'CharactersLeft', value: 'Liko simbolių {0}', comment: 'indicator showing how many more characters you can type.'},
       'CharactersMax': {id: 'CharactersMax', value: 'Didžiausias simbolių skaičius ', comment: 'indicator showing how many max characters you can type.'},
       'ChangeSelection': {id: 'ChangeSelection', value: '. Pasirinkimui pakeisti naudokite rodyklių klavišus.', comment: 'Audible Text for drop down list help'},
       'Checkbox': {id: 'Checkbox', value: 'Žymimasis langelis', comment: 'Checkbox tooltip'},

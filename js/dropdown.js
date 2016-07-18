@@ -886,6 +886,10 @@
           this.list.addClass('datagrid-dropdown-list ' + rowHeight);
         }
 
+        if (this.pseudoElem.closest('.datagrid-filter-wrapper')) {
+          this.list.addClass('datagrid-filter-dropdown');
+        }
+
         var cssClass = this.settings.cssClass;
         if (cssClass && typeof cssClass === 'string') {
           this.list.addClass(cssClass);

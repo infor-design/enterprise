@@ -118,7 +118,7 @@
       'CapsLockOn': {id: 'CapsLockOn', value: 'تشغيل Caps Lock', comment: 'Caps Lock On message'},
       'Cart': {id: 'Cart', value: 'سلة', comment: 'Cart tooltip'},
       'CenterText': {id: 'CenterText', value: 'توسيط', comment: 'An Icon Tooltip'},
-      'CharactersLeft': {id: 'CharactersLeft', value: 'أحرف متبقية ', comment: 'indicator showing how many more characters you can type.'},
+      'CharactersLeft': {id: 'CharactersLeft', value: 'أحرف متبقية {0}', comment: 'indicator showing how many more characters you can type.'},
       'CharactersMax': {id: 'CharactersMax', value: 'الحد الأقصى لعدد الأحرف ', comment: 'indicator showing how many max characters you can type.'},
       'ChangeSelection': {id: 'ChangeSelection', value: '. استخدم مفاتيح الأسهم لتغيير الاختيار.', comment: 'Audible Text for drop down list help'},
       'Checkbox': {id: 'Checkbox', value: 'خانة الاختيار', comment: 'Checkbox tooltip'},

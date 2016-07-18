@@ -95,7 +95,7 @@
       'CapsLockOn': {id: 'CapsLockOn', value: 'Feststelltaste ein', comment: 'Caps Lock On message'},
       'Cart': {id: 'Cart', value: 'Warenkorb', comment: 'Cart tooltip'},
       'CenterText': {id: 'CenterText', value: 'Zentrieren', comment: 'An Icon Tooltip'},
-      'CharactersLeft': {id: 'CharactersLeft', value: 'Zeichen verbleiben ', comment: 'indicator showing how many more characters you can type.'},
+      'CharactersLeft': {id: 'CharactersLeft', value: 'Zeichen verbleiben {0}', comment: 'indicator showing how many more characters you can type.'},
       'CharactersMax': {id: 'CharactersMax', value: 'Maximal mögliche Zeichen: ', comment: 'indicator showing how many max characters you can type.'},
       'ChangeSelection': {id: 'ChangeSelection', value: '. Verwenden Sie die Pfeiltasten, um die Auswahl zu ändern.', comment: 'Audible Text for drop down list help'},
       'Checkbox': {id: 'Checkbox', value: 'Kontrollkästchen', comment: 'Checkbox tooltip'},

@@ -369,11 +369,50 @@ $datagrid-short-row-height: 30px;
         }
       }
 
-      .datepicker + .icon {
+      .dropdown {
+        color: $white;
+        height: 23px;
+        line-height: 23px;
+        padding: 0 0 0 5px;
+        width: calc(100% - 44px);
+
+        &:hover {
+          // scss-lint:disable ImportantRule
+          border-color: $input-border-color !important;
+          // scss-lint:enable ImportantRule
+
+          + .icon {
+            // scss-lint:disable ImportantRule
+            fill: $slate02 !important;
+            // scss-lint:enable ImportantRule
+          }
+        }
+
+        + .icon {
+          right: 4px;
+        }
+
+      }
+
+      .dropdown-wrapper {
+        display: inline;
+        left: 13px;
+        width: calc(100% - 44px);
+      }
+
+
+      .datepicker + .icon,
+      .dropdown + .icon {
         fill: $slate03;
         height: 14px;
         margin-left: -9px;
         width: 14px;
+
+        &:hover {
+          // scss-lint:disable ImportantRule
+          fill: $slate02 !important;
+          // scss-lint:enable ImportantRule
+        }
       }
 
       .btn-filter {

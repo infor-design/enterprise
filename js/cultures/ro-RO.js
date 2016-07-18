@@ -92,7 +92,7 @@
       'CapsLockOn': {id: 'CapsLockOn', value: 'Caps Lock activat', comment: 'Caps Lock On message'},
       'Cart': {id: 'Cart', value: 'Coş', comment: 'Cart tooltip'},
       'CenterText': {id: 'CenterText', value: 'Centrare', comment: 'An Icon Tooltip'},
-      'CharactersLeft': {id: 'CharactersLeft', value: 'Caractere rămase ', comment: 'indicator showing how many more characters you can type.'},
+      'CharactersLeft': {id: 'CharactersLeft', value: 'Caractere rămase {0}', comment: 'indicator showing how many more characters you can type.'},
       'CharactersMax': {id: 'CharactersMax', value: 'Numărul maxim de caractere ', comment: 'indicator showing how many max characters you can type.'},
       'ChangeSelection': {id: 'ChangeSelection', value: '. Pentru a modifica selecţia, utilizaţi tastele săgeată.', comment: 'Audible Text for drop down list help'},
       'Checkbox': {id: 'Checkbox', value: 'Casetă de validare', comment: 'Checkbox tooltip'},

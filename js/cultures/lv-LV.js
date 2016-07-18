@@ -93,7 +93,7 @@
       'CapsLockOn': {id: 'CapsLockOn', value: 'Ieslēgt burtslēgu', comment: 'Caps Lock On message'},
       'Cart': {id: 'Cart', value: 'Grozs', comment: 'Cart tooltip'},
       'CenterText': {id: 'CenterText', value: 'Centrs', comment: 'An Icon Tooltip'},
-      'CharactersLeft': {id: 'CharactersLeft', value: 'Atlikušas rakstzīmes ', comment: 'indicator showing how many more characters you can type.'},
+      'CharactersLeft': {id: 'CharactersLeft', value: 'Atlikušas rakstzīmes {0}', comment: 'indicator showing how many more characters you can type.'},
       'CharactersMax': {id: 'CharactersMax', value: 'Maksimālais rakstzīmju skaits no ', comment: 'indicator showing how many max characters you can type.'},
       'ChangeSelection': {id: 'ChangeSelection', value: '. Izmantojiet bulttaustiņus, lai mainītu atlasi.', comment: 'Audible Text for drop down list help'},
       'Checkbox': {id: 'Checkbox', value: 'Izvēles rūtiņa', comment: 'Checkbox tooltip'},

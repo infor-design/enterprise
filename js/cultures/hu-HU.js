@@ -93,7 +93,7 @@
       'CapsLockOn': {id: 'CapsLockOn', value: 'Caps Lock bekapcsolva', comment: 'Caps Lock On message'},
       'Cart': {id: 'Cart', value: 'Kosár', comment: 'Cart tooltip'},
       'CenterText': {id: 'CenterText', value: 'Középre', comment: 'An Icon Tooltip'},
-      'CharactersLeft': {id: 'CharactersLeft', value: 'Felhasználható karakterek száma: ', comment: 'indicator showing how many more characters you can type.'},
+      'CharactersLeft': {id: 'CharactersLeft', value: 'Felhasználható karakterek száma: {0}', comment: 'indicator showing how many more characters you can type.'},
       'CharactersMax': {id: 'CharactersMax', value: 'Maximális karakterszám: ', comment: 'indicator showing how many max characters you can type.'},
       'ChangeSelection': {id: 'ChangeSelection', value: '. A kiválasztást a nyílbillentyűkkel módosíthatja.', comment: 'Audible Text for drop down list help'},
       'Checkbox': {id: 'Checkbox', value: 'Jelölőnégyzet', comment: 'Checkbox tooltip'},

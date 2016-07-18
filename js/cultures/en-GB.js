@@ -94,7 +94,7 @@
       'CapsLockOn': {id: 'CapsLockOn', value: 'Caps Lock On', comment: 'Caps Lock On message'},
       'Cart': {id: 'Cart', value: 'Cart', comment: 'Cart tooltip'},
       'CenterText': {id: 'CenterText', value: 'Center', comment: 'An Icon Tooltip'},
-      'CharactersLeft': {id: 'CharactersLeft', value: 'Characters left ', comment: 'indicator showing how many more characters you can type.'},
+      'CharactersLeft': {id: 'CharactersLeft', value: 'Characters left {0}', comment: 'indicator showing how many more characters you can type.'},
       'CharactersMax': {id: 'CharactersMax', value: 'Character count maximum of ', comment: 'indicator showing how many max characters you can type.'},
       'ChangeSelection': {id: 'ChangeSelection', value: '. To change the selection use the arrow keys.', comment: 'Audible Text for drop down list help'},
       'Checkbox': {id: 'Checkbox', value: 'Checkbox', comment: 'Checkbox tooltip'},

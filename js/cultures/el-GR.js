@@ -93,7 +93,7 @@
       'CapsLockOn': {id: 'CapsLockOn', value: 'Κλείδωμα κεφαλαίων ενεργοποιημένο', comment: 'Caps Lock On message'},
       'Cart': {id: 'Cart', value: 'Καλάθι', comment: 'Cart tooltip'},
       'CenterText': {id: 'CenterText', value: 'Κέντρο', comment: 'An Icon Tooltip'},
-      'CharactersLeft': {id: 'CharactersLeft', value: 'Χαρακτήρες αριστερά ', comment: 'indicator showing how many more characters you can type.'},
+      'CharactersLeft': {id: 'CharactersLeft', value: 'Χαρακτήρες αριστερά {0}', comment: 'indicator showing how many more characters you can type.'},
       'CharactersMax': {id: 'CharactersMax', value: 'Μέγιστος αριθμός χαρακτήρων των ', comment: 'indicator showing how many max characters you can type.'},
       'ChangeSelection': {id: 'ChangeSelection', value: '- Για να αλλάξετε την επιλογή, χρησιμοποιήστε τα πλήκτρα βέλους.', comment: 'Audible Text for drop down list help'},
       'Checkbox': {id: 'Checkbox', value: 'Πλαίσιο ελέγχου', comment: 'Checkbox tooltip'},

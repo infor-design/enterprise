@@ -93,7 +93,7 @@
       'CapsLockOn': {id: 'CapsLockOn', value: 'Caps Lock päällä', comment: 'Caps Lock On message'},
       'Cart': {id: 'Cart', value: 'Ostoskärry', comment: 'Cart tooltip'},
       'CenterText': {id: 'CenterText', value: 'Keskitä', comment: 'An Icon Tooltip'},
-      'CharactersLeft': {id: 'CharactersLeft', value: 'Merkkejä jäljellä ', comment: 'indicator showing how many more characters you can type.'},
+      'CharactersLeft': {id: 'CharactersLeft', value: 'Merkkejä jäljellä {0}', comment: 'indicator showing how many more characters you can type.'},
       'CharactersMax': {id: 'CharactersMax', value: 'Merkkimäärä enintään ', comment: 'indicator showing how many max characters you can type.'},
       'ChangeSelection': {id: 'ChangeSelection', value: '. Vaihda valinta nuolinäppäimillä.', comment: 'Audible Text for drop down list help'},
       'Checkbox': {id: 'Checkbox', value: 'Valintaruutu', comment: 'Checkbox tooltip'},

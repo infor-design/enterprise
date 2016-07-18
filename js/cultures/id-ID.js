@@ -93,7 +93,7 @@
       'CapsLockOn': {id: 'CapsLockOn', value: 'Caps Lock On', comment: 'Caps Lock On message'},
       'Cart': {id: 'Cart', value: 'Cart', comment: 'Cart tooltip'},
       'CenterText': {id: 'CenterText', value: 'Tengah', comment: 'An Icon Tooltip'},
-      'CharactersLeft': {id: 'CharactersLeft', value: 'Karakter tersisa ', comment: 'indicator showing how many more characters you can type.'},
+      'CharactersLeft': {id: 'CharactersLeft', value: 'Karakter tersisa {0}', comment: 'indicator showing how many more characters you can type.'},
       'CharactersMax': {id: 'CharactersMax', value: 'Jumlah karakter maksimal ', comment: 'indicator showing how many max characters you can type.'},
       'ChangeSelection': {id: 'ChangeSelection', value: 'Untuk mengubah pilihan, gunakan tombol panah.', comment: 'Audible Text for drop down list help'},
       'Checkbox': {id: 'Checkbox', value: 'Kotak periksa', comment: 'Checkbox tooltip'},

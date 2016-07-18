@@ -93,7 +93,7 @@
       'CapsLockOn': {id: 'CapsLockOn', value: 'Caps Lock פועל', comment: 'Caps Lock On message'},
       'Cart': {id: 'Cart', value: 'עגלה', comment: 'Cart tooltip'},
       'CenterText': {id: 'CenterText', value: 'מרכז', comment: 'An Icon Tooltip'},
-      'CharactersLeft': {id: 'CharactersLeft', value: 'תווים שנותרו ', comment: 'indicator showing how many more characters you can type.'},
+      'CharactersLeft': {id: 'CharactersLeft', value: 'תווים שנותרו {0}', comment: 'indicator showing how many more characters you can type.'},
       'CharactersMax': {id: 'CharactersMax', value: 'ספירת תווים מרבית של ', comment: 'indicator showing how many max characters you can type.'},
       'ChangeSelection': {id: 'ChangeSelection', value: '. כדי לשנות את הבחירה, השתמש במקשי החצים.', comment: 'Audible Text for drop down list help'},
       'Checkbox': {id: 'Checkbox', value: 'תיבת סימון', comment: 'Checkbox tooltip'},

@@ -94,7 +94,7 @@
       'CapsLockOn': {id: 'CapsLockOn', value: 'Bloqueo de mayúsculas activo', comment: 'Caps Lock On message'},
       'Cart': {id: 'Cart', value: 'Cesta', comment: 'Cart tooltip'},
       'CenterText': {id: 'CenterText', value: 'Centrar', comment: 'An Icon Tooltip'},
-      'CharactersLeft': {id: 'CharactersLeft', value: 'Caracteres a la izquierda ', comment: 'indicator showing how many more characters you can type.'},
+      'CharactersLeft': {id: 'CharactersLeft', value: 'Caracteres a la izquierda {0}', comment: 'indicator showing how many more characters you can type.'},
       'CharactersMax': {id: 'CharactersMax', value: 'Número máximo de caracteres ', comment: 'indicator showing how many max characters you can type.'},
       'ChangeSelection': {id: 'ChangeSelection', value: '. Para cambiar la selección utilice las teclas de dirección.', comment: 'Audible Text for drop down list help'},
       'Checkbox': {id: 'Checkbox', value: 'Casilla', comment: 'Checkbox tooltip'},

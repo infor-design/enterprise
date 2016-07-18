@@ -111,7 +111,7 @@
         var length = self.element.val().length,
           max = self.element.attr('maxlength'),
           remaining = (parseInt(max)-length),
-          text = remaining.toString() + ' ' + (settings.charRemainingText ? settings.charRemainingText : (Locale.translate('CharactersLeft') === 'CharactersLeft' ? 'Characters Left' : Locale.translate('CharactersLeft')));
+          text = (settings.charRemainingText ? settings.charRemainingText : (Locale.translate('CharactersLeft') === 'CharactersLeft' ? 'Characters Left' : Locale.translate('CharactersLeft'))).replace('{0}', remaining.toString());
 
         if (self.counter) {
           if (length === 0) {

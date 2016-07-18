@@ -93,7 +93,7 @@
       'CapsLockOn': {id: 'CapsLockOn', value: 'कैप्स लॉक चालू है', comment: 'Caps Lock On message'},
       'Cart': {id: 'Cart', value: 'कार्ट', comment: 'Cart tooltip'},
       'CenterText': {id: 'CenterText', value: 'मध्य', comment: 'An Icon Tooltip'},
-      'CharactersLeft': {id: 'CharactersLeft', value: 'बचे हुए अक्षर: ', comment: 'indicator showing how many more characters you can type.'},
+      'CharactersLeft': {id: 'CharactersLeft', value: 'बचे हुए अक्षर: {0}', comment: 'indicator showing how many more characters you can type.'},
       'CharactersMax': {id: 'CharactersMax', value: 'अक्षर की अधिकतम गिनती ', comment: 'indicator showing how many max characters you can type.'},
       'ChangeSelection': {id: 'ChangeSelection', value: '. चयन को परिवर्तित करने के लिए तीर कुंजी का उपयोग करें।', comment: 'Audible Text for drop down list help'},
       'Checkbox': {id: 'Checkbox', value: 'चेकबॉक्स', comment: 'Checkbox tooltip'},

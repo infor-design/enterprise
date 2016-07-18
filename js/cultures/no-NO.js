@@ -93,7 +93,7 @@
       'CapsLockOn': {id: 'CapsLockOn', value: 'Caps Lock på', comment: 'Caps Lock On message'},
       'Cart': {id: 'Cart', value: 'Handlekurv', comment: 'Cart tooltip'},
       'CenterText': {id: 'CenterText', value: 'Senter', comment: 'An Icon Tooltip'},
-      'CharactersLeft': {id: 'CharactersLeft', value: 'Tegn igjen ', comment: 'indicator showing how many more characters you can type.'},
+      'CharactersLeft': {id: 'CharactersLeft', value: 'Tegn igjen {0}', comment: 'indicator showing how many more characters you can type.'},
       'CharactersMax': {id: 'CharactersMax', value: 'Maksimum antall tegn ', comment: 'indicator showing how many max characters you can type.'},
       'ChangeSelection': {id: 'ChangeSelection', value: '. Bruk pilene for å endre valget.', comment: 'Audible Text for drop down list help'},
       'Checkbox': {id: 'Checkbox', value: 'Avmerkingsboks', comment: 'Checkbox tooltip'},
