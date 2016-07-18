@@ -53,14 +53,14 @@
         settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
-    function Plugin(element) {
+    function DatePicker(element) {
       this.element = $(element);
       this.settings = settings;
       this.init();
     }
 
     // Plugin Methods
-    Plugin.prototype = {
+    DatePicker.prototype = {
 
       init: function() {
         this.build();
@@ -870,7 +870,7 @@
       if (instance) {
         instance.settings = $.extend({}, defaults, options);
       } else {
-        instance = $.data(this, pluginName, new Plugin(this, settings));
+        instance = $.data(this, pluginName, new DatePicker(this, settings));
       }
     });
   };

@@ -621,7 +621,7 @@
           expander.children('.audible').text(Locale.translate('Expand'));
         }
 
-        pane.removeClass('is-expanded');
+        pane.removeClass('is-expanded').closeChildren();
         a.attr('aria-expanded', 'false');
 
         pane.one('animateclosedcomplete', function(e) {

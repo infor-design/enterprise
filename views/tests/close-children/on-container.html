@@ -9,7 +9,7 @@
 
   </div>
   <div class="six columns">
-    <p id="#reset-counter-time">
+    <p id="reset-counter-time">
       <b>0</b>
     </p>
   </div>
@@ -18,7 +18,7 @@
 <div class="row">
   <div class="six columns">
 
-    <div class="field">
+    <div class="field" style="margin-top: 20px;">
       <button id="go-for-closechildren" class="btn-primary">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use xlink:href="#icon-close"></use>
@@ -27,7 +27,7 @@
       </button>
     </div>
 
-    <div class="card">
+    <div class="card" style="margin-top: 20px;">
       <div class="card-header">
         <h2 class="widget-title">Closed Controls will list here:</h2>
       </div>
@@ -124,20 +124,20 @@
           return '';
         }
 
-        var id = item.attr('id'),
-          className = item[0].className,
-          tagName = item[0].tagName;
+        var id = item[0].getAttribute('id'),
+          tagName = item[0].tagName,
+          className = item[0].getAttribute('class');
 
         if (tagName) {
           tagName = tagName.toLowerCase();
         }
 
-        return tagName + (id ? '#' + id : '') + (className ? '.' + className.split(' ').join('.') : '');
+        return tagName + (id ? '<b>#' + id + '</b>' : '') + (className ? '.' + className.split(' ').join('.') : '');
       }
 
       html += '<p>';
       $.each(items, function(i, item) {
-        html += getTextSelector(item.elem) + ' <b>' + Object.getPrototypeOf(item.control) + '</b><br>';
+        html += getTextSelector(item.elem) + '<br>';
       });
       html += '</p>';
 
@@ -157,19 +157,22 @@
       $('#go-for-closechildren').trigger('done');
     }
 
-    $('#closeable-controls-container').on('sift-close-complete.test', function(e, results) {
+    $('#closable-controls-container').on('sift-close-complete.test', function(e, results) {
       $('#results-panel').html(listToHtml(results));
     });
 
     $('#go-for-closechildren').on('click.test', function() {
+      $(this).disable();
+
       $('#tooltip-button').data('tooltip').show();
       $('#multiselect').data('dropdown').open();
       $('#datepicker').data('datepicker').open();
 
-      countTimer = 200;
+      countTimer = 100;
       count();
     }).on('done.test', function() {
       $('#closable-controls-container').closeChildren();
+      $(this).enable();
     });
   });
 </script>

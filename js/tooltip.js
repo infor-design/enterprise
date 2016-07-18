@@ -239,6 +239,11 @@
         return true;
       },
 
+      // Alias for _show()_.
+      open: function() {
+        return this.show();
+      },
+
       show: function(newSettings, ajaxReturn) {
         var self = this;
         this.isInPopup = false;
@@ -673,6 +678,11 @@
         this.tooltip.removeAttr('style');
         this.tooltip.css({'top': o.top + scrollable.offsetTop - (this.tooltip.outerHeight() / 2) + (this.activeElement.outerHeight() / 2) - scrollable.deltaHeight,
                           'left': o.left + scrollable.offsetLeft + settings.offset.left - (settings.offset.top + this.tooltip.outerWidth()) - scrollable.deltaWidth});
+      },
+
+      // Alias for _hide()_ that works with the global _closeChildren()_ method.
+      close: function() {
+        return this.hide();
       },
 
       hide: function() {
