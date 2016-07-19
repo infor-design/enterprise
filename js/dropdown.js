@@ -888,7 +888,7 @@
           this.list.addClass('datagrid-dropdown-list ' + rowHeight);
         }
 
-        if (this.pseudoElem.closest('.datagrid-filter-wrapper')) {
+        if (this.pseudoElem.closest('.datagrid-filter-wrapper').length === 1) {
           this.list.addClass('datagrid-filter-dropdown');
         }
 
