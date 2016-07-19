@@ -35,6 +35,13 @@ $header-height: 60px;
     margin-bottom: 0;
     text-overflow: ellipsis;
     width: calc(100% - 60px);
+
+    span {
+      display: block;
+      height: inherit;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 
   // Used for the popupmenu header pattern
