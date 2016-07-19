@@ -281,6 +281,13 @@ textarea[disabled] + .textarea-wordcount {
   .label-text {
     display: block;
   }
+
+  &.inline-switch .label-text {
+    &::before,
+    &::after {
+      margin-left: -40px;
+    }
+  }
 }
 
 // Required Indicator
@@ -568,6 +575,20 @@ html[dir='rtl'] {
       margin-top: 6px;
       top: auto;
       width: 18px;
+    }
+
+    label {
+      padding-left: 10px;
+      padding-right: inherit;
+      text-align: left;
+    }
+  }
+
+  .inline.inline-switch .label-text {
+    &::before,
+    &::after {
+      margin-left: inherit;
+      margin-right: -40px;
     }
   }
 }

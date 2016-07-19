@@ -109,13 +109,13 @@
         handleStates(this);
 
         // Place the elements depending on the configuration
-        if (this.isInlineLabel) {
-          this.wrapper
-            .append($('<label></label>')
-              .attr('for', name + prefix)
-              .html(this.label.find('.label-text').html())
-            );
-        }
+        // if (this.isInlineLabel) {
+        //   this.wrapper
+        //     .append($('<label></label>')
+        //       .attr('for', name + prefix)
+        //       .html(this.label.find('.label-text').html())
+        //     );
+        // }
         this.wrapper.append(this.pseudoElem, this.trigger);
 
         // Check for and add the icon
