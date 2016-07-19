@@ -46,9 +46,7 @@
     // Actual DropDown Code
     Dropdown.prototype = {
       init: function() {
-        var orgId = this.element.attr('id'),
-          prefix = '-shdo',
-          name = this.element.attr('name');
+        var orgId = this.element.attr('id');
 
         this.inlineLabel = this.element.closest('label');
         this.inlineLabelText = this.inlineLabel.find('.label-text');
