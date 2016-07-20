@@ -9,7 +9,7 @@
 <script type="text/javascript">
 
   // Example App and Controller
-  var app = angular.module('sohoxi-angular');
+  var app = angular.module('exampleApp', ['sohoxi-angular']);
 
   app.controller('demoCtrl', function($scope, $compile) {
     var template = '<div class="contextual-action-panel modal" ng-include="\'../partials/cap-template.html\'"></div>';
