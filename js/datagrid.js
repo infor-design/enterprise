@@ -1524,16 +1524,23 @@ $.fn.datagrid = function(options) {
     },
 
     // Adjust draggable position
-    adjustDraggablePosition: function () {
+    adjustDraggablePosition: function(header) {
       var self = this,
-        headers = self.headerNodes().not('.is-hidden');
+        adjust = function(header) {
+          $('.is-draggable-target, .handle', header).css('left', header.position().left);
+          $('.is-draggable-target.last', header).css('left', header.position().left + header.outerWidth());
+        },
+        adjustAll = function() {
+          self.headerNodes().not('.is-hidden').each(function() {
+            adjust($(this));
+          });
+        };
 
-      headers.each(function() {
-        var header = $(this);
-        $('.is-draggable-target, .handle', header).css('left', header.position().left);
-        $('.is-draggable-target.last', header)
-          .css('left', header.position().left + header.outerWidth());
-      });
+      if (header) {
+        adjust(header);
+      } else {
+        adjustAll();
+      }
     },
 
     // Set draggable columns target
@@ -1811,9 +1818,7 @@ $.fn.datagrid = function(options) {
         }
 
         total+= column.width || header.outerWidth();
-        $('.is-draggable-target, .handle', header).css('left', header.position().left);
-        $('.is-draggable-target.last', header)
-          .css('left', header.position().left + header.outerWidth());
+        self.adjustDraggablePosition(header);
       }
 
       if (widthProvided) {
@@ -2119,7 +2124,6 @@ $.fn.datagrid = function(options) {
         var header = $(this);
         self.setColumnWidth(header.attr('data-column-id'), header.width());
       });
-      self.adjustDraggablePosition();
     },
 
     // Explicitly Set the Width of a column (reset: optional set "true" to reset table width)
@@ -2157,6 +2161,7 @@ $.fn.datagrid = function(options) {
           total += col.outerWidth();
         }
 
+        self.adjustDraggablePosition(col);
       });
 
       var columnSettings = this.columnById(id);
@@ -2166,8 +2171,9 @@ $.fn.datagrid = function(options) {
 
       if (self.fixedHeader) {
         self.headerNodes().each(function (i) {
-          var w = $(this).outerWidth();
-          self.cloneHeaderNodes().eq(i).css('width', w);
+          var cloneHeader = self.cloneHeaderNodes().eq(i);
+          cloneHeader.css('width', $(this).outerWidth());
+          self.adjustDraggablePosition(cloneHeader);
         });
       }
 
@@ -2429,6 +2435,11 @@ $.fn.datagrid = function(options) {
       // Move the drag handle to the end or start of the column
       this.headerRow
         .add((this.clone ? this.clone.find('thead') : []))
+        .off('mouseenter.datagrid').on('mouseenter.datagrid', 'th', function() {
+          if (!self.draggableStatus) {
+            self.adjustDraggablePosition();
+          }
+        })
         .off('mousemove.datagrid touchstart.datagrid touchmove.datagrid')
         .on('mousemove.datagrid touchstart.datagrid touchmove.datagrid', 'th', function (e) {
           if (self.dragging) {
@@ -2498,7 +2509,6 @@ $.fn.datagrid = function(options) {
         }
 
       });
-
     },
 
     //Check if the event is subscribed to
