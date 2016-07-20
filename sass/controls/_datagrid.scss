@@ -27,10 +27,6 @@ $datagrid-short-row-height: 30px;
   }
 }
 
-.toolbar + .datagrid-wrapper {
-  top: 5px;
-}
-
 //The scrollable header
 .datagrid-scrollable-header {
   overflow: hidden;
@@ -371,19 +367,68 @@ $datagrid-short-row-height: 30px;
         &:focus {
           border-color: $primary-color;
         }
+      }
 
+ .dropdown {
+        color: $white;
+        height: 23px;
+        line-height: 23px;
+        padding: 0 0 0 5px;
+        width: calc(100% - 44px);
+
+        &:hover {
+          // scss-lint:disable ImportantRule
+          border-color: $input-border-color !important;
+          // scss-lint:enable ImportantRule
+
+          + .icon {
+            // scss-lint:disable ImportantRule
+            fill: $slate02 !important;
+            // scss-lint:enable ImportantRule
+          }
+        }
+
+        > span {
+          width: calc(100% - 16px);
+        }
+
+        + .icon {
+          right: 4px;
+        }
+
+      }
+
+      .dropdown-wrapper {
+        display: inline;
+        left: 13px;
+        width: calc(100% - 44px);
+      }
+
+
+      .datepicker + .icon,
+      .dropdown + .icon {
+        fill: $slate03;
+        height: 14px;
+        margin-left: -9px;
+        width: 14px;
+
+        &:hover {
+          // scss-lint:disable ImportantRule
+          fill: $slate02 !important;
+          // scss-lint:enable ImportantRule
+        }
       }
 
       .btn-filter {
         height: 21px;
         left: 15px;
         min-width: 34px;
-        top: -2px;
+        top: 0;
         width: 34px;
 
         .icon-dropdown {
           // scss-lint:disable ImportantRule
-          fill: $slate04 !important;
+          fill: $slate03 !important;
           // scss-lint:enable ImportantRule
           left: -8px;
           position: relative;
@@ -394,6 +439,13 @@ $datagrid-short-row-height: 30px;
             width: 14px;
           }
         }
+
+        &:hover .icon {
+          // scss-lint:disable ImportantRule
+          fill: $slate02 !important;
+          // scss-lint:enable ImportantRule
+        }
+
       }
     }
   }
@@ -1339,6 +1391,37 @@ html[dir='rtl'] {
     width: 360px;
   }
 
+}
+
+//Filter Dropdown Style
+.datagrid-filter-dropdown {
+  .dropdown-search {
+    height: 24px;
+    padding: 4px 32px 1px 7px;
+  }
+
+  .trigger .icon {
+    height: 24px;
+    left: 4px;
+    width: 16px;
+  }
+
+  .dropdown-list {
+    li {
+      min-height: 28px;
+    }
+
+    ul {
+      line-height: 28px;
+      text-indent: 7px;
+    }
+
+    .icon.search {
+      height: 14px;
+      margin-top: 6px;
+      width: 16px;
+    }
+  }
 }
 
 //Ios Hack
