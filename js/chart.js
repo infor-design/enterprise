@@ -496,7 +496,7 @@ window.Chart = function(container) {
       }
     })
     .attr('x', function (d) {
-      return (isStacked && !isSingle) ? xScale(d.x0) : (d.x < 0 ? xScale(d.x) : xScale(0));
+      return (isStacked && !isSingle) ? xScale(d.x0) : xScale(0);
     })
     .attr('y', function (d) {
       return isStacked ? yScale(d.y) :
@@ -617,6 +617,9 @@ window.Chart = function(container) {
       .transition().duration(1000)
       .attr('width', function (d) {
         return Math.abs(xScale(d.x) - xScale(0));
+      })
+      .attr('x', function (d) {
+        return (isStacked && !isSingle) ? xScale(d.x0) : (d.x < 0 ? xScale(d.x) : xScale(0));
       });
 
     //Add Legends
@@ -1647,7 +1650,7 @@ window.Chart = function(container) {
           return isStacked ? xScale(0) : (x1(d.name) + (x1.rangeBand() - barMaxWidth)/2);
         })
         .attr('y', function() {
-          return height;
+          return y(0) > height ? height : y(0);
         })
         .attr('height', function() {
           return 0;
@@ -1658,8 +1661,9 @@ window.Chart = function(container) {
 
         bars.transition().duration(1000)
           .attr('y', function(d) {
-            return isStacked ? (height - yScale(d[0].y) - yScale(d[0].y0)) :
+            var r = isStacked ? (height - yScale(d[0].y) - yScale(d[0].y0)) :
             (d.value < 0 ? y(0) : y(d.value));
+            return d.value < 0 ? r : (r > (height-3) ? height-2 : r);
           })
           .attr('height', function(d) {
             var r;
@@ -1674,7 +1678,7 @@ window.Chart = function(container) {
                 r = (height-y(d.value)) - (height-y(0));
               }
             }
-            return r;
+            return d.value < 0 ? r : (r < 3 ? 2 : (r > height ? (height-y(d.value)) : r));
           });
     } else {
 
@@ -1705,12 +1709,13 @@ window.Chart = function(container) {
               var width = Math.min.apply(null, [x1.rangeBand()-2, barMaxWidth]);
               return isStacked ? xScale(i) : (x1.rangeBand()/2 + ((width + 2) * i) - (dataArray[0].values.length === 1 || dataArray[0].values.length === 5 || dataArray[0].values.length === 4  ? (width/2) : 0) );//' * (dataArray[0].values.length/2)) );
             })
-            .attr('y', function() {return height;})
+            .attr('y', function() {return y(0) > height ? height : y(0);})
             .attr('height', function() {return 0;});
 
         bars.transition().duration(1000)
           .attr('y', function(d) {
-            return isStacked ? (height-yScale(d.y)-yScale(d.y0)) : (d.value < 0 ? y(0) : y(d.value));
+            var r = isStacked ? (height-yScale(d.y)-yScale(d.y0)) : (d.value < 0 ? y(0) : y(d.value));
+            return d.value < 0 ? r : (r > (height-3) ? height-2 : r);
           })
           .attr('height', function(d) {
             var r;
@@ -1725,7 +1730,7 @@ window.Chart = function(container) {
                r = (height-y(d.value)) - (height-y(0));
              }
            }
-           return r;
+           return d.value < 0 ? r : (r < 3 ? 2 : (r > height ? (height-y(d.value)) : r));
           });
       }
 
