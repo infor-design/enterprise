@@ -82,7 +82,7 @@
     }
 
     &.l-pull-right {
-      top: -15px;
+      top: -7px;
     }
   }
 
@@ -237,7 +237,16 @@
       left: -5px;
       top: 2px;
     }
-  }
+
+    .dropdown-wrapper {
+      top: 4px;
+
+      .icon {
+        left: initial;
+        top: initial;
+      }
+    }
+}
 
   .field {
     float: left;
