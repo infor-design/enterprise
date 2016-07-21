@@ -363,11 +363,27 @@
             a = li.children('a'),
             menu = li.data('popupmenu').menu;
 
+          // Alt+Del or Alt+Backspace closes a dropdown tab item
+          function closeDropdownMenuItem(e) {
+            if (!e.altKey || !li.is('.dismissible')) {
+              return;
+            }
+
+            self.closeDismissibleTab(a);
+            return;
+          }
+
           menu.on('keydown.popupmenu', 'a', function(e) {
             switch(e.which) {
               case 27: // escape
                 li.addClass('is-selected');
                 a.focus();
+                break;
+              case 8: // backspace (delete on Mac)
+                closeDropdownMenuItem(e);
+                break;
+              case 46: // The actual delete key
+                closeDropdownMenuItem(e);
                 break;
             }
           });
@@ -923,7 +939,15 @@
         return (nestedInModuleTabs > 0 || nestedInHeaderTabs > 0 || hasTabContainerClass > 0);
       },
 
+      isAnchor: function(obj) {
+        return obj instanceof jQuery && obj.length && obj.is('a');
+      },
+
       getAnchor: function(href) {
+        if (this.isAnchor(href)) {
+          return href;
+        }
+
         if (href.indexOf('#') === -1 && href.charAt(0) !== '/') {
           href = '#' + href;
         }
@@ -931,10 +955,18 @@
       },
 
       getPanel: function(href) {
+        if (this.isAnchor(href)) {
+          href = href.attr('href');
+        }
+
         return this.panels.filter('[id="' + href.replace(/#/g, '') + '"]');
       },
 
       getMenuItem: function(href) {
+        if (this.isAnchor(href)) {
+          href = href.attr('href');
+        }
+
         if (href.indexOf('#') === -1) {
           href = '#' + href;
         }
@@ -1249,13 +1281,12 @@
       // NOTE: Does not take advantage of _activatePreviousTab()_ due to specific needs of selecting certain
       // Tabs/Anchors at certain times.
       remove: function(tabId) {
-        if (!tabId) {
+        var targetAnchor = this.getAnchor(tabId);
+        if (!targetAnchor) {
           return this;
         }
-        tabId = tabId.replace(/#/g, '');
 
-        var targetAnchor = this.getAnchor(tabId),
-          targetLi = targetAnchor.parent(),
+        var targetLi = targetAnchor.parent(),
           targetPanel = this.getPanel(tabId),
           targetLiIndex = this.tablist.children('li').index(targetLi),
           notATab = '.separator, .is-disabled, :hidden',
@@ -1284,6 +1315,12 @@
         // Remove Markup
         targetLi.remove();
         targetPanel.remove();
+
+        var menuItem = targetAnchor.data('moremenu-link');
+        if (menuItem) {
+          menuItem.parent().off().remove();
+          $.removeData(targetAnchor[0], 'moremenu-link');
+        }
 
         // Adjust tablist height
         this.setOverflow();
@@ -1674,6 +1711,7 @@
                   originalA = originalLi.children('a');
 
                 a.data('original-tab', originalA);
+                originalA.data('moremenu-link', a);
               });
             }
           }
@@ -1790,7 +1828,21 @@
             }
           }
 
+          // Alt+Del or Alt+Backspace closes a dropdown tab item
+          function closeDropdownMenuItem(e) {
+            if (!e.altKey || !currentMenuItem.parent().is('.dismissible')) {
+              return;
+            }
+            self.popupmenu.close();
+            self.closeDismissibleTab(currentMenuItem.attr('href'));
+            return;
+          }
+
           switch(key) {
+            case 8:
+            case 46:
+              closeDropdownMenuItem(e);
+              break;
             case 37: // left
               if (currentMenuItem.is('a')) {
                 if (currentMenuItem.parent().is(':not(:first-child)')) {
