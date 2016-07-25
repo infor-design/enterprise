@@ -327,7 +327,6 @@ window.Editors = {
         this.input.mask({pattern: mask, mode: column.maskMode});
       } else if (column.mask) {
         this.input.mask({pattern: column.mask, mode: column.maskMode});
-        console.log(column.mask, column.maskMode)
       }
     };
 
@@ -3443,7 +3442,7 @@ $.fn.datagrid = function(options) {
       this.editor = null;
 
       //Save the Cell Edit back to the data set
-      this.updateCellNode(cellNode.parent().index(), cellNode.index(), newValue);
+      this.updateCellNode(cellNode.parent().parent().find('tr[role="row"]').index(cellNode.parent()), cellNode.index(), newValue);
       this.element.triggerHandler('exiteditmode');
     },
 
