@@ -360,7 +360,7 @@ $datagrid-short-row-height: 30px;
         color: $white;
         height: 23px;
         left: 12px;
-        padding: 3px 0 3px 5px;
+        padding: 3px 0 2px 5px;
         position: relative;
         width: calc(100% - 44px);
 
@@ -369,7 +369,11 @@ $datagrid-short-row-height: 30px;
         }
       }
 
- .dropdown {
+      [data-mask-mode="number"] {
+        padding: 3px 7px 2px 0;
+      }
+
+      .dropdown {
         color: $white;
         height: 23px;
         line-height: 23px;

@@ -47,7 +47,7 @@
         "text": "Node 2.2",
         "children": [{
           "id": "node5",
-          "text": "Node 2.2.1",
+          "text": " Node 2.2.1",
           "icon": "icon-tree-chart",
           "children": [{
             "id": "node6",
@@ -64,7 +64,7 @@
   api.addNode({text: 'New Item 1.2.2', icon: 'icon-tree-image', parent: 'new12'});
 
   //Wrong id - adds to bottom
-  api.addNode({text: 'New Item 3', parent: 'xxx', id: 'new3'});
+  api.addNode({text: 'New Item 3   <span class="round info badge">5</span>', parent: 'xxx', id: 'new3'});
 
   //Add view jquery object
   api.addNode({text: 'New Item 5', parent: $('#leadership'), id: 'new5'});

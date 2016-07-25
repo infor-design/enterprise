@@ -19,6 +19,7 @@
 | Cloud Suite |   | Adel, Rick Hansen  | 3x |
 | Cl Wizard | New Designs  | Shelwin Wu  | 4x |
 | CRM | Shared Repo  | Jason Best  | 4x |
+| Docs Admin Console | docs.infor.com  admin tool | Xiwen Zhao <Xiwen.Zhao@infor.com> | 4x |
 | GFC  | Lawson App | Tiffany Kai King, Jon Cadag | 3x |
 | Graphical Lot Tracker  | M3 App - Shared Angular Repo | Dan McOdrum | 4x |
 | GT Nexus | Citrusbyte, React  | Tom Sorgie | 4x |
@@ -57,7 +58,7 @@
 | MUA (M3H5 Client) |   | Michael Quibin , Jack Rubillar | 3x |
 | NGCC - Content Creator HCM - LMS |   | Shakeeb Murtaza | 3x |
 | Optiva | Asp Based  | Bert Cushman | 4x |
-| Pathway | Australian / NZ Giv Self Service App| Jesser Susi | 4x |
+| Pathway | Public Sector Product sold in Australia and New Zealand, Highlight Rated App, MVC | Mark Nolan, Jesser Susi | 4x |
 | PLM Discrete | Home Pages/Angular and More controls | Angie Rowley and Krishna | 4x |Peddibhotla || PMServerAdmin |   | Mike Campbell | 3x |
 | Product Certification Manger |   | Kishor Dhumal <Kishor.Dhumal@infor.com> | 3x to 4x|
 | (Infor) PLM Discrete |   | Srinivasulu Vadakattu | 3x to 4x |

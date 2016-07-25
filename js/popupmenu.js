@@ -304,6 +304,11 @@
             selectionResult = self.select(anchor);
           }
 
+          //Single toggle on off of checkbox class
+          if (anchor.parent().hasClass('is-toggleable')) {
+            anchor.parent().toggleClass('is-checked');
+          }
+
           // Trigger a selected event containing the anchor that was selected
           self.element.trigger('selected', selectionResult);
 

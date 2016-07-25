@@ -217,7 +217,9 @@
       width: 5px;
     }
 
-    &.is-selectable {
+    &.is-selectable,
+    &.is-indented,
+    &.is-toggleable {
       > a {
         padding-left: 35px;
       }
@@ -343,6 +345,11 @@
   .separator {
     border-bottom: 1px solid $popupmenu-border-color;
     margin: 5px 0;
+
+    &:first-child {
+      border: medium none;
+      margin: 0;
+    }
   }
 
   // Short fields

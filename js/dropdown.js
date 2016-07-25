@@ -1388,7 +1388,7 @@
 
         // Fire the change event with the new value if the noTrigger flag isn't set
         if (!noTrigger) {
-          this.element.val(val).trigger('change').trigger('selected', [option, isAdded]);
+          this.element.val(val).trigger('change').triggerHandler('selected', [option, isAdded]);
         }
 
         // If multiselect, reset the menu to the unfiltered mode

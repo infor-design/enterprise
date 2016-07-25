@@ -327,6 +327,7 @@ window.Editors = {
         this.input.mask({pattern: mask, mode: column.maskMode});
       } else if (column.mask) {
         this.input.mask({pattern: column.mask, mode: column.maskMode});
+        console.log(column.mask, column.maskMode)
       }
     };
 
@@ -1235,26 +1236,35 @@ $.fn.datagrid = function(options) {
             filterMarkup = '<div class="datagrid-filter-wrapper">'+ this.renderFilterButton(col.filterType) +'<label class="audible" for="'+ filterId +'">' +
               col.name + '</label>';
 
-          if (col.filterType === 'date') {
-            filterMarkup += '<input type="text" class="datepicker" id="'+ filterId +'"/>';
-          } else if (col.filterType === 'select') {
-            filterMarkup += '<select class="dropdown" id="'+ filterId +'">';
-            if (col.options) {
-              for (var i = 0; i < col.options.length; i++) {
-                var option = col.options[i],
-                optionValue = col.caseInsensitive && typeof option.value === 'string' ? option.value.toLowerCase() : option.value;
-                filterMarkup += '<option value = "' +optionValue + '">' + option.label + '</option>';
+          switch (col.filterType) {
+            case 'date':
+              filterMarkup += '<input type="text" class="datepicker" id="'+ filterId +'"/>';
+              break;
+            case 'decimal':
+              filterMarkup += '<input type="text" id="'+ filterId +'"/ data-mask-mode="number" data-mask="'+ (col.mask ? col.mask : '####.00') +'">';
+              break;
+            case 'select':
+              filterMarkup += '<select class="dropdown" id="'+ filterId +'">';
+              if (col.options) {
+                for (var i = 0; i < col.options.length; i++) {
+                  var option = col.options[i],
+                  optionValue = col.caseInsensitive && typeof option.value === 'string' ? option.value.toLowerCase() : option.value;
+                  filterMarkup += '<option value = "' +optionValue + '">' + option.label + '</option>';
+                }
               }
-            }
-            filterMarkup += '</select>';
-          } else {
-            filterMarkup += '<input type="text" id="'+ filterId +'"/>';
+              filterMarkup += '</select>';
+
+              break;
+            default:
+              filterMarkup += '<input type="text" id="'+ filterId +'"/>';
+              break;
           }
 
           filterMarkup += '</div>';
           header.find('.datagrid-column-wrapper').after(filterMarkup);
           header.find('.datepicker').datepicker(col.editorOptions ? col.editoroptions : {dateFormat: col.dateFormat});
           header.find('.dropdown').dropdown(col.editorOptions);
+          header.find('[data-mask]').mask();
         }
       }
 
@@ -1301,7 +1311,7 @@ $.fn.datagrid = function(options) {
         btnMarkup += this.renderFilterItem('is-empty', 'IsEmpty') +
         this.renderFilterItem('is-not-empty', 'IsNotEmpty');
 
-        if (filterType === 'integer' || filterType === 'date') {
+        if (filterType === 'integer' || filterType === 'date' || filterType === 'decimal') {
           btnMarkup += this.renderFilterItem('less-than', 'LessThan');
           btnMarkup += this.renderFilterItem('less-equals', 'LessOrEquals');
           btnMarkup += this.renderFilterItem('greater-than', 'GreaterThan');
@@ -1390,9 +1400,8 @@ $.fn.datagrid = function(options) {
       this.headerRow.find('th').each(function () {
         var rowElem = $(this),
           btn = rowElem.find('.btn-filter'),
-          input = rowElem.find('input'),
+          input = rowElem.find('input, select'),
           op;
-
         if (!btn.length || !input.length) {
           return;
         }
@@ -2603,6 +2612,14 @@ $.fn.datagrid = function(options) {
             '<li class="is-selectable"><a data-option="row-short">' + Locale.translate('Short') + '</a></li>' +
             '<li class="is-selectable"><a data-option="row-medium">' + Locale.translate('Medium') + '</a></li>' +
             '<li class="is-selectable is-checked"><a data-option="row-normal">' + Locale.translate('Normal') + '</a></li>');
+        }
+
+        if (settings.toolbar.filterRow) {
+          menu.append('<li class="separator"></li>' +
+            '<li class="heading">' + Locale.translate('Filter') + '</li>' +
+            '<li class="is-checked is-toggleable"><a data-option="show-filter-row">' + Locale.translate('ShowFilterRow') + '</a></li>' +
+            '<li class="is-indented"><a data-option="run-filter">' + Locale.translate('RunFilter') + '</a></li>' +
+            '<li class="is-indented"><a data-option="clear-filter">' + Locale.translate('ClearFilter') + '</a></li>');
         }
 
         if (settings.toolbar.actions) {
