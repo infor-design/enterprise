@@ -3278,15 +3278,6 @@ $.fn.datagrid = function(options) {
             self.quickEditMode = false;
             self.commitCellEdit(self.editor.input);
             self.setNextActiveCell(e);
-
-            // if (self.settings.actionableMode) {
-            //   var evt = $.Event('keydown.datagrid');
-            //   evt.keyCode = 40; // move down
-            //   node.trigger(evt);
-            // }
-            // else {
-            //   self.setActiveCell(row, cell);
-            // }
           }
           else {
             self.makeCellEditable(row, cell, e);
