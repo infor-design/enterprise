@@ -2,6 +2,7 @@
 Release Date: TBD
 
 ### Key New
+* Positive/Negative Chart
 * Datagrid Export to XLS
 * Datagrid Icon Buttons
 * Datagrid Formatters for Class/ Content Visible
