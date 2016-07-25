@@ -35,42 +35,33 @@ window.Chart = function(container) {
     var specColor = (data && data.color ? data.color : null);
 
     //error, alert, alertYellow, good, neutral or hex
-    if (specColor && specColor ==='error' ) {
-      return '#e84f4f';
-    }
-
-    if (specColor && specColor ==='alert' ) {
-      return '#ff9426';
-    }
-
-    if (specColor && specColor ==='alertYellow' ) {
-      return '#ffd726';
-    }
-
-    if (specColor && specColor ==='good' ) {
-      return '#80ce4d';
-    }
-
-    if (specColor && specColor ==='neutral' ) {
-      return '#dbdbdb';
-    }
-
-    if (specColor && specColor.indexOf('#') === 0) {
-      return data.color;
+    if (specColor) {
+      if (specColor ==='error' ) {
+        return '#e84f4f';
+      }
+      if (specColor ==='alert' ) {
+        return '#ff9426';
+      }
+      if (specColor ==='alertYellow' ) {
+        return '#ffd726';
+      }
+      if (specColor ==='good' ) {
+        return '#80ce4d';
+      }
+      if (specColor ==='neutral' ) {
+        return '#dbdbdb';
+      }
+      if (specColor && specColor.indexOf('#') === 0) {
+        return data.color;
+      }
     }
 
     if (chartType === 'pie') {
       return this.pieColors(i);
     }
-
-    if (chartType === 'column-single') {
+    if (chartType === 'bar-single' || chartType === 'column-single') {
       return '#368AC0';
     }
-
-    if (chartType === 'bar-single') {
-      return '#368AC0';
-    }
-
     if (chartType === 'bar') {
       return this.colors(i);
     }
@@ -86,6 +77,12 @@ window.Chart = function(container) {
     if (s.chartType === 'Pie') {
       selector = d3.select(s.svg.selectAll('.arc')[0][idx]);
     }
+    else if (s.type === 'column-positive-negative') {
+      if (!elem.option || (elem.option && elem.option === 'target')) {
+        return;
+      }
+      selector = s.svg.select('.bar.'+ elem.option);
+    }
     else if (['Column', 'HorizontalBar'].indexOf(s.chartType) !== -1) {
       // Grouped or singlular
       if (s.isGrouped || s.isSingular) {
@@ -97,6 +94,7 @@ window.Chart = function(container) {
         selector = thisGroup.select('.bar');
       }
     }
+
     if (['Pie', 'Column', 'HorizontalBar'].indexOf(s.chartType) !== -1) {
       s.isByLegends = true;
       selector.on('click').call(selector.node(), selector.datum(), idx);
@@ -108,7 +106,9 @@ window.Chart = function(container) {
   };
 
   this.addLegend = function(series) {
-    var i, legend = $('<div class="chart-legend"></div>');
+    var i, s = charts.settings,
+      legend = $('<div class="chart-legend"></div>');
+
     if (series.length === 0) {
       return;
     }
@@ -133,7 +133,10 @@ window.Chart = function(container) {
 
       var extraClass = '';
       if (series[i].display && (series[i].display === 'block' || series[i].display === 'twocolumn')) {
-        extraClass = ' lg';
+        extraClass += ' lg';
+      }
+      if (s.type === 'column-positive-negative' && series[i].option) {
+        extraClass += ' '+ series[i].option;
       }
 
       var seriesLine = $('<span class="chart-legend-item'+ extraClass +'" tabindex="0"></span>'),
@@ -487,7 +490,7 @@ window.Chart = function(container) {
     })
     .style('fill', function(d, i) {
       return isStacked ?
-        (charts.chartColor(d.index, (series.length === 1 ? 'bar-single' : 'bar'), dataset[0][i])) :
+        (charts.chartColor(d.index, (series.length === 1 ? 'bar-single' : 'bar'), series[d.index])) :
         (charts.chartColor(i, 'bar', dataset[d.index][i]));
     })
     .attr('mask', function (d, i) {
@@ -1481,12 +1484,13 @@ window.Chart = function(container) {
       dataset = chartData,
       self = this,
       parent = $(container).parent(),
+      isPositiveNegative = (charts.settings.type === 'column-positive-negative'),
       isSingular = (dataset.length === 1),
       margin = {top: 40, right: 40, bottom: (isSingular && chartData[0].name === undefined ? (isStacked ? 20 : 50) : 35), left: 45},
       legendHeight = 40,
       width = parent.width() - margin.left - margin.right - 10,
-      height = parent.height() - margin.top - margin.bottom - (isSingular && chartData[0].name === undefined ? (isStacked ? legendHeight : 0) : legendHeight),
-      yMin, yMax;
+      height = parent.height() - margin.top - margin.bottom - (isSingular && chartData[0].name === undefined ? (isStacked || isPositiveNegative ? legendHeight : 0) : legendHeight),
+      yMin, yMax, yMinTarget, yMaxTarget, pnColors, pnLegends, pnSeries;
 
     yMin = d3.min(dataset, function (group) {
       return d3.min(group.data, function (d) {
@@ -1499,6 +1503,40 @@ window.Chart = function(container) {
           return d.value;
       });
     });
+
+    if (isPositiveNegative) {
+      yMinTarget = d3.min(dataset, function (group) {
+        return d3.min(group.data, function (d) {
+            return d.target;
+        });
+      });
+
+      yMaxTarget = d3.max(dataset, function (group) {
+        return d3.max(group.data, function (d) {
+            return d.target;
+        });
+      });
+
+      yMin = d3.min([yMin, yMinTarget]);
+      yMax = d3.max([yMax, yMaxTarget]);
+
+      pnLegends = {target: 'Target', positive: 'Positive', negative: 'Negative'};
+      pnColors = {target: 'neutral', positive: 'good', negative: 'error'};
+
+      if (dataset[0]) {
+        if (dataset[0].colors) {
+          $.extend(true, pnColors, dataset[0].colors);
+        }
+        if (dataset[0].legends) {
+          $.extend(true, pnLegends, dataset[0].legends);
+        }
+      }
+      //Converting object into array
+      pnSeries = [];
+      $.each(pnLegends, function(key, val) {
+        pnSeries.push({name: val, color: pnColors[key], option: key});
+      });
+    }
 
     $(container).addClass('column-chart');
 
@@ -1574,7 +1612,7 @@ window.Chart = function(container) {
         .scale(y)
         .tickSize(-width)
         .tickPadding(12)
-        .tickFormat(d3.format(charts.format ? charts.format : 's'))
+        .tickFormat(d3.format(charts.format || 's'))
         .orient('left');
 
     var svg = d3.select(container)
@@ -1591,7 +1629,9 @@ window.Chart = function(container) {
 
     //Get the Maxes of each series
     var maxesStacked, maxes = dataset.map(function (d) {
-      return d3.max(d.data, function(d){ return d.value;});
+      return d3.max(d.data, function(d){
+        return isPositiveNegative ? d.target : d.value;
+      });
     });
 
     if (isStacked) {
@@ -1604,6 +1644,12 @@ window.Chart = function(container) {
       names = dataset[0].data.map(function (d) {
         return d.name;
       });
+    }
+
+    // Extra ticks
+    if (isPositiveNegative) {
+      yMin += yMin / y.ticks().length;
+      maxes[0] += maxes[0] / y.ticks().length;
     }
 
     x0.domain(isStacked ? xAxisValues : names);
@@ -1634,36 +1680,103 @@ window.Chart = function(container) {
       });
     }
 
-    var barMaxWidth = 35, bars;
+    var bars, targetBars, pnBars,
+      barMaxWidth = 35,
+      color = function(colorStr) {
+        return charts.chartColor(0, '', {'color': colorStr});
+      },
+      onEndAllTransition = function (transition, callback) {
+        var n;
+        if (transition.empty()) {
+          callback();
+        }
+        else {
+          n = transition.size();
+          transition.each('end', function() {
+            n--;
+            if (n === 0) {
+              callback();
+            }
+          });
+        }
+      };
 
-    // Add the bars - done different depending on if grouped or singlular
-    if (isSingular) {
-      bars = svg.selectAll('rect')
-        .data(isStacked ? datasetStacked : dataArray)
-        .enter()
-        .append('rect')
-        .attr('class', function(d, i) {
-          return 'series-'+ i +' bar';
-        })
-        .attr('width', Math.min.apply(null, [x1.rangeBand()-2, barMaxWidth]))
-        .attr('x', function(d) {
-          return isStacked ? xScale(0) : (x1(d.name) + (x1.rangeBand() - barMaxWidth)/2);
-        })
-        .attr('y', function() {
-          return y(0) > height ? height : y(0);
-        })
-        .attr('height', function() {
-          return 0;
-        })
-        .style('fill', function(d, i) {
-          return charts.chartColor(i, 'bar', chartData[0].data[i]);
-        });
+    function drawBars(isTargetBars) {
+      var bars;
+      isTargetBars = isPositiveNegative && isTargetBars;
+
+      // Add the bars - done different depending on if grouped or singlular
+      if (isSingular || isPositiveNegative) {
+        bars = svg.selectAll('rect' + (isTargetBars ? '.target-bar' : '.bar'))
+          .data(isStacked ? datasetStacked : dataArray)
+          .enter()
+          .append('rect')
+          .attr('class', function(d, i) {
+            var classStr = 'bar series-'+ i;
+
+            if (isPositiveNegative) {
+              classStr = (isTargetBars ? ('target-bar series-'+ i) : classStr) +
+                (d.value > 0 ? ' positive' : ' negative');
+            }
+            return classStr;
+          })
+          .attr('width', Math.min.apply(null, [x1.rangeBand()-2, barMaxWidth]))
+          .attr('x', function(d) {
+            return isStacked ? xScale(0) : (x1(d.name) + (x1.rangeBand() - barMaxWidth)/2);
+          })
+          .attr('y', function() {
+            return y(0) > height ? height : y(0);
+          })
+          .attr('height', function() {
+            return 0;
+          })
+          // .style('stroke', function(d) {
+          //   return (isPositiveNegative && !isTargetBars && d.value < 0) ? color(pnColors.negative) : '';
+          // })
+          .style('fill', function(d, i) {
+            return isTargetBars ? color(pnColors.target) :
+              (isPositiveNegative ? (d.value < 0 ? color(pnColors.negative) : color(pnColors.positive)) :
+                charts.chartColor(i, 'bar', chartData[0].data[i]));
+          });
+
+        if (isPositiveNegative) {
+          var yTextPadding = 12;
+          svg.selectAll(isTargetBars ? '.target-bartext' : '.bartext')
+            .data(dataArray)
+            .enter()
+            .append('text')
+            .attr('class', function(d) {
+              return (isTargetBars ? 'target-bartext' : 'bartext') +
+                (d.value > 0 ? ' positive' : ' negative');
+            })
+            .attr('text-anchor', 'middle')
+            .attr('x', function(d) {
+              return x1(d.name) + (x1.rangeBand())/2;
+            })
+            .attr('y', function(d) {
+              return isTargetBars ?
+                (y(d.target) - (yTextPadding/2)) : (y(d.value > 0 ? 0 : d.value) + yTextPadding);
+            })
+            .style('opacity', 0)
+            .style('fill', function(d) {
+              return isTargetBars ? '' /* color(pnColors.target) */ :
+                (d.value < 0 ? color(pnColors.negative) : color(pnColors.positive));
+            })
+            .style('font-weight', 'bold')
+            .text(function(d) {
+              return format(isTargetBars ? d.target : d.value);
+            });
+        }
 
         bars.transition().duration(1000)
+          .call(onEndAllTransition, function () {
+            svg.selectAll('.target-bartext, .bartext')
+              .transition().duration(300).style('opacity', 1);
+          })
           .attr('y', function(d) {
             var r = isStacked ? (height - yScale(d[0].y) - yScale(d[0].y0)) :
             (d.value < 0 ? y(0) : y(d.value));
-            return d.value < 0 ? r : (r > (height-3) ? height-2 : r);
+            return (isTargetBars ? y(d.target) : (d.value < 0 ? r : (r > (height-3) ? height-2 : r)));
           })
           .attr('height', function(d) {
             var r;
@@ -1678,11 +1791,11 @@ window.Chart = function(container) {
                 r = (height-y(d.value)) - (height-y(0));
               }
             }
-            return d.value < 0 ? r : (r < 3 ? 2 : (r > height ? (height-y(d.value)) : r));
+            r = d.value < 0 ? r : (r < 3 ? 2 : (r > height ? (height-y(d.value)) : r));
+            return isTargetBars ? (height-y(d.target)) - (height-y(0)) : r;
           });
-    } else {
-
-      var xValues = svg.selectAll('.x-value')
+      } else {
+        var xValues = svg.selectAll('.x-value')
           .data(isStacked ? datasetStacked : dataArray)
           .enter()
           .append('g')
@@ -1691,7 +1804,7 @@ window.Chart = function(container) {
             return i;
           })
           .style('fill', function(d, i) {
-            return charts.chartColor(i, (isSingular ? 'column-single' : 'bar'), (isStacked ? datasetStacked[i] : dataArray[i]));
+            return charts.chartColor(i, (isSingular ? 'column-single' : 'bar'), (isStacked ? dataset[i] : dataArray[i]));
           })
           .attr('transform', function(d) {
             return 'translate(' + x0(isStacked ? xAxisValues[0] : d.name) + ',0)';
@@ -1712,7 +1825,8 @@ window.Chart = function(container) {
             .attr('y', function() {return y(0) > height ? height : y(0);})
             .attr('height', function() {return 0;});
 
-        bars.transition().duration(1000)
+        bars
+          .transition().duration(1000)
           .attr('y', function(d) {
             var r = isStacked ? (height-yScale(d.y)-yScale(d.y0)) : (d.value < 0 ? y(0) : y(d.value));
             return d.value < 0 ? r : (r > (height-3) ? height-2 : r);
@@ -1733,29 +1847,47 @@ window.Chart = function(container) {
            return d.value < 0 ? r : (r < 3 ? 2 : (r > height ? (height-y(d.value)) : r));
           });
       }
+      return bars;
+    }
 
+
+    if (isPositiveNegative) {
+      targetBars = drawBars(true); //Draw target bars
+    }
+    bars = drawBars();
+
+    if (isPositiveNegative) {
+      pnBars = d3.selectAll('.empty-bars');
+      charts.mergeArrays(pnBars[0], targetBars[0], bars[0]);
+    }
+
+    if (!isPositiveNegative) {
       //Style the bars and add interactivity
       if (!isStacked) {
-        bars.style('fill', function(d, i) {
-          return charts.chartColor(i, (isSingular ? 'column-single' : 'bar'), chartData[0].data[i]);
-        }).attr('mask', function (d, i) {
-          return (chartData[0].data[i].pattern ? 'url(#' + chartData[0].data[i].pattern + ')' : '');
-        });
+        bars
+          .style('fill', function(d, i) {
+            return charts.chartColor(i, (isSingular ? 'column-single' : 'bar'), chartData[0].data[i]);
+          })
+          .attr('mask', function (d, i) {
+            return (chartData[0].data[i].pattern ? 'url(#' + chartData[0].data[i].pattern + ')' : '');
+          });
       }
+    }
 
-      var isSingle = isSingular || !isSingular && isStacked,
-        isGrouped = !isSingle;
+    var isSingle = isSingular || !isSingular && isStacked,
+      isGrouped = !isSingle;
 
-      $.extend(charts.settings, {
-        svg: svg,
-        chartType: 'Column',
-        isSingle: isSingle,
-        isGrouped: isGrouped,
-        isStacked: isStacked,
-        isSingular: isSingular
-      });
+    $.extend(charts.settings, {
+      svg: svg,
+      chartType: 'Column',
+      isSingle: isSingle,
+      isGrouped: isGrouped,
+      isStacked: isStacked,
+      isSingular: isSingular
+    });
 
-      bars.on('mouseenter', function(d, i) {
+    (isPositiveNegative ? pnBars : bars)
+      .on('mouseenter', function(d, i) {
         var x, y, j, l, size, isTooltipBottom,
           maxBarsForTopTooltip = 6,
           thisShape = this,
@@ -1794,12 +1926,15 @@ window.Chart = function(container) {
           if (isSingular) {
             content = '<p><b>'+ format(d[0].value) +'</b> '+ d[0].name +'</p>';
           } else {
-            content = '<div class="chart-swatch">';
-            content += '<div class="swatch-caption"><b>'+ datasetStacked[0][i].name +'</b></div>';
+            content = ''+
+              '<div class="chart-swatch">'+
+                '<div class="swatch-caption"><b>'+ datasetStacked[0][i].name +'</b></div>';
             for (j=datasetStacked.length-1,l=0; j>=l; j--) {
-              content += '<div class="swatch-row">';
-              content += '<div style="background-color:'+(isSingular ? '#368AC0' : charts.colors(j))+';"></div>';
-              content += '<span>'+ datasetStacked[j][i].parentName +'</span><b>'+ format(datasetStacked[j][i].value) +'</b></div>';
+              content += ''+
+                '<div class="swatch-row">'+
+                  '<div style="background-color:'+(isSingular ? '#368AC0' : charts.colors(j))+';"></div>'+
+                  '<span>'+ datasetStacked[j][i].parentName +'</span><b>'+ format(datasetStacked[j][i].value) +'</b>'+
+                '</div>';
             }
             content += '</div>';
           }
@@ -1810,20 +1945,38 @@ window.Chart = function(container) {
 
         // No Stacked
         else {
-          if (dataset.length === 1) {
+          if (isPositiveNegative) {
+            content = ''+
+              '<div class="chart-swatch">'+
+                '<div class="swatch-caption"><b>'+ d.name +'</b></div>'+
+                '<div class="swatch-row">'+
+                  '<div style="background-color:'+ color(pnColors.target) +';"></div>'+
+                  '<span>'+ pnLegends.target +'</span><b>'+ format(d.target) +'</b>'+
+                '</div>'+
+                '<div class="swatch-row">'+
+                  '<div style="background-color:'+ color(pnColors[d.value < 0 ? 'negative' : 'positive']) +';"></div>'+
+                  '<span>'+ pnLegends[d.value < 0 ? 'negative' : 'positive'] +'</span><b>'+ format(d.value) +'</b>'+
+                '</div>'+
+              '</div>';
+          }
+          else if (dataset.length === 1) {
             content = '<p><b>'+ format(d.value) + '</b> '+ d.name +'</p>';
-          } else {
-            content = '<div class="chart-swatch">';
+          }
+          else {
             var data = d3.select(this.parentNode).datum().values;
 
+            content = '<div class="chart-swatch">';
             for (j=0,l=data.length; j<l; j++) {
-              content += '<div class="swatch-row">';
-              content += '<div style="background-color:'+(isSingular ? '#368AC0' : charts.colors(j))+';"></div>';
-              content += '<span>'+ data[j].name +'</span><b>'+ format(data[j].value) +'</b></div>';
+              content += ''+
+                '<div class="swatch-row">'+
+                  '<div style="background-color:'+(isSingular ? '#368AC0' : charts.colors(j))+';"></div>'+
+                  '<span>'+ data[j].name +'</span><b>'+ format(data[j].value) +'</b>'+
+                '</div>';
             }
             content += '</div>';
             isTooltipBottom = data.length > maxBarsForTopTooltip;
           }
+
           size = charts.getTooltipSize(content);
           x = shape[0].getBoundingClientRect().left - (size.width /2) + (shape.attr('width')/2);
           y = ePageY-charts.tooltip.outerHeight() - 25;
@@ -1868,6 +2021,13 @@ window.Chart = function(container) {
 
       // Click
       .on('click', function (d, i) {
+        var selector, isTargetBar = this && d3.select(this).classed('target-bar');
+        if (isTargetBar) {
+          selector = svg.select('.bar.series-'+ i);
+          selector.on('click').call(selector.node(), selector.datum(), i);
+          return;
+        }
+
         var isSelected = this && d3.select(this).classed('is-selected'),
           thisGroupId = parseInt(d3.select(this.parentNode).attr('data-group-id'), 10);
 
@@ -1893,23 +2053,28 @@ window.Chart = function(container) {
       });
 
     //Add Legend
-    var seriesStacked, series = xAxisValues.map(function (d) {
-      return {name: d};
-    });
+    var seriesStacked,
+      series = xAxisValues.map(function (d, i) {
+        return {name: d, color: dataset[0].data[i].color};
+      });
 
     if (isSingular && chartData[0].name) {
       charts.addLegend([{name: chartData[0].name}]);
     }
 
     if (isStacked && !isSingular) {
-      seriesStacked = names.map(function (d) {
-        return {name: d};
+      seriesStacked = names.map(function (d, i) {
+        return {name: d, color: dataset[i].color};
       });
     }
 
-    if (isStacked && isSingular) {
+    if (isPositiveNegative) {
+      charts.addLegend(pnSeries);
+    }
+    else if (isStacked && isSingular) {
       charts.addLegend(series);
-    } else if (!isSingular) {
+    }
+    else if (!isSingular) {
       charts.addLegend(isStacked ? seriesStacked : series);
     }
 
@@ -1990,6 +2155,18 @@ window.Chart = function(container) {
 
     $(container).trigger('rendered');
     return $(container);
+  };
+
+  // Merge the contents of multiple arrays together into the first array
+  this.mergeArrays = function() {
+    var i, len = arguments.length;
+    if (len > 1) {
+      for (i = 1; i < len; i++) {
+        arguments[i].forEach(function(v) {
+          this.push(v);
+        }, arguments[0]);
+      }
+    }
   };
 
   this.labelsColide = function(svg) {
@@ -2500,7 +2677,6 @@ window.Chart = function(container) {
 
   //Select the element and fire the event, make the inverse selector opace
   this.selectElement = function(elem, inverse, data) {
-    // console.log(elem.node());
     var isSelected = elem.node() && elem.classed('is-selected');
 
     inverse.classed('is-not-selected', false)
@@ -2517,6 +2693,7 @@ window.Chart = function(container) {
   // Make bars to be Selected or Unselected
   this.setSelectedElement = function (o) {
     var s = charts.settings,
+      isPositiveNegative = s.type === 'column-positive-negative',
       isTypeHorizontalBar = s.chartType === 'HorizontalBar',
       isTypeColumn = s.chartType === 'Column',
       isTypePie = s.chartType === 'Pie',
@@ -2529,8 +2706,11 @@ window.Chart = function(container) {
 
       taskSelected = (o.task === 'selected'),
       selector = d3.select(o.selector),
+      isPositive = selector.classed('positive'),
       ticksX = svg.selectAll('.axis.x .tick'),
       ticksY = svg.selectAll('.axis.y .tick'),
+      pnPositiveText = svg.selectAll('.bartext.positive, .target-bartext.positive'),
+      pnNegativeText = svg.selectAll('.bartext.negative, .target-bartext.negative'),
       thisGroup = d3.select(o.selector.parentNode),
       thisGroupId = parseInt((thisGroup.node() ? thisGroup.attr('data-group-id') : 0), 10),
       triggerData = [selector[0], o.d, (isGrouped ? thisGroupId : o.i)],
@@ -2538,16 +2718,30 @@ window.Chart = function(container) {
 
     ticksX.style('font-weight', 'normal');
     ticksY.style('font-weight', 'normal');
+    pnPositiveText.style('font-weight', 'normal');
+    pnNegativeText.style('font-weight', 'normal');
     svg.selectAll('.is-selected').classed('is-selected', false);
 
     // Task make selected
     if (taskSelected) {
-      svg.selectAll('.bar').style('opacity', 0.6);
+      svg.selectAll('.bar, .target-bar').style('opacity', 0.6);
 
       // By legends only
       if (s.isByLegends) {
+        if (isPositiveNegative) {
+          s.svg.selectAll(isPositive ?
+            '.bar.positive, .target-bar.positive': '.bar.negative, .target-bar.negative')
+              .classed('is-selected', true).style('opacity', 1);
+
+          (isPositive ? pnPositiveText : pnNegativeText).style('font-weight', 'bolder');
+
+          svg.selectAll('.bar.is-selected').each(function(d, i) {
+            selectedBars.push([d3.select(this)[0], d, i]);
+          });
+          triggerData.push(selectedBars);
+        }
         // Grouped and stacked only -NOT singular-
-        if (isTypeColumn || isTypeHorizontalBar) {
+        else if (isTypeColumn || isTypeHorizontalBar) {
           if (isGrouped || isSingular) {
             s.svg.selectAll('.series-'+ o.i).classed('is-selected', true).style('opacity', 1);
           }
@@ -2573,10 +2767,15 @@ window.Chart = function(container) {
           .style('font-weight', 'bolder');
 
         selector.classed('is-selected', true).style('opacity', 1);
+        svg.select('.target-bar.series-'+ o.i).style('opacity', 1);
+        d3.select(svg.selectAll('.bartext')[0][o.i]).style('font-weight', 'bolder');
+        d3.select(svg.selectAll('.target-bartext')[0][o.i]).style('font-weight', 'bolder');
 
-        if (isGrouped) {
-          thisGroup.classed('is-selected', true)
-            .selectAll('.bar').classed('is-selected', true).style('opacity', 1);
+        if (isGrouped || isPositiveNegative) {
+          if (!isPositiveNegative) {
+            thisGroup.classed('is-selected', true)
+              .selectAll('.bar').classed('is-selected', true).style('opacity', 1);
+          }
 
           svg.selectAll('.bar.is-selected').each(function(d, i) {
             selectedBars.push([d3.select(this)[0], d, i]);
@@ -2609,7 +2808,9 @@ window.Chart = function(container) {
     }
     // Task make unselected
     else {
-      svg.selectAll('.bar').style('opacity', 1);
+      svg.selectAll('.bar, .target-bar').style('opacity', 1);
+      pnPositiveText.style('font-weight', 'bolder');
+      pnNegativeText.style('font-weight', 'bolder');
 
       if(isTypePie) {
         selector.classed('is-selected', false)
@@ -2663,7 +2864,7 @@ window.Chart = function(container) {
     if (options.type === 'column-stacked') {
       this.Column(options.dataset, true);
     }
-    if (options.type === 'column' || options.type === 'column-grouped') {
+    if (['column', 'column-grouped', 'column-positive-negative'].indexOf(options.type) > -1) {
       this.Column(options.dataset);
     }
     if (options.type === 'donut') {
