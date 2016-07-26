@@ -29,8 +29,6 @@
           source: ['bold','italic','underline', 'separator', 'anchor', 'separator', 'quote', 'separator', 'visual']
         },
         delay: 200,
-        diffLeft: 0,
-        diffTop: -10,
         firstHeader: 'h3',
         secondHeader: 'h4',
         placeholder: null,

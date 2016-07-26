@@ -31,15 +31,13 @@ window.Formatters = {
        return '';
     }
 
-    if (typeof Locale !== undefined) {
-       formatted = Locale.formatDate(value, (typeof col.dateFormat === 'string' ? {pattern: col.dateFormat}: col.dateFormat));
-    }
-
     if (typeof value === 'string') {
       var value2 = Locale.parseDate(value, (typeof col.dateFormat === 'string' ? {pattern: col.dateFormat}: col.dateFormat));
       if (value2) {
         formatted = Locale.formatDate(value2, (typeof col.dateFormat === 'string' ? {pattern: col.dateFormat}: col.dateFormat));
       }
+    } else {
+      formatted = Locale.formatDate(value, (typeof col.dateFormat === 'string' ? {pattern: col.dateFormat}: col.dateFormat));
     }
 
     if (!col.editor) {
@@ -1224,6 +1222,8 @@ $.fn.datagrid = function(options) {
         return;
       }
 
+      this.headerRow.find('.datagrid-filter-wrapper').remove();
+
     //Loop the columns looking at the filter types and generate the markup for the various Types
     //Supported Filter Types: text, integer, date, select, decimal, lookup, percent, checkbox, contents
       for (var j = 0; j < this.settings.columns.length; j++) {
@@ -1322,6 +1322,22 @@ $.fn.datagrid = function(options) {
       return btnMarkup ;
     },
 
+    toggleFilterRow: function () {
+
+      if (this.settings.filterable) {
+        this.headerRow.removeClass('is-filterable');
+        this.headerRow.find('.is-filterable').removeClass('is-filterable');
+        this.headerRow.find('.datagrid-filter-wrapper').hide();
+        this.settings.filterable = false;
+      } else {
+        this.settings.filterable = true;
+        this.headerRow.addClass('is-filterable');
+        this.headerRow.find('.is-filterable').addClass('is-filterable');
+        this.headerRow.find('.datagrid-filter-wrapper').show();
+      }
+
+    },
+
     //Except conditions from outside or pull from filter row
     applyFilter: function (conditions) {
 
@@ -1385,9 +1401,15 @@ $.fn.datagrid = function(options) {
       for (var i = 0; i < this.settings.dataset.length; i++) {
         var isFiltered = !checkRow(this.settings.dataset[i]);
         this.settings.dataset[i].isFiltered = isFiltered;
-    }
+      }
 
       this.renderRows();
+    },
+
+    //Clear and reset the filter
+    clearFilter: function () {
+      this.renderFilterRow();
+      this.applyFilter();
     },
 
     //Get filter conditions in array form from the UI
@@ -2637,8 +2659,20 @@ $.fn.datagrid = function(options) {
         if (action === 'personalize-columns') {
           self.personalizeColumns();
         }
+
         if (action === 'export-to-excel') {
           self.exportToExcel();
+        }
+
+        //Filter actions
+        if (action === 'show-filter-row') {
+          self.toggleFilterRow();
+        }
+        if (action === 'run-filter') {
+          self.applyFilter();
+        }
+        if (action === 'clear-filter') {
+          self.clearFilter();
         }
       });
 
