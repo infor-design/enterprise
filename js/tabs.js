@@ -161,12 +161,13 @@
            .parent().attr('role', 'presentation').addClass('tab');
 
           if (a.parent().hasClass('dismissible') && !a.parent().children('.icon').length) {
-            $('<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-close"></svg>').insertAfter(a);
+            $('<svg class="icon close" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-close"></svg>').insertAfter(a);
           }
 
           // Find and configure dropdown tabs
           var dd = a.nextAll('ul').first();
           if (dd.length > 0) {
+            dd.addClass('dropdown-tab');
             var li = a.parent();
 
             li.addClass('has-popupmenu').popupmenu({
@@ -217,7 +218,8 @@
           // NOTE: dropdown tabs shouldn't have children, so they aren't accounted for here
           if (popup) {
             popup.menu.children('li').each(function() {
-              var a = $(this).children('a'),
+              var li = $(this),
+                a = li.children('a'),
                 href = a.attr('href'),
                 panel = $(href);
 
@@ -226,6 +228,26 @@
 
               self.panels = self.panels.add(panel);
               self.anchors = self.anchors.add(a);
+
+              if (!li.hasClass('dismissible')) {
+                return;
+              }
+
+              var icon = li.children('.icon');
+              if (!icon.length) {
+                icon = $('<svg class="icon close" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-close"></svg>');
+              }
+              icon.detach().appendTo(a);
+
+            }).on('click.popupmenu', '.icon', function iconClickHandler(e) {
+              var icon = $(this),
+                li = icon.closest('li');
+
+              if (li.is('.dismissible') && icon.is('.icon')) {
+                e.preventDefault();
+                e.stopPropagation();
+                self.closeDismissibleTab(li.children('a').attr('href'));
+              }
             });
           }
         }
@@ -314,10 +336,12 @@
             return;
           }
 
-          if (elem.parent().hasClass('dismissible')) {
+          var li = $(elem).parent();
+
+          if (li.hasClass('dismissible')) {
             e.preventDefault();
             e.stopPropagation();
-            self.closeDismissibleTab($(this).prev().attr('href'));
+            self.closeDismissibleTab(li.children('a'));
           }
         }
 
@@ -369,7 +393,7 @@
               return;
             }
 
-            self.closeDismissibleTab(a);
+            self.closeDismissibleTab(a.attr('href'));
             return;
           }
 
@@ -931,12 +955,21 @@
         return this.element.closest('.tab-panel').length;
       },
 
+      isActive: function(href) {
+        var panel = this.getPanel(href);
+        return panel.css('display') === 'none';
+      },
+
       isNestedInLayoutTabs: function() {
         var nestedInModuleTabs = this.element.closest('.module-tabs').length,
           nestedInHeaderTabs = this.element.closest('.header-tabs').length,
           hasTabContainerClass = this.element.closest('.tab-panel-container').length;
 
         return (nestedInModuleTabs > 0 || nestedInHeaderTabs > 0 || hasTabContainerClass > 0);
+      },
+
+      isTab: function(obj) {
+        return obj instanceof jQuery && obj.length && obj.is('li.tab');
       },
 
       isAnchor: function(obj) {
@@ -955,8 +988,16 @@
       },
 
       getPanel: function(href) {
+        if (this.isTab(href)) {
+          href = href.children('a');
+        }
+
         if (this.isAnchor(href)) {
           href = href.attr('href');
+        }
+
+        if (!href || href === '' || href === '#') {
+          return $();
         }
 
         return this.panels.filter('[id="' + href.replace(/#/g, '') + '"]');
@@ -975,7 +1016,7 @@
 
       // Takes a tab ID and returns a jquery object containing the previous available tab
       getPreviousTab: function(tabId) {
-        var tab = this.getAnchor(tabId).parent(),
+        var tab = this.getTab(null, tabId),
           filter = 'li:not(.separator):not(:hidden):not(.is-disabled)',
           tabs = this.tablist.find(filter),
           target = tabs.eq(tabs.index(tab) - 1);
@@ -984,13 +1025,22 @@
           target = tabs.eq(tabs.index(target) - 1);
         }
 
+        // Top-level Dropdown Tabs don't have an actual panel associated with them.
+        // Get a Dropdown Tab's first child as the target.
+        if (target.is('.has-popupmenu')) {
+          var menuAPI = target.data('popupmenu');
+          if (menuAPI) {
+            target = menuAPI.menu.children('li').first();
+          }
+        }
+
         return target;
       },
 
       // Takes a tab ID and returns a jquery object containing the previous available tab
       // If an optional target Tab (li) is provided, use this to perform activation events
       activatePreviousTab: function(tabId, target) {
-        var tab = this.getAnchor(tabId).parent();
+        var tab = this.getTab(null, tabId);
 
         if (!target || !(target instanceof jQuery)) {
           target = this.getPreviousTab(tabId);
@@ -1189,7 +1239,7 @@
 
         if (options.isDismissible) {
           tabHeaderMarkup.addClass('dismissible');
-          tabHeaderMarkup.append('<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-close"></svg>');
+          tabHeaderMarkup.append('<svg class="icon close" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-close"></svg>');
         }
 
         if (this.settings.tabCounts) {
@@ -1281,13 +1331,16 @@
       // NOTE: Does not take advantage of _activatePreviousTab()_ due to specific needs of selecting certain
       // Tabs/Anchors at certain times.
       remove: function(tabId) {
-        var targetAnchor = this.getAnchor(tabId);
-        if (!targetAnchor) {
-          return this;
+        var self = this,
+          targetLi = this.doGetTab(null, tabId);
+
+        if (!targetLi || !targetLi.length) {
+          return;
         }
 
-        var targetLi = targetAnchor.parent(),
+        var targetAnchor = targetLi.children('a'),
           targetPanel = this.getPanel(tabId),
+          hasTargetPanel = (targetPanel && targetPanel.length),
           targetLiIndex = this.tablist.children('li').index(targetLi),
           notATab = '.separator, .is-disabled, :hidden',
           prevLi = targetLi.prev();
@@ -1305,8 +1358,29 @@
         }
 
         // Remove these from the collections
-        this.panels = this.panels.not(targetPanel);
+        if (hasTargetPanel) {
+          this.panels = this.panels.not(targetPanel);
+        }
         this.anchors = this.anchors.not(targetAnchor);
+
+        // Close Dropdown Tabs in a clean fashion
+        var popupAPI = targetLi.data('popupmenu');
+        if (targetLi.hasClass('has-popupmenu')) {
+          if (popupAPI) {
+            popupAPI.menu.children('li').each(function() {
+              self.remove($(this).children('a').attr('href'));
+            });
+            popupAPI.destroy();
+          }
+        }
+
+        // If this tab is inside of a Dropdown Tab's menu, detect if it was the last one
+        // remaining, and if so, close the entire Dropdown Tab.
+        // The actual check on these elements needs to be done AFTER the targetLi is removed
+        // from a Dropdown Tab, to accurately check the number of list items remaining.
+        // See: _isLastDropdownTabItem()_
+        var parentMenu = targetLi.closest('.dropdown-tab'),
+          trigger = parentMenu.data('trigger');
 
         // Kill associated events
         targetLi.off('click.tabs');
@@ -1314,12 +1388,22 @@
 
         // Remove Markup
         targetLi.remove();
-        targetPanel.remove();
+        if (hasTargetPanel) {
+          targetPanel.remove();
+        }
 
         var menuItem = targetAnchor.data('moremenu-link');
         if (menuItem) {
           menuItem.parent().off().remove();
           $.removeData(targetAnchor[0], 'moremenu-link');
+        }
+
+        function isLastDropdownTabItem(menu) {
+          return menu.children('li:not(.separator)').length === 0;
+        }
+        if (isLastDropdownTabItem(parentMenu)) {
+          prevLi = this.getPreviousTab(trigger);
+          this.remove(trigger);
         }
 
         // Adjust tablist height
@@ -1366,23 +1450,96 @@
         return this;
       },
 
-      getTabFromId: function(tabId) {
-        if (!tabId) {
-          return;
-        }
-        var anchor = this.anchors.filter('[href="#' + tabId + '"]');
-        if (!anchor.length) {
-          return;
+      checkPopupMenuItems: function(tab) {
+        function getRemainingMenuItems(popupAPI) {
+          if (!popupAPI || !popupAPI.menu) {
+            return $();
+          }
+          var menu = popupAPI.menu,
+            items = menu.children('li');
+
+          if (!items.length) {
+            popupAPI.destroy();
+            return $();
+          }
+          return items;
         }
 
-        return anchor.parent();
+        if (tab.is('.has-popupmenu')) {
+          return getRemainingMenuItems(tab.data('popupmenu'));
+        }
+
+        var ddTab = tab.closest('.dropdown-tab');
+        if (!ddTab.length) {
+          return $();
+        }
+        return getRemainingMenuItems(ddTab.data('popupmenu'));
+      },
+
+      getTab: function(e, tabId) {
+        var self = this,
+          tab = $();
+
+        function getTabFromEvent(ev) {
+          var t = $(ev.currentTarget);
+          if (t.is('.tab')) {
+            return t;
+          }
+          if (t.closest('.tab').length) {
+            return t.closest('.tab').first();
+          }
+          return null;
+        }
+
+        function getTabFromId(id) {
+          if (!id || id === '' || id === '#') {
+            return null;
+          }
+
+          if (id.indexOf('#') === -1) {
+            id = '#' + id;
+          }
+
+          var anchor = self.anchors.filter('[href="' + id + '"]');
+          if (!anchor.length) {
+            return null;
+          }
+
+          return anchor.parent();
+        }
+
+        // TabId can also be a jQuery object containing a tab.
+        if (tabId instanceof $ && tabId.length > 0) {
+          if (tabId.is('a')) {
+            return tabId.parent();
+          }
+          return tabId;
+        }
+
+        return e ? getTabFromEvent(e) : tabId ? getTabFromId(tabId) : tab;
+      },
+
+      doGetTab: function(e, tabId) {
+        if (!e && !tabId) { return $(); }
+        if (e && !(e instanceof $.Event) && typeof e !== 'string') {
+          return $();
+        }
+
+        if (e) {
+          if (typeof e !== 'string') { // jQuery Event
+            return this.getTab(e);
+          }
+          return this.getTab(null, e); // String containing a selector
+        }
+
+        // Straight to the TabID
+        return this.getTab(null, tabId);
       },
 
       // Hides a tab
-      hide: function(tabId) {
-        if (!tabId) { return this; }
+      hide: function(e, tabId) {
+        var tab = this.doGetTab(e, tabId);
 
-        var tab = this.getTabFromId(tabId);
         if (tab.is('.is-selected')) {
           this.activatePreviousTab(tabId);
         }
@@ -1393,10 +1550,9 @@
       },
 
       // Shows a tab
-      show: function(tabId) {
-        if (!tabId) { return this; }
+      show: function(e, tabId) {
+        var tab = this.doGetTab(e, tabId);
 
-        var tab = this.getTabFromId(tabId);
         tab.removeClass('hidden');
         this.focusBar();
         this.positionFocusState();
@@ -1404,10 +1560,9 @@
       },
 
       // Disables an individual tab
-      disableTab: function(tabId) {
-        if (!tabId) { return this; }
+      disableTab: function(e, tabId) {
+        var tab = this.doGetTab(e, tabId);
 
-        var tab = this.getTabFromId(tabId);
         if (tab.is('.is-selected')) {
           this.activatePreviousTab(tabId);
         }
@@ -1418,10 +1573,9 @@
       },
 
       // Enables an individual tab
-      enableTab: function(tabId) {
-        if (!tabId) { return this; }
+      enableTab: function(e, tabId) {
+        var tab = this.doGetTab(e, tabId);
 
-        var tab = this.getTabFromId(tabId);
         tab.removeClass('is-disabled');
         this.focusBar();
         this.positionFocusState();
@@ -1429,12 +1583,18 @@
       },
 
       // Renames a tab and resets the focusable bar/animation.
-      rename: function(tabId, name) {
-        if (!tabId || !name) {
+      rename: function(e, tabId, name) {
+        // Backwards compatibility with 4.2.0
+        if (e && typeof e === 'string') {
+          name = tabId;
+          tabId = e;
+        }
+
+        if (!name) {
           return;
         }
 
-        var tab = this.getTabFromId(tabId),
+        var tab = this.doGetTab(e, tabId),
           hasCounts = this.settings.tabCounts,
           anchor = tab.children('a'),
           count;
@@ -1456,12 +1616,18 @@
       },
 
       // For tabs with counts, updates the count and resets the focusable bar/animation
-      updateCount: function(tabId, count) {
-        if (!this.settings.tabCounts || !tabId || !count) {
+      updateCount: function(e, tabId, count) {
+        // Backwards compatibility with 4.2.0
+        if (e && typeof e === 'string') {
+          count = tabId;
+          tabId = e;
+        }
+
+        if (!this.settings.tabCounts || !count) {
           return;
         }
 
-        var tab = this.getTabFromId(tabId);
+        var tab = this.doGetTab(e, tabId);
 
         tab.children('a').find('.count').text(count.toString() + ' ');
 
@@ -1671,7 +1837,7 @@
         // Reset it if it does exist.
         var menuHtml = $('#tab-container-popupmenu');
         if (menuHtml.length === 0) {
-          menuHtml = $('<ul>').attr('id', 'tab-container-popupmenu').appendTo('body');
+          menuHtml = $('<ul class="tab-list-spillover">').attr('id', 'tab-container-popupmenu').appendTo('body');
         } else {
           menuHtml.html('');
         }
@@ -1688,7 +1854,7 @@
             }
             if ($(item).is(':not(.separator)')) {
               popupLi = $(item).clone().removeClass('tab is-selected').removeAttr('style');
-              popupLi.find('.icon').remove(); // NOTE: Remove this to show the close icon in overflow menu
+              popupLi.find('.icon').detach().appendTo(popupLi.children('a')).off();
               popupLi
                 .appendTo(menuHtml);
 
@@ -1697,6 +1863,8 @@
               popupLi.children('a')
                 .data('original-tab', $(item).children('a'))
                 .removeAttr('onclick');
+
+              $(item).data('moremenu-link', popupLi.children('a'));
             }
             if ($(item).is('.has-popupmenu')) {
               var submenu = $('#' + $(item).attr('aria-controls')),
@@ -1744,7 +1912,7 @@
         function selectMenuOption(e, anchor) {
           var href = anchor.attr('href'),
             id = href.substr(1, href.length),
-            tab = self.getTabFromId(id) || $(),
+            tab = self.doGetTab(id) || $(),
             a = tab ? tab.children('a') : $(),
             originalTab = anchor.data('original-tab').parent();
 
@@ -1780,7 +1948,23 @@
           $('#tab-container-popupmenu').remove();
         }
 
-        menu.on('destroy.popupmenu', handleDestroy);
+        function handleDismissibleIconClick(e) {
+          var icon = $(this),
+            li = icon.closest('li');
+
+          if (!li.is('.dismissible') || !icon.is('.close')) {
+            return;
+          }
+
+          e.preventDefault();
+          e.stopPropagation();
+          self.closeDismissibleTab(li.children('a').attr('href'));
+          self.popupmenu.close();
+        }
+
+        menu
+          .on('destroy.popupmenu', handleDestroy)
+          .on('click.popupmenu', '.icon', handleDismissibleIconClick);
 
         // If the optional startingIndex is provided, focus the popupmenu on the matching item.
         // Otherwise, focus the first item in the list.
@@ -1833,7 +2017,7 @@
             if (!e.altKey || !currentMenuItem.parent().is('.dismissible')) {
               return;
             }
-            self.popupmenu.close();
+            //self.popupmenu.close();
             self.closeDismissibleTab(currentMenuItem.attr('href'));
             return;
           }
@@ -1926,8 +2110,8 @@
           }
         }
         if (target.is('.dismissible.tab') || target.is('.has-popupmenu.tab')) {
-          paddingRight -= target.is('.has-popupmenu.tab') ? 0 : 20;
-          width += 20;
+          paddingRight -= target.is('.has-popupmenu.tab') ? 0 : 10;
+          width += 10;
         }
 
         var left = Locale.isRTL() ?

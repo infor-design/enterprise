@@ -340,10 +340,8 @@
 
         //Select on Focus
         if (this.settings.mouseFocus) {
-          this.menu.on('mouseenter.popupmenu', 'a', function () {
-            self.highlight($(this));
-          }).on('mouseleave.popupmenu', 'a', function() {
-            $(this).parent().removeClass('is-focused');
+          this.menu.on('mouseenter.popupmenu', 'li', function () {
+            self.highlight($(this).children('a'));
           });
         }
 
