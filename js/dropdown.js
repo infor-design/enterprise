@@ -494,6 +494,7 @@
 
         this.unhighlightOptions();
 
+        //var highlighted = $();
         $.each(this.element[0].options, function () {
           //Filter List
           var opt = $(this),
@@ -509,7 +510,7 @@
           //Find List Item - Starts With
           if (containsTerm) {
             if (!selected) {
-              //self.highlightOption(opt);
+              self.highlightOption(listOpt);
               selected = true;
             }
 
