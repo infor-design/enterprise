@@ -1,0 +1,88 @@
+{{> controls/svg-patterns}}
+
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Positive Negative Column Chart</h2>
+        </div>
+        <div class="widget-content">
+          <div id="positive-negative-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+{{={{{ }}}=}}
+
+<script>
+/*
+** Type: 'column-positive-negative'
+** Required: Value & Target
+** Optional: Legends, Colors & Patterns
+**/
+var dataset = [{
+    data: [{
+        name: 'JAN',
+        value: 4000,
+        target: 28000
+    }, {
+        name: 'FEB',
+        value: 11000,
+        target: 26000
+    }, {
+        name: 'MAR',
+        value: 6000,
+        target: 18000
+    }, {
+        name: 'APR',
+        value: 4000,
+        target: 22000
+    }, {
+        name: 'MAY',
+        value: 2000,
+        target: 29000
+    }, {
+        name: 'JUN',
+        value: 4000,
+        target: 23000
+    }, {
+        name: 'JUL',
+        value: -14000,
+        target: 27000
+    }, {
+        name: 'AUG',
+        value: -6000,
+        target: 17000
+    }, {
+        name: 'SEP',
+        value: -1000,
+        target: 23000
+    }, {
+        name: 'OCT',
+        value: -12000,
+        target: 28000
+    }, {
+        name: 'NOV',
+        value: -7500,
+        target: 17000
+    }, {
+        name: 'DEC',
+        value: -3000,
+        target: 17000
+    }],
+    patterns: {
+      target: 'doublehatch',
+      // positive: 'crosshatch',
+      // negative: 'hatch'
+    }
+  }];
+
+    $('#positive-negative-example').chart({
+      type: 'column-positive-negative',
+      dataset: dataset,
+      formatterString: 's'
+    });
+
+</script>

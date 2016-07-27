@@ -406,9 +406,20 @@ window.Chart = function(container) {
         return d.name;
       });
 
-      legendMap = dataset[0].map(function (d) {
-        return {'name': d.y};
-      });
+      (function() {
+        var i, l, lm;
+        // Loop backwards to catch and override with found first custom info from top
+        for (i = dataset.length-1,l = -1; i > l; i--) {
+          lm = dataset[i].map(function (d) {
+            return d;
+          });
+          $.extend(true, legendMap, lm);
+          // Convert back to array from object
+          legendMap = $.map(legendMap, function(d) {
+            return d;
+          });
+        }
+      })();
 
       gindex = 0;
       totalBarsInGroup = legendMap.length;
@@ -455,9 +466,6 @@ window.Chart = function(container) {
       .attr('class', 'series-group')
       .attr('data-group-id', function (d, i) {
         return i;
-      })
-      .style('fill', function (d, i) {
-        return charts.chartColor(i, (series.length === 1 ? 'bar-single' : 'bar'), series[i]);
       });
 
     isGrouped = (svg.selectAll('.series-group')[0].length > 1 && !isStacked);
@@ -486,16 +494,23 @@ window.Chart = function(container) {
     .enter()
     .append('rect')
     .attr('class', function(d, i) {
-      return 'series-'+ i +' bar';
+      return 'bar series-'+ i;
     })
     .style('fill', function(d, i) {
       return isStacked ?
-        (charts.chartColor(d.index, (series.length === 1 ? 'bar-single' : 'bar'), series[d.index])) :
-        (charts.chartColor(i, 'bar', dataset[d.index][i]));
+        (series.length === 1 ? (charts.chartColor(i, 'bar-single', d)) :
+          (charts.chartColor(d.index, 'bar', series[d.index]))) :
+        (charts.chartColor(i, 'bar', legendMap[i]));
     })
     .attr('mask', function (d, i) {
-      if (dataset.length === 1 && dataset[0][i].pattern){
-        return 'url(#' + dataset[0][i].pattern + ')';
+      if (dataset.length === 1 && dataset[0][i].pattern) {
+        return 'url(#'+ dataset[0][i].pattern +')';
+      }
+      else if (isStacked && series[d.index].pattern) {
+        return 'url(#'+ series[d.index].pattern +')';
+      }
+      else if (!isStacked && legendMap[i].pattern) {
+        return 'url(#'+ legendMap[i].pattern +')';
       }
     })
     .attr('x', function (d) {
@@ -510,13 +525,19 @@ window.Chart = function(container) {
     })
     .attr('width', 0) //Animated in later
     .on('mouseenter', function (d, i) {
-      var j, l,
+      var j, l, hexColor,
         total = 0,
         totals = [],
         content = '',
         data = d3.select(this.parentNode).datum(),
         mid = Math.round(data.length/2),
         shape = d3.select(this),
+        setPattern = function(pattern, hexColor) {
+          return !pattern || !hexColor ? '' :
+            '<svg width="12" height="12">'+
+              '<rect style="fill: '+ hexColor +'" mask="url(#'+ pattern +')" height="12" width="12" />'+
+            '</svg>';
+        },
 
         show = function(xPosS, yPosS, isTooltipBottom) {
           var size = charts.getTooltipSize(content),
@@ -529,7 +550,7 @@ window.Chart = function(container) {
         };
 
        if (dataset.length === 1) {
-          content = '<p><b>' + d.y + ' </b>' + d.x + '</p>';
+          content = '<p><b>'+ d.y +' </b>'+ d.x +'</p>';
         }
         else {
           content = '<div class="chart-swatch">';
@@ -537,11 +558,18 @@ window.Chart = function(container) {
           if(isStacked) {
             for (j=0,l=dataset.length; j<l; j++) {
               total = 0;
+              hexColor = charts.chartColor(j, 'bar', series[j]);
               for (var k=0,kl=dataset.length; k<kl; k++) {
                 total += dataset[k][i].x;
                 totals[k] = dataset[k][i].x;
               }
-              content += '<div class="swatch-row"><div style="background-color:'+charts.colors(j)+';"></div><span>'+ series[j].name +'</span><b> '+ Math.round((totals[j]/total)*100) +'% </b></div>';
+              content += ''+
+                '<div class="swatch-row">'+
+                  '<div style="background-color:'+ (series[j].pattern ? 'transparent' : hexColor) +';">'+
+                    setPattern(series[j].pattern, hexColor)+
+                  '</div>'+
+                  '<span>'+ series[j].name +'</span><b> '+ Math.round((totals[j]/total)*100) +'% </b>'+
+                '</div>';
             }
 
           }
@@ -550,9 +578,14 @@ window.Chart = function(container) {
               shape = d3.select(this.parentNode).select('.series-' + mid);
             }
             for (j=0,l=data.length; j<l; j++) {
-              content += '<div class="swatch-row">';
-              content += '<div style="background-color:'+charts.colors(j)+';"></div>';
-              content += '<span>'+ data[j].name +'</span><b>'+ format(data[j].value) +'</b></div>';
+              hexColor = charts.chartColor(j, 'bar', legendMap[j]);
+              content += ''+
+                '<div class="swatch-row">'+
+                  '<div style="background-color:'+ (legendMap[j].pattern ? 'transparent' : hexColor) +';">'+
+                    setPattern(legendMap[j].pattern, hexColor)+
+                  '</div>'+
+                  '<span>'+ data[j].name +'</span><b>'+ format(data[j].value) +'</b>'+
+                '</div>';
             }
           }
           content += '</div>';
@@ -1490,7 +1523,8 @@ window.Chart = function(container) {
       legendHeight = 40,
       width = parent.width() - margin.left - margin.right - 10,
       height = parent.height() - margin.top - margin.bottom - (isSingular && chartData[0].name === undefined ? (isStacked || isPositiveNegative ? legendHeight : 0) : legendHeight),
-      yMin, yMax, yMinTarget, yMaxTarget, pnColors, pnLegends, pnSeries;
+      yMin, yMax, yMinTarget, yMaxTarget, series, seriesStacked,
+      pnColors, pnPatterns, pnLegends, pnSeries;
 
     yMin = d3.min(dataset, function (group) {
       return d3.min(group.data, function (d) {
@@ -1522,6 +1556,7 @@ window.Chart = function(container) {
 
       pnLegends = {target: 'Target', positive: 'Positive', negative: 'Negative'};
       pnColors = {target: 'neutral', positive: 'good', negative: 'error'};
+      pnPatterns = {};
 
       if (dataset[0]) {
         if (dataset[0].colors) {
@@ -1530,11 +1565,19 @@ window.Chart = function(container) {
         if (dataset[0].legends) {
           $.extend(true, pnLegends, dataset[0].legends);
         }
+        if (dataset[0].patterns) {
+          $.extend(true, pnPatterns, dataset[0].patterns);
+        }
       }
       //Converting object into array
       pnSeries = [];
       $.each(pnLegends, function(key, val) {
-        pnSeries.push({name: val, color: pnColors[key], option: key});
+        pnSeries.push({
+          name: val,
+          color: pnColors[key],
+          pattern: pnPatterns[key],
+          option: key
+        });
       });
     }
 
@@ -1652,6 +1695,33 @@ window.Chart = function(container) {
       maxes[0] += maxes[0] / y.ticks().length;
     }
 
+    // Set series
+    (function() {
+      if (isStacked && isSingular) {
+        series = dataset[0].data;
+      }
+      else {
+        var i, l, lm;
+        // Loop backwards to catch and override with found first custom info from top
+        for (i = dataset.length-1,l = -1; i > l; i--) {
+          lm = dataset[i].data.map(function (d) {
+            return d;
+          });
+          $.extend(true, series, lm);
+          // Convert back to array from object
+          series = $.map(series, function(d) {
+            return d;
+          });
+        }
+      }
+    })();
+
+    if (isStacked && !isSingular) {
+      seriesStacked = names.map(function (d, i) {
+        return dataset[i];
+      });
+    }
+
     x0.domain(isStacked ? xAxisValues : names);
     x1.domain(xAxisValues).rangeRoundBands([0, (isSingular||isStacked) ? width : x0.rangeBand()]);
     y.domain([(yMin < 0 ? yMin : (charts.settings.minValue || 0)), d3.max(isStacked ? maxesStacked : maxes)]).nice();
@@ -1730,13 +1800,16 @@ window.Chart = function(container) {
           .attr('height', function() {
             return 0;
           })
-          // .style('stroke', function(d) {
-          //   return (isPositiveNegative && !isTargetBars && d.value < 0) ? color(pnColors.negative) : '';
-          // })
-          .style('fill', function(d, i) {
-            return isTargetBars ? color(pnColors.target) :
-              (isPositiveNegative ? (d.value < 0 ? color(pnColors.negative) : color(pnColors.positive)) :
-                charts.chartColor(i, 'bar', chartData[0].data[i]));
+          .attr('mask', function (d) {
+            return !isPositiveNegative ? null :
+              (isTargetBars ? (pnPatterns.target ? 'url(#' + pnPatterns.target + ')' : null) :
+                (d.value < 0 ? (pnPatterns.negative ? 'url(#' + pnPatterns.negative + ')' : null) :
+                (pnPatterns.positive ? 'url(#' + pnPatterns.positive + ')' : null))
+              );
+          })
+          .style('fill', function(d) {
+            return !isPositiveNegative ? null :
+              color(isTargetBars ? pnColors.target : (d.value < 0 ? pnColors.negative : pnColors.positive));
           });
 
         if (isPositiveNegative) {
@@ -1803,9 +1876,6 @@ window.Chart = function(container) {
           .attr('data-group-id', function (d, i) {
             return i;
           })
-          .style('fill', function(d, i) {
-            return charts.chartColor(i, (isSingular ? 'column-single' : 'bar'), (isStacked ? dataset[i] : dataArray[i]));
-          })
           .attr('transform', function(d) {
             return 'translate(' + x0(isStacked ? xAxisValues[0] : d.name) + ',0)';
           });
@@ -1850,7 +1920,6 @@ window.Chart = function(container) {
       return bars;
     }
 
-
     if (isPositiveNegative) {
       targetBars = drawBars(true); //Draw target bars
     }
@@ -1866,10 +1935,34 @@ window.Chart = function(container) {
       if (!isStacked) {
         bars
           .style('fill', function(d, i) {
-            return charts.chartColor(i, (isSingular ? 'column-single' : 'bar'), chartData[0].data[i]);
+            return isSingular ?
+              charts.chartColor(i, 'column-single', chartData[0].data[i]) :
+              charts.chartColor(i, 'bar', series[i]);
           })
           .attr('mask', function (d, i) {
-            return (chartData[0].data[i].pattern ? 'url(#' + chartData[0].data[i].pattern + ')' : '');
+            return isSingular ?
+              (chartData[0].data[i].pattern ? 'url(#'+ chartData[0].data[i].pattern +')' : null) :
+              (series[i].pattern ? 'url(#'+ series[i].pattern +')' : null);
+          });
+      }
+      else if (isStacked && !isSingular) {
+        bars
+          .style('fill', function() {
+            var thisGroup = d3.select(this.parentNode).attr('data-group-id');
+            return charts.chartColor(thisGroup, 'bar', dataset[thisGroup]);
+          })
+          .attr('mask', function() {
+            var thisGroup = d3.select(this.parentNode).attr('data-group-id');
+            return (dataset[thisGroup].pattern ? 'url(#'+ dataset[thisGroup].pattern +')' : null);
+          });
+      }
+      else if (isStacked && isSingular) {
+        bars
+          .style('fill', function(d, i) {
+            return charts.chartColor(i, 'bar', d[0]);
+          })
+          .attr('mask', function(d) {
+            return (d[0].pattern ? 'url(#'+ d[0].pattern +')' : null);
           });
       }
     }
@@ -1888,12 +1981,19 @@ window.Chart = function(container) {
 
     (isPositiveNegative ? pnBars : bars)
       .on('mouseenter', function(d, i) {
-        var x, y, j, l, size, isTooltipBottom,
+        var x, y, j, l, hexColor, size, isTooltipBottom,
           maxBarsForTopTooltip = 6,
           thisShape = this,
           shape = $(this),
           content = '',
           ePageY = d3.event.pageY,
+
+          setPattern = function(pattern, hexColor) {
+            return !pattern || !hexColor ? '' :
+              '<svg width="12" height="12">'+
+                '<rect style="fill: '+ hexColor +'" mask="url(#'+ pattern +')" height="12" width="12" />'+
+              '</svg>';
+          },
 
           show = function(isTooltipBottom) {
             size = charts.getTooltipSize(content);
@@ -1930,9 +2030,12 @@ window.Chart = function(container) {
               '<div class="chart-swatch">'+
                 '<div class="swatch-caption"><b>'+ datasetStacked[0][i].name +'</b></div>';
             for (j=datasetStacked.length-1,l=0; j>=l; j--) {
+              hexColor = charts.chartColor(j, 'bar', dataset[j]);
               content += ''+
                 '<div class="swatch-row">'+
-                  '<div style="background-color:'+(isSingular ? '#368AC0' : charts.colors(j))+';"></div>'+
+                  '<div style="background-color:'+ (dataset[j].pattern ? 'transparent' : hexColor) +';">'+
+                    (setPattern(dataset[j].pattern, hexColor))+
+                  '</div>'+
                   '<span>'+ datasetStacked[j][i].parentName +'</span><b>'+ format(datasetStacked[j][i].value) +'</b>'+
                 '</div>';
             }
@@ -1950,11 +2053,20 @@ window.Chart = function(container) {
               '<div class="chart-swatch">'+
                 '<div class="swatch-caption"><b>'+ d.name +'</b></div>'+
                 '<div class="swatch-row">'+
-                  '<div style="background-color:'+ color(pnColors.target) +';"></div>'+
+                  '<div style="background-color:'+ (pnPatterns.target ? 'transparent' : color(pnColors.target)) +';">'+
+                    (setPattern(pnPatterns.target, color(pnColors.target)))+
+                  '</div>'+
                   '<span>'+ pnLegends.target +'</span><b>'+ format(d.target) +'</b>'+
                 '</div>'+
                 '<div class="swatch-row">'+
-                  '<div style="background-color:'+ color(pnColors[d.value < 0 ? 'negative' : 'positive']) +';"></div>'+
+                  '<div style="background-color:'+ (d.value < 0 ?
+                    (pnPatterns.negative ? 'transparent' : color(pnColors.negative)) :
+                    (pnPatterns.positive ? 'transparent' : color(pnColors.positive))) +
+                  ';">'+
+                    (d.value < 0 ?
+                      setPattern(pnPatterns.negative, color(pnColors.negative)) :
+                      setPattern(pnPatterns.positive, color(pnColors.positive)))+
+                  '</div>'+
                   '<span>'+ pnLegends[d.value < 0 ? 'negative' : 'positive'] +'</span><b>'+ format(d.value) +'</b>'+
                 '</div>'+
               '</div>';
@@ -1967,9 +2079,12 @@ window.Chart = function(container) {
 
             content = '<div class="chart-swatch">';
             for (j=0,l=data.length; j<l; j++) {
+              hexColor = charts.chartColor(j, 'bar', series[j]);
               content += ''+
                 '<div class="swatch-row">'+
-                  '<div style="background-color:'+(isSingular ? '#368AC0' : charts.colors(j))+';"></div>'+
+                  '<div style="background-color:'+ (series[j].pattern ? 'transparent' : hexColor) +';">'+
+                    (setPattern(series[j].pattern, hexColor))+
+                  '</div>'+
                   '<span>'+ data[j].name +'</span><b>'+ format(data[j].value) +'</b>'+
                 '</div>';
             }
@@ -2006,7 +2121,7 @@ window.Chart = function(container) {
           content = tooltipDataCache[i] || tooltipData || content || '';
           if (d.tooltip) {
             var val = d.tooltip.replace('{{value}}', format(d.value));
-            content = '<p>' + val + '</p>';
+            content = '<p>'+ val +'</p>';
           }
           show(isTooltipBottom);
         }
@@ -2053,22 +2168,10 @@ window.Chart = function(container) {
       });
 
     //Add Legend
-    var seriesStacked,
-      series = xAxisValues.map(function (d, i) {
-        return {name: d, color: dataset[0].data[i].color};
-      });
-
     if (isSingular && chartData[0].name) {
       charts.addLegend([{name: chartData[0].name}]);
     }
-
-    if (isStacked && !isSingular) {
-      seriesStacked = names.map(function (d, i) {
-        return {name: d, color: dataset[i].color};
-      });
-    }
-
-    if (isPositiveNegative) {
+    else if (isPositiveNegative) {
       charts.addLegend(pnSeries);
     }
     else if (isStacked && isSingular) {
