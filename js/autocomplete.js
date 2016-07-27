@@ -75,6 +75,10 @@
       },
 
       openList: function (term, items) {
+        if (this.element.is('[disabled], [readonly]')) {
+          return;
+        }
+
         var self = this,
           matchingOptions = [];
 
