@@ -463,7 +463,8 @@
         var val = this.element.val(),
           pos = this.originalPos,
           buffSize = this.buffer.length,
-          pattSize = this.settings.pattern.length;
+          workingPattern = '' + this.settings.pattern, // copy the pattern, don't reference it
+          pattSize = workingPattern.length;
 
         // insert the buffer's contents
         val = this.insertAtIndex(val, this.buffer, pos.begin);
@@ -475,9 +476,13 @@
         // cut down the total length of the string to make it no larger than the pattern mask
         val = val.substring(0, pattSize);
 
-        // Reduce the size of the string by one if a negative-capable mask contains a positive number
+        // If the mask supports negative numbers, but a positive number is present,
+        // don't calculate the negative symbol as part of the current pattern.
+        // Also, Reduce the size of the buffer to the new maximum (pattern size minus one, representing the newly removed minus)
         if (this.settings.negative && val.indexOf('-') === -1) {
-          val = val.substring(0, (pattSize - 1));
+          workingPattern = workingPattern.substring(1);
+          pattSize = workingPattern.length;
+          val = val.substring(0, pattSize);
         }
 
         // if we're dealing with numbers, figure out commas and adjust caret position accordingly.
@@ -494,14 +499,14 @@
           val = valWithoutLeadZeros;
 
           var originalVal = val,
-            maskParts = this.settings.pattern.replace(/,/g, '').split('.'),
+            maskParts = workingPattern.replace(/,/g, '').split('.'),
             totalLengthMinusSeparators = maskParts[0].length + (maskParts[1] ? maskParts[1].length : 0);
 
           // strip out the decimal and any commas from the current value
           val = val.replace(/(\.|,)/g, '');
 
           // if the original value had a decimal point, place it back in the right spot
-          if (this.settings.pattern.indexOf('.') !== -1) {
+          if (workingPattern.indexOf('.') !== -1) {
             // Lots of checking of decimal position is necessary if it already exists in the value string.
             if (originalVal.indexOf('.') !== -1) {
               var inputParts = originalVal.split('.');
@@ -722,7 +727,8 @@
 
         var inputParts = val.split('.'),
           inputWithoutCommas = inputParts[0].replace(/,/g, ''),
-          numInputInts = inputWithoutCommas.length;
+          inputWithoutOperators = inputWithoutCommas.replace(/-/g, ''),
+          numInputInts = inputWithoutOperators.length;
 
         // Actually test the typed character against the correct pattern character.
         match = self.testCharAgainstRegex(typedChar, patternChar);
