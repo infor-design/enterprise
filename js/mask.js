@@ -87,7 +87,7 @@
         }
         if (this.settings.mode) {
           if ($.inArray(this.settings.mode, maskModes) === -1) {
-            this.settings.mode = undefined;
+            this.settings.mode = 'group';
           }
         }
 
@@ -154,7 +154,7 @@
           this.settings.groupComplete = true;
         }
         if (this.settings.mode === 'time') {
-          //this.settings.groupComplete = true;
+          this.settings.groupComplete = true;
         }
 
         // Point all keyboard related events to the handleKeyEvents() method, which knows how to
