@@ -37,9 +37,6 @@
     function Autocomplete(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
-      if (this.element.is('[disabled], [readonly]')) {
-        return;
-      }
       this.init();
     }
 
@@ -78,6 +75,10 @@
       },
 
       openList: function (term, items) {
+        if (this.element.is('[disabled], [readonly]')) {
+          return;
+        }
+
         var self = this,
           matchingOptions = [];
 
