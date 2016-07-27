@@ -37,6 +37,9 @@
     function Autocomplete(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
+      if (this.element.is('[disabled], [readonly]')) {
+        return;
+      }
       this.init();
     }
 
