@@ -399,6 +399,13 @@ input.error {
     text-align: right;
     vertical-align: top;
     width: 150px;
+
+    ~ .error-message {
+      .message-text,
+      .icon {
+        left: 150px;
+      }
+    }
   }
 
   .icon-error,
@@ -411,15 +418,11 @@ input.error {
   }
 
   .error-message {
+    margin-top: -10px;
+
     .message-text {
-      left: 150px;
       margin-top: 3px;
       position: relative;
-    }
-
-    .icon {
-      left: 155px;
-      top: 8px;
     }
   }
 }
