@@ -1,0 +1,69 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Mask Test: Fields with Initial Values</h2>
+    <p>When you initialize a Masked input field that already contains a value, the value should immediately be masked by the control properly.</p>
+    <p>To use this test, please check the source code for this HTML file in order to see what the initial values for the fields were before they were modified by the Mask Control's constructor.</p>
+    <p></p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+
+    <div class="field">
+      <label for="alphabet-only">Alphabetic Only (should remove numbers)</label>
+      <input id="alphabet-only" data-mask data-options="{ 'pattern': 'xxxxxxxxxx' }" value="a1b2c3d4e5f6g7"/>
+    </div>
+
+    <div class="field">
+      <label for="numeric-only">Numeric Only (should remove letters)</label>
+      <input id="numeric-only" data-mask data-options="{ 'pattern': '##########' }" value="a1b2c3d4e5f6g7"/>
+    </div>
+
+    <div class="field">
+      <label for="alphanumeric">Alphanumeric</label>
+      <input id="alphanumeric" data-mask data-options='{ "pattern": "**********" }' value="!@#$%^*()_abcdefghij"/>
+    </div>
+
+    <div class="field">
+      <label for="phone">Phone Number</label>
+      <input id="phone" data-mask data-options="{ 'pattern': '(###) ###-####' }" value="1234567890"/>
+    </div>
+
+    <div class="field">
+      <label for="date">Date</label>
+      <input id="date" data-mask data-options="{ 'pattern': '##/##/####', 'mode': 'date' }" data-validate="date" value="08142012"/>
+    </div>
+
+    <div class="field">
+      <label for="time">Time</label>
+      <input id="time" data-mask data-options="{ 'pattern': '##:## am', 'mode': 'time' }" data-validate="time" value="1235pm"/>
+    </div>
+
+  </div>
+  <div class="six columns">
+
+    <div class="field">
+      <label for="currency">Currency (US Dollars)</label>
+      <input id="currency" type="text" data-mask data-options='{ "pattern": "###.00", "mode": "number", "showSymbol": "currency" }' value="10000" />
+    </div>
+
+    <div class="field">
+      <label for="percent">Percentage</label>
+      <input id="percent" type="text" data-mask data-options='{ "pattern": "###", "mode": "number", "showSymbol": "percent" }' value="100" />
+    </div>
+
+    <div class="field">
+      <label for="negative-decimal-1">Decimal Number (negative-capable mask, thousands separator active)</label>
+      <input id="negative-decimal-1" type="text" data-mask data-options='{ "pattern": "-###,###.00", "mode": "number" }' value="12345678" />
+    </div>
+
+    <div class="field">
+      <label for="negative-decimal-2">Negative-capable Decimal Number with no thousands separator</label>
+      <input id="negative-decimal-2" type="text" data-mask data-options='{ "pattern": "-######.00", "mode": "number" }' value="-12345678" />
+    </div>
+
+  </div>
+</div>
