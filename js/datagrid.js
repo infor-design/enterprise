@@ -1172,14 +1172,14 @@ $.fn.datagrid = function(options) {
           isSortable = (column.sortable === undefined ? true : column.sortable),
           isResizable = (column.resizable === undefined ? true : column.resizable),
           isSelection = column.id === 'selectionCheckbox',
-          alignmentClass = (column.align === undefined ? false : '');// Disable for now as this was acting wierd ' l-'+ column.align +'-text');
+          alignmentClass = (column.align === 'center' ? ' l-'+ column.align +'-text' : '');// Disable right align for now as this was acting wierd
 
         headerRow += '<th scope="col" role="columnheader" class="' + (isSortable ? 'is-sortable' : '') + (isResizable ? ' is-resizable' : '') + (column.hidden ? ' is-hidden' : '') + (column.filterType ? ' is-filterable' : '') + (alignmentClass ? alignmentClass : '') + '"' +
          ' id="' + id + '" data-column-id="'+ column.id + '"' + (column.field ? ' data-field="'+ column.field +'"' : '') +
          (column.headerTooltip ? 'title="' + column.headerTooltip + '"' : '') +
          (colGroups ? ' headers="' + self.getColumnGroup(j) + '"' : '') +
          (column.width ? ' style="width:'+ (typeof column.width ==='number' ? column.width+'px': column.width) +'"' : '') + '>';
-         headerRow += '<div class="' + (isSelection ? 'datagrid-checkbox-wrapper ': 'datagrid-column-wrapper ') + (column.align === undefined || column.filterType ? false : ' l-'+ column.align +'-text') + '"><span class="datagrid-header-text">' + self.headerText(settings.columns[j]) + '</span>';
+         headerRow += '<div class="' + (isSelection ? 'datagrid-checkbox-wrapper ': 'datagrid-column-wrapper') + (column.align === undefined || column.filterType ? '' : ' l-'+ column.align +'-text') + '"><span class="datagrid-header-text">' + self.headerText(settings.columns[j]) + '</span>';
 
         //Removed the alignment - even if the column is right aligned data keep the header left aligned
         //+ (column.align === undefined ? false : ' l-'+ column.align +'-text')
@@ -1236,14 +1236,18 @@ $.fn.datagrid = function(options) {
               col.name + '</label>';
 
           switch (col.filterType) {
+            case 'checkbox':
+              //just the button
+              break;
             case 'date':
               filterMarkup += '<input type="text" class="datepicker" id="'+ filterId +'"/>';
               break;
             case 'decimal':
               filterMarkup += '<input type="text" id="'+ filterId +'"/ data-mask-mode="number" data-mask="'+ (col.mask ? col.mask : '####.00') +'">';
               break;
+            case 'contents':
             case 'select':
-              filterMarkup += '<select class="dropdown" id="'+ filterId +'">';
+              filterMarkup += '<select ' + (col.filterType ==='select' ? 'class="dropdown"' : ' multiple class="multiselect"') + 'id="'+ filterId +'">';
               if (col.options) {
                 for (var i = 0; i < col.options.length; i++) {
                   var option = col.options[i],
@@ -1263,6 +1267,7 @@ $.fn.datagrid = function(options) {
           header.find('.datagrid-column-wrapper').after(filterMarkup);
           header.find('.datepicker').datepicker(col.editorOptions ? col.editoroptions : {dateFormat: col.dateFormat});
           header.find('.dropdown').dropdown(col.editorOptions);
+          header.find('.multiselect').multiselect(col.editorOptions);
           header.find('[data-mask]').mask();
         }
       }
@@ -1284,7 +1289,7 @@ $.fn.datagrid = function(options) {
         self.applyFilter();
       });
 
-      this.headerRow.find('.dropdown').on('selected.datagrid', function () {
+      this.headerRow.find('.dropdown, .multiselect').on('selected.datagrid', function () {
         self.applyFilter();
       });
 
@@ -1300,21 +1305,41 @@ $.fn.datagrid = function(options) {
       var btnMarkup = '<button class="btn-menu btn-filter" data-init="false" type="button"><span class="audible">Filter</span></button>' +
         '<ul class="popupmenu has-icons is-translatable is-selectable">';
 
+        //Just the dropdown
+        if (filterType === 'contents' || filterType === 'select') {
+          return '';
+        }
+
         if (filterType === 'text') {
           btnMarkup += this.renderFilterItem('contains', 'Contains', true);
         }
 
-        btnMarkup += this.renderFilterItem('equals', 'Equals', (filterType === 'integer' || filterType === 'date' ? true : false)) +
-          this.renderFilterItem('doesnt-equal', 'DoesNotEqual');
+        if (filterType === 'checkbox') {
+          btnMarkup += this.renderFilterItem('selected-notselected', 'EitherSelectedOrNotSelected', true);
+          btnMarkup += this.renderFilterItem('selected', 'Selected');
+          btnMarkup += this.renderFilterItem('not-selected', 'NotSelected');
+        }
 
-        btnMarkup += this.renderFilterItem('is-empty', 'IsEmpty') +
-        this.renderFilterItem('is-not-empty', 'IsNotEmpty');
+        if (filterType !== 'checkbox') {
+          btnMarkup += this.renderFilterItem('equals', 'Equals', (filterType === 'integer' || filterType === 'date' ? true : false)) +
+            this.renderFilterItem('does-not-equal', 'DoesNotEqual');
+
+          btnMarkup += this.renderFilterItem('is-empty', 'IsEmpty') +
+          this.renderFilterItem('is-not-empty', 'IsNotEmpty');
+        }
 
         if (filterType === 'integer' || filterType === 'date' || filterType === 'decimal') {
           btnMarkup += this.renderFilterItem('less-than', 'LessThan');
           btnMarkup += this.renderFilterItem('less-equals', 'LessOrEquals');
           btnMarkup += this.renderFilterItem('greater-than', 'GreaterThan');
           btnMarkup += this.renderFilterItem('greater-equals', 'GreaterOrEquals');
+        }
+
+        if (filterType === 'text') {
+          btnMarkup += this.renderFilterItem('end-with', 'EndWith');
+          btnMarkup += this.renderFilterItem('does-not-end-with', 'DoesNotEndWith');
+          btnMarkup += this.renderFilterItem('start-with', 'StartWith');
+          btnMarkup += this.renderFilterItem('does-not-start-with', 'DoesNotStartWith');
         }
 
         btnMarkup += '</ul>';
@@ -1352,6 +1377,7 @@ $.fn.datagrid = function(options) {
 
         for (var i = 0; i < conditions.length; i++) {
           var rowValue = (row[conditions[i].columnId] === null ||row[conditions[i].columnId] === undefined) ? '' : row[conditions[i].columnId].toString().toLowerCase(),
+            rowValueStr = rowValue.toString(),
             conditionValue = conditions[i].value.toString().toLowerCase();
 
           if (typeof row[conditions[i].columnId] === 'number') {
@@ -1364,15 +1390,33 @@ $.fn.datagrid = function(options) {
             conditionValue = Locale.parseDate(conditions[i].value, conditions[i].format).getTime();
           }
 
+          //This case is multiselect
+          if (conditions[i].value instanceof Array) {
+            isMatch = conditions[i].value.indexOf(row[conditions[i].columnId]) >= 0 && row[conditions[i].columnId].toString() !== '';
+            return isMatch;
+          }
+
           switch (conditions[i].operator) {
             case 'equals':
               isMatch = (rowValue === conditionValue && rowValue !== '');
               break;
-            case 'doesnt-equal':
+            case 'does-not-equal':
               isMatch = (rowValue !== conditionValue && rowValue !== '');
               break;
             case 'contains':
-              isMatch = (rowValue.toString().indexOf(conditionValue) > -1 && rowValue.toString() !== '');
+              isMatch = (rowValueStr.indexOf(conditionValue) > -1 && rowValue.toString() !== '');
+              break;
+            case 'end-with':
+              isMatch = (rowValueStr.lastIndexOf(conditionValue) === (rowValueStr.length - conditionValue.toString().length)  && rowValueStr !== '');
+              break;
+            case 'start-with':
+              isMatch = (rowValueStr.indexOf(conditionValue) === 0 && rowValueStr !== '');
+              break;
+            case 'does-not-end-with':
+              isMatch = !(rowValueStr.lastIndexOf(conditionValue) === (rowValueStr.length - conditionValue.toString().length)  && rowValueStr !== '');
+              break;
+            case 'does-not-start-with':
+              isMatch = !(rowValueStr.indexOf(conditionValue) === 0 && rowValueStr !== '');
               break;
             case 'is-empty':
               isMatch = (rowValue === '');
@@ -1391,6 +1435,15 @@ $.fn.datagrid = function(options) {
               break;
             case 'greater-equals':
               isMatch = (rowValue <= conditionValue && rowValue !== '');
+              break;
+            case 'selected':
+              isMatch = (rowValueStr === '1' || rowValueStr ==='true' || rowValue === true || rowValue === 1) && rowValueStr !== '';
+              break;
+            case 'not-selected':
+              isMatch = (rowValueStr === '0' || rowValueStr ==='false' || rowValue === false || rowValue === 0) && rowValueStr !== '';
+              break;
+            case 'selected-notselected':
+              isMatch = true;
               break;
             default:
           }
@@ -1422,20 +1475,32 @@ $.fn.datagrid = function(options) {
         var rowElem = $(this),
           btn = rowElem.find('.btn-filter'),
           input = rowElem.find('input, select'),
+          isDropdown = input.is('select'),
           op;
-        if (!btn.length || !input.length) {
+
+
+        if (!btn.length && !isDropdown) {
           return;
         }
 
-        op = btn.find('use:first').attr('xlink:href').replace('#icon-filter-', '');
+        op = isDropdown ? 'equals' : btn.find('use:first').attr('xlink:href').replace('#icon-filter-', '');
 
-        if (input.val() === '' && op !== 'is-empty' && op !== 'is-not-empty') {
+        if (op === 'selected-notselected') {
+          return;
+        }
+
+        if (input.val() === '' && ['is-not-empty', 'is-empty', 'selected', 'not-selected'].indexOf(op) === -1) {
+          return;
+        }
+
+        if (input.val() instanceof Array && input.val().length ===0) {
           return;
         }
 
         var condition = {columnId: rowElem.attr('data-column-id'),
           operator: op,
-          value: input.val(), lowercase: 'no'};
+          value: input.val() ? input.val() : '',
+          ignorecase: 'yes'};
 
         if (input.data('datepicker')) {
           var format = input.data('datepicker').settings.dateFormat;
@@ -2324,7 +2389,7 @@ $.fn.datagrid = function(options) {
       var self = this,
         isMultiple = this.settings.selectable === 'multiple';
 
-      // Set Active class on rows
+      // Set Focus on rows
       self.table
         .on('focus.datagrid', 'tbody > tr', function () {
           if (!self.settings.cellNavigation) {
@@ -2375,7 +2440,6 @@ $.fn.datagrid = function(options) {
             }
           }
 
-          // TODO: if (e.type === 'touchstart') {} ?
           if (!elem.hasClass('is-cell-readonly')) {
             col.click(e, [{row: row, cell: cell, item: item, originalEvent: e}]);
           }
@@ -2403,7 +2467,6 @@ $.fn.datagrid = function(options) {
               self.quickEditMode = true;
             }
           }, 0);
-
         }
 
       });
@@ -2744,7 +2807,7 @@ $.fn.datagrid = function(options) {
       }
 
       term = term.toLowerCase();
-      this.filterExpr.push({column: 'all', operator: 'contains', value: term, lowercase: 'no'});
+      this.filterExpr.push({column: 'all', operator: 'contains', value: term, ignorecase: 'yes'});
 
       this.highlightSearchRows(term);
       this.displayCounts();

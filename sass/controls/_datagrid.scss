@@ -230,21 +230,19 @@ $datagrid-short-row-height: 30px;
     &.l-center-text {
       text-align: center;
 
-      .datagrid-column-wrapper {
-        display: inline;
-      }
-
       .datagrid-header-text {
-        display: inline-block;
-        margin-top: 4px;
+        text-align: center;
+        width: auto;
       }
 
       .sort-indicator {
-        margin: 0 6px;
-        position: relative;
-        top: -4px;
+        margin-left: 0;
+        margin-top: 7px;
       }
 
+      .datagrid-filter-wrapper .btn-filter {
+        left: 18px;
+      }
     }
 
     &.is-hidden {
@@ -378,7 +376,7 @@ $datagrid-short-row-height: 30px;
         height: 23px;
         line-height: 23px;
         padding: 0 0 0 5px;
-        width: calc(100% - 44px);
+        width: calc(100% - 5px);
 
         &:hover {
           // scss-lint:disable ImportantRule
@@ -1400,7 +1398,7 @@ html[dir='rtl'] {
 //Filter Dropdown Style
 .datagrid-filter-dropdown {
   .dropdown-search {
-    height: 24px;
+    height: 28px;
     padding: 4px 32px 1px 7px;
   }
 

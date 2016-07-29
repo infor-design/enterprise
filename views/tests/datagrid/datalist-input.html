@@ -1,0 +1,55 @@
+<div class="page-container top-padding scrollable" id="maincontent" role="main" >
+
+   <div class="row">
+      <div class="twelve columns">
+         <div id="datagrid"></div>
+      </div>
+   </div>
+
+   <div class="row">
+      <div class="twelve columns">
+         <div id="datagrid2"></div>
+      </div>
+   </div>
+
+<script>
+$('body').one('initialized', function () {
+ var columns = [],
+    data = [];
+
+  data.push({
+    item : "item 1",
+    qty : 2,
+    uom : "EA",
+    cost : 50.00,
+    availability : "Non stock",
+    button : "Add to Request"
+  });
+
+  myFormatter = function(row, cell, value, col, item) {
+	  var str = '<input type="number" onclick="javascript:void(0);"/> / ' + item.uom;
+	  return str;
+  };
+
+  //Define Columns for the Grid.
+  columns.push({ id: 'item', name: 'Item', field: 'item'});
+  columns.push({ id: 'qty_uom1', name: 'Quantity/UOM1', field: 'qty', formatter: Formatters.Text, editor: Editors.Input});
+  columns.push({ id: 'qty_uom2', name: 'Quantity/UOM2', field: 'qty', formatter: myFormatter});
+  columns.push({ id: 'cost', name: 'Cost', field: 'cost', formatter: Formatters.Integer });
+  columns.push({ id: 'availability', name: 'Available', field: 'availability'});
+  columns.push({ id: 'button', name: ' ', field: 'button', formatter: Formatters.Button, align: 'center' });
+
+  $('#datagrid').datagrid({
+    columns: columns,
+    dataset: data,
+    isList: true,
+    isEditable: true,
+    selectable: false,
+    columnReorder: false,
+    cellNavigation: false
+   });
+
+  });
+</script>
+
+</div>
