@@ -141,17 +141,19 @@
         // DRAGGABLE ===============================================================================
         self.element
         .on('mousedown.swaplist', self.dragElements, function(e) {
-          var target = $(e.target).closest('li');
-          target.attr({ 'draggable': $(e.target).is('.draggable') });
+          if (self.handle) {
+            var target = $(e.target).closest('li');
+            target.attr({ 'draggable': $(e.target).is('.draggable') });
+          }
           e.stopPropagation();
         })
         .onTouchClick('swaplist', self.dragElements)
 
         // Dragstart - initiate dragging
         .on(self.dragStart, self.dragElements, function(e) {
-          var orig, pos, posOwner, placeholderContainer,
+          var touch, pos, posOwner, placeholderContainer,
+            scrollable = $('.scrollable'),
             target = $(e.target).closest('li'),
-            isInSelection = false,
             list = $('.listview', target.closest('.card')).data('listview');
 
           if (!!self.handle && !selections.isHandle) {
@@ -159,16 +161,7 @@
           }
 
           if(!self.isTouch) {
-            // Check if dragged element was selected or not
-            $.each(list.selectedItems, function(index, val) {
-              if (target[0] === val[0]) {
-                isInSelection = true;
-                return false;
-              }
-            });
-            if (!isInSelection) {
-              list.select(target); // Make selected if dragged element was not selected
-            }
+            self.draggedMakeSelected(list, target);
           }
 
           self.clearSelections(); // Clear selection before fill
@@ -193,17 +186,29 @@
             }
           }
           else {
-            orig = e.originalEvent;
+            touch = e.originalEvent.changedTouches[0];
             pos = target.position();
             posOwner = selections.owner.position();
 
+            scrollable = {
+              left: (scrollable.scrollLeft() || 0),
+              top: (scrollable.scrollTop() || 0)
+            };
+
             self.offset = {
-              x: orig.changedTouches[0].pageX - (posOwner.left + pos.left),
-              y: orig.changedTouches[0].pageY - (posOwner.top + pos.top + target.outerHeight(true)*1.2)
+              x: touch.pageX - ((posOwner.left + scrollable.left) + pos.left),
+              y: touch.pageY - ((posOwner.top + scrollable.top) + pos.top + target.outerHeight(true)*1.2)
             };
 
             self.containers.css({'z-index': 1});
             selections.placeholderTouch = selections.dragged.clone(true);
+
+            if (selections.items.length > 1 && !$('#sl-placeholder-touch2').length) {
+              selections.dragged.clone()
+                .addClass('is-dragging-touch').attr('id', 'sl-placeholder-touch2')
+                .insertBefore(selections.dragged)
+                .hide();
+            }
             selections.placeholderTouch.attr('id', 'sl-placeholder-touch').removeClass('is-selected').hide();
 
             // Mobile view with three container(available, selected, additional) prepend to parent
@@ -212,6 +217,7 @@
 
             $('#sl-placeholder-container').append(selections.placeholderTouch);
             $('#sl-placeholder-container, #sl-placeholder-touch').css({width: selections.owner.width() +'px'});
+
             self.draggTouchElement(e, selections.placeholderTouch);
           }
           e.stopPropagation();
@@ -231,23 +237,39 @@
         // Dragover - allow the drag by preventing default, for touch set related/droptarget
         .on(self.dragOverWhileDragging, self.dragElements, function(e) {
           var touch,
-            overItem = this;
+            overItem = this,
+            list = $('.listview', selections.dragged.closest('.card')).data('listview');
 
           if(self.isTouch) {
             if (!!self.handle && !selections.isHandle) {
               return;
             }
+
+            if (!selections.isInSelection) {
+              self.draggedMakeSelected(list, selections.dragged);
+              selections.items = list.selectedItems;
+              $('.'+ settings.numOfSelectionsClass, settings.itemContentTempl).html(selections.items.length);
+            }
+
             touch = e.originalEvent.touches[0];
             overItem = self.getElementByTouchInList($('ul, li', self.element), touch.pageX, touch.pageY) || overItem;
 
             selections.dragged.addClass('is-dragging');
             selections.placeholderTouch.addClass('is-dragging is-dragging-touch');
             selections.placeholderTouch.show();
-            $('[aria-grabbed="true"]', self.element).not(selections.dragged).not(selections.placeholderTouch).slideUp();
+
+            $('[aria-grabbed="true"]', self.element)
+              .not(selections.dragged)
+              .not(selections.placeholderTouch)
+              .not('#sl-placeholder-touch2')
+              .slideUp();
 
             if (selections.items.length > 1) {
-              $('.'+ settings.itemContentClass, (selections.dragged.add(selections.placeholderTouch)))
+              $('.'+ settings.itemContentClass, (selections.placeholderTouch.add('#sl-placeholder-touch2')))
                 .html(settings.itemContentTempl.html());
+
+              $('#sl-placeholder-touch2').show();
+              selections.dragged.hide();
             }
             self.draggTouchElement(e, selections.placeholderTouch);
 
@@ -258,6 +280,7 @@
             selections.droptarget = selections.related.closest('.card');
           }
           e.preventDefault();
+          e.stopPropagation();
         })
 
         // Dragend - implement items being validly dropped into targets
@@ -265,7 +288,7 @@
           var related = $(selections.related).closest('li'),
           ul = $('ul', selections.droptarget),
           currentSize = $('li', ul).length,
-          size = self.selections.items.length + currentSize;
+          size = selections.items.length + currentSize;
 
           self.unselectElements($('.listview', selections.owner).data('listview'));
 
@@ -290,6 +313,9 @@
             $('.'+ settings.itemContentClass, selections.dragged).html(
               $('.'+ settings.itemContentClass, selections.placeholder).html()
             );
+            if(self.isTouch) {
+              selections.dragged.show();
+            }
           }
 
           if(self.isTouch) {
@@ -362,6 +388,7 @@
           'owner': null,
           'related': null,
           'droptarget': null,
+          'isInSelection': null,
           'isHandle': null,
           'placeholder': null,
           'placeholderTouch': null,
@@ -483,6 +510,7 @@
         if (self.isDragAndDropSupports) {
           // Use Handle if available
           self.handle = ul.first().attr('data-swap-handle');
+          self.handle = (!self.isTouch && !!$(self.handle, ul).length) ? self.handle : null;
           $(self.handle, ul).addClass('draggable')
             .on('mousedown.swaplist touchstart.swaplist', function() { self.selections.isHandle = true; })
             .on('mouseup.swaplist touchend.swaplist', function() { self.selections.isHandle = false; });
@@ -551,11 +579,12 @@
         this.selections.owner = null;
         this.selections.related = null;
         this.selections.droptarget = null;
+        this.selections.isInSelection = null;
         this.selections.dragged = null;
         this.selections.placeholder = null;
         this.selections.placeholderTouch = null;
         $('ul, li', this.element).removeClass('over');
-        $('#sl-placeholder-container, #sl-placeholder-touch, #sl-placeholder').remove();
+        $('#sl-placeholder-container, #sl-placeholder-touch, #sl-placeholder-touch2, #sl-placeholder').remove();
       },
 
       // Update attributes
@@ -593,13 +622,31 @@
         return $('.listview li', container);
       },
 
+      // Make selected if dragged element was not selected
+      draggedMakeSelected: function(list, target) {
+        var self = this, isInSelection = false;
+        if (!self.selections.isInSelection) {
+          // Check if dragged element was selected or not
+          $.each(list.selectedItems, function(index, val) {
+            if (target[0] === val[0]) {
+              isInSelection = true;
+              return false;
+            }
+          });
+          if (!isInSelection) {
+            list.select(target); // Make selected
+            self.selections.isInSelection = true;
+          }
+        }
+      },
+
       unbind: function() {
         this.actionButtons.off('click.swaplist');
         this.containers.off('keydown.swaplist');
         this.selectedButtons.off('keydown.swaplist');
         this.element.off(this.dragStart+' '+this.dragEnterWhileDragging +' '+this.dragOverWhileDragging +' '+this.dragEnd, this.dragElements);
 
-        $('#sl-placeholder-container, #sl-placeholder-touch, #sl-placeholder').remove();
+        $('#sl-placeholder-container, #sl-placeholder-touch, #sl-placeholder-touch2, #sl-placeholder').remove();
         return this;
       },
 
