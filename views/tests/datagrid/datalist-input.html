@@ -26,15 +26,26 @@ $('body').one('initialized', function () {
     button : "Add to Request"
   });
 
-  myFormatter = function(row, cell, value, col, item) {
-	  var str = '<input type="number" onclick="javascript:void(0);"/> / ' + item.uom;
-	  return str;
+  inputFormatter = function(row, cell, value, col, item) {
+    var opt = col.formatterOptions || {},
+      format = function(s) {
+        return (s || '').replace(/{(\w+)}/g, function(m, p) {
+          return item[p];
+        });
+      },
+      id = (opt.prefix || 'input') + row +'-'+ cell,
+      type = opt.type || 'text',
+      beforeTemplate = format(opt.beforeTemplate),
+      afterTemplate = format(opt.afterTemplate);
+
+    return beforeTemplate +'<label for="'+ id +'" class="audible">'+ id +'</label>'+
+        '<input type="'+ type +'" id="'+ id +'" name="'+ id +'" />'+ afterTemplate;
   };
 
   //Define Columns for the Grid.
   columns.push({ id: 'item', name: 'Item', field: 'item'});
   columns.push({ id: 'qty_uom1', name: 'Quantity/UOM1', field: 'qty', formatter: Formatters.Text, editor: Editors.Input});
-  columns.push({ id: 'qty_uom2', name: 'Quantity/UOM2', field: 'qty', formatter: myFormatter});
+  columns.push({ id: 'qty_uom2', name: 'Quantity/UOM2', field: 'qty', formatter: inputFormatter, formatterOptions: {'prefix': 'uom', 'afterTemplate': '&nbsp; / {uom}', 'type': 'number'} });
   columns.push({ id: 'cost', name: 'Cost', field: 'cost', formatter: Formatters.Integer });
   columns.push({ id: 'availability', name: 'Available', field: 'availability'});
   columns.push({ id: 'button', name: ' ', field: 'button', formatter: Formatters.Button, align: 'center' });
@@ -43,10 +54,7 @@ $('body').one('initialized', function () {
     columns: columns,
     dataset: data,
     isList: true,
-    isEditable: true,
-    selectable: false,
-    columnReorder: false,
-    cellNavigation: false
+    // cellNavigation: false
    });
 
   });
