@@ -525,11 +525,8 @@
 
             self.updatePagingInfo(request);
 
-            if (self.isTable && self.renders !== 1) {
-              self.setDatagrid();
-              self.datagrid.renderRows();
-            }
-
+            self.setDatagrid();
+            self.datagrid.renderRows();
             elements.hide();
 
             //collapse expanded rows

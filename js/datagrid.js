@@ -1041,6 +1041,7 @@ $.fn.datagrid = function(options) {
 
     //Remove all selected rows
     removeSelected: function () {
+
       var self = this,
         selectedRows = this.selectedRows();
 
@@ -1712,27 +1713,26 @@ $.fn.datagrid = function(options) {
     renderRows: function() {
       var rowHtml, tableHtml = '',
         self = this,
-        dataset = self.settings.dataset;
+        dataset = self.settings.dataset,
+        activePage = self.pager ? self.pager.activePage : 1,
+        pagesize = self.settings.pagesize;
 
       var body = self.table.find('tbody');
       if (body.length === 0) {
         self.tableBody = $('<tbody></tbody>');
         self.table.append(self.tableBody);
       }
+
       //Save the height during render
       self.tableHeight = self.tableBody.height();
       self.tableBody.css({'height': self.tableHeight, 'display': 'block'});
-
       self.tableBody.empty();
-
 
       for (var i = 0; i < dataset.length; i++) {
         var isEven = (i % 2 === 0);
 
         //For performance dont render out of page
         if (self.settings.paging && !self.settings.source) {
-          var activePage = self.pager ? self.pager.activePage : 1,
-            pagesize = self.settings.pagesize;
 
           if (activePage === 1 && i >= pagesize){
             continue;
@@ -1747,7 +1747,7 @@ $.fn.datagrid = function(options) {
           continue;
         }
 
-        rowHtml = '<tr role="row" aria-rowindex="' + (i+1) + '" class="datagrid-row '+
+        rowHtml = '<tr role="row" aria-rowindex="' + ((i+1) + (self.settings.source  ? ((activePage-1) * pagesize) : 0)) + '" class="datagrid-row '+
                   (self.settings.rowHeight !== 'normal' ? ' ' + self.settings.rowHeight + '-rowheight' : '') +
                   (self.settings.alternateRowShading && !isEven ? ' alt-shading' : '') +
                   (!self.settings.cellNavigation ? ' is-clickable' : '' ) +
@@ -2425,7 +2425,7 @@ $.fn.datagrid = function(options) {
           btn = $(this).find('button'),
           cell = elem.index(),
           rowNode = $(this).closest('tr'),
-          row = rowNode.attr('aria-rowindex')-1,
+          row = self.visualRowIndex(rowNode),
           col = self.columnSettings(cell),
           item = self.settings.dataset[row];
 
@@ -2882,31 +2882,36 @@ $.fn.datagrid = function(options) {
 
     //Toggle selection on a single row
     selectRow: function (idx) {
-      var checkbox = null, row;
+      var checkbox = null, rowNode, dataRowIndex;
 
       if (idx === undefined || idx === -1 || !this.settings.selectable) {
         return;
       }
 
-      row = this.tableBody.find('tr[role="row"]').eq(idx);
-      if (!row) {
+      rowNode = this.visualRowNode(idx);
+      dataRowIndex = this.dataRowIndex(rowNode);
+
+      if (!rowNode) {
         return;
       }
-
 
       if (this.settings.selectable === 'single' && this._selectedRows.length > 0) {
         this.unselectRow(this._selectedRows[0].idx);
       }
 
-      if (!row.hasClass('is-selected')) {
-        checkbox = this.cellNode(row, this.columnIdxById('selectionCheckbox'));
+      if (!rowNode.hasClass('is-selected')) {
+        checkbox = this.cellNode(rowNode, this.columnIdxById('selectionCheckbox'));
 
         //Select It
-        this._selectedRows.push({idx: idx, data: this.settings.dataset[idx], elem: row});
-        this.lastSelectedRow = idx;// Rember index to use shift key
+        var rowData = this.settings.dataset[dataRowIndex];
+        if (this.pager && this.settings.source) {
+          rowData = this.settings.dataset[rowNode.index()];
+        }
+        this._selectedRows.push({idx: dataRowIndex, data: rowData, elem: rowNode});
+        this.lastSelectedRow = idx;// Rememeber index to use shift key
 
-        row.addClass('is-selected').attr('aria-selected', 'true');
-        row.find('td').attr('aria-selected', 'true');
+        rowNode.addClass('is-selected').attr('aria-selected', 'true');
+        rowNode.find('td').attr('aria-selected', 'true');
         checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox').addClass('is-checked').attr('aria-checked', 'true');
       }
 
@@ -2962,7 +2967,7 @@ $.fn.datagrid = function(options) {
     toggleRowSelection: function (idx) {
       var row = (typeof idx === 'number' ? this.tableBody.find('tr[role="row"]').eq(idx) : idx),
         isSingle = this.settings.selectable === 'single',
-        rowIndex = (typeof idx === 'number' ? idx : this.tableBody.find('tr[role="row"]').index(idx));
+        rowIndex = (typeof idx === 'number' ? idx : this.dataRowIndex(row));
 
       if (this.settings.selectable === false) {
         return;
@@ -2991,14 +2996,14 @@ $.fn.datagrid = function(options) {
     },
 
     unselectRow: function (idx, nosync) {
-      var row = this.tableBody.find('tr[role="row"]').eq(idx),
+      var rowNode = this.visualRowNode(idx),
         checkbox = null, selIdx;
 
-      if (!row || idx === undefined) {
+      if (!rowNode || idx === undefined) {
         return;
       }
 
-      checkbox = this.cellNode(row, this.columnIdxById('selectionCheckbox'));
+      checkbox = this.cellNode(rowNode, this.columnIdxById('selectionCheckbox'));
 
       selIdx = undefined;
       for (var i = 0; i < this._selectedRows.length; i++) {
@@ -3011,8 +3016,8 @@ $.fn.datagrid = function(options) {
         this._selectedRows.splice(selIdx, 1);
       }
 
-      row.removeClass('is-selected').removeAttr('aria-selected');
-      row.find('td').removeAttr('aria-selected');
+      rowNode.removeClass('is-selected').removeAttr('aria-selected');
+      rowNode.find('td').removeAttr('aria-selected');
 
       checkbox.find('.datagrid-checkbox').removeClass('is-checked').attr('aria-checked', 'false');
 
@@ -3031,6 +3036,10 @@ $.fn.datagrid = function(options) {
 
       if (!row) {
         return this._selectedRows;
+      }
+
+      if (row.length === 0 && this._selectedRows.length === 0) {
+        return;
       }
 
       if (isSingle) {
@@ -3539,7 +3548,7 @@ $.fn.datagrid = function(options) {
       this.editor = null;
 
       //Save the Cell Edit back to the data set
-      this.updateCellNode(cellNode.parent().parent().find('tr[role="row"]').index(cellNode.parent()), cellNode.index(), newValue);
+      this.updateCellNode(this.dataRowIndex(cellNode.parent()) , cellNode.index(), newValue);
       this.element.triggerHandler('exiteditmode');
     },
 
@@ -3587,7 +3596,7 @@ $.fn.datagrid = function(options) {
     },
 
     updateCellNode: function (row, cell, value, fromApiCall) {
-      var rowNode = this.tableBody.find('tr[role="row"]').eq(row),
+      var rowNode = this.visualRowNode(row),
         cellNode = rowNode.find('td').eq(cell),
         col = this.columnSettings(cell),
         formatted = '',
@@ -3662,6 +3671,31 @@ $.fn.datagrid = function(options) {
       }
     },
 
+    //For the row node get the index - adjust for paging / invisible rowsCache
+    visualRowIndex: function (row) {
+     var rowIdx = (row.attr('aria-rowindex')-1);
+     if (this.pager) {
+      rowIdx = rowIdx - ((this.pager.activePage -1) * this.settings.pagesize);
+     }
+     return rowIdx;
+    },
+
+    visualRowNode: function (idx) {
+      var node = this.tableBody.find('tr[role="row"]').eq(idx);
+
+      if (this.pager) {
+        idx = idx - ((this.pager.activePage -1) * this.settings.pagesize);
+        node = this.tableBody.find('tr[role="row"]').eq(idx);
+      }
+      return node;
+    },
+
+    dataRowIndex: function (row) {
+     var rowIdx = (row.attr('aria-rowindex')-1);
+
+     return rowIdx;
+    },
+
     // Update a specific Cell
     setActiveCell: function (row, cell) {
       var self = this,
@@ -3670,7 +3704,7 @@ $.fn.datagrid = function(options) {
       //Support passing the td in
       if (row instanceof jQuery) {
         cell = row.siblings(':visible').addBack().index(row);
-        row = row.parent().attr('aria-rowindex') -1;
+        row = this.visualRowIndex(row.parent());
       }
 
       if (row < 0 || cell < 0) {
