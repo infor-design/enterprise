@@ -139,6 +139,7 @@
   legend {
     @include font-size(12);
     color: $label-color;
+    margin-top: -20px;
     padding-bottom: 8px;
     padding-top: 0;
   }
