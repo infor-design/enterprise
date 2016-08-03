@@ -9,8 +9,15 @@
 
 @mixin is-dragging-touch() {
   @include is-dragging();
+  background-color: $swaplist-bg-color-selected;
+  color: $white;
+  opacity: .7;
   position: absolute;
   z-index: 2;
+
+  p {
+    color: $white;
+  }
 }
 
 .swaplist {
@@ -36,8 +43,8 @@
       padding: 0;
       width: 35px;
 
-      &:after,
-      &:before {
+      &::after,
+      &::before {
         background: $swaplist-icon-color; //border color
         content: '';
         display: inline-block;
@@ -46,7 +53,7 @@
         top: 8px;
       }
 
-      &:after { //border left and right
+      &::after { //border left and right
         box-shadow: 0 6px 0 $swaplist-icon-color,
                     0 12px 0 $swaplist-icon-color,
                     16px 0 0 $swaplist-icon-color,
@@ -56,9 +63,9 @@
         width: 2px;
       }
 
-      &:before { //border top and bottom
+      &::before { //border top and bottom
         box-shadow: 13px 0 0 $swaplist-icon-color,
-                    0 16px 0 $swaplist-icon-color, 
+                    0 16px 0 $swaplist-icon-color,
                     13px 16px 0 $swaplist-icon-color;
         height: 2px;
         width: 5px;
@@ -67,12 +74,12 @@
       &:hover,
       &:focus:not(.hide-focus):not(.is-disabled) {
 
-        &:after,
-        &:before {
+        &::after,
+        &::before {
           background: $swaplist-icon-color-hover; //border color
         }
 
-        &:after {
+        &::after {
           box-shadow: 0 6px 0 $swaplist-icon-color-hover,
                       0 12px 0 $swaplist-icon-color-hover,
                       16px 0 0 $swaplist-icon-color-hover,
@@ -80,7 +87,7 @@
                       16px 12px 0 $swaplist-icon-color-hover;
         }
 
-        &:before {
+        &::before {
           box-shadow: 13px 0 0 $swaplist-icon-color-hover,
                       0 16px 0 $swaplist-icon-color-hover,
                       13px 16px 0 $swaplist-icon-color-hover;
@@ -112,6 +119,7 @@
       color: $swaplist-title-text-color;
       font-weight: normal;
     }
+
     p {
       color: $swaplist-text-color;
     }
@@ -181,7 +189,7 @@
   .is-muliselect {
     ul {
       min-height: 100%;
-      padding: 5px 0;;
+      padding: 5px 0;
     }
 
     li {
@@ -189,9 +197,9 @@
       margin-bottom: 1px;
       padding: 9px 20px;
 
-      &:before,
-      &:after,
-      &.is-selected:after {
+      &::after,
+      &::before,
+      &.is-selected::after {
         content: none;
       }
 
@@ -204,13 +212,13 @@
         background-color: $swaplist-bg-color-hover;
 
         .handle {
-          display: inline-block;
           color: $swaplist-text-color;
+          display: inline-block;
         }
 
         &:focus {
           border-color: $swaplist-border-color-focus;
-        }          
+        }
       }
 
       &.is-selected {
@@ -226,13 +234,13 @@
           background-color: $swaplist-bg-color-selected;
 
           .handle {
-            display: inline-block;
             color: $swaplist-text-color-selected;
+            display: inline-block;
           }
 
           &:focus {
             border-color: $swaplist-border-color-focus;
-          }          
+          }
         }
       }
 
@@ -281,6 +289,7 @@
               transform: translateX(5px) translateY(0) rotate(45deg);
             }
           }
+
           &:nth-child(3) {
             .btn svg {
               margin-right: 10px;

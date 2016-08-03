@@ -3769,7 +3769,10 @@ $.fn.datagrid = function(options) {
         self.activeCell = prevCell;
       }
 
-      self.activeCell.node.focus();
+      // self.activeCell.node.focus();
+      if (!$('input, button, a', self.activeCell.node).length) {
+        self.activeCell.node.focus();
+      }
       if (self.activeCell.node.hasClass('is-focusable')) {
         self.activeCell.node.find('button').focus();
       }
