@@ -10,6 +10,7 @@ Release Date: TBD
 * Property Sheet pattern
 * Tree - Ability to add nodes with Ajax
 * Splitter - Added keyboard/Aria
+* Datagrid Filter Row
 
 ### Breaking Changes
 * 2016-07-26 - Tabs Control - Reworked some external API methods to not only accept "TabId" as an argument for working with a tab, but also jQuery objects that represent Tabs or Anchors.  This was done in an effort to make the dismissible tab-related functionality work properly (SOHO-4140).  Many of these API methods (add/remove/hide/show/enableTab/disableTab) now take a jQuery event as a primary argument, while their old first and second arguments have become second and third arguments, respectively.  In many cases, type-checking handles re-working of the previous API's arguments, but its possible that these changes make break your implementation.  Please see the source code for these methods in the interim while we update the SoHo Site.

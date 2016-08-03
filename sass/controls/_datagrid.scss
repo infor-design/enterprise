@@ -464,6 +464,12 @@ $datagrid-short-row-height: 30px;
       }
     }
 
+    //Tree - Collapsed rows
+
+    &.is-hidden {
+      display: none;
+    }
+
     // Hover States
     &:not(.datagrid-expandable-row):hover td:not(.is-editing) {
       background-color: $datagrid-row-hover-color;

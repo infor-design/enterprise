@@ -174,6 +174,18 @@ window.Formatters = {
     return button;
   },
 
+  // Tree Expand / Collapse Button and Paddings
+  Tree: function (row, cell, value, col, item) {
+    var isOpen = item.expanded,
+      button = '<button class="btn-icon datagrid-expand-btn' + (isOpen ? ' is-expanded' : '') + '" tabindex="-1"' +  (item.depth ? ' style="margin-left: ' + (item.depth ? (40*item.depth) + 'px' : '') + '"' : '') + '>'+
+      '<span class="icon plus-minus'+ (isOpen ? ' active' : '') + '"></span>' +
+      '<span class="audible">' + Locale.translate('ExpandCollapse') + '</span>' +
+      '</button>' + ( value ? '<span> ' + value + '</span>' : ''),
+      node = '<span class="datagrid-tree-node"' + (item.depth ? ' style="margin-left: ' + (item.depth ? (30*item.depth) + 'px' : '') + '"' : '') + '> ' + value + '</span>';
+
+    return (item[col.children ? col.children : 'children'] ? button : node);
+  },
+
   // Badge / Tags and Visual Indictors
   ClassRange: function (row, cell, value, col) {
     var ranges = col.ranges,
@@ -805,7 +817,7 @@ $.fn.datagrid = function(options) {
 
       //Init from Table
       if (this.settings.dataset === 'table') {
-        self.table = $(this.element).addClass('datagrid');
+        self.table = $(this.element).addClass('datagrid').attr('role', this.settings.treeGrid ? 'treegrid' : 'grid');
 
         var wrapper = $(this.element).closest('.datagrid-wrapper');
 
@@ -815,7 +827,7 @@ $.fn.datagrid = function(options) {
         self.settings.dataset = self.htmlToDataset();
         self.container = this.element.closest('.datagrid-wrapper');
       } else {
-        self.table = $('<table role="grid"></table>').addClass('datagrid');
+        self.table = $('<table></table>').addClass('datagrid').attr('role', this.settings.treeGrid ? 'treegrid' : 'grid');
         self.container = self.element.addClass('datagrid-container');
       }
 
@@ -1711,11 +1723,11 @@ $.fn.datagrid = function(options) {
 
     //Render the Rows
     renderRows: function() {
-      var rowHtml, tableHtml = '',
-        self = this,
-        dataset = self.settings.dataset,
+      var tableHtml = '',
+        self = this, i,
         activePage = self.pager ? self.pager.activePage : 1,
-        pagesize = self.settings.pagesize;
+        pagesize = self.settings.pagesize,
+        dataset = self.settings.dataset;
 
       var body = self.table.find('tbody');
       if (body.length === 0) {
@@ -1728,136 +1740,27 @@ $.fn.datagrid = function(options) {
       self.tableBody.css({'height': self.tableHeight, 'display': 'block'});
       self.tableBody.empty();
 
-      for (var i = 0; i < dataset.length; i++) {
-        var isEven = (i % 2 === 0);
+      for (i = 0; i < dataset.length; i++) {
 
-        //For performance dont render out of page
-        if (self.settings.paging && !self.settings.source) {
+        //For better performance dont render out of page
+        if (this.settings.paging && !this.settings.source) {
 
           if (activePage === 1 && i >= pagesize){
             continue;
           }
 
-          if (activePage > 1 && !(i >= pagesize*(activePage-1) && i < pagesize*activePage)){
+          if (activePage > 1 && !(i >= pagesize*(activePage-1) && i < pagesize*activePage)) {
             continue;
           }
         }
 
+        //Exclude Filtered Rows
         if (dataset[i].isFiltered) {
           continue;
         }
 
-        rowHtml = '<tr role="row" aria-rowindex="' + ((i+1) + (self.settings.source  ? ((activePage-1) * pagesize) : 0)) + '" class="datagrid-row '+
-                  (self.settings.rowHeight !== 'normal' ? ' ' + self.settings.rowHeight + '-rowheight' : '') +
-                  (self.settings.alternateRowShading && !isEven ? ' alt-shading' : '') +
-                  (!self.settings.cellNavigation ? ' is-clickable' : '' ) +
-                   '"' + '>';
+        tableHtml += self.rowHtml(dataset[i]);
 
-        for (var j = 0; j < self.settings.columns.length; j++) {
-          var col = self.settings.columns[j],
-              cssClass = '',
-              formatter = (col.formatter ? col.formatter : self.defaultFormatter),
-              formatted = '';
-
-          if (typeof formatter ==='string') {
-            formatted = window.Formatters[formatter](i, j, self.fieldValue(dataset[i], self.settings.columns[j].field), self.settings.columns[j], dataset[i], self).toString();
-          } else {
-            formatted = formatter(i, j, self.fieldValue(dataset[i], self.settings.columns[j].field), self.settings.columns[j], dataset[i], self).toString();
-          }
-
-          if (formatted.indexOf('<span class="is-readonly">') === 0) {
-            col.readonly = true;
-          }
-
-          if (formatted.indexOf('datagrid-checkbox') > -1 ||
-            formatted.indexOf('btn-actions') > -1) {
-            cssClass += ' l-center-text';
-          }
-
-          if (formatted.indexOf('trigger') > -1) {
-            cssClass += ' datagrid-trigger-cell';
-          }
-
-          if (col.align) {
-            cssClass += ' l-'+ col.align +'-text';
-          }
-
-          if (col.textOverflow === 'ellipsis') {
-            cssClass += ' text-ellipsis';
-          }
-
-          // Add Column Css Classes
-
-          //Add a readonly class if set on the column
-          cssClass += (col.readonly ? ' is-readonly' : '');
-          cssClass += (col.hidden ? ' is-hidden' : '');
-
-          //Run a function that helps check if editable
-          if (col.isEditable && !col.readonly) {
-            var canEdit = col.isEditable(i, j, self.fieldValue(dataset[i], self.settings.columns[j].field), col, dataset[i]);
-
-            if (!canEdit) {
-              cssClass += ' is-readonly';
-            }
-          }
-
-          //Run a function that helps check if readonly
-          var ariaReadonly = ((col.readonly || col.editor === undefined) ? 'aria-readonly="true"': '');
-
-          if (col.isReadonly && !col.readonly) {
-            var isReadonly = col.isReadonly(i, j, self.fieldValue(dataset[i], self.settings.columns[j].field), col, dataset[i]);
-
-            if (isReadonly) {
-              cssClass += ' is-cell-readonly';
-              ariaReadonly = 'aria-readonly="true"';
-            }
-          }
-
-          var cellValue = self.fieldValue(dataset[i], self.settings.columns[j].field);
-
-          //Run a function that dynamically adds a class
-          if (col.cssClass && typeof col.cssClass === 'function') {
-            cssClass += col.cssClass(i, j, cellValue, col,dataset[i]);
-          }
-
-          cssClass += (col.focusable ? ' is-focusable' : '');
-
-          rowHtml += '<td role="gridcell" ' + ariaReadonly + ' aria-colindex="' + (j+1) + '" '+
-              ' aria-describedby="' + self.uniqueId( '-header-' + j) + '"' +
-             (cssClass ? ' class="' + cssClass + '"' : '') + 'data-idx="' + (j) + '"' +
-             (col.tooltip ? ' title="' + col.tooltip.replace('{{value}}', cellValue) + '"' : '') +
-             (col.id === 'rowStatus' && dataset[i].rowStatus && dataset[i].rowStatus.tooltip ? ' title="' + dataset[i].rowStatus.tooltip + '"' : '') +
-               (self.settings.columnGroups ? 'headers = "' + self.uniqueId( '-header-' + j) + ' ' + self.getColumnGroup(j) + '"' : '') +
-             '><div class="datagrid-cell-wrapper">';
-
-          if (col.contentVisible) {
-            var canShow = col.contentVisible(i, j, cellValue, col, dataset[i]);
-            if (!canShow) {
-              formatted = '';
-            }
-          }
-
-          rowHtml += formatted + '</div></td>';
-        }
-
-        rowHtml += '</tr>';
-
-        if (self.settings.rowTemplate) {
-          var tmpl = self.settings.rowTemplate,
-            item = dataset[i],
-            renderedTmpl = '';
-
-          if (Tmpl && item) {
-            var compiledTmpl = Tmpl.compile('{{#dataset}}'+tmpl+'{{/dataset}}');
-            renderedTmpl = compiledTmpl.render({dataset: item});
-          }
-
-          rowHtml += '<tr class="datagrid-expandable-row"><td colspan="'+ this.visibleColumns().length +'">' +
-            '<div class="datagrid-row-detail"><div class="datagrid-row-detail-padding">'+ renderedTmpl + '</div></div>' +
-            '</td></tr>';
-        }
-
-        tableHtml += rowHtml;
       }
 
       self.tableBody.append(tableHtml);
@@ -1870,6 +1773,144 @@ $.fn.datagrid = function(options) {
         self.displayCounts();
         self.activeCell = {node: self.cellNode(0, 0).attr('tabindex', '0'), isFocused: false, cell: 0, row: 0};
       }, 100);
+    },
+
+    recordCount: 0,
+
+    rowHtml: function (rowData, renderHidden) {
+      this.recordCount++;
+
+      var isEven = (this.recordCount % 2 === 0),
+        self = this,
+        activePage = self.pager ? self.pager.activePage : 1,
+        pagesize = self.settings.pagesize,
+        rowHtml = '';
+
+      rowHtml = '<tr role="row" aria-rowindex="' + ((this.recordCount) + (self.settings.source  ? ((activePage-1) * pagesize) : 0)) + '" class="datagrid-row'+
+                (self.settings.rowHeight !== ' normal' ? ' ' + self.settings.rowHeight + '-rowheight' : '') +
+                (renderHidden ? ' is-hidden' : '') +
+                (self.settings.alternateRowShading && !isEven ? ' alt-shading' : '') +
+                (!self.settings.cellNavigation ? ' is-clickable' : '' ) +
+                (self.settings.treeGrid ? (rowData.children ? ' datagrid-tree-parent' : (rowData.depth > 0 ? ' datagrid-tree-child' : '')) : '') +
+                 '"' + '>';
+
+      for (var j = 0; j < self.settings.columns.length; j++) {
+        var col = self.settings.columns[j],
+            cssClass = '',
+            formatter = (col.formatter ? col.formatter : self.defaultFormatter),
+            formatted = '';
+
+        if (typeof formatter ==='string') {
+          formatted = window.Formatters[formatter](this.recordCount, j, self.fieldValue(rowData, self.settings.columns[j].field), self.settings.columns[j], rowData, self).toString();
+        } else {
+          formatted = formatter(this.recordCount, j, self.fieldValue(rowData, self.settings.columns[j].field), self.settings.columns[j], rowData, self).toString();
+        }
+
+        if (formatted.indexOf('<span class="is-readonly">') === 0) {
+          col.readonly = true;
+        }
+
+        if (formatted.indexOf('datagrid-checkbox') > -1 ||
+          formatted.indexOf('btn-actions') > -1) {
+          cssClass += ' l-center-text';
+        }
+
+        if (formatted.indexOf('trigger') > -1) {
+          cssClass += ' datagrid-trigger-cell';
+        }
+
+        if (col.expanded) {
+          self.treeExpansionField = col.expanded;
+        }
+
+        if (col.align) {
+          cssClass += ' l-'+ col.align +'-text';
+        }
+
+        if (col.textOverflow === 'ellipsis') {
+          cssClass += ' text-ellipsis';
+        }
+
+        // Add Column Css Classes
+
+        //Add a readonly class if set on the column
+        cssClass += (col.readonly ? ' is-readonly' : '');
+        cssClass += (col.hidden ? ' is-hidden' : '');
+
+        //Run a function that helps check if editable
+        if (col.isEditable && !col.readonly) {
+          var canEdit = col.isEditable(this.recordCount, j, self.fieldValue(rowData, self.settings.columns[j].field), col, rowData);
+
+          if (!canEdit) {
+            cssClass += ' is-readonly';
+          }
+        }
+
+        //Run a function that helps check if readonly
+        var ariaReadonly = ((col.readonly || col.editor === undefined) ? 'aria-readonly="true"': '');
+
+        if (col.isReadonly && !col.readonly) {
+          var isReadonly = col.isReadonly(this.recordCount, j, self.fieldValue(rowData, self.settings.columns[j].field), col, rowData);
+
+          if (isReadonly) {
+            cssClass += ' is-cell-readonly';
+            ariaReadonly = 'aria-readonly="true"';
+          }
+        }
+
+        var cellValue = self.fieldValue(rowData, self.settings.columns[j].field);
+
+        //Run a function that dynamically adds a class
+        if (col.cssClass && typeof col.cssClass === 'function') {
+          cssClass += col.cssClass(this.recordCount, j, cellValue, col, rowData);
+        }
+
+        cssClass += (col.focusable ? ' is-focusable' : '');
+
+        rowHtml += '<td role="gridcell" ' + ariaReadonly + ' aria-colindex="' + (j+1) + '" '+
+            ' aria-describedby="' + self.uniqueId( '-header-' + j) + '"' +
+           (cssClass ? ' class="' + cssClass + '"' : '') + 'data-idx="' + (j) + '"' +
+           (col.tooltip ? ' title="' + col.tooltip.replace('{{value}}', cellValue) + '"' : '') +
+           (col.id === 'rowStatus' && rowData.rowStatus && rowData.rowStatus.tooltip ? ' title="' + rowData.rowStatus.tooltip + '"' : '') +
+             (self.settings.columnGroups ? 'headers = "' + self.uniqueId( '-header-' + j) + ' ' + self.getColumnGroup(j) + '"' : '') +
+           '><div class="datagrid-cell-wrapper">';
+
+        if (col.contentVisible) {
+          var canShow = col.contentVisible(this.recordCount, j, cellValue, col, rowData);
+          if (!canShow) {
+            formatted = '';
+          }
+        }
+
+        rowHtml += formatted + '</div></td>';
+      }
+
+      rowHtml += '</tr>';
+
+      if (self.settings.rowTemplate) {
+        var tmpl = self.settings.rowTemplate,
+          item = rowData,
+          renderedTmpl = '';
+
+        if (Tmpl && item) {
+          var compiledTmpl = Tmpl.compile('{{#dataset}}'+tmpl+'{{/dataset}}');
+          renderedTmpl = compiledTmpl.render({dataset: item});
+        }
+
+        rowHtml += '<tr class="datagrid-expandable-row"><td colspan="'+ this.visibleColumns().length +'">' +
+          '<div class="datagrid-row-detail"><div class="datagrid-row-detail-padding">'+ renderedTmpl + '</div></div>' +
+          '</td></tr>';
+      }
+
+      //Render Tree Children
+      if (rowData.children) {
+
+        for (var l = 0; l < rowData.children.length; l++) {
+          rowHtml += self.rowHtml(rowData.children[l], !rowData[self.treeExpansionField]);
+        }
+      }
+
+      return rowHtml;
     },
 
     setupTooltips: function () {
@@ -2458,7 +2499,9 @@ $.fn.datagrid = function(options) {
         }
 
         if (btn.is('.datagrid-expand-btn')) {
-          self.expandRow(rowNode.index()+1);
+          var idx = rowNode.index()+1;
+          self.toggleRowDetail(idx);
+          self.toggleChildren(idx);
         }
 
         if (self.isCellEditable(row, cell)) {
@@ -3741,15 +3784,39 @@ $.fn.datagrid = function(options) {
       self.element.trigger('activecellchange', [{node: this.activeCell.node, row: this.activeCell.row, cell: this.activeCell.cell}]);
     },
 
-    expandRow: function(row) {
+//expand the tree rows
+    toggleChildren: function(rowIndex) {
+      var rowElement = this.table.find('tr').eq(rowIndex),
+        expandButton = rowElement.find('.datagrid-expand-btn'),
+        children = rowElement.nextAll('.datagrid-tree-child');
+
+      if (expandButton.hasClass('is-expanded')) {
+        expandButton.removeClass('is-expanded')
+          .find('.plus-minus').removeClass('active');
+
+          children.css('display', 'none');
+      } else {
+        expandButton.addClass('is-expanded')
+          .find('.plus-minus').addClass('active');
+
+        children.css('display', 'table-row');
+      }
+
+    },
+
+    //Expand Detail Row Or Tree Row
+    toggleRowDetail: function(rowIndex) {
 
       var self = this,
-        expandRow = this.table.find('tr').eq(row+1),
-        expandButton = this.table.find('tr').eq(row).find('.datagrid-expand-btn'),
-        detail = expandRow.find('.datagrid-row-detail');
+        rowElement = this.table.find('tr').eq(rowIndex),
+        expandRow = this.table.find('tr').eq(rowIndex+1),
+        expandButton = rowElement.find('.datagrid-expand-btn'),
+        detail = expandRow.find('.datagrid-row-detail'),
+        item = self.settings.dataset[rowIndex - (rowIndex + 1)/2];
 
-      // Get data item for this row
-      var item = self.settings.dataset[row - (row + 1)/2];
+      if (rowElement.hasClass('datagrid-tree-parent')) {
+        return;
+      }
 
       if (expandRow.hasClass('is-expanded')) {
         expandRow.removeClass('is-expanded');
@@ -3758,7 +3825,7 @@ $.fn.datagrid = function(options) {
 
         detail.animateClosed().on('animateclosedcomplete', function () {
           expandRow.css('display', 'none');
-          self.element.trigger('collapserow', [{grid: self, row: row, detail: detail, item: item}]);
+          self.element.trigger('collapserow', [{grid: self, row: rowIndex, detail: detail, item: item}]);
         });
 
       } else {
@@ -3772,7 +3839,7 @@ $.fn.datagrid = function(options) {
         expandRow.find('.constrained-width').css('max-width', this.element.outerWidth());
 
         detail.animateOpen();
-        self.element.trigger('expandrow', [{grid: self, row: row, detail: detail, item: item}]);
+        self.element.trigger('expandrow', [{grid: self, row: rowIndex, detail: detail, item: item}]);
       }
     },
 
