@@ -479,7 +479,7 @@ window.Editors = {
             html.attr('selected', 'true');
           }
 
-          html.attr('value', opt.value).attr('id', opt.id);
+          html.attr('value', opt.value).attr('id', opt.id).attr('data-type', typeof opt.value);
           html.text(opt.label);
           this.input.append(html);
         }
@@ -501,8 +501,17 @@ window.Editors = {
         this.input.val(value);
 
         this.select.find('option').each(function () {
-          var opt = $(this), valueAttr = opt.attr('value');
-          var optionValue = column.caseInsensitive && typeof valueAttr === 'string' ? valueAttr.toLowerCase() : valueAttr;
+          var opt = $(this), valueAttr = opt.attr('value'), type = opt.attr('data-type');
+          var optionValue = valueAttr;
+
+          // Get option value in proper type before checking equality
+          if (type === 'number') {
+            optionValue = parseFloat(valueAttr);
+          } else if (type === 'boolean') {
+            optionValue = valueAttr === 'true';
+          } else if (type === 'string' && column.caseInsensitive) {
+            optionValue = valueAttr.toLowerCase();
+          }
 
           if (optionValue === compareValue) {
             opt.attr('selected', 'true');
@@ -512,7 +521,14 @@ window.Editors = {
       }
 
       var selected = this.select.find(':selected'),
-        val = selected.attr('value');
+        val = selected.attr('value'), dataType = selected.attr('data-type');
+
+      // For non-string option values (number, boolean, etc.), convert string attr value to proper type
+      if (dataType === 'number') {
+        val = parseFloat(val);
+      } else if (dataType === 'boolean') {
+        val = val === 'true';
+      }
 
       if (val === undefined) {
         val = selected.text();
@@ -1748,7 +1764,7 @@ $.fn.datagrid = function(options) {
       }
 
       var rawValue = obj[field],
-        value = (rawValue !== undefined || rawValue === 0 ? rawValue : '');
+        value = (rawValue || rawValue === 0 || rawValue === false ? rawValue : '');
 
       value = $.escapeHTML(value);
       return value;
@@ -1772,6 +1788,7 @@ $.fn.datagrid = function(options) {
       self.tableHeight = self.tableBody.height();
       self.tableBody.css({'height': self.tableHeight, 'display': 'block'});
       self.tableBody.empty();
+      self.recordCount = 0;
 
       for (i = 0; i < dataset.length; i++) {
 
@@ -1779,10 +1796,12 @@ $.fn.datagrid = function(options) {
         if (this.settings.paging && !this.settings.source) {
 
           if (activePage === 1 && i >= pagesize){
+            this.recordCount++;
             continue;
           }
 
           if (activePage > 1 && !(i >= pagesize*(activePage-1) && i < pagesize*activePage)) {
+            this.recordCount++;
             continue;
           }
         }
@@ -1792,6 +1811,7 @@ $.fn.datagrid = function(options) {
           continue;
         }
 
+        this.recordCount++;
         tableHtml += self.rowHtml(dataset[i]);
 
       }
@@ -1811,7 +1831,6 @@ $.fn.datagrid = function(options) {
     recordCount: 0,
 
     rowHtml: function (rowData, renderHidden) {
-      this.recordCount++;
 
       var isEven = (this.recordCount % 2 === 0),
         self = this,
@@ -1875,7 +1894,7 @@ $.fn.datagrid = function(options) {
 
         //Run a function that helps check if editable
         if (col.isEditable && !col.readonly) {
-          var canEdit = col.isEditable(this.recordCount, j, self.fieldValue(rowData, self.settings.columns[j].field), col, rowData);
+          var canEdit = col.isEditable(this.recordCount-1, j, self.fieldValue(rowData, self.settings.columns[j].field), col, rowData);
 
           if (!canEdit) {
             cssClass += ' is-readonly';
@@ -3635,11 +3654,11 @@ $.fn.datagrid = function(options) {
         return newVal;
       }
 
-      if (typeof oldVal === 'number') {
+      if (typeof oldVal === 'number' && col.numberFormat) {
         newVal = value;
 
         if (typeof Locale !== undefined) {
-          newVal = Locale.formatNumber(newVal, (col.numberFormat ? col.numberFormat : null));
+          newVal = Locale.formatNumber(newVal, col.numberFormat);
         }
 
         // double check if newValue is NaN when value is true/false
@@ -3830,6 +3849,10 @@ $.fn.datagrid = function(options) {
         level = rowElement.attr('aria-level'),
         children = rowElement.nextAll(),
         isExpanded = expandButton.hasClass('is-expanded');
+
+      if (!rowElement.hasClass('datagrid-tree-parent')) {
+        return;
+      }
 
       if (isExpanded) {
         expandButton.removeClass('is-expanded')
