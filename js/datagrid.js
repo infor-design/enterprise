@@ -97,6 +97,11 @@ window.Formatters = {
     //Support for dynamic links based on content
     if (col.href && typeof col.href === 'function') {
       colHref = col.href(row, cell, item, col);
+      //Passing a null href will produce "just text" with no link
+      if (colHref == null) {
+          return col.text ? col.text : value;
+      }
+
     } else  {
       colHref = colHref.replace('{{value}}', value);
     }
