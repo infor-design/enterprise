@@ -924,7 +924,12 @@ $.fn.datagrid = function(options) {
       data.rowStatus = {icon: 'new', text: 'New', tooltip: 'New'};
 
       // Add to array
-      self.settings.dataset[isTop ? 'unshift' : 'push'](data);
+      if (typeof location === 'string') {
+        self.settings.dataset[isTop ? 'unshift' : 'push'](data);
+      }
+      else {
+        self.settings.dataset.splice(location, 0, data);
+      }
 
       // Add to ui
       self.renderRows();
@@ -940,8 +945,25 @@ $.fn.datagrid = function(options) {
 
         rowNode = self.tableBody.find('tr').eq(row);
         args = {row: row, cell: cell, target: rowNode, value: data, oldValue: []};
+
+        self.pagerRefresh(location);
         self.element.triggerHandler('addrow', args);
       }, 10);
+    },
+
+    pagerRefresh: function (location) {
+      if (this.pager) {
+        var activePage = this.pager.activePage;
+        if (typeof location === 'string') {
+          activePage = location === 'top' ? 1 : this.pager._pageCount;
+        }
+        else if (typeof location === 'number') {
+          activePage = Math.floor(location / this.pager.settings.pagesize + 1);
+        }
+        this.pager.pagingInfo = this.pager.pagingInfo || {};
+        this.pager.pagingInfo.activePage = activePage;
+        this.renderPager(this.pager.pagingInfo);
+      }
     },
 
     initFixedHeader: function () {
@@ -1066,6 +1088,7 @@ $.fn.datagrid = function(options) {
         self.removeRow(selectedRows[i].idx, true);
         this.updateSelected();
       }
+      this.pagerRefresh();
       this.syncSelectedUI();
 
     },
