@@ -1743,7 +1743,7 @@ $.fn.datagrid = function(options) {
       }
 
       var rawValue = obj[field],
-        value = (rawValue || rawValue === 0 ? rawValue : '');
+        value = (rawValue !== undefined || rawValue === 0 ? rawValue : '');
 
       value = $.escapeHTML(value);
       return value;
