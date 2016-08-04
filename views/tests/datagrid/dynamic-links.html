@@ -36,6 +36,10 @@
       columns.push({ id: 'productId', hidden: true, name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly });
       columns.push({ id: 'productDesc', name: 'Product Desc', field: 'productName', width: 125, formatter: Formatters.Hyperlink,
         href: function(row, cell, item, col) {
+          //These links will be just text if null is returned
+          if (item.id === 1 || item.id === 2) {
+            return null;
+          }
           return '/functions/'+ item.productId + '?'+ item.id;
         },
         click: function (e, args) {
