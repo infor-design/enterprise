@@ -326,7 +326,7 @@
         if (this.isTable && !this.settings.indeterminate && this.pagerBar.find('.pager-count').length === 0) {
           var text = Locale.translate('PageOf');
           text = text = text.replace('{0}', '<input name="pager-pageno" value="' + this.activePage + '">');
-          text = text.replace('{1}', '<span class="pager-total-pages">' + (pages ? pages : '-') + '</span>');
+          text = text.replace('{1}', '<span class="pager-total-pages">' + (pages ? pages : 1) + '</span>');
 
           $('<li class="pager-count"><label>'+ text +' </label>').insertAfter(this.pagerBar.find('.pager-prev'));
 
@@ -373,6 +373,8 @@
 
         var pattern = (''+ this._pageCount).replace(/\d/g, '#');
         this.pagerBar.find('.pager-count input').attr('data-mask', pattern).mask();
+
+        this._pageCount = this._pageCount || 1;
 
         return this._pageCount;
       },
