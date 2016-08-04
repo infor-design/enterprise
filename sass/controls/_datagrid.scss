@@ -1036,7 +1036,7 @@ td .btn-actions {
 //Grid Expand Button
 .datagrid-expand-btn {
   background-color: transparent;
-  margin-left: -10px;
+  left: -10px;
   top: 1px;
   vertical-align: middle;
 
@@ -1046,7 +1046,7 @@ td .btn-actions {
 
   + span {
     color: $datagrid-cell-color;
-    margin-left: -5px;
+    margin-left: -15px;
     position: relative;
   }
 

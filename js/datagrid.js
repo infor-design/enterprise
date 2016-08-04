@@ -177,11 +177,11 @@ window.Formatters = {
   // Tree Expand / Collapse Button and Paddings
   Tree: function (row, cell, value, col, item) {
     var isOpen = item.expanded,
-      button = '<button class="btn-icon datagrid-expand-btn' + (isOpen ? ' is-expanded' : '') + '" tabindex="-1"' +  (item.depth ? ' style="margin-left: ' + (item.depth ? (40*item.depth) + 'px' : '') + '"' : '') + '>'+
+      button = '<button class="btn-icon datagrid-expand-btn' + (isOpen ? ' is-expanded' : '') + '" tabindex="-1"' +  (item.depth ? ' style="margin-left: ' + (item.depth ? (30* (item.depth -1)) + 'px' : '') + '"' : '') + '>'+
       '<span class="icon plus-minus'+ (isOpen ? ' active' : '') + '"></span>' +
       '<span class="audible">' + Locale.translate('ExpandCollapse') + '</span>' +
       '</button>' + ( value ? '<span> ' + value + '</span>' : ''),
-      node = '<span class="datagrid-tree-node"' + (item.depth ? ' style="margin-left: ' + (item.depth ? (30*item.depth) + 'px' : '') + '"' : '') + '> ' + value + '</span>';
+      node = '<span class="datagrid-tree-node"' + (item.depth ? ' style="margin-left: ' + (item.depth ? (30* (item.depth-1)) + 'px' : '') + '"' : '') + '> ' + value + '</span>';
 
     return (item[col.children ? col.children : 'children'] ? button : node);
   },
@@ -829,6 +829,11 @@ $.fn.datagrid = function(options) {
       } else {
         self.table = $('<table></table>').addClass('datagrid').attr('role', this.settings.treeGrid ? 'treegrid' : 'grid');
         self.container = self.element.addClass('datagrid-container');
+      }
+
+      //A treegrid is considered editable unless otherwise specified.
+      if (this.settings.treeGrid && !this.settings.editable) {
+        self.table.attr('aria-readonly', 'true');
       }
 
       $(this.element).closest('.datagrid-wrapper').addClass(this.settings.isList ? ' is-gridlist' : '');
@@ -1786,12 +1791,15 @@ $.fn.datagrid = function(options) {
         pagesize = self.settings.pagesize,
         rowHtml = '';
 
-      rowHtml = '<tr role="row" aria-rowindex="' + ((this.recordCount) + (self.settings.source  ? ((activePage-1) * pagesize) : 0)) + '" class="datagrid-row'+
+      rowHtml = '<tr role="row" aria-rowindex="' + ((this.recordCount) + (self.settings.source  ? ((activePage-1) * pagesize) : 0)) + '"' +
+                (self.settings.treeGrid && rowData.children ? ' aria-expanded="' + (rowData.expanded ? 'true"' : 'false"') : '') +
+                (self.settings.treeGrid ? ' aria-level= "' + rowData.depth + '"' : '') +
+                ' class="datagrid-row'+
                 (self.settings.rowHeight !== ' normal' ? ' ' + self.settings.rowHeight + '-rowheight' : '') +
                 (renderHidden ? ' is-hidden' : '') +
                 (self.settings.alternateRowShading && !isEven ? ' alt-shading' : '') +
                 (!self.settings.cellNavigation ? ' is-clickable' : '' ) +
-                (self.settings.treeGrid ? (rowData.children ? ' datagrid-tree-parent' : (rowData.depth > 0 ? ' datagrid-tree-child' : '')) : '') +
+                (self.settings.treeGrid ? (rowData.children ? ' datagrid-tree-parent' : (rowData.depth > 1 ? ' datagrid-tree-child' : '')) : '') +
                  '"' + '>';
 
       for (var j = 0; j < self.settings.columns.length; j++) {
@@ -2371,7 +2379,7 @@ $.fn.datagrid = function(options) {
 
       //Consitutues Client Side Paging
       if (self.settings.source === null) {
-        count = self.settings.dataset.length;
+        count = self.recordCount;
       }
 
       if (totals && totals !== -1) {
@@ -3315,7 +3323,7 @@ $.fn.datagrid = function(options) {
         }
 
         //Up arrow key
-        if (key === 38 && !self.quickEditMode) {
+          if (key === 38 && !self.quickEditMode) {
           //Press [Control + Up] arrow to move to the first row on the first page.
           if (e.altKey) {
             self.setActiveCell(0, cell);
@@ -3463,19 +3471,6 @@ $.fn.datagrid = function(options) {
         }
 
       });
-    },
-
-    setNextActiveCell: function (e) {
-      if (e.type === 'keydown') {
-        if (this.settings.actionableMode) {
-          var evt = $.Event('keydown.datagrid');
-          evt.keyCode = 40; // move down
-          this.activeCell.node.trigger(evt);
-        }
-        else {
-          this.setActiveCell(this.activeCell.row, this.activeCell.cell);
-        }
-      }
     },
 
     isContainTextfield: function(container) {
@@ -3787,23 +3782,67 @@ $.fn.datagrid = function(options) {
       self.element.trigger('activecellchange', [{node: this.activeCell.node, row: this.activeCell.row, cell: this.activeCell.cell}]);
     },
 
-//expand the tree rows
+    setNextActiveCell: function (e) {
+      if (e.type === 'keydown') {
+        if (this.settings.actionableMode) {
+          var evt = $.Event('keydown.datagrid');
+          evt.keyCode = 40; // move down
+          this.activeCell.node.trigger(evt);
+        }
+        else {
+          this.setActiveCell(this.activeCell.row, this.activeCell.cell);
+        }
+      }
+    },
+
+    //expand the tree rows
     toggleChildren: function(rowIndex) {
       var rowElement = this.table.find('tr').eq(rowIndex),
         expandButton = rowElement.find('.datagrid-expand-btn'),
-        children = rowElement.nextAll('.datagrid-tree-child');
+        level = rowElement.attr('aria-level'),
+        children = rowElement.nextAll(),
+        isExpanded = expandButton.hasClass('is-expanded');
 
-      if (expandButton.hasClass('is-expanded')) {
+      if (isExpanded) {
         expandButton.removeClass('is-expanded')
           .find('.plus-minus').removeClass('active');
-
-          children.css('display', 'none');
       } else {
         expandButton.addClass('is-expanded')
           .find('.plus-minus').addClass('active');
-
-        children.css('display', 'table-row');
       }
+
+      var restCollapsed = false;
+
+      children.each(function () {
+        var node = $(this);
+
+        if (node.hasClass('datagrid-tree-parent') && node.attr('aria-level') > level) {
+          restCollapsed = node.find('.datagrid-expand-btn.is-expanded').length === 0;
+
+          if (isExpanded) {
+            node.addClass('is-hidden');
+          } else {
+            node.removeClass('is-hidden');
+          }
+
+          return;
+        }
+
+        if (restCollapsed) {
+          node.addClass('is-hidden');
+          return;
+        }
+
+        if (node.attr('aria-level') > level) {
+
+          if (isExpanded) {
+            node.addClass('is-hidden');
+          } else {
+            node.removeClass('is-hidden');
+          }
+        }
+
+     });
 
     },
 

@@ -24,6 +24,20 @@ $('body').one('initialized', function () {
     cost : 50.00,
     availability : "Non stock",
     button : "Add to Request"
+  }, {
+    item : "item 2",
+    qty : 2,
+    uom : "EA",
+    cost : 50.00,
+    availability : "Non stock",
+    button : "Add to Request"
+  }, {
+    item : "item 3",
+    qty : 2,
+    uom : "EA",
+    cost : 50.00,
+    availability : "Non stock",
+    button : "Add to Request"
   });
 
   inputFormatter = function(row, cell, value, col, item) {
@@ -53,7 +67,8 @@ $('body').one('initialized', function () {
   $('#datagrid').datagrid({
     columns: columns,
     dataset: data,
-    isList: true
+    isList: true,
+    cellNavigation: false
    });
 
   });
