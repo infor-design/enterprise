@@ -110,14 +110,16 @@
             $('label:visible', field).append('<span class="audible msg-dirty">'+ Locale.translate('MsgDirty') +'</span>');
           }
 
-          //Trigger event
-          input.trigger('dirty');
-
           //Handle reseting value back
           if (valMethod(input) === input.data('original')) {
             input.removeClass('dirty');
             $('.icon-dirty, .msg-dirty', field).remove();
+            return;
           }
+
+          //Trigger event
+          input.trigger('dirty');
+
         });
       });
     return this;
