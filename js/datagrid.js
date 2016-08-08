@@ -755,7 +755,8 @@ $.fn.datagrid = function(options) {
         indeterminate: false, //removed ability to go to a specific page.
         source: null, //callback for paging
         //Filtering Options
-        filterable: false
+        filterable: false,
+        resultsText: null  // Can provide a custom function to adjust results text
       },
       settings = $.extend({}, defaults, options);
 
@@ -2445,6 +2446,10 @@ $.fn.datagrid = function(options) {
       }
 
       var countText = '(' + count + ' ' + Locale.translate('Results') + ')';
+      if (self.settings.resultsText && typeof self.settings.resultsText === 'function') {
+        countText = self.settings.resultsText(self, count);
+      }
+
       if (self.toolbar) {
         self.toolbar.find('.datagrid-result-count').html(countText);
         self.toolbar.attr('aria-label',  self.toolbar.find('.title').text());
