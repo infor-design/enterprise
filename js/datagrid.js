@@ -3654,19 +3654,6 @@ $.fn.datagrid = function(options) {
         return newVal;
       }
 
-      if (typeof oldVal === 'number' && col.numberFormat) {
-        newVal = value;
-
-        if (typeof Locale !== undefined) {
-          newVal = Locale.formatNumber(newVal, col.numberFormat);
-        }
-
-        // double check if newValue is NaN when value is true/false
-        if (isNaN(newVal)){
-          newVal = value;
-        }
-      }
-
       return newVal;
     },
 
