@@ -862,10 +862,9 @@ $.fn.datagrid = function(options) {
       self.table.addClass(this.settings.isList ? ' is-gridlist' : '');
 
       self.table.empty();
-      self.renderHeader();
       self.renderRows();
       self.element.append(self.table);
-      self.setColumnWidths();
+      self.renderHeader();
 
       self.wrapper = self.element.closest('.datagrid-wrapper');
 
@@ -1260,7 +1259,7 @@ $.fn.datagrid = function(options) {
 
       if (self.headerRow === undefined) {
         self.headerRow = $('<thead>' + headerRow + '</thead>');
-        self.table.append(self.headerRow);
+        self.table.prepend(self.headerRow);
       } else {
         self.headerRow.empty();
         self.headerRow.append(headerRow);
@@ -2007,11 +2006,20 @@ $.fn.datagrid = function(options) {
           widthProvided = true;
         }
 
-        if (typeof column.width === 'string') {
+        if (typeof column.width === 'string' && column.width.indexOf('px') === -1) {
           widthPercent = true;
         }
 
-        total+= column.width || header.outerWidth();
+        var colWidth =  parseInt(column.width) || header.outerWidth();
+        total+= colWidth;
+        if (widthProvided) {
+          header.css('width', colWidth);
+        }
+
+        if (widthPercent && column.width) {
+          header.css('width', parseInt(column.width) + '%');
+        }
+
         self.adjustDraggablePosition(header);
       }
 
@@ -2070,8 +2078,8 @@ $.fn.datagrid = function(options) {
         this.settings.columnGroups = columnGroups;
       }
 
-      this.renderHeader();
       this.renderRows();
+      this.renderHeader();
       this.setColumnWidths();
 
       this.resetPager('updatecolumns');
@@ -3803,8 +3811,7 @@ $.fn.datagrid = function(options) {
         self.activeCell = prevCell;
       }
 
-      // self.activeCell.node.focus();
-      if (!$('input, button, a', self.activeCell.node).length) {
+      if (!$('input, button', self.activeCell.node).length) {
         self.activeCell.node.focus();
       }
       if (self.activeCell.node.hasClass('is-focusable')) {
