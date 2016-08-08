@@ -1,0 +1,152 @@
+{{={{{ }}}=}}
+
+<button class="btn-primary" type="button" onclick='resetDisplaySettings_onclick();'>Action</button><br><br><br>
+<div id="travelSectionDiv">
+	<div id="travelSectionList" class="listview" data-init="false" data-tmpl="ts-list-template"></div>
+</div>
+
+
+<script id="ts-list-template" type="text/html">
+  <ul>
+	{{#dataset}}
+	  <li  data-id="{{ID}}">
+		<span class="listview-heading">{{ts_name}}</span>
+		<div style="float:right; width:160px;">
+		<p class="listview-subheading">{{remainingPicks}}&nbsp;<span id="tSectTmpltHoldLabel">Filtered Picks Remaining</span></p>
+		</div><br>
+	  </li>
+	{{/dataset}}
+  </ul>
+</script>
+
+<script>
+  var odd = true;
+
+  $(function() {
+    $('body').initialize('en-US');
+  });
+
+  // initial load
+  $('body').one('initialized', function () {
+  	$('#travelSectionList').listview({dataset: getTSeven(), template: $('#ts-list-template').html()});
+  });
+
+  // button click (after about 14 clicks my browser locks up)
+  function resetDisplaySettings_onclick() {
+	var tsdata;
+	if (odd) {
+		tsdata = getTSodd();
+	} else {
+		tsdata = getTSeven();
+	}
+	odd = !odd;
+
+	// update the listview
+	$('#travelSectionList').listview({dataset: tsdata, template: $('#ts-list-template').html()}).trigger('updated');
+};
+
+// dummy data from app...
+function getTSeven() {
+	var data = [
+    {
+      "remainingPicks": 55,
+      "ts_name": "Cooler",
+      "ID": 108
+    },
+    {
+      "remainingPicks": 82,
+      "ts_name": "FREEZER",
+      "ID": 109
+    },
+    {
+      "remainingPicks": 440,
+      "ts_name": "RACKS",
+      "ID": 110
+    },
+    {
+      "remainingPicks": 96,
+      "ts_name": "RACK2",
+      "ID": 111
+    },
+    {
+      "remainingPicks": 100,
+      "ts_name": "BULK",
+      "ID": 112
+    },
+    {
+      "remainingPicks": 6,
+      "ts_name": "BULK-L",
+      "ID": 113
+    },
+    {
+      "remainingPicks": 0,
+      "ts_name": "DOCKS",
+      "ID": 114
+    },
+    {
+      "remainingPicks": 0,
+      "ts_name": "MIDSECTION",
+      "ID": 115
+    },
+    {
+      "remainingPicks": 0,
+      "ts_name": "OFFICE",
+      "ID": 117
+    }
+  ];
+  return data;
+}
+
+function getTSodd() {
+	var data = [
+    {
+      "remainingPicks": 55,
+      "ts_name": "XXXXXX",
+      "ID": 108
+    },
+    {
+      "remainingPicks": 82,
+      "ts_name": "XXXXXX",
+      "ID": 109
+    },
+    {
+      "remainingPicks": 440,
+      "ts_name": "XXXXXX",
+      "ID": 110
+    },
+    {
+      "remainingPicks": 96,
+      "ts_name": "XXXXXX",
+      "ID": 111
+    },
+    {
+      "remainingPicks": 100,
+      "ts_name": "XXXXXX",
+      "ID": 112
+    },
+    {
+      "remainingPicks": 6,
+      "ts_name": "XXXXXX-L",
+      "ID": 113
+    },
+    {
+      "remainingPicks": 0,
+      "ts_name": "XXXXXX",
+      "ID": 114
+    },
+    {
+      "remainingPicks": 0,
+      "ts_name": "XXXXXX",
+      "ID": 115
+    },
+    {
+      "remainingPicks": 0,
+      "ts_name": "XXXXXX",
+      "ID": 117
+    }
+  ];
+  return data;
+}
+
+
+</script>

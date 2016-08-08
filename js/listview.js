@@ -163,7 +163,7 @@
         // Add Aria
         $('ul', this.element).attr({'role': 'presentation'});
 
-        // Add an Checkboxes
+        // Add Checkboxes
         var first = this.element.find('li, tbody > tr').first(),
           items = this.element.find('li, tr'),
           isMultiselect = (this.settings.selectable === 'multiple');
@@ -201,7 +201,7 @@
         this.element.trigger('rendered', [dataset]);
 
         //Handle refresh
-        this.element.on('updated', function () {
+        this.element.off('updated').on('updated', function () {
           self.refresh();
         });
       },
@@ -757,7 +757,7 @@
       },
 
       updated: function() {
-        // TODO: Updated
+        this.refresh();
         return this;
       },
 
