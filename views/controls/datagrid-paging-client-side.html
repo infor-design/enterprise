@@ -36,7 +36,15 @@
           }).on('selected', function (e, args) {
             console.log(args);
           });
+
+          $('#datagrid tbody').on('paging', function(e, args) {
+           console.log(args);
+          });
+
       });
 
+
   });
+
+
 </script>

@@ -69,7 +69,7 @@ $(function($) {
   var cnt = 0;
   $('#show-toast-message').on('click', function() {
     cnt ++;
-    $('body').toast({title: 'Application Offline' + cnt, message: 'This is a Toast message'});
+    $('body').toast({title: 'Sample Message ' + cnt, message: 'This is a Toast message'});
   });
 
 

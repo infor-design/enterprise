@@ -1824,7 +1824,9 @@ $.fn.datagrid = function(options) {
 
       //Set Tab Index and active Cell
       setTimeout(function () {
-        self.displayCounts();
+        if (!self.settings.source) {
+          self.displayCounts();
+        }
         self.activeCell = {node: self.cellNode(0, 0).attr('tabindex', '0'), isFocused: false, cell: 0, row: 0};
       }, 100);
     },
