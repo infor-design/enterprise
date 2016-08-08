@@ -734,7 +734,8 @@ $.fn.datagrid = function(options) {
         // If actionableMode is "true”, tab and shift tab behave like left and right arrow key,
         // if the cell is editable it goes in and out of edit mode
         actionableMode: false,
-        cellNavigation: true, // If cellNavigation is "false”, will show border arround whole row on focus
+        cellNavigation: true, // If cellNavigation is "false”, will show border around whole row on focus
+        rowNavigation: true, // If rowNavigation is "false”, will NOT show border around the row
         alternateRowShading: false, //Sets shading for readonly grids
         columns: [],
         dataset: [],
@@ -2488,7 +2489,7 @@ $.fn.datagrid = function(options) {
       // Set Focus on rows
       self.table
         .on('focus.datagrid', 'tbody > tr', function () {
-          if (!self.settings.cellNavigation) {
+          if (!self.settings.cellNavigation && self.settings.rowNavigation) {
             $(this).addClass('is-active-row');
           }
         })
@@ -2571,8 +2572,10 @@ $.fn.datagrid = function(options) {
 
       var body = this.table.find('tbody');
       body.off('touchcancel.datagrid touchend.datagrid').on('touchcancel.datagrid touchend.datagrid', 'td', function (e) {
+        if (!$('input, button, a', this).length) {
+          e.preventDefault();
+        }
         e.stopPropagation();
-        e.preventDefault();
         $(this).trigger('click');
       }).off('click.datagrid').on('click.datagrid', 'td', function (e) {
         var target = $(e.target);
