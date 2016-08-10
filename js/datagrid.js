@@ -636,15 +636,14 @@ window.Editors = {
 
     this.focus = function () {
       var self = this,
-        api = this.input.data('lookup'),
-        td = this.input.closest('td');
+        api = self.input.data('lookup'),
+        td = self.input.closest('td');
 
       // Using keyboard
       if (event.type === 'keydown') {
+        self.input.select().focus();
         td.on('keydown.editorlookup', function (e) {
-          if (e.keyCode === 40) {
-            $(this).addClass('is-focused');
-            api.openDialog(e);
+          if (e.keyCode === 40 && grid.quickEditMode) {
             e.preventDefault();
             e.stopPropagation();
           }
@@ -653,28 +652,33 @@ window.Editors = {
 
       //Check if isClick or cell touch and just open the list
       if (event.type === 'click') {
-        api.openDialog(event);
-        td.addClass('is-focused');
+        if ($(event.target).is('svg')) {
+          api.openDialog(event);
+        } else {
+          self.input.select().focus();
+          td.on('touchcancel.editorlookup touchend.editorlookup', '.trigger', function() {
+            api.openDialog();
+          });
+        }
       }
 
       // Update on change from lookup
-      this.input.on('change', function () {
-        td.removeClass('is-focused');
-
+      self.input.on('change', function () {
         setTimeout(function () {
-          self.input.trigger('focusout');
           container.parent().focus();
           grid.setNextActiveCell(event);
+          grid.quickEditMode = false;
         }, 1);
-
       });
+
     };
 
     this.destroy = function () {
       var self = this,
         td = this.input.closest('td');
       setTimeout(function() {
-        td.off('keydown.editorlookup');
+        td.off('keydown.editorlookup')
+          .find('.trigger').off('touchcancel.editorlookup touchend.editorlookup');
         self.input.remove();
       }, 0);
     };
@@ -2709,7 +2713,8 @@ $.fn.datagrid = function(options) {
       // Implement Editing Commit Functionality
       body.off('focusout.datagrid').on('focusout.datagrid', 'td input, td textarea, div.dropdown', function () {
         //Popups are open
-        if ($('#calendar-popup, .autocomplete.popupmenu.is-open').is(':visible')) {
+        if ($('#calendar-popup, .autocomplete.popupmenu.is-open').is(':visible') ||
+          $('.lookup-modal.is-visible').length) {
           return;
         }
 
@@ -3553,7 +3558,7 @@ $.fn.datagrid = function(options) {
     },
 
     notContainTextfield: function(container) {
-      var selector = '.dropdown, .datepicker, .lookup';
+      var selector = '.dropdown, .datepicker';
       return !($(selector, container).length);
     },
 
