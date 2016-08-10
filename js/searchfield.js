@@ -95,7 +95,7 @@
         // Add Icon
         var icon = this.wrapper.find('.icon:not(.icon-dropdown)');
         if (!icon || !icon.length) {
-          icon = $('<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-search"/></svg>').insertAfter(this.element);
+          icon = $.svgIcon('search').insertAfter(this.element);
         }
 
         // Change icon to a trigger button if we're dealing with categories
@@ -114,7 +114,7 @@
 
           var ddIcon = icon.find('.icon-dropdown');
           if (!ddIcon.length) {
-            ddIcon = $('<svg class="icon icon-dropdown" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></use></svg>');
+            ddIcon = $.svgIcon({ cls: 'icon-dropdown', icon: 'dropdown' });
           }
           ddIcon.appendTo(icon);
 
@@ -150,7 +150,7 @@
         }
 
         if (this.settings.clearable) {
-          this.xButton = $('<svg class="icon close" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-close"/></svg>');
+          this.xButton = $.svgIcon({ cls: 'close', icon:'close' });
           this.element.parent('').append(this.xButton);
         }
 

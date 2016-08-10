@@ -126,7 +126,7 @@
         if (self.moreButton.length === 0) {
           var button = $('<div>').attr({'class': 'tab-more'});
           button.append( $('<span class="more-text">').text(Locale.translate('More')));
-          button.append('<svg class="icon icon-more" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></svg>');
+          button.append($.svgIconRaw({ cls: 'icon-more', icon: 'dropdown' }));
           self.tablist.after(button);
           self.moreButton = button;
         }
@@ -161,7 +161,7 @@
            .parent().attr('role', 'presentation').addClass('tab');
 
           if (a.parent().hasClass('dismissible') && !a.parent().children('.icon').length) {
-            $('<svg class="icon close" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-close"></svg>').insertAfter(a);
+            $.svgIcon({ icon: 'close', cls: 'close' }).insertAfter(a);
           }
 
           // Find and configure dropdown tabs
@@ -179,7 +179,7 @@
             a.removeAttr('role').removeAttr('aria-expanded').removeAttr('aria-selected');
 
             if (!a.parent().children('.icon.icon-more').length) {
-              $('<svg class="icon icon-more" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></svg>').insertAfter(a);
+              $.svgIcon({ cls: 'icon-more', icon: 'dropdown' }).insertAfter(a);
             }
           }
 
@@ -1239,7 +1239,7 @@
 
         if (options.isDismissible) {
           tabHeaderMarkup.addClass('dismissible');
-          tabHeaderMarkup.append('<svg class="icon close" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-close"></svg>');
+          tabHeaderMarkup.append($.svgIconRaw({ icon: 'close', cls: 'close' }));
         }
 
         if (this.settings.tabCounts) {

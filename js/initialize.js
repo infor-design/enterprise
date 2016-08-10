@@ -123,6 +123,14 @@
       },
 
       initAll : function () {
+        this.element.find('use').each(function () {
+          var url = this.getAttribute('xlink:href');
+
+          if (url && url.charAt(0) === '#') {
+            this.setAttribute('xlink:href', $.getSvgIconLink(url));
+          }
+        });
+
         // Iterate all objects we are initializing
         this.element.filter(':not(svg):not(use):not(.no-init)').each(function() {
           var elem = $(this),

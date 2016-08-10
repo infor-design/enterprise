@@ -543,7 +543,7 @@
       },
 
       getIcon: function(textName, iconName, className) {
-        return '<span class="audible">'+ Locale.translate(textName) +'</span><svg class="icon' + (className ? ' '+ className : '') + '" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-' +iconName +'"></use></svg>';
+        return '<span class="audible">'+ Locale.translate(textName) +'</span>' + $.svgIconRaw({ cls: className ? className : '', icon: iconName });
       },
 
       getButtonLabels: function (buttonLabelType) {

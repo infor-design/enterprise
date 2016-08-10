@@ -43,7 +43,7 @@ window.Formatters = {
     if (!col.editor) {
       return formatted;
     }
-    return '<span class="trigger">' + formatted + '</span><svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-calendar"><use xlink:href="#icon-calendar"/></svg>';
+    return '<span class="trigger">' + formatted + '</span>' + $.svgIconRaw({ icon: 'calendar', cls: 'icon-calendar' });
   },
 
   Autocomplete: function(row, cell, value) {
@@ -62,7 +62,7 @@ window.Formatters = {
       formatted = col.editorOptions.field(item, null, null);
     }
 
-    return '<span class="trigger">' + formatted + '</span><svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-search-list"><use xlink:href="#icon-search-list"/></svg>';
+    return '<span class="trigger">' + formatted + '</span>' + $.svgIconRaw({ icon: 'search-list', cls: 'icon-search-list' });
   },
 
   Decimal:  function(row, cell, value, col) {
@@ -128,10 +128,12 @@ window.Formatters = {
       text = '';
     }
 
-    return '<button class="btn-icon small datagrid-drilldown">' +
-         '<svg class="icon" focusable="false" aria-hidden="true" role="presentation">'+
-         '<use xlink:href="#icon-drilldown"/></svg><span>'+ text +'</span>'+
-         '</button>';
+    return (
+      '<button class="btn-icon small datagrid-drilldown">' +
+         $.svgIconRaw({icon: 'drilldown'}) +
+        '<span>' + text + '</span>' +
+      '</button>'
+    );
   },
 
   Checkbox: function (row, cell, value, col) {
@@ -157,10 +159,12 @@ window.Formatters = {
 
   Actions: function (row, cell, value, col) {
     //Render an Action Formatter
-    return '<button class="btn-actions" aria-haspopup="true" aria-expanded="false" aria-owns="'+ col.menuId +'">' +
-          '<span class="audible">'+ col.title +'</span>' +
-          '<svg class="icon" focusable="false" aria-hidden="true" role="presentation">' +
-          '<use xlink:href="#icon-more"></svg></button>';
+    return (
+      '<button class="btn-actions" aria-haspopup="true" aria-expanded="false" aria-owns="'+ col.menuId +'">' +
+        '<span class="audible">'+ col.title +'</span>' +
+        $.svgIconRaw({ icon: 'more' }) +
+      '</button>'
+    );
   },
 
   // Multi Line TextArea
@@ -230,7 +234,14 @@ window.Formatters = {
 
   Alert: function (row, cell, value, col) {
     var ranges = Formatters.ClassRange(row, cell, value, col);
-    return '<svg class="icon datagrid-alert-icon icon-' + ranges.classes +'" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-' + ranges.classes +'"/></svg><span class="datagrid-alert-text">' + (ranges.text === 'value' ? value : ranges.text) + '</span>';
+    var icon = $.svgIconRaw({
+      icon: ranges.classes, classes: [
+        'icon',
+        'datagrid-alert-icon',
+        'icon-' + ranges.classes
+      ]
+    });
+    return icon + '<span class="datagrid-alert-text">' + (ranges.text === 'value' ? value : ranges.text) + '</span>';
   },
 
   Image: function (row, cell, value, col) {
@@ -274,7 +285,7 @@ window.Formatters = {
       }
     }
 
-    return '<span class="trigger">' + formattedValue + '</span><svg role="presentation" aria-hidden="true" focusable="false" class="icon"><use xlink:href="#icon-dropdown"/></svg>';
+    return '<span class="trigger">' + formattedValue + '</span>' + $.svgIconRaw({ icon: 'dropdown' });
   },
 
   Favorite: function (row, cell, value, col) {
@@ -287,7 +298,7 @@ window.Formatters = {
       isChecked = (value == undefined ? false : value == true); // jshint ignore:line
     }
 
-    return !isChecked ? '' : '<span class="audible">'+ Locale.translate('Favorite') + '</span><span class="icon-favorite"><svg role="presentation" aria-hidden="true" focusable="false" class="icon"><use xlink:href="#icon-star-filled"/></svg></span>';
+    return !isChecked ? '' : '<span class="audible">'+ Locale.translate('Favorite') + '</span><span class="icon-favorite">' + $.svgIconRaw({ icon: 'star-filled' }) + '</span>';
   },
 
   Status: function (row, cell, value, col, item) {
@@ -296,7 +307,7 @@ window.Formatters = {
       return '<span>&nbsp;</span>';
     }
 
-    return '<svg title="test" role="presentation" aria-hidden="true" focusable="false" class="icon icon-' + item.rowStatus.icon + ' datagrid-alert-icon"><use xlink:href="#icon-'+ item.rowStatus.icon + '"/></svg><span class="audible">' + item.rowStatus.text + '</span>';
+    return $.svgIconRaw({ icon: item.rowStatus.icon, classes: ['icon', 'icon-' + item.rowStatus.icon, 'datagrid-alert-icon'] }) + '<span class="audible">' + item.rowStatus.text + '</span>';
   },
 
   // Possible future Formatters
@@ -1255,7 +1266,9 @@ $.fn.datagrid = function(options) {
           headerRow += '<span aria-checked="false" class="datagrid-checkbox" aria-label="Selection" role="checkbox"></span>';
         }
         if (isSortable) {
-          headerRow += '<div class="sort-indicator"><span class="sort-asc"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></svg></span><span class="sort-desc"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></svg></div>';
+          headerRow += '<div class="sort-indicator">' +
+            '<span class="sort-asc">' + $.svgIconRaw({ icon: 'dropdown' })+ '</span>' +
+            '<span class="sort-desc">'+ $.svgIconRaw({ icon: 'dropdown' }) +'</div>';
         }
 
         headerRow += '</div></th>';
@@ -2781,12 +2794,12 @@ $.fn.datagrid = function(options) {
         }
 
         if (settings.toolbar.dateFilter) {
-          buttonSet.append('<button class="btn" type="button"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-calendar"></use></svg><span>' + Locale.translate('Date') + '</span></button>');
+          buttonSet.append('<button class="btn" type="button">' + $.svgIconRaw({ icon: 'calendar' }) + '<span>' + Locale.translate('Date') + '</span></button>');
         }
 
         if (settings.toolbar.actions) {
           more = $('<div class="more"></div>').insertAfter(buttonSet);
-          more.append('<button class="btn-actions" title="More" type="button"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-more"></use></svg><span class="audible">Grid Features</span></button>');
+          more.append('<button class="btn-actions" title="More" type="button">' + $.svgIconRaw({ icon: 'more' }) + '<span class="audible">Grid Features</span></button>');
           toolbar.addClass('has-more-button');
         }
 

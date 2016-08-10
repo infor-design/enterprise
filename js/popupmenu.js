@@ -173,7 +173,7 @@
           }
 
           if (item.find('svg.arrow').length === 0) {
-            item.append('<svg class="icon arrow icon-dropdown" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></svg>');
+            item.append($.svgIconRaw({ cls: ['arrow', 'icon-dropdown'], icon: 'dropdown' }));
           }
           item.attr('aria-haspopup', 'true');
 
@@ -486,7 +486,7 @@
             audibleText = link.find('span').text();
 
           if (!icon.length) {
-            this.element.append($('<svg class="icon icon-dropdown" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></use></svg>'));
+            this.element.append($.svgIcon({ cls: 'icon-dropdown', icon: 'dropdown' }));
             icon = $('use', this.element);
           }
           $('use', this.element).attr('xlink:href', $('use', link).attr('xlink:href'));

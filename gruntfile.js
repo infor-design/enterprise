@@ -53,6 +53,7 @@ module.exports = function(grunt) {
         files: {
           'dist/js/<%= pkg.shortName %>.js': [
             'temp/amd/utils.js',
+            'temp/amd/svgicon.js',
             'temp/amd/animations.js',
             'temp/amd/locale.js',
             'temp/amd/listfilter.js',

@@ -129,13 +129,13 @@
       // Add Button Code and Functionality
       addButtons: function () {
         var self = this,
-          closeButton = $('<button class="btn-icon" type="button"><svg role="presentation" aria-hidden="true" focusable="false" class="icon close"><use xlink:href="#icon-close"/></svg><span class="audible">'+
+          closeButton = $('<button class="btn-icon" type="button">' + $.svgIconRaw({ cls: 'close', icon: 'close' }) + '<span class="audible">'+
             Locale.translate('Close') +'</span></button>');
 
-        this.previousButton = $('<button class="btn-previous" type="button"><svg role="presentation" aria-hidden="true" focusable="false" class="icon"><use xlink:href="#icon-left-arrow"/></svg><span class="audible">'+
+        this.previousButton = $('<button class="btn-previous" type="button">' + $.svgIconRaw('left-arrow') + '<span class="audible">'+
             Locale.translate('Previous') +'</span></button>');
 
-        this.nextButton = $('<button class="btn-next" type="button"><svg role="presentation" aria-hidden="true" focusable="false" class="icon"><use xlink:href="#icon-right-arrow"/></svg><span class="audible">'+
+        this.nextButton = $('<button class="btn-next" type="button">' + $.svgIconRaw('right-arrow') + '<span class="audible">'+
             Locale.translate('Next') +'</span></button>');
 
         this.lightBox
