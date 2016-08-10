@@ -41,7 +41,7 @@
 
       handleKeys: function() {
         var self = this,
-          cssIcon = $.svgIcon({ cls: 'icon-capslock', icon: 'capslock' });
+          cssIcon = $.createIconElement({ classes: 'icon-capslock', icon: 'capslock' });
 
         // Disable default [caps lock on] popup in IE
         document.msCapsLockWarningOff = true;

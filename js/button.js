@@ -48,7 +48,7 @@
             return $(this).find('use').attr('xlink:href') === '#icon-dropdown';
           });
           if (!ddIcon.length) {
-            ddIcon = $.svgIcon({ icon: 'dropdown', cls: 'icon-dropdown'});
+            ddIcon = $.createIcon({ icon: 'dropdown', classes: ['icon-dropdown']});
             this.element.append(ddIcon);
           }
           if (!ddIcon.hasClass('icon-dropdown')) {

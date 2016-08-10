@@ -52,8 +52,9 @@ module.exports = function(grunt) {
       basic: {
         files: {
           'dist/js/<%= pkg.shortName %>.js': [
+            'temp/amd/initialize.js',
+            'temp/amd/base.js',
             'temp/amd/utils.js',
-            'temp/amd/svgicon.js',
             'temp/amd/animations.js',
             'temp/amd/locale.js',
             'temp/amd/listfilter.js',
@@ -80,7 +81,7 @@ module.exports = function(grunt) {
             'temp/amd/hierarchy.js',
             'temp/amd/highlight.js',
             'temp/amd/homepage.js',
-            'temp/amd/initialize.js',
+            'temp/amd/icon.js',
             'temp/amd/lookup.js',
             'temp/amd/lifecycle.js',
             'temp/amd/lightbox.js',

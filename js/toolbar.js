@@ -96,7 +96,7 @@
           }
 
           this.more = $('<button class="btn-actions" type="button"></button>')
-            .html($.svgIconRaw('more') +
+            .html($.createIcon('more') +
               '<span class="audible">'+Locale.translate('MoreActions')+'</span>')
             .appendTo(moreContainer);
         }
@@ -160,7 +160,7 @@
           a.text(self.getItemText(item));
 
           // Pass along any icons except for the dropdown (which is added as part of the submenu design)
-          var submenuDesignIcon = $.getSvgIconLink('#icon-dropdown');
+          var submenuDesignIcon = $.getBaseURL('#icon-dropdown');
           var icon = item.children('.icon').filter(function(){
             var curr = $(this).children('use').attr('xlink:href');
 

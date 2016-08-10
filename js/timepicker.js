@@ -99,7 +99,7 @@
         //Append a Button
         this.trigger = this.element.next('svg.icon');
         if (this.trigger.length === 0) {
-          this.trigger = $.svgIcon('clock').insertAfter(this.element);
+          this.trigger = $.createIconElement('clock').insertAfter(this.element);
         }
 
         this.addAria();

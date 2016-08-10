@@ -66,7 +66,7 @@
         this.element.append(
           '<div class="fileupload-wrapper '+ standaloneClass +'">' +
             '<div class="container drop-area">' +
-              $.svgIconRaw('upload-adv') +
+              $.createIcon('upload-adv') +
               '<p>'+ settings.textDropArea +'</p>' +
             '</div>' +
           '</div>');
@@ -167,7 +167,7 @@
               '<div class="file-row">' +
                 '<span class="status-icon">' +
                   '<button type="button" class="btn-icon action">' +
-                    $.svgIconRaw({ cls: 'icon-close', icon: 'close'}) +
+                    $.createIcon({ icon: 'close', classes: ['icon-close'] }) +
                     '<span>'+ settings.textBtnCancel +'</span>' +
                   '</button>' +
                 '</span>' +
@@ -210,12 +210,12 @@
             container.addClass('completed');
 
             // Add "Completed" icon
-            btnCancel.after($.svgIconRaw('check'));
+            btnCancel.after($.createIcon('check'));
 
             // Add "Remove from server" button
             rightSide.append(
               '<button type="button" class="btn-icon action">' +
-                $.svgIconRaw({ cls: 'icon-close', icon: 'close' }) +
+                $.createIcon({ classes: ['icon-close'], icon: 'close' }) +
                 '<span>'+ settings.textBtnRemove +'</span>' +
               '</button>');
 
@@ -309,7 +309,7 @@
               '<div class="file-row">' +
                 '<span class="status-icon">' +
                   '<button type="button" class="btn-icon action">' +
-                    $.svgIconRaw({ cls: 'icon-close', icon: 'close' }) +
+                    $.createIcon({ classes: ['icon-close'], icon: 'close' }) +
                     '<span>'+ settings.textBtnCloseError +'</span>' +
                   '</button>' +
                 '</span>' +
@@ -323,7 +323,7 @@
               '<div class="file-row">' +
                 '<span class="status-icon">' +
                   '<button type="button" class="btn-icon action">' +
-                    $.svgIconRaw({ cls: 'icon-close', icon: 'close' }) +
+                    $.createIcon({ classes: ['icon-close'], icon: 'close' }) +
                     '<span>'+ settings.textBtnCloseError +'</span>' +
                   '</button>' +
                 '</span>' +

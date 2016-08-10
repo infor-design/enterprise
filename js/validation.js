@@ -262,7 +262,7 @@
 
     // Set Error icon on parent tabs/expandable
     setErrorOnParent: function (field) {
-      var errorIcon = $.svgIconRaw({ cls: 'icon-error', icon: 'error' }),
+      var errorIcon = $.createIcon({ classes: ['icon-error'], icon: 'error' }),
         parent = field.closest('.tab-panel, .expandable-pane'),
         parentContainer = field.closest('.tab-container, .expandable-area'),
         iconTarget = parent.attr('id'),
@@ -440,7 +440,7 @@
     showErrorIcon: function(field) {
 
       var loc = this.getField(field).addClass('error'),
-        svg = $.svgIcon({ cls: 'icon-error', icon: 'error' });
+        svg = $.createIconElement({ classes: ['icon-error'], icon: 'error' });
 
       if (loc.parent('.field, .field-short').find('svg.icon-error').length === 0) {
 
@@ -509,7 +509,7 @@
     showInlineError: function (field, message) {
       var loc = this.getField(field).addClass('error'),
         markup = '<div class="error-message">' +
-          $.svgIconRaw({ cls: 'error', icon: 'error' }) +
+          $.createIcon({ classes: ['error'], icon: 'error' }) +
           '<pre class="audible">'+ Locale.translate('Error') +'</pre>' +
           '<p class="message-text">' + message +'</p>' +
           '</div>';

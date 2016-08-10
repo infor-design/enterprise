@@ -45,9 +45,20 @@
     Initialize.prototype = {
       init: function() {
         this
+          .setupEnvironment()
           .addBrowserClasses()
           .handleInit()
           .addGlobalResize();
+      },
+
+      setupEnvironment: function() {
+        window.soho = window.soho || {};
+
+        if (!window.soho.base) {
+          $.detectBaseTag();
+        }
+
+        return this;
       },
 
       // Global Classes for browser, version and device as needed.
@@ -123,16 +134,18 @@
       },
 
       initAll : function () {
+        /*
         this.element.find('use').each(function () {
           var url = this.getAttribute('xlink:href');
 
           if (url && url.charAt(0) === '#') {
-            this.setAttribute('xlink:href', $.getSvgIconLink(url));
+            this.setAttribute('xlink:href', $.getBaseURL(url));
           }
         });
+        */
 
         // Iterate all objects we are initializing
-        this.element.filter(':not(svg):not(use):not(.no-init)').each(function() {
+        this.element.filter(':not(.no-init)').each(function() {
           var elem = $(this),
             noinitExcludes = '.no-init, [data-init]';
 
@@ -170,7 +183,7 @@
 
                 // Don't invoke elements inside of "container" controls that need to invoke their internal
                 // items in a specific order.
-                if (elem.parents('.toolbar').length && !elem.parents().hasClass('masthead')) {
+                if (!elem.is('.icon') && elem.parents('.toolbar').length && !elem.parents().hasClass('masthead')) {
                   return;
                 }
 
@@ -212,6 +225,9 @@
 
           //Array of plugin names and selectors (optional) for no-configuration initializations
           var simplePluginMappings = [
+            // Icons
+            ['icon'],
+
             //Tabs
             ['tabs', '.tab-container:not(.vertical)'],
 

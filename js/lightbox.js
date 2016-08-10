@@ -129,13 +129,13 @@
       // Add Button Code and Functionality
       addButtons: function () {
         var self = this,
-          closeButton = $('<button class="btn-icon" type="button">' + $.svgIconRaw({ cls: 'close', icon: 'close' }) + '<span class="audible">'+
+          closeButton = $('<button class="btn-icon" type="button">' + $.createIcon({ classes: ['close'], icon: 'close' }) + '<span class="audible">'+
             Locale.translate('Close') +'</span></button>');
 
-        this.previousButton = $('<button class="btn-previous" type="button">' + $.svgIconRaw('left-arrow') + '<span class="audible">'+
+        this.previousButton = $('<button class="btn-previous" type="button">' + $.createIcon('left-arrow') + '<span class="audible">'+
             Locale.translate('Previous') +'</span></button>');
 
-        this.nextButton = $('<button class="btn-next" type="button">' + $.svgIconRaw('right-arrow') + '<span class="audible">'+
+        this.nextButton = $('<button class="btn-next" type="button">' + $.createIcon('right-arrow') + '<span class="audible">'+
             Locale.translate('Next') +'</span></button>');
 
         this.lightBox

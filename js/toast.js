@@ -58,7 +58,7 @@
           toast = $('<div class="toast"><span class="toast-title">'+ settings.title+
             '</span><span class="toast-message">'+ settings.message + '</span></div>'),
           closeBtn = $('<button type="button" class="btn-icon btn-close" title="'+ Locale.translate('Close')+
-            '" aria-hidden="true">' + $.svgIconRaw('close') + '<span class="audible"> '+ Locale.translate('Close')+'</span></button>'),
+            '" aria-hidden="true">' + $.createIcon('close') + '<span class="audible"> '+ Locale.translate('Close')+'</span></button>'),
           progress = $('<div class="toast-progress"></div>');
 
         if (!container.length) {

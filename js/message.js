@@ -102,7 +102,7 @@
         });
 
         if (settings.isError) {
-          this.title.addClass('is-error').prepend($.svgIconRaw('error'));
+          this.title.addClass('is-error').prepend($.createIconElement('error'));
         } else {
           this.title.removeClass('is-error').find('svg').remove();
         }

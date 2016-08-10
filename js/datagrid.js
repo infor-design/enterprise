@@ -43,7 +43,7 @@ window.Formatters = {
     if (!col.editor) {
       return formatted;
     }
-    return '<span class="trigger">' + formatted + '</span>' + $.svgIconRaw({ icon: 'calendar', cls: 'icon-calendar' });
+    return '<span class="trigger">' + formatted + '</span>' + $.createIcon({ icon: 'calendar', classes: ['icon-calendar'] });
   },
 
   Autocomplete: function(row, cell, value) {
@@ -62,7 +62,7 @@ window.Formatters = {
       formatted = col.editorOptions.field(item, null, null);
     }
 
-    return '<span class="trigger">' + formatted + '</span>' + $.svgIconRaw({ icon: 'search-list', cls: 'icon-search-list' });
+    return '<span class="trigger">' + formatted + '</span>' + $.createIcon({ icon: 'search-list', classes: ['icon-search-list'] });
   },
 
   Decimal:  function(row, cell, value, col) {
@@ -130,7 +130,7 @@ window.Formatters = {
 
     return (
       '<button class="btn-icon small datagrid-drilldown">' +
-         $.svgIconRaw({icon: 'drilldown'}) +
+         $.createIcon({icon: 'drilldown'}) +
         '<span>' + text + '</span>' +
       '</button>'
     );
@@ -162,7 +162,7 @@ window.Formatters = {
     return (
       '<button class="btn-actions" aria-haspopup="true" aria-expanded="false" aria-owns="'+ col.menuId +'">' +
         '<span class="audible">'+ col.title +'</span>' +
-        $.svgIconRaw({ icon: 'more' }) +
+        $.createIcon({ icon: 'more' }) +
       '</button>'
     );
   },
@@ -234,7 +234,7 @@ window.Formatters = {
 
   Alert: function (row, cell, value, col) {
     var ranges = Formatters.ClassRange(row, cell, value, col);
-    var icon = $.svgIconRaw({
+    var icon = $.createIcon({
       icon: ranges.classes, classes: [
         'icon',
         'datagrid-alert-icon',
@@ -285,7 +285,7 @@ window.Formatters = {
       }
     }
 
-    return '<span class="trigger">' + formattedValue + '</span>' + $.svgIconRaw({ icon: 'dropdown' });
+    return '<span class="trigger">' + formattedValue + '</span>' + $.createIcon({ icon: 'dropdown' });
   },
 
   Favorite: function (row, cell, value, col) {
@@ -298,7 +298,7 @@ window.Formatters = {
       isChecked = (value == undefined ? false : value == true); // jshint ignore:line
     }
 
-    return !isChecked ? '' : '<span class="audible">'+ Locale.translate('Favorite') + '</span><span class="icon-favorite">' + $.svgIconRaw({ icon: 'star-filled' }) + '</span>';
+    return !isChecked ? '' : '<span class="audible">'+ Locale.translate('Favorite') + '</span><span class="icon-favorite">' + $.createIcon({ icon: 'star-filled' }) + '</span>';
   },
 
   Status: function (row, cell, value, col, item) {
@@ -307,7 +307,7 @@ window.Formatters = {
       return '<span>&nbsp;</span>';
     }
 
-    return $.svgIconRaw({ icon: item.rowStatus.icon, classes: ['icon', 'icon-' + item.rowStatus.icon, 'datagrid-alert-icon'] }) + '<span class="audible">' + item.rowStatus.text + '</span>';
+    return $.createIcon({ icon: item.rowStatus.icon, classes: ['icon', 'icon-' + item.rowStatus.icon, 'datagrid-alert-icon'] }) + '<span class="audible">' + item.rowStatus.text + '</span>';
   },
 
   // Possible future Formatters
@@ -1267,8 +1267,8 @@ $.fn.datagrid = function(options) {
         }
         if (isSortable) {
           headerRow += '<div class="sort-indicator">' +
-            '<span class="sort-asc">' + $.svgIconRaw({ icon: 'dropdown' })+ '</span>' +
-            '<span class="sort-desc">'+ $.svgIconRaw({ icon: 'dropdown' }) +'</div>';
+            '<span class="sort-asc">' + $.createIcon({ icon: 'dropdown' }) + '</span>' +
+            '<span class="sort-desc">' + $.createIcon({ icon: 'dropdown' }) + '</div>';
         }
 
         headerRow += '</div></th>';
@@ -2794,12 +2794,12 @@ $.fn.datagrid = function(options) {
         }
 
         if (settings.toolbar.dateFilter) {
-          buttonSet.append('<button class="btn" type="button">' + $.svgIconRaw({ icon: 'calendar' }) + '<span>' + Locale.translate('Date') + '</span></button>');
+          buttonSet.append('<button class="btn" type="button">' + $.createIcon({ icon: 'calendar' }) + '<span>' + Locale.translate('Date') + '</span></button>');
         }
 
         if (settings.toolbar.actions) {
           more = $('<div class="more"></div>').insertAfter(buttonSet);
-          more.append('<button class="btn-actions" title="More" type="button">' + $.svgIconRaw({ icon: 'more' }) + '<span class="audible">Grid Features</span></button>');
+          more.append('<button class="btn-actions" title="More" type="button">' + $.createIcon({ icon: 'more' }) + '<span class="audible">Grid Features</span></button>');
           toolbar.addClass('has-more-button');
         }
 

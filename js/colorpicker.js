@@ -150,7 +150,7 @@
 
         this.container = colorpicker.parent();
         this.swatch = $('<span class="swatch"></span>').prependTo(this.container);
-        this.icon = $.svgIcon({ icon: 'dropdown' }).appendTo(this.container);
+        this.icon = $.createIconElement('dropdown').appendTo(this.container);
         this.icon.wrap('<span class="trigger"></span>');
 
         //Add Masking to show the #

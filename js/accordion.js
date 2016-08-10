@@ -135,7 +135,7 @@
           var expanderIcon = expander.children('.icon, .svg, .plus-minus');
           if (!expanderIcon.length) {
             if (self.settings.displayChevron && isTopLevel) {
-              expanderIcon = $.svgIcon({ icon: 'caret-down', cls: 'chevron' });
+              expanderIcon = $.createIconElement({ icon: 'caret-down', classes: ['chevron'] });
             } else {
               var isActive = self.isExpanded(header) ? ' active' : '';
               expanderIcon = $('<span class="icon plus-minus'+ isActive +'" aria-hidden="true" role="presentation"></span>');
