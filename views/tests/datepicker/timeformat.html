@@ -1,0 +1,28 @@
+﻿
+<div class="row">
+    <div class="twelve columns">
+        <form >
+            <div class="field">
+                <label for="dp1" class="label">Date-Time Picker With Custom Pattern</label>
+                <input id="dp1" data-init="false" class="datepicker datetime" name="dp1" type="text" />
+            </div>
+            <div class="field">
+                <label for="dp2" class="label">Date-Time Picker in Locale (Default)</label>
+                <input id="dp2" data-init="false" class="datepicker datetime" name="dp2" type="text"/>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+$('body').on('initialized', function () {
+  $('#dp1').datepicker({
+    dateFormat: 'yyyy/MM/dd',
+    timeFormat: 'HH:mm',
+    showTime: true
+  });
+
+  $('#dp2').datepicker({
+    showTime: true
+  });
+});
+</script>

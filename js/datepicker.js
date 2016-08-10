@@ -28,7 +28,6 @@
           minuteInterval: undefined, // Integer from 1 to 60. Multiples of this value are displayed as options in the minutes dropdown.
           mode: undefined, // options: 'standard', 'range',
           roundToInterval: undefined, // If a non-matching minutes value is entered, rounds the minutes value to the nearest interval when the field is blurred.
-          forceHourMode: undefined, // Can be used to force timepicker to use only 12-hour or 24-hour display modes. Defaults to whatever the current Globalize locale requires if left undefined.
           timepickerMarkup: '<label class="label"><input class="timepicker" name="calendar-timepicker" type="text"></label>',
           dateFormat: 'locale', //or can be a specific format like 'yyyy-MM-dd' iso8601 format
           placeholder: false,
@@ -269,21 +268,16 @@
       },
 
       setFormat: function () {
-        var localeDateFormat = ((typeof Locale === 'object' && Locale.calendar().dateFormat) ? Locale.calendar().dateFormat : null);
+        var localeDateFormat = ((typeof Locale === 'object' && Locale.calendar().dateFormat) ? Locale.calendar().dateFormat : null),
+          localeTimeFormat = ((typeof Locale === 'object' && Locale.calendar().timeFormat) ? Locale.calendar().timeFormat : null);
 
         if (this.settings.dateFormat === 'locale') {
-          this.show24Hours = (
-            parseInt(this.element.attr('data-force-hour-mode')) === 24 ||
-            parseInt(this.settings.forceHourMode) === 24);
-          this.pattern = localeDateFormat.short + (this.settings.showTime ? (' '+
-            (this.settings.timeFormat || (this.show24Hours ? 'HH:mm' : 'h:mm a'))) : '');
+          this.pattern = localeDateFormat.short + (this.settings.showTime ? ' ' + localeTimeFormat: '');
         } else {
-          this.pattern = this.settings.dateFormat;
+          this.pattern = this.settings.dateFormat + (this.settings.showTime ? ' ' + this.settings.timeFormat : '');
         }
 
-        this.show24Hours = (
-          parseInt(this.element.attr('data-force-hour-mode')) === 24 ||
-          parseInt(this.settings.forceHourMode) === 24) ? true : (this.pattern.match('HH') || []).length > 0;
+        this.show24Hours = (this.pattern.match('HH') || []).length > 0;
       },
 
       // Add masking with the mask function
@@ -387,9 +381,6 @@
           }
           if (this.settings.roundToInterval !== undefined) {
             timeOptions.roundToInterval = this.settings.roundToInterval;
-          }
-          if (this.settings.forceHourMode !== undefined) {
-            timeOptions.forceHourMode = this.settings.forceHourMode;
           }
           $('.timepicker', this.timepickerInput).attr('data-options', JSON.stringify(timeOptions));
         }

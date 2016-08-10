@@ -26,8 +26,7 @@
           timeFormat: Locale.calendar().timeFormat || 'h:mm a', // The time format
           minuteInterval: 5, // Integer from 1 to 60.  Multiples of this value are displayed as options in the minutes dropdown.
           mode: 'standard', // options: 'standard', 'range',
-          roundToInterval: false, // If a non-matching minutes value is entered, rounds the minutes value to the nearest interval when the field is blurred.
-          forceHourMode: undefined // can be used to force timepicker to use only 12-hour or 24-hour display modes.  Defaults to whatever the current Globalize locale requires if left undefined.
+          roundToInterval: false
         },
         settings = $.extend({}, defaults, options);
 
@@ -85,7 +84,6 @@
           this.settings.minuteInterval = parseInt(this.element.attr('data-minute-interval'), 10);
         }
 
-        this.settings.forceHourMode = this.settings.forceHourMode || this.element.attr('data-force-hour-mode');
         this.settings.timeFormat = sanitizeTimeFormat(parseInt(this.element.attr('data-force-hour-mode')) === 24 ? 'HH:mm' : this.settings.timeFormat);
         this.settings.minuteInterval = sanitizeMinuteInterval(this.settings.minuteInterval);
         this.settings.mode = sanitizeMode(this.settings.mode);
