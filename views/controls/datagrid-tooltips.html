@@ -26,6 +26,7 @@
         data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
 
         //Define Columns for the Grid.
+        columns.push({ id: 'drilldown', name: '', field: '', width: 95, formatter: Formatters.Drilldown, align: 'center', tooltip: 'Drill Down to Product'});
         columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly, tooltip: 'This is a product', headerTooltip: 'This is the header'});
         columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, formatter: Formatters.Hyperlink });
         columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});
@@ -33,7 +34,7 @@
         columns.push({ id: 'status', name: 'Status', field: 'price', width: 135, textOverflow: 'none', formatter: Formatters.Alert, ranges: [{'min': 0, 'max': 150, 'classes': 'confirm', text: 'Confirmed'}, {'min': 151, 'max': 9999, 'classes': 'error', text: 'Error'}]});
         columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});
         columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
-        columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 360, formatter: Formatters.Textarea, tooltip: '{{value}}' });
+        columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 360, formatter: Formatters.Ellipsis});
 
         //Init the grid
         $('#datagrid').datagrid({
