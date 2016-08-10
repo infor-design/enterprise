@@ -2,7 +2,7 @@
   <div class="twelve columns">
     <br />
     <h3>Grid Example: Customization</h3>
-    <p>A visual test showing the short rowHeight setting.</p><br />
+    <p>A visual test showing the short rowHeight setting.</p><br><br>
   </div>
 </div>
 
@@ -48,7 +48,8 @@
       grid = $('#datagrid').datagrid({
         columns: columns,
         rowHeight: 'short',
-        dataset: data
+        dataset: data,
+        toolbar: {title: 'Compressor Results', results: true, actions: true, rowHeight: true}
       });
 
  });

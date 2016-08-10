@@ -2814,9 +2814,9 @@ $.fn.datagrid = function(options) {
         if (settings.toolbar.rowHeight) {
           menu.append('<li class="separator single-selectable-section"></li>' +
             '<li class="heading">' + Locale.translate('RowHeight') + '</li>' +
-            '<li class="is-selectable"><a data-option="row-short">' + Locale.translate('Short') + '</a></li>' +
-            '<li class="is-selectable"><a data-option="row-medium">' + Locale.translate('Medium') + '</a></li>' +
-            '<li class="is-selectable is-checked"><a data-option="row-normal">' + Locale.translate('Normal') + '</a></li>');
+            '<li class="is-selectable' + (this.settings.rowHeight === 'short' ? ' is-checked' : '') + '"><a data-option="row-short">' + Locale.translate('Short') + '</a></li>' +
+            '<li class="is-selectable' + (this.settings.rowHeight === 'medium' ? ' is-checked' : '') + '"><a data-option="row-medium">' + Locale.translate('Medium') + '</a></li>' +
+            '<li class="is-selectable' + (this.settings.rowHeight === 'normal' ? ' is-checked' : '') + '"><a data-option="row-normal">' + Locale.translate('Normal') + '</a></li>');
         }
 
         if (settings.toolbar.filterRow) {

@@ -47,8 +47,9 @@
         columns: columns,
         dataset: data,
         filterable: true,
-        selectable: 'single',
+      //  selectable: 'single',
         cellNavigation: false,
+        rowNavigation: false,
         toolbar: {title: 'Filterable Datagrid', filterRow: true, results: true, dateFilter: false ,keywordFilter: false, actions: true, views: false, rowHeight: true, collapsibleFilter: false}
       }).on('filtered', function (e, args) {
         console.log(args);
