@@ -113,7 +113,7 @@
 
           var expander = header.children('.btn');
           if (!expander.length) {
-            expander = $('<button class="btn"></button>');
+            expander = $('<button class="btn" type="button"></button>');
 
             var method = 'insertBefore';
             if (self.settings.displayChevron && isTopLevel) {

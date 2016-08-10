@@ -134,14 +134,14 @@
 }
 
 .radio-group {
-  margin-bottom: 14px;
+  margin-top: 0;
+  padding-top: 20px;
 
   legend {
     @include font-size(12);
     color: $label-color;
-    margin-top: -20px;
-    padding-bottom: 8px;
-    padding-top: 0;
+    margin-top: -28px;
+    padding-top: 10px;
   }
 
   &.is-disabled,
