@@ -1299,7 +1299,7 @@ $.fn.datagrid = function(options) {
             id = self.uniqueId( '-header-' + j),
             header = this.headerRow.find('#'+id),
             filterId = self.uniqueId( '-header-filter-' + j),
-            filterMarkup = '<div class="datagrid-filter-wrapper">'+ this.renderFilterButton(col.filterType) +'<label class="audible" for="'+ filterId +'">' +
+            filterMarkup = '<div class="datagrid-filter-wrapper">'+ this.renderFilterButton(col.filterType, col.filterDisabled) +'<label class="audible" for="'+ filterId +'">' +
               col.name + '</label>';
 
           switch (col.filterType) {
@@ -1326,7 +1326,7 @@ $.fn.datagrid = function(options) {
 
               break;
             default:
-              filterMarkup += '<input type="text" id="'+ filterId +'"/>';
+              filterMarkup += '<input' + (col.filterDisabled ? ' disabled' : '') + ' type="text" id="'+ filterId +'"/>';
               break;
           }
 
@@ -1368,8 +1368,8 @@ $.fn.datagrid = function(options) {
     },
 
     //Render the Filter Button and Menu based on filterType - which determines the options
-    renderFilterButton: function (filterType) {
-      var btnMarkup = '<button class="btn-menu btn-filter" data-init="false" type="button"><span class="audible">Filter</span></button>' +
+    renderFilterButton: function (filterType, isDisabled) {
+      var btnMarkup = '<button class="btn-menu btn-filter" data-init="false" ' + (isDisabled ? ' disabled' : '') + ' type="button"><span class="audible">Filter</span></button>' +
         '<ul class="popupmenu has-icons is-translatable is-selectable">';
 
         //Just the dropdown
