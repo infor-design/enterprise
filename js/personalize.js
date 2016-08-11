@@ -167,7 +167,7 @@
         });
 
         $('body').append(pageOverlay);
-        css.attr('href', path.substring(0, path.lastIndexOf('/')) + '/' + theme +'.css');
+        css.attr('href', path.substring(0, path.lastIndexOf('/')) + '/' + theme + (path.indexOf('.min') > -1 ? '.min' : '') + '.css');
         pageOverlay.fadeOut('slow', function() {
         // pageOverlay.fadeOut('fast', function() {
           pageOverlay.remove();
