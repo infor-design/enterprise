@@ -114,6 +114,7 @@
           if (valMethod(input) === input.data('original')) {
             input.removeClass('dirty');
             $('.icon-dirty, .msg-dirty', field).remove();
+            input.trigger('pristine');
             return;
           }
 

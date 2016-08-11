@@ -1,15 +1,22 @@
 <div class="row">
-  <div class="twelve columns">
+  <div class="six columns">
 
-    <h2 class="fieldset-title">Form - Dirty / Events</h2>
+    <h2>Form - Dirty / Events</h2>
+    <p>The department field has dit tracking on. Change the value will trigger the dirty event output to the console and show a visual indicator.
+       Reseting the value back to its orginal will trigger the 'pristine' event.
+    </p>
+    <br>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="twelve columns">
 
     <form id="test-form" action="#" method="POST">
         <div class="field">
           <label for="department-code">Department Code</label>
-          <input type="text" id="department-code" data-trackdirty="true" placeholder="Dirty Tracking">
-
-          <label for="output">Test</label>
-          <input id="output">
+          <input type="text" id="department-code" value = 'Original Value' data-trackdirty="true" >
         </div>
     </form>
   </div>
@@ -17,10 +24,12 @@
 
 <script>
   $('#department-code').on('dirty', function () {
-    $('#output').val('changed');
+    console.log('Dirty Fired');
+  }).on('pristine', function () {
+    console.log('Pristine Fired');
   });
 
    $('body').on('dirty', function () {
-    $('#output').val('changed');
+    console.log('Parent Dirty Fired');
   });
 </script>
