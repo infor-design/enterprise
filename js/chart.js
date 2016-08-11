@@ -286,6 +286,8 @@ window.Chart = function(container) {
 
     isStacked = isStacked === undefined ? true : isStacked;
 
+    var isViewSmall = $(container).parent().width() < 450;
+
     var margins = {
       top: isStacked ? 30 : 20,
       left: 30,
@@ -440,6 +442,10 @@ window.Chart = function(container) {
       .scale(xScale)
       .tickSize(-height)
       .orient('middle');
+
+    if (isViewSmall) {
+      xAxis.ticks(textWidth < 100 ? 5 : 3);
+    }
 
     if (isStacked && isNormalized) {
       xAxis.tickFormat(function(d) { return d + '%'; });
@@ -2332,7 +2338,8 @@ window.Chart = function(container) {
     var dataset = chartData,
       hideDots = (options.hideDots),
       parent = $(container).parent(),
-      margin = {top: 30, right: 55, bottom: 35, left: 65},
+      isViewSmall = parent.width() < 450,
+      margin = {top: 30, right: (isViewSmall ? 35 : 55), bottom: 35, left: (isViewSmall ? 45 : 65)},
       width = parent.width() - margin.left - margin.right,
       height = parent.height() - margin.top - margin.bottom - 30; //legend
 
@@ -2398,7 +2405,7 @@ window.Chart = function(container) {
       .scale(xScale)
       .orient('bottom')
       .tickSize(isBubble ? -(height + 10) : 0)
-      .ticks(entries)
+      .ticks(isBubble && isViewSmall ? Math.round(entries/2) : entries)
       .tickPadding(10)
       .tickFormat(function (d, i) {
         return isBubble ? d : names[i];
