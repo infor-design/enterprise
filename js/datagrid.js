@@ -1514,6 +1514,10 @@ $.fn.datagrid = function(options) {
               break;
             default:
           }
+
+          if (!isMatch) {
+            return false;
+          }
         }
         return isMatch;
       };
