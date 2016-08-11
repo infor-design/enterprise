@@ -214,6 +214,7 @@
       'Next': {id: 'Next', value: 'Next', comment: 'Next in icons tooltip'},
       'NextPage': {id: 'NextPage', value: 'Next Page', comment: 'Next on Pager'},
       'NextMonth': {id: 'NextMonth', value: 'Next Month', comment: 'the label for the button that moves calendar to next/prev'},
+      'No': {id: 'No', value: 'No', comment: 'On a dialog button'},
       'NoResults': {id: 'NoResults', value: 'No Results', comment: 'Search Results Text'},
       'Normal': {id: 'Normal', value: 'Normal', comment: 'Normal row height'},
       'Notes': {id: 'Notes', value: 'Notes', comment: 'Notes icon tooltip'},
@@ -312,6 +313,7 @@
       'VerticalMiddleAlign': {id: 'VerticalMiddleAlign', value: 'Vertical Align Center', comment: 'Vertical Align tooltip'},
       'ViewSource': {id: 'ViewSource', value: 'View Source', comment: 'Toggle the source view in the editor'},
       'ViewVisual': {id: 'ViewVisual', value: 'View Visual', comment: 'Toggle the visual view in the editor'}
+      'Yes': {id: 'Yes', value: 'Yes', comment: 'On a dialog button'}
     }
   });
 }));
