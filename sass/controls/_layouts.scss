@@ -376,6 +376,7 @@ body.no-scroll {
 }
 
 .page-container {
+  @include transition(height 300ms cubic-bezier(.17, .04, .03, .94));
   bottom: 0;
   height: 100%;
   margin: 0 auto;
@@ -454,6 +455,13 @@ body.no-scroll {
     margin-top: 98px;
   }
 
+}
+
+//Stands on its own content header - assumes header above it
+.content-container-header {
+  @include transition(height 300ms cubic-bezier(.17, .04, .03, .94));
+  height: calc(100% - 60px);
+  margin: 30px;
 }
 
 //Header on Side Panels - fx: tests/tree/expand-collapse-splitter

@@ -350,7 +350,7 @@ $datagrid-short-row-height: 30px;
       max-height: 22px;
       max-width: calc(100% - 20px);
       position: relative;
-      top: -14px;
+      top: -10px;
       width: calc(100% - 20px);
 
       input {
@@ -360,10 +360,15 @@ $datagrid-short-row-height: 30px;
         left: 12px;
         padding: 3px 0 2px 5px;
         position: relative;
+        vertical-align: top;
         width: calc(100% - 44px);
 
         &:focus {
           border-color: $primary-color;
+        }
+
+        &:disabled {
+          border-color: $slate05;
         }
       }
 
@@ -376,6 +381,8 @@ $datagrid-short-row-height: 30px;
         height: 23px;
         line-height: 23px;
         padding: 0 0 0 5px;
+        -webkit-text-fill-color: $white;
+        vertical-align: top;
         width: calc(100% - 5px);
 
         &:hover {
@@ -391,11 +398,14 @@ $datagrid-short-row-height: 30px;
         }
 
         > span {
+          color: inherit;
+          -webkit-text-fill-color: inherit;
           width: calc(100% - 16px);
         }
 
         + .icon {
           right: 4px;
+          top: -2px;
         }
 
       }
@@ -412,6 +422,7 @@ $datagrid-short-row-height: 30px;
         fill: $slate03;
         height: 14px;
         margin-left: -9px;
+        top: -4px;
         width: 14px;
 
         &:hover {
@@ -421,12 +432,25 @@ $datagrid-short-row-height: 30px;
         }
       }
 
+      .dropdown + .icon {
+        top: -2px;
+      }
+
       .btn-filter {
         height: 21px;
         left: 15px;
         min-width: 34px;
-        top: 0;
+        top: 1px;
+        vertical-align: top;
         width: 34px;
+
+        &:disabled {
+          opacity: 1;
+
+          .icon {
+            fill: $slate05;
+          }
+        }
 
         .icon-dropdown {
           // scss-lint:disable ImportantRule
