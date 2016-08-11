@@ -1098,7 +1098,7 @@
 
         //Fixed and Absolute Positioning use cases
         this.pseudoElem.parentsUntil('body').each(function () {
-          if ($(this).css('position') === 'fixed') {
+          if ($(this).css('position') === 'fixed' && !$(this).is('.modal')) {
             isFixed = true;
             return;
           }
