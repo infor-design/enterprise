@@ -202,8 +202,8 @@
       // Removes the appended markup and hides any trace of the indicator
       close: function() {
         var self = this;
-        
-        if (this.overlay) {
+
+        if (this.container) {
           this.container.addClass('is-hidden');
         }
 
