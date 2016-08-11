@@ -312,7 +312,7 @@
       'UserProfile': {id: 'UserProfile', value: 'User Profile', comment: 'User Profile tooltip'},
       'VerticalMiddleAlign': {id: 'VerticalMiddleAlign', value: 'Vertical Align Center', comment: 'Vertical Align tooltip'},
       'ViewSource': {id: 'ViewSource', value: 'View Source', comment: 'Toggle the source view in the editor'},
-      'ViewVisual': {id: 'ViewVisual', value: 'View Visual', comment: 'Toggle the visual view in the editor'}
+      'ViewVisual': {id: 'ViewVisual', value: 'View Visual', comment: 'Toggle the visual view in the editor'},
       'Yes': {id: 'Yes', value: 'Yes', comment: 'On a dialog button'}
     }
   });
