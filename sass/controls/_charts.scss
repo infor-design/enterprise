@@ -140,6 +140,13 @@
     display: table-caption;
     margin-bottom: .7em;
     text-align: center;
+
+    .indicator-box {
+      display: inline-block;
+      height: 14px;
+      margin-right: 10px;
+      width: 14px;
+    }
   }
 
   .swatch-row {
