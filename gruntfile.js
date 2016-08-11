@@ -16,12 +16,12 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'public/stylesheets/demo.css'       : 'sass/demo.scss',
-          'public/stylesheets/grey-theme.css' : 'sass/grey-theme.scss',
-          'public/stylesheets/dark-theme.css' : 'sass/dark-theme.scss',
-          'public/stylesheets/high-contrast-theme.css'  : 'sass/high-contrast-theme.scss',
-          'public/stylesheets/css-only.css'   : 'sass/css-only.scss',
-          'public/stylesheets/site.css'       : 'sass/site.scss'
+          'dist/css/demo.css'       : 'sass/demo.scss',
+          'dist/css/grey-theme.css' : 'sass/grey-theme.scss',
+          'dist/css/dark-theme.css' : 'sass/dark-theme.scss',
+          'dist/css/high-contrast-theme.css'  : 'sass/high-contrast-theme.scss',
+          'dist/css/css-only.css'   : 'sass/css-only.scss',
+          'dist/css/site.css'       : 'sass/site.scss'
         }
       }
     },
@@ -151,8 +151,7 @@ module.exports = function(grunt) {
           {expand: true, flatten: true, src: ['views/controls/svg-empty.html'], dest: 'dist/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['views/controls/svg-patterns.html'], dest: 'dist/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/*.js'], dest: 'dist/js/all/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['public/stylesheets/*-theme.*'], dest: 'dist/css/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['public/stylesheets/css-only.css'], dest: 'dist/css/', filter: 'isFile'},
+          {expand: true, flatten: true, src: ['dist/css/*'], dest: 'public/stylesheets/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/demo/demo.js'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/demo/syntax.js'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/vendor/jquery-3*.js'], dest: 'public/js/', filter: 'isFile'},
