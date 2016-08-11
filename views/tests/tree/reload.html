@@ -1,0 +1,92 @@
+<button type="submit" id='reload' class="btn-primary">Reload</button>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <ul role="tree" aria-label="Asset Types" class="tree" data-init="false" id="json-tree">
+    </ul>
+
+  </div>
+</div>
+
+
+<script>
+  var sampleData, sampleData2;
+
+  /* jshint ignore:start */
+  sampleData = [{
+    "id": "node1",
+    "text": "Node One",
+    "open": false,
+    "selected": false,
+    "href": '/somelink/'
+  }, {
+    "id": "node2",
+    "text": "Node Two",
+    "open": true,
+    "selected": true,
+    "focus": true,
+    "children": [{
+        "id": "node3",
+        "text": "Node 2.1"
+      }, {
+        "id": "node4",
+        "text": "Node 2.2",
+        "children": [{
+          "id": "node5",
+          "text": "Node 2.2.1",
+          "icon": "icon-tree-chart",
+          "children": [{
+            "id": "node6",
+            "text": "Node 2.2.1.1",
+            "icon": "icon-tree-chart"
+          }]
+        }]
+      }]
+  }];
+
+  sampleData2 = [{
+    "id": "node1",
+    "text": "New Node One",
+    "open": false,
+    "selected": false,
+    "href": '/somelink/'
+  }, {
+    "id": "node2",
+    "text": "New Node Two",
+    "open": true,
+    "selected": true,
+    "focus": true,
+    "children": [{
+        "id": "node3",
+        "text": "New Node 2.1"
+      }, {
+        "id": "node4",
+        "text": "New Node 2.2",
+        "children": [{
+          "id": "node5",
+          "text": "New Node 2.2.1",
+          "icon": "icon-tree-chart",
+          "children": [{
+            "id": "node6",
+            "text": "New Node 2.2.1.1",
+            "icon": "icon-tree-chart"
+          }]
+        }]
+      }]
+  }];
+
+
+  /* jshint ignore:end */
+
+  //Can refer to the data set here
+  var elem = $('#json-tree').tree({dataset: sampleData}),
+    api = elem.data('tree');
+
+  console.log(api.settings.dataset);
+
+  $('#reload').on('click', function () {
+    api.loadData(sampleData2);
+    console.log(api.settings.dataset);
+  });
+</script>

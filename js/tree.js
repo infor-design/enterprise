@@ -491,6 +491,8 @@
           return;
         }
 
+        self.element.empty();
+
         self.loading = true;
         for (var i = 0; i < dataset.length; i++) {
           self.addNode(dataset[i], 'bottom');
