@@ -1307,14 +1307,14 @@ $.fn.datagrid = function(options) {
               //just the button
               break;
             case 'date':
-              filterMarkup += '<input type="text" class="datepicker" id="'+ filterId +'"/>';
+              filterMarkup += '<input ' + (col.filterDisabled ? ' disabled' : '') + ' type="text" class="datepicker" id="'+ filterId +'"/>';
               break;
             case 'decimal':
-              filterMarkup += '<input type="text" id="'+ filterId +'"/ data-mask-mode="number" data-mask="'+ (col.mask ? col.mask : '####.00') +'">';
+              filterMarkup += '<input ' + (col.filterDisabled ? ' disabled' : '') + ' type="text" id="'+ filterId +'"/ data-mask-mode="number" data-mask="'+ (col.mask ? col.mask : '####.00') +'">';
               break;
             case 'contents':
             case 'select':
-              filterMarkup += '<select ' + (col.filterType ==='select' ? 'class="dropdown"' : ' multiple class="multiselect"') + 'id="'+ filterId +'">';
+              filterMarkup += '<select ' + (col.filterDisabled ? ' disabled' : '') + (col.filterType ==='select' ? ' class="dropdown"' : ' multiple class="multiselect"') + 'id="'+ filterId +'">';
               if (col.options) {
                 for (var i = 0; i < col.options.length; i++) {
                   var option = col.options[i],
