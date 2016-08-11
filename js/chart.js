@@ -62,7 +62,7 @@ window.Chart = function(container) {
     if (chartType === 'bar-single' || chartType === 'column-single') {
       return '#368AC0';
     }
-    if (chartType === 'bar') {
+    if (chartType === 'bar' || chartType === 'line') {
       return this.colors(i);
     }
   };
@@ -2309,7 +2309,7 @@ window.Chart = function(container) {
     });
   };
 
-  this.Line = function(chartData, options, isArea) {
+  this.Line = function(chartData, options, isArea, isBubble) {
     var defaults = {
       // Use d3 Format
       // http://koaning.s3-website-us-west-2.amazonaws.com/html/d3format.html
@@ -2322,7 +2322,7 @@ window.Chart = function(container) {
       return isFormatter ? d3.format(settings.formatterString)(value) : value;
     };
 
-    $(container).addClass('line-chart');
+    $(container).addClass('line-chart' + (isBubble ? ' bubble' : ''));
 
     var tooltipInterval,
       tooltipDataCache = [],
@@ -2340,32 +2340,68 @@ window.Chart = function(container) {
         .attr('width', width + margin.left + margin.right)
         .attr('height', height + margin.top + margin.bottom)
         .append('g')
-          .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-    //Calculate the Domain X and Y Ranges
-    var x = d3.scale.linear().range([0, width]),
-      y = d3.scale.linear().range([height, 0]);
-
-    var maxes = dataset.map(function (d) {
-      return d3.max(d.data, function(d){ return d.value;});
+    var names = dataset[0].data.map(function (d) {
+      return d.name;
     });
 
-    var entries = d3.max(dataset.map(function(d){ return d.data.length;})) -1,
-      xScale = x.domain([0, entries]),
-      yScale = y.domain([0, d3.max(maxes)]).nice();
+    var formatValue,
+      valueFormatterString = {};
+    if (dataset[0] && dataset[0].valueFormatterString) {
+      $.extend(true, valueFormatterString, dataset[0].valueFormatterString);
+    }
+    formatValue = function (s, value) {
+      return !$.isEmptyObject(valueFormatterString) && !!s ?
+        (d3.format(s)(s === '0.0%' ? value/100 : value)) : value;
+    };
 
-    var names = dataset[0].data.map(function (o) {
-      return o.name;
-    });
+    var labels = {
+      name: 'Name',
+      value: {
+        x: 'Value.x',
+        y: 'Value.y',
+        z: 'Value.z'
+      }
+    };
+    if (dataset[0] && dataset[0].labels) {
+      $.extend(true, labels, dataset[0].labels);
+    }
+
+    // Calculate the Domain X and Y Ranges
+    var maxes,
+      x = d3.scale.linear().range([0, width]),
+      y = d3.scale.linear().range([height, 0]),
+      z = d3.scale.linear().range([1, 25]),
+      getMaxes = function (d, option) {
+        return d3.max(d.data, function(d) {
+          return option ? d.value[option] : d.value;
+        });
+      };
+
+    if (isBubble) {
+      maxes = {
+        x: dataset.map(function (d) { return getMaxes(d, 'x'); }),
+        y: dataset.map(function (d) { return getMaxes(d, 'y'); }),
+        z: dataset.map(function (d) { return getMaxes(d, 'z'); })
+      };
+    } else {
+      maxes = dataset.map(function (d) { return getMaxes(d); });
+    }
+
+    var entries = d3.max(dataset.map(function(d){ return d.data.length; })) -1,
+      xScale = x.domain([0, isBubble ? d3.max(maxes.x) : entries]).nice(),
+      yScale = y.domain([0, d3.max(isBubble ? maxes.y : maxes)]).nice(),
+      zScale = z.domain([0, d3.max(isBubble ? maxes.z : maxes)]).nice();
 
     var xAxis = d3.svg.axis()
       .scale(xScale)
       .orient('bottom')
-      .tickSize(0)
+      .tickSize(isBubble ? -(height + 10) : 0)
       .ticks(entries)
       .tickPadding(10)
       .tickFormat(function (d, i) {
-        return names[i];
+        return isBubble ? d : names[i];
       });
 
     var yAxis = d3.svg.axis()
@@ -2387,20 +2423,26 @@ window.Chart = function(container) {
     //Offset the tick inside, uses the fact that the yAxis has 20 added.
     svg.selectAll('.tick line').attr('x1', '-10');
 
+    if (isBubble) {
+      svg.selectAll('.x.axis .tick line, .y.axis .tick line').style('opacity', 0);
+      svg.select('.x.axis .tick line').attr('x2', '-10').style('opacity', 1);
+      svg.select('.y.axis .tick line').style('opacity', 1);
+    }
+
     // Create the line generator
     var line = d3.svg.line()
       .x(function(d, i) {
-        return xScale(i);
+        return xScale(isBubble ? d.value.x : i);
       })
       .y(function(d) {
-        return yScale(d.value);
+        return yScale(isBubble ? d.value.y : d.value);
       });
 
     //append the three lines.
     dataset.forEach(function(d, i) {
 
       var lineGroups = svg.append('g')
-        .attr('class', 'line-group');
+        .attr({'data-group-id': i, 'class': 'line-group'});
 
       if (isArea) {
         var area = d3.svg.area()
@@ -2409,12 +2451,12 @@ window.Chart = function(container) {
           })
           .y0(height)
           .y1(function(d) {
-            return yScale(d.value);
+            return yScale(isBubble ? d.value.y : d.value);
           });
 
         lineGroups.append('path')
           .datum(d.data)
-          .attr('fill', charts.colors(i))
+          .attr('fill', function (d) { return charts.chartColor(i, 'line', d); })
           .style('opacity', '.2')
           .attr('class', 'area')
           .attr('d', area);
@@ -2422,7 +2464,7 @@ window.Chart = function(container) {
 
       var path = lineGroups.append('path')
         .attr('d', line(d.data))
-        .attr('stroke', charts.colors(i))
+        .attr('stroke', function (d) { return isBubble ? '' : charts.chartColor(i, 'line', d); })
         .attr('stroke-width', 2)
         .attr('fill', 'none')
         .attr('class', 'line')
@@ -2446,24 +2488,59 @@ window.Chart = function(container) {
           .enter()
           .append('circle')
           .attr('class', 'dot')
-          .attr('cx', function (d, i) { return xScale(i); })
-          .attr('cy', function (d) { return yScale(d.value); })
-          .attr('r', 5)
+          .attr('cx', function (d, i) { return xScale(isBubble ? d.value.x : i); })
+          .attr('cy', function (d) { return yScale(isBubble ? 0 : d.value); })
+          .attr('r', (isBubble ? 0 : 5))
           .style('stroke', '#ffffff')
-          .style('stroke-width', 2)
-          .style('fill', charts.colors(i))
+          .style('stroke-width', (isBubble ? 0 : 2))
+          .style('fill', function (d) { return charts.chartColor(i, 'line', d); })
+          .style('opacity', (isBubble ? '.7' : '1'))
           .on('mouseenter.chart', function(d2) {
             var rect = this.getBoundingClientRect(),
               content = '<p><b>' + d2.name + ' </b> ' + format(d2.value) + '</p>',
-              show = function() {
-              var size = charts.getTooltipSize(content),
-                x = rect.left - (size.width /2) + 6,
-                y = rect.top - size.height - 18;
 
-              if(content !== '') {
-                charts.showTooltip(x, y, content, 'top');
-              }
-            };
+              show = function() {
+                var size = charts.getTooltipSize(content),
+                  x = rect.left - (size.width /2) + 6,
+                  y = rect.top - size.height - 18;
+                if(content !== '') {
+                  charts.showTooltip(x, y, content, 'top');
+                }
+              };
+
+            if (isBubble) {
+              content = ''+
+                '<div class="chart-swatch" style="min-width: 95px;">'+
+                  '<div class="swatch-caption">'+
+                    '<span style="background-color:'+ charts.chartColor(i, 'line', d) +';" class="indicator-box"></span>'+
+                    '<b>'+ d.name +'</b>'+
+                  '</div>';
+
+                var obj = d2;
+                for (var key in obj) {
+                  if(obj.hasOwnProperty(key)) {
+                    if (typeof obj[key] !== 'object') {
+                      content += ''+
+                        '<div class="swatch-row">'+
+                          '<span>'+ labels[key] +'</span>'+
+                          '<b>'+ obj[key] +'</b>'+
+                        '</div>';
+                    } else {
+                      var obj2 = obj[key];
+                      for (var key2 in obj2) {
+                        if(obj2.hasOwnProperty(key2)) {
+                          content += ''+
+                            '<div class="swatch-row">'+
+                              '<span style="text-transform: capitalize;">'+ labels[key][key2] +'</span>'+
+                              '<b>'+ formatValue(valueFormatterString[key2], obj2[key2]) +'</b>'+
+                            '</div>';
+                        }
+                      }
+                    }
+                  }
+                }
+              content += '</div>';
+            }
 
             if (tooltipData && typeof tooltipData === 'function' && !tooltipDataCache[i]) {
               content = '';
@@ -2487,14 +2564,25 @@ window.Chart = function(container) {
             }
 
             //Circle associated with hovered point
-            d3.select(this).attr('r', 7);
-          }).on('mouseleave.chart', function() {
+            d3.select(this).attr('r', function (d) { return 2+(isBubble ? zScale(d.value.z) : 5); });
+          })
+          .on('mouseleave.chart', function() {
             clearInterval(tooltipInterval);
             charts.hideTooltip();
-            d3.select(this).attr('r', 5);
-          }).on('click.chart', function(d) {
+            d3.select(this).attr('r', function (d) { return isBubble ? zScale(d.value.z) : 5; });
+          })
+          .on('click.chart', function(d) {
             charts.selectElement(d3.select(this.parentNode), svg.selectAll('.line-group'), d);
           });
+
+        if (isBubble) {
+          // Add animation
+          lineGroups.selectAll('circle')
+            .transition().duration(700).ease('cubic')
+            .attr('cx', function (d) { return xScale(d.value.x); })
+            .attr('cy', function (d) { return yScale(d.value.y); })
+            .attr('r', function (d) { return isBubble ? zScale(d.value.z) : 5; });
+        }
       }
 
     });
@@ -2999,6 +3087,9 @@ window.Chart = function(container) {
     }
     if (options.type === 'area') {
       this.Line(options.dataset, options, true);
+    }
+    if (options.type === 'bubble') {
+      this.Line(options.dataset, options, false, true);
     }
     if (options.type === 'bullet') {
       this.Bullet(options.dataset, options);
