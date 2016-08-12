@@ -2191,12 +2191,17 @@ window.Chart = function(container) {
     charts.appendTooltip();
 
     //See if any labels overlap and use shorter */
+    // [applyAltLabels] - function(svg, dataArray, elem, selector, isNoEclipse)
     if (charts.labelsColide(svg)) {
       charts.applyAltLabels(svg, dataArray, 'shortName');
     }
 
     if (charts.labelsColide(svg)) {
       charts.applyAltLabels(svg, dataArray, 'abbrName');
+    }
+
+    if (charts.labelsColide(svg)) {
+      charts.applyAltLabels(svg, dataArray, null, null, true);
     }
 
     // Set initial selected
@@ -2305,12 +2310,14 @@ window.Chart = function(container) {
     return collides;
   };
 
-  this.applyAltLabels = function(svg, dataArray, elem, selector) {
+  this.applyAltLabels = function(svg, dataArray, elem, selector, isNoEclipse) {
     var ticks = selector ? svg.selectAll(selector) : svg.selectAll('.x text');
 
     ticks.each(function(d, i) {
       var text = dataArray[i][elem];
-      text = text || d3.select(this).text().substring(0, 6) +'...';
+
+      text = text || (isNoEclipse ?
+        ((d3.select(this).text().substring(0, 1))) : (d3.select(this).text().substring(0, 6) +'...'));
       d3.select(this).text(text);
     });
   };
@@ -2585,10 +2592,11 @@ window.Chart = function(container) {
         if (isBubble) {
           // Add animation
           lineGroups.selectAll('circle')
-            .transition().duration(700).ease('cubic')
-            .attr('cx', function (d) { return xScale(d.value.x); })
+            .transition().duration(900).ease('bounce')
             .attr('cy', function (d) { return yScale(d.value.y); })
-            .attr('r', function (d) { return isBubble ? zScale(d.value.z) : 5; });
+            .attr('r', function () { return zScale(1); })
+            .transition().duration(900).ease('bounce')
+            .attr('r', function (d) { return zScale(d.value.z); });
         }
       }
 
