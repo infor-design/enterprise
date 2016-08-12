@@ -95,7 +95,7 @@
         // Add Icon
         var icon = this.wrapper.find('.icon:not(.icon-dropdown)');
         if (!icon || !icon.length) {
-          icon = $.svgIcon('search').insertAfter(this.element);
+          icon = $.createIconElement('search').insertAfter(this.element).icon();
         }
 
         // Change icon to a trigger button if we're dealing with categories
@@ -114,7 +114,7 @@
 
           var ddIcon = icon.find('.icon-dropdown');
           if (!ddIcon.length) {
-            ddIcon = $.svgIcon({ cls: 'icon-dropdown', icon: 'dropdown' });
+            ddIcon = $.createIconElement({ classes: 'icon-dropdown', icon: 'dropdown' }).icon();
           }
           ddIcon.appendTo(icon);
 
@@ -150,7 +150,7 @@
         }
 
         if (this.settings.clearable) {
-          this.xButton = $.svgIcon({ cls: 'close', icon:'close' });
+          this.xButton = $.createIconElement({ classes: 'close', icon: 'close' }).icon();
           this.element.parent('').append(this.xButton);
         }
 

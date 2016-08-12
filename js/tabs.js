@@ -126,7 +126,7 @@
         if (self.moreButton.length === 0) {
           var button = $('<div>').attr({'class': 'tab-more'});
           button.append( $('<span class="more-text">').text(Locale.translate('More')));
-          button.append($.svgIconRaw({ cls: 'icon-more', icon: 'dropdown' }));
+          button.append($.createIconElement({ classes: 'icon-more', icon: 'dropdown' }));
           self.tablist.after(button);
           self.moreButton = button;
         }
@@ -161,7 +161,7 @@
            .parent().attr('role', 'presentation').addClass('tab');
 
           if (a.parent().hasClass('dismissible') && !a.parent().children('.icon').length) {
-            $.svgIcon({ icon: 'close', cls: 'close' }).insertAfter(a);
+            $.createIconElement({ icon: 'close', classes: 'close' }).insertAfter(a);
           }
 
           // Find and configure dropdown tabs
@@ -179,7 +179,7 @@
             a.removeAttr('role').removeAttr('aria-expanded').removeAttr('aria-selected');
 
             if (!a.parent().children('.icon.icon-more').length) {
-              $.svgIcon({ cls: 'icon-more', icon: 'dropdown' }).insertAfter(a);
+              $.createIconElement({ classes: 'icon-more', icon: 'dropdown' }).insertAfter(a);
             }
           }
 
@@ -1239,7 +1239,7 @@
 
         if (options.isDismissible) {
           tabHeaderMarkup.addClass('dismissible');
-          tabHeaderMarkup.append($.svgIconRaw({ icon: 'close', cls: 'close' }));
+          tabHeaderMarkup.append($.createIconElement({ icon: 'close', classes: 'close' }));
         }
 
         if (this.settings.tabCounts) {

@@ -41,7 +41,7 @@
         var self = this,
           btnDismissable = $(
             '<span class="dismissable-btn">' +
-              $.svgIconRaw('close') +
+              $.createIcon('close') +
               '<span class="audible"> '+ Locale.translate('Close') +'</span>' +
             '</span>');
 

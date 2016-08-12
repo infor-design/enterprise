@@ -173,7 +173,7 @@
           }
 
           if (item.find('svg.arrow').length === 0) {
-            item.append($.svgIconRaw({ cls: ['arrow', 'icon-dropdown'], icon: 'dropdown' }));
+            item.append($.createIconElement({ classes: ['arrow', 'icon-dropdown'], icon: 'dropdown' }));
           }
           item.attr('aria-haspopup', 'true');
 
@@ -486,7 +486,7 @@
             audibleText = link.find('span').text();
 
           if (!icon.length) {
-            this.element.append($.svgIcon({ cls: 'icon-dropdown', icon: 'dropdown' }));
+            this.element.append($.createIconElement({ classes: 'icon-dropdown', icon: 'dropdown' }));
             icon = $('use', this.element);
           }
           $('use', this.element).attr('xlink:href', $('use', link).attr('xlink:href'));

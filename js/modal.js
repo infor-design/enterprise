@@ -270,8 +270,8 @@
 
           if (props.icon && props.icon.charAt(0) === '#') {
             btn.html('<span>' + btn.text() + '</span>');
-            $.svgIcon({
-              cls: props.icon === '#icon-close' ? 'icon-close' : '',
+            $.createIconElement({
+              classes: [props.icon === '#icon-close' ? 'icon-close' : ''],
               icon: props.icon.substr('#icon-'.length)
             }).prependTo(btn);
           }
