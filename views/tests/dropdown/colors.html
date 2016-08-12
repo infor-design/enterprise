@@ -1,0 +1,53 @@
+<style>
+.dropdown {
+    background-color: #126171 !important;
+    color: white !important;
+}
+
+
+.dropdown + .icon {
+    fill: white !important;
+}
+</style>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="states" class="label">Colored Codes</label>
+      <select id="states" name="states" class="dropdown">
+        <option value="AL" selected>Alabama</option>
+        <option value="DE">Delaware</option>
+        <option value="DC" disabled>District Of Columbia</option>
+        <option value="FL" disabled>Florida</option>
+        <option value="GA">Georgia</option>
+        <option value="HI">Hawaii</option>
+        <option value="ID">Idaho</option>
+        <option value="OK">Oklahoma</option>
+        <option value="OR">Oregon</option>
+        <option value="PA">Pennsylvania</option>
+        <option value="RI">Rhode Island</option>
+        <option value="SC">South Carolina</option>
+        </select>
+     </div>
+
+     <div class="field">
+      <label for="special" class="label">Special Chars</label>
+      <select id="special" name="special" class="dropdown">
+        <option value="a&#039;z">A&#039;rizona</option>
+        <option value="<">&lt;</option>
+        <option value=">">&gt;</option>
+        <option value="\\myserver\path\">\\myserver\path\</option>
+        <option value="a&#039;z">A&#039;rizona</option>
+        <option value="<=">&lt;=</option>
+        <option value=">=">&gt;=</option>
+        <option value="script">&lt;script&gt;alert('")&lt;/script&gt;</option>
+        <option value="1">&lt;test&gt;</option>
+        <option value="7" >Customer &amp; Internal</option>
+        <option value="a" selected>Apostraphe's</option>
+        <option value="p'p">papa john's pizza</option>
+       </select>
+     </div>
+
+  </div>
+</div>
