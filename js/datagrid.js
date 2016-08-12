@@ -2282,7 +2282,7 @@ $.fn.datagrid = function(options) {
           var col = this.settings.columns[i];
 
           if (col.name) {
-            markup += '<li><a href="#" target="_self"> <label class="inline"><input ' + (col.hideable ===false ? 'disabled' : '') + ' type="checkbox" class="checkbox" '+ (col.hidden ? '' : ' checked') +' data-column-id="'+ (col.id || i) +'"><span class="label-text">' + col.name + '</span></label></a></li>';
+            markup += '<li><a href="#" target="_self" tabindex="-1"> <label class="inline"><input tabindex="-1" ' + (col.hideable ===false ? 'disabled' : '') + ' type="checkbox" class="checkbox" '+ (col.hidden ? '' : ' checked') +' data-column-id="'+ (col.id || i) +'"><span class="label-text">' + col.name + '</span></label></a></li>';
           }
         }
         markup += '</ul></div>';

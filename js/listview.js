@@ -364,14 +364,10 @@
           }
 
           if ((key === 40 || key === 38) && !metaKey) {// move down or up
-            var newItem = list.children().eq(item.index() + (e.keyCode === 40 ? 1 : -1));
+            var newItem = e.keyCode === 40 ? item.nextAll(':not(.is-disabled):visible:first') : item.prevAll(':not(.is-disabled):visible:first');
 
             if ($(e.target).is(item) || e.shiftKey) {
-              if (newItem.hasClass('is-disabled')) {
-                self.focus((e.keyCode === 40 ? newItem.next() : newItem.prev()));
-              } else {
-                self.focus(newItem);
-              }
+              self.focus(newItem);
             }
             e.preventDefault();
           }
@@ -525,8 +521,10 @@
         }
 
         list.not(results).addClass('hidden');
-        list.filter(results).each(function() {
-          $(this).highlight(term);
+        list.filter(results).each(function(i) {
+          var li = $(this);
+          li.attr('tabindex', i === 0 ? '0' : '-1');
+          li.highlight(term);
         });
 
         this.renderPager();
