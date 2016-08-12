@@ -2,6 +2,7 @@
 Release Date: TBD
 
 ### Key New
+* Bubble Chart
 * Positive/Negative Chart
 * Datagrid Export to XLS
 * Datagrid Icon Buttons
