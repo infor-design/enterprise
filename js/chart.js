@@ -2596,7 +2596,7 @@ window.Chart = function(container) {
           // Add animation
           lineGroups.selectAll('circle')
             .attr('cy', function (d) { return yScale(d.value.y); })
-            .transition().duration(1000).ease('cubic')
+            .transition().duration(750).ease('cubic')
             .attr('r', function (d) { return zScale(d.value.z); });
         }
       }
