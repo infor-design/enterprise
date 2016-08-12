@@ -2595,10 +2595,8 @@ window.Chart = function(container) {
         if (isBubble) {
           // Add animation
           lineGroups.selectAll('circle')
-            .transition().duration(900).ease('bounce')
             .attr('cy', function (d) { return yScale(d.value.y); })
-            .attr('r', function () { return zScale(1); })
-            .transition().duration(900).ease('bounce')
+            .transition().duration(1000).ease('cubic')
             .attr('r', function (d) { return zScale(d.value.z); });
         }
       }
