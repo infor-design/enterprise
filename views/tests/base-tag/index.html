@@ -1,62 +1,49 @@
-<body class="no-scroll">
+<div class="page-container scrollable">
 
-  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
-  {{> controls/svg}}
-  {{> includes/applicationmenu}}
+  <div class="row">
+    <div class="six columns">
 
-  <!-- Page Container -->
-  <div class="page-container no-scroll">
+      <h2>Base Tag Test</h2>
+      <p><a class="hyperlink" href="http://jira/browse/HFC-3847" target="_blank">Related JIRA Ticket</a>.</p>
+      <p></p>
 
-    {{> includes/header}}
+    </div>
+  </div>
 
-    <div class="page-container scrollable">
+  <div class="row">
+    <div class="twelve columns">
 
-      <div class="row">
-        <div class="six columns">
+      <button class="btn">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-alert"></use>
+        </svg>
+        <span>This button should have an alert icon</span>
+      </button>
 
-          <h2>Base Tag Test</h2>
-          <p><a class="hyperlink" href="http://jira/browse/HFC-3847" target="_blank">Related JIRA Ticket</a>.</p>
-          <p></p>
+    </div>
+  </div>
 
+  <div class="row">
+    <div class="twelve columns">
+
+      <div id="base-tag-tabs" class="tab-container">
+        <ul class="tab-list">
+          <li class="tab is-selected"><a href="#tab-one">Tab One</a></li>
+          <li class="tab"><a href="#tab-two">Tab Two</a></li>
+          <li class="tab"><a href="#tab-three">Tab Three</a></li>
+        </ul>
+        <div id="tab-one" class="tab-panel">
+          <h3>Tab #1</h3>
         </div>
-      </div>
-
-      <div class="row">
-        <div class="twelve columns">
-
-          <button class="btn">
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use xlink:href="#icon-alert"></use>
-            </svg>
-            <span>This button should have an alert icon</span>
-          </button>
-
+        <div id="tab-two" class="tab-panel">
+          <h3>Tab #2</h3>
         </div>
-      </div>
-
-      <div class="row">
-        <div class="twelve columns">
-
-          <div id="base-tag-tabs" class="tab-container">
-            <ul class="tab-list">
-              <li class="tab is-selected"><a href="#tab-one">Tab One</a></li>
-              <li class="tab"><a href="#tab-two">Tab Two</a></li>
-              <li class="tab"><a href="#tab-three">Tab Three</a></li>
-            </ul>
-            <div id="tab-one" class="tab-panel">
-              <h3>Tab #1</h3>
-            </div>
-            <div id="tab-two" class="tab-panel">
-              <h3>Tab #2</h3>
-            </div>
-            <div id="tab-three" class="tab-panel">
-              <h3>Tab #3</h3>
-            </div>
-          </div>
-
+        <div id="tab-three" class="tab-panel">
+          <h3>Tab #3</h3>
         </div>
       </div>
 
     </div>
-
   </div>
+
+</div>

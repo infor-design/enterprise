@@ -659,9 +659,9 @@
         var btn = leaf.find('.'+ constants.button);
 
         if (data.isExpanded || data.isExpanded === undefined) {
-          btn.find('.icon use').attr('xlink:href', '#icon-caret-up');
+          btn.find('.icon use').attr('xlink:href', $.getBaseURL('#icon-caret-up'));
         } else {
-          btn.find('.icon use').attr('xlink:href', '#icon-caret-down');
+          btn.find('.icon use').attr('xlink:href', $.getBaseURL('#icon-caret-down'));
         }
 
         if (data.isExpanded === undefined) {
