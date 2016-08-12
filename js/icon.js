@@ -155,6 +155,10 @@
         });
       }
 
+      if (!options.classes) {
+        options.classes = [].concat(defaults.classes);
+      }
+
       if (typeof options.classes === 'string') {
         options.classes = options.classes.split(' ');
       }

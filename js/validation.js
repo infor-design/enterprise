@@ -509,7 +509,7 @@
     showInlineError: function (field, message) {
       var loc = this.getField(field).addClass('error'),
         markup = '<div class="error-message">' +
-          $.createIcon({ classes: ['error'], icon: 'error' }) +
+          $.createIcon({ classes: ['icon-error'], icon: 'error' }) +
           '<pre class="audible">'+ Locale.translate('Error') +'</pre>' +
           '<p class="message-text">' + message +'</p>' +
           '</div>';

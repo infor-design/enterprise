@@ -76,7 +76,7 @@
         }
 
         //Append a Button
-        this.trigger = $.createIcon('calendar').insertAfter(this.element);
+        this.trigger = $.createIconElement('calendar').insertAfter(this.element);
 
         this.addAria();
       },

@@ -89,10 +89,10 @@
         var header = $('<div class="modal-header"></div>').appendTo(this.modal.find('.modal-content'));
         $('<div class="close-container"></div>')
           .append($('<button name="close" class="btn-icon hide-focus"></button>')
-            .append($.createIcon({ icon: 'close', classes: 'icon-close' }))
+            .append($.createIconElement({ icon: 'close', classes: 'icon-close' }))
             .append('<span>' + Locale.translate('Close') + '</span>'))
           .appendTo(header);
-        $.createIcon({ icon: 'logo-trademark', classes: ['icon', 'about-logo'] }).attr({ viewBox: '0 0 44 44' }).appendTo(header);
+        $.createIconElement({ icon: 'logo-trademark', classes: ['icon', 'about-logo'] }).attr({ viewBox: '0 0 44 44' }).appendTo(header);
         this.title = $('<h1 class="title"></h1>').text(this.settings.appName).appendTo(this.modal.find('.modal-header'));
 
         var body = $('<div class="modal-body"></div>').appendTo(this.modal.find('.modal-content'));
