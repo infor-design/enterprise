@@ -2517,6 +2517,9 @@ window.Chart = function(container) {
                 var size = charts.getTooltipSize(content),
                   x = rect.left - (size.width /2) + 6,
                   y = rect.top - size.height - 18;
+
+                x = isBubble ? ((rect.left + (rect.width /2)) - (size.width /2)) : x;
+
                 if(content !== '') {
                   charts.showTooltip(x, y, content, 'top');
                 }
