@@ -715,12 +715,13 @@
 
       //Add the children for the specified node element
       addChildNodes: function (nodeData, li) {
-        var self = this;
+        var self = this,
+          ul = li.find('ul');
+
         if (!nodeData.children) {
+          ul.remove();
           return;
         }
-
-        var ul = li.find('ul.folder');
 
         if (ul.length === 0) {
           ul = $('<ul></ul>').appendTo(li);
@@ -770,6 +771,7 @@
           this.syncDataset(this.element);
         }
 
+        this.addChildNodes(nodeData, elem.node.parent());
       },
 
       //Delete a node from the dataset or tree
