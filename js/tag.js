@@ -41,9 +41,7 @@
         var self = this,
           btnDismissable = $(
             '<span class="dismissable-btn">' +
-              '<svg class="icon" focusable="false" aria-hidden="true" role="presentation">' +
-                '<use xlink:href="#icon-close"></use>' +
-              '</svg>' +
+              $.createIcon('close') +
               '<span class="audible"> '+ Locale.translate('Close') +'</span>' +
             '</span>');
 

@@ -64,7 +64,7 @@
          var lookup = this.element;
 
         //Add Button
-        this.icon = $('<span class="trigger" tabindex="-1"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-search-list"/></svg></span>');
+        this.icon = $('<span class="trigger" tabindex="-1"></span>').append($.createIcon('search-list'));
         if (this.isInlineLabel) {
           this.inlineLabel.addClass('lookup-wrapper');
         }

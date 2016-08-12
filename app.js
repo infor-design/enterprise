@@ -328,7 +328,7 @@ var express = require('express'),
       opts.layout = getApplicationMenuTestLayout(directory);
     }
     if (directory.match(/tests\/base-tag/)) {
-      opts.layout = 'tests/base-tag/layout';
+      opts.usebasehref = true;
     }
     if (directory.match(/tests\/distribution/)) {
       opts.amd = true;

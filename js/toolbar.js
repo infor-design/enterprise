@@ -96,7 +96,7 @@
           }
 
           this.more = $('<button class="btn-actions" type="button"></button>')
-            .html('<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-more"></svg>' +
+            .html($.createIcon('more') +
               '<span class="audible">'+Locale.translate('MoreActions')+'</span>')
             .appendTo(moreContainer);
         }
@@ -160,8 +160,11 @@
           a.text(self.getItemText(item));
 
           // Pass along any icons except for the dropdown (which is added as part of the submenu design)
+          var submenuDesignIcon = $.getBaseURL('#icon-dropdown');
           var icon = item.children('.icon').filter(function(){
-            return $(this).children('use').attr('xlink:href') !== '#icon-dropdown';
+            var curr = $(this).children('use').attr('xlink:href');
+
+            return curr !== submenuDesignIcon && curr !== '#icon-dropdown';
           });
 
           if (icon.length) {
