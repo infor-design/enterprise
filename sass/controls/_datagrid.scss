@@ -397,6 +397,11 @@ $datagrid-short-row-height: 30px;
           }
         }
 
+        + .icon {
+          right: 4px;
+          top: -2px;
+        }
+
         &.is-disabled {
           border-color: $slate05;
 
@@ -409,11 +414,6 @@ $datagrid-short-row-height: 30px;
           color: inherit;
           -webkit-text-fill-color: inherit;
           width: calc(100% - 16px);
-        }
-
-        + .icon {
-          right: 4px;
-          top: -2px;
         }
 
       }
@@ -437,10 +437,6 @@ $datagrid-short-row-height: 30px;
           fill: $slate02 !important;
           // scss-lint:enable ImportantRule
         }
-      }
-
-      .dropdown + .icon {
-        top: -2px;
       }
 
       .btn-filter {

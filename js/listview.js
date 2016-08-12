@@ -434,7 +434,7 @@
 
             if (!isFocused && !item.hasClass('is-disabled')) {
               isSelect = true;
-              // self.select(item);
+
               if(isMultiple && e.shiftKey) {
                 self.selectRowsBetweenIndexes([self.lastSelectedRow, item.index()]);
                 e.preventDefault();
@@ -691,6 +691,15 @@
         self.selectedItems = [];
         isChecked = li.hasClass('is-selected');
 
+        //focus
+        li.parent().children().removeAttr('tabindex');
+        li.attr('tabindex', 0);
+
+        if (this.settings.selectable === false || this.settings.selectable === 'false') {
+          return;
+        }
+
+        //Select
         if (this.settings.selectable !== 'multiple') {
           li.parent().children().removeAttr('aria-selected');
           li.parent().find('.is-selected').removeClass('is-selected');
@@ -711,11 +720,8 @@
           self.selectedItems[i] = $(this);
         });
 
-        li.parent().children().removeAttr('tabindex');
-        li.attr('tabindex', 0);
-
         li.attr('aria-selected', !isChecked);
-        this.element.trigger('selected', [this.selectedItems]);
+        this.element.trigger('selected', {selectedItems: this.selectedItems, elem: li});
 
         var toolbar, toolbarControl,
           parent = this.element.closest('.card, .widget');

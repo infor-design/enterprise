@@ -71,7 +71,7 @@
     font-weight: bold;
     text-transform: uppercase;
 
-    &:after {
+    &::after {
       clear: both;
       content: '';
       display: inline-block;
@@ -95,7 +95,9 @@
     position: relative;
 
     &.pending::before {
+      // scss-lint:disable ImportantRule
       left: .35em !important;
+      // scss-lint:enable ImportantRule
     }
   }
 
@@ -113,38 +115,40 @@
       border-bottom-color: $listview-border-color;
     }
 
-    &:after {
+    &::after {
       clear: both;
       content: '';
       display: inline-block;
       position: absolute;
     }
 
-    &:hover,
-    &:focus {
+    &:hover {
       background-color: $listview-hover-bg-color;
       outline: none;
+    }
 
-      &:focus {
-        //@include css3(box-shadow, 0 0 1px 1px $primary-color inset);
-        border-color: $primary-color;
+    &:focus {
+      // scss-lint:disable ImportantRule - need for modal dialog (personalization in grid)
+      border-color: $primary-color !important;
+      // scss-lint:enable ImportantRule
+      outline: none;
 
-        + li {
-          border-top-color: transparent;
-        }
+      + li {
+        border-top-color: transparent;
       }
-
     }
 
     &.error,
     &.alert {
-      border-left-width: 3px;
       border-left-style: solid;
+      border-left-width: 3px;
       padding: 15px 20px 15px 17px;
     }
 
     &.error {
+      // scss-lint:disable ImportantRule
       border-left-color: $error-color !important;
+      // scss-lint:enable ImportantRule
 
       .days,
       .hours,
@@ -154,8 +158,23 @@
       }
     }
 
+    &.is-error {
+      background-color: $error-bg-color;
+      border-color: $error-color;
+
+      &:hover {
+        background-color: $error-bg-color;
+      }
+
+      + li {
+        border-top-color: transparent;
+      }
+    }
+
     &.alert {
+      // scss-lint:disable ImportantRule
       border-left-color: $alert-yellow !important;
+      // scss-lint:enable ImportantRule
 
       .days,
       .hours,
@@ -176,8 +195,8 @@
     }
 
     p {
-      margin-bottom: 5px;
       line-height: normal;
+      margin-bottom: 5px;
 
       &:last-of-type {
         margin-bottom: 0;
@@ -333,19 +352,6 @@
     }
   }
 
-  li.is-error {
-    background-color: $error-bg-color;
-    border-color: $error-color;
-
-    &:hover {
-      background-color: $error-bg-color;
-    }
-
-    + li {
-      border-top-color: transparent;
-    }
-  }
-
   li.is-selected,
   tr.is-selected {
     background-color: $selected-bg-color;
@@ -374,7 +380,7 @@
     padding-left: 45px;
     position: relative;
 
-    &:before {
+    &::before {
       @include checkbox-unchecked-before-style;
       height: 14px;
       left: 19px;
@@ -383,11 +389,11 @@
       width: 14px;
     }
 
-    &.is-selected:before {
+    &.is-selected::before {
       @include checkbox-checked-before-style;
     }
 
-    &.is-selected:after {
+    &.is-selected::after {
       @include checkbox-checked-after-style;
       @include css3(transform-origin, -11px top 0);
       @include checkbox-animation;
@@ -399,7 +405,7 @@
 
     &:hover:not(.is-disabled):not(.is-selected):not(.is-error),
     &:focus:not(.is-disabled):not(.is-selected):not(.is-error) {
-      &:before {
+      &::before {
         border-color: $listview-color;
       }
     }
@@ -417,7 +423,10 @@
     .info > li:hover {
       background-color: transparent;
       border: 0 none;
+      // scss-lint:disable ImportantRule
       padding: 0 !important;
+      // scss-lint:enable ImportantRule
+
     }
 
     td {
@@ -479,8 +488,8 @@
     }
 
     th {
-      color: $listview-header-color;
       @include font-size(12);
+      color: $listview-header-color;
       display: table-cell;
       font-weight: bold;
       padding: 15px;
@@ -541,13 +550,13 @@
   }
 
   p {
-    color: $font-color-highcontrast;
     @include font-size(16);
+    color: $font-color-highcontrast;
   }
 
   strong {
-    color: $font-color-highcontrast;
     @include font-size(16);
+    color: $font-color-highcontrast;
     font-weight: bold;
     margin-top: 10px;
   }
@@ -645,7 +654,10 @@
   .icon-error,
   .icon-confirm,
   .icon-pending {
+    // scss-lint:disable ImportantRule
     top: 3px !important;
+    // scss-lint:enable ImportantRule
+
   }
 }
 
@@ -671,15 +683,20 @@ html[dir='rtl'] {
 
       &.pending::before {
         left: auto;
+        // scss-lint:disable ImportantRule
         right: .35em !important;
+        // scss-lint:enable ImportantRule
+
       }
     }
 
     li {
 
       &.error {
+        // scss-lint:disable ImportantRule
         border-left: 3px solid $error-color !important;
         border-right: 0 solid $error-color !important;
+        // scss-lint:enable ImportantRule
         padding: 15px 17px 15px 20px;
       }
 
@@ -732,7 +749,7 @@ html[dir='rtl'] {
       }
     }
 
-    &.is-muliselect li:before {
+    &.is-muliselect li::before {
       left: auto;
       margin-left: inherit;
       margin-right: 0;
@@ -743,7 +760,7 @@ html[dir='rtl'] {
       padding-left: inherit;
       padding-right: 43px;
 
-      &.is-selected:after {
+      &.is-selected::after {
         left: auto;
         right: 19px;
       }
@@ -760,6 +777,7 @@ html[dir='rtl'] {
 
   .listview-search {
 
+    // scss-lint:disable ImportantRule
     input {
       padding: 12px 40px 12px 10px !important;
     }
@@ -770,9 +788,10 @@ html[dir='rtl'] {
     }
 
     .icon.close {
-      right: initial !important;
       left: 12px !important;
+      right: initial !important;
     }
+    // scss-lint:enable ImportantRule
 
   }
 }
