@@ -24,6 +24,7 @@
     var pluginName = 'searchfield',
         defaults = {
           allResultsCallback: undefined,
+          showAllResults: true,
           categories: undefined, // If defined as an array, displays a dropdown containing categories that can be used to filter results.
           categoryMultiselect: false, // If true, creates a multiselectable Categories list
           showCategoryText: false, // If true, will show any available categories that are selected to the left of the Dropdown field.
@@ -53,6 +54,7 @@
       build: function() {
         var self = this;
 
+        this.optionsParseBoolean();
         this.label = this.element.prev('label, .label');
 
         // Invoke Autocomplete and store references to that and the popupmenu created by autocomplete.
@@ -160,6 +162,20 @@
         return this;
       },
 
+      // Set boolean value if strings
+      optionsParseBoolean: function() {
+        var i, l,
+          arr = [
+            'showAllResults',
+            'categoryMultiselect',
+            'showCategoryText',
+            'clearable'
+          ];
+        for (i=0,l=arr.length; i<l; i++) {
+          this.settings[arr[i]] = this.parseBoolean(this.settings[arr[i]]);
+        }
+      },
+
       hasCategories: function() {
         return this.settings.categories && $.isArray(this.settings.categories) && this.settings.categories.length > 0;
       },
@@ -210,8 +226,10 @@
 
         // Insert the "view more results" link on the Autocomplete control's "populated" event
         this.element.on('populated.searchfield', function(e, items) {
-          if (items.length > 0 ) {
-            self.addMoreLink();
+          if (items.length > 0) {
+            if (self.settings.showAllResults) {
+              self.addMoreLink();
+            }
           } else {
             self.addNoneLink();
           }
@@ -470,6 +488,12 @@
 
       disable: function() {
         this.element.prop('disabled', true);
+      },
+
+      // Performs the usual Boolean coercion with the exception of
+      // the strings "false" (case insensitive) and "0"
+      parseBoolean: function(b) {
+        return !(/^(false|0)$/i).test(b) && !!b;
       },
 
       teardown: function() {
