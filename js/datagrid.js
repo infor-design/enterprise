@@ -1473,7 +1473,9 @@ $.fn.datagrid = function(options) {
           //This case is multiselect
           if (conditions[i].value instanceof Array) {
             isMatch = conditions[i].value.indexOf(row[conditions[i].columnId]) >= 0 && row[conditions[i].columnId].toString() !== '';
-            return isMatch;
+            if (!isMatch) {
+              return false;
+            }
           }
 
           switch (conditions[i].operator) {

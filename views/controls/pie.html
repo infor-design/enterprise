@@ -48,7 +48,6 @@
     }];
 
   $('#pie-chart-example').chart({type: 'pie', dataset: pieData}).on('selected', function(e, elem, info) {
-    console.log(elem, info);
-    //window.location = data.elm.url;
+    window.location = info.data.url;
   });
 </script>

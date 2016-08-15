@@ -3,7 +3,6 @@
 
 | Project            | Comments      |  Names |  Version |
 |--------------------|-------------|------|------|
-| Automative  | Angular - Looking at shared repo |  Rick Leedy | 4x |
 | Approva Applications |An ASP Application interested in accessibility | Shabu Kutty | 3x|
 | Automotive Exchange  | Angular - Looking at shared repo |Rick Leedy | 4x |
 | BI | React - New App |  Andrej Hazucha <Andrej.Hazucha@infor.com> | 4x |
@@ -45,7 +44,7 @@
 | Lawson S3  |   | Andy Buboltz | 4x |
 | LBI |   | Steve Stahl, Rommel Dollison | 3x |
 | LTM App Group |   | Jerry Drinka, David Cooper |3x |
-| LMS  | Angular (2.0) interested, using some widgets. Has PM |  | 4x|
+| LMS  | Angular (2.0) interested, using some widgets. Has PM | Tony Shah | 4x|
 | Content Creator for LMS( Learning Management System ) |   | Vadim Liman | 3x |
 | Masterpiece |   | Tam Nav | 3x |
 | Mingle|  Pulling SASS files into Mingle | Ravi Narayan <Ravi.Narayan@infor.com> | 4x |
@@ -67,6 +66,7 @@
 | Rhythm Widgets | Dropdown, Date Picker, Text Area, Spinbox foldeed into | Eric Martensson | 4x |
 | Sales Portal |   | Matt Defina  | 3x |
 | Self Portal - Cloudsuite | Using XI js and css directly, actively implementing | Hal Walters | 4x |
+| Sky Vault | Ana Laura Martinez <AnaLaura.Martinez@infor.com> | Wim Denayer | 4x |
 | SmartStream | ASP | Wim Denayer | 3x to 4x |
 | Smart Mobile CityWatch app | ?? | Nicholas Gabb | 3x |
 | Softbrands FourthShift ERP | ASP | Steve Duepner | 3x |
@@ -76,8 +76,8 @@
 | SupplyWeb | Eric Andrews | Reviewing | 3x |
 | System Console | New app by S3 team  | Andy Buboltz | 4x |
 | System I |   | Richard Sankey | 3x |
-| SXE | Angular 1.0 - using XI directly - Huge app it will be another year. | Peter Cullen | 4x |
+| SXE | Angular 1.0 - using XI directly - Huge app it will be another year. | Aaron Pikkarainen <aaron.pikkarainen@infor.com> | 4x |
 | S&OP | Vaadin and GWT | Duncan Simpson | 4x |
 | VR POC | (POS system) works on Windows Forms using the ProvideX language. Win Forms dynamically transformed to a Web Forms (DHTML), | Arnaud Pochon  | 3x to 4x |
 | WFM | complex tables and field sets. desktop with basic mobile only| Edgar Ogando | 4x|
-| Xtreme Support | ASP| Raj S. Joshi | 4x |
+| Xtreme Support | ASP| Julia Walker | 4x |

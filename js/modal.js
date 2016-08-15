@@ -192,7 +192,7 @@
           // Buttons in markup
           btnWidth = 100/inlineBtns.length;
           inlineBtns.css('width', btnWidth + '%').button();
-          inlineBtns.not('[ng-click], [onclick], :submit').on('click.modal', function (e) {
+          inlineBtns.not('[data-ng-click], [ng-click], [onclick], :submit').on('click.modal', function (e) {
             if ($(e.target).is('.btn-cancel')) {
               self.isCancelled = true;
             }

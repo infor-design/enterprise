@@ -390,6 +390,10 @@ body.no-scroll {
   > .row:first-child {
     padding-top: 20px;
   }
+
+  .svg-patterns + .row {
+    padding-top: 20px;
+  }
 }
 
 .header {
