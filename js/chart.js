@@ -857,17 +857,16 @@ window.Chart = function(container) {
       .on('click', function (d, i) {
         var isSelected = this && d3.select(this).classed('is-selected');
 
-        // Make unselected
-        charts.setSelectedElement({
-          task: 'unselected',
-          container: container,
-          selector: '.chart-container .is-selected',
-          isTrigger: false,
-          d: d.data,
-          i: i
-        });
-
         if (isSelected) {
+          // Make unselected
+          charts.setSelectedElement({
+            task: 'unselected',
+            container: container,
+            selector: '.chart-container .is-selected',
+            isTrigger: false,
+            d: d.data,
+            i: i
+          });
           $(container).triggerHandler('selected', [d3.select(this)[0], {}, i]);
         }
         else {
