@@ -232,7 +232,6 @@
           elem.swaplist({
             available: scope.available,
             selected: scope.selected,
-            template: templateHtml
           });
         }
       };

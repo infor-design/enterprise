@@ -1,31 +1,3 @@
-  <!--This is only needed because it renders first on the server on the first one-->
-  {{={{{ }}}=}}
-
-  <script id="swaplist-tmpl" type="text/html">
-    <ul data-swap-handle=".handle">
-      {{#dataset}}
-      {{#text}}
-        <li
-        {{#value}}
-          data-value="{{value}}"
-        {{/value}}
-        {{#selected}}
-          selected="selected"
-        {{/selected}}
-        {{#disabled}}
-          class="is-disabled"
-        {{/disabled}}
-        >
-          <span class="handle" focusable="false" aria-hidden="true" role="presentation">&#8286;</span>
-          <div class="swaplist-item-content">
-            <p>{{text}}</p>
-          </div>
-        </li>
-      {{/text}}
-      {{/dataset}}
-    </ul>
- </script>
-
   <div class="row" ng-controller="demo">
     <div class="columns nine">
 
