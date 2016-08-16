@@ -1137,9 +1137,6 @@ $.fn.datagrid = function(options) {
     },
 
     loadData: function (dataset, pagerInfo) {
-      var self = this;
-
-      var oldRows = (this.selectedRows() ? this.selectedRows().slice() : []);
       this.settings.dataset = dataset;
 
       if (this.pager) {
@@ -1160,15 +1157,14 @@ $.fn.datagrid = function(options) {
       //Update Paging and Clear Rows
       this.renderRows();
       this.renderPager(pagerInfo);
-      this.selectedRows([]);
 
       if (pagerInfo && pagerInfo.preserveSelected) {
-        for (var i = 0; i < oldRows.length; i++) {
-          self.selectRow(oldRows[i].idx, true);
-        }
+        this.updateSelected();
+        this.syncSelectedUI();
       }
-
-      this.syncSelectedUI();
+      else {
+        this.unSelectAllRows();
+      }
     },
 
     uniqueId: function (suffix) {
