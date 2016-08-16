@@ -36,9 +36,6 @@
 
     // Plugin Constructor
     function Initialize(element, settings) {
-      // console.log('t');
-      // console.log($(element).data('initialize'));
-      // console.log(settings);
       this.settings = $.extend({}, settings);
       this.element = $(element);
       this.init();
