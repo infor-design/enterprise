@@ -151,6 +151,7 @@
 
     function normalizeIconOptions(options) {
       var defaults = {
+        file: '/svg/icons.svg',
         icon: 'user-profile', // omit the "icon-" if you want; this code strips it out.
         classes: ['icon']
       };
@@ -165,6 +166,10 @@
 
       if (!options.classes) {
         options.classes = [].concat(defaults.classes);
+      }
+
+      if (!options.file) {
+        options.file = defaults.file;
       }
 
       if (typeof options.classes === 'string') {
@@ -184,7 +189,7 @@
 
       return [
         '<svg class="' + options.classes.join(' ') + '" focusable="false" aria-hidden="true" role="presentation">' +
-          '<use xlink:href="#icon-' + options.icon + '"></use>' +
+          '<use xlink:href="'+ options.file +'#icon-' + options.icon + '"></use>' +
         '</svg>'
       ].join('');
     };
