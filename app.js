@@ -48,6 +48,13 @@ var express = require('express'),
       console.log('Changing Route Parameter "locale" to be "' + res.opts.locale + '".');
     }
 
+    // Normally we will use an external file for loading SVG Icons and Patterns.
+    // Setting "inlineSVG" to true will use the deprecated method of using SVG icons, which was to bake them into the HTML markup.
+    if (req.query.inlineSVG && req.query.inlineSVG.length > 0) {
+      res.opts.inlineSVG = true;
+      console.log('Inlining SVG Elements...');
+    }
+
     next();
   };
 
@@ -315,7 +322,7 @@ var express = require('express'),
 
     var directory = 'tests/' + end;
     if (hasTrailingSlash(directory)) {
-      if ( is('directory', directory) ) {
+      if (is('directory', directory) ) {
         getDirectoryListing(directory, req, res, next);
         return;
       }

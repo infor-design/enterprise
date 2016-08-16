@@ -29,7 +29,8 @@
     // Settings and Options
     var pluginName = 'icon',
         defaults = {
-          use: 'user-profile',
+          use: 'user-profile', // Match this to one of the SoHo Xi icons, prefixed with an ID of '#icon-'
+          iconFileLocation: null, // If defined, this will be prepended to the <use> tag's xlink:href attribute, causing it to be loaded from an external file instead of locally on the page.
           focusable: false
         },
         settings = $.extend({}, defaults, options);
@@ -70,7 +71,7 @@
       },
 
       getBasedUseTag: function() {
-        return $.getBaseURL('#icon-' + this.settings.use);
+        return $.getBaseURL((this.settings.iconFileLocation || '') + '#icon-' + this.settings.use);
       },
 
       // In the event that a <use> tag exists on an icon, we want to retain it
@@ -86,6 +87,13 @@
         }
 
         var xlinkHref = useTag.attr('xlink:href');
+
+        // detect if there is an external file location in the use tag, and store it
+        if (xlinkHref.indexOf('#') > 0) {
+          this.settings.iconFileLocation = xlinkHref.substring(0, xlinkHref.indexOf('#'));
+          xlinkHref = xlinkHref.substring(xlinkHref.indexOf('#'), xlinkHref.length);
+        }
+
         this.settings.use = xlinkHref.replace('#icon-', '');
 
         return this;

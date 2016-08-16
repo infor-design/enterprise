@@ -36,6 +36,11 @@
 
     getBaseURL: function(hash) {
       if (hash) {
+        // absolute links
+        if (hash.indexOf('/') === 0) {
+          return window.location.origin + hash;
+        }
+
         hash = (hash.indexOf('#') === -1 ? '#' : '') + hash;
         return this.url + hash;
       }

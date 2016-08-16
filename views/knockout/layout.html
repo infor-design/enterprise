@@ -20,12 +20,14 @@
 
 </head>
 <body>
-  {{> controls/svg}}
+  {{> includes/svg-inline-refs}}
   <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
 
   {{> includes/header}}
   <div id="maincontent" class="page-container top-padding" role="main">
     {{> content}}
   </div>
+
+  {{> includes/footer}}
 </body>
 </html>
