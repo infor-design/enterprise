@@ -23,7 +23,7 @@
     // Settings and Options
     var pluginName = 'initialize',
         defaults = {
-          locale: 'en-US'
+          locale: Locale.currentLocale.name || 'en-US'
         },
         settings;
 
