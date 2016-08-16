@@ -28,7 +28,7 @@ module.exports = function(grunt) {
 
     watch: {
       source: {
-        files: ['sass/**/*.scss', 'views/docs/**.html', 'views/**.html', 'views/includes/**.html', 'views/controls/**.html', 'js/*/*.js', 'js/*.js', 'js/cultures/*.*'],
+        files: ['sass/**/*.scss', 'svg/*.svg', 'views/docs/**.html', 'views/**.html', 'views/includes/**.html', 'views/controls/**.html', 'js/*/*.js', 'js/*.js', 'js/cultures/*.*'],
         tasks: ['sohoxi-watch'],
         options: {
           livereload: true
@@ -148,14 +148,9 @@ module.exports = function(grunt) {
           {expand: true, flatten: true, src: ['js/sohoxi-angular.js'], dest: 'dist/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/sohoxi-knockout.js'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/sohoxi-knockout.js'], dest: 'dist/js/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['views/controls/svg.html'], dest: 'dist/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['views/controls/svg-extended.html'], dest: 'dist/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['views/controls/svg-empty.html'], dest: 'dist/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['views/controls/svg-patterns.html'], dest: 'dist/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/*.js'], dest: 'dist/js/all/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['dist/css/*'], dest: 'public/stylesheets/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['js/demo/demo.js'], dest: 'public/js/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['js/demo/syntax.js'], dest: 'public/js/', filter: 'isFile'},
+          {expand: true, flatten: true, src: ['js/demo/*.js'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/vendor/jquery-3*.js'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/vendor/jquery-3*.min.js'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/vendor/jquery-3*.map'], dest: 'public/js/', filter: 'isFile'},
@@ -167,8 +162,13 @@ module.exports = function(grunt) {
           {expand: true, flatten: true, src: ['js/vendor/jquery-2*.min.js'], dest: 'dist/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/vendor/jquery-2*.map'], dest: 'dist/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/vendor/d3.*'], dest: 'dist/js/', filter: 'isFile'},
+          {expand: true, flatten: true, src: ['js/vendor/svg4everybody.js'], dest: 'dist/js/', filter: 'isFile'},
+          {expand: true, flatten: true, src: ['js/vendor/svg4everybody.js'], dest: 'public/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/cultures/*.*'], dest: 'public/js/cultures/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['js/cultures/*.*'], dest: 'dist/js/cultures/', filter: 'isFile'}
+          {expand: true, flatten: true, src: ['js/cultures/*.*'], dest: 'dist/js/cultures/', filter: 'isFile'},
+          {expand: true, flatten: true, src: ['svg/*.svg'], dest: 'dist/svg/', filter: 'isFile'},
+          {expand: true, flatten: true, src: ['svg/*.svg'], dest: 'public/svg/', filter: 'isFile'},
+          {expand: true, flatten: true, src: ['dist/svg/*.html'], dest: 'public/svg/', filter: 'isFile'}
         ]
       },
       amd: {
@@ -244,6 +244,39 @@ module.exports = function(grunt) {
       amd: ['temp']
     },
 
+    'string-replace': {
+      svg: {
+        files: [
+          {
+            expand: true,
+            cwd: 'views/controls',
+            src: 'svg*.html',
+            dest: 'dist/svg/'
+          }
+        ],
+        options: {
+          replacements: [
+            {
+              pattern: '<!-- NOTE:  This file gets automatically rewritten below this comment at build time.  Please make changes to the SVG files in the "<project-root>/svg" folder. -->',
+              replacement: ''
+            },
+            {
+              pattern: '{{> svg/svg}}',
+              replacement: '<%= grunt.file.read("svg/icons.svg") %>'
+            },
+            {
+              pattern: '{{> svg/svg-extended}}',
+              replacement: '<%= grunt.file.read("svg/icons-extended.svg") %>'
+            },
+            {
+              pattern: '{{> svg/svg-empty}}',
+              replacement: '<%= grunt.file.read("svg/icons-empty.svg") %>'
+            }
+          ]
+        }
+      }
+    },
+
     compress: {
       main: {
         options: {
@@ -278,6 +311,7 @@ module.exports = function(grunt) {
     'jshint',
     'sass',
     'copy:amd',
+    'string-replace',
     'strip_code',
     'concat',
     'clean',
@@ -291,7 +325,7 @@ module.exports = function(grunt) {
 
   // Don't do any uglify/minify/jshint while the Dev Watch is running.
   grunt.registerTask('sohoxi-watch', [
-    'revision', 'sass', 'copy:amd', 'strip_code','concat', 'clean', 'copy:main', 'usebanner'
+    'revision', 'sass', 'copy:amd', 'string-replace', 'strip_code','concat', 'clean', 'copy:main', 'usebanner'
   ]);
 
 };

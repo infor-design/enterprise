@@ -1,5 +1,3 @@
-{{> controls/svg-extended}}
-
 <div class="two-column fixed" role="main">
 
   <div class="sidebar scrollable">
@@ -13,7 +11,7 @@
         <div class="buttonset">
           <button class="btn-icon" title="Expand All" id="expand-collapse">
              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                 <use xlink:href="#icon-expand-all"></use>
+                 <use xlink:href="/svg/icons.svg#icon-expand-all"></use>
              </svg>
              <span>Expand All</span>
           </button>
@@ -95,4 +93,3 @@
     btn.attr('title', isExpanded ? 'Collapse All' : 'Expand All').trigger('updated');
   });
 </script>
-

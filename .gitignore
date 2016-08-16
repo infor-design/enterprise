@@ -1,5 +1,6 @@
 node_modules/
 designs/
+public/svg/
 public/js/
 public/stylesheets/
 dist/

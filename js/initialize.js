@@ -47,6 +47,7 @@
         this
           .setupEnvironment()
           .addBrowserClasses()
+          .polyfillSVG()
           .handleInit()
           .addGlobalResize();
       },
@@ -118,6 +119,15 @@
 
         if ((/Android/.test(ua))) {
           html.addClass('android');
+        }
+
+        return this;
+      },
+
+      polyfillSVG: function() {
+        var html = $('html');
+        if (html.hasClass('ie') || html.hasClass('edge')) {
+          svg4everybody();
         }
 
         return this;

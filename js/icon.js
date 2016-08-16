@@ -29,7 +29,8 @@
     // Settings and Options
     var pluginName = 'icon',
         defaults = {
-          use: 'user-profile',
+          use: 'user-profile', // Match this to one of the SoHo Xi icons, prefixed with an ID of '#icon-'
+          iconFileLocation: null, // If defined, this will be prepended to the <use> tag's xlink:href attribute, causing it to be loaded from an external file instead of locally on the page.
           focusable: false
         },
         settings = $.extend({}, defaults, options);
@@ -64,13 +65,17 @@
         // Get a "base-tag-proof" version of the Use tag's definition.
         // jQuery can't work with SVG elements, so we just modify it with regular DOM APIs
         var use = this.element[0].getElementsByTagName('use')[0];
+        if (!use) {
+          return this;
+        }
+
         use.setAttribute('xlink:href', this.getBasedUseTag());
 
         return this;
       },
 
       getBasedUseTag: function() {
-        return $.getBaseURL('#icon-' + this.settings.use);
+        return $.getBaseURL((this.settings.iconFileLocation || '') + '#icon-' + this.settings.use);
       },
 
       // In the event that a <use> tag exists on an icon, we want to retain it
@@ -86,6 +91,13 @@
         }
 
         var xlinkHref = useTag.attr('xlink:href');
+
+        // detect if there is an external file location in the use tag, and store it
+        if (xlinkHref.indexOf('#') > 0) {
+          this.settings.iconFileLocation = xlinkHref.substring(0, xlinkHref.indexOf('#'));
+          xlinkHref = xlinkHref.substring(xlinkHref.indexOf('#'), xlinkHref.length);
+        }
+
         this.settings.use = xlinkHref.replace('#icon-', '');
 
         return this;
@@ -143,6 +155,7 @@
 
     function normalizeIconOptions(options) {
       var defaults = {
+        file: '/svg/icons.svg',
         icon: 'user-profile', // omit the "icon-" if you want; this code strips it out.
         classes: ['icon']
       };
@@ -157,6 +170,10 @@
 
       if (!options.classes) {
         options.classes = [].concat(defaults.classes);
+      }
+
+      if (!options.file) {
+        options.file = defaults.file;
       }
 
       if (typeof options.classes === 'string') {
@@ -176,7 +193,7 @@
 
       return [
         '<svg class="' + options.classes.join(' ') + '" focusable="false" aria-hidden="true" role="presentation">' +
-          '<use xlink:href="#icon-' + options.icon + '"></use>' +
+          '<use xlink:href="'+ options.file +'#icon-' + options.icon + '"></use>' +
         '</svg>'
       ].join('');
     };
