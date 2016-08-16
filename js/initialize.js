@@ -23,7 +23,7 @@
     // Settings and Options
     var pluginName = 'initialize',
         defaults = {
-          locale: 'en-US'
+          locale: Locale.currentLocale.name || 'en-US'
         },
         settings;
 
@@ -36,6 +36,9 @@
 
     // Plugin Constructor
     function Initialize(element, settings) {
+      // console.log('t');
+      // console.log($(element).data('initialize'));
+      // console.log(settings);
       this.settings = $.extend({}, settings);
       this.element = $(element);
       this.init();
