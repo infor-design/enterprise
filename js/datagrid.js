@@ -1466,17 +1466,23 @@ $.fn.datagrid = function(options) {
             conditionValue = Locale.parseDate(conditions[i].value, conditions[i].format).getTime();
           }
 
-          //This case is multiselect
-          if (conditions[i].value instanceof Array) {
-            isMatch = conditions[i].value.indexOf(row[conditions[i].columnId]) >= 0 && row[conditions[i].columnId].toString() !== '';
-            if (!isMatch) {
-              return false;
-            }
-          }
-
           switch (conditions[i].operator) {
             case 'equals':
-              isMatch = (rowValue === conditionValue && rowValue !== '');
+
+              //This case is multiselect
+              if (conditions[i].value instanceof Array) {
+                isMatch = false;
+
+                for (var k = 0; k < conditions[i].value.length; k++) {
+                  var match = conditions[i].value[k].indexOf(row[conditions[i].columnId]) >= 0 && row[conditions[i].columnId].toString() !== '';
+                  if (match) {
+                    isMatch = true;
+                  }
+                }
+              } else {
+                isMatch = (rowValue === conditionValue && rowValue !== '');
+              }
+
               break;
             case 'does-not-equal':
               isMatch = (rowValue !== conditionValue && rowValue !== '');
@@ -3681,7 +3687,7 @@ $.fn.datagrid = function(options) {
 
     //Returns Column Settings from a cell
     columnSettings: function (cell) {
-      var cellNode = this.tableBody.find('tr').find('td').eq(cell),
+      var cellNode = this.tableBody.find('tr:first').find('td:not(.is-hidden)').eq(cell),
         column = settings.columns[parseInt(cellNode.attr('data-idx'))];
 
       return column;
@@ -3712,7 +3718,7 @@ $.fn.datagrid = function(options) {
     updateCellNode: function (row, cell, value, fromApiCall) {
       var rowNode = this.visualRowNode(row),
         cellNode = rowNode.find('td').eq(cell),
-        col = this.columnSettings(cell),
+        col = this.settings.columns[cell],
         formatted = '',
         formatter = (col.formatter ? col.formatter : this.defaultFormatter);
 
