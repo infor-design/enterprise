@@ -65,6 +65,10 @@
         // Get a "base-tag-proof" version of the Use tag's definition.
         // jQuery can't work with SVG elements, so we just modify it with regular DOM APIs
         var use = this.element[0].getElementsByTagName('use')[0];
+        if (!use) {
+          return this;
+        }
+
         use.setAttribute('xlink:href', this.getBasedUseTag());
 
         return this;
