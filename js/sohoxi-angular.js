@@ -221,20 +221,20 @@
   };
 
   var swaplist = function () {
-      return {
-        scope: {
-          available: '=',
-          selected: '=',
-          template: '='
-        },
-        link: function(scope, elem, attrs) {
-          var templateHtml = $('#' + scope.template).html();
-          elem.swaplist({
-            available: scope.available,
-            selected: scope.selected,
-          });
-        }
-      };
+    return {
+      scope: {
+        available: '=',
+        selected: '=',
+        template: '='
+      },
+      link: function(scope, elem, attrs) {
+        var templateHtml = $('#' + scope.template).html();
+        elem.swaplist({
+          available: scope.available,
+          selected: scope.selected,
+        });
+      }
+    };
   };
 
   angular.module('sohoxi-angular', [])
