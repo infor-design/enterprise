@@ -27,5 +27,7 @@
     centerLabel: 'Donut Chart'
   }];
 
-  $('#pie-donut-example').chart({type: 'donut', dataset: donutData});
+  $('#pie-donut-example').chart({type: 'donut', dataset: donutData}).on('selected', function (e, elem, args) {
+    console.log(e, elem, args);
+  });
 </script>

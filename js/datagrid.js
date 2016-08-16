@@ -3925,6 +3925,10 @@ $.fn.datagrid = function(options) {
           }
         }
 
+        if (node.attr('aria-level') === level) {
+          return false;
+        }
+
      });
 
     },
