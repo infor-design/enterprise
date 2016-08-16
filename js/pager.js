@@ -494,6 +494,7 @@
 
             response = function(data, pagingInfo) {
               //Render Data
+              pagingInfo.preserveSelected = true;
               self.datagrid.loadData(data, pagingInfo, true);
 
               //Update Paging Info
