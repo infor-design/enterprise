@@ -259,6 +259,10 @@ $datagrid-short-row-height: 30px;
       text-align: left;
       vertical-align: middle;
       white-space: nowrap;
+
+      &.required::after {
+        @include required-indicator();
+      }
     }
 
     //Checkboxes

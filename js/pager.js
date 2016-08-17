@@ -77,38 +77,26 @@
         if (this.pagerBar.length === 0) {
           this.pagerBar = $('<ul class="pager-toolbar"></ul>');
           var buttons = '<li class="pager-prev">' +
-              '<a href="#" rel="prev" title="PreviousPage">' +
-                '<svg class="icon" focusable="false" aria-hidden="true" role="presentation">' +
-                  '<use xlink:href="#icon-previous-page"></use>' +
-                '</svg>' +
-                '<span class="audible">Previous</span>' +
+              '<a href="#" rel="prev" title="PreviousPage">' + $.createIcon({ icon: 'previous-page' }) +
+                '<span class="audible">' + Locale.translate('PreviousPage') + '</span>' +
               '</a>' +
             '</li>' +
             '<li class="pager-next">' +
-              '<a href="#" rel="next" title="NextPage">' +
-                '<svg class="icon" focusable="false" role="presentation" aria-hidden="true">' +
-                  '<use xlink:href="#icon-next-page"></use>' +
-                '</svg>' +
-                '<span class="audible">Next</span> ' +
+              '<a href="#" rel="next" title="NextPage">' + $.createIcon({ icon: 'next-page' }) +
+                '<span class="audible">' + Locale.translate('NextPage') + '</span>' +
               '</a>' +
             '</li>';
 
           if (this.settings.type === 'table') {
             buttons = '<li class="pager-first">' +
-              '<a href="#" title="FirstPage">' +
-                '<svg class="icon" focusable="false" role="presentation" aria-hidden="true">' +
-                  '<use xlink:href="#icon-first-page"></use>' +
-                '</svg>' +
-                '<span class="audible">First</span>' +
+              '<a href="#" title="FirstPage">' + $.createIcon({ icon: 'first-page' }) +
+                '<span class="audible">' + Locale.translate('FirstPage') + '</span>' +
               '</a>' +
             '</li>' +
             buttons +
             '<li class="pager-last">' +
-              '<a href="#" title="LastPage">' +
-                '<svg class="icon" focusable="false" role="presentation" aria-hidden="true">' +
-                  '<use xlink:href="#icon-last-page"></use>' +
-                '</svg>' +
-                '<span class="audible">Last</span>' +
+              '<a href="#" title="LastPage">' + $.createIcon({ icon: 'last-page' }) +
+                '<span class="audible">' + Locale.translate('LastPage') + '</span>' +
               '</a>' +
             '</li>';
           }
@@ -349,7 +337,7 @@
 
         //Add functionality to change page size.
         if (this.isTable && this.pagerBar.find('.btn-menu').length === 0) {
-          var pageSize = $('<li class="pager-pagesize"><button type="button" class="btn-menu"> <span>' + Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize) +'</span> <svg class="icon" focusable="false" role="presentation" aria-hidden="true"> <use xlink:href="#icon-dropdown"></use> </svg> </button></li>');
+          var pageSize = $('<li class="pager-pagesize"><button type="button" class="btn-menu"> <span>' + Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize) +'</span> '+ $.createIcon({ icon: 'dropdown' }) +' </button></li>');
           $(pageSize).insertAfter(this.pagerBar.find('.pager-last'));
           var menu = $('<ul class="popupmenu has-icons"></ul>');
 

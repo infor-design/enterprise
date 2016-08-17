@@ -106,7 +106,13 @@ window.Formatters = {
       colHref = colHref.replace('{{value}}', value);
     }
 
-    return '<a href="' + colHref +'" tabindex="-1" role="presentation" class="hyperlink">' + (col.text ? col.text : value) + '</a>';
+
+    var textValue = (col.text ? col.text : value);
+    if (!textValue) {
+      return '';
+    }
+
+    return '<a href="' + colHref +'" tabindex="-1" role="presentation" class="hyperlink">' + textValue + '</a>';
   },
 
   Template: function(row, cell, value, col, item) {
@@ -262,7 +268,7 @@ window.Formatters = {
       markup ='<button type="button" class="'+ ( col.icon ? 'btn-icon': 'btn') + '  row-btn ' + (col.cssClass ? col.cssClass : '') + '">';
 
       if (col.icon) {
-        markup +='<svg role="presentation" aria-hidden="true" focusable="false" class="icon"><use xlink:href="#icon-'+ col.icon + '"/>/svg>';
+        markup += $.createIcon({ icon: col.icon });
       }
       markup += '<span>' + text + '</span></button>';
     return markup;
@@ -1253,7 +1259,7 @@ $.fn.datagrid = function(options) {
          (column.headerTooltip ? 'title="' + column.headerTooltip + '"' : '') +
          (colGroups ? ' headers="' + self.getColumnGroup(j) + '"' : '') +
          (column.width ? ' style="width:'+ (typeof column.width ==='number' ? column.width+'px': column.width) +'"' : '') + '>';
-         headerRow += '<div class="' + (isSelection ? 'datagrid-checkbox-wrapper ': 'datagrid-column-wrapper') + (column.align === undefined || column.filterType ? '' : ' l-'+ column.align +'-text') + '"><span class="datagrid-header-text">' + self.headerText(settings.columns[j]) + '</span>';
+         headerRow += '<div class="' + (isSelection ? 'datagrid-checkbox-wrapper ': 'datagrid-column-wrapper') + (column.align === undefined || column.filterType ? '' : ' l-'+ column.align +'-text') + '"><span class="datagrid-header-text'+ (column.required ? ' required': '') + '">' + self.headerText(settings.columns[j]) + '</span>';
 
         //Removed the alignment - even if the column is right aligned data keep the header left aligned
         //+ (column.align === undefined ? false : ' l-'+ column.align +'-text')
@@ -1373,7 +1379,9 @@ $.fn.datagrid = function(options) {
 
     //Render one filter item as used in renderFilterButton
     renderFilterItem: function (icon, text, checked) {
-      return '<li ' + (checked ? 'class="is-checked"' : '') + '><a href="#"><svg class="icon icon-filter" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-filter-'+ icon +'"></use></svg><span>'+ text +'</span></a></li>';
+      //<svg class="icon icon-filter" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-filter-'+ icon +'"></use></svg>
+      var iconMarkup = $.createIcon({ classes: 'icon icon-filter', icon: 'filter-' + icon });
+      return '<li ' + (checked ? 'class="is-checked"' : '') + '><a href="#">' + iconMarkup + '<span>'+ text +'</span></a></li>';
     },
 
     //Render the Filter Button and Menu based on filterType - which determines the options
@@ -2719,7 +2727,7 @@ $.fn.datagrid = function(options) {
 
       // Handle Clicking Header Checkbox
       this
-        .headerRow.offTouchClick().onTouchClick('datagrid', 'th .datagrid-checkbox')
+        .headerRow
         .off('click.datagrid')
         .on('click.datagrid', 'th .datagrid-checkbox', function () {
           var checkbox = $(this);

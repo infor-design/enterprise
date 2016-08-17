@@ -48,7 +48,7 @@
     > .content {
       padding: 25px 0 15px;
 
-      .column:first-child {
+      .column {
         margin-left: 0;
         padding-left: 0;
       }
@@ -136,4 +136,10 @@
     }
   }
 
+}
+
+@include respond-to(phabletdown) {
+  .expandable-pane .column:not(:first-child) {
+    margin-top: 20px;
+  }
 }
