@@ -64,8 +64,8 @@
         this.settings.useBreadcrumb = this.element.attr('data-use-breadcrumb') ? this.element.attr('data-use-breadcrumb') === 'true' : this.settings.useBreadcrumb;
         this.settings.useAlternate = this.element.attr('data-use-alternate') ? this.element.attr('data-use-alternate') === 'true' : this.settings.useAlternate;
 
-        this.settings.tabs = !Array.isArray(this.settings.tabs) ? null : this.settings.tabs;
-        this.settings.wizardTicks = !Array.isArray(this.settings.wizardTicks) ? null : this.settings.wizardTicks;
+        this.settings.tabs = !$.isArray(this.settings.tabs) ? null : this.settings.tabs;
+        this.settings.wizardTicks = !$.isArray(this.settings.wizardTicks) ? null : this.settings.wizardTicks;
 
         this.titleText = this.element.find('.title > h1');
 

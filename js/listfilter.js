@@ -31,10 +31,6 @@
     this.init();
   }
 
-  function isArray(obj) {
-    return Object.prototype.toString.call(obj) === '[object Array]';
-  }
-
   ListFilter.prototype = {
 
     init: function() {
@@ -62,7 +58,7 @@
       }
 
       // Check incoming list type
-      if (!isArray(list) && !(list instanceof jQuery)) {
+      if (!$.isArray(list) && !(list instanceof jQuery)) {
         return false;
       }
 
@@ -81,7 +77,7 @@
       }
 
       // If it's not an array, build an array of the incoming object(s) for iterating through
-      if (!isArray(list)) {
+      if (!$.isArray(list)) {
         if (list instanceof jQuery || typeof list === 'object') {
           list = $.makeArray(list);
           isJQuery = true;

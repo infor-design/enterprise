@@ -40,11 +40,6 @@
       this.init();
     }
 
-    // Check if an object is an array
-    function isArray(obj) {
-      return Object.prototype.toString.call(obj) === '[object Array]';
-    }
-
     // Default Autocomplete Result Item Template
     var resultTemplate = '<li id="{{listItemId}}" {{#hasValue}}data-value="{{value}}"{{/hasValue}} role="listitem">' + '\n\n' +
       '<a href="#" tabindex="-1">' + '\n\n' +
@@ -336,7 +331,7 @@
             } else if (sourceType === 'object') {
               // Use the 'source' setting as pre-existing data.
               // Sanitize accordingly.
-              var sourceData = isArray(self.settings.source) ? self.settings.source : [self.settings.source];
+              var sourceData = $.isArray(self.settings.source) ? self.settings.source : [self.settings.source];
               done(buffer, sourceData);
             } else if (!self.settings.source) {
               return;

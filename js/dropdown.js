@@ -1483,7 +1483,7 @@
           } else if (sourceType === 'object') {
             // Use the 'source' setting as pre-existing data.
             // Sanitize accordingly.
-            var sourceData = Array.isArray(this.settings.source) ? this.settings.source : [this.settings.source];
+            var sourceData = $.isArray(this.settings.source) ? this.settings.source : [this.settings.source];
             response(sourceData);
           } else {
             // Attempt to resolve source as a URL string.  Do an AJAX get with the URL

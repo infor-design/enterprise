@@ -142,10 +142,6 @@
     return partial;
   }
 
-  var isArray = Array.isArray || function(a) {
-    return Object.prototype.toString.call(a) === '[object Array]';
-  };
-
   function coerceToString(val) {
     return String((val === null || val === undefined) ? '' : val);
   }
@@ -264,7 +260,7 @@
     rs: function(context, partials, section) {
       var tail = context[context.length - 1];
 
-      if (!isArray(tail)) {
+      if (!$.isArray(tail)) {
         section(context, partials, this);
         return;
       }
@@ -280,7 +276,7 @@
     s: function(val, ctx, partials, inverted, start, end, tags) {
       var pass;
 
-      if (isArray(val) && val.length === 0) {
+      if ($.isArray(val) && val.length === 0) {
         return false;
       }
 
@@ -305,7 +301,7 @@
           doModelGet = this.options.modelGet,
           cx = null;
 
-      if (key === '.' && isArray(ctx[ctx.length - 2])) {
+      if (key === '.' && $.isArray(ctx[ctx.length - 2])) {
         val = ctx[ctx.length - 1];
       } else {
         for (var i = 1; i < names.length; i++) {

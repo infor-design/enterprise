@@ -41,11 +41,6 @@
       this.init();
     }
 
-    // Check if an object is an array
-    function isArray(obj) {
-      return Object.prototype.toString.call(obj) === '[object Array]';
-    }
-
     // Check if is an integer
     function isInt(n) {
       return n % 1 === 0;
@@ -146,7 +141,7 @@
           // and doesn't have at least one option, ignore it.
           var ticks = self.settings.ticks || [];
 
-          if (isArray(ticks) && ticks.length > 0) {
+          if ($.isArray(ticks) && ticks.length > 0) {
             // Filter through the incoming ticks to figure out if any have been defined
             // That match the values of min and max.
             var equalsMin = ticks.filter(function(obj) {
@@ -188,7 +183,7 @@
         }
 
         // configure the slider to deal with an array of values, and normalize the values to make sure they are numbers.
-        if (isArray(this.settings.value)) {
+        if ($.isArray(this.settings.value)) {
           this.settings.value[0] = isNaN(this.settings.value[0]) ? (this.settings.min + this.settings.max)/2 : parseInt(this.settings.value[0]);
         } else if (typeof this.settings.value === 'number') {
           this.settings.value = [this.settings.value];
@@ -848,7 +843,7 @@
         }
 
         // if an array is passed as the first argument, break it apart
-        if (minVal && isArray(minVal)) {
+        if (minVal && $.isArray(minVal)) {
           if (minVal[1] !== undefined) {
             maxVal = minVal[1];
           }
@@ -856,10 +851,10 @@
         }
 
         // set the values back to the existing one if they aren't passed.
-        if (minVal === undefined && isArray(self._value) && self._value[0] !== undefined) {
+        if (minVal === undefined && $.isArray(self._value) && self._value[0] !== undefined) {
           minVal = self._value[0];
         }
-        if (maxVal === undefined && isArray(self._value) && self._value[1] !== undefined) {
+        if (maxVal === undefined && $.isArray(self._value) && self._value[1] !== undefined) {
           maxVal = self._value[1];
         }
 
