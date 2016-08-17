@@ -446,6 +446,23 @@
   }
 }
 
+// On iOS/Android, need to always show the icon so that it can be activated by touch.
+.ios,
+.android {
+  .popupmenu.tab-list-spillover,
+  .popupmenu.dropdown-tab {
+
+    li.dismissible {
+      > a {
+
+        > .icon.close {
+          position: absolute;
+          display: inline-block;
+        }
+      }
+    }
+  }
+}
 
 @import './horizontaltabs';
 @import './verticaltabs';

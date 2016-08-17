@@ -1678,14 +1678,6 @@
       setOverflow: function () {
         var self = this;
 
-        if (this.isModuleTabs()) {
-          this.adjustModuleTabs();
-        }
-
-        if (this.isHeaderTabs()) {
-          this.adjustHeaderTabs();
-        }
-
         if (self.tablist[0].scrollHeight > self.tablist.outerHeight() + 3.5) {
           self.element.addClass('has-more-button');
         } else {
@@ -1693,6 +1685,13 @@
         }
         self.setMoreActive();
 
+        if (this.isModuleTabs()) {
+          this.adjustModuleTabs();
+        }
+
+        if (this.isHeaderTabs()) {
+          this.adjustHeaderTabs();
+        }
       },
 
       adjustHeaderTabs: function() {
@@ -1964,6 +1963,7 @@
 
         menu
           .on('destroy.popupmenu', handleDestroy)
+          .on('touchend.popupmenu touchcancel.popupmenu', '.icon', handleDismissibleIconClick)
           .on('click.popupmenu', '.icon', handleDismissibleIconClick);
 
         // If the optional startingIndex is provided, focus the popupmenu on the matching item.
