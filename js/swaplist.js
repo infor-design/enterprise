@@ -33,7 +33,10 @@
           'availableBtn': '.btn-moveto-selected',
           'selectedBtnLeft': '.btn-moveto-left',
           'selectedBtnRight': '.btn-moveto-right',
-          'additionalBtn': '.btn-moveto-selected'
+          'additionalBtn': '.btn-moveto-selected',
+
+          // Template HTML
+          'template': '<ul data-swap-handle=".handle">{{#dataset}}{{#text}}<li {{#value}}data-value="{{value}}"{{/value}} {{#selected}}selected="selected"{{/selected}} {{#disabled}}class="is-disabled"{{/disabled}}><span class="handle" focusable="false" aria-hidden="true" role="presentation">&#8286;</span><div class="swaplist-item-content"><p>{{text}}</p></div></li>{{/text}}{{/dataset}}</ul>'
         },
         settings = $.extend({}, defaults, options);
 
@@ -343,8 +346,9 @@
           ds[s.additionalClass] = s.additional || [];
 
           $.each(ds, function(key, value) {
-            var lv = $(key +' .listview', self.element);
+            var lv = $(key +' .listview', this.element);
             if (lv.length) {
+              console.log(s.template);
               lv.listview({ dataset: value, template: s.template, selectable: 'multiple' });
             }
           });

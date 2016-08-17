@@ -220,6 +220,23 @@
       };
   };
 
+  var swaplist = function () {
+    return {
+      scope: {
+        available: '=',
+        selected: '=',
+        template: '='
+      },
+      link: function(scope, elem, attrs) {
+        var templateHtml = $('#' + scope.template).html();
+        elem.swaplist({
+          available: scope.available,
+          selected: scope.selected,
+        });
+      }
+    };
+  };
+
   angular.module('sohoxi-angular', [])
       .directive('button', button)
       .directive('chart', chart)
@@ -231,6 +248,7 @@
       .directive('popupmenu', popupmenu)
       .directive('slider', slider)
       .directive('toolbar', toolbar)
+      .directive('swaplist', swaplist)
       .directive('wizard', wizard);
 
 }());
