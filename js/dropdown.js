@@ -336,6 +336,9 @@
            this.pseudoElem.find('span').text(text.substr(0, this.element.attr('maxlength')));
         }
 
+        //Set the "previousActiveDescendant" to the first of the items
+        this.previousActiveDescendant = opts.first().val();
+
         this.setBadge(opts);
       },
 
