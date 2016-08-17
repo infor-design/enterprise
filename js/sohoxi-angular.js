@@ -227,12 +227,13 @@
         selected: '=',
         template: '='
       },
-      link: function(scope, elem, attrs) {
-        var templateHtml = $('#' + scope.template).html();
-        elem.swaplist({
+      link: function(scope, elem) {
+        var settings = {
           available: scope.available,
           selected: scope.selected,
-        });
+          template: scope.template
+        };
+        elem.swaplist(settings);
       }
     };
   };
