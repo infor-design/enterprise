@@ -39,6 +39,13 @@
     Textarea.prototype = {
 
       init: function() {
+        this.isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+        this.isSafari = (
+          navigator.userAgent.indexOf('Safari')  !== -1 &&
+          navigator.userAgent.indexOf('Chrome') === -1 &&
+          navigator.userAgent.indexOf('Android') === -1
+        );
+
         this.element.addClass(this.element.is('.textarea-xs') ? 'input-xs' :
             this.element.is('.textarea-sm') ? 'input-sm' :
             this.element.is('.textarea-lg') ? 'input-lg' : '');
@@ -107,8 +114,15 @@
         return valid;
       },
 
+      // Counts characters
+      countLinebreaks: function(s) {
+        return (s.match(/\n/g) || []).length;
+      },
+
       update: function (self) {
-        var length = self.element.val().length,
+        var value = self.element.val(),
+          isExtraLinebreaks = this.isChrome || this.isSafari,
+          length = value.length + (isExtraLinebreaks ? this.countLinebreaks(value) : 0),
           max = self.element.attr('maxlength'),
           remaining = (parseInt(max)-length),
           text = (settings.charRemainingText ? settings.charRemainingText : (Locale.translate('CharactersLeft') === 'CharactersLeft' ? 'Characters Left' : Locale.translate('CharactersLeft'))).replace('{0}', remaining.toString());
