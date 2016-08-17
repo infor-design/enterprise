@@ -348,7 +348,6 @@
           $.each(ds, function(key, value) {
             var lv = $(key +' .listview', this.element);
             if (lv.length) {
-              console.log(s.template);
               lv.listview({ dataset: value, template: s.template, selectable: 'multiple' });
             }
           });
