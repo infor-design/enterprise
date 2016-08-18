@@ -65,6 +65,10 @@
     display: none;
   }
 
+  .icon-dropdown {
+    margin-left: 2px;
+  }
+
   .searchfield {
     padding-left: 34px;
     padding-right: 34px;
@@ -316,6 +320,10 @@
 
 .is-firefox.is-mac {
   .searchfield-wrapper .btn {
+    height: 33px;
+  }
+
+  .searchfield-wrapper.context .btn {
     height: 32px;
   }
 }
