@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Place Test:  Coordinates</h2>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+    <form action="#" id="coords-form">
+      <div class="field">
+        <label for="coords-x">X Coord</label>
+        <input id="coords-x" name="coords-x" type="text" />
+      </div>
+
+      <div class="field">
+        <label for="coords-y">Y Coord</label>
+        <input id="coords-y" name="coords-y" type="text" />
+      </div>
+
+      <div class="field">
+        <button id="reset" name="reset" class="btn-secondary" type="reset">Reset</button>
+        <button id="submit" name="submit" class="btn-primary" type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
+  <div class="six columns">
+
+    <div id="placeable-one" class="ruby05" style="height: 96px; width: 96px;"></div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+
+    var el = $('#placeable-one');
+    el.place();
+
+    var api = el.data('place');
+
+    $('#coords-form').on('submit.test', function(e) {
+      e.preventDefault();
+
+      var x = $('#coords-x').val(),
+        y = $('#coords-y').val();
+
+      api.place(x, y);
+    });
+
+    el.on('afterplace', function(e, coords) {
+      if (console) {
+        console.log('#' + el.attr('id') + '\'s new coordinates: X=' + coords[0] + ' Y=' + coords[1]);
+      }
+    });
+  });
+</script>

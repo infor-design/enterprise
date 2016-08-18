@@ -1,0 +1,381 @@
+/**
+* Place Behavior (TODO: bitly link to soho xi docs)
+*/
+
+// NOTE:  There are AMD Blocks available
+
+/* start-amd-strip-block */
+(function(factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module
+    define(['jquery'], factory);
+  } else if (typeof exports === 'object') {
+    // Node/CommonJS
+    module.exports = factory(require('jquery'));
+  } else {
+    // Browser globals
+    factory(jQuery);
+  }
+}(function($) {
+/* end-amd-strip-block */
+
+  //NOTE: Just this part will show up in SoHo Xi Builds.
+
+  $.fn.place = function(options) {
+    'use strict';
+
+    // Settings and Options
+    var pluginName = 'place',
+        defaults = {
+          callback: null, // If defined, provides extra placement adjustments after the main calculation is performed
+          parent: null, // If defined, will be used as the reference element for placement this element
+          parentAlignment: ['center', 'center'], // Only used for parent-based placement. Determines the alignment of the placed element against its parent. value 0 === X, value 1 === Y
+          placement: 'bottom' // If defined, changes the direction in which placement of the element happens
+        },
+        placements = ['top', 'left', 'right', 'bottom'],
+        xAlignments = ['left', 'center', 'right'],
+        yAlignments = ['top', 'center', 'bottom'],
+        settings = $.extend({}, defaults, options);
+
+
+    // Plugin Constructor
+    function Place(element) {
+      this.settings = $.extend({}, settings);
+      this.element = $(element);
+      this.init();
+    }
+
+    // Plugin Methods
+    Place.prototype = {
+      init: function() {
+        //Do other init (change/normalize settings, load externals, etc)
+        return this
+          .build()
+          .handleEvents();
+      },
+
+      // Add markup to the control
+      build: function() {
+        if (!this.element.hasClass('placeable')) {
+          this.element.addClass('placeable');
+        }
+
+        // Setup a hash of original styles that will retain width/height whenever
+        // the placement for this element is recalculated.
+        this.originalStyles = {};
+        var h = this.element[0].style.height,
+          w = this.element[0].style.width;
+
+        if (h) {
+          this.originalStyles.height = h;
+        }
+        if (w) {
+          this.originalStyles.width = w;
+        }
+
+        // Setup reasonable defaults for some settings, so that weird values can't get in
+        function setReasonableDefaults(setting, limits, preset) {
+          if ($.inArray(setting, limits) === -1) {
+            setting = preset;
+          }
+        }
+
+        var checks = [
+          { setting: this.settings.placement, limits: placements, preset: defaults.placement },
+          { setting: this.settings.parentAlignment[0], limits: xAlignments, preset: defaults.parentAlignment[0] },
+          { setting: this.settings.parentAlignment[1], limits: yAlignments, preset: defaults.parentAlignment[1] }
+        ];
+
+        for (var i = 0; i < checks.length; i++) {
+          setReasonableDefaults(checks[i].setting, checks[i].limits, checks[i].preset);
+        }
+
+        return this;
+      },
+
+      // Sets up event handlers for this control and its sub-elements
+      handleEvents: function() {
+        var self = this;
+
+        this.element.on('place.' + pluginName, function placementEventHandler(e, x, y) {
+          self.place(x, y);
+        }).on('updated.' + pluginName, function updatedEventHandler() {
+          self.updated();
+        });
+
+        return this;
+      },
+
+      // Main placement API Method (external)
+      place: function(x, y) {
+        var parent = this.settings.parent,
+          curr = [
+            this.element.css('left'),
+            this.element.css('top')
+          ];
+
+        if (x == null && y == null) {
+          return curr;
+        }
+
+        // Cancel placement with return:false; from a "beforeplace" event
+        var canBePlaced = this.element.trigger('beforeplace', [curr]);
+        if (!canBePlaced) {
+          return curr;
+        }
+
+        // Sanitize incoming values
+        function setNum(num) {
+          if (isNaN(num)) {
+            num = 0;
+          }
+          return num;
+        }
+        x = setNum(parseInt(x, 10));
+        y = setNum(parseInt(y, 10));
+
+        // Remove any previous placement styles
+        this.clearOldStyles();
+
+        // Use different methods if placement against a parent, versus straight-up coordinate placement
+        if (parent && $(parent).length) {
+          return this._placeWithParent($(parent), x, y);
+        }
+
+        return this._placeWithCoords(x, y);
+      },
+
+      // Placement Routine that expects a parent to be used as a base placement marking.
+      // In this case, "x" and "y" integers are "relative" adjustments to the original numbers generated by the parent.
+      // Can be modified by using a callback in the settings.
+      _placeWithParent: function(parent, x, y) {
+        if (!parent || !parent.length) {
+          return [undefined, undefined]; // can't simply return x and y here because they are not coordinates, they are offsets
+        }
+
+        var self = this,
+          parentRect = parent[0].getBoundingClientRect(),
+          elRect = this.element[0].getBoundingClientRect();
+
+        var coords = (function getCoordsFromPlacement() {
+          var cX, cY,
+            p = self.settings.placement,
+            a = self.settings.parentAlignment; // a[0] === xAlignment, a[1] === yAlignment
+
+          // Set initial placements
+          switch(p) {
+            case 'top':
+              cY = parentRect.top - elRect.height - y;
+              break;
+            case 'left':
+              cX = parentRect.left - elRect.width - x;
+              break;
+            case 'right':
+              cX = parentRect.right + x;
+              break;
+            default: // Bottom
+              cY = parentRect.bottom + y;
+              break;
+          }
+
+          // Set X alignments on bottom/top placements
+          if (p === 'top' || p === 'bottom') {
+            switch(a[0]) {
+              case 'left':
+                cX = parentRect.left - x;
+                break;
+              case 'right':
+                cX = (parentRect.right - elRect.width) + x;
+                break;
+              default: // center
+                cX = (parentRect.left + ((parentRect.width - elRect.width) / 2)) + x;
+                break;
+            }
+          }
+
+          // Set Y alignments on left/right placements
+          if (p === 'right' || p === 'left') {
+            switch(a[1]) {
+              case 'top':
+                cY = parentRect.top - y;
+                break;
+              case 'bottom':
+                cY = (parentRect.bottom - elRect.height) + y;
+                break;
+              default: // center
+                cY = (parentRect.top + ((parentRect.height - elRect.height) / 2)) + y;
+                break;
+            }
+          }
+
+          return [cX, cY];
+        })();
+
+        coords = this._handlePlacementCallback(coords[0], coords[1]);
+
+        // Simple placement logic
+        this.element.offset({
+          'left': coords[0],
+          'top': coords[1]
+        });
+
+        coords = this._fixBleeding(coords[0], coords[1]);
+
+        this.element.trigger('afterplace', [coords]);
+
+        return coords;
+      },
+
+      // Basic Placement Routine that simply accepts X and Y coordinates.
+      // In this case, "x" and "y" integers are "absolute" and will be the base point for placement.
+      // Can be modified by using a callback in the settings.
+      _placeWithCoords: function(x, y) {
+        var coords = this._handlePlacementCallback(x, y);
+
+        // Simple placement logic
+        this.element.offset({
+          'left': coords[0],
+          'top': coords[1]
+        });
+
+        coords = this._fixBleeding(coords[0], coords[1]);
+
+        this.element.trigger('afterplace', [coords]);
+
+        return coords;
+      },
+
+      // Perform callback, if it exists
+      // Callback should return an array containing the modified coordinate values: [x, y];
+      // NOTE: These are actual coordinates in all cases.  They are not relative values - they are absolute
+      _handlePlacementCallback: function(x, y) {
+        var cb = this.settings.callback,
+          coords = [x, y];
+
+        if (cb && typeof cb === 'function') {
+          coords = cb(x, y);
+        }
+
+        return coords;
+      },
+
+      // Re-adjust a previously-placed element to account for bleeding off the edges.
+      // Element must fit within the boundaries of the page or it's current scrollable pane.
+      _fixBleeding: function(x, y) {
+        var parentContainer = document.documentElement || document.body.parentNode,
+          rect = this.element[0].getBoundingClientRect(),
+          windowH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
+          windowW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
+          scrollX = (typeof parentContainer.scrollLeft === 'number' ? parentContainer : document.body).scrollLeft,
+          scrollY = (typeof parentContainer.scrollTop === 'number' ? parentContainer : document.body).scrollTop,
+          d;
+
+        // If element width is greater than window width, shrink to fit
+        if (rect.width >= windowW) {
+          d = rect.width - (windowW - scrollX);
+          var newWidth = rect.width - d;
+
+          this.element.css('width', newWidth);
+          rect = this.element[0].getBoundingClientRect(); // reset the rect because the size changed
+        }
+
+        // If element height is greater than window height, shrink to fit
+        if (rect.height >= windowH) {
+          d = rect.height - (windowH - scrollY);
+          var newHeight = rect.height - d;
+
+          this.element.css('height', newHeight);
+          rect = this.element[0].getBoundingClientRect(); // reset the rect because the size changed
+        }
+
+        // build conditions
+        var offRightEdge = rect.right > windowW - scrollX,
+            offLeftEdge = rect.left < 0 - scrollX, // 0 === left edge of viewport
+            offBottomEdge = rect.bottom > windowH - scrollY,
+            offTopEdge = rect.top < 0 - scrollY; // 0 === top edge of viewport
+
+        // Bump element around a bit in each direction, if necessary
+        if (offRightEdge) {
+          x = x - (rect.right - windowW - scrollX);
+        }
+        if (offLeftEdge) {
+          x = x + -(rect.left - scrollX);
+        }
+        if (offBottomEdge) {
+          y = y - (rect.bottom - windowH - scrollY);
+        }
+        if (offTopEdge) {
+          y = y + -(rect.top - scrollY);
+        }
+
+        this.element.offset({
+          'left': x,
+          'top': y
+        });
+
+        return [x, y];
+      },
+
+      // Clears the old styles that may be present
+      clearOldStyles: function() {
+        this.element.css({
+          'left': '',
+          'top': '',
+          'width': '',
+          'height': ''
+        });
+
+        var os = this.originalStyles;
+        if (os) {
+          if (os.width) {
+            this.element[0].style.width = os.width;
+          }
+
+          if (os.height) {
+            this.element[0].style.height = os.height;
+          }
+        }
+
+        return this;
+      },
+
+      //Handle Updating Settings
+      updated: function() {
+        return this
+          .teardown()
+          .init();
+      },
+
+      // Simple Teardown - remove events & rebuildable markup.
+      teardown: function() {
+        this.clearOldStyles();
+        this.element.removeClass('placeable');
+
+        this.element.off('updated.' + pluginName + ' place.' + pluginName);
+
+        this.element.trigger('afterteardown');
+        return this;
+      },
+
+      // Teardown - Remove added markup and events
+      destroy: function() {
+        this.teardown();
+        $.removeData(this.element[0], pluginName);
+      }
+    };
+
+    // Initialize the plugin (Once)
+    return this.each(function() {
+      var instance = $.data(this, pluginName);
+      if (instance) {
+        instance.settings = $.extend({}, instance.settings, options);
+        instance.updated();
+      } else {
+        instance = $.data(this, pluginName, new Place(this, settings));
+      }
+    });
+  };
+
+/* start-amd-strip-block */
+}));
+/* end-amd-strip-block */
