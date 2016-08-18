@@ -17,9 +17,9 @@
   }
 
   //Get Latest from http://www.unicode.org/Public/cldr/25/
-  Locale.addCulture('en-US', {
+  Locale.addCulture('es-US', {
     //layout/language
-    language: 'en',
+    language: 'es',
     englishName: 'Spanish (United States)',
     nativeName: 'Español (Estados Unidos)',
     //layout/orientation/@characters
