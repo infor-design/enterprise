@@ -591,11 +591,11 @@
         truncatedNum = Math[adjustedNum < 0 ? 'ceil' : 'floor'](adjustedNum);
 
       if (round && decimals >= maxDigits && adjustedNum > 0) {
-        truncatedNum = Math.ceil(adjustedNum);
+        truncatedNum = Math.round(adjustedNum)
       }
 
       if (round && decimals <= maxDigits && decimals > 0) {
-        truncatedNum = Math.ceil(adjustedNum);
+        truncatedNum = Math.round(adjustedNum)
       }
 
       if (decimals < maxDigits && decimals > 0) {
