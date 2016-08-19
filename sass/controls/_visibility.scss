@@ -1,6 +1,7 @@
 // Visibility Classes - To hide and show at various media
 //================================================== //
 
+// scss-lint:disable ImportantRule
 .show {
   display: block !important;
 }
@@ -9,6 +10,7 @@
   display: none !important;
   visibility: hidden !important;
 }
+// scss-lint:enable ImportantRule
 
 .collapsed {
   visibility: collapse;
@@ -21,8 +23,10 @@
 // Off Screen Text for Accessibility
 .sr-only,
 .audible {
-  clip: rect(0px, 0px, 0px, 0px);
-  height: 1px;
+  clip: rect(0, 0, 0, 0);
+  height: 0;
+  line-height: 0;
+  min-height: 0;
   overflow: hidden;
   padding: 0;
   position: absolute;
@@ -71,9 +75,11 @@
   @include respond-to(phone) { display: inline-block; }
 }
 
+// scss-lint:disable ImportantRule
 .hidden-sm {
   @include respond-to(phone) { display: none !important; }
 }
+// scss-lint:enable ImportantRule
 
 [class*="visible-md-"] {
   display: none;
@@ -136,11 +142,11 @@
 }
 
 // Print Visibility Clases
+// scss-lint:disable ImportantRule
 [class*="visible-print-"] {
   display: none !important;
 }
 
-// Print Classes
 @media print {
   .visible-print-block {
     display: block !important;
@@ -158,3 +164,4 @@
     display: none !important;
   }
 }
+// scss-lint:enable ImportantRule
