@@ -1449,7 +1449,6 @@ $.fn.datagrid = function(options) {
 
     //Except conditions from outside or pull from filter row
     applyFilter: function (conditions) {
-
       this.filteredDataset = null;
 
       if (!conditions) {
@@ -2550,17 +2549,15 @@ $.fn.datagrid = function(options) {
         });
 
       //Handle Sorting
-      this.element.add(this.clone).off('touchcancel.datagrid touchend.datagrid').on('touchcancel.datagrid touchend.datagrid', 'th.is-sortable', function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-        $(this).trigger('click.datagrid');
-      }).off('click.datagrid').on('click.datagrid', 'th.is-sortable', function (e) {
-        if ($(e.target).parent().is('.datagrid-filter-wrapper')) {
-          return;
-        }
+      this.element.add(this.clone)
+        .off('click.datagrid')
+        .on('click.datagrid', 'th.is-sortable', function (e) {
+          if ($(e.target).parent().is('.datagrid-filter-wrapper')) {
+            return;
+          }
 
-        self.setSortColumn($(this).attr('data-column-id'));
-      });
+          self.setSortColumn($(this).attr('data-column-id'));
+        });
 
       //Prevent redirects
       this.table.off('mouseup.datagrid touchstart.datagrid').on('mouseup.datagrid touchstart.datagrid', 'a', function (e) {
