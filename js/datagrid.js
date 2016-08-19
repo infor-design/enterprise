@@ -268,7 +268,7 @@ window.Formatters = {
       markup ='<button type="button" class="'+ ( col.icon ? 'btn-icon': 'btn') + '  row-btn ' + (col.cssClass ? col.cssClass : '') + '">';
 
       if (col.icon) {
-        markup += $.createIcon({ icon: col.icon });
+        markup += $.createIcon({ icon: col.icon, file: col.iconFile });
       }
       markup += '<span>' + text + '</span></button>';
     return markup;
@@ -1847,7 +1847,6 @@ $.fn.datagrid = function(options) {
 
         this.recordCount++;
         tableHtml += self.rowHtml(dataset[i]);
-
       }
 
       self.tableBody.append(tableHtml);
@@ -1997,6 +1996,7 @@ $.fn.datagrid = function(options) {
       if (rowData.children) {
 
         for (var l = 0; l < rowData.children.length; l++) {
+          this.recordCount++;
           rowHtml += self.rowHtml(rowData.children[l], !rowData[self.treeExpansionField]);
         }
       }
@@ -3854,7 +3854,7 @@ $.fn.datagrid = function(options) {
         self.activeCell = prevCell;
       }
 
-      if (!$('input, button', self.activeCell.node).length) {
+      if (!$('input, button:not(.datagrid-expand-btn)', self.activeCell.node).length) {
         self.activeCell.node.focus();
       }
       if (self.activeCell.node.hasClass('is-focusable')) {

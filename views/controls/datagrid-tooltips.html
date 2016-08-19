@@ -35,6 +35,20 @@
         columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});
         columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
         columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 360, formatter: Formatters.Ellipsis});
+ 
+        Formatters.CustomFormatter = function(row, cell, value, col) {
+          var cellHtml = "<button class='btn-icon' title='Approval Status' >";
+          cellHtml += " <svg class='icon' focusable='false' aria-hidden='true' role='presentation'>";
+          cellHtml += "     <use xlink:href='/svg/icons-extended.svg#icon-queries'></use>";
+          cellHtml += " </svg>";
+          cellHtml += " <span>Span Approval Status</span>";
+          cellHtml += "</button>";
+
+            return cellHtml;
+        };
+ 
+        columns.push({ id: "queries", name: '', field: '', width: 65, formatter: Formatters.Button, click: function() {}, icon: 'queries', iconFile: '/svg/icons-extended.svg', sortable: false, tooltip: 'Approval Status' });
+ 
 
         //Init the grid
         $('#datagrid').datagrid({
