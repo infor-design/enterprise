@@ -390,8 +390,13 @@
             this.footer
           );
 
+        var leftOffset = Locale.isRTL() ? -163 : 160;
+        if (this.element.closest('.datagrid-filter-wrapper').length) {
+          leftOffset = Locale.isRTL() ? -179 : 176;
+        }
+
         this.trigger.popover({content: this.calendar, popover: true, trigger: 'immediate',
-            placement: 'offset', offset: {top: 23, left: Locale.isRTL() ? -163 : 162},
+            placement: 'offset', offset: {top: 23, left: leftOffset},
             tooltipElement: '#calendar-popup'})
             .on('hide.datepicker', function () {
               self.closeCalendar();
