@@ -353,7 +353,7 @@
         });
 
         // Key Board
-        this.element.on('keypress.listview', 'li, tr', function (e) {
+        this.element.on('keydown.listview', 'li, tr', function (e) {
           var item = $(this),
             list = item.parent(),
             key = e.keyCode || e.charCode || 0,
@@ -370,6 +370,7 @@
               self.focus(newItem);
             }
             e.preventDefault();
+            e.stopPropagation();  //prevent container from scrolling
           }
 
           if (key === 35 || (key === 40 && metaKey)) { //end
