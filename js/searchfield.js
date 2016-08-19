@@ -122,7 +122,7 @@
 
           this.list = this.wrapper.find('ul.popupmenu');
           if (!this.list || !this.list.length) {
-            this.list = $('<ul class="popupmenu has-icons"></ul>');
+            this.list = $('<ul class="popupmenu"></ul>');
           }
 
           // Handle Single vs Multi-Selectable Lists
