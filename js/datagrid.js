@@ -1578,7 +1578,8 @@ $.fn.datagrid = function(options) {
           return;
         }
 
-        op = isDropdown ? 'equals' : btn.find('use:first').attr('xlink:href').replace('#icon-filter-', '');
+        op = isDropdown ? 'equals' : btn.find('use:first').attr('xlink:href').replace('/svg/icons.svg#icon-filter-', '');
+        //operator="/svg/icons.svgequals"
 
         if (op === 'selected-notselected') {
           return;
