@@ -138,6 +138,10 @@ $datagrid-short-row-height: 30px;
     .sort-indicator {
       margin: 1px 0 0 4px;
     }
+
+    .is-filterable .datagrid-filter-wrapper {
+      top: -6px;
+    }
   }
 
   &.short-rowheight {
@@ -173,7 +177,9 @@ $datagrid-short-row-height: 30px;
       }
 
       .datagrid-alert-icon {
-        top: 5px;
+        // scss-lint:disable ImportantRule
+        top: 5px !important;
+        // scss-lint:enable ImportantRule
       }
 
       .tag {
@@ -209,6 +215,10 @@ $datagrid-short-row-height: 30px;
       .sort-desc {
         margin-top: -1px;
       }
+    }
+
+    .is-filterable .datagrid-filter-wrapper {
+      top: -4px;
     }
 
   }
@@ -1514,12 +1524,12 @@ html[dir='rtl'] {
 }
 
 //Ios Hack
-.ios .datagrid {
+.ios .datagrid:not(.short-rowheight):not(.medium-rowheight) {
   .icon-error,
   .icon-confirm,
   .icon-pending {
     // scss-lint:disable ImportantRule
-    top: 14px !important;
+    top: 15px !important;
     // scss-lint:enable ImportantRule
   }
 }

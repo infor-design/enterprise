@@ -650,14 +650,13 @@
   }
 }
 
-.ios {
+.ios .listview {
   .icon-error,
   .icon-confirm,
   .icon-pending {
     // scss-lint:disable ImportantRule
     top: 3px !important;
     // scss-lint:enable ImportantRule
-
   }
 }
 
