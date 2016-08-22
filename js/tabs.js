@@ -317,13 +317,12 @@
       setupEvents: function() {
         var self = this;
 
+        // Set animation bar if tabs under modal
         var modal = self.element.closest('.modal');
         if (modal.length) {
           modal.on('afteropen', function () {
             if (self.hasAnimatedBar()) {
-              console.log('t1');
               self.focusBar();
-              // self.getActiveTab().trigger('click');
             }
           });
         }
