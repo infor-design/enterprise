@@ -45,7 +45,7 @@
 
         if (this.element.hasClass('btn-menu') && !this.element.hasClass('btn-icon') && !this.element.hasClass('btn-actions')) {
           var ddIcon = this.element.children('.icon').filter(function() {
-            return $(this).find('use').attr('xlink:href') === '#icon-dropdown';
+            return $(this).find('use').attr('xlink:href').indexOf('#icon-dropdown') > -1;
           });
           if (!ddIcon.length) {
             ddIcon = $.createIconElement({ icon: 'dropdown', classes: ['icon-dropdown']});
