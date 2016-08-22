@@ -96,16 +96,19 @@
       availableContainer = '.card.available',
       selectedContainer = '.card.selected';
 
-    // Get available items
-    // console.log(api.getItems(availableContainer));
+      // On swap update
+      api.element.on('swapupdate', function (e, items) {
+        console.log(items);
+      });
 
-    // Get selected items
-    console.log(api.getItems(selectedContainer));
+    // Wait for Listview availability
+    setTimeout(function() {
+      // Get available items
+      // console.log(api.getItems(availableContainer));
 
-    // On swap update
-    api.element.on('swapupdate', function (e, items) {
-      console.log(items);
-    });
+      // Get selected items
+      console.log(api.getItems(selectedContainer));
+    }, 0);
 
   });
 </script>
