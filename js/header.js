@@ -252,7 +252,7 @@
         this.titlePopup = title.find('.btn-menu');
         if (!this.titlePopup.length) {
           var heading = title.find('h1'); // If H1 doesn't exist here, you're doing it wrong.
-          heading.wrap('<button id="header-menu" class="btn-menu"></button>');
+          heading.wrap('<button id="header-menu" type="button" class="btn-menu"></button>');
           this.titlePopup = heading.parent('.btn-menu');
         }
         this.titlePopupMenu = this.titlePopup.next('.popupmenu');

@@ -135,7 +135,7 @@ window.Formatters = {
     }
 
     return (
-      '<button class="btn-icon small datagrid-drilldown">' +
+      '<button type="button" class="btn-icon small datagrid-drilldown">' +
          $.createIcon({icon: 'drilldown'}) +
         '<span>' + text + '</span>' +
       '</button>'
@@ -166,7 +166,7 @@ window.Formatters = {
   Actions: function (row, cell, value, col) {
     //Render an Action Formatter
     return (
-      '<button class="btn-actions" aria-haspopup="true" aria-expanded="false" aria-owns="'+ col.menuId +'">' +
+      '<button type="button" class="btn-actions" aria-haspopup="true" aria-expanded="false" aria-owns="'+ col.menuId +'">' +
         '<span class="audible">'+ col.title +'</span>' +
         $.createIcon({ icon: 'more' }) +
       '</button>'
@@ -181,7 +181,7 @@ window.Formatters = {
 
   // Expand / Collapse Button
   Expander: function (row, cell, value) {
-    var button = '<button class="btn-icon datagrid-expand-btn" tabindex="-1">'+
+    var button = '<button type="button" class="btn-icon datagrid-expand-btn" tabindex="-1">'+
       '<span class="icon plus-minus"></span>' +
       '<span class="audible">' + Locale.translate('ExpandCollapse') + '</span>' +
       '</button>' + ( value ? '<span> ' + value + '</span>' : '');
@@ -192,7 +192,7 @@ window.Formatters = {
   // Tree Expand / Collapse Button and Paddings
   Tree: function (row, cell, value, col, item) {
     var isOpen = item.expanded,
-      button = '<button class="btn-icon datagrid-expand-btn' + (isOpen ? ' is-expanded' : '') + '" tabindex="-1"' +  (item.depth ? ' style="margin-left: ' + (item.depth ? (30* (item.depth -1)) + 'px' : '') + '"' : '') + '>'+
+      button = '<button type="button" class="btn-icon datagrid-expand-btn' + (isOpen ? ' is-expanded' : '') + '" tabindex="-1"' +  (item.depth ? ' style="margin-left: ' + (item.depth ? (30* (item.depth -1)) + 'px' : '') + '"' : '') + '>'+
       '<span class="icon plus-minus'+ (isOpen ? ' active' : '') + '"></span>' +
       '<span class="audible">' + Locale.translate('ExpandCollapse') + '</span>' +
       '</button>' + ( value ? '<span> ' + value + '</span>' : ''),
@@ -1386,7 +1386,7 @@ $.fn.datagrid = function(options) {
 
     //Render the Filter Button and Menu based on filterType - which determines the options
     renderFilterButton: function (filterType, isDisabled) {
-      var btnMarkup = '<button class="btn-menu btn-filter" data-init="false" ' + (isDisabled ? ' disabled' : '') + ' type="button"><span class="audible">Filter</span></button>' +
+      var btnMarkup = '<button type="button" class="btn-menu btn-filter" data-init="false" ' + (isDisabled ? ' disabled' : '') + ' type="button"><span class="audible">Filter</span></button>' +
         '<ul class="popupmenu has-icons is-translatable is-selectable">';
 
         //Just the dropdown
@@ -1579,7 +1579,7 @@ $.fn.datagrid = function(options) {
         }
 
         op = isDropdown ? 'equals' : btn.find('use:first').attr('xlink:href').replace('/svg/icons.svg#icon-filter-', '');
-        
+
         if (op === 'selected-notselected') {
           return;
         }

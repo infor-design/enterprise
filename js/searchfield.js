@@ -106,7 +106,7 @@
 
           this.button = icon.parent('.searchfield-category-button');
           if (!this.button.length) {
-            this.button = icon.wrap('<button class="btn searchfield-category-button"></button>').parent();
+            this.button = icon.wrap('<button type="button" class="btn searchfield-category-button"></button>').parent();
           }
           icon = this.button;
 

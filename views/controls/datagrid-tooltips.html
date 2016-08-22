@@ -37,7 +37,7 @@
         columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 360, formatter: Formatters.Ellipsis});
  
         Formatters.CustomFormatter = function(row, cell, value, col) {
-          var cellHtml = "<button class='btn-icon' title='Approval Status' >";
+          var cellHtml = "<button type='button' class='btn-icon' title='Approval Status' >";
           cellHtml += " <svg class='icon' focusable='false' aria-hidden='true' role='presentation'>";
           cellHtml += "     <use xlink:href='/svg/icons-extended.svg#icon-queries'></use>";
           cellHtml += " </svg>";

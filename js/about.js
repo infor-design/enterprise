@@ -88,7 +88,7 @@
         $('<div class="modal-content"></div>').appendTo(this.modal);
         var header = $('<div class="modal-header"></div>').appendTo(this.modal.find('.modal-content'));
         $('<div class="close-container"></div>')
-          .append($('<button name="close" class="btn-icon hide-focus"></button>')
+          .append($('<button name="close" type="button" class="btn-icon hide-focus"></button>')
             .append($.createIconElement({ icon: 'close', classes: 'icon-close' }))
             .append('<span>' + Locale.translate('Close') + '</span>'))
           .appendTo(header);

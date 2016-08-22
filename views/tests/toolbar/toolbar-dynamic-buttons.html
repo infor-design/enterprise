@@ -17,7 +17,7 @@
    <div class="row">
       <div class="twelve columns">
          <br/><br/>
-         
+
          <button id="enable-btn" class="btn" type="button">
             <span>Enable Buttons</span>
          </button>
@@ -33,7 +33,7 @@
          <button id="reset-label-btn" class="btn-tertiary" type="button">
             <span>Reset Button Labels</span>
          </button>
-         
+
          <br/><br/><br/>
          <div class="toolbar" role="toolbar" data-options="{maxVisibleButtons: 5}">
             <div class="title">
@@ -108,7 +108,7 @@
             </div>
 
             <div class="more">
-               <button class="btn-actions">
+               <button type="button" class="btn-actions">
                   <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
                      <use xlink:href="/svg/icons.svg#icon-more"></use>
                   </svg>
@@ -127,7 +127,7 @@
                </ul>
             </div>
          </div>
-         
+
       </div>
    </div>
 
@@ -146,7 +146,7 @@
             $(this).text(text.replace('Button', 'Changed'));
          });
       });
-      
+
       $('#reset-label-btn').click(function () {
          $('.toolbar .buttonset button span').each(function () {
             var text = $(this).text();

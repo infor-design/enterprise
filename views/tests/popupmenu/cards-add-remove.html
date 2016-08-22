@@ -1,9 +1,9 @@
 <div class="row">
 	<div class="full column" style="margin-bottom: 20px;">
-		<button class="btn add-popup">Add</button>
-		<button class="btn remove-popup">Remove First Card</button>
-		<button class="btn remove-popup-destroy">Remove First Card + Destroy</button>
-		<button class="btn remove-wrappers">Remove Empty Wrappers</button>
+		<button type="button" class="btn add-popup">Add</button>
+		<button type="button" class="btn remove-popup">Remove First Card</button>
+		<button type="button" class="btn remove-popup-destroy">Remove First Card + Destroy</button>
+		<button type="button" class="btn remove-wrappers">Remove Empty Wrappers</button>
 	</div>
 </div>
 
@@ -57,4 +57,3 @@ $(".remove-wrappers").click(function(){
 	$(".popupmenu-wrapper:not(:has(*))").remove();
 });
 </script>
-
