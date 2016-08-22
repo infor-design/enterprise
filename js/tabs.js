@@ -2124,11 +2124,6 @@
           paddingRight -= target.is('.has-popupmenu.tab') ? 0 : 10;
           width += 10;
         }
-        // var modalContent = target.closest('.modal-content');
-        // if (modalContent.length && !modalContent.closest('.modal').is('.is-visible')) {
-        //   paddingRight = -(parseInt(modalContent.css('margin-right'), 10));
-        //   width += 8;
-        // }
 
         var left = Locale.isRTL() ?
           (paddingRight + target.position().left) : (target.position().left);
