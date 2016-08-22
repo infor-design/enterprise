@@ -4,13 +4,13 @@
   <div class="row">
     <div class="columns six">
 
-      <div class="swaplist" data-init="false" id="example-swaplist-1">
-        <div class="card available">
+      <div class="swaplist" data-init="false" id="example-todolist">
+        <div class="card todo">
           <div class="card-header">
-            <h2 class="card-title">Available</h2>
+            <h2 class="card-title">To Do List</h2>
             <div class="buttons">
-              <button class="btn btn-moveto-selected" type="button">
-                <span class="audible">Select</span>
+              <button class="btn moveto-completed" type="button">
+                <span class="audible">Mark completed</span>
                 <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
                   <use xlink:href="/svg/icons.svg#icon-right-arrow"></use>
                 </svg>
@@ -20,28 +20,46 @@
           <div class="card-content">
             <div class="listview">
               <ul data-swap-handle=".handle">
-                <li data-value="opt-1">
+                <li data-value="Hit the gym">
                    <span class="handle" focusable="false" aria-hidden="true" role="presentation">&#8286;</span>
                   <div class="swaplist-item-content">
-                    <p>Option A</p>
+                    <p>Hit the gym</p>
                   </div>
                 </li>
-                <li data-value="opt-2">
+                <li data-value="Meet George">
                    <span class="handle" focusable="false" aria-hidden="true" role="presentation">&#8286;</span>
                   <div class="swaplist-item-content">
-                    <p>Option B</p>
+                    <p>Meet George</p>
+                  </div>
+                </li>
+                <li data-value="Buy eggs">
+                   <span class="handle" focusable="false" aria-hidden="true" role="presentation">&#8286;</span>
+                  <div class="swaplist-item-content">
+                    <p>Buy eggs</p>
+                  </div>
+                </li>
+                <li data-value="Read a book">
+                   <span class="handle" focusable="false" aria-hidden="true" role="presentation">&#8286;</span>
+                  <div class="swaplist-item-content">
+                    <p>Read a book</p>
+                  </div>
+                </li>
+                <li data-value="Organize office">
+                   <span class="handle" focusable="false" aria-hidden="true" role="presentation">&#8286;</span>
+                  <div class="swaplist-item-content">
+                    <p>Organize office</p>
                   </div>
                 </li>
               </ul>
             </div>
           </div>
         </div>
-        <div class="card selected">
+        <div class="card completed">
           <div class="card-header">
-            <h2 class="card-title">Selected</h2>
+            <h2 class="card-title">Completed</h2>
             <div class="buttons">
-              <button class="btn btn-moveto-left" type="button">
-                <span class="audible">Move to left</span>
+              <button class="btn moveto-todo" type="button">
+                <span class="audible">Move to todo list</span>
                 <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
                   <use xlink:href="/svg/icons.svg#icon-left-arrow"></use>
                 </svg>
@@ -51,6 +69,12 @@
           <div class="card-content">
             <div class="listview">
               <ul data-swap-handle=".handle">
+                <li data-value="Pay bills">
+                   <span class="handle" focusable="false" aria-hidden="true" role="presentation">&#8286;</span>
+                  <div class="swaplist-item-content">
+                    <p>Pay bills</p>
+                  </div>
+                </li>
               </ul>
             </div>
           </div>
@@ -64,10 +88,15 @@
 
 <script>
 
-  // Initialize all SoHo Xi Controls and set the locale
   $(function () {
+    $('#example-todolist').swaplist({
+      // Containers
+      availableClass: '.todo',
+      selectedClass: '.completed',
 
-    $('#example-swaplist-1').swaplist({available: [], selected: []});
-
+      // Top buttons
+      availableBtn: '.moveto-completed',
+      selectedBtnLeft: '.moveto-todo'
+    });
   });
 </script>

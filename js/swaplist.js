@@ -36,7 +36,21 @@
           'additionalBtn': '.btn-moveto-selected',
 
           // Template HTML
-          'template': '<ul data-swap-handle=".handle">{{#dataset}}{{#text}}<li {{#value}}data-value="{{value}}"{{/value}} {{#selected}}selected="selected"{{/selected}} {{#disabled}}class="is-disabled"{{/disabled}}><span class="handle" focusable="false" aria-hidden="true" role="presentation">&#8286;</span><div class="swaplist-item-content"><p>{{text}}</p></div></li>{{/text}}{{/dataset}}</ul>'
+          'template': ''+
+            '<ul data-swap-handle=".handle">'+
+              '{{#dataset}}'+
+                '{{#text}}'+
+                  '<li'+
+                    '{{#value}} data-value="{{value}}"{{/value}}'+
+                    '{{#selected}} selected="selected"{{/selected}}'+
+                    '{{#disabled}} class="is-disabled"{{/disabled}}'+
+                  '>'+
+                    '<span class="handle" focusable="false" aria-hidden="true" role="presentation">&#8286;</span>'+
+                    '<div class="swaplist-item-content"><p>{{text}}</p></div>'+
+                  '</li>'+
+                '{{/text}}'+
+              '{{/dataset}}'+
+            '</ul>'
         },
         settings = $.extend({}, defaults, options);
 
@@ -55,7 +69,7 @@
         self.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         self.loadListview();
         self.setElements();
-        self.isMultiSelectClass(self.settings.selectedClass);
+        self.isMultiSelectClass();
 
         setTimeout(function() { // Wait for Listview availability
           self.makeDraggable();
@@ -228,9 +242,12 @@
 
         // Dragenter - set that related/droptarget
         .on(self.dragEnterWhileDragging, self.dragElements, function(e) {
+          if (!selections.dragged) {
+            return;
+          }
           self.element.triggerHandler('draggingswap', [selections.items]);
           selections.related = e.target;
-          $('ul, li', this.element).removeClass('over');
+          $('ul, li', self.element).removeClass('over');
           $(e.target).closest('ul, li').addClass('over');
           selections.droptarget = $(selections.related).closest('.card');
           $('[aria-grabbed="true"]', self.element).not(selections.dragged).slideUp();
@@ -239,8 +256,11 @@
 
         // Dragover - allow the drag by preventing default, for touch set related/droptarget
         .on(self.dragOverWhileDragging, self.dragElements, function(e) {
+          if (!selections.dragged) {
+            return;
+          }
           var touch,
-            overItem = this,
+            overItem = $(this),
             list = $('.listview', selections.dragged.closest('.card')).data('listview');
 
           if(self.isTouch) {
@@ -336,21 +356,24 @@
 
       // Load listview
       loadListview: function() {
-        var self = this,
+        var i, l, lv, c,
+          self = this,
           s = self.settings,
-          ds = {};
+          containers = [
+            { dataset: s.available, class: s.availableClass },
+            { dataset: s.selected, class: s.selectedClass },
+            { dataset: s.additional, class: s.additionalClass }
+          ];
 
-        if(s.available || s.selected || s.additional) {
-          ds[s.availableClass] = s.available || [];
-          ds[s.selectedClass] = s.selected || [];
-          ds[s.additionalClass] = s.additional || [];
-
-          $.each(ds, function(key, value) {
-            var lv = $(key +' .listview', this.element);
-            if (lv.length) {
-              lv.listview({ dataset: value, template: s.template, selectable: 'multiple' });
-            }
-          });
+        for (i=0,l=containers.length; i<l; i++) {
+          c = containers[i];
+          lv = $(c.class +' .listview', self.element);
+          if (!c.dataset && lv.length && $('li', lv).length) {
+            lv.listview({ selectable: 'multiple' });
+          }
+          else if (lv.length) {
+            lv.listview({ dataset: (c.dataset || []), template: s.template, selectable: 'multiple' });
+          }
         }
       },
 
@@ -409,10 +432,16 @@
       },
 
       // When list is Empty force to add css class "is-muliselect"
-      isMultiSelectClass: function(container) {
-        var lv = $(container +' .listview', this.element);
-        if(!$('li', lv).length) {
-          lv.addClass('is-muliselect');
+      isMultiSelectClass: function() {
+        var i, l, lv,
+          s = this.settings,
+          containers = [s.availableClass, s.selectedClass, s.additionalClass];
+
+        for (i=0,l=containers.length; i<l; i++) {
+          lv = $(containers[i] +' .listview', this.element);
+          if (!$('li', lv).length) {
+            lv.addClass('is-muliselect');
+          }
         }
       },
 
@@ -605,15 +634,19 @@
         var self = this;
 
         setTimeout(function() {
-          if (self.selections.placeholder) {
-            list.select(self.selections.placeholder);
-            self.selections.placeholder.focus();
+          if (list) {
+            if (self.selections.placeholder) {
+              list.select(self.selections.placeholder);
+              self.selections.placeholder.focus();
+            }
+            self.unselectElements(list);
+            self.updateAttributes($('.listview', self.selections.owner));
+            self.updateAttributes($('.listview', self.selections.droptarget));
+            if (self.selections.items.length) {
+              self.element.triggerHandler('swapupdate', [self.selections.items]);
+            }
           }
-          self.unselectElements(list);
-          self.updateAttributes($('.listview', self.selections.owner));
-          self.updateAttributes($('.listview', self.selections.droptarget));
           self.clearDropeffects();
-          self.element.triggerHandler('swapupdate', [self.selections.items]);
           self.clearSelections();
           self.items.removeClass('is-dragging is-dragging-touch');
         }, 100);

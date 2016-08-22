@@ -29,47 +29,6 @@
   </ul>
 </script>
 
-<div class="row top-padding">
-  <div class="columns six">
-
-    <div class="swaplist" id="example-swaplist-1">
-      <div class="card available">
-        <div class="card-header">
-          <h2 class="card-title">Available</h2>
-          <div class="buttons">
-            <button class="btn btn-moveto-selected" type="button">
-              <span class="audible">Select</span>
-              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                <use xlink:href="/svg/icons.svg#icon-right-arrow"></use>
-              </svg>
-            </button>
-          </div>
-        </div>
-        <div class="card-content">
-          <div class="listview"></div>
-        </div>
-      </div>
-      <div class="card selected">
-        <div class="card-header">
-          <h2 class="card-title">Selected</h2>
-          <div class="buttons">
-            <button class="btn btn-moveto-left" type="button">
-              <span class="audible">Move to left</span>
-              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                <use xlink:href="/svg/icons.svg#icon-left-arrow"></use>
-              </svg>
-            </button>
-          </div>
-        </div>
-        <div class="card-content">
-          <div class="listview"></div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
 <div class="row">
   <div class="columns nine">
 
@@ -139,60 +98,17 @@
 
 <script>
   $(function () {
-    var ds1 = [],
-      dsAvailable = [];
-      dsSelected = [];
-      dsAdditional = [];
+    var ds1 = [];
 
     ds1.push({id: 1, value: 'opt-1', text: 'Option A'});
     ds1.push({id: 2, value: 'opt-2', text: 'Option B'});
     ds1.push({id: 3, value: 'opt-3', text: 'Option C'});
     ds1.push({id: 4, value: 'opt-4', text: 'Option D'});
-    ds1.push({id: 5, value: 'opt-5', text: 'Option E', disabled: true});
-    ds1.push({id: 6, value: 'opt-6', text: 'Option F'});
-    ds1.push({id: 7, value: 'opt-7', text: 'Option G', selected: true});
-    ds1.push({id: 8, value: 'opt-8', text: 'Option H', selected: true});
-    ds1.push({id: 9, value: 'opt-9', text: 'Option I'});
-
-    dsAvailable.push({id: 1, value: 'opt-1', text: 'Option A'});
-    dsAvailable.push({id: 2, value: 'opt-2', text: 'Option B'});
-    dsAvailable.push({id: 3, value: 'opt-3', text: 'Option C'});
-    dsAvailable.push({id: 5, value: 'opt-5', text: 'Option E', disabled: true});
-    dsAvailable.push({id: 6, value: 'opt-6', text: 'Option F'});
-    dsAvailable.push({id: 8, value: 'opt-8', text: 'Option H'});
-    dsAvailable.push({id: 9, value: 'opt-9', text: 'Option I'});
-
-    dsSelected.push({id: 4, value: 'opt-4', text: 'Option D'});
-    dsSelected.push({id: 7, value: 'opt-7', text: 'Option G'});
-    dsSelected.push({id: 11, value: 'opt-11', text: 'Option K'});
-
-    dsAdditional.push({id: 10, value: 'opt-10', text: 'Option J'});
-    dsAdditional.push({id: 12, value: 'opt-12', text: 'Option L'});
-    dsAdditional.push({id: 13, value: 'opt-13', text: 'Option M'});
-    dsAdditional.push({id: 14, value: 'opt-14', text: 'Option N'});
-
-
-    // Single Dataset Example ==================================================
-    $('#example-swaplist-1').swaplist({
-      available: ds1,
-      template: $('#swaplist-tmpl').html()
-    });
-
 
     // Additional Dataset Example ==============================================
     $('#example-swaplist-2').swaplist({
-      available: dsAvailable,
-      selected: dsSelected,
-      additional: dsAdditional,
+      available: ds1,
       template: $('#swaplist-tmpl').html()
-    });
-
-
-    // On swap update ==========================================================
-    var api1 = $('#example-swaplist-1').data('swaplist');
-    api1.element.on('swapupdate', function (e, items) {
-      console.log(items);
-      // console.log(api1.getItems('.card.selected'));
     });
 
   });
