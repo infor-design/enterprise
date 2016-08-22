@@ -38,13 +38,8 @@
     }
 
     &.close {
-      cursor: pointer;
       right: 5px;
       top: 11px;
-
-      &:hover {
-        fill: $trigger-hover-color;
-      }
     }
 
     &.icon-error {
@@ -61,10 +56,6 @@
     }
   }
 
-  .icon.close {
-    display: none;
-  }
-
   .icon-dropdown {
     margin-left: 2px;
   }
@@ -72,12 +63,6 @@
   .searchfield {
     padding-left: 34px;
     padding-right: 34px;
-
-    &:not(.hide-close-button) {
-      + .icon + .icon.close {
-        display: inline-block;
-      }
-    }
   }
 
   // This variation is used on white-backgrounds (usually in list-detail, listviews, or builder pattern)

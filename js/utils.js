@@ -401,6 +401,44 @@
 
   };
 
+
+  //Clearable (Shows an X to clear)
+  $.fn.clearable = function() {
+    var self = this;
+    this.element = $(this);
+
+    //Create an X icon button styles in icons.scss
+    this.xButton = $.createIconElement({ classes: 'close is-empty', icon: 'close' }).icon();
+
+    //Create a function
+    this.checkContents = function () {
+      var text = self.element.val();
+      if (!text || !text.length) {
+        this.xButton.addClass('is-empty');
+      } else {
+        this.xButton.removeClass('is-empty');
+      }
+    };
+
+    //Add the button to field parent
+    self.element.parent().append(this.xButton);
+
+    //Handle Events
+    this.xButton.offTouchClick('clearable').off()
+      .onTouchClick('clearable', '.clearable')
+      .on('click.clearable', function handleClear() {
+        self.element.val('').trigger('change').focus().trigger('cleared');
+        self.checkContents();
+      });
+
+    this.element.on('change.clearable, blur.clearable, keyup.clearable', function () {
+      self.checkContents();
+    });
+
+    //Set initial state
+    this.checkContents();
+  };
+
   // Replacement for String.fromCharCode() that takes meta keys into account when determining which
   // character key was pressed.
   $.actualChar = function(e) {

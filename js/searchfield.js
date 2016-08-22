@@ -67,8 +67,6 @@
         //Prevent browser typahead
         this.element.attr('autocomplete','off');
 
-        this.element.addClass('hide-close-button');
-
         this.wrapper = this.element.parent('.searchfield-wrapper');
         if (!this.wrapper || !this.wrapper.length) {
           if (this.isInlineLabel) {
@@ -152,12 +150,8 @@
         }
 
         if (this.settings.clearable) {
-          this.xButton = $.createIconElement({ classes: 'close', icon: 'close' }).icon();
-          this.element.parent('').append(this.xButton);
+          this.element.clearable();
         }
-
-        // Add empty class if the field is initialized empty
-        this.checkContents();
 
         return this;
       },
@@ -192,19 +186,11 @@
         }).onTouchClick('searchfield', '.searchfield')
         .on('click.searchfield', function(e) {
           self.handleClick(e);
-        }).on('keyup.searchfield', function(e) {
-          self.handleKeyUp(e);
         }).on('keydown.searchfield', function(e) {
           self.handleKeydown(e);
         }).on('beforeopen.searchfield', function(e, menu) { // propagates from Autocomplete's Popupmenu
           self.handlePopupBeforeOpen(e, menu);
         });
-
-        if (this.settings.clearable) {
-          this.xButton.onTouchClick('searchfield', '.searchfield').on('click.searchfield', function handleClear() {
-            self.clear();
-          });
-        }
 
         this.wrapper.on('mouseenter.searchfield', function() {
           $(this).addClass('is-hovered');
@@ -309,7 +295,7 @@
         var self = this;
 
         // Activate
-        this.element.addClass('active').addClass('hide-close-button');
+        this.element.addClass('active');
         var toolbar = this.element.closest('.toolbar, [class$="-toolbar"]');
         if (toolbar.length) {
           toolbar.addClass('searchfield-active');
@@ -355,15 +341,10 @@
           }, 10);
         }
 
-        this.checkContents();
       },
 
       handleClick: function() {
         this.setAsActive();
-      },
-
-      handleKeyUp: function() {
-        this.checkContents();
       },
 
       handleKeydown: function(e) {
@@ -445,20 +426,8 @@
         return this.setAsActive();
       },
 
-      checkContents: function() {
-        var text = this.element.val();
-        if (!text || !text.length) {
-          this.element.addClass('empty');
-        } else {
-          this.element.removeClass('empty').removeClass('hide-close-button');
-        }
-
-        this.element.trigger('contents-checked');
-      },
-
       clear: function() {
         this.element.val('').trigger('change').focus();
-        this.checkContents();
       },
 
       addMoreLink: function() {
@@ -505,10 +474,6 @@
 
         if (this.wrapper.hasClass('context')) {
           this.element.addClass('context');
-        }
-
-        if (this.settings.clearable && (this.xButton && this.xButton.length)) {
-          this.xButton.offTouchClick('searchfield').off().remove();
         }
 
         this.element.next('.icon').remove();

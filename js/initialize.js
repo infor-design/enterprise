@@ -295,6 +295,9 @@
             //Track Dirty
             ['trackdirty', '[data-trackdirty="true"]'],
 
+            //Clear x
+            ['clearable', '[data-clearable="true"]'],
+
             //Text Area
             ['textarea', 'textarea'],
 

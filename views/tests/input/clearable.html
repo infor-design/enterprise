@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="twelve columns">
+
+    <h2>Input Fields</h2>
+    <p>Usually used on a search and filter row but inputs can have an X on them to clear. See also datagrid-filter
+    </p><br />
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="clearable">Clearable Input</label>
+      <input type="text" id="clearable" name="clearable" data-clearable="true"/>
+    </div>
+
+    <div class="field">
+      <label for="searchfield-clearable">Clearable Searchfield</label>
+      <input data-autocomplete="/api/states?term=" data-options="{clearable: true}" id="searchfield-clearable" type="text" class="searchfield"/>
+    </div>
+
+  </div>
+</div>
