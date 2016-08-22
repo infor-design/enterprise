@@ -15,6 +15,8 @@ Release Date: TBD
 * External SVG Files for icons.
 
 ### Breaking Changes
+
+* 2016-08-16 - Popupmenu classes were not mutually exclusive now both the is-selectable and has-icons class add extra left padding. It may be needed to remove has-icons if you have a selectable menu and no actual row icons or you might end up with extra space.
 * 2016-08-16 - Extrenal SVG Files for icons - It's now possible to use external SVG files for icons.  If you are using the old method (inlining the SVG elements in an HTML document), you can still find these files in _/dist/svg/***.html_.  If you'd like to use the new external files, they're in the same folder with an _.svg_ suffix.  Please note that if you use icons this way, there will be a small breaking change in the form of appending all <use> tags' "xlink:href" attributes to contain a relative path to the SVG file.  Please also be wary that our icon sets are split across several files, so you may need to include more than one of these files in your project.
 * 2016-08-10 - Date and TimePicker - The forceHourMode option was not used in timepicker so was removed. In Datepicker it had a buggy effect. If used it can be removed from your markup. Use the timeFormat option to control 24h vs 12h format.
 * 2016-07-14 - Changed app menu so its less backwards compatible. Anyone that has written their app menu markup to sit next to the hamburger button in the header; will need to move that app menu markup to the body in their code manually. So the structure should be icons -> app menu -> page container.

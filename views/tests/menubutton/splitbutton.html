@@ -1,0 +1,83 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Menu Button Test</h2>
+    <p>Split buttons are not officially supported. This is a non-official way you could implement them.
+    </p><br />
+  </div>
+</div>
+
+<style>
+  .btn-split-menu + .separator + .btn-split-menu {
+    margin-left: -8px;
+    width: 32px;
+  }
+
+  .btn-split-menu + .separator {
+    height: 16px !important;
+    margin: 1px 10px 0 !important;
+    top: 11px !important;
+  }
+
+  .btn-split-menu.btn {
+    margin-right: -8px;
+  }
+</style>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="toolbar" role="toolbar" data-options="{maxVisibleButtons: 4}">
+      <div class="title">
+        Toolbar Title
+      </div>
+
+      <div class="buttonset">
+
+        <button class="btn">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="/svg/icons.svg#icon-add"></use>
+          </svg>
+          <span>Add Row</span>
+        </button>
+
+        <button type="button" class="btn-split-menu btn">
+          <span>Add</span>
+        </button>
+        <div class="separator"></div>
+        <button type="button" class="btn-split-menu btn-menu">
+            <span class="audible">Change Default</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="/svg/icons.svg#icon-dropdown"></use>
+            </svg>
+        </button>
+        <ul class="popupmenu is-selectable">
+          <li class="is-checked"><a href="#">Add</a></li>
+          <li><a href="#">Change</a></li>
+          <li><a href="#">Delete</a></li>
+          <li><a href="#">Previous</a></li>
+          <li><a href="#">Inquire</a></li>
+          <li><a href="#">Next</a></li>
+        </ul>
+
+        <button id="btn-settings" class="btn">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="/svg/icons.svg#icon-settings"></use>
+          </svg>
+          <span>Settings</span>
+        </button>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+    $('.btn-split-menu.btn').on('click', function (e) {
+      alert('Do ' + $(this).find('span').text() + ' Action');
+    });
+
+    $('.toolbar').on('selected', function (e, args) {
+      $('.btn-split-menu.btn').find('span').text(args.text());
+    });
+</script>

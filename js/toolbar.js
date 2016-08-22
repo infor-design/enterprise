@@ -164,7 +164,7 @@
           var icon = item.children('.icon').filter(function(){
             var curr = $(this).children('use').attr('xlink:href');
 
-            return curr !== submenuDesignIcon && curr !== '#icon-dropdown';
+            return curr !== submenuDesignIcon && curr.indexOf('#icon-dropdown') === -1;
           });
 
           if (icon.length) {
