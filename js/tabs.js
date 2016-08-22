@@ -317,6 +317,17 @@
       setupEvents: function() {
         var self = this;
 
+        var modal = self.element.closest('.modal');
+        if (modal.length) {
+          modal.on('afteropen', function () {
+            if (self.hasAnimatedBar()) {
+              console.log('t1');
+              self.focusBar();
+              // self.getActiveTab().trigger('click');
+            }
+          });
+        }
+
         // Clicking the 'a' triggers the click on the 'li'
         function routeAnchorClick(e) {
           var a = $(e.currentTarget);
@@ -639,7 +650,8 @@
           currentLi = $(e.currentTarget).parent(),
           currentA = currentLi.children('a'),
           targetLi,
-          tabs = self.tablist.children('li' + allExcludes);
+          tabs = self.tablist.children('li' + allExcludes),
+          isRTL = Locale.isRTL();
 
         function previousTab() {
           var i = tabs.index(currentLi) - 1;
@@ -713,13 +725,13 @@
           case 38:
             e.preventDefault(); // jshint ignore:line
           case 37:
-            targetLi = previousTab();
+            targetLi = isRTL ? nextTab() : previousTab();
             e.preventDefault();
             break;
           case 40:
             e.preventDefault(); // jshint ignore:line
           case 39:
-            targetLi = nextTab();
+            targetLi = isRTL ? previousTab() : nextTab();
             e.preventDefault();
             break;
         }
@@ -2113,6 +2125,11 @@
           paddingRight -= target.is('.has-popupmenu.tab') ? 0 : 10;
           width += 10;
         }
+        // var modalContent = target.closest('.modal-content');
+        // if (modalContent.length && !modalContent.closest('.modal').is('.is-visible')) {
+        //   paddingRight = -(parseInt(modalContent.css('margin-right'), 10));
+        //   width += 8;
+        // }
 
         var left = Locale.isRTL() ?
           (paddingRight + target.position().left) : (target.position().left);
@@ -2171,6 +2188,7 @@
           offset = this.tablist.offset(),
           width = parseInt(target.outerWidth()),
           height = parseInt(target.outerHeight()),
+          isRTL = Locale.isRTL(),
           left, top;
 
         if (!this.isModuleTabs() && (target.is('.dismissible.tab > a') || target.is('.has-popupmenu.tab > a'))) {
@@ -2227,7 +2245,7 @@
         this.focusState.css({
           left: left,
           top: top,
-          right: left + width,
+          right: isRTL ? '' : left + width,
           bottom: top + height,
           width: width,
           height: height
