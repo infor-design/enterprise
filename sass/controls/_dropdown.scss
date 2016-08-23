@@ -712,6 +712,10 @@ html[dir='rtl'] {
     }
   }
 
+  .trigger .icon {
+    left: 6px;
+  }
+
   .dropdown-short {
     &.multiple {
       li {

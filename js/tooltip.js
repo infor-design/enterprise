@@ -67,7 +67,7 @@
         }
 
         if (this.element.is('.dropdown, .multiselect')) {
-          this.activeElement = $('#' + this.element.attr('id') + '-shdo');
+          this.activeElement = this.element.nextAll('.dropdown-wrapper:first').find('>.dropdown');
         }
 
         settings.closebutton = (settings.closebutton || this.element.data('closebutton')) ? true : false;
@@ -625,7 +625,7 @@
           if (this.activeElement.is('textarea')) {
             lessTop = this.activeElement.outerHeight() - 22;
           }
-          if (this.activeElement.is('input.dropdown')) {
+          if (this.activeElement.is('.dropdown')) {
             if (this.tooltip.outerWidth() === parseInt(this.tooltip.css('max-width'), 10)) {
               extraWidth = -20;
               extraOffset = 10;

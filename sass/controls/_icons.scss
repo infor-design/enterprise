@@ -509,6 +509,12 @@ html[dir='rtl'] {
       right: auto;
     }
 
+    .error-message {
+      .icon-error {
+        margin-right: inherit;
+      }
+    }
+
     .lookup-wrapper {
       .icon-error,
       .icon-confirm {
