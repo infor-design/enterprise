@@ -486,8 +486,10 @@
 //RTL Styles
 html[dir='rtl'] {
   .editor-container {
-    .icon-error {
-      left: 7px;
+    .editor[data-error-type='tooltip'] {
+      ~ .icon-error {
+        left: 40px;
+      }
     }
   }
 }

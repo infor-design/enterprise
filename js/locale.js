@@ -799,7 +799,7 @@
       ];
       $('svg').each(function() {
         var use = $('use', this).attr('xlink:href');
-        if(use && $.inArray(use.substring(1), icons) !== -1) {
+        if(use && $.inArray(use.split('#').pop(), icons) !== -1) {
           $(this).addClass('icon-rtl-rotate');
         }
       });

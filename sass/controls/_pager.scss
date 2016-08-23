@@ -258,10 +258,12 @@ li + .pager-count {
 html[dir='rtl'] {
   // Pager for Tables
   .pager-count {
-    margin: 7px 10px 5px -13px;
-
     .pager-total-pages {
       text-align: right;
+    }
+
+    input {
+      text-align: center;
     }
   }
 }

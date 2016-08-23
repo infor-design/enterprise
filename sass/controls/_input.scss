@@ -559,6 +559,18 @@ input.error {
 
 //RTL Styles
 html[dir='rtl'] {
+  .field-info,
+  .error-message {
+    .icon {
+      left: auto;
+    }
+
+    .message-text {
+      padding-left: inherit;
+      padding-right: 19px;
+    }
+  }
+
   .field .checkbox-label,
   .field .checkbox > label {
     margin-left: inherit;
@@ -568,6 +580,10 @@ html[dir='rtl'] {
   input,
   textarea {
     text-align: right;
+
+    &.error {
+      padding-right: 10px;
+    }
   }
 
   // Required Indicator
@@ -591,8 +607,7 @@ html[dir='rtl'] {
     .icon-confirm {
       height: 14px;
       margin-left: inherit;
-      margin-right: -22px;
-      margin-top: 6px;
+      right: 0;
       top: auto;
       width: 18px;
     }
@@ -601,6 +616,14 @@ html[dir='rtl'] {
       padding-left: 10px;
       padding-right: inherit;
       text-align: left;
+
+      ~ .error-message {
+        .icon,
+        .message-text {
+          left: auto;
+          right: 150px;
+        }
+      }
     }
   }
 
