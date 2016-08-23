@@ -96,18 +96,18 @@
 
 // Animated Bar
 .animated-bar {
+  @include transition(left .25s ease, width .25s ease);
   background-color: rgba($tab-selected-color, 0); //background: transparent;
   bottom: 0;
   display: inline-block;
   height: 3px;
   left: 0;
   position: absolute;
-  @include transition(left .25s ease, width .25s ease);
   width: 20px;
 
   &.visible {
-    background-color: rgba($tab-selected-color, 1);
     @include transition(background-color .25s ease, left .25s ease, width .25s ease);
+    background-color: rgba($tab-selected-color, 1);
   }
 }
 
@@ -478,8 +478,28 @@ html[dir='rtl'] {
     right: auto;
   }
 
-  .tab-container:not(.vertical) .tab .icon-error {
-    left: -10px;
+  .tab-container:not(.vertical) {
+    &.has-more-button {
+      .tab-list {
+        padding-left: 102px;
+        padding-right: inherit;
+      }
+    }
+
+    .tab {
+      &:not(.last-child) {
+        margin-left: 10px;
+        margin-right: inherit;
+      }
+
+      .icon-error {
+        left: -10px;
+        right: auto;
+      }
+    }
+  }
+
+  .tab-focus-indicator {
     right: auto;
   }
 }
