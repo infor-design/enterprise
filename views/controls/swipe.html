@@ -1,10 +1,15 @@
-
+<style>
+body {
+  -ms-touch-action: none;
+  touch-action: none;
+}
+</style>
 
 <div class="row">
   <div class="twelve columns">
 
     <span class="label">Swip Me</span>
-    <div id='thing' style="border: 1px solid #999999;width:100px; height:100px; background:#ffffff;">
+    <div id='thing' style="left: -50px; position: relative; border: 1px solid #999999;width:100px; height:100px; background:#ffffff;">
       Swip Me
     </div>
 </div>
@@ -39,6 +44,9 @@ function handleTouchMove(e) {
         /* right swipe */
         console.log('right swipe');
       }
+      e.preventDefault();
+      e.stopPropagation();
+      alert();
     } else {
       if ( yDiff > 0 ) {
           /* up swipe */
@@ -48,14 +56,15 @@ function handleTouchMove(e) {
         console.log('down swipe');
       }
     }
+
     /* reset values */
     xDown = null;
     yDown = null;
 }
 
-document.addEventListener('touchstart', handleTouchStart, false);
-document.addEventListener('touchmove', handleTouchMove, false);
-document.addEventListener('mousedown', handleTouchStart, false);
-document.addEventListener('mousemove', handleTouchMove, false);
-
+window.addEventListener('touchstart', handleTouchStart, false);
+window.addEventListener('touchmove', handleTouchMove, false);
+window.addEventListener('mousedown', handleTouchStart, false);
+window.addEventListener('mousemove', handleTouchMove, false);
+window.history.replaceState(null, null, "#")
 </script>

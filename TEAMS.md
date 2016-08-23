@@ -71,7 +71,8 @@
 | Smart Mobile CityWatch app | ?? | Nicholas Gabb | 3x |
 | Softbrands FourthShift ERP | ASP | Steve Duepner | 3x |
 | S3 Worklist | Webpart (Black) | Jeremy Spring | 3x to 4x |
-| Sunsystems Transfer Desk | Alexander Taylor | MVC3 | 3x |
+| Sunsystems  | Theo Harper | Angular | 4x |
+| Sunsystems  | Geoff Parkes | GWT | 4x |
 | Supply Chain Execution | Mark Schaible, Anindhya Sharma | Apache, Jboss - Many Screens - Reviewing Upgrade | 3x to 4x |
 | SupplyWeb | Eric Andrews | Reviewing | 3x |
 | System Console | New app by S3 team  | Andy Buboltz | 4x |
