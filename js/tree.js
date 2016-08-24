@@ -140,8 +140,8 @@
       },
 
       //Expand all Parents
-      expandAll: function() {
-        var nodes = this.element.find('ul[role=group]');
+      expandAll: function(nodes) {
+        nodes = nodes || this.element.find('ul[role=group]');
         nodes.each(function () {
           var node = $(this);
           node.addClass('is-open');
@@ -173,6 +173,44 @@
         });
       },
 
+      // Check if a jQuery object
+      isjQuery: function (obj) {
+        return (obj && (obj instanceof jQuery || obj.constructor.prototype.jquery));
+      },
+
+      // Select node by id
+      selectNodeById: function (id) {
+        this.selectNodeByJquerySelectior('#'+ id);
+      },
+
+      // Select node by [jquery selectior] -or- [jquery object]
+      selectNodeByJquerySelectior: function (selectior) {
+        var target = this.isjQuery(selectior) ? selectior : $(selectior);
+        if (target.length && !target.is('.is-disabled')) {
+          var nodes = target.parentsUntil(this.element, 'ul[role=group]');
+          this.expandAll(nodes);
+          this.setSelectedNode(target, true);
+        }
+      },
+
+      // Mark node selected by id
+      markNodeSelectedById: function (id, source) {
+        source = source || this.settings.dataset;
+
+        for (var key in source) {
+            var item = source[key];
+            delete item.selected;
+            if (item.id === id) {
+              item.selected = true;
+              return;
+            }
+            if (item.children) {
+              this.markNodeSelectedById(id, item.children);
+            }
+        }
+        return;
+      },
+
       //Set a node as the selected one
       setSelectedNode: function (node, focus) {
         if (node.length === 0) {
@@ -180,6 +218,8 @@
         }
         node.attr({'tabindex': '0', 'aria-selected': 'true'}).parent().addClass('is-selected');
         this.element.find('a').not(node).attr({'tabindex': '-1', 'aria-selected': 'false'}).parent().removeClass('is-selected');
+
+        this.markNodeSelectedById(node.attr('id'));
 
         if (focus) {
           node.focus();
@@ -299,7 +339,7 @@
         //on click give clicked element 0 tabindex and 'aria-selected=true', resets all other links
         this.element.on('click.tree', 'a', function (e) {
           var target = $(this);
-          if (!target.hasClass('is-disabled')) {
+          if (!target.is('.is-disabled, .is-loading')) {
             self.setSelectedNode(target, true);
             self.toggleNode(target);
             e.stopPropagation();
@@ -558,6 +598,29 @@
             }
         }
         return null;
+      },
+
+      // Get node by ID if selected
+      getNodeByIdIfSelected: function (id, source) {
+        var node = this.findById(id, source);
+        return (node && node.selected) ? node : null;
+      },
+
+      // Get selected nodes
+      getSelectedNodes: function (source) {
+        var node,
+          self = this,
+          selected = [];
+
+        $('a', self.element).each(function() {
+          if (this.id) {
+            node = self.getNodeByIdIfSelected(this.id, source);
+            if (node) {
+              selected.push(node);
+            }
+          }
+        });
+        return selected;
       },
 
       //Sync the tree with the underlying dataset
