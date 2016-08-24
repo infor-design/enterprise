@@ -106,6 +106,7 @@
         }
 
         this.tooltip.place({
+          container: this.scrollParent,
           parent: this.element,
           placement: this.settings.placement,
           strategy: 'flip'
@@ -354,7 +355,6 @@
 
         // adjust the tooltip if the element is being scrolled inside a scrollable DIV
         this.scrollparent = this.element.closest('.page-container.scrollable');
-        // this.scrollparent = this.element.parents('.page-container[class*="scrollable"]').first();
         if (this.scrollparent.length) {
           targetContainer = this.scrollparent;
         }
@@ -363,13 +363,6 @@
       },
 
       position: function () {
-        /*
-        this.tooltip.place({
-          parent: this.element,
-          placement: this.settings.placement
-        });
-        */
-
         this.setTargetContainer();
         this.tooltip.removeClass('is-hidden');
 
@@ -386,6 +379,7 @@
         this.tooltip.data('place').place({
           x: x,
           y: y,
+          container: this.scrollParent,
           parent: this.element,
           placement: this.settings.placement,
           strategy: 'flip'
