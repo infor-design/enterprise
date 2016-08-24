@@ -27,8 +27,9 @@
     // Settings and Options
     var pluginName = 'place',
         defaults = {
-          callback: null, // If defined, provides extra placement adjustments after the main calculation is performed
-          parent: null, // If defined, will be used as the reference element for placement this element
+          callback: null, // If defined, provides extra placement adjustments after the main calculation is performed.
+          container: null, // If defined, contains the placement of the element to the boundaries of a specific container element.
+          parent: null, // If defined, will be used as the reference element for placement this element.
           parentXAlignment: 'center',
           parentYAlignment: 'center', // Only used for parent-based placement. Determines the alignment of the placed element against its parent. value 0 === X, value 1 === Y
           placement: 'bottom', // If defined, changes the direction in which placement of the element happens
@@ -144,6 +145,10 @@
         return this;
       },
 
+      isRTL: function() {
+        return Locale.isRTL();
+      },
+
       // Main placement API Method (external)
       // Can either take a PlacementObject as a single argument, or can take 2 coordinates (x, y) and
       // will use the pre-defined settings.
@@ -171,6 +176,19 @@
 
         // Remove any previous placement styles
         this.clearOldStyles();
+
+        // RTL support
+        if (this.isRTL()) {
+          placementObj.placement = (function() {
+          switch (placementObj.placement) {
+            case 'left':
+              return 'right';
+            case 'right':
+              return 'left';
+            default:
+              return placementObj.placement;
+          }})();
+        }
 
         // Use different methods if placement against a parent, versus straight-up coordinate placement
         if (placementObj.parent) {
@@ -422,10 +440,10 @@
               performFlip('left', 'top');
               break;
             case 'top':
-              performFlip('bottom', 'left');
+              performFlip('bottom', (self.isRTL() ? 'right' : 'left') );
               break;
             default: // bottom
-              performFlip('top', 'left');
+              performFlip('top', (self.isRTL() ? 'right' : 'left'));
               break;
           }
           placementObj.placement = p;
