@@ -42,6 +42,7 @@
 
     // Plugin Constructor
     function Tooltip(element) {
+      this.settings = $.extend({}, settings);
       this.element = $(element);
       this.init();
     }
@@ -103,7 +104,14 @@
           var name = (settings.tooltipElement ? settings.tooltipElement.substring(1, settings.tooltipElement.length) : 'tooltip');
           this.tooltip = $('<div class="' + (this.isPopover ? 'popover' : 'tooltip') + ' bottom is-hidden" role="tooltip" id="' + name + '"><div class="arrow"></div><div class="tooltip-content"></div></div>');
         }
-        this.place();
+
+        this.tooltip.place({
+          parent: this.element,
+          placement: this.settings.placement,
+          strategy: 'flip'
+        });
+
+        this.setTargetContainer();
       },
 
       handleEvents: function() {
@@ -158,6 +166,12 @@
 
         this.element.filter('button, a').on('focus.tooltip', function() {
           self.setContent(self.content);
+        });
+
+        this.tooltip.on('afterplace.tooltip', function(e, x, y, bleedingWasFixed) {
+          if (bleedingWasFixed) {
+            $(this).find('.arrow').css('display', 'none');
+          }
         });
 
       },
@@ -285,8 +299,6 @@
           this.tooltip.addClass('is-error');
         }
 
-        this.place();
-        this.tooltip.removeClass('is-hidden');
         this.position();
         this.element.trigger('show', [this.tooltip]);
 
@@ -337,7 +349,7 @@
 
       // Places the tooltip element itself in the correct DOM element.
       // If the current element is inside a scrollable container, the tooltip element goes as high as possible in the DOM structure.
-      place: function() {
+      setTargetContainer: function() {
         var targetContainer = $('body');
 
         // adjust the tooltip if the element is being scrolled inside a scrollable DIV
@@ -351,7 +363,37 @@
       },
 
       position: function () {
+        /*
+        this.tooltip.place({
+          parent: this.element,
+          placement: this.settings.placement
+        });
+        */
 
+        this.setTargetContainer();
+        this.tooltip.removeClass('is-hidden');
+
+        var distance = this.isPopover ? 20 : 10,
+          x = 0,
+          y = distance,
+          s = this.settings.placement;
+
+        if (s === 'left' || s === 'right') {
+          x = distance;
+          y = 0;
+        }
+
+        this.tooltip.data('place').place({
+          x: x,
+          y: y,
+          parent: this.element,
+          placement: this.settings.placement,
+          strategy: 'flip'
+        });
+
+        return this;
+
+        /*
         var self = this,
           winH = window.innerHeight + $(document).scrollTop(),
           // subtract 2 from the window width to account for the tooltips
@@ -583,9 +625,11 @@
             arrow.css('top', arrowPosTop);
           }
         }
+        */
 
       },
 
+      /*
       placeBelowOffset: function(scrollable) {
        var o = this.activeElement.offset(),
           isShortField = !!(this.activeElement.closest('.field-short').length),
@@ -679,6 +723,7 @@
         this.tooltip.css({'top': o.top + scrollable.offsetTop - (this.tooltip.outerHeight() / 2) + (this.activeElement.outerHeight() / 2) - scrollable.deltaHeight,
                           'left': o.left + scrollable.offsetLeft + settings.offset.left - (settings.offset.top + this.tooltip.outerWidth()) - scrollable.deltaWidth});
       },
+      */
 
       // Alias for _hide()_ that works with the global _closeChildren()_ method.
       close: function() {

@@ -392,13 +392,14 @@
             matchedItems('[data-popover]:not('+ noinitExcludes +')').each(function () {
               var obj = $(this),
                 trigger = obj.attr('data-trigger'),
-                title = obj.attr('data-title');
+                title = obj.attr('data-title'),
+                placement = obj.attr('data-placement');
 
               obj.popover({
                 content: $('#' + obj.attr('data-popover')),
                 trigger: trigger ? trigger : 'click',
                 title: title ? title : undefined,
-                placement: 'right'
+                placement: placement || 'right'
               });
             });
           }

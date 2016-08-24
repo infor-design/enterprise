@@ -29,14 +29,69 @@
         defaults = {
           callback: null, // If defined, provides extra placement adjustments after the main calculation is performed
           parent: null, // If defined, will be used as the reference element for placement this element
-          parentAlignment: ['center', 'center'], // Only used for parent-based placement. Determines the alignment of the placed element against its parent. value 0 === X, value 1 === Y
-          placement: 'bottom' // If defined, changes the direction in which placement of the element happens
+          parentXAlignment: 'center',
+          parentYAlignment: 'center', // Only used for parent-based placement. Determines the alignment of the placed element against its parent. value 0 === X, value 1 === Y
+          placement: 'bottom', // If defined, changes the direction in which placement of the element happens
+          strategy: 'nudge' // Determines the "strategy" for alternatively placing the element if it doesn't fit in the defined boundaries.  Only matters when "parent" is a defined setting.
         },
-        placements = ['top', 'left', 'right', 'bottom'],
+        strategies = ['nudge', 'clockwise', 'flip'],
+        placements = ['top', 'left', 'right', 'bottom', 'center'],
         xAlignments = ['left', 'center', 'right'],
         yAlignments = ['top', 'center', 'bottom'],
         settings = $.extend({}, defaults, options);
 
+    // Object that contains coordinates along with temporary, changeable properties.
+    function PlacementObject(placementOptions) {
+      var self = this,
+        possibleSettings = ['x', 'y', 'callback', 'parent', 'parentXAlignment', 'parentYAlignment', 'placement', 'strategy'];
+
+      possibleSettings.forEach(function settingIterator(val) {
+        if (placementOptions[val] === null) {
+          return;
+        }
+
+        if (val === 'x' || val === 'y') {
+          self.setCoordinate(val, placementOptions[val]);
+          self['original' + val] = placementOptions[val];
+          return;
+        }
+
+        self[val] = placementOptions[val];
+      });
+
+      this.modified = false;
+
+      return this.sanitize();
+    }
+
+    PlacementObject.prototype = {
+      isReasonableDefault: function(setting, limits) {
+        return $.inArray(setting, limits) > -1;
+      },
+
+      sanitize: function() {
+        this.callback = (typeof this.callback === 'function') ? this.callback : settings.callback;
+        this.parent = (this.parent instanceof $ && this.parent.length) ? this.parent : settings.parent;
+        this.parentXAlignment = this.isReasonableDefault(this.parentXAlignment, xAlignments) ? this.parentXAlignment : settings.parentXAlignment;
+        this.parentYAlignment = this.isReasonableDefault(this.parentYAlignment, yAlignments) ? this.parentYAlignment : settings.parentYAlignment;
+        this.placement = this.isReasonableDefault(this.placement, placements) ? this.placement : settings.placement;
+        this.strategy = this.isReasonableDefault(this.strategy, strategies) ? this.strategy : settings.strategy;
+      },
+
+      setCoordinate: function(coordinate, value) {
+        var coordinates = ['x', 'y'];
+        if (!this.isReasonableDefault(coordinate, coordinates)) {
+          // TODO: log error?
+          return;
+        }
+
+        if (isNaN(value)) {
+          value = 0;
+        }
+
+        this[coordinate] = parseInt(value, 10);
+      }
+    };
 
     // Plugin Constructor
     function Place(element) {
@@ -73,23 +128,6 @@
           this.originalStyles.width = w;
         }
 
-        // Setup reasonable defaults for some settings, so that weird values can't get in
-        function setReasonableDefaults(setting, limits, preset) {
-          if ($.inArray(setting, limits) === -1) {
-            setting = preset;
-          }
-        }
-
-        var checks = [
-          { setting: this.settings.placement, limits: placements, preset: defaults.placement },
-          { setting: this.settings.parentAlignment[0], limits: xAlignments, preset: defaults.parentAlignment[0] },
-          { setting: this.settings.parentAlignment[1], limits: yAlignments, preset: defaults.parentAlignment[1] }
-        ];
-
-        for (var i = 0; i < checks.length; i++) {
-          setReasonableDefaults(checks[i].setting, checks[i].limits, checks[i].preset);
-        }
-
         return this;
       },
 
@@ -98,7 +136,7 @@
         var self = this;
 
         this.element.on('place.' + pluginName, function placementEventHandler(e, x, y) {
-          self.place(x, y);
+          self.place(new PlacementObject({ x: x, y: y }));
         }).on('updated.' + pluginName, function updatedEventHandler() {
           self.updated();
         });
@@ -107,16 +145,13 @@
       },
 
       // Main placement API Method (external)
-      place: function(x, y) {
-        var parent = this.settings.parent,
-          curr = [
-            this.element.css('left'),
-            this.element.css('top')
-          ];
-
-        if (x == null && y == null) {
-          return curr;
-        }
+      // Can either take a PlacementObject as a single argument, or can take 2 coordinates (x, y) and
+      // will use the pre-defined settings.
+      place: function(placementObj) {
+        var curr = [
+          this.element.css('left'),
+          this.element.css('top')
+        ];
 
         // Cancel placement with return:false; from a "beforeplace" event
         var canBePlaced = this.element.trigger('beforeplace', [curr]);
@@ -124,86 +159,87 @@
           return curr;
         }
 
-        // Sanitize incoming values
-        function setNum(num) {
-          if (isNaN(num)) {
-            num = 0;
-          }
-          return num;
+        if (!(placementObj instanceof PlacementObject)) {
+          placementObj = new PlacementObject(placementObj);
         }
-        x = setNum(parseInt(x, 10));
-        y = setNum(parseInt(y, 10));
+
+        // If no values are defined, simply return the current coordinates with a warning.
+        if (placementObj.x == null && placementObj.y == null) {
+          // TODO: Log a warning about not positioning stuff?
+          return curr;
+        }
 
         // Remove any previous placement styles
         this.clearOldStyles();
 
         // Use different methods if placement against a parent, versus straight-up coordinate placement
-        if (parent && $(parent).length) {
-          return this._placeWithParent($(parent), x, y);
+        if (placementObj.parent) {
+          return this._placeWithParent(placementObj);
         }
 
-        return this._placeWithCoords(x, y);
+        return this._placeWithCoords(placementObj);
       },
 
       // Placement Routine that expects a parent to be used as a base placement marking.
       // In this case, "x" and "y" integers are "relative" adjustments to the original numbers generated by the parent.
       // Can be modified by using a callback in the settings.
-      _placeWithParent: function(parent, x, y) {
-        if (!parent || !parent.length) {
+      _placeWithParent: function(placementObj) {
+        if (!placementObj.parent || !placementObj.parent.length) {
           return [undefined, undefined]; // can't simply return x and y here because they are not coordinates, they are offsets
         }
 
         var self = this,
-          parentRect = parent[0].getBoundingClientRect(),
+          parentRect = placementObj.parent[0].getBoundingClientRect(),
           elRect = this.element[0].getBoundingClientRect();
 
         var coords = (function getCoordsFromPlacement() {
           var cX, cY,
-            p = self.settings.placement,
-            a = self.settings.parentAlignment; // a[0] === xAlignment, a[1] === yAlignment
+            p = placementObj.placement,
+            aX = placementObj.parentXAlignment,
+            aY = placementObj.parentYAlignment;
 
           // Set initial placements
           switch(p) {
             case 'top':
-              cY = parentRect.top - elRect.height - y;
+              cY = parentRect.top - elRect.height - placementObj.y;
               break;
             case 'left':
-              cX = parentRect.left - elRect.width - x;
+              cX = parentRect.left - elRect.width - placementObj.x;
               break;
             case 'right':
-              cX = parentRect.right + x;
+              cX = parentRect.right + placementObj.x;
               break;
             default: // Bottom
-              cY = parentRect.bottom + y;
+              cY = parentRect.bottom + placementObj.y;
               break;
           }
 
           // Set X alignments on bottom/top placements
           if (p === 'top' || p === 'bottom') {
-            switch(a[0]) {
+            switch(aX) {
               case 'left':
-                cX = parentRect.left - x;
+                cX = parentRect.left - placementObj.x;
                 break;
               case 'right':
-                cX = (parentRect.right - elRect.width) + x;
+                cX = (parentRect.right - elRect.width) + placementObj.x;
                 break;
               default: // center
-                cX = (parentRect.left + ((parentRect.width - elRect.width) / 2)) + x;
+                cX = (parentRect.left + ((parentRect.width - elRect.width) / 2)) + placementObj.x;
                 break;
             }
           }
 
           // Set Y alignments on left/right placements
           if (p === 'right' || p === 'left') {
-            switch(a[1]) {
+            switch(aY) {
               case 'top':
-                cY = parentRect.top - y;
+                cY = parentRect.top - placementObj.y;
                 break;
               case 'bottom':
-                cY = (parentRect.bottom - elRect.height) + y;
+                cY = (parentRect.bottom - elRect.height) + placementObj.y;
                 break;
               default: // center
-                cY = (parentRect.top + ((parentRect.height - elRect.height) / 2)) + y;
+                cY = (parentRect.top + ((parentRect.height - elRect.height) / 2)) + placementObj.y;
                 break;
             }
           }
@@ -211,57 +247,72 @@
           return [cX, cY];
         })();
 
-        coords = this._handlePlacementCallback(coords[0], coords[1]);
+        placementObj.setCoordinate('x', coords[0]);
+        placementObj.setCoordinate('y', coords[1]);
+        placementObj = this._handlePlacementCallback(placementObj);
 
         // Simple placement logic
         this.element.offset({
-          'left': coords[0],
-          'top': coords[1]
+          'left': placementObj.x,
+          'top': placementObj.y
         });
 
-        coords = this._fixBleeding(coords[0], coords[1]);
+        placementObj = this._fixBleeding(placementObj);
 
-        this.element.trigger('afterplace', [coords]);
+        // If the item has bled out over the edge, and we're not ready to give up,
+        // try changing the placement strategy.  This won't happen for "nudge", only for the
+        // alternate types.
+        if (!placementObj.giveup && placementObj.strategy !== 'nudge' && placementObj.fixedBleeding) {
+          return this._changePlacementStrategy(placementObj);
+        }
 
-        return coords;
+        this.element.trigger('afterplace', [
+          placementObj
+        ]);
+
+        return placementObj;
       },
 
       // Basic Placement Routine that simply accepts X and Y coordinates.
       // In this case, "x" and "y" integers are "absolute" and will be the base point for placement.
       // Can be modified by using a callback in the settings.
-      _placeWithCoords: function(x, y) {
-        var coords = this._handlePlacementCallback(x, y);
+      _placeWithCoords: function(placementObj) {
+        placementObj = this._handlePlacementCallback(placementObj);
 
         // Simple placement logic
         this.element.offset({
-          'left': coords[0],
-          'top': coords[1]
+          'left': placementObj.x,
+          'top': placementObj.y
         });
 
-        coords = this._fixBleeding(coords[0], coords[1]);
+        placementObj = this._fixBleeding(placementObj);
 
-        this.element.trigger('afterplace', [coords]);
+        this.element.trigger('afterplace', [
+          placementObj
+        ]);
 
-        return coords;
+        return placementObj;
       },
 
       // Perform callback, if it exists
       // Callback should return an array containing the modified coordinate values: [x, y];
       // NOTE: These are actual coordinates in all cases.  They are not relative values - they are absolute
-      _handlePlacementCallback: function(x, y) {
-        var cb = this.settings.callback,
-          coords = [x, y];
+      _handlePlacementCallback: function(placementObj) {
+        var cb = placementObj.callback || this.settings.callback,
+          coords = [placementObj.x, placementObj.y];
 
         if (cb && typeof cb === 'function') {
-          coords = cb(x, y);
+          coords = cb(coords[0], coords[1]);
         }
 
-        return coords;
+        placementObj.setCoordinate('x', coords[0]);
+        placementObj.setCoordinate('y', coords[1]);
+        return placementObj;
       },
 
       // Re-adjust a previously-placed element to account for bleeding off the edges.
       // Element must fit within the boundaries of the page or it's current scrollable pane.
-      _fixBleeding: function(x, y) {
+      _fixBleeding: function(placementObj) {
         var parentContainer = document.documentElement || document.body.parentNode,
           rect = this.element[0].getBoundingClientRect(),
           windowH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
@@ -294,26 +345,111 @@
             offBottomEdge = rect.bottom > windowH - scrollY,
             offTopEdge = rect.top < 0 - scrollY; // 0 === top edge of viewport
 
+        // Keep a record of whether or not the bleeding needed to be fixed.
+        placementObj.fixedBleeding = offRightEdge || offLeftEdge || offBottomEdge || offTopEdge || null;
+
         // Bump element around a bit in each direction, if necessary
         if (offRightEdge) {
-          x = x - (rect.right - windowW - scrollX);
+          placementObj.setCoordinate('x', placementObj.x - (rect.right - windowW - scrollX));
         }
         if (offLeftEdge) {
-          x = x + -(rect.left - scrollX);
+          placementObj.setCoordinate('x', placementObj.x + -(rect.left - scrollX));
         }
         if (offBottomEdge) {
-          y = y - (rect.bottom - windowH - scrollY);
+          placementObj.setCoordinate('y', placementObj.y - (rect.bottom - windowH - scrollY));
         }
         if (offTopEdge) {
-          y = y + -(rect.top - scrollY);
+          placementObj.setCoordinate('y', placementObj.y + -(rect.top - scrollY));
         }
 
         this.element.offset({
-          'left': x,
-          'top': y
+          'left': placementObj.x,
+          'top': placementObj.y
         });
 
-        return [x, y];
+        return placementObj;
+      },
+
+      // At this point in the positioning loop, if we need to try flipping in a different direction,
+      // Do so and retry the positioning algorithm;
+      _changePlacementStrategy: function(placementObj) {
+        placementObj.fixedBleeding = null;
+        placementObj.modified = true;
+        placementObj.tried = placementObj.tried || [];
+
+        placementObj.tried.push(placementObj.placement);
+
+        var self = this;
+
+        function tried(placement) {
+          return $.inArray(placement, placementObj.tried) > -1;
+        }
+
+        function giveup() {
+          placementObj.giveup = true;
+          placementObj.strategy = self.settings.strategy;
+          placementObj.placement = self.settings.placement;
+        }
+
+        function flip() {
+          var p;
+
+          // If we've tried everything, give up and use the defaults.
+          if (placementObj.tried.length > 3) {
+            giveup();
+            return;
+          }
+
+          function performFlip(newDir, perpendicularDir) {
+            if (!tried(newDir)) {
+              p = newDir;
+              return;
+            }
+
+            // switch the coordinate definitions
+            // since the axis for placement is flipped, our coordinate offsets should also flip
+            var tmp = placementObj.originalx;
+            placementObj.originalx = placementObj.originaly;
+            placementObj.originaly = tmp;
+
+            p = perpendicularDir;
+          }
+
+          switch(placementObj.placement) {
+            case 'left':
+              performFlip('right', 'top');
+              break;
+            case 'right':
+              performFlip('left', 'top');
+              break;
+            case 'top':
+              performFlip('bottom', 'left');
+              break;
+            default: // bottom
+              performFlip('top', 'left');
+              break;
+          }
+          placementObj.placement = p;
+        }
+
+        function clockwise() {
+          // TODO: Write clockwise strategy if we need it.
+          // for now, give up immediately.
+          giveup();
+        }
+
+        if (placementObj.strategy === 'flip') {
+          flip();
+        }
+        if (placementObj.strategy === 'clockwise') {
+          clockwise();
+        }
+
+        // Reset the original coordinates
+        placementObj.setCoordinate('x', placementObj.originalx);
+        placementObj.setCoordinate('y', placementObj.originaly);
+
+        return this.place(placementObj);
       },
 
       // Clears the old styles that may be present

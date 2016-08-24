@@ -46,12 +46,15 @@
       var x = $('#coords-x').val(),
         y = $('#coords-y').val();
 
-      api.place(x, y);
+      api.place({
+        x: x,
+        y: y
+      });
     });
 
-    el.on('afterplace', function(e, coords) {
+    el.on('afterplace', function(e, placementObj) {
       if (console) {
-        console.log('#' + el.attr('id') + '\'s new coordinates: X=' + coords[0] + ' Y=' + coords[1]);
+        console.log('#' + el.attr('id') + '\'s new coordinates: X=' + placementObj.x + ' Y=' + placementObj.y);
       }
     });
   });

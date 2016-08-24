@@ -20,12 +20,21 @@
       </div>
 
       <div class="field">
-        <label for="placement">Placement</label>
+        <label for="placement">Placement Direction</label>
         <select id="placement" class="dropdown">
           <option value="bottom" selected>Bottom</option>
           <option value="top">Top</option>
           <option value="left">Left</option>
           <option value="right">Right</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="strategy">Placement Strategy</label>
+        <select id="strategy" class="dropdown">
+          <option value="nudge" selected>Nudge</option>
+          <option value="flip">Flip</option>
+          <option value="clockwise">Clockwise</option>
         </select>
       </div>
 
@@ -103,15 +112,18 @@
       var x = $('#offset-x').val(),
         y = $('#offset-y').val(),
         placement = $('#placement').val(),
+        strategy = $('#strategy').val(),
         xAlignment = $('#x-alignment').val(),
         yAlignment = $('#y-alignment').val();
 
-      el.place({
+      api.place({
+        x: x,
+        y: y,
         placement: placement,
-        parentAlignment: [xAlignment, yAlignment]
+        strategy: strategy,
+        parentXAlignment: xAlignment,
+        parentYAlignment: yAlignment
       });
-
-      api.place(x, y);
     }).on('reset.test', function() {
       setTimeout(function valueReset() {
         $('#offset-x').val(0);
@@ -119,13 +131,20 @@
       }, 0);
     });
 
-    el.on('afterplace.test', function(e, coords) {
+    el.on('afterplace.test', function(e, placementObj) {
       if (console) {
-        console.log('#' + el.attr('id') + '\'s new offsets: X=' + coords[0] + ' Y=' + coords[1] + ' Placement="' + api.settings.placement + '"');
+        console.log('#' + el.attr('id') + '\'s new offsets: X=' + placementObj.x + ' Y=' + placementObj.y + ' Placement="' + placementObj.placement + '"');
       }
     });
 
     // Use the default settings and do some placement to start
-    api.place( $('#offset-x').val(), $('#offset-y').val() );
+    api.place({
+      x: $('#offset-x').val(),
+      y: $('#offset-y').val(),
+      placement: $('#placement').val(),
+      strategy: $('#strategy').val(),
+      parentXAlignment: $('#x-alignment').val(),
+      parentYAlignment: $('#y-alignment').val()
+    });
   });
 </script>
