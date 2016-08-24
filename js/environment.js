@@ -224,8 +224,6 @@
       }
 
       var attr = $('[data-svg-path]').attr('data-svg-path');
-      console.log('1', attr);
-
       if (attr) {
         window.Soho.svgPath = attr;
       }
