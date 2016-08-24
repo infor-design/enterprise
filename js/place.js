@@ -72,6 +72,7 @@
 
       sanitize: function() {
         this.callback = (typeof this.callback === 'function') ? this.callback : settings.callback;
+        this.container = (this.container instanceof $ && this.container.length) ? this.container : settings.container;
         this.parent = (this.parent instanceof $ && this.parent.length) ? this.parent : settings.parent;
         this.parentXAlignment = this.isReasonableDefault(this.parentXAlignment, xAlignments) ? this.parentXAlignment : settings.parentXAlignment;
         this.parentYAlignment = this.isReasonableDefault(this.parentYAlignment, yAlignments) ? this.parentYAlignment : settings.parentYAlignment;
@@ -330,7 +331,7 @@
       // Re-adjust a previously-placed element to account for bleeding off the edges.
       // Element must fit within the boundaries of the page or it's current scrollable pane.
       _fixBleeding: function(placementObj) {
-        var parentContainer = document.documentElement || document.body.parentNode,
+        var parentContainer = placementObj.container ? placementObj.container : (document.documentElement || document.body.parentNode),
           rect = this.element[0].getBoundingClientRect(),
           windowH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
           windowW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
