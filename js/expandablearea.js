@@ -155,7 +155,8 @@
       },
 
       toggleExpanded: function() {
-        if (this.header.attr('aria-expanded') === 'true') {
+        // if (this.header.attr('aria-expanded') === 'true') {
+        if (this.element.is('.is-expanded')) {
           this.close();
         } else {
           this.open();
