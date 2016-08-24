@@ -188,8 +188,7 @@
           return [undefined, undefined]; // can't simply return x and y here because they are not coordinates, they are offsets
         }
 
-        var self = this,
-          parentRect = placementObj.parent[0].getBoundingClientRect(),
+        var parentRect = placementObj.parent[0].getBoundingClientRect(),
           elRect = this.element[0].getBoundingClientRect();
 
         var coords = (function getCoordsFromPlacement() {
