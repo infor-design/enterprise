@@ -59,10 +59,10 @@
   $.detectBaseTag = function detectBaseTag() {
     var base = $('base[href]');
     if (base.length) {
-      window.soho.base = new Base(base);
+      window.Soho.base = new Base(base);
 
       // override the "getBaseURL"
-      $.getBaseURL = window.soho.base.getBaseURL.bind(window.soho.base);
+      $.getBaseURL = window.Soho.base.getBaseURL.bind(window.Soho.base);
     }
   };
 

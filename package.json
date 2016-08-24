@@ -28,8 +28,7 @@
   "main": "sohoxi.js",
   "dependencies": {
     "d3": "^3.4.6",
-    "jquery": "^3.1.0",
-    "svg4everybody": "^2.1.0"
+    "jquery": "^3.1.0"
   },
   "devDependencies": {
     "chai": "^1.10.0",

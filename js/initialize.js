@@ -44,115 +44,16 @@
     // Plugin Methods
     Initialize.prototype = {
       init: function() {
-        this
-          .setupEnvironment()
-          .addBrowserClasses()
-          .polyfillSVG()
-          .handleInit()
-          .addGlobalResize();
-      },
-
-      setupEnvironment: function() {
-        window.soho = window.soho || {};
-
-        if (!window.soho.base) {
-          $.detectBaseTag();
-        }
-
-        return this;
-      },
-
-      // Global Classes for browser, version and device as needed.
-      addBrowserClasses: function() {
-        var ua = navigator.userAgent || navigator.vendor || window.opera,
-          html = $('html'); // User-agent string
-
-        if (ua.indexOf('Safari')  !== -1 &&
-            ua.indexOf('Chrome')  === -1 &&
-            ua.indexOf('Android') === -1) {
-          html.addClass('is-safari');
-        }
-
-        if (ua.indexOf('Mac OS X') !== -1) {
-          html.addClass('is-mac');
-        }
-
-        if (ua.indexOf('Firefox') > 0) {
-          html.addClass('is-firefox');
-        }
-
-        //Class-based detection for IE
-        if (ua.match(/Edge\//)) {
-          html.addClass('ie ie-edge');
-        }
-        if (ua.match(/Trident/)) {
-          html.addClass('ie');
-        }
-        if (navigator.appVersion.indexOf('MSIE 8.0') > -1 ||
-          ua.indexOf('MSIE 8.0') > -1 ||
-          document.documentMode === 8) {
-          html.addClass('ie8');
-        }
-        if (navigator.appVersion.indexOf('MSIE 9.0') > -1) {
-          html.addClass('ie9');
-        }
-        if (navigator.appVersion.indexOf('MSIE 10.0') > -1) {
-          html.addClass('ie10');
-        } else {
-          if (ua.match(/Trident\/7\./)) {
-            html.addClass('ie11');
-          }
-        }
-
-        // Class-based detection for iOS
-        // /iPhone|iPod|iPad|Silk|Android|BlackBerry|Opera Mini|IEMobile/
-        if ((/iPhone|iPod|iPad/).test(ua)) {
-          html.addClass('ios');
-
-          var iDevices = ['iPod', 'iPad', 'iPhone'];
-          for (var i = 0; i < iDevices.length; i++) {
-            if (new RegExp(iDevices[i]).test(ua)) {
-              html.addClass(iDevices[i].toLowerCase());
-            }
-          }
-        }
-
-        if ((/Android/.test(ua))) {
-          html.addClass('android');
-        }
-
-        return this;
-      },
-
-      polyfillSVG: function() {
-        var html = $('html');
-        if (html.hasClass('ie') || html.hasClass('edge')) {
-          svg4everybody();
-        }
-
-        return this;
-      },
-
-      //Initialize after setting the locale
-      handleInit: function () {
         var self = this;
 
         Locale.set(this.settings.locale).done(function () {
           self.initAll();
         });
+
         return this;
       },
 
       initAll : function () {
-        /*
-        this.element.find('use').each(function () {
-          var url = this.getAttribute('xlink:href');
-
-          if (url && url.charAt(0) === '#') {
-            this.setAttribute('xlink:href', $.getBaseURL(url));
-          }
-        });
-        */
 
         // Iterate all objects we are initializing
         this.element.filter(':not(.no-init)').each(function() {
@@ -498,15 +399,6 @@
         // "initialized" event from bubbling up the DOM.  It should be possible to initialize just the contents
         // of an element on the page without causing the entire page to re-initialize.
         this.element.triggerHandler('initialized');
-
-        return this;
-      },
-
-      // Setup a global resize event trigger for controls to listen to
-      addGlobalResize: function() {
-        $(window).on('resize', function() {
-          $('body').triggerHandler('resize', [window]);
-        });
 
         return this;
       }

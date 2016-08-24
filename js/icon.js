@@ -97,7 +97,6 @@
           this.settings.iconFileLocation = xlinkHref.substring(0, xlinkHref.indexOf('#'));
           xlinkHref = xlinkHref.substring(xlinkHref.indexOf('#'), xlinkHref.length);
         }
-
         this.settings.use = xlinkHref.replace('#icon-', '');
 
         return this;
@@ -154,12 +153,14 @@
     'use strict';
 
     function normalizeIconOptions(options) {
+      //Recheck for backwards compatibility
+      var inlineSvg = $('.svg-icons > .svg-icons').length > 0;
+
       var defaults = {
-        file: '/svg/icons.svg',
+        file: inlineSvg ? '' : window.Soho.svgPath + 'icons.svg',
         icon: 'user-profile', // omit the "icon-" if you want; this code strips it out.
         classes: ['icon']
       };
-
       options = options || $.extend({}, defaults);
 
       if (typeof options === 'string') {

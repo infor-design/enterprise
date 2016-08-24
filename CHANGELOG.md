@@ -2,6 +2,9 @@
 Release Date: TBD
 
 ### Key New
+
+* Datagrid Filter Row
+* Datagrid Tree
 * Bubble Chart
 * Positive/Negative Chart
 * Datagrid Export to XLS
@@ -11,7 +14,6 @@ Release Date: TBD
 * Property Sheet pattern
 * Tree - Ability to add nodes with Ajax
 * Splitter - Added keyboard/Aria
-* Datagrid Filter Row
 * External SVG Files for icons.
 
 ### Breaking Changes
