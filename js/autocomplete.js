@@ -24,7 +24,6 @@
     var pluginName = 'autocomplete',
       defaults = {
         source: [], //Defines the data to use, must be specified.
-        tags: false, //Allows tags to be shown/generated.
         template: undefined, // If defined, use this to draw the contents of each search result instead of the default draw routine.
         filterMode: 'startsWith',  // startsWith and contains Supported
         delay: 300, // delay is the delay between key strokes on the keypad before it thinks you stopped typing
@@ -62,11 +61,10 @@
       },
 
       addMarkup: function () {
-        this.element.addClass('autocomplete').attr('role', 'combobox')
-          .attr('autocomplete', 'off')
-          .attr('aria-owns', 'autocomplete-list')
-          .attr('aria-autocomplete', 'list')
-          .attr('aria-activedescendant', '');
+        this.element.addClass('autocomplete').attr({
+          'role': 'combobox',
+          'autocomplete': 'off'
+        });
       },
 
       openList: function (term, items) {
@@ -96,14 +94,10 @@
         // Try to get an element first, and use its contents.
         // If the string provided isn't a selector, attempt to use it as a string, or fall back to the default template.
         var templateAttr = $(this.element.attr('data-tmpl'));
-        this.tmpl = $(templateAttr).length ?
-          $(templateAttr).text() :
-          typeof templateAttr === 'string' ?
-          templateAttr :
-          $(this.settings.template).length ?
-          $(this.settings.template).text() :
-          typeof this.settings.template === 'string' ?
-          this.settings.template :
+        this.tmpl = $(templateAttr).length ? $(templateAttr).text() :
+          typeof templateAttr === 'string' ? templateAttr :
+          $(this.settings.template).length ? $(this.settings.template).text() :
+          typeof this.settings.template === 'string' ? this.settings.template :
           resultTemplate;
 
         for (var i = 0; i < items.length; i++) {
@@ -236,6 +230,16 @@
         if (this.settings.offset && this.settings.offset.top) {
           this.list.parent().css('top', parseInt(this.list.parent().css('top')) + this.settings.offset.top + 'px');
         }
+
+        // As chars are typed into the edit field, nothing was announced to indicate
+        // that a value has been suggested, for the non-sighted user an offscreen span
+        // added and will remove soon popup close that includes aria-live="polite"
+        // which have the first suggested item automatically announced when it
+        // appears without moving focus.
+        self.list.parent('.popupmenu-wrapper').append(''+
+          '<span id="ac-is-arialive" aria-live="polite" class="audible">'+
+            $.trim(this.list.find('>li:first-child').text()) +
+          '</span>');
 
         this.noSelect = true;
         this.element.trigger('listopen', [items]);
