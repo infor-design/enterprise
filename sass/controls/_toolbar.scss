@@ -298,7 +298,13 @@ $toolbar-buttonset-height: 40px;
       padding: 0 10px;
 
       > .icon {
-        fill: $contextual-toolbar-button-color;
+        // scss-lint:disable ImportantRule
+        fill: $contextual-toolbar-button-color !important;
+        // scss-lint:enable ImportantRule
+      }
+
+      &.btn-actions {
+        margin-top: 0;
       }
 
       &:focus {
