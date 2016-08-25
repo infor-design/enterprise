@@ -58,12 +58,13 @@
 
         if (this.element.hasClass('icon-favorite')) {
           this.element.on('click.button', function() {
-            var use = $(this).find('use');
+            var use = $(this).find('use'),
+              attr = use.attr('xlink:href');
 
-            if (use.attr('xlink:href') === '#icon-star-outlined') {
-              use.attr('xlink:href', '#icon-star-filled');
+            if (attr.indexOf('star-outlined') > -1) {
+              use.attr('xlink:href', $.createIconPath({icon: 'star-filled'}));
             } else {
-              use.attr('xlink:href', '#icon-star-outlined');
+              use.attr('xlink:href', $.createIconPath({icon: 'star-outlined'}));
             }
 
           });

@@ -156,6 +156,10 @@
       //Recheck for backwards compatibility
       var inlineSvg = $('.svg-icons > .svg-icons').length > 0;
 
+      if (options.file && options.file.indexOf('/','') -1 ) {
+        options.file = window.Soho.svgPath + options.file;
+      }
+
       var defaults = {
         file: inlineSvg ? '' : window.Soho.svgPath + 'icons.svg',
         icon: 'user-profile', // omit the "icon-" if you want; this code strips it out.
@@ -202,6 +206,12 @@
     // Returns a jQuery-wrapped element containing a new icon
     $.createIconElement = function createIconElement(options) {
       return $($.createIcon(options));
+    };
+
+    // Returns just the path part
+    $.createIconPath = function createIconElement(options) {
+      options = normalizeIconOptions(options);
+      return options.file + $.getBaseURL('#icon-' + options.icon.replace('icon-',''));
     };
 
   })();

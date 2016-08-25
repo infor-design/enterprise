@@ -115,23 +115,25 @@
 
         //Inject Icons
         var text = a.text();
+
         a.text('');
         if (a.children('svg').length === 0) {
-          a.prepend('<svg class="icon icon-tree" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-tree-node"></use></svg>');
+          a.prepend($.createIcon({ icon: 'tree-node', classes: ['icon-tree'] }));
         }
 
         a.append('<span class="tree-text">' + text + '</span>');
 
         if (a.is('[class^="icon"]')) {
-          a.find('use').attr('xlink:href','#'+ a.attr('class'));
+          //createIconPath
+          this.setTreeIcon(a.find('use'), a.attr('class'));
         }
 
         if (subNode.is('ul')) {
           subNode.attr('role', 'group').parent().addClass('folder');
-          a.find('use').attr('xlink:href', subNode.hasClass('is-open') ? '#icon-open-folder' : '#icon-closed-folder');
+          this.setTreeIcon(a.find('use'), subNode.hasClass('is-open') ? 'open-folder' : 'closed-folder' );
 
           if (a.is('[class^="icon"]')) {
-            a.find('use').attr('xlink:href', subNode.hasClass('is-open') ? '#' + a.attr('class') : '#' + a.attr('class').replace('open', 'closed'));
+            this.setTreeIcon(a.find('use'), subNode.hasClass('is-open') ?  a.attr('class') : a.attr('class').replace('open', 'closed') );
           }
         }
 
@@ -139,16 +141,29 @@
         a.hideFocus();
       },
 
+      setTreeIcon: function(use, icon) {
+        var iconStr = icon.replace('icon-',''),
+          file = 'icons.svg';
+
+        if (iconStr.match('jpg|mp3|gif|msg|pdf|png|ppt|prj|psd|pub|rar|tif|vis|xls')) {
+          file = 'icons-extended.svg';
+        }
+
+        use.attr('xlink:href', $.createIconPath({ icon: iconStr, file: file}));
+      },
+
       //Expand all Parents
       expandAll: function(nodes) {
+        var self = this;
+
         nodes = nodes || this.element.find('ul[role=group]');
         nodes.each(function () {
           var node = $(this);
           node.addClass('is-open');
-          node.prev('a').find('svg use').attr('xlink:href', '#icon-open-folder');
+          self.setTreeIcon(node.prev('a').find('svg use'), 'open-folder');
 
           if (node.prev('a').is('[class^="icon"]')) {
-            node.prev('svg use').find('use').attr('xlink:href', '#' + node.prev('a').attr('class'));
+            self.setTreeIcon(node.prev('svg use').find('use'), node.prev('a').attr('class'));
           }
 
         });
@@ -156,18 +171,19 @@
 
       //Collapse all Parents
       collapseAll: function () {
-        var nodes = this.element.find('ul[role=group]');
+        var nodes = this.element.find('ul[role=group]'), self = this;
+
         nodes.each(function () {
           var node = $(this);
           node.removeClass('is-open');
-          node.prev('a').find('svg use').attr('xlink:href', '#icon-closed-folder');
+          self.setTreeIcon(node.prev('a').find('svg use'), 'closed-folder');
 
           if (node.prev('a').is('[class^="icon"]')) {
-            node.prev('a').find('svg use').attr('xlink:href', '#' + node.prev('a').attr('class').replace('open', 'closed').replace(' hide-focus', ''));
+            self.setTreeIcon(node.prev('a').find('svg use'), node.prev('a').attr('class').replace('open', 'closed').replace(' hide-focus', '') );
           }
 
           if (node.prev('a').is('[class^="icon"]')) {
-            node.prev('svg use').find('use').attr('xlink:href', '#' + node.prev('a').attr('class').replace('open', 'closed'));
+            self.setTreeIcon(node.prev('svg use').find('use'), node.prev('a').attr('class').replace('open', 'closed'));
           }
 
         });
@@ -255,11 +271,13 @@
 
         if (next.is('ul[role="group"]')) {
           if (next.hasClass('is-open')) {
-            node.closest('.folder').removeClass('is-open').end()
-              .find('use').attr('xlink:href', '#icon-closed-folder');
+
+            self.setTreeIcon(node.closest('.folder').removeClass('is-open').end().find('use'),
+                'closed-folder');
 
             if (node.closest('.folder a').is('[class^="icon"]')) {
-              node.closest('.folder a').find('use').attr('xlink:href', '#' + node.closest('.folder a').attr('class').replace('open', 'closed').replace(' hide-focus', ''));
+              self.setTreeIcon(node.closest('.folder a').find('use'),
+                node.closest('.folder a').attr('class').replace('open', 'closed').replace(' hide-focus', ''));
             }
 
             self.isAnimating = true;
@@ -308,11 +326,10 @@
       openNode: function(next, node) {
         var self = this;
 
-        node.closest('.folder').addClass('is-open').end()
-            .find('use').attr('xlink:href', '#icon-open-folder');
+        self.setTreeIcon(node.closest('.folder').addClass('is-open').end().find('use'), 'open-folder');
 
         if (node.is('[class^="icon"]')) {
-          node.find('use').attr('xlink:href', '#' + node.attr('class').replace(' hide-focus', ''));
+          self.setTreeIcon(node.find('use'), node.attr('class').replace(' hide-focus', ''));
         }
 
         self.isAnimating = true;
@@ -821,7 +838,7 @@
         }
 
         if (nodeData.icon) {
-          elem.node.find('use').first().attr('xlink:href','#'+ nodeData.icon);
+          this.setTreeIcon(elem.node.find('use').first(), nodeData.icon);
           elem.icon = nodeData.icon;
         }
 
