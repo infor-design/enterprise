@@ -39,13 +39,16 @@
       init: function() {
         var self = this;
         self.update();
-        this.element.on('updated.progress', function () {
+
+        this.element.off('updated.progress').on('updated.progress', function (e) {
+          e.stopPropagation();
           self.update();
         });
       },
 
       updateAria: function (value) {
         this.element.attr({'role': 'progressbar', 'aria-valuenow': value, 'aria-maxvalue':'100'});
+
         var container = this.element.parent();
         if (container.data('tooltip')) {
           container.data('tooltip').content = value + '%';
@@ -55,17 +58,14 @@
       },
 
       update: function (value) {
-        var perc = this.element.attr('data-value'),
-          animationLength = this.settings.animationLength;
+
+        var perc = this.element.attr('data-value');
 
         if (value) {
           perc = value;
         }
 
-        this.element.stop().animate({
-            width: perc + '%'
-        }, animationLength);
-
+        this.element.css('width', perc + '%');
         this.updateAria(perc);
       },
 

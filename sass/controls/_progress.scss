@@ -12,6 +12,7 @@
   width: 100%;
 
   .progress-bar {
+    @include transition(width 300ms cubic-bezier(.17, .04, .03, .94));
     background: $progress-bar-bg-color;
     border-radius: 4px;
     height: 6px;

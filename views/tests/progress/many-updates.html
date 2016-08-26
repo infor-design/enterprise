@@ -11,10 +11,18 @@
   </div>
 
   <script>
-
     $('#upd-progressbar').on('click', function () {
       $('#progress-bar1').attr('data-value', '100').trigger('updated');
     });
+
+
+    var cnt = 1;
+    setInterval(function ( ) {
+      cnt++;
+      $('#progress-bar1').attr('data-value', cnt).trigger('updated');
+      if (cnt === 100)
+        cnt = 0
+    }, 100);
 
   </script>
 
