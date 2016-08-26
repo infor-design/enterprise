@@ -582,7 +582,7 @@
       // Close the calendar in a popup
       closeCalendar: function () {
         // Close timepicker
-        if (this.settings.showTime && this.timepickerControl.isOpen()) {
+        if (this.settings.showTime && this.timepickerControl && this.timepickerControl.isOpen()) {
           this.timepickerControl.closeTimePopup();
         }
 
