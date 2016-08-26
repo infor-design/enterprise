@@ -1579,7 +1579,6 @@ $.fn.datagrid = function(options) {
         }
 
         op = isDropdown ? 'equals' : svg.getIconName().replace('filter-', '');
-        console.log(op);
 
         if (op === 'selected-notselected') {
           return;

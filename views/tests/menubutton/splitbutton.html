@@ -8,14 +8,21 @@
 
 <style>
   .btn-split-menu + .separator + .btn-split-menu {
-    margin-left: -8px;
-    width: 32px;
+    margin-left: -3px;
+    min-width: 20px;
+    width: 20px;
+  }
+
+  .btn-split-menu + .separator + .btn-split-menu .icon {
+    margin-left: -7px;
+  }
+
+  .btn-split-menu:focus + .separator {
+    opacity: 0;
   }
 
   .btn-split-menu + .separator {
-    height: 16px !important;
-    margin: 1px 10px 0 !important;
-    top: 11px !important;
+    margin: 3px 3px 0 !important;
   }
 
   .btn-split-menu.btn {

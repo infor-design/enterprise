@@ -488,8 +488,8 @@
         }
 
         this.list.addClass('search-mode');
-        this.list.find('.icon').attr('class', 'icon search') // needs to be 'attr' here because .addClass() doesn't work with SVG
-          .children('use').attr('xlink:href', $.getBaseURL('#icon-search'));
+        this.list.find('.icon').attr('class', 'icon search').changeIcon('search');
+
         this.listUl.find('li').hide();
         this.searchInput.removeAttr('aria-activedescendant');
 
@@ -522,14 +522,6 @@
           }
         });
 
-        // Set ARIA-activedescendant to the first search term
-        /*
-        var topItem = this.listUl.find('.dropdown-option').not(':hidden').eq(0);
-        if (topItem.length) {
-          this.highlightOption(topItem);
-        }
-        */
-
         term = '';
 
         //Adjust height / top position
@@ -541,11 +533,11 @@
       // Removes filtering from an open Dropdown list and turns off "search mode"
       resetList: function() {
         var cssClass = 'icon' + (this.isMobile() ? ' close' : ''),
-          icon = $.getBaseURL(this.isMobile() ? '#icon-close' : '#icon-dropdown');
+          icon = $.getBaseURL(this.isMobile() ? 'close' : 'dropdown');
 
         this.list.removeClass('search-mode');
         this.list.find('.icon').attr('class', cssClass) // needs to be 'attr' here because .addClass() doesn't work with SVG
-          .children('use').attr('xlink:href', icon);
+          .changeIcon(icon);
 
         function stripHtml(obj) {
           if (!obj[0]) {

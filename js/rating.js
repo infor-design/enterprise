@@ -68,14 +68,14 @@
           }
 
           //Handle Half Star
-          input.next(svgSelector).find('use').attr('xlink:href', $.createIconPath({icon: 'star-filled'}));
+          input.next(svgSelector).find('svg').changeIcon('star-filled');
 
           if (i+1 === chkIdx) {
             input.prop('checked', true);
           }
 
           if (chkIdx !== self.currentValue && i+1 === chkIdx) {
-           input.addClass('is-half').next(svgSelector).find('use').attr('xlink:href', $.createIconPath({icon: 'star-half'}));
+           input.addClass('is-half').next(svgSelector).find('svg').changeIcon('star-half');
           }
         }
         if (chkIdx <= 0) {

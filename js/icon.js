@@ -140,10 +140,7 @@
     // Initialize the plugin (Once)
     return this.each(function() {
         var instance = $.data(this, pluginName);
-      if (instance) {
-        instance.settings = $.extend({}, instance.settings, options);
-        instance.updated();
-      } else {
+      if (!instance) {
         instance = $.data(this, pluginName, new Icon(this, settings));
       }
     });
@@ -236,10 +233,6 @@
     $.fn.getIconName = function() {
       var svg = $(this),
           use = svg.find('use');
-
-      if (svg.length === 0) {
-        return '';
-      }
 
       if (use.length === 1) {
         return use.attr('xlink:href').substr(use.attr('xlink:href').indexOf('#icon-')+6);

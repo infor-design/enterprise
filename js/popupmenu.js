@@ -417,7 +417,7 @@
           var isPicker = (self.settings.menu === 'colorpicker-menu'),
             isAutocomplete = self.element.is('.autocomplete');
 
-          //Left Close Submenu
+          // Close Submenu
           if (key === 37 && !isAutocomplete) {
             e.stopPropagation();
             e.preventDefault();
@@ -608,13 +608,13 @@
           wrapper.find('div.arrow').css({'left': '20px'});
 
           if (this.element.closest('.buttonset').length > 0 ) {
-            wrapper.find('div.arrow').css({'left': this.element.width() -2 + 'px'});
+            wrapper.find('div.arrow').css({'left': Math.max(this.element.width() -2, 7) + 'px'});
           }
 
           if (wrapper.offset().left < 0) {
             wrapper.css('left', '10px');
             var arrowPos = this.element.outerWidth() + this.element.offset().left - 27;
-            wrapper.find('div.arrow').css('left', arrowPos);
+            wrapper.find('div.arrow').css('left', Math.max(arrowPos, 7));
           }
 
         }
