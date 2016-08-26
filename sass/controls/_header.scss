@@ -56,17 +56,10 @@ $header-height: 60px;
   }
 
   .page-title {
-    @include font-size(15);
+    @include font-size(18);
     color: $header-text-color;
     display: block;
-
-    + .section-title {
-      @include font-size(20);
-      color: $header-text-color;
-      display: block;
-      padding: 0;
-      text-transform: capitalize;
-    }
+    margin-top: 3px;
 
     .alert .icon {
       line-height: inherit;
@@ -74,6 +67,15 @@ $header-height: 60px;
       position: absolute;
       top: -3px;
     }
+  }
+
+  .section-title {
+    @include font-size(14);
+    color: $header-text-color;
+    display: block;
+    margin-top: 2px;
+    padding: 0;
+    text-transform: capitalize;
   }
 
   .hamburger-menu + h {
