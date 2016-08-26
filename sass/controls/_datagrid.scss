@@ -364,7 +364,7 @@ $datagrid-short-row-height: 30px;
       max-height: 22px;
       max-width: calc(100% - 20px);
       position: relative;
-      top: -10px;
+      top: -9px;
       width: calc(100% - 20px);
 
       input {
@@ -448,13 +448,15 @@ $datagrid-short-row-height: 30px;
         background-color: transparent;
         display: inline;
         left: 13px;
+        vertical-align: top;
         width: calc(100% - 44px);
 
         .icon {
           height: 16px;
           // scss-lint:disable ImportantRule
-          top: -3px !important;
+          top: -1px !important;
           // scss-lint:enable ImportantRule
+          vertical-align: top;
           width: 16px;
         }
 
@@ -486,6 +488,7 @@ $datagrid-short-row-height: 30px;
         height: 21px;
         left: 15px;
         min-width: 34px;
+        padding-top: 3px;
         top: 1px;
         vertical-align: top;
         width: 34px;
@@ -505,6 +508,7 @@ $datagrid-short-row-height: 30px;
           height: 14px;
           left: -7px;
           position: relative;
+          vertical-align: top;
           width: 14px;
 
           + .icon-dropdown {

@@ -1379,7 +1379,6 @@ $.fn.datagrid = function(options) {
 
     //Render one filter item as used in renderFilterButton
     renderFilterItem: function (icon, text, checked) {
-      //<svg class="icon icon-filter" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-filter-'+ icon +'"></use></svg>
       var iconMarkup = $.createIcon({ classes: 'icon icon-filter', icon: 'filter-' + icon });
       return '<li ' + (checked ? 'class="is-checked"' : '') + '><a href="#">' + iconMarkup + '<span>'+ text +'</span></a></li>';
     },
@@ -1571,6 +1570,7 @@ $.fn.datagrid = function(options) {
           btn = rowElem.find('.btn-filter'),
           input = rowElem.find('input, select'),
           isDropdown = input.is('select'),
+          svg = btn.find('.icon-dropdown:first'),
           op;
 
 
@@ -1578,7 +1578,8 @@ $.fn.datagrid = function(options) {
           return;
         }
 
-        op = isDropdown ? 'equals' : btn.find('use:first').attr('xlink:href').replace(window.Soho.svgPath + 'icons.svg#icon-filter-', '');
+        op = isDropdown ? 'equals' : svg.getIconName().replace('filter-', '');
+        console.log(op);
 
         if (op === 'selected-notselected') {
           return;

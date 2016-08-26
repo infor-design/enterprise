@@ -55,7 +55,7 @@
 
       // Add markup to the control
       render: function() {
-
+        var self = this;
         this.element.addClass('icon');
 
         if (!this.element.is('svg')) {
@@ -70,9 +70,11 @@
           return this;
         }
 
-        setTimeout(function () {
-        //  use.setAttribute('xlink:href', self.getBasedUseTag());
-        }, 0);
+        if (use.getAttribute('xlink:href') !== self.getBasedUseTag()) {
+          setTimeout(function () {
+            use.setAttribute('xlink:href', self.getBasedUseTag());
+          }, 0);
+        }
         return this;
       },
 
@@ -229,6 +231,22 @@
         svg.remove();
       }
       svg.attr('data-icon', icon);
+    };
+
+    $.fn.getIconName = function() {
+      var svg = $(this),
+          use = svg.find('use');
+
+      if (svg.length === 0) {
+        return '';
+      }
+
+      if (use.length === 1) {
+        return use.attr('xlink:href').substr(use.attr('xlink:href').indexOf('#icon-')+6);
+      } else {
+        return svg.attr('data-icon');
+      }
+
     };
 
   })();
