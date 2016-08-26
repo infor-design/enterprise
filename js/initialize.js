@@ -137,7 +137,7 @@
           //Array of plugin names and selectors (optional) for no-configuration initializations
           var simplePluginMappings = [
             // Icons
-            ['icon'],
+            // ['icon'],
 
             //Tabs
             ['tabs', '.tab-container:not(.vertical)'],
@@ -394,6 +394,14 @@
 
           matchedItems('.breadcrumb ol').attr('aria-label', Locale.translate('Breadcrumb'));
         });
+
+        // Fix: chrome was not showing icons had to resets [xlink:href] attribute
+        setTimeout(function() {
+          $('svg.icon').each(function() {
+            var use = $('use', this);
+            use.attr('xlink:href', use.attr('xlink:href'));
+          });
+        }, 0);
 
         // NOTE: use of .triggerHandler() here causes event listeners for "initialized" to fire, but prevents the
         // "initialized" event from bubbling up the DOM.  It should be possible to initialize just the contents
