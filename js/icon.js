@@ -55,6 +55,7 @@
 
       // Add markup to the control
       render: function() {
+
         this.element.addClass('icon');
 
         if (!this.element.is('svg')) {
@@ -69,8 +70,9 @@
           return this;
         }
 
-        use.setAttribute('xlink:href', this.getBasedUseTag());
-
+        setTimeout(function () {
+        //  use.setAttribute('xlink:href', self.getBasedUseTag());
+        }, 0);
         return this;
       },
 
@@ -122,7 +124,6 @@
 
       // Simple Teardown - remove events & rebuildable markup.
       teardown: function() {
-        this.element.children('use').remove();
         this.element.off('updated.' + pluginName);
         return this;
       },
@@ -136,7 +137,7 @@
 
     // Initialize the plugin (Once)
     return this.each(function() {
-      var instance = $.data(this, pluginName);
+        var instance = $.data(this, pluginName);
       if (instance) {
         instance.settings = $.extend({}, instance.settings, options);
         instance.updated();

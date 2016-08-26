@@ -49,6 +49,24 @@
         this.addMarkup();
         this.handleEvents();
         this.iconFilteringSetup();
+        this.fixSvg();
+      },
+
+      fixSvg: function () {
+        // Fix: chrome was not showing icons had to resets [xlink:href] attribute
+        var self = this,
+            isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+
+        if (!isChrome) {
+          return;
+        }
+
+        setTimeout(function() {
+          self.menu.find('svg.icon').each(function() {
+            var use = $('use', this);
+            use.attr('xlink:href', use.attr('xlink:href'));
+          });
+        }, 0);
       },
 
       setup: function() {
