@@ -729,6 +729,12 @@ body.no-scroll {
 
 //RTL Styles
 html[dir='rtl'] {
+  .two-column {
+    .sidebar {
+      border-left: 1px solid $panel-border-color;
+      border-right: 0 solid $panel-border-color;
+    }
+  }
 
   .scrollable {
     direction: ltr;
