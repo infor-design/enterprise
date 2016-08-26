@@ -109,9 +109,10 @@
               var src = use.getAttribute('xlink:href');
 
               if (polyfill) {
+                  var icon = src.substr(src.indexOf('#')+6);
                   // remove the <use> element
                   svg.removeChild(use);
-
+                  svg.setAttribute('data-icon', icon);
                   // parse the src and get the url and id
                   var srcSplit = src.split('#'), url = srcSplit.shift(), id = srcSplit.join('#');
 

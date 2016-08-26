@@ -44,13 +44,20 @@
         }
 
         if (this.element.hasClass('btn-menu') && !this.element.hasClass('btn-icon') && !this.element.hasClass('btn-actions')) {
-          var ddIcon = this.element.children('.icon').filter(function() {
-            return $(this).find('use').attr('xlink:href').indexOf('#icon-dropdown') > -1;
-          });
-          if (!ddIcon.length) {
+          var ddIcon = this.element.children('svg.icon'),
+              use = ddIcon.find('use'), hasIcon = false;
+
+          if (ddIcon.length > 0 && use.length === 1) {
+            hasIcon = use.attr('xlink:href').indexOf('#icon-dropdown') > -1;
+          } else if (ddIcon.length > 0) {
+            hasIcon = ddIcon.attr('data-icon') === 'icon-dropdown';
+          }
+
+          if (!hasIcon) {
             ddIcon = $.createIconElement({ icon: 'dropdown', classes: ['icon-dropdown']});
             this.element.append(ddIcon);
           }
+
           if (!ddIcon.hasClass('icon-dropdown')) {
             ddIcon.addClass('icon-dropdown');
           }
@@ -58,13 +65,12 @@
 
         if (this.element.hasClass('icon-favorite')) {
           this.element.on('click.button', function() {
-            var use = $(this).find('use'),
-              attr = use.attr('xlink:href');
+            var svg = $(this).find('svg:not(.ripple-effect)');
 
-            if (attr.indexOf('star-outlined') > -1) {
-              use.attr('xlink:href', $.createIconPath({icon: 'star-filled'}));
+            if (svg.attr('data-icon') === 'star-outlined') {
+              svg.changeIcon('star-filled');
             } else {
-              use.attr('xlink:href', $.createIconPath({icon: 'star-outlined'}));
+              svg.changeIcon('star-outlined');
             }
 
           });

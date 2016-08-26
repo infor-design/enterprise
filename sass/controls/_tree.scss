@@ -227,11 +227,20 @@ html[dir='rtl'] {
       li {
         margin-left: inherit;
         margin-right: 10px;
+
+        &:first-child {
+          margin-top: 5px;
+        }
       }
+
     }
 
     svg {
       margin: 0 0 0 9px;
     }
+  }
+
+  .sidebar .tree {
+    float: none;
   }
 }

@@ -445,7 +445,7 @@
 
       pagerInfo: {},
       setDatagrid: function() {
-        this.datagrid = this.mainContainer.children('.datagrid-container').data('datagrid');
+        this.datagrid = this.mainContainer ? this.mainContainer.children('.datagrid-container').data('datagrid') : null;
       },
 
       renders: 0,
@@ -517,7 +517,9 @@
             self.updatePagingInfo(request);
 
             self.setDatagrid();
-            self.datagrid.renderRows();
+            if (self.datagrid) {
+              self.datagrid.renderRows();
+            }
             elements.hide();
 
             //collapse expanded rows
