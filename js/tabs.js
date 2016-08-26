@@ -235,7 +235,7 @@
 
               var icon = li.children('.icon');
               if (!icon.length) {
-                icon = $('<svg class="icon close" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-close"></svg>');
+                icon = $.createIcon({icon: 'close', class: 'close'});
               }
               icon.detach().appendTo(a);
 

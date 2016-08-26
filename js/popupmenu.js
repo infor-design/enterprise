@@ -499,15 +499,15 @@
       // Filtering icon initial setup
       iconFilteringSetup: function(alink) {
         if (this.element.hasClass('btn-filter')) {
-          var icon = $('use', this.element),
+          var svg = this.element.find('svg.icon-dropdown'),
             link = alink || $('li:first a', this.menu),
             audibleText = link.find('span').text();
 
-          if (!icon.length) {
+          if (svg.length === 1) {
             this.element.append($.createIconElement({ classes: 'icon-dropdown', icon: 'dropdown' }));
-            icon = $('use', this.element);
           }
-          $('use', this.element).attr('xlink:href', $('use', link).attr('xlink:href'));
+
+          svg.first().changeIcon(link.find('svg').getIconName());
           this.element.find('.audible').text(audibleText);
         }
       },
@@ -519,7 +519,7 @@
             audibleText = link.find('span').text();
 
           this.element.find('.audible').text(audibleText);
-          $('use:first', this.element).attr('xlink:href', $('use', link).attr('xlink:href'));
+          this.element.find('svg:not(.ripple-effect):first').changeIcon(link.find('svg').getIconName());
         }
       },
 

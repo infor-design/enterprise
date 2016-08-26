@@ -1385,7 +1385,7 @@ $.fn.datagrid = function(options) {
 
     //Render the Filter Button and Menu based on filterType - which determines the options
     renderFilterButton: function (filterType, isDisabled) {
-      var btnMarkup = '<button type="button" class="btn-menu btn-filter" data-init="false" ' + (isDisabled ? ' disabled' : '') + ' type="button"><span class="audible">Filter</span></button>' +
+      var btnMarkup = '<button type="button" class="btn-menu btn-filter" data-init="false" ' + (isDisabled ? ' disabled' : '') + ' type="button"><span class="audible">Filter</span>' + $.createIcon({icon: 'dropdown' , classes: 'icon-dropdown'}) +'</button>' +
         '<ul class="popupmenu has-icons is-translatable is-selectable">';
 
         //Just the dropdown

@@ -162,9 +162,9 @@
           // Pass along any icons except for the dropdown (which is added as part of the submenu design)
           var submenuDesignIcon = $.getBaseURL('#icon-dropdown');
           var icon = item.children('.icon').filter(function() {
-            var curr = $(this).children('use').attr('xlink:href');
+            var iconName = $(this).getIconName();
 
-            return curr && curr !== submenuDesignIcon && curr.indexOf('#icon-dropdown') === -1;
+            return iconName && iconName !== submenuDesignIcon && iconName.indexOf('#icon-dropdown') === -1;
           });
 
           if (icon && icon.length) {

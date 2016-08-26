@@ -78,8 +78,7 @@
         this.more = this.info.find('.btn-actions');
         if (!this.more.length) {
           this.more = $('<button class="btn-actions" type="button"></button>')
-            .html('<svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-more"></svg>' +
-              '<span class="audible">'+Locale.translate('MoreActions')+'</span>')
+            .html($.createIcon({ icon: 'more'}) + '<span class="audible">'+Locale.translate('MoreActions')+'</span>')
             .appendTo(this.info);
         }
 

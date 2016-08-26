@@ -125,15 +125,15 @@
 
         if (a.is('[class^="icon"]')) {
           //createIconPath
-          this.setTreeIcon(a.find('use'), a.attr('class'));
+          this.setTreeIcon(a.find('svg'), a.attr('class'));
         }
 
         if (subNode.is('ul')) {
           subNode.attr('role', 'group').parent().addClass('folder');
-          this.setTreeIcon(a.find('use'), subNode.hasClass('is-open') ? 'open-folder' : 'closed-folder' );
+          this.setTreeIcon(a.find('svg'), subNode.hasClass('is-open') ? 'open-folder' : 'closed-folder' );
 
           if (a.is('[class^="icon"]')) {
-            this.setTreeIcon(a.find('use'), subNode.hasClass('is-open') ?  a.attr('class') : a.attr('class').replace('open', 'closed') );
+            this.setTreeIcon(a.find('svg'), subNode.hasClass('is-open') ?  a.attr('class') : a.attr('class').replace('open', 'closed') );
           }
         }
 
@@ -141,7 +141,7 @@
         a.hideFocus();
       },
 
-      setTreeIcon: function(use, icon) {
+      setTreeIcon: function(svg, icon) {
         var iconStr = icon.replace('icon-',''),
           file = 'icons.svg';
 
@@ -149,7 +149,7 @@
           file = 'icons-extended.svg';
         }
 
-        use.attr('xlink:href', $.createIconPath({ icon: iconStr, file: file}));
+        svg.changeIcon(iconStr, file);
       },
 
       //Expand all Parents
@@ -160,10 +160,10 @@
         nodes.each(function () {
           var node = $(this);
           node.addClass('is-open');
-          self.setTreeIcon(node.prev('a').find('svg use'), 'open-folder');
+          self.setTreeIcon(node.prev('a').find('svg'), 'open-folder');
 
           if (node.prev('a').is('[class^="icon"]')) {
-            self.setTreeIcon(node.prev('svg use').find('use'), node.prev('a').attr('class'));
+            self.setTreeIcon(node.prev('svg'), node.prev('a').attr('class'));
           }
 
         });
@@ -176,14 +176,14 @@
         nodes.each(function () {
           var node = $(this);
           node.removeClass('is-open');
-          self.setTreeIcon(node.prev('a').find('svg use'), 'closed-folder');
+          self.setTreeIcon(node.prev('a').find('svg'), 'closed-folder');
 
           if (node.prev('a').is('[class^="icon"]')) {
-            self.setTreeIcon(node.prev('a').find('svg use'), node.prev('a').attr('class').replace('open', 'closed').replace(' hide-focus', '') );
+            self.setTreeIcon(node.prev('a').find('svg'), node.prev('a').attr('class').replace('open', 'closed').replace(' hide-focus', '') );
           }
 
           if (node.prev('a').is('[class^="icon"]')) {
-            self.setTreeIcon(node.prev('svg use').find('use'), node.prev('a').attr('class').replace('open', 'closed'));
+            self.setTreeIcon(node.prev('svg'), node.prev('a').attr('class').replace('open', 'closed'));
           }
 
         });
@@ -272,11 +272,11 @@
         if (next.is('ul[role="group"]')) {
           if (next.hasClass('is-open')) {
 
-            self.setTreeIcon(node.closest('.folder').removeClass('is-open').end().find('use'),
+            self.setTreeIcon(node.closest('.folder').removeClass('is-open').end().find('svg'),
                 'closed-folder');
 
             if (node.closest('.folder a').is('[class^="icon"]')) {
-              self.setTreeIcon(node.closest('.folder a').find('use'),
+              self.setTreeIcon(node.closest('.folder a').find('svg'),
                 node.closest('.folder a').attr('class').replace('open', 'closed').replace(' hide-focus', ''));
             }
 
@@ -326,10 +326,10 @@
       openNode: function(next, node) {
         var self = this;
 
-        self.setTreeIcon(node.closest('.folder').addClass('is-open').end().find('use'), 'open-folder');
+        self.setTreeIcon(node.closest('.folder').addClass('is-open').end().find('svg'), 'open-folder');
 
         if (node.is('[class^="icon"]')) {
-          self.setTreeIcon(node.find('use'), node.attr('class').replace(' hide-focus', ''));
+          self.setTreeIcon(node.find('svg'), node.attr('class').replace(' hide-focus', ''));
         }
 
         self.isAnimating = true;
@@ -838,7 +838,7 @@
         }
 
         if (nodeData.icon) {
-          this.setTreeIcon(elem.node.find('use').first(), nodeData.icon);
+          this.setTreeIcon(elem.node.find('svg').first(), nodeData.icon);
           elem.icon = nodeData.icon;
         }
 

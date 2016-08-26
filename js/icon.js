@@ -215,12 +215,12 @@
     };
 
     //Toggle the use or entire svg icon in the case of the polyfill
-    $.fn.changeIcon = function(icon) {
+    $.fn.changeIcon = function(icon, file) {
       var svg = $(this),
           use = svg.find('use');
 
       if (use.length === 1) {
-        use.attr('xlink:href', $.createIconPath({icon: icon}));
+        use.attr('xlink:href', $.createIconPath({icon: icon, file: file}));
       } else {
         //ie polyfilled
         var newSvg = $.createIcon({classes: svg.attr('class'), icon : icon});

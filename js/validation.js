@@ -519,7 +519,7 @@
     },
 
     addPositive: function(field) {
-      var svg = $('<svg class="icon icon-confirm" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-confirm"></use></svg>');
+      var svg = $.createIcon({ icon: 'confirm', classes: 'icon-confirm'});
 
       if (!$('.icon-confirm', field.parent('.field, .field-short')).length) {
         field.parent('.field, .field-short').append(svg);
