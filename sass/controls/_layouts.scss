@@ -733,10 +733,6 @@ html[dir='rtl'] {
     .sidebar {
       border-left: 1px solid $panel-border-color;
       border-right: 0 solid $panel-border-color;
-
-      .content {
-        // float: right;
-      }
     }
   }
 
