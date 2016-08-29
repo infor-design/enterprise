@@ -275,14 +275,14 @@
 
         if (popupMenuInstance) {
           this.more.triggerHandler('updated');
-          popupMenuInstance.element.on('beforeopen', refreshTextAndDisabled);
+          popupMenuInstance.element.off('beforeopen').on('beforeopen', refreshTextAndDisabled);
         } else {
           var actionButtonOpts = $.fn.parseOptions(this.more[0]);
 
           this.more.popupmenu($.extend({}, actionButtonOpts, {
             trigger: 'click',
             menu: this.moreMenu
-          })).on('beforeopen', refreshTextAndDisabled);
+          })).off('beforeopen').on('beforeopen', refreshTextAndDisabled);
         }
 
 
@@ -348,40 +348,40 @@
         var self = this;
 
         this.items
-          .on('keydown.toolbar', function(e) {
+          .off('keydown.toolbar').on('keydown.toolbar', function(e) {
             self.handleKeys(e);
-          }).on('click.toolbar', function(e) {
+          }).off('click.toolbar').on('click.toolbar', function(e) {
             self.handleClick(e);
           });
 
         this.items.filter('.btn-menu, .btn-actions')
-          .on('close.toolbar', function onClosePopup() {
+          .off('close.toolbar').on('close.toolbar', function onClosePopup() {
             $(this).focus();
           });
 
-        this.items.not(this.more).on('selected.toolbar', function(e, anchor) {
+        this.items.not(this.more).off('selected.toolbar').on('selected.toolbar', function(e, anchor) {
           e.stopPropagation();
           self.handleSelected(e, anchor);
         });
 
-        this.more.on('keydown.toolbar', function(e) {
+        this.more.off('keydown.toolbar').on('keydown.toolbar', function(e) {
           self.handleKeys(e);
-        }).on('beforeopen.toolbar', function() {
+        }).off('beforeopen.toolbar').on('beforeopen.toolbar', function() {
           self.checkOverflowItems();
-        }).on('selected.toolbar', function(e, anchor) {
+        }).off('selected.toolbar').on('selected.toolbar', function(e, anchor) {
           e.stopPropagation();
           self.handleSelected(e, anchor);
         });
 
-        this.element.on('updated.toolbar', function(e) {
+        this.element.off('updated.toolbar').on('updated.toolbar', function(e) {
           e.stopPropagation();
           self.updated();
-        }).on('recalculateButtons.toolbar', function() {
+        }).off('recalculateButtons.toolbar').on('recalculateButtons.toolbar', function() {
           self.adjustButtonVisibility();
           self.toggleMoreMenu(); // Added 9/16/2015 due to issue HFC-2876
         });
 
-        $(window).on('resize.toolbar-' + this.id, function() {
+        $(window).off('resize.toolbar-' + this.id).on('resize.toolbar-' + this.id, function() {
           self.adjustButtonVisibility();
           self.toggleMoreMenu();
         });
@@ -724,11 +724,18 @@
       },
 
       updated: function() {
+
+        this.more.next('.popupmenu-wrapper').remove();
+
         this
           .unbind()
           .teardown()
-        // Rebuild the control
           .init();
+
+        setTimeout(function () {
+          $(window).trigger('resize');
+        }, 0);
+
       },
 
       enable: function() {
