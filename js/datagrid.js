@@ -1331,6 +1331,10 @@ $.fn.datagrid = function(options) {
             case 'select':
               filterMarkup += '<select ' + (col.filterDisabled ? ' disabled' : '') + (col.filterType ==='select' ? ' class="dropdown"' : ' multiple class="multiselect"') + 'id="'+ filterId +'">';
               if (col.options) {
+                if (col.filterType ==='select') {
+                  filterMarkup += '<option>&nbsp;</option>';
+                }
+
                 for (var i = 0; i < col.options.length; i++) {
                   var option = col.options[i],
                   optionValue = col.caseInsensitive && typeof option.value === 'string' ? option.value.toLowerCase() : option.value;

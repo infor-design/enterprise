@@ -725,8 +725,6 @@
 
       updated: function() {
 
-        this.more.next('.popupmenu-wrapper').remove();
-
         this
           .unbind()
           .teardown()

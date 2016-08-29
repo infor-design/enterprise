@@ -22,8 +22,7 @@
       data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', inStock: true, activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold', status: 'Confirmed'});
       data.push({ id: 7, productId: null, productName: null, activity:  null, quantity: null, price: null, status: null, orderDate: null, action: 'Blank Row', status: 'Confirmed'});
 
-      var statuses = [{id:'', value:'', label:''},
-                         {id:'Confirmed', value:'Confirmed', label:'Confirmed'},
+      var statuses = [{id:'Confirmed', value:'Confirmed', label:'Confirmed'},
                          {id:'Error', value:'Error', label:'Error'}];
 
       var activities = [{id: 'Assemble Paint', value:'Assemble Paint', label: 'Assemble Paint'},
@@ -54,7 +53,6 @@
       }).on('selected', function (e, args) {
         console.log(args);
       });
-
 
  });
 
