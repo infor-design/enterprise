@@ -810,17 +810,17 @@
   };
 
   $(function() {
-
     if (!window.Locale.cultureInHead()) {
       window.Locale.set('en-US');
     }
-
-    // ICONS: Right to Left Direction
-    if (window.Locale.isRTL()) {
-      window.Locale.flipIconsHorizontally();
-    }
-
+    setTimeout(function() {
+      // ICONS: Right to Left Direction
+      if (window.Locale.isRTL()) {
+        window.Locale.flipIconsHorizontally();
+      }
+    }, 50);
   });
+
 
 /* start-amd-strip-block */
 }));
