@@ -164,7 +164,7 @@
           var icon = item.children('.icon').filter(function() {
             var iconName = $(this).getIconName();
 
-            return iconName && iconName !== submenuDesignIcon && iconName.indexOf('#icon-dropdown') === -1;
+            return iconName && iconName !== submenuDesignIcon && iconName.indexOf('dropdown') === -1;
           });
 
           if (icon && icon.length) {
@@ -255,7 +255,11 @@
                 text = self.getItemText(item);
 
             if (item) {
-              a.find('span').text(text.trim());
+              if (a.find('span').length) {
+                a.find('span').text(text.trim());
+              } else {
+                a.text(text.trim());
+              }
 
               if (item.is(':disabled')) {
                 a.closest('li').addClass('is-disabled');
@@ -264,6 +268,7 @@
                 a.closest('li').removeClass('is-disabled');
                 a.removeAttr('disabled');
               }
+
             }
           });
         }

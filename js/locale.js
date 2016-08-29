@@ -799,9 +799,9 @@
       ];
 
       $('svg').each(function() {
-        var use = $(this).getIconName();
+        var iconName = $(this).getIconName();
 
-        if (use && $.inArray(use.split('#').pop(), icons) !== -1) {
+        if (iconName && $.inArray(iconName, icons) !== -1) {
           $(this).addClass('icon-rtl-rotate');
         }
       });
