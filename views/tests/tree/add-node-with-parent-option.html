@@ -1,0 +1,43 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <ul id="tree" class="tree" role="tree" aria-label="Asset Types">
+      <li>
+          <a href="#" id="home">Home</a>
+      </li>
+      <li><a href="#" id="about">About Us</a></li>
+      <li class="is-open">
+        <a href="#" id="public">Public Folders</a>
+        <ul class="is-open root">
+          <li class="is-open">
+              <a href="#" id="leadership">New Leadership</a>
+              <ul class="is-open">
+                <li><a href="#" id="new1">New Item 1</a></li>
+                <li><a href="#" id="new2">New Item 2</a></li>
+              </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  var tree = $('#tree').tree().data('tree');
+
+  // Add new node
+  tree.addNode({id: 'new3', text: 'New Item 3', parent: 'leadership'});
+
+  // Update only text for this node
+  tree.updateNode({id: 'new3', text: 'Testing'});
+
+  // Update only text for folder level node
+  // tree.updateNode({id: 'leadership', text: 'Testing2'});
+
+  // Update text and delete all children from folder level node
+  // tree.updateNode({id: 'leadership', text: 'Testing3', children: []});
+
+  // Update text, icon and delete all children from folder level node
+  // tree.updateNode({id: 'leadership', text: 'Testing4', icon: 'icon-tree-image', children: []});
+</script>
