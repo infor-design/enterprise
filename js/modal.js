@@ -463,6 +463,7 @@
 
         }
 
+
         setTimeout(function () {
           self.disableSubmit();
         }, 10);
@@ -472,6 +473,10 @@
 
         setTimeout(function () {
           focusElement();
+          // fixes blur problems with reset filter after animation done, only for non IE browsers
+          if (!$('html').is('.ie')) {
+            self.element.addClass('no-filter');
+          }
         }, 200);
 
         setTimeout(function () {
