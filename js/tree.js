@@ -761,7 +761,7 @@
             }
             this.addAsChild(nodeData, li);
           }
-          nodeData.node = li.find('ul li a').first();
+          nodeData.node = li.find('ul li a#'+ nodeData.id);
 
         } else {
           this.addChildNodes(nodeData, li);
@@ -798,7 +798,9 @@
         var self = this,
           ul = li.find('ul');
 
-        if (!nodeData.children) {
+        if (!nodeData.children || (!!nodeData.children && !nodeData.children.length)) {
+          this.setTreeIcon(li.find('svg').first(), (nodeData.icon || 'icon-tree-node'));
+          li.removeClass('folder is-open');
           ul.remove();
           return;
         }
@@ -851,7 +853,10 @@
           this.syncDataset(this.element);
         }
 
-        this.addChildNodes(nodeData, elem.node.parent());
+        if (nodeData.children) {
+          this.addChildNodes(nodeData, elem.node.parent());
+        }
+
       },
 
       //Delete a node from the dataset or tree
