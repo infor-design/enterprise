@@ -3422,6 +3422,7 @@ $.fn.datagrid = function(options) {
               cell = (cell+1 > lastCell) ? lastCell : cell+1;
             }
             self.setActiveCell(row, cell);
+            self.quickEditMode = false;
             handled = true;
           }
         }
