@@ -609,7 +609,7 @@
           var i = $(this),
             li = i.data('action-button-link').parent();
 
-          if (!self.isItemOverflowed(i)) {
+          if (!self.isItemOverflowed(i) || i.hasClass('hidden')) {
             li.addClass('hidden');
           } else {
             li.removeClass('hidden');
