@@ -20,6 +20,12 @@
   width: auto;
   z-index: 1001;
 
+  // DO NOT REMOVE OR CHANGE - FIXES BLUR PROBLEMS THIS CLASS APPLY AFTER ANIMATION DONE
+  &.no-filter {
+    -webkit-filter: blur(0);
+    filter: blur(0);
+  }
+
   &.is-visible {
     @include css3(transform, translate(-50%, -50%) scale(1, 1));
     opacity: 1;
@@ -327,6 +333,7 @@
   }
 }
 
+&.ie,
 &.is-firefox {
   .modal {
     filter: none;  // DO NOT REMOVE OR CHANGE - FIXES BLUR PROBLEMS (HFC-3526) - talk to "ed.coyle@infor.com" if you need to remove
