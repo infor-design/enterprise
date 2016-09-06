@@ -149,7 +149,13 @@
           file = 'icons-extended.svg';
         }
 
-        svg.changeIcon(iconStr, file);
+        var self = this,
+          loadingInterval = setInterval(function() {
+            if (!self.loading) {
+              clearInterval(loadingInterval);
+            }
+            svg.changeIcon(iconStr, file);
+          }, 10);
       },
 
       //Expand all Parents
@@ -293,7 +299,7 @@
           } else {
             var nodeData = node.data('jsonData');
 
-            if (self.settings.source && nodeData.children.length === 0) {
+            if (self.settings.source && nodeData.children && nodeData.children.length === 0) {
               var response = function (nodes) {
                 var id = nodeData.id,
                 elem = self.findById(id);
@@ -798,9 +804,7 @@
         var self = this,
           ul = li.find('ul');
 
-        if (!nodeData.children || (!!nodeData.children && !nodeData.children.length)) {
-          this.setTreeIcon(li.find('svg').first(), (nodeData.icon || 'icon-tree-node'));
-          li.removeClass('folder is-open');
+        if (!nodeData.children) {
           ul.remove();
           return;
         }
@@ -813,9 +817,11 @@
 
         ul.empty();
 
-        for (var i = 0; i < nodeData.children.length; i++) {
-          var elem = nodeData.children[i];
-          self.addNode(elem, ul);
+        if (nodeData.children) {
+          for (var i = 0; i < nodeData.children.length; i++) {
+            var elem = nodeData.children[i];
+            self.addNode(elem, ul);
+          }
         }
       },
 
@@ -854,9 +860,23 @@
         }
 
         if (nodeData.children) {
-          this.addChildNodes(nodeData, elem.node.parent());
+          if (nodeData.children.length) {
+            this.addChildNodes(nodeData, elem.node.parent());
+          }
+          else {
+            this.removeChildren(nodeData, elem.node.parent());
+          }
         }
 
+      },
+
+      // Delete children nodes
+      removeChildren: function (nodeData, li) {
+        var ul = li.find('ul');
+
+        this.setTreeIcon(li.find('svg').first(), (nodeData.icon || 'icon-tree-node'));
+        li.removeClass('folder is-open');
+        ul.remove();
       },
 
       //Delete a node from the dataset or tree
