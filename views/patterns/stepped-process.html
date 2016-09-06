@@ -1,13 +1,10 @@
 <body class="no-scroll">
-<<<<<<< 05f6d0fae7798ee39d74bbf19c484c47aa6116d2
   <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
   {{> includes/svg-inline-refs}}
-=======
 
   <header class="header is-personalizable">
     <div class="toolbar">
       <div class="title">
-        <h1>Builder</h1>
         <h1>
           <span class="panel-title">Builder Panel Title</span>
           <span class="panel-subhead">Builder Panel Subheader</span>
@@ -18,11 +15,9 @@
             <span>Save</span>
           </button>
       </div>
-
       {{> includes/header-actionbutton}}
     </div>
   </header>
->>>>>>> SOHO-4621 Updated markup to start basic layout
 
   <div class="page-container no-scroll two-column fixed list-detail">
 
@@ -95,33 +90,97 @@
       <header class="header subheader is-personalizable">
         <div class="toolbar">
           <div class="title">
-            <h1>Builder</h1>
+            <h1>Preferences</h1>
           </div>
           <div class="buttonset">
-
-              <button class="btn"  type="button">
-                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                  <use xlink:href="#icon-left-arrow"></use>
-                </svg>
-                <span>Previous</span>
-              </button>
-
-              <button class="btn"  type="button">
-                <span>Next</span>
-                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                  <use xlink:href="#icon-right-arrow"></use>
-                </svg>
-
-              </button>
-
+            <button class="btn"  type="button">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="/svg/icons.svg#icon-left-arrow"></use>
+              </svg>
+              <span>Previous</span>
+            </button>
+            <button class="btn"  type="button">
+              <span>Next</span>
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="/svg/icons.svg#icon-right-arrow"></use>
+              </svg>
+            </button>
           </div>
         </div>
       </header>
 
       <div class="page-container scrollable">
+        <div class="row">
+          <div class="full column">
+            <h4>Please be specific so we can match your preferences to our job requirements. You can attach a resume, but you increase the likelihood of finding a position if you complete the whole application process.</h4>
+            <div class="field">
+              <label for="employment-type" class="label">Employment Type</label>
+              <input id="employment-type" name="employment-type" type="text">
+            </div>
 
+            <div class="field">
+              <label for="work-type" class="label">Work Type</label>
+              <input id="work-type" name="work-type" type="text">
+            </div>
+
+            <h4>Your preferred locations:</h4>
+
+            <div class="field">
+              <label for="location-one" class="label">Location 1</label>
+              <input id="location-one" name="location-one" type="text">
+            </div>
+
+            <div class="field">
+              <label for="location-two" class="label">Location 2</label>
+              <input id="location-two" name="location-two" type="text">
+            </div>
+
+            <div class="field">
+              <label for="location-three" class="label">Location 3</label>
+              <input id="location-three" name="location-three" type="text">
+            </div>
+
+            <h4>Your preferred categories:</h4>
+
+            <div class="field">
+              <label for="category-one" class="label">Preference 1</label>
+              <input id="category-one" name="category-one" type="text">
+            </div>
+
+            <div class="field">
+              <label for="category-two" class="label">Preference 2</label>
+              <input id="category-two" name="category-two" type="text">
+            </div>
+
+            <div class="field">
+              <label for="category-three" class="label">Preference 3</label>
+              <input id="category-three" name="category-three" type="text">
+            </div>
+
+            <hr style="margin-bottom: 20px;">
+
+            <div class="field">
+              <label for="point-of-origin" class="label">Point of Origin</label>
+              <input id="point-of-origin" name="point-of-origin" type="text">
+            </div>
+
+            <div class="field">
+              <label for="extra-field-one" class="label">Extra Field</label>
+              <input id="extra-field-one" name="extra-field-one" type="text">
+            </div>
+
+            <div class="field">
+              <label for="extra-field-two" class="label">Extra Field</label>
+              <input id="extra-field-two" name="extra-field-two" type="text">
+            </div>
+
+            <div class="field">
+              <label for="extra-field-three" class="label">Extra Field</label>
+              <input id="extra-field-three" name="extra-field-three" type="text">
+            </div>
+
+          </div>
+        </div>
       </div>
-
     </div>
-
   </div>
