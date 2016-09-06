@@ -63,13 +63,21 @@
       build: function() {
          var lookup = this.element;
 
+        var cssClass = this.element.is('.input-xs') ? 'lookup-wrapper xs' :
+            this.element.is('.input-sm') ? 'lookup-wrapper sm' :
+            this.element.is('.input-lg') ? 'lookup-wrapper lg' : 'lookup-wrapper';
+
+        if (this.element.is('.has-actions')) {
+         cssClass += ' has-actions-wrapper';
+        }
+
         //Add Button
         this.icon = $('<span class="trigger" tabindex="-1"></span>').append($.createIcon('search-list'));
         if (this.isInlineLabel) {
-          this.inlineLabel.addClass('lookup-wrapper');
+          this.inlineLabel.addClass(cssClass);
         }
         else {
-          this.container = $('<span class="lookup-wrapper"></span>');
+          this.container = $('<span class="'+ cssClass +'"></span>');
           lookup.wrap(this.container);
         }
 

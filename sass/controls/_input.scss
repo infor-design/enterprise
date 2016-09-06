@@ -551,9 +551,61 @@ input.error {
   }
 }
 
-@include respond-to(phone) {
-  .has-actions {
+// Default vars
+$xs: 75px;
+$sm: 150px;
+$md: 300px;
+$lg: 400px;
+
+.columns {
+  input.has-actions,
+  textarea.has-actions {
+    max-width: $md;
     width: calc(100% - 40px);
+
+    &.input-xs {
+      max-width: $xs;
+    }
+
+    &.input-sm {
+      max-width: $sm;
+    }
+
+    &.input-lg {
+      max-width: $lg;
+    }
+  }
+}
+
+.has-actions-wrapper {
+  margin-right: -40px;
+  width: $md + 40;
+
+  &.xs {
+    width: $xs + 40;
+  }
+
+  &.sm {
+    width: $sm + 40;
+  }
+
+  &.lg {
+    width: $lg + 40;
+  }
+}
+
+@include respond-to(phone) {
+  .columns {
+    input.has-actions,
+    textarea.has-actions,
+    input.has-actions.input-lg,
+    textarea.has-actions.input-lg {
+      max-width: calc(100% - 40px);
+    }
+  }
+
+  .has-actions-wrapper:not(.xs):not(.sm) {
+    width: 100%;
   }
 }
 
@@ -633,12 +685,5 @@ html[dir='rtl'] {
       margin-left: inherit;
       margin-right: -40px;
     }
-  }
-}
-
-.columns {
-  input.has-actions,
-  textarea.has-actions {
-    width: calc(100% - 40px);
   }
 }
