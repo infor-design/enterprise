@@ -288,25 +288,22 @@
 
         //Add in fake pages
         if (!this.isTable) {
+          var i, thisClass, thisText, isAriaSelected, isAriaDisabled;
           this.pagerBar.find(this.buttonExpr).remove();
-        }
 
-        var i, thisClass, thisText, isAriaSelected, isAriaDisabled;
+          for (i = pages; i > 0; i--) {
+            if (i === (this.activePage || 1)) {
+              thisClass = 'class="selected"';
+              thisText = Locale.translate('PageOn');
+              isAriaSelected = 'aria-selected="true"';
+              isAriaDisabled = 'aria-disabled="true"';
+            } else {
+              thisClass = '';
+              thisText = Locale.translate('Page');
+              isAriaSelected = '';
+              isAriaDisabled = '';
+            }
 
-        for (i = pages; i > 0; i--) {
-          if (i === 1) {
-            thisClass = 'class="selected"';
-            thisText = Locale.translate('PageOn');
-            isAriaSelected = 'aria-selected="true"';
-            isAriaDisabled = 'aria-disabled="true"';
-          } else {
-            thisClass = '';
-            thisText = Locale.translate('Page');
-            isAriaSelected = '';
-            isAriaDisabled = '';
-          }
-
-          if (!this.isTable) {
             $('<li '+ thisClass + isAriaSelected +'><a href="#" '+ isAriaDisabled +'><span class="audible">'+ thisText +' </span>'+ i +'</a></li>').insertAfter(this.pagerBar.find('.pager-prev'));
           }
         }
