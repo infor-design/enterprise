@@ -495,6 +495,80 @@
           }, 1);
         }
 
+
+        // Fix: for small view port, where not enough space to show calendar
+        // bring the calendar in center (i.e. inside modal)
+        setTimeout(function() {
+          // self.getClosestParent({elem}, {position: 'fixed'|'relative'|'absolute'})
+          var fixedParent = self.getClosestParent(self.element.closest('.field'), 'fixed'),
+            absoluteParent = self.getClosestParent(self.element.closest('.field'), 'absolute'),
+            triggerRect = self.trigger[0].getBoundingClientRect(),
+            offset = self.getAbsoluteOffset(self.popup[0], $('body')[0]),
+            popupCss = {
+              'top': parseInt(self.popup.css('top'), 10),
+              'left': parseInt(self.popup.css('left'), 10)
+            },
+            arrow = self.popup.find('.arrow'),
+            arrowRect = arrow[0].getBoundingClientRect(),
+            extra = 50 + arrowRect.height,
+            pagescroll = $('.page-container.scrollable').scrollTop(),
+            top, left, method;
+
+          if ((absoluteParent[0] && !absoluteParent.is('.page-container')) ||
+            fixedParent[0] || popupCss.top < 0 || popupCss.left < 0) {
+
+            arrow.show(); //default
+            if (popupCss.top < 0 || popupCss.left < 0) {
+              if (popupCss.top < 0) {
+                top = 5;
+                self.popup.css({'top': top +'px'});
+              }
+              if (popupCss.left < 0) {
+                left = triggerRect.left - self.popup.outerWidth() - 20;
+                self.popup.css({'left': left +'px'});
+              }
+            }
+            else {
+              if (offset.top < 0 ||
+                  (offset.top + self.popup.outerHeight() > window.innerHeight)) {
+                top = offset.top - self.popup.outerHeight() + pagescroll - (extra*2);
+                if ((popupCss.top < 0 || offset.top > 0) && top > 0) {
+                  method = 'show';
+                } else {
+                  top = (window.innerHeight - self.popup.outerHeight())/2;
+                  method = 'hide';
+                }
+                if (absoluteParent[0] && self.popup.is('.bottom')) {
+                  self.popup.removeClass('bottom').addClass('top');
+                }
+                self.popup.css({'top': top +'px'});
+                arrow[method]();
+              }
+              if (offset.left < 0 ||
+                  (offset.left + self.popup.outerWidth() > window.innerWidth)) {
+                if (popupCss.left < 0 || (offset.left > 0 && (offset.left - self.popup.outerWidth()) > extra)) {
+                  left = offset.left + self.popup.outerWidth() + extra;
+                  method = 'show';
+                } else {
+                  left = (window.innerWidth - self.popup.outerWidth())/2;
+                  method = 'hide';
+                }
+                if (absoluteParent[0] && self.popup.is('.left, .right')) {
+                  if (self.popup.is('.left')) {
+                    self.popup.removeClass('left').addClass('right');
+                  } else {
+                    self.popup.removeClass('right').addClass('left');
+                  }
+                }
+                self.popup.css({'left': left +'px'});
+                arrow[method]();
+              }
+            }
+          }
+
+        }, 1);
+
+
         this.todayDate = new Date();
         this.todayMonth = this.todayDate.getMonth();
         this.todayYear = this.todayDate.getFullYear();
@@ -592,6 +666,29 @@
 
         this.element.removeClass('is-active');
         this.element.trigger('listclosed');
+      },
+
+      // Get the closest parent by position type
+      // elem: jQuery element
+      // position: 'fixed'|'relative'|'absolute'
+      getClosestParent: function(elem, position) {
+        var closestParent = elem.parents().filter(function() {
+          return $(this).css('position') === position;
+        }).slice(0,1); // grab only the "first"
+        return closestParent;
+      },
+
+      // Finds the offset of el from relativeEl
+      // http://stackoverflow.com/questions/442404/retrieve-the-position-x-y-of-an-html-element
+      getAbsoluteOffset: function(el, relativeEl) {
+        var x = 0, y = 0;
+
+        while(el && el !== relativeEl && !isNaN(el.offsetLeft) && !isNaN(el.offsetTop)) {
+          x += el.offsetLeft - el.scrollLeft + el.clientLeft;
+          y += el.offsetTop - el.scrollTop + el.clientTop;
+          el = el.offsetParent;
+        }
+        return { top: y, left: x };
       },
 
       // Check date in obj, return: true|false
