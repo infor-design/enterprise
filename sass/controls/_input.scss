@@ -556,12 +556,18 @@ $xs: 75px;
 $sm: 150px;
 $md: 300px;
 $lg: 400px;
+$full: 100%;
 
+.column,
 .columns {
-  input.has-actions,
+  input.has-actions:not(.datepicker),
   textarea.has-actions {
     max-width: $md;
     width: calc(100% - 40px);
+
+    &.textarea {
+      max-width: 362px;
+    }
 
     &.input-xs {
       max-width: $xs;
@@ -573,6 +579,37 @@ $lg: 400px;
 
     &.input-lg {
       max-width: $lg;
+    }
+
+    &.input-full {
+      max-width: calc(100% - 40px);
+    }
+  }
+
+  input.has-actions.datepicker {
+    &.input-xs {
+      max-width: $xs;
+      width: calc(100% - 40px);
+    }
+
+    &.input-sm {
+      max-width: $sm;
+      width: calc(100% - 40px);
+    }
+
+    &.input-md {
+      max-width: $md;
+      width: calc(100% - 40px);
+    }
+
+    &.input-lg {
+      max-width: $lg;
+      width: calc(100% - 40px);
+    }
+
+    &.input-full {
+      max-width: calc(100% - 40px);
+      width: calc(100% - 40px);
     }
   }
 }
@@ -591,21 +628,6 @@ $lg: 400px;
 
   &.lg {
     width: $lg + 40;
-  }
-}
-
-@include respond-to(phone) {
-  .columns {
-    input.has-actions,
-    textarea.has-actions,
-    input.has-actions.input-lg,
-    textarea.has-actions.input-lg {
-      max-width: calc(100% - 40px);
-    }
-  }
-
-  .has-actions-wrapper:not(.xs):not(.sm) {
-    width: 100%;
   }
 }
 
