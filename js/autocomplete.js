@@ -108,7 +108,7 @@
             },
             dataset = isString ? baseData : $.extend(baseData, items[i]),
             parts = option.split(' '),
-            containsTerm = false;
+            containsTerm = !this.settings.filterMode ? true : false;
 
           if (this.settings.filterMode === 'startsWith') {
               for (var a = 0; a < parts.length; a++) {
