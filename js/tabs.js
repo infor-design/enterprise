@@ -1258,7 +1258,7 @@
         }
 
         if (this.settings.tabCounts) {
-          anchorMarkup.prepend('<span class="count">0 </span>');
+          anchorMarkup.prepend('<span class="count">1</span>');
         }
 
         if (options.dropdown) {
@@ -1693,13 +1693,7 @@
       setOverflow: function () {
         var self = this;
 
-        if (self.tablist[0].scrollHeight > self.tablist.outerHeight() + 3.5) {
-          self.element.addClass('has-more-button');
-        } else {
-          self.element.removeClass('has-more-button');
-        }
-        self.setMoreActive();
-
+        // Recalc tab width before detection of overflow
         if (this.isModuleTabs()) {
           this.adjustModuleTabs();
         }
@@ -1707,6 +1701,15 @@
         if (this.isHeaderTabs()) {
           this.adjustHeaderTabs();
         }
+
+        if (self.tablist[0].scrollHeight > self.tablist.outerHeight() + 3.5) {
+          self.element.addClass('has-more-button');
+        } else {
+          self.element.removeClass('has-more-button');
+        }
+
+        self.setMoreActive();
+
       },
 
       adjustHeaderTabs: function() {
@@ -1806,6 +1809,11 @@
         if (!countDiv.length) {
           countDiv = $('<span class="count"></span>');
           this.moreButton.children('span').first().prepend(countDiv);
+        }
+
+        // Remove tab, append to list
+        if (overflowedTabs.length === 1) {
+          overflowedTabs.length++;
         }
 
         countDiv.text('' + overflowedTabs.length + ' ');
