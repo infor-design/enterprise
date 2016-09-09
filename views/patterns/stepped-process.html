@@ -19,7 +19,7 @@
     </div>
   </header>
 
-  <div class="page-container no-scroll two-column fixed list-detail">
+  <div class="page-container no-scroll two-column fixed list-detail stepped-process">
 
     <div class="sidebar scrollable" role="complementary">
       <div class="accordion" >
@@ -31,10 +31,10 @@
         </div>
         <div class="accordion-pane">
           <div class="accordion-header">
-            <a href="#"><span>Compency Model 1</span></a>
+            <a href="#step1" class="steppedprocess-link"><span>Compency Model 1</span></a>
           </div>
           <div class="accordion-header">
-            <a href="#"><span>Compency Model 2</span></a>
+            <a href="#step2" class="steppedprocess-link"><span>Compency Model 2</span></a>
           </div>
         </div>
 
@@ -46,7 +46,7 @@
         </div>
         <div class="accordion-pane">
           <div class="accordion-header">
-            <a href="#"><span>Goal Section</span></a>
+            <a href="#step4" class="steppedprocess-link"><span>Goal Section</span></a>
           </div>
         </div>
 
@@ -58,7 +58,7 @@
         </div>
         <div class="accordion-pane">
           <div class="accordion-header">
-            <a href="#"><span>Future Goal Section</span></a>
+            <a href="#step5" class="steppedprocess-link"><span>Future Goal Section</span></a>
           </div>
         </div>
 
@@ -66,21 +66,21 @@
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-empty-circle"></use>
           </svg>
-          <a href="#"><span>Completed Activities</span></a>
+          <a href="#step6" class="steppedprocess-link"><span>Completed Activities</span></a>
         </div>
 
         <div class="accordion-header">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-empty-circle"></use>
           </svg>
-          <a href="#"><span>Planned Activities</span></a>
+          <a href="#step7" class="steppedprocess-link"><span>Planned Activities</span></a>
         </div>
 
         <div class="accordion-header">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-empty-circle"></use>
           </svg>
-          <a href="#"><span>Overall Evaluation Comments</span></a>
+          <a href="#step8" class="steppedprocess-link"><span>Overall Evaluation Comments</span></a>
         </div>
       </div>
 
@@ -111,76 +111,99 @@
 
       <div class="page-container scrollable">
         <div class="row">
-          <div class="full column">
-            <h4>Please be specific so we can match your preferences to our job requirements. You can attach a resume, but you increase the likelihood of finding a position if you complete the whole application process.</h4>
-            <div class="field">
-              <label for="employment-type" class="label">Employment Type</label>
-              <input id="employment-type" name="employment-type" type="text">
+          <div class="full column steppedprocess-container">
+
+            <div id="step1" class="step-panel">
+              <h4>Please be specific so we can match your preferences to our job requirements. You can attach a resume, but you increase the likelihood of finding a position if you complete the whole application process.</h4>
+              <div class="field">
+                <label for="employment-type" class="label">Employment Type</label>
+                <input id="employment-type" name="employment-type" type="text">
+              </div>
+
+              <div class="field">
+                <label for="work-type" class="label">Work Type</label>
+                <input id="work-type" name="work-type" type="text">
+              </div>
+
+              <h4>Your preferred locations:</h4>
+
+              <div class="field">
+                <label for="location-one" class="label">Location 1</label>
+                <input id="location-one" name="location-one" type="text">
+              </div>
+
+              <div class="field">
+                <label for="location-two" class="label">Location 2</label>
+                <input id="location-two" name="location-two" type="text">
+              </div>
+
+              <div class="field">
+                <label for="location-three" class="label">Location 3</label>
+                <input id="location-three" name="location-three" type="text">
+              </div>
+
+              <h4>Your preferred categories:</h4>
+
+              <div class="field">
+                <label for="category-one" class="label">Preference 1</label>
+                <input id="category-one" name="category-one" type="text">
+              </div>
+
+              <div class="field">
+                <label for="category-two" class="label">Preference 2</label>
+                <input id="category-two" name="category-two" type="text">
+              </div>
+
+              <div class="field">
+                <label for="category-three" class="label">Preference 3</label>
+                <input id="category-three" name="category-three" type="text">
+              </div>
+
+              <hr style="margin-bottom: 20px;">
+
+              <div class="field">
+                <label for="point-of-origin" class="label">Point of Origin</label>
+                <input id="point-of-origin" name="point-of-origin" type="text">
+              </div>
+
+              <div class="field">
+                <label for="extra-field-one" class="label">Extra Field</label>
+                <input id="extra-field-one" name="extra-field-one" type="text">
+              </div>
+
+              <div class="field">
+                <label for="extra-field-two" class="label">Extra Field</label>
+                <input id="extra-field-two" name="extra-field-two" type="text">
+              </div>
+
+              <div class="field">
+                <label for="extra-field-three" class="label">Extra Field</label>
+                <input id="extra-field-three" name="extra-field-three" type="text">
+              </div>
             </div>
 
-            <div class="field">
-              <label for="work-type" class="label">Work Type</label>
-              <input id="work-type" name="work-type" type="text">
-            </div>
-
-            <h4>Your preferred locations:</h4>
-
-            <div class="field">
-              <label for="location-one" class="label">Location 1</label>
-              <input id="location-one" name="location-one" type="text">
-            </div>
-
-            <div class="field">
-              <label for="location-two" class="label">Location 2</label>
-              <input id="location-two" name="location-two" type="text">
-            </div>
-
-            <div class="field">
-              <label for="location-three" class="label">Location 3</label>
-              <input id="location-three" name="location-three" type="text">
-            </div>
-
-            <h4>Your preferred categories:</h4>
-
-            <div class="field">
-              <label for="category-one" class="label">Preference 1</label>
-              <input id="category-one" name="category-one" type="text">
-            </div>
-
-            <div class="field">
-              <label for="category-two" class="label">Preference 2</label>
-              <input id="category-two" name="category-two" type="text">
-            </div>
-
-            <div class="field">
-              <label for="category-three" class="label">Preference 3</label>
-              <input id="category-three" name="category-three" type="text">
-            </div>
-
-            <hr style="margin-bottom: 20px;">
-
-            <div class="field">
-              <label for="point-of-origin" class="label">Point of Origin</label>
-              <input id="point-of-origin" name="point-of-origin" type="text">
-            </div>
-
-            <div class="field">
-              <label for="extra-field-one" class="label">Extra Field</label>
-              <input id="extra-field-one" name="extra-field-one" type="text">
-            </div>
-
-            <div class="field">
-              <label for="extra-field-two" class="label">Extra Field</label>
-              <input id="extra-field-two" name="extra-field-two" type="text">
-            </div>
-
-            <div class="field">
-              <label for="extra-field-three" class="label">Extra Field</label>
-              <input id="extra-field-three" name="extra-field-three" type="text">
-            </div>
+            <div id="step2" class="step-panel">Step 2</div>
+            <div id="step3" class="step-panel">Step 3</div>
+            <div id="step4" class="step-panel">Step 4</div>
+            <div id="step5" class="step-panel">Step 5</div>
+            <div id="step6" class="step-panel">Step 6</div>
+            <div id="step7" class="step-panel">Step 7</div>
+            <div id="step8" class="step-panel">Step 8</div>
 
           </div>
         </div>
       </div>
     </div>
   </div>
+
+
+  <script type="text/javascript">
+
+    $(function() {
+
+      $('.stepped-process').steppedprocess();
+
+
+    });
+
+  </script>

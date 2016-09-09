@@ -3,6 +3,18 @@
 
 .stepped-process {
 
+  .step-link-active {
+    background-color: pink;
+  }
+
+  .step-panel {
+    display: none;
+
+    &.step-panel-active {
+      display: block;
+    }
+  }
+
 }
 
 @include respond-to(tabletdown) {
