@@ -192,7 +192,7 @@
             w += self.blocks[i].w;
             if(w >= self.settings.columns) {
               w = 0; //reset
-              j = i; //record to move
+              j = (self.blocks[j].w >= self.settings.columns) ? j+1 : i; //record to move
             }
           }
         }
