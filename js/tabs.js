@@ -1740,7 +1740,6 @@
           totalSize = totalSize + width;
         });
 
-        this.adjustSpilloverNumber();
         return this;
       },
 
@@ -1773,7 +1772,6 @@
         if (!sizeableTabs.length) {
           visibleTabSize = (tabContainerW - appTriggerSize + 101);
           this.moreButton.width(visibleTabSize);
-          this.adjustSpilloverNumber();
           return;
         }
 
