@@ -572,7 +572,7 @@
 
         this.element.off('keypress.modal keydown.modal');
         this.element.css('visibility', 'visible');
-        this.element.removeClass('is-visible');
+        this.element.removeClass('is-visible no-filter');
 
         this.overlay.attr('aria-hidden', 'true');
         this.element.attr('aria-hidden', 'true');
