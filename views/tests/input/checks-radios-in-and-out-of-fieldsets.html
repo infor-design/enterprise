@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="twelve columns">
+
+    <h2>Checkboxes and Radios in/out of Fieldsets</h2>
+    <p>The padding/margins on Checkboxes, Radio Buttons, and their corresponding labels should all match, and they should all be the same regardless of whether or not they live inside of a fieldset element.</p>
+    <p></p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+
+    <h3>No Fieldsets</h3>
+
+    <span class="label">Select delivery method</span>
+
+    <input type="radio" name="options" value="0" class="radio" id="no-fieldset-option1">
+    <label for="no-fieldset-option1" class="radio-label" tabindex="-1">The First Option</label><br>
+
+    <input type="radio" checked name="options" value="1" class="radio" id="no-fieldset-option2">
+    <label for="no-fieldset-option2" class="radio-label" tabindex="-1">Another Option</label><br>
+
+    <input type="radio" name="options" value="2" class="radio" id="no-fieldset-option3">
+    <label for="no-fieldset-option3" class="radio-label" tabindex="-1">Yet Another Option</label><br>
+
+    <input type="checkbox" class="checkbox" id="no-fieldset-additional-setting">
+    <label for="no-fieldset-additional-setting" class="checkbox-label">Additional Setting</label>
+
+  </div>
+  <div class="six columns">
+
+    <h3>Inside of Fieldsets</h3>
+
+    <fieldset class="radio-group">
+      <legend>Select delivery method</legend>
+
+      <input type="radio" name="options" value="0" class="radio" id="fieldset-option1">
+      <label for="fieldset-option1" class="radio-label" tabindex="-1">The First Option</label><br>
+
+      <input type="radio" checked name="options" value="1" class="radio" id="fieldset-option2">
+      <label for="fieldset-option2" class="radio-label" tabindex="-1">Another Option</label><br>
+
+      <input type="radio" name="options" value="2" class="radio" id="fieldset-option3">
+      <label for="fieldset-option3" class="radio-label" tabindex="-1">Yet Another Option</label><br>
+
+      <input type="checkbox" class="checkbox" id="fieldset-additional-setting">
+      <label for="fieldset-additional-setting" class="checkbox-label">Additional Setting</label>
+    </fieldset>
+
+  </div>
+</div>
