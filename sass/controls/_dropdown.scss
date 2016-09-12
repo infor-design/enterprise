@@ -301,7 +301,7 @@ div.multiselect {
     li::before {
       @include checkbox-unchecked-before-style;
       margin-left: -27px;
-      top: 8px;
+      top: 4px;
     }
 
     li.is-disabled::before {
@@ -557,7 +557,7 @@ div.dropdown-lg {
     li {
       &::before {
         margin-left: 0;
-        top: 8px;
+        top: 4px;
       }
 
       &::after {
@@ -591,7 +591,7 @@ div.dropdown-lg {
   .dropdown-list {
     &.multiple li {
       &::before {
-        top: 7px;
+        top: 3px;
       }
 
       &.is-selected::after {
@@ -617,7 +617,7 @@ div.dropdown-lg {
 .ios {
   .dropdown-list.multiple li {
     &::before {
-      top: 10px;
+      top: 6px;
     }
 
     &.is-selected::after {
