@@ -1708,6 +1708,7 @@
           self.element.removeClass('has-more-button');
         }
 
+        this.adjustSpilloverNumber();
         self.setMoreActive();
 
       },
