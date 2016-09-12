@@ -1258,7 +1258,7 @@
         }
 
         if (this.settings.tabCounts) {
-          anchorMarkup.prepend('<span class="count">1</span>');
+          anchorMarkup.prepend('<span class="count">0 </span>');
         }
 
         if (options.dropdown) {
@@ -1809,11 +1809,6 @@
         if (!countDiv.length) {
           countDiv = $('<span class="count"></span>');
           this.moreButton.children('span').first().prepend(countDiv);
-        }
-
-        // Remove tab, append to list
-        if (overflowedTabs.length === 1) {
-          overflowedTabs.length++;
         }
 
         countDiv.text('' + overflowedTabs.length + ' ');
