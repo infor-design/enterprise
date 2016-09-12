@@ -438,7 +438,10 @@
 
         this.icon.remove();
         this.element.unwrap();
-        this.label.find('.audible').remove();
+
+        if (this.label.length) {
+          this.label.find('.audible').remove();
+        }
       }
     };
 

@@ -55,6 +55,18 @@ var express = require('express'),
       console.log('Inlining SVG Elements...');
     }
 
+    // Set the theme and colorScheme
+    //Fx: http://localhost:4000/controls/modal?colorScheme=123456,123456,827272&themeName=dark
+    if (req.query.themeName && req.query.themeName.length  > 0) {
+      res.opts.themeName = req.query.themeName;
+      console.log('Setting Theme to ' + res.opts.themeName);
+    }
+
+    if (req.query.colorScheme && req.query.colorScheme.length > 0) {
+      res.opts.colorScheme = req.query.colorScheme;
+      console.log('Setting Colors to ' + res.opts.colorScheme);
+    }
+
     next();
   };
 

@@ -21,6 +21,18 @@
 
   $('body').initialize({locale: initialLocale}); //ar-EG to test RTL
 
+  var initialTheme = 'light';
+  {{#initialTheme}}
+  initialTheme = '{{initialTheme}}';
+  {{/initialTheme}}
+
+  var colorScheme;
+  {{#colorScheme}}
+  colorScheme = '{{colorScheme}}'.split(',');
+  {{/colorScheme}}
+
+  $('body').trigger('personalizecolors', colorScheme);
+  $('body').trigger('changetheme', initialTheme);
 </script>
 
 <!--

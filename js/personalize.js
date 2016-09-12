@@ -41,7 +41,7 @@
     // Plugin Methods
     Personalize.prototype = {
       init: function() {
-        this.setNewColorScheme(this.settings.startingColor, true);
+        this.setColorScheme(this.settings.startingColor, true);
 
         return this
           .handleEvents();
@@ -54,7 +54,7 @@
         this.element.on('updated.' + pluginName, function() {
           self.updated();
         }).on('personalizecolors.' + pluginName, function(e, newColor, noAnimate) {
-          self.setNewColorScheme(newColor, noAnimate);
+          self.setColorScheme(newColor, noAnimate);
         }).on('changetheme.' + pluginName, function(e, newTheme) {
           self.setNewTheme(newTheme);
         });
@@ -77,7 +77,7 @@
 
       // Changes all personalizable elements inside this element to match the personalization scheme provided.
       // @param {String} hex: The original Hexadecimal base color.
-      setNewColorScheme: function(hex, noAnimate) {
+      setColorScheme: function(hex, noAnimate) {
         // If an event sends a blank string through instead of a hex,
         // reset any color values back to the theme defaults.  Otherwise, get a valid hex value.
         if (hex && hex !== '') {
