@@ -1047,6 +1047,7 @@ td .btn-actions {
   &::before {
     @include checkbox-unchecked-before-style;
     margin-left: 0;
+    top: -4px;
   }
 
   &.is-checked::before {
@@ -1057,6 +1058,7 @@ td .btn-actions {
     @include checkbox-checked-after-style;
     @include css3(transform-origin, -11px top 0);
     @include checkbox-animation;
+    left: 5px;
     margin-top: 0;
     top: 1px;
   }

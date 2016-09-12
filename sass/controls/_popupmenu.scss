@@ -399,13 +399,15 @@
       &.is-focused::before {
         @include checkbox-unchecked-before-style;
         margin-left: 12px;
-        top: 8px;
+        margin-top: 0;
+        top: 9px;
       }
 
       &.is-checked::before {
         @include checkbox-checked-before-style;
         margin-left: 12px;
-        top: 8px;
+        margin-top: 0;
+        top: 9px;
       }
 
       &.is-checked::after {
@@ -419,7 +421,8 @@
         &::before {
           @include checkbox-unchecked-disabled-before-style;
           margin-left: 12px;
-          top: 8px;
+          margin-top: 0;
+          top: 9px;
         }
 
         &.is-checked {
