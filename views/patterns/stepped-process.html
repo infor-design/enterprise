@@ -21,22 +21,22 @@
 
   <div class="page-container no-scroll two-column fixed list-detail">
 
-    <div class="sidebar scrollable" role="complementary">
-      <div id="stepped-process-example" class="accordion panel stepped-process">
+    <div id="step-process-example" class="sidebar scrollable" role="complementary">
+      <div class="accordion panel step-process-accordion" data-init="false">
         <div class="accordion-header">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="/svg/icons.svg#icon-confirm"></use>
+          </svg>
           <a href="#">
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use xlink:href="/svg/icons.svg#icon-confirm"></use>
-            </svg>
             <span>Evaluate Criteria</span>
           </a>
         </div>
         <div class="accordion-pane">
           <div class="accordion-header">
-            <a href="#step1"><span>Compency Model 1</span></a>
+            <a href="#step1" class="step-link"><span>Compency Model 1</span></a>
           </div>
           <div class="accordion-header">
-            <a href="#step2"><span>Compency Model 2</span></a>
+            <a href="#step2" class="step-link"><span>Compency Model 2</span></a>
           </div>
         </div>
 
@@ -50,7 +50,7 @@
         </div>
         <div class="accordion-pane">
           <div class="accordion-header">
-            <a href="#step3"><span>Goal Section</span></a>
+            <a href="#step3" class="step-link"><span>Goal Section</span></a>
           </div>
         </div>
 
@@ -68,7 +68,7 @@
         </div>
         <div class="accordion-pane">
           <div class="accordion-header">
-            <a href="#step4"><span>Future Goal Section</span></a>
+            <a href="#step4" class="step-link"><span>Future Goal Section</span></a>
           </div>
         </div>
 
@@ -76,21 +76,21 @@
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-empty-circle"></use>
           </svg>
-          <a href="#step5"><span>Completed Activities</span></a>
+          <a href="#step5" class="step-link"><span>Completed Activities</span></a>
         </div>
 
         <div class="accordion-header">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-empty-circle"></use>
           </svg>
-          <a href="#step6"><span>Planned Activities</span></a>
+          <a href="#step6" class="step-link"><span>Planned Activities</span></a>
         </div>
 
         <div class="accordion-header">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-empty-circle"></use>
           </svg>
-          <a href="#step7"><span>Overall Evaluation Comments</span></a>
+          <a href="#step7" class="step-link"><span>Overall Evaluation Comments</span></a>
         </div>
       </div>
 
@@ -103,13 +103,13 @@
             <h1>Preferences</h1>
           </div>
           <div class="buttonset">
-            <button class="btn"  type="button">
+            <button class="btn step-link-prev" type="button">
               <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
                 <use xlink:href="/svg/icons.svg#icon-left-arrow"></use>
               </svg>
               <span>Previous</span>
             </button>
-            <button class="btn"  type="button">
+            <button class="btn step-link-next" type="button">
               <span>Next</span>
               <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
                 <use xlink:href="/svg/icons.svg#icon-right-arrow"></use>
@@ -121,9 +121,10 @@
 
       <div class="page-container scrollable">
         <div class="row">
-          <div class="full column steppedprocess-container">
+          <div class="full column step-process-container">
 
             <div id="step1" class="step-panel-example">
+              <h3>Step 1</h3>
               <h4>Please be specific so we can match your preferences to our job requirements. You can attach a resume, but you increase the likelihood of finding a position if you complete the whole application process.</h4>
               <div class="field">
                 <label for="employment-type" class="label">Employment Type</label>
@@ -133,40 +134,6 @@
               <div class="field">
                 <label for="work-type" class="label">Work Type</label>
                 <input id="work-type" name="work-type" type="text">
-              </div>
-
-              <h4>Your preferred locations:</h4>
-
-              <div class="field">
-                <label for="location-one" class="label">Location 1</label>
-                <input id="location-one" name="location-one" type="text">
-              </div>
-
-              <div class="field">
-                <label for="location-two" class="label">Location 2</label>
-                <input id="location-two" name="location-two" type="text">
-              </div>
-
-              <div class="field">
-                <label for="location-three" class="label">Location 3</label>
-                <input id="location-three" name="location-three" type="text">
-              </div>
-
-              <h4>Your preferred categories:</h4>
-
-              <div class="field">
-                <label for="category-one" class="label">Preference 1</label>
-                <input id="category-one" name="category-one" type="text">
-              </div>
-
-              <div class="field">
-                <label for="category-two" class="label">Preference 2</label>
-                <input id="category-two" name="category-two" type="text">
-              </div>
-
-              <div class="field">
-                <label for="category-three" class="label">Preference 3</label>
-                <input id="category-three" name="category-three" type="text">
               </div>
 
               <hr style="margin-bottom: 20px;">
@@ -192,12 +159,56 @@
               </div>
             </div>
 
-            <div id="step2" class="step-panel-example">Step 2</div>
-            <div id="step3" class="step-panel-example">Step 3</div>
-            <div id="step4" class="step-panel-example">Step 4</div>
-            <div id="step5" class="step-panel-example">Step 5</div>
-            <div id="step6" class="step-panel-example">Step 6</div>
-            <div id="step7" class="step-panel-example">Step 7</div>
+            <div id="step2" class="step-panel-example">
+
+              <h3>Step 2</h3>
+              <div class="field">
+                <label for="location-one" class="label">Location 1</label>
+                <input id="location-one" name="location-one" type="text">
+              </div>
+
+              <div class="field">
+                <label for="location-two" class="label">Location 2</label>
+                <input id="location-two" name="location-two" type="text">
+              </div>
+
+              <div class="field">
+                <label for="location-three" class="label">Location 3</label>
+                <input id="location-three" name="location-three" type="text">
+              </div>
+            </div>
+            <div id="step3" class="step-panel-example">
+              <h3>Step 3</h3>
+
+              <h4>Your preferred categories:</h4>
+
+              <div class="field">
+                <label for="category-one" class="label">Preference 1</label>
+                <input id="category-one" name="category-one" type="text">
+              </div>
+
+              <div class="field">
+                <label for="category-two" class="label">Preference 2</label>
+                <input id="category-two" name="category-two" type="text">
+              </div>
+
+              <div class="field">
+                <label for="category-three" class="label">Preference 3</label>
+                <input id="category-three" name="category-three" type="text">
+              </div>
+            </div>
+            <div id="step4" class="step-panel-example">
+              <h3>Step 4</h3>
+            </div>
+            <div id="step5" class="step-panel-example">
+              <h3>Step 5</h3>
+            </div>
+            <div id="step6" class="step-panel-example">
+              <h3>Step 6</h3>
+            </div>
+            <div id="step7" class="step-panel-example">
+              <h3>Step 7</h3>
+            </div>
 
           </div>
         </div>
@@ -210,16 +221,18 @@
 
     $(function() {
 
-      $('#stepped-process-example')
-        .accordion()
-        .on('beforeselect', function(event, elem) {
-          var stepId =  elem.attr('href');
-          if (stepId !== '#') {
-            $('.step-panel-example').hide();
-            $(stepId).show();
-            console.log(stepId);
-          }
-        });
+      $('#step-process-example').stepprocess();
+
+
+      // $('#step-process-example').stepProcess()
+      //   .on('beforeselect', function(event, elem) {
+      //     var stepId =  elem.attr('href');
+      //     if (stepId !== '#') {
+      //       $('.step-panel-example').hide();
+      //       $(stepId).show();
+      //       console.log(stepId);
+      //     }
+      //   });
 
     });
 

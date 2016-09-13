@@ -1,23 +1,18 @@
 // Stepped Process Pattern
 //==================================================//
 
-.stepped-process {
+.step-process-accordion.accordion.panel {
+  border-color: transparent;
+}
 
-  .panel {
-    border-color: transparent;
-  }
-
-  .step-link-active {
-  }
-
-  .step-panel {
+.step-process-container {
+  .step-panel-example {
     display: none;
-
-    &.step-panel-active {
-      display: block;
-    }
   }
 
+  .step-panel-active {
+    display: block;
+  }
 }
 
 @include respond-to(tabletdown) {
