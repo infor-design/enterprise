@@ -24,9 +24,9 @@
         defaults = {
           panelContainer: '.step-process-container', // Defines a separate element to be used for containing the content panels
           changeTabOnHashChange: false, // If true, will change the selected tab on invocation based on the URL that exists after the hash
-          stepLinks: '.step-link', // The selector for elements that are step links and change the content
-          stepPrev: '.step-link-prev', // The selector of the next step action (btn, link, etc)
-          stepNext: '.step-link-next', // The select of the next step action element (btn, link, etc)
+          stepLinks: '.js-step-link', // The selector for elements that are step links and change the content
+          stepPrev: '.js-step-link-prev', // The selector of the next step action (btn, link, etc)
+          stepNext: '.js-step-link-next', // The select of the next step action element (btn, link, etc)
         },
         settings = $.extend({}, defaults, options);
 
@@ -73,8 +73,15 @@
           self.selectNextStep.call(self, event);
         });
 
+        $(self.settings.stepToggle).click(function(event) {
+          self.toggleViewSteps.call(self, event);
+        });
+
         // Initiate and save access the accordion plugin methods
-        self.$stepAccordion = this.element.find('.accordion').accordion().data('accordion');
+        var accordionParams = {
+          rerouteOnLinkClick: false
+        }
+        self.$stepAccordion = this.element.find('.accordion').accordion(accordionParams).data('accordion');
 
         // If we are using the hash change setting
         if (this.settings.changeTabOnHashChange) {
@@ -123,7 +130,7 @@
       selectPrevStep: function() {
         var newStepIndex = this.getStepIndex(this.$currentStep) - 1;
         if (newStepIndex < 0) {
-          return;
+                  return;
         }
         this.changeSelectedStep(this.stepLinks[newStepIndex]);
       },
@@ -134,6 +141,11 @@
           return;
         }
         this.changeSelectedStep(this.stepLinks[newStepIndex]);
+      },
+
+      toggleViewSteps: function() {
+        console.log(this.element);
+
       }
 
     };

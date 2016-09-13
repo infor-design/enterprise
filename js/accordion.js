@@ -275,6 +275,8 @@
           headerWhereMouseDown = null;
         });
 
+        console.log(this.anchors);
+
         this.anchors.on('touchend.accordion', function(e) {
           return touchendInterceptor(e, $(this));
         }).on('click.accordion', function(e) {
@@ -338,7 +340,7 @@
           return;
         }
 
-        this.element.trigger('selected', [header]);
+        this.element.trigger('selected', header);
 
         // Set the original element for DOM traversal by keyboard
         this.originalSelection = anchor;

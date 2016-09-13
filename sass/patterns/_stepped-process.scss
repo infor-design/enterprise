@@ -15,6 +15,45 @@
   }
 }
 
+
+// In List-Detail View, Main/Sidebar slide left/right instead of being stacked
 @include respond-to(tabletdown) {
+
+  .responsive-2-col {
+    .main,
+    .sidebar {
+      @include transform-transition-list(300ms cubic-bezier(.17, .04, .03, .94));
+      position: absolute;
+
+      &.scrollable,
+      &.scrollable-y {
+        height: 100%;
+        overflow: auto;
+      }
+    }
+
+    .main {
+      @include css3(transform, translateX(100%));
+    }
+
+    .sidebar {
+      @include css3(transform, translateX(0));
+    }
+
+    &.show-detail {
+      .main {
+        @include css3(transform, translateX(0));
+      }
+
+      .sidebar {
+        @include css3(transform, translateX(-100%));
+      }
+    }
+  }
+
+  .list-detail-back-button {
+    display: inline-block;
+  }
+
 
 }
