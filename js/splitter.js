@@ -51,13 +51,25 @@
 
       // Add markup to the control
       build: function() {
-        var self = this;
-        var parentHeight = this.element.parent().height();
+        var self = this,
+          splitter = this.element,
+          scrollable = splitter.closest('.scrollable'),
+          parentHeight = splitter.parent().height();
 
         //Restore from local storage
         if (localStorage) {
           var w = localStorage[this.uniqueId()];
           this.splitTo(parseInt(w), parentHeight);
+        }
+
+        // Set extra margin for right splitter
+        if (splitter.is('.splitter-right')) {
+          splitter.css({'border-right': scrollable.css('border-right')});
+          scrollable.css({
+            'border-right': 0,
+            'margin-right': '20px',
+            'width': parseInt(scrollable.css('width'), 10) - 20 +'px'
+          });
         }
 
         //Set the height
@@ -101,7 +113,7 @@
 
         //move handle to left
         if (this.element.is('.splitter-right')) {
-          this.orgLeft = this.element.parent().outerWidth();
+          this.orgLeft = this.element.parent().outerWidth() + 20;
 
           if (this.element.parent().is('.content')) {
             this.orgLeft = this.element.parent().parent().outerWidth();
@@ -187,7 +199,7 @@
         }
 
         var rightSide = leftSide.next(),
-          w = leftArg + 20;
+          w = leftArg;
 
         //Adjust Left and Right Side
         leftSide.css('width', (w + 'px'));
