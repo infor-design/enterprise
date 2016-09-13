@@ -49,6 +49,7 @@ git checkout master
 # How To
 
 * Full grunt
+* update package.json
 * npm publish --force
 * Update CHANGELOG.MD for breaking changes, and add a new section.
 * Send Email to team
@@ -56,7 +57,7 @@ git checkout master
 * Create new version in Jira
 * Generate Release Notes
 * Make sure all new examples on the index page are updated
-* Comment in the analytics in footer.html
+* Comment in the analytics in footer.html (soho.infor.com)
 * Deploy to to http://107.170.15.202:4000
 * Deploy to to soho.infor.com
 * Create branch for major versions inside stash
@@ -65,4 +66,4 @@ git checkout master
 # Future
 * Make Build
 * Make Auto push on npm
-* updated changelog-contents.html 
+* updated changelog-contents.html

@@ -30,22 +30,22 @@ $('#show-message').on('click.test', function () {
     };
 
     $('body').message(opts)
-    .on('beforeOpen', function () {
+    .on('beforeopen', function () {
       console.log('beforeOpen');
       //return false;
     })
     .on('open', function () {
       console.log('open');
     })
-    .on('beforeClose', function () {
-      console.log('beforeClose');
+    .on('beforeclose', function () {
+      console.log('beforeclose');
       //return false;
     })
     .on('close', function () {
       console.log('close');
     })
-    .on('afterClose', function () {
-      console.log('afterClose');
+    .on('afterclose', function () {
+      console.log('afterclose');
     });
 });
 </script>

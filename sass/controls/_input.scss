@@ -159,23 +159,6 @@
     }
   }
 
-  //Clearable input
-  .icon.close {
-    cursor: pointer;
-    fill: $trigger-icon-fill-color;
-    height: 14px;
-    right: 29px;
-    top: 3px;
-
-    &:hover {
-      fill: $trigger-hover-color;
-    }
-
-    &.is-empty {
-      display: none;
-    }
-  }
-
   > .textarea-wordcount {
     color: $label-color;
     margin-bottom: 14px;
@@ -211,6 +194,23 @@
     margin-top: 3rem;
   }
 
+}
+
+//Clearable input fx on search or input/clearable
+.icon.close {
+  cursor: pointer;
+  fill: $trigger-icon-fill-color;
+  height: 14px;
+  right: 29px;
+  top: 3px;
+
+  &:hover {
+    fill: $trigger-hover-color;
+  }
+
+  &.is-empty {
+    display: none;
+  }
 }
 
 // Input Style

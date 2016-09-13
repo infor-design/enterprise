@@ -25,7 +25,7 @@
       defaults = {
         source: [], //Defines the data to use, must be specified.
         template: undefined, // If defined, use this to draw the contents of each search result instead of the default draw routine.
-        filterMode: 'startsWith',  // startsWith and contains Supported
+        filterMode: 'startsWith',  // startsWith and contains Supported - false will not client side filter
         delay: 300, // delay is the delay between key strokes on the keypad before it thinks you stopped typing
         width: null, //width of the auto complete menu
         offset: null //left or top offset

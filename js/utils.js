@@ -418,6 +418,8 @@
       } else {
         this.xButton.removeClass('is-empty');
       }
+
+      this.element.trigger('contents-checked');
     };
 
     //Add the button to field parent
