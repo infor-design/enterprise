@@ -14,7 +14,7 @@ Release Date: TBD
 * Property Sheet pattern
 * Tree - Ability to add nodes with Ajax
 * Splitter - Added keyboard/Aria
-* External SVG Files for icons.
+* External SVG Files for icons
 * Record ID styling - Options
 
 ### Breaking Changes
@@ -30,7 +30,7 @@ Release Date: TBD
 * 2016-06-01 - Renamed (not frequently used) .sort plugin to .arrange.
 
 ### Ui Changes
-* 2016-08-30 - http://usmvvwdev53:421/tests/header - Shows a number of header options we added 
+* 2016-08-30 - http://usmvvwdev53:421/tests/header - Shows a number of header options we added
 * 2016-08-24 - Changed border color from graphite02 to graphite03 (this was a mistake and not matching design comps)
 * 2016-07-13 - Datagrid alternate row colors Changed
 * 2016-06-20 - Changed background color of drop down to transparent (to match designs)
