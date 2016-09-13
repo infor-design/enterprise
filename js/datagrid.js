@@ -345,6 +345,7 @@ window.Editors = {
     this.originalValue = value;
 
     this.init = function () {
+
       this.input = $('<input type="'+ (column.inputType ? column.inputType : 'text') +'"/>')
         .appendTo(container);
 
@@ -3650,9 +3651,10 @@ $.fn.datagrid = function(options) {
       // Put the Cell into Focus Mode
       this.setActiveCell(row, cell);
 
-      var cellNode = this.activeCell.node.find('.datagrid-cell-wrapper'),
+      var dataRowIndex = this.dataRowIndex(this.visualRowNode(row)),
+        cellNode = this.activeCell.node.find('.datagrid-cell-wrapper'),
         cellParent = cellNode.parent('td'),
-        cellValue = (cellNode.text() ? cellNode.text() : this.fieldValue(this.settings.dataset[row], col.field));
+        cellValue = (cellNode.text() ? cellNode.text() : this.fieldValue(this.settings.dataset[dataRowIndex], col.field));
 
       if (cellParent.hasClass('is-editing')) {
         //Already in edit mode
@@ -3664,10 +3666,10 @@ $.fn.datagrid = function(options) {
       //Editor.init
       cellParent.addClass('is-editing');
       cellNode.empty();
-      this.editor = new col.editor(row, cell, cellValue, cellNode, col, event, this, this.settings.dataset[row]);
+      this.editor = new col.editor(dataRowIndex, cell, cellValue, cellNode, col, event, this, this.settings.dataset[dataRowIndex]);
 
       if (this.editor.useValue) {
-        cellValue = this.fieldValue(this.settings.dataset[row], col.field);
+        cellValue = this.fieldValue(this.settings.dataset[dataRowIndex], col.field);
       }
       this.editor.val(cellValue);
       this.editor.focus();
@@ -3955,7 +3957,8 @@ $.fn.datagrid = function(options) {
         expandRow = this.table.find('tr').eq(rowIndex+1),
         expandButton = rowElement.find('.datagrid-expand-btn'),
         detail = expandRow.find('.datagrid-row-detail'),
-        item = self.settings.dataset[rowIndex - (rowIndex + 1)/2];
+        dataRowIndex = self.dataRowIndex(rowElement),
+        item = self.settings.dataset[dataRowIndex];
 
       if (rowElement.hasClass('datagrid-tree-parent')) {
         return;
@@ -3968,7 +3971,7 @@ $.fn.datagrid = function(options) {
 
         detail.animateClosed().on('animateclosedcomplete', function () {
           expandRow.css('display', 'none');
-          self.element.trigger('collapserow', [{grid: self, row: rowIndex, detail: detail, item: item}]);
+          self.element.trigger('collapserow', [{grid: self, row: dataRowIndex, detail: detail, item: item}]);
         });
 
       } else {
@@ -3982,7 +3985,7 @@ $.fn.datagrid = function(options) {
         expandRow.find('.constrained-width').css('max-width', this.element.outerWidth());
 
         detail.animateOpen();
-        self.element.trigger('expandrow', [{grid: self, row: rowIndex, detail: detail, item: item}]);
+        self.element.trigger('expandrow', [{grid: self, row: dataRowIndex, detail: detail, item: item}]);
       }
     },
 

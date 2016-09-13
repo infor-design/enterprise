@@ -71,6 +71,10 @@
         console.log('collapserow', e, args);
       });
 
+      grid.on('expandrow', function (e, args) {
+        console.log('expandrow', e, args);
+      });
+
       grid.on('cellchange', function (e, args) {
         console.log('cellchange', e, args);
       });
