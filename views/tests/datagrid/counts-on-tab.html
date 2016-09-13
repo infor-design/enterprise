@@ -30,19 +30,21 @@
 
 	<script>
     $(function() {
-        $('body').initialize('en-US');
-        $('body').one('initialized', function () {
-        	initGrid('#first-grid', 'First');
-        	initGrid('#second-grid', 'Second');
-        	initGrid('#third-grid', 'Third');
-          });
+
+      $('body').one('initialized', function () {
+      	initGrid('#first-grid', 'First');
+      	initGrid('#second-grid', 'Second');
+      	initGrid('#third-grid', 'Third');
+
         // simulate data being loading asynchronously after grids are initilized.
-    	setTimeout(function() {
-        	loadGrid('#first-grid');
-        	loadGrid('#second-grid');
-        	loadGrid('#third-grid');
-    	}, 1000);
+	    	setTimeout(function() {
+	        	loadGrid('#first-grid');
+	        	loadGrid('#second-grid');
+	        	loadGrid('#third-grid');
+	    	}, 1000);
       });
+
+    });
 
     function initGrid(selector, tabName) {
         var grid,
@@ -53,7 +55,7 @@
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly});
       columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, click: function (e, args) {
           console.log(e, args);
-      }});
+      }, width: 400});
       columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity'});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
       columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal});
@@ -67,6 +69,7 @@
         dataset: data,
         toolbar: {title: tabName, results: true}
       });
+
     }
 
     function loadGrid(selector) {

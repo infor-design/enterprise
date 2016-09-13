@@ -860,7 +860,6 @@ $.fn.datagrid = function(options) {
     render: function () {
       var self = this;
 
-
       //Init from Table
       if (this.settings.dataset === 'table') {
         self.table = $(this.element).addClass('datagrid').attr('role', this.settings.treeGrid ? 'treegrid' : 'grid');
@@ -2051,7 +2050,8 @@ $.fn.datagrid = function(options) {
 
         var colWidth =  parseInt(column.width) || header.outerWidth();
         total+= colWidth;
-        if (widthProvided) {
+
+        if (widthProvided && colWidth) {
           header.css('width', colWidth);
         }
 
