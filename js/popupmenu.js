@@ -52,6 +52,10 @@
         this.fixSvg();
       },
 
+      isRTL: function() {
+        return $('html').attr('dir') === 'rtl';
+      },
+
       fixSvg: function () {
         // Fix: chrome was not showing icons had to resets [xlink:href] attribute
         var self = this,
@@ -524,122 +528,202 @@
       },
 
       position: function(e) {
-        var target = (e ? $(e.target) : this.element),
+        var target = this.element,
           wrapper = this.menu.parent('.popupmenu-wrapper'),
-          menuWidth = this.menu.outerWidth(),
-          menuHeight = this.menu.outerHeight(),
-          xOffset = this.element.hasClass('btn-actions') ? (menuWidth) - 36 : 0;
+          menuDimensions = {
+            width: this.menu.outerWidth(),
+            height: this.menu.outerHeight()
+          },
+          //xOffset = this.element.hasClass('btn-actions') ? (menuWidth) - 36 : 0,
+          left, top,
+          d;
 
         //Adjust width for filter button
+        /*
         if (this.element.hasClass('btn-filter')) {
           xOffset = +10;
         }
+        */
 
         if (target.is('svg, .icon') && target.closest('.tab').length) {
           target = target.closest('.tab');
         }
 
-        if (this.settings.trigger === 'rightClick' || (e !== null && e !== undefined && this.settings.trigger === 'immediate')) {
-          wrapper.css({'left': (e.type === 'keypress' || e.type === 'keydown' ? target.offset().left : e.pageX) - xOffset,
-                        'top': (e.type === 'keypress' || e.type === 'keydown' ? target.offset().top : e.pageY) });
-        } else {
-          wrapper.css({'left': target.offset().left - (wrapper.parent().length ===1 ? wrapper.offsetParent().offset().left : 0) - xOffset,
-                        'top': target.offset().top + 10 + target.outerHeight() });
+        function sanitizeAxis(axis) {
+          return ((axis === 'x' || axis === 'y') ? axis : 'x');
         }
 
-        if (wrapper.closest('.modal').length > 0 && !this.isIe11) {
-          wrapper.css('left', target.offset().left + 2 - xOffset - wrapper.closest('.modal').offset().left );
-          wrapper.css('top', target.offset().top + 10 + target.outerHeight() - wrapper.closest('.modal').offset().top);
+        function getCoordinates(e, axis) {
+          axis = sanitizeAxis(axis);
+          return e['page' + axis.toUpperCase()]; // use mouseX/mouseY if this doesn't work
         }
+
+        function getBorder(axis) {
+          return (axis === 'x' ? 'left' : 'top');
+        }
+
+        function getTargetOffset(el, axis) {
+          axis = sanitizeAxis(axis);
+          var border = getBorder(axis),
+            offset = el.offset();
+          return offset[border];
+        }
+
+        function isKeyboardEvent(e) {
+          var eventTypes = ['keydown', 'keypress'];
+          return (e && eventTypes.indexOf(e.type) > -1);
+        }
+
+        function hasCloseParent(el) {
+          return el && el.parent().length > 0 && !(el.offsetParent().is('html'));
+        }
+
+        switch(this.settings.trigger) {
+          case 'rightClick':
+            left = getCoordinates(e, 'x');
+            top = getCoordinates(e, 'y');
+            break;
+          case 'immediate':
+            left = isKeyboardEvent(e) ? getCoordinates(e, 'x') : getTargetOffset(target, 'x');
+            top = isKeyboardEvent(e) ? getCoordinates(e, 'y') : getTargetOffset(target, 'y');
+            break;
+          default:
+            left = getTargetOffset(target, 'x');/*target.offset().left - (hasCloseParent(wrapper) ? wrapper.offsetParent().offset().left : 0) - xOffset*/;
+            top = getTargetOffset(target, 'y');/*target.offset().top + 10 + target.outerHeight()*/;
+            break;
+        }
+
+        function useArrow() {
+          return target.is('.btn-menu, .btn-actions, .searchfield-category-button, .trigger');
+        }
+        function hideArrow() {
+          if (useArrow()) {
+            wrapper.find('.arrow').css({ 'display': 'none' });
+          }
+        }
+        function centerArrow() {
+          wrapper.find('.arrow').css({ 'right': 'auto', 'left': (target.width() / 2) + 'px' });
+        }
+
+        // Reset the arrow
+        wrapper.find('.arrow').removeAttr('style');
+
+        // if the target "is" a certain set of classes, or meets certain criteria, the target's
+        // size (height or width) will be added to the left/top placement.
+        function useTargetSize(axis) {
+          var cssConstraints = {
+            x: '',
+            y: '.autocomplete, .btn-menu, .btn-actions, .searchfield-category-button, .trigger'
+          };
+          var jsConstraints = {
+            x: function() {
+              return false;
+            },
+            y: function() {
+              return target.closest('.tab').length ||
+                target.closest('.tab-more').length ||
+                target.closest('.colorpicker-container').length;
+            }
+          };
+
+          return target.is(cssConstraints[axis]) || jsConstraints[axis]();
+        }
+
+        // Same thing, but uses the "menu" size.
+        function useMenuSize(axis) {
+          var cssConstraints = {
+            x: '.btn-actions',
+            y: ''
+          };
+          return target.is(cssConstraints[axis]);
+        }
+
+        // Factor in the "size" of both the target element and the menu into the left/top positions
+        // of the menu.
+        function getAdjustedForSize(axis, value) {
+          axis = sanitizeAxis(axis);
+          var dimension = axis === 'x' ? 'Width' : 'Height';
+
+          if (useTargetSize(axis)) {
+            value = value + target['outer' + dimension]();
+          }
+
+          if (useMenuSize(axis)) {
+            value = value - menuDimensions[dimension.toLowerCase()];
+          }
+
+          // Custom adjustments on a per-element/axis basis
+          if (axis === 'x' && target.is('.btn-actions')) {
+            value = value + target.outerWidth();
+          }
+
+          if (axis === 'y' && (target.is('.btn-actions, .searchfield-category-button') || target.closest('.colorpicker-container').length)) {
+            value = value + 10; // extra spacing to keep arrow from overlapping
+          }
+
+          return value;
+        }
+        left = getAdjustedForSize('x', left);
+        top = getAdjustedForSize('y', top);
+
+        var modalParent = wrapper.closest('.modal'),
+          mpOffset = modalParent.offset();
+        function getModalParentOffset(axis) {
+          axis = sanitizeAxis(axis);
+          var border = getBorder(axis);
+          return modalParent.length && !this.isIe11 ? mpOffset[border] : 0;
+        }
+
+        // Fix these values if we're sitting inside a modal, since the modal element is "fixed"
+        left = left - getModalParentOffset('x');
+        top = top - getModalParentOffset('y');
+
+        // place the element so we can get some height/width and bleeds
+        wrapper.css({'left': left, 'top': top});
+        left = wrapper.offset().left;
+        top = wrapper.offset().top;
+
+        var scrollPosY = $(window).height() + $(document).scrollTop(),
+          scrollPosX = $(window).width() + $(document).scrollLeft();
 
         //Handle Case where menu is off bottom
-        if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
-          if (this.element.is(':not(.autocomplete)')) {
-            wrapper.css({'top': ($(window).height() + $(document).scrollTop()) - menuHeight});
+        if ((top + menuDimensions.height) > scrollPosY) {
+          d = (top + menuDimensions.height) + getModalParentOffset('y') - scrollPosY;
+          top = top - d;
 
-            if (this.element.is('.btn-menu')) {
-              //move on top and change arrow
-              wrapper.css({'top': target.offset().top - menuHeight});
-              wrapper.removeClass('bottom').addClass('top');
-            }
-
-            //Did it fit?
-            if ((wrapper.offset().top - $(document).scrollTop()) < 0) {
-              wrapper.css('top', 0);
-              wrapper.css('top', $(document).scrollTop() + (wrapper.offset().top * -1));
-              menuHeight = wrapper.outerHeight();
-            }
+          // Check if we've bled off the top edge.  If yes, shrink the menu's height
+          if (top - $(document).scrollTop() < 0) {
+            d = top * -1;
+            top = top + d;
+            menuDimensions.height = menuDimensions.height - d;
           }
 
-          // Do one more check to see if the bottom edge bleeds off the screen.
-          // If it does, shrink the menu's Y size.
-          if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
-            var differenceX = (wrapper.offset().top + menuHeight) - ($(window).height() + $(document).scrollTop());
-            menuHeight = menuHeight - differenceX - 32;
-            this.menu.height(menuHeight);
-          }
+          hideArrow();
+          wrapper.css({'top': top});
+          this.menu.css({'height': menuDimensions.height});
         }
 
         //Handle Case where menu is off the right
-        if ((wrapper.offset().left + menuWidth) > $(window).width()) {
-          wrapper.css({'left': $(window).width() - menuWidth - ($(window).width() - target.offset().left) + target.outerWidth()});
-          wrapper.find('div.arrow').css({'left': 'auto', 'right': '10px'});
-        }
+        if ((left + menuDimensions.width) > scrollPosX) {
+          d = (left + menuDimensions.width) + getModalParentOffset('x') - scrollPosX;
+          left = left - d;
 
-        wrapper.find('.arrow').removeAttr('style');
-
-        if (this.element.is('.searchfield-category-button')) {
-          wrapper.find('.arrow').css({
-            'right': 'auto',
-            'left': (this.element.width() / 2) + 'px'
-          });
-        }
-
-        //Handle Case where menu is off the left
-        if (wrapper.offset().left < 0) {
-          wrapper.css({'left': this.element.offset().left});
-
-          //move the arrow - might need better logic here.
-          wrapper.find('.arrow').css({'left': '20px', 'right': 'unset'});
-          this.menu.css('overflow', 'hidden');
-        }
-
-        if (this.element.hasClass('btn-menu') && !this.element.parent().is('.field')) {
-          wrapper.find('div.arrow').css({'left': '20px'});
-
-          if (this.element.closest('.buttonset').length > 0 ) {
-            wrapper.find('div.arrow').css({'left': Math.max(this.element.width() -2, 7) + 'px'});
+          // Check if we've bled off the left edge.  If yes, shrink the menu's width
+          if (left - $(document).scrollLeft() < 0) {
+            d = left * -1;
+            left = left + d;
+            menuDimensions.width = menuDimensions.width - d;
           }
 
-          if (wrapper.offset().left < 0) {
-            wrapper.css('left', '10px');
-            var arrowPos = this.element.outerWidth() + this.element.offset().left - 27;
-            wrapper.find('div.arrow').css('left', Math.max(arrowPos, 7));
-          }
-
+          hideArrow();
+          wrapper.css({'left': left});
+          this.menu.css({'width': menuDimensions.width});
         }
 
-        if (this.element.parent('.field').length > 0) {
-          wrapper.find('div.arrow').css({'right': '13px'});
+        // reposition the arrow in some cases.
+        if (this.element.is('.btn-menu') || this.element.is('.searchfield-category-button')) {
+          centerArrow();
         }
-
-        if (this.element.closest('.tab').length || this.element.closest('.tab-more').length) {
-          wrapper.css({ 'top': target.offset().top + target.outerHeight() });
-        }
-
-        if (this.element.is('.autocomplete')) {
-          wrapper.css({ 'top': this.element.offset().top + target.outerHeight() });
-        }
-
-        // Fix: In lookup toolbar ie11 was not positioning, so need to use this hack
-        var lookupMoreBtn = $('.lookup-modal .modal-body .toolbar .more');
-        if (this.isIe11 && lookupMoreBtn.length) {
-          wrapper.css({
-            'left': lookupMoreBtn.offset().left - (wrapper.outerWidth() - lookupMoreBtn.outerWidth()),
-            'top': lookupMoreBtn.offset().top + lookupMoreBtn.outerHeight()
-          });
-        }
-
       },
 
       open: function(e, ajaxReturn) {
