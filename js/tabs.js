@@ -1258,7 +1258,7 @@
         }
 
         if (this.settings.tabCounts) {
-          anchorMarkup.prepend('<span class="count">1</span>');
+          anchorMarkup.prepend('<span class="count">0 </span>');
         }
 
         if (options.dropdown) {
@@ -1708,6 +1708,7 @@
           self.element.removeClass('has-more-button');
         }
 
+        this.adjustSpilloverNumber();
         self.setMoreActive();
 
       },
@@ -1739,7 +1740,6 @@
           totalSize = totalSize + width;
         });
 
-        this.adjustSpilloverNumber();
         return this;
       },
 
@@ -1772,7 +1772,6 @@
         if (!sizeableTabs.length) {
           visibleTabSize = (tabContainerW - appTriggerSize + 101);
           this.moreButton.width(visibleTabSize);
-          this.adjustSpilloverNumber();
           return;
         }
 
@@ -1809,11 +1808,6 @@
         if (!countDiv.length) {
           countDiv = $('<span class="count"></span>');
           this.moreButton.children('span').first().prepend(countDiv);
-        }
-
-        // Remove tab, append to list
-        if (overflowedTabs.length === 1) {
-          overflowedTabs.length++;
         }
 
         countDiv.text('' + overflowedTabs.length + ' ');
