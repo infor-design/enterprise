@@ -84,6 +84,10 @@
           hex = this.validateHex(hex);
         }
 
+        if (!hex) {
+          return;
+        }
+
         var self = this,
           colors = {
             'header': hex !== '' ? hex : '',

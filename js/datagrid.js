@@ -4221,7 +4221,6 @@ $.fn.datagrid = function(options) {
         if (self.filterExpr && self.filterExpr[0]) {
           self.highlightSearchRows(self.filterExpr[0].value);
         }
-
       });
 
     },
