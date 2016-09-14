@@ -1560,6 +1560,8 @@ $.fn.datagrid = function(options) {
       }
 
       this.renderRows();
+      this.resetPager('filtered');
+
     },
 
     //Clear and reset the filter
@@ -1831,18 +1833,19 @@ $.fn.datagrid = function(options) {
       self.tableBody.css({'height': self.tableHeight, 'display': 'block'});
       self.tableBody.empty();
       self.recordCount = 0;
+      self.filteredCount = 0;
 
       for (i = 0; i < dataset.length; i++) {
 
         //For better performance dont render out of page
         if (this.settings.paging && !this.settings.source) {
 
-          if (activePage === 1 && i >= pagesize){
+          if (activePage === 1 && (i - this.filteredCount) >= pagesize){
             this.recordCount++;
             continue;
           }
 
-          if (activePage > 1 && !(i >= pagesize*(activePage-1) && i < pagesize*activePage)) {
+          if (activePage > 1 && !((i - this.filteredCount) >= pagesize*(activePage-1) && (i - this.filteredCount) < pagesize*activePage)) {
             this.recordCount++;
             continue;
           }
@@ -1850,6 +1853,7 @@ $.fn.datagrid = function(options) {
 
         //Exclude Filtered Rows
         if (dataset[i].isFiltered) {
+          this.filteredCount++;
           continue;
         }
 
@@ -3111,10 +3115,6 @@ $.fn.datagrid = function(options) {
         return;
       }
 
-      if (!this.element.find('tbody tr[aria-rowindex="'+ idx +'"]').length) {
-        return;
-      }
-
       rowNode = this.visualRowNode(idx);
       dataRowIndex = this.dataRowIndex(rowNode);
 
@@ -4218,7 +4218,7 @@ $.fn.datagrid = function(options) {
         self.updateSelected();
         self.syncSelectedUI();
 
-        if (self.filterExpr && self.filterExpr[0]) {
+        if (self.filterExpr && self.filterExpr[0] && self.filterExpr[0].column === 'all') {
           self.highlightSearchRows(self.filterExpr[0].value);
         }
       });

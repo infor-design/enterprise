@@ -401,9 +401,16 @@
 
         //Adjust Page count numbers
         if (!this.settings.source) {
-          pc = Math.ceil(this.getPageableElements().not('.is-filtered').length/this.settings.pagesize);
+          var pageableLength = this.getPageableElements().not('.is-filtered').length;
+          pc = Math.ceil(pageableLength/this.settings.pagesize);
+
           if (this.isTable) {
-            pc = Math.ceil(this.settings.dataset.length/this.settings.pagesize);
+            var isFiltered = function(value) {
+              return !value.isFiltered;
+            },
+            dataLength = this.settings.dataset.filter(isFiltered).length;
+
+            pc = Math.ceil(dataLength/this.settings.pagesize);
           }
           this.pageCount(pc);
         }
