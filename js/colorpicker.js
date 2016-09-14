@@ -239,7 +239,6 @@
         .on('close.colorpicker', function () {
           $('#colorpicker-menu').parent('.popupmenu-wrapper').remove();
           self.element.parent().removeClass('is-open');
-          self.element.focus();
         })
         .on('selected.colorpicker', function (e, item) {
           self.element.val('#'+item.data('value'));
