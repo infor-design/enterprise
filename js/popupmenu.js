@@ -1074,7 +1074,9 @@
           return;
         }
 
-        this.element.focus();
+        if ($(document.activeElement).is('body')) {
+          this.element.focus();
+        }
       },
 
       teardown: function() {
