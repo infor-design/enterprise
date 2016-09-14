@@ -529,21 +529,14 @@
 
       position: function(e) {
         var target = this.element,
+          isRTL = this.isRTL(),
           wrapper = this.menu.parent('.popupmenu-wrapper'),
           menuDimensions = {
             width: this.menu.outerWidth(),
             height: this.menu.outerHeight()
           },
-          //xOffset = this.element.hasClass('btn-actions') ? (menuWidth) - 36 : 0,
           left, top,
           d;
-
-        //Adjust width for filter button
-        /*
-        if (this.element.hasClass('btn-filter')) {
-          xOffset = +10;
-        }
-        */
 
         if (target.is('svg, .icon') && target.closest('.tab').length) {
           target = target.closest('.tab');
@@ -584,8 +577,8 @@
             top = isKeyboardEvent(e) ? getCoordinates(e, 'y') : getTargetOffset(target, 'y');
             break;
           default:
-            left = getTargetOffset(target, 'x');  //target.offset().left - (hasCloseParent(wrapper) ? wrapper.offsetParent().offset().left : 0) - xOffset
-            top = getTargetOffset(target, 'y'); //target.offset().top + 10 + target.outerHeight()
+            left = getTargetOffset(target, 'x');
+            top = getTargetOffset(target, 'y');
             break;
         }
 
@@ -649,12 +642,23 @@
           }
 
           // Custom adjustments on a per-element/axis basis
-          if (axis === 'x' && target.is('.btn-actions')) {
-            value = value + target.outerWidth();
+          if (axis === 'x') {
+            if (target.is('.btn-actions')) {
+              value = value + (isRTL ? -(target.outerWidth()) : target.outerWidth());
+            }
+            if (target.is('.btn-filter')) {
+              value = value + (isRTL ? 10 : -10);
+            }
           }
 
-          if (axis === 'y' && (target.is('.btn-actions, .searchfield-category-button') || target.closest('.colorpicker-container').length)) {
-            value = value + 10; // extra spacing to keep arrow from overlapping
+          if (axis === 'y') {
+            if (target.is('.btn-actions')) {
+              value = value + 5;
+            }
+
+            if (target.is('.btn-filter, .searchfield-category-button') || target.closest('.colorpicker-container').length) {
+              value = value + 10; // extra spacing to keep arrow from overlapping
+            }
           }
 
           return value;
@@ -728,6 +732,9 @@
         // reposition the arrow in some cases.
         if (this.element.is('.btn-menu') || this.element.is('.searchfield-category-button')) {
           centerArrow();
+        }
+        if (this.element.is('.btn-filter')) {
+          wrapper.find('.arrow').css({ 'right': (isRTL ? '20px' : 'auto'), 'left': (isRTL ? 'auto' : '20px') });
         }
       },
 
