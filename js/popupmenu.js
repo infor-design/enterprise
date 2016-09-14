@@ -574,10 +574,6 @@
           return (e && eventTypes.indexOf(e.type) > -1);
         }
 
-        function hasCloseParent(el) {
-          return el && el.parent().length > 0 && !(el.offsetParent().is('html'));
-        }
-
         switch(this.settings.trigger) {
           case 'rightClick':
             left = getCoordinates(e, 'x');
@@ -588,8 +584,8 @@
             top = isKeyboardEvent(e) ? getCoordinates(e, 'y') : getTargetOffset(target, 'y');
             break;
           default:
-            left = getTargetOffset(target, 'x');/*target.offset().left - (hasCloseParent(wrapper) ? wrapper.offsetParent().offset().left : 0) - xOffset*/;
-            top = getTargetOffset(target, 'y');/*target.offset().top + 10 + target.outerHeight()*/;
+            left = getTargetOffset(target, 'x');  //target.offset().left - (hasCloseParent(wrapper) ? wrapper.offsetParent().offset().left : 0) - xOffset
+            top = getTargetOffset(target, 'y'); //target.offset().top + 10 + target.outerHeight()
             break;
         }
 

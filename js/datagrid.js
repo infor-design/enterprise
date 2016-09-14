@@ -345,7 +345,6 @@ window.Editors = {
     this.originalValue = value;
 
     this.init = function () {
-
       this.input = $('<input type="'+ (column.inputType ? column.inputType : 'text') +'"/>')
         .appendTo(container);
 
@@ -3049,6 +3048,10 @@ $.fn.datagrid = function(options) {
       rowNode = this.visualRowNode(idx);
       dataRowIndex = this.dataRowIndex(rowNode);
 
+      if (isNaN(dataRowIndex)) {
+        dataRowIndex = idx;
+      }
+
       if (!rowNode) {
         return;
       }
@@ -4085,7 +4088,7 @@ $.fn.datagrid = function(options) {
 
       $('tr[role="row"]', self.tableBody).each(function() {
         var row = $(this),
-          newIdx = row.index(),
+          newIdx = self.dataRowIndex(row),
           checkbox = self.cellNode(row, self.columnIdxById('selectionCheckbox'));
 
         $.each(self._selectedRows, function(index, val) {
@@ -4126,11 +4129,16 @@ $.fn.datagrid = function(options) {
       this.pager = pagerElem.data('pager');
 
       pagerElem.on('afterpaging', function (e, args) {
-       self.displayCounts(args.total);
 
-       if (self.filterExpr && self.filterExpr[0]) {
-        self.highlightSearchRows(self.filterExpr[0].value);
-       }
+        self.displayCounts(args.total);
+
+        //Handle row selection across pages
+        self.updateSelected();
+        self.syncSelectedUI();
+
+        if (self.filterExpr && self.filterExpr[0]) {
+          self.highlightSearchRows(self.filterExpr[0].value);
+        }
 
       });
 
