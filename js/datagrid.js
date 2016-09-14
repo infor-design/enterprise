@@ -1299,6 +1299,8 @@ $.fn.datagrid = function(options) {
 
     },
 
+    filterRowRendered: false,
+
     //Render the Filter Row
     renderFilterRow: function () {
       var self = this;
@@ -1382,6 +1384,7 @@ $.fn.datagrid = function(options) {
         self.applyFilter();
       });
 
+      self.filterRowRendered = true;
     },
 
     //Render one filter item as used in renderFilterButton
@@ -1446,6 +1449,11 @@ $.fn.datagrid = function(options) {
         this.settings.filterable = false;
       } else {
         this.settings.filterable = true;
+
+        if (!this.filterRowRendered) {
+          this.renderFilterRow();
+        }
+
         this.headerRow.addClass('is-filterable');
         this.headerRow.find('.is-filterable').addClass('is-filterable');
         this.headerRow.find('.datagrid-filter-wrapper').show();
@@ -2926,7 +2934,7 @@ $.fn.datagrid = function(options) {
         if (settings.toolbar.filterRow) {
           menu.append('<li class="separator"></li>' +
             '<li class="heading">' + Locale.translate('Filter') + '</li>' +
-            '<li class="is-checked is-toggleable"><a data-option="show-filter-row">' + Locale.translate('ShowFilterRow') + '</a></li>' +
+            '<li class="' + (settings.filterable ? 'is-checked ' : '') + 'is-toggleable"><a data-option="show-filter-row">' + Locale.translate('ShowFilterRow') + '</a></li>' +
             '<li class="is-indented"><a data-option="run-filter">' + Locale.translate('RunFilter') + '</a></li>' +
             '<li class="is-indented"><a data-option="clear-filter">' + Locale.translate('ClearFilter') + '</a></li>');
         }
