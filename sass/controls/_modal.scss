@@ -216,6 +216,7 @@
   }
 
   .modal-body-wrapper {
+    -webkit-overflow-scrolling: auto;
     overflow: auto;
     padding: 20px;
   }

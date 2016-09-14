@@ -794,6 +794,7 @@ $.fn.datagrid = function(options) {
 
     init: function(){
       var self = this;
+      this.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
       this.isFirefoxMac = (navigator.platform.indexOf('Mac') !== -1 && navigator.userAgent.indexOf(') Gecko') !== -1);
       this.isIe = $('html').is('.ie');
       this.isIe9 = $('html').is('.ie9');
@@ -847,7 +848,8 @@ $.fn.datagrid = function(options) {
             parseInt(el.css('margin-right'), 10);
 
         this.element.css('max-width', w);
-        $('.modal').css('overflow','hidden').find('.modal-body').css('overflow-x','hidden');
+        $('.modal').find('.modal-body').css('overflow-x','hidden');
+        // $('.modal').css('overflow','hidden').find('.modal-body').css('overflow-x','hidden');
       }
 
       //initialize row height by a setting
@@ -2759,6 +2761,66 @@ $.fn.datagrid = function(options) {
         }
 
       });
+
+      //=== BEGIN: isScrolling setup for touch device ==========================
+      var touchPrevented = false,
+      threshold = 10,
+      pos;
+
+      // Is the jQuery Element a component of the current Datagrid?
+      function isDatagridElement(target) {
+        return !!target.closest('.datagrid, .datagrid-container').length;
+      }
+
+      // Triggered when the user clicks anywhere in the document
+      function clickDocument(e) {
+        var target = $(e.target);
+        self.isScrolling = false;
+
+        if (touchPrevented && isDatagridElement(target)) {
+          e.preventDefault();
+          touchPrevented = false;
+          self.isScrolling = true;
+        }
+      }
+
+      function touchStartCallback(e) {
+        touchPrevented = false;
+
+        pos = {
+          x: e.originalEvent.touches[0].pageX,
+          y: e.originalEvent.touches[0].pageY
+        };
+
+        $(document).on('touchmove.datagrid', function touchMoveCallback(e) {
+          var newPos = {
+            x: e.originalEvent.touches[0].pageX,
+            y: e.originalEvent.touches[0].pageY
+          };
+
+          if ((newPos.x >= pos.x + threshold) || (newPos.x <= pos.x - threshold) ||
+              (newPos.y >= pos.y + threshold) || (newPos.y <= pos.y - threshold)) {
+            touchPrevented = true;
+          }
+        });
+      }
+
+      function touchEndCallback(e) {
+        $(document).off('touchmove.datagrid');
+        if (touchPrevented) {
+          e.preventDefault();
+          return false;
+        }
+        clickDocument(e);
+      }
+
+      // Need to detect whether or not scrolling is happening on a touch-capable device
+      $(document)
+        .on('touchstart.datagrid', touchStartCallback)
+        .on('touchend.datagrid touchcancel.datagrid', touchEndCallback)
+        .on('click.datagrid', clickDocument);
+
+      //=== END: Isscrolls setup for touch device ==============================
     },
 
     //Check if the event is subscribed to
@@ -3045,6 +3107,10 @@ $.fn.datagrid = function(options) {
         return;
       }
 
+      if (!this.element.find('tbody tr[aria-rowindex="'+ idx +'"]').length) {
+        return;
+      }
+
       rowNode = this.visualRowNode(idx);
       dataRowIndex = this.dataRowIndex(rowNode);
 
@@ -3053,6 +3119,13 @@ $.fn.datagrid = function(options) {
       }
 
       if (!rowNode) {
+        return;
+      }
+
+      // if scrolling NOT click on touch device
+      if (this.isTouch && this.isScrolling) {
+        rowNode.removeClass('is-active-row')
+          .find('td:not(.is-editing)').css({'background-color': 'transparent'});
         return;
       }
 
@@ -4188,6 +4261,8 @@ $.fn.datagrid = function(options) {
       this.element.prev('.datagrid-scrollable-header').remove();
       this.element.next('.pager-toolbar').remove();
       $.removeData(this.element[0], pluginName);
+
+      $(document).off('touchstart.datagrid touchend.datagrid touchcancel.datagrid click.datagrid touchmove.datagrid');
     }
 
   };

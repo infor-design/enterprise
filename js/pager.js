@@ -53,6 +53,16 @@
       },
 
       setup: function() {
+
+        // Add [pagesize] if not found in [pagesizes]
+        if($.inArray(this.settings.pagesize, this.settings.pagesizes) === -1) {
+          var sortNumber = function (a, b) {
+            return a - b;
+          };
+          this.settings.pagesizes.push(this.settings.pagesize);
+          this.settings.pagesizes = this.settings.pagesizes.sort(sortNumber);
+        }
+
         // Adjust for the possibility of the pager being attached to a Table instead of normal grid markup
         if (this.element.is('tbody')) {
           this.isTable = true;
