@@ -463,6 +463,10 @@
 
         }
 
+        var pagerElem = self.element.find('.paginated');
+        pagerElem.on('afterpaging', function () {
+          self.resize();
+        });
 
         setTimeout(function () {
           self.disableSubmit();

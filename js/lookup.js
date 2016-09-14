@@ -179,7 +179,6 @@
         self.element.trigger('open', [self.modal, self.grid]);
 
         self.modal.element.find('.btn-actions').removeClass('is-selected');
-        self.modal.element.find('.pager-pagesize').remove();
 
         self.element.trigger('afteropen', [self.modal, self.grid]);
 
