@@ -1455,6 +1455,7 @@ $.fn.datagrid = function(options) {
 
     //Except conditions from outside or pull from filter row
     applyFilter: function (conditions) {
+      var self = this;
       this.filteredDataset = null;
 
       if (!conditions) {
@@ -1465,7 +1466,8 @@ $.fn.datagrid = function(options) {
         var isMatch = true;
 
         for (var i = 0; i < conditions.length; i++) {
-          var rowValue = (row[conditions[i].columnId] === null ||row[conditions[i].columnId] === undefined) ? '' : row[conditions[i].columnId].toString().toLowerCase(),
+          var field = self.columnById(conditions[i].columnId)[0].field,
+            rowValue = self.fieldValue(row, field).toString().toLowerCase(),
             rowValueStr = rowValue.toString(),
             conditionValue = conditions[i].value.toString().toLowerCase();
 
