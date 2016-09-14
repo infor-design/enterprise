@@ -3025,20 +3025,22 @@ $.fn.datagrid = function(options) {
       }
 
       this.dontSyncUi = true;
-      this.selectedRows(rows);
+      this.selectedRows(rows, true, true);
       this.dontSyncUi = false;
       this.syncSelectedUI();
+      this.element.trigger('selected', [this._selectedRows]);
     },
 
     unSelectAllRows: function () {
       this.dontSyncUi = true;
-      this.selectedRows([]);
+      this.selectedRows([], true, true);
       this.dontSyncUi = false;
       this.syncSelectedUI();
+      this.element.trigger('selected', [this._selectedRows]);
     },
 
     //Toggle selection on a single row
-    selectRow: function (idx) {
+    selectRow: function (idx, selectAll) {
       var checkbox = null, rowNode, dataRowIndex;
 
       if (idx === undefined || idx === -1 || !this.settings.selectable) {
@@ -3077,7 +3079,10 @@ $.fn.datagrid = function(options) {
       }
 
       this.syncSelectedUI();
-      this.element.trigger('selected', [this._selectedRows]);
+
+      if (!selectAll) {
+        this.element.trigger('selected', [this._selectedRows]);
+      }
     },
 
     dontSyncUi: false,
@@ -3156,7 +3161,7 @@ $.fn.datagrid = function(options) {
       return this._selectedRows;
     },
 
-    unselectRow: function (idx, nosync) {
+    unselectRow: function (idx, nosync, selectAll) {
       var rowNode = this.visualRowNode(idx),
         checkbox = null, selIdx;
 
@@ -3185,12 +3190,14 @@ $.fn.datagrid = function(options) {
       if (!nosync) {
         this.syncSelectedUI();
       }
-      this.element.trigger('selected', [this._selectedRows]);
 
+      if (!selectAll) {
+        this.element.trigger('selected', [this._selectedRows]);
+      }
     },
 
     //Set the selected rows by passing the row index or an array of row indexes
-    selectedRows: function (row) {
+    selectedRows: function (row, nosync, selectAll) {
       var idx = -1,
           isSingle = this.settings.selectable === 'single',
           isMultiple = this.settings.selectable === 'multiple';
@@ -3206,29 +3213,29 @@ $.fn.datagrid = function(options) {
       if (isSingle) {
         //Unselect
         if (this._selectedRows[0]) {
-          this.unselectRow(this._selectedRows[0].idx);
+          this.unselectRow(this._selectedRows[0].idx, nosync, selectAll);
         }
 
         //Select - may be passed array or int
         idx = ((Object.prototype.toString.call(row) === '[object Array]' ) ? row[0] : row.index());
-        this.selectRow(idx);
+        this.selectRow(idx, selectAll);
       }
 
       if (isMultiple) {
         if (Object.prototype.toString.call(row) === '[object Array]' ) {
           for (var i = 0; i < row.length; i++) {
-            this.selectRow(row[i]);
+            this.selectRow(row[i], selectAll);
           }
 
           if (row.length === 0) {
             for (var j = 0; j < this.settings.dataset.length; j++) {
-              this.unselectRow(j);
+              this.unselectRow(j, nosync, selectAll);
             }
             this._selectedRows = [];
           }
 
         } else {
-          this.selectRow(row.index());
+          this.selectRow(row.index(), selectAll);
         }
       }
 
