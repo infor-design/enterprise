@@ -720,6 +720,15 @@
           this.menu.css({'width': menuDimensions.width});
         }
 
+        //Handle Case where menu is off the left
+        if (left - $(document).scrollLeft() < 0) {
+          d = left * -1;
+          left = left + d;
+
+          hideArrow();
+          wrapper.css({'left': left});
+        }
+
         // reposition the arrow in some cases.
         if (this.element.is('.btn-menu') || this.element.is('.searchfield-category-button')) {
           centerArrow();
