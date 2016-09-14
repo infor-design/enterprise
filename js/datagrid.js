@@ -1374,7 +1374,7 @@ $.fn.datagrid = function(options) {
           self.applyFilter();
         }
 
-      }).on('blur.datagrid', '.datagrid-filter-wrapper input', function () {
+      }).on('change.datagrid', '.datagrid-filter-wrapper input', function () {
         self.applyFilter();
       });
 
