@@ -136,8 +136,23 @@
           .attr('role', (this.settings.ariaListbox ? 'listbox' : 'menu'))
           .wrap('<div class="popupmenu-wrapper"></div>');
 
+        this.wrapper = this.menu.parent('.popupmenu-wrapper');
+
         //Enforce Correct Modality
         this.menu.parent('.popupmenu-wrapper').attr('role', 'application').attr('aria-hidden', 'true');
+
+        // Use "absolute" positioning on the menu insead of "fixed", only when the
+        // menu lives <body> tag and we have a <body> element that is tall enough to
+        // scroll and is allowed to scroll.
+        function scrollableFilter() {
+          var c = $(this).css('overflow');
+          return c !== 'auto' && c !== 'visible' && c !== 'scroll';
+        }
+        if (this.wrapper.parents().filter(scrollableFilter).length === 0) {
+          this.wrapper.css('position', 'absolute');
+        } else {
+          this.wrapper.css('position', 'fixed');
+        }
 
         // Wrap submenu ULs in a 'wrapper' to help break it out of overflow.
         this.menu.find('.popupmenu').each(function(i, elem) {

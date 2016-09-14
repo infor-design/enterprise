@@ -55,6 +55,13 @@ var express = require('express'),
       console.log('Inlining SVG Elements...');
     }
 
+    // Global settings for forcing a "no frills" layout for test pages.
+    // This means no header with page title, hamburger, theme swap settings, etc.
+    if (req.query.nofrills && req.query.nofrills.length > 0) {
+      res.opts.nofrillslayout = true;
+      console.log('"No-frills" layout active.');
+    }
+
     // Set the theme and colorScheme
     //Fx: http://localhost:4000/controls/modal?colorScheme=123456,123456,827272&themeName=dark
     if (req.query.themeName && req.query.themeName.length  > 0) {
@@ -369,6 +376,12 @@ var express = require('express'),
     if (directory.match(/tests\/tabs-vertical/)) {
       opts.layout = 'tests/tabs-vertical/layout';
     }
+
+    // Global "no-header" layout setting takes precedent
+    if (res.opts.nofrillslayout) {
+      opts.layout = 'tests/layout-noheader';
+    }
+
 
     // No trailing slash.  Check for an index file.  If no index file, do directory listing
     if (is('directory', directory)) {
