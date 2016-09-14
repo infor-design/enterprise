@@ -794,7 +794,7 @@
 
         selectText();
 
-        if (document.activeElement !== input[0]) {
+        if (document.activeElement !== input[0] && $(document.activeElement).is('body')) {
           input[0].focus();
         }
       },
