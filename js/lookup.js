@@ -439,7 +439,7 @@
         this.icon.remove();
         this.element.unwrap();
 
-        if (this.label.length) {
+        if (this.label && this.label != null) {
           this.label.find('.audible').remove();
         }
       }
