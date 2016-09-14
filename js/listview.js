@@ -688,6 +688,10 @@
           isChecked = false;
 
         self.selectedItems = [];
+        if (typeof li === 'number') {
+          li = $(this.element.children()[0]).children().eq(li);
+        }
+
         isChecked = li.hasClass('is-selected');
 
         //focus
