@@ -4,6 +4,7 @@
 fieldset {
   margin-top: 20px;
   padding-top: 50px;
+  position: relative;
 
   > legend {
     @include font-size(16);
