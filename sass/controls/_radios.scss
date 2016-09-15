@@ -42,6 +42,14 @@
 .radio-label {
   display: inline-block;
   line-height: 20px;
+
+  &:first-of-type {
+    margin-top: 4px;
+  }
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
 }
 
 .inline .radio ~ .label-text::after,
@@ -149,6 +157,10 @@
     legend {
       color: $disabled-color;
     }
+  }
+
+  + .field {
+    padding-top: 20px;
   }
 }
 

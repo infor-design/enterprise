@@ -1,0 +1,214 @@
+<div class="page-container builder" initialize>
+
+   <div class="sidebar scrollable" role="complementary">
+      <div class="listview" id="task-listview" data-tmpl="task-tmpl" data-dataset="demoTasks"></div>
+   </div>
+
+   <div id="maincontent" class="main scrollable builder-pane" role="main">
+
+      <div class="builder-header azure06">
+         <div class="toolbar no-actions-button">
+            <div class="title">
+               <h2>
+                  <span class="panel-title">Field Set & Radios in a Builder Panel</span><br>
+                  <span class="panel-subhead">Test for proper spacing and scrolling</span>
+               </h2>
+            </div>
+            <div class="buttonset">
+
+               <!--Enabled Generic-->
+               <button class="btn" type="button">
+                  <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                     <use xlink:href="#icon-filter"></use>
+                  </svg>
+                  <span>Category</span>
+               </button>
+
+               <!--Enabled Tertiary Icon-->
+               <button class="btn-tertiary" type="button">
+                  <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                     <use xlink:href="#icon-calendar"></use>
+                  </svg>
+                  <span>Date</span>
+               </button>
+
+               <!--Disabled Generic-->
+               <button class="btn" type="button" disabled>
+                  <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                     <use xlink:href="#icon-mingle-share"></use>
+                  </svg>
+                  <span>Share</span>
+               </button>
+
+               <!--Disabled Tertiary Icon-->
+               <button class="btn-tertiary" type="button" disabled>
+                  <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                     <use xlink:href="#icon-calendar"></use>
+                  </svg>
+                  <span>Date</span>
+               </button>
+
+               <!--Enabled Tertiary-->
+               <button class="btn" type="button">
+                  <span>Option #1</span>
+               </button>
+
+               <button id="sidebar-responsive-menu" class="btn-tertiary hidden-lg hidden-xl" data-popdown="builder-popdown-content">
+                  <svg class="icon" focusable="false" aria-hidden="true">
+                     <use xlink:href="#icon-settings"></use>
+                  </svg>
+                  <span>Sidebar Popup</span>
+               </button>
+            </div>
+         </div>
+         <div id="builder-popdown-content" class="popdown hidden">
+            <div class="widget">
+               <div class="widget-header">
+                  <h2 class="widget-title">My Cart <span class="extra">(8 Items)</span></h2>
+               </div>
+               <div class="widget-content">
+                  <p style="margin: 0 20px 20px;">
+                     Tag aggregate, feeds rich weblogs user-centric user-centred mashups frictionless, interactive blogospheres e-enable visionary, solutions enable vertical target seamless remix seize folksonomies--vortals efficient. Integrate, metrics. Peer-to-peer weblogs mesh methodologies platforms citizen-media revolutionary podcasts enable communities, "folksonomies best-of-breed reinvent; rss-capable mindshare."
+                  </p>
+                  <p style="margin: 0 20px 20px;">
+                     Syndicate share, synergies capture, value-added integrate B2C, integrate synthesize envisioneer podcasts orchestrate incentivize cross-platform networkeffects. Robust redefine ecologies, eyeballs, "A-list semantic," revolutionary bricks-and-clicks Cluetrain target syndicate integrate viral e-enable mindshare reintermediate whiteboard.
+                  </p>
+               </div>
+               <div class="widget-footer modal-buttonset">
+                  <button class="btn-modal-secondary" style="width: 50%;">Edit Cart</button>
+                  <button class="btn-modal-primary" style="width: 50%;">Checkout</button>
+               </div>
+            </div>
+         </div>
+
+      </div>
+      <!-- .builder-header -->
+
+      <div class="builder-content no-scroll">
+         <div class="builder-actions scrollable">
+            <div class="builder-actions-content">
+
+               <fieldset>
+                  <legend>Company Information</legend>
+                  <div class="summary-form">
+                     <div class="row">
+                        <div class="one-half column">
+                           <div class="field">
+                              <span class="label">Company Name</span>
+                              <span class="data">Building Suppliers</span>
+                           </div>
+
+                           <div class="field">
+                              <span class="label">Company Type</span>
+                              <span class="data">Contractor</span>
+                           </div>
+                        </div>
+
+                        <div class="one-half column">
+                           <div class="field">
+                              <span class="label">Phone Number</span>
+                              <span class="data">(999) 810-2604</span>
+                           </div>
+
+                           <div class="field">
+                              <span class="label">Website</span>
+                              <span class="data">www.buildings.com</span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </fieldset>
+
+               <fieldset>
+                  <legend>Field Set 2</legend>
+                  <div class="summary-form">
+                     <div class="row">
+                        <div class="one-half column">
+                           <div class="field">
+                              <span class="label">Company Name</span>
+                              <span class="data">Building Suppliers</span>
+                           </div>
+
+                           <div class="field">
+                              <span class="label">Company Type</span>
+                              <span class="data">Contractor</span>
+                           </div>
+                        </div>
+
+                        <div class="one-half column">
+                           <div class="field">
+                              <span class="label">Phone Number</span>
+                              <span class="data">(999) 810-2604</span>
+                           </div>
+
+                           <div class="field">
+                              <span class="label">Website</span>
+                              <span class="data">www.buildings.com</span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </fieldset>
+
+               <div class="fieldset">
+                  <h2 class="fieldset-title">Field Set 3 (not using html fieldset)</h2>
+
+                  <div class="row">
+                     <div class="one-half column">
+                        <div class="field">
+                           <label for="input-1">Input Field</label>
+                           <input type="text" id="input-1" />
+                        </div>
+
+                        <fieldset class="radio-group">
+                           <legend>Radio Set</legend>
+                           <input type="radio" class="radio" name="options" id="option1" value="option1" />
+                           <label for="option1" class="radio-label">Option One</label>
+                           <br>
+                           <input type="radio" class="radio" name="options" id="option2" value="option1" checked />
+                           <label for="option2"  class="radio-label">Option Two</label>
+                           <br>
+                           <input type="radio" class="radio" name="options" id="option3" value="option3" />
+                           <label for="option3" class="radio-label">Option Three</label>
+                        </fieldset>
+
+                        <div class="field">
+                           <label for="input-2">Input Field 2</label>
+                           <input type="text" id="input-2" />
+                        </div>
+                     </div>
+
+                     <div class="one-half column">
+                        <div class="field">
+                           <label for="input-3">Input Field 3</label>
+                           <input type="text" id="input-3" />
+                        </div>
+
+                        <div class="field">
+                           <label for="input-4">Input Field 4</label>
+                           <input type="text" id="input-4" />
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+               <!-- To ensure scrolling -->
+               <div style="height: 500px; font-size: 8px">&nbsp;</div>
+            </div>
+         </div>
+         <div class="builder-sidebar my-cart scrollable">
+            <div class="builder-sidebar-header">
+               <h3>Sidebar Contents</h3>
+            </div>
+            <div class="builder-sidebar-content">
+
+            </div>
+            <div class="builder-sidebar-footer"></div>
+         </div>
+      </div>
+      <!-- .builder-content -->
+
+   </div>
+   <!-- #maincontent.main.scrollable.builder-pane -->
+
+</div>

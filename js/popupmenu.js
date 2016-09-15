@@ -30,6 +30,7 @@
         attachToBody: false,
         beforeOpen: null, //Ajax callback for open event
         ariaListbox: false,   //Switches aria to use listbox construct instead of menu construct (internal)
+        useCoordsForClick: false, //By default, menus open up underneath their target element.  Set this to true to use mouse coordinates for positioning a menu inside of its target element.
         eventObj: undefined  //Can pass in the event object so you can do a right click with immediate
       },
       settings = $.extend({}, defaults, options);
@@ -299,6 +300,8 @@
           this.element.attr('aria-describedby', id);
         }
 
+        // Allow for an external click event to be passed in from outside this code.
+        // This event can be used to pass clientX/clientY coordinates for mouse cursor positioning.
         if (this.settings.trigger === 'immediate') {
           this.open(this.settings.eventObj);
         }
@@ -543,7 +546,8 @@
       },
 
       position: function(e) {
-        var target = this.element,
+        var self = this,
+          target = this.element,
           isRTL = this.isRTL(),
           wrapper = this.menu.parent('.popupmenu-wrapper'),
           menuDimensions = {
@@ -563,7 +567,7 @@
 
         function getCoordinates(e, axis) {
           axis = sanitizeAxis(axis);
-          return e['page' + axis.toUpperCase()]; // use mouseX/mouseY if this doesn't work
+          return e['client' + axis.toUpperCase()]; // use mouseX/mouseY if this doesn't work
         }
 
         function getBorder(axis) {
@@ -579,7 +583,27 @@
 
         function isKeyboardEvent(e) {
           var eventTypes = ['keydown', 'keypress'];
-          return (e && eventTypes.indexOf(e.type) > -1);
+          return (e && eventTypes.indexOf(e.type) > -1 );
+        }
+
+        function useCoords(e, axis) {
+          var s = self.settings.eventObj;
+
+          if (s && s.clientX && s.clientY) {
+            return getCoordinates(s, axis);
+          }
+
+          if (e.type === 'click' && self.settings.useCoordsForClick === true) {
+            return getCoordinates(e, axis);
+          }
+
+          return getTargetOffset($(e.target), axis);
+        }
+
+        function getOffsetsFromTrigger(axis) {
+          return isKeyboardEvent(e) ?
+            getTargetOffset(target, axis) :
+            useCoords(e, axis);
         }
 
         switch(this.settings.trigger) {
@@ -587,13 +611,9 @@
             left = getCoordinates(e, 'x');
             top = getCoordinates(e, 'y');
             break;
-          case 'immediate':
-            left = isKeyboardEvent(e) ? getCoordinates(e, 'x') : getTargetOffset(target, 'x');
-            top = isKeyboardEvent(e) ? getCoordinates(e, 'y') : getTargetOffset(target, 'y');
-            break;
           default:
-            left = getTargetOffset(target, 'x');
-            top = getTargetOffset(target, 'y');
+            left = getOffsetsFromTrigger('x');
+            top = getOffsetsFromTrigger('y');
             break;
         }
 

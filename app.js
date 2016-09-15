@@ -269,6 +269,10 @@ var express = require('express'),
       opts.layout = 'controls/masthead-layout';
     }
 
+    if (res.opts.nofrillslayout) {
+      opts.layout = 'tests/layout-noheader';
+    }
+
     res.render('controls/' + controlName, opts);
     next();
   });
@@ -378,7 +382,7 @@ var express = require('express'),
     }
 
     // Global "no-header" layout setting takes precedent
-    if (res.opts.nofrillslayout) {
+    if (res.opts.nofrillslayout || directory.match(/tests\/patterns/)) {
       opts.layout = 'tests/layout-noheader';
     }
 
