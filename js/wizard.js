@@ -238,7 +238,7 @@
 
         // Timeout allows animation to finish
         setTimeout(function () {
-          self.element.trigger('afteractivate', [tick]);
+          self.element.trigger('afteractivated', [tick]);
         }, 300);
 
         return this;

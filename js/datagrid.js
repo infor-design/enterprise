@@ -2086,6 +2086,12 @@ $.fn.datagrid = function(options) {
         this.table.css('width', '100%');
       }
 
+      //Make a one time event to resize next time visible on tabs
+      if (!this.element.is(':visible')) {
+        this.element.closest('.tab-container').one('afteractivated', function () {
+          self.setColumnWidths();
+        });
+      }
     },
 
     //Returns all header nodes (not the groups)
@@ -2140,6 +2146,7 @@ $.fn.datagrid = function(options) {
       this.resetPager('updatecolumns');
       this.element.trigger('columnchange', [{type: 'updatecolumns', columns: this.settings.columns}]);
       this.saveColumns();
+
     },
 
     saveColumns: function () {

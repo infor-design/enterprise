@@ -1104,7 +1104,7 @@
         function fadeComplete() {
           $('#tooltip').addClass('is-hidden');
           $('#dropdown-list, #multiselect-list').remove();
-          self.element.trigger('afteractivate', [a]);
+          self.element.trigger('afteractivated', [a]);
         }
 
         targetPanel.stop().fadeIn({
