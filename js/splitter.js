@@ -64,7 +64,7 @@
 
         // Set extra margin for right splitter
         if (splitter.is('.splitter-right')) {
-          splitter.css({'border-right': scrollable.css('border-right')});
+          splitter.css({'border-right': self.getBorderString(scrollable, 'right')});
           scrollable.css({
             'border-right': 0,
             'margin-right': '20px',
@@ -125,6 +125,13 @@
         }
 
         return this;
+      },
+
+      // Workaround since shorthand CSS properties are not supported.
+      getBorderString: function(el, side) {
+        return el.css('border-'+ side +'-width') + ' ' +
+          el.css('border-'+ side +'-style') + ' ' +
+          el.css('border-'+ side +'-color');
       },
 
       // Sets up event handlers for this control and its sub-elements
@@ -203,7 +210,7 @@
 
         //Adjust Left and Right Side
         leftSide.css('width', (w + 'px'));
-        rightSide.css('width', ('calc(100% - ' + w + 'px)'));
+        rightSide.css('width', ('calc(100% - ' + (w+20) + 'px)'));
       },
 
       //Preferably use the id, but if none that make one based on the url and count
