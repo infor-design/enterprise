@@ -58,7 +58,9 @@ git checkout master
 * Generate Release Notes
 * Make sure all new examples on the index page are updated
 * Comment in the analytics in footer.html (soho.infor.com)
-* Deploy to to http://usmvvwdev53:421
+* Deploy to to http://usmvvwdev53:421 <version>
+* Make new Deploy to to http://usmvvwdev53:<version next>
+* Dync db and files from usmvvwdev53
 * Deploy to to http://soho.infor.com
 * Create branch for major versions inside stash
 * Git Tag
