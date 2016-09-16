@@ -728,10 +728,15 @@
           top = top - d;
 
           // Check if we've bled off the top edge.  If yes, shrink the menu's height
-          if (top - $(document).scrollTop() < 0) {
+          if (top +  - $(document).height() < 0) {
             d = top * -1;
             top = top + d;
             menuDimensions.height = menuDimensions.height - d;
+
+            if ((wrapper.offset().top + menuDimensions.height) > $(document).height()) {
+              top = target.offset().top + target.outerHeight();
+              menuDimensions.height = $(document).height() - top - 5;
+            }
           }
 
           hideArrow();
