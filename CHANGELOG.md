@@ -3,13 +3,13 @@ Release Date: Approx 1-2 Weeks
 
 ### Key New Features
 
-* Blank Item
+*
 
 ### Breaking Changes
-* 2016-09-16 - TBD
+* 2016-09-16 -
 
 ### Ui Changes
-* 2016-08-30 - TBD
+* 2016-08-30 - 
 
 Jira Release Notes
 http://bit.ly/2cwBELt
