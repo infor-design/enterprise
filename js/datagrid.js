@@ -2601,8 +2601,8 @@ $.fn.datagrid = function(options) {
           cell = elem.index(),
           rowNode = $(this).closest('tr'),
           row = self.visualRowIndex(rowNode),
-          col = self.columnSettings(cell),
-          item = self.settings.dataset[row];
+          col = self.columnSettings(cell-1),
+          item = self.settings.dataset[self.dataRowIndex(rowNode)];
 
         function handleClick() {
           if (e.type === 'mouseup' && e.button !== 0) {
@@ -3497,7 +3497,7 @@ $.fn.datagrid = function(options) {
           row = self.activeCell.row,
           cell = self.activeCell.cell,
           col = self.columnSettings(cell),
-          item = self.settings.dataset[row],
+          item = self.settings.dataset[self.dataRowIndex(row)],
           visibleCols = self.visibleColumns(),
           isSelectionCheckbox = !!($('.datagrid-selection-checkbox', node).length),
           lastRow, lastCell;
