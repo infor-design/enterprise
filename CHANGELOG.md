@@ -1,4 +1,4 @@
-## 4.2.2 - Minor Release
+## 4.2.1 - Minor Release
 Release Date: Approx 1-2 Weeks
 
 ### Key New Features
@@ -14,7 +14,7 @@ Release Date: Approx 1-2 Weeks
 Jira Release Notes
 http://bit.ly/2cwBELt
 
-## 4.2.1 - Patch Release
+## 4.2.1.rc1 - Patch Release
 Release Date: 2016-09-16
 
 ### Key New Features
