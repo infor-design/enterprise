@@ -583,7 +583,7 @@
 
         function isKeyboardEvent(e) {
           var eventTypes = ['keydown', 'keypress'];
-          return (e && eventTypes.indexOf(e.type) > -1 );
+          return (e === undefined || e === null || eventTypes.indexOf(e.type) > -1 );
         }
 
         function useCoords(e, axis) {
@@ -601,9 +601,10 @@
         }
 
         function getOffsetsFromTrigger(axis) {
-          return isKeyboardEvent(e) ?
-            getTargetOffset(target, axis) :
-            useCoords(e, axis);
+          if (isKeyboardEvent(e)) {
+            return getTargetOffset(target, axis);
+          }
+          return useCoords(e, axis);
         }
 
         switch(this.settings.trigger) {
