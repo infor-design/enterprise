@@ -1,7 +1,23 @@
-## 4.2.1 - Patch Release
-Release Date: TBD
+## 4.2.2 - Minor Release
+Release Date: Approx 1-2 Weeks
 
-### Key New
+### Key New Features
+
+* Blank Item
+
+### Breaking Changes
+* 2016-09-16 - TBD
+
+### Ui Changes
+* 2016-08-30 - TBD
+
+Jira Release Notes
+http://bit.ly/2cwBELt
+
+## 4.2.1 - Patch Release
+Release Date: 2016-09-16
+
+### Key New Features
 
 * Datagrid Filter Row
 * Datagrid Tree
@@ -18,7 +34,7 @@ Release Date: TBD
 * Record ID styling - Options
 
 ### Breaking Changes
-* 2016-15-16 - tabs afteractive renamed to afteractived for consistency
+* 2016-09-16 - tabs afteractive renamed to afteractived for consistency
 * 2016-08-16 - Popupmenu classes were not mutually exclusive now both the is-selectable and has-icons class add extra left padding. It may be needed to remove has-icons if you have a selectable menu and no actual row icons or you might end up with extra space.
 * 2016-08-16 - External SVG Files for icons - It's now possible to use external SVG files for icons. This has caching advantages and reduces the need for inline svg in each page. If you are using the old method (inlining the SVG elements in an HTML document), you can still find these files in _/dist/svg/***.html_.  If you'd like to use the new external files, they're in the same folder with an _.svg_ suffix.  Please note that if you use icons this way, there will be a small breaking change in the form of appending all <use> tags' "xlink:href" attributes to contain a relative path to the SVG file.  Please also be wary that our icon sets are split across several files, so you may need to include more than one of these files in your project. You can also change the path where the svg files are kept by adding a relative path to the script in a data-svg-path property <script src="/js/sohoxi.js" data-svg-path="/svg/"></script>
 * 2016-08-10 - Date and TimePicker - The forceHourMode option was not used in timepicker so was removed. In Datepicker it had a buggy effect. If used it can be removed from your markup. Use the timeFormat option to control 24h vs 12h format.
@@ -39,7 +55,7 @@ Release Date: TBD
 * 2016-06-02 - Design of radios/checkboxes changed to reduce size.
 
 Jira Release Notes
-http://bit.ly/1P1jCAk
+http://bit.ly/2cLADk7
 
 ## 4.2.0 - Minor Release
 Release Date: May 26th
