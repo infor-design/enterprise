@@ -3,13 +3,13 @@ Release Date: Approx 1-2 Weeks
 
 ### Key New Features
 
-*
+* Hello
 
 ### Breaking Changes
 * 2016-09-16 -
 
 ### Ui Changes
-* 2016-08-30 - 
+* 2016-08-30 -
 
 Jira Release Notes
 http://bit.ly/2cwBELt
