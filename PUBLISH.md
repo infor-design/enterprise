@@ -1,7 +1,7 @@
 # Publish instructions
 
 ## Prerequisites
-To be able to publish to [npm.infor.com](http://npm.infor.com:4873) you need to add an authorized npm user on your system.
+To be able to publish to [npm.infor.com](http://npm.infor.com:4873) you need to add an authorized npm user on your system...
 
 ```bash
 npm adduser --registry http://npm.infor.com:4873 --scope=@infor
