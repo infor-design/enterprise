@@ -588,7 +588,7 @@ window.Editors = {
 
     this.init = function () {
       this.input = $('<input class="datepicker"/>').appendTo(container);
-      this.input.datepicker(column.editorOptions ? column.editoroptions : {dateFormat: column.dateFormat});
+      this.input.datepicker(column.editorOptions ? column.editorOptions : {dateFormat: column.dateFormat});
     };
 
     this.val = function (value) {
