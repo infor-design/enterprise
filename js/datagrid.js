@@ -2601,7 +2601,7 @@ $.fn.datagrid = function(options) {
           cell = elem.index(),
           rowNode = $(this).closest('tr'),
           row = self.visualRowIndex(rowNode),
-          col = self.columnSettings(cell-1),
+          col = self.columnSettings(cell),
           item = self.settings.dataset[self.dataRowIndex(rowNode)];
 
         function handleClick() {
