@@ -191,15 +191,99 @@
       background-color: $tree-selected-bg-color;
     }
   }
-}
 
-// Firefox on Mac only
-.is-mac.is-firefox {
-  .tree-container {
-    .selected-item-indicator {
-      margin-top: -2px;
+  &.is-muliselect {
+    li {
+      .tree-checkbox {
+        margin-right: 25px;
+        position: relative;
+
+        &::before {
+          @include checkbox-unchecked-before-style;
+          margin-left: 0;
+          margin-top: 0;
+          top: 0;
+        }
+      }
+
+      &.is-selected {
+        > a .tree-checkbox {
+          &::before {
+            @include checkbox-checked-before-style;
+          }
+
+          &::after {
+            @include checkbox-checked-after-style;
+            @include css3(transform-origin, -11px top 0);
+            @include checkbox-animation;
+            left: 5px;
+            top: 1px;
+          }
+        }
+      }
+
+      &.is-partial {
+        > a .tree-checkbox {
+          &::before {
+            @include checkbox-checked-before-style;
+          }
+
+          &::after {
+            @include checkbox-checked-after-style;
+            @include  checkbox-partial-after-style;
+            @include no-animation();
+            left: 2px;
+            top: -3px;
+          }
+        }
+      }
+
+      &:not(.is-selected):not(.is-partial):not(.is-disabled):not(.is-error) {
+        a:hover:not(.is-disabled):not(.is-error) .tree-checkbox,
+        a:focus:not(.is-disabled):not(.is-error) .tree-checkbox {
+          &::before {
+            border-color: $listview-color;
+          }
+        }
+      }
+
     }
   }
+}
+
+// Firefox only
+.is-firefox {
+
+  &.is-mac {// Firefox on Mac only
+    .tree-container {
+      .selected-item-indicator {
+        margin-top: -2px;
+      }
+    }
+  }
+
+  .tree-container {
+    &.is-muliselect {
+      li {
+        .tree-checkbox::before {
+          top: -2px;
+        }
+
+        &.is-selected {
+          > a .tree-checkbox::after {
+            top: -1px;
+          }
+        }
+
+        &.is-partial {
+          > a .tree-checkbox::after {
+            top: -5px;
+          }
+        }
+      }
+    }
+  }
+
 }
 
 //Tree Detail Pattern
