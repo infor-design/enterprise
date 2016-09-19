@@ -25,8 +25,8 @@
         data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
 
         //Define Columns for the Grid.
-        columns.push({ id: 'drilldown', name: '', field: '', width: 95, formatter: Formatters.Drilldown, click: function(a, b , c) {
-            console.log(a, b, c);
+        columns.push({ id: 'drilldown', name: '', field: '', width: 95, formatter: Formatters.Drilldown, click: function(e, args) {
+            console.log(e, args);
         }, align: 'center'});
         columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly});
         columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 170, formatter: Formatters.Hyperlink});
@@ -36,18 +36,12 @@
         columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
 
         //Init and get the api for the grid
-        grid = $('#datagrid').datagrid({
+        $('#datagrid').datagrid({
           columns: columns,
           dataset: data,
           selectable: 'single',
           toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true}
-        }).on('selected', function (e, args) {
-          if (args.length > 0) {
-            console.log(args[0].data);
-          }
-        }).data('datagrid');
-
-        grid.selectedRows([1]);
+        });
     });
   });
 
