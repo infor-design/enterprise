@@ -22,6 +22,8 @@
   $.fn.tree = function(options) {
     var pluginName = 'tree',
       defaults = {
+        selectable: 'single', // ['single'|'multiple']
+        hideCheckboxes: false // [true|false] -apply only with [selectable: 'multiple']
       },
       settings = $.extend({}, defaults, options);
 
@@ -40,15 +42,28 @@
         this.setupEvents();
         this.loadData(this.settings.dataset);
         this.syncDataset(this.element);
+        this.initSelected();
         this.focusFirst();
       },
 
       //Init Tree from ul, li, a markup structure in DOM
       initTree: function() {
-        var links = this.element.find('a'),
-          self = this;
+        var self = this,
+          s = this.settings,
+          links = this.element.find('a'),
+          selectableAttr = this.element.attr('data-selectable');
 
-        this.element.wrap('<div class="tree-container"></div>');
+        // Set attribute "data-selectable"
+        s.selectable = ((typeof selectableAttr !== 'undefined') &&
+         (selectableAttr.toLowerCase() === 'single' ||
+           selectableAttr.toLowerCase() === 'multiple')) ?
+            selectableAttr : s.selectable;
+
+        // Set isMultiselect and checkboxes show/hide
+        this.isMultiselect = s.selectable === 'multiple';
+        s.hideCheckboxes = s.hideCheckboxes || !this.isMultiselect;
+
+        this.element.wrap('<div class="tree-container'+ (this.isMultiselect ? ' is-muliselect' : '') +'"></div>');
         this.element.parent('.tree-container').prepend(
           '<div class="selected-item-indicator"></div>' +
           '<div class="focused-item-indicator"></div>'
@@ -64,6 +79,14 @@
         });
       },
 
+      //Init selected notes
+      initSelected: function () {
+        var self = this;
+        this.element.find('li.is-selected').each(function() {
+          self.setSelectedNode($('a:first', this), true);
+        });
+      },
+
       //Focus first tree node
       focusFirst: function () {
         this.element.find('a:first').attr('tabindex', '0');
@@ -76,8 +99,8 @@
 
       //From the LI, Read props and add stuff
       decorateNode: function(a) {
-        var parentCount = 0,
-            subNode;
+        var subNode,
+          parentCount = 0;
 
         //set initial 'role', 'tabindex', and 'aria selected' on each link (except the first)
         a.attr({'role': 'treeitem', 'tabindex': '-1', 'aria-selected': 'false'});
@@ -119,6 +142,11 @@
         a.text('');
         if (a.children('svg').length === 0) {
           a.prepend($.createIcon({ icon: 'tree-node', classes: ['icon-tree'] }));
+        }
+
+        //Inject checkbox
+        if (this.isMultiselect && !this.settings.hideCheckboxes) {
+          a.append('<span class="tree-checkbox"></span>');
         }
 
         a.append('<span class="tree-text">' + text + '</span>');
@@ -202,12 +230,12 @@
 
       // Select node by id
       selectNodeById: function (id) {
-        this.selectNodeByJquerySelectior('#'+ id);
+        this.selectNodeByJquerySelector('#'+ id);
       },
 
-      // Select node by [jquery selectior] -or- [jquery object]
-      selectNodeByJquerySelectior: function (selectior) {
-        var target = this.isjQuery(selectior) ? selectior : $(selectior);
+      // Select node by [jquery selector] -or- [jquery object]
+      selectNodeByJquerySelector: function (selector) {
+        var target = this.isjQuery(selector) ? selector : $(selector);
         if (target.length && !target.is('.is-disabled')) {
           var nodes = target.parentsUntil(this.element, 'ul[role=group]');
           this.expandAll(nodes);
@@ -215,22 +243,37 @@
         }
       },
 
-      // Mark node selected by id
-      markNodeSelectedById: function (id, source) {
-        source = source || this.settings.dataset;
-
-        for (var key in source) {
-            var item = source[key];
-            delete item.selected;
-            if (item.id === id) {
-              item.selected = true;
-              return;
-            }
-            if (item.children) {
-              this.markNodeSelectedById(id, item.children);
-            }
+      //Set a node as the unselected one
+      setUnSelectedNode: function (node, focus) {
+        if (node.length === 0) {
+          return;
         }
-        return;
+
+        var top,
+          self = this,
+          aTags = $('a', this.element);
+
+        aTags.attr('tabindex', '-1');
+        node.attr('tabindex', '0');
+
+        $('a:not(.is-disabled)', node.parent()).attr('aria-selected', 'false').parent().removeClass('is-selected');
+
+        this.syncNode(node);
+        this.setNodeStatus(node);
+
+        top = this.getAbsoluteOffset(node[0], this.container[0]).top;
+        if (this.selectedIndicator.length) {
+          this.selectedIndicator.css({top: top});
+        }
+
+        if (focus) {
+          node.focus();
+        }
+
+        setTimeout(function() {
+          var jsonData = node.data('jsonData') || {};
+          self.element.triggerHandler('unselected', {node: node, data: jsonData});
+        }, 0);
       },
 
       //Set a node as the selected one
@@ -238,23 +281,108 @@
         if (node.length === 0) {
           return;
         }
-        node.attr({'tabindex': '0', 'aria-selected': 'true'}).parent().addClass('is-selected');
-        this.element.find('a').not(node).attr({'tabindex': '-1', 'aria-selected': 'false'}).parent().removeClass('is-selected');
 
-        this.markNodeSelectedById(node.attr('id'));
+        var top,
+          self = this,
+          aTags = $('a', this.element);
+
+        aTags.attr('tabindex', '-1');
+        node.attr('tabindex', '0');
+
+        if (this.isMultiselect) {
+          $('a:not(.is-disabled)', node.parent())
+            .attr('aria-selected', 'true').parent().addClass('is-selected');
+        }
+        else {
+          aTags.attr('aria-selected', 'false').parent().removeClass('is-selected');
+          node.attr('aria-selected', 'true').parent().addClass('is-selected');
+        }
+
+        this.syncNode(node);
+        if (!this.loading) {
+          this.setNodeStatus(node);
+        }
+
+        if (this.selectedIndicator.length) {
+          top = this.getAbsoluteOffset(node[0], this.container[0]).top;
+          this.selectedIndicator.css({top: top});
+        }
 
         if (focus) {
           node.focus();
         }
 
-        var jsonData = node.data('jsonData') ? node.data('jsonData') : [];
+        setTimeout(function() {
+          var jsonData = node.data('jsonData') || {};
+          self.element.triggerHandler('selected', {node: node, data: jsonData});
+        }, 0);
+      },
 
-        var top = this.getAbsoluteOffset(node[0], this.container[0]).top;
-        if (this.selectedIndicator.length) {
-          this.selectedIndicator.css({top: top});
+      setNodeStatus: function(node) {
+        var self = this,
+          data = node.data('jsonData'),
+          nodes;
+
+        // Not multiselect
+        if (!this.isMultiselect) {
+          node.removeClass('is-selected is-partial');
+          if (data && data.selected) {
+            node.addClass('is-selected');
+          }
+          return;
         }
 
-        this.element.trigger('selected', {node: node, data: jsonData});
+        var setStatus = function (nodes, isFirstSkipped) {
+          nodes.each(function() {
+            var node = $('a:first', this),
+              parent = node.parent(),
+              status = self.getSelectedStatus(node, isFirstSkipped);
+
+            if (status === 'mixed') {
+              parent.removeClass('is-selected is-partial').addClass('is-partial');
+            }
+            else if (status) {
+              parent.removeClass('is-selected is-partial').addClass('is-selected');
+            }
+            else {
+              parent.removeClass('is-selected is-partial');
+            }
+            self.syncNode(node);
+          });
+        };
+
+        // Multiselect
+        var isFirstSkipped = false;
+        nodes = node.parent().find('li.folder');
+        setStatus(nodes, isFirstSkipped);
+
+        isFirstSkipped = (!nodes.length && data && !data.selected) ? false : true;
+        nodes = node.parentsUntil(this.element, 'li.folder');
+        setStatus(nodes, isFirstSkipped);
+      },
+
+      getSelectedStatus: function(node, isFirstSkipped) {
+        var status,
+          total = 0,
+          selected = 0,
+          unselected = 0,
+          data;
+
+        node.parent().find('a').each(function(i) {
+          if (isFirstSkipped && i === 0) {
+            return;
+          }
+          total++;
+          data = $(this).data('jsonData');
+          if (data && data.selected) {
+            selected++;
+          } else {
+            unselected++;
+          }
+        });
+
+        status = ((total === selected) ? true : ((total === unselected) ? false : 'mixed'));
+        return status;
       },
 
       // Finds the offset of el from relativeEl
@@ -308,6 +436,7 @@
                 elem.children = nodes;
                 self.addChildNodes(elem, node.parent());
                 node.removeClass('is-loading');
+                self.loading = false;
 
                 //open
                 self.openNode(next, node);
@@ -315,11 +444,13 @@
                 //sync data on node
                 nodeData.children = nodes;
                 node.data('jsonData', nodeData);
+                self.initSelected();
               };
 
               var args = {node: node, data: node.data('jsonData')};
               self.settings.source(args, response);
               node.addClass('is-loading');
+              self.loading = true;
 
               return;
             }
@@ -361,10 +492,24 @@
         var self = this;
         //on click give clicked element 0 tabindex and 'aria-selected=true', resets all other links
         this.element.on('click.tree', 'a', function (e) {
-          var target = $(this);
+          var target = $(this),
+            parent = target.parent();
           if (!target.is('.is-disabled, .is-loading')) {
-            self.setSelectedNode(target, true);
-            self.toggleNode(target);
+            if (self.isMultiselect) {
+              if ($(e.target).is('.icon') && parent.is('.folder')) {
+                self.toggleNode(target);
+              }
+              else if (parent.is('.is-selected, .is-partial')) {
+                self.setUnSelectedNode(target, true);
+              }
+              else {
+                self.setSelectedNode(target, true);
+              }
+            }
+            else {
+              self.setSelectedNode(target, true);
+              self.toggleNode(target);
+            }
             e.stopPropagation();
           }
           return false; //Prevent Click from Going to Top
@@ -630,18 +775,14 @@
       },
 
       // Get selected nodes
-      getSelectedNodes: function (source) {
-        var node,
-          self = this,
+      getSelectedNodes: function () {
+        var node, data,
           selected = [];
 
-        $('a', self.element).each(function() {
-          if (this.id) {
-            node = self.getNodeByIdIfSelected(this.id, source);
-            if (node) {
-              selected.push(node);
-            }
-          }
+        $('li.is-selected', this.element).each(function() {
+          node = $('a:first', this);
+          data = node.data('jsonData');
+          selected.push({'node': node, 'data': data});
         });
         return selected;
       },
@@ -705,13 +846,14 @@
           });
         }
 
+        node.data('jsonData', entry);
         return entry;
       },
 
       // Add a node and all its related markup
       addNode: function (nodeData, location) {
         var li = $('<li></li>'),
-            a = $('<a href="#"></a>').appendTo(li);
+          a = $('<a href="#"></a>').appendTo(li);
 
         location = (!location ? 'bottom' : location); //supports button or top or jquery node
 
@@ -757,6 +899,10 @@
 
           if (found && typeof nodeData.parent === 'string') {
             li = this.element.find('#'+nodeData.parent).parent();
+
+            if (!nodeData.disabled && li.is('.is-selected') && typeof nodeData.selected === 'undefined') {
+              nodeData.selected = true;
+            }
             this.addAsChild(nodeData, li);
           }
 
