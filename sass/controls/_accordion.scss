@@ -1,6 +1,49 @@
 // New Accordion Style
 //========================================================
 
+@mixin leftAlignCascadeStylesHeader($aPadding, $iconMargin, $width, $liPadding) {
+  > a {
+    padding-left: $aPadding;
+  }
+
+  > .icon,
+  > [class^="btn"] {
+    margin-left: $iconMargin;
+
+    + a {
+      padding-left: 0;
+      width: calc(100% - $width);
+    }
+  }
+
+  &.list-item {
+    &::before {
+      padding-left: $liPadding;
+    }
+
+    a {
+      padding-left: 0;
+      width: calc(100% - $width);
+    }
+  }
+}
+
+@mixin leftAlignCascadeStylesPane($leftPadding, $iconLinkPadding, $iconContentPadding) {
+  .accordion-content {
+    padding-left: $leftPadding;
+  }
+
+  &.has-icons {
+    .accordion-header.no-icon > a {
+      padding-left: $iconLinkPadding;
+    }
+
+    .accordion-content {
+      padding-left: $iconContentPadding;
+    }
+  }
+}
+
 .accordion {
   background-color: transparent;
   border: 1px solid transparent;
@@ -13,8 +56,7 @@
     border-bottom-color: $accordion-disabled-border-color;
     pointer-events: none;
 
-    .accordion-header,
-    .step-process-item {
+    .accordion-header {
       background-color: $accordion-disabled-bg-color !important;
       border-bottom-color: $accordion-disabled-border-color !important;
       color: $accordion-disabled-text-color !important;
@@ -49,8 +91,7 @@
       background-color: $accordion-disabled-pane-bg-color !important;
 
       .accordion-content,
-      .accordion-header,
-      .step-process-item {
+      .accordion-header {
         background-color: $accordion-disabled-pane-bg-color !important;
         border-bottom-color: $accordion-disabled-pane-bg-color !important;
       }
@@ -61,8 +102,7 @@
   &.has-icons {
 
     // Level 1
-    > .accordion-header,
-    > .step-process-item {
+    > .accordion-header {
       > a {
         padding-left: 54px;
       }
@@ -77,231 +117,49 @@
     }
 
     .accordion-pane {
-      .accordion-content {
-        padding-left: 54px;
-      }
-
-      &.has-icons {
-        .accordion-header.no-icon > a,
-        .step-process-item.no-icon > a {
-          padding-left: 54px;
-        }
-
-        .accordion-content {
-          padding-left: 54px;
-        }
-      }
+      @include leftAlignCascadeStylesPane(54px, 54px, 54px);
 
       // Level 2
-      .accordion-header,
-      .step-process-item  {
-        > a {
-          padding-left: 36px;
-        }
-
-        > .icon,
-        > [class^="btn"] {
-          margin-left: 30px;
-
-          + a {
-            padding-left: 0;
-            width: calc(100% - 56px);
-          }
-        }
+      .accordion-header {
+        @include leftAlignCascadeStylesHeader(36px, 30px, 56px, 37px);
 
         &.no-icon {
           > a {
             padding-left: 54px;
           }
         }
-
-        &.list-item {
-          &::before {
-            padding-left: 37px;
-          }
-
-          a {
-            padding-left: 0;
-            width: calc(100% - 56px);
-          }
-        }
       }
 
       .accordion-pane {
-        .accordion-content {
-          padding-left: 54px;
-        }
-
-        &.has-icons {
-          .accordion-header.no-icon > a,
-          .step-process-item  > a {
-            padding-left: 73px;
-          }
-
-          .accordion-content {
-            padding-left: 74px;
-          }
-        }
+        @include leftAlignCascadeStylesPane(54px, 73px, 74px);
 
         // Level 3
-        .accordion-header,
-        .step-process-item  {
-          > a {
-            padding-left: 54px;
-          }
-
-          > .icon,
-          > [class^="btn"] {
-            margin-left: 49px;
-
-            + a {
-              padding-left: 0;
-              width: calc(100% - 76px);
-            }
-          }
-
-          &.list-item {
-            &::before {
-              padding-left: 56px;
-            }
-
-            a {
-              padding-left: 0;
-              width: calc(100% - 76px);
-            }
-          }
+        .accordion-header {
+          @include leftAlignCascadeStylesHeader(54px, 49px, 76px, 56px);
         }
 
         .accordion-pane {
-          .accordion-content {
-            padding-left: 74px;
-          }
-
-          &.has-icons {
-            .accordion-header.no-icon > a {
-              padding-left: 92px;
-            }
-
-            .accordion-content {
-              padding-left: 93px;
-            }
-          }
+          @include leftAlignCascadeStylesPane(74px, 92px, 93px);
 
           // Level 4
-          .accordion-header,
-          .step-process-item {
-            > a {
-              padding-left: 74px;
-            }
-
-            > .icon,
-            > [class^="btn"] {
-              margin-left: 68px;
-
-              + a {
-                width: calc(100% - 95px);
-                padding-left: 0;
-              }
-            }
-
-            &.list-item {
-              &::before {
-                padding-left: 75px;
-              }
-
-              a {
-                padding-left: 0;
-                width: calc(100% - 95px);
-              }
-            }
+          .accordion-header {
+            @include leftAlignCascadeStylesHeader(74px, 68px, 95px, 75px);
           }
 
           .accordion-pane {
-            .accordion-content {
-              padding-left: 93px;
-            }
-
-            &.has-icons {
-              .accordion-header.no-icon > a {
-                padding-left: 111px;
-              }
-
-              .accordion-content {
-                padding-left: 112px;
-              }
-            }
+            @include leftAlignCascadeStylesPane(93px, 111px, 112px);
 
             // Level 5
-            .accordion-header,
-            .step-process-item {
-              > a {
-                padding-left: 93px;
-              }
-
-              > .icon,
-              > [class^="btn"] {
-                margin-left: 87px;
-
-                + a {
-                  padding-left: 0;
-                  width: calc(100% - 114px);
-                }
-              }
-
-              &.list-item {
-                &::before {
-                  padding-left: 94px;
-                }
-
-                a {
-                  padding-left: 0;
-                  width: calc(100% - 114px);
-                }
-              }
+            .accordion-header {
+              @include leftAlignCascadeStylesHeader(93px, 87px, 114px, 94px);
             }
 
             .accordion-pane {
-              .accordion-content {
-                padding-left: 112px;
-              }
-
-              &.has-icons {
-                .accordion-header.no-icon > a {
-                  padding-left: 131px;
-                }
-
-                .accordion-content {
-                  padding-left: 132px;
-                }
-              }
+              @include leftAlignCascadeStylesPane(112px, 131px, 132px);
 
               // Level 6
-              .accordion-header,
-              .step-process-item {
-                > a {
-                  padding-left: 112px;
-                }
-
-                > .icon,
-                > [class^="btn"] {
-                  margin-left: 106px;
-
-                  + a {
-                    padding-left: 0;
-                    width: calc(100% - 134px);
-                  }
-                }
-
-                &.list-item {
-                  &::before {
-                    padding-left: 113px;
-                  }
-
-                  a {
-                    padding-left: 0;
-                    width: calc(100% - 134px);
-                  }
-                }
+              .accordion-header {
+                @include leftAlignCascadeStylesHeader(112px, 106px, 134px, 113px);
               }
 
               .accordion-pane {
@@ -322,8 +180,7 @@
     border-color: $accordion-panel-border-color;
     border-right-color: $accordion-toplevel-border-color;
 
-    .accordion-header,
-    .step-process-item {
+    .accordion-header {
       border-bottom-color: $accordion-panel-border-color;
 
       &.is-focused:not(.hide-focus) {
@@ -371,8 +228,7 @@
           }
         }
 
-        .accordion-header,
-        .step-process-item {
+        .accordion-header {
           border-bottom-color: $accordion-selected-bg-color;
         }
       }
@@ -409,8 +265,7 @@
     &.alternate {
       background-color: $accordion-alternate-bg-color;
 
-      .accordion-header,
-      .step-process-item {
+      .accordion-header {
         border-bottom-color: $accordion-alternate-border-color;
 
         &.is-focused:not(.hide-focus) {
@@ -421,8 +276,7 @@
       .accordion-pane {
         background-color: $accordion-alternate-pane-bg-color;
 
-        .accordion-header,
-        .step-process-item {
+        .accordion-header {
           border-bottom-color: $accordion-alternate-border-color;
 
           &:last-child {
@@ -452,8 +306,7 @@
       background-color: $accordion-inverse-bg-color;
       border-right: $accordion-inverse-border-color;
 
-      .accordion-header,,
-      .step-process-item {
+      .accordion-header {
         border-bottom-color: $accordion-inverse-border-color;
         color: $accordion-inverse-text-color;
 
@@ -540,8 +393,7 @@
           }
         }
 
-        .accordion-header,
-        .step-process-item {
+        .accordion-header {
           border-bottom-color: $accordion-inverse-pane-bg-color;
 
           &:last-child {
@@ -577,8 +429,7 @@
   @include font-size(14);
 }
 
-.accordion-header,
-.step-process-item {
+.accordion-header {
   border: 1px solid transparent;
   border-bottom-color: $accordion-border-color;
   cursor: pointer;
@@ -789,8 +640,7 @@
       background-color: $accordion-disabled-pane-bg-color !important;
       border-bottom-color: $accordion-disabled-pane-bg-color !important;
 
-      .accordion-header,
-      .step-process-item {
+      .accordion-header {
         background-color: $accordion-disabled-pane-bg-color !important;
         border-bottom-color: $accordion-disabled-pane-bg-color !important;
 
@@ -833,23 +683,12 @@
   .accordion-content {
     color: $accordion-text-color;
     overflow-x: visible;
-    padding-left: 20px;
   }
-
-  &.has-icons {
-    .accordion-header.no-icon > a {
-      padding-left: 40px;
-    }
-
-    .accordion-content {
-      padding-left: 40px;
-    }
-  }
+  @include leftAlignCascadeStylesPane(20px, 40px, 40px);
 
   // These rules allow the accordion to expand
   // Level 2 Accordion Header
-  .accordion-header,
-  .step-process-item {
+  .accordion-header {
     height: 34px;
 
     &:not(:first-child) {
@@ -941,186 +780,40 @@
     padding: 0;
     border-bottom-color: transparent;
 
-    &.has-icons {
-      .accordion-header.no-icon > a {
-        padding-left: 59px;
-      }
-
-      .accordion-content {
-        padding-left: 59px;
-      }
-    }
-
-    .accordion-content {
-      padding-left: 40px;
-    }
+    @include leftAlignCascadeStylesPane(59px, 59px, 40px);
 
     // Level 3 Accordion Header
-    .accordion-header,
-    .step-process-item {
-      > a {
-        padding-left: 40px;
-      }
-
-      > [class^="btn"],
-      > .icon {
-        margin-left: 34px;
-
-        + a {
-          padding-left: 0;
-          width: calc(100% - 59px);
-        }
-      }
-
-      &.list-item {
-        &::before {
-          padding-left: 41px;
-        }
-
-        a {
-          padding-left: 0;
-          width: calc(100% - 59px);
-        }
-      }
-
+    .accordion-header {
+      @include leftAlignCascadeStylesHeader(40px, 34px, 59px, 41px);
     }
 
     // Level 3 Accordion Pane
     .accordion-pane {
+      @include leftAlignCascadeStylesPane(78px, 78px, 59px);
 
-      &.has-icons {
-        .accordion-header.no-icon > a {
-          padding-left: 78px;
-        }
-
-        .accordion-content {
-          padding-left: 78px;
-        }
-      }
-
-      .accordion-content {
-        padding-left: 59px;
-      }
 
       // Level 4 Accordion Header
-      .accordion-header,
-      .step-process-item {
-        > a {
-          padding-left: 59px;
-        }
-
-        > [class^="btn"],
-        > .icon {
-          margin-left: 53px;
-
-          + a {
-            padding-left: 0;
-            width: calc(100% - 78px);
-          }
-        }
-
-        &.list-item {
-          &::before {
-            padding-left: 60px;
-          }
-
-          a {
-            padding-left: 0;
-            width: calc(100% - 78px);
-          }
-        }
+      .accordion-header {
+        @include leftAlignCascadeStylesHeader(59px, 53px, 78px, 60px);
       }
 
       // Level 4 Accordion Pane
       .accordion-pane {
+        @include leftAlignCascadeStylesPane(97px, 97px, 78px);
 
-        &.has-icons {
-          .accordion-header.no-icon > a {
-            padding-left: 97px;
-          }
-
-          .accordion-content {
-            padding-left: 97px;
-          }
-        }
-
-        .accordion-content {
-          padding-left: 78px;
-        }
 
         // Level 5 Accordion Header
-        .accordion-header,
-        .step-process-item {
-          > a {
-            padding-left: 78px;
-          }
-
-          > [class^="btn"],
-          > .icon {
-            margin-left: 72px;
-
-            + a {
-              padding-left: 0;
-              width: calc(100% - 97px);
-            }
-          }
-
-          &.list-item {
-            &::before {
-              padding-left: 79px;
-            }
-
-            a {
-              padding-left: 0;
-              width: calc(100% - 97px);
-            }
-          }
+        .accordion-header {
+          @include leftAlignCascadeStylesHeader(78px, 72px, 97px, 79px);
         }
 
         // Level 5 Accordion Pane
         .accordion-pane {
-
-          &.has-icons {
-            .accordion-header.no-icon > a {
-              padding-left: 116px;
-            }
-
-            .accordion-content {
-              padding-left: 116px;
-            }
-          }
-
-          .accordion-content {
-            padding-left: 97px;
-          }
+          @include leftAlignCascadeStylesPane(116px, 116px, 97px);
 
           // Level 6 Accordion Header
-          .accordion-header,
-          .step-process-item {
-            > a {
-              padding-left: 97px;
-            }
-
-            > [class^="btn"],
-            > .icon {
-              margin-left: 92px;
-
-              + a {
-                padding-left: 0;
-                width: calc(100% - 117px);
-              }
-            }
-
-            &.list-item {
-              &::before {
-                padding-left: 99px;
-              }
-
-              a {
-                padding-left: 0;
-                width: calc(100% - 117px);
-              }
-            }
+          .accordion-header {
+            @include leftAlignCascadeStylesHeader(97px, 92px, 117px, 99px);
           }
 
           // Level 6 Accordion Pane
@@ -1145,8 +838,7 @@ html[dir='rtl'] {
   .accordion {
 
     // Level 1
-    .accordion-header,
-    .step-process-item {
+    .accordion-header {
       -webkit-font-feature-settings: "ccmp" 0;
 
       > a {
@@ -1180,8 +872,7 @@ html[dir='rtl'] {
       }
 
       // Level 2
-      .accordion-header,
-      .step-process-item {
+      .accordion-header {
         > a {
           padding-left: 0;
           padding-right: 20px;
@@ -1229,8 +920,7 @@ html[dir='rtl'] {
         }
 
         // Level 3
-        .accordion-header,
-        .step-process-item {
+        .accordion-header {
           > a {
             padding-left: 0;
             padding-right: 40px;
@@ -1277,8 +967,7 @@ html[dir='rtl'] {
           }
 
           // Level 4
-          .accordion-header,
-          .step-process-item {
+          .accordion-header {
             > a {
               padding-left: 0;
               padding-right: 59px;
@@ -1325,8 +1014,7 @@ html[dir='rtl'] {
             }
 
             // Level 5
-            .accordion-header,
-            .step-process-item {
+            .accordion-header {
               > a {
                 padding-left: 0;
                 padding-right: 78px;
@@ -1373,8 +1061,7 @@ html[dir='rtl'] {
               }
 
               // Level 6
-              .accordion-header,
-              .step-process-item {
+              .accordion-header {
                 > a {
                   padding-left: 0;
                   padding-right: 97px;
@@ -1416,8 +1103,7 @@ html[dir='rtl'] {
 
     // Change padding/margin for headers based on icon existence
     &.has-icons {
-      .accordion-header,
-      .step-process-item {
+      .accordion-header {
         > a {
           padding-right: 55px;
         }
@@ -1449,8 +1135,7 @@ html[dir='rtl'] {
         }
 
         // Level 2
-        .accordion-header,
-        .step-process-item {
+        .accordion-header {
           > a {
             padding-right: 36px;
           }
@@ -1500,8 +1185,7 @@ html[dir='rtl'] {
           }
 
           // Level 3
-          .accordion-header,
-          .step-process-item {
+          .accordion-header {
             > a {
               padding-right: 54px;
             }
@@ -1545,8 +1229,7 @@ html[dir='rtl'] {
             }
 
             // Level 4
-            .accordion-header,
-            .step-process-item {
+            .accordion-header {
               > a {
                 padding-right: 74px;
               }
@@ -1590,8 +1273,7 @@ html[dir='rtl'] {
               }
 
               // Level 5
-              .accordion-header,
-              .step-process-item {
+              .accordion-header {
                 > a {
                   padding-right: 93px;
                 }
@@ -1635,8 +1317,7 @@ html[dir='rtl'] {
                 }
 
                 // Level 6
-                .accordion-header,
-                .step-process-item {
+                .accordion-header {
                   > a {
                     padding-right: 112px;
                   }
@@ -1681,8 +1362,7 @@ html[dir='rtl'] {
 // Dirty Hack because Firefox never lines things up right
 // These rules vertically "center" the plus-minus icon in
 .is-firefox {
-  .accordion-header,
-  .step-process-item {
+  .accordion-header {
     > [class^="btn"] {
       .icon.plus-minus {
         &::before,
@@ -1694,8 +1374,7 @@ html[dir='rtl'] {
   }
 
   .accordion-pane {
-    .accordion-header,
-    .step-process-item {
+    .accordion-header {
       > [class^="btn"] {
         .icon.plus-minus {
           &::before,
