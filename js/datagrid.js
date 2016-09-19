@@ -3497,7 +3497,7 @@ $.fn.datagrid = function(options) {
           row = self.activeCell.row,
           cell = self.activeCell.cell,
           col = self.columnSettings(cell),
-          item = self.settings.dataset[self.dataRowIndex(row)],
+          item = self.settings.dataset[self.dataRowIndex(node)],
           visibleCols = self.visibleColumns(),
           isSelectionCheckbox = !!($('.datagrid-selection-checkbox', node).length),
           lastRow, lastCell;
