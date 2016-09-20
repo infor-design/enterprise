@@ -124,7 +124,7 @@ npm info @infor/sohoxi dist-tags
 ### Tagging develop builds
 To be used by build servers to tag the develop builds before pushing to `npm.infor.com`
 ```node
-npm run tag-version
+npm run develop-tag
 ```
 
 # Contributing to Soho XI
