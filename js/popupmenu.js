@@ -39,7 +39,7 @@
     function PopupMenu(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
-      this.isIe11 = $('html').is('.ie11');
+      this.isOldIe  = $('html').is('.ie11, .ie10, .ie9');
       this.init();
     }
 
@@ -552,6 +552,10 @@
           wrapper = this.menu.parent('.popupmenu-wrapper'),
           windowH = $(window).height(),
           windowW = $(window).width(),
+          mouse =  {
+            x: e.clientX ? e.clientX : window.event.clientX,
+            y: e.clientY ? e.clientY : window.event.clientY
+          },
           menuDimensions = {
             width: this.menu.outerWidth(),
             height: this.menu.outerHeight()
@@ -572,7 +576,7 @@
         function getCoordinates(e, axis) {
           axis = sanitizeAxis(axis);
           usedCoords = true;
-          return e['client' + axis.toUpperCase()]; // use mouseX/mouseY if this doesn't work
+          return mouse[axis]; // use mouseX/mouseY if this doesn't work
         }
 
         function getBorder(axis) {
@@ -739,15 +743,21 @@
         function getModalParentOffset(axis) {
           axis = sanitizeAxis(axis);
           var border = getBorder(axis);
-          return modalParent.length && !this.isIe11 ? mpOffset[border] : 0;
+          return modalParent.length ? mpOffset[border] : 0;
         }
 
         //left = flipIfNotEnoughRoom('x', left);
         top = flipIfNotEnoughRoom('y', top);
 
         // Fix these values if we're sitting inside a modal, since the modal element is "fixed"
-        left = left - getModalParentOffset('x');
-        top = top - getModalParentOffset('y');
+        // IE11 handles fixed positioning differently so add the offset instead of subtracting
+        if (this.isOldIe) {
+          left = left + getModalParentOffset('x');
+          top = top + getModalParentOffset('y');
+        } else {
+          left = left - getModalParentOffset('x');
+          top = top - getModalParentOffset('y');
+        }
 
         // place the element so we can get some height/width and bleeds
         wrapper.css({'left': left, 'top': top});
@@ -824,6 +834,11 @@
 
         left = left - getModalParentOffset('x');
         top = top - getModalParentOffset('y');
+
+        // If menu is off the top at this point, shrink to fit
+        if (top - $(document).scrollTop() < 0) {
+          shrinkY(true);
+        }
 
         // Re-apply adjusted positioning
         wrapper.css({'top': top, 'left': left});
