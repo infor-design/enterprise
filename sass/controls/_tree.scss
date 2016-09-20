@@ -17,11 +17,27 @@
     padding: 4px 5px;
     text-decoration: none;
 
+    //Badge in the tree items
+    .tree-badge {
+      height: 18px;
+      line-height: 18px;
+      margin: -2px 4px 0 3px;
+
+      &:not(.round) {
+        padding: 0 7px;
+      }
+
+      &.round {
+        width: 18px;
+      }
+    }
+
     //Text in the tree items
     .tree-text {
       @include transition(border 300ms cubic-bezier(.17, .04, .03, .94), color 300ms cubic-bezier(.17, .04, .03, .94));
       border-bottom: 1px solid transparent;
       color: $tree-link-color;
+      margin: 0 0 0 4px;
     }
 
     // Icons
@@ -29,7 +45,7 @@
       @include transition(fill 300ms cubic-bezier(.17, .04, .03, .94));
       fill: $tree-icon-color;
       height: 15px;
-      margin: 0 9px 0 0;
+      margin: 0 5px 0 0;
       top: 2px;
       width: 15px;
     }
@@ -131,6 +147,15 @@
         }
       }
     }
+
+    &.is-active {
+      > a {
+        .tree-badge:not(.info):not(.good):not(.error):not(.alert):not(.pending) {
+          background-color: $badge-neutral-hover-bg-color;
+        }
+      }
+    }
+
   }
 
   // Sub Nodes
@@ -200,7 +225,7 @@
 
         &::before {
           @include checkbox-unchecked-before-style;
-          margin-left: 0;
+          margin-left: 4px;
           margin-top: 0;
           top: 0;
         }
@@ -216,7 +241,7 @@
             @include checkbox-checked-after-style;
             @include css3(transform-origin, -11px top 0);
             @include checkbox-animation;
-            left: 5px;
+            left: 9px;
             top: 1px;
           }
         }
@@ -232,7 +257,7 @@
             @include checkbox-checked-after-style;
             @include  checkbox-partial-after-style;
             @include no-animation();
-            left: 2px;
+            left: 6px;
             top: -3px;
           }
         }
@@ -291,6 +316,15 @@
   float: left;
   margin: 20px;
   min-width: 200px;
+}
+
+//IE
+.ie {
+  &:not(.ie-edge) {
+    .tree a .tree-badge {
+      line-height: 20px;
+    }
+  }
 }
 
 //RTL Tree

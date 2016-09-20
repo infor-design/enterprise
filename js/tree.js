@@ -100,7 +100,13 @@
       //From the LI, Read props and add stuff
       decorateNode: function(a) {
         var subNode,
-          parentCount = 0;
+        parentCount = 0,
+        badgeData = a.attr('data-badge'),
+        badge = {elem: $('<span class="tree-badge badge"></span>')};
+
+      if (typeof badgeData !== 'undefined') {
+        badgeData = $.fn.parseOptions(a, 'data-badge');
+      }
 
         //set initial 'role', 'tabindex', and 'aria selected' on each link (except the first)
         a.attr({'role': 'treeitem', 'tabindex': '-1', 'aria-selected': 'false'});
@@ -137,7 +143,9 @@
         subNode = a.next();
 
         //Inject Icons
-        var text = a.text();
+        var text = a.contents().filter(function() {
+          return !$(this).is('.tree-badge');// Do not include badge text
+        }).text();
 
         a.text('');
         if (a.children('svg').length === 0) {
@@ -147,6 +155,28 @@
         //Inject checkbox
         if (this.isMultiselect && !this.settings.hideCheckboxes) {
           a.append('<span class="tree-checkbox"></span>');
+        }
+
+        //Inject badge
+        if (badgeData && !badgeData.remove) {
+          badge.text = '';
+
+          if (typeof badgeData.text !== 'undefined') {
+            badge.text = badgeData.text.toString();
+            badge.elem.html(badge.text);
+            if (badge.text.length === 1) {
+              badge.elem.addClass('round');
+            }
+          }
+          if (/info|good|error|alert|pending/i.test(badgeData.type)) {
+            badge.elem.addClass(badgeData.type);
+          }
+          if (badge.elem.text() !== '') {
+            a.append(badge.elem);
+          }
+          if (badgeData.type && badgeData.type.indexOf('pending') !== -1) {
+            badge.elem.text('');
+          }
         }
 
         a.append('<span class="tree-text">' + text + '</span>');
@@ -261,14 +291,18 @@
         this.syncNode(node);
         this.setNodeStatus(node);
 
-        top = this.getAbsoluteOffset(node[0], this.container[0]).top;
         if (this.selectedIndicator.length) {
+          top = this.getAbsoluteOffset(node[0], this.container[0]).top;
           this.selectedIndicator.css({top: top});
         }
 
         if (focus) {
           node.focus();
         }
+
+        // Set active css class
+        $('li', self.element).removeClass('is-active');
+        node.parent().addClass('is-active');
 
         setTimeout(function() {
           var jsonData = node.data('jsonData') || {};
@@ -311,6 +345,10 @@
         if (focus) {
           node.focus();
         }
+
+        // Set active css class
+        $('li', self.element).removeClass('is-active');
+        node.parent().addClass('is-active');
 
         setTimeout(function() {
           var jsonData = node.data('jsonData') || {};
@@ -416,7 +454,7 @@
 
             self.isAnimating = true;
             node.find('.is-selected').removeClass('is-selected');
-            this.element.parent().find('.selected-item-indicator').css('top', '');
+            // this.element.parent().find('.selected-item-indicator').css('top', '');
 
             next.one('animateclosedcomplete', function() {
               next.removeClass('is-open');
@@ -572,9 +610,15 @@
               next = next.parent().next().find('a:first');
             }
 
-            //bottom of a group..
+            //bottom of a group..{l=1000: max folders to be deep }
             if (next.length === 0) {
-              next = target.closest('.folder').next().find('a:first');
+              for (var i=0,l=1000,closest=target; i<l; i++) {
+                closest = closest.parent().closest('.folder');
+                next = closest.next().find('a:first');
+                if (next.length) {
+                  break;
+                }
+              }
             }
             self.setFocus(next);
           }
@@ -585,7 +629,7 @@
 
             //move into children at bottom
             if (prev.parent().is('.folder.is-open') &&
-                prev.parent().find('ul.is-open').length &&
+                prev.parent().find('ul.is-open a').length &&
                 !prev.parent().find('ul.is-disabled').length) {
               prev = prev.parent().find('ul.is-open a:last');
             }
@@ -853,13 +897,15 @@
       // Add a node and all its related markup
       addNode: function (nodeData, location) {
         var li = $('<li></li>'),
-          a = $('<a href="#"></a>').appendTo(li);
+          a = $('<a href="#"></a>').appendTo(li),
+          badgeAttr = typeof nodeData.badge === 'object' ? JSON.stringify(nodeData.badge) : nodeData.badge;
 
         location = (!location ? 'bottom' : location); //supports button or top or jquery node
 
         a.attr({
           'id': nodeData.id,
-          'href': nodeData.href
+          'href': nodeData.href,
+          'data-badge': badgeAttr
         }).text(nodeData.text);
 
         if (nodeData.open) {
@@ -986,6 +1032,46 @@
           return;
         }
 
+        // Update badge
+        if (nodeData.badge) {
+          var badge = elem.node.find('.tree-badge:first');
+          // Add badge if not exists
+          if (!badge.length && !nodeData.badge.remove) {
+            if (!nodeData.badge.remove && typeof nodeData.badge.text !== 'undefined' && $.trim(nodeData.badge.text) !== '') {
+              $('<span class="tree-badge badge"></span>').insertBefore(elem.node.find('.tree-text:first'));
+              badge = elem.node.find('.tree-badge:first');
+            }
+          }
+          // Make update changes
+          if (badge.length) {
+            if (typeof nodeData.badge.text !== 'undefined') {
+              nodeData.badge.text = nodeData.badge.text.toString();
+              badge.text(nodeData.badge.text).removeClass('round');
+              if (nodeData.badge.text.length === 1) {
+                badge.addClass('round');
+              }
+            }
+            if (typeof nodeData.badge.type !== 'undefined') {
+              badge.removeClass('info good error alert pending');
+              if (/info|good|error|alert|pending/i.test(nodeData.badge.type)) {
+                badge.addClass(nodeData.badge.type);
+              }
+              if (nodeData.badge.type.indexOf('pending') !== -1) {
+                badge.text('');
+              }
+            }
+            elem.badge = nodeData.badge;
+
+            //Remove badge
+            if (this.parseBool(nodeData.badge.remove)) {
+              badge.remove();
+              if (typeof elem.badge !== 'undefined') {
+                delete elem.badge;
+              }
+            }
+          }
+        }
+
         if (nodeData.text) {
           elem.node.find('.tree-text').first().text(nodeData.text);
           elem.text = nodeData.text;
@@ -1014,6 +1100,12 @@
           }
         }
 
+      },
+
+      // Performs the usual Boolean coercion with the exception of
+      // the strings "false" (case insensitive) and "0"
+      parseBool: function(b) {
+        return !(/^(false|0)$/i).test(b) && !!b;
       },
 
       // Delete children nodes
