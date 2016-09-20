@@ -2601,8 +2601,9 @@ $.fn.datagrid = function(options) {
           cell = elem.index(),
           rowNode = $(this).closest('tr'),
           row = self.visualRowIndex(rowNode),
+          dataRowIdx = self.dataRowIndex(rowNode),
           col = self.columnSettings(cell),
-          item = self.settings.dataset[self.dataRowIndex(rowNode)];
+          item = self.settings.dataset[dataRowIdx];
 
         function handleClick() {
           if (e.type === 'mouseup' && e.button !== 0) {
@@ -2616,7 +2617,7 @@ $.fn.datagrid = function(options) {
           }
 
           if (!elem.hasClass('is-cell-readonly')) {
-            col.click(e, [{row: row, cell: cell, item: item, originalEvent: e}]);
+            col.click(e, [{row: dataRowIdx, cell: cell, item: item, originalEvent: e}]);
           }
         }
 
