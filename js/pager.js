@@ -239,7 +239,6 @@
 
       //Set or Get Current Page
       setActivePage: function(pageNum, force, op) {
-
         var lis = this.pagerBar.find(this.buttonExpr);
 
         // Check to make sure our internal active page is set
@@ -247,15 +246,12 @@
           this.activePage = this.settings.activePage;
         }
 
-        if (pageNum === 0 || pageNum > this.pageCount()) {
-          return this.activePage;
-        }
+        if (pageNum === undefined ||
+            pageNum === 0 ||
+            isNaN(pageNum) ||
+            pageNum > this.pageCount() ||
+            (pageNum === this.activePage && !force)) {
 
-        if (pageNum === undefined) {
-          return this.activePage;
-        }
-
-        if (pageNum === this.activePage && !force) {
           return this.activePage;
         }
 
@@ -333,7 +329,7 @@
             lastValue = $(this).val();
           }).on('blur', function () {
             if (lastValue !== $(this).val()) {
-              self.setActivePage(parseInt($(this).val()), false, 'page');
+              $(this).val(self.setActivePage(parseInt($(this).val()), false, 'page'));
             }
           }).on('keydown', function (e) {
             if (e.which === 13) {
