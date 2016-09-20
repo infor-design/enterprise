@@ -1,8 +1,12 @@
+<<<<<<< 41cbdf79848a5d468ed9d42b0534025b2417b34f
 <body class="no-scroll">
   <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
   {{> includes/svg-inline-refs}}
+=======
+<body class="no-scroll responsive-two-col">
+>>>>>>> SOHO-4624 Adding advanced styles
 
-  <header class="header is-personalizable">
+  <header class="header is-personalizable top-page-header">
     <div class="toolbar">
       <div class="title">
         <h1>
@@ -19,12 +23,31 @@
     </div>
   </header>
 
-  <div class="page-container no-scroll two-column fixed responsive-2-col">
+  <div class="page-container no-scroll two-column fixed">
 
     <div id="step-process-example" class="sidebar scrollable" role="complementary">
+
+
+      <header class="header is-personalizable responsive-visible">
+        <div class="toolbar">
+          <div class="title">
+            <h1>
+              <span class="panel-title">Builder Panel Title</span>
+              <span class="panel-subhead">Builder Panel Subheader</span>
+            </h1>
+          </div>
+          <div class="buttonset">
+              <button class="btn" type="button">
+                <span>Save</span>
+              </button>
+          </div>
+          {{> includes/header-actionbutton}}
+        </div>
+      </header>
+
       <div class="accordion panel step-process-accordion" data-init="false">
         <div class="accordion-header">
-          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <svg class="icon icon-confirm" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="/svg/icons.svg#icon-confirm"></use>
           </svg>
           <a href="#">
@@ -32,7 +55,7 @@
           </a>
         </div>
         <div class="accordion-pane">
-          <div class="accordion-header">
+          <div class="step-process-item">
             <a href="#step1" class="js-step-link"><span>Compency Model 1</span></a>
           </div>
           <div class="step-process-item">
@@ -41,8 +64,13 @@
         </div>
 
         <div class="accordion-header">
+<<<<<<< 41cbdf79848a5d468ed9d42b0534025b2417b34f
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-confirm"></use>
+=======
+          <svg class="icon icon-confirm" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="/svg/icons.svg#icon-confirm"></use>
+>>>>>>> SOHO-4624 Adding advanced styles
           </svg>
           <a href="#">
             <span>Evaluate Goals</span>
@@ -100,13 +128,10 @@
       <header class="header subheader is-personalizable">
         <div class="toolbar">
           <div class="title">
-            <button class="btn-icon list-detail-back-button go-back" type="button">
-              <span class="audible">Show navigation</span>
-              <span class="icon app-header">
-                <span class="one"></span>
-                <span class="two"></span>
-                <span class="three"></span>
-              </span>
+            <button class="btn-icon responsive-two-col-back-button js-toggle-steps" type="button">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="/svg/icons.svg#icon-left-arrow"></use>
+              </svg>
             </button>
             <h1>Preferences</h1>
           </div>
@@ -127,7 +152,7 @@
         </div>
       </header>
 
-      <div class="page-container scrollable">
+      <div class="scrollable">
         <div class="full-width step-process-container">
 
           <div id="step1" class="step-panel-example">
@@ -343,7 +368,7 @@
   <script type="text/javascript">
     $(function() {
       $('#step-process-example').stepprocess({
-        changeTabOnHashChange: true
+        changeTabOnHashChange: false
       });
     });
   </script>

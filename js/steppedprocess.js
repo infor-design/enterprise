@@ -25,8 +25,9 @@
           panelContainer: '.step-process-container', // Defines a separate element to be used for containing the content panels
           changeTabOnHashChange: false, // If true, will change the selected tab on invocation based on the URL that exists after the hash
           stepLinks: '.js-step-link', // The selector for elements that are step links and change the content
-          stepPrev: '.js-step-link-prev', // The selector of the next step action (btn, link, etc)
-          stepNext: '.js-step-link-next', // The select of the next step action element (btn, link, etc)
+          stepPrevBtn: '.js-step-link-prev', // The selector of the next step action (btn, link, etc)
+          stepNextBtn: '.js-step-link-next', // The selector of the next step action element (btn, link, etc)
+          toggleStepsBtn: '.js-toggle-steps', // The selector of the element to toggle the nav bar (btn, link)
         },
         settings = $.extend({}, defaults, options);
 
@@ -65,22 +66,23 @@
             });
         });
 
-        $(self.settings.stepPrev).click(function(event) {
+        $(self.settings.stepPrevBtn).click(function(event) {
           self.selectPrevStep.call(self, event);
         });
 
-        $(self.settings.stepNext).click(function(event) {
+        $(self.settings.stepNextBtn).click(function(event) {
           self.selectNextStep.call(self, event);
         });
 
-        $(self.settings.stepToggle).click(function(event) {
-          self.toggleViewSteps.call(self, event);
+        $(self.settings.toggleStepsBtn).click(function(event) {
+          self.hideContentPane.call(self, event);
         });
 
         // Initiate and save access the accordion plugin methods
         var accordionParams = {
           rerouteOnLinkClick: false
-        }
+        };
+
         self.$stepAccordion = this.element.find('.accordion').accordion(accordionParams).data('accordion');
 
         // If we are using the hash change setting
@@ -97,8 +99,10 @@
         }
 
         // Set the initial views
-        self.$stepAccordion.select(self.$currentStep);
-        self.$stepAccordion.expand(self.$currentStep.parent());
+        self.$stepAccordion
+          .select(self.$currentStep)
+          .expand(self.$currentStep.parent());
+
         self.selectStep(self.$currentStep);
 
         return this;
@@ -110,6 +114,7 @@
       },
 
       clearSelectedSteps: function() {
+        this.$currentStep.parent().removeClass('is-selected');
         this.stepPanels.removeClass('step-panel-active');
       },
 
@@ -123,14 +128,16 @@
         this.$stepAccordion.select(this.$currentStep);
         this.$stepAccordion.expand(this.$currentStep.parent());
 
+        self.showContentPane(); // For mobile
+
         var stepId = this.$currentStep.attr('href');
-        this.stepPanels.filter(stepId).first().addClass('step-panel-active');
+        self.stepPanels.filter(stepId).first().addClass('step-panel-active');
       },
 
       selectPrevStep: function() {
         var newStepIndex = this.getStepIndex(this.$currentStep) - 1;
         if (newStepIndex < 0) {
-                  return;
+          return;
         }
         this.changeSelectedStep(this.stepLinks[newStepIndex]);
       },
@@ -143,9 +150,12 @@
         this.changeSelectedStep(this.stepLinks[newStepIndex]);
       },
 
-      toggleViewSteps: function() {
-        console.log(this.element);
+      showContentPane: function() {
+        $('.responsive-two-col').addClass('show-main');
+      },
 
+      hideContentPane: function() {
+        $('.responsive-two-col').removeClass('show-main');
       }
 
     };

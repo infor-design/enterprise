@@ -1,25 +1,141 @@
 // Stepped Process Pattern
+//  ** Note that some styles are in _accordion.scss
 //==================================================//
 
 .step-process-accordion.accordion.panel {
   border-color: transparent;
+
+  .step-process-item {
+    border: 1px solid transparent;
+    border-bottom-color: $accordion-border-color;
+    cursor: pointer;
+    font-size: 0;
+    height: 45px;
+    overflow: hidden;
+    position: relative;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+
+    > * {
+      vertical-align: middle;
+    }
+
+    a {
+      color: inherit;
+      @include font-size(14);
+      text-decoration: none;
+      text-overflow: ellipsis;
+    }
+
+    > a {
+      display: inline-block;
+      overflow: hidden;
+      padding: 13px 0 13px 54px;
+      white-space: nowrap;
+      width: calc(100% - 56px);
+    }
+
+    > .icon {
+      fill: $accordion-icon-color;
+      height: 16px;
+      margin: 0 18px;
+      top: -1px;
+      width: 18px;
+
+      &.plus-minus {
+        &::before,
+        &::after {
+          background-color: $accordion-disabled-text-color !important;
+        }
+      }
+
+      & + a {
+        padding-left: 0;
+      }
+    }
+
+    &.is-disabled {
+      background-color: $accordion-disabled-bg-color !important;
+      color: $accordion-disabled-text-color !important;
+
+      a {
+        color: $accordion-disabled-text-color !important;
+      }
+
+      .icon {
+        fill: $accordion-disabled-text-color !important;
+
+        &.plus-minus {
+          &::before,
+          &::after {
+            background-color: $accordion-disabled-text-color !important;
+          }
+        }
+      }
+    }
+
+
+    &.is-selected,
+    &.is-selected:hover,
+    &.is-focused.is-selected {
+      background-color: $accordion-selected-bg-color;
+      border-bottom-color: $accordion-selected-bg-color;
+      color: $accordion-selected-text-color;
+
+      > a {
+        color: $accordion-selected-text-color;
+      }
+
+      > .icon {
+        fill: $accordion-selected-text-color;
+      }
+    }
+
+  }
+
 }
 
 .step-process-container {
+
   .step-panel-example {
     display: none;
   }
 
   .step-panel-active {
+    display: inline;
+  }
+
+}
+
+.responsive-two-col {
+
+  .responsive-hidden {
     display: block;
   }
+
+  .responsive-visible {
+    display: none;
+  }
+
 }
 
 
 // In List-Detail View, Main/Sidebar slide left/right instead of being stacked
 @include respond-to(tabletdown) {
 
-  .responsive-2-col {
+  .responsive-two-col {
+    .responsive-hidden {
+      display: none;
+    }
+
+    .responsive-visible {
+      display: block;
+    }
+
+    > .page-container {
+      height: 100%;
+    }
+
     .main,
     .sidebar {
       @include transform-transition-list(300ms cubic-bezier(.17, .04, .03, .94));
@@ -32,6 +148,10 @@
       }
     }
 
+    .responsive-two-col-back-button {
+      display: none;
+    }
+
     .main {
       @include css3(transform, translateX(100%));
     }
@@ -40,7 +160,9 @@
       @include css3(transform, translateX(0));
     }
 
-    &.show-detail {
+
+    &.show-main {
+
       .main {
         @include css3(transform, translateX(0));
       }
@@ -49,11 +171,10 @@
         @include css3(transform, translateX(-100%));
       }
     }
+
+    .responsive-two-col-back-button {
+      display: inline-block;
+    }
+
   }
-
-  .list-detail-back-button {
-    display: inline-block;
-  }
-
-
 }
