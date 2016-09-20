@@ -32,6 +32,10 @@
   width: 14px;
 }
 
+.inline .radio ~ .label-text::before {
+  margin-top: 2px;
+}
+
 .inline .radio:hover ~ .label-text::before,
 .radio:hover + label::before {
   @include css3(transition, border-color 300ms ease);
@@ -64,6 +68,10 @@
   top: 8px;
   transition: all .2s ease 0s;
   width: 4px;
+}
+
+.inline .radio ~ .label-text::after {
+  top: 6px;
 }
 
 .inline .radio:checked ~ .label-text::before,
