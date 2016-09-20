@@ -22,12 +22,10 @@
       height: 18px;
       line-height: 18px;
       margin: -2px 4px 0 3px;
-
-      &:not(.round) {
-        padding: 0 7px;
-      }
+      padding: 0 7px;
 
       &.round {
+        padding: 0;
         width: 18px;
       }
     }
