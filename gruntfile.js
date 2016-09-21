@@ -165,8 +165,6 @@ module.exports = function(grunt) {
           {expand: true, flatten: true, src: ['js/vendor/d3.*'], dest: 'dist/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/cultures/*.*'], dest: 'public/js/cultures/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/cultures/*.*'], dest: 'dist/js/cultures/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['svg/*.svg'], dest: 'dist/svg/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['svg/*.svg'], dest: 'public/svg/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['dist/svg/*.html'], dest: 'public/svg/', filter: 'isFile'}
         ]
       },
@@ -243,39 +241,6 @@ module.exports = function(grunt) {
       amd: ['temp']
     },
 
-    'string-replace': {
-      svg: {
-        files: [
-          {
-            expand: true,
-            cwd: 'views/controls',
-            src: 'svg*.html',
-            dest: 'dist/svg/'
-          }
-        ],
-        options: {
-          replacements: [
-            {
-              pattern: '<!-- NOTE:  This file gets automatically rewritten below this comment at build time.  Please make changes to the SVG files in the "<project-root>/svg" folder. -->',
-              replacement: ''
-            },
-            {
-              pattern: '{{> svg/svg}}',
-              replacement: '<%= grunt.file.read("svg/icons.svg") %>'
-            },
-            {
-              pattern: '{{> svg/svg-extended}}',
-              replacement: '<%= grunt.file.read("svg/icons-extended.svg") %>'
-            },
-            {
-              pattern: '{{> svg/svg-empty}}',
-              replacement: '<%= grunt.file.read("svg/icons-empty.svg") %>'
-            }
-          ]
-        }
-      }
-    },
-
     compress: {
       main: {
         options: {
@@ -310,7 +275,6 @@ module.exports = function(grunt) {
     'jshint',
     'sass',
     'copy:amd',
-    'string-replace',
     'strip_code',
     'concat',
     'clean',
@@ -324,7 +288,7 @@ module.exports = function(grunt) {
 
   // Don't do any uglify/minify/jshint while the Dev Watch is running.
   grunt.registerTask('sohoxi-watch', [
-    'revision', 'sass', 'copy:amd', 'string-replace', 'strip_code','concat', 'clean', 'copy:main', 'usebanner'
+    'revision', 'sass', 'copy:amd', 'strip_code','concat', 'clean', 'copy:main', 'usebanner'
   ]);
 
 };
