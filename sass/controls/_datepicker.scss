@@ -2,11 +2,14 @@
 //================================================== *
 
 .datepicker {
-  width: 150px;
+
+  &:not(.input-xs):not(.input-sm):not(.input-md):not(.input-lg) {
+    width: 150px;
+  }
 
   &.datetime {
-    width: auto;
     padding-right: 30px;
+    width: auto;
   }
 
   + .icon,
@@ -245,8 +248,8 @@
     display: inline-block;
     height: 30px;
     margin: 0;
-    min-width: 30px;
     min-height: 30px;
+    min-width: 30px;
     position: absolute;
     top: 8px;
     transition: border-color .3s ease;
@@ -357,7 +360,7 @@ html[dir='rtl'] {
 
   .calendar {
     td {
-        span {
+      span {
         margin-left: inherit;
         margin-right: 1px;
       }
