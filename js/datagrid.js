@@ -1866,7 +1866,7 @@ $.fn.datagrid = function(options) {
         }
 
         this.recordCount++;
-        tableHtml += self.rowHtml(dataset[i]);
+        tableHtml += self.rowHtml(dataset[i], false, i);
       }
 
       self.tableBody.append(tableHtml);
@@ -1885,7 +1885,7 @@ $.fn.datagrid = function(options) {
 
     recordCount: 0,
 
-    rowHtml: function (rowData, renderHidden) {
+    rowHtml: function (rowData, renderHidden, dataRowIdx) {
 
       var isEven = (this.recordCount % 2 === 0),
         self = this,
@@ -1893,7 +1893,7 @@ $.fn.datagrid = function(options) {
         pagesize = self.settings.pagesize,
         rowHtml = '';
 
-      rowHtml = '<tr role="row" aria-rowindex="' + ((this.recordCount) + (self.settings.source  ? ((activePage-1) * pagesize) : 0)) + '"' +
+      rowHtml = '<tr role="row" aria-rowindex="' + ((dataRowIdx + 1) + (self.settings.source  ? ((activePage-1) * pagesize) : 0)) + '"' +
                 (self.settings.treeGrid && rowData.children ? ' aria-expanded="' + (rowData.expanded ? 'true"' : 'false"') : '') +
                 (self.settings.treeGrid ? ' aria-level= "' + rowData.depth + '"' : '') +
                 ' class="datagrid-row'+
@@ -2017,7 +2017,7 @@ $.fn.datagrid = function(options) {
 
         for (var l = 0; l < rowData.children.length; l++) {
           this.recordCount++;
-          rowHtml += self.rowHtml(rowData.children[l], !rowData[self.treeExpansionField]);
+          rowHtml += self.rowHtml(rowData.children[l], !rowData[self.treeExpansionField], l+1+j);
         }
       }
 
@@ -3916,12 +3916,7 @@ $.fn.datagrid = function(options) {
     },
 
     visualRowNode: function (idx) {
-      var node = this.tableBody.find('tr[role="row"]').eq(idx);
-
-      if (this.pager) {
-        idx = idx - ((this.pager.activePage -1) * this.settings.pagesize);
-        node = this.tableBody.find('tr[role="row"]').eq(idx);
-      }
+      var node = this.tableBody.find('tr[aria-rowindex="'+ (idx + 1) +'"]');
       return node;
     },
 
