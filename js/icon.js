@@ -75,13 +75,6 @@
           }, 0);
         }
 
-        var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-        if (isChrome) {
-          setTimeout(function () {
-            use.setAttribute('xlink:href', use.getAttribute('xlink:href'));
-          }, 10);
-        }
-
         return this;
       },
 
