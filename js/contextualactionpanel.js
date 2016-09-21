@@ -96,6 +96,8 @@
           isIframe = false,
           contents;
 
+        this.panel.find('svg').icon();//fixSvg();
+
         if (this.panel.find('.modal-content').length === 0) {
           children = this.panel.children();
           if (children.is('iframe')) {

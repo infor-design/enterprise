@@ -3,31 +3,24 @@
 
 // NOTE:  this element gets a margin dynamically set in the "resize" method of modal.js
 .modal {
-  // Ignoring the mixin and doing manual CSS3 vendor-prefixing here because this is complicated
-  @include css3(transform, translate(-50%, -50%) scale(.9, .9));
+  @include css3(transform, scale(.9, .9));
   @include css3(transition, opacity .2s, transform .2s);
-  backface-visibility: hidden; // DO NOT REMOVE OR CHANGE - FIXES BLUR PROBLEMS (HFC-3526) - talk to "ed.coyle@infor.com" if you need to remove
-  -webkit-filter: blur(.000001px); // DO NOT REMOVE OR CHANGE - FIXES BLUR PROBLEMS (HFC-3526) - talk to "ed.coyle@infor.com" if you need to remove
-  filter: blur(.000001px);  // DO NOT REMOVE OR CHANGE - FIXES BLUR PROBLEMS (HFC-3526) - talk to "ed.coyle@infor.com" if you need to remove
+  //Added after size calc bottom: 0;
   height: auto;
-  left: 50%;
+  left: 0;
+  margin: auto;
   max-height: 90%;
   max-width: 90%;
   min-width: 200px;
   opacity: 0;
   position: fixed;
-  top: 50%;
+  //right: 0;
+  top: 0;
   width: auto;
   z-index: 1001;
 
-  // DO NOT REMOVE OR CHANGE - FIXES BLUR PROBLEMS THIS CLASS APPLY AFTER ANIMATION DONE
-  &.no-filter {
-    -webkit-filter: blur(0);
-    filter: blur(0);
-  }
-
   &.is-visible {
-    @include css3(transform, translate(-50%, -50%) scale(1, 1));
+    @include css3(transform, scale(1, 1));
     opacity: 1;
   }
 
@@ -48,12 +41,7 @@
     margin-bottom: 10px;
   }
 
-  &.full-width {
-    margin: 0;
-  }
-
   .textarea-wordcount {
-    margin-bottom: 10px;
     margin-top: -9px;
     width: auto;
   }
@@ -68,6 +56,7 @@
   }
 
   &.full-width {
+    margin: auto;
     width: auto;
 
     .modal-content {
@@ -107,11 +96,12 @@
     }
 
     .searchfield-wrapper {
-      width: 360px;
+      min-width: 300px;
+      width: 100%;
 
       input {
         border-color: $fieldset-border-top-color;
-        width: 360px;
+        width: 100%;
       }
     }
   }
@@ -240,6 +230,7 @@
   .alert-text {
     display: inline-block;
     margin-bottom: 10px;
+    position: relative;
   }
 
   p + p {

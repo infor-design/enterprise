@@ -31,7 +31,8 @@
         cssClass: null,  //Append a css class to top level
         autoFocus: true,
         id: null,  //Optionally tag a dialog with an id
-        frameHeight: 180 //Extra Height
+        frameHeight: 180, //Extra Height
+        frameWidth: 46 //Extra Width
       },
       settings = $.extend({}, defaults, options);
 
@@ -386,11 +387,8 @@
 
         //Center
         this.element.css({'display': ''});
+        self.setDialogSize();
         setTimeout(function() {
-          // TODO: Figure out why we need to do this twice in some cases
-          if (self.element.css('margin') !== undefined) {
-            self.resize();
-          }
           self.resize();
           self.element.addClass('is-visible').attr('role', (self.settings.isAlert ? 'alertdialog' : 'dialog'));
           self.element.attr('aria-hidden', 'false');
@@ -477,10 +475,6 @@
 
         setTimeout(function () {
           focusElement();
-          // fixes blur problems with reset filter after animation done, only for non IE browsers
-          if (!$('html').is('.ie')) {
-            self.element.addClass('no-filter');
-          }
         }, 200);
 
         setTimeout(function () {
@@ -489,11 +483,24 @@
 
       },
 
+      setDialogSize: function () {
+        var bodyElem = this.element.find('.modal-body');
+
+        if (!bodyElem.length) {
+          bodyElem = this.element.find('iframe');
+        }
+        //Add Actual size for centering
+        this.element.css({'width': bodyElem.width() + this.settings.frameWidth,
+                          'height': bodyElem.height() + this.settings.frameHeight });
+
+        this.element.css({'bottom': 0, 'right': 0});
+      },
+
       resize: function() {
-        var bodyHeight = $('.modal-body', this.element).height(),
+        var bodyHeight = this.element.find('.modal-body').height(),
           calcHeight = ($(window).height()* 0.9)-this.settings.frameHeight; //90% -(180 :extra elements-height)
 
-        $('.modal-body-wrapper', this.element).css('max-height', bodyHeight > calcHeight ? calcHeight : '');
+        this.element.find('.modal-body-wrapper').css('max-height', bodyHeight > calcHeight ? calcHeight : '');
       },
 
       isOpen: function() {
@@ -576,7 +583,7 @@
 
         this.element.off('keypress.modal keydown.modal');
         this.element.css('visibility', 'visible');
-        this.element.removeClass('is-visible no-filter');
+        this.element.removeClass('is-visible');
 
         this.overlay.attr('aria-hidden', 'true');
         this.element.attr('aria-hidden', 'true');
