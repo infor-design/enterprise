@@ -50,10 +50,10 @@ var express = require('express'),
 
     // Normally we will use an external file for loading SVG Icons and Patterns.
     // Setting "inlineSVG" to true will use the deprecated method of using SVG icons, which was to bake them into the HTML markup.
-    if (req.query.inlineSVG && req.query.inlineSVG.length > 0) {
+    // if (req.query.inlineSVG && req.query.inlineSVG.length > 0) {
       res.opts.inlineSVG = true;
-      console.log('Inlining SVG Elements...');
-    }
+      //console.log('Inlining SVG Elements...');
+    // }
 
     // Global settings for forcing a "no frills" layout for test pages.
     // This means no header with page title, hamburger, theme swap settings, etc.
