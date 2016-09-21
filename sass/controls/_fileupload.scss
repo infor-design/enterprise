@@ -44,7 +44,7 @@ label.fileupload {
 
   // Make this flow offscreen
   input[type="file"] {
-    left: -1000px;
+    left: -10000px;
     position: fixed;
 
     &:disabled + span:not(.audible) {

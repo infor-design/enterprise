@@ -50,28 +50,10 @@
         this.addMarkup();
         this.handleEvents();
         this.iconFilteringSetup();
-        this.fixSvg();
       },
 
       isRTL: function() {
         return $('html').attr('dir') === 'rtl';
-      },
-
-      fixSvg: function () {
-        // Fix: chrome was not showing icons had to resets [xlink:href] attribute
-        var self = this,
-            isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-
-        if (!isChrome) {
-          return;
-        }
-
-        setTimeout(function() {
-          self.menu.find('svg.icon').each(function() {
-            var use = $('use', this);
-            use.attr('xlink:href', use.attr('xlink:href'));
-          });
-        }, 0);
       },
 
       setup: function() {
@@ -138,6 +120,7 @@
           .wrap('<div class="popupmenu-wrapper"></div>');
 
         this.wrapper = this.menu.parent('.popupmenu-wrapper');
+        this.wrapper.find('svg').icon();
 
         //Enforce Correct Modality
         this.menu.parent('.popupmenu-wrapper').attr('role', 'application').attr('aria-hidden', 'true');

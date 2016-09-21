@@ -401,7 +401,6 @@
 
   };
 
-
   //Clearable (Shows an X to clear)
   $.fn.clearable = function() {
     var self = this;
