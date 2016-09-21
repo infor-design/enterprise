@@ -29,6 +29,8 @@ $datagrid-short-row-height: 30px;
 
 //The scrollable header
 .datagrid-scrollable-header {
+  border: 1px solid $datagrid-cell-border-color;
+  border-bottom: 0;
   overflow: hidden;
   width: 100%;
 
@@ -94,6 +96,7 @@ $datagrid-short-row-height: 30px;
 
   //Frozen Headers
   &.datagrid-clone {
+    border-bottom: 0;
     height: auto;
   }
 
@@ -232,6 +235,10 @@ $datagrid-short-row-height: 30px;
     min-width: 40px;
     overflow: hidden;
     text-align: left;
+
+    &:first-child {
+      border-left: 0;
+    }
 
     &.hide-border + th {
       border-left: 0;

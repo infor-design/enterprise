@@ -1098,18 +1098,13 @@ $.fn.datagrid = function(options) {
 
       var self = this;
       self.headerRow.find('th').each(function (index) {
-        var div = self.table.closest('.datagrid-container').get(0),
-          scrollbarWidth = div.offsetWidth - div.clientWidth,
-          th = $(this),
+        var th = $(this),
           w = th.width();
 
-        w += th.is(':last-child') ? scrollbarWidth : 0;
-
         th.width(w);
-        self.clone.find('th').eq(index).width(w);
+        self.clone.find('th').eq(index).css({'width': w, 'min-width': w});
       });
 
-      self.clone.width(self.table.width());
     },
 
     //Delete a Specific Row
@@ -2052,6 +2047,8 @@ $.fn.datagrid = function(options) {
         var column = self.settings.columns[i],
           header = self.headerNodes().eq(i);
 
+        widthProvided = false;
+
         if (column.hidden) {
           continue;
         }
@@ -2069,6 +2066,7 @@ $.fn.datagrid = function(options) {
 
         if (widthProvided && colWidth) {
           header.css('width', colWidth);
+          header.css('min-width', colWidth);
         }
 
         if (widthPercent && column.width) {
@@ -2078,20 +2076,10 @@ $.fn.datagrid = function(options) {
         self.adjustDraggablePosition(header);
       }
 
-      if (widthProvided) {
-        this.table.css('width', total);
-      }
-
       if (widthPercent) {
         this.table.css('width', '100%');
       }
 
-      //Make a one time event to resize next time visible on tabs
-      if (!this.element.is(':visible')) {
-        this.element.closest('.tab-container').one('afteractivated', function () {
-          self.setColumnWidths();
-        });
-      }
     },
 
     //Returns all header nodes (not the groups)
@@ -2394,25 +2382,19 @@ $.fn.datagrid = function(options) {
       });
     },
 
-    // Explicitly Set the Width of a column (reset: optional set "true" to reset table width)
-    setColumnWidth: function(id, width, reset) {
+    // Explicitly Set the Width of a column
+    setColumnWidth: function(id, width) {
       var self = this,
-        total = 0,
-        percent = parseFloat(width);
+        percent = parseFloat(width),
+        columnSettings = this.columnById(id);
 
       if (!percent) {
         return;
       }
 
       //Handles min width on some browsers
-      if (width < 50) {
+      if ((columnSettings.minWidth && width > parseInt(columnSettings.minWidth))) {
         return;
-      }
-
-      self.table.css('width', self.element.width());
-
-      if (reset && self.fixedHeader) {
-        self.clone.css('width', self.element.width());
       }
 
       if (typeof width !=='number') { //calculate percentage
@@ -2423,16 +2405,13 @@ $.fn.datagrid = function(options) {
         var col = $(this);
 
         if (col.attr('data-column-id') === id) {
-          col.css('width', width);
-          total += width;
-        } else {
-          total += col.outerWidth();
+          col.css({'width': width, 'min-width': width});
         }
 
         self.adjustDraggablePosition(col);
       });
 
-      var columnSettings = this.columnById(id);
+      // Save the column back in settings for later
       if (columnSettings[0] && columnSettings[0].width) {
         columnSettings[0].width = width;
       }
@@ -2440,16 +2419,11 @@ $.fn.datagrid = function(options) {
       if (self.fixedHeader) {
         self.headerNodes().each(function (i) {
           var cloneHeader = self.cloneHeaderNodes().eq(i);
-          cloneHeader.css('width', $(this).outerWidth());
+          cloneHeader.css({'width': $(this).outerWidth(), 'min-width': width});
           self.adjustDraggablePosition(cloneHeader);
         });
       }
 
-      self.table.css('width', total);
-
-      if (self.fixedHeader) {
-        self.clone.css('width', total);
-      }
     },
 
     // Get child offset
