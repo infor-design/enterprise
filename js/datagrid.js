@@ -1472,6 +1472,7 @@ $.fn.datagrid = function(options) {
           var field = self.columnById(conditions[i].columnId)[0].field,
             rowValue = self.fieldValue(row, field).toString().toLowerCase(),
             rowValueStr = rowValue.toString(),
+            columnDef = self.settings.columns[conditions[i].columnId],
             conditionValue = conditions[i].value.toString().toLowerCase();
 
           if (typeof row[conditions[i].columnId] === 'number') {
@@ -1539,6 +1540,10 @@ $.fn.datagrid = function(options) {
               isMatch = (rowValue <= conditionValue && rowValue !== '');
               break;
             case 'selected':
+              if (columnDef && columnDef.isChecked) {
+                rowValue = columnDef.isChecked(rowValue);
+                rowValueStr = rowValue.toString();
+              }
               isMatch = (rowValueStr === '1' || rowValueStr ==='true' || rowValue === true || rowValue === 1) && rowValueStr !== '';
               break;
             case 'not-selected':
