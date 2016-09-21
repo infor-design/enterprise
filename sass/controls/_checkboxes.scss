@@ -84,9 +84,9 @@ input.checkbox + label,
 input.checkbox + input[type="hidden"] + label,
 span.checkbox > label {
   @include no-select();
+  @include font-size(14);
   cursor: pointer;
   display: inline-block;
-  @include font-size(14);
   line-height: 24px;
   padding-left: 26px;
   position: relative;
@@ -97,6 +97,7 @@ input.checkbox + label::before,
 input.checkbox + input[type="hidden"] + label::before,
 span.checkbox > label::before {
   @include checkbox-unchecked-before-style;
+  margin-top: 0;
 }
 
 label.inline .checkbox:checked ~ .label-text::before,
@@ -111,6 +112,7 @@ input.checkbox:checked + label::after,
 input.checkbox:checked + input[type="hidden"] + label::after,
 span.checkbox > input:checked + label::after {
   @include checkbox-checked-after-style;
+  top: 9px;
 }
 
 // Adjustments for ASP style checkboxes
@@ -141,6 +143,7 @@ input.checkbox.partial:checked + label::after,
 input.checkbox.partial:checked + input[type="hidden"] + label::after,
 span.checkbox.partial > input:checked + label::after {
   @include checkbox-partial-after-style;
+  top: -3px;
 }
 
 .ie9 input.checkbox.partial:checked + label::after,

@@ -272,7 +272,7 @@
   }
 }
 
-.inline.searchfield-wrapper {
+.inline.searchfield-wrapper:not(.toolbar-searchfield-wrapper) {
   > .icon:not(.icon-error) {
     top: 30px;
   }
