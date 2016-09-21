@@ -794,7 +794,8 @@
 
         selectText();
 
-        if (document.activeElement !== input[0] && $(document.activeElement).is('body')) {
+        if (document.activeElement !== input[0] &&
+          $(document.activeElement).is('body, .dropdown.is-open')) {
           input[0].focus();
         }
       },

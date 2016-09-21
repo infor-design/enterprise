@@ -156,11 +156,12 @@ svg.icon-logo {
     margin-top: 8px;
 
     &.dirty-checkbox {
+      left: -4px;
       margin-top: inherit;
       top: 1px;
 
       &.is-checked {
-        left: auto;
+        // left: -4px;
         top: 0;
       }
     }

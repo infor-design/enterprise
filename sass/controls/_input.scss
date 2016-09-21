@@ -90,12 +90,18 @@
     $exclude-controls: $exclude-controls + ':not(.#{$control})';
   }
 
-  input,
+  input {
+    &#{$exclude-controls} {
+      margin: 5px 0 15px;
+    }
+  }
+
   textarea {
     &#{$exclude-controls} {
       margin: 5px 0 12px;
     }
   }
+
 }
 
 
