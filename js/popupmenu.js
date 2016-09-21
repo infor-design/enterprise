@@ -553,8 +553,8 @@
           windowH = $(window).height(),
           windowW = $(window).width(),
           mouse =  {
-            x: e.clientX ? e.clientX : window.event.clientX,
-            y: e.clientY ? e.clientY : window.event.clientY
+            x: e && e.clientX ? e.clientX : window.event.clientX,
+            y: e && e.clientY ? e.clientY : window.event.clientY
           },
           menuDimensions = {
             width: this.menu.outerWidth(),
