@@ -767,6 +767,7 @@ $.fn.datagrid = function(options) {
         editable: false,
         isList: false, // Makes a readonly "list"
         menuId: null,  //Id to the right click context menu
+        uniqueId: null, //Unique ID for local storage reference and variable names
         rowHeight: 'normal', //(short, medium or normal)
         selectable: false, //false, 'single' or 'multiple'
         clickToSelect: true,
@@ -1174,7 +1175,11 @@ $.fn.datagrid = function(options) {
     uniqueId: function (suffix) {
       var uniqueid = (window.location.pathname.split('/').pop().replace('.html', '')) + '-' + (this.element.attr('id') ? this.element.attr('id'): 'datagrid') + '-' + this.gridCount + suffix;
 
-      return uniqueid;
+      if (this.settings.uniqueId) {
+        uniqueid = this.settings.uniqueId + '-' + suffix;
+      }
+
+      return uniqueid.replace(/--/g, '-');
     },
 
     visibleColumns: function () {
@@ -1231,7 +1236,7 @@ $.fn.datagrid = function(options) {
         for (var k = 0; k < colGroups.length; k++) {
 
           total += parseInt(colGroups[k].colspan);
-          uniqueId = self.uniqueId( '-header-group-' + k);
+          uniqueId = self.uniqueId('-header-group-' + k);
 
           headerRow += '<th colspan="' + colGroups[k].colspan + '" id="' + uniqueId + '"' + '><div class="datagrid-column-wrapper "><span class="datagrid-header-text">'+ colGroups[k].name +'</span></div></th>';
         }
@@ -1246,7 +1251,7 @@ $.fn.datagrid = function(options) {
 
       for (var j = 0; j < this.settings.columns.length; j++) {
         var column = settings.columns[j],
-          id = self.uniqueId( '-header-' + j),
+          id = self.uniqueId('-header-' + j),
           isSortable = (column.sortable === undefined ? true : column.sortable),
           isResizable = (column.resizable === undefined ? true : column.resizable),
           isSelection = column.id === 'selectionCheckbox',
@@ -1311,9 +1316,9 @@ $.fn.datagrid = function(options) {
       for (var j = 0; j < this.settings.columns.length; j++) {
         if (this.settings.columns[j].filterType) {
           var col = this.settings.columns[j],
-            id = self.uniqueId( '-header-' + j),
+            id = self.uniqueId('-header-' + j),
             header = this.headerRow.find('#'+id),
-            filterId = self.uniqueId( '-header-filter-' + j),
+            filterId = self.uniqueId('-header-filter-' + j),
             filterMarkup = '<div class="datagrid-filter-wrapper">'+ this.renderFilterButton(col.filterType, col.filterDisabled) +'<label class="audible" for="'+ filterId +'">' +
               col.name + '</label>';
 
@@ -1978,11 +1983,11 @@ $.fn.datagrid = function(options) {
         cssClass += (col.focusable ? ' is-focusable' : '');
 
         rowHtml += '<td role="gridcell" ' + ariaReadonly + ' aria-colindex="' + (j+1) + '" '+
-            ' aria-describedby="' + self.uniqueId( '-header-' + j) + '"' +
+            ' aria-describedby="' + self.uniqueId('-header-' + j) + '"' +
            (cssClass ? ' class="' + cssClass + '"' : '') + 'data-idx="' + (j) + '"' +
            (col.tooltip ? ' title="' + col.tooltip.replace('{{value}}', cellValue) + '"' : '') +
            (col.id === 'rowStatus' && rowData.rowStatus && rowData.rowStatus.tooltip ? ' title="' + rowData.rowStatus.tooltip + '"' : '') +
-             (self.settings.columnGroups ? 'headers = "' + self.uniqueId( '-header-' + j) + ' ' + self.getColumnGroup(j) + '"' : '') +
+             (self.settings.columnGroups ? 'headers = "' + self.uniqueId('-header-' + j) + ' ' + self.getColumnGroup(j) + '"' : '') +
            '><div class="datagrid-cell-wrapper">';
 
         if (col.contentVisible) {
