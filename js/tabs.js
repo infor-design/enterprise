@@ -1089,10 +1089,7 @@
           return;
         }
 
-        // http://jira.infor.com/browse/SOHO-4641
-        // Fix: Disable this [oldPanel.closeChildren()], was causing to close children with activation
-
-        // oldPanel.closeChildren();
+        oldPanel.closeChildren();
 
         self.panels.hide();
         self.element.trigger('activated', [a]);

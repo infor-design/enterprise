@@ -18,6 +18,8 @@
 }(function($) {
   /* end-amd-strip-block */
 
+  var excluded = ['.expandable-area, .accordion'];
+
   // Used by several of these plugins to detect whether or not the "data" property in question
   // is a valid SoHo Xi Control.
   function canAccessAPI(prop) {
@@ -67,7 +69,7 @@
     }
 
     rootElem = $(rootElem);
-    var DOMelements = rootElem.find('*').add(rootElem),
+    var DOMelements = rootElem.find('*').add(rootElem).not(excluded.join(', ')),
       siftedControls = findControlsOnElements(DOMelements, method);
 
     rootElem.trigger('sift-' + method + '-complete', [siftedControls]);
