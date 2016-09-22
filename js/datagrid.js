@@ -1470,23 +1470,24 @@ $.fn.datagrid = function(options) {
         conditions = this.filterConditions();
       }
 
-      var checkRow = function (row) {
+      var checkRow = function (rowData) {
         var isMatch = true;
 
         for (var i = 0; i < conditions.length; i++) {
-          var field = self.columnById(conditions[i].columnId)[0].field,
-            rowValue = self.fieldValue(row, field).toString().toLowerCase(),
+          var columnDef = self.columnById(conditions[i].columnId)[0],
+            field = columnDef.field,
+            rowValue = self.fieldValue(rowData, field).toString().toLowerCase(),
             rowValueStr = rowValue.toString(),
-            columnDef = self.settings.columns[conditions[i].columnId],
             conditionValue = conditions[i].value.toString().toLowerCase();
 
-          if (typeof row[conditions[i].columnId] === 'number') {
-            rowValue = row[conditions[i].columnId];
-            conditionValue = parseFloat(conditions[i].value);
+          //Run Data over the formatter
+          if (columnDef.filterType === 'text') {
+            rowValue = self.formatValue(columnDef.formatter, i , conditions[i].columnId, self.fieldValue(rowData, field), columnDef, rowData, self);
+            rowValueStr = rowValue.toString();
           }
 
-          if (row[conditions[i].columnId] instanceof Date) {
-            rowValue = row[conditions[i].columnId].getTime();
+          if (rowData[conditions[i].columnId] instanceof Date) {
+            rowValue = rowData[conditions[i].columnId].getTime();
             conditionValue = Locale.parseDate(conditions[i].value, conditions[i].format).getTime();
           }
 
@@ -1498,7 +1499,7 @@ $.fn.datagrid = function(options) {
                 isMatch = false;
 
                 for (var k = 0; k < conditions[i].value.length; k++) {
-                  var match = conditions[i].value[k].indexOf(row[conditions[i].columnId]) >= 0 && row[conditions[i].columnId].toString() !== '';
+                  var match = conditions[i].value[k].indexOf(rowData[conditions[i].columnId]) >= 0 && rowData[conditions[i].columnId].toString() !== '';
                   if (match) {
                     isMatch = true;
                   }
@@ -1888,6 +1889,17 @@ $.fn.datagrid = function(options) {
       }, 100);
     },
 
+    formatValue: function (formatter, row, cell, fieldValue, columnDef, rowData, api) {
+      var formattedValue;
+
+      if (typeof formatter ==='string') {
+        formattedValue = window.Formatters[formatter](row, cell, fieldValue, columnDef, rowData, api).toString();
+      } else {
+        formattedValue = formatter(row, cell, fieldValue, columnDef, rowData, api).toString();
+      }
+      return formattedValue;
+    },
+
     recordCount: 0,
 
     rowHtml: function (rowData, renderHidden, dataRowIdx) {
@@ -1915,11 +1927,7 @@ $.fn.datagrid = function(options) {
             formatter = (col.formatter ? col.formatter : self.defaultFormatter),
             formatted = '';
 
-        if (typeof formatter ==='string') {
-          formatted = window.Formatters[formatter](this.recordCount, j, self.fieldValue(rowData, self.settings.columns[j].field), self.settings.columns[j], rowData, self).toString();
-        } else {
-          formatted = formatter(this.recordCount, j, self.fieldValue(rowData, self.settings.columns[j].field), self.settings.columns[j], rowData, self).toString();
-        }
+        formatted = self.formatValue(formatter, this.recordCount, j, self.fieldValue(rowData, self.settings.columns[j].field), self.settings.columns[j], rowData, self);
 
         if (formatted.indexOf('<span class="is-readonly">') === 0) {
           col.readonly = true;
@@ -3870,11 +3878,7 @@ $.fn.datagrid = function(options) {
 
       //update cell value
       escapedVal = $.escapeHTML(coercedVal);
-      if (typeof formatter ==='string') {
-        formatted = window.Formatters[formatter](row, cell, escapedVal, col, settings.dataset[row]).toString();
-      } else {
-        formatted = formatter(row, cell, escapedVal, col, settings.dataset[row]).toString();
-      }
+      formatted = this.formatValue(formatter, row, cell, escapedVal, col, settings.dataset[row]);
 
       if (col.contentVisible) {
         var canShow = col.contentVisible(row, cell, escapedVal, col, settings.dataset[row]);

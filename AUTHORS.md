@@ -9,3 +9,6 @@ Aaron Pikkarainen <Aaron.Pikkarainen@infor.com>
 Jake Harrington <jake.harrington@infor.com>
 James Mintzer <james.mintzer@infor.com>
 Khoa Nguyen <Khoa.Nguyen@infor.com>
+Ondrej Skalicka <Ondrej.Skalicka@infor.com>
+Chris Lepore <Chris.Lepore@infor.com>
+Dave Hall <Dave.Hall@infor.com>
