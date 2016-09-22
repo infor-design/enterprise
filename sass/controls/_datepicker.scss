@@ -2,9 +2,26 @@
 //================================================== *
 
 .datepicker {
+  width: 150px;
 
-  &:not(.input-xs):not(.input-sm):not(.input-md):not(.input-lg) {
-    width: 150px;
+  &.input-xs {
+    width: $field-xs;
+  }
+
+  &.input-sm {
+    width: $field-sm;
+  }
+
+  &.input-md {
+    width: $field-md;
+  }
+
+  &.input-lg {
+    width: $field-lg;
+  }
+
+  &.input-full {
+    width: $field-full;
   }
 
   &.datetime {
