@@ -1476,18 +1476,18 @@ $.fn.datagrid = function(options) {
         for (var i = 0; i < conditions.length; i++) {
           var columnDef = self.columnById(conditions[i].columnId)[0],
             field = columnDef.field,
-            rowValue = self.fieldValue(rowData, field).toString().toLowerCase(),
-            rowValueStr = rowValue.toString(),
+            rowValue = self.fieldValue(rowData, field),
+            rowValueStr = rowValue.toString().toLowerCase(),
             conditionValue = conditions[i].value.toString().toLowerCase();
 
           //Run Data over the formatter
           if (columnDef.filterType === 'text') {
-            rowValue = self.formatValue(columnDef.formatter, i , conditions[i].columnId, self.fieldValue(rowData, field), columnDef, rowData, self);
-            rowValueStr = rowValue.toString();
+            rowValue = self.formatValue(columnDef.formatter, i , conditions[i].columnId, rowValue, columnDef, rowData, self);
+            rowValueStr = rowValue.toString().toLowerCase();
           }
 
-          if (rowData[conditions[i].columnId] instanceof Date) {
-            rowValue = rowData[conditions[i].columnId].getTime();
+          if (rowValue instanceof Date) {
+            rowValue = rowValue.getTime();
             conditionValue = Locale.parseDate(conditions[i].value, conditions[i].format).getTime();
           }
 
@@ -1499,7 +1499,7 @@ $.fn.datagrid = function(options) {
                 isMatch = false;
 
                 for (var k = 0; k < conditions[i].value.length; k++) {
-                  var match = conditions[i].value[k].indexOf(rowData[conditions[i].columnId]) >= 0 && rowData[conditions[i].columnId].toString() !== '';
+                  var match = conditions[i].value[k].indexOf(rowValue) >= 0 && rowValue.toString() !== '';
                   if (match) {
                     isMatch = true;
                   }
