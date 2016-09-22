@@ -1547,12 +1547,16 @@ $.fn.datagrid = function(options) {
               break;
             case 'selected':
               if (columnDef && columnDef.isChecked) {
-                rowValue = columnDef.isChecked(rowValue);
-                rowValueStr = rowValue.toString();
+                 isMatch = columnDef.isChecked(rowValue);
+                 break;
               }
               isMatch = (rowValueStr === '1' || rowValueStr ==='true' || rowValue === true || rowValue === 1) && rowValueStr !== '';
               break;
-            case 'not-selected':
+           case 'not-selected':
+              if (columnDef && columnDef.isChecked) {
+                 isMatch = !columnDef.isChecked(rowValue);
+                 break;
+              }
               isMatch = (rowValueStr === '0' || rowValueStr ==='false' || rowValue === false || rowValue === 0) && rowValueStr !== '';
               break;
             case 'selected-notselected':
