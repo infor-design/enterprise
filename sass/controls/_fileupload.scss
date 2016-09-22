@@ -18,10 +18,6 @@ label.fileupload {
     text-align: center;
     width: 36px;
 
-    @media (max-width: 374px) {
-      left: -55px;
-    }
-
     &.trigger {
 
       .icon {
