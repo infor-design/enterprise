@@ -4097,7 +4097,7 @@ $.fn.datagrid = function(options) {
 
       //Do Sort on Data Set
       this.setSortIndicator(id, ascending);
-      sort = this.sortFunction(this.sortColumn.sortField, ascending);
+      sort = this.sortFunction(this.sortColumn.sortId, ascending);
       settings.dataset.sort(sort);
 
       var wasFocused = this.activeCell.isFocused;
@@ -4134,6 +4134,9 @@ $.fn.datagrid = function(options) {
 
     //Overridable function to conduct sorting
     sortFunction: function(id, ascending) {
+      var column = this.columnById(id),
+        field = column.length === 0 ? id : column[0].field; //Assume the field and id match if no column found
+
       var key, self = this,
       primer = function(a) {
         a = (a === undefined || a === null ? '' : a);
@@ -4150,7 +4153,7 @@ $.fn.datagrid = function(options) {
         return a;
       };
 
-      key = function(x) { return primer(self.fieldValue(x, id)); };
+      key = function(x) { return primer(self.fieldValue(x, field)); };
 
       ascending = !ascending ? -1 : 1;
 
