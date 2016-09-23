@@ -4,7 +4,6 @@
 .summary-form {
 
   .field {
-    margin-bottom: 2.5rem;
     width: 100%;
 
     &:last-child {
@@ -22,6 +21,13 @@
     vertical-align: top;
   }
 
+  //Push the switch back in if nested
+  .switch {
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
   .data {
     @include font-size(14);
     color: $font-color-extrahighcontrast;
@@ -33,5 +39,19 @@
   i {
     color: $font-color-extrahighcontrast;
     font-style: normal;
+  }
+}
+
+//Adjust the summary form layout when in columns for responsive
+@include respond-to(tabletdown) {
+  .summary-form {
+    .column,
+    .columns {
+      padding: 0;
+
+      .field:first-child {
+        margin-top: 10px;
+      }
+    }
   }
 }

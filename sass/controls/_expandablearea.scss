@@ -6,8 +6,11 @@
   //Header Area
   .expandable-header {
     border-top: 1px solid $expandable-area-border-color;
-    padding-top: 28px;
     position: relative;
+
+    &:first-child {
+      padding-top: 30px;
+    }
 
     > * {
       vertical-align: top;
@@ -127,12 +130,19 @@
     color: $expandable-area-title-color;
   }
 
-  //Push the switch out a big
+  //Push the switch out a bit, qualified to panes only not nested children
   .switch {
     margin: 12px 4px;
 
     &:first-child {
       margin-top: 15px;
+    }
+  }
+
+  //Better handle nested expandables
+  .expandable-area {
+    .expandable-header {
+      padding-top: 10px;
     }
   }
 
