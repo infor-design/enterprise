@@ -6,7 +6,7 @@
 <body class="no-scroll responsive-two-col">
 >>>>>>> SOHO-4624 Adding advanced styles
 
-  <header class="header is-personalizable top-page-header">
+  <header class="header is-personalizable responsive-hidden">
     <div class="toolbar">
       <div class="title">
         <h1>
@@ -121,10 +121,9 @@
           <a href="#step7" class="js-step-link"><span>Overall Evaluation Comments</span></a>
         </div>
       </div>
-
     </div>
 
-    <div id="maincontent" class="main no-scroll" role="main">
+    <div class="main no-scroll js-scroll-action" role="main">
       <header class="header subheader is-personalizable">
         <div class="toolbar">
           <div class="title">
@@ -152,8 +151,8 @@
         </div>
       </header>
 
-      <div class="scrollable">
-        <div class="full-width step-process-container">
+      <div class="page-container scrollable js-step-process-scroll">
+        <div class="full-width js-step-process-panel">
 
           <div id="step1" class="step-panel-example">
             <h2>Competency Model 1</h2>
@@ -335,7 +334,7 @@
           </div>
 
           <div id="step6" class="step-panel-example">
-            <h2>PLanned Activities</h2>
+            <h2>Planned Activities</h2>
             <div class="field">
               <label for="planned-one" class="label">Planned Activity</label>
               <input id="planned-one" name="planned-one" type="text">

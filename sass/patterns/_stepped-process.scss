@@ -95,14 +95,47 @@
 
 }
 
-.step-process-container {
+.js-scroll-action {
+
+  .js-step-process-scroll,
+  .subheader {
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+    transition: all 1s ease;
+  }
+
+  .subheader {
+    overflow-y: hidden;
+    max-height: 60px; /* approximate max height */
+
+    transition-property: all;
+    transition-duration: .75s;
+    transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+  }
+
+  &.scrolled-down {
+
+    .subheader {
+      height: 0;
+    }
+
+    .js-step-process-scroll {
+      top: 0;
+      margin: 0;
+    }
+  }
+}
+
+.js-step-process-panel {
 
   .step-panel-example {
     display: none;
   }
 
   .step-panel-active {
-    display: inline;
+    display: block;
   }
 
 }

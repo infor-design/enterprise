@@ -22,12 +22,16 @@
     // Tab Settings and Options
     var pluginName = 'stepprocess',
         defaults = {
-          panelContainer: '.step-process-container', // Defines a separate element to be used for containing the content panels
           changeTabOnHashChange: false, // If true, will change the selected tab on invocation based on the URL that exists after the hash
+          panelContainer: '.js-step-process-panel', // Defines a separate element to be used for containing the content panels
           stepLinks: '.js-step-link', // The selector for elements that are step links and change the content
           stepPrevBtn: '.js-step-link-prev', // The selector of the next step action (btn, link, etc)
           stepNextBtn: '.js-step-link-next', // The selector of the next step action element (btn, link, etc)
-          toggleStepsBtn: '.js-toggle-steps', // The selector of the element to toggle the nav bar (btn, link)
+
+          // Responsive Specific vars
+          scrollWatchElem: '.js-step-process-scroll', // The element to track scrolling on
+          scrollActionElem: '.js-scroll-action', // The element to add a class to based on scrolling logic
+          toggleStepsBtn: '.js-toggle-steps' // The selector of the element to toggle the nav bar (btn, link)
         },
         settings = $.extend({}, defaults, options);
 
@@ -48,12 +52,12 @@
       setup: function() {
         var self = this;
 
-        self.stepLinks = self.element.find(self.settings.stepLinks);
-        self.stepPanels = $(self.settings.panelContainer).children();
-        self.$currentStep = self.stepLinks.first();
+        this.stepLinks = this.element.find(this.settings.stepLinks);
+        this.stepPanels = $(this.settings.panelContainer).children();
+        this.$currentStep = this.stepLinks.first();
 
         // Setup click events
-        self.stepLinks.each(function() {
+        this.stepLinks.each(function() {
           $(this)
             .attr({
               'role': 'step',
@@ -66,96 +70,176 @@
             });
         });
 
-        $(self.settings.stepPrevBtn).click(function(event) {
+        $(this.settings.stepPrevBtn).click(function(event) {
           self.selectPrevStep.call(self, event);
         });
 
-        $(self.settings.stepNextBtn).click(function(event) {
+        $(this.settings.stepNextBtn).click(function(event) {
           self.selectNextStep.call(self, event);
         });
 
-        $(self.settings.toggleStepsBtn).click(function(event) {
+        $(this.settings.toggleStepsBtn).click(function(event) {
           self.hideContentPane.call(self, event);
         });
 
         // Initiate and save access the accordion plugin methods
         var accordionParams = {
-          rerouteOnLinkClick: false
+          rerouteOnLinkClick: true
         };
 
-        self.$stepAccordion = this.element.find('.accordion').accordion(accordionParams).data('accordion');
+        this.$stepAccordion = this.element.find('.accordion').accordion(accordionParams).data('accordion');
 
         // If we are using the hash change setting
         if (this.settings.changeTabOnHashChange) {
           var hash = window.location.hash;
 
           if (hash && hash.length) {
-            var $firstMatchingStep = self.stepLinks.filter('[href="'+ hash +'"]').first();
+            var $firstMatchingStep = this.stepLinks.filter('[href="'+ hash +'"]').first();
 
             if ($firstMatchingStep.length) {
-              self.$currentStep = $firstMatchingStep;
+              this.$currentStep = $firstMatchingStep;
             }
           }
         }
 
         // Set the initial views
-        self.$stepAccordion
-          .select(self.$currentStep)
-          .expand(self.$currentStep.parent());
+        this.$stepAccordion.select(this.$currentStep)
+        this.$stepAccordion.expand(this.$currentStep.parent());
+        this.selectStep(this.$currentStep);
 
-        self.selectStep(self.$currentStep);
+        // track the scrolling
+        this.trackScrolling();
 
         return this;
       },
 
-      changeSelectedStep: function(step) {
+      /**
+       * Change the selected step link
+       *
+       * @param {object} stepLink - The step element
+       */
+      changeSelectedStep: function(stepLink) {
         this.clearSelectedSteps();
-        this.selectStep(step);
+        this.selectStep(stepLink);
       },
 
+      /**
+       * Resets all step elements to be inactive
+       */
       clearSelectedSteps: function() {
         this.$currentStep.parent().removeClass('is-selected');
         this.stepPanels.removeClass('step-panel-active');
       },
 
-      getStepIndex: function(step) {
-          return this.stepLinks.index(step);
+      /**
+       * Get the index of the specified step link in the step array
+       *
+       * @param {object} stepLink - The step element
+       * @returns {number} The index
+       */
+      getStepIndex: function(stepLink) {
+          return this.stepLinks.index(stepLink);
       },
 
+
+      /**
+       * Mark the step as selected and show the corresponding step panel
+       *
+       * @param {object} step - The step element
+       */
       selectStep: function(step) {
         this.$currentStep = $(step);
 
         this.$stepAccordion.select(this.$currentStep);
         this.$stepAccordion.expand(this.$currentStep.parent());
 
-        self.showContentPane(); // For mobile
 
         var stepId = this.$currentStep.attr('href');
-        self.stepPanels.filter(stepId).first().addClass('step-panel-active');
+
+        this.showContentPane(); // For mobile
+
+        var self = this;
+        setTimeout(function() {
+          // NOTE: Hacky but this HAS to come after the showContentPane() - clepore
+          self.stepPanels.filter(stepId).first().addClass('step-panel-active');
+        }, 100);
       },
 
+
+      /**
+       * Selects the previous steplink in the list
+       */
       selectPrevStep: function() {
         var newStepIndex = this.getStepIndex(this.$currentStep) - 1;
         if (newStepIndex < 0) {
-          return;
+          newStepIndex = this.stepLinks.length - 1;
         }
+          console.log(this.stepLinks[newStepIndex]);
         this.changeSelectedStep(this.stepLinks[newStepIndex]);
       },
 
+      /**
+       * Selects the next steplink in the list
+       */
       selectNextStep: function() {
         var newStepIndex = this.getStepIndex(this.$currentStep) + 1;
-        if (newStepIndex > this.stepLinks.length) {
-          return;
+        if (newStepIndex >= this.stepLinks.length) {
+          newStepIndex = 0;
         }
+                  console.log(this.stepLinks[newStepIndex]);
+
         this.changeSelectedStep(this.stepLinks[newStepIndex]);
       },
 
+      /**
+       * Adds a class to show the step pane in
+       * responsive viewing
+       */
       showContentPane: function() {
         $('.responsive-two-col').addClass('show-main');
       },
 
+      /**
+       * Removes a class to hide the step pane in
+       * responsive viewing
+       */
       hideContentPane: function() {
         $('.responsive-two-col').removeClass('show-main');
+      },
+
+
+      /**
+       * Attach scrolling logic to specified container
+       */
+      trackScrolling: function() {
+        var self = this;
+        self.lastScrollTop = 0;
+
+        $(this.settings.scrollWatchElem).scroll(function(event) {
+           var st = $(this).scrollTop();
+
+           if (st > self.lastScrollTop){
+              self.didScrollDown();
+           } else {
+              self.didScrollUp();
+           }
+
+           self.lastScrollTop = st;
+        });
+      },
+
+      /**
+       * Slide element down on scroll up
+       */
+      didScrollUp: function() {
+        $(this.settings.scrollActionElem).removeClass('scrolled-down');
+      },
+
+      /**
+       * Slide element up on scroll down
+       */
+      didScrollDown: function() {
+        $(this.settings.scrollActionElem).addClass('scrolled-down');
       }
 
     };
