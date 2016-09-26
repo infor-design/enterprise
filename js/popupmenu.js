@@ -831,7 +831,7 @@
 
         // Flip arrow to the opposite side
         var arrow = wrapper.find('.arrow');
-        if (wasFlipped) {
+        if (wasFlipped && this.element.not('.btn-').length) {
           wrapper.removeClass('bottom').addClass('top');
         }
 
