@@ -598,8 +598,8 @@
           extraOffset = 16;
         }
 
-        if (this.activeElement.is('.lookup')) {
-          extraOffset = -17;
+        if (this.activeElement.is('.lookup') && this.activeElement.parent().is(':not(.field-short)')) {
+          extraOffset = Locale.isRTL() ? 17 : -17;
         }
 
         this.tooltip.find('.arrow').css('right', '');
@@ -617,6 +617,10 @@
           extraOffset = (this.tooltip.outerWidth() === parseInt(this.tooltip.css('max-width'), 10)) ?
              7 : (isShortField ? (Locale.isRTL() ? -10 : 4) : 1);
           lessTop = 2;
+
+          if (this.activeElement.is('.lookup')) {
+            extraOffset = Locale.isRTL() ? 13 : -13;
+          }
 
           if (this.activeElement.is('.editor')) {
             extraOffset = -5;

@@ -156,6 +156,10 @@
         top: 6px;
         width: 18px;
       }
+
+      + .icon {
+        margin-left: -41px;
+      }
     }
   }
 
@@ -170,11 +174,31 @@ html[dir="rtl"] {
   .lookup-wrapper .trigger {
     margin-left: 0;
     margin-right: -33px;
+
+    .icon {
+      height: 14px;
+      right: auto;
+      left: 0;
+      top: 6px;
+      width: 18px;
+    }
+
+    + .icon {
+      margin-left: -41px;
+    }
   }
 
   .field-short .lookup-wrapper .trigger {
     margin-left: 0;
     margin-right: -20px;
+
+    .icon {
+      height: 14px;
+      right: auto;
+      left: 0;
+      top: 3px;
+      width: 18px;
+    }
   }
 
   .lookup-wrapper .lookup {
