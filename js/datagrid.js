@@ -2780,6 +2780,15 @@ $.fn.datagrid = function(options) {
 
       });
 
+      // resize datagrid-clone table headers along with based off of #datagrid on resize of window to maintain table header proportions as visually mimicking table column proportions
+      $('body').on('resize.datagrid', function () {
+        $('#datagrid').find('th').each(function (index) {
+          var th = $(this),
+              w = th.width();
+          $('.datagrid-clone').find('th').eq(index).css({'width': w, 'min-width': w});
+        });
+      });
+
       //=== BEGIN: isScrolling setup for touch device ==========================
       var touchPrevented = false,
       threshold = 10,
