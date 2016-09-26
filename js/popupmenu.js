@@ -611,7 +611,7 @@
         }
 
         function useArrow() {
-          return target.is('.btn-menu, .btn-actions, .searchfield-category-button, .trigger');
+          return target.is('.btn-menu, .btn-actions, .btn-split-menu, .searchfield-category-button, .trigger');
         }
         function hideArrow() {
           if (useArrow()) {
@@ -627,7 +627,7 @@
         function useTargetSize(axis) {
           var cssConstraints = {
             x: '',
-            y: '.autocomplete, .btn-menu, .btn-actions, .searchfield-category-button, .trigger'
+            y: '.autocomplete, .btn-menu, .btn-actions, .btn-split-menu, .searchfield-category-button, .trigger'
           };
           var jsConstraints = {
             x: function() {
@@ -703,13 +703,15 @@
             if (target.is('.btn-filter')) {
               value = value + (isRTL ? 10 : -10);
             }
+            if (target.is('.btn-split-menu')) {
+              value = value + (isRTL ? 13 : -13);
+            }
           }
 
           if (axis === 'y') {
             if (target.is('.btn-actions')) {
               value = value + 5;
             }
-
             if (target.is('.btn-filter, .searchfield-category-button') || target.closest('.colorpicker-container').length) {
               value = value + 10; // extra spacing to keep arrow from overlapping
             }
@@ -828,12 +830,13 @@
         this.menu.css({'height': menuDimensions.height, 'width': menuDimensions.width});
 
         // Flip arrow to the opposite side
-        if (wasFlipped) {
+        var arrow = wrapper.find('.arrow');
+        if (wasFlipped && this.element.not('.btn-').length) {
           wrapper.removeClass('bottom').addClass('top');
         }
 
-        if (this.element.is('.btn-filter, .searchfield-category-button')) {
-          wrapper.find('.arrow').css({ 'right': (isRTL ? '20px' : 'auto'), 'left': (isRTL ? 'auto' : '20px') });
+        if (this.element.is('.btn-filter, .btn-split-menu, .searchfield-category-button')) {
+          arrow.css({ 'right': (isRTL ? '20px' : 'auto'), 'left': (isRTL ? 'auto' : '20px') });
         }
       },
 
