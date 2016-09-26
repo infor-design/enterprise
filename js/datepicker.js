@@ -396,7 +396,7 @@
         }
 
         this.trigger.popover({content: this.calendar, popover: true, trigger: 'immediate',
-            placement: 'offset', offset: {top: 23, left: leftOffset},
+            placement: 'bottom', offset: {top: 23, left: Locale.isRTL() ? -163 : 162},
             tooltipElement: '#calendar-popup'})
             .on('hide.datepicker', function () {
               self.closeCalendar();
