@@ -347,11 +347,11 @@
     validate: function (field, showTooltip, e) {
       //call the validation function inline on the element
       var self = this,
-        types = self.getTypes(field, e),
+        types = self.getTypes(field, e) || [],
         rule, dfd,
         dfds = [],
         errors = [],
-        i,
+        i, l,
         value = self.value(field),
         placeholder = field.attr('placeholder'),
 
@@ -392,7 +392,7 @@
       self.removeError(field);
       field.removeData('data-errormessage');
 
-      for (i = 0; i < (types ? types.length : 0); i++) {
+      for (i = 0, l = types.length; i < l; i++) {
         rule = $.fn.validation.rules[types[i]];
         dfd = $.Deferred();
 
@@ -699,7 +699,7 @@
           var name = field.attr('name');
           return (name && name.length && $('input[name="'+ name +'"]:radio:checked').length);
         },
-        
+
         check: function (value, field) {
           var self = this;
 
