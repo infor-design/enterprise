@@ -168,7 +168,7 @@
         selects.filter(function() {
           return $(this).data('dropdown') !== undefined;
         }).data('dropdown').pseudoElem.on('blur.validate', function(e) {
-          var select = $(this).closest('.field').find('select');
+          var select = $(this).closest('.field, .field-short').find('select');
           self.validate(select, true, e);
         });
       }
