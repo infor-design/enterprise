@@ -357,3 +357,27 @@ html[dir='rtl'] {
   }
 
 }
+
+// Error States
+.inline .radio.error ~ .label-text,
+.radio.error + label {
+  color: $error-color;
+
+  &::before {
+    border-color: $error-color;
+  }
+}
+// disabled radio
+.inline .radio.error:disabled ~ .label-text,
+.radio.error:disabled + label {
+  color: rgba($error-color, .4);
+
+  &::before {
+    border-color: rgba($error-color, .4);
+  }
+}
+
+.radio-group-error {
+  margin-left: 2px;
+  margin-top: 5px;
+}
