@@ -142,6 +142,10 @@
         self.validate($(this), true, e);
       });
 
+      this.inputs.filter(':radio').on('click.validate', function (e) {
+        self.validate($(this), true, e);
+      });
+
       var selects = this.inputs.filter('select').filter(attribs);
 
       if (selects.length) {
@@ -343,11 +347,11 @@
     validate: function (field, showTooltip, e) {
       //call the validation function inline on the element
       var self = this,
-        types = self.getTypes(field, e),
+        types = self.getTypes(field, e) || [],
         rule, dfd,
         dfds = [],
         errors = [],
-        i,
+        i, l,
         value = self.value(field),
         placeholder = field.attr('placeholder'),
 
@@ -388,7 +392,7 @@
       self.removeError(field);
       field.removeData('data-errormessage');
 
-      for (i = 0; i < types.length; i++) {
+      for (i = 0, l = types.length; i < l; i++) {
         rule = $.fn.validation.rules[types[i]];
         dfd = $.Deferred();
 
@@ -472,6 +476,10 @@
     },
 
     showTooltipError: function(field, message, showTooltip) {
+      if (field.is(':radio')) {
+        return;
+      }
+
       this.showErrorIcon(field);
 
       //Add error classes to pseudo-markup for certain controls
@@ -506,6 +514,28 @@
       }
     },
 
+    // Toggle radio group error
+    toggleRadioError:  function (field, message, markup, isShow) {
+      var all, loc,
+        name = field.attr('name');
+
+      if (name && name.length) {
+        all = $(':radio[name="'+ name +'"], :radio[name="'+ name +'"] + label');
+        loc = field.parent().is('.inline') ?
+          $(':radio[name="'+ name +'"]:last').parent() :
+          $(':radio[name="'+ name +'"]:last + label');
+
+        if (isShow) {
+          all.addClass('error');
+          $(markup).addClass('radio-group-error').insertAfter(loc);
+        }
+        else {
+          all.removeClass('error');
+          loc.next('.radio-group-error').remove();
+        }
+      }
+    },
+
     showInlineError: function (field, message) {
       var loc = this.getField(field).addClass('error'),
         markup = '<div class="error-message">' +
@@ -514,8 +544,15 @@
           '<p class="message-text">' + message +'</p>' +
           '</div>';
 
-      loc.closest('.field, .field-short').find('.formatter-toolbar').addClass('error');
-      loc.closest('.field, .field-short').append(markup);
+      // Radio button
+      if (field.is(':radio')) {
+        this.toggleRadioError(field, message, markup, true);
+      }
+      // All other
+      else {
+        loc.closest('.field, .field-short').find('.formatter-toolbar').addClass('error');
+        loc.closest('.field, .field-short').append(markup);
+      }
     },
 
     addPositive: function(field) {
@@ -527,23 +564,32 @@
     },
 
     removeError: function(field) {
-      var loc = this.getField(field);
+      var loc = this.getField(field),
+        isRadio = field.is(':radio');
 
       this.inputs.filter('input, textarea').off('focus.validate');
       field.removeClass('error');
       field.removeData('data-errormessage');
 
-      field.next('.icon-error').off('click.validate').remove();
+      if (isRadio) {
+        this.toggleRadioError(field);
+      }
+      else {
+        field.next('.icon-error').off('click.validate').remove();
+      }
+
       if (field.hasClass('dropdown') || field.hasClass('multiselect')) {
         field.next().next().removeClass('error'); // #shdo
         field.parent().find('.dropdown-wrapper > .icon-error').off('click.validate').remove(); // SVG Error Icon
       }
 
-      field.next().next('.icon-error').remove();
-      field.next('.inforCheckboxLabel').next('.icon-error').remove();
-      field.parent('.field, .field-short').find('span.error').remove();
-      field.parent().find('.icon-error').remove();
-      field.off('focus.validate focus.tooltip');
+      if (!isRadio) {
+        field.next().next('.icon-error').remove();
+        field.next('.inforCheckboxLabel').next('.icon-error').remove();
+        field.parent('.field, .field-short').find('span.error').remove();
+        field.parent().find('.icon-error').remove();
+        field.off('focus.validate focus.tooltip');
+      }
 
       if (field.data('tooltip')) {
         field.data('tooltip').destroy();
@@ -647,6 +693,13 @@
 
           return (value ? true : false);
         },
+
+        // Check if at least one radio button checked in group
+        isRadioChecked: function (field) {
+          var name = field.attr('name');
+          return (name && name.length && $('input[name="'+ name +'"]:radio:checked').length);
+        },
+
         check: function (value, field) {
           var self = this;
 
@@ -666,7 +719,7 @@
           }
 
           this.message = Locale.translate('Required');
-          return this.isNotEmpty(value, field);
+          return field.is(':radio') ? this.isRadioChecked(field) : this.isNotEmpty(value, field);
         },
         message: 'Required'
       },
