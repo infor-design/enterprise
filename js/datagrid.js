@@ -2630,9 +2630,8 @@ $.fn.datagrid = function(options) {
         }
 
         if (btn.is('.datagrid-expand-btn')) {
-          var idx = rowNode.index()+1;
-          self.toggleRowDetail(idx);
-          self.toggleChildren(idx);
+          self.toggleRowDetail(dataRowIdx);
+          self.toggleChildren(dataRowIdx);
         }
 
         if (self.isCellEditable(row, cell)) {
@@ -3979,8 +3978,8 @@ $.fn.datagrid = function(options) {
     },
 
     //expand the tree rows
-    toggleChildren: function(rowIndex) {
-      var rowElement = this.table.find('tr').eq(rowIndex),
+    toggleChildren: function(dataRowIndex) {
+      var rowElement = this.visualRowNode(dataRowIndex),
         expandButton = rowElement.find('.datagrid-expand-btn'),
         level = rowElement.attr('aria-level'),
         children = rowElement.nextAll(),
@@ -4038,14 +4037,13 @@ $.fn.datagrid = function(options) {
     },
 
     //Expand Detail Row Or Tree Row
-    toggleRowDetail: function(rowIndex) {
+    toggleRowDetail: function(dataRowIndex) {
 
       var self = this,
-        rowElement = this.table.find('tr').eq(rowIndex),
-        expandRow = this.table.find('tr').eq(rowIndex+1),
+        rowElement = self.visualRowNode(dataRowIndex),
+        expandRow = rowElement.next(),
         expandButton = rowElement.find('.datagrid-expand-btn'),
         detail = expandRow.find('.datagrid-row-detail'),
-        dataRowIndex = self.dataRowIndex(rowElement),
         item = self.settings.dataset[dataRowIndex];
 
       if (rowElement.hasClass('datagrid-tree-parent')) {
