@@ -1,0 +1,75 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Busy Indicator Test: AJAX Calls</h2>
+    <p><a class="hyperlink" href="" target="_blank">Related JIRA Ticket</a>.</p>
+    <p>Fields that make AJAX calls to get data should display a busy indicator when their call is started, and should hide that indicator when the call is complete.</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+
+    <div class="field">
+      <label for="autocomplete-busy">Autocomplete</label>
+      <input type="text" autocomplete="off" class='autocomplete busy' data-options='{source: "/api/states?term="}' placeholder="Type to Search" id="autocomplete-busy">
+    </div>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+
+    <div class="field">
+      <label for="dropdown-busy">Dropdown</label>
+      <select id="dropdown-busy" name="ajax-test" class="dropdown busy" data-init="false"></select>
+    </div>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+
+    <div class="field">
+      <label for="lookup-busy" class="label">Lookup</label>
+      <input id="lookup-busy" data-init="false" class="lookup busy" name="lookup-busy" type="text">
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+
+    function genericSource(response, term) {
+      $.getJSON('/api/states', function(data, term) {
+        console.log(data, term);
+        response(data);
+      });
+    }
+
+    // Setup Dropdown's AJAX Call
+    $('#dropdown-busy').dropdown({
+      source: genericSource
+    });
+
+    // Setup Lookup's AJAX Call
+    $('#lookup-busy').lookup({
+        field: 'productId',
+        beforeShow: function (api, response) {
+          var url = '/api/lookupInfo';
+
+          $.getJSON(url, function(data) {
+            api.settings.options.columns = data[0].columns;
+            api.settings.options.dataset = data[0].dataset;
+            response();
+          });
+        },
+        options: {
+          selectable: 'single', //multiple or single
+          toolbar: {title: 'Products', results: true, collapsibleFilter: false, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true , rowHeight: true}
+        }
+    });
+  });
+</script>
