@@ -2,12 +2,11 @@
 //================================================== //
 
 .modal.contextual-action-panel {
-  @include css3(transform, translate3d(0%, 50%, 0) scale(1, 1));
-  @include css3(transition-timing-function, cubic-bezier(.17, .04, .03, .94));
+  @include css3(transition, opacity .2s, transform .2s);
 
-  &.is-visible {
-    @include css3(transform, translate3d(0, 0, 0) scale(1, 1));
-    @include css3(transition-timing-function, cubic-bezier(.94, .03, .04, .17));
+  &.is-animating {
+    @include css3(transform, translate3d(0%, 50%, 0));
+    opacity: 0;
   }
 
   .modal-content {
@@ -37,7 +36,8 @@
     .separator {
       background-color: $contextual-panel-seperator-bg-color;
       height: 28px;
-      margin: 5px 0 0;
+      margin: 5px 1px 0;
+      pointer-events: none; //fixes wierd IE10 over effect
       top: 1px;
     }
 

@@ -712,7 +712,7 @@ html[dir='rtl'] {
 }
 
 //When on smaller form factors make 400px fields go down to medium size
-@include respond-to(tabletdown) {
+@include respond-to(phone) {
   .input-lg,
   .field-short .input-lg {
     width: $field-md;

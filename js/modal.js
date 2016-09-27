@@ -81,7 +81,8 @@
         }
 
         self.addButtons(this.settings.buttons);
-        this.element.css({'display':'none'}).appendTo('body');
+        this.element.appendTo('body');
+        this.element.css({'display':'none'});
       },
 
       appendContent: function () {
@@ -326,6 +327,11 @@
 
         this.element.after(this.overlay);
 
+        if (this.element && !this.element.parent().hasClass('modal-wrapper')) {
+          this.element.wrap('<div class="modal-page-container"><div class="modal-wrapper"></div>');
+        }
+        this.root = this.element.closest('.modal-page-container');
+
         messageArea = self.element.find('.detailed-message');
         if (messageArea.length === 1) {
           $(window).on('resize.modal-' + this.id, function () {
@@ -344,7 +350,7 @@
           }
         });
 
-        $('body > *').not(this.element).not('.modal, .overlay').attr('aria-hidden', 'true');
+        $('body > *').not(this.element).not('.modal, .overlay, .modal-page-container').attr('aria-hidden', 'true');
 
         // Ensure aria-labelled by points to the id
         if (this.settings.isAlert) {
@@ -386,13 +392,14 @@
         });
 
         //Center
+        this.root.css({'display': ''});
         this.element.css({'display': ''});
-        self.setDialogSize();
+
         setTimeout(function() {
           self.resize();
           self.element.addClass('is-visible').attr('role', (self.settings.isAlert ? 'alertdialog' : 'dialog'));
-          self.element.attr('aria-hidden', 'false');
-          self.overlay.attr('aria-hidden', 'false');
+          self.root.attr('aria-hidden', 'false');
+          self.overlay.attr('aria-hidden', 'true');
           self.element.attr('aria-modal', 'true'); //This is a forward thinking approach, since aria-modal isn't actually supported by browsers or ATs yet
         }, 1);
 
@@ -483,19 +490,6 @@
 
       },
 
-      setDialogSize: function () {
-        var bodyElem = this.element.find('.modal-body');
-
-        if (!bodyElem.length) {
-          bodyElem = this.element.find('iframe');
-        }
-        //Add Actual size for centering
-        this.element.css({'width': bodyElem.width() + this.settings.frameWidth,
-                          'height': bodyElem.height() + this.settings.frameHeight });
-
-        this.element.css({'bottom': 0, 'right': 0});
-      },
-
       resize: function() {
         var bodyHeight = this.element.find('.modal-body').height(),
           calcHeight = ($(window).height()* 0.9)-this.settings.frameHeight; //90% -(180 :extra elements-height)
@@ -570,6 +564,7 @@
           self = this,
           fields = this.element.find('[data-validate]');
 
+        this.root = this.element.closest('.modal-page-container');
         fields.addClass('disable-validation');
 
         if (elemCanClose === false) {
@@ -582,15 +577,16 @@
         $(window).off('resize.modal-' + this.id);
 
         this.element.off('keypress.modal keydown.modal');
-        this.element.css('visibility', 'visible');
         this.element.removeClass('is-visible');
 
         this.overlay.attr('aria-hidden', 'true');
-        this.element.attr('aria-hidden', 'true');
+        if (this.root) {
+          this.root.attr('aria-hidden', 'true');
+        }
 
-        if ($('.modal[aria-hidden="false"]').length < 1) {
+        if ($('.modal-page-container[aria-hidden="false"]').length < 1) {
           $('body').removeClass('modal-engaged');
-          $('body > *').not(this.element).removeAttr('aria-hidden');
+          $('body > *').not(this.element.closest('.modal-page-container')).removeAttr('aria-hidden');
           $('.overlay').remove();
         }
 
@@ -612,7 +608,8 @@
 
         setTimeout( function() {
           self.overlay.remove();
-          self.element.css({'display':'none'}).trigger('afterclose');
+          self.root.css({'display':'none'});
+          self.element.trigger('afterclose');
 
           if (self.settings.trigger === 'immediate' || destroy) {
             self.destroy();

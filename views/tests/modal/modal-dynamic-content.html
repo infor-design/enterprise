@@ -1,0 +1,107 @@
+﻿<div class="page-container scrollable" id="maincontent" role="main" initialize>
+
+   <div class="row">
+      <div class="twelve columns">
+         <h3>Modal w/ Dynamic Content</h3>
+         <h4>
+            Test if content will scroll vertically and if modal looks okay when content is added.
+            <br><br>
+            <b>Important!</b> We can't rely on teams manually calling a resize trigger because with Angular the content
+            on the screen can be very dynamic and not have simple events/places to invoke the resize function.
+            We just need the content to scroll vertically and the modal buttons to not get chopped off.
+         </h4>
+         <br><br>
+
+         <button class="btn-secondary" type="button" id="add-context">Open Modal</button><br><br>
+
+         <div id="modal-add-context" style="display: none;">
+            <div class="field">
+               <label for="context-type">Type</label>
+               <select class="dropdown-lg" id="context-type" name="context-type" onchange="update()">
+                  <option value="">Change Me</option>
+                  <option value="2">This Value Shows More Content</option>
+               </select>
+            </div>
+
+            <div class="field">
+               <label for="context-name">Name</label>
+               <input id="context-name" name="context-name" class="input-lg" type="text">
+            </div>
+
+            <div class="field">
+               <label for="context-phone">Phone</label>
+               <input id="context-phone" name="context-phone" class="input-lg" type="text">
+            </div>
+
+            <div class="field if-value-2">
+               <label for="context-desc">Description</label>
+               <textarea id="context-desc" name="context-desc" class="textarea-lg"></textarea>
+            </div>
+
+            <div class="field if-value-2">
+               <label for="alt-desc">Alternate Description</label>
+               <textarea id="alt-desc" name="alt-desc" class="textarea-lg"></textarea>
+            </div>
+
+            <div class="field if-value-2">
+               <label for="field-6">Field 6</label>
+               <textarea id="field-6" name="field-6" class="textarea-lg"></textarea>
+            </div>
+
+            <div class="field if-value-2">
+               <label for="field-7">Field 7</label>
+               <textarea id="field-7" name="field-7" class="textarea-lg"></textarea>
+            </div>
+         </div>
+
+      </div>
+   </div>
+
+
+   <script>
+      function update() {
+         var val = $('#context-type').val();
+
+         if (val === '2') {
+            $('.if-value-2').show();
+         } else {
+            $('.if-value-2').hide();
+         }
+      }
+
+      var modals = {
+            'add-context': {
+               'title': 'Change Type & See Modal Height',
+               'content': $('#modal-add-context')
+            }
+         },
+
+         setModal = function (opt) {
+            opt = $.extend({
+               buttons: [{
+                  text: 'Cancel',
+                  click: function(e, modal) {
+                     modal.close();
+                  }
+               }, {
+                  text: 'Save',
+                  click: function(e, modal) {
+                     modal.close();
+                  },
+                  validate: false,
+                  isDefault: true
+               }]
+            }, opt);
+
+            $('body').modal(opt);
+         };
+
+      $('#add-context').on('click', function () {
+         setModal(modals[this.id]);
+      });
+
+      // Initial update of view
+      update();
+   </script>
+</div>
+</div>
