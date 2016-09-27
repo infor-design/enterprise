@@ -50,6 +50,12 @@
         this.addMarkup();
         this.handleEvents();
         this.iconFilteringSetup();
+
+        // Allow for an external click event to be passed in from outside this code.
+        // This event can be used to pass clientX/clientY coordinates for mouse cursor positioning.
+        if (this.settings.trigger === 'immediate') {
+          this.open(this.settings.eventObj);
+        }
       },
 
       isRTL: function() {
@@ -76,7 +82,9 @@
 
       //Add markip including Aria
       addMarkup: function () {
-        var id;
+        var id,
+          leftClick = this.settings.trigger !== 'rightClick',
+          immediate = this.settings.trigger === 'immediate';
 
         switch(typeof this.settings.menu) {
           case 'string': // ID Selector
@@ -180,6 +188,16 @@
         this.element.attr('aria-controls', id);
 
         this.markupItems();
+
+        //Add an Audible Label
+        if (!leftClick && !immediate) {
+          var audibleSpanId = 'popupmenu-f10-label';
+          if ($('#'+audibleSpanId).length === 0) {
+            this.element.after('<span style="display:none;" id="' + audibleSpanId + '">' + Locale.translate('PressShiftF10') + '</span>');
+          }
+          //PressShiftF10
+          this.element.attr('aria-describedby', audibleSpanId);
+        }
       },
 
       markupItems: function () {
@@ -227,73 +245,60 @@
       },
 
       handleEvents: function() {
-        var self = this;
+        var self = this,
+          leftClick = this.settings.trigger !== 'rightClick',
+          immediate = this.settings.trigger === 'immediate';
 
-        if (this.settings.trigger === 'click' || this.settings.trigger === 'toggle') {
+        function disableBrowserContextMenu(e) {
+          e.stopPropagation();
+          e.preventDefault();
+          return false;
+        }
 
-        this.element.onTouchClick('popupmenu')
-          .on('click.popupmenu', function (e) {
+        function doOpen(e) {
+          e.stopPropagation();
+          e.preventDefault();
 
-            if (self.element.is(':disabled')) {
-              return;
-            }
+          if (self.menu.hasClass('is-open')){
+            self.close();
+          } else {
+            self.open(e);
+          }
+        }
 
-            if (self.element.closest('.listview').length > 0) {
-              e.stopPropagation();
-              e.preventDefault();
-            }
+        if (leftClick && !immediate) {
+          this.element
+            .on('mousedown.popupmenu', function (e) {
+              if (e.button > 0 || self.element.is(':disabled')) {
+                return;
+              }
+              doOpen(e);
+          });
+        }
 
-            if (self.menu.hasClass('is-open')){
-              self.close();
-            } else {
-              self.open(e);
+        //settings.trigger
+        if (!leftClick) {
+          this.menu.parent().on('contextmenu.popupmenu', disableBrowserContextMenu);
+          this.element
+            .on('contextmenu.popupmenu', disableBrowserContextMenu)
+            .on('mousedown.popupmenu', function (e) {
+              if (e.button === 1 || (e.button === 0 & e.ctrlKey)) {
+                doOpen(e);
+              }
+            });
+        }
+
+        // Setup these next events no matter what trigger type is
+        this.element
+          .on('keydown.popupmenu', function (e) {
+            if (e.shiftKey && e.which === 121) {  //Shift F10
+              self.open(e, true);
             }
           })
           .on('updated.popupmenu', function(e) {
             e.stopPropagation();
             self.updated();
           });
-        }
-
-        //settings.trigger
-        if (this.settings.trigger === 'rightClick') {
-          this.menu.parent().on('contextmenu.popupmenu', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-          });
-
-          this.element.on('contextmenu.popupmenu', function (e) {
-            e.preventDefault();
-            return false;
-          }).on('mousedown.popupmenu', function (e) {
-            if (e.button === 2 || e.button === 0 && e.ctrlKey) {
-              self.open(e);
-              e.stopPropagation();
-            }
-            e.preventDefault();
-          });
-
-          //Add an Audible Label
-          var id = 'popupmenu-f10-label';
-          if ($('#'+id).length === 0) {
-            this.element.after('<span style="display:none;" id="' + id + '">' + Locale.translate('PressShiftF10') + '</span>');
-          }
-          //PressShiftF10
-          this.element.attr('aria-describedby', id);
-        }
-
-        // Allow for an external click event to be passed in from outside this code.
-        // This event can be used to pass clientX/clientY coordinates for mouse cursor positioning.
-        if (this.settings.trigger === 'immediate') {
-          this.open(this.settings.eventObj);
-        }
-
-        this.element.on('keydown.popupmenu', function (e) {
-          if (e.shiftKey && e.which === 121) {  //Shift F10
-            self.open(e, true);
-          }
-        });
       },
 
       handleKeys: function () {
