@@ -27,7 +27,6 @@
           text: null, //Custom Text To Show or Will Show Localized Loading....
           delay: 1000, // number in miliseconds to pass before the markup is displayed.  If 0, displays immediately.
           timeToComplete: 0, // fires the 'complete' trigger at a certain timing interval.  If 0, goes indefinitely.
-          timeToClose: 0, // fires the 'close' trigger at a certain timing interval.  If 0, goes indefinitely.
         },
         settings = $.extend({}, defaults, options);
 
@@ -55,14 +54,12 @@
       setup: function() {
         var blockUI = this.element.attr('data-block-ui'),
           delay = this.element.attr('data-delay'),
-          completionTime = this.element.attr('data-completion-time'),
-          closeTime = this.element.attr('data-close-time');
+          completionTime = this.element.attr('data-completion-time');
 
         this.blockUI = blockUI !== undefined ? blockUI : this.settings.blockUI;
         this.loadingText = this.settings.text ? this.settings.text : Locale.translate('Loading');
         this.delay = delay !== undefined && !isNaN(delay) && parseInt(delay, 10) > 20 ? delay : !isNaN(this.settings.delay) && this.settings.delay >= 20 ? this.settings.delay : 20;
         this.completionTime = completionTime !== undefined && !isNaN(completionTime) ? parseInt(completionTime, 10) : this.settings.timeToComplete;
-        this.closeTime = closeTime !== undefined && !isNaN(closeTime) ? parseInt(closeTime, 10) : this.settings.timeToClose;
 
         return this;
       },
@@ -145,7 +142,7 @@
             this.container.insertAfter(this.isInlineLabel ? this.inlineLabel : this.element);
           } else {
             var dd = this.element.data('dropdown');
-            target = dd.input;
+            target = dd.pseudoElem;
             this.container.appendTo(target.parent());
           }
 

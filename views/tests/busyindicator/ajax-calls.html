@@ -11,7 +11,7 @@
 
     <div class="field">
       <label for="autocomplete-busy">Autocomplete</label>
-      <input type="text" autocomplete="off" class='autocomplete busy' data-options='{source: "/api/states?term="}' placeholder="Type to Search" id="autocomplete-busy">
+      <input type="text" autocomplete="off" class='autocomplete busy' data-options='{delay: 0, source: "/api/states?delay=5000&amp;term="}' placeholder="Type to Search" id="autocomplete-busy">
     </div>
 
   </div>
@@ -22,7 +22,7 @@
 
     <div class="field">
       <label for="dropdown-busy">Dropdown</label>
-      <select id="dropdown-busy" name="ajax-test" class="dropdown busy" data-init="false"></select>
+      <select id="dropdown-busy" name="dropdown-busy" class="dropdown busy"></select>
     </div>
 
   </div>
@@ -33,7 +33,7 @@
 
     <div class="field">
       <label for="lookup-busy" class="label">Lookup</label>
-      <input id="lookup-busy" data-init="false" class="lookup busy" name="lookup-busy" type="text">
+      <input id="lookup-busy" class="lookup busy" name="lookup-busy" type="text">
     </div>
 
   </div>
@@ -43,22 +43,31 @@
   $('body').on('initialized', function() {
 
     function genericSource(response, term) {
-      $.getJSON('/api/states', function(data, term) {
+      $.getJSON('/api/states?delay=5000', function(data, term) {
         console.log(data, term);
         response(data);
       });
     }
 
     // Setup Dropdown's AJAX Call
-    $('#dropdown-busy').dropdown({
+    var dropdown = $('#dropdown-busy').dropdown({
       source: genericSource
+    }).busyindicator({
+      delay: 0
+    });
+    var dropdownAPI = dropdown.data('dropdown');
+
+    dropdown.on('start.test', function() {
+      'Dropdown - Busy Indicator Start';
+    }).on('complete.test', function() {
+      'Dropdown - Busy Indicator Complete';
     });
 
     // Setup Lookup's AJAX Call
     $('#lookup-busy').lookup({
         field: 'productId',
         beforeShow: function (api, response) {
-          var url = '/api/lookupInfo';
+          var url = '/api/lookupInfo?delay=5000';
 
           $.getJSON(url, function(data) {
             api.settings.options.columns = data[0].columns;

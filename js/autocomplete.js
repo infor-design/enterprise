@@ -321,12 +321,13 @@
 
             var sourceType = typeof self.settings.source,
               done = function(searchTerm, response) {
-                self.element.removeClass('is-busy');  //TODO: Need style for this
-                self.element.trigger('requestend', [searchTerm, response]);
+                self.element
+                  .trigger('complete') // For Busy Indicator
+                  .trigger('requestend', [searchTerm, response]);
               };
 
             self.element
-              .addClass('busy')
+              .trigger('start') // For Busy Indicator
               .trigger('requeststart', [buffer]);
 
             if (sourceType === 'function') {

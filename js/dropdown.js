@@ -1460,14 +1460,14 @@
 
             self.element.append(list);
             self.updateList();
-            self.pseudoElem.removeClass('is-busy');
+
+            self.element.trigger('complete'); // For Busy Indicator
             self.element.trigger('requestend', [searchTerm, data]);
             callback();
             return;
           };
 
-          //TODO: show indicator when we have it
-          self.pseudoElem.addClass('is-busy');
+          self.element.trigger('start'); // For Busy Indicator
           self.element.trigger('requeststart');
 
           if (sourceType === 'function') {
