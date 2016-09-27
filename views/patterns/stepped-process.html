@@ -1,10 +1,4 @@
-<<<<<<< 41cbdf79848a5d468ed9d42b0534025b2417b34f
-<body class="no-scroll">
-  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
-  {{> includes/svg-inline-refs}}
-=======
-<body class="no-scroll responsive-two-col">
->>>>>>> SOHO-4624 Adding advanced styles
+<body class="no-scroll soho-step-process">
 
   <header class="header is-personalizable responsive-hidden">
     <div class="toolbar">
@@ -25,8 +19,7 @@
 
   <div class="page-container no-scroll two-column fixed">
 
-    <div id="step-process-example" class="sidebar scrollable" role="complementary">
-
+    <div class="sidebar scrollable" role="complementary">
 
       <header class="header is-personalizable responsive-visible">
         <div class="toolbar">
@@ -37,11 +30,22 @@
             </h1>
           </div>
           <div class="buttonset">
-              <button class="btn" type="button">
-                <span>Save</span>
-              </button>
+            <button class="btn" type="button">
+              <span>Save</span>
+            </button>
           </div>
           {{> includes/header-actionbutton}}
+        </div>
+      </header>
+
+      <header class="header subheader is-personalizable responsive-visible">
+        <div class="toolbar">
+          <div class="title">
+            <h1>
+              <span class="panel-title">Application Steps</span>
+              <span class="panel-subhead">2/7 Completed</span>
+            </h1>
+          </div>
         </div>
       </header>
 
@@ -64,13 +68,8 @@
         </div>
 
         <div class="accordion-header">
-<<<<<<< 41cbdf79848a5d468ed9d42b0534025b2417b34f
-          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use xlink:href="#icon-confirm"></use>
-=======
           <svg class="icon icon-confirm" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="/svg/icons.svg#icon-confirm"></use>
->>>>>>> SOHO-4624 Adding advanced styles
           </svg>
           <a href="#">
             <span>Evaluate Goals</span>
@@ -84,11 +83,7 @@
 
         <div class="accordion-header">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-<<<<<<< 01affeef7cd49e245583ed7ed4159b8d708021ff
-            <use xlink:href="#icon-in-progress"></use>
-=======
             <use xlink:href="/svg/icons.svg#icon-half-empty-circle"></use>
->>>>>>> SOHO-4620 Added new half empty circle icon
           </svg>
           <a href="#">
             <span>Set Goals</span>
@@ -123,11 +118,11 @@
       </div>
     </div>
 
-    <div class="main no-scroll js-scroll-action" role="main">
+    <div class="main no-scroll" role="main">
       <header class="header subheader is-personalizable">
         <div class="toolbar">
           <div class="title">
-            <button class="btn-icon responsive-two-col-back-button js-toggle-steps" type="button">
+            <button class="btn-icon js-toggle-steps responsive-two-col-back-button responsive-visible" type="button">
               <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
                 <use xlink:href="/svg/icons.svg#icon-left-arrow"></use>
               </svg>
@@ -151,10 +146,10 @@
         </div>
       </header>
 
-      <div class="page-container scrollable js-step-process-scroll">
-        <div class="full-width js-step-process-panel">
+      <div class="page-container scrollable js-step-panel-scroll">
+        <div class="full-width">
 
-          <div id="step1" class="step-panel-example">
+          <div id="step1" class="js-step-process-panel">
             <h2>Competency Model 1</h2>
             <h4>Please be specific so we can match your preferences to our job requirements. You can attach a resume, but you increase the likelihood of finding a position if you complete the whole application process.</h4>
             <div class="field">
@@ -224,7 +219,7 @@
             </div>
           </div>
 
-          <div id="step2" class="step-panel-example">
+          <div id="step2" class="js-step-process-panel">
             <h2>Competency Model 2</h2>
             <div class="field">
               <label for="slider-competency1">How competent do you think you are?</label>
@@ -248,7 +243,7 @@
             </div>
           </div>
 
-          <div id="step3" class="step-panel-example">
+          <div id="step3" class="js-step-process-panel">
             <h2>How well did you meet your goals:</h2>
             <div class="field">
               <label for="slider-goal1">Your First Goal</label>
@@ -282,7 +277,7 @@
             </div>
           </div>
 
-          <div id="step4" class="step-panel-example">
+          <div id="step4" class="js-step-process-panel">
             <h2>Your future goals:</h2>
             <div class="field">
               <label for="future-one" class="label">Goal 1</label>
@@ -300,7 +295,7 @@
             </div>
           </div>
 
-          <div id="step5" class="step-panel-example">
+          <div id="step5" class="js-step-process-panel">
             <h2>Completed Activities</h2>
             <div class="field">
               <input type="checkbox" class="checkbox" id="checkbox1">
@@ -333,7 +328,7 @@
             </div>
           </div>
 
-          <div id="step6" class="step-panel-example">
+          <div id="step6" class="js-step-process-panel">
             <h2>Planned Activities</h2>
             <div class="field">
               <label for="planned-one" class="label">Planned Activity</label>
@@ -351,7 +346,7 @@
             </div>
           </div>
 
-          <div id="step7" class="step-panel-example">
+          <div id="step7" class="js-step-process-panel">
             <h2>Overall Evaluation</h2>
             <div class="field">
               <label for="comments-max">Comments (maxlength)</label>
@@ -366,8 +361,11 @@
 
   <script type="text/javascript">
     $(function() {
-      $('#step-process-example').stepprocess({
+      $('.soho-step-process').stepprocess({
         changeTabOnHashChange: false
       });
+
+
+
     });
   </script>

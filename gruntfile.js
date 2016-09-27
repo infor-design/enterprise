@@ -105,6 +105,7 @@ module.exports = function(grunt) {
             'temp/amd/signin.js',
             'temp/amd/slider.js',
             'temp/amd/arrange.js',
+            'temp/amd/scrollaction.js',
             'temp/amd/spinbox.js',
             'temp/amd/splitter.js',
             'temp/amd/steppedprocess.js',

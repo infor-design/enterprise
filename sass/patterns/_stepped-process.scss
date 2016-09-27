@@ -2,68 +2,48 @@
 //  ** Note that some styles are in _accordion.scss
 //==================================================//
 
-.step-process-accordion.accordion.panel {
-  border-color: transparent;
+.soho-step-process {
 
-  .step-process-item {
-    border: 1px solid transparent;
-    border-bottom-color: $accordion-border-color;
-    cursor: pointer;
-    font-size: 0;
-    height: 45px;
-    overflow: hidden;
-    position: relative;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
+  // Borrow and tweak some accordion styles for consistency
+  .step-process-accordion.accordion.panel {
+    border-color: transparent;
 
-    > * {
-      vertical-align: middle;
-    }
-
-    a {
-      color: inherit;
-      @include font-size(14);
-      text-decoration: none;
-      text-overflow: ellipsis;
-    }
-
-    > a {
-      display: inline-block;
+    .step-process-item {
+      border: 1px solid transparent;
+      border-bottom-color: $accordion-border-color;
+      cursor: pointer;
+      font-size: 0;
+      height: 45px;
       overflow: hidden;
-      padding: 13px 0 13px 54px;
-      white-space: nowrap;
-      width: calc(100% - 56px);
-    }
+      position: relative;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
 
-    > .icon {
-      fill: $accordion-icon-color;
-      height: 16px;
-      margin: 0 18px;
-      top: -1px;
-      width: 18px;
-
-      &.plus-minus {
-        &::before,
-        &::after {
-          background-color: $accordion-disabled-text-color !important;
-        }
+      > * {
+        vertical-align: middle;
       }
-
-      & + a {
-        padding-left: 0;
-      }
-    }
-
-    &.is-disabled {
-      background-color: $accordion-disabled-bg-color !important;
-      color: $accordion-disabled-text-color !important;
 
       a {
-        color: $accordion-disabled-text-color !important;
+        color: inherit;
+        @include font-size(14);
+        text-decoration: none;
+        text-overflow: ellipsis;
       }
 
-      .icon {
-        fill: $accordion-disabled-text-color !important;
+      > a {
+        display: inline-block;
+        overflow: hidden;
+        padding: 13px 0 13px 54px;
+        white-space: nowrap;
+        width: calc(100% - 56px);
+      }
+
+      > .icon {
+        fill: $accordion-icon-color;
+        height: 16px;
+        margin: 0 18px;
+        top: -1px;
+        width: 18px;
 
         &.plus-minus {
           &::before,
@@ -71,98 +51,108 @@
             background-color: $accordion-disabled-text-color !important;
           }
         }
+
+        & + a {
+          padding-left: 0;
+        }
       }
-    }
 
+      &.is-disabled {
+        background-color: $accordion-disabled-bg-color !important;
+        color: $accordion-disabled-text-color !important;
 
-    &.is-selected,
-    &.is-selected:hover,
-    &.is-focused.is-selected {
-      background-color: $accordion-selected-bg-color;
-      border-bottom-color: $accordion-selected-bg-color;
-      color: $accordion-selected-text-color;
+        a {
+          color: $accordion-disabled-text-color !important;
+        }
 
-      > a {
+        .icon {
+          fill: $accordion-disabled-text-color !important;
+
+          &.plus-minus {
+            &::before,
+            &::after {
+              background-color: $accordion-disabled-text-color !important;
+            }
+          }
+        }
+      }
+
+      &.is-selected,
+      &.is-selected:hover,
+      &.is-focused.is-selected {
+        background-color: $accordion-selected-bg-color;
+        border-bottom-color: $accordion-selected-bg-color;
         color: $accordion-selected-text-color;
-      }
 
-      > .icon {
-        fill: $accordion-selected-text-color;
+        > a {
+          color: $accordion-selected-text-color;
+        }
+
+        > .icon {
+          fill: $accordion-selected-text-color;
+        }
       }
     }
-
   }
 
-}
+  // Original step process styles
+  .js-step-process-panel {
+    display: none;
 
-.js-scroll-action {
-
-  .js-step-process-scroll,
-  .subheader {
-    -webkit-transition: all 1s ease;
-    -moz-transition: all 1s ease;
-    -o-transition: all 1s ease;
-    -ms-transition: all 1s ease;
-    transition: all 1s ease;
+    &.step-panel-active {
+      display: block;
+    }
   }
 
-  .subheader {
-    overflow-y: hidden;
-    max-height: 60px; /* approximate max height */
+  // Custom classes for scrollAction plugin
+  .js-scroll-target {
 
-    transition-property: all;
-    transition-duration: .75s;
-    transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
-  }
-
-  &.scrolled-down {
+    .js-scroll-watch,
+    .subheader {
+      @include css3(transition, all .3s ease-out);
+    }
 
     .subheader {
-      height: 0;
+      overflow-y: hidden;
+      max-height: 60px;
     }
 
-    .js-step-process-scroll {
-      top: 0;
-      margin: 0;
+    &.scrolled-down {
+
+      .subheader {
+        margin-top: -60px;
+      }
+
+      .js-scroll-watch {
+        top: 0;
+        margin: 0;
+      }
     }
   }
-}
 
-.js-step-process-panel {
-
-  .step-panel-example {
-    display: none;
-  }
-
-  .step-panel-active {
-    display: block;
-  }
-
-}
-
-.responsive-two-col {
-
+  // Responsive styles
   .responsive-hidden {
     display: block;
   }
-
   .responsive-visible {
     display: none;
   }
-
 }
 
-
-// In List-Detail View, Main/Sidebar slide left/right instead of being stacked
 @include respond-to(tabletdown) {
 
-  .responsive-two-col {
+  .soho-step-process {
+
     .responsive-hidden {
       display: none;
     }
 
     .responsive-visible {
       display: block;
+
+      &.responsive-two-col-back-button {
+        display: inline-block;
+      }
     }
 
     > .page-container {
@@ -181,10 +171,6 @@
       }
     }
 
-    .responsive-two-col-back-button {
-      display: none;
-    }
-
     .main {
       @include css3(transform, translateX(100%));
     }
@@ -195,19 +181,12 @@
 
 
     &.show-main {
-
       .main {
         @include css3(transform, translateX(0));
       }
-
       .sidebar {
         @include css3(transform, translateX(-100%));
       }
     }
-
-    .responsive-two-col-back-button {
-      display: inline-block;
-    }
-
   }
 }
