@@ -968,7 +968,7 @@
 
       isActive: function(href) {
         var panel = this.getPanel(href);
-        return panel.css('display') === 'none';
+        return panel.css('display') !== 'none';
       },
 
       isNestedInLayoutTabs: function() {
