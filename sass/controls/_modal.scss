@@ -2,20 +2,31 @@
 //================================================== //
 
 // NOTE:  this element gets a margin dynamically set in the "resize" method of modal.js
+.modal-wrapper {
+  display: table;
+  height: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.modal-page-container {
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+
 .modal {
   @include css3(transform, scale(.9, .9));
   @include css3(transition, opacity .2s, transform .2s);
   //Added after size calc bottom: 0;
+  display: table-cell;
   height: auto;
-  left: 0;
-  margin: auto;
   max-height: 90%;
   max-width: 90%;
   min-width: 200px;
   opacity: 0;
-  position: fixed;
-  //right: 0;
-  top: 0;
+  position: relative;
+  vertical-align: middle;
   width: auto;
   z-index: 1001;
 
@@ -114,7 +125,7 @@
       li {
         border-color: transparent;
 
-        &:hover {
+        &:not(.is-selected):hover {
           background-color: $listview-full-width-hover-color;
         }
       }
@@ -129,13 +140,13 @@
 }
 
 .overlay {
+  @include css3(transition, all .2s);
   background: $black;
   height: 100%;
   left: 0;
   opacity: 0;
   position: fixed;
   top: 0;
-  @include css3(transition, all .2s);
   visibility: hidden;
   width: 100%;
   z-index: 1000;
@@ -156,13 +167,7 @@
   border-radius: 2px;
   box-shadow: $modal-box-shadow;
   color: $modal-secondary-color;
-  margin: 5px;
-  position: relative;
-
-  // //3D sign Effect
-  // @include css3(transform-origin, 50% 50% 0);
-  // @include css3(transition, all .3s);
-  // @include css3(backface-visibility, hidden);
+  margin: 10px;
 
   // Messages/Content
   h1 {
@@ -185,10 +190,10 @@
 
       .icon {
         fill: $error-color;
+        left: -6px;
         margin-left: 5px;
         margin-right: 4px;
         top: auto;
-        left: -6px;
       }
     }
   }
@@ -206,8 +211,8 @@
   }
 
   .modal-body-wrapper {
-    -webkit-overflow-scrolling: auto;
     overflow: auto;
+    -webkit-overflow-scrolling: auto;
     padding: 20px;
   }
 
@@ -264,6 +269,7 @@
 
   button {
     @include font-size(12);
+    @include css3(transition, color .3s ease 0s);
     border: 1px solid transparent;
     border-left: 1px solid $modal-btn-border-color;
     border-radius: 0;
@@ -277,7 +283,6 @@
     position: relative;
     text-align: center;
     text-transform: uppercase;
-    @include css3(transition, color .3s ease 0s);
     width: 100%;
 
     &:hover {
@@ -348,8 +353,8 @@ html[dir='rtl'] {
     // Messages/Content
     h1 {
       margin-left: 25px;
-      padding-left: 20px;
       margin-right: inherit;
+      padding-left: 20px;
       text-align: right;
 
       &.is-error {
@@ -370,5 +375,11 @@ html[dir='rtl'] {
     .message {
       text-align: right;
     }
+  }
+}
+
+@include respond-to(phone) {
+  .modal-content {
+    max-width: 320px;
   }
 }
