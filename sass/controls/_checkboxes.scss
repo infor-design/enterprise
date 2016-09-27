@@ -87,7 +87,7 @@ span.checkbox > label {
   @include font-size(14);
   cursor: pointer;
   display: inline-block;
-  line-height: 24px;
+  margin-bottom: 10px;
   padding-left: 26px;
   position: relative;
 }
@@ -134,7 +134,7 @@ span.checkbox > input + label {
 .ie9 input.checkbox:checked + label::after,
 .ie9 input.checkbox:checked + input[type="hidden"] + label::after,
 .ie9 span.checkbox > input:checked + label::after {
-  left: 8px;
+  left: 6px;
   margin-top: -8px;
 }
 
@@ -149,7 +149,7 @@ span.checkbox.partial > input:checked + label::after {
 .ie9 input.checkbox.partial:checked + label::after,
 .ie9 input.checkbox.partial:checked + input[type="hidden"] + label::after,
 .ie9 span.checkbox.partial > input:checked + label::after {
-  left: 5px;
+  left: 3px;
   margin-top: 0;
 }
 
@@ -271,6 +271,18 @@ label.inline .checkbox:not(.partial):checked ~ .label-text::after,
 
 label.inline:not(.checkbox-label) .checkbox ~ .label-text {
   margin: 0 auto 5px -5px;
+}
+
+.ie9 {
+  label.inline .checkbox ~ .label-text::after {
+    left: 6px;
+    top: 1px;
+  }
+
+  label.inline .partial:checked ~ .label-text::after {
+    left: 3px;
+    top: -3px;
+  }
 }
 
 
