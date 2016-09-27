@@ -2242,7 +2242,7 @@ $.fn.datagrid = function(options) {
       this.saveColumns();
     },
 
-    // Eexport To Excel
+    // Export To Excel
     exportToExcel: function (fileName, worksheetName, customDs) {
       var self = this,
         template = ''+
