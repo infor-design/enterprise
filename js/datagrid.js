@@ -2243,7 +2243,7 @@ $.fn.datagrid = function(options) {
     },
 
     // Eexport To Excel
-    exportToExcel: function (fileName, worksheetName) {
+    exportToExcel: function (fileName, worksheetName, customDs) {
       var self = this,
         template = ''+
           '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">'+
@@ -2266,7 +2266,7 @@ $.fn.datagrid = function(options) {
               '<meta http-equiv="content-type" content="text/plain; charset=UTF-8"/>'+
             '</head>'+
             '<body>'+
-              '<table border="1px">{table}</table>'+
+              '<table border="1px solid #999999">{table}</table>'+
             '</body>'+
           '</html>',
 
@@ -2302,8 +2302,22 @@ $.fn.datagrid = function(options) {
           });
         },
 
-        table = cleanExtra(self.table.clone()),
-        ctx = { worksheet: (worksheetName || 'Worksheet'), table: table.html() };
+        appendRows = function(dataset, table) {
+          var tableHtml,
+            body = table.find('tbody').empty();
+
+          for (var i = 0; i < dataset.length; i++) {
+            tableHtml += self.rowHtml(dataset[i], false, i);
+          }
+
+          body.append(tableHtml);
+          return table;
+        };
+
+      var table = self.table.clone();
+      table = appendRows(customDs ? customDs : this.settings.dataset, table);
+      table = cleanExtra(table);
+      var ctx = { worksheet: (worksheetName || 'Worksheet'), table: table.html() };
 
       fileName = (fileName ||
         self.element.closest('.datagrid-container').attr('id') ||
