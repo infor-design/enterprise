@@ -1491,6 +1491,11 @@ $.fn.datagrid = function(options) {
             conditionValue = Locale.parseDate(conditions[i].value, conditions[i].format).getTime();
           }
 
+          if (typeof rowValue === 'number') {
+            rowValue =  parseFloat(rowValue);
+            conditionValue = parseFloat(conditionValue);
+          }
+
           switch (conditions[i].operator) {
             case 'equals':
 

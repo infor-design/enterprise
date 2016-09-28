@@ -950,11 +950,11 @@ $datagrid-short-row-height: 30px;
     .datagrid-filter-wrapper {
       input,
       div.dropdown {
-        border-color: $datagrid-list-filter-border-color;
+        // scss-lint:disable ImportantRule
+        border-color: $datagrid-list-filter-border-color !important;
         color: $datagrid-list-filter-color;
         -webkit-text-fill-color: $datagrid-list-filter-color;
 
-        // scss-lint:disable ImportantRule
         &:disabled,
         &.is-disabled {
           border-color: $datagrid-list-filter-disabled-color !important;
