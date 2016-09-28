@@ -2307,7 +2307,9 @@ $.fn.datagrid = function(options) {
             body = table.find('tbody').empty();
 
           for (var i = 0; i < dataset.length; i++) {
-            tableHtml += self.rowHtml(dataset[i], false, i);
+            if (!dataset[i].isFiltered) {
+              tableHtml += self.rowHtml(dataset[i], false, i);
+            }
           }
 
           body.append(tableHtml);
