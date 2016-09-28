@@ -96,6 +96,17 @@
   }
 
   // Original step process styles
+
+  .step-panels {
+    padding: 15px 30px;
+    width: calc(100% - 250px);
+  }
+
+  .js-step-links-scroll {
+    overflow: auto;
+    height: 100%;
+  }
+
   .js-step-process-panel {
     display: none;
 
@@ -104,40 +115,17 @@
     }
   }
 
-  // Custom classes for scrollAction plugin
-  .js-scroll-target {
-
-    .js-scroll-watch,
-    .subheader {
-      @include css3(transition, all .3s ease-out);
-    }
-
-    .subheader {
-      overflow-y: hidden;
-      max-height: 60px;
-    }
-
-    &.scrolled-down {
-
-      .subheader {
-        margin-top: -60px;
-      }
-
-      .js-scroll-watch {
-        top: 0;
-        margin: 0;
-      }
-    }
-  }
-
   // Responsive styles
   .responsive-hidden {
     display: block;
   }
-  .responsive-visible {
+
+  .tablet-visible,
+  .phone-visible {
     display: none;
   }
 }
+
 
 @include respond-to(tabletdown) {
 
@@ -147,38 +135,93 @@
       display: none;
     }
 
-    .responsive-visible {
+    .tablet-visible {
       display: block;
-
-      &.responsive-two-col-back-button {
-        display: inline-block;
-      }
     }
 
-    > .page-container {
-      height: 100%;
+    .btn-toggle-steps {
+      display: inline-block;
     }
 
     .main,
     .sidebar {
       @include transform-transition-list(300ms cubic-bezier(.17, .04, .03, .94));
-      position: absolute;
+    }
 
-      &.scrollable,
-      &.scrollable-y {
-        height: 100%;
-        overflow: auto;
+    .header {
+      position: relative;
+      z-index: 2;
+    }
+
+    // Classes for scrollAction plugin
+    .subheader {
+      position: relative;
+      z-index: 1;
+    }
+
+    .subheader,
+    .js-step-links-scroll,
+    .js-step-panels-scroll {
+      @include css3(transition, all .3s ease-out);
+    }
+
+    .scrolled-down {
+
+      .subheader {
+        margin-top: -60px;
       }
+
+      .js-step-links-scroll {
+        top: 60px;
+        margin-top: 0;
+      }
+
+      .js-step-panels-scroll {
+        top: 0;
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+@include respond-to(phone) {
+
+  .soho-step-process {
+
+    > .page-container {
+      height: 100%;
+    }
+
+    .phone-visible {
+      display: block;
+    }
+
+    .phone-hidden {
+      display: none;
+    }
+
+    .step-panels {
+      width: 100%;
+    }
+
+    .main,
+    .sidebar {
+      position: absolute;
     }
 
     .main {
       @include css3(transform, translateX(100%));
+      margin-top: 0;
+
     }
 
     .sidebar {
       @include css3(transform, translateX(0));
-    }
 
+      .subheader {
+        display: block;
+      }
+    }
 
     &.show-main {
       .main {
@@ -188,5 +231,26 @@
         @include css3(transform, translateX(-100%));
       }
     }
+
+    .js-step-links-scroll {
+      top: 60px;
+      height: calc(100% - 60px);
+    }
+
+    .phone-button-bar {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+
+      button {
+        border-radius: 0;
+        display: inline-block;
+        height: 60px;
+        width: 50%;
+        margin: 0;
+      }
+    }
+
+
   }
 }
