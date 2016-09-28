@@ -1487,6 +1487,10 @@ $.fn.datagrid = function(options) {
             rowValueStr = rowValue.toString().toLowerCase();
           }
 
+          if (columnDef.filterType === 'contents' || columnDef.filterType === 'select') {
+            rowValue = rowValue.toLowerCase();
+          }
+
           if (rowValue instanceof Date) {
             rowValue = rowValue.getTime();
             conditionValue = Locale.parseDate(conditions[i].value, conditions[i].format).getTime();
