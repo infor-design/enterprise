@@ -529,7 +529,7 @@ $datagrid-short-row-height: 30px;
           // scss-lint:enable ImportantRule
         }
 
-        &:hover:not(.is-open) {
+        &:hover:not(.is-open):not(:disabled) {
           .icon {
             // scss-lint:disable ImportantRule
             fill: $datagrid-filter-hover-color !important;
@@ -945,6 +945,69 @@ $datagrid-short-row-height: 30px;
     tr:hover:not(.datagrid-expandable-row) td:not(.is-editing) {
       background-color: $datagrid-list-row-hover-color;
     }
+
+    //Filter Row
+    .datagrid-filter-wrapper {
+      input,
+      div.dropdown {
+        border-color: $datagrid-list-filter-border-color;
+        color: $datagrid-list-filter-color;
+        -webkit-text-fill-color: $datagrid-list-filter-color;
+
+        // scss-lint:disable ImportantRule
+        &:disabled,
+        &.is-disabled {
+          border-color: $datagrid-list-filter-disabled-color !important;
+
+          + .icon {
+            fill: $datagrid-list-filter-disabled-color !important;
+          }
+        }
+
+        &:focus {
+          border-color: $datagrid-list-filter-focus-color !important;
+        }
+
+        &:hover:not(:disabled):not(:focus) {
+          border-color: $datagrid-list-filter-hover-border-color !important;
+        }
+        // scss-lint:enable ImportantRule
+      }
+
+      // scss-lint:disable ImportantRule
+      .btn-filter {
+        .icon,
+        .icon-dropdown {
+          fill: $datagrid-list-filter-icon-color !important;
+        }
+
+        &:hover:not(.is-open):not(:disabled) .icon,
+        &:hover:not(.is-open):not(:disabled) .icon-dropdown {
+          fill: $datagrid-list-filter-hover-color !important;
+        }
+
+        &:disabled .icon {
+          fill: $datagrid-list-filter-disabled-color !important;
+        }
+
+        &.is-open .icon {
+          fill: $datagrid-list-filter-active-color !important;
+        }
+      }
+
+      .datepicker,
+      .dropdown {
+        + .icon {
+          fill: $datagrid-list-filter-icon-color !important;
+        }
+
+        &:hover:not(:disabled) + .icon {
+          fill: $datagrid-list-filter-hover-color !important;
+        }
+      }
+      // scss-lint:enable ImportantRule
+  }
+
   }
 }
 
