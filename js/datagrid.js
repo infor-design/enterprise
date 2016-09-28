@@ -1373,6 +1373,7 @@ $.fn.datagrid = function(options) {
         e.stopPropagation();
 
         if (e.which === 13) {
+          e.preventDefault();
           self.applyFilter();
         }
 
@@ -2996,6 +2997,7 @@ $.fn.datagrid = function(options) {
 
       toolbar.find('.searchfield').off('keypress.datagrid').on('keypress.datagrid', function (e) {
         if (e.keyCode === 13 || e.type==='change') {
+          e.preventDefault();
           self.keywordSearch($(this).val());
         }
       });
