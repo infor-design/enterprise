@@ -476,19 +476,29 @@ $datagrid-short-row-height: 30px;
         }
       }
 
-      .datepicker + .icon,
-      .dropdown + .icon {
-        fill: $datagrid-filter-icon-color;
-        height: 14px;
-        margin-left: -9px;
-        top: -4px;
-        width: 14px;
+      .datepicker,
+      .dropdown {
+        + .icon {
+          fill: $datagrid-filter-icon-color;
+          height: 14px;
+          margin-left: -9px;
+          top: -4px;
+          width: 14px;
+        }
 
-        &:hover:not(:disabled) {
+        &:hover:not(:disabled) + .icon {
           // scss-lint:disable ImportantRule
           fill: $datagrid-filter-hover-color !important;
           // scss-lint:enable ImportantRule
         }
+
+        &:disabled + .icon {
+          // scss-lint:disable ImportantRule
+          fill: $datagrid-list-filter-disabled-color !important;
+          // scss-lint:enable ImportantRule
+          opacity: .7;
+        }
+
       }
 
       .btn-filter {
