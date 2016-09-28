@@ -67,8 +67,12 @@
         });
       },
 
+      isLoading: function() {
+        return this.element.is('.is-loading');
+      },
+
       openList: function (term, items) {
-        if (this.element.is('[disabled], [readonly]')) {
+        if (this.element.is('[disabled], [readonly]') || this.isLoading()) {
           return;
         }
 
@@ -254,6 +258,10 @@
         this.element.on('updated.autocomplete', function() {
           self.updated();
         }).on('keydown.autocomplete', function(e) {
+          if (self.isLoading()) {
+            e.preventDefault();
+            return false;
+          }
 
           var excludes = 'li:not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)';
           //Down - select next
@@ -295,6 +303,11 @@
 
         })
         .on('keypress.autocomplete', function (e) {
+          if (self.isLoading()) {
+            e.preventDefault();
+            return false;
+          }
+
           var field = $(this);
           clearTimeout(timer);
 
@@ -304,6 +317,9 @@
           }
 
           timer = setTimeout(function () {
+            if (self.isLoading()) {
+              return;
+            }
 
             buffer = field.val();
             if (buffer === '') {
