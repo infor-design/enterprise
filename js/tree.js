@@ -190,6 +190,11 @@
           subNode.attr('role', 'group').parent().addClass('folder');
           this.setTreeIcon(a.find('svg'), subNode.hasClass('is-open') ? 'open-folder' : 'closed-folder' );
 
+          if (a.attr('class') && a.attr('class').indexOf('open') === -1 && a.attr('class').indexOf('closed') === -1) {
+            a.attr('class', '');
+            this.setTreeIcon(a.find('svg'), subNode.hasClass('is-open') ? 'open-folder' : 'closed-folder' );
+          }
+
           if (a.is('[class^="icon"]')) {
             this.setTreeIcon(a.find('svg'), subNode.hasClass('is-open') ?  a.attr('class') : a.attr('class').replace('open', 'closed') );
           }
@@ -243,7 +248,7 @@
           self.setTreeIcon(node.prev('a').find('svg'), 'closed-folder');
 
           if (node.prev('a').is('[class^="icon"]')) {
-            self.setTreeIcon(node.prev('a').find('svg'), node.prev('a').attr('class').replace('open', 'closed').replace(' hide-focus', '') );
+            self.setTreeIcon(node.prev('a').find('svg'), node.prev('a').attr('class').replace('open', 'closed').replace(' hide-focus', '').replace(' is-selected', '') );
           }
 
           if (node.prev('a').is('[class^="icon"]')) {
@@ -449,7 +454,7 @@
 
             if (node.closest('.folder a').is('[class^="icon"]')) {
               self.setTreeIcon(node.closest('.folder a').find('svg'),
-                node.closest('.folder a').attr('class').replace('open', 'closed').replace(' hide-focus', ''));
+                node.closest('.folder a').attr('class').replace('open', 'closed').replace(' hide-focus', '').replace(' is-selected', ''));
             }
 
             self.isAnimating = true;
@@ -504,7 +509,7 @@
         self.setTreeIcon(node.closest('.folder').addClass('is-open').end().find('svg'), 'open-folder');
 
         if (node.is('[class^="icon"]')) {
-          self.setTreeIcon(node.find('svg'), node.attr('class').replace(' hide-focus', ''));
+          self.setTreeIcon(node.find('svg'), node.attr('class').replace(' hide-focus', '').replace(' is-selected', ''));
         }
 
         self.isAnimating = true;
