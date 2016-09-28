@@ -497,7 +497,7 @@ $datagrid-header-focus-bg-color: $graphite08;
 $datagrid-header-focus-border-color: $slate02;
 $datagrid-list-header-checkbox-border-color: $slate05;
 
-$datagrid-filter-border-color: $slate03;
+$datagrid-filter-border-color: $slate06;
 $datagrid-filter-hover-border-color: $white;
 $datagrid-filter-color: $white;
 $datagrid-filter-hover-color: $white;
@@ -505,6 +505,15 @@ $datagrid-filter-disabled-color: $slate06;
 $datagrid-filter-icon-color: $slate03;
 $datagrid-filter-focus-color: $azure04;
 $datagrid-filter-active-color: $azure04;
+
+$datagrid-list-filter-border-color: $slate06;
+$datagrid-list-filter-hover-border-color: $slate10;
+$datagrid-list-filter-color: $slate10;
+$datagrid-list-filter-hover-color: $slate10;
+$datagrid-list-filter-icon-color: $slate06;
+$datagrid-list-filter-disabled-color: $slate04;
+$datagrid-list-filter-focus-color: $azure09;
+$datagrid-list-filter-active-color: $azure09;
 
 // Search Results
 $sr-masthead-text-color: $font-color;

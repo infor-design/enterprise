@@ -476,19 +476,29 @@ $datagrid-short-row-height: 30px;
         }
       }
 
-      .datepicker + .icon,
-      .dropdown + .icon {
-        fill: $datagrid-filter-icon-color;
-        height: 14px;
-        margin-left: -9px;
-        top: -4px;
-        width: 14px;
+      .datepicker,
+      .dropdown {
+        + .icon {
+          fill: $datagrid-filter-icon-color;
+          height: 14px;
+          margin-left: -9px;
+          top: -4px;
+          width: 14px;
+        }
 
-        &:hover:not(:disabled) {
+        &:hover:not(:disabled) + .icon {
           // scss-lint:disable ImportantRule
           fill: $datagrid-filter-hover-color !important;
           // scss-lint:enable ImportantRule
         }
+
+        &:disabled + .icon {
+          // scss-lint:disable ImportantRule
+          fill: $datagrid-list-filter-disabled-color !important;
+          // scss-lint:enable ImportantRule
+          opacity: .7;
+        }
+
       }
 
       .btn-filter {
@@ -950,11 +960,11 @@ $datagrid-short-row-height: 30px;
     .datagrid-filter-wrapper {
       input,
       div.dropdown {
-        border-color: $datagrid-list-filter-border-color;
+        // scss-lint:disable ImportantRule
+        border-color: $datagrid-list-filter-border-color !important;
         color: $datagrid-list-filter-color;
         -webkit-text-fill-color: $datagrid-list-filter-color;
 
-        // scss-lint:disable ImportantRule
         &:disabled,
         &.is-disabled {
           border-color: $datagrid-list-filter-disabled-color !important;
@@ -1341,6 +1351,18 @@ html[dir='rtl'] {
   .datagrid-column-wrapper {
     margin-left: inherit;
     margin-right: 20px;
+  }
+
+  .datagrid {
+      //Restore Left Border
+    th:first-child {
+      border-left: 1px solid $datagrid-header-border-color;
+    }
+
+    //Push sort indicator over
+    .sort-indicator {
+      margin: 6px 3px 0;
+    }
   }
 
   //Datagrid Dropdown Formatter

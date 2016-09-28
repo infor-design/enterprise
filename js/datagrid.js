@@ -1487,9 +1487,18 @@ $.fn.datagrid = function(options) {
             rowValueStr = rowValue.toString().toLowerCase();
           }
 
+          if (columnDef.filterType === 'contents' || columnDef.filterType === 'select') {
+            rowValue = rowValue.toLowerCase();
+          }
+
           if (rowValue instanceof Date) {
             rowValue = rowValue.getTime();
             conditionValue = Locale.parseDate(conditions[i].value, conditions[i].format).getTime();
+          }
+
+          if (typeof rowValue === 'number') {
+            rowValue =  parseFloat(rowValue);
+            conditionValue = parseFloat(conditionValue);
           }
 
           switch (conditions[i].operator) {
@@ -1896,6 +1905,11 @@ $.fn.datagrid = function(options) {
 
     formatValue: function (formatter, row, cell, fieldValue, columnDef, rowData, api) {
       var formattedValue;
+
+      //Use default formatter if undefined
+      if (formatter === undefined) {
+        formatter = this.defaultFormatter;
+      }
 
       if (typeof formatter ==='string') {
         formattedValue = window.Formatters[formatter](row, cell, fieldValue, columnDef, rowData, api).toString();
@@ -2611,7 +2625,7 @@ $.fn.datagrid = function(options) {
 
         var elem = $(this).closest('td'),
           btn = $(this).find('button'),
-          cell = elem.index(),
+          cell = elem.parent().children(':visible').index(elem),
           rowNode = $(this).closest('tr'),
           row = self.visualRowIndex(rowNode),
           dataRowIdx = self.dataRowIndex(rowNode),
@@ -2619,7 +2633,7 @@ $.fn.datagrid = function(options) {
           item = self.settings.dataset[dataRowIdx];
 
         function handleClick() {
-          if (e.type === 'mouseup' && e.button !== 0) {
+          if (e.type === 'mouseup' && e.button === 2) {
             return;
           }
 
@@ -2683,7 +2697,10 @@ $.fn.datagrid = function(options) {
           return;
         }
 
-        var canSelect = self.settings.clickToSelect ? true : $(target).is('.datagrid-selection-checkbox') || $(target).find('.datagrid-selection-checkbox').length ===1;
+        var canSelect = self.settings.clickToSelect ? true : $(target).is('.datagrid-selection-checkbox') || $(target).find('.datagrid-selection-checkbox').length === 1;
+        if ($(target).is('.datagrid-drilldown')) {
+          canSelect = false;
+        }
 
         if (canSelect && isMultiple && e.shiftKey) {
           self.selectRowsBetweenIndexes([self.lastSelectedRow, target.closest('tr').index()]);
@@ -3622,7 +3639,7 @@ $.fn.datagrid = function(options) {
           }
 
           // Toggle datagrid-expand with Space press
-          var btn = $(e.target).find('.datagrid-expand-btn');
+          var btn = $(e.target).find('.datagrid-expand-btn, .datagrid-drilldown');
           if (btn && btn.length) {
             btn.trigger('mouseup.datagrid');
             e.preventDefault();
@@ -3646,12 +3663,8 @@ $.fn.datagrid = function(options) {
 
         // if column have click function to fire [ie. action button]
         if (key === 13 && col.click && typeof col.click === 'function') {
-          if (node.hasClass('is-focusable')) {
-            if ($(e.target).is(self.settings.buttonSelector)) {
-              if (!node.hasClass('is-cell-readonly')) {
-                col.click(e, [{row: row, cell: cell, item: item, originalEvent: e}]);
-              }
-            }
+          if (!node.hasClass('is-cell-readonly')) {
+            col.click(e, [{row: row, cell: cell, item: item, originalEvent: e}]);
           }
         }
 
@@ -3974,7 +3987,7 @@ $.fn.datagrid = function(options) {
         self.activeCell = prevCell;
       }
 
-      if (!$('input, button:not(.datagrid-expand-btn)', self.activeCell.node).length) {
+      if (!$('input, button:not(.datagrid-expand-btn, .datagrid-drilldown)', self.activeCell.node).length) {
         self.activeCell.node.focus();
       }
       if (self.activeCell.node.hasClass('is-focusable')) {

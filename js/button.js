@@ -50,7 +50,7 @@
           if (ddIcon.length > 0 && use.length === 1) {
             hasIcon = use.attr('xlink:href').indexOf('#icon-dropdown') > -1;
           } else if (ddIcon.length > 0) {
-            hasIcon = ddIcon.hasClass('data-icon') === 'dropdown' || ddIcon.hasClass('icon-dropdown');
+            hasIcon = ddIcon.attr('data-icon') === 'dropdown' || ddIcon.hasClass('icon-dropdown');
           }
 
           if (!hasIcon) {

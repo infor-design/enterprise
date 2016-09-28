@@ -8,7 +8,6 @@
 
 <script>
   $('body').one('initialized', function () {
-    Locale.set('en-US').done(function () {
       var grid,
         columns = [],
         data = [];
@@ -44,12 +43,7 @@
 
       grid.setSortColumn('productId');
 
-      /*grid.setColumnWidth('productId', '70%');
-      grid.setColumnWidth('productName', '15%');
-      grid.setColumnWidth('activity', '15%');*/
-  });
 
  });
 
 </script>
-
