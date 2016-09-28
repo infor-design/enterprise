@@ -7,7 +7,7 @@
 
         <h2 class="fieldset-title">Regular Example (UI Blocking)</h2>
 
-        <form id="busy-form" class="busy" action="#" method="POST" data-delay="300">
+        <form id="busy-form" class="busy" action="#" method="POST" data-display-delay="300">
           <div class="field">
             <label for="busy-field-name">Name</label>
             <input id="busy-field-name" name="busy-field-name" />
@@ -55,7 +55,7 @@
       <div class="one-half column">
         <h2 class="fieldset-title">Delay Example</h2>
 
-        <form id="busy-delayed-form" class="busy" action="#" method="POST" data-delay="2000" data-completion-time="2000" data-close-time="3000">
+        <form id="busy-delayed-form" class="busy" action="#" method="POST" data-display-delay="2000" data-completion-time="2000" data-close-time="3000">
           <div class="field">
             <label for="busy-reaction-time">Reaction Time</label>
             <input id="busy-reaction-time" name="busy-reaction-time" value="2000"/>
@@ -136,7 +136,7 @@
         $('#busy-reaction-time').change(function() {
           var val = parseInt($(this).val(), 10);
           $('#busy-time-length').text('(Waits ' + val + 'ms)');
-          $('#busy-delayed-form').attr('data-delay', val).trigger('updated.busyindicator');
+          $('#busy-delayed-form').attr('data-display-delay', val).trigger('updated.busyindicator');
         });
 
         $('#nested-busy-form button[type="submit"]').click(function(e) {

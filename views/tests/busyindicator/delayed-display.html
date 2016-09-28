@@ -1,0 +1,66 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Busy Indicator Test: Delayed Display</h2>
+    <p></p>
+    <p></p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+
+    <form id="busy-delayed-form" class="busy" action="#" method="POST" data-display-delay="2000" data-completion-time="4000">
+      <div class="field">
+        <label for="busy-reaction-time">Reaction Time (Busy Indicator Won't Display for "x" ms).</label>
+        <input id="busy-reaction-time" name="busy-reaction-time" value="2000"/>
+      </div>
+      <div class="field">
+        <label for="busy-completion-time">Completion Time (Busy Indicator Turns off at "x" ms).</label>
+        <input id="busy-completion-time" name="busy-completion-time" value="4000"/>
+      </div>
+      <div class="field">
+        <button type="reset" class="btn-secondary">Clear</button>
+        <button type="submit" class="btn-primary">Submit</button>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+    var form = $('#busy-delayed-form'),
+      api = form.data('busyindicator'),
+      submit = form.find('button[type="submit"]'),
+      reactionTimeField = $('#busy-reaction-time'),
+      completionTimeField = $('#busy-completion-time');
+
+    function update(dataField, value) {
+      if (isNaN(value)) {
+        return false;
+      }
+
+      value = parseInt(value, 10);
+      form.attr('data-' + dataField, value).trigger('updated.busyindicator');
+    }
+
+    reactionTimeField.change(function(e) {
+      if (!update('delay', e.target.value)) {
+        e.preventDefault();
+        return false;
+      };
+    });
+
+    completionTimeField.change(function(e) {
+      if (!update('completion-time', e.target.value)) {
+        e.preventDefault();
+        return false;
+      };
+    });
+
+    submit.click(function(e) {
+      e.preventDefault();
+      form.trigger('start.busyindicator');
+    });
+  });
+</script>

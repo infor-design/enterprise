@@ -106,14 +106,6 @@
         }
         handleStates(this);
 
-        // Place the elements depending on the configuration
-        // if (this.isInlineLabel) {
-        //   this.wrapper
-        //     .append($('<label></label>')
-        //       .attr('for', name + prefix)
-        //       .html(this.label.find('.label-text').html())
-        //     );
-        // }
         this.wrapper.append(this.pseudoElem, this.trigger);
 
         // Check for and add the icon
@@ -583,6 +575,10 @@
             excludes = 'li:visible:not(.separator):not(.group-label):not(.is-disabled)',
             next;
 
+        if (this.isLoading()) {
+          return;
+        }
+
         //Down arrow, Up arrow, or Spacebar to open
         if (!self.isOpen() && (key === 38 || key === 40 || key === 32)) {
           self.toggleList();
@@ -735,6 +731,10 @@
       filterTerm: '',
 
       handleAutoComplete: function(e) {
+        if (this.isLoading()) {
+          return;
+        }
+
         var self = this;
         clearTimeout(this.timer);
 
@@ -1222,6 +1222,11 @@
         return true;
       },
 
+      // returns true if the field is attempting to load via AJAX.
+      isLoading: function() {
+        return this.element.is('.is-loading');
+      },
+
       // Return true/false if the list is open
       isOpen: function() {
         return this.list.is(':visible');
@@ -1229,7 +1234,7 @@
 
       // Hide or Show list
       toggleList: function() {
-        if (this.isOpen()) {
+        if (this.isOpen() || this.isLoading()) {
           this.closeList();
           return;
         }
@@ -1460,14 +1465,14 @@
 
             self.element.append(list);
             self.updateList();
-            self.pseudoElem.removeClass('is-busy');
+
+            self.element.trigger('complete'); // For Busy Indicator
             self.element.trigger('requestend', [searchTerm, data]);
             callback();
             return;
           };
 
-          //TODO: show indicator when we have it
-          self.pseudoElem.addClass('is-busy');
+          self.element.trigger('start'); // For Busy Indicator
           self.element.trigger('requeststart');
 
           if (sourceType === 'function') {

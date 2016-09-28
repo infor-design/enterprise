@@ -81,7 +81,7 @@ $busy-indicator-check-color: $inverse-color;
 
 // Animation Keyframes
 @include keyframes(stretchdelay) {
-  0%, 70%, 100% { @include css3(transform, scaleY(.4)); }
+  0%, 70%, 100% { @include css3(transform, scaleY(.6)); }
   35% { @include css3(transform, scaleY(1)); }
 }
 
@@ -100,14 +100,14 @@ input + .busy-indicator-container,
 
   .busy-indicator {
     background-color: $body-bg-color;
-    height: 28px;
-    margin: .33em .3em .3em;
+    height: 22px;
+    margin: 5px 1px 1px;
     position: absolute;
     right: 0;
     width: 40px;
 
     .bar {
-      height: 2.8em;
+      height: 2.4em;
       margin-right: .3em;
       width: .3em;
 
@@ -123,14 +123,14 @@ input + .busy-indicator-container,
   .dropdown-wrapper > .busy-indicator-container {
     .busy-indicator {
       background-color: $body-bg-color;
-      height: 28px;
-      margin: .33em .3em .3em;
+      height: 22px;
+      margin: 5px 1px 1px;
       position: absolute;
       right: 0;
       width: 40px;
 
       .bar {
-        height: 2.8em;
+        height: 2.4em;
         margin-right: .3em;
         width: .3em;
 
@@ -145,16 +145,28 @@ input + .busy-indicator-container,
 .ie9 {
   .busy-indicator {
     .bar {
-      -ms-transform: scaleY(.4);
+      -ms-transform: scaleY(.6);
       -ms-transform-origin: 50% 50%;
 
       &.half {
-        -ms-transform: scaleY(.7);
+        -ms-transform: scaleY(.8);
       }
 
       &.full {
         -ms-transform: scaleY(1);
       }
+    }
+  }
+}
+
+// bump everything up 1px because Firefox
+.is-firefox {
+  input + .busy-indicator-container,
+  .dropdown-wrapper > .busy-indicator-container {
+    position: absolute;
+
+    .busy-indicator {
+      margin: 4px 1px 1px;
     }
   }
 }
