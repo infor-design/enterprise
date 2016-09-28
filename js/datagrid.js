@@ -2610,7 +2610,7 @@ $.fn.datagrid = function(options) {
 
         var elem = $(this).closest('td'),
           btn = $(this).find('button'),
-          cell = elem.index(),
+          cell = elem.parent().children(':visible').index(elem),
           rowNode = $(this).closest('tr'),
           row = self.visualRowIndex(rowNode),
           dataRowIdx = self.dataRowIndex(rowNode),
