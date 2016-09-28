@@ -73,6 +73,10 @@
         this.dropdown.disable();
       },
 
+      updated: function() {
+        this.build();
+      },
+
       // Teardown - Remove added markup and events
       destroy: function() {
         this.dropdown.destroy();
@@ -86,6 +90,7 @@
       var instance = $.data(this, pluginName);
       if (instance) {
         instance.settings = $.extend({}, instance.settings, options);
+        instance.updated();
       } else {
         instance = $.data(this, pluginName, new MultiSelect(this, settings));
       }

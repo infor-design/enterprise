@@ -74,7 +74,27 @@ var express = require('express'),
       console.log('Setting Colors to ' + res.opts.colorScheme);
     }
 
+    // Sets a simulated response delay for API Calls
+    if (req.query.delay && !isNaN(req.query.delay) && req.query.delay.length > 0) {
+      res.opts.delay = req.query.delay;
+    }
+
     next();
+  };
+
+  // Simple Middleware that simulates a delayed response by setting a timeout before returning the next middleware.
+  var responseThrottler = function(req, res, next) {
+    if (!res.opts.delay) {
+      return next();
+    }
+
+    function delayedResponse() {
+      console.log('Delayed request continuing...');
+      return next();
+    }
+
+    console.log('Delaying the response time of this request by ' + res.opts.delay + 'ms...');
+    setTimeout(delayedResponse, res.opts.delay);
   };
 
   // Simple Middleware for logging some meta-data about the request to the console
@@ -100,6 +120,7 @@ var express = require('express'),
 
   // place optionHandler() first to augment all "res" objects with an "opts" object
   app.use(optionHandler);
+  app.use(responseThrottler);
   app.use(router);
   app.use(timestampLogger);
   app.use(errorHandler);

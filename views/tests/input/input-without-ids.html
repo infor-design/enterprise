@@ -295,7 +295,7 @@
     <div class="field">
       <label>
         <span class="label-text">States</span>
-        <input type="text" autocomplete="off" class='autocomplete' data-options='{source: "/api/states?term="}' placeholder="Type to Search">
+        <input type="text" autocomplete="off" class='autocomplete' data-options='{delay: 300, source: "/api/states?term="}' placeholder="Type to Search">
       </label>
     </div>
 
@@ -308,7 +308,7 @@
     <div class="field">
       <label>
         <span class="label-text">Busy Dropdown</span>
-        <select class="dropdown busy" name="busy-dropdown" data-block-ui="false" data-delay="0" data-completion-time="5000" data-close-time="6000">
+        <select class="dropdown busy" name="busy-dropdown" data-block-ui="false" data-display-delay="0" data-completion-time="5000" data-close-time="6000">
           <option selected>Busy</option>
           <option>Preoccupied</option>
           <option>Distracted</option>
@@ -514,5 +514,3 @@
 </div>
 
 <div style="height:100px"></div>
-
-

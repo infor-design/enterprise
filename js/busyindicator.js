@@ -25,9 +25,8 @@
         defaults = {
           blockUI: true, // makes the element that Busy Indicator is invoked on unusable while it's displayed.
           text: null, //Custom Text To Show or Will Show Localized Loading....
-          delay: 1000, // number in miliseconds to pass before the markup is displayed.  If 0, displays immediately.
+          displayDelay: 1000, // number in miliseconds to pass before the markup is displayed.  If 0, displays immediately.
           timeToComplete: 0, // fires the 'complete' trigger at a certain timing interval.  If 0, goes indefinitely.
-          timeToClose: 0, // fires the 'close' trigger at a certain timing interval.  If 0, goes indefinitely.
         },
         settings = $.extend({}, defaults, options);
 
@@ -54,15 +53,13 @@
       // Sanitize incoming option values
       setup: function() {
         var blockUI = this.element.attr('data-block-ui'),
-          delay = this.element.attr('data-delay'),
-          completionTime = this.element.attr('data-completion-time'),
-          closeTime = this.element.attr('data-close-time');
+          delay = this.element.attr('data-display-delay'),
+          completionTime = this.element.attr('data-completion-time');
 
         this.blockUI = blockUI !== undefined ? blockUI : this.settings.blockUI;
         this.loadingText = this.settings.text ? this.settings.text : Locale.translate('Loading');
-        this.delay = delay !== undefined && !isNaN(delay) && parseInt(delay, 10) > 20 ? delay : !isNaN(this.settings.delay) && this.settings.delay >= 20 ? this.settings.delay : 20;
+        this.delay = delay !== undefined && !isNaN(delay) && parseInt(delay, 10) > 20 ? delay : !isNaN(this.settings.displayDelay) && this.settings.displayDelay >= 20 ? this.settings.displayDelay : 20;
         this.completionTime = completionTime !== undefined && !isNaN(completionTime) ? parseInt(completionTime, 10) : this.settings.timeToComplete;
-        this.closeTime = closeTime !== undefined && !isNaN(closeTime) ? parseInt(closeTime, 10) : this.settings.timeToClose;
 
         return this;
       },
@@ -76,9 +73,10 @@
           // Complete event is only active once the indicator is "started"
           self.element.on('complete.busyindicator', function(e) {
             e.stopPropagation();
-            self.close();
+            self.close(true);
           });
         }).on('updated.busyindicator', function() {
+          self.close(true);
           self.updated();
         });
 
@@ -136,6 +134,7 @@
         // Append the markup to the page
         // Use special positioning logic for compatibility with certain controls
         if (this.element.is('input, .dropdown, .multiselect')) {
+          this.element.addClass('is-loading');
           this.label.addClass('audible');
 
           var target;
@@ -145,7 +144,7 @@
             this.container.insertAfter(this.isInlineLabel ? this.inlineLabel : this.element);
           } else {
             var dd = this.element.data('dropdown');
-            target = dd.input;
+            target = dd.pseudoElem;
             this.container.appendTo(target.parent());
           }
 
@@ -183,7 +182,6 @@
         // Lets external code know that we've successully kicked off.
         this.element.trigger('afterstart');
 
-
         // Start the JS Animation Loop if IE9
         if (!$.fn.cssPropSupport('animation')) {
           self.isAnimating = true;
@@ -194,14 +192,20 @@
         // Triggers complete if the "timeToComplete" option is set.
         if (this.completionTime > 0) {
           setTimeout(function() {
-            self.element.trigger('complete');
+            self.element.trigger('close');
           }, self.completionTime);
         }
       },
 
       // Removes the appended markup and hides any trace of the indicator
-      close: function() {
+      close: function(fromEvent) {
         var self = this;
+
+        // If closed from an event, fire the necessary event triggers
+        // and removes the 'is-loading' CSS class.
+        if (fromEvent) {
+          this.element.removeClass('is-loading');
+        }
 
         if (this.container) {
           this.container.addClass('is-hidden');
