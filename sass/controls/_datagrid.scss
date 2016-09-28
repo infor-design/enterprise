@@ -1353,6 +1353,18 @@ html[dir='rtl'] {
     margin-right: 20px;
   }
 
+  .datagrid {
+      //Restore Left Border
+    th:first-child {
+      border-left: 1px solid $datagrid-header-border-color;
+    }
+
+    //Push sort indicator over
+    .sort-indicator {
+      margin: 6px 3px 0;
+    }
+  }
+
   //Datagrid Dropdown Formatter
   .datagrid-trigger-cell {
     .icon-calendar {

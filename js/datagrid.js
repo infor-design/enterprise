@@ -1902,6 +1902,11 @@ $.fn.datagrid = function(options) {
     formatValue: function (formatter, row, cell, fieldValue, columnDef, rowData, api) {
       var formattedValue;
 
+      //Use default formatter if undefined
+      if (formatter === undefined) {
+        formatter = this.defaultFormatter;
+      }
+
       if (typeof formatter ==='string') {
         formattedValue = window.Formatters[formatter](row, cell, fieldValue, columnDef, rowData, api).toString();
       } else {
