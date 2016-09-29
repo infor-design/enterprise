@@ -114,13 +114,13 @@ On usmvvwdev53:
 Update notes to come...
 ```
 
-**NOTE** If you copy in new CraftCMS dirs (craft or public), then make sure to check that Users group has Full Control access to any changed dirs.
+**NOTE** If you copy in new version of CraftCMS or the craft dir, then make sure to check that Users group has Full Control access to /inetpub/wwwroot/craft/storage.
 
 Site error: `C:\inetpub\wwwroot\craft\storage isn't writable by PHP. Please fix that.`
 
 To Confirm Permissions:
 
-* Right click /inetpub/wwwroot/craft/storage and/or /inetpub/wwwroot/public and select Properties
+* Right click /inetpub/wwwroot/craft/storage and select Properties
 * Click Securtity tab > Advanced
 * Confirm that Users(USALVWSOHO2\Users) has Full Control Access
 * If not then:
