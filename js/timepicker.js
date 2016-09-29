@@ -234,7 +234,7 @@
 
         var timeSeparator = this.getTimeSeparator(),
           mask = '##' + timeSeparator + '##' + (!this.is24HourFormat() ? ' am' : ''),
-          maskMode = 'time',
+          maskMode = 'group',
           validation = 'time',
           events = {'time': 'blur'},
           customValidation = this.element.attr('data-validate'),
@@ -250,11 +250,12 @@
         }
 
         this.element
-          .attr('data-mask', mask)
-          .attr('data-mask-mode', maskMode)
           .attr('data-validate', validation)
           .attr('data-validation-events', JSON.stringify(events))
-          .mask()
+          .mask({
+            pattern: mask,
+            mode: maskMode
+          })
           .validate()
           .triggerHandler('updated');
       },

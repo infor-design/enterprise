@@ -153,8 +153,9 @@
         if (html5DataGroupComplete) {
           this.settings.groupComplete = true;
         }
+        // Backwards Compat with the old "time" mode
         if (this.settings.mode === 'time') {
-          this.settings.groupComplete = true;
+          this.settings.mode = 'group';
         }
 
         // Point all keyboard related events to the handleKeyEvents() method, which knows how to
