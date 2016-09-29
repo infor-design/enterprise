@@ -1886,7 +1886,7 @@ $.fn.datagrid = function(options) {
         }
 
         this.recordCount++;
-        tableHtml += self.rowHtml(dataset[i], false, i);
+        tableHtml += self.rowHtml(dataset[i], false, this.settings.treeGrid ? this.recordCount-1 : i);
       }
 
       self.tableBody.append(tableHtml);
@@ -2049,7 +2049,7 @@ $.fn.datagrid = function(options) {
 
         for (var l = 0; l < rowData.children.length; l++) {
           this.recordCount++;
-          rowHtml += self.rowHtml(rowData.children[l], !rowData[self.treeExpansionField], l+1+j);
+          rowHtml += self.rowHtml(rowData.children[l], !rowData[self.treeExpansionField], dataRowIdx +  l + 1);
         }
       }
 
