@@ -291,8 +291,16 @@
         // Setup these next events no matter what trigger type is
         this.element
           .on('keydown.popupmenu', function (e) {
-            if (e.shiftKey && e.which === 121) {  //Shift F10
-              self.open(e, true);
+            switch(e.which) {
+              case 13:
+              case 32:
+                self.open(e, true);
+                break;
+              case 121:
+                if (e.shiftKey) { //Shift F10
+                  self.open(e, true);
+                }
+                break;
             }
           })
           .on('updated.popupmenu', function(e) {
@@ -836,11 +844,11 @@
 
         // Flip arrow to the opposite side
         var arrow = wrapper.find('.arrow');
-        if (wasFlipped && this.element.not('.btn-').length) {
+        if (wasFlipped) {
           wrapper.removeClass('bottom').addClass('top');
         }
 
-        if (this.element.is('.btn-filter, .btn-split-menu, .searchfield-category-button')) {
+        if (this.element.is('.btn-menu', '.btn-filter, .btn-split-menu, .searchfield-category-button')) {
           arrow.css({ 'right': (isRTL ? '20px' : 'auto'), 'left': (isRTL ? 'auto' : '20px') });
         }
       },
@@ -1159,6 +1167,8 @@
           isCancelled = false;
         }
 
+        var self = this;
+
         this.menu.removeClass('is-open').attr('aria-hidden', 'true').css({'height': '', 'width': ''});
         this.menu.parent('.popupmenu-wrapper').css({'left': '-999px', 'height': '', 'width': ''});
         this.menu.find('.submenu').off('mouseenter mouseleave').removeClass('is-submenu-open');
@@ -1181,9 +1191,7 @@
           return;
         }
 
-        if ($(document.activeElement).is('body')) {
-          this.element.focus();
-        }
+        self.element.removeClass('hide-focus').focus();
       },
 
       teardown: function() {
