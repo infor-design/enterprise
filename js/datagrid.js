@@ -1553,7 +1553,7 @@ $.fn.datagrid = function(options) {
               isMatch = (rowValue > conditionValue && rowValue !== '');
               break;
             case 'greater-equals':
-              isMatch = (rowValue <= conditionValue && rowValue !== '');
+              isMatch = (rowValue >= conditionValue && rowValue !== '');
               break;
             case 'selected':
               if (columnDef && columnDef.isChecked) {
