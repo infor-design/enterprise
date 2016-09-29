@@ -1173,7 +1173,7 @@ $.fn.datagrid = function(options) {
     },
 
     uniqueId: function (suffix) {
-      var uniqueid = (window.location.pathname.split('/').pop().replace('.html', '')) + '-' + (this.element.attr('id') ? this.element.attr('id'): 'datagrid') + '-' + this.gridCount + suffix;
+      var uniqueid = (window.location.pathname.split('/').pop().replace('.html', '').replace('.htm', '')) + '-' + (this.element.attr('id') ? this.element.attr('id'): 'datagrid') + '-' + this.gridCount + suffix;
 
       if (this.settings.uniqueId) {
         uniqueid = this.settings.uniqueId + '-' + suffix;

@@ -624,7 +624,7 @@
           var btn = $(this);
 
           if (btn.hasClass('cancel')) {
-            self.element.val('');
+            self.element.val('').trigger('change');
             self.currentDate = null;
             self.closeCalendar();
           }
