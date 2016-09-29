@@ -279,6 +279,7 @@ $datagrid-short-row-height: 30px;
 
       &.required::after {
         @include required-indicator();
+        color: $datagrid-required-icon-color;
       }
     }
 
