@@ -164,7 +164,9 @@ module.exports = function(grunt) {
           {expand: true, flatten: true, src: ['js/vendor/jquery-2*.map'], dest: 'dist/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/vendor/d3.*'], dest: 'dist/js/', filter: 'isFile'},
           {expand: true, flatten: true, src: ['js/cultures/*.*'], dest: 'public/js/cultures/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['js/cultures/*.*'], dest: 'dist/js/cultures/', filter: 'isFile'}
+          {expand: true, flatten: true, src: ['js/cultures/*.*'], dest: 'dist/js/cultures/', filter: 'isFile'},
+          {expand: true, flatten: true, src: ['views/controls/svg*.html'], dest: 'dist/svg/', filter: 'isFile'},
+          {expand: true, flatten: true, src: ['views/controls/svg*.html'], dest: 'public/svg/', filter: 'isFile'}
         ]
       },
       amd: {
@@ -237,7 +239,9 @@ module.exports = function(grunt) {
     },
 
     clean: {
-      amd: ['temp']
+      amd: ['temp'],
+      dist: ['dist/js/*', 'dist/svg/*', 'dist/css/*'],
+      public: ['public/js/*','public/svg/*','public/stylesheets/*']
     },
 
     compress: {
@@ -270,13 +274,15 @@ module.exports = function(grunt) {
   require('load-grunt-tasks')(grunt);
 
   grunt.registerTask('default', [
+    'clean:dist',
+    'clean:public',
     'revision',
     'jshint',
     'sass',
     'copy:amd',
     'strip_code',
     'concat',
-    'clean',
+    'clean:amd',
     'uglify',
     'cssmin',
     'copy:main',
@@ -287,7 +293,7 @@ module.exports = function(grunt) {
 
   // Don't do any uglify/minify/jshint while the Dev Watch is running.
   grunt.registerTask('sohoxi-watch', [
-    'revision', 'sass', 'copy:amd', 'strip_code','concat', 'clean', 'copy:main', 'usebanner'
+    'clean:dist', 'clean:public', 'revision', 'sass', 'copy:amd', 'strip_code','concat', 'clean:amd', 'copy:main', 'usebanner'
   ]);
 
 };
