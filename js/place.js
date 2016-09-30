@@ -27,6 +27,7 @@
     // Settings and Options
     var pluginName = 'place',
         defaults = {
+          bleedFromContainer: false, // If true, allows positioned content to bleed outside of a defined container.
           callback: null, // If defined, provides extra placement adjustments after the main calculation is performed.
           container: null, // If defined, contains the placement of the element to the boundaries of a specific container element.
           parent: null, // If defined, will be used as the reference element for placement this element.
@@ -71,6 +72,7 @@
       },
 
       sanitize: function() {
+        this.bleedFromContainer = this.bleedFromContainer === true;
         this.callback = (typeof this.callback === 'function') ? this.callback : settings.callback;
         this.container = (this.container instanceof $ && this.container.length) ? this.container : settings.container;
         this.parent = (this.parent instanceof $ && this.parent.length) ? this.parent : settings.parent;
@@ -189,6 +191,14 @@
             default:
               return placementObj.placement;
           }})();
+        }
+
+        // Use an "relatively positioned container" element, if one exists and the container setting isn't already defined.
+        var relativelyPositionedContainers = (placementObj.parent || this.element).parents().filter(function() {
+          return $(this).css('position') === 'relative';
+        });
+        if (!placementObj.container && relativelyPositionedContainers.length) {
+          placementObj.container = relativelyPositionedContainers.first();
         }
 
         // Use different methods if placement against a parent, versus straight-up coordinate placement
@@ -331,13 +341,28 @@
       // Re-adjust a previously-placed element to account for bleeding off the edges.
       // Element must fit within the boundaries of the page or it's current scrollable pane.
       _fixBleeding: function(placementObj) {
-        var parentContainer = placementObj.container ? placementObj.container : (document.documentElement || document.body.parentNode),
+        var containerBleed = this.settings.bleedFromContainer,
+          container = $(placementObj.container ? placementObj.container : (document.documentElement || document.body.parentNode)),
           rect = this.element[0].getBoundingClientRect(),
+          containerRect = container ? container[0].getBoundingClientRect() : {},
           windowH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
           windowW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
-          scrollX = (typeof parentContainer.scrollLeft === 'number' ? parentContainer : document.body).scrollLeft,
-          scrollY = (typeof parentContainer.scrollTop === 'number' ? parentContainer : document.body).scrollTop,
+          scrollX = (typeof container.scrollLeft === 'number' ? container : document.body).scrollLeft,
+          scrollY = (typeof container.scrollTop === 'number' ? container : document.body).scrollTop,
           d;
+
+        function getBoundary(edge) {
+          switch(edge) {
+            case 'top':
+              return (containerBleed ? 0 : containerRect.top) - scrollY; // 0 === top edge of viewport
+            case 'left':
+              return (containerBleed ? 0 : containerRect.left) - scrollX; // 0 === left edge of viewport
+            case 'right':
+              return (containerBleed ? windowW : containerRect.right) - scrollX;
+            default: // bottom
+              return (containerBleed ? windowH : containerRect.bottom) - scrollY;
+          }
+        }
 
         // If element width is greater than window width, shrink to fit
         if (rect.width >= windowW) {
@@ -358,26 +383,26 @@
         }
 
         // build conditions
-        var offRightEdge = rect.right > windowW - scrollX,
-            offLeftEdge = rect.left < 0 - scrollX, // 0 === left edge of viewport
-            offBottomEdge = rect.bottom > windowH - scrollY,
-            offTopEdge = rect.top < 0 - scrollY; // 0 === top edge of viewport
+        var offRightEdge = rect.right > getBoundary('right'),
+            offLeftEdge = rect.left < getBoundary('left'),
+            offBottomEdge = rect.bottom > getBoundary('bottom'),
+            offTopEdge = rect.top < getBoundary('top');
 
         // Keep a record of whether or not the bleeding needed to be fixed.
         placementObj.fixedBleeding = offRightEdge || offLeftEdge || offBottomEdge || offTopEdge || null;
 
         // Bump element around a bit in each direction, if necessary
         if (offRightEdge) {
-          placementObj.setCoordinate('x', placementObj.x - (rect.right - windowW - scrollX));
+          placementObj.setCoordinate('x', placementObj.x - (rect.right - getBoundary('right')));
         }
         if (offLeftEdge) {
-          placementObj.setCoordinate('x', placementObj.x + -(rect.left - scrollX));
+          placementObj.setCoordinate('x', placementObj.x + -(rect.left - getBoundary('left')));
         }
         if (offBottomEdge) {
-          placementObj.setCoordinate('y', placementObj.y - (rect.bottom - windowH - scrollY));
+          placementObj.setCoordinate('y', placementObj.y - (rect.bottom - getBoundary('bottom')));
         }
         if (offTopEdge) {
-          placementObj.setCoordinate('y', placementObj.y + -(rect.top - scrollY));
+          placementObj.setCoordinate('y', placementObj.y + -(rect.top - getBoundary('top')));
         }
 
         this.element.offset({

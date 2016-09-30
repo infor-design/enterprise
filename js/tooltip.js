@@ -106,6 +106,7 @@
         }
 
         this.tooltip.place({
+          //bleedFromContainer: true,
           container: this.scrollParent,
           parent: this.element,
           placement: this.settings.placement,
