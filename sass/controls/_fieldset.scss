@@ -1,7 +1,8 @@
 // Field Set Css.
 //================================================== //
 
-fieldset {
+fieldset,
+.fieldset {
 
   > legend {
     @include font-size(16);
@@ -24,6 +25,10 @@ fieldset {
 
   .row:last-child {
     margin-bottom: 0;
+  }
+
+  + fieldset {
+    margin-top: 30px;
   }
 }
 
