@@ -161,7 +161,7 @@
            .parent().attr('role', 'presentation').addClass('tab');
 
           if (a.parent().hasClass('dismissible') && !a.parent().children('.icon').length) {
-            $.createIconElement({ icon: 'close', classes: 'close' }).insertAfter(a);
+            $.createIconElement({ icon: 'close', classes: 'icon close' }).insertAfter(a);
           }
 
           // Find and configure dropdown tabs
@@ -235,7 +235,7 @@
 
               var icon = li.children('.icon');
               if (!icon.length) {
-                icon = $.createIcon({icon: 'close', class: 'close'});
+                icon = $.createIconElement({icon: 'close', class: 'icon close'});
               }
               icon.detach().appendTo(a);
 
@@ -1251,7 +1251,7 @@
 
         if (options.isDismissible) {
           tabHeaderMarkup.addClass('dismissible');
-          tabHeaderMarkup.append($.createIconElement({ icon: 'close', classes: 'close' }));
+          tabHeaderMarkup.append($.createIconElement({ icon: 'close', classes: 'close icon' }));
         }
 
         if (this.settings.tabCounts) {
@@ -1411,7 +1411,7 @@
         }
 
         function isLastDropdownTabItem(menu) {
-          return menu.children('li:not(.separator)').length === 0;
+          return menu.length && menu.children('li:not(.separator)').length === 0;
         }
         if (isLastDropdownTabItem(parentMenu)) {
           prevLi = this.getPreviousTab(trigger);
@@ -1707,7 +1707,6 @@
 
         this.adjustSpilloverNumber();
         self.setMoreActive();
-
       },
 
       adjustHeaderTabs: function() {
