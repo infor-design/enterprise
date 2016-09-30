@@ -491,10 +491,9 @@
       },
 
       resize: function() {
-        var bodyHeight = this.element.find('.modal-body').height(),
-          calcHeight = ($(window).height()* 0.9)-this.settings.frameHeight; //90% -(180 :extra elements-height)
+        var calcHeight = ($(window).height()* 0.9)-this.settings.frameHeight; //90% -(180 :extra elements-height)
 
-        this.element.find('.modal-body-wrapper').css('max-height', bodyHeight > calcHeight ? calcHeight : '');
+        this.element.find('.modal-body-wrapper').css('max-height', calcHeight);
       },
 
       isOpen: function() {

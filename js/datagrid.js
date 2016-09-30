@@ -2632,10 +2632,11 @@ $.fn.datagrid = function(options) {
           col = self.columnSettings(cell),
           item = self.settings.dataset[dataRowIdx];
 
+        if (e.type === 'mouseup' && e.button === 2) {
+          return;
+        }
+
         function handleClick() {
-          if (e.type === 'mouseup' && e.button === 2) {
-            return;
-          }
 
           if (elem.hasClass('is-focusable')) {
             if (!$(e.target).is(self.settings.buttonSelector)) {
