@@ -235,7 +235,7 @@
 
               var icon = li.children('.icon');
               if (!icon.length) {
-                icon = $.createIconElement({icon: 'close', class: 'icon close'});
+                icon = $.createIconElement({icon: 'close', classes: 'icon close'});
               }
               icon.detach().appendTo(a);
 
