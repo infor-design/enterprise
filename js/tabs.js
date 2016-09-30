@@ -1415,7 +1415,15 @@
         }
         if (isLastDropdownTabItem(parentMenu)) {
           prevLi = this.getPreviousTab(trigger);
-          this.remove(trigger);
+
+          setTimeout(function() {
+            self.remove(trigger);
+          }, 1);
+        }
+
+        // Close dropdown tab's menu
+        if (trigger && trigger.length) {
+          trigger.data('popupmenu').close();
         }
 
         // Adjust tablist height
