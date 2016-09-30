@@ -97,6 +97,20 @@
 
   // Original step process styles
 
+  .header .page-title {
+    margin: 10px 27px 0;
+
+    .panel-title {
+      @include font-size(20);
+      line-height: 1.2;
+    }
+
+    .panel-subhead {
+      @include font-size(14);
+      line-height: 1;
+    }
+  }
+
   .step-panels {
     padding: 15px 30px;
     width: calc(100% - 250px);
@@ -137,10 +151,6 @@
 
     .tablet-visible {
       display: block;
-    }
-
-    .btn-toggle-steps {
-      display: inline-block;
     }
 
     .main,
@@ -194,6 +204,10 @@
 
     .phone-visible {
       display: block;
+
+      &.btn-toggle-steps {
+        display: inline-block;
+      }
     }
 
     .phone-hidden {
@@ -204,6 +218,7 @@
       width: 100%;
     }
 
+
     .main,
     .sidebar {
       position: absolute;
@@ -213,6 +228,9 @@
       @include css3(transform, translateX(100%));
       margin-top: 0;
 
+      .toolbar .title {
+        width: 99%;
+      }
     }
 
     .sidebar {

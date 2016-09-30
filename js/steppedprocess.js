@@ -23,11 +23,14 @@
     var pluginName = 'stepprocess',
         defaults = {
           changeTabOnHashChange: false, // If true, will change the selected tab on invocation based on the URL that exists after the hash
-          stepPanels: '.js-step-process-panel', // Defines a separate element to be used for containing the content panels
+          stepPanels: '.js-step-process-panel', // The selector for elements that are step panels
           stepLinks: '.js-step-link', // The selector for elements that are step links
-          stepPrevBtn: '.js-step-link-prev', // The selector of the next step action (btn, link, etc)
-          stepNextBtn: '.js-step-link-next', // The selector of the next step action element (btn, link, etc)
-          toggleStepsBtn: '.js-toggle-steps' // The selector of the element to toggle the nav bar (btn, link)
+          btnStepPrev: '.js-step-link-prev', // The selector of the next step action
+          btnStepNext: '.js-step-link-next', // The selector of the next step action element
+          btnToggleStepLinks: '.js-toggle-steps', // The selector of the element to toggle the steps list
+
+          beforeStepChange: function() { },
+          afterStepChange: function() { }
         },
         settings = $.extend({}, defaults, options);
 
@@ -66,15 +69,15 @@
             });
         });
 
-        $(this.settings.stepPrevBtn).click(function(event) {
+        $(this.settings.btnStepPrev).click(function(event) {
           self.selectPrevStep.call(self, event);
         });
 
-        $(this.settings.stepNextBtn).click(function(event) {
+        $(this.settings.btnStepNext).click(function(event) {
           self.selectNextStep.call(self, event);
         });
 
-        $(this.settings.toggleStepsBtn).click(function(event) {
+        $(this.settings.btnToggleStepLinks).click(function(event) {
           self.hideContentPane.call(self, event);
         });
 
@@ -112,8 +115,17 @@
        * @param {object} stepLink - The step element
        */
       changeSelectedStep: function(stepLink) {
+        if (typeof this.settings.beforeStepChange === 'function' && this.settings.beforeStepChange() === false) {
+          return false;
+        }
+
         this.clearSelectedSteps();
         this.selectStep(stepLink);
+
+
+        if (typeof this.settings.beforeStepChange === 'function') {
+          this.settings.afterStepChange();
+        }
       },
 
       /**
