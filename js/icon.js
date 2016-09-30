@@ -159,6 +159,12 @@
         });
       }
 
+      // reroute "options.class" if that exists
+      if (!options.classes && options.class) {
+        options.classes = options.class;
+        delete options.class;
+      }
+
       if (!options.classes) {
         options.classes = [].concat(defaults.classes);
       }
