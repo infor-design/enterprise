@@ -11,5 +11,5 @@ if (!file.version.includes(tag)) {
 
 fs.writeFile(filename, JSON.stringify(file, null, 2), function (err) {
 	if (err) return console.log(err);
-	console.log('Updated version to:' + file.version);
+	console.log('[Info] Updated version to:' + file.version);
 });

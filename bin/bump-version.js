@@ -6,7 +6,7 @@ var fs = require('fs'),
 	version = process.env.bamboo_version || process.env.bamboo_jira_version;
 
 if (!version) {
-	console.log("Either bamboo_version or bamboo_jira_version ENV must be set.");
+	console.log('[Error] Either bamboo_version or bamboo_jira_version ENV must be set.');
 	process.exit(1);
 } else {
   file.version = version;
@@ -14,5 +14,5 @@ if (!version) {
 
 fs.writeFile(filename, JSON.stringify(file, null, 2), function (err) {
 	if (err) return console.log(err);
-	console.log('Updated version to:' + file.version);
+	console.log('[Info] Updated version to:' + file.version);
 });
