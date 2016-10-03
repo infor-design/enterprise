@@ -1,0 +1,39 @@
+<body class="no-scroll">
+
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+  {{> includes/svg-inline-refs}}
+
+  <!-- Module Tabs -->
+  <section id="module-tabs-example" class="tab-container module-tabs">
+    <div class="tab-list-container">
+      <ul class="tab-list">
+      </ul>
+    </div>
+  </section>
+
+  {{> includes/applicationmenu}}
+
+  <!-- Page Container -->
+  <div id="module-tabs-container" class="page-container no-scroll"></div>
+
+  <script type="text/javascript">
+    $('body').on('initialized', function() {
+
+      var options = {containerElement: '#module-tabs-container'},
+        $tabs = $('#module-tabs-example').tabs(options),
+        control = $tabs.data('tabs');
+
+      control.add('tab1', {name: 'tab 1', content: '<p style="font-size:20em;">Tab 1</p>', isDismissible: true });
+      control.add('tab2', {name: 'tab 2', content: '<p style="font-size:20em;">Tab 2</p>', isDismissible: true });
+      control.add('tab3', {name: 'tab 3', content: '<p style="font-size:20em;">Tab 3</p>', isDismissible: true });
+      control.select('tab1');
+
+      $tabs.tabs($.extend({
+        addTabButton: true,
+        addTabCallback: function(){}
+      }, options));
+
+    });
+  </script>
+
+</body>
