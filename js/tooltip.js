@@ -106,7 +106,6 @@
         }
 
         this.tooltip.place({
-          //bleedFromContainer: true,
           container: this.scrollParent,
           parent: this.element,
           placement: this.settings.placement,
@@ -170,9 +169,18 @@
           self.setContent(self.content);
         });
 
-        this.tooltip.on('afterplace.tooltip', function(e, x, y, bleedingWasFixed) {
-          if (bleedingWasFixed) {
-            $(this).find('.arrow').css('display', 'none');
+        this.tooltip.on('afterplace.tooltip', function(e, placementObj) {
+          var tt = $(this),
+            arrow = tt.find('.arrow');
+          if (placementObj.bleedingWasFixed) {
+            arrow.css('display', 'none');
+          }
+
+          // Adjust the arrow
+          var dir = placementObj.placement;
+          if (placementObj.tried) {
+            tt.removeClass('top right bottom left').addClass(dir);
+            arrow.css('display', 'block');
           }
         });
 
@@ -370,7 +378,8 @@
         var distance = this.isPopover ? 20 : 10,
           x = 0,
           y = distance,
-          s = this.settings.placement;
+          s = this.settings.placement,
+          self = this;
 
         if (s === 'left' || s === 'right') {
           x = distance;

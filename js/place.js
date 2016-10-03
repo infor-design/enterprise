@@ -193,14 +193,6 @@
           }})();
         }
 
-        // Use an "relatively positioned container" element, if one exists and the container setting isn't already defined.
-        var relativelyPositionedContainers = (placementObj.parent || this.element).parents().filter(function() {
-          return $(this).css('position') === 'relative';
-        });
-        if (!placementObj.container && relativelyPositionedContainers.length) {
-          placementObj.container = relativelyPositionedContainers.first();
-        }
-
         // Use different methods if placement against a parent, versus straight-up coordinate placement
         if (placementObj.parent) {
           return this._placeWithParent(placementObj);
@@ -345,22 +337,24 @@
           container = $(placementObj.container ? placementObj.container : (document.documentElement || document.body.parentNode)),
           rect = this.element[0].getBoundingClientRect(),
           containerRect = container ? container[0].getBoundingClientRect() : {},
-          windowH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
-          windowW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
+          containerDeltaHeight = container.offset().top,
+          containerDeltaWidth = container.offset().left,
           scrollX = (typeof container.scrollLeft === 'number' ? container : document.body).scrollLeft,
           scrollY = (typeof container.scrollTop === 'number' ? container : document.body).scrollTop,
+          windowH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
+          windowW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
           d;
 
         function getBoundary(edge) {
           switch(edge) {
             case 'top':
-              return (containerBleed ? 0 : containerRect.top) - scrollY; // 0 === top edge of viewport
+              return (containerBleed ? 0 : containerRect.top) - (scrollY + containerDeltaHeight); // 0 === top edge of viewport
             case 'left':
-              return (containerBleed ? 0 : containerRect.left) - scrollX; // 0 === left edge of viewport
+              return (containerBleed ? 0 : containerRect.left) - (scrollX + containerDeltaWidth); // 0 === left edge of viewport
             case 'right':
-              return (containerBleed ? windowW : containerRect.right) - scrollX;
+              return (containerBleed ? windowW : containerRect.right) - (scrollX + containerDeltaWidth);
             default: // bottom
-              return (containerBleed ? windowH : containerRect.bottom) - scrollY;
+              return (containerBleed ? windowH : containerRect.bottom) - (scrollY + containerDeltaHeight);
           }
         }
 
