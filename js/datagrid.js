@@ -1869,12 +1869,18 @@ $.fn.datagrid = function(options) {
         if (this.settings.paging && !this.settings.source) {
 
           if (activePage === 1 && (i - this.filteredCount) >= pagesize){
-            this.recordCount++;
+            if (!dataset[i].isFiltered) {
+              this.recordCount++;
+            }
             continue;
           }
 
           if (activePage > 1 && !((i - this.filteredCount) >= pagesize*(activePage-1) && (i - this.filteredCount) < pagesize*activePage)) {
-            this.recordCount++;
+            if (!dataset[i].isFiltered) {
+              this.recordCount++;
+            } else {
+              this.filteredCount++;
+            }
             continue;
           }
         }
@@ -2295,7 +2301,7 @@ $.fn.datagrid = function(options) {
               return;
             }
 
-            $('.is-hidden, .is-draggable-target, .handle, .sort-indicator', el).remove();
+            $('.is-hidden, .is-draggable-target, .handle, .sort-indicator, .datagrid-filter-wrapper', el).remove();
             while(el.attributes.length > 0) {
               el.removeAttribute(el.attributes[0].name);
             }

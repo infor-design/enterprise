@@ -638,7 +638,7 @@
             self.trigger.off('click.modal');
           }
 
-          self.element.remove();
+          self.element.closest('.modal-page-container').remove();
           $.removeData(self.element[0], 'modal');
         }
 
