@@ -170,18 +170,7 @@
         });
 
         this.tooltip.on('afterplace.tooltip', function(e, placementObj) {
-          var tt = $(this),
-            arrow = tt.find('.arrow');
-          if (placementObj.bleedingWasFixed) {
-            arrow.css('display', 'none');
-          }
-
-          // Adjust the arrow
-          var dir = placementObj.placement;
-          if (placementObj.tried) {
-            tt.removeClass('top right bottom left').addClass(dir);
-            arrow.css('display', 'block');
-          }
+          self.handleAfterPlace(e, placementObj);
         });
 
       },
@@ -371,6 +360,24 @@
         this.tooltip.detach().appendTo(targetContainer);
       },
 
+      // Placement behavior's "afterplace" handler.
+      // DO NOT USE FOR ADDITONAL POSITIONING.
+      handleAfterPlace: function(e, placementObj) {
+        var arrow = this.tooltip.find('.arrow');
+
+        // Hide the arrow if bleeding occured and needed to be fixed.
+        if (placementObj.bleedingWasFixed) {
+          arrow.css('display', 'none');
+        }
+
+        // Adjust the arrow's direction if a different strategy was attempted.
+        var dir = placementObj.placement;
+        if (placementObj.tried) {
+          this.tooltip.removeClass('top right bottom left').addClass(dir);
+          arrow.css('display', 'block');
+        }
+      },
+
       position: function () {
         this.setTargetContainer();
         this.tooltip.removeClass('is-hidden');
@@ -378,8 +385,7 @@
         var distance = this.isPopover ? 20 : 10,
           x = 0,
           y = distance,
-          s = this.settings.placement,
-          self = this;
+          s = this.settings.placement;
 
         if (s === 'left' || s === 'right') {
           x = distance;
