@@ -322,6 +322,10 @@
           nextElem = buttonset;
         }
 
+        if (!buttonset.length) {
+          return;
+        }
+
         if (this.shouldBeFullWidth()) {
           width = '100%';
 
