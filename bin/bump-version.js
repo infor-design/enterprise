@@ -3,10 +3,10 @@
 var fs = require('fs'),
 	filename = 'package.json',
 	file = require('../' + filename),
-	version = process.env.bamboo_version || process.env.bamboo_jira_version;
+	version = process.env.bamboo_jira_version || process.env.bamboo_version;
 
 if (!version) {
-	console.log('[Error] Either bamboo_version or bamboo_jira_version ENV must be set.');
+	console.log('[Error] Either bamboo_jira_version or bamboo_version ENV var must be set.');
 	process.exit(1);
 } else {
   file.version = version;
