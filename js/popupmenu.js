@@ -282,7 +282,7 @@
           this.element
             .on('contextmenu.popupmenu', disableBrowserContextMenu)
             .on('mousedown.popupmenu', function (e) {
-              if (e.button === 1 || (e.button === 0 & e.ctrlKey)) {
+              if (e.button === 2 || (e.button === 0 & e.ctrlKey)) {
                 doOpen(e);
               }
             });

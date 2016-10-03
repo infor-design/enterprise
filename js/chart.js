@@ -2340,12 +2340,35 @@ window.Chart = function(container) {
       tooltipDataCache = [],
       tooltipData = charts.options.tooltip;
 
+    //Config axis labels
+    var i, l,
+      axisLabels = {},
+      isAxisLabels = {atLeastOne: false},
+      axisArray = ['left', 'top', 'right', 'bottom'];
+    if (charts.options.axisLabels) {
+      $.extend(true, axisLabels, charts.options.axisLabels);
+    }
+    if (!$.isEmptyObject(axisLabels)) {
+      for (i = 0, l = axisArray.length; i < l; i++) {
+        var thisAxis = axisLabels[axisArray[i]];
+        if (thisAxis && typeof thisAxis === 'string' && $.trim(thisAxis) !== '') {
+          isAxisLabels[axisArray[i]] = true;
+          isAxisLabels.atLeastOne = true;
+        }
+      }
+    }
+
     //Append the SVG in the parent area.
     var dataset = chartData,
       hideDots = (options.hideDots),
       parent = $(container).parent(),
       isViewSmall = parent.width() < 450,
-      margin = {top: 30, right: (isViewSmall ? 35 : 55), bottom: 35, left: (isViewSmall ? 45 : 65)},
+      margin = {
+        top: (isAxisLabels.top ? 40 : 30),
+        right: (isAxisLabels.right ? (isViewSmall ? 45 : 65) : (isViewSmall ? 35 : 55)),
+        bottom: (isAxisLabels.bottom ? 50 : 35),
+        left: (isAxisLabels.right ? (isViewSmall ? 55 : 75) : (isViewSmall ? 45 : 65))
+      },
       width = parent.width() - margin.left - margin.right,
       height = parent.height() - margin.top - margin.bottom - 30; //legend
 
@@ -2422,6 +2445,33 @@ window.Chart = function(container) {
       .tickSize(-(width + 20))
       .tickPadding(20)
       .orient('left');
+
+    //Append The Axis Labels
+    if (isAxisLabels.atLeastOne) {
+      var axisLabelsGroup = svg.append('g').attr('class', 'axis-labels'),
+        place = {
+          top: 'translate('+ (width/2) +','+(-10)+')',
+          right: 'translate('+ (width+28) +','+(height/2)+')rotate(90)',
+          bottom: 'translate('+ (width/2) +','+(height+40)+')',
+          left: 'translate('+ (-40) +','+(height/2)+')rotate(-90)'
+        },
+        addAxis = function(pos) {
+          if (isAxisLabels[pos]) {
+            axisLabelsGroup.append('text')
+              .attr({
+                'text-anchor': 'middle',
+                'transform': place[pos]
+              })
+              .style('font-size', '1.3em')
+              .text(axisLabels[pos]);
+          }
+        };
+
+      for (i = 0, l = axisArray.length; i < l; i++) {
+        addAxis(axisArray[i]);
+      }
+    }
+
 
     //Append The Axis to the svg
     svg.append('g')

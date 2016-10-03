@@ -1354,7 +1354,7 @@
           targetPanel = this.getPanel(tabId),
           hasTargetPanel = (targetPanel && targetPanel.length),
           targetLiIndex = this.tablist.children('li').index(targetLi),
-          notATab = '.separator, .is-disabled, :hidden',
+          notATab = '.application-menu-trigger, .separator, .is-disabled, :hidden',
           prevLi = targetLi.prev();
 
         var canClose = this.element.triggerHandler('beforeclose', [targetLi]);
