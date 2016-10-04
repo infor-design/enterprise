@@ -491,9 +491,10 @@
       },
 
       resize: function() {
-        var calcHeight = ($(window).height()* 0.9)-this.settings.frameHeight; //90% -(180 :extra elements-height)
+        var calcHeight = ($(window).height()* 0.9)-this.settings.frameHeight, //90% -(180 :extra elements-height)
+          calcWidth = ($(window).width()* 0.9)-this.settings.frameWidth;
 
-        this.element.find('.modal-body-wrapper').css('max-height', calcHeight);
+        this.element.find('.modal-body-wrapper').css({'max-height': calcHeight, 'max-width': calcWidth});
       },
 
       isOpen: function() {
@@ -638,7 +639,7 @@
             self.trigger.off('click.modal');
           }
 
-          self.element.remove();
+          self.element.closest('.modal-page-container').remove();
           $.removeData(self.element[0], 'modal');
         }
 

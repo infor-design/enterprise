@@ -1,0 +1,32 @@
+
+<div class="row">
+  <div class="twelve columns">
+
+    <button class="btn-secondary" type="button" id="add-comment">Add a Comment</button><br><br>
+
+  </div>
+</div>
+
+<script>
+
+  $('#add-comment').on('click', function () {
+
+      $('body').modal({
+        'title': 'Add a Comment',
+        'content': $('<div id="modal-add-comment" style="display: none;"> <small class="alert-text">Escalated (2X)</small> <h2>Follow up action with HMM Global</h2> <p>Contact sales representative with the updated purchase order <br>before submission to corporate.</p> <div class="field"> <label for="txt-comment" class="audible">Comments</label> <textarea id="txt-comment" name="txt-comment" class="textarea-lg">This task needs to be escalated to maximum priority and delivered be the end of this week</textarea> </div> </div>'),
+        buttons: [{
+          text: 'Cancel',
+          click: function(e, modal) {
+            modal.destroy();
+          }
+        }, {
+          text: 'Save',
+          click: function(e, modal) {
+            modal.destroy();
+          },
+          isDefault: true
+        }]
+      });
+  });
+
+</script>

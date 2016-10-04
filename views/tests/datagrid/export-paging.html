@@ -57,12 +57,12 @@
         columns = [];
 
       //Define Columns for the Grid.
-      columns.push({ id: 'id', name: 'Id', field: 'id', width: 140, formatter: Formatters.Text});
-      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, formatter: Formatters.Hyperlink});
-      columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});
-      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
-      columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+      columns.push({ id: 'id', name: 'Id', field: 'id', width: 70, formatter: Formatters.Readonly, filterType: 'text', filterDisabled: true});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 120, formatter: Formatters.Readonly, filterType: 'text'});
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', width: 200, formatter: Formatters.Hyperlink, filterType: 'text'});
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 140, filterType: 'contents'});
+      columns.push({ id: 'quantity', name: 'Accuml. Quantity', field: 'quantity', align: 'right', width: 150, filterType: 'integer'});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', width: 130, formatter: Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date'});
 
       //Get some data via ajax
       var url = '/api/compressors?pageNum=1&pageSize=1000';
@@ -74,6 +74,7 @@
           dataset: res.data,
           selectable: 'single',
           paging: true,
+          filterable: true,
           pagesize: 10,
           toolbar: {title: 'Requests', results: true, dateFilter: false , keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true}
           }).on('selected', function (e, args) {
