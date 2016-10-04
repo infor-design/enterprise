@@ -1486,9 +1486,10 @@ $.fn.datagrid = function(options) {
           //Run Data over the formatter
           if (columnDef.filterType === 'text') {
             rowValue = self.formatValue(columnDef.formatter, i , conditions[i].columnId, rowValue, columnDef, rowData, self);
+            console.log(rowValue);
             rowValueStr = rowValue.toString().toLowerCase();
           }
-
+            console.log(columnDef.filterType , $(rowValue).text());
           if (columnDef.filterType === 'contents' || columnDef.filterType === 'select') {
             rowValue = rowValue.toLowerCase();
           }
