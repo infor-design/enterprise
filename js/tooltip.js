@@ -106,7 +106,7 @@
         }
 
         this.tooltip.place({
-          container: this.scrollParent,
+          container: this.scrollparent,
           parent: this.element,
           placement: this.settings.placement,
           strategy: 'flip'
@@ -167,10 +167,6 @@
 
         this.element.filter('button, a').on('focus.tooltip', function() {
           self.setContent(self.content);
-        });
-
-        this.tooltip.on('afterplace.tooltip', function(e, placementObj) {
-          self.handleAfterPlace(e, placementObj);
         });
 
       },
@@ -366,13 +362,13 @@
         var arrow = this.tooltip.find('.arrow');
 
         // Hide the arrow if bleeding occured and needed to be fixed.
-        if (placementObj.bleedingWasFixed) {
+        if (placementObj.wasNudged) {
           arrow.css('display', 'none');
         }
 
         // Adjust the arrow's direction if a different strategy was attempted.
         var dir = placementObj.placement;
-        if (placementObj.tried) {
+        if (placementObj.attemptedFlips) {
           this.tooltip.removeClass('top right bottom left').addClass(dir);
           arrow.css('display', 'block');
         }
@@ -382,7 +378,8 @@
         this.setTargetContainer();
         this.tooltip.removeClass('is-hidden');
 
-        var distance = this.isPopover ? 20 : 10,
+        var self = this,
+          distance = this.isPopover ? 20 : 10,
           x = 0,
           y = distance,
           s = this.settings.placement;
@@ -392,13 +389,17 @@
           y = 0;
         }
 
+        this.tooltip.one('afterplace.tooltip', function(e, placementObj) {
+          self.handleAfterPlace(e, placementObj);
+        });
+
         this.tooltip.data('place').place({
           x: x,
           y: y,
-          container: this.scrollParent,
+          container: this.scrollparent,
           parent: this.element,
           placement: this.settings.placement,
-          strategy: 'flip'
+          strategies: ['flip', 'nudge']
         });
 
         return this;

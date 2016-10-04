@@ -34,7 +34,7 @@
           parentXAlignment: 'center',
           parentYAlignment: 'center', // Only used for parent-based placement. Determines the alignment of the placed element against its parent. value 0 === X, value 1 === Y
           placement: 'bottom', // If defined, changes the direction in which placement of the element happens
-          strategy: 'nudge' // Determines the "strategy" for alternatively placing the element if it doesn't fit in the defined boundaries.  Only matters when "parent" is a defined setting.
+          strategies: ['nudge'] // Determines the "strategy" for alternatively placing the element if it doesn't fit in the defined boundaries.  Only matters when "parent" is a defined setting.  It's possible to define multiple strategies and execute them in order.
         },
         strategies = ['nudge', 'clockwise', 'flip'],
         placements = ['top', 'left', 'right', 'bottom', 'center'],
@@ -45,7 +45,7 @@
     // Object that contains coordinates along with temporary, changeable properties.
     function PlacementObject(placementOptions) {
       var self = this,
-        possibleSettings = ['x', 'y', 'callback', 'parent', 'parentXAlignment', 'parentYAlignment', 'placement', 'strategy'];
+        possibleSettings = ['x', 'y', 'container', 'callback', 'parent', 'parentXAlignment', 'parentYAlignment', 'placement', 'strategies'];
 
       possibleSettings.forEach(function settingIterator(val) {
         if (placementOptions[val] === null) {
@@ -72,6 +72,8 @@
       },
 
       sanitize: function() {
+        var self = this;
+
         this.bleedFromContainer = this.bleedFromContainer === true;
         this.callback = (typeof this.callback === 'function') ? this.callback : settings.callback;
         this.container = (this.container instanceof $ && this.container.length) ? this.container : settings.container;
@@ -79,7 +81,14 @@
         this.parentXAlignment = this.isReasonableDefault(this.parentXAlignment, xAlignments) ? this.parentXAlignment : settings.parentXAlignment;
         this.parentYAlignment = this.isReasonableDefault(this.parentYAlignment, yAlignments) ? this.parentYAlignment : settings.parentYAlignment;
         this.placement = this.isReasonableDefault(this.placement, placements) ? this.placement : settings.placement;
-        this.strategy = this.isReasonableDefault(this.strategy, strategies) ? this.strategy : settings.strategy;
+
+        if (!this.strategies.length || !$.isArray(this.strategies)) {
+          this.strategies = ['nudge'];
+        }
+        this.strategies.forEach(function(strat, i) {
+          self.strategies[i] = self.isReasonableDefault(strat, strategies) ? strat : self.strategies[i];
+        });
+
       },
 
       setCoordinate: function(coordinate, value) {
@@ -209,10 +218,11 @@
           return [undefined, undefined]; // can't simply return x and y here because they are not coordinates, they are offsets
         }
 
-        var parentRect = placementObj.parent[0].getBoundingClientRect(),
+        var self = this,
+          parentRect = placementObj.parent[0].getBoundingClientRect(),
           elRect = this.element[0].getBoundingClientRect();
 
-        var coords = (function getCoordsFromPlacement() {
+        function getCoordsFromPlacement(placementObj) {
           var cX, cY,
             p = placementObj.placement,
             aX = placementObj.parentXAlignment,
@@ -265,30 +275,53 @@
           }
 
           return [cX, cY];
-        })();
+        }
 
-        placementObj.setCoordinate('x', coords[0]);
-        placementObj.setCoordinate('y', coords[1]);
-        placementObj = this._handlePlacementCallback(placementObj);
+        function doPlacementAgainstParent(placementObj) {
+          var coords = getCoordsFromPlacement(placementObj);
+          placementObj.setCoordinate('x', coords[0]);
+          placementObj.setCoordinate('y', coords[1]);
+          placementObj = self._handlePlacementCallback(placementObj);
+          return placementObj;
+        }
 
         // Simple placement logic
+        placementObj = doPlacementAgainstParent(placementObj);
         this.element.offset({
           'left': placementObj.x,
           'top': placementObj.y
         });
 
-        placementObj = this._fixBleeding(placementObj);
+        // Adjusts the placement coordinates based on a defined strategy
+        // Will only adjust the current strategy if bleeding outside the viewport/container are detected.
+        placementObj.strategies.forEach(function(strat) {
+          placementObj = self.checkBleeds(placementObj);
 
-        // If the item has bled out over the edge, and we're not ready to give up,
-        // try changing the placement strategy.  This won't happen for "nudge", only for the
-        // alternate types.
-        if (!placementObj.giveup && placementObj.strategy !== 'nudge' && placementObj.fixedBleeding) {
-          return this._changePlacementStrategy(placementObj);
-        }
+          if (placementObj.bleeds) {
+            placementObj = (function(self) {
+              switch(strat) {
+                case 'nudge':
+                  return self.nudge(placementObj);
+                case 'clockwise':
+                  return placementObj;
+                case 'flip':
+                  self.flip(placementObj);
+                  placementObj.setCoordinate('x', placementObj.originalx);
+                  placementObj.setCoordinate('y', placementObj.originaly);
+                  placementObj = doPlacementAgainstParent(placementObj);
+                  return placementObj;
+              }
+            })(self);
 
-        this.element.trigger('afterplace', [
-          placementObj
-        ]);
+            self.element.offset({
+              'left': placementObj.x,
+              'top': placementObj.y
+            });
+          }
+        });
+
+        // Trigger an event to notify placement has ended
+        this.element.trigger('afterplace', [placementObj]);
 
         return placementObj;
       },
@@ -305,7 +338,11 @@
           'top': placementObj.y
         });
 
-        placementObj = this._fixBleeding(placementObj);
+        // Coordinate placement can only be "nudged" (strategy is not used in this style of placement).
+        placementObj = this.checkBleeds(placementObj);
+        if (placementObj.bleeds) {
+          placementObj = this.nudge(placementObj);
+        }
 
         this.element.trigger('afterplace', [
           placementObj
@@ -332,13 +369,11 @@
 
       // Re-adjust a previously-placed element to account for bleeding off the edges.
       // Element must fit within the boundaries of the page or it's current scrollable pane.
-      _fixBleeding: function(placementObj) {
+      checkBleeds: function(placementObj) {
         var containerBleed = this.settings.bleedFromContainer,
           container = $(placementObj.container ? placementObj.container : (document.documentElement || document.body.parentNode)),
           rect = this.element[0].getBoundingClientRect(),
           containerRect = container ? container[0].getBoundingClientRect() : {},
-          containerDeltaHeight = container.offset().top,
-          containerDeltaWidth = container.offset().left,
           scrollX = (typeof container.scrollLeft === 'number' ? container : document.body).scrollLeft,
           scrollY = (typeof container.scrollTop === 'number' ? container : document.body).scrollTop,
           windowH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
@@ -348,13 +383,13 @@
         function getBoundary(edge) {
           switch(edge) {
             case 'top':
-              return (containerBleed ? 0 : containerRect.top) - (scrollY + containerDeltaHeight); // 0 === top edge of viewport
+              return (containerBleed ? 0 : containerRect.top) - scrollY; // 0 === top edge of viewport
             case 'left':
-              return (containerBleed ? 0 : containerRect.left) - (scrollX + containerDeltaWidth); // 0 === left edge of viewport
+              return (containerBleed ? 0 : containerRect.left) - scrollX; // 0 === left edge of viewport
             case 'right':
-              return (containerBleed ? windowW : containerRect.right) - (scrollX + containerDeltaWidth);
+              return (containerBleed ? windowW : containerRect.right) - scrollX;
             default: // bottom
-              return (containerBleed ? windowH : containerRect.bottom) - (scrollY + containerDeltaHeight);
+              return (containerBleed ? windowH : containerRect.bottom) - scrollY;
           }
         }
 
@@ -379,114 +414,109 @@
         // build conditions
         var offRightEdge = rect.right > getBoundary('right'),
             offLeftEdge = rect.left < getBoundary('left'),
-            offBottomEdge = rect.bottom > getBoundary('bottom'),
-            offTopEdge = rect.top < getBoundary('top');
+            offTopEdge = rect.top < getBoundary('top'),
+            offBottomEdge = rect.bottom > getBoundary('bottom');
 
-        // Keep a record of whether or not the bleeding needed to be fixed.
-        placementObj.fixedBleeding = offRightEdge || offLeftEdge || offBottomEdge || offTopEdge || null;
-
-        // Bump element around a bit in each direction, if necessary
-        if (offRightEdge) {
-          placementObj.setCoordinate('x', placementObj.x - (rect.right - getBoundary('right')));
-        }
-        if (offLeftEdge) {
-          placementObj.setCoordinate('x', placementObj.x + -(rect.left - getBoundary('left')));
-        }
-        if (offBottomEdge) {
-          placementObj.setCoordinate('y', placementObj.y - (rect.bottom - getBoundary('bottom')));
-        }
-        if (offTopEdge) {
-          placementObj.setCoordinate('y', placementObj.y + -(rect.top - getBoundary('top')));
+        // Return if no bleeding is detected (no need to fix anything!)
+        if (!offRightEdge && !offLeftEdge && !offTopEdge && !offBottomEdge) {
+          placementObj.bleeds = undefined;
+          return placementObj;
         }
 
-        this.element.offset({
-          'left': placementObj.x,
-          'top': placementObj.y
-        });
+        // Keep a record of bleeds that need to be adjusted, and by what values
+        placementObj.bleeds = {};
+        placementObj.bleeds.right = offRightEdge ? (rect.right - getBoundary('right')) : null;
+        placementObj.bleeds.left = offLeftEdge ? -(rect.left - getBoundary('left')) : null;
+        placementObj.bleeds.top = offTopEdge ? -(rect.top - getBoundary('top')) : null;
+        placementObj.bleeds.bottom = offBottomEdge ? (rect.bottom - getBoundary('bottom')) : null;
 
         return placementObj;
       },
 
-      // At this point in the positioning loop, if we need to try flipping in a different direction,
-      // Do so and retry the positioning algorithm;
-      _changePlacementStrategy: function(placementObj) {
-        placementObj.fixedBleeding = null;
-        placementObj.modified = true;
-        placementObj.tried = placementObj.tried || [];
+      // Bumps the element around in each direction
+      nudge: function(placementObj) {
+        if (placementObj.bleeds.right) {
+          placementObj.setCoordinate('x', placementObj.x - placementObj.bleeds.right);
+        }
+        if (placementObj.bleeds.left) {
+          placementObj.setCoordinate('x', placementObj.x + placementObj.bleeds.left);
+        }
+        if (placementObj.bleeds.top) {
+          placementObj.setCoordinate('y', placementObj.y + placementObj.bleeds.top);
+        }
+        if (placementObj.bleeds.bottom) {
+          placementObj.setCoordinate('y', placementObj.y - placementObj.bleeds.bottom);
+        }
 
-        placementObj.tried.push(placementObj.placement);
+        placementObj.wasNudged = true;
+        placementObj.bleeds = undefined;
 
-        var self = this;
+        return placementObj;
+      },
+
+      flip: function(placementObj) {
+        // Don't attempt to flip if there was no bleeding on the edge we're attempting to leave from.
+        if (!placementObj.bleeds[placementObj.placement]) {
+          return placementObj;
+        }
+
+        if (!placementObj.attemptedFlips) {
+          placementObj.attemptedFlips = [];
+        }
+        placementObj.attemptedFlips.push(placementObj.placement);
+
+        // If we've tried flipping in all directions, give up and use the default placement.
+        if (placementObj.attemptedFlips.length > 3) {
+          placementObj = this.giveup(placementObj);
+          return placementObj;
+        }
 
         function tried(placement) {
-          return $.inArray(placement, placementObj.tried) > -1;
+          return $.inArray(placement, placementObj.attemptedFlips) > -1;
         }
 
-        function giveup() {
-          placementObj.giveup = true;
-          placementObj.strategy = self.settings.strategy;
-          placementObj.placement = self.settings.placement;
+        function performFlip(newDir, perpendicularDir) {
+          if (!tried(newDir)) {
+            return newDir;
+          }
+
+          // switch the coordinate definitions
+          // since the axis for placement is flipped, our coordinate offsets should also flip
+          var tmp = placementObj.originalx;
+          placementObj.originalx = placementObj.originaly;
+          placementObj.originaly = tmp;
+
+          return perpendicularDir;
         }
 
-        function flip() {
-          var p;
-
-          // If we've tried everything, give up and use the defaults.
-          if (placementObj.tried.length > 3) {
-            giveup();
-            return;
-          }
-
-          function performFlip(newDir, perpendicularDir) {
-            if (!tried(newDir)) {
-              p = newDir;
-              return;
-            }
-
-            // switch the coordinate definitions
-            // since the axis for placement is flipped, our coordinate offsets should also flip
-            var tmp = placementObj.originalx;
-            placementObj.originalx = placementObj.originaly;
-            placementObj.originaly = tmp;
-
-            p = perpendicularDir;
-          }
-
+        var self = this;
+        placementObj.placement = (function() {
           switch(placementObj.placement) {
             case 'left':
-              performFlip('right', 'top');
-              break;
+              return performFlip('right', 'top');
             case 'right':
-              performFlip('left', 'top');
-              break;
+              return performFlip('left', 'top');
             case 'top':
-              performFlip('bottom', (self.isRTL() ? 'right' : 'left') );
-              break;
+              return performFlip('bottom', (self.isRTL() ? 'right' : 'left') );
             default: // bottom
-              performFlip('top', (self.isRTL() ? 'right' : 'left'));
-              break;
+              return performFlip('top', (self.isRTL() ? 'right' : 'left'));
           }
-          placementObj.placement = p;
-        }
+        })();
 
-        function clockwise() {
-          // TODO: Write clockwise strategy if we need it.
-          // for now, give up immediately.
-          giveup();
-        }
+        return placementObj;
+      },
 
-        if (placementObj.strategy === 'flip') {
-          flip();
-        }
-        if (placementObj.strategy === 'clockwise') {
-          clockwise();
-        }
+      // TODO: Move Clockwise
+      clockwise: function(placementObj) {
+        return placementObj;
+      },
 
-        // Reset the original coordinates
-        placementObj.setCoordinate('x', placementObj.originalx);
-        placementObj.setCoordinate('y', placementObj.originaly);
-
-        return this.place(placementObj);
+      // Giving up causes all the placementObj settings to revert
+      giveup: function(placementObj) {
+        placementObj.giveup = true;
+        placementObj.strategy = this.settings.strategy;
+        placementObj.placement = this.settings.placement;
+        return placementObj;
       },
 
       // Clears the old styles that may be present
