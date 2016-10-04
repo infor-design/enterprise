@@ -759,6 +759,10 @@
 
         // place the element so we can get some height/width and bleeds
         wrapper.css({'left': left, 'top': top});
+        if (!wrapper.length) {
+          return;
+        }
+
         left = wrapper.offset().left;
         top = wrapper.offset().top;
 
