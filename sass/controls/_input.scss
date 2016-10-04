@@ -568,6 +568,12 @@ input.error {
 
     &.textarea {
       max-width: 362px;
+
+      ~ .btn-tertiary {
+        margin-left: 2px;
+        position: absolute;
+        top: calc(50% - 14px);
+      }
     }
 
     &.input-xs {
@@ -584,6 +590,16 @@ input.error {
 
     &.input-full {
       max-width: calc(100% - 40px);
+    }
+
+    ~ .btn-tertiary {
+      min-width: 30px;
+      width: 30px;
+    }
+
+    ~ a.btn-tertiary {
+      display: inline;
+      padding: 0 5px;
     }
   }
 
@@ -612,6 +628,11 @@ input.error {
       max-width: calc(100% - 40px);
       width: calc(100% - 40px);
     }
+
+    ~ a.btn-tertiary {
+      display: inline;
+      padding: 0 5px;
+    }
   }
 }
 
@@ -629,6 +650,11 @@ input.error {
 
   &.lg {
     width: $field-lg + 40;
+  }
+
+  ~ a.btn-tertiary {
+    display: inline;
+    padding: 0 5px;
   }
 }
 
