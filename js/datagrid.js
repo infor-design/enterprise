@@ -780,6 +780,8 @@ $.fn.datagrid = function(options) {
         source: null, //callback for paging
         //Filtering Options
         filterable: false,
+        disableClientFilter: false, //Disable Filter Logic client side and let your server do it
+        disableClientSort: false, //Disable Sort Logic client side and let your server do it
         resultsText: null  // Can provide a custom function to adjust results text
       },
       settings = $.extend({}, defaults, options);
@@ -1582,9 +1584,11 @@ $.fn.datagrid = function(options) {
         return isMatch;
       };
 
-      for (var i = 0; i < this.settings.dataset.length; i++) {
-        var isFiltered = !checkRow(this.settings.dataset[i]);
-        this.settings.dataset[i].isFiltered = isFiltered;
+      if (!this.settings.disableClientFilter) {
+        for (var i = 0; i < this.settings.dataset.length; i++) {
+          var isFiltered = !checkRow(this.settings.dataset[i]);
+          this.settings.dataset[i].isFiltered = isFiltered;
+        }
       }
 
       this.renderRows();
@@ -4143,7 +4147,10 @@ $.fn.datagrid = function(options) {
       //Do Sort on Data Set
       this.setSortIndicator(id, ascending);
       sort = this.sortFunction(this.sortColumn.sortId, ascending);
-      settings.dataset.sort(sort);
+
+      if (!this.settings.disableClientSort) {
+        settings.dataset.sort(sort);
+      }
 
       var wasFocused = this.activeCell.isFocused;
       this.tableBody.addClass('is-loading');
