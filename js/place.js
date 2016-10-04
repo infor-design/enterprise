@@ -45,7 +45,14 @@
     // Object that contains coordinates along with temporary, changeable properties.
     function PlacementObject(placementOptions) {
       var self = this,
-        possibleSettings = ['x', 'y', 'container', 'callback', 'parent', 'parentXAlignment', 'parentYAlignment', 'placement', 'strategies'];
+        possibleSettings = [
+          'x', 'y',
+          'container', 'containerOffsetX', 'containerOffsetY',
+          'callback',
+          'parent', 'parentXAlignment', 'parentYAlignment',
+          'placement',
+          'strategies'
+        ];
 
       possibleSettings.forEach(function settingIterator(val) {
         if (placementOptions[val] === null) {
@@ -77,6 +84,8 @@
         this.bleedFromContainer = this.bleedFromContainer === true;
         this.callback = (typeof this.callback === 'function') ? this.callback : settings.callback;
         this.container = (this.container instanceof $ && this.container.length) ? this.container : settings.container;
+        this.containerOffsetX = !isNaN(parseInt(this.containerOffsetX)) ? this.containerOffsetX : 0;
+        this.containerOffsetY = !isNaN(parseInt(this.containerOffsetY)) ? this.containerOffsetY : 0;
         this.parent = (this.parent instanceof $ && this.parent.length) ? this.parent : settings.parent;
         this.parentXAlignment = this.isReasonableDefault(this.parentXAlignment, xAlignments) ? this.parentXAlignment : settings.parentXAlignment;
         this.parentYAlignment = this.isReasonableDefault(this.parentYAlignment, yAlignments) ? this.parentYAlignment : settings.parentYAlignment;
@@ -435,17 +444,30 @@
 
       // Bumps the element around in each direction
       nudge: function(placementObj) {
+        if (!placementObj.nudges) {
+          placementObj.nudges = {x: 0, y: 0};
+        }
+
+        var d = 0;
         if (placementObj.bleeds.right) {
-          placementObj.setCoordinate('x', placementObj.x - placementObj.bleeds.right);
+          d = placementObj.bleeds.right - placementObj.containerOffsetX;
+          placementObj.setCoordinate('x', placementObj.x - d);
+          placementObj.nudges.x = placementObj.nudges.x - d;
         }
         if (placementObj.bleeds.left) {
-          placementObj.setCoordinate('x', placementObj.x + placementObj.bleeds.left);
+          d = placementObj.bleeds.left + placementObj.containerOffsetX;
+          placementObj.setCoordinate('x', placementObj.x + d);
+          placementObj.nudges.x = placementObj.nudges.x + d;
         }
         if (placementObj.bleeds.top) {
-          placementObj.setCoordinate('y', placementObj.y + placementObj.bleeds.top);
+          d = placementObj.bleeds.top + placementObj.containerOffsetY;
+          placementObj.setCoordinate('y', placementObj.y + d);
+          placementObj.nudges.y = placementObj.nudges.y + d;
         }
         if (placementObj.bleeds.bottom) {
-          placementObj.setCoordinate('y', placementObj.y - placementObj.bleeds.bottom);
+          d = placementObj.bleeds.bottom - placementObj.containerOffsetY;
+          placementObj.setCoordinate('y', placementObj.y - d);
+          placementObj.nudges.y = placementObj.nudges.y - d;
         }
 
         placementObj.wasNudged = true;

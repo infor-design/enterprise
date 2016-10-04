@@ -367,10 +367,30 @@
         }
 
         // Adjust the arrow's direction if a different strategy was attempted.
-        var dir = placementObj.placement;
+        var dir = placementObj.placement,
+          cssOptions = { display: 'block' },
+          isXCoord = ['left', 'right'].indexOf(dir) < 0,
+          dimension = 'outer' + (isXCoord ? 'Width' : 'Height'),
+          edge = (isXCoord ? 'margin-left' : 'margin-top'),
+          nudgeDistance = 0;
+
         if (placementObj.attemptedFlips) {
           this.tooltip.removeClass('top right bottom left').addClass(dir);
-          arrow.css('display', 'block');
+
+          // Adjust the arrow's position if a nudge is detected.
+          if (placementObj.nudges) {
+            nudgeDistance = placementObj.nudges[isXCoord ? 'x' : 'y'];
+            if (nudgeDistance) {
+              cssOptions[edge] = nudgeDistance * -1;
+
+              // Hide a tooltip arrow that sticks out too far
+              if (Math.abs(nudgeDistance) > this.tooltip[dimension]()/2 ) {
+                cssOptions.display = 'none';
+              }
+            }
+          }
+
+          arrow.css(cssOptions);
         }
       },
 
@@ -397,6 +417,8 @@
           x: x,
           y: y,
           container: this.scrollparent,
+          containerOffsetX: 10,
+          containerOffsetY: 10,
           parent: this.element,
           placement: this.settings.placement,
           strategies: ['flip', 'nudge']
@@ -756,6 +778,8 @@
         }
 
         this.tooltip.addClass('is-hidden').css({'left': '', 'top': ''});
+        this.tooltip.find('.arrow').removeAttr('style');
+
         this.tooltip.off('click.tooltip');
 
         if ($('.popover').not('.is-hidden').length === 0) {
