@@ -1141,7 +1141,7 @@ $.fn.datagrid = function(options) {
       this.loadData(dataset, pagerInfo);
     },
 
-    loadData: function (dataset, pagerInfo) {
+    loadData: function (dataset, pagerInfo, isResponse) {
       this.settings.dataset = dataset;
 
       if (this.pager) {
@@ -1161,7 +1161,7 @@ $.fn.datagrid = function(options) {
 
       //Update Paging and Clear Rows
       this.renderRows();
-      this.renderPager(pagerInfo);
+      this.renderPager(pagerInfo, isResponse);
 
       if (pagerInfo && pagerInfo.preserveSelected) {
         this.updateSelected();
@@ -4159,7 +4159,6 @@ $.fn.datagrid = function(options) {
       this.syncFixedHeader();
       this.resetPager('sorted');
       this.tableBody.removeClass('is-loading');
-      this.sortColumn.sortId = (this.columnById(id)[0] ? this.columnById(id)[0].field : id);
       this.element.trigger('sorted', [this.sortColumn]);
     },
 
@@ -4277,7 +4276,7 @@ $.fn.datagrid = function(options) {
 
     },
 
-    renderPager: function (pagingInfo) {
+    renderPager: function (pagingInfo, isResponse) {
       if (!this.pager) {
         return;
       }
@@ -4291,7 +4290,9 @@ $.fn.datagrid = function(options) {
       }
 
       this.pager.renderBar();
-      this.pager.renderPages((pagingInfo.type === 'sorted' ? false : true), 'initial');
+      if (!isResponse) {
+        this.pager.renderPages(pagingInfo.type);
+      }
 
       // Update selected and Sync header checkbox
       this.updateSelected();
@@ -4310,7 +4311,7 @@ $.fn.datagrid = function(options) {
 
       this.pager.pagingInfo.type = type;
       this.pager.pagingInfo.activePage = 1;
-      this.renderPager(this.pager.pagingInfo, type);
+      this.renderPager(this.pager.pagingInfo);
     },
 
     destroy: function() {
