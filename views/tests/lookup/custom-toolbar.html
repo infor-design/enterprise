@@ -1,0 +1,44 @@
+
+<div class="row">
+  <div class="twelve columns">
+      <div class="field">
+        <label for="custom" class="label">Custom Modal Grid</label>
+        <input id="custom" data-init="false" class="lookup" name="custom" type="text">
+      </div>
+  </div>
+</div>
+
+<script>
+  $('#custom').lookup({
+
+    validator: function (field, modal, grid) {
+      var btn = modal.element.find('.btn-modal-primary');
+
+      btn.attr('disabled', 'disabled');
+      if (grid.selectedRows().length) {
+        btn.removeAttr('disabled');
+      }
+    },
+
+    field: function (row, field, grid) {
+      return row.productId;
+    },
+
+    match: function (value, row, field, grid) {
+      return (row.productId === value);
+    },
+
+    beforeShow: function (api, response) {
+
+      $.get('/partials/list-multiselect', function (html) {
+
+        $(html).hide().appendTo('body');
+        api.settings.modalContent = $('#modal-contents');
+        response($('#my-datagrid'));
+
+      });
+
+    }
+  });
+
+</script>
