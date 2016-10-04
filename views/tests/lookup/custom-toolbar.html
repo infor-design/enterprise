@@ -11,15 +11,6 @@
 <script>
   $('#custom').lookup({
 
-    validator: function (field, modal, grid) {
-      var btn = modal.element.find('.btn-modal-primary');
-
-      btn.attr('disabled', 'disabled');
-      if (grid.selectedRows().length) {
-        btn.removeAttr('disabled');
-      }
-    },
-
     field: function (row, field, grid) {
       return row.productId;
     },

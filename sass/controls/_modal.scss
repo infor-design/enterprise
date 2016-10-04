@@ -330,13 +330,6 @@
   }
 }
 
-&.ie,
-&.is-firefox {
-  .modal {
-    filter: none;  // DO NOT REMOVE OR CHANGE - FIXES BLUR PROBLEMS (HFC-3526) - talk to "ed.coyle@infor.com" if you need to remove
-  }
-}
-
 //RTL Styles
 html[dir='rtl'] {
   .modal-buttonset {
