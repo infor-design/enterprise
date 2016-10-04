@@ -102,7 +102,6 @@
           this.element.attr('id', this.settings.id);
         }
 
-
         if ($(this.settings.content).is('.modal')) {
           this.element = $(this.settings.content);
         } else if (this.settings.content && this.settings.content.length > 0) {
@@ -317,16 +316,7 @@
           this.oldActive = $(':focus');  //Save and restore focus for A11Y
         }
 
-        elemCanOpen = this.element.triggerHandler('beforeopen');
-
-        self.isCancelled = false;
-
-        if (elemCanOpen === false) {
-          return false;
-        }
-
         this.element.after(this.overlay);
-
         if (this.element && !this.element.parent().hasClass('modal-wrapper')) {
           this.element.wrap('<div class="modal-page-container"><div class="modal-wrapper"></div>');
         }
@@ -338,6 +328,15 @@
             self.sizeInner();
           });
           self.sizeInner();
+        }
+
+        elemCanOpen = this.element.triggerHandler('beforeopen');
+        self.isCancelled = false;
+
+        if (elemCanOpen === false) {
+          self.overlay.remove();
+          self.root.css({'display':'none'});
+          return false;
         }
 
         //Look for other nested dialogs and adjust the zindex.
