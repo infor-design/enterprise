@@ -353,3 +353,13 @@ html[dir='rtl'] {
 
   }
 }
+
+@include respond-to(phone) {
+  .is-safari {
+    .modal {
+      label.fileupload {
+        position: absolute;
+      }
+    }
+  }
+}
