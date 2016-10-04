@@ -450,22 +450,22 @@
 
         var d = 0;
         if (placementObj.bleeds.right) {
-          d = placementObj.bleeds.right - placementObj.containerOffsetX;
+          d = Math.abs(placementObj.bleeds.right) + Math.abs(placementObj.containerOffsetX);
           placementObj.setCoordinate('x', placementObj.x - d);
           placementObj.nudges.x = placementObj.nudges.x - d;
         }
         if (placementObj.bleeds.left) {
-          d = placementObj.bleeds.left + placementObj.containerOffsetX;
+          d = Math.abs(placementObj.bleeds.left) + Math.abs(placementObj.containerOffsetX);
           placementObj.setCoordinate('x', placementObj.x + d);
           placementObj.nudges.x = placementObj.nudges.x + d;
         }
         if (placementObj.bleeds.top) {
-          d = placementObj.bleeds.top + placementObj.containerOffsetY;
+          d = Math.abs(placementObj.bleeds.top) + Math.abs(placementObj.containerOffsetY);
           placementObj.setCoordinate('y', placementObj.y + d);
           placementObj.nudges.y = placementObj.nudges.y + d;
         }
         if (placementObj.bleeds.bottom) {
-          d = placementObj.bleeds.bottom - placementObj.containerOffsetY;
+          d = Math.abs(placementObj.bleeds.bottom) + Math.abs(placementObj.containerOffsetY);
           placementObj.setCoordinate('y', placementObj.y - d);
           placementObj.nudges.y = placementObj.nudges.y - d;
         }
