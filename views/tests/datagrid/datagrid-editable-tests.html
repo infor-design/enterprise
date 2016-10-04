@@ -3,7 +3,6 @@
 
   <div class="row">
     <div class="twelve columns">
-      <div role="toolbar" class="toolbar">
 
       <div id="datagrid">
 
@@ -46,7 +45,7 @@
             editable: true,
             clickToSelect: false,
             selectable: 'multiple',
-            toolbar: {keywordFilter: true, results: true}
+            toolbar: {keywordFilter: false, results: true}
           });
 
           gridApi = $('#datagrid').data('datagrid');
