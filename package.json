@@ -24,7 +24,8 @@
     "test:functional": "./bin/test.sh runner config=test2/intern.local.functional",
     "test:unit": "./bin/test.sh client config=test2/intern.local.unit",
     "postinstall": "npm run install-test-deps",
-    "develop-tag": "./bin/develop-tag.js"
+    "develop-tag": "./bin/add-npm-tag.js develop",
+    "bump-version": "./bin/bump-version.js"
   },
   "main": "sohoxi.js",
   "dependencies": {
