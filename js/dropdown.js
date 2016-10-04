@@ -1224,7 +1224,7 @@
 
       // returns true if the field is attempting to load via AJAX.
       isLoading: function() {
-        return this.element.is('.is-loading');
+        return this.element.is('.is-loading') &&  this.element.is('.is-blocked') ;
       },
 
       // Return true/false if the list is open

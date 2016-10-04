@@ -48,7 +48,7 @@
         this.createPagerBar();
         this.setActivePage(this.settings.activePage); //Get First Page
         this.renderBar();
-        this.renderPages(false, 'initial');
+        this.renderPages('initial');
         this.handleEvents();
       },
 
@@ -270,7 +270,7 @@
         }
 
         this.renderBar();
-        this.renderPages(false, op);
+        this.renderPages(op);
         return pageNum;
       },
 
@@ -318,7 +318,6 @@
           var text = Locale.translate('PageOf');
           text = text = text.replace('{0}', '<input name="pager-pageno" value="' + this.activePage + '">');
           text = text.replace('{1}', '<span class="pager-total-pages">' + (pages || 1) + '</span>');
-
           $('<li class="pager-count"><label>'+ text +' </label>').insertAfter(this.pagerBar.find('.pager-prev'));
 
           //Setup interactivty with the numeric page input
@@ -458,9 +457,8 @@
         this.datagrid = this.mainContainer ? this.mainContainer.children('.datagrid-container').data('datagrid') : null;
       },
 
-      renders: 0,
       // Render Paged Items
-      renderPages: function(uiOnly, op) {
+      renderPages: function(op) {
       var expr,
           self = this,
           request = {
@@ -470,8 +468,6 @@
             total: -1
           };
 
-        self.renders ++;
-
         //Make an ajax call and wait
         setTimeout(function () {
           var doPaging = self.element.triggerHandler('beforepaging', request);
@@ -480,7 +476,7 @@
             return;
           }
 
-          if (self.settings.source && !uiOnly) {
+          if (self.settings.source) {
             var response;
 
             // Distinguish between datagrid and listview
@@ -572,7 +568,7 @@
         //Update the UI
         this.pagerBar.find('.pager-count input').val(this.activePage);
 
-        if (this._pageCount !== '0') {
+        if (this._pageCount !== '0' && !isNaN(this._pageCount)) {
           this.pagerBar.find('.pager-total-pages').text(this._pageCount);
         }
 

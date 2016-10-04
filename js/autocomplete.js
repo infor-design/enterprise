@@ -68,7 +68,7 @@
       },
 
       isLoading: function() {
-        return this.element.is('.is-loading');
+        return this.element.is('.is-loading') && this.element.is('is-blocked');
       },
 
       openList: function (term, items) {
@@ -183,8 +183,6 @@
             self.list.parent('.popupmenu-wrapper').remove();
             self.element.removeClass('is-open');
           });
-
-
 
         this.element.trigger('populated', [matchingOptions]);
 

@@ -561,6 +561,10 @@
           usedCoords = false,
           d;
 
+        if (!wrapper.length) {
+          return;
+        }
+
         if (target.is('svg, .icon') && target.closest('.tab').length) {
           target = target.closest('.tab');
         }
@@ -759,6 +763,7 @@
 
         // place the element so we can get some height/width and bleeds
         wrapper.css({'left': left, 'top': top});
+
         left = wrapper.offset().left;
         top = wrapper.offset().top;
 
