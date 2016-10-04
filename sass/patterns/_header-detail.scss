@@ -24,3 +24,19 @@
     height: 50%;
   }
 }
+
+.anchoring-container {
+  height: 100%;
+}
+
+.top-anchored {
+  height: 50%;
+}
+
+.bottom-anchored {
+  height: 50%;
+
+  .bottom-anchored-inner {
+    height: calc(100% - 60px);
+  }
+}
