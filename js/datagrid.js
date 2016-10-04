@@ -4159,6 +4159,7 @@ $.fn.datagrid = function(options) {
       this.syncFixedHeader();
       this.resetPager('sorted');
       this.tableBody.removeClass('is-loading');
+      this.sortColumn.sortId = (this.columnById(id)[0] ? this.columnById(id)[0].field : id);
       this.element.trigger('sorted', [this.sortColumn]);
     },
 
