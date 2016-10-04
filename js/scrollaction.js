@@ -22,7 +22,8 @@
     // Tab Settings and Options
     var pluginName = 'scrollaction',
         defaults = {
-          scrollActionTarget: '.js-scroll-target' // The element to add a class to based on scrolling logic
+          scrollActionTarget: '.js-scroll-target', // The element to add a class to based on scrolling logic
+          classToAdd: 'scrolled-down' // The class added to the target element
         },
         settings = $.extend({}, defaults, options);
 
@@ -65,14 +66,14 @@
        * Slide element down on scroll up
        */
       didScrollUp: function() {
-        $(this.settings.scrollActionTarget).removeClass('scrolled-down');
+        $(this.settings.scrollActionTarget).removeClass(this.settings.classToAdd);
       },
 
       /**
        * Slide element up on scroll down
        */
       didScrollDown: function() {
-        $(this.settings.scrollActionTarget).addClass('scrolled-down');
+        $(this.settings.scrollActionTarget).addClass(this.settings.classToAdd);
       }
 
     };
@@ -81,8 +82,7 @@
     return this.each(function() {
       var instance = $.data(this, pluginName);
       if (instance) {
-        instance.settings = $.extend({}, instance.settings, options);
-        instance.updated();
+
       } else {
         instance = $.data(this, pluginName, new ScrollAction(this, settings));
       }
