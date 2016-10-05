@@ -384,6 +384,8 @@
         if (!this.mainContent.length) {
           this.mainContent = $('body');
         }
+
+        this.removeNoScroll = !this.mainContent.hasClass('no-scroll');
         this.mainContent.addClass('no-scroll');
 
         $(window).on('resize.modal-' + this.id, function() {
@@ -570,7 +572,7 @@
           return false;
         }
 
-        if (this.mainContent) {
+        if (this.mainContent && this.removeNoScroll) {
           this.mainContent.removeClass('no-scroll');
         }
         $(window).off('resize.modal-' + this.id);
