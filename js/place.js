@@ -91,7 +91,7 @@
         this.parentYAlignment = this.isReasonableDefault(this.parentYAlignment, yAlignments) ? this.parentYAlignment : settings.parentYAlignment;
         this.placement = this.isReasonableDefault(this.placement, placements) ? this.placement : settings.placement;
 
-        if (!this.strategies.length || !$.isArray(this.strategies)) {
+        if (!$.isArray(this.strategies) || !this.strategies.length) {
           this.strategies = ['nudge'];
         }
         this.strategies.forEach(function(strat, i) {
@@ -164,6 +164,14 @@
         });
 
         return this;
+      },
+
+      // Actually renders an element with coordinates inside the DOM
+      render: function(placementObj) {
+        this.element.offset({
+          'left': placementObj.x,
+          'top': placementObj.y
+        });
       },
 
       isRTL: function() {
@@ -296,10 +304,7 @@
 
         // Simple placement logic
         placementObj = doPlacementAgainstParent(placementObj);
-        this.element.offset({
-          'left': placementObj.x,
-          'top': placementObj.y
-        });
+        this.render(placementObj);
 
         // Adjusts the placement coordinates based on a defined strategy
         // Will only adjust the current strategy if bleeding outside the viewport/container are detected.
@@ -322,10 +327,7 @@
               }
             })(self);
 
-            self.element.offset({
-              'left': placementObj.x,
-              'top': placementObj.y
-            });
+            self.render(placementObj);
           }
         });
 
@@ -341,17 +343,16 @@
       _placeWithCoords: function(placementObj) {
         placementObj = this._handlePlacementCallback(placementObj);
 
-        // Simple placement logic
-        this.element.offset({
-          'left': placementObj.x,
-          'top': placementObj.y
-        });
+        this.render(placementObj);
 
         // Coordinate placement can only be "nudged" (strategy is not used in this style of placement).
         placementObj = this.checkBleeds(placementObj);
         if (placementObj.bleeds) {
           placementObj = this.nudge(placementObj);
         }
+
+        // Place again
+        this.render(placementObj);
 
         this.element.trigger('afterplace', [
           placementObj
