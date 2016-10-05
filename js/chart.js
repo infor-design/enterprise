@@ -665,7 +665,9 @@ window.Chart = function(container) {
       });
 
     //Add Legends
-    charts.addLegend(isStacked ? series : legendMap);
+    if (charts.showLegend) {
+      charts.addLegend(isStacked ? series : legendMap);
+    }
     charts.appendTooltip();
 
     // Set initial selected
@@ -777,7 +779,7 @@ window.Chart = function(container) {
 
     charts.appendTooltip();
 
-    var legendshow = charts.legendshow || false;
+    var showLegend = charts.showLegend || false;
 
     var chartData = initialData[0].data;
     chartData = chartData.sort(function(a,b) {
@@ -1161,7 +1163,7 @@ window.Chart = function(container) {
               drawTextlabels({ isShortName: true });
               svg.selectAll('.label-text tspan').each(function() {
                 if (d3.select(this).text().substring(5) === '...') {
-                  legendshow = true;
+                  showLegend = true;
                 }
               });
             }
@@ -1197,7 +1199,7 @@ window.Chart = function(container) {
         })();
       } // END: lb.hideLabels
       else {
-        legendshow = true;
+        showLegend = true;
       }
 
     //Get the Legend Series'
@@ -1207,7 +1209,7 @@ window.Chart = function(container) {
     });
 
     // Add Legends
-    if (legendshow || charts.legendformatter) {
+    if (showLegend || charts.legendformatter) {
       charts[charts.legendformatter ? 'renderLegend' : 'addLegend'](series);
     }
 
@@ -3099,8 +3101,8 @@ window.Chart = function(container) {
     if (options.tooltip) {
       this.tooltip = options.tooltip;
     }
-    if (options.legendshow) {
-      this.legendshow = options.legendshow;
+    if (options.showLegend) {
+      this.showLegend = options.showLegend;
     }
     if (options.legendformatter) {
       this.legendformatter = options.legendformatter;
@@ -3109,12 +3111,15 @@ window.Chart = function(container) {
       this.Pie(options.dataset, false, options);
     }
     if (options.type === 'bar' || options.type === 'bar-stacked') {
+      this.showLegend = typeof options.showLegend !== 'undefined' ? options.showLegend : true;
       this.HorizontalBar(options.dataset);
     }
     if (options.type === 'bar-normalized') {
+      this.showLegend = typeof options.showLegend !== 'undefined' ? options.showLegend : true;
       this.HorizontalBar(options.dataset, true);
     }
     if (options.type === 'bar-grouped') {
+      this.showLegend = typeof options.showLegend !== 'undefined' ? options.showLegend : true;
       this.HorizontalBar(options.dataset, true, false); //dataset, isNormalized, isStacked
     }
     if (options.type === 'column-stacked') {
