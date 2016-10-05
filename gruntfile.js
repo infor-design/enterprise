@@ -283,9 +283,9 @@ module.exports = function(grunt) {
     'strip_code',
     'concat',
     'clean:amd',
+    'uglify',
     'cssmin',
     'copy:main',
-    'uglify',
     'usebanner',
     'compress',
     'md2html'
