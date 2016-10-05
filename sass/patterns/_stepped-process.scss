@@ -23,6 +23,11 @@
         vertical-align: middle;
       }
 
+      &:focus,
+      &.is-focused {
+        border-color: $accordion-selected-bg-color;
+      }
+
       a {
         color: inherit;
         @include font-size(14);

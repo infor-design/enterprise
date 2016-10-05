@@ -22,7 +22,7 @@
     // Tab Settings and Options
     var pluginName = 'stepprocess',
         defaults = {
-          changeTabOnHashChange: false, // If true, will change the selected tab on invocation based on the URL that exists after the hash
+          changeTabOnHashChange: true, // If true, will change the selected tab on invocation based on the URL that exists after the hash
           stepPanels: '.js-step-process-panel', // The selector for elements that are step panels
           stepLinks: '.js-step-link', // The selector for elements that are step links
           btnStepPrev: '.js-step-link-prev', // The selector of the next step action
@@ -53,7 +53,19 @@
 
         this.stepLinks = this.element.find(this.settings.stepLinks);
         this.stepPanels = $(this.settings.stepPanels);
+        this.keyboardFocusItems = this.element.find('.accordion-header, .step-process-item');
         this.$currentStep = this.stepLinks.first();
+        this.$focusedStep = this.$currentStep;
+
+        // Initiate and save access the accordion plugin methods
+        this.stepAccordion = this.element.find('.accordion').accordion().data('accordion');
+
+        // Remove accordion events from non-accordion items
+        this.stepAccordion.element
+          .find('.accordion-header.step-process-item')
+          .off()
+          .find('a')
+          .off('touchend');
 
         // Setup click events
         this.stepLinks.each(function() {
@@ -64,29 +76,31 @@
               'aria-selected': 'false',
               'tabindex': '-1'
             })
-            .click(function() {
+            .click(function(e) {
+              e.preventDefault();
               self.changeSelectedStep(this);
+            })
+            .on('keydown', function(e) {
+              self.handleKeyDown(e);
             });
         });
 
-        $(this.settings.btnStepPrev).click(function(event) {
-          self.selectPrevStep.call(self, event);
+        $(this.settings.btnStepPrev).click(function(e) {
+          e.preventDefault();
+          var stepIdx = self.getPrevItem(self.$currentStep, self.stepLinks);
+          self.changeSelectedStep.call(self, stepIdx);
         });
 
-        $(this.settings.btnStepNext).click(function(event) {
-          self.selectNextStep.call(self, event);
+        $(this.settings.btnStepNext).click(function(e) {
+          e.preventDefault();
+          var stepIdx = self.getNextItem(self.$currentStep, self.stepLinks);
+          self.changeSelectedStep.call(self, stepIdx);
         });
 
-        $(this.settings.btnToggleStepLinks).click(function(event) {
-          self.hideContentPane.call(self, event);
+        $(this.settings.btnToggleStepLinks).click(function(e) {
+          e.preventDefault();
+          self.hideContentPane.call(self);
         });
-
-        // Initiate and save access the accordion plugin methods
-        var accordionParams = {
-          rerouteOnLinkClick: true
-        };
-
-        this.$stepAccordion = this.element.find('.accordion').accordion(accordionParams).data('accordion');
 
         // If we are using the hash change setting
         if (this.settings.changeTabOnHashChange) {
@@ -101,31 +115,48 @@
           }
         }
 
-        // Set the initial views
-        this.$stepAccordion.select(this.$currentStep);
-        this.$stepAccordion.expand(this.$currentStep.parent());
+        // Set the initial states/vars
+        this.stepAccordion.select(this.$currentStep);
+        this.stepAccordion.expand(this.$currentStep.parent());
+        this.$focusedStep = this.$currentStep.closest('.accordion-header, .step-process-item', this.element);
         this.selectStep(this.$currentStep);
 
         return this;
       },
 
       /**
-       * Change the selected step link
+       * Change the selected stepLink
        *
-       * @param {object} stepLink - The step element
+       * @param {object} stepLink - The stepLink element
        */
       changeSelectedStep: function(stepLink) {
-        if (typeof this.settings.beforeStepChange === 'function' && this.settings.beforeStepChange() === false) {
+        if (this.$currentStep.attr('href') === $(stepLink).attr('href')) {
+          return false;
+        }
+
+        if (typeof this.settings.beforeStepChange === 'function' &&
+            this.settings.beforeStepChange() === false) {
           return false;
         }
 
         this.clearSelectedSteps();
         this.selectStep(stepLink);
+        this.updateHash();
 
+        this.focusStep(this.$currentStep.closest('.accordion-header, .step-process-item', this.element), 'next');
 
         if (typeof this.settings.beforeStepChange === 'function') {
           this.settings.afterStepChange();
         }
+      },
+
+      /**
+       * Unfocus any keyboard elements and set the default selected
+       */
+      clearFocusedSteps: function() {
+        this.keyboardFocusItems
+          .removeClass('is-focused')
+          .addClass('hide-focus');
       },
 
       /**
@@ -137,60 +168,109 @@
       },
 
       /**
-       * Get the index of the specified step link in the step array
+       * Remove old focus and set new stepLink to focused
        *
-       * @param {object} stepLink - The step element
-       * @returns {number} The index
+       * @param {object} stepLink - The stepLink element
+       * @param {string} direction - (optional) The direction to move in the array
        */
-      getStepIndex: function(stepLink) {
-          return this.stepLinks.index(stepLink);
+      focusStep: function(focusElem, direction) {
+        this.clearFocusedSteps();
+
+        this.$focusedStep = $(focusElem);
+
+        var x = this.$focusedStep.closest('.accordion-pane', this.element);
+
+        if (x.length > 0 && !x.hasClass('is-expanded')) {
+          var step;
+          if (direction && direction === 'previous') {
+            step = this.getPrevItem(this.$focusedStep, this.keyboardFocusItems);
+          } else {
+            step = this.getNextItem(this.$focusedStep, this.keyboardFocusItems);
+          }
+          this.focusStep(step, direction);
+
+        } else {
+          this.$focusedStep
+            .addClass('is-focused')
+            .removeClass('hide-focus');
+        }
+
       },
 
+      /**
+       * Get the previous item in an array
+       *
+       * @param {object} item - An element
+       * @param {object} list - A jquery collection of elements
+       * @returns {object} The previous stepLink
+       */
+      getPrevItem: function(item, $list) {
+        var prevIdx = $list.index(item) - 1;
+        if (prevIdx < 0) {
+          prevIdx = $list.length - 1;
+        }
+        return $list[prevIdx];
+      },
 
       /**
-       * Mark the step as selected and show the corresponding step panel
+       * Get the next item in an array
        *
-       * @param {object} step - The step element
+       * @param {object} item - An element
+       * @param {object} list - A jquery collection of elements
+       * @returns {object} The previous stepLink
        */
-      selectStep: function(step) {
-        this.$currentStep = $(step);
+      getNextItem: function(item, $list) {
+        var nextIdx = $list.index(item) + 1;
+        if (nextIdx >= $list.length) {
+          nextIdx = 0;
+        }
+        return $list[nextIdx];
+      },
 
-        this.$stepAccordion.select(this.$currentStep);
-        this.$stepAccordion.expand(this.$currentStep.parent());
+      /**
+       * Handle certain keyboard shortcuts
+       *
+       * @param {event} e - The event
+       */
+      handleKeyDown: function(e) {
+        var self = this,
+            key = e.which;
 
+        // Left Arrow/Up Arrow
+        if (key === 37 || key === 38) {
+          e.preventDefault();
+          var prevStep = self.getPrevItem(self.$focusedStep, self.keyboardFocusItems);
+          self.focusStep.call(self, prevStep, 'previous');
+        }
 
-        var stepId = this.$currentStep.attr('href');
+        // Right Arrow/Down Arrow
+        if (key === 39 || key === 40) {
+          e.preventDefault();
+          var nextStep = self.getNextItem(self.$focusedStep, self.keyboardFocusItems);
+          self.focusStep.call(self, nextStep, 'next');
+        }
+      },
+
+      /**
+       * Mark the stepLink as selected and show the corresponding stepPanel
+       *
+       * @param {object} stepLink - The stepLink element
+       */
+      selectStep: function(stepLink) {
+        this.$currentStep = $(stepLink);
+
+        this.stepAccordion.select(this.$currentStep);
+        this.stepAccordion.expand(this.$currentStep.parent());
+
+        var self = this,
+            stepId = this.$currentStep.attr('href');
 
         this.showContentPane(); // For mobile
 
-        var self = this;
+        // NOTE: Hacky but this HAS to come after the showContentPane() - clepore
         setTimeout(function() {
-          // NOTE: Hacky but this HAS to come after the showContentPane() - clepore
           self.stepPanels.filter(stepId).first().addClass('step-panel-active');
         }, 100);
-      },
-
-
-      /**
-       * Selects the previous steplink in the list
-       */
-      selectPrevStep: function() {
-        var newStepIndex = this.getStepIndex(this.$currentStep) - 1;
-        if (newStepIndex < 0) {
-          newStepIndex = this.stepLinks.length - 1;
-        }
-        this.changeSelectedStep(this.stepLinks[newStepIndex]);
-      },
-
-      /**
-       * Selects the next steplink in the list
-       */
-      selectNextStep: function() {
-        var newStepIndex = this.getStepIndex(this.$currentStep) + 1;
-        if (newStepIndex >= this.stepLinks.length) {
-          newStepIndex = 0;
-        }
-        this.changeSelectedStep(this.stepLinks[newStepIndex]);
       },
 
       /**
@@ -207,6 +287,18 @@
        */
       hideContentPane: function() {
         $(this.element).removeClass('show-main');
+      },
+
+      /**
+       * Updates the hash in the url
+       */
+      updateHash: function() {
+        if (!this.settings.changeTabOnHashChange) {
+          return;
+        }
+
+        var stepId = this.$currentStep.attr('href').replace(/#/g, '');
+        window.location.hash = stepId;
       }
     };
 
