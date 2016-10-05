@@ -6,6 +6,8 @@ Release Date: Approx 1-2 Weeks
 * Hello
 
 ### Breaking Changes
+* 2016-10-05 - Pie and Donut Chart - Changed api option **legendshow** to **showLegend** for consistency.
+
 * 2016-09-16 - Busy Indicator - Changed the **delay** setting to **displayDelay**.  When defining settings inside of the HTML markup using the _data-options_ attribute, using "delay" in some cases would cause settings on different Soho Controls that were named "delay" to conflict, causing them both to be the same number.  Changing the name of property on the more transient Busy Indicator fixed the bug, but it does cause a breaking change.  This was completely changed and there was no deprecation, in order to prevent issues with "delay" from occuring. (see SOHO-2951)
 
 ### Ui Changes
