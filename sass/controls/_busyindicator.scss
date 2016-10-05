@@ -6,10 +6,10 @@ $busy-indicator-color: $primary-btn-bg-color;
 $busy-indicator-check-color: $inverse-color;
 
 .busy-indicator-container {
-  display: inline-block;
   @include opacity(1);
-  text-align: center;
   @include transition(opacity 500ms);
+  display: inline-block;
+  text-align: center;
   vertical-align: middle;
   z-index: 1010;
 
@@ -27,17 +27,17 @@ $busy-indicator-check-color: $inverse-color;
   }
 
   span {
-    color: $busy-indicator-color;
     @include font-size(16);
+    color: $busy-indicator-color;
     display: block;
   }
 }
 
 .busy-indicator {
+  @include opacity(1);
   display: inline-block;
   height: $busy-indicator-size;
   margin: .8em;
-  @include opacity(1);
   position: relative;
   vertical-align: middle;
   width: $busy-indicator-size;
@@ -72,10 +72,10 @@ $busy-indicator-check-color: $inverse-color;
 
 // Overlay Override for Busy Indicator
 .busy.overlay {
-  background-color: $body-bg-color;
   @include opacity(.75);
-  position: absolute;
   @include transition(opacity 500ms);
+  background-color: $body-bg-color;
+  position: absolute;
   visibility: visible;
 }
 
@@ -101,13 +101,13 @@ input + .busy-indicator-container,
   .busy-indicator {
     background-color: $body-bg-color;
     height: 22px;
-    margin: 5px 1px 1px;
+    margin: 8px 1px 1px;
     position: absolute;
     right: 0;
     width: 40px;
 
     .bar {
-      height: 2.4em;
+      height: 1.8em;
       margin-right: .3em;
       width: .3em;
 
@@ -142,6 +142,7 @@ input + .busy-indicator-container,
   }
 }
 
+// scss-lint:disable VendorPrefix
 .ie9 {
   .busy-indicator {
     .bar {
@@ -158,6 +159,7 @@ input + .busy-indicator-container,
     }
   }
 }
+// scss-lint:enable VendorPrefix
 
 // bump everything up 1px because Firefox
 .is-firefox {
@@ -166,7 +168,7 @@ input + .busy-indicator-container,
     position: absolute;
 
     .busy-indicator {
-      margin: 4px 1px 1px;
+      margin: 7px 1px 1px;
     }
   }
 }
@@ -220,7 +222,6 @@ input + .busy-indicator-container,
     }
   }
 }
-
 
 //RTL Styles
 html[dir='rtl'] {
