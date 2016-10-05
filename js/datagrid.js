@@ -777,6 +777,7 @@ $.fn.datagrid = function(options) {
         selectable: false, //false, 'single' or 'multiple'
         clickToSelect: true,
         toolbar: false, // or features fx.. {title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true, rowHeight: true, views: true}
+        initializeToolbar: true, // can set to false if you will initialize the toolbar yourself
         //Paging Options
         paging: false,
         pagesize: 25,
@@ -3035,7 +3036,7 @@ $.fn.datagrid = function(options) {
         }
       });
 
-      if (!toolbar.data('toolbar')) {
+      if (settings.initializeToolbar && !toolbar.data('toolbar')) {
         var opts = $.fn.parseOptions(toolbar);
 
         if (settings.toolbar.fullWidth) {
