@@ -195,6 +195,24 @@ $datagrid-short-row-height: 30px;
       .hyperlink {
         margin-top: 4px;
       }
+
+      .row-btn {
+        height: 18px;
+        margin-left: 9px;
+        min-height: 18px;
+        min-width: 18px;
+        padding: 0;
+        top: -2px;
+        width: 18px;
+      }
+
+      a.row-btn {
+        margin-bottom: -5px;
+
+        .icon {
+          margin: 0;
+        }
+      }
     }
 
     //Resize the headers too
@@ -688,6 +706,19 @@ $datagrid-short-row-height: 30px;
 
     .row-btn {
       line-height: normal;
+    }
+
+    a.row-btn {
+      height: 36px;
+      margin-bottom: -14px;
+      min-height: 36px;
+      min-width: 36px;
+      padding: 0;
+      width: 36px;
+
+      .icon {
+        margin: 8px 0 0 8px;
+      }
     }
 
     .datagrid-cell-wrapper {
@@ -1631,5 +1662,12 @@ html[dir='rtl'] {
     // scss-lint:disable ImportantRule
     top: 15px !important;
     // scss-lint:enable ImportantRule
+  }
+}
+
+// Safari Hack
+.is-safari {
+  a.btn-icon.row-btn {
+    top: -4px;
   }
 }

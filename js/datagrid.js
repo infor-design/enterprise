@@ -94,27 +94,32 @@ window.Formatters = {
   },
 
   Hyperlink: function(row, cell, value, col, item) {
-    var colHref = (col.href ? col.href : '#');
+    var textValue,
+      colHref = col.href || '#';
 
     //Support for dynamic links based on content
     if (col.href && typeof col.href === 'function') {
       colHref = col.href(row, cell, item, col);
       //Passing a null href will produce "just text" with no link
       if (colHref == null) {
-          return col.text ? col.text : value;
+        return col.text || value;
       }
-
-    } else  {
+    }
+    else  {
       colHref = colHref.replace('{{value}}', value);
     }
 
-
-    var textValue = (col.text ? col.text : value);
-    if (!textValue) {
+    textValue = col.text || value;
+    if (!textValue && !col.icon) {
       return '';
     }
 
-    return '<a href="' + colHref +'" tabindex="-1" role="presentation" class="hyperlink">' + textValue + '</a>';
+    return col.icon ?
+      ('<a href="'+ colHref +'" class="btn-icon row-btn '+ (col.cssClass || '') +'">'+
+          $.createIcon({ icon: col.icon, file: col.iconFile }) +
+          '<span class="audible">'+ textValue +'</span>'+
+        '</a>') :
+      ('<a href="'+ colHref +'" tabindex="-1" role="presentation" class="hyperlink '+ (col.cssClass || '') +'">'+ textValue +'</a>');
   },
 
   Template: function(row, cell, value, col, item) {
