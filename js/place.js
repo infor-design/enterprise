@@ -235,6 +235,8 @@
           return [undefined, undefined]; // can't simply return x and y here because they are not coordinates, they are offsets
         }
 
+        this.render(placementObj);
+
         var self = this,
           parentRect = placementObj.parent[0].getBoundingClientRect(),
           elRect = this.element[0].getBoundingClientRect();
@@ -298,6 +300,7 @@
           var coords = getCoordsFromPlacement(placementObj);
           placementObj.setCoordinate('x', coords[0]);
           placementObj.setCoordinate('y', coords[1]);
+          self.render(placementObj);
           placementObj = self._handlePlacementCallback(placementObj);
           return placementObj;
         }
@@ -341,6 +344,8 @@
       // In this case, "x" and "y" integers are "absolute" and will be the base point for placement.
       // Can be modified by using a callback in the settings.
       _placeWithCoords: function(placementObj) {
+        this.render(placementObj);
+
         placementObj = this._handlePlacementCallback(placementObj);
 
         this.render(placementObj);
@@ -365,15 +370,14 @@
       // Callback should return an array containing the modified coordinate values: [x, y];
       // NOTE: These are actual coordinates in all cases.  They are not relative values - they are absolute
       _handlePlacementCallback: function(placementObj) {
-        var cb = placementObj.callback || this.settings.callback,
-          coords = [placementObj.x, placementObj.y];
+        var cb = placementObj.callback || this.settings.callback;
 
         if (cb && typeof cb === 'function') {
-          coords = cb(coords[0], coords[1]);
+          placementObj = cb(placementObj);
         }
 
-        placementObj.setCoordinate('x', coords[0]);
-        placementObj.setCoordinate('y', coords[1]);
+        //placementObj.setCoordinate('x', coords[0]);
+        //placementObj.setCoordinate('y', coords[1]);
         return placementObj;
       },
 
