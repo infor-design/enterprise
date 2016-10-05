@@ -811,11 +811,11 @@
 
   //Has to delay in order to check if no culture in head since scripts load async
   $(function() {
-    if (!window.Locale.cultureInHead() && !window.Locale.currentLocale.name) {
-      window.Locale.set('en-US');
-    }
-
     setTimeout(function() {
+      if (!window.Locale.cultureInHead() && !window.Locale.currentLocale.name) {
+        window.Locale.set('en-US');
+      }
+
       // ICONS: Right to Left Direction
       if (window.Locale.isRTL()) {
         window.Locale.flipIconsHorizontally();
