@@ -104,6 +104,18 @@
         $.detectBaseTag();
       }
 
+      window.Soho.logTimeStart = function(label) { // jshint ignore:line
+        if (window.Soho.logTime) {
+          console.time(label); // jshint ignore:line
+        }
+      };
+
+      window.Soho.logTimeEnd = function(label) { // jshint ignore:line
+        if (window.Soho.logTime) {
+          console.timeEnd(label); // jshint ignore:line
+        }
+      };
+
       return this;
     }
 
