@@ -68,7 +68,7 @@
       },
 
       isLoading: function() {
-        return this.element.is('.is-loading') && this.element.is('is-blocked');
+        return this.element.hasClass('is-loading') && this.element.hasClass('is-blocked');
       },
 
       openList: function (term, items) {

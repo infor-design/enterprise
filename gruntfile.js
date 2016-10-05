@@ -283,9 +283,9 @@ module.exports = function(grunt) {
     'strip_code',
     'concat',
     'clean:amd',
-    'uglify',
     'cssmin',
     'copy:main',
+    'uglify',
     'usebanner',
     'compress',
     'md2html'
@@ -293,7 +293,7 @@ module.exports = function(grunt) {
 
   // Don't do any uglify/minify/jshint while the Dev Watch is running.
   grunt.registerTask('sohoxi-watch', [
-    'clean:dist', 'clean:public', 'revision', 'sass', 'copy:amd', 'strip_code','concat', 'clean:amd', 'copy:main', 'usebanner'
+    'revision', 'sass', 'copy:amd', 'strip_code','concat', 'clean:amd', 'copy:main', 'usebanner'
   ]);
 
 };

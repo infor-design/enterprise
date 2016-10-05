@@ -135,6 +135,9 @@
         // Use special positioning logic for compatibility with certain controls
         if (this.element.is('input, .dropdown, .multiselect')) {
           this.element.addClass('is-loading');
+          if (this.blockUI) {
+            this.element.addClass('is-blocked');
+          }
           this.label.addClass('audible');
 
           var target;
@@ -205,6 +208,7 @@
         // and removes the 'is-loading' CSS class.
         if (fromEvent) {
           this.element.removeClass('is-loading');
+          this.element.removeClass('is-blocked');
         }
 
         if (this.container) {
