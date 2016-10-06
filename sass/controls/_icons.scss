@@ -97,14 +97,6 @@ svg.icon-close {
   width: 115px;
 }
 
-//Shitty Workaround...
-.ios {
-  .icon-error,
-  .icon-confirm {
-    top: 9.5px !important;
-  }
-}
-
 &.icon-favorite {
   svg {
     fill: $rating-bg-color !important;
