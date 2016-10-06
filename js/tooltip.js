@@ -42,6 +42,7 @@
 
     // Plugin Constructor
     function Tooltip(element) {
+      this.settings = $.extend({}, settings);
       this.element = $(element);
       this.init();
     }
@@ -61,7 +62,7 @@
         this.activeElement = this.element;
 
         this.descriptionId = $('.tooltip-description').length + 1;
-        this.description = this.element.next('.tooltip-description');
+        this.description = this.element.parent().find('.tooltip-description');
         if (!this.description.length && settings.isError) {
           this.description = $('<span id="tooltip-description-'+ this.descriptionId +'" class="tooltip-description audible"></span>').insertAfter(this.element);
         }
@@ -75,6 +76,8 @@
         if (this.element.data('extraClass') && this.element.data('extraClass').length) {
           settings.extraClass = this.element.data('extraClass');
         }
+
+        this.isRTL = Locale.isRTL();
       },
 
       addAria: function() {
@@ -103,7 +106,15 @@
           var name = (settings.tooltipElement ? settings.tooltipElement.substring(1, settings.tooltipElement.length) : 'tooltip');
           this.tooltip = $('<div class="' + (this.isPopover ? 'popover' : 'tooltip') + ' bottom is-hidden" role="tooltip" id="' + name + '"><div class="arrow"></div><div class="tooltip-content"></div></div>');
         }
-        this.place();
+
+        this.tooltip.place({
+          container: this.scrollparent,
+          parent: this.element,
+          placement: this.settings.placement,
+          strategy: 'flip'
+        });
+
+        this.setTargetContainer();
       },
 
       handleEvents: function() {
@@ -285,8 +296,6 @@
           this.tooltip.addClass('is-error');
         }
 
-        this.place();
-        this.tooltip.removeClass('is-hidden');
         this.position();
         this.element.trigger('show', [this.tooltip]);
 
@@ -337,12 +346,11 @@
 
       // Places the tooltip element itself in the correct DOM element.
       // If the current element is inside a scrollable container, the tooltip element goes as high as possible in the DOM structure.
-      place: function() {
+      setTargetContainer: function() {
         var targetContainer = $('body');
 
         // adjust the tooltip if the element is being scrolled inside a scrollable DIV
         this.scrollparent = this.element.closest('.page-container.scrollable');
-        // this.scrollparent = this.element.parents('.page-container[class*="scrollable"]').first();
         if (this.scrollparent.length) {
           targetContainer = this.scrollparent;
         }
@@ -350,242 +358,86 @@
         this.tooltip.detach().appendTo(targetContainer);
       },
 
-      position: function () {
+      // Placement behavior's "afterplace" handler.
+      // DO NOT USE FOR ADDITONAL POSITIONING.
+      handleAfterPlace: function(e, placementObj) {
+        var arrow = this.tooltip.find('.arrow');
 
-        var self = this,
-          winH = window.innerHeight + $(document).scrollTop(),
-          // subtract 2 from the window width to account for the tooltips
-          // resizing themselves to fit within the CSS overflow boundary.
-          winW = (window.innerWidth - 2) + $(document).scrollLeft(),
-          scrollable = {
-            deltaHeight: 0,
-            deltaWidth: 0,
-            offsetLeft: 0,
-            offsetTop: 0
-          };
-
-        // Reset adjustments to panel and arrow
-        this.tooltip.removeAttr('style');
-        this.tooltip.find('.arrow').removeAttr('style');
-
-        if (this.settings.maxWidth) {
-          this.tooltip.css('max-width', this.settings.maxWidth + 'px');
+        // Hide the arrow if bleeding occured and needed to be fixed.
+        if (placementObj.wasNudged) {
+          arrow.css('display', 'none');
         }
 
-        if (this.scrollparent.length) {
-          scrollable.offsetTop = this.scrollparent.scrollTop();
-          scrollable.offsetLeft = this.scrollparent.scrollLeft();
-          scrollable.deltaHeight = this.scrollparent.offset().top;
-          scrollable.deltaWidth = this.scrollparent.offset().left;
-          winH = winH - (this.scrollparent.offset().top + scrollable.offsetTop);
-          winW = winW - (this.scrollparent.offset().left + scrollable.offsetLeft);
+        // Adjust the arrow's direction if a different strategy was attempted.
+        var dir = placementObj.placement,
+          cssOptions = { display: 'block' },
+          isXCoord = ['left', 'right'].indexOf(dir) > -1,
+          dimension = 'outer' + (!isXCoord ? 'Width' : 'Height'),
+          edge = (!isXCoord ? 'margin-left' : 'margin-top'),
+          nudgeDistance = 0;
+
+        if (placementObj.attemptedFlips) {
+          this.tooltip.removeClass('top right bottom left').addClass(dir);
         }
 
-        var rightOffset;
-        switch(settings.placement) {
-          case 'offset':
-            // Used for error messages (validation)
-            self.tooltip.addClass('bottom');
-            self.placeBelowOffset(scrollable);
-            break;
-          case 'bottom':
-            self.placeBelow(scrollable);
-            var bottomOffset = self.tooltip.offset().top - scrollable.deltaHeight + self.tooltip.outerHeight();
-            if (bottomOffset >= winH) {
-              self.tooltip.removeClass('bottom').addClass('top');
-              self.placeAbove(scrollable);
-            }
-            break;
-          case 'top':
-            self.placeAbove(scrollable);
-            if (this.tooltip.offset().top - scrollable.deltaHeight <= 0) {
-              self.tooltip.removeClass('top').addClass('bottom');
-              self.placeBelow(scrollable);
-            }
-            break;
-          case 'right':
-            if (Locale.isRTL()) {
-              self.placeToLeft(scrollable);
-              if (this.tooltip.offset().left - scrollable.deltaWidth <= 0) {
-                self.tooltip.removeClass('right').addClass('left');
-                self.placeToRight(scrollable);
-              }
-            } else {
-              self.placeToRight(scrollable);
-              rightOffset = self.tooltip.offset().left - scrollable.deltaWidth + self.tooltip.outerWidth();
-              if (rightOffset >= winW) {
-                self.tooltip.removeClass('right').addClass('left');
-                self.placeToLeft(scrollable);
-              }
-            }
-            break;
-          default: //left
-            if (Locale.isRTL()) {
-              self.placeToRight(scrollable);
-              rightOffset = self.tooltip.offset().left - scrollable.deltaWidth + self.tooltip.outerWidth();
-              if (rightOffset >= winW) {
-                self.tooltip.removeClass('left').addClass('right');
-                self.placeToLeft(scrollable);
-              }
-            } else {
-              self.placeToLeft(scrollable);
-              if (this.tooltip.offset().left - scrollable.deltaWidth <= 0) {
-                self.tooltip.removeClass('left').addClass('right');
-                self.placeToRight(scrollable);
-              }
-            }
-            break;
+        // Flip the arrow if we're in RTL mode
+        if (this.isRTL && isXCoord) {
+          var opposite = dir === 'right' ? 'left' : 'right';
+          this.tooltip.removeClass('right left').addClass(opposite);
         }
 
-        // secondary check on bottom/top placements to see if the tooltip width is long enough
-        // to bleed off the edge of the page.
-        var o, arrow, arrowPosLeft, arrowPosTop, delta, headHtml, extra,
-          el = self.activeElement;
+        // Adjust the arrow's position if a nudge is detected.
+        // Arrow gets adjusted perpendicular to the placement type.
+        if (placementObj.nudges) {
+          nudgeDistance = placementObj.nudges[isXCoord ? 'y' : 'x'];
+          if (nudgeDistance) {
+            cssOptions[edge] = nudgeDistance * -1;
 
-        function setCurrentTooltipPos() {
-          o = self.tooltip.offset();
-          arrow = self.tooltip.find('.arrow');
-          arrowPosLeft = 0;
-          arrowPosTop = 0;
-          delta = 0;
-        }
-
-        function offLeftEdgeCondition() {
-          setCurrentTooltipPos();
-          return o.left - scrollable.deltaWidth <= 0;
-        }
-
-        function offRightEdgeCondition() {
-          setCurrentTooltipPos();
-          return o.left - scrollable.deltaWidth + self.tooltip.outerWidth() - 10 >= winW;
-        }
-
-        function offTopEdgeCondition() {
-          setCurrentTooltipPos();
-          return o.top - scrollable.deltaHeight <= 0;
-        }
-
-        // Datepicker in editable datagrid
-        if (el.prev().is('.datepicker')) {
-          var thisEl = el.prev();
-
-          // Check for bleeding off the left edge.
-          if (offLeftEdgeCondition()) {
-            arrow.removeAttr('style');
-            self.tooltip.removeClass('top bottom').addClass('right');
-            self.placeToRight(scrollable);
-            arrow.css('left', '-12px');
-
-            setCurrentTooltipPos();
-            delta = thisEl.offset().left + thisEl.outerWidth() + 15;
-            self.tooltip.css('left', delta);
-          }
-          // Check for bleeding off the right edge.
-          if (offRightEdgeCondition()) {
-            arrow.removeAttr('style');
-            self.tooltip.removeClass('top bottom').addClass('left');
-            self.placeToLeft(scrollable);
-            arrow.css('left', 'auto');
-
-            setCurrentTooltipPos();
-            delta = thisEl.offset().left - self.tooltip.outerWidth() - 15;
-            self.tooltip.css('left', delta);
-          }
-
-          if (offTopEdgeCondition()) {
-            headHtml = $('html');
-            extra = {offsetTop: 0, paddingTop: 0};
-            if (headHtml.is('.is-firefox') || headHtml.is('.is-safari') || headHtml.is('.ie')) {
-              extra.offsetTop = 8;
-              extra.paddingTop = 8;
+            // Hide a tooltip arrow that sticks out too far.
+            // Might happen if the tooltip has to be nudged so far that the arrow placement
+            // no longer makes sense.
+            if (Math.abs(nudgeDistance) > this.tooltip[dimension]()/2 ) {
+              cssOptions.display = 'none';
             }
-            if (headHtml.is('.ie11') || headHtml.is('.ie9')) {
-              extra.offsetTop = 13;
-              extra.paddingTop = 15;
-            }
-            delta = (scrollable.deltaHeight - o.top - scrollable.offsetTop - 40);
-            arrowPosTop = (self.tooltip.outerHeight()/2) - delta - (el.outerHeight()/2 + 40);
-
-            if ((o.top + scrollable.offsetTop - extra.offsetTop) < 0) {
-              delta -= scrollable.deltaHeight - extra.paddingTop;
-              arrowPosTop = arrowPosTop + (el.outerHeight()/2);
-            }
-            self.tooltip.css({'top': delta});
-            arrow.css('top', arrowPosTop);
-          }
-
-
-        }
-
-        // All other elements
-        else {
-          if (/offset|bottom|top/i.test(settings.placement)) {
-            // Check for bleeding off the left edge
-            if (offLeftEdgeCondition()) {
-              delta = (0 - (o.left - scrollable.deltaWidth) + 1) * -1;
-              self.tooltip.css('left', o.left + delta);
-
-              // Check again.  If it's still bleeding off the left edge, swap it to a right-placed Tooltip.
-              if (offLeftEdgeCondition()) {
-                self.tooltip.removeClass('top bottom').addClass('right');
-                self.placeToRight(scrollable);
-              }
-            }
-
-            // Check for bleeding off the right edge.
-            if (offRightEdgeCondition()) {
-              // need to explicitly set a width on the popover for this to work, otherwise popover contents will wrap
-              // and cause it to grow wider:
-              var top,
-                tooltipWidth = self.tooltip.outerWidth() -10;
-
-              el = self.activeElement;
-
-              self.tooltip.removeClass('top bottom').addClass(Locale.isRTL() ? 'right' : 'left');
-              self.tooltip.css('width', tooltipWidth);
-              delta = (winW - (o.left - scrollable.deltaWidth + tooltipWidth +7) - 1) * -1;
-              top = (el.offset().top - el.outerHeight() - (self.tooltip.outerHeight()/2) -3) + scrollable.offsetTop;
-              self.tooltip.css({'left': Locale.isRTL() ? (el.offset().left - self.tooltip.outerWidth() -7) : (o.left - delta), 'top': top});
-              arrowPosLeft = parseInt(arrow.css('left'), 10);
-              arrow.css('left', Locale.isRTL() ? 'auto' : (arrowPosLeft + delta));
-
-              // Check again.  If it's still bleeding off the edge, swap it to a left-placed Tooltip.
-              if (offRightEdgeCondition()) {
-                arrow.removeAttr('style');
-                self.tooltip.removeClass('top bottom').addClass('left');
-                self.placeToLeft(scrollable);
-              }
-            }
-
-          }
-
-          // If tooltip is hidden under header
-          // TODO: this is dirty fix, need to come-up with different approch
-          if (offTopEdgeCondition()) {
-            headHtml = $('html');
-            extra = {offsetTop: 0, paddingTop: 0};
-            if (headHtml.is('.is-firefox') || headHtml.is('.is-safari') || headHtml.is('.ie')) {
-              extra.offsetTop = 8;
-              extra.paddingTop = 8;
-            }
-            if (headHtml.is('.ie11') || headHtml.is('.ie9')) {
-              extra.offsetTop = 13;
-              extra.paddingTop = 15;
-            }
-            delta = (scrollable.deltaHeight - o.top - scrollable.offsetTop);
-            arrowPosTop = (self.tooltip.outerHeight()/2) - delta - (el.outerHeight()/2);
-
-            if ((o.top + scrollable.offsetTop - extra.offsetTop) < 0) {
-              delta -= scrollable.deltaHeight - extra.paddingTop;
-              arrowPosTop = arrowPosTop + (el.outerHeight()/2);
-            }
-            self.tooltip.css({'top': delta});
-            arrow.css('top', arrowPosTop);
           }
         }
 
+        arrow.css(cssOptions);
+        this.tooltip.triggerHandler('tooltipafterplace');
       },
 
+      position: function () {
+        this.setTargetContainer();
+        this.tooltip.removeClass('is-hidden');
+
+        var self = this,
+          distance = this.isPopover ? 20 : 10,
+          tooltipPlacementOpts = this.settings.placementOpts || {},
+          opts = $.extend({}, tooltipPlacementOpts, {
+            x: 0,
+            y: distance,
+            container: this.scrollparent,
+            containerOffsetX: 10,
+            containerOffsetY: 10,
+            parent: this.element,
+            placement: this.settings.placement,
+            strategies: ['flip', 'nudge']
+          });
+
+        if (opts.placement === 'left' || opts.placement === 'right') {
+          opts.x = distance;
+          opts.y = 0;
+        }
+
+        this.tooltip.one('afterplace.tooltip', function(e, placementObj) {
+          self.handleAfterPlace(e, placementObj);
+        });
+
+        this.tooltip.data('place').place(opts);
+        return this;
+      },
+
+      /*
       placeBelowOffset: function(scrollable) {
        var o = this.activeElement.offset(),
           isShortField = !!(this.activeElement.closest('.field-short').length),
@@ -683,6 +535,7 @@
         this.tooltip.css({'top': o.top + scrollable.offsetTop - (this.tooltip.outerHeight() / 2) + (this.activeElement.outerHeight() / 2) - scrollable.deltaHeight,
                           'left': o.left + scrollable.offsetLeft + settings.offset.left - (settings.offset.top + this.tooltip.outerWidth()) - scrollable.deltaWidth});
       },
+      */
 
       // Alias for _hide()_ that works with the global _closeChildren()_ method.
       close: function() {
@@ -700,6 +553,8 @@
         }
 
         this.tooltip.addClass('is-hidden').css({'left': '', 'top': ''});
+        this.tooltip.find('.arrow').removeAttr('style');
+
         this.tooltip.off('click.tooltip');
 
         if ($('.popover').not('.is-hidden').length === 0) {

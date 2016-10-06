@@ -1,0 +1,155 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Place Test:  Relative to Parent</h2>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+    <form action="#" id="coords-form">
+      <div class="field">
+        <label for="offset-x">X Offset</label>
+        <input id="offset-x" name="offset-x" type="text" value="0"/>
+      </div>
+
+      <div class="field">
+        <label for="offset-y">Y Offset</label>
+        <input id="offset-y" name="offset-y" type="text" value="0"/>
+      </div>
+
+      <div class="field">
+        <label for="placement">Placement Direction</label>
+        <select id="placement" class="dropdown">
+          <option value="bottom" selected>Bottom</option>
+          <option value="top">Top</option>
+          <option value="left">Left</option>
+          <option value="right">Right</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="strategy">Placement Strategy</label>
+        <select id="strategy" class="dropdown">
+          <option value="nudge" selected>Nudge</option>
+          <option value="flip">Flip</option>
+          <option value="clockwise">Clockwise</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="x-alignment">X Alignment</label>
+        <select id="x-alignment" class="dropdown">
+          <option value="left">Left</option>
+          <option value="center" selected>Center</option>
+          <option value="right">Right</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="y-alignment">Y Alignment</label>
+        <select id="y-alignment" class="dropdown">
+          <option value="top">Top</option>
+          <option value="center" selected>Center</option>
+          <option value="bottom">Bottom</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <input type="checkbox" class="checkbox" id="use-container">
+        <label for="use-container" class="checkbox-label" >Use this page's scroll container as a boundary</label>
+      </div>
+
+      <div class="field" style="margin-top: 20px;">
+        <button id="reset" name="reset" class="btn-secondary" type="reset">Reset</button>
+        <button id="submit" name="submit" class="btn-primary" type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
+  <div class="six columns">
+
+    <br />
+    <br />
+    <br />
+    <br />
+    <button id="parent-button" class="btn-primary">
+      <span>Parent Button</span>
+    </button>
+    <div id="placeable-one" style="height: 96px; width: 96px; left: 348px; top: 128px;"></div>
+
+  </div>
+</div>
+
+<!--
+  Styles that are specific to this test
+-->
+<style>
+  #placeable-one {
+    background-color: rgba(198,95,95, 1);
+    z-index: 400;
+    -moz-transition: background-color 200ms cubic-bezier(.17, .04, .03, .94);
+    -ms-transition: background-color 200ms cubic-bezier(.17, .04, .03, .94);
+    -o-transition: background-color 200ms cubic-bezier(.17, .04, .03, .94);
+    -webkit-transition: background-color 200ms cubic-bezier(.17, .04, .03, .94);
+    transition: background-color 200ms cubic-bezier(.17, .04, .03, .94);
+  }
+
+  #placeable-one:hover,
+  #placeable-one:active {
+    background-color: rgba(198,95,95, .2);
+  }
+</style>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+
+    var el = $('#placeable-one'),
+      parent = $('#parent-button');
+
+    // remove it from our grid and put it in the body
+    //el.detach().appendTo('body');
+    el.place({
+      parent: parent
+    });
+
+    var api = el.data('place');
+
+    function serialize() {
+      var opts = {
+        x: $('#offset-x').val(),
+        y: $('#offset-y').val(),
+        placement: $('#placement').val(),
+        strategies: [$('#strategy').val()],
+        xAlignment: $('#x-alignment').val(),
+        yAlignment: $('#y-alignment').val()
+      };
+
+      // Grab the closest page container as a boundary
+      if ($('#use-container').prop('checked')) {
+        opts.container = el.closest('.page-container');
+      }
+
+      return opts;
+    }
+
+    $('#coords-form').on('submit.test', function(e) {
+      e.preventDefault();
+      api.place(serialize());
+    }).on('reset.test', function() {
+      setTimeout(function valueReset() {
+        $('#offset-x').val(0);
+        $('#offset-y').val(0);
+      }, 0);
+    });
+
+    el.on('afterplace.test', function(e, placementObj) {
+      if (console) {
+        console.log('#' + el.attr('id') + '\'s new offsets: X=' + placementObj.x + ' Y=' + placementObj.y + ' Placement="' + placementObj.placement + '" Strategy="' + placementObj.strategies.join(' ') + '"');
+      }
+    });
+
+    // Use the default settings and do some placement to start
+    api.place(serialize());
+  });
+</script>
