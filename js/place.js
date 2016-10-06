@@ -43,6 +43,8 @@
         settings = $.extend({}, defaults, options);
 
     // Object that contains coordinates along with temporary, changeable properties.
+    // This object gets passed around the Place Behavior and modified during each phase of positioning.
+    // This object is also passed to all callbacks and event listeners for further modification.
     function PlacementObject(placementOptions) {
       var self = this,
         possibleSettings = [
@@ -103,7 +105,6 @@
       setCoordinate: function(coordinate, value) {
         var coordinates = ['x', 'y'];
         if (!this.isReasonableDefault(coordinate, coordinates)) {
-          // TODO: log error?
           return;
         }
 
@@ -115,14 +116,14 @@
       }
     };
 
-    // Plugin Constructor
+    // Place Behavior Constructor
+    // This is the actual "thing" that is tied to a Placeable Element.
     function Place(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
       this.init();
     }
 
-    // Plugin Methods
     Place.prototype = {
       init: function() {
         //Do other init (change/normalize settings, load externals, etc)
@@ -499,7 +500,6 @@
           return perpendicularDir;
         }
 
-        var self = this;
         placementObj.placement = (function() {
           switch(placementObj.placement) {
             case 'left':

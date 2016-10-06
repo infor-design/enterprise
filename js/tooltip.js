@@ -403,6 +403,7 @@
         }
 
         arrow.css(cssOptions);
+        this.tooltip.triggerHandler('tooltipafterplace');
       },
 
       position: function () {
