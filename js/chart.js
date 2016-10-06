@@ -2713,11 +2713,13 @@ window.Chart = function(container) {
       width = parent.width() - margin.left - margin.right,
       height = parent.height() - margin.top - margin.bottom - 30; //legend
 
+    height = height < 0 ? 50 : height; //default minimum height
+
     var svg = d3.select(container).append('svg')
-        .attr('width', width + margin.left + margin.right)
-        .attr('height', height + margin.top + margin.bottom)
-      .append('g')
-        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+              .attr('width', width + margin.left + margin.right)
+              .attr('height', height + margin.top + margin.bottom)
+              .append('g')
+                .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
     //Functions Used in the Loop
     function bulletWidth(x) {
@@ -2733,10 +2735,14 @@ window.Chart = function(container) {
           rowData = dataset[0].data[i],
           ranges = rowData.ranges.slice().sort(d3.descending),
           markers = (rowData.markers ? rowData.markers.slice().sort(d3.descending) : []),
-          measures = (rowData.measures ? rowData.measures.slice().sort(d3.descending) : []);
+          measures = (rowData.measures ? rowData.measures.slice().sort(d3.descending) : []),
+          rangesAsc = rowData.ranges.slice().sort(d3.ascending),
+          markersAsc = (rowData.markers ? rowData.markers.slice().sort(d3.ascending) : []),
+          measuresAsc = (rowData.measures ? rowData.measures.slice().sort(d3.ascending) : []);
 
       if (markers.length === 0) {
         markers = measures;
+        markersAsc = measuresAsc;
         noMarkers = true;
       }
 
@@ -2757,10 +2763,16 @@ window.Chart = function(container) {
           .attr('dx', '15px')
           .text(function() { return rowData.subtitle; });
 
+      var maxAll = Math.max(ranges[0], markers[0], measures[0]),
+          minAll = Math.min(rangesAsc[0], markersAsc[0], measuresAsc[0]);
+
+      minAll = minAll < 0 ? minAll : 0;
+
       // Compute the new x-scale.
       var x1 = d3.scale.linear()
-          .domain([0, Math.max(ranges[0], markers[0], measures[0])])
-          .range([0, width]);
+          .domain([minAll, maxAll])
+          .range([0, width])
+          .nice();
 
       // Derive width-scales from the x-scales.
       var w1 = bulletWidth(x1);
@@ -2773,7 +2785,8 @@ window.Chart = function(container) {
           .attr('class', function(d, i) { return 'range s' + i; })
           .attr('data-idx', i)
           .attr('width', 0)
-          .style('fill', function(d,i) {
+          .attr('x', function (d) { return x1(d < 0 ? d : 0); })
+          .style('fill', function(d, i) {
             if (chartData[0].barColors) {
               return chartData[0].barColors[i];
             }
@@ -2844,6 +2857,7 @@ window.Chart = function(container) {
           .attr('class', function(d, i) { return 'measure s' + i; })
           .attr('width', 0)
           .attr('height', 3)
+          .attr('x', function (d) { return x1(d < 0 ? d : 0); })
           .style('fill', function(d,i) {
             if (chartData[0].lineColors) {
               return chartData[0].lineColors[i];
@@ -2863,7 +2877,7 @@ window.Chart = function(container) {
           .attr('class', (noMarkers ? 'hidden' : 'marker'))
           .attr('x1', 0)
           .attr('x2', 0)
-          .style('stroke', function(d,i) {
+          .style('stroke', function(d, i) {
             if (chartData[0].markerColors) {
               return chartData[0].markerColors[i];
             }
@@ -3162,7 +3176,7 @@ window.Chart = function(container) {
       this.Line(options.dataset, options, false, true);
     }
     if (options.type === 'bullet') {
-      this.Bullet(options.dataset, options);
+      this.Bullet(options.dataset);
     }
   };
 
