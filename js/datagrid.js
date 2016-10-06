@@ -324,19 +324,16 @@ window.Formatters = {
   },
 
   // Possible future Formatters
+  // Percent
   // Image?
-  // Tree
   // Multi Select
-  // Lookup
   // Re Order - Drag Indicator
   // Sparkline
   // Progress Indicator (n of 100%)
   // Process Indicator
   // Currency
-  // Percent
   // File Upload (Simple)
   // Menu Button
-  // Icon Button (Approved and SoHo Xi Standard)
   // Toggle Button (No)
   // Color Picker (Low)
 };
@@ -513,6 +510,7 @@ window.Editors = {
       if (!editorOptions || (editorOptions && !editorOptions.cssClass)) {
         editorOptions = $.extend(column.editorOptions, {'cssClass': 'is-editing'});
       }
+
       this.input.dropdown(editorOptions);
       this.input = this.input.parent().find('div.dropdown');
     };
@@ -566,6 +564,7 @@ window.Editors = {
 
       //Check if isClick or cell touch and just open the list
       this.select.trigger('openlist');
+      this.input.focus();
 
       this.select.on('listclosed', function () {
         if (grid.activeCell.cell === self.cell.cell && grid.activeCell.row === self.cell.row) {
@@ -655,7 +654,11 @@ window.Editors = {
     };
 
     this.val = function (value) {
-      return value ? this.input.val(value) : this.input.val();
+      var fieldValue = this.input.val();
+      if (fieldValue) {
+        fieldValue = fieldValue.substr(0, fieldValue.indexOf('|'));
+      }
+      return value ? this.input.val(value) : fieldValue;
     };
 
     this.focus = function () {
