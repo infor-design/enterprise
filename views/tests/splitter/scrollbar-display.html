@@ -1,0 +1,101 @@
+<div class="two-column fixed page-container" role="main">
+  <div class="sidebar scrollable">
+    <ul role="tree" aria-label="Asset Types" class="tree" data-init="false" id="json-tree">
+    </ul>
+    <div class="splitter splitter-right"></div>
+  </div>
+
+  <div class="main" role="main">
+    <div class="content">
+    </div>
+  </div>
+</div>
+
+<script>
+  var sampleData;
+
+  /* jshint ignore:start */
+  sampleData = [{
+    "id": "node1",
+    "text": "Node One",
+    "open": false,
+    "selected": false,
+    "href": '/somelink/'
+  }, {
+    "id": "node2",
+    "text": "Node Two",
+    "open": true,
+    "selected": true,
+    "focus": true,
+    "children": [{
+      "id": "node3",
+      "text": "Node 2.1"
+    }, {
+      "id": "node4",
+      "text": "Node 2.2",
+      "children": [{
+        "id": "node5",
+        "text": "Node 2.2.1",
+        "icon": "icon-tree-chart",
+        "children": [{
+          "id": "node6",
+          "text": "Node 2.2.1.1",
+          "icon": "icon-tree-chart"
+        }]
+      }]
+    }]
+  }, {
+    "id": "node7",
+    "text": "Node Three",
+    "open": true,
+    "selected": true,
+    "focus": true,
+    "children": [{
+      "id": "node8",
+      "text": "Node 3.1"
+    }, {
+      "id": "node9",
+      "text": "Node 3.2",
+      "open": true,
+      "children": [{
+        "id": "node10",
+        "text": "Node 3.2.1",
+        "icon": "icon-tree-chart",
+        "open": true,
+        "children": [{
+          "id": "node11",
+          "text": "Node 3.2.1.1",
+          "icon": "icon-tree-chart"
+        }]
+      }]
+    }]
+  }, {
+    "id": "node12",
+    "text": "Node Four",
+    "open": true,
+    "selected": true,
+    "focus": true,
+    "children": [{
+      "id": "node13",
+      "text": "Node 4.1"
+    }, {
+      "id": "node14",
+      "text": "Node 4.2",
+      "open": true,
+      "children": [{
+        "id": "node15",
+        "text": "Node 4.2.1",
+        "icon": "icon-tree-chart",
+        "open": true,
+        "children": [{
+          "id": "node16",
+          "text": "Node 4.2.1.1",
+          "icon": "icon-tree-chart"
+        }]
+      }]
+    }]
+  }];
+  /* jshint ignore:end */
+
+  $('#json-tree').tree({dataset: sampleData});
+</script>
