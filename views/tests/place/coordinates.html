@@ -1,0 +1,100 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Place Test:  Coordinates</h2>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+    <form action="#" id="coords-form">
+      <div class="field">
+        <label for="coords-x">X Coord</label>
+        <input id="coords-x" name="coords-x" type="text" value="0"/>
+      </div>
+
+      <div class="field">
+        <label for="coords-y">Y Coord</label>
+        <input id="coords-y" name="coords-y" type="text" value="0"/>
+      </div>
+
+      <div class="field">
+        <input type="checkbox" class="checkbox" id="use-container">
+        <label for="use-container" class="checkbox-label" >Use this page's scroll container as a boundary</label>
+      </div>
+
+      <div class="field" style="margin-top: 20px;">
+        <button id="reset" name="reset" class="btn-secondary" type="reset">Reset</button>
+        <button id="submit" name="submit" class="btn-primary" type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
+  <div class="six columns">
+
+    <div id="placeable-one" class="ruby05" style="height: 96px; width: 96px;"></div>
+
+  </div>
+</div>
+
+<!--
+  Styles that are specific to this test
+-->
+<style>
+  #placeable-one {
+    background-color: rgba(198,95,95, 1);
+    z-index: 400;
+    -moz-transition: background-color 200ms cubic-bezier(.17, .04, .03, .94);
+    -ms-transition: background-color 200ms cubic-bezier(.17, .04, .03, .94);
+    -o-transition: background-color 200ms cubic-bezier(.17, .04, .03, .94);
+    -webkit-transition: background-color 200ms cubic-bezier(.17, .04, .03, .94);
+    transition: background-color 200ms cubic-bezier(.17, .04, .03, .94);
+  }
+
+  #placeable-one:hover,
+  #placeable-one:active {
+    background-color: rgba(198,95,95, .2);
+  }
+</style>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+
+    var el = $('#placeable-one');
+    el.place();
+
+    var api = el.data('place');
+
+    function serialize() {
+      var opts = {
+        x: $('#coords-x').val(),
+        y: $('#coords-y').val()
+      };
+
+      // Grab the closest page container as a boundary
+      if ($('#use-container').prop('checked')) {
+        opts.container = el.closest('.page-container');
+      }
+
+      return opts;
+    }
+
+    $('#coords-form').on('submit.test', function(e) {
+      e.preventDefault();
+      api.place(serialize());
+    });
+
+    el.on('afterplace', function(e, placementObj) {
+      var containerText = '',
+        c = placementObj.container;
+
+      if (c) {
+        containerText += ', using container "' + c[0].tagName + (c[0].id ? '#' + c[0].id : '') + (c.className ? '.' + c.className.split(' ').join('.') : '') + '".';
+      }
+
+      if (console) {
+        console.log('#' + el.attr('id') + '\'s new coordinates: X=' + placementObj.x + ' Y=' + placementObj.y + (containerText.length ? containerText : ''));
+      }
+    });
+  });
+</script>

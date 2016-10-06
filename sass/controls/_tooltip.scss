@@ -134,7 +134,7 @@
     .arrow {
       border-top-color: $popover-arrow-border-color;
       bottom: -14px;
-      margin-left: -7px;
+      left: calc(50% - 12px);
     }
 
     .arrow::after {
@@ -147,6 +147,7 @@
   &.bottom {
     .arrow {
       border-bottom-color: $popover-arrow-border-color;
+      left: calc(50% - 12px);
       top: -12px;
     }
 
@@ -161,7 +162,7 @@
     .arrow {
       border-right-color: $popover-arrow-border-color;
       left: -12px;
-      margin-top: -11px;
+      top: calc(50% - 12px);
     }
 
     .arrow::after {
@@ -173,8 +174,8 @@
   &.left {
     .arrow {
       border-left-color: $popover-arrow-border-color;
-      margin-top: -11px;
-      right: -11px;
+      right: -12px;
+      top: calc(50% - 12px);
     }
 
     .arrow::after {
@@ -294,9 +295,8 @@
 .top {
   .arrow {
     border-bottom-width: 0;
-    bottom: -7px;
-    left: 50%;
-    margin-left: -7px;
+    bottom: -6px;
+    left: calc(50% - 6px);
 
     &::after {
       border-bottom-width: 0;
@@ -309,8 +309,7 @@
 .bottom {
   .arrow {
     border-top-width: 0;
-    left: 50%;
-    margin-left: -4px;
+    left: calc(50% - 6px);
     top: -6px;
 
     &::after {
@@ -332,8 +331,7 @@
   .arrow {
     border-left-width: 0;
     left: -7px;
-    margin-top: -6px;
-    top: 50%;
+    top: calc(50% - 6px);
 
     &::after {
       border-left-width: 0;
@@ -346,9 +344,8 @@
 .left {
   .arrow {
     border-right-width: 0;
-    margin-top: -6px;
     right: -7px;
-    top: 50%;
+    top: calc(50% - 6px);
 
     &::after {
       border-right-width: 0;
