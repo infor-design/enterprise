@@ -482,10 +482,12 @@
       }
 
       var icon = this.showErrorIcon(field);
+      var representationField = field;
 
       //Add error classes to pseudo-markup for certain controls
       if (field.is('.dropdown, .multiselect') && field.data('dropdown') !== undefined) {
         var input = field.data('dropdown').pseudoElem;
+        representationField = input;
         input.addClass('error');
       }
 
@@ -494,16 +496,15 @@
       // Error tooltips should be positioned on the 'x' so that they sit directly underneath the fields
       // that they are indicating.
       function tooltipPositionCallback(placementObj) {
-        var fieldRect = field[0].getBoundingClientRect(),
+        var fieldRect = representationField[0].getBoundingClientRect(),
           elRect = tooltipAPI.tooltip[0].getBoundingClientRect(),
           rtl = $('html').is('[dir="rtl"]'),
           currX = placementObj.x,
           xAdjustment = 0;
 
-
         if (rtl) {
           if (elRect.left < fieldRect.left) {
-            xAdjustment += (elRect.left + fieldRect.left) * -1;
+            xAdjustment += (fieldRect.left - elRect.left);
           }
         } else {
           if (elRect.right > fieldRect.right) {
