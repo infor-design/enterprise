@@ -387,7 +387,9 @@ window.Editors = {
       }, 0);
     };
 
+    Soho.logTimeStart('datagrid - ' + this.name);
     this.init();
+    Soho.logTimeEnd('datagrid - ' + this.name);
   },
 
   Textarea: function(row, cell, value, container, column) {
@@ -423,7 +425,9 @@ window.Editors = {
       }, 0);
     };
 
+    Soho.logTimeStart('datagrid - ' + this.name);
     this.init();
+    Soho.logTimeEnd(this.name);
   },
 
   Checkbox: function(row, cell, value, container, column, event, grid) {
@@ -475,7 +479,9 @@ window.Editors = {
       }, 0);
     };
 
+    Soho.logTimeStart('datagrid - ' + this.name);
     this.init();
+    Soho.logTimeEnd(this.name);
   },
 
   Dropdown: function(row, cell, value, container, column, event, grid) {
@@ -583,7 +589,9 @@ window.Editors = {
       //We dont need to destroy since it will when the list is closed
     };
 
+    Soho.logTimeStart('datagrid - ' + this.name);
     this.init();
+    Soho.logTimeEnd(this.name);
   },
 
   Date: function(row, cell, value, container, column, event, grid) {
@@ -636,7 +644,9 @@ window.Editors = {
       }, 0);
     };
 
+    Soho.logTimeStart('datagrid - ' + this.name);
     this.init();
+    Soho.logTimeEnd(this.name);
 
   },
 
@@ -707,7 +717,9 @@ window.Editors = {
       }, 0);
     };
 
+    Soho.logTimeStart('datagrid - ' + this.name);
     this.init();
+    Soho.logTimeEnd('datagrid - ' + this.name);
   },
 
   Autocomplete: function(ow, cell, value, container, column, event, grid) {
@@ -748,7 +760,10 @@ window.Editors = {
         self.input.remove();
       }, 0);
     };
+
+    Soho.logTimeStart('datagrid - ' + this.name);
     this.init();
+    Soho.logTimeEnd('datagrid - ' + this.name);
   }
 
 };
@@ -795,7 +810,9 @@ $.fn.datagrid = function(options) {
   // Plugin Constructor
   function Datagrid(element) {
     this.element = $(element);
+    Soho.logTimeStart(pluginName);
     this.init();
+    Soho.logTimeEnd(pluginName);
   }
 
   // Actual Plugin Code

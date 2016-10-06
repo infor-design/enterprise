@@ -32,7 +32,9 @@
     function Zoom(element, settings) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
+      Soho.logTimeStart(pluginName);
       this.init();
+      Soho.logTimeEnd(pluginName);
     }
 
     Zoom.prototype = {

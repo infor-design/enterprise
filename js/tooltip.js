@@ -43,7 +43,9 @@
     // Plugin Constructor
     function Tooltip(element) {
       this.element = $(element);
+      Soho.logTimeStart(pluginName);
       this.init();
+      Soho.logTimeEnd(pluginName);
     }
 
     // Plugin Object

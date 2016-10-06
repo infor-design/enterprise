@@ -30,7 +30,9 @@
     function Plugin(element) {
       this.element = $(element);
       this.settings = settings;
+      Soho.logTimeStart(pluginName);
       this.init();
+      Soho.logTimeEnd(pluginName);
     }
 
     // Actual Plugin Code

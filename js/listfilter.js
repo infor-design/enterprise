@@ -28,7 +28,9 @@
 
   function ListFilter(settings) {
     this.settings = $.extend({}, defaults, settings);
+    Soho.logTimeStart('ListFilter');
     this.init();
+    Soho.logTimeEnd('ListFilter');
   }
 
   ListFilter.prototype = {

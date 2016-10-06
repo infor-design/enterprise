@@ -40,7 +40,9 @@
       this.settings = $.extend({}, settings);
       this.element = $(element);
       this.isOldIe  = $('html').is('.ie11, .ie10, .ie9');
+      Soho.logTimeStart(pluginName);
       this.init();
+      Soho.logTimeEnd(pluginName);
     }
 
     // Plugin Object
