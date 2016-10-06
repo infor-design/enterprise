@@ -101,7 +101,7 @@ input + .busy-indicator-container,
   .busy-indicator {
     background-color: $body-bg-color;
     height: 22px;
-    margin: 8px 1px 1px;
+    margin: 8px 5px 1px;
     position: absolute;
     right: 0;
     width: 40px;
@@ -168,7 +168,7 @@ input + .busy-indicator-container,
     position: absolute;
 
     .busy-indicator {
-      margin: 7px 1px 1px;
+      margin: 7px 5px 1px;
     }
   }
 }
