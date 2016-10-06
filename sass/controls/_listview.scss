@@ -25,6 +25,7 @@
     @include font-size(14);
     color: $listview-color;
     font-weight: normal;
+    overflow-wrap: break-word;
 
     &.hyperlink {
       color: $hyperlink-color;
@@ -47,6 +48,7 @@
   .listview-subheading {
     @include font-size(12);
     color: $listview-secondary-color;
+    overflow-wrap: break-word;
   }
 
   &.alternate-row {
