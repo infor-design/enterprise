@@ -39,7 +39,7 @@
         Formatters.CustomFormatter = function(row, cell, value, col) {
           var cellHtml = "<button type='button' class='btn-icon' title='Approval Status' >";
           cellHtml += " <svg class='icon' focusable='false' aria-hidden='true' role='presentation'>";
-          cellHtml += "     <use xlink:href='/svg/icons-extended.svg#icon-queries'></use>";
+          cellHtml += "     <use xlink:href='#icon-queries'></use>";
           cellHtml += " </svg>";
           cellHtml += " <span>Span Approval Status</span>";
           cellHtml += "</button>";
@@ -47,7 +47,7 @@
             return cellHtml;
         };
  
-        columns.push({ id: "queries", name: '', field: '', width: 65, formatter: Formatters.Button, click: function() {}, icon: 'queries', iconFile: '/svg/icons-extended.svg', sortable: false, tooltip: 'Approval Status' });
+        columns.push({ id: "queries", name: '', field: '', width: 65, formatter: Formatters.Button, click: function() {}, icon: 'queries', iconFile: '', sortable: false, tooltip: 'Approval Status' });
  
 
         //Init the grid

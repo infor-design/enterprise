@@ -30,7 +30,6 @@
     var pluginName = 'icon',
         defaults = {
           use: 'user-profile', // Match this to one of the SoHo Xi icons, prefixed with an ID of '#icon-'
-          iconFileLocation: null, // If defined, this will be prepended to the <use> tag's xlink:href attribute, causing it to be loaded from an external file instead of locally on the page.
           focusable: false
         },
         settings = $.extend({}, defaults, options);
@@ -75,11 +74,12 @@
             use.setAttribute('xlink:href', self.getBasedUseTag());
           }, 0);
         }
+
         return this;
       },
 
       getBasedUseTag: function() {
-        return $.getBaseURL((this.settings.iconFileLocation || '') + '#icon-' + this.settings.use);
+        return $.getBaseURL('#icon-' + this.settings.use);
       },
 
       // In the event that a <use> tag exists on an icon, we want to retain it
@@ -95,12 +95,6 @@
         }
 
         var xlinkHref = useTag.attr('xlink:href');
-
-        // detect if there is an external file location in the use tag, and store it
-        if (xlinkHref.indexOf('#') > 0) {
-          this.settings.iconFileLocation = xlinkHref.substring(0, xlinkHref.indexOf('#'));
-          xlinkHref = xlinkHref.substring(xlinkHref.indexOf('#'), xlinkHref.length);
-        }
         this.settings.use = xlinkHref.replace('#icon-', '');
 
         return this;
@@ -153,15 +147,7 @@
     'use strict';
 
     function normalizeIconOptions(options) {
-      //Recheck for backwards compatibility
-      var inlineSvg = $('.svg-icons > .svg-icons').length > 0;
-
-      if (options.file && options.file.indexOf('/','') -1 ) {
-        options.file = window.Soho.svgPath + options.file;
-      }
-
       var defaults = {
-        file: inlineSvg ? '' : window.Soho.svgPath + 'icons.svg',
         icon: 'user-profile', // omit the "icon-" if you want; this code strips it out.
         classes: ['icon']
       };
@@ -173,12 +159,14 @@
         });
       }
 
-      if (!options.classes) {
-        options.classes = [].concat(defaults.classes);
+      // reroute "options.class" if that exists
+      if (!options.classes && options.class) {
+        options.classes = options.class;
+        delete options.class;
       }
 
-      if (!options.file) {
-        options.file = defaults.file;
+      if (!options.classes) {
+        options.classes = [].concat(defaults.classes);
       }
 
       if (typeof options.classes === 'string') {
@@ -198,7 +186,7 @@
 
       return [
         '<svg class="' + options.classes.join(' ') + '" focusable="false" aria-hidden="true" role="presentation">' +
-          '<use xlink:href="'+ options.file +'#icon-' + options.icon + '"></use>' +
+          '<use xlink:href="#icon-' + options.icon + '"></use>' +
         '</svg>'
       ].join('');
     };
@@ -211,16 +199,16 @@
     // Returns just the path part
     $.createIconPath = function createIconElement(options) {
       options = normalizeIconOptions(options);
-      return options.file + $.getBaseURL('#icon-' + options.icon.replace('icon-',''));
+      return $.getBaseURL('#icon-' + options.icon.replace('icon-',''));
     };
 
     //Toggle the use or entire svg icon in the case of the polyfill
-    $.fn.changeIcon = function(icon, file) {
+    $.fn.changeIcon = function(icon) {
       var svg = $(this),
           use = svg.find('use');
 
       if (use.length === 1) {
-        use.attr('xlink:href', $.createIconPath({icon: icon, file: file}));
+        use.attr('xlink:href', $.createIconPath({icon: icon}));
       } else {
         //ie polyfilled
         var newSvg = $.createIcon({classes: svg.attr('class'), icon : icon});

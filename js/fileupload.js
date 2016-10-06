@@ -73,8 +73,7 @@
         }
 
         this.fileInput.attr('tabindex', '-1').on('change.fileupload', function () {
-          var fileInput = $(this);
-          elem.prev('input').val(fileInput.val());
+          elem.prev('input').val(this.files[0].name);
         });
       },
 

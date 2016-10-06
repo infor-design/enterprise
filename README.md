@@ -109,16 +109,22 @@ Run the following to get a specific version.
 npm install --save @infor/sohoxi@4.2.0
 ```
 
-Run the following to get the last nightly build
+Run the following to get the last develop build
 
 ```bash
-npm install --save @infor/sohoxi@nightly
+npm install --save @infor/sohoxi@develop
 ```
 
 Run the following to see the versions
 
 ```bash
 npm info @infor/sohoxi dist-tags
+```
+
+### Tagging develop builds
+To be used by build servers to tag the develop builds before pushing to `npm.infor.com`
+```node
+npm run develop-tag
 ```
 
 # Contributing to Soho XI

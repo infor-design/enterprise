@@ -32,6 +32,10 @@
   width: 14px;
 }
 
+.inline .radio ~ .label-text::before {
+  margin-top: 2px;
+}
+
 .inline .radio:hover ~ .label-text::before,
 .radio:hover + label::before {
   @include css3(transition, border-color 300ms ease);
@@ -64,6 +68,10 @@
   top: 8px;
   transition: all .2s ease 0s;
   width: 4px;
+}
+
+.inline .radio ~ .label-text::after {
+  top: 6px;
 }
 
 .inline .radio:checked ~ .label-text::before,
@@ -143,13 +151,12 @@
 
 .radio-group {
   margin-top: 0;
-  padding-top: 20px;
+  padding-bottom: 10px;
 
   legend {
     @include font-size(12);
     color: $label-color;
-    margin-top: -28px;
-    padding-top: 10px;
+    padding-bottom: 5px;
   }
 
   &.is-disabled,
@@ -349,4 +356,28 @@ html[dir='rtl'] {
     top: 13px;
   }
 
+}
+
+// Error States
+.inline .radio.error ~ .label-text,
+.radio.error + label {
+  color: $error-color;
+
+  &::before {
+    border-color: $error-color;
+  }
+}
+// disabled radio
+.inline .radio.error:disabled ~ .label-text,
+.radio.error:disabled + label {
+  color: rgba($error-color, .4);
+
+  &::before {
+    border-color: rgba($error-color, .4);
+  }
+}
+
+.radio-group-error {
+  margin-left: 2px;
+  margin-top: 5px;
 }

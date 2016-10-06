@@ -97,14 +97,6 @@ svg.icon-close {
   width: 115px;
 }
 
-//Shitty Workaround...
-.ios {
-  .icon-error,
-  .icon-confirm {
-    top: 9.5px !important;
-  }
-}
-
 &.icon-favorite {
   svg {
     fill: $rating-bg-color !important;
@@ -139,12 +131,12 @@ svg.icon-logo {
 
   &.dirty-checkbox {
     left: 1px;
-    top: 3px;
+    top: -1px;
 
     &.is-checked {
       border-width: 4px;
       left: 1px;
-      top: 5px;
+      top: 0;
       z-index: 2;
     }
   }
@@ -156,11 +148,12 @@ svg.icon-logo {
     margin-top: 8px;
 
     &.dirty-checkbox {
+      left: -4px;
       margin-top: inherit;
       top: 1px;
 
       &.is-checked {
-        left: auto;
+        // left: -4px;
         top: 0;
       }
     }
@@ -555,6 +548,7 @@ html[dir='rtl'] {
 }
 
 // Empty State Widget Icons
+// NOTE: These styles also live inside of "<project root>/svg/icons-empty.svg"
 //================================================== //
 
 .icon-empty-state {

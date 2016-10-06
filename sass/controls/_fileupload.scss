@@ -18,10 +18,6 @@ label.fileupload {
     text-align: center;
     width: 36px;
 
-    @media (max-width: 374px) {
-      left: -55px;
-    }
-
     &.trigger {
 
       .icon {
@@ -44,7 +40,7 @@ label.fileupload {
 
   // Make this flow offscreen
   input[type="file"] {
-    left: -1000px;
+    left: -10000px;
     position: fixed;
 
     &:disabled + span:not(.audible) {
@@ -355,5 +351,15 @@ html[dir='rtl'] {
       }
     }
 
+  }
+}
+
+@include respond-to(phone) {
+  .is-safari {
+    .modal {
+      label.fileupload {
+        position: absolute;
+      }
+    }
   }
 }

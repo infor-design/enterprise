@@ -50,28 +50,16 @@
         this.addMarkup();
         this.handleEvents();
         this.iconFilteringSetup();
-        this.fixSvg();
+
+        // Allow for an external click event to be passed in from outside this code.
+        // This event can be used to pass clientX/clientY coordinates for mouse cursor positioning.
+        if (this.settings.trigger === 'immediate') {
+          this.open(this.settings.eventObj);
+        }
       },
 
       isRTL: function() {
         return $('html').attr('dir') === 'rtl';
-      },
-
-      fixSvg: function () {
-        // Fix: chrome was not showing icons had to resets [xlink:href] attribute
-        var self = this,
-            isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-
-        if (!isChrome) {
-          return;
-        }
-
-        setTimeout(function() {
-          self.menu.find('svg.icon').each(function() {
-            var use = $('use', this);
-            use.attr('xlink:href', use.attr('xlink:href'));
-          });
-        }, 0);
       },
 
       setup: function() {
@@ -94,7 +82,9 @@
 
       //Add markip including Aria
       addMarkup: function () {
-        var id;
+        var id,
+          leftClick = this.settings.trigger !== 'rightClick',
+          immediate = this.settings.trigger === 'immediate';
 
         switch(typeof this.settings.menu) {
           case 'string': // ID Selector
@@ -138,6 +128,7 @@
           .wrap('<div class="popupmenu-wrapper"></div>');
 
         this.wrapper = this.menu.parent('.popupmenu-wrapper');
+        this.wrapper.find('svg').icon();
 
         //Enforce Correct Modality
         this.menu.parent('.popupmenu-wrapper').attr('role', 'application').attr('aria-hidden', 'true');
@@ -197,6 +188,16 @@
         this.element.attr('aria-controls', id);
 
         this.markupItems();
+
+        //Add an Audible Label
+        if (!leftClick && !immediate) {
+          var audibleSpanId = 'popupmenu-f10-label';
+          if ($('#'+audibleSpanId).length === 0) {
+            this.element.after('<span style="display:none;" id="' + audibleSpanId + '">' + Locale.translate('PressShiftF10') + '</span>');
+          }
+          //PressShiftF10
+          this.element.attr('aria-describedby', audibleSpanId);
+        }
       },
 
       markupItems: function () {
@@ -244,73 +245,68 @@
       },
 
       handleEvents: function() {
-        var self = this;
+        var self = this,
+          leftClick = this.settings.trigger !== 'rightClick',
+          immediate = this.settings.trigger === 'immediate';
 
-        if (this.settings.trigger === 'click' || this.settings.trigger === 'toggle') {
+        function disableBrowserContextMenu(e) {
+          e.stopPropagation();
+          e.preventDefault();
+          return false;
+        }
 
-        this.element.onTouchClick('popupmenu')
-          .on('click.popupmenu', function (e) {
+        function doOpen(e) {
+          e.stopPropagation();
+          e.preventDefault();
 
-            if (self.element.is(':disabled')) {
-              return;
-            }
+          if (self.menu.hasClass('is-open')){
+            self.close();
+          } else {
+            self.open(e);
+          }
+        }
 
-            if (self.element.closest('.listview').length > 0) {
-              e.stopPropagation();
-              e.preventDefault();
-            }
+        if (leftClick && !immediate) {
+          this.element
+            .on('mousedown.popupmenu', function (e) {
+              if (e.button > 0 || self.element.is(':disabled')) {
+                return;
+              }
+              doOpen(e);
+          });
+        }
 
-            if (self.menu.hasClass('is-open')){
-              self.close();
-            } else {
-              self.open(e);
+        //settings.trigger
+        if (!leftClick) {
+          this.menu.parent().on('contextmenu.popupmenu', disableBrowserContextMenu);
+          this.element
+            .on('contextmenu.popupmenu', disableBrowserContextMenu)
+            .on('mousedown.popupmenu', function (e) {
+              if (e.button === 2 || (e.button === 0 & e.ctrlKey)) {
+                doOpen(e);
+              }
+            });
+        }
+
+        // Setup these next events no matter what trigger type is
+        this.element.not('.autocomplete')
+          .on('keydown.popupmenu', function (e) {
+            switch(e.which) {
+              case 13:
+              case 32:
+                self.open(e, true);
+                break;
+              case 121:
+                if (e.shiftKey) { //Shift F10
+                  self.open(e, true);
+                }
+                break;
             }
           })
           .on('updated.popupmenu', function(e) {
             e.stopPropagation();
             self.updated();
           });
-        }
-
-        //settings.trigger
-        if (this.settings.trigger === 'rightClick') {
-          this.menu.parent().on('contextmenu.popupmenu', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-          });
-
-          this.element.on('contextmenu.popupmenu', function (e) {
-            e.preventDefault();
-            return false;
-          }).on('mousedown.popupmenu', function (e) {
-            if (e.button === 2 || e.button === 0 && e.ctrlKey) {
-              self.open(e);
-              e.stopPropagation();
-            }
-            e.preventDefault();
-          });
-
-          //Add an Audible Label
-          var id = 'popupmenu-f10-label';
-          if ($('#'+id).length === 0) {
-            this.element.after('<span style="display:none;" id="' + id + '">' + Locale.translate('PressShiftF10') + '</span>');
-          }
-          //PressShiftF10
-          this.element.attr('aria-describedby', id);
-        }
-
-        // Allow for an external click event to be passed in from outside this code.
-        // This event can be used to pass clientX/clientY coordinates for mouse cursor positioning.
-        if (this.settings.trigger === 'immediate') {
-          this.open(this.settings.eventObj);
-        }
-
-        this.element.on('keydown.popupmenu', function (e) {
-          if (e.shiftKey && e.which === 121) {  //Shift F10
-            self.open(e, true);
-          }
-        });
       },
 
       handleKeys: function () {
@@ -553,8 +549,8 @@
           windowH = $(window).height(),
           windowW = $(window).width(),
           mouse =  {
-            x: e && e.clientX ? e.clientX : window.event.clientX,
-            y: e && e.clientY ? e.clientY : window.event.clientY
+            x: e && e.clientX ? e.clientX : (window.event && window.event.clientX) ? window.event.clientX : 0,
+            y: e && e.clientY ? e.clientY : (window.event && window.event.clientY) ? window.event.clientY : 0
           },
           menuDimensions = {
             width: this.menu.outerWidth(),
@@ -564,6 +560,10 @@
           wasFlipped = false,
           usedCoords = false,
           d;
+
+        if (!wrapper.length) {
+          return;
+        }
 
         if (target.is('svg, .icon') && target.closest('.tab').length) {
           target = target.closest('.tab');
@@ -628,7 +628,7 @@
         }
 
         function useArrow() {
-          return target.is('.btn-menu, .btn-actions, .searchfield-category-button, .trigger');
+          return target.is('.btn-menu, .btn-actions, .btn-split-menu, .searchfield-category-button, .trigger');
         }
         function hideArrow() {
           if (useArrow()) {
@@ -644,7 +644,7 @@
         function useTargetSize(axis) {
           var cssConstraints = {
             x: '',
-            y: '.autocomplete, .btn-menu, .btn-actions, .searchfield-category-button, .trigger'
+            y: '.autocomplete, .btn-menu, .btn-actions, .btn-split-menu, .searchfield-category-button, .trigger'
           };
           var jsConstraints = {
             x: function() {
@@ -720,13 +720,15 @@
             if (target.is('.btn-filter')) {
               value = value + (isRTL ? 10 : -10);
             }
+            if (target.is('.btn-split-menu')) {
+              value = value + (isRTL ? 13 : -13);
+            }
           }
 
           if (axis === 'y') {
             if (target.is('.btn-actions')) {
               value = value + 5;
             }
-
             if (target.is('.btn-filter, .searchfield-category-button') || target.closest('.colorpicker-container').length) {
               value = value + 10; // extra spacing to keep arrow from overlapping
             }
@@ -761,6 +763,7 @@
 
         // place the element so we can get some height/width and bleeds
         wrapper.css({'left': left, 'top': top});
+
         left = wrapper.offset().left;
         top = wrapper.offset().top;
 
@@ -845,12 +848,13 @@
         this.menu.css({'height': menuDimensions.height, 'width': menuDimensions.width});
 
         // Flip arrow to the opposite side
+        var arrow = wrapper.find('div.arrow');
         if (wasFlipped) {
           wrapper.removeClass('bottom').addClass('top');
         }
 
-        if (this.element.is('.btn-filter, .searchfield-category-button')) {
-          wrapper.find('.arrow').css({ 'right': (isRTL ? '20px' : 'auto'), 'left': (isRTL ? 'auto' : '20px') });
+        if (this.element.is('.btn-menu', '.btn-filter, .btn-split-menu, .searchfield-category-button')) {
+          arrow.css({ 'right': (isRTL ? '20px' : 'auto'), 'left': (isRTL ? 'auto' : '20px') });
         }
       },
 
@@ -1168,6 +1172,8 @@
           isCancelled = false;
         }
 
+        var self = this;
+
         this.menu.removeClass('is-open').attr('aria-hidden', 'true').css({'height': '', 'width': ''});
         this.menu.parent('.popupmenu-wrapper').css({'left': '-999px', 'height': '', 'width': ''});
         this.menu.find('.submenu').off('mouseenter mouseleave').removeClass('is-submenu-open');
@@ -1190,9 +1196,7 @@
           return;
         }
 
-        if ($(document.activeElement).is('body')) {
-          this.element.focus();
-        }
+        self.element.removeClass('hide-focus').focus();
       },
 
       teardown: function() {

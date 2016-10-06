@@ -161,7 +161,7 @@
            .parent().attr('role', 'presentation').addClass('tab');
 
           if (a.parent().hasClass('dismissible') && !a.parent().children('.icon').length) {
-            $.createIconElement({ icon: 'close', classes: 'close' }).insertAfter(a);
+            $.createIconElement({ icon: 'close', classes: 'icon close' }).insertAfter(a);
           }
 
           // Find and configure dropdown tabs
@@ -235,7 +235,7 @@
 
               var icon = li.children('.icon');
               if (!icon.length) {
-                icon = $.createIcon({icon: 'close', class: 'close'});
+                icon = $.createIconElement({icon: 'close', classes: 'icon close'});
               }
               icon.detach().appendTo(a);
 
@@ -968,7 +968,7 @@
 
       isActive: function(href) {
         var panel = this.getPanel(href);
-        return panel.css('display') === 'none';
+        return panel.css('display') !== 'none';
       },
 
       isNestedInLayoutTabs: function() {
@@ -1089,10 +1089,7 @@
           return;
         }
 
-        // http://jira.infor.com/browse/SOHO-4641
-        // Fix: Disable this [oldPanel.closeChildren()], was causing to close children with activation
-
-        // oldPanel.closeChildren();
+        oldPanel.closeChildren();
 
         self.panels.hide();
         self.element.trigger('activated', [a]);
@@ -1254,7 +1251,7 @@
 
         if (options.isDismissible) {
           tabHeaderMarkup.addClass('dismissible');
-          tabHeaderMarkup.append($.createIconElement({ icon: 'close', classes: 'close' }));
+          tabHeaderMarkup.append($.createIconElement({ icon: 'close', classes: 'close icon' }));
         }
 
         if (this.settings.tabCounts) {
@@ -1357,7 +1354,7 @@
           targetPanel = this.getPanel(tabId),
           hasTargetPanel = (targetPanel && targetPanel.length),
           targetLiIndex = this.tablist.children('li').index(targetLi),
-          notATab = '.separator, .is-disabled, :hidden',
+          notATab = '.application-menu-trigger, .separator, .is-disabled, :hidden',
           prevLi = targetLi.prev();
 
         var canClose = this.element.triggerHandler('beforeclose', [targetLi]);
@@ -1414,11 +1411,19 @@
         }
 
         function isLastDropdownTabItem(menu) {
-          return menu.children('li:not(.separator)').length === 0;
+          return menu.length && menu.children('li:not(.separator)').length === 0;
         }
         if (isLastDropdownTabItem(parentMenu)) {
           prevLi = this.getPreviousTab(trigger);
-          this.remove(trigger);
+
+          setTimeout(function() {
+            self.remove(trigger);
+          }, 1);
+        }
+
+        // Close dropdown tab's menu
+        if (trigger && trigger.length) {
+          trigger.data('popupmenu').close();
         }
 
         // Adjust tablist height
@@ -1710,7 +1715,6 @@
 
         this.adjustSpilloverNumber();
         self.setMoreActive();
-
       },
 
       adjustHeaderTabs: function() {

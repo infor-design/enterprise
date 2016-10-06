@@ -64,34 +64,36 @@
 
 <body>
 
-<div class="wrapper">
-  <section class="signin" role="main">
+<div class="page-container scrollable">
+    <div class="wrapper">
+      <section class="signin" role="main">
 
-      <img src = "/images/signin-logo.png" alt="Name"/>
+          <img src = "/images/signin-logo.png" alt="Name"/>
 
-      <div class="field">
-        <label for="username-display">Email</label>
-        <input type="text" name="username-display" id="username-display" autocomplete="off" data-validate="required">
-      </div>
+          <div class="field">
+            <label for="username-display">Email</label>
+            <input type="text" name="username-display" id="username-display" autocomplete="off" data-validate="required">
+          </div>
 
-      <div class="field">
-        <label for="password-display">Password</label>
-        <input type="password" id="password-display" data-validate="required">
-      </div>
-      <form id="signin" data-validate-on="submit" autocomplete="off">
-          <button class="btn-primary" type="submit">Sign in</button>
-          <a class="hyperlink" href="forgotpassword">Forgot Password?</a>
+          <div class="field">
+            <label for="password-display">Password</label>
+            <input type="password" id="password-display" data-validate="required">
+          </div>
+          <form id="signin" data-validate-on="submit" autocomplete="off">
+              <button class="btn-primary" type="submit">Sign in</button>
+              <a class="hyperlink" href="forgotpassword">Forgot Password?</a>
 
-          <span class="powered-by">Powered By <svg viewBox="0 0 34 34" class="icon icon-logo" focusable="false" aria-hidden="true" role="presentation" aria-label="Infor Logo">
-            <use xlink:href="/svg/icons.svg#icon-logo"></use>
-          </svg></span>
+              <span class="powered-by">Powered By <svg viewBox="0 0 34 34" class="icon icon-logo" focusable="false" aria-hidden="true" role="presentation" aria-label="Infor Logo">
+                <use xlink:href="#icon-logo"></use>
+              </svg></span>
 
-          <label for="username" class="audible">Username</label>
-          <input type="hidden" name="username" id="username" >
-          <label for="password" class="audible">Password</label>
-          <input type="hidden" id="password" name="password">
-      </form>
-  </section>
+              <label for="username" class="audible">Username</label>
+              <input type="hidden" name="username" id="username" >
+              <label for="password" class="audible">Password</label>
+              <input type="hidden" id="password" name="password">
+          </form>
+      </section>
+    </div>
 </div>
 
 <script>

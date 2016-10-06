@@ -49,8 +49,7 @@
 
       setup: function() {
         this.panel = this.element.next('.contextual-action-panel');
-        this.panel.css('display', 'none');
-
+        this.panel.css('display', 'none').addClass('is-animating');
         return this;
       },
 
@@ -95,6 +94,8 @@
           children,
           isIframe = false,
           contents;
+
+        this.panel.find('svg').icon();//fixSvg();
 
         if (this.panel.find('.modal-content').length === 0) {
           children = this.panel.children();
@@ -174,7 +175,12 @@
           self.element.triggerHandler(e.type);
         }
 
-        this.panel.on('open.contextualactionpanel close.contextualactionpanel', function(e) {
+        this.panel.addClass('is-animating').on('open.contextualactionpanel', function(e) {
+          passEvent(e);
+          self.panel.removeClass('is-animating');
+        }).on('beforeclose.contextualactionpanel', function() {
+          self.panel.addClass('is-animating');
+        }).on('close.contextualactionpanel', function(e) {
           passEvent(e);
         }).on('beforeopen.contextualactionpanel', function(e) {
           $(this).initialize();

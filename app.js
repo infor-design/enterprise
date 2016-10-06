@@ -50,10 +50,10 @@ var express = require('express'),
 
     // Normally we will use an external file for loading SVG Icons and Patterns.
     // Setting "inlineSVG" to true will use the deprecated method of using SVG icons, which was to bake them into the HTML markup.
-    if (req.query.inlineSVG && req.query.inlineSVG.length > 0) {
+    // if (req.query.inlineSVG && req.query.inlineSVG.length > 0) {
       res.opts.inlineSVG = true;
-      console.log('Inlining SVG Elements...');
-    }
+      //console.log('Inlining SVG Elements...');
+    // }
 
     // Global settings for forcing a "no frills" layout for test pages.
     // This means no header with page title, hamburger, theme swap settings, etc.
@@ -74,7 +74,27 @@ var express = require('express'),
       console.log('Setting Colors to ' + res.opts.colorScheme);
     }
 
+    // Sets a simulated response delay for API Calls
+    if (req.query.delay && !isNaN(req.query.delay) && req.query.delay.length > 0) {
+      res.opts.delay = req.query.delay;
+    }
+
     next();
+  };
+
+  // Simple Middleware that simulates a delayed response by setting a timeout before returning the next middleware.
+  var responseThrottler = function(req, res, next) {
+    if (!res.opts.delay) {
+      return next();
+    }
+
+    function delayedResponse() {
+      console.log('Delayed request continuing...');
+      return next();
+    }
+
+    console.log('Delaying the response time of this request by ' + res.opts.delay + 'ms...');
+    setTimeout(delayedResponse, res.opts.delay);
   };
 
   // Simple Middleware for logging some meta-data about the request to the console
@@ -100,6 +120,7 @@ var express = require('express'),
 
   // place optionHandler() first to augment all "res" objects with an "opts" object
   app.use(optionHandler);
+  app.use(responseThrottler);
   app.use(router);
   app.use(timestampLogger);
   app.use(errorHandler);
@@ -896,7 +917,7 @@ var express = require('express'),
   // Example Call: http://localhost:4000/api/compressors?pageNum=1&sort=productId&pageSize=100
   router.get('/api/compressors', function(req, res, next) {
 
-    var products = [], productsAll = [],
+    var products = [], productsAll = [], term,
       start = (req.query.pageNum -1) * req.query.pageSize,
       end = req.query.pageNum * req.query.pageSize,
       total = 1000, i = 0, j = 0, filteredTotal = 0, seed = 1,
@@ -906,9 +927,9 @@ var express = require('express'),
     for (j = 0; j < total; j++) {
       var filteredOut = false;
 
-      //Just filter first two cols
+      //Just filter first four cols
       if (req.query.filter) {
-        var term = req.query.filter.replace('\'','');
+        term = req.query.filter.replace('\'','');
         filteredOut = true;
 
         if ((214220+j).toString().indexOf(term) > -1) {
@@ -928,12 +949,44 @@ var express = require('express'),
         }
       }
 
+      //Filter Row simulation
+      if (req.query.filterValue) {
+        term = req.query.filterValue.replace('\'','').toLowerCase();
+        filteredOut = true;
+
+        if (req.query.filterColumn ==='productId' && req.query.filterOp === 'contains' && (214220+j).toString().indexOf(term) > -1) {
+          filteredOut = false;
+        }
+        if (req.query.filterColumn ==='productId' && req.query.filterOp === 'equals' && (214220+j).toString() === term) {
+          filteredOut = false;
+        }
+
+        if (req.query.filterColumn ==='productName' && req.query.filterOp === 'contains' && 'compressor'.toString().indexOf(term) > -1) {
+          filteredOut = false;
+        }
+
+        if (req.query.filterColumn ==='activity' && req.query.filterOp === 'contains' && 'assemble paint'.toString().indexOf(term) > -1) {
+          filteredOut = false;
+        }
+        if (req.query.filterColumn ==='activity' && req.query.filterOp === 'equals' && 'assemble paint'.toString() === -1) {
+          filteredOut = false;
+        }
+
+        if (req.query.filterColumn ==='quantity' && req.query.filterOp === 'contains' && (1+(j/2)).toString().indexOf(term) > -1) {
+          filteredOut = false;
+        }
+        if (req.query.filterColumn ==='quantity' && req.query.filterOp === 'equals' && (1+(j/2)).toString() === term) {
+          filteredOut = false;
+        }
+      }
+
       var status = Math.floor(statuses.length / (start + seed)) + 1;
 
       if (!filteredOut) {
         filteredTotal++;
         productsAll.push({ id: j, productId: 214220+j, productName: 'Compressor ' + (seed + start), activity:  'Assemble Paint', quantity: 1+(j/2), price: 210.99-j, status: statuses[status], orderDate: new Date(2014, 12, seed), action: 'Action'});
       }
+
       seed ++;
       if (seed > 10) {
         seed = 1;
@@ -954,7 +1007,9 @@ var express = require('express'),
     }
 
     for (i = start; i < end && i < total; i++) {
-      products.push(productsAll[i]);
+      if (productsAll[i]) {
+        products.push(productsAll[i]);
+      }
     }
 
     res.setHeader('Content-Type', 'application/json');

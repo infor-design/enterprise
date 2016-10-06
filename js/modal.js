@@ -31,7 +31,8 @@
         cssClass: null,  //Append a css class to top level
         autoFocus: true,
         id: null,  //Optionally tag a dialog with an id
-        frameHeight: 180 //Extra Height
+        frameHeight: 180, //Extra Height
+        frameWidth: 46 //Extra Width
       },
       settings = $.extend({}, defaults, options);
 
@@ -80,7 +81,8 @@
         }
 
         self.addButtons(this.settings.buttons);
-        this.element.css({'display':'none'}).appendTo('body');
+        this.element.appendTo('body');
+        this.element.css({'display':'none'});
       },
 
       appendContent: function () {
@@ -99,7 +101,6 @@
         if (this.settings.id) {
           this.element.attr('id', this.settings.id);
         }
-
 
         if ($(this.settings.content).is('.modal')) {
           this.element = $(this.settings.content);
@@ -315,15 +316,11 @@
           this.oldActive = $(':focus');  //Save and restore focus for A11Y
         }
 
-        elemCanOpen = this.element.triggerHandler('beforeopen');
-
-        self.isCancelled = false;
-
-        if (elemCanOpen === false) {
-          return false;
-        }
-
         this.element.after(this.overlay);
+        if (this.element && !this.element.parent().hasClass('modal-wrapper')) {
+          this.element.wrap('<div class="modal-page-container"><div class="modal-wrapper"></div>');
+        }
+        this.root = this.element.closest('.modal-page-container');
 
         messageArea = self.element.find('.detailed-message');
         if (messageArea.length === 1) {
@@ -331,6 +328,15 @@
             self.sizeInner();
           });
           self.sizeInner();
+        }
+
+        elemCanOpen = this.element.triggerHandler('beforeopen');
+        self.isCancelled = false;
+
+        if (elemCanOpen === false) {
+          self.overlay.remove();
+          self.root.css({'display':'none'});
+          return false;
         }
 
         //Look for other nested dialogs and adjust the zindex.
@@ -343,7 +349,7 @@
           }
         });
 
-        $('body > *').not(this.element).not('.modal, .overlay').attr('aria-hidden', 'true');
+        $('body > *').not(this.element).not('.modal, .overlay, .modal-page-container').attr('aria-hidden', 'true');
 
         // Ensure aria-labelled by points to the id
         if (this.settings.isAlert) {
@@ -378,6 +384,8 @@
         if (!this.mainContent.length) {
           this.mainContent = $('body');
         }
+
+        this.removeNoScroll = !this.mainContent.hasClass('no-scroll');
         this.mainContent.addClass('no-scroll');
 
         $(window).on('resize.modal-' + this.id, function() {
@@ -385,16 +393,14 @@
         });
 
         //Center
+        this.root.css({'display': ''});
         this.element.css({'display': ''});
+
         setTimeout(function() {
-          // TODO: Figure out why we need to do this twice in some cases
-          if (self.element.css('margin') !== undefined) {
-            self.resize();
-          }
           self.resize();
           self.element.addClass('is-visible').attr('role', (self.settings.isAlert ? 'alertdialog' : 'dialog'));
-          self.element.attr('aria-hidden', 'false');
-          self.overlay.attr('aria-hidden', 'false');
+          self.root.attr('aria-hidden', 'false');
+          self.overlay.attr('aria-hidden', 'true');
           self.element.attr('aria-modal', 'true'); //This is a forward thinking approach, since aria-modal isn't actually supported by browsers or ATs yet
         }, 1);
 
@@ -477,10 +483,6 @@
 
         setTimeout(function () {
           focusElement();
-          // fixes blur problems with reset filter after animation done, only for non IE browsers
-          if (!$('html').is('.ie')) {
-            self.element.addClass('no-filter');
-          }
         }, 200);
 
         setTimeout(function () {
@@ -490,10 +492,10 @@
       },
 
       resize: function() {
-        var bodyHeight = $('.modal-body', this.element).height(),
-          calcHeight = ($(window).height()* 0.9)-this.settings.frameHeight; //90% -(180 :extra elements-height)
+        var calcHeight = ($(window).height()* 0.9)-this.settings.frameHeight, //90% -(180 :extra elements-height)
+          calcWidth = ($(window).width()* 0.9)-this.settings.frameWidth;
 
-        $('.modal-body-wrapper', this.element).css('max-height', bodyHeight > calcHeight ? calcHeight : '');
+        this.element.find('.modal-body-wrapper').css({'max-height': calcHeight, 'max-width': calcWidth});
       },
 
       isOpen: function() {
@@ -563,27 +565,29 @@
           self = this,
           fields = this.element.find('[data-validate]');
 
+        this.root = this.element.closest('.modal-page-container');
         fields.addClass('disable-validation');
 
         if (elemCanClose === false) {
           return false;
         }
 
-        if (this.mainContent) {
+        if (this.mainContent && this.removeNoScroll) {
           this.mainContent.removeClass('no-scroll');
         }
         $(window).off('resize.modal-' + this.id);
 
         this.element.off('keypress.modal keydown.modal');
-        this.element.css('visibility', 'visible');
-        this.element.removeClass('is-visible no-filter');
+        this.element.removeClass('is-visible');
 
         this.overlay.attr('aria-hidden', 'true');
-        this.element.attr('aria-hidden', 'true');
+        if (this.root) {
+          this.root.attr('aria-hidden', 'true');
+        }
 
-        if ($('.modal[aria-hidden="false"]').length < 1) {
+        if ($('.modal-page-container[aria-hidden="false"]').length < 1) {
           $('body').removeClass('modal-engaged');
-          $('body > *').not(this.element).removeAttr('aria-hidden');
+          $('body > *').not(this.element.closest('.modal-page-container')).removeAttr('aria-hidden');
           $('.overlay').remove();
         }
 
@@ -605,7 +609,8 @@
 
         setTimeout( function() {
           self.overlay.remove();
-          self.element.css({'display':'none'}).trigger('afterclose');
+          self.root.css({'display':'none'});
+          self.element.trigger('afterclose');
 
           if (self.settings.trigger === 'immediate' || destroy) {
             self.destroy();
@@ -635,7 +640,7 @@
             self.trigger.off('click.modal');
           }
 
-          self.element.remove();
+          self.element.closest('.modal-page-container').remove();
           $.removeData(self.element[0], 'modal');
         }
 

@@ -507,6 +507,7 @@ $datagrid-header-active-color: $graphite08;
 $datagrid-header-checkbox-border-color: $graphite03;
 $datagrid-sort-icon-color: $graphite04;
 $datagrid-sort-icon-sorted-color: $white;
+$datagrid-required-icon-color: $white;
 
 $datagrid-cell-color: $graphite10;
 $datagrid-cell-bg-color: #ffffff;
@@ -540,6 +541,15 @@ $datagrid-filter-disabled-color: $slate05;
 $datagrid-filter-icon-color: $slate03;
 $datagrid-filter-focus-color: $azure04;
 $datagrid-filter-active-color: $azure04;
+
+$datagrid-list-filter-border-color: $slate04;
+$datagrid-list-filter-hover-border-color: $slate10;
+$datagrid-list-filter-color: $slate10;
+$datagrid-list-filter-hover-color: $slate10;
+$datagrid-list-filter-icon-color: $slate04;
+$datagrid-list-filter-disabled-color: $slate03;
+$datagrid-list-filter-focus-color: $azure04;
+$datagrid-list-filter-active-color: $azure04;
 
 // Search Results
 $sr-masthead-text-color: $font-color;
@@ -687,3 +697,10 @@ $breakpoint-phone-to-tablet: 767px;
 $breakpoint-wide-tablet: 968px;
 $breakpoint-tablet-to-desktop: 1280px;
 $breakpoint-desktop-to-extralarge: 1600px;
+
+//Field Sizes
+$field-xs: 75px;
+$field-sm: 150px;
+$field-md: 300px;
+$field-lg: 400px;
+$field-full: 100%;

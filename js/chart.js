@@ -665,7 +665,9 @@ window.Chart = function(container) {
       });
 
     //Add Legends
-    charts.addLegend(isStacked ? series : legendMap);
+    if (charts.showLegend) {
+      charts.addLegend(isStacked ? series : legendMap);
+    }
     charts.appendTooltip();
 
     // Set initial selected
@@ -777,7 +779,7 @@ window.Chart = function(container) {
 
     charts.appendTooltip();
 
-    var legendshow = charts.legendshow || false;
+    var showLegend = charts.showLegend || false;
 
     var chartData = initialData[0].data;
     chartData = chartData.sort(function(a,b) {
@@ -1161,7 +1163,7 @@ window.Chart = function(container) {
               drawTextlabels({ isShortName: true });
               svg.selectAll('.label-text tspan').each(function() {
                 if (d3.select(this).text().substring(5) === '...') {
-                  legendshow = true;
+                  showLegend = true;
                 }
               });
             }
@@ -1197,7 +1199,7 @@ window.Chart = function(container) {
         })();
       } // END: lb.hideLabels
       else {
-        legendshow = true;
+        showLegend = true;
       }
 
     //Get the Legend Series'
@@ -1207,7 +1209,7 @@ window.Chart = function(container) {
     });
 
     // Add Legends
-    if (legendshow || charts.legendformatter) {
+    if (showLegend || charts.legendformatter) {
       charts[charts.legendformatter ? 'renderLegend' : 'addLegend'](series);
     }
 
@@ -2340,12 +2342,35 @@ window.Chart = function(container) {
       tooltipDataCache = [],
       tooltipData = charts.options.tooltip;
 
+    //Config axis labels
+    var i, l,
+      axisLabels = {},
+      isAxisLabels = {atLeastOne: false},
+      axisArray = ['left', 'top', 'right', 'bottom'];
+    if (charts.options.axisLabels) {
+      $.extend(true, axisLabels, charts.options.axisLabels);
+    }
+    if (!$.isEmptyObject(axisLabels)) {
+      for (i = 0, l = axisArray.length; i < l; i++) {
+        var thisAxis = axisLabels[axisArray[i]];
+        if (thisAxis && typeof thisAxis === 'string' && $.trim(thisAxis) !== '') {
+          isAxisLabels[axisArray[i]] = true;
+          isAxisLabels.atLeastOne = true;
+        }
+      }
+    }
+
     //Append the SVG in the parent area.
     var dataset = chartData,
       hideDots = (options.hideDots),
       parent = $(container).parent(),
       isViewSmall = parent.width() < 450,
-      margin = {top: 30, right: (isViewSmall ? 35 : 55), bottom: 35, left: (isViewSmall ? 45 : 65)},
+      margin = {
+        top: (isAxisLabels.top ? 40 : 30),
+        right: (isAxisLabels.right ? (isViewSmall ? 45 : 65) : (isViewSmall ? 35 : 55)),
+        bottom: (isAxisLabels.bottom ? 50 : 35),
+        left: (isAxisLabels.right ? (isViewSmall ? 55 : 75) : (isViewSmall ? 45 : 65))
+      },
       width = parent.width() - margin.left - margin.right,
       height = parent.height() - margin.top - margin.bottom - 30; //legend
 
@@ -2422,6 +2447,33 @@ window.Chart = function(container) {
       .tickSize(-(width + 20))
       .tickPadding(20)
       .orient('left');
+
+    //Append The Axis Labels
+    if (isAxisLabels.atLeastOne) {
+      var axisLabelsGroup = svg.append('g').attr('class', 'axis-labels'),
+        place = {
+          top: 'translate('+ (width/2) +','+(-10)+')',
+          right: 'translate('+ (width+28) +','+(height/2)+')rotate(90)',
+          bottom: 'translate('+ (width/2) +','+(height+40)+')',
+          left: 'translate('+ (-40) +','+(height/2)+')rotate(-90)'
+        },
+        addAxis = function(pos) {
+          if (isAxisLabels[pos]) {
+            axisLabelsGroup.append('text')
+              .attr({
+                'text-anchor': 'middle',
+                'transform': place[pos]
+              })
+              .style('font-size', '1.3em')
+              .text(axisLabels[pos]);
+          }
+        };
+
+      for (i = 0, l = axisArray.length; i < l; i++) {
+        addAxis(axisArray[i]);
+      }
+    }
+
 
     //Append The Axis to the svg
     svg.append('g')
@@ -3049,8 +3101,8 @@ window.Chart = function(container) {
     if (options.tooltip) {
       this.tooltip = options.tooltip;
     }
-    if (options.legendshow) {
-      this.legendshow = options.legendshow;
+    if (options.showLegend) {
+      this.showLegend = options.showLegend;
     }
     if (options.legendformatter) {
       this.legendformatter = options.legendformatter;
@@ -3059,12 +3111,15 @@ window.Chart = function(container) {
       this.Pie(options.dataset, false, options);
     }
     if (options.type === 'bar' || options.type === 'bar-stacked') {
+      this.showLegend = typeof options.showLegend !== 'undefined' ? options.showLegend : true;
       this.HorizontalBar(options.dataset);
     }
     if (options.type === 'bar-normalized') {
+      this.showLegend = typeof options.showLegend !== 'undefined' ? options.showLegend : true;
       this.HorizontalBar(options.dataset, true);
     }
     if (options.type === 'bar-grouped') {
+      this.showLegend = typeof options.showLegend !== 'undefined' ? options.showLegend : true;
       this.HorizontalBar(options.dataset, true, false); //dataset, isNormalized, isStacked
     }
     if (options.type === 'column-stacked') {

@@ -55,7 +55,7 @@
         this.isFirefox = $('html').is('.is-firefox');
         this.parentElements = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre'];
         this.id = $('.editor-toolbar').length + 1;
-        this.element.parent('.field').addClass('editor-container');
+        this.container = this.element.parent('.field, .field-short').addClass('editor-container');
         settings.anchor.defaultUrl = settings.anchor.url;
         settings.anchor.defaultClass = settings.anchor.class;
         settings.anchor.defaultTargetText = settings.anchor.target;
@@ -1455,17 +1455,17 @@
 
       disable: function () {
         this.element.addClass('is-disabled').attr('contenteditable', 'false');
-        this.element.parent('.field').addClass('is-disabled');
+        this.container.addClass('is-disabled');
       },
 
       enable: function () {
         this.element.removeClass('is-disabled is-readonly').attr('contenteditable', 'true');
-        this.element.parent('.field').removeClass('is-disabled is-readonly');
+        this.container.removeClass('is-disabled is-readonly');
       },
 
       readonly: function () {
         this.element.removeClass('is-readonly').attr('contenteditable', 'false');
-        this.element.parent('.field').addClass('is-readonly');
+        this.container.addClass('is-readonly');
       },
 
       // Fix to Firefox get focused by keyboard

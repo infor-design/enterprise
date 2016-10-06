@@ -67,8 +67,12 @@
         });
       },
 
+      isLoading: function() {
+        return this.element.hasClass('is-loading') && this.element.hasClass('is-blocked');
+      },
+
       openList: function (term, items) {
-        if (this.element.is('[disabled], [readonly]')) {
+        if (this.element.is('[disabled], [readonly]') || this.isLoading()) {
           return;
         }
 
@@ -180,8 +184,6 @@
             self.element.removeClass('is-open');
           });
 
-
-
         this.element.trigger('populated', [matchingOptions]);
 
         // Overrides the 'click' listener attached by the Popupmenu plugin
@@ -254,6 +256,10 @@
         this.element.on('updated.autocomplete', function() {
           self.updated();
         }).on('keydown.autocomplete', function(e) {
+          if (self.isLoading()) {
+            e.preventDefault();
+            return false;
+          }
 
           var excludes = 'li:not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)';
           //Down - select next
@@ -295,6 +301,11 @@
 
         })
         .on('keypress.autocomplete', function (e) {
+          if (self.isLoading()) {
+            e.preventDefault();
+            return false;
+          }
+
           var field = $(this);
           clearTimeout(timer);
 
@@ -304,6 +315,9 @@
           }
 
           timer = setTimeout(function () {
+            if (self.isLoading()) {
+              return;
+            }
 
             buffer = field.val();
             if (buffer === '') {
@@ -321,13 +335,12 @@
 
             var sourceType = typeof self.settings.source,
               done = function(searchTerm, response) {
-                self.element.removeClass('is-busy');  //TODO: Need style for this
+                self.element.triggerHandler('complete'); // For Busy Indicator
                 self.element.trigger('requestend', [searchTerm, response]);
               };
 
-            self.element
-              .addClass('busy')
-              .trigger('requeststart', [buffer]);
+            self.element.triggerHandler('start'); // For Busy Indicator
+            self.element.trigger('requeststart', [buffer]);
 
             if (sourceType === 'function') {
               // Call the 'source' setting as a function with the done callback.

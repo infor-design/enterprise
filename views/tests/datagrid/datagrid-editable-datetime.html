@@ -14,7 +14,7 @@
 
         <button class="btn" type="button" id="add-btn">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use xlink:href="/svg/icons.svg#icon-add"></use>
+            <use xlink:href="#icon-add"></use>
           </svg>
           <span>Add</span>
         </button>
@@ -27,7 +27,7 @@
       <div class="buttonset">
         <button class="btn" type="button" id='remove-btn'>
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use xlink:href="/svg/icons.svg#icon-delete"></use>
+            <use xlink:href="#icon-delete"></use>
           </svg>
           <span>Remove</span>
         </button>
@@ -62,8 +62,8 @@
         //Define Columns for the Grid.
         columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center', width: 65});
         columns.push({ id: 'productId', name: 'ProductId Id ', field: 'productId'});
-        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date, width: 200, editorOptions: {showTime: true}, dateFormat: 'M/d/yyyy HH:mm:ss'});
-        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date, width: 200, editorOptions: {showTime: true}, dateFormat: Locale.calendar().dateFormat.datetime});
+        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date, width: 200, editorOptions: {showTime: true, dateFormat: 'M/d/yyyy HH:mm:ss'}, dateFormat: 'M/d/yyyy HH:mm:ss'});
+        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date, width: 200, editorOptions: {showTime: true, dateFormat: Locale.calendar().dateFormat.datetime}, dateFormat: Locale.calendar().dateFormat.datetime});
         columns.push({ id: 'productName', name: 'Row Id', field: 'productName'});
 
 

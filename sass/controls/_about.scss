@@ -4,10 +4,10 @@
 .modal.about {
 
   .close-container {
-    position: absolute;
-    right: 8px;
-    text-align: right;
-    top: 8px;
+    float: right;
+    position: relative;
+    right: -12px;
+    top: -27px;
   }
 
   &.modal {
@@ -43,7 +43,6 @@
     &:focus,
     &.focusbody {
       border-color: $input-focus-border-color;
-      box-shadow: 0 0 5px rgba(8, 150, 233, .2);
     }
   }
 
@@ -68,6 +67,19 @@
     &:focus {
       border: 1px solid $azure06;
       outline: none;
+    }
+  }
+}
+
+html[dir='rtl'] {
+  .modal.about {
+    .close-container {
+      float: left;
+      right: 13px;
+    }
+
+    .about-logo {
+      margin-left: -40px;
     }
   }
 }

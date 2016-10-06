@@ -90,12 +90,18 @@
     $exclude-controls: $exclude-controls + ':not(.#{$control})';
   }
 
-  input,
+  input {
+    &#{$exclude-controls} {
+      margin: 5px 0 15px;
+    }
+  }
+
   textarea {
     &#{$exclude-controls} {
       margin: 5px 0 12px;
     }
   }
+
 }
 
 
@@ -404,7 +410,7 @@ input.error {
     padding: 5px;
     resize: none;
     text-align: left;
-    width: 150px;
+    width: $field-sm;
   }
 
   label {
@@ -413,12 +419,12 @@ input.error {
     padding-top: 5px;
     text-align: right;
     vertical-align: top;
-    width: 150px;
+    width: $field-sm;
 
     ~ .error-message {
       .message-text,
       .icon {
-        left: 150px;
+        left: $field-sm;
       }
     }
   }
@@ -445,27 +451,27 @@ input.error {
 // Field Sizes
 .input-lg,
 .field-short .input-lg {
-  width: 400px;
+  width: $field-lg;
 }
 
 .input-md,
 .input-md.datepicker,
 .field-short .input-md {  //Default
-  width: 300px;
+  width: $field-md;
 }
 
 .input-sm,
 .field-short .input-sm {
-  width: 150px;
+  width: $field-sm;
 }
 
 .input-xs,
 .field-short .input-xs {
-  width: 75px;
+  width: $field-xs;
 }
 
 .input-full {
-  width: 100%;
+  width: $field-full;
 }
 
 //Info Field
@@ -549,83 +555,106 @@ input.error {
   }
 }
 
-// Default vars
-$xs: 75px;
-$sm: 150px;
-$md: 300px;
-$lg: 400px;
-$full: 100%;
+.dropdown-wrapper + .error-message {
+  margin-top: -5px;
+}
 
 .column,
 .columns {
   input.has-actions:not(.datepicker),
   textarea.has-actions {
-    max-width: $md;
+    max-width: $field-md;
     width: calc(100% - 40px);
 
     &.textarea {
       max-width: 362px;
+
+      ~ .btn-tertiary {
+        margin-left: 2px;
+        position: absolute;
+        top: calc(50% - 14px);
+      }
     }
 
     &.input-xs {
-      max-width: $xs;
+      max-width: $field-xs;
     }
 
     &.input-sm {
-      max-width: $sm;
+      max-width: $field-sm;
     }
 
     &.input-lg {
-      max-width: $lg;
+      max-width: $field-lg;
     }
 
     &.input-full {
       max-width: calc(100% - 40px);
+    }
+
+    ~ .btn-tertiary {
+      min-width: 30px;
+      width: 30px;
+    }
+
+    ~ a.btn-tertiary {
+      display: inline;
+      padding: 0 5px;
     }
   }
 
   input.has-actions.datepicker {
     &.input-xs {
-      max-width: $xs;
+      max-width: $field-xs;
       width: calc(100% - 40px);
     }
 
     &.input-sm {
-      max-width: $sm;
+      max-width: $field-sm;
       width: calc(100% - 40px);
     }
 
     &.input-md {
-      max-width: $md;
+      max-width: $field-md;
       width: calc(100% - 40px);
     }
 
     &.input-lg {
-      max-width: $lg;
+      max-width: $field-lg;
       width: calc(100% - 40px);
     }
 
     &.input-full {
       max-width: calc(100% - 40px);
       width: calc(100% - 40px);
+    }
+
+    ~ a.btn-tertiary {
+      display: inline;
+      padding: 0 5px;
     }
   }
 }
 
 .has-actions-wrapper {
   margin-right: -40px;
-  width: $md + 40;
+  width: $field-md + 40;
 
   &.xs {
-    width: $xs + 40;
+    width: $field-xs + 40;
   }
 
   &.sm {
-    width: $sm + 40;
+    width: $field-sm + 40;
   }
 
   &.lg {
-    width: $lg + 40;
+    width: $field-lg + 40;
+  }
+
+  ~ a.btn-tertiary {
+    display: inline;
+    padding: 0 5px;
   }
 }
 
@@ -693,7 +722,7 @@ html[dir='rtl'] {
         .icon,
         .message-text {
           left: auto;
-          right: 150px;
+          right: $field-sm;
         }
       }
     }
@@ -705,5 +734,13 @@ html[dir='rtl'] {
       margin-left: inherit;
       margin-right: -40px;
     }
+  }
+}
+
+//When on smaller form factors make 400px fields go down to medium size
+@include respond-to(phone) {
+  .input-lg,
+  .field-short .input-lg {
+    width: $field-md;
   }
 }

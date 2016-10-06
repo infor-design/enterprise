@@ -48,7 +48,7 @@
         this.createPagerBar();
         this.setActivePage(this.settings.activePage); //Get First Page
         this.renderBar();
-        this.renderPages(false, 'initial');
+        this.renderPages('initial');
         this.handleEvents();
       },
 
@@ -239,7 +239,6 @@
 
       //Set or Get Current Page
       setActivePage: function(pageNum, force, op) {
-
         var lis = this.pagerBar.find(this.buttonExpr);
 
         // Check to make sure our internal active page is set
@@ -247,15 +246,12 @@
           this.activePage = this.settings.activePage;
         }
 
-        if (pageNum === 0 || pageNum > this.pageCount()) {
-          return this.activePage;
-        }
+        if (pageNum === undefined ||
+            pageNum === 0 ||
+            isNaN(pageNum) ||
+            pageNum > this.pageCount() ||
+            (pageNum === this.activePage && !force)) {
 
-        if (pageNum === undefined) {
-          return this.activePage;
-        }
-
-        if (pageNum === this.activePage && !force) {
           return this.activePage;
         }
 
@@ -274,7 +270,7 @@
         }
 
         this.renderBar();
-        this.renderPages(false, op);
+        this.renderPages(op);
         return pageNum;
       },
 
@@ -322,7 +318,6 @@
           var text = Locale.translate('PageOf');
           text = text = text.replace('{0}', '<input name="pager-pageno" value="' + this.activePage + '">');
           text = text.replace('{1}', '<span class="pager-total-pages">' + (pages || 1) + '</span>');
-
           $('<li class="pager-count"><label>'+ text +' </label>').insertAfter(this.pagerBar.find('.pager-prev'));
 
           //Setup interactivty with the numeric page input
@@ -333,7 +328,7 @@
             lastValue = $(this).val();
           }).on('blur', function () {
             if (lastValue !== $(this).val()) {
-              self.setActivePage(parseInt($(this).val()), false, 'page');
+              $(this).val(self.setActivePage(parseInt($(this).val()), false, 'page'));
             }
           }).on('keydown', function (e) {
             if (e.which === 13) {
@@ -462,9 +457,8 @@
         this.datagrid = this.mainContainer ? this.mainContainer.children('.datagrid-container').data('datagrid') : null;
       },
 
-      renders: 0,
       // Render Paged Items
-      renderPages: function(uiOnly, op) {
+      renderPages: function(op) {
       var expr,
           self = this,
           request = {
@@ -474,8 +468,6 @@
             total: -1
           };
 
-        self.renders ++;
-
         //Make an ajax call and wait
         setTimeout(function () {
           var doPaging = self.element.triggerHandler('beforepaging', request);
@@ -484,7 +476,7 @@
             return;
           }
 
-          if (self.settings.source && !uiOnly) {
+          if (self.settings.source) {
             var response;
 
             // Distinguish between datagrid and listview
@@ -576,7 +568,7 @@
         //Update the UI
         this.pagerBar.find('.pager-count input').val(this.activePage);
 
-        if (this._pageCount !== '0') {
+        if (this._pageCount !== '0' && !isNaN(this._pageCount)) {
           this.pagerBar.find('.pager-total-pages').text(this._pageCount);
         }
 

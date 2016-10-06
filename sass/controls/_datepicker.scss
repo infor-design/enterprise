@@ -4,9 +4,29 @@
 .datepicker {
   width: 150px;
 
+  &.input-xs {
+    width: $field-xs;
+  }
+
+  &.input-sm {
+    width: $field-sm;
+  }
+
+  &.input-md {
+    width: $field-md;
+  }
+
+  &.input-lg {
+    width: $field-lg;
+  }
+
+  &.input-full {
+    width: $field-full;
+  }
+
   &.datetime {
-    width: auto;
     padding-right: 30px;
+    width: auto;
   }
 
   + .icon,
@@ -245,8 +265,8 @@
     display: inline-block;
     height: 30px;
     margin: 0;
-    min-width: 30px;
     min-height: 30px;
+    min-width: 30px;
     position: absolute;
     top: 8px;
     transition: border-color .3s ease;
@@ -357,7 +377,7 @@ html[dir='rtl'] {
 
   .calendar {
     td {
-        span {
+      span {
         margin-left: inherit;
         margin-right: 1px;
       }

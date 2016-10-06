@@ -159,6 +159,7 @@
               self.createGrid(grid);
             }
             self.createModal();
+            self.element.triggerHandler('complete'); // for Busy Indicator
             self.element.trigger('open', [self.modal, self.grid]);
 
             if (self.settings.validator) {
@@ -167,6 +168,7 @@
             return;
           };
 
+          this.element.triggerHandler('start'); // for Busy Indicator
           this.settings.beforeShow(this, response);
           return;
         }

@@ -1,6 +1,6 @@
 {
   "name": "@infor/sohoxi",
-  "version": "4.2.1-rc.1",
+  "version": "4.2.1",
   "shortName": "sohoxi",
   "description": "Hook & Loop - SoHo XI Controls",
   "author": "Hook & Loop",
@@ -23,7 +23,9 @@
     "test": "./bin/test-build.sh",
     "test:functional": "./bin/test.sh runner config=test2/intern.local.functional",
     "test:unit": "./bin/test.sh client config=test2/intern.local.unit",
-    "postinstall": "npm run install-test-deps"
+    "postinstall": "npm run install-test-deps",
+    "develop-tag": "./bin/add-npm-tag.js develop",
+    "bump-version": "./bin/bump-version.js"
   },
   "main": "sohoxi.js",
   "dependencies": {
@@ -59,7 +61,6 @@
     "grunt-run": "^0.3.0",
     "grunt-sass": "^1.2.0",
     "grunt-shell": "^1.3.0",
-    "grunt-string-replace": "^1.3.0",
     "grunt-strip-code": "^0.1.2",
     "intern": "^3.2.0",
     "jsdom": "^3.1.2",
