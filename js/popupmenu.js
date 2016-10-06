@@ -848,7 +848,7 @@
         this.menu.css({'height': menuDimensions.height, 'width': menuDimensions.width});
 
         // Flip arrow to the opposite side
-        var arrow = wrapper.find('.arrow');
+        var arrow = wrapper.find('div.arrow');
         if (wasFlipped) {
           wrapper.removeClass('bottom').addClass('top');
         }
