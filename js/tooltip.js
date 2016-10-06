@@ -371,22 +371,31 @@
         // Adjust the arrow's direction if a different strategy was attempted.
         var dir = placementObj.placement,
           cssOptions = { display: 'block' },
-          isXCoord = ['left', 'right'].indexOf(dir) < 0,
-          dimension = 'outer' + (isXCoord ? 'Width' : 'Height'),
-          edge = (isXCoord ? 'margin-left' : 'margin-top'),
+          isXCoord = ['left', 'right'].indexOf(dir) > -1,
+          dimension = 'outer' + (!isXCoord ? 'Width' : 'Height'),
+          edge = (!isXCoord ? 'margin-left' : 'margin-top'),
           nudgeDistance = 0;
 
         if (placementObj.attemptedFlips) {
           this.tooltip.removeClass('top right bottom left').addClass(dir);
         }
 
+        // Flip the arrow if we're in RTL mode
+        if (this.isRTL && isXCoord) {
+          var opposite = dir === 'right' ? 'left' : 'right';
+          this.tooltip.removeClass('right left').addClass(opposite);
+        }
+
         // Adjust the arrow's position if a nudge is detected.
+        // Arrow gets adjusted perpendicular to the placement type.
         if (placementObj.nudges) {
-          nudgeDistance = placementObj.nudges[isXCoord ? 'x' : 'y'];
+          nudgeDistance = placementObj.nudges[isXCoord ? 'y' : 'x'];
           if (nudgeDistance) {
             cssOptions[edge] = nudgeDistance * -1;
 
-            // Hide a tooltip arrow that sticks out too far
+            // Hide a tooltip arrow that sticks out too far.
+            // Might happen if the tooltip has to be nudged so far that the arrow placement
+            // no longer makes sense.
             if (Math.abs(nudgeDistance) > this.tooltip[dimension]()/2 ) {
               cssOptions.display = 'none';
             }

@@ -174,10 +174,6 @@
         });
       },
 
-      isRTL: function() {
-        return Locale.isRTL();
-      },
-
       // Main placement API Method (external)
       // Can either take a PlacementObject as a single argument, or can take 2 coordinates (x, y) and
       // will use the pre-defined settings.
@@ -205,19 +201,6 @@
 
         // Remove any previous placement styles
         this.clearOldStyles();
-
-        // RTL support
-        if (this.isRTL()) {
-          placementObj.placement = (function() {
-          switch (placementObj.placement) {
-            case 'left':
-              return 'right';
-            case 'right':
-              return 'left';
-            default:
-              return placementObj.placement;
-          }})();
-        }
 
         // Use different methods if placement against a parent, versus straight-up coordinate placement
         if (placementObj.parent) {
@@ -524,9 +507,9 @@
             case 'right':
               return performFlip('left', 'top');
             case 'top':
-              return performFlip('bottom', (self.isRTL() ? 'right' : 'left') );
+              return performFlip('bottom', 'left');
             default: // bottom
-              return performFlip('top', (self.isRTL() ? 'right' : 'left'));
+              return performFlip('top', 'left');
           }
         })();
 
