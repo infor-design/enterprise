@@ -335,14 +335,12 @@
 
             var sourceType = typeof self.settings.source,
               done = function(searchTerm, response) {
-                self.element
-                  .trigger('complete') // For Busy Indicator
-                  .trigger('requestend', [searchTerm, response]);
+                self.element.triggerHandler('complete'); // For Busy Indicator
+                self.element.trigger('requestend', [searchTerm, response]);
               };
 
-            self.element
-              .trigger('start') // For Busy Indicator
-              .trigger('requeststart', [buffer]);
+            self.element.triggerHandler('start'); // For Busy Indicator
+            self.element.trigger('requeststart', [buffer]);
 
             if (sourceType === 'function') {
               // Call the 'source' setting as a function with the done callback.

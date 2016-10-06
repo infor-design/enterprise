@@ -1466,13 +1466,13 @@
             self.element.append(list);
             self.updateList();
 
-            self.element.trigger('complete'); // For Busy Indicator
+            self.element.triggerHandler('complete'); // For Busy Indicator
             self.element.trigger('requestend', [searchTerm, data]);
             callback();
             return;
           };
 
-          self.element.trigger('start'); // For Busy Indicator
+          self.element.triggerHandler('start'); // For Busy Indicator
           self.element.trigger('requeststart');
 
           if (sourceType === 'function') {
