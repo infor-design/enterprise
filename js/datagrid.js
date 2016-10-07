@@ -1417,6 +1417,7 @@ $.fn.datagrid = function(options) {
 
         if (filterType === 'text') {
           btnMarkup += this.renderFilterItem('contains', 'Contains', true);
+          btnMarkup += this.renderFilterItem('does-not-contain', 'DoesNotContain', false);
         }
 
         if (filterType === 'checkbox') {
@@ -1536,6 +1537,9 @@ $.fn.datagrid = function(options) {
               break;
             case 'contains':
               isMatch = (rowValueStr.indexOf(conditionValue) > -1 && rowValue.toString() !== '');
+              break;
+            case 'does-not-contain':
+              isMatch = (rowValueStr.indexOf(conditionValue) === -1 && rowValue.toString() !== '');
               break;
             case 'end-with':
               isMatch = (rowValueStr.lastIndexOf(conditionValue) === (rowValueStr.length - conditionValue.toString().length)  && rowValueStr !== '');
