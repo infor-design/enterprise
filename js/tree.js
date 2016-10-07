@@ -859,10 +859,7 @@
         var entry = node.data('jsonData'),
           self = this;
 
-        entry = node.data('jsonData');
-        if (entry === undefined) {
-          entry = {};
-        }
+        entry = node.data('jsonData') || {};
 
         entry.node = node;
         entry.id = node.attr('id');
