@@ -1,7 +1,7 @@
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module
-    define('cultures/en-AR', ['jquery'], factory);
+    define('cultures/es-AR', ['jquery'], factory);
     factory();
   } else if (typeof exports === 'object') {
     // Node/CommonJS
@@ -85,7 +85,7 @@
       'Blockquote': {id: 'Blockquote', value: 'Cita en bloque', comment: 'insert a block quote in the editor'},
       'Bold': {id: 'Bold', value: 'Negrita', comment: 'Make text Bold'},
       'Bookmarked': {id: 'Bookmarked', value: 'Señalado con marcador', comment: 'Bookmark filled - Element is already bookmarked'},
-      'BookmarkThis': {id: 'BookmarkThis', value: 'Señalar con marcador', comment: 'Bookmark outlined'},
+      'BookmarkThis': {id: 'BookmarkThis', value: 'Señalar con marcador', comment: 'Bookmark an element'},
       'Breadcrumb': {id: 'Breadcrumb', value: 'Ruta de navegación', comment: 'Text describing the Breadcrumb'},
       'BulletedList': {id: 'BulletedList', value: 'Lista de viñetas', comment: 'Bulleted List tooltip'},
       'Calendar': {id: 'Calendar', value: 'Calendario', comment: 'Inline Text for the title of the Calendar control'},
@@ -94,12 +94,13 @@
       'CapsLockOn': {id: 'CapsLockOn', value: 'Bloqueo de mayúsculas activo', comment: 'Caps Lock On message'},
       'Cart': {id: 'Cart', value: 'Cesta', comment: 'Cart tooltip'},
       'CenterText': {id: 'CenterText', value: 'Centrar', comment: 'An Icon Tooltip'},
-      'CharactersLeft': {id: 'CharactersLeft', value: 'Caracteres a la izquierda {0}', comment: 'indicator showing how many more characters you can type.'},
+      'CharactersLeft': {id: 'CharactersLeft', value: 'Se permiten {0} caracteres más', comment: 'indicator showing how many more characters you can type.'},
       'CharactersMax': {id: 'CharactersMax', value: 'Número máximo de caracteres ', comment: 'indicator showing how many max characters you can type.'},
       'ChangeSelection': {id: 'ChangeSelection', value: '. Para cambiar la selección utilice las teclas de dirección.', comment: 'Audible Text for drop down list help'},
       'Checkbox': {id: 'Checkbox', value: 'Casilla', comment: 'Checkbox tooltip'},
       'Checked': {id: 'Checked', value: 'Activado', comment: 'Checked tooltip'},
       'Clear': {id: 'Clear', value: 'Borrar', comment: 'Tooltip for a Clear Action'},
+      'ClearFilter': {id: 'ClearFilter', value: 'Borrar filtro', comment: 'Clear the current filter criteria'},
       'Clock': {id: 'Clock', value: 'Reloj', comment: 'Clock tooltip'},
       'Close': {id: 'Close', value: 'Cerrar', comment: 'Tooltip for a Close Button Action'},
       'Copy': {id: 'Copy', value: 'Copiar', comment: 'Copy tooltip'},
@@ -121,11 +122,14 @@
       'Drillup': {id: 'Drillup', value: 'Menos detalles', comment: 'Opposite of Drilldown, move back up to a larger set of records'},
       'Dropdown': {id: 'Dropdown', value: 'Lista desplegable', comment: 'Dropdown'},
       'DoesNotContain': {id: 'DoesNotContain', value: 'No contiene', comment: 'Does Not Contain in icons for filtering'},
+      'DoesNotEndWith': {id: 'DoesNotEndWith', value: 'No acaba en', comment: 'For condition filtering'},
       'DoesNotEqual': {id: 'DoesNotEqual', value: 'No es igual a', comment: 'Does Not Equal in icons for filtering'},
+      'DoesNotStartWith': {id: 'DoesNotStartWith', value: 'No empieza por', comment: 'For condition filtering'},
       'Down': {id: 'Down', value: 'Abajo', comment: 'Down tooltip'},
       'Download': {id: 'Download', value: 'Descargar', comment: 'Download tooltip'},
       'Duplicate': {id: 'Duplicate', value: 'Duplicar', comment: 'Duplicate tooltip'},
       'EitherSelectedOrNotSelected': {id: 'EitherSelectedOrNotSelected', value: 'Tanto seleccionado como no seleccionado', comment: 'Either Selected Or NotSelected in icons for filtering'},
+      'EndWith': {id: 'EndWith', value: 'Termina en', comment: 'for condition filtering'},
       'EnterComments': {id: 'EnterComments', value: 'Introduzca aquí sus comentarios...', comment: 'Placeholder text for a text input (comments)'},
       'Error': {id: 'Error', value: 'Error', comment: 'Title, Spoken Text describing fact an error has occured'},
       'ErrorAllowedTypes': {id: 'ErrorAllowedTypes', value: 'El tipo de archivo no está permitido', comment: 'Error string for file-upload'},
@@ -134,7 +138,6 @@
       'EmailValidation': {id: 'EmailValidation', value: 'Dirección de correo electrónico no válida', comment: 'This the rule for email validation'},
       'Emerald': {id: 'Emerald', value: 'Esmeralda', comment: 'Color in our color pallette'},
       'Expand': {id: 'Expand', value: 'Expandir', comment: 'Expand open a tree/submenu'},
-      'Expand1x': {id: 'Expand1x', value: 'Expandir una vez', comment: 'Expands one time - on the app tray'},
       'ExpandAppTray': {id: 'ExpandAppTray', value: 'Expandir bandeja de aplicación', comment: 'ExpandAppTray tooltip'},
       'ExpandCollapse': {id: 'ExpandCollapse', value: 'Expandir/Contraer', comment: 'Text to toggle a button in a container.'},
       'ExportAsSpreadsheet': {id: 'ExportAsSpreadsheet', value: 'Exportar a hoja de cálculo', comment: 'Export as Spreadsheet tooltip'},
@@ -154,7 +157,7 @@
       'GoDown': {id: 'GoDown', value: 'Bajar', comment: 'Move Page / object this directionp'},
       'GoUp': {id: 'GoUp', value: 'Subir', comment: 'Move Page / object this direction'},
       'Graphite': {id: 'Graphite', value: 'Grafito', comment: 'Color in our color pallette'},
-      'GreaterOrEquals': {id: 'GreaterOrEquals', value: 'Mayor o igual', comment: 'Greater Or Equals in icons for filtering'},
+      'GreaterOrEquals': {id: 'GreaterOrEquals', value: 'Mayor que o igual a', comment: 'Greater Than Or Equals in icons for filtering'},
       'GreaterThan': {id: 'GreaterThan', value: 'Mayor que', comment: 'Greater Than in icons for filtering'},
       'Grid': {id: 'Grid', value: 'Cuadrícula', comment: 'Grid tooltip'},
       'Hours': {id: 'Hours', value: 'Horas', comment: 'the hour portion of a time'},
@@ -183,7 +186,7 @@
       'Launch': {id: 'Launch', value: 'Iniciar', comment: 'Launch'},
       'LastPage': {id: 'LastPage', value: 'Última página', comment: 'Last Page tooltip'},
       'Left': {id: 'Left', value: 'Izquierda', comment: 'Left tooltip'},
-      'LessOrEquals': {id: 'LessOrEquals', value: 'Menor que o igual a', comment: 'Less Or Equals in icons for filtering'},
+      'LessOrEquals': {id: 'LessOrEquals', value: 'Menor que o igual a', comment: 'Less Than Or Equals in icons for filtering'},
       'LessThan': {id: 'LessThan', value: 'Menor que', comment: 'Less Than in icons for filtering'},
       'Link': {id: 'Link', value: 'Vínculo', comment: 'Link - as in hyperlink - icon tooltop'},
       'Load': {id: 'Load', value: 'Cargar', comment: 'Load icon tooltip'},
@@ -210,6 +213,7 @@
       'Next': {id: 'Next', value: 'Siguiente', comment: 'Next in icons tooltip'},
       'NextPage': {id: 'NextPage', value: 'Siguiente página', comment: 'Next on Pager'},
       'NextMonth': {id: 'NextMonth', value: 'Siguiente mes', comment: 'the label for the button that moves calendar to next/prev'},
+      'No': {id: 'No', value: 'No', comment: 'On a dialog button'},
       'NoResults': {id: 'NoResults', value: 'Ningún resultado', comment: 'Search Results Text'},
       'Normal': {id: 'Normal', value: 'Normal', comment: 'Normal row height'},
       'Notes': {id: 'Notes', value: 'Notas', comment: 'Notes icon tooltip'},
@@ -222,7 +226,7 @@
       'PageOf': {id: 'PageOf', value: 'Página {0} de {1}', comment: 'Pager Text Showing current and number of pages'},
       'PageOn': {id: 'PageOn', value: 'Se encuentra en la página ', comment: 'Text on the pager links'},
       'Paste': {id: 'Paste', value: 'Pegar', comment: 'Paste icon tooltip'},
-      'PasswordValidation': {id: 'PasswordValidation', value: '<strong>La contraseña debe:</strong><br>Tener como mínimo 10 caracteres<br>Tener al menos una mayúscula<br>Tener al menos una minúscula<br>Incluir un carácter especial<br>Evitar el nombre del usuario<br>Evitar una contraseña ya utilizada<br>', comment: 'Password validation requirements'},
+      'PasswordValidation': {id: 'PasswordValidation', value: 'strong>La contraseña debe:</strong><br>Tener como mínimo 10 caracteres<br>Tener al menos una mayúscula<br>Tener al menos una minúscula<br>Incluir un carácter especial<br>Evitar el nombre del usuario<br>Evitar una contraseña ya utilizada<br>', comment: 'Password validation requirements'},
       'PasswordConfirmValidation': {id: 'PasswordConfirmValidation', value: 'Las contraseñas deben coincidir', comment: 'Password Confirm validation'},
       'Peak': {id: 'Peak', value: 'Máximo', comment: 'the max or peak value in a chart'},
       'PersonalizeColumns': {id: 'PersonalizeColumns', value: 'Personalizar columnas', comment: 'Customize Columns in a Grid'},
@@ -246,6 +250,7 @@
       'Roles': {id: 'Roles', value: 'Roles', comment: 'Roles tooltip'},
       'RowHeight': {id: 'RowHeight', value: 'Altura de fila', comment: 'Describes the Height for Rows in a Data Grid'},
       'Ruby': {id: 'Ruby', value: 'Rubí', comment: 'Color in our color pallette'},
+      'RunFilter': {id: 'RunFilter', value: 'Ejecutar filtro', comment: 'Execute the current filter criteria'},
       'Save': {id: 'Save', value: 'Guardar', comment: 'Save tooltip'},
       'SaveCurrentView': {id: 'SaveCurrentView', value: 'Guardar vista actual', comment: 'Datagrids contain view sets. This menu option saves them'},
       'SavedViews': {id: 'SavedViews', value: 'Vistas guardadas', comment: 'Label for a list of Views'},
@@ -259,6 +264,7 @@
       'SetTime': {id: 'SetTime', value: 'Establecer hora', comment: 'button text that inserts time when clicked'},
       'Settings': {id: 'Settings', value: 'Configuración', comment: 'Settings tooltip'},
       'Short': {id: 'Short', value: 'Baja', comment: 'Describes a Shorted Row Height in a grid/list'},
+      'ShowFilterRow': {id: 'ShowFilterRow', value: 'Mostrar fila de filtro', comment: 'Toggle a row with filer info above a list'},
       'ShowLess': {id: 'ShowLess', value: 'Mostrar menos', comment: 'Show less form content'},
       'ShowMore': {id: 'ShowMore', value: 'Mostrar más', comment: 'Show more form content'},
       'Slate': {id: 'Slate', value: 'Pizarra', comment: 'Color in our color pallette'},
@@ -266,6 +272,7 @@
       'SliderMaximumHandle': {id: 'SliderMaximumHandle', value: 'Manipulador del intervalo máximo para', comment: 'Describes a maximum value handle in a Range (double slider), followed in code by the name of the control'},
       'SliderMinimumHandle': {id: 'SliderMinimumHandle', value: 'Manipulador del intervalo mínimo para', comment: 'Describes a minimum value handle in a Range (double slider), followed in code by the name of the control'},
       'SkipToMain': {id: 'SkipToMain', value: 'Saltar a contenido principal', comment: 'Skip link in header, jumps when clicked on to main area'},
+      'StartWith': {id: 'StartWith', value: 'Empezar por', comment: 'for condition filtering'},
       'StrikeThrough': {id: 'StrikeThrough', value: 'Tachado', comment: 'turn on and off strike through text in text editor (like word)'},
       'SortAtoZ': {id: 'SortAtoZ', value: 'Orden ascendente', comment: 'Sort A to Z in icons for filtering'},
       'SortZtoA': {id: 'SortZtoA', value: 'Orden descendente', comment: 'Sort Z to A in icons for filtering'},
@@ -304,7 +311,8 @@
       'UserProfile': {id: 'UserProfile', value: 'Perfil de usuario', comment: 'User Profile tooltip'},
       'VerticalMiddleAlign': {id: 'VerticalMiddleAlign', value: 'Alinear verticalmente en centro', comment: 'Vertical Align tooltip'},
       'ViewSource': {id: 'ViewSource', value: 'Ver código fuente', comment: 'Toggle the source view in the editor'},
-      'ViewVisual': {id: 'ViewVisual', value: 'Ver resultado visual', comment: 'Toggle the visual view in the editor'}
+      'ViewVisual': {id: 'ViewVisual', value: 'Ver resultado visual', comment: 'Toggle the visual view in the editor'},
+      'Yes': {id: 'Yes', value: 'Sí', comment: 'On a dialog button'}
     }
   });
 }));
