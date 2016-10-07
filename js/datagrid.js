@@ -751,6 +751,7 @@ window.Editors = {
         self.input.remove();
       }, 0);
     };
+
     this.init();
   }
 
@@ -798,7 +799,9 @@ $.fn.datagrid = function(options) {
   // Plugin Constructor
   function Datagrid(element) {
     this.element = $(element);
+    Soho.logTimeStart(pluginName);
     this.init();
+    Soho.logTimeEnd(pluginName);
   }
 
   // Actual Plugin Code

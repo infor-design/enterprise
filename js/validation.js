@@ -19,7 +19,9 @@
 
   function Validator(element) {
     this.element = $(element);
+    Soho.logTimeStart('Validator');
     this.init();
+    Soho.logTimeEnd('Validator');
   }
 
   // Plugin Object
