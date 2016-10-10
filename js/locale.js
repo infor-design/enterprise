@@ -618,9 +618,9 @@
         return NaN;
       }
 
-      group = ',' ||  numSettings.group;
+      group = numSettings ? numSettings.group  : ',';
 
-      numString = numString.replace(new RegExp('\\' + numSettings.group, 'g'), '');
+      numString = numString.replace(new RegExp('\\' + group, 'g'), '');
       numString = numString.replace(numSettings.decimal, '.');
       numString = numString.replace(numSettings.percentSign, '');
       numString = numString.replace(this.currentLocale.data.currencySign, '');
