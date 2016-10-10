@@ -610,13 +610,15 @@
     //Take a Formatted Number and return a real number
     parseNumber: function(input) {
       var numSettings = this.currentLocale.data.numbers,
-        numString;
+        numString, group;
 
       numString = input;
 
       if (!numString) {
         return NaN;
       }
+
+      group = ',' ||  numSettings.group;
 
       numString = numString.replace(new RegExp('\\' + numSettings.group, 'g'), '');
       numString = numString.replace(numSettings.decimal, '.');
