@@ -8,6 +8,7 @@ var express = require('express'),
   mmm = require('mmm'),
   fs = require('fs'),
   http = require('http'),
+  git = require('git-rev-sync'),
   colors = require('colors'); // jshint ignore:line
 
   app.set('view engine', 'html');
@@ -33,7 +34,7 @@ var express = require('express'),
     enableLiveReload: true,
     layout: 'layout',
     locale: 'en-US',
-    title: 'SoHo XI',
+    title: title: 'SoHo XI - v' + process.env.npm_package_version + ' ' + git.short(),
   };
 
   // Option Handling - Custom Middleware
