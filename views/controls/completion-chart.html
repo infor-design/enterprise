@@ -31,8 +31,8 @@
   var dataset2 = [{
     data: [{
       name: {text: 'Procurement'},
-      completed: {value: '50%', color: 'primary'},
-      remaining: {value: '16%'},
+      completed: {value: '50%', format: '.0%', color: 'primary'},
+      remaining: {value: '16%', format: '.0%'},
       total: {value: 49000, format: '$,.0f'},
     }]
   }];
@@ -40,8 +40,8 @@
   var dataset3 = [{
     data: [{
       name: {text: 'Construction'},
-      completed: {value: '50%', color: 'dark'},
-      remaining: {value: '50%'},
+      completed: {value: '50%', format: '.0%', color: 'dark'},
+      remaining: {value: '50%', format: '.0%'},
       total: {value: 19000, format: '$,.0f'},
     }]
   }];
@@ -57,7 +57,7 @@
   var dataset5 = [{
     data: [{
       name: {text: 'Ronald Reynolds'},
-      info: {value: '13h'},
+      info: {value: '13h', color: 'colored'},
       completed: {value: 13},
     }]
   }];
@@ -135,100 +135,3 @@ setTimeout(function() {
 }, 0);
 
 </script>
-
-
-
-
-
-
-<!--
-<div class="row">
-  <div class="one-third column">
-
-    <span class="label" id="prbc-label1">Available Credit <span class="l-pull-right">$95,000</span></span>
-    <div class="chart-completion-target" id="chart-progressbar1" aria-labelledby="prbc-label1">
-      <div class="target" style="width: 66%">
-        <span aria-hidden="true">$10,000 <br> Pending</span>
-      </div>
-      <div class="completed" style="width: 50%">
-        <span aria-hidden="true">$50,000 <br> Spent</span>
-      </div>
-    </div>
-
-    <br>
-    <button type="button" class="btn" id="upd-progressbar-chart">Update</button>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-
-    <span class="label" id="prbc-label2">Procurement <span class="l-pull-right">$49,000</span></span>
-    <div class="chart-completion-target" aria-labelledby="prbc-label2">
-      <div class="target" style="width: 66%">
-        <span aria-hidden="true">16% <span class="audible">left to target</span></span>
-      </div>
-      <div class="completed primary" style="width: 50%">
-        <span aria-hidden="true">50% <span class="audible">complete</span></span>
-      </div>
-    </div>
-
-    <span class="label" id="prbc-label3">Construction $19,000</span>
-    <div class="chart-completion-target" aria-labelledby="prbc-label3">
-      <div class="target" style="width: 100%">
-        <span aria-hidden="true">50% <span class="audible">left to target</span></span>
-      </div>
-      <div class="completed dark" style="width: 50%">
-        <span aria-hidden="true">50% <span class="audible">complete</span></span>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-
-<div class="row">
-
-  <div class="two columns">
-
-    <b class="label" id="prbc-label4">Russell Dunn</b>
-    <b class="label error" id="prbc-label4">-22h</b>
-    <div class="chart-completion" aria-labelledby="prbc-label4">
-      <div class="completed error" style="width: 50%">
-      </div>
-    </div>
-
-    <b class="label" id="prbc-label5">Ronald Reynolds</b>
-    <b class="label colored" id="prbc-label5">13h</b>
-    <div class="chart-completion" aria-labelledby="prbc-label5">
-      <div class="completed" style="width: 10%">
-      </div>
-    </div>
-
-    <b class="label" id="prbc-label6">Lei Ju</b>
-    <b class="label colored" id="prbc-label6">-22h <span>Approaching max.*</span></b>
-    <div class="chart-completion" aria-labelledby="prbc-label6">
-      <div class="completed" style="width: 90%">
-      </div>
-    </div>
-
-    <b class="label" id="prbc-label7">Behavior 1</b>
-    <b class="label colored amethyst07" id="prbc-label7">49 <span>/100</span></b>
-    <div class="chart-completion target" aria-labelledby="prbc-label7">
-      <div class="completed graphite04" style="width: 84%">
-      </div>
-      <div class="target-line" style="left: 87%">
-        <span aria-hidden="true">95% <span class="audible">target</span></span>
-      </div>
-    </div>
-
-  </div>
-
-</div>
-
-<script>
-  $('#upd-progressbar-chart').on('click', function () {
-    $('#chart-progressbar1').find('.completed').css('width', '100%').find('span:first').html('$95,000<br>Spent');
-  });
-</script>
--->

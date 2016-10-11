@@ -511,10 +511,18 @@
   &.amethyst07 {
     background-color: transparent;
     color: $amethyst07;
+
+    .value {
+      color: $amethyst07;
+    }
   }
 
   span {
     color: $font-color;
+  }
+
+  .value {
+    color: $turquoise06;
   }
 }
 

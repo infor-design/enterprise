@@ -2965,15 +2965,17 @@ window.Chart = function(container) {
       fixUndefined = function(value, isNumber) {
         return !isUndefined(value) ? value : (isNumber ? 0 : '');
       },
-      format = function (value, formatterString) {
-        value = formatterString === '.0%' ? value/100 : value;
-        return d3.format(formatterString || '')(value);
-      },
       toValue = function(percent) {
         return percent /100 * fixUndefined(dataset.total.value, true);
       },
       toPercent = function(value) {
         return d3.round(100 * (value / fixUndefined(dataset.total.value, true)));
+      },
+      format = function (value, formatterString) {
+        if (formatterString === '.0%') {
+          return toPercent(value) +'%';
+        }
+        return d3.format(formatterString || '')(value);
       },
       fixPercent = function(value) {
         var s = value.toString();
@@ -3003,7 +3005,7 @@ window.Chart = function(container) {
               rect2 = remaining.find('.value')[0].getBoundingClientRect();
 
             remaining.add(total)
-              [(rect1.right > rect2.left) ? 'addClass' : 'removeClass']('overlap');
+              [(rect1.right > rect2.left-20) ? 'addClass' : 'removeClass']('overlap');
           }, 500);
         }
       };
@@ -3081,8 +3083,6 @@ window.Chart = function(container) {
             else {
               node.html(setFormat(dataset[type]));
             }
-            // ((type === 'completed' && (!dataset.info || (dataset.info && isUndefined(dataset.info.value)))) ?
-            //   node.add($('.info .value', container)) : node).html(setFormat(dataset[type]));
 
             if (!node.is('.name, .total') && type !== 'targetline') {
               if (type === 'completed') {
@@ -3096,11 +3096,6 @@ window.Chart = function(container) {
                 updateWidth(bar, w);
               }
             }
-            // if (!node.is('.name, .total') && type !== 'targetline') {
-            //   w = fixPercent(dataset[type].value);
-            //   w += (type === 'remaining') ? fixPercent(dataset.completed.value) : 0;
-            //   updateWidth(bar, w);
-            // }
             else if (!node.is('.name, .total, .remaining') && type === 'targetline') {
               w = fixPercent(dataset[type].value);
               updateTargetline(bar, w);
