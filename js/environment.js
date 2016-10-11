@@ -116,6 +116,21 @@
         }
       };
 
+      //Handle Personalization and theme
+      window.Soho.theme = 'light';
+
+      window.Soho.setTheme = function(theme) { // jshint ignore:line
+        $('body').trigger('changetheme', theme);
+      };
+
+      window.Soho.setColors = function(colors) { // jshint ignore:line
+        $('body').trigger('changecolors', colors);
+      };
+
+      $(function() {
+        $('body').personalize();
+      });
+
       return this;
     }
 

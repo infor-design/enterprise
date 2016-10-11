@@ -1,13 +1,13 @@
-## 4.2.3 - Minor Release
-Release Date: 2016-10-31
+## 4.2.2 - Minor Release
+Release Date: 2016-10-17
 
 ### Key New Features
-
-*
+* Personalization
 
 ### Breaking Changes
-* 2016-10-05 -
-
+* 2016-10-11 - Event personalizecolors now called change colors to match changetheme
+* 2016-10-11 - Css File is now called light.scss not grey.css to match Soho Naming standards
+* 2016-10-11 - tab-container module-tabs should have class is-personalizable appended for module tabs to handle personalization - SOHO-4162
 
 ### Ui Changes
 * 2016-08-30 -

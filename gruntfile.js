@@ -17,7 +17,7 @@ module.exports = function(grunt) {
       dist: {
         files: {
           'dist/css/demo.css'       : 'sass/demo.scss',
-          'dist/css/grey-theme.css' : 'sass/grey-theme.scss',
+          'dist/css/light-theme.css' : 'sass/light-theme.scss',
           'dist/css/dark-theme.css' : 'sass/dark-theme.scss',
           'dist/css/high-contrast-theme.css'  : 'sass/high-contrast-theme.scss',
           'dist/css/css-only.css'   : 'sass/css-only.scss',
@@ -52,6 +52,7 @@ module.exports = function(grunt) {
       basic: {
         files: {
           'dist/js/<%= pkg.shortName %>.js': [
+            'temp/amd/personalize.js',
             'temp/amd/initialize.js',
             'temp/amd/base.js',
             'temp/amd/utils.js',
@@ -88,7 +89,6 @@ module.exports = function(grunt) {
             'temp/amd/lightbox.js',
             'temp/amd/listview.js',
             'temp/amd/pager.js',
-            'temp/amd/personalize.js',
             'temp/amd/place.js',
             'temp/amd/popdown.js',
             'temp/amd/popupmenu.js',
@@ -186,7 +186,7 @@ module.exports = function(grunt) {
         files: {
           'dist/css/high-contrast-theme.min.css': ['dist/css/high-contrast-theme.css'],
           'dist/css/dark-theme.min.css': ['dist/css/dark-theme.css'],
-          'dist/css/grey-theme.min.css': ['dist/css/grey-theme.css'],
+          'dist/css/light-theme.min.css': ['dist/css/light-theme.css'],
           'dist/css/css-only.min.css': ['dist/css/css-only.css'],
         }
       }
@@ -206,8 +206,8 @@ module.exports = function(grunt) {
             'dist/css/508-theme.min.css',
             'dist/css/dark-theme.css',
             'dist/css/dark-theme.min.css',
-            'dist/css/grey-theme.css',
-            'dist/css/grey-theme.min.css',
+            'dist/css/light-theme.css',
+            'dist/css/light-theme.min.css',
             'dist/css/css-only.css',
             'dist/css/css-only.min.css',
             'dist/js/all/*.js'
