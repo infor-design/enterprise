@@ -626,7 +626,7 @@ $module-tabs-y-border-color: $header-border-color;
 $module-tabs-inactive-bg-color: $header-border-color;
 $module-tabs-active-bg-color: $slate06;
 $module-tabs-hover-bg-color: $slate06;
-$module-tabs-inactive-text-color: $slate01;
+$module-tabs-inactive-text-color: rgba($white, .85);
 $module-tabs-active-text-color: $white;
 $module-tabs-hover-text-color: $white;
 $module-tabs-disabled-bg-color: $slate06;

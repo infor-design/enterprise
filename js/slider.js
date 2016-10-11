@@ -781,9 +781,9 @@
       },
 
       getColorClosestToValue: function() {
-        var currentTheme = $('#sohoxi-stylesheet').get(0).href.replace(/^.*[\\\/]/, '').replace(/\.[^\.]+$/, ''),
+        var currentTheme = Soho.theme,
           preColors = {
-            'grey-theme': {
+            'light': {
               'default'   : '#000000',
               'very-poor' : '#a13030',
               'poor'      : '#d66221',
@@ -792,7 +792,7 @@
               'very-good' : '#76b051',
               'superior'  : '#488421'
             },
-            'dark-theme': {
+            'dark': {
               'default'   : '#ffffff',
               'very-poor' : '#a13030',
               'poor'      : '#d66221',
@@ -801,7 +801,7 @@
               'very-good' : '#76b051',
               'superior'  : '#488421'
             },
-            'high-contrast-theme': {
+            'high-contrast': {
               'default'   : '#000000',
               'very-poor' : '#a13030',
               'poor'      : '#d66221',
@@ -813,11 +813,6 @@
           };
 
         //remove from ? to end
-        var idx = currentTheme.indexOf('?');
-        if (currentTheme !== '' && idx > -1) {
-          currentTheme = currentTheme.substr(0, idx).replace('.css', '');
-        }
-
         var themeColors = preColors[currentTheme],
           val = this.value()[0],
           highestTickColor, c;

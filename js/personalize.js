@@ -43,7 +43,7 @@
     // Plugin Methods
     Personalize.prototype = {
       init: function() {
-        this.setColorScheme(this.settings.startingColor, true);
+        this.setColors(this.settings.startingColor);
 
         return this
           .handleEvents();
@@ -55,10 +55,10 @@
 
         this.element.on('updated.' + pluginName, function() {
           self.updated();
-        }).on('personalizecolors.' + pluginName, function(e, newColor, noAnimate) {
-          self.setColorScheme(newColor, noAnimate);
-        }).on('changetheme.' + pluginName, function(e, newTheme) {
-          self.setNewTheme(newTheme);
+        }).on('changecolors.' + pluginName, function(e, newColor, noAnimate) {
+          self.setColors(newColor, noAnimate);
+        }).on('changetheme.' + pluginName, function(e, theme) {
+          self.setTheme(theme);
         });
 
         return this;
@@ -77,51 +77,72 @@
         return '#' + hex;
       },
 
-      // Changes all personalizable elements inside this element to match the personalization scheme provided.
-      // @param {String} hex: The original Hexadecimal base color.
-      setColorScheme: function(hex, noAnimate) {
-        // If an event sends a blank string through instead of a hex,
-        // reset any color values back to the theme defaults.  Otherwise, get a valid hex value.
-        if (hex && hex !== '') {
-          hex = this.validateHex(hex);
+      stylesheet: function(cssRules) {
+        var sheet = document.getElementById('soho-personalization');
+        if (sheet) {
+          sheet.parentNode.removeChild(sheet);
         }
 
-        if (!hex) {
+        // Create the <style> tag
+        sheet = document.createElement('style');
+        sheet.setAttribute('id', 'soho-personalization');
+        sheet.appendChild(document.createTextNode(cssRules));
+
+      	// Add the <style> element to the page
+      	document.head.appendChild(sheet);
+      },
+
+      // Changes all personalizable elements inside this element to match the personalization scheme provided.
+      // The original hex color as a string or an object with all the Colors
+      setColors: function(colors) {
+        Soho.colors = colors;
+
+        if (typeof colors === 'string') {
+          Soho.colors = {};
+          Soho.colors.header = colors;
+        }
+
+        if (!colors || colors === '') {
           return;
         }
 
-        var self = this,
-          colors = {
-            'header': hex !== '' ? hex : '',
-            'subheader': hex !== '' ? this.getLuminousColorShade(hex, 0.2) : ''
-          },
-          mappings = [
-            ['.header.is-personalizable', 'background-color', colors.header],
-            ['.subheader.is-personalizable', 'background-color', colors.subheader],
-            ['.builder-header.is-personalizable', 'background-color', colors.subheader]
-          ];
+        // Default Colors...
+        // (Color)07 for the main color (fx headers)
+        // (Color)06 for the secondary color (fx sub-headers)
+        // Light or Dark (fff or 000) for the contrast color
 
-        function setProp(selector, prop, color) {
-          var elems = self.element.find(selector);
-          if (self.element.is(selector)) {
-            elems.add(self.element);
-          }
+        // (Color)06 for the vertical borders between module tabs - 133C59
+        // (Color)07 for the page header and active module tab - 2578A9 DEFAULT
+        // (Color)08 for the inactive module tab - 1d5f8a
+        // (Color)09 for the horizontal border - 134D71
+        // (Color)10 for the hover state on module tab - 133C59
+        var defaultColors = {header: '2578A9',
+                             subheader: '368AC0',
+                             text: 'ffffff',
+                             verticalBorder: '133C59',
+                             horizontalBorder: '134D71',
+                             inactive: '1d5f8a',
+                             hover: '133C59'};
 
-          function changeIt(method) {
-            if (noAnimate) {
-              elems[method + 'Class']('no-transition');
-            }
-          }
+        // If an event sends a blank string through instead of a hex,
+        // reset any color values back to the theme defaults.  Otherwise, get a valid hex value.
+        Soho.colors.header = this.validateHex(Soho.colors.header || defaultColors.header);
+        Soho.colors.subheader = this.validateHex(Soho.colors.subheader || this.getLuminousColorShade(Soho.colors.header, 0.2));
+        Soho.colors.inactive = this.validateHex(Soho.colors.inactive || this.getLuminousColorShade(Soho.colors.header, -0.22));
+        Soho.colors.verticalBorder = this.validateHex(Soho.colors.verticalBorder || this.getLuminousColorShade(Soho.colors.header, 0.1));
+        Soho.colors.horizontalBorder = this.validateHex(Soho.colors.horizontalBorder || this.getLuminousColorShade(Soho.colors.header, -0.4));
+        Soho.colors.hover = this.validateHex(Soho.colors.hover || this.getLuminousColorShade(Soho.colors.header, -0.5));
 
-          changeIt('add');
-          elems.css(prop, color);
-          elems.height(); // Forces repaint
-          changeIt('remove');
-        }
-
-        for (var i = 0; i < mappings.length; i++) {
-          setProp.apply(null, mappings[i]);
-        }
+        //not that the sheet is appended in backwards
+        var cssRules = '.tab-container.module-tabs.is-personalizable { border-top: 1px solid '+ Soho.colors.horizontalBorder +'; border-bottom: 1px solid ' + Soho.colors.horizontalBorder + '}' +
+        ' .module-tabs.is-personalizable .tab:not(:first-child) { border-left: 1px solid '+ Soho.colors.verticalBorder +'}'  +
+        ' .module-tabs.is-personalizable { background-color: '+ Soho.colors.inactive +'}'  +
+        ' .module-tabs.is-personalizable .tab.is-selected { background-color: '+ Soho.colors.header +'}'  +
+        ' .builder-header.is-personalizable{ background-color: '+ Soho.colors.subheader +'}'  +
+        ' .subheader.is-personalizable { background-color: '+ Soho.colors.subheader +'}' +
+        ' .header.is-personalizable { background-color: '+ Soho.colors.header +'}' +
+        ' .module-tabs.is-personalizable .tab:hover { background-color: '+ Soho.colors.hover +'}';
+        this.stylesheet(cssRules);
       },
 
       // Takes a color and performs a change in luminosity of that color programatically.
@@ -145,14 +166,18 @@
       },
 
       availableThemes: [
-        'grey-theme',
-        'dark-theme',
-        'high-contrast-theme'
+        'light',
+        'dark',
+        'high-contrast'
       ],
 
-      // Changes the application's current theme by swapping the "href" attribute of the main stylesheet entry
       // @param {String} theme: Represents the file name of a color scheme
-      setNewTheme: function(theme) {
+      setTheme: function(theme) {
+        if (Soho.theme === theme) {
+          return;
+        }
+
+        Soho.theme = theme;
         // validate theme
         if (this.availableThemes.indexOf(theme) === -1) {
           return;
@@ -173,9 +198,8 @@
         });
 
         $('body').append(pageOverlay);
-        css.attr('href', path.substring(0, path.lastIndexOf('/')) + '/' + theme + (path.indexOf('.min') > -1 ? '.min' : '') + '.css');
+        css.attr('href', path.substring(0, path.lastIndexOf('/')) + '/' + theme + '-theme' + (path.indexOf('.min') > -1 ? '.min' : '') + '.css');
         pageOverlay.fadeOut('slow', function() {
-        // pageOverlay.fadeOut('fast', function() {
           pageOverlay.remove();
         });
 

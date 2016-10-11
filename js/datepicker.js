@@ -948,7 +948,6 @@
         $.each(names.split(' '), function (idx, name) {
           elements.each(function () {
             var handlers = $._data(this, 'events')[name.split('.')[0]];
-            // console.log(handlers);
             // Validate requested position.
             newIndex = Math.min(newIndex, handlers.length - 1);
             handlers.splice(newIndex, 0, handlers.pop());

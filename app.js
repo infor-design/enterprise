@@ -63,15 +63,15 @@ var express = require('express'),
     }
 
     // Set the theme and colorScheme
-    //Fx: http://localhost:4000/controls/modal?colorScheme=123456,123456,827272&themeName=dark
-    if (req.query.themeName && req.query.themeName.length  > 0) {
-      res.opts.themeName = req.query.themeName;
-      console.log('Setting Theme to ' + res.opts.themeName);
+    //Fx: http://localhost:4000/controls/modal?colors=9279a6,ffffff&theme=dark
+    if (req.query.theme && req.query.theme.length  > 0) {
+      res.opts.theme = req.query.theme;
+      console.log('Setting Theme to ' + res.opts.theme);
     }
 
-    if (req.query.colorScheme && req.query.colorScheme.length > 0) {
-      res.opts.colorScheme = req.query.colorScheme;
-      console.log('Setting Colors to ' + res.opts.colorScheme);
+    if (req.query.colors && req.query.colors.length > 0) {
+      res.opts.colors = req.query.colors;
+      console.log('Setting Colors to ' + res.opts.colors);
     }
 
     // Sets a simulated response delay for API Calls
