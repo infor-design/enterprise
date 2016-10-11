@@ -71,6 +71,11 @@
                     <button id="reset" class="btn-tertiary" type="reset"><span>Clear</span></button>
                     <button id="submit" class="btn-primary" type="submit"><span>Create New Tab</span></button>
                   </div>
+
+                  <br><br><br>
+                  <button type="button" class="btn" id="btn-disable-all">Disable All</button>
+                  <button type="button" class="btn" id="btn-disable-partial">Disable Partial</button>
+
                 </div>
                 <div class="six columns"></div>
               </div>
@@ -266,6 +271,15 @@
       // Run the field toggle method on start
       toggleFields($('#use-garbage').prop('checked'));
     });
+
+    // Disable module tabs
+    $('#btn-disable-all').on('click', function () {
+      $('#module-tabs-example').data('tabs').disable();
+    });
+    $('#btn-disable-partial').on('click', function () {
+      $('#module-tabs-example').data('tabs').disable(true);
+    });
+
   </script>
 
 </body>

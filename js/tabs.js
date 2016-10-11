@@ -2283,8 +2283,10 @@
           .init();
       },
 
-      disable: function() {
-        this.element.prop('disabled', true).addClass('is-disabled');
+      disable: function(isPartial) {
+        if (!isPartial) {
+          this.element.prop('disabled', true).addClass('is-disabled');
+        }
 
         if (!this.disabledElems) {
           this.disabledElems = [];
@@ -2292,6 +2294,10 @@
 
         var self = this,
           tabs = this.tablist.children('li:not(.separator)');
+          if (isPartial) {
+            tabs = tabs.filter(':not(.application-menu-trigger)');
+          }
+
 
         tabs.each(function() {
           var li = $(this);
@@ -2334,7 +2340,7 @@
           });
         });
 
-        if (this.isModuleTabs()) {
+        if (this.isModuleTabs() && !isPartial) {
           this.element.children('.toolbar').disable();
         }
 
