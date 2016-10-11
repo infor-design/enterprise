@@ -217,6 +217,13 @@
   }
 }
 
+.is-disabled {
+  .icon.close {
+    cursor: default;
+    opacity: .5;
+  }
+}
+
 // Input Style
 input,
 textarea {
