@@ -814,7 +814,7 @@ window.Chart = function(container) {
     dims.height = dims.height > dims.widgetheight ? dims.widgetheight : dims.height;
     dims.height = isSmall && !lb.hideLabels ? dims.width : dims.height;
 
-    dims.outerRadius = ((Math.min(dims.width, dims.height) / 2) - 35);
+    dims.outerRadius = ((Math.min(dims.width, dims.height) / 2) - 40);
     dims.innerRadius = isDonut ? dims.outerRadius - (!lb.hideLabels ? 50 : 30) : 0;
     dims.labelRadius = dims.outerRadius + 20;
     dims.center = { x: dims.width / 2, y: dims.height / 2 };
@@ -1086,12 +1086,14 @@ window.Chart = function(container) {
       addLabels();
 
       if (lb.hideLabels) {
+        var isRunning = true,
+          orgLabelPos,
+          spacing = Math.round(textLabels.node().getBBox().height) + 1;
+
         // Resolve label positioning collisions
         (function () {
-          var spacing = Math.round(textLabels.node().getBBox().height) + 1;
-
           // Record org x, y position
-          var orgLabelPos = textLabels[0].map(function(d) {
+          orgLabelPos = textLabels[0].map(function(d) {
             d = d3.select(d);
             return { x: +d.attr('x'), y: +d.attr('y') };
           });
@@ -1112,10 +1114,18 @@ window.Chart = function(container) {
                     y2 = +db.attr('y');
 
                   if (da.attr('text-anchor') === db.attr('text-anchor')) {
-                    deltaY = y1 - y2;
-                    if (Math.abs(deltaY) < spacing) {
+                    deltaY = Math.round(Math.abs(y1 - y2));
+                    if (deltaY < spacing) {
+                      deltaY += 1;
+                      var newY = y2 > 0 ? y2-(deltaY/2) : y2+(deltaY/2);
                       again = true;
-                      db.attr('y', y2 > 0 ? y2-1 : y2+1); //padding
+                      db.attr('y', newY); //padding
+
+                      if (Math.round(Math.abs(newY)) < 2) {
+                        again = false;
+                        newY = y2 > 0 ? y2-(spacing) : y2+(spacing/2);
+                        db.attr('y', newY);
+                      }
                     }
                   }
                 }
@@ -1123,10 +1133,22 @@ window.Chart = function(container) {
             });
 
             if(again) {
-              relax();
+              setTimeout(function() {
+                relax();
+              }, 0);
+            } else {
+              isRunning = false;
             }
           }
           relax();
+        })();
+
+        // Draw lines and set short name
+        var intervalId = setInterval(function() {
+          if (isRunning) {
+            return;
+          }
+          clearInterval(intervalId);
 
           // Fix x position
           textLabels.each(function(d, i) {
@@ -1137,7 +1159,7 @@ window.Chart = function(container) {
               x = (dims.labelRadius - Math.abs(y1) + Math.abs(orgLabelPos[i].x + (spacing * 2.5))) * sign;
 
             if (orgLabelPos[i].y !== y1 || (i === 0 && chartData[i].percent < 10)) {
-              x += chartData[i].percent < 10 ? x1 : Math.ceil(x1/3);
+              x += chartData[i].percent < 10 ? Math.ceil(x1/2) : Math.ceil(x1-x)- (spacing/2);
               label.attr('x', x);
 
               if (lb.isTwoline) {
@@ -1146,10 +1168,6 @@ window.Chart = function(container) {
             }
           });
 
-        })();
-
-        // Draw lines and set short name
-        (function () {
           var lineFunction = d3.svg.line()
             .x(function(d) { return d.x; })
             .y(function(d) { return d.y; })
@@ -1196,7 +1214,8 @@ window.Chart = function(container) {
               }
           });
 
-        })();
+        }, 1);
+
       } // END: lb.hideLabels
       else {
         showLegend = true;
