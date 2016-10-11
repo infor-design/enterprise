@@ -1499,7 +1499,11 @@ $.fn.datagrid = function(options) {
           //Run Data over the formatter
           if (columnDef.filterType === 'text') {
             rowValue = self.formatValue(columnDef.formatter, i , conditions[i].columnId, rowValue, columnDef, rowData, self);
-            rowValue = $(rowValue).text().toLowerCase();
+
+            //Strip any html markup that might be in the formatters
+            var rex = /(<([^>]+)>)|(&lt;([^>]+)&gt;)/ig;
+            rowValue = rowValue.replace(rex , '').toLowerCase();
+
             rowValueStr = rowValue.toString().toLowerCase();
           }
 

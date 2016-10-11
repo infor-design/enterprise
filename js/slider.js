@@ -812,7 +812,6 @@
             }
           };
 
-        //remove from ? to end
         var themeColors = preColors[currentTheme],
           val = this.value()[0],
           highestTickColor, c;
