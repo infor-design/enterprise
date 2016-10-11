@@ -34,7 +34,8 @@ var express = require('express'),
     enableLiveReload: true,
     layout: 'layout',
     locale: 'en-US',
-    title: 'SoHo XI - v' + process.env.npm_package_version + ' ' + git.short(),
+    // Ignore this because its not in our control
+    title: 'SoHo XI - v' + process.env.npm_package_version + ' ' + git.short(), // jshint ignore:line
   };
 
   // Option Handling - Custom Middleware
