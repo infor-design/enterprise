@@ -2947,6 +2947,297 @@ window.Chart = function(container) {
 
   };
 
+  //Completion chart
+  this.Completion = function(chartData) {
+    $(container).addClass('completion-chart');
+
+    // Set dataset
+    var dataset = chartData[0].data[0],
+      isTarget = charts.settings.type === 'completion-target';
+
+    // Set total defaults
+    dataset.total = $.extend({}, {value: 100}, dataset.total);
+
+    // Basic functions
+    var isUndefined = function(value) {
+        return typeof value === 'undefined';
+      },
+      fixUndefined = function(value, isNumber) {
+        return !isUndefined(value) ? value : (isNumber ? 0 : '');
+      },
+      format = function (value, formatterString) {
+        value = formatterString === '.0%' ? value/100 : value;
+        return d3.format(formatterString || '')(value);
+      },
+      toValue = function(percent) {
+        return percent /100 * fixUndefined(dataset.total.value, true);
+      },
+      toPercent = function(value) {
+        return d3.round(100 * (value / fixUndefined(dataset.total.value, true)));
+      },
+      fixPercent = function(value) {
+        var s = value.toString();
+        if (s.indexOf('%') !== -1) {
+          return toValue(s.replace(/%/g, ''));
+        }
+        return value;
+      },
+      updateWidth = function(elem, value) {
+        var w = toPercent(value) > 100 ? 100 : (toPercent(value) < 0 ? 0 : toPercent(value));
+        elem.css({'width': w +'%'});
+      },
+      updateTargetline = function(elem, value) {
+        var w = value > 100 ? 100 : (value < 0 ? 0 : value);
+        elem.css({'left': w +'%'});
+      },
+      setFormat = function(obj) {
+        return (obj && !isUndefined(obj.value) && obj.format) ?
+          format(fixPercent(obj.value), obj.format) : (obj ? fixPercent(obj.value) : 0);
+      },
+      setOverlap = function() {
+        if (isTarget) {
+          setTimeout(function() {
+            var remaining = $('.remaining', container),
+              total = $('.total', container),
+              rect1 = $('.completed .value', container)[0].getBoundingClientRect(),
+              rect2 = remaining.find('.value')[0].getBoundingClientRect();
+
+            remaining.add(total)
+              [(rect1.right > rect2.left) ? 'addClass' : 'removeClass']('overlap');
+          }, 500);
+        }
+      };
+
+      this.update = function(o) {
+        var type, bar, nodes, jsonData;
+        if (!o.data) {
+          return;
+        }
+
+        if (!o.type) {
+          nodes = o.node;
+        }
+        else {
+          type = o.type;
+          if (!dataset[type]) {
+            return;
+          }
+          nodes = (type === 'name') ?
+            $('.name', container) : ((type === 'total') ?
+              $('.total.value', container) :
+                $('.'+ type +' .value, .'+ type +' .text', container));
+        }
+        jsonData = (nodes.length === 1 ? nodes : nodes.first()).data('jsonData');
+        type = jsonData ? Object.keys(jsonData)[0] : 'name';
+        bar = $('.'+ type +'.bar', container);
+        $.extend(true, dataset[type], o.data);
+
+        nodes.each(function() {
+          var node = $(this);
+
+          // Update text
+          if (o.data.text && node.is('.name, .text')) {
+            node.html(fixUndefined(dataset[type].text));
+          }
+
+          // Update color for text, value, bar
+          if (o.data.color && node.is('.name, .info, .text, .value')) {
+            if (o.data.color.indexOf('#') === -1) {
+              ((type === 'completed' && (!dataset.info || (dataset.info && isUndefined(dataset.info.value)))) ?
+                node.add($('.info .value', container)) : node).add(bar)
+                  .removeClass('error dark good primary amethyst07')
+                  .addClass(o.data.color);
+            }
+            else {
+              if (node.is('.name, .total')) {
+                node.css('color', dataset[type].color);
+              }
+              else {
+                ((type === 'completed' && (!dataset.info || (dataset.info && isUndefined(dataset.info.value)))) ?
+                  $('.'+ type +' .value, .'+ type +' .text, .info .value', container) :
+                  $('.'+ type +' .value, .'+ type +' .text', container))
+                    .css('color', dataset[type].color);
+                bar.css('background-color', dataset[type].color);
+              }
+            }
+          }
+
+          // Update value & bar width
+          if (o.data.value && node.is('.value')) {
+            var w,
+              completed = $('.completed', container),
+              remaining = $('.remaining', container);
+
+            if (type === 'completed') {
+              ((!dataset.info || (dataset.info && isUndefined(dataset.info.value))) ?
+                node.add($('.info .value', container)) : node)
+                  .html(setFormat(dataset[type]));
+
+              if (toPercent(fixPercent(dataset[type].value)) >= 100) {
+                remaining.hide();
+                completed.css({'margin-top': 'inherit'});
+              }
+            }
+            else {
+              node.html(setFormat(dataset[type]));
+            }
+            // ((type === 'completed' && (!dataset.info || (dataset.info && isUndefined(dataset.info.value)))) ?
+            //   node.add($('.info .value', container)) : node).html(setFormat(dataset[type]));
+
+            if (!node.is('.name, .total') && type !== 'targetline') {
+              if (type === 'completed') {
+                w = fixPercent(dataset[type].value);
+                updateWidth(bar, w);
+                w += fixPercent(dataset.remaining.value);
+                updateWidth($('.remaining.bar', container), w);
+              }
+              else if (type === 'remaining') {
+                w = fixPercent(dataset[type].value) + fixPercent(dataset.completed.value);
+                updateWidth(bar, w);
+              }
+            }
+            // if (!node.is('.name, .total') && type !== 'targetline') {
+            //   w = fixPercent(dataset[type].value);
+            //   w += (type === 'remaining') ? fixPercent(dataset.completed.value) : 0;
+            //   updateWidth(bar, w);
+            // }
+            else if (!node.is('.name, .total, .remaining') && type === 'targetline') {
+              w = fixPercent(dataset[type].value);
+              updateTargetline(bar, w);
+            }
+            setOverlap();
+          }
+        });
+      };
+
+    // Render
+    var html = {body: $('<div class="total bar" />')};
+    if (isTarget) {
+      html.body.addClass('chart-completion-target');
+      html.label = ''+
+      '<span class="label">'+
+        '<span class="name">'+ fixUndefined(dataset.name.text) +'</span>'+
+        '<span class="l-pull-right total value">'+ setFormat(dataset.total) +'</span>'+
+      '</span>';
+    }
+    else {
+      html.body.addClass('chart-completion');
+      html.label = ''+
+      '<b class="label name ">'+ fixUndefined(dataset.name.text) +'</b>'+
+      '<b class="label info '+ (dataset.info.color ?
+        fixUndefined(dataset.info.color) :
+          fixUndefined(dataset.completed.color) +' colored') +'">'+
+        '<span class="value">'+
+        (dataset.info && !isUndefined(dataset.info.value) ? fixUndefined(dataset.info.value) :
+          setFormat(dataset.completed)) +
+        '</span> '+
+        '<span class="text">'+ fixUndefined(dataset.info.text) +'</span>'+
+      '</b>';
+    }
+
+    if (dataset.remaining) {
+      html.remaining = ''+
+      '<div class="target remaining bar '+ fixUndefined(dataset.remaining.color) +'">'+
+        '<span aria-hidden="true"'+ (!isTarget ? ' class="audible"' : '') +'>'+
+          '<span class="value">'+
+            setFormat(dataset.remaining) +
+          '</span><br />'+
+          '<span class="text">'+
+            fixUndefined(dataset.remaining.text) +
+          '</span>'+
+        '</span>'+
+      '</div>';
+    }
+    if (dataset.completed) {
+      html.completed = ''+
+      '<div class="completed bar '+ fixUndefined(dataset.completed.color) +'">'+
+        '<span aria-hidden="true"'+ (!isTarget ? ' class="audible"' : '') +'>'+
+          '<span class="value">'+
+            setFormat(dataset.completed) +
+          '</span><br />'+
+          '<span class="text">'+
+            fixUndefined(dataset.completed.text) +
+          '</span>'+
+        '</span>'+
+      '</div>';
+    }
+    if (dataset.targetline) {
+      html.targetline = ''+
+      '<div class="target-line targetline bar">'+
+        '<span aria-hidden="true"'+ (!isTarget ? ' class="audible"' : '') +'>'+
+          '<span class="value">'+
+            setFormat(dataset.targetline) +
+            '</span><br />'+
+            '<span class="text">'+
+              fixUndefined(dataset.targetline.text) +
+            '</span>'+
+        '</span>'+
+      '</div>';
+    }
+
+    html.body.append(html.remaining, html.completed, html.targetline);
+    $(container).append(html.label, html.body);
+
+    // Caching elements
+    var c = {
+      name: $('.name', container),
+      info: {
+        value: $('.info .value', container),
+        text: $('.info .text', container)
+      },
+      completed: {
+        bar: $('.completed.bar', container),
+        value: $('.completed .value', container),
+        text: $('.completed .text', container)
+      },
+      remaining: {
+        bar: $('.remaining.bar', container),
+        value: $('.remaining .value', container),
+        text: $('.remaining .text', container)
+      },
+      targetline: {
+        bar: $('.targetline', container),
+        value: $('.targetline .value', container),
+        text: $('.targetline .text', container)
+      },
+      total: {
+        bar: $('.total.bar', container),
+        value: $('.total.value', container),
+      }
+    };
+
+    // Set jsonData
+    c.name.data('jsonData', {name: dataset.name});
+    c.info.value.add(c.info.text).data('jsonData', {info: dataset.info});
+    c.completed.bar.add(c.completed.value).add(c.completed.text)
+      .data('jsonData', {completed: dataset.completed});
+    c.remaining.bar.add(c.remaining.value).add(c.remaining.text)
+      .data('jsonData', {remaining: dataset.remaining});
+    c.targetline.bar.add(c.targetline.value).add(c.targetline.text)
+      .data('jsonData', {targetline: dataset.targetline});
+    c.total.bar.add(c.total.value).data('jsonData', {total: dataset.total});
+
+    var w;
+    // Update completed bar width
+    if (dataset.completed) {
+      w = fixPercent(dataset.completed.value);
+      updateWidth(c.completed.bar, w);
+    }
+
+    // Update remaining bar width
+    if (dataset.remaining) {
+      w = fixPercent(dataset.completed.value) + fixPercent(dataset.remaining.value);
+      updateWidth(c.remaining.bar, w);
+      setOverlap();
+    }
+
+    // Update target line bar position
+    if (dataset.targetline) {
+      w = fixPercent(dataset.targetline.value);
+      updateTargetline(c.targetline.bar, w);
+    }
+  };
+
   //Select the element and fire the event, make the inverse selector opace
   this.selectElement = function(elem, inverse, data) {
     var isSelected = elem.node() && elem.classed('is-selected');
@@ -3177,6 +3468,11 @@ window.Chart = function(container) {
     }
     if (options.type === 'bullet') {
       this.Bullet(options.dataset);
+    }
+    if (options.type === 'completion' ||
+        options.type === 'completion-target') {
+      this.redrawOnResize = false;
+      this.Completion(options.dataset);
     }
   };
 
