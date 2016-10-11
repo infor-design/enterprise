@@ -20,7 +20,7 @@
 
   // Force all variable names to use either camelCase style or UPPER_CASE
   // with underscores.
-  "camelcase": true,
+  "camelcase": false,
 
   // Prohibit use of == and != in favor of === and !==.
   "eqeqeq": true,

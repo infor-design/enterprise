@@ -34,7 +34,7 @@ var express = require('express'),
     enableLiveReload: true,
     layout: 'layout',
     locale: 'en-US',
-    title: title: 'SoHo XI - v' + process.env.npm_package_version + ' ' + git.short(),
+    title: 'SoHo XI - v' + process.env.npm_package_version + ' ' + git.short(),
   };
 
   // Option Handling - Custom Middleware
