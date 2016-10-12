@@ -22,10 +22,9 @@
     // Tab Settings and Options
     var pluginName = 'stepprocess',
         defaults = {
-          changeTabOnHashChange: true, // If true, will change the selected tab on invocation based on the URL that exists after the hash
           stepPanels: '.js-step-process-panel', // The selector for elements that are step panels
           stepLinks: '.js-step-link', // The selector for elements that are step links
-          btnStepPrev: '.js-step-link-prev', // The selector of the next step action
+          btnStepPrev: '.js-step-link-prev', // The selector of the previous step action element
           btnStepNext: '.js-step-link-next', // The selector of the next step action element
           btnToggleStepLinks: '.js-toggle-steps', // The selector of the element to toggle the steps list
 
@@ -62,10 +61,8 @@
 
         // Remove accordion events from non-accordion items
         this.stepAccordion.element
-          .find('.accordion-header.step-process-item')
-          .off()
-          .find('a')
-          .off('touchend');
+          .find('.accordion-header.step-process-item').off()
+          .find('a').off('touchend');
 
         // Setup click events
         this.stepLinks.each(function() {
@@ -102,18 +99,6 @@
           self.hideContentPane.call(self);
         });
 
-        // If we are using the hash change setting
-        if (this.settings.changeTabOnHashChange) {
-          var hash = window.location.hash;
-
-          if (hash && hash.length) {
-            var $firstMatchingStep = this.stepLinks.filter('[href="'+ hash +'"]').first();
-
-            if ($firstMatchingStep.length) {
-              this.$currentStep = $firstMatchingStep;
-            }
-          }
-        }
 
         // Set the initial states/vars
         this.stepAccordion.select(this.$currentStep);
@@ -198,33 +183,33 @@
       },
 
       /**
-       * Get the previous item in an array
+       * Get the previous item in a jquery collection
        *
        * @param {object} item - An element
        * @param {object} list - A jquery collection of elements
        * @returns {object} The previous stepLink
        */
       getPrevItem: function(item, $list) {
-        var prevIdx = $list.index(item) - 1;
-        if (prevIdx < 0) {
-          prevIdx = $list.length - 1;
+        var idx = $list.index(item);
+        if (idx > 0) {
+          idx +- 1;
         }
-        return $list[prevIdx];
+        return $list[idx];
       },
 
       /**
-       * Get the next item in an array
+       * Get the next item in a jquery collection
        *
        * @param {object} item - An element
        * @param {object} list - A jquery collection of elements
        * @returns {object} The previous stepLink
        */
       getNextItem: function(item, $list) {
-        var nextIdx = $list.index(item) + 1;
-        if (nextIdx >= $list.length) {
-          nextIdx = 0;
+        var idx = $list.index(item);
+        if (idx === $list.length - 1) {
+          idx += 1;
         }
-        return $list[nextIdx];
+        return $list[idx];
       },
 
       /**
@@ -287,18 +272,6 @@
        */
       hideContentPane: function() {
         $(this.element).removeClass('show-main');
-      },
-
-      /**
-       * Updates the hash in the url
-       */
-      updateHash: function() {
-        if (!this.settings.changeTabOnHashChange) {
-          return;
-        }
-
-        var stepId = this.$currentStep.attr('href').replace(/#/g, '');
-        window.location.hash = stepId;
       }
     };
 
