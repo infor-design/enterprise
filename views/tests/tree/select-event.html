@@ -16,7 +16,8 @@
     "text": "Node One",
     "open": false,
     "selected": false,
-    "href": '/somelink/'
+    "href": '/somelink/',
+    "metadata": { "fileType": "doc"}
   }, {
     "id": "node2",
     "text": "Node Two",
@@ -25,7 +26,8 @@
     "focus": true,
     "children": [{
         "id": "node3",
-        "text": "Node 2.1"
+        "text": "Node 2.1",
+        "metadata": { "fileType": "doc"}
       }, {
         "id": "node4",
         "text": "Node 2.2",
@@ -36,7 +38,8 @@
           "children": [{
             "id": "node6",
             "text": "Node 2.2.1.1",
-            "icon": "icon-tree-chart"
+            "icon": "icon-tree-chart",
+            "metadata": { "fileType": "chart"}
           }]
         }]
       }]
@@ -44,7 +47,7 @@
   /* jshint ignore:end */
 
   $('#json-tree').tree({dataset: sampleData})
-  .on('selected', function (e, args, x) {
-    console.log(args, x);
+  .on('selected', function (e, args) {
+    console.log(args.data.id , args.data.metadata);
   });
 </script>

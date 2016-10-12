@@ -19,20 +19,33 @@
   initialLocale = '{{locale}}';
   {{/locale}}
 
-  $('body').initialize({locale: initialLocale}); //ar-EG to test RTL
 
-  var initialTheme = 'light';
-  {{#initialTheme}}
-  initialTheme = '{{initialTheme}}';
-  {{/initialTheme}}
+  var theme = 'light';
+  {{#theme}}
+  theme = '{{theme}}';
+  {{/theme}}
 
-  var colorScheme;
-  {{#colorScheme}}
-  colorScheme = '{{colorScheme}}'.split(',');
-  {{/colorScheme}}
+  var colors;
+  {{#colors}}
+  colors = '{{colors}}'.split(',');
+  console.log(colors);
 
-  $('body').trigger('personalizecolors', colorScheme);
-  $('body').trigger('changetheme', initialTheme);
+  colors = {header: colors[0],
+           subheader: colors[1],
+           text: colors[2],
+           verticalBorder: colors[3],
+           horizontalBorder: colors[4],
+           inactive: colors[5],
+           hover: colors[6]};
+
+  {{/colors}}
+
+  $('body').initialize({locale: initialLocale});
+
+  //If Initialize isnt called need to defer this
+  $('body').trigger('changetheme', theme)
+      .trigger('changecolors', colors);
+
 </script>
 
 <!--

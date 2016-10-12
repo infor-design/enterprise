@@ -30,7 +30,9 @@
     // Plugin Constructor
     function Plugin(element) {
       this.element = $(element);
+      Soho.logTimeStart(pluginName);
       this.init();
+      Soho.logTimeEnd(pluginName);
     }
 
     // Plugin Methods
@@ -856,14 +858,12 @@
 
       //Sync a node with its dataset 'record'
       syncNode: function (node) {
-        var entry = {},
+        var entry = node.data('jsonData') || {},
           self = this;
 
-        entry = {
-          node: node,
-          id: node.attr('id'),
-          text: node.find('.tree-text').text()
-        };
+        entry.node = node;
+        entry.id = node.attr('id');
+        entry.text = node.find('.tree-text').text();
 
         if (node.hasClass('is-open')) {
           entry.open = true;

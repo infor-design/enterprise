@@ -63,15 +63,15 @@ var express = require('express'),
     }
 
     // Set the theme and colorScheme
-    //Fx: http://localhost:4000/controls/modal?colorScheme=123456,123456,827272&themeName=dark
-    if (req.query.themeName && req.query.themeName.length  > 0) {
-      res.opts.themeName = req.query.themeName;
-      console.log('Setting Theme to ' + res.opts.themeName);
+    //Fx: http://localhost:4000/controls/modal?colors=9279a6,ffffff&theme=dark
+    if (req.query.theme && req.query.theme.length  > 0) {
+      res.opts.theme = req.query.theme;
+      console.log('Setting Theme to ' + res.opts.theme);
     }
 
-    if (req.query.colorScheme && req.query.colorScheme.length > 0) {
-      res.opts.colorScheme = req.query.colorScheme;
-      console.log('Setting Colors to ' + res.opts.colorScheme);
+    if (req.query.colors && req.query.colors.length > 0) {
+      res.opts.colors = req.query.colors;
+      console.log('Setting Colors to ' + res.opts.colors);
     }
 
     // Sets a simulated response delay for API Calls
@@ -858,7 +858,19 @@ var express = require('express'),
             { id: 14, escalated: 0, depth: 4, taskName: 'More Follow up', desc: 'Contact sales representative.', comments: 2, time: '7:04 AM'},
           ]},
         ]}
+      ]},
+      { id: 15, escalated: 0, depth: 1, expanded: true, taskName: 'Follow up action with Residental Housing', desc: 'Contact sales representative with the updated purchase order.', comments: 2, time: '22:10 PM', children: [
+        { id: 16, escalated: 0, depth: 2, taskName: 'Follow up action with Universal HMM Logistics', desc: 'Contact sales representative.', comments: 2, time: '22:10 PM'},
+        { id: 17, escalated: 0, depth: 2, taskName: 'Follow up action with Acme Shipping', desc: 'Contact sales representative.', comments: 2, time: '22:10 PM'},
+        { id: 18, escalated: 0, depth: 2, expanded: true, taskName: 'Follow up action with Residental Shipping Logistics ', desc: 'Contact sales representative.', comments: 2, time: '7:04 AM', children: [
+          { id: 19, escalated: 0, depth: 3, taskName: 'Follow up action with Universal Shipping Logistics Customers', desc: 'Contact sales representative.', comments: 2, time: '14:10 PM'},
+          { id: 20, escalated: 0, depth: 3, expanded: true,  taskName: 'Follow up action with Acme Universal Logistics Customers', desc: 'Contact sales representative.', comments: 2, time: '7:04 AM', children: [
+            { id: 21, escalated: 0, depth: 4, taskName: 'More Contact', desc: 'Contact sales representative.', comments: 2, time: '14:10 PM'},
+            { id: 22, escalated: 0, depth: 4, taskName: 'More Follow up', desc: 'Contact sales representative.', comments: 2, time: '7:04 AM'},
+          ]},
+        ]}
       ]}
+
     ];
 
     res.setHeader('Content-Type', 'application/json');

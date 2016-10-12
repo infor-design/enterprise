@@ -28,7 +28,9 @@
     // Plugin Constructor
     function SignIn(element) {
       this.element = $(element);
+      Soho.logTimeStart(pluginName);
       this.init();
+      Soho.logTimeEnd(pluginName);
     }
 
     // Plugin Methods

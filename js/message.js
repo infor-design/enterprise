@@ -21,7 +21,8 @@
   $.fn.message = function(options) {
 
     // Settings and Options
-    var defaults = {
+    var pluginName = 'message',
+      defaults = {
           title: 'Message Title', //Title text or content shown in the message
           isError: false, //Show Title as an Error with an Icon
           message: 'Message Summary', //The message content or text
@@ -35,7 +36,9 @@
     // Plugin Constructor
     function Message(element) {
       this.element = $(element);
+      Soho.logTimeStart(pluginName);
       this.init();
+      Soho.logTimeEnd(pluginName);
     }
 
     // Actual Plugin Code

@@ -40,7 +40,9 @@
     function Dropdown(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
+      Soho.logTimeStart(pluginName);
       this.init();
+      Soho.logTimeEnd(pluginName);
     }
 
     // Actual DropDown Code
@@ -397,7 +399,7 @@
         //for form resets.
         self.element.closest('form').on('reset.dropdown', function() {
           setTimeout(function () {
-            self.element.triggerHandle('updated');
+            self.element.triggerHandler('updated');
           }, 1);
         });
 

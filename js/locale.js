@@ -610,7 +610,7 @@
     //Take a Formatted Number and return a real number
     parseNumber: function(input) {
       var numSettings = this.currentLocale.data.numbers,
-        numString;
+        numString, group;
 
       numString = input;
 
@@ -618,7 +618,9 @@
         return NaN;
       }
 
-      numString = numString.replace(new RegExp('\\' + numSettings.group, 'g'), '');
+      group = numSettings ? numSettings.group  : ',';
+
+      numString = numString.replace(new RegExp('\\' + group, 'g'), '');
       numString = numString.replace(numSettings.decimal, '.');
       numString = numString.replace(numSettings.percentSign, '');
       numString = numString.replace(this.currentLocale.data.currencySign, '');

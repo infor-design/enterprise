@@ -1,91 +1,137 @@
-
 <div class="row">
   <div class="one-third column">
+    <div id="example-1" class="chart-container"></div>
+    <button type="button" class="btn" id="example-1-update-value">Update</button>
+    <br><br><br><br><br>
 
-    <span class="label" id="prbc-label1">Available Credit <span class="l-pull-right">$95,000</span></span>
-    <div class="chart-completion-target" id="chart-progressbar1" aria-labelledby="prbc-label1">
-      <div class="target" style="width: 66%">
-        <span aria-hidden="true">$10,000 <br> Pending</span>
-      </div>
-      <div class="completed" style="width: 50%">
-        <span aria-hidden="true">$50,000 <br> Spent</span>
-      </div>
-    </div>
-
-    <br>
-    <button type="button" class="btn" id="upd-progressbar-chart">Update</button>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-
-    <span class="label" id="prbc-label2">Procurement <span class="l-pull-right">$49,000</span></span>
-    <div class="chart-completion-target" aria-labelledby="prbc-label2">
-      <div class="target" style="width: 66%">
-        <span aria-hidden="true">16% <span class="audible">left to target</span></span>
-      </div>
-      <div class="completed primary" style="width: 50%">
-        <span aria-hidden="true">50% <span class="audible">complete</span></span>
-      </div>
-    </div>
-
-    <span class="label" id="prbc-label3">Construction $19,000</span>
-    <div class="chart-completion-target" aria-labelledby="prbc-label3">
-      <div class="target" style="width: 100%">
-        <span aria-hidden="true">50% <span class="audible">left to target</span></span>
-      </div>
-      <div class="completed dark" style="width: 50%">
-        <span aria-hidden="true">50% <span class="audible">complete</span></span>
-      </div>
-    </div>
-
+    <div id="example-2" class="chart-container"></div>
+    <div id="example-3" class="chart-container"></div>
   </div>
 </div>
 
-<!--Alternate style-->
-
 <div class="row">
-
   <div class="two columns">
-
-    <b class="label" id="prbc-label4">Russell Dunn</b>
-    <b class="label error" id="prbc-label4">-22h</b>
-    <div class="chart-completion" aria-labelledby="prbc-label4">
-      <div class="completed error" style="width: 50%">
-      </div>
-    </div>
-
-    <b class="label" id="prbc-label5">Ronald Reynolds</b>
-    <b class="label colored" id="prbc-label5">13h</b>
-    <div class="chart-completion" aria-labelledby="prbc-label5">
-      <div class="completed" style="width: 10%">
-      </div>
-    </div>
-
-    <b class="label" id="prbc-label6">Lei Ju</b>
-    <b class="label colored" id="prbc-label6">-22h <span>Approaching max.*</span></b>
-    <div class="chart-completion" aria-labelledby="prbc-label6">
-      <div class="completed" style="width: 90%">
-      </div>
-    </div>
-
-    <b class="label" id="prbc-label7">Behavior 1</b>
-    <b class="label colored amethyst07" id="prbc-label7">49 <span>/100</span></b>
-    <div class="chart-completion target" aria-labelledby="prbc-label7">
-      <div class="completed graphite04" style="width: 84%">
-      </div>
-      <div class="target-line" style="left: 87%">
-        <span aria-hidden="true">95% <span class="audible">target</span></span>
-      </div>
-    </div>
-
+    <div id="example-4" class="chart-container"></div>
+    <div id="example-5" class="chart-container"></div>
+    <div id="example-6" class="chart-container"></div>
+    <div id="example-7" class="chart-container"></div>
   </div>
-
 </div>
 
 <script>
-  $('#upd-progressbar-chart').on('click', function () {
-    $('#chart-progressbar1').find('.completed').css('width', '100%').find('span:first').html('$95,000<br>Spent');
+  var dataset1 = [{
+    data: [{
+      name: {text: 'Available Credit'},
+      completed: {text: 'Spent', value: 50000, format: '$,.0f'},
+      remaining: {text: 'Pending', value: 10000, format: '$,.0f'},
+      total: {value: 95000, format: '$,.0f'},
+    }]
+  }];
+
+  var dataset2 = [{
+    data: [{
+      name: {text: 'Procurement'},
+      completed: {value: '50%', format: '.0%', color: 'primary'},
+      remaining: {value: '16%', format: '.0%'},
+      total: {value: 49000, format: '$,.0f'},
+    }]
+  }];
+
+  var dataset3 = [{
+    data: [{
+      name: {text: 'Construction'},
+      completed: {value: '50%', format: '.0%', color: 'dark'},
+      remaining: {value: '50%', format: '.0%'},
+      total: {value: 19000, format: '$,.0f'},
+    }]
+  }];
+
+  var dataset4 = [{
+    data: [{
+      name: {text: 'Russell Dunn'},
+      info: {value: '-22h', color: 'error'},
+      completed: {value: 50, color: 'error'},
+    }]
+  }];
+
+  var dataset5 = [{
+    data: [{
+      name: {text: 'Ronald Reynolds'},
+      info: {value: '13h', color: 'colored'},
+      completed: {value: 13},
+    }]
+  }];
+
+  var dataset6 = [{
+    data: [{
+      name: {text: 'Lei Ju'},
+      info: {value: '-22h', text: 'Approaching max.*'},
+      completed: {value: 90},
+    }]
+  }];
+
+  var dataset7 = [{
+    data: [{
+      name: {text: 'Behavior 1'},
+      info: {text: '/100'},
+      completed: {value: 84, color: 'amethyst07'},
+      targetline: {text: 'target', value: '87%'},
+    }]
+  }];
+
+  var api1 = $('#example-1').chart({dataset: dataset1, type: 'completion-target'}).data('chart');
+  var api2 = $('#example-2').chart({dataset: dataset2, type: 'completion-target'}).data('chart');
+  var api3 = $('#example-3').chart({dataset: dataset3, type: 'completion-target'}).data('chart');
+  var api4 = $('#example-4').chart({dataset: dataset4, type: 'completion'}).data('chart');
+  var api5 = $('#example-5').chart({dataset: dataset5, type: 'completion'}).data('chart');
+  var api6 = $('#example-6').chart({dataset: dataset6, type: 'completion'}).data('chart');
+  var api7 = $('#example-7').chart({dataset: dataset7, type: 'completion'}).data('chart');
+
+  $('#example-1-update-value').on('click', function () {
+    api1.update({
+      type: 'completed',
+      data: {value: '100%'}
+    });
   });
+
+setTimeout(function() {
+
+  // Update name text & color
+  // api1.update({
+  //   type: 'name',
+  //   data: {text: 'Red text', color: 'error'}
+  // });
+
+  // Update total value & color
+  // api1.update({
+  //   type: 'total',
+  //   data: {value: 97000, color: 'error'}
+  // });
+
+  // Update remaining value & color
+  // api1.update({
+  //   type: 'remaining',
+  //   data: {value: 22000, color: 'error'}
+  // });
+
+  // Update completed text, value and color
+  // api1.update({
+  //   type: 'completed',
+  //   data: {text: 'New', value: 43000, color: 'error'}
+  // });
+
+// Update info value, text and color
+  // api7.update({
+  //   type: 'info',
+  //   data: {value: 'new value', text: 'new text', color: 'error'}
+  // });
+
+// Update targetline value & color
+  // api7.update({
+  //   type: 'targetline',
+  //   data: {value: 15, color: 'error'}
+  // });
+
+}, 0);
+
 </script>

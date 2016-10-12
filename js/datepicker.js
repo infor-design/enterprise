@@ -55,7 +55,9 @@
     function DatePicker(element) {
       this.element = $(element);
       this.settings = settings;
+      Soho.logTimeStart(pluginName);
       this.init();
+      Soho.logTimeEnd(pluginName);
     }
 
     // Plugin Methods
@@ -396,7 +398,7 @@
         }
 
         this.trigger.popover({content: this.calendar, popover: true, trigger: 'immediate',
-            placement: 'offset', offset: {top: 23, left: leftOffset},
+            placement: 'bottom', offset: {top: 23, left: Locale.isRTL() ? -163 : 162},
             tooltipElement: '#calendar-popup'})
             .on('hide.datepicker', function () {
               self.closeCalendar();
@@ -946,7 +948,6 @@
         $.each(names.split(' '), function (idx, name) {
           elements.each(function () {
             var handlers = $._data(this, 'events')[name.split('.')[0]];
-            // console.log(handlers);
             // Validate requested position.
             newIndex = Math.min(newIndex, handlers.length - 1);
             handlers.splice(newIndex, 0, handlers.pop());

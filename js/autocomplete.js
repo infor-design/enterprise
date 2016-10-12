@@ -36,7 +36,9 @@
     function Autocomplete(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
+      Soho.logTimeStart(pluginName);
       this.init();
+      Soho.logTimeEnd(pluginName);
     }
 
     // Default Autocomplete Result Item Template

@@ -40,7 +40,9 @@
     function Header(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
+      Soho.logTimeStart(pluginName);
       this.init();
+      Soho.logTimeEnd(pluginName);
     }
 
     Header.prototype = {
@@ -340,7 +342,7 @@
           // Change Theme
           if (link.attr('data-theme')) {
             var theme = link.attr('data-theme');
-            $('body').trigger('changetheme', [theme]);
+            $('body').trigger('changetheme', theme.replace('-theme',''));
             return;
           }
 
@@ -352,7 +354,7 @@
 
           // Change Color
           var color = link.attr('data-rgbcolor');
-          $('body').trigger('personalizecolors', [color]);
+          $('body').trigger('changecolors', [color]);
         });
       },
 

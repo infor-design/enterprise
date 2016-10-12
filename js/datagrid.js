@@ -324,19 +324,16 @@ window.Formatters = {
   },
 
   // Possible future Formatters
+  // Percent
   // Image?
-  // Tree
   // Multi Select
-  // Lookup
   // Re Order - Drag Indicator
   // Sparkline
   // Progress Indicator (n of 100%)
   // Process Indicator
   // Currency
-  // Percent
   // File Upload (Simple)
   // Menu Button
-  // Icon Button (Approved and SoHo Xi Standard)
   // Toggle Button (No)
   // Color Picker (Low)
 };
@@ -513,6 +510,7 @@ window.Editors = {
       if (!editorOptions || (editorOptions && !editorOptions.cssClass)) {
         editorOptions = $.extend(column.editorOptions, {'cssClass': 'is-editing'});
       }
+
       this.input.dropdown(editorOptions);
       this.input = this.input.parent().find('div.dropdown');
     };
@@ -566,6 +564,7 @@ window.Editors = {
 
       //Check if isClick or cell touch and just open the list
       this.select.trigger('openlist');
+      this.input.focus();
 
       this.select.on('listclosed', function () {
         if (grid.activeCell.cell === self.cell.cell && grid.activeCell.row === self.cell.row) {
@@ -655,7 +654,11 @@ window.Editors = {
     };
 
     this.val = function (value) {
-      return value ? this.input.val(value) : this.input.val();
+      var fieldValue = this.input.val();
+      if (fieldValue) {
+        fieldValue = fieldValue.substr(0, fieldValue.indexOf('|'));
+      }
+      return value ? this.input.val(value) : fieldValue;
     };
 
     this.focus = function () {
@@ -748,6 +751,7 @@ window.Editors = {
         self.input.remove();
       }, 0);
     };
+
     this.init();
   }
 
@@ -795,7 +799,9 @@ $.fn.datagrid = function(options) {
   // Plugin Constructor
   function Datagrid(element) {
     this.element = $(element);
+    Soho.logTimeStart(pluginName);
     this.init();
+    Soho.logTimeEnd(pluginName);
   }
 
   // Actual Plugin Code
@@ -1414,6 +1420,7 @@ $.fn.datagrid = function(options) {
 
         if (filterType === 'text') {
           btnMarkup += this.renderFilterItem('contains', 'Contains', true);
+          btnMarkup += this.renderFilterItem('does-not-contain', 'DoesNotContain', false);
         }
 
         if (filterType === 'checkbox') {
@@ -1492,9 +1499,12 @@ $.fn.datagrid = function(options) {
           //Run Data over the formatter
           if (columnDef.filterType === 'text') {
             rowValue = self.formatValue(columnDef.formatter, i , conditions[i].columnId, rowValue, columnDef, rowData, self);
-    		//Strip any html markup that might be in the formatters
+
+            //Strip any html markup that might be in the formatters
             var rex = /(<([^>]+)>)|(&lt;([^>]+)&gt;)/ig;
             rowValue = rowValue.replace(rex , '').toLowerCase();
+
+            rowValueStr = rowValue.toString().toLowerCase();
           }
 
           if (columnDef.filterType === 'contents' || columnDef.filterType === 'select') {
@@ -1534,6 +1544,9 @@ $.fn.datagrid = function(options) {
               break;
             case 'contains':
               isMatch = (rowValueStr.indexOf(conditionValue) > -1 && rowValue.toString() !== '');
+              break;
+            case 'does-not-contain':
+              isMatch = (rowValueStr.indexOf(conditionValue) === -1 && rowValue.toString() !== '');
               break;
             case 'end-with':
               isMatch = (rowValueStr.lastIndexOf(conditionValue) === (rowValueStr.length - conditionValue.toString().length)  && rowValueStr !== '');

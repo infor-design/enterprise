@@ -1,0 +1,42 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+      var grid,
+        columns = [],
+        data = [];
+
+      // Some Sample Data
+      data.push({ id: 1, priority: 1, location: '99 Elm Street Bay Shore, NY 11706', nature:  'Civil Disturbance', time: '12:12:21', unit1: true, unit2: false, unit3: false});
+      data.push({ id: 2, priority: 1, location: '99 Elm Street Bay Shore, NY 11706', nature:  'Civil Disturbance', time: '12:12:21', unit1: false, unit2: true, unit3: false});
+      data.push({ id: 3, priority: 1, location: '366 Andover Drive Farmington, MI 48331', nature:  'Man with Gun', time: '12:10:10'});
+      data.push({ id: 4, priority: 1, location: '366 Andover Drive Farmington, MI 48331', nature:  'Man with Gun', time: '12:10:10'});
+      data.push({ id: 5, priority: 1, location: '366 Andover Drive Farmington, MI 48331', nature:  'Man with Gun', time: '12:10:10'});
+      data.push({ id: 5, priority: '11F', location: '20 Mulberry Drive Calhoun, GA 30701', nature:  'Structure Fire', time: '12:07:13'});
+      data.push({ id: 6, priority: '11F', location: '20 Mulberry Drive Calhoun, GA 30701', nature:  'Structure Fire', time: '12:07:13' });
+
+
+      //Define Columns for the Grid.
+      columns.push({ id: 'priority', name: 'Priority', field: 'priority'});
+      columns.push({ id: 'location', name: 'Location', field: 'location', formatter: Formatters.Hyperlink});
+      columns.push({ id: 'nature', name: 'Nature', field: 'nature', rowspan: true});
+      columns.push({ id: 'time', name: 'Time', field: 'time', rowspan: true});
+
+      //Init and get the api for the grid
+      $('#datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        selectable: 'single',
+        cellNavigation: false
+        toolbar: {title: 'Data Grid Header Title', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: true,  collapsibleFilter: true}
+      });
+ });
+
+</script>

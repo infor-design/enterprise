@@ -19,7 +19,9 @@
 
   function Validator(element) {
     this.element = $(element);
+    Soho.logTimeStart('Validator');
     this.init();
+    Soho.logTimeEnd('Validator');
   }
 
   // Plugin Object
@@ -473,6 +475,7 @@
         $('.icon-confirm', loc.parent('.field, .field-short')).remove();
       }
 
+      return svg;
     },
 
     showTooltipError: function(field, message, showTooltip) {
@@ -480,37 +483,73 @@
         return;
       }
 
-      this.showErrorIcon(field);
+      var icon = this.showErrorIcon(field);
+      var representationField = field;
 
       //Add error classes to pseudo-markup for certain controls
       if (field.is('.dropdown, .multiselect') && field.data('dropdown') !== undefined) {
         var input = field.data('dropdown').pseudoElem;
+        representationField = input;
         input.addClass('error');
       }
 
+      var tooltipAPI = icon.data('tooltip');
+
+      // Error tooltips should be positioned on the 'x' so that they sit directly underneath the fields
+      // that they are indicating.
+      function tooltipPositionCallback(placementObj) {
+        var fieldRect = representationField[0].getBoundingClientRect(),
+          elRect = tooltipAPI.tooltip[0].getBoundingClientRect(),
+          rtl = $('html').is('[dir="rtl"]'),
+          currX = placementObj.x,
+          xAdjustment = 0;
+
+        if (rtl) {
+          if (elRect.left < fieldRect.left) {
+            xAdjustment += (fieldRect.left - elRect.left);
+          }
+        } else {
+          if (elRect.right > fieldRect.right) {
+            xAdjustment += (elRect.right - fieldRect.right) * -1;
+          }
+        }
+
+        placementObj.setCoordinate('x', currX + xAdjustment);
+        if (!placementObj.nudges) {
+          placementObj.nudges = {};
+        }
+        placementObj.nudges.x = xAdjustment;
+
+        return placementObj;
+      }
+
       // Build Tooltip
-      if (!field.data('tooltip')) {
-        field.tooltip({
+      if (!tooltipAPI) {
+        icon.tooltip({
           content: message,
-          placement: 'offset',
+          placement: 'bottom',
+          placementOpts: {
+            callback: tooltipPositionCallback
+          },
           trigger: 'focus',
           isError: true,
           tooltipElement: '#validation-tooltip'
         });
+        tooltipAPI = icon.data('tooltip');
       } else {
-        field.data('tooltip').content = message;
+        tooltipAPI.content = message;
       }
 
       field.on('focus.validate', function() {
-       field.data('tooltip').show();
+        if (!tooltipAPI) { return; }
+        tooltipAPI.show();
       }).on('blur.validate', function() {
-        if (field.data('tooltip')) {
-          field.data('tooltip').hide();
-        }
+        if (!tooltipAPI) { return; }
+        tooltipAPI.hide();
       });
 
-      if (showTooltip) {
-        field.data('tooltip').show();
+      if (showTooltip && tooltipAPI) {
+        tooltipAPI.show();
       }
     },
 
@@ -565,11 +604,24 @@
 
     removeError: function(field) {
       var loc = this.getField(field),
-        isRadio = field.is(':radio');
+        isRadio = field.is(':radio'),
+        hasTooltip = field.attr('data-error-type');
 
       this.inputs.filter('input, textarea').off('focus.validate');
       field.removeClass('error');
       field.removeData('data-errormessage');
+
+      if (hasTooltip) {
+        var tooltipAPI = field.find('.icon.error').data('tooltip');
+
+        if (tooltipAPI) {
+          tooltipAPI.destroy();
+        }
+        if (field.attr('aria-describedby') === 'validation-tooltip') {
+          field.removeAttr('aria-describedby');
+          $('#validation-tooltip').remove();
+        }
+      }
 
       if (isRadio) {
         this.toggleRadioError(field);
@@ -589,14 +641,6 @@
         field.parent('.field, .field-short').find('span.error').remove();
         field.parent().find('.icon-error').remove();
         field.off('focus.validate focus.tooltip');
-      }
-
-      if (field.data('tooltip')) {
-        field.data('tooltip').destroy();
-      }
-      if (field.attr('aria-describedby') === 'validation-tooltip') {
-        field.removeAttr('aria-describedby');
-        $('#validation-tooltip').remove();
       }
 
       if (loc.attr('data-placeholder')) {
