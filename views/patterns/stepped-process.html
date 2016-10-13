@@ -1,16 +1,16 @@
 <body class="no-scroll soho-step-process">
   {{> includes/svg-inline-refs}}
 
-  <header class="header is-personalizable phone-hidden">
+  <header class="header is-personalizable top-header">
     <div class="toolbar">
       <div class="title">
         <h1>
-          <span class="panel-title">Builder Panel Title</span>
-          <span class="panel-subhead">Builder Panel Subheader</span>
+          <span class="panel-title">Designer Application</span>
+          <span class="panel-subhead">Last saved at <i id="savedTime">8:02am</i></span>
         </h1>
       </div>
       <div class="buttonset">
-          <button class="btn" type="button">
+          <button class="btn btn-save-changes" type="button">
             <span>Save</span>
           </button>
       </div>
@@ -22,29 +22,7 @@
 
     <div class="sidebar" role="complementary">
 
-      <header class="header is-personalizable phone-visible">
-        <div class="toolbar">
-          <div class="title">
-            <h1>
-              <span class="panel-title">Builder Panel Title</span>
-              <span class="panel-subhead">Builder Panel Subheader</span>
-            </h1>
-          </div>
-          <div class="buttonset">
-            <button class="btn" type="button">
-              <span>Save</span>
-            </button>
-          </div>
-          {{> includes/header-actionbutton}}
-        </div>
-      </header>
-
-      <header class="header subheader is-personalizable phone-visible">
-        <h1 class="page-title">
-          <span class="panel-title">Application Steps</span>
-          <span class="panel-subhead">2 of 7 Completed</span>
-        </h1>
-      </header>
+      <header class="status-bar collapsible-bar">Steps to complete</header>
 
       <div class="accordion panel step-process-accordion js-step-links-scroll" data-init="false">
         <div class="accordion-header">
@@ -60,7 +38,7 @@
             <svg class="icon icon-confirm" focusable="false" aria-hidden="true" role="presentation">
               <use xlink:href="#icon-confirm"></use>
             </svg>
-            <a href="#step1" class="js-step-link"><span>Compency Model 1</span></a>
+            <a href="#step1" class="js-step-link"><span>Competency Model 1</span></a>
           </div>
           <div class="step-process-item">
             <svg class="icon icon-confirm" focusable="false" aria-hidden="true" role="presentation">
@@ -227,30 +205,33 @@
     </div>
 
     <div class="main no-scroll" role="main">
-      <header class="header subheader is-personalizable">
+
+      <header class="header header-custom collapsible-bar">
         <div class="toolbar">
           <div class="title">
-            <button class="btn-icon btn-toggle-steps js-toggle-steps phone-visible" type="button">
+            <button class="btn-icon btn-toggle-steps js-toggle-steps" type="button">
               <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                <use xlink:href="#icon-left-arrow"></use>
+                <use xlink:href="#icon-bullet-steps"></use>
               </svg>
             </button>
-            <h1>Preferences</h1>
+            <h2>
+              <span class="panel-title">Preferences</span>
+              <span class="panel-subhead">Step X of XX</span>
+            </h2>
           </div>
           <div class="buttonset phone-hidden">
-            <button class="btn js-step-link-prev" type="button">
+            <button class="btn-tertiary js-step-link-prev" type="button">
               <span>Previous</span>
             </button>
-            <button class="btn js-step-link-next" type="button">
+            <button class="btn-tertiary js-step-link-next" type="button">
               <span>Next</span>
             </button>
           </div>
         </div>
       </header>
 
-      <div class="page-container scrollable step-panels js-step-panels-scroll">
+      <div class="scrollable step-panels js-step-panels-scroll">
         <div id="step1" class="js-step-process-panel">
-          <h2>Competency Model 1</h2>
           <form>
             <h4>Please be specific so we can match your preferences to our job requirements. You can attach a resume, but you increase the likelihood of finding a position if you complete the whole application process.</h4>
             <div class="field">
@@ -262,8 +243,6 @@
               <label for="work-type" class="label">Work Type</label>
               <input id="work-type" name="work-type" type="text">
             </div>
-
-            <hr style="margin-bottom: 20px;">
 
             <div class="field">
               <label for="point-of-origin" class="label">Point of Origin</label>
@@ -284,8 +263,6 @@
               <label for="extra-field-three" class="label">Extra Field</label>
               <input id="extra-field-three" name="extra-field-three" type="text">
             </div>
-
-            <hr style="margin-bottom: 20px;">
 
             <h4>Your preferred locations:</h4>
             <div class="field">
@@ -327,7 +304,7 @@
             <div class="field">
               <label for="slider-competency1">How competent do you think you are?</label>
               <input id="slider-competency1" name="slider-competency1" class="slider" type="range" min="0" max="4" value="0" step="1" data-ticks='[
-                {"value": 0, "description": "0"},
+                {"value": 0, "description": "0%"},
                 {"value": 1, "description": "25%"},
                 {"value": 2, "description": "50%"},
                 {"value": 3, "description": "75%"},
@@ -337,7 +314,7 @@
             <div class="field">
               <label for="slider-competency2">Do you think you are smarter than what percentage of the general population?</label>
               <input id="slider-competency2" name="slider-competency2" class="slider" type="range" min="0" max="4" value="0" step="1" data-ticks='[
-                {"value": 0, "description": "0"},
+                {"value": 0, "description": "0%"},
                 {"value": 1, "description": "25%"},
                 {"value": 2, "description": "50%"},
                 {"value": 3, "description": "75%"},
@@ -353,7 +330,7 @@
             <div class="field">
               <label for="slider-goal1">Your First Goal</label>
               <input id="slider-goal1" name="slider-goal1" class="slider" type="range" min="0" max="4" value="0" step="1" data-ticks='[
-                {"value": 0, "description": "0"},
+                {"value": 0, "description": "0%"},
                 {"value": 1, "description": "25%"},
                 {"value": 2, "description": "50%"},
                 {"value": 3, "description": "75%"},
@@ -363,7 +340,7 @@
             <div class="field">
               <label for="slider-goal2">Your Second Goal</label>
               <input id="slider-goal2" name="slider-goal2" class="slider" type="range" min="0" max="4" value="0" step="1" data-ticks='[
-                {"value": 0, "description": "0"},
+                {"value": 0, "description": "0%"},
                 {"value": 1, "description": "25%"},
                 {"value": 2, "description": "50%"},
                 {"value": 3, "description": "75%"},
@@ -373,7 +350,7 @@
             <div class="field">
               <label for="slider-goal3">Your Third Goal</label>
               <input id="slider-goal3" name="slider-goal3" class="slider" type="range" min="0" max="4" value="0" step="1" data-ticks='[
-                {"value": 0, "description": "0"},
+                {"value": 0, "description": "0%"},
                 {"value": 1, "description": "25%"},
                 {"value": 2, "description": "50%"},
                 {"value": 3, "description": "75%"},
@@ -482,7 +459,6 @@
         <div id="step19" class="js-step-process-panel"><h2>Step 19</h2></div>
         <div id="step20" class="js-step-process-panel"><h2>Step 20</h2></div>
         <div id="step21" class="js-step-process-panel"><h2>Step 21</h2></div>
-
       </div>
 
       <div class="phone-button-bar phone-visible">
@@ -511,21 +487,33 @@
             isDefault: true
           }]
         });
+      },
+
+      formatNow: function() {
+        var d = new Date();
+        var hr = d.getHours();
+        var min = d.getMinutes();
+        if (min < 10) {
+            min = "0" + min;
+        }
+        var ampm = 'am';
+        if (hr > 12) {
+          ampm = 'pm';
+          hr -= 12;
+        }
+        return hr + ":" + min + ampm;
       }
     }
 
     $(function() {
       // Init soho stepped process
       $('.soho-step-process').stepprocess({
-        changeTabOnHashChange: true,
         beforeStepChange: function() {
           // Uncomment below to see unsaved message example
           // customStepFunctions.alertUnsavedChanges();
-
-          console.log('Soho Event: Before step change - Returning false will prevent a step change.')
         },
         afterStepChange: function() {
-          console.log('Soho Event: After step has changed');
+          $('.btn-save-changes').prop('disabled', false);
         }
       });
 
@@ -537,6 +525,13 @@
 
       $('.js-step-links-scroll').scrollaction({
         scrollActionTarget: '.sidebar'
+      });
+
+      // Example events
+      $('.btn-save-changes').click(function(e) {
+        e.preventDefault();
+        $('#savedTime').text(customStepFunctions.formatNow());
+        $(this).prop('disabled', true);
       });
     });
 
