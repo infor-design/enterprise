@@ -616,17 +616,6 @@
           return useCoords(e, axis);
         }
 
-        switch(this.settings.trigger) {
-          case 'rightClick':
-            left = getCoordinates(e, 'x');
-            top = getCoordinates(e, 'y');
-            break;
-          default:
-            left = getOffsetsFromTrigger('x');
-            top = getOffsetsFromTrigger('y');
-            break;
-        }
-
         function useArrow() {
           return target.is('.btn-menu, .btn-actions, .btn-split-menu, .searchfield-category-button, .trigger');
         }
@@ -639,6 +628,7 @@
         // Reset the arrow
         wrapper.find('.arrow').removeAttr('style');
 
+        /*
         // if the target "is" a certain set of classes, or meets certain criteria, the target's
         // size (height or width) will be added to the left/top placement.
         function useTargetSize(axis) {
@@ -760,7 +750,54 @@
           left = left - getModalParentOffset('x');
           top = top - getModalParentOffset('y');
         }
+        */
 
+        function placementCallback(positionObj) {
+          // Change direction of menu opening in RTL
+          if (isRTL) {
+            positionObj.setCoordinate('x', positionObj.x - menuDimensions.width);
+          }
+          return positionObj;
+        }
+
+        var opts = {
+          callback: placementCallback,
+          strategies: ['flip', 'shrink']
+        };
+
+        switch(this.settings.trigger) {
+          case 'rightClick':
+            opts.x = getCoordinates(e, 'x');
+            opts.y = getCoordinates(e, 'y');
+            break;
+          default:
+            opts.x = isRTL ? (menuDimensions.width) * -1 : 0;
+            opts.y = 0;
+            opts.parent = this.element;
+            opts.placement = 'bottom';
+            break;
+        }
+
+        // Customize some settings based on the type of element that is doing the triggering.
+        if (target.is('.btn-actions, .btn-menu, .btn-filter')) {
+          opts.parentXAlignment = (isRTL ? 'left' : 'right');
+          opts.strategies = ['flip', 'nudge', 'shrink'];
+        }
+        if (target.is('.btn-split-menu')) {
+          opts.parentYAlignment = (isRTL ? 'right': 'left');
+          opts.strategies = ['flip', 'nudge', 'shrink'];
+        }
+
+        wrapper.on('afterplace.popupmenu', function(e, positionObj) {
+          self.handleAfterPlace(e, positionObj);
+        });
+
+        wrapper.place(opts);
+        this.placeAPI = this.placeAPI || wrapper.data('place');
+
+        this.placeAPI.place(opts);
+
+        /*
         // place the element so we can get some height/width and bleeds
         wrapper.css({'left': left, 'top': top});
 
@@ -856,6 +893,11 @@
         if (this.element.is('.btn-menu', '.btn-filter, .btn-split-menu, .searchfield-category-button')) {
           arrow.css({ 'right': (isRTL ? '20px' : 'auto'), 'left': (isRTL ? 'auto' : '20px') });
         }
+        */
+      },
+
+      handleAfterPlace: function(e, positionObj) {
+        return positionObj;
       },
 
       open: function(e, ajaxReturn) {

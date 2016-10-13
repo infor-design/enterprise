@@ -311,6 +311,8 @@
                   placementObj.setCoordinate('y', placementObj.originaly);
                   placementObj = doPlacementAgainstParent(placementObj);
                   return placementObj;
+                default:
+                  return placementObj;
               }
             })(self);
 
