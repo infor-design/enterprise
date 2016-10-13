@@ -1333,7 +1333,7 @@ $.fn.datagrid = function(options) {
             id = self.uniqueId('-header-' + j),
             header = this.headerRow.find('#'+id),
             filterId = self.uniqueId('-header-filter-' + j),
-            filterMarkup = '<div class="datagrid-filter-wrapper">'+ this.renderFilterButton(col.filterType, col.filterDisabled) +'<label class="audible" for="'+ filterId +'">' +
+            filterMarkup = '<div class="datagrid-filter-wrapper">'+ this.renderFilterButton(col) +'<label class="audible" for="'+ filterId +'">' +
               col.name + '</label>';
 
           switch (col.filterType) {
@@ -1405,54 +1405,69 @@ $.fn.datagrid = function(options) {
     //Render one filter item as used in renderFilterButton
     renderFilterItem: function (icon, text, checked) {
       var iconMarkup = $.createIcon({ classes: 'icon icon-filter', icon: 'filter-' + icon });
-      return '<li ' + (checked ? 'class="is-checked"' : '') + '><a href="#">' + iconMarkup + '<span>'+ text +'</span></a></li>';
+      return '<li '+ (checked ? 'class="is-checked"' : '') +'><a href="#">'+ iconMarkup +'<span>'+ text +'</span></a></li>';
     },
 
     //Render the Filter Button and Menu based on filterType - which determines the options
-    renderFilterButton: function (filterType, isDisabled) {
-      var btnMarkup = '<button type="button" class="btn-menu btn-filter" data-init="false" ' + (isDisabled ? ' disabled' : '') + ' type="button"><span class="audible">Filter</span>' + $.createIcon({icon: 'dropdown' , classes: 'icon-dropdown'}) +'</button>' +
+    renderFilterButton: function (col) {
+      var self = this,
+        filterType = col.filterType,
+        isDisabled = col.filterDisabled,
+        filterConditions = $.isArray(col.filterConditions) ? col.filterConditions : [],
+        inArray = function (s, array) {
+          array = array || filterConditions;
+          return ($.inArray(s, array) > -1);
+        },
+        render = function (icon, text, checked) {
+          return filterConditions.length && !inArray(icon) ?
+            '' : self.renderFilterItem(icon, text, checked);
+        },
+        btnMarkup = '<button type="button" class="btn-menu btn-filter" data-init="false" ' + (isDisabled ? ' disabled' : '') + ' type="button"><span class="audible">Filter</span>' + $.createIcon({icon: 'dropdown' , classes: 'icon-dropdown'}) +'</button>' +
         '<ul class="popupmenu has-icons is-translatable is-selectable">';
 
-        //Just the dropdown
-        if (filterType === 'contents' || filterType === 'select') {
-          return '';
-        }
+      //Just the dropdown
+      if (filterType === 'contents' || filterType === 'select') {
+        return '';
+      }
 
-        if (filterType === 'text') {
-          btnMarkup += this.renderFilterItem('contains', 'Contains', true);
-          btnMarkup += this.renderFilterItem('does-not-contain', 'DoesNotContain', false);
-        }
+      if (filterType === 'text') {
+        btnMarkup += ''+
+          render('contains', 'Contains', true) +
+          render('does-not-contain', 'DoesNotContain', false);
+      }
 
-        if (filterType === 'checkbox') {
-          btnMarkup += this.renderFilterItem('selected-notselected', 'EitherSelectedOrNotSelected', true);
-          btnMarkup += this.renderFilterItem('selected', 'Selected');
-          btnMarkup += this.renderFilterItem('not-selected', 'NotSelected');
-        }
+      if (filterType === 'checkbox') {
+        btnMarkup += ''+
+          render('selected-notselected', 'EitherSelectedOrNotSelected', true) +
+          render('selected', 'Selected') +
+          render('not-selected', 'NotSelected');
+      }
 
-        if (filterType !== 'checkbox') {
-          btnMarkup += this.renderFilterItem('equals', 'Equals', (filterType === 'integer' || filterType === 'date' ? true : false)) +
-            this.renderFilterItem('does-not-equal', 'DoesNotEqual');
+      if (filterType !== 'checkbox') {
+        btnMarkup += ''+
+          render('equals', 'Equals', (filterType === 'integer' || filterType === 'date')) +
+          render('does-not-equal', 'DoesNotEqual') +
+          render('is-empty', 'IsEmpty') +
+          render('is-not-empty', 'IsNotEmpty');
+      }
 
-          btnMarkup += this.renderFilterItem('is-empty', 'IsEmpty') +
-          this.renderFilterItem('is-not-empty', 'IsNotEmpty');
-        }
+      if (filterType === 'integer' || filterType === 'date' || filterType === 'decimal') {
+        btnMarkup += ''+
+          render('less-than', 'LessThan') +
+          render('less-equals', 'LessOrEquals') +
+          render('greater-than', 'GreaterThan') +
+          render('greater-equals', 'GreaterOrEquals');
+      }
 
-        if (filterType === 'integer' || filterType === 'date' || filterType === 'decimal') {
-          btnMarkup += this.renderFilterItem('less-than', 'LessThan');
-          btnMarkup += this.renderFilterItem('less-equals', 'LessOrEquals');
-          btnMarkup += this.renderFilterItem('greater-than', 'GreaterThan');
-          btnMarkup += this.renderFilterItem('greater-equals', 'GreaterOrEquals');
-        }
+      if (filterType === 'text') {
+        btnMarkup += ''+
+          render('end-with', 'EndWith') +
+          render('does-not-end-with', 'DoesNotEndWith') +
+          render('start-with', 'StartWith') +
+          render('does-not-start-with', 'DoesNotStartWith');
+      }
 
-        if (filterType === 'text') {
-          btnMarkup += this.renderFilterItem('end-with', 'EndWith');
-          btnMarkup += this.renderFilterItem('does-not-end-with', 'DoesNotEndWith');
-          btnMarkup += this.renderFilterItem('start-with', 'StartWith');
-          btnMarkup += this.renderFilterItem('does-not-start-with', 'DoesNotStartWith');
-        }
-
-        btnMarkup += '</ul>';
-
+      btnMarkup += '</ul>';
       return btnMarkup ;
     },
 
