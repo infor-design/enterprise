@@ -8,6 +8,7 @@ var express = require('express'),
   mmm = require('mmm'),
   fs = require('fs'),
   http = require('http'),
+  git = require('git-rev-sync'),
   colors = require('colors'); // jshint ignore:line
 
   app.set('view engine', 'html');
@@ -34,6 +35,9 @@ var express = require('express'),
     layout: 'layout',
     locale: 'en-US',
     title: 'SoHo XI',
+    // Ignore this because its not in our control
+    version: process.env.npm_package_version, // jshint ignore:line
+    commit: git.long(),
   };
 
   // Option Handling - Custom Middleware
