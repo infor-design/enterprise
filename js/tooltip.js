@@ -363,49 +363,8 @@
       // Placement behavior's "afterplace" handler.
       // DO NOT USE FOR ADDITONAL POSITIONING.
       handleAfterPlace: function(e, placementObj) {
-        var arrow = this.tooltip.find('.arrow');
-
-        // Hide the arrow if bleeding occured and needed to be fixed.
-        if (placementObj.wasNudged) {
-          arrow.css('display', 'none');
-        }
-
-        // Adjust the arrow's direction if a different strategy was attempted.
-        var dir = placementObj.placement,
-          cssOptions = { display: 'block' },
-          isXCoord = ['left', 'right'].indexOf(dir) > -1,
-          dimension = 'outer' + (!isXCoord ? 'Width' : 'Height'),
-          edge = (!isXCoord ? 'margin-left' : 'margin-top'),
-          nudgeDistance = 0;
-
-        if (placementObj.attemptedFlips) {
-          this.tooltip.removeClass('top right bottom left').addClass(dir);
-        }
-
-        // Flip the arrow if we're in RTL mode
-        if (this.isRTL && isXCoord) {
-          var opposite = dir === 'right' ? 'left' : 'right';
-          this.tooltip.removeClass('right left').addClass(opposite);
-        }
-
-        // Adjust the arrow's position if a nudge is detected.
-        // Arrow gets adjusted perpendicular to the placement type.
-        if (placementObj.nudges) {
-          nudgeDistance = placementObj.nudges[isXCoord ? 'y' : 'x'];
-          if (nudgeDistance) {
-            cssOptions[edge] = nudgeDistance * -1;
-
-            // Hide a tooltip arrow that sticks out too far.
-            // Might happen if the tooltip has to be nudged so far that the arrow placement
-            // no longer makes sense.
-            if (Math.abs(nudgeDistance) > this.tooltip[dimension]()/2 ) {
-              cssOptions.display = 'none';
-            }
-          }
-        }
-
-        arrow.css(cssOptions);
-        this.tooltip.triggerHandler('tooltipafterplace');
+        this.tooltip.data('place').setArrowPosition(e, placementObj);
+        this.tooltip.triggerHandler('tooltipafterplace', [placementObj]);
       },
 
       position: function () {
@@ -438,106 +397,6 @@
         this.tooltip.data('place').place(opts);
         return this;
       },
-
-      /*
-      placeBelowOffset: function(scrollable) {
-       var o = this.activeElement.offset(),
-          isShortField = !!(this.activeElement.closest('.field-short').length),
-          extraOffset = (this.element.parent().find('.icon').length > 1 ? -12 : 4),
-          extraWidth = 10,
-          lessTop = 0;
-
-        if (this.activeElement.is('input.dropdown')) {
-          extraWidth = -20;
-          extraOffset = 16;
-        }
-
-        if (this.activeElement.is('.lookup') && this.activeElement.parent().is(':not(.field-short)')) {
-          extraOffset = Locale.isRTL() ? 17 : -17;
-        }
-
-        this.tooltip.find('.arrow').css('right', '');
-
-        if (this.activeElement.is('.timepicker') && this.activeElement.parent().is(':not(.field-short)')) {
-          extraOffset = Locale.isRTL() ? 25 : -20;
-        }
-
-        if (this.activeElement.is('.datepicker') && this.activeElement.parent().is(':not(.field-short)')) {
-          extraOffset = -15;
-        }
-
-        // Errors
-        if (settings.isError) {
-          extraOffset = (this.tooltip.outerWidth() === parseInt(this.tooltip.css('max-width'), 10)) ?
-             7 : (isShortField ? (Locale.isRTL() ? -10 : 4) : 1);
-          lessTop = 2;
-
-          if (this.activeElement.is('.lookup')) {
-            extraOffset = Locale.isRTL() ? 13 : -13;
-          }
-
-          if (this.activeElement.is('.editor')) {
-            extraOffset = -5;
-            lessTop = this.activeElement.outerHeight() - 22;
-          }
-          if (this.activeElement.is('textarea')) {
-            lessTop = this.activeElement.outerHeight() - 22;
-          }
-          if (this.activeElement.is('.dropdown')) {
-            if (this.tooltip.outerWidth() === parseInt(this.tooltip.css('max-width'), 10)) {
-              extraWidth = -20;
-              extraOffset = 10;
-            } else {
-              extraWidth = 10;
-              extraOffset = (isShortField ? (Locale.isRTL() ? 10 : -10) : (Locale.isRTL() ? 10 : -20));
-            }
-          }
-          if (this.activeElement.is('.spinbox')) {
-            extraOffset =  Locale.isRTL() ? -5 : 4;
-          }
-
-          if (this.activeElement.is('.datepicker') || this.activeElement.is('.timepicker')) {
-            extraOffset = Locale.isRTL() ? (isShortField ? 5 : 18) : (isShortField ? -9 : -23);
-          }
-
-          if (this.activeElement.is('.colorpicker')) {
-            extraOffset = 11;
-          }
-        }
-
-        var left = o.left + scrollable.offsetLeft + settings.offset.left + (this.activeElement.outerWidth() - this.tooltip.outerWidth()) + extraOffset - scrollable.deltaWidth;
-
-        left = Locale.isRTL() ? (left - (this.activeElement.outerWidth() - this.tooltip.outerWidth())) : left;
-
-        this.tooltip.css({'width': this.tooltip.width() + extraWidth,
-                          'top' : o.top + scrollable.offsetTop + this.activeElement.outerHeight() + settings.offset.top - scrollable.deltaHeight - lessTop,
-                          'left': left });
-      },
-      placeBelow: function (scrollable) {
-        var o = this.activeElement.offset();
-        this.tooltip.css({'top': o.top + scrollable.offsetTop + this.activeElement.outerHeight() + settings.offset.top - scrollable.deltaHeight,
-                          'left': o.left + scrollable.offsetLeft + settings.offset.left + (this.activeElement.outerWidth()/2) - (this.tooltip.outerWidth() / 2) - scrollable.deltaWidth});
-      },
-      placeAbove: function (scrollable) {
-        var o = this.activeElement.offset();
-        this.tooltip.css({'top': o.top + scrollable.offsetTop - settings.offset.top - this.tooltip.outerHeight() - scrollable.deltaHeight,
-                          'left': o.left + scrollable.offsetLeft + settings.offset.left + (this.activeElement.outerWidth()/2) - (this.tooltip.outerWidth() / 2) - scrollable.deltaWidth});
-      },
-      placeToRight: function (scrollable) {
-        var o = this.activeElement.offset(),
-          extraLeft = (this.isPopover ? 10 : 0);
-
-        this.tooltip.removeAttr('style');
-        this.tooltip.css({'top': o.top + scrollable.offsetTop - (this.tooltip.outerHeight() / 2) + (this.activeElement.outerHeight() / 2) - scrollable.deltaHeight,
-                          'left': o.left + scrollable.offsetLeft + extraLeft + settings.offset.left + this.activeElement.outerWidth() + settings.offset.top - scrollable.deltaWidth});
-      },
-      placeToLeft: function (scrollable) {
-        var o = this.activeElement.offset();
-        this.tooltip.removeAttr('style');
-        this.tooltip.css({'top': o.top + scrollable.offsetTop - (this.tooltip.outerHeight() / 2) + (this.activeElement.outerHeight() / 2) - scrollable.deltaHeight,
-                          'left': o.left + scrollable.offsetLeft + settings.offset.left - (settings.offset.top + this.tooltip.outerWidth()) - scrollable.deltaWidth});
-      },
-      */
 
       // Alias for _hide()_ that works with the global _closeChildren()_ method.
       close: function() {
