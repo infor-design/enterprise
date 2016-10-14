@@ -335,7 +335,12 @@
           return false;
         }
 
-        self.element.trigger('selected', [header]);
+        var canSelect = this.element.triggerHandler('beforeselect', [anchor]);
+        if (canSelect === false) {
+          return;
+        }
+
+        this.element.trigger('selected', header);
 
         // Set the original element for DOM traversal by keyboard
         this.originalSelection = anchor;

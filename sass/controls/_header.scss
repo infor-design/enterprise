@@ -125,6 +125,16 @@ $header-height: 60px;
       }
     }
 
+    .panel-title {
+      @include font-size(20);
+      line-height: 1.2;
+    }
+
+    .panel-subhead {
+      @include font-size(14);
+      line-height: 1;
+    }
+
     &.has-title-button + .breadcrumb {
       padding-left: 65px;
     }
@@ -140,6 +150,10 @@ $header-height: 60px;
   // Sticky Header
   &.is-sticky {
     z-index: 9000;
+  }
+
+  &.subheader {
+    background-color: $subhead-bg-color;
   }
 
 }

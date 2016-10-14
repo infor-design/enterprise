@@ -20,8 +20,8 @@
 svg.icon-dirty,
 .icon-new,
 .icon-pending,
-.icon-empty-circle {
-  fill: $alert-red;
+.icon-empty-circle,
+.icon-half-empty-circle {
   position: relative;
   top: 10px;
   vertical-align: top;
@@ -60,29 +60,38 @@ svg.icon-dirty,
   }
 }
 
-.icon-confirm {
-  fill: $confirm-icon-fill;
+
+// scss-lint:disable ImportantRule
+
+.icon-error {
+  fill: $alert-red !important;
 }
 
-.icon-empty-circle {
+.icon-confirm {
+  fill: $confirm-icon-fill !important;
+}
+
+
+.icon-empty-circle,
+.icon-half-empty-circle {
   fill: $icon-color;
 }
 
 .icon-alert {
-  fill: $alert-yellow;
+  fill: $alert-yellow !important;
 }
 
 .icon-pending {
-  background: $alert-yellow;
+  background: $alert-yellow  !important;
   border: 2px solid $alert-yellow;
   border-radius: 50%;
-  fill: $white;
+  fill: $white !important;
   height: 18px;
   width: 18px;
 }
 
 .icon-info {
-  fill: $info-icon-fill;
+  fill: $info-icon-fill !important;
 }
 
 svg.icon-close {

@@ -1,10 +1,279 @@
 // Stepped Process Pattern
+//  ** Note that some styles are in _accordion.scss
 //==================================================//
 
-.stepped-process {
+.soho-step-process {
 
+  // Borrow and tweak some accordion styles for consistency
+  .step-process-accordion.accordion.panel {
+    border-color: transparent;
+
+    .step-process-item {
+      border: 1px solid transparent;
+      border-bottom-color: $accordion-border-color;
+      cursor: pointer;
+      font-size: 0;
+      height: 45px;
+      overflow: hidden;
+      position: relative;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+
+      > * {
+        vertical-align: middle;
+      }
+
+      &:focus,
+      &.is-focused {
+        border-color: $accordion-selected-bg-color;
+      }
+
+      a {
+        color: inherit;
+        @include font-size(14);
+        text-decoration: none;
+        text-overflow: ellipsis;
+      }
+
+      > a {
+        display: inline-block;
+        overflow: hidden;
+        padding: 13px 0 13px 54px;
+        white-space: nowrap;
+        width: calc(100% - 56px);
+      }
+
+      > .icon {
+        fill: $accordion-icon-color;
+        height: 16px;
+        margin: 0 18px;
+        top: -1px;
+        width: 18px;
+
+        &.plus-minus {
+          &::before,
+          &::after {
+            background-color: $accordion-disabled-text-color !important;
+          }
+        }
+
+        & + a {
+          padding-left: 0;
+        }
+      }
+
+      &.is-disabled {
+        background-color: $accordion-disabled-bg-color !important;
+        color: $accordion-disabled-text-color !important;
+
+        a {
+          color: $accordion-disabled-text-color !important;
+        }
+
+        .icon {
+          fill: $accordion-disabled-text-color !important;
+
+          &.plus-minus {
+            &::before,
+            &::after {
+              background-color: $accordion-disabled-text-color !important;
+            }
+          }
+        }
+      }
+
+      &.is-selected,
+      &.is-selected:hover,
+      &.is-focused.is-selected {
+        background-color: $accordion-selected-bg-color;
+        border-bottom-color: $accordion-selected-bg-color;
+        color: $accordion-selected-text-color;
+
+        > a {
+          color: $accordion-selected-text-color;
+        }
+
+        > .icon {
+          fill: $accordion-selected-text-color;
+        }
+      }
+    }
+  }
+
+  // Original step process styles
+
+  .header .page-title {
+    margin: 10px 27px 0;
+
+    .panel-title {
+      @include font-size(20);
+      line-height: 1.2;
+    }
+
+    .panel-subhead {
+      @include font-size(14);
+      line-height: 1;
+    }
+  }
+
+  .step-panels {
+    padding: 15px 30px;
+    width: calc(100% - 250px);
+  }
+
+  .js-step-links-scroll {
+    overflow: auto;
+    height: 100%;
+  }
+
+  .js-step-process-panel {
+    display: none;
+
+    &.step-panel-active {
+      display: block;
+    }
+  }
+
+  // Responsive styles
+  .responsive-hidden {
+    display: block;
+  }
+
+  .tablet-visible,
+  .phone-visible {
+    display: none;
+  }
 }
+
 
 @include respond-to(tabletdown) {
 
+  .soho-step-process {
+
+    .responsive-hidden {
+      display: none;
+    }
+
+    .tablet-visible {
+      display: block;
+    }
+
+    .main,
+    .sidebar {
+      @include transform-transition-list(300ms cubic-bezier(.17, .04, .03, .94));
+    }
+
+    .header {
+      position: relative;
+      z-index: 2;
+    }
+
+    // Classes for scrollAction plugin
+    .subheader {
+      position: relative;
+      z-index: 1;
+    }
+
+    .subheader,
+    .js-step-links-scroll,
+    .js-step-panels-scroll {
+      @include css3(transition, all .3s ease-out);
+    }
+
+    .scrolled-down {
+
+      .subheader {
+        margin-top: -60px;
+      }
+
+      .js-step-links-scroll {
+        top: 60px;
+        margin-top: 0;
+      }
+
+      .js-step-panels-scroll {
+        top: 0;
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+@include respond-to(phone) {
+
+  .soho-step-process {
+
+    > .page-container {
+      height: 100%;
+    }
+
+    .phone-visible {
+      display: block;
+
+      &.btn-toggle-steps {
+        display: inline-block;
+      }
+    }
+
+    .phone-hidden {
+      display: none;
+    }
+
+    .step-panels {
+      width: 100%;
+    }
+
+
+    .main,
+    .sidebar {
+      position: absolute;
+    }
+
+    .main {
+      @include css3(transform, translateX(100%));
+      margin-top: 0;
+
+      .toolbar .title {
+        width: 99%;
+      }
+    }
+
+    .sidebar {
+      @include css3(transform, translateX(0));
+
+      .subheader {
+        display: block;
+      }
+    }
+
+    &.show-main {
+      .main {
+        @include css3(transform, translateX(0));
+      }
+      .sidebar {
+        @include css3(transform, translateX(-100%));
+      }
+    }
+
+    .js-step-links-scroll {
+      top: 60px;
+      height: calc(100% - 60px);
+    }
+
+    .phone-button-bar {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+
+      button {
+        border-radius: 0;
+        display: inline-block;
+        height: 60px;
+        width: 50%;
+        margin: 0;
+      }
+    }
+
+
+  }
 }
