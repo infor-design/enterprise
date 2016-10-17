@@ -197,13 +197,14 @@ window.Formatters = {
   },
 
   // Tree Expand / Collapse Button and Paddings
-  Tree: function (row, cell, value, col, item) {
+  Tree: function (row, cell, value, col, item, api) {
     var isOpen = item.expanded,
-      button = '<button type="button" class="btn-icon datagrid-expand-btn' + (isOpen ? ' is-expanded' : '') + '" tabindex="-1"' +  (item.depth ? ' style="margin-left: ' + (item.depth ? (30* (item.depth -1)) + 'px' : '') + '"' : '') + '>'+
-      '<span class="icon plus-minus'+ (isOpen ? ' active' : '') + '"></span>' +
-      '<span class="audible">' + Locale.translate('ExpandCollapse') + '</span>' +
-      '</button>' + ( value ? '<span> ' + value + '</span>' : ''),
-      node = '<span class="datagrid-tree-node"' + (item.depth ? ' style="margin-left: ' + (item.depth ? (30* (item.depth-1)) + 'px' : '') + '"' : '') + '> ' + value + '</span>';
+      depth = api.settings.treeDepth[row-1].depth,
+      button = '<button type="button" class="btn-icon datagrid-expand-btn'+ (isOpen ? ' is-expanded' : '') +'" tabindex="-1"'+ (depth ? ' style="margin-left: '+ (depth ? (30* (depth -1)) +'px' : '') +'"' : '') +'>'+
+      '<span class="icon plus-minus'+ (isOpen ? ' active' : '') +'"></span>' +
+      '<span class="audible">'+ Locale.translate('ExpandCollapse') +'</span>' +
+      '</button>'+ ( value ? '<span> '+ value +'</span>' : ''),
+      node = '<span class="datagrid-tree-node"'+ (depth ? ' style="margin-left: '+ (depth ? (30* (depth-1)) +'px' : '') +'"' : '') +'> '+ value +'</span>';
 
     return (item[col.children ? col.children : 'children'] ? button : node);
   },
@@ -819,6 +820,7 @@ $.fn.datagrid = function(options) {
 
       this.appendToolbar();
       this.restoreColumns();
+      this.setTreeDepth();
       this.render();
       this.initFixedHeader();
       this.createResizeHandle();
@@ -1882,6 +1884,27 @@ $.fn.datagrid = function(options) {
       return value;
     },
 
+    // Set tree depth
+    setTreeDepth: function(dataset) {
+      var self = this,
+        idx = 0,
+        iterate = function(node, depth) {
+          idx++;
+          self.settings.treeDepth.push({idx: idx, depth: depth});
+          var children = node.children || [];
+          for (var i = 0, len = children.length; i < len; i++) {
+            iterate(children[i], depth + 1);
+          }
+        };
+
+      dataset = dataset || this.settings.dataset;
+      self.settings.treeDepth = [];
+
+      for (var i = 0, len = dataset.length; i < len; i++) {
+        iterate(dataset[i], 1);
+      }
+    },
+
     //Render the Rows
     renderRows: function() {
       var tableHtml = '',
@@ -1973,17 +1996,18 @@ $.fn.datagrid = function(options) {
         self = this,
         activePage = self.pager ? self.pager.activePage : 1,
         pagesize = self.settings.pagesize,
-        rowHtml = '';
+        rowHtml = '',
+        depth = self.settings.treeDepth[dataRowIdx].depth;
 
       rowHtml = '<tr role="row" aria-rowindex="' + ((dataRowIdx + 1) + (self.settings.source  ? ((activePage-1) * pagesize) : 0)) + '"' +
                 (self.settings.treeGrid && rowData.children ? ' aria-expanded="' + (rowData.expanded ? 'true"' : 'false"') : '') +
-                (self.settings.treeGrid ? ' aria-level= "' + rowData.depth + '"' : '') +
+                (self.settings.treeGrid ? ' aria-level= "' + depth + '"' : '') +
                 ' class="datagrid-row'+
                 (self.settings.rowHeight !== ' normal' ? ' ' + self.settings.rowHeight + '-rowheight' : '') +
                 (renderHidden ? ' is-hidden' : '') +
                 (self.settings.alternateRowShading && !isEven ? ' alt-shading' : '') +
                 (!self.settings.cellNavigation ? ' is-clickable' : '' ) +
-                (self.settings.treeGrid ? (rowData.children ? ' datagrid-tree-parent' : (rowData.depth > 1 ? ' datagrid-tree-child' : '')) : '') +
+                (self.settings.treeGrid ? (rowData.children ? ' datagrid-tree-parent' : (depth > 1 ? ' datagrid-tree-child' : '')) : '') +
                  '"' + '>';
 
       for (var j = 0; j < self.settings.columns.length; j++) {
@@ -4069,7 +4093,7 @@ $.fn.datagrid = function(options) {
       var rowElement = this.visualRowNode(dataRowIndex),
         expandButton = rowElement.find('.datagrid-expand-btn'),
         level = rowElement.attr('aria-level'),
-        children = rowElement.nextAll(),
+        children = rowElement.nextUntil('[aria-level="1"]'),
         isExpanded = expandButton.hasClass('is-expanded');
 
       if (!rowElement.hasClass('datagrid-tree-parent')) {
