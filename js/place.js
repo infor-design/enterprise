@@ -556,52 +556,97 @@
 
       // Built-in method for handling positon of optional arrow elements.
       // Used for tooltip/popovers/popupmenus
-      setArrowPosition: function(e, placementObj) {
-        var arrow = this.element.find('.arrow');
-        if (!arrow.length) {
+      setArrowPosition: function(e, placementObj, element) {
+        var target = placementObj.parent,
+          arrow = element.find('.arrow'),
+          dir = placementObj.placement,
+          isXCoord = ['left', 'right'].indexOf(dir) > -1,
+          targetRect = {},
+          elementRect = element[0].getBoundingClientRect(),
+          arrowRect = {},
+          newArrowRect = {},
+          hideArrow = false;
+
+        if (!target || !target.length || !arrow.length) {
           return;
         }
 
-        // Hide the arrow if bleeding occured and needed to be fixed.
-        if (placementObj.wasNudged) {
-          arrow.css('display', 'none');
-        }
-
-        // Adjust the arrow's direction if a different strategy was attempted.
-        var dir = placementObj.placement,
-          cssOptions = { display: 'block' },
-          isXCoord = ['left', 'right'].indexOf(dir) > -1,
-          dimension = 'outer' + (!isXCoord ? 'Width' : 'Height'),
-          edge = (!isXCoord ? 'margin-left' : 'margin-top'),
-          nudgeDistance = 0;
-
         if (placementObj.attemptedFlips) {
-          this.element.removeClass('top right bottom left').addClass(dir);
+          element.removeClass('top right bottom left').addClass(dir);
         }
 
         // Flip the arrow if we're in RTL mode
         if (this.isRTL && isXCoord) {
           var opposite = dir === 'right' ? 'left' : 'right';
-          this.element.removeClass('right left').addClass(opposite);
+          element.removeClass('right left').addClass(opposite);
         }
 
-        // Adjust the arrow's position if a nudge is detected.
-        // Arrow gets adjusted perpendicular to the placement type.
-        if (placementObj.nudges) {
-          nudgeDistance = placementObj.nudges[isXCoord ? 'y' : 'x'];
-          if (nudgeDistance) {
-            cssOptions[edge] = nudgeDistance * -1;
+        // Custom target for some scenarios
+        if (target.is('.colorpicker')) {
+          target = target.next('.trigger');
+        }
+        if (target.is('.datepicker, .timepicker')) {
+          target = target.next('.icon');
+        }
+        
+        if (target.is('.btn-split-menu, .btn-menu, .btn-actions, .btn-filter, .tab')) {
+          target = target.find('.icon');
+        }
+        if (target.is('.searchfield-category-button')) {
+          target = target.find('.icon.icon-dropdown');
+        }
 
-            // Hide a tooltip arrow that sticks out too far.
-            // Might happen if the tooltip has to be nudged so far that the arrow placement
-            // no longer makes sense.
-            if (Math.abs(nudgeDistance) > this.element[dimension]()/2 ) {
-              cssOptions.display = 'none';
+        // reset if we borked the target
+        if (!target.length) {
+          target = placementObj.parent;
+        }
+
+        targetRect = target.length ? target[0].getBoundingClientRect() : targetRect;
+        arrowRect = arrow.length ? arrow[0].getBoundingClientRect() : arrowRect;
+        newArrowRect = {};
+
+        function getMargin(placement) {
+          return (placement === 'right' || placement === 'left') ? 'margin-top' : 'margin-left';
+        }
+
+        function getDistance() {
+          var targetCenter = 0,
+            currentArrowCenter = 0,
+            d = 0;
+
+          if (dir === 'left' || dir === 'right') {
+            targetCenter = targetRect.top + (targetRect.height/2);
+            currentArrowCenter = arrowRect.top + (arrowRect.height/2);
+            d = targetCenter - currentArrowCenter;
+            newArrowRect.top = arrowRect.top + d;
+            newArrowRect.bottom = arrowRect.bottom + d;
+
+            if (newArrowRect.top <= elementRect.top || newArrowRect.bottom >= elementRect.bottom) {
+              hideArrow = true;
             }
           }
+          if (dir === 'top' || dir === 'bottom') {
+            targetCenter = targetRect.left + (targetRect.width/2);
+            currentArrowCenter = arrowRect.left + (arrowRect.width/2);
+            d = targetCenter - currentArrowCenter;
+            newArrowRect.left = arrowRect.left + d;
+            newArrowRect.right = arrowRect.right + d;
+
+            if (newArrowRect.left <= elementRect.left || newArrowRect.right >= elementRect.right) {
+              hideArrow = true;
+            }
+          }
+
+          return d;
         }
 
-        arrow.css(cssOptions);
+        // line the arrow up with the target element's "dropdown icon", if applicable
+        var positionOpts = {};
+        positionOpts[getMargin(dir)] = getDistance();
+        if (hideArrow) {
+          positionOpts.display = 'none';
+        }
+        arrow.css(positionOpts);
       },
 
       //Handle Updating Settings

@@ -1,6 +1,6 @@
 /**
 * Responsive Popup Menu Control (Context)
-* @name popupmen
+* @name popupmenu
 */
 
 /* start-amd-strip-block */
@@ -31,7 +31,16 @@
         beforeOpen: null, //Ajax callback for open event
         ariaListbox: false,   //Switches aria to use listbox construct instead of menu construct (internal)
         useCoordsForClick: false, //By default, menus open up underneath their target element.  Set this to true to use mouse coordinates for positioning a menu inside of its target element.
-        eventObj: undefined  //Can pass in the event object so you can do a right click with immediate
+        eventObj: undefined,  //Can pass in the event object so you can do a right click with immediate,
+        placementOpts: { // Gets passed to this control's Place behavior
+          containerOffsetX: 10,
+          containerOffsetY: 10,
+          strategies: ['flip', 'shrink']
+        },
+        offset: {
+          x: 0,
+          y: 0,
+        }
       },
       settings = $.extend({}, defaults, options);
 
@@ -548,8 +557,6 @@
           target = this.element,
           isRTL = this.isRTL(),
           wrapper = this.menu.parent('.popupmenu-wrapper'),
-          windowH = $(window).height(),
-          windowW = $(window).width(),
           mouse =  {
             x: e && e.clientX ? e.clientX : (window.event && window.event.clientX) ? window.event.clientX : 0,
             y: e && e.clientY ? e.clientY : (window.event && window.event.clientY) ? window.event.clientY : 0
@@ -557,11 +564,7 @@
           menuDimensions = {
             width: this.menu.outerWidth(),
             height: this.menu.outerHeight()
-          },
-          left, top,
-          wasFlipped = false,
-          usedCoords = false,
-          d;
+          };
 
         if (!wrapper.length) {
           return;
@@ -571,188 +574,13 @@
           target = target.closest('.tab');
         }
 
-        function sanitizeAxis(axis) {
-          return ((axis === 'x' || axis === 'y') ? axis : 'x');
-        }
-
         function getCoordinates(e, axis) {
-          axis = sanitizeAxis(axis);
-          usedCoords = true;
+          axis = ((axis === 'x' || axis === 'y') ? axis : 'x');
           return mouse[axis]; // use mouseX/mouseY if this doesn't work
-        }
-
-        function getBorder(axis) {
-          return (axis === 'x' ? 'left' : 'top');
-        }
-
-        function getTargetOffset(el, axis) {
-          axis = sanitizeAxis(axis);
-          var border = getBorder(axis),
-            offset = el.offset();
-          return offset[border];
-        }
-
-        function isKeyboardEvent(e) {
-          var eventTypes = ['keydown', 'keypress'];
-          return (e === undefined || e === null || eventTypes.indexOf(e.type) > -1 );
-        }
-
-        function useCoords(e, axis) {
-          var s = self.settings.eventObj;
-
-          if (s && s.clientX && s.clientY) {
-            return getCoordinates(s, axis);
-          }
-
-          if (e.type === 'click' && self.settings.useCoordsForClick === true) {
-            return getCoordinates(e, axis);
-          }
-
-          return getTargetOffset($(e.target), axis);
-        }
-
-        function getOffsetsFromTrigger(axis) {
-          if (isKeyboardEvent(e)) {
-            return getTargetOffset(target, axis);
-          }
-          return useCoords(e, axis);
-        }
-
-        function useArrow() {
-          return target.is('.btn-menu, .btn-actions, .btn-split-menu, .searchfield-category-button, .trigger');
-        }
-        function hideArrow() {
-          if (useArrow()) {
-            wrapper.find('.arrow').css({ 'display': 'none' });
-          }
         }
 
         // Reset the arrow
         wrapper.find('.arrow').removeAttr('style');
-
-        /*
-        // if the target "is" a certain set of classes, or meets certain criteria, the target's
-        // size (height or width) will be added to the left/top placement.
-        function useTargetSize(axis) {
-          var cssConstraints = {
-            x: '',
-            y: '.autocomplete, .btn-menu, .btn-actions, .btn-split-menu, .searchfield-category-button, .trigger'
-          };
-          var jsConstraints = {
-            x: function() {
-              return false;
-            },
-            y: function() {
-              return target.closest('.tab').length ||
-                target.closest('.tab-more').length ||
-                target.closest('.colorpicker-container').length;
-            }
-          };
-
-          return target.is(cssConstraints[axis]) || jsConstraints[axis]();
-        }
-
-        // If there's more room on the opposite side of the target,
-        // the popupmenu should open on the opposite side.
-        function flipIfNotEnoughRoom(axis, value) {
-          var targetOffset = target.offset(),
-            targetW = target.outerWidth(),
-            targetH = target.outerHeight();
-
-          if (axis === 'x') {
-            var leftEdge = targetOffset.left,
-              rightEdge = targetOffset.left + targetW;
-
-            if (leftEdge > windowW - rightEdge) {
-              value = targetOffset.left - menuDimensions.width;
-              wasFlipped = true;
-            }
-          }
-          if (axis === 'y') {
-            var topEdge = targetOffset.top,
-              bottomEdge = targetOffset.top + targetH;
-
-            if (topEdge > windowH - bottomEdge) {
-              value = targetOffset.top - menuDimensions.height;
-              wasFlipped = true;
-            }
-          }
-
-          return value;
-        }
-
-        // Same thing, but uses the "menu" size.
-        function useMenuSize(axis) {
-          var cssConstraints = {
-            x: '.btn-actions',
-            y: ''
-          };
-          return target.is(cssConstraints[axis]);
-        }
-
-        // Factor in the "size" of both the target element and the menu into the left/top positions
-        // of the menu.
-        function getAdjustedForSize(axis, value) {
-          axis = sanitizeAxis(axis);
-          var dimension = axis === 'x' ? 'Width' : 'Height';
-
-          if (useTargetSize(axis)) {
-            value = value + target['outer' + dimension]();
-          }
-
-          if (useMenuSize(axis)) {
-            value = value - menuDimensions[dimension.toLowerCase()];
-          }
-
-          // Custom adjustments on a per-element/axis basis
-          if (axis === 'x') {
-            if (target.is('.btn-actions')) {
-              value = value + (isRTL ? -(target.outerWidth()) : target.outerWidth());
-            }
-            if (target.is('.btn-filter')) {
-              value = value + (isRTL ? 10 : -10);
-            }
-            if (target.is('.btn-split-menu')) {
-              value = value + (isRTL ? 13 : -13);
-            }
-          }
-
-          if (axis === 'y') {
-            if (target.is('.btn-actions')) {
-              value = value + 5;
-            }
-            if (target.is('.btn-filter, .searchfield-category-button') || target.closest('.colorpicker-container').length) {
-              value = value + 10; // extra spacing to keep arrow from overlapping
-            }
-          }
-
-          return value;
-        }
-        left = getAdjustedForSize('x', left);
-        top = getAdjustedForSize('y', top);
-
-        var modalParent = wrapper.closest('.modal'),
-          mpOffset = modalParent.offset();
-
-        function getModalParentOffset(axis) {
-          axis = sanitizeAxis(axis);
-          var border = getBorder(axis);
-          return modalParent.length ? mpOffset[border] : 0;
-        }
-
-        //left = flipIfNotEnoughRoom('x', left);
-        top = flipIfNotEnoughRoom('y', top);
-
-        // Fix these values if we're sitting inside a modal, since the modal element is "fixed"
-        // IE11 handles fixed positioning differently so add the offset instead of subtracting
-        if (this.isOldIe) {
-          left = left + getModalParentOffset('x');
-          top = top + getModalParentOffset('y');
-        } else {
-          left = left - getModalParentOffset('x');
-          top = top - getModalParentOffset('y');
-        }
-        */
 
         function placementCallback(positionObj) {
           // Change direction of menu opening in RTL
@@ -762,33 +590,49 @@
           return positionObj;
         }
 
-        var opts = {
-          callback: placementCallback,
-          strategies: ['flip', 'shrink']
-        };
+        var popupPlaceOpts = this.settings.placementOpts || {},
+          opts = $.extend({}, popupPlaceOpts, {
+            callback: placementCallback
+          });
 
         switch(this.settings.trigger) {
           case 'rightClick':
-            opts.x = getCoordinates(e, 'x');
-            opts.y = getCoordinates(e, 'y');
+            opts.x = getCoordinates(e, 'x') + this.settings.offset.x;
+            opts.y = getCoordinates(e, 'y') + this.settings.offset.y;
             break;
           default:
-            opts.x = isRTL ? (menuDimensions.width) * -1 : 0;
-            opts.y = 0;
+            opts.x = (isRTL ? (menuDimensions.width) * -1 : 0) + (this.settings.offset * (isRTL ? -1 : 1) || 0);
+            opts.y = this.settings.offset.y || 0;
             opts.parent = this.element;
             opts.placement = 'bottom';
             break;
         }
 
+        //=======================================================
+        // BEGIN Temporary stuff until we sort out passing these settings from the controls that utilize them
+        //=======================================================
+
+        function shouldBeLeftAligned(target) {
+          return target.is('.btn-split-menu, .btn-menu, .tab, .searchfield-category-button');
+        }
+
+        function shouldBeRightAligned(target) {
+          return target.is('.btn-actions, .btn-filter');
+        }
+
         // Customize some settings based on the type of element that is doing the triggering.
-        if (target.is('.btn-actions, .btn-filter, .timepicker, .datepicker')) {
+        if (shouldBeRightAligned(target)) {
           opts.parentXAlignment = (isRTL ? 'left' : 'right');
           opts.strategies = ['flip', 'nudge', 'shrink'];
         }
-        if (target.is('.btn-split-menu, .btn-menu, .tab, .searchfield-category-button, .colorpicker')) {
+        if (shouldBeLeftAligned(target)) {
           opts.parentXAlignment = (isRTL ? 'right': 'left');
           opts.strategies = ['flip', 'nudge', 'shrink'];
         }
+
+        //=======================================================
+        // END Temporary stuff until we sort out passing these settings from the controls that utilize them
+        //=======================================================
 
         wrapper.one('afterplace.popupmenu', function(e, positionObj) {
           self.handleAfterPlace(e, positionObj);
@@ -801,71 +645,8 @@
       },
 
       handleAfterPlace: function(e, placementObj) {
-        var wrapper = this.menu.parent('.popupmenu-wrapper'),
-          target = placementObj.parent,
-          arrow = wrapper.find('.arrow'),
-          dir = placementObj.placement,
-          isXCoord = ['left', 'right'].indexOf(dir) > -1,
-          targetRect = {},
-          arrowRect = {};
-
-        if (!target || !target.length || !arrow.length) {
-          return;
-        }
-
-        if (placementObj.attemptedFlips) {
-          wrapper.removeClass('top right bottom left').addClass(dir);
-        }
-
-        // Flip the arrow if we're in RTL mode
-        if (this.isRTL && isXCoord) {
-          var opposite = dir === 'right' ? 'left' : 'right';
-          wrapper.removeClass('right left').addClass(opposite);
-        }
-
-        // Custom target for some scenarios
-        if (target.is('.colorpicker')) {
-          target = target.next('.trigger');
-        }
-        if (target.is('.btn-split-menu, .btn-menu, .btn-actions, .btn-filter, .tab')) {
-          target = target.find('.icon');
-        }
-        if (target.is('.searchfield-category-button')) {
-          target = target.find('.icon.icon-dropdown');
-        }
-
-        // reset if we borked the target
-        if (!target.length) {
-          target = placementObj.parent;
-        }
-
-        targetRect = target.length ? target[0].getBoundingClientRect() : targetRect;
-        arrowRect = arrow.length ? arrow[0].getBoundingClientRect() : arrowRect;
-
-        function getMargin(placement) {
-          return (placement === 'right' || placement === 'left') ? 'margin-top' : 'margin-left';
-        }
-
-        function getDistance() {
-          var targetCenter = 0,
-            arrowCenter = 0;
-
-          if (dir === 'left' || dir === 'right') {
-            targetCenter = targetRect.top + (targetRect.height/2);
-            arrowCenter = arrowRect.top + (arrowRect.height/2);
-          }
-          if (dir === 'top' || dir === 'bottom') {
-            targetCenter = targetRect.left + (targetRect.width/2);
-            arrowCenter = arrowRect.left + (arrowRect.width/2);
-          }
-
-          return targetCenter - arrowCenter;
-        }
-
-        // line the arrow up with the target element's "dropdown icon", if applicable
-        var positionOpts = {};
-        positionOpts[getMargin(dir)] = getDistance();
-        arrow.css(positionOpts);
+        var wrapper = this.menu.parent('.popupmenu-wrapper');
+        wrapper.data('place').setArrowPosition(e, placementObj, wrapper);
 
         wrapper.triggerHandler('popupmenuafterplace', [placementObj]);
         return placementObj;
