@@ -36,7 +36,7 @@
           placement: 'bottom', // If defined, changes the direction in which placement of the element happens
           strategies: ['nudge'] // Determines the "strategy" for alternatively placing the element if it doesn't fit in the defined boundaries.  Only matters when "parent" is a defined setting.  It's possible to define multiple strategies and execute them in order.
         },
-        strategies = ['nudge', 'clockwise', 'flip'],
+        strategies = ['nudge', 'clockwise', 'flip', 'shrink'],
         placements = ['top', 'left', 'right', 'bottom', 'center'],
         xAlignments = ['left', 'center', 'right'],
         yAlignments = ['top', 'center', 'bottom'],

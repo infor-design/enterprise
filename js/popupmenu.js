@@ -599,6 +599,7 @@
           case 'rightClick':
             opts.x = getCoordinates(e, 'x') + this.settings.offset.x;
             opts.y = getCoordinates(e, 'y') + this.settings.offset.y;
+            opts.strategies = ['flip', 'nudge', 'shrink'];
             break;
           default:
             opts.x = (isRTL ? (menuDimensions.width) * -1 : 0) + (this.settings.offset * (isRTL ? -1 : 1) || 0);
@@ -623,11 +624,9 @@
         // Customize some settings based on the type of element that is doing the triggering.
         if (shouldBeRightAligned(target)) {
           opts.parentXAlignment = (isRTL ? 'left' : 'right');
-          opts.strategies = ['flip', 'nudge', 'shrink'];
         }
         if (shouldBeLeftAligned(target)) {
           opts.parentXAlignment = (isRTL ? 'right': 'left');
-          opts.strategies = ['flip', 'nudge', 'shrink'];
         }
 
         //=======================================================
