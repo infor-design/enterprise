@@ -79,12 +79,12 @@
           containment: this.settings.containment ? this.settings.containment :
           this.settings.axis === 'x' ? 'document' : 'parent'})
           .on('dragstart.splitter', function () {
-            var overlay = $('<div class="overlay"></div>'),
-              iframes = $('iframe');
+            var iframes = $('iframe');
 
             if (iframes.length > 0) {
               iframes.each(function() {
-                var frame = $(this);
+                var frame = $(this),
+                  overlay = $('<div class="overlay"></div>');
                 frame.before(overlay);
                 overlay.css({height: '100%', width: (frame.parent().css('width')) - 40 + 'px', opacity: 0, visibility: 'visible'});
               });
@@ -208,11 +208,11 @@
         }
 
         var rightSide = leftSide.next(),
-          w = leftArg;
+          w = leftArg + 20;
 
         //Adjust Left and Right Side
         leftSide.css('width', (w + 'px'));
-        rightSide.css('width', ('calc(100% - ' + (w+20) + 'px)'));
+        rightSide.css('width', ('calc(100% - ' + w + 'px)'));
       },
 
       //Preferably use the id, but if none that make one based on the url and count
