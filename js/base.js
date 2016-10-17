@@ -25,6 +25,12 @@
     this.element = $(element);
     this.url = this.getCurrentURL();
 
+    window.Soho = window.Soho || {};
+
+    if (!window.Soho.base) {
+      $.detectBaseTag();
+    }
+
     return this;
   }
 
