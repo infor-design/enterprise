@@ -173,6 +173,13 @@
           'left': placementObj.x,
           'top': placementObj.y
         });
+
+        if (placementObj.height) {
+          this.element.height(placementObj.height);
+        }
+        if (placementObj.width) {
+          this.element.width(placementObj.width);
+        }
       },
 
       // Main placement API Method (external)
@@ -304,13 +311,15 @@
                 case 'nudge':
                   return self.nudge(placementObj);
                 case 'clockwise':
-                  return placementObj;
+                  return self.clockwise(placementObj);
                 case 'flip':
                   self.flip(placementObj);
                   placementObj.setCoordinate('x', placementObj.originalx);
                   placementObj.setCoordinate('y', placementObj.originaly);
                   placementObj = doPlacementAgainstParent(placementObj);
                   return placementObj;
+                case 'shrink':
+                  return self.shrink(placementObj);
                 default:
                   return placementObj;
               }
@@ -343,6 +352,13 @@
         }
 
         // Place again
+        this.render(placementObj);
+
+        placementObj = this.checkBleeds(placementObj);
+        if (placementObj.bleeds) {
+          placementObj = this.shrink(placementObj);
+        }
+
         this.render(placementObj);
 
         this.element.trigger('afterplace', [
@@ -523,6 +539,30 @@
         return placementObj;
       },
 
+      shrink: function(placementObj) {
+        var container = $(placementObj.container ? placementObj.container : (document.documentElement || document.body.parentNode)),
+          rect = this.element[0].getBoundingClientRect(),
+          scrollX = (typeof container.scrollLeft === 'number' ? container : document.body).scrollLeft,
+          scrollY = (typeof container.scrollTop === 'number' ? container : document.body).scrollTop,
+          windowH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
+          windowW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
+          d;
+
+        // If element width is greater than window width, shrink to fit
+        if (rect.width >= windowW) {
+          d = rect.width - (windowW - scrollX);
+          placementObj.width = rect.width - d;
+        }
+
+        // If element height is greater than window height, shrink to fit
+        if (rect.height >= windowH) {
+          d = rect.height - (windowH - scrollY);
+          placementObj.height = rect.height - d;
+        }
+
+        return placementObj;
+      },
+
       // Giving up causes all the placementObj settings to revert
       giveup: function(placementObj) {
         placementObj.giveup = true;
@@ -588,7 +628,7 @@
         if (target.is('.datepicker, .timepicker')) {
           target = target.next('.icon');
         }
-        
+
         if (target.is('.btn-split-menu, .btn-menu, .btn-actions, .btn-filter, .tab')) {
           target = target.find('.icon');
         }

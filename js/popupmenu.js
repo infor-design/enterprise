@@ -648,6 +648,15 @@
         var wrapper = this.menu.parent('.popupmenu-wrapper');
         wrapper.data('place').setArrowPosition(e, placementObj, wrapper);
 
+        if (placementObj.height) {
+          wrapper.css('height', '');
+          this.menu.height(placementObj.height);
+        }
+        if (placementObj.width) {
+          wrapper.css('width', '');
+          this.menu.width(placementObj.width);
+        }
+
         wrapper.triggerHandler('popupmenuafterplace', [placementObj]);
         return placementObj;
       },
