@@ -1,7 +1,7 @@
 (function (factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module
-    define('cultures/es-ES', ['jquery'], factory);
+    define('cultures/es-MX', ['jquery'], factory);
     factory();
   } else if (typeof exports === 'object') {
     // Node/CommonJS
@@ -17,55 +17,55 @@
   }
 
   //Get Latest from http://www.unicode.org/Public/cldr/25/
-  Locale.addCulture('es-ES', {
+  Locale.addCulture('es-MX', {
     //layout/language
     language: 'es',
-    englishName: 'Spanish (Spain)',
-    nativeName: 'Español (España)',
+    englishName: 'Spanish (Mexico)',
+    nativeName: 'Español (Mexico)',
     //layout/orientation/@characters
     direction: 'left-to-right',
     //ca-gregorian
     calendars: [{
-        name: 'gregorian',
-        //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
-        dateFormat: {'separator': '/', //Infered
-                     'timeSeparator': ':',
-                     'short': 'd/M/yyyy', //use four digit year
-                     'medium': 'd/M/yyy',
-                     'long': 'd de MMMM de y',
-                     'full': 'EEEE, d de MMMM de y',
-                     'month': 'dd MMMM',
-                     'year': 'MMMM de yyyy',
-                     'timestamp': 'HH:mm:ss',
-                     'datetime': 'd/M/yyyy HH:mm'}, //Infered short + short gregorian/dateTimeFormats
-        //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated
-        days: {
-          wide: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-          abbreviated: ['DO', 'LU', 'MA', 'MI', 'JU', 'VI', 'SA'],
-          narrow: ['D', 'L', 'M', 'X', 'J', 'V', 'S']
-        },
-        //ca-gregorian/main/dates/calendars/gregorian/months/format/wide and abbreviated
-        months: {
-          wide: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-          abbreviated: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sept', 'Oct', 'Nov', 'Dic']
-        },
-        //ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
-        timeFormat: 'HH:mm',
-        //ca-gregorian/main/dates/calendars/gregorian/dayPeriods/abbreviated
-        dayPeriods: ['a.m.', 'p.m.']
-      }],
+      name: 'gregorian',
+      //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
+      dateFormat: {'separator': '/', //Infered
+                   'timeSeparator': ':',
+                   'short': 'dd/MM/yyyy', //use four digit year
+                   'medium': 'dd/MM/yyyy',
+                   'long': 'dd de MMMM de yyyy',
+                   'full': 'EEEE, d de MMMM de yyyy',
+                   'month': 'dd MMMM',
+                   'year': 'MMMM de yyyy',
+                   'timestamp': 'HH:mm',
+                   'datetime': 'dd/MM/yyyy HH:mm'}, //Infered short + short gregorian/dateTimeFormats
+      //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
+      days: {
+        wide: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+        abbreviated: ['DO', 'LU', 'MA', 'MI', 'JU', 'VI', 'SA'],
+        narrow: ['D', 'L', 'M', 'X', 'J', 'V', 'S']
+      },
+      //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
+      months: {
+        wide: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        abbreviated: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sept', 'Oct', 'Nov', 'Dic']
+      },
+      //ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
+      timeFormat: 'HH:mm',
+      //ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
+      dayPeriods: ['a.m.', 'p.m.']
+    }],
     //numbers/currencyFormats-numberSystem-latn/standard (Replace Sign http://www.currencysymbols.in ?)
-    currencySign: '€', //(Replace Sign http://www.currencysymbols.in ?)
-    currencyFormat: '#,##0.00 ¤',
+    currencySign: '$', //(Replace Sign http://www.currencysymbols.in ?)
+    currencyFormat: '¤#,##0.00',
     //numbers/symbols-numberSystem-latn
     numbers: {
       percentSign: '%',
-      percentFormat: '#,##0 %',
+      percentFormat: '#,##0%',
       minusSign: '-',
-      decimal: ',',
-      group: '.'
+      decimal: '.',
+      group: ','
     },
-    //Resx
+    //Resx - Approved By Translation Team
     messages: {
       'AboutText': {id: 'AboutText', value: 'Copyright &copy; {0} Infor. Todos los derechos están reservados. Las marcas denominativas y figurativas mencionadas a continuación son marcas comerciales y marcas comerciales registradas de Infor y/o sus empresas filiales y subsidiarias'},
       'Actions': {id: 'Actions', value: 'Acciones', comment: 'Tooltip text for the action button with additional in context actions'},
