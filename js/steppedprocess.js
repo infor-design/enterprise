@@ -192,7 +192,7 @@
       getPrevItem: function(item, $list) {
         var idx = $list.index(item);
         if (idx > 0) {
-          idx +- 1;
+          idx -= 1;
         }
         return $list[idx];
       },
@@ -206,7 +206,7 @@
        */
       getNextItem: function(item, $list) {
         var idx = $list.index(item);
-        if (idx === $list.length - 1) {
+        if (idx < $list.length - 1) {
           idx += 1;
         }
         return $list[idx];
