@@ -821,6 +821,7 @@ $.fn.datagrid = function(options) {
       this.appendToolbar();
       this.restoreColumns();
       this.setTreeDepth();
+      this.setTreeRootNodes();
       this.render();
       this.initFixedHeader();
       this.createResizeHandle();
@@ -1884,13 +1885,21 @@ $.fn.datagrid = function(options) {
       return value;
     },
 
+    // Set tree root nodes
+    setTreeRootNodes: function() {
+      this.settings.treeRootNodes = this.settings.treeDepth
+        .filter(function(node) {
+          return node.depth === 1;
+        });
+    },
+
     // Set tree depth
     setTreeDepth: function(dataset) {
       var self = this,
         idx = 0,
         iterate = function(node, depth) {
           idx++;
-          self.settings.treeDepth.push({idx: idx, depth: depth});
+          self.settings.treeDepth.push({idx: idx, depth: depth, node: node});
           var children = node.children || [];
           for (var i = 0, len = children.length; i < len; i++) {
             iterate(children[i], depth + 1);
@@ -1909,9 +1918,10 @@ $.fn.datagrid = function(options) {
     renderRows: function() {
       var tableHtml = '',
         self = this, i,
+        s = self.settings,
         activePage = self.pager ? self.pager.activePage : 1,
-        pagesize = self.settings.pagesize,
-        dataset = self.settings.dataset;
+        pagesize = s.pagesize,
+        dataset = s.dataset;
 
       var body = self.table.find('tbody');
       if (body.length === 0) {
@@ -1929,7 +1939,7 @@ $.fn.datagrid = function(options) {
       for (i = 0; i < dataset.length; i++) {
 
         //For better performance dont render out of page
-        if (this.settings.paging && !this.settings.source) {
+        if (s.paging && !s.source) {
 
           if (activePage === 1 && (i - this.filteredCount) >= pagesize){
             if (!dataset[i].isFiltered) {
@@ -1955,7 +1965,7 @@ $.fn.datagrid = function(options) {
         }
 
         this.recordCount++;
-        tableHtml += self.rowHtml(dataset[i], false, this.settings.treeGrid ? this.recordCount-1 : i);
+        tableHtml += self.rowHtml(dataset[i], s.treeGrid ? s.treeRootNodes[i].idx-1 : i);
       }
 
       self.tableBody.append(tableHtml);
@@ -1965,7 +1975,7 @@ $.fn.datagrid = function(options) {
 
       //Set Tab Index and active Cell
       setTimeout(function () {
-        if (!self.settings.source) {
+        if (!s.source) {
           self.displayCounts();
         }
         self.activeCell = {node: self.cellNode(0, 0).attr('tabindex', '0'), isFocused: false, cell: 0, row: 0};
@@ -1990,21 +2000,32 @@ $.fn.datagrid = function(options) {
 
     recordCount: 0,
 
-    rowHtml: function (rowData, renderHidden, dataRowIdx) {
+    rowHtml: function (rowData, dataRowIdx) {
 
       var isEven = (this.recordCount % 2 === 0),
         self = this,
         activePage = self.pager ? self.pager.activePage : 1,
         pagesize = self.settings.pagesize,
         rowHtml = '',
-        depth = self.settings.treeDepth[dataRowIdx].depth;
+        depth = self.settings.treeDepth[dataRowIdx].depth,
+        d = depth,
+        d2, i, l, isHidden;
+
+      // Setup if this row will be hidden or not
+      for (i = dataRowIdx; i >= 0 && d > 1 && !isHidden; i--) {
+        d2 = self.settings.treeDepth[i];
+        if (d !== d2.depth) {
+          d = d2.depth;
+          isHidden = typeof d2.node.expanded !== 'undefined' && !d2.node.expanded;
+        }
+      }
 
       rowHtml = '<tr role="row" aria-rowindex="' + ((dataRowIdx + 1) + (self.settings.source  ? ((activePage-1) * pagesize) : 0)) + '"' +
                 (self.settings.treeGrid && rowData.children ? ' aria-expanded="' + (rowData.expanded ? 'true"' : 'false"') : '') +
                 (self.settings.treeGrid ? ' aria-level= "' + depth + '"' : '') +
                 ' class="datagrid-row'+
                 (self.settings.rowHeight !== ' normal' ? ' ' + self.settings.rowHeight + '-rowheight' : '') +
-                (renderHidden ? ' is-hidden' : '') +
+                (isHidden ? ' is-hidden' : '') +
                 (self.settings.alternateRowShading && !isEven ? ' alt-shading' : '') +
                 (!self.settings.cellNavigation ? ' is-clickable' : '' ) +
                 (self.settings.treeGrid ? (rowData.children ? ' datagrid-tree-parent' : (depth > 1 ? ' datagrid-tree-child' : '')) : '') +
@@ -2012,11 +2033,17 @@ $.fn.datagrid = function(options) {
 
       for (var j = 0; j < self.settings.columns.length; j++) {
         var col = self.settings.columns[j],
-            cssClass = '',
-            formatter = (col.formatter ? col.formatter : self.defaultFormatter),
-            formatted = '';
-
-        formatted = self.formatValue(formatter, this.recordCount, j, self.fieldValue(rowData, self.settings.columns[j].field), self.settings.columns[j], rowData, self);
+          cssClass = '',
+          formatter = (col.formatter || self.defaultFormatter),
+          formatted = self.formatValue(
+            formatter,
+            dataRowIdx + 1,
+            j,
+            self.fieldValue(rowData, self.settings.columns[j].field),
+            self.settings.columns[j],
+            rowData,
+            self
+          );
 
         if (formatted.indexOf('<span class="is-readonly">') === 0) {
           col.readonly = true;
@@ -2088,7 +2115,7 @@ $.fn.datagrid = function(options) {
            '><div class="datagrid-cell-wrapper">';
 
         if (col.contentVisible) {
-          var canShow = col.contentVisible(this.recordCount, j, cellValue, col, rowData);
+          var canShow = col.contentVisible(dataRowIdx + 1, j, cellValue, col, rowData);
           if (!canShow) {
             formatted = '';
           }
@@ -2116,10 +2143,9 @@ $.fn.datagrid = function(options) {
 
       //Render Tree Children
       if (rowData.children) {
-
-        for (var l = 0; l < rowData.children.length; l++) {
+        for (i=0, l=rowData.children.length; i<l; i++) {
           this.recordCount++;
-          rowHtml += self.rowHtml(rowData.children[l], !rowData[self.treeExpansionField], dataRowIdx +  l + 1);
+          rowHtml += self.rowHtml(rowData.children[i], dataRowIdx + i+1);
         }
       }
 
@@ -2237,11 +2263,9 @@ $.fn.datagrid = function(options) {
       this.renderRows();
       this.renderHeader();
       this.setColumnWidths();
-
       this.resetPager('updatecolumns');
       this.element.trigger('columnchange', [{type: 'updatecolumns', columns: this.settings.columns}]);
       this.saveColumns();
-
     },
 
     saveColumns: function () {
@@ -2393,7 +2417,7 @@ $.fn.datagrid = function(options) {
 
           for (var i = 0; i < dataset.length; i++) {
             if (!dataset[i].isFiltered) {
-              tableHtml += self.rowHtml(dataset[i], false, i);
+              tableHtml += self.rowHtml(dataset[i], i);
             }
           }
 
@@ -4088,6 +4112,34 @@ $.fn.datagrid = function(options) {
       }
     },
 
+    // Set expanded property in Dataset
+    setExpandedInDataset: function(dataRowIndex, isExpanded, dataset) {
+      var idx = 0,
+        iterate = function(node, depth) {
+          if (idx === dataRowIndex) {
+            node.expanded = isExpanded;
+            return true;
+          }
+          idx++;
+          var children = node.children || [];
+          for (var i = 0, len = children.length; i < len; i++) {
+            var found = iterate(children[i], depth + 1);
+            if (found) {
+              return true;
+            }
+          }
+        };
+
+      dataset = dataset || this.settings.dataset;
+
+      for (var i = 0, len = dataset.length; i < len; i++) {
+        var found = iterate(dataset[i], 1);
+        if (found) {
+          return true;
+        }
+      }
+    },
+
     //expand the tree rows
     toggleChildren: function(dataRowIndex) {
       var rowElement = this.visualRowNode(dataRowIndex),
@@ -4107,6 +4159,7 @@ $.fn.datagrid = function(options) {
         expandButton.addClass('is-expanded')
           .find('.plus-minus').addClass('active');
       }
+      this.setExpandedInDataset(dataRowIndex, !isExpanded);
 
       var restCollapsed = false;
 
