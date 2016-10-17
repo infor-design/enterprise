@@ -618,17 +618,6 @@
           return useCoords(e, axis);
         }
 
-        switch(this.settings.trigger) {
-          case 'rightClick':
-            left = getCoordinates(e, 'x');
-            top = getCoordinates(e, 'y');
-            break;
-          default:
-            left = getOffsetsFromTrigger('x');
-            top = getOffsetsFromTrigger('y');
-            break;
-        }
-
         function useArrow() {
           return target.is('.btn-menu, .btn-actions, .btn-split-menu, .searchfield-category-button, .trigger');
         }
@@ -641,6 +630,7 @@
         // Reset the arrow
         wrapper.find('.arrow').removeAttr('style');
 
+        /*
         // if the target "is" a certain set of classes, or meets certain criteria, the target's
         // size (height or width) will be added to the left/top placement.
         function useTargetSize(axis) {
@@ -762,102 +752,123 @@
           left = left - getModalParentOffset('x');
           top = top - getModalParentOffset('y');
         }
+        */
 
-        // place the element so we can get some height/width and bleeds
-        wrapper.css({'left': left, 'top': top});
+        function placementCallback(positionObj) {
+          // Change direction of menu opening in RTL
+          if (isRTL) {
+            positionObj.setCoordinate('x', positionObj.x - menuDimensions.width);
+          }
+          return positionObj;
+        }
 
-        left = wrapper.offset().left;
-        top = wrapper.offset().top;
+        var opts = {
+          callback: placementCallback,
+          strategies: ['flip', 'shrink']
+        };
 
-        var scrollPosY = $(window).height() + $(document).scrollTop(),
-          scrollPosX = $(window).width() + $(document).scrollLeft();
+        switch(this.settings.trigger) {
+          case 'rightClick':
+            opts.x = getCoordinates(e, 'x');
+            opts.y = getCoordinates(e, 'y');
+            break;
+          default:
+            opts.x = isRTL ? (menuDimensions.width) * -1 : 0;
+            opts.y = 0;
+            opts.parent = this.element;
+            opts.placement = 'bottom';
+            break;
+        }
 
-        function shrinkY(onTop) {
-          if (onTop) {
-            d = top * -1;
-            top = top + d;
-            menuDimensions.height = menuDimensions.height - d;
-            return;
+        // Customize some settings based on the type of element that is doing the triggering.
+        if (target.is('.btn-actions, .btn-filter, .timepicker, .datepicker')) {
+          opts.parentXAlignment = (isRTL ? 'left' : 'right');
+          opts.strategies = ['flip', 'nudge', 'shrink'];
+        }
+        if (target.is('.btn-split-menu, .btn-menu, .tab, .searchfield-category-button, .colorpicker')) {
+          opts.parentXAlignment = (isRTL ? 'right': 'left');
+          opts.strategies = ['flip', 'nudge', 'shrink'];
+        }
+
+        wrapper.one('afterplace.popupmenu', function(e, positionObj) {
+          self.handleAfterPlace(e, positionObj);
+        });
+
+        wrapper.place(opts);
+        this.placeAPI = this.placeAPI || wrapper.data('place');
+
+        this.placeAPI.place(opts);
+      },
+
+      handleAfterPlace: function(e, placementObj) {
+        var wrapper = this.menu.parent('.popupmenu-wrapper'),
+          target = placementObj.parent,
+          arrow = wrapper.find('.arrow'),
+          dir = placementObj.placement,
+          isXCoord = ['left', 'right'].indexOf(dir) > -1,
+          targetRect = {},
+          arrowRect = {};
+
+        if (!target || !target.length || !arrow.length) {
+          return;
+        }
+
+        if (placementObj.attemptedFlips) {
+          wrapper.removeClass('top right bottom left').addClass(dir);
+        }
+
+        // Flip the arrow if we're in RTL mode
+        if (this.isRTL && isXCoord) {
+          var opposite = dir === 'right' ? 'left' : 'right';
+          wrapper.removeClass('right left').addClass(opposite);
+        }
+
+        // Custom target for some scenarios
+        if (target.is('.colorpicker')) {
+          target = target.next('.trigger');
+        }
+        if (target.is('.btn-split-menu, .btn-menu, .btn-actions, .btn-filter, .tab')) {
+          target = target.find('.icon');
+        }
+        if (target.is('.searchfield-category-button')) {
+          target = target.find('.icon.icon-dropdown');
+        }
+
+        // reset if we borked the target
+        if (!target.length) {
+          target = placementObj.parent;
+        }
+
+        targetRect = target.length ? target[0].getBoundingClientRect() : targetRect;
+        arrowRect = arrow.length ? arrow[0].getBoundingClientRect() : arrowRect;
+
+        function getMargin(placement) {
+          return (placement === 'right' || placement === 'left') ? 'margin-top' : 'margin-left';
+        }
+
+        function getDistance() {
+          var targetCenter = 0,
+            arrowCenter = 0;
+
+          if (dir === 'left' || dir === 'right') {
+            targetCenter = targetRect.top + (targetRect.height/2);
+            arrowCenter = arrowRect.top + (arrowRect.height/2);
+          }
+          if (dir === 'top' || dir === 'bottom') {
+            targetCenter = targetRect.left + (targetRect.width/2);
+            arrowCenter = arrowRect.left + (arrowRect.width/2);
           }
 
-          d = (top + menuDimensions.height) - windowH;
-          menuDimensions.height = menuDimensions.height - d;
+          return targetCenter - arrowCenter;
         }
 
-        function shrinkX(reposition) {
-          d = left * -1;
-          if (!reposition) {
-            left = left + d;
-          }
-          menuDimensions.width = menuDimensions.width - d;
-        }
+        // line the arrow up with the target element's "dropdown icon", if applicable
+        var positionOpts = {};
+        positionOpts[getMargin(dir)] = getDistance();
+        arrow.css(positionOpts);
 
-        //If the menu is off the bottom, fix its position so it's on-screen
-        if ((top + menuDimensions.height) > scrollPosY) {
-
-          // Only nudge on Y if we're using coordinate-based positioning.
-          if (usedCoords) {
-            d = (top + menuDimensions.height) - scrollPosY;
-            top = top - d;
-
-            hideArrow();
-
-            // Check if we've bled off the top edge.  If yes, shrink the menu's height
-            if (top - $(document).scrollTop() < 0) {
-              shrinkY(true);
-            }
-          } else {
-            shrinkY();
-          }
-        }
-
-        // If menu is off the top at this point, shrink to fit
-        if (top - $(document).scrollTop() < 0) {
-          shrinkY(true);
-        }
-
-        //Handle Case where menu is off the right
-        if ((left + menuDimensions.width) > scrollPosX) {
-          d = (left + menuDimensions.width) - scrollPosX;
-          left = left - d;
-
-          // Check if we've bled off the left edge.  If yes, shrink the menu's width
-          if (left - $(document).scrollLeft() < 0) {
-            shrinkX(true);
-          }
-
-          hideArrow();
-        }
-
-        //Handle Case where menu is off the left
-        if (left - $(document).scrollLeft() < 0) {
-          d = left * -1;
-          left = left + d;
-
-          hideArrow();
-        }
-
-        left = left - getModalParentOffset('x');
-        top = top - getModalParentOffset('y');
-
-        // If menu is off the top at this point, shrink to fit
-        if (top - $(document).scrollTop() < 0) {
-          shrinkY(true);
-        }
-
-        // Re-apply adjusted positioning
-        wrapper.css({'top': top, 'left': left});
-        this.menu.css({'height': menuDimensions.height, 'width': menuDimensions.width});
-
-        // Flip arrow to the opposite side
-        var arrow = wrapper.find('div.arrow');
-        if (wasFlipped) {
-          wrapper.removeClass('bottom').addClass('top');
-        }
-
-        if (this.element.is('.btn-menu', '.btn-filter, .btn-split-menu, .searchfield-category-button')) {
-          arrow.css({ 'right': (isRTL ? '20px' : 'auto'), 'left': (isRTL ? 'auto' : '20px') });
-        }
+        wrapper.triggerHandler('popupmenuafterplace', [placementObj]);
+        return placementObj;
       },
 
       open: function(e, ajaxReturn) {
