@@ -36,8 +36,8 @@
                      'full': 'EEEE, d de MMMM de y',
                      'month': 'dd MMMM',
                      'year': 'MMMM de yyyy',
-                     'timestamp': 'H:mm:ss',
-                     'datetime': 'd/M/yyyy H:mm'}, //Infered short + short gregorian/dateTimeFormats
+                     'timestamp': 'HH:mm:ss',
+                     'datetime': 'd/M/yyyy HH:mm'}, //Infered short + short gregorian/dateTimeFormats
         //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated
         days: {
           wide: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
@@ -50,7 +50,7 @@
           abbreviated: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sept', 'Oct', 'Nov', 'Dic']
         },
         //ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
-        timeFormat: 'H:mm',
+        timeFormat: 'HH:mm',
         //ca-gregorian/main/dates/calendars/gregorian/dayPeriods/abbreviated
         dayPeriods: ['a.m.', 'p.m.']
       }],
