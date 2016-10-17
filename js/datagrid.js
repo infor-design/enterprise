@@ -1495,6 +1495,7 @@ $.fn.datagrid = function(options) {
     		//Strip any html markup that might be in the formatters
             var rex = /(<([^>]+)>)|(&lt;([^>]+)&gt;)/ig;
             rowValue = rowValue.replace(rex , '').toLowerCase();
+            rowValueStr = rowValue;
           }
 
           if (columnDef.filterType === 'contents' || columnDef.filterType === 'select') {
