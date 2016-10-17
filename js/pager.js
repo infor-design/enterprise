@@ -531,11 +531,11 @@
             elements.hide();
 
             //collapse expanded rows
-            self.element.children().filter('.datagrid-expandable-row.is-expanded').removeClass('is-expanded').hide();
-            self.element.children().find('.datagrid-expand-btn').each(function () {
-              $(this).removeClass('.is-expanded');
-              $(this).find('.plus-minus').removeClass('active');
-            });
+            self.element.children()
+              .filter('.datagrid-expandable-row.is-expanded')
+                .removeClass('is-expanded').hide()
+                .prev().removeClass('.is-expanded')
+                  .find('.plus-minus').removeClass('active');
 
             expr = (self.activePage === 1 ? ':not(".is-filtered"):lt('+ rows +')' : ':not(".is-filtered"):lt('+ ((self.activePage) * rows) +'):gt('+ (((self.activePage-1) * rows) -1) +')');
 
