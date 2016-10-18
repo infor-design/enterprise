@@ -2349,7 +2349,7 @@
           });
         });
 
-        this.moreButton.disable();
+        this.moreButton.addClass('is-disabled');
 
         if (this.isModuleTabs() && !isPartial) {
           this.element.children('.toolbar').disable();
@@ -2404,6 +2404,8 @@
             attrTarget.prop('disabled', obj.originalDisabled);
           });
         });
+
+        this.moreButton.removeClass('is-disabled');
 
         if (this.isModuleTabs()) {
           this.element.children('.toolbar').enable();
