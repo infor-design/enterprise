@@ -1192,9 +1192,7 @@
 
         $(window).off('resize.dropdown');
         this.element.trigger('listclosed');
-
         this.activate();
-        //this.pseudoElem.focus();
       },
 
       //Set option into view
