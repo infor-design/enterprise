@@ -75,6 +75,7 @@
                   <br><br><br>
                   <button type="button" class="btn" id="btn-disable-all">Disable All</button>
                   <button type="button" class="btn" id="btn-disable-partial">Disable Partial</button>
+                  <button type="button" class="btn" id="btn-enable">Enable</button>
 
                 </div>
                 <div class="six columns"></div>
@@ -268,16 +269,19 @@
         }
       });
 
+      // Disable module tabs when these buttons are clicked
+      $('#btn-disable-all').on('click', function () {
+        tabsAPI.disable();
+      });
+      $('#btn-disable-partial').on('click', function () {
+        tabsAPI.disableOtherTabs();
+      });
+      $('#btn-enable').on('click', function() {
+        tabsAPI.enable();
+      });
+
       // Run the field toggle method on start
       toggleFields($('#use-garbage').prop('checked'));
-    });
-
-    // Disable module tabs
-    $('#btn-disable-all').on('click', function () {
-      $('#module-tabs-example').data('tabs').disable();
-    });
-    $('#btn-disable-partial').on('click', function () {
-      $('#module-tabs-example').data('tabs').disable(true);
     });
 
   </script>
