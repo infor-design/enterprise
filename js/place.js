@@ -399,19 +399,20 @@
         function getBoundary(edge) {
           switch(edge) {
             case 'top':
-              return (containerBleed ? 0 : containerRect.top) - scrollY; // 0 === top edge of viewport
+              return (containerBleed ? 0 : containerRect.top) - scrollY + placementObj.containerOffsetY; // 0 === top edge of viewport
             case 'left':
-              return (containerBleed ? 0 : containerRect.left) - scrollX; // 0 === left edge of viewport
+              return (containerBleed ? 0 : containerRect.left) - scrollX + placementObj.containerOffsetX; // 0 === left edge of viewport
             case 'right':
-              return (containerBleed ? windowW : containerRect.right) - scrollX;
+              return (containerBleed ? windowW : containerRect.right) - scrollX - placementObj.containerOffsetX;
             default: // bottom
-              return (containerBleed ? windowH : containerRect.bottom) - scrollY;
+              return (containerBleed ? windowH : containerRect.bottom) - scrollY - placementObj.containerOffsetY;
           }
         }
 
         // If element width is greater than window width, shrink to fit
-        if (rect.width >= windowW) {
-          d = rect.width - (windowW - scrollX);
+        var rightViewportEdge = getBoundary('right');
+        if (rect.width >= rightViewportEdge) {
+          d = rect.width - rightViewportEdge;
           var newWidth = rect.width - d;
 
           this.element.css('width', newWidth);
@@ -419,8 +420,9 @@
         }
 
         // If element height is greater than window height, shrink to fit
-        if (rect.height >= windowH) {
-          d = rect.height - (windowH - scrollY);
+        var bottomViewportEdge = getBoundary('bottom');
+        if (rect.height >= bottomViewportEdge) {
+          d = rect.height - bottomViewportEdge;
           var newHeight = rect.height - d;
 
           this.element.css('height', newHeight);
@@ -500,12 +502,58 @@
           return placementObj;
         }
 
+        var isXCoord = ['left', 'right'].indexOf(placementObj.placement) > -1,
+          containerBleed = this.settings.bleedFromContainer,
+          container = $(placementObj.container ? placementObj.container : (document.documentElement || document.body.parentNode)),
+          containerRect = container ? container[0].getBoundingClientRect() : {},
+          parentRect = placementObj.parent[0].getBoundingClientRect(),
+          scrollX = (typeof container.scrollLeft === 'number' ? container : document.body).scrollLeft,
+          scrollY = (typeof container.scrollTop === 'number' ? container : document.body).scrollTop,
+          windowH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
+          windowW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+
+        function getOppositeDir(dir) {
+          switch(dir) {
+            case 'left':
+              return 'right';
+            case 'right':
+              return 'left';
+            case 'top':
+              return 'bottom';
+            default: // bottom
+              return 'top';
+          }
+        }
+
+        // Gets the distance between an edge on the target element, and its opposing viewport border
+        function getDistance(dir) {
+          switch (dir) {
+            case 'left':
+              return (containerBleed ? 0 : containerRect.left) - scrollX - parentRect.left + placementObj.containerOffsetX;
+            case 'right':
+              return ((containerBleed ? windowW : containerRect.right) - scrollX) - parentRect.right - placementObj.containerOffsetX;
+            case 'top':
+              return (containerBleed ? 0 : containerRect.top) - scrollY + placementObj.containerOffsetY;
+            default: // bottom
+              return ((containerBleed ? windowH : containerRect.bottom) - scrollY) - parentRect.bottom - placementObj.containerOffsetY;
+          }
+        }
+
         function tried(placement) {
           return $.inArray(placement, placementObj.attemptedFlips) > -1;
         }
 
-        function performFlip(newDir, perpendicularDir) {
+        function performFlip(originalDir) {
+          var newDir = getOppositeDir(originalDir),
+            perpendicularDir = isXCoord ? 'top' : 'left',
+            oppPerpendicularDir = getOppositeDir(perpendicularDir),
+            originalDistance = getDistance(originalDir),
+            targetDistance = getDistance(newDir);
+
           if (!tried(newDir)) {
+            if (originalDistance >= targetDistance) {
+              return originalDir;
+            }
             return newDir;
           }
 
@@ -515,21 +563,20 @@
           placementObj.originalx = placementObj.originaly;
           placementObj.originaly = tmp;
 
-          return perpendicularDir;
+          var perpendicularDistance = getDistance(perpendicularDir),
+            oppPerpendicularDistance = getDistance(oppPerpendicularDir);
+
+          if (!tried(perpendicularDir)) {
+            if (perpendicularDistance >= oppPerpendicularDistance) {
+              return perpendicularDir;
+            }
+            return oppPerpendicularDir;
+          }
+
+          return originalDir;
         }
 
-        placementObj.placement = (function() {
-          switch(placementObj.placement) {
-            case 'left':
-              return performFlip('right', 'top');
-            case 'right':
-              return performFlip('left', 'top');
-            case 'top':
-              return performFlip('bottom', 'left');
-            default: // bottom
-              return performFlip('top', 'left');
-          }
-        })();
+        placementObj.placement = performFlip(placementObj.placement);
 
         return placementObj;
       },
@@ -540,23 +587,26 @@
       },
 
       shrink: function(placementObj) {
-        var container = $(placementObj.container ? placementObj.container : (document.documentElement || document.body.parentNode)),
-          rect = this.element[0].getBoundingClientRect(),
+        var containerBleed = this.settings.bleedFromContainer,
+          container = $(placementObj.container ? placementObj.container : (document.documentElement || document.body.parentNode)),
+          containerRect = container ? container[0].getBoundingClientRect() : {},rect = this.element[0].getBoundingClientRect(),
           scrollX = (typeof container.scrollLeft === 'number' ? container : document.body).scrollLeft,
           scrollY = (typeof container.scrollTop === 'number' ? container : document.body).scrollTop,
           windowH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
           windowW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
+          rightViewportEdge = (containerBleed ? windowW : containerRect.right) - scrollX - placementObj.containerOffsetX,
+          bottomViewportEdge = (containerBleed ? windowH : containerRect.bottom) - scrollY - placementObj.containerOffsetY,
           d;
 
         // If element width is greater than window width, shrink to fit
-        if (rect.width >= windowW) {
-          d = rect.width - (windowW - scrollX);
+        if (rect.right >= rightViewportEdge) {
+          d = rect.right - rightViewportEdge;
           placementObj.width = rect.width - d;
         }
 
         // If element height is greater than window height, shrink to fit
-        if (rect.height >= windowH) {
-          d = rect.height - (windowH - scrollY);
+        if (rect.bottom >= bottomViewportEdge) {
+          d = rect.bottom - bottomViewportEdge;
           placementObj.height = rect.height - d;
         }
 
