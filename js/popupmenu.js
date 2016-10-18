@@ -153,8 +153,6 @@
         }
         if (this.wrapper.parents().filter(scrollableFilter).length === 0) {
           this.wrapper.css('position', 'absolute');
-        } else {
-          this.wrapper.css('position', 'fixed');
         }
 
         // Wrap submenu ULs in a 'wrapper' to help break it out of overflow.
@@ -582,27 +580,15 @@
         // Reset the arrow
         wrapper.find('.arrow').removeAttr('style');
 
-        function placementCallback(positionObj) {
-          // Change direction of menu opening in RTL
-          if (isRTL) {
-            positionObj.setCoordinate('x', positionObj.x - menuDimensions.width);
-          }
-          return positionObj;
-        }
-
-        var popupPlaceOpts = this.settings.placementOpts || {},
-          opts = $.extend({}, popupPlaceOpts, {
-            callback: placementCallback
-          });
-
+        var opts = $.extend({}, this.settings.placementOpts);
         switch(this.settings.trigger) {
           case 'rightClick':
-            opts.x = getCoordinates(e, 'x') + this.settings.offset.x;
+            opts.x = getCoordinates(e, 'x') - (isRTL ? menuDimensions.width : 0) + ((isRTL ? -1 : 1) * this.settings.offset.x);
             opts.y = getCoordinates(e, 'y') + this.settings.offset.y;
             opts.strategies = ['flip', 'nudge', 'shrink'];
             break;
           default:
-            opts.x = (isRTL ? (menuDimensions.width) * -1 : 0) + (this.settings.offset * (isRTL ? -1 : 1) || 0);
+            opts.x = this.settings.offset.x || 0;
             opts.y = this.settings.offset.y || 0;
             opts.parent = this.element;
             opts.placement = 'bottom';
