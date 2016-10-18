@@ -2007,9 +2007,12 @@ $.fn.datagrid = function(options) {
         activePage = self.pager ? self.pager.activePage : 1,
         pagesize = self.settings.pagesize,
         rowHtml = '',
-        depth = self.settings.treeDepth[dataRowIdx].depth,
-        d = depth,
-        d2, i, l, isHidden;
+        d = self.settings.treeDepth[dataRowIdx],
+        depth, d2, i, l, isHidden;
+
+      // Default
+      d = d ? d.depth : 0;
+      depth = d;
 
       // Setup if this row will be hidden or not
       for (i = dataRowIdx; i >= 0 && d > 1 && !isHidden; i--) {

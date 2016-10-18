@@ -2283,6 +2283,11 @@
           .init();
       },
 
+      // Disables all tabs in the
+      disableOtherTabs: function() {
+        return this.disable(true);
+      },
+
       disable: function(isPartial) {
         if (!isPartial) {
           this.element.prop('disabled', true).addClass('is-disabled');
@@ -2302,6 +2307,10 @@
         tabs.each(function() {
           var li = $(this);
           var a = li.children('a');
+
+          if (isPartial && self.isActive(a.attr('href'))) {
+            return;
+          }
 
           if (li.is('.is-disabled') || a.prop('disabled') === true) {
             self.disabledElems.push({
@@ -2339,6 +2348,8 @@
             t.disable();
           });
         });
+
+        this.moreButton.addClass('is-disabled');
 
         if (this.isModuleTabs() && !isPartial) {
           this.element.children('.toolbar').disable();
@@ -2393,6 +2404,8 @@
             attrTarget.prop('disabled', obj.originalDisabled);
           });
         });
+
+        this.moreButton.removeClass('is-disabled');
 
         if (this.isModuleTabs()) {
           this.element.children('.toolbar').enable();

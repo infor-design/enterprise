@@ -44,18 +44,12 @@
       }
 
       > .icon {
+        color: $white;
         fill: $accordion-icon-color;
         height: 16px;
         margin: 0 18px;
         top: -1px;
         width: 18px;
-
-        &.plus-minus {
-          &::before,
-          &::after {
-            background-color: $accordion-disabled-text-color !important;
-          }
-        }
 
         & + a {
           padding-left: 0;
@@ -72,19 +66,12 @@
 
         .icon {
           fill: $accordion-disabled-text-color !important;
-
-          &.plus-minus {
-            &::before,
-            &::after {
-              background-color: $accordion-disabled-text-color !important;
-            }
-          }
         }
       }
 
       &.is-selected,
       &.is-selected:hover,
-      &.is-focused.is-selected {
+      &.is-selected.is-focused {
         background-color: $accordion-selected-bg-color;
         border-bottom-color: $accordion-selected-bg-color;
         color: $accordion-selected-text-color;
@@ -92,33 +79,75 @@
         > a {
           color: $accordion-selected-text-color;
         }
+      }
+    }
 
-        > .icon {
-          fill: $accordion-selected-text-color;
+    .step-process-item,
+    .accordion-header {
+      &.is-selected,
+      &.is-selected:hover,
+      &.is-selected.is-focused {
+        > .icon,
+        > .icon-confirm,
+        > .icon-error {
+          fill: $accordion-selected-text-color !important;
         }
       }
     }
   }
 
   // Original step process styles
+  .header {
+    .page-title {
 
-  .header .page-title {
-    margin: 10px 27px 0;
+      .panel-title {
+        @include font-size(20);
+        line-height: 1.2;
+      }
 
-    .panel-title {
-      @include font-size(20);
-      line-height: 1.2;
+      .panel-subhead {
+        @include font-size(14);
+        line-height: 1;
+      }
     }
 
-    .panel-subhead {
-      @include font-size(14);
-      line-height: 1;
+    &.header-custom {
+      background-color: $white;
+      border-bottom: solid 2px $graphite02;
+
+      .toolbar {
+
+        .title,
+        [class ^= 'btn'],
+        .icon {
+          color: $graphite09;
+          fill: $graphite09 !important;
+        }
+
+        > .title {
+
+          h2 {
+            font-weight: 500;
+            display: inline-block;
+            margin: 0;
+          }
+
+          .panel-subhead {
+            color: $graphite05;
+            font-style: italic;
+          }
+        }
+      }
     }
+  }
+
+  .btn-toggle-steps {
+    display: none;
   }
 
   .step-panels {
     padding: 15px 30px;
-    width: calc(100% - 250px);
+    height: calc(100% - 60px);
   }
 
   .js-step-links-scroll {
@@ -134,121 +163,130 @@
     }
   }
 
-  // Responsive styles
-  .responsive-hidden {
-    display: block;
-  }
-
-  .tablet-visible,
   .phone-visible {
     display: none;
   }
 }
 
-
-@include respond-to(tabletdown) {
-
+@include respond-to(tablet) {
   .soho-step-process {
-
-    .responsive-hidden {
-      display: none;
+    .sidebar,
+    .main {
+      @include css3(transform, translateX(0));
     }
 
-    .tablet-visible {
-      display: block;
-    }
-
-    .main,
-    .sidebar {
-      @include transform-transition-list(300ms cubic-bezier(.17, .04, .03, .94));
-    }
-
-    .header {
-      position: relative;
-      z-index: 2;
-    }
-
-    // Classes for scrollAction plugin
-    .subheader {
-      position: relative;
-      z-index: 1;
-    }
-
-    .subheader,
-    .js-step-links-scroll,
-    .js-step-panels-scroll {
-      @include css3(transition, all .3s ease-out);
-    }
-
-    .scrolled-down {
-
-      .subheader {
-        margin-top: -60px;
+    &.show-main {
+      .main {
+        position: absolute;
+        width: 100%;
       }
 
-      .js-step-links-scroll {
-        top: 60px;
-        margin-top: 0;
-      }
-
-      .js-step-panels-scroll {
-        top: 0;
-        margin-top: 0;
+      .sidebar,
+      .main {
+        @include css3(transform, translateX(-250px));
       }
     }
   }
 }
 
-@include respond-to(phone) {
-
+@include respond-to(tabletdown) {
   .soho-step-process {
-
-    > .page-container {
-      height: 100%;
+    .main,
+    .sidebar {
+      @include transform-transition-list(300ms cubic-bezier(.17, .04, .03, .94));
     }
+
+    .main {
+      position: relative;
+      width: 100%;
+    }
+
+    .collapsible-bar,
+    .js-step-links-scroll,
+    .js-step-panels-scroll {
+      @include css3(transition, all .3s ease-out);
+    }
+
+    .collapsible-bar {
+      position: absolute;
+      width: 100%;
+      z-index: 1;
+    }
+
+    .btn-toggle-steps {
+      display: inline-block;
+    }
+
+    .js-step-panels-scroll {
+      height: 100%;
+      padding-top: $header-height + 15px;
+    }
+
+    .scrolled-down  .collapsible-bar {
+      margin-top: -60px;
+    }
+  }
+}
+
+@include respond-to(phone) {
+  .soho-step-process {
+    $header-height: 60px;
 
     .phone-visible {
       display: block;
-
-      &.btn-toggle-steps {
-        display: inline-block;
-      }
     }
 
     .phone-hidden {
       display: none;
     }
 
-    .step-panels {
-      width: 100%;
+    > header {
+      position: relative;
+      z-index: 1;
     }
 
+    > .page-container {
+      height: 100%;
+    }
 
     .main,
     .sidebar {
+      $this-height: calc(100% - #{$header-height});
       position: absolute;
+      height: $this-height;
+      min-height: $this-height !important;
+      top: $header-height;
     }
 
     .main {
       @include css3(transform, translateX(100%));
-      margin-top: 0;
 
       .toolbar .title {
-        width: 99%;
+        width: auto;
       }
     }
 
     .sidebar {
       @include css3(transform, translateX(0));
+      border: none;
 
-      .subheader {
-        display: block;
+      .status-bar {
+        background-color: $white;
+        border-bottom: solid 2px $graphite02;
+        color: $graphite08;
+        height: $header-height;
+        line-height: $header-height;
+        font-size: 1.8rem;
+        font-weight: 500;
+        padding: 0 10px;
+        width: 100%;
       }
     }
 
     &.show-main {
       .main {
         @include css3(transform, translateX(0));
+        width: calc(100% - 250px);
       }
       .sidebar {
         @include css3(transform, translateX(-100%));
@@ -256,8 +294,12 @@
     }
 
     .js-step-links-scroll {
-      top: 60px;
-      height: calc(100% - 60px);
+      top: $header-height;
+      padding-top: $header-height;
+    }
+
+    .js-step-panels-scroll {
+      height: calc(100% - #{$header-height});
     }
 
     .phone-button-bar {
@@ -268,12 +310,10 @@
       button {
         border-radius: 0;
         display: inline-block;
-        height: 60px;
+        height: $header-height;
         width: 50%;
         margin: 0;
       }
     }
-
-
   }
 }
