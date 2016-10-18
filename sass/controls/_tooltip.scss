@@ -420,44 +420,12 @@ html[dir='rtl'] {
     margin-right: 0;
   }
 
-  .top {
-    .arrow {
-      &::after {
-        left: auto;
-        right: -8px;
-      }
-    }
-  }
-
-  .bottom {
-    .arrow {
-      &::after {
-        left: auto;
-        right: -12px;
-      }
-    }
-
-    &.offset {
-      .arrow {
-        left: 18px;
-        right: auto;
-      }
-    }
-  }
-
   .right {
     .arrow {
       border-left-width: 11px;
       border-right-width: 0;
       left: auto;
       right: -11px;
-
-      &::after {
-        border-left-width: 11px;
-        border-right-width: 0;
-        left: auto;
-        right: 1px;
-      }
     }
   }
 
@@ -467,13 +435,6 @@ html[dir='rtl'] {
       border-right-width: 11px;
       left: -10px;
       right: auto;
-
-      &::after {
-        border-left-width: 0;
-        border-right-width: 11px;
-        left: inherit;
-        right: -11px;
-      }
     }
   }
 

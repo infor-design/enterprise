@@ -232,9 +232,25 @@
         //Append Color Menu
         self.updateColorMenu();
 
+        var popupmenuOpts = {
+          ariaListbox: true,
+          menuId: 'colorpicker-menu',
+          trigger: 'immediate',
+          placementOpts: {
+            containerOffsetX: 10,
+            containerOffsetY: 10,
+            parentXAlignment: (Locale.isRTL() ? 'right': 'left'),
+            strategies: ['flip', 'nudge', 'shrink']
+          },
+          offset: {
+            x: 0,
+            y: 10
+          }
+        };
+
         // Show Menu
         self.element
-        .popupmenu({trigger: 'immediate', ariaListbox: true, menuId: 'colorpicker-menu'})
+        .popupmenu(popupmenuOpts)
         .on('open.colorpicker', function () {
           self.element.parent().addClass('is-open');
         })
@@ -250,10 +266,6 @@
 
         //Append Buttons
         this.menu = $('#colorpicker-menu');
-        //if (this.menu.find('.popup-footer').length === 0) {
-        //this.menu.append('<li class="popup-footer"> <button class="cancel btn-tertiary" type="button">' + Locale.translate('Cancel') + '</button> <button class="btn-primary" type="button">' + Locale.translate('Select') + '</button> </li>');
-        ////var btns = this.menu.find('button').button();
-        //}
 
         setTimeout(function () {
           self.menu.find('.is-selected').focus();
