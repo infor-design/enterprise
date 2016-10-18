@@ -3759,12 +3759,12 @@ $.fn.datagrid = function(options) {
         // For mode 'Selectable':
         // Press Space to toggle row selection, or click to activate using a mouse.
         if (key === 32 && (!self.settings.editable || isSelectionCheckbox)) {
-          e.preventDefault();
           row = node.closest('tr');
-
+        
           if ($(e.target).closest('.datagrid-row-detail').length === 1) {
             return;
           }
+          e.preventDefault();
 
           // Toggle datagrid-expand with Space press
           var btn = $(e.target).find('.datagrid-expand-btn, .datagrid-drilldown');
