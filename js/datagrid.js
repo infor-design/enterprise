@@ -571,7 +571,6 @@ window.Editors = {
 
       this.input.on('listclosed', function () {
         grid.commitCellEdit(self.input);
-
         grid.setNextActiveCell(event);
       });
 
@@ -1379,14 +1378,8 @@ $.fn.datagrid = function(options) {
       }
 
       //Attach Keyboard support
-      var popupOpts = {
-        offset: {
-          y: 15
-        }
-      };
-
       this.headerRow.addClass('is-filterable');
-      this.headerRow.find('.btn-filter').popupmenu(popupOpts).on('selected.datagrid', function () {
+      this.headerRow.find('.btn-filter').popupmenu({}).on('selected.datagrid', function () {
         self.applyFilter();
       });
 
@@ -2434,8 +2427,8 @@ $.fn.datagrid = function(options) {
             // White Hat Security Violation. Remove Excel formulas
             // Excel Formulas Start with =SOMETHING
             var text = elm.text();
-            if (text.substr(0, 1) === '=' && text.substr(1, 1) !== '' && text.substr(1, 1) === text.substr(1, 1).toUpperCase()) {
-              elm.remove();
+            if (text.substr(0, 1) === '=' && text.substr(1, 1) !== '') {
+              elm.text('\'' + elm.text());
             }
           });
           return table;
@@ -2792,7 +2785,7 @@ $.fn.datagrid = function(options) {
         }
 
         if (col.menuId) {
-          btn.popupmenu({menuId: col.menuId, trigger: 'immediate', offset: { y: 5 }});
+          btn.popupmenu({menuId: col.menuId, trigger: 'immediate'});
 
           if (col.selected) {
             btn.on('selected.datagrid', col.selected);
