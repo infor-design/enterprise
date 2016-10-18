@@ -414,6 +414,7 @@
         if (rect.width >= rightViewportEdge) {
           d = rect.width - rightViewportEdge;
           var newWidth = rect.width - d;
+          placementObj.width = newWidth;
 
           this.element.css('width', newWidth);
           rect = this.element[0].getBoundingClientRect(); // reset the rect because the size changed
@@ -424,6 +425,7 @@
         if (rect.height >= bottomViewportEdge) {
           d = rect.height - bottomViewportEdge;
           var newHeight = rect.height - d;
+          placementObj.height = newHeight;
 
           this.element.css('height', newHeight);
           rect = this.element[0].getBoundingClientRect(); // reset the rect because the size changed
