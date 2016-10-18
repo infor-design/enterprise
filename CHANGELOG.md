@@ -5,6 +5,8 @@ Release Date: 2016-10-17
 * Personalization
 
 ### Breaking Changes
+* 2016-10-18 - Split place logic into new file place.js. This is a dependency for controls that position like datepicker, tooltip, popup.
+* 2016-10-18 - Split initialize logic into 3 files personalize.js for personalization, environment.js for setting up environmental changes like global browser css tags and initialize.js for initializing controls.
 * 2016-10-11 - Event personalizecolors now called change colors to match changetheme
 * 2016-10-11 - Css File is now called light.scss not grey.css to match Soho Naming standards
 * 2016-10-11 - tab-container module-tabs should have class is-personalizable appended for module tabs to handle personalization - SOHO-4162

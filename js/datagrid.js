@@ -2109,12 +2109,18 @@ $.fn.datagrid = function(options) {
 
         cssClass += (col.focusable ? ' is-focusable' : '');
 
+        var rowspan = this.calculateRowspan(cellValue, dataRowIdx, col);
+        if (rowspan === '') {
+          continue;
+        }
+
         rowHtml += '<td role="gridcell" ' + ariaReadonly + ' aria-colindex="' + (j+1) + '" '+
             ' aria-describedby="' + self.uniqueId('-header-' + j) + '"' +
            (cssClass ? ' class="' + cssClass + '"' : '') + 'data-idx="' + (j) + '"' +
            (col.tooltip ? ' title="' + col.tooltip.replace('{{value}}', cellValue) + '"' : '') +
            (col.id === 'rowStatus' && rowData.rowStatus && rowData.rowStatus.tooltip ? ' title="' + rowData.rowStatus.tooltip + '"' : '') +
-             (self.settings.columnGroups ? 'headers = "' + self.uniqueId('-header-' + j) + ' ' + self.getColumnGroup(j) + '"' : '') +
+           (self.settings.columnGroups ? 'headers = "' + self.uniqueId('-header-' + j) + ' ' + self.getColumnGroup(j) + '"' : '') +
+           (rowspan ? rowspan : '' ) +
            '><div class="datagrid-cell-wrapper">';
 
         if (col.contentVisible) {
@@ -2153,6 +2159,30 @@ $.fn.datagrid = function(options) {
       }
 
       return rowHtml;
+    },
+
+    rowSpans: [],
+
+    calculateRowspan: function (value, row, col) {
+      var cnt = 0, min = null;
+
+      if (!col.rowspan) {
+        return;
+      }
+
+      for (var i = 0; i < this.settings.dataset.length; i++) {
+        if (value === this.settings.dataset[i][col.field]) {
+          cnt++;
+          if (min === null) {
+            min = i;
+          }
+        }
+      }
+
+      if (row === min) {
+        return ' rowspan ="'+ cnt + '"';
+      }
+      return '';
     },
 
     setupTooltips: function () {
