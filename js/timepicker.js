@@ -334,7 +334,11 @@
           content: popupContent,
           trigger: 'immediate',
           placement: 'bottom',
-          offset: {top: 27, left: -8},
+          placementOpts: {
+            parent: this.element,
+            parentXAlignment: (Locale.isRTL() ? 'right' : 'left'),
+            strategies: ['flip', 'nudge', 'shrink']
+          },
           width: '200',
           tooltipElement: '#timepicker-popup'})
         .on('show.timepicker', function(e, ui) {
@@ -342,9 +346,6 @@
             //noSearch: true
           });
           ui.find('button').button();
-
-          // reposition the popover
-          self.trigger.data('tooltip').position();
 
           // Set default values based on what's retrieved from the Timepicker's input field.
           hourSelect.val(initValues.hours);

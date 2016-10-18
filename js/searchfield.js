@@ -142,7 +142,10 @@
           this.list.insertAfter(icon);
 
           icon.popupmenu({
-            menu: this.list
+            menu: this.list,
+            offset: {
+              y: 10
+            }
           });
         }
 

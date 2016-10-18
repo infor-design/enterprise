@@ -397,14 +397,25 @@
           leftOffset = Locale.isRTL() ? -179 : 176;
         }
 
-        this.trigger.popover({content: this.calendar, popover: true, trigger: 'immediate',
-            placement: 'bottom', offset: {top: 23, left: Locale.isRTL() ? -163 : 162},
-            tooltipElement: '#calendar-popup'})
-            .on('hide.datepicker', function () {
-              self.closeCalendar();
-            }).on('open.datepicker', function () {
-              self.days.find('.is-selected').attr('tabindex', 0).focus();
-            });
+        var popoverOpts = {
+          content: this.calendar,
+          placementOpts: {
+            parent: this.element,
+            parentXAlignment: (Locale.isRTL() ? 'right' : 'left'),
+            strategies: ['flip', 'nudge', 'shrink']
+          },
+          placement : 'bottom',
+          popover: true,
+          trigger: 'immediate',
+          tooltipElement: '#calendar-popup'
+        };
+
+        this.trigger.popover(popoverOpts)
+          .on('hide.datepicker', function () {
+            self.closeCalendar();
+          }).on('open.datepicker', function () {
+            self.days.find('.is-selected').attr('tabindex', 0).focus();
+          });
 
         // ICONS: Right to Left Direction
         setTimeout(function() {
