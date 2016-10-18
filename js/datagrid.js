@@ -476,7 +476,7 @@ window.Editors = {
     this.init();
   },
 
-  Dropdown: function(row, cell, value, container, column, event, grid) {
+  Dropdown: function(row, cell, value, container, column, event, grid, rowData) {
 
     this.name = 'dropdown';
     this.originalValue = value;
@@ -490,6 +490,8 @@ window.Editors = {
 
       if (column.options) {
         var html, opt, optionValue;
+        value = grid.fieldValue(rowData,column.field);
+
         var compareValue = column.caseInsensitive && typeof value === 'string' ? value.toLowerCase() : value;
 
         for (var i = 0; i < column.options.length; i++) {
@@ -513,7 +515,7 @@ window.Editors = {
       }
 
       this.input.dropdown(editorOptions);
-      this.input = this.input.parent().find('div.dropdown');
+
     };
 
     this.val = function (value) {
@@ -565,15 +567,10 @@ window.Editors = {
 
       //Check if isClick or cell touch and just open the list
       this.select.trigger('openlist');
-      this.input.focus();
+      this.input.parent().find('div.dropdown').focus();
 
-      this.select.on('listclosed', function () {
-        if (grid.activeCell.cell === self.cell.cell && grid.activeCell.row === self.cell.row) {
-         self.input.trigger('focusout');
-         container.parent().trigger('focus');
-        } else {
-          grid.commitCellEdit(self.input);
-        }
+      this.input.on('listclosed', function () {
+        grid.commitCellEdit(self.input);
         grid.setNextActiveCell(event);
       });
 
@@ -1381,14 +1378,8 @@ $.fn.datagrid = function(options) {
       }
 
       //Attach Keyboard support
-      var popupOpts = {
-        offset: {
-          y: 15
-        }
-      };
-
       this.headerRow.addClass('is-filterable');
-      this.headerRow.find('.btn-filter').popupmenu(popupOpts).on('selected.datagrid', function () {
+      this.headerRow.find('.btn-filter').popupmenu({}).on('selected.datagrid', function () {
         self.applyFilter();
       });
 
@@ -2436,8 +2427,8 @@ $.fn.datagrid = function(options) {
             // White Hat Security Violation. Remove Excel formulas
             // Excel Formulas Start with =SOMETHING
             var text = elm.text();
-            if (text.substr(0, 1) === '=' && text.substr(1, 1) !== '' && text.substr(1, 1) === text.substr(1, 1).toUpperCase()) {
-              elm.remove();
+            if (text.substr(0, 1) === '=' && text.substr(1, 1) !== '') {
+              elm.text('\'' + elm.text());
             }
           });
           return table;
@@ -2794,7 +2785,7 @@ $.fn.datagrid = function(options) {
         }
 
         if (col.menuId) {
-          btn.popupmenu({menuId: col.menuId, trigger: 'immediate', offset: { y: 5 }});
+          btn.popupmenu({menuId: col.menuId, trigger: 'immediate'});
 
           if (col.selected) {
             btn.on('selected.datagrid', col.selected);
@@ -2943,7 +2934,7 @@ $.fn.datagrid = function(options) {
       // Implement Editing Commit Functionality
       body.off('focusout.datagrid').on('focusout.datagrid', 'td input, td textarea, div.dropdown', function () {
         //Popups are open
-        if ($('#calendar-popup, .autocomplete.popupmenu.is-open').is(':visible') ||
+        if ($('#calendar-popup, #dropdown-list, .autocomplete.popupmenu.is-open').is(':visible') ||
           $('.lookup-modal.is-visible').length) {
           return;
         }
