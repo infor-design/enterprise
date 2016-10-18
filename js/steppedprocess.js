@@ -115,18 +115,16 @@
        * @param {object} stepLink - The stepLink element
        */
       changeSelectedStep: function(stepLink) {
-        if (this.$currentStep.attr('href') === $(stepLink).attr('href')) {
-          return false;
-        }
-
         if (typeof this.settings.beforeStepChange === 'function' &&
             this.settings.beforeStepChange() === false) {
           return false;
         }
 
-        this.clearSelectedSteps();
+        if (this.$currentStep.attr('href') !== $(stepLink).attr('href')) {
+          this.clearSelectedSteps();
+        }
+
         this.selectStep(stepLink);
-        this.updateHash();
 
         this.focusStep(this.$currentStep.closest('.accordion-header, .step-process-item', this.element), 'next');
 
