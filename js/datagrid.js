@@ -2417,7 +2417,7 @@ $.fn.datagrid = function(options) {
             var el = this,
               elm = $(this);
 
-            if(elm.is('.is-hidden')) {
+            if (elm.is('.is-hidden')) {
               elm.remove();
               return;
             }
@@ -2425,6 +2425,13 @@ $.fn.datagrid = function(options) {
             $('.is-hidden, .is-draggable-target, .handle, .sort-indicator, .datagrid-filter-wrapper', el).remove();
             while(el.attributes.length > 0) {
               el.removeAttribute(el.attributes[0].name);
+            }
+
+            // White Hat Security Violation. Remove Excel formulas
+            // Excel Formulas Start with =SOMETHING
+            var text = elm.text();
+            if (text.substr(0, 1) === '=' && text.substr(1, 1) !== '' && text.substr(1, 1) === text.substr(1, 1).toUpperCase()) {
+              elm.remove();
             }
           });
           return table;
@@ -3759,12 +3766,12 @@ $.fn.datagrid = function(options) {
         // For mode 'Selectable':
         // Press Space to toggle row selection, or click to activate using a mouse.
         if (key === 32 && (!self.settings.editable || isSelectionCheckbox)) {
-          e.preventDefault();
           row = node.closest('tr');
 
           if ($(e.target).closest('.datagrid-row-detail').length === 1) {
             return;
           }
+          e.preventDefault();
 
           // Toggle datagrid-expand with Space press
           var btn = $(e.target).find('.datagrid-expand-btn, .datagrid-drilldown');
