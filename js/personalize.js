@@ -161,8 +161,9 @@
         ' .module-tabs.is-personalizable { background-color: '+ Soho.colors.inactive +'}'  +
         ' .module-tabs.is-personalizable .tab.is-selected { background-color: '+ Soho.colors.header +'}'  +
         ' .builder-header.is-personalizable{ background-color: '+ Soho.colors.subheader +'}'  +
-        ' .subheader.is-personalizable { background-color: '+ Soho.colors.subheader +'}' +
         ' .header.is-personalizable { background-color: '+ Soho.colors.header +'}' +
+        ' .subheader.is-personalizable { background-color: '+ Soho.colors.subheader +'}' +
+        ' .builder .sidebar .header {border-right: 1px solid '+ Soho.colors.verticalBorder +'}' +
         ' .module-tabs.is-personalizable .tab:hover { background-color: '+ Soho.colors.hover +'}';
         this.stylesheet(cssRules);
 
