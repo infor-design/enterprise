@@ -97,47 +97,28 @@
   }
 
   // Original step process styles
-  .header {
-    .page-title {
 
-      .panel-title {
-        @include font-size(20);
-        line-height: 1.2;
-      }
+  .toolbar-custom {
+    background-color: $white;
+    border-bottom: solid 2px $graphite02;
+    height: 60px;
 
-      .panel-subhead {
-        @include font-size(14);
-        line-height: 1;
-      }
+    .title.title-wide {
+      width: 98%;
     }
 
-    &.header-custom {
-      background-color: $white;
-      border-bottom: solid 2px $graphite02;
+    .dual-title {
+      @include font-size(18);
+      color: $font-color-extrahighcontrast;
+      display: inline-block;
+      margin-top: 2px;
 
-      .toolbar {
-
-        .title,
-        [class ^= 'btn'],
-        .icon {
-          color: $graphite09;
-          fill: $graphite09 !important;
-        }
-
-        > .title {
-
-          h2 {
-            font-weight: 500;
-            display: inline-block;
-            margin: 0;
-          }
-
-          .panel-subhead {
-            color: $graphite05;
-            display: block;
-            font-style: italic;
-          }
-        }
+      > small {
+        @include font-size(14);
+        display: block;
+        margin: 2px 0 0 0;
+        padding: 0;
+        text-transform: capitalize;
       }
     }
   }
@@ -180,6 +161,10 @@
       .main {
         position: absolute;
         width: 100%;
+
+        .btn-toggle-steps {
+          display: inline-block;
+        }
       }
 
       .sidebar,
@@ -209,16 +194,12 @@
       z-index: 1;
     }
 
-    .btn-toggle-steps {
-      display: inline-block;
-    }
-
     .js-step-panels-scroll {
       height: 100%;
       padding-top: $header-height + 15px;
     }
 
-    .scrolled-down  .collapsible-bar {
+    .scrolled-down .collapsible-bar {
       margin-top: -60px;
     }
   }
@@ -287,6 +268,10 @@
       .sidebar {
         @include css3(transform, translateX(-100%));
       }
+    }
+
+    .btn-toggle-steps {
+      display: inline-block;
     }
 
     .js-step-links-scroll {

@@ -22,7 +22,9 @@
 
     <div class="sidebar" role="complementary">
 
-      <header class="status-bar collapsible-bar">Steps to complete</header>
+      <div class="toolbar toolbar-custom collapsible-bar phone-visible">
+        <div class="title title-wide">Steps to complete</div>
+      </div>
 
       <div class="accordion panel step-process-accordion js-step-links-scroll" data-init="false">
         <div class="accordion-header">
@@ -206,29 +208,27 @@
 
     <div class="main no-scroll" role="main">
 
-      <header class="header header-custom collapsible-bar">
-        <div class="toolbar">
-          <div class="title">
-            <button class="btn-icon btn-toggle-steps js-toggle-steps" type="button">
-              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                <use xlink:href="#icon-bullet-steps"></use>
-              </svg>
-            </button>
-            <h2>
-              <span class="panel-title">Preferences</span>
-              <span class="panel-subhead">Step X of XX</span>
-            </h2>
-          </div>
-          <div class="buttonset phone-hidden">
-            <button class="btn-tertiary js-step-link-prev" type="button">
-              <span>Previous</span>
-            </button>
-            <button class="btn-tertiary js-step-link-next" type="button">
-              <span>Next</span>
-            </button>
+      <div class="toolbar toolbar-custom collapsible-bar">
+        <div class="title">
+          <button class="btn-icon btn-toggle-steps js-toggle-steps" type="button">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-bullet-steps"></use>
+            </svg>
+          </button>
+          <div class="dual-title">
+            Preferences
+            <small>Page X of XX</small>
           </div>
         </div>
-      </header>
+        <div class="buttonset phone-hidden">
+          <button class="btn-tertiary js-step-link-prev" type="button">
+            <span>Previous</span>
+          </button>
+          <button class="btn-tertiary js-step-link-next" type="button">
+            <span>Next</span>
+          </button>
+        </div>
+      </div>
 
       <div class="scrollable step-panels js-step-panels-scroll">
         <div id="step1" class="js-step-process-panel">
