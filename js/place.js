@@ -529,16 +529,24 @@
 
         // Gets the distance between an edge on the target element, and its opposing viewport border
         function getDistance(dir) {
+          var d = 0;
+
           switch (dir) {
             case 'left':
-              return (containerBleed ? 0 : containerRect.left) - scrollX - parentRect.left + placementObj.containerOffsetX;
+              d = (containerBleed ? 0 : containerRect.left) - scrollX - parentRect.left + placementObj.containerOffsetX;
+              break;
             case 'right':
-              return ((containerBleed ? windowW : containerRect.right) - scrollX) - parentRect.right - placementObj.containerOffsetX;
+              d = ((containerBleed ? windowW : containerRect.right) - scrollX) - parentRect.right - placementObj.containerOffsetX;
+              break;
             case 'top':
-              return (containerBleed ? 0 : containerRect.top) - scrollY + placementObj.containerOffsetY;
+              d = (containerBleed ? 0 : containerRect.top) - scrollY + placementObj.containerOffsetY;
+              break;
             default: // bottom
-              return ((containerBleed ? windowH : containerRect.bottom) - scrollY) - parentRect.bottom - placementObj.containerOffsetY;
+              d = ((containerBleed ? windowH : containerRect.bottom) - scrollY) - parentRect.bottom - placementObj.containerOffsetY;
+              break;
           }
+
+          return Math.abs(d);
         }
 
         function tried(placement) {
@@ -572,7 +580,10 @@
             if (perpendicularDistance >= oppPerpendicularDistance) {
               return perpendicularDir;
             }
-            return oppPerpendicularDir;
+
+            if (!tried(oppPerpendicularDir)) {
+              return oppPerpendicularDir;
+            }
           }
 
           return originalDir;

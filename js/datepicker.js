@@ -392,11 +392,6 @@
             this.footer
           );
 
-        var leftOffset = Locale.isRTL() ? -163 : 160;
-        if (this.element.closest('.datagrid-filter-wrapper').length) {
-          leftOffset = Locale.isRTL() ? -179 : 176;
-        }
-
         var popoverOpts = {
           content: this.calendar,
           placementOpts: {
@@ -436,6 +431,7 @@
         this.currentDay = this.currentDate.getDate();
 
         // Set timepicker
+        // TODO: Break this out so we don't have issues with Timepicker placement.
         if (this.settings.showTime) {
 
           // Wait for timepicker
@@ -507,80 +503,6 @@
             }, 1);
           }, 1);
         }
-
-
-        // Fix: for small view port, where not enough space to show calendar
-        // bring the calendar in center (i.e. inside modal)
-        setTimeout(function() {
-          // self.getClosestParent({elem}, {position: 'fixed'|'relative'|'absolute'})
-          var fixedParent = self.getClosestParent(self.element.closest('.field'), 'fixed'),
-            absoluteParent = self.getClosestParent(self.element.closest('.field'), 'absolute'),
-            triggerRect = self.trigger[0].getBoundingClientRect(),
-            offset = self.getAbsoluteOffset(self.popup[0], $('body')[0]),
-            popupCss = {
-              'top': parseInt(self.popup.css('top'), 10),
-              'left': parseInt(self.popup.css('left'), 10)
-            },
-            arrow = self.popup.find('.arrow'),
-            arrowRect = arrow[0].getBoundingClientRect(),
-            extra = 50 + arrowRect.height,
-            pagescroll = $('.page-container.scrollable').scrollTop(),
-            top, left, method;
-
-          if ((absoluteParent[0] && !absoluteParent.is('.page-container')) ||
-            fixedParent[0] || popupCss.top < 0 || popupCss.left < 0) {
-
-            arrow.show(); //default
-            if (popupCss.top < 0 || popupCss.left < 0) {
-              if (popupCss.top < 0) {
-                top = 5;
-                self.popup.css({'top': top +'px'});
-              }
-              if (popupCss.left < 0) {
-                left = triggerRect.left - self.popup.outerWidth() - 20;
-                self.popup.css({'left': left +'px'});
-              }
-            }
-            else {
-              if (offset.top < 0 ||
-                  (offset.top + self.popup.outerHeight() > window.innerHeight)) {
-                top = offset.top - self.popup.outerHeight() + pagescroll - (extra*2);
-                if ((popupCss.top < 0 || offset.top > 0) && top > 0) {
-                  method = 'show';
-                } else {
-                  top = (window.innerHeight - self.popup.outerHeight())/2;
-                  method = 'hide';
-                }
-                if (absoluteParent[0] && self.popup.is('.bottom')) {
-                  self.popup.removeClass('bottom').addClass('top');
-                }
-                self.popup.css({'top': top +'px'});
-                arrow[method]();
-              }
-              if (offset.left < 0 ||
-                  (offset.left + self.popup.outerWidth() > window.innerWidth)) {
-                if (popupCss.left < 0 || (offset.left > 0 && (offset.left - self.popup.outerWidth()) > extra)) {
-                  left = offset.left + self.popup.outerWidth() + extra;
-                  method = 'show';
-                } else {
-                  left = (window.innerWidth - self.popup.outerWidth())/2;
-                  method = 'hide';
-                }
-                if (absoluteParent[0] && self.popup.is('.left, .right')) {
-                  if (self.popup.is('.left')) {
-                    self.popup.removeClass('left').addClass('right');
-                  } else {
-                    self.popup.removeClass('right').addClass('left');
-                  }
-                }
-                self.popup.css({'left': left +'px'});
-                arrow[method]();
-              }
-            }
-          }
-
-        }, 1);
-
 
         this.todayDate = new Date();
         this.todayMonth = this.todayDate.getMonth();
