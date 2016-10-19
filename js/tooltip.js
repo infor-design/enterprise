@@ -24,7 +24,7 @@
     var pluginName = 'tooltip',
       defaults = {
         content: null, //Takes title attribute or feed content. Can be a function or jQuery markup
-        offset: {top: 10, left: 0}, //how much room to leave
+        offset: {top: 10, left: 10}, //how much room to leave
         placement: 'top',  //can be top/left/bottom/right/offset
         trigger: 'hover', //supports click and immediate and hover (and maybe in future focus)
         title: null, //Title for Infor Tips
@@ -34,6 +34,7 @@
         isError: false, //Add error classes
         isErrorColor: false, //Add error color only not description
         tooltipElement: null, // ID selector for an alternate element to use to contain the tooltip classes
+        parentElement: null, // jQuery-wrapped element that gets passed to the 'place' behavior as the element to place the tooltip against.  Defaults to "this.element" in tooltip, if not set.
         keepOpen: false, // Forces the tooltip to stay open in situations where it would normally close.
         extraClass: null, // Extra css class
         maxWidth: null // Toolip max width
@@ -61,7 +62,7 @@
 
       setup: function() {
         // this.activeElement is the element that the tooltip displays and positions against
-        this.activeElement = this.element;
+        this.activeElement = this.settings.parentElement instanceof $ && this.settings.parentElement.length ? this.settings.parentElement : this.element;
 
         this.descriptionId = $('.tooltip-description').length + 1;
         this.description = this.element.parent().find('.tooltip-description');
@@ -111,7 +112,7 @@
 
         this.tooltip.place({
           container: this.scrollparent,
-          parent: this.element,
+          parent: this.activeElement,
           placement: this.settings.placement,
           strategy: 'flip'
         });
@@ -363,7 +364,7 @@
       // Placement behavior's "afterplace" handler.
       // DO NOT USE FOR ADDITONAL POSITIONING.
       handleAfterPlace: function(e, placementObj) {
-        this.tooltip.data('place').setArrowPosition(e, placementObj);
+        this.tooltip.data('place').setArrowPosition(e, placementObj, this.tooltip);
         this.tooltip.triggerHandler('tooltipafterplace', [placementObj]);
       },
 
@@ -378,10 +379,10 @@
             x: 0,
             y: distance,
             container: this.scrollparent,
-            containerOffsetX: 10,
-            containerOffsetY: 10,
-            parent: this.element,
-            placement: this.settings.placement,
+            containerOffsetX: tooltipPlacementOpts.containerOffsetX || this.settings.offset.left,
+            containerOffsetY: tooltipPlacementOpts.containerOffsetY || this.settings.offset.top,
+            parent: tooltipPlacementOpts.parent || this.activeElement,
+            placement: tooltipPlacementOpts.placement || this.settings.placement,
             strategies: ['flip', 'nudge']
           });
 

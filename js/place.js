@@ -36,7 +36,7 @@
           placement: 'bottom', // If defined, changes the direction in which placement of the element happens
           strategies: ['nudge'] // Determines the "strategy" for alternatively placing the element if it doesn't fit in the defined boundaries.  Only matters when "parent" is a defined setting.  It's possible to define multiple strategies and execute them in order.
         },
-        strategies = ['nudge', 'clockwise', 'flip'],
+        strategies = ['nudge', 'clockwise', 'flip', 'shrink'],
         placements = ['top', 'left', 'right', 'bottom', 'center'],
         xAlignments = ['left', 'center', 'right'],
         yAlignments = ['top', 'center', 'bottom'],
@@ -173,6 +173,13 @@
           'left': placementObj.x,
           'top': placementObj.y
         });
+
+        if (placementObj.height) {
+          this.element.height(placementObj.height);
+        }
+        if (placementObj.width) {
+          this.element.width(placementObj.width);
+        }
       },
 
       // Main placement API Method (external)
@@ -304,13 +311,15 @@
                 case 'nudge':
                   return self.nudge(placementObj);
                 case 'clockwise':
-                  return placementObj;
+                  return self.clockwise(placementObj);
                 case 'flip':
                   self.flip(placementObj);
                   placementObj.setCoordinate('x', placementObj.originalx);
                   placementObj.setCoordinate('y', placementObj.originaly);
                   placementObj = doPlacementAgainstParent(placementObj);
                   return placementObj;
+                case 'shrink':
+                  return self.shrink(placementObj);
                 default:
                   return placementObj;
               }
@@ -343,6 +352,13 @@
         }
 
         // Place again
+        this.render(placementObj);
+
+        placementObj = this.checkBleeds(placementObj);
+        if (placementObj.bleeds) {
+          placementObj = this.shrink(placementObj);
+        }
+
         this.render(placementObj);
 
         this.element.trigger('afterplace', [
@@ -383,29 +399,33 @@
         function getBoundary(edge) {
           switch(edge) {
             case 'top':
-              return (containerBleed ? 0 : containerRect.top) - scrollY; // 0 === top edge of viewport
+              return (containerBleed ? 0 : containerRect.top) - scrollY + placementObj.containerOffsetY; // 0 === top edge of viewport
             case 'left':
-              return (containerBleed ? 0 : containerRect.left) - scrollX; // 0 === left edge of viewport
+              return (containerBleed ? 0 : containerRect.left) - scrollX + placementObj.containerOffsetX; // 0 === left edge of viewport
             case 'right':
-              return (containerBleed ? windowW : containerRect.right) - scrollX;
+              return (containerBleed ? windowW : containerRect.right) - scrollX - placementObj.containerOffsetX;
             default: // bottom
-              return (containerBleed ? windowH : containerRect.bottom) - scrollY;
+              return (containerBleed ? windowH : containerRect.bottom) - scrollY - placementObj.containerOffsetY;
           }
         }
 
         // If element width is greater than window width, shrink to fit
-        if (rect.width >= windowW) {
-          d = rect.width - (windowW - scrollX);
+        var rightViewportEdge = getBoundary('right');
+        if (rect.width >= rightViewportEdge) {
+          d = rect.width - rightViewportEdge;
           var newWidth = rect.width - d;
+          placementObj.width = newWidth;
 
           this.element.css('width', newWidth);
           rect = this.element[0].getBoundingClientRect(); // reset the rect because the size changed
         }
 
         // If element height is greater than window height, shrink to fit
-        if (rect.height >= windowH) {
-          d = rect.height - (windowH - scrollY);
+        var bottomViewportEdge = getBoundary('bottom');
+        if (rect.height >= bottomViewportEdge) {
+          d = rect.height - bottomViewportEdge;
           var newHeight = rect.height - d;
+          placementObj.height = newHeight;
 
           this.element.css('height', newHeight);
           rect = this.element[0].getBoundingClientRect(); // reset the rect because the size changed
@@ -484,12 +504,66 @@
           return placementObj;
         }
 
+        var isXCoord = ['left', 'right'].indexOf(placementObj.placement) > -1,
+          containerBleed = this.settings.bleedFromContainer,
+          container = $(placementObj.container ? placementObj.container : (document.documentElement || document.body.parentNode)),
+          containerRect = container ? container[0].getBoundingClientRect() : {},
+          parentRect = placementObj.parent[0].getBoundingClientRect(),
+          scrollX = (typeof container.scrollLeft === 'number' ? container : document.body).scrollLeft,
+          scrollY = (typeof container.scrollTop === 'number' ? container : document.body).scrollTop,
+          windowH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
+          windowW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+
+        function getOppositeDir(dir) {
+          switch(dir) {
+            case 'left':
+              return 'right';
+            case 'right':
+              return 'left';
+            case 'top':
+              return 'bottom';
+            default: // bottom
+              return 'top';
+          }
+        }
+
+        // Gets the distance between an edge on the target element, and its opposing viewport border
+        function getDistance(dir) {
+          var d = 0;
+
+          switch (dir) {
+            case 'left':
+              d = (containerBleed ? 0 : containerRect.left) - scrollX - parentRect.left + placementObj.containerOffsetX;
+              break;
+            case 'right':
+              d = ((containerBleed ? windowW : containerRect.right) - scrollX) - parentRect.right - placementObj.containerOffsetX;
+              break;
+            case 'top':
+              d = (containerBleed ? 0 : containerRect.top) - scrollY + placementObj.containerOffsetY;
+              break;
+            default: // bottom
+              d = ((containerBleed ? windowH : containerRect.bottom) - scrollY) - parentRect.bottom - placementObj.containerOffsetY;
+              break;
+          }
+
+          return Math.abs(d);
+        }
+
         function tried(placement) {
           return $.inArray(placement, placementObj.attemptedFlips) > -1;
         }
 
-        function performFlip(newDir, perpendicularDir) {
+        function performFlip(originalDir) {
+          var newDir = getOppositeDir(originalDir),
+            perpendicularDir = isXCoord ? 'top' : 'left',
+            oppPerpendicularDir = getOppositeDir(perpendicularDir),
+            originalDistance = getDistance(originalDir),
+            targetDistance = getDistance(newDir);
+
           if (!tried(newDir)) {
+            if (originalDistance >= targetDistance) {
+              return originalDir;
+            }
             return newDir;
           }
 
@@ -499,27 +573,56 @@
           placementObj.originalx = placementObj.originaly;
           placementObj.originaly = tmp;
 
-          return perpendicularDir;
+          var perpendicularDistance = getDistance(perpendicularDir),
+            oppPerpendicularDistance = getDistance(oppPerpendicularDir);
+
+          if (!tried(perpendicularDir)) {
+            if (perpendicularDistance >= oppPerpendicularDistance) {
+              return perpendicularDir;
+            }
+
+            if (!tried(oppPerpendicularDir)) {
+              return oppPerpendicularDir;
+            }
+          }
+
+          return originalDir;
         }
 
-        placementObj.placement = (function() {
-          switch(placementObj.placement) {
-            case 'left':
-              return performFlip('right', 'top');
-            case 'right':
-              return performFlip('left', 'top');
-            case 'top':
-              return performFlip('bottom', 'left');
-            default: // bottom
-              return performFlip('top', 'left');
-          }
-        })();
+        placementObj.placement = performFlip(placementObj.placement);
 
         return placementObj;
       },
 
       // TODO: Move Clockwise
       clockwise: function(placementObj) {
+        return placementObj;
+      },
+
+      shrink: function(placementObj) {
+        var containerBleed = this.settings.bleedFromContainer,
+          container = $(placementObj.container ? placementObj.container : (document.documentElement || document.body.parentNode)),
+          containerRect = container ? container[0].getBoundingClientRect() : {},rect = this.element[0].getBoundingClientRect(),
+          scrollX = (typeof container.scrollLeft === 'number' ? container : document.body).scrollLeft,
+          scrollY = (typeof container.scrollTop === 'number' ? container : document.body).scrollTop,
+          windowH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
+          windowW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
+          rightViewportEdge = (containerBleed ? windowW : containerRect.right) - scrollX - placementObj.containerOffsetX,
+          bottomViewportEdge = (containerBleed ? windowH : containerRect.bottom) - scrollY - placementObj.containerOffsetY,
+          d;
+
+        // If element width is greater than window width, shrink to fit
+        if (rect.right >= rightViewportEdge) {
+          d = rect.right - rightViewportEdge;
+          placementObj.width = rect.width - d;
+        }
+
+        // If element height is greater than window height, shrink to fit
+        if (rect.bottom >= bottomViewportEdge) {
+          d = rect.bottom - bottomViewportEdge;
+          placementObj.height = rect.height - d;
+        }
+
         return placementObj;
       },
 
@@ -556,52 +659,97 @@
 
       // Built-in method for handling positon of optional arrow elements.
       // Used for tooltip/popovers/popupmenus
-      setArrowPosition: function(e, placementObj) {
-        var arrow = this.element.find('.arrow');
-        if (!arrow.length) {
+      setArrowPosition: function(e, placementObj, element) {
+        var target = placementObj.parent,
+          arrow = element.find('.arrow'),
+          dir = placementObj.placement,
+          isXCoord = ['left', 'right'].indexOf(dir) > -1,
+          targetRect = {},
+          elementRect = element[0].getBoundingClientRect(),
+          arrowRect = {},
+          newArrowRect = {},
+          hideArrow = false;
+
+        if (!target || !target.length || !arrow.length) {
           return;
         }
 
-        // Hide the arrow if bleeding occured and needed to be fixed.
-        if (placementObj.wasNudged) {
-          arrow.css('display', 'none');
-        }
-
-        // Adjust the arrow's direction if a different strategy was attempted.
-        var dir = placementObj.placement,
-          cssOptions = { display: 'block' },
-          isXCoord = ['left', 'right'].indexOf(dir) > -1,
-          dimension = 'outer' + (!isXCoord ? 'Width' : 'Height'),
-          edge = (!isXCoord ? 'margin-left' : 'margin-top'),
-          nudgeDistance = 0;
-
         if (placementObj.attemptedFlips) {
-          this.element.removeClass('top right bottom left').addClass(dir);
+          element.removeClass('top right bottom left').addClass(dir);
         }
 
         // Flip the arrow if we're in RTL mode
         if (this.isRTL && isXCoord) {
           var opposite = dir === 'right' ? 'left' : 'right';
-          this.element.removeClass('right left').addClass(opposite);
+          element.removeClass('right left').addClass(opposite);
         }
 
-        // Adjust the arrow's position if a nudge is detected.
-        // Arrow gets adjusted perpendicular to the placement type.
-        if (placementObj.nudges) {
-          nudgeDistance = placementObj.nudges[isXCoord ? 'y' : 'x'];
-          if (nudgeDistance) {
-            cssOptions[edge] = nudgeDistance * -1;
+        // Custom target for some scenarios
+        if (target.is('.colorpicker')) {
+          target = target.next('.trigger');
+        }
+        if (target.is('.datepicker, .timepicker')) {
+          target = target.next('.icon');
+        }
 
-            // Hide a tooltip arrow that sticks out too far.
-            // Might happen if the tooltip has to be nudged so far that the arrow placement
-            // no longer makes sense.
-            if (Math.abs(nudgeDistance) > this.element[dimension]()/2 ) {
-              cssOptions.display = 'none';
+        if (target.is('.btn-split-menu, .btn-menu, .btn-actions, .btn-filter, .tab')) {
+          target = target.find('.icon');
+        }
+        if (target.is('.searchfield-category-button')) {
+          target = target.find('.icon.icon-dropdown');
+        }
+
+        // reset if we borked the target
+        if (!target.length) {
+          target = placementObj.parent;
+        }
+
+        targetRect = target.length ? target[0].getBoundingClientRect() : targetRect;
+        arrowRect = arrow.length ? arrow[0].getBoundingClientRect() : arrowRect;
+        newArrowRect = {};
+
+        function getMargin(placement) {
+          return (placement === 'right' || placement === 'left') ? 'margin-top' : 'margin-left';
+        }
+
+        function getDistance() {
+          var targetCenter = 0,
+            currentArrowCenter = 0,
+            d = 0;
+
+          if (dir === 'left' || dir === 'right') {
+            targetCenter = targetRect.top + (targetRect.height/2);
+            currentArrowCenter = arrowRect.top + (arrowRect.height/2);
+            d = targetCenter - currentArrowCenter;
+            newArrowRect.top = arrowRect.top + d;
+            newArrowRect.bottom = arrowRect.bottom + d;
+
+            if (newArrowRect.top <= elementRect.top || newArrowRect.bottom >= elementRect.bottom) {
+              hideArrow = true;
             }
           }
+          if (dir === 'top' || dir === 'bottom') {
+            targetCenter = targetRect.left + (targetRect.width/2);
+            currentArrowCenter = arrowRect.left + (arrowRect.width/2);
+            d = targetCenter - currentArrowCenter;
+            newArrowRect.left = arrowRect.left + d;
+            newArrowRect.right = arrowRect.right + d;
+
+            if (newArrowRect.left <= elementRect.left || newArrowRect.right >= elementRect.right) {
+              hideArrow = true;
+            }
+          }
+
+          return d;
         }
 
-        arrow.css(cssOptions);
+        // line the arrow up with the target element's "dropdown icon", if applicable
+        var positionOpts = {};
+        positionOpts[getMargin(dir)] = getDistance();
+        if (hideArrow) {
+          positionOpts.display = 'none';
+        }
+        arrow.css(positionOpts);
       },
 
       //Handle Updating Settings
