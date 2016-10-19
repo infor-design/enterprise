@@ -214,13 +214,7 @@
           file = 'icons-extended.svg';
         }
 
-        var self = this,
-          loadingInterval = setInterval(function() {
-            if (!self.loading) {
-              clearInterval(loadingInterval);
-            }
-            svg.changeIcon(iconStr, file);
-          }, 10);
+        svg.changeIcon(iconStr, file);
       },
 
       //Expand all Parents
