@@ -1,8 +1,10 @@
 ## 4.2.2 - Minor Release
-Release Date: 2016-10-17
+Release Date: 2016-10-20
 
 ### Key New Features
 * Personalization
+* Improved Positioning logic
+* Improved Filtering and Tree grid
 
 ### Breaking Changes
 * 2016-10-18 - Split place logic into new file place.js. This is a dependency for controls that position like datepicker, tooltip, popup.

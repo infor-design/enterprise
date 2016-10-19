@@ -2707,7 +2707,8 @@ $.fn.datagrid = function(options) {
 
     //Returns a cell node
     cellNode: function (row, cell) {
-      var rowNode = this.tableBody.find('tr[role="row"]').eq(row);
+      var rowNode = this.visualRowNode(row);
+
       if (row instanceof jQuery) {
         rowNode = row;
       }
