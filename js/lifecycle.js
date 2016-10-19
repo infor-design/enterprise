@@ -18,7 +18,7 @@
 }(function($) {
   /* end-amd-strip-block */
 
-  var excluded = ['.expandable-area, .accordion'];
+  var excluded = ['.expandable-area', '.accordion'];
 
   // Used by several of these plugins to detect whether or not the "data" property in question
   // is a valid SoHo Xi Control.
@@ -40,6 +40,7 @@
   // Actually triggers the method on the control if it's possible
   function triggerAPIMethod(prop, method) {
     if (canCall(prop, method)) {
+      console.dir(prop.element);
       prop[method]();
       return true;
     }
@@ -63,14 +64,18 @@
   }
 
   // Kicks it all off
-  function siftFor(rootElem, method) {
+  function siftFor(rootElem, method, filteredOutElements) {
     if (!rootElem || !method) {
       return;
     }
 
     rootElem = $(rootElem);
-    var DOMelements = rootElem.find('*').add(rootElem).not(excluded.join(', ')),
-      siftedControls = findControlsOnElements(DOMelements, method);
+    var DOMelements = rootElem.find('*').add(rootElem);
+
+    if (filteredOutElements) {
+      DOMelements = DOMelements.not(filteredOutElements.join(', '));
+    }
+    var siftedControls = findControlsOnElements(DOMelements, method);
 
     rootElem.trigger('sift-' + method + '-complete', [siftedControls]);
     return rootElem;
@@ -85,7 +90,7 @@
   };
 
   $.fn.closeChildren = function() {
-    return siftFor($(this), 'close');
+    return siftFor($(this), 'close', excluded);
   };
 
   /* start-amd-strip-block */
