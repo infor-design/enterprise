@@ -23,7 +23,8 @@
     var pluginName = 'tree',
       defaults = {
         selectable: 'single', // ['single'|'multiple']
-        hideCheckboxes: false // [true|false] -apply only with [selectable: 'multiple']
+        hideCheckboxes: false, // [true|false] -apply only with [selectable: 'multiple']
+        menuId: null //Context Menu to add to nodes
       },
       settings = $.extend({}, defaults, options);
 
@@ -46,6 +47,7 @@
         this.syncDataset(this.element);
         this.initSelected();
         this.focusFirst();
+        this.attachMenu(this.settings.menuId);
       },
 
       //Init Tree from ul, li, a markup structure in DOM
@@ -1133,10 +1135,25 @@
         this.syncDataset(this.element);
       },
 
+      //Attach Context Menus
+      attachMenu: function (menuId) {
+        
+        if (!menuId) {
+          return;
+        }
+
+        this.element.off('contextmenu.tree').on('contextmenu.tree', 'a', function (e) {
+          e.preventDefault();
+          $(e.currentTarget).popupmenu({menuId: menuId, eventObj: e, trigger: 'immediate'});
+          return false;
+        });
+
+      },
+
       // Plugin Related Functions
       destroy: function() {
         this.element.removeData(pluginName);
-        this.element.off('updated.tree click.tree focus.tree keydown.tree keypress.tree').empty();
+        this.element.off('contextmenu.tree updated.tree click.tree focus.tree keydown.tree keypress.tree').empty();
       }
     };
 
