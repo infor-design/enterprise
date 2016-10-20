@@ -1,34 +1,34 @@
 // New Accordion Style
 //========================================================
 
-@mixin leftAlignCascadeStylesHeader($aPadding, $iconMargin, $width, $liPadding) {
+@mixin left-align-cascade-styles-header($a-padding, $icon-margin, $width, $li-padding) {
   > a {
-    padding-left: $aPadding;
+    padding-left: $a-padding;
   }
 
   > .icon,
   > [class^="btn"] {
-    margin-left: $iconMargin;
+    margin-left: $icon-margin;
 
     + a {
       padding-left: 0;
-      width: calc(100% - $width);
+      width: calc(100% - #{$width});
     }
   }
 
   &.list-item {
     &::before {
-      padding-left: $liPadding;
+      padding-left: $li-padding;
     }
 
     a {
       padding-left: 0;
-      width: calc(100% - $width);
+      width: calc(100% - #{$width});
     }
   }
 }
 
-@mixin leftAlignCascadeStylesPane($leftPadding, $iconLinkPadding, $iconContentPadding) {
+@mixin left-align-cascade-styles-pane($leftPadding, $iconLinkPadding, $iconContentPadding) {
   .accordion-content {
     padding-left: $leftPadding;
   }
@@ -117,11 +117,11 @@
     }
 
     .accordion-pane {
-      @include leftAlignCascadeStylesPane(54px, 54px, 54px);
+      @include left-align-cascade-styles-pane(54px, 54px, 54px);
 
       // Level 2
       .accordion-header {
-        @include leftAlignCascadeStylesHeader(36px, 30px, 56px, 37px);
+        @include left-align-cascade-styles-header(36px, 30px, 56px, 37px);
 
         &.no-icon {
           > a {
@@ -131,35 +131,35 @@
       }
 
       .accordion-pane {
-        @include leftAlignCascadeStylesPane(54px, 73px, 74px);
+        @include left-align-cascade-styles-pane(54px, 73px, 74px);
 
         // Level 3
         .accordion-header {
-          @include leftAlignCascadeStylesHeader(54px, 49px, 76px, 56px);
+          @include left-align-cascade-styles-header(54px, 49px, 76px, 56px);
         }
 
         .accordion-pane {
-          @include leftAlignCascadeStylesPane(74px, 92px, 93px);
+          @include left-align-cascade-styles-pane(74px, 92px, 93px);
 
           // Level 4
           .accordion-header {
-            @include leftAlignCascadeStylesHeader(74px, 68px, 95px, 75px);
+            @include left-align-cascade-styles-header(74px, 68px, 95px, 75px);
           }
 
           .accordion-pane {
-            @include leftAlignCascadeStylesPane(93px, 111px, 112px);
+            @include left-align-cascade-styles-pane(93px, 111px, 112px);
 
             // Level 5
             .accordion-header {
-              @include leftAlignCascadeStylesHeader(93px, 87px, 114px, 94px);
+              @include left-align-cascade-styles-header(93px, 87px, 114px, 94px);
             }
 
             .accordion-pane {
-              @include leftAlignCascadeStylesPane(112px, 131px, 132px);
+              @include left-align-cascade-styles-pane(112px, 131px, 132px);
 
               // Level 6
               .accordion-header {
-                @include leftAlignCascadeStylesHeader(112px, 106px, 134px, 113px);
+                @include left-align-cascade-styles-header(112px, 106px, 134px, 113px);
               }
 
               .accordion-pane {
@@ -684,7 +684,7 @@
     color: $accordion-text-color;
     overflow-x: visible;
   }
-  @include leftAlignCascadeStylesPane(20px, 40px, 40px);
+  @include left-align-cascade-styles-pane(20px, 40px, 40px);
 
   // These rules allow the accordion to expand
   // Level 2 Accordion Header
@@ -780,40 +780,40 @@
     padding: 0;
     border-bottom-color: transparent;
 
-    @include leftAlignCascadeStylesPane(59px, 59px, 40px);
+    @include left-align-cascade-styles-pane(59px, 59px, 40px);
 
     // Level 3 Accordion Header
     .accordion-header {
-      @include leftAlignCascadeStylesHeader(40px, 34px, 59px, 41px);
+      @include left-align-cascade-styles-header(40px, 34px, 59px, 41px);
     }
 
     // Level 3 Accordion Pane
     .accordion-pane {
-      @include leftAlignCascadeStylesPane(78px, 78px, 59px);
+      @include left-align-cascade-styles-pane(78px, 78px, 59px);
 
 
       // Level 4 Accordion Header
       .accordion-header {
-        @include leftAlignCascadeStylesHeader(59px, 53px, 78px, 60px);
+        @include left-align-cascade-styles-header(59px, 53px, 78px, 60px);
       }
 
       // Level 4 Accordion Pane
       .accordion-pane {
-        @include leftAlignCascadeStylesPane(97px, 97px, 78px);
+        @include left-align-cascade-styles-pane(97px, 97px, 78px);
 
 
         // Level 5 Accordion Header
         .accordion-header {
-          @include leftAlignCascadeStylesHeader(78px, 72px, 97px, 79px);
+          @include left-align-cascade-styles-header(78px, 72px, 97px, 79px);
         }
 
         // Level 5 Accordion Pane
         .accordion-pane {
-          @include leftAlignCascadeStylesPane(116px, 116px, 97px);
+          @include left-align-cascade-styles-pane(116px, 116px, 97px);
 
           // Level 6 Accordion Header
           .accordion-header {
-            @include leftAlignCascadeStylesHeader(97px, 92px, 117px, 99px);
+            @include left-align-cascade-styles-header(97px, 92px, 117px, 99px);
           }
 
           // Level 6 Accordion Pane
