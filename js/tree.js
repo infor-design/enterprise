@@ -282,8 +282,7 @@
           return;
         }
 
-        var top,
-          self = this,
+        var self = this,
           aTags = $('a', this.element);
 
         aTags.attr('tabindex', '-1');
@@ -295,8 +294,7 @@
         this.setNodeStatus(node);
 
         if (this.selectedIndicator.length) {
-          top = this.getAbsoluteOffset(node[0], this.container[0]).top;
-          this.selectedIndicator.css({top: top});
+          this.selectedIndicator.css('top', '');
         }
 
         if (focus) {
@@ -456,8 +454,8 @@
             }
 
             self.isAnimating = true;
+            self.setUnSelectedNode(node.parent().find('li.is-selected'), false);
             node.find('.is-selected').removeClass('is-selected');
-            // this.element.parent().find('.selected-item-indicator').css('top', '');
 
             next.one('animateclosedcomplete', function() {
               next.removeClass('is-open');
@@ -465,6 +463,9 @@
             }).animateClosed();
 
             node.attr('aria-expanded', node.attr('aria-expanded')!=='true');
+
+
+
           } else {
             var nodeData = node.data('jsonData');
 
@@ -1137,7 +1138,7 @@
 
       //Attach Context Menus
       attachMenu: function (menuId) {
-        
+
         if (!menuId) {
           return;
         }
