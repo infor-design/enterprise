@@ -40,7 +40,6 @@
   // Actually triggers the method on the control if it's possible
   function triggerAPIMethod(prop, method) {
     if (canCall(prop, method)) {
-      console.dir(prop.element);
       prop[method]();
       return true;
     }
