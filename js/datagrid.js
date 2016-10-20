@@ -1378,8 +1378,14 @@ $.fn.datagrid = function(options) {
       }
 
       //Attach Keyboard support
+      var popupOpts = {
+        offset: {
+          y: 15
+        }
+      };
+
       this.headerRow.addClass('is-filterable');
-      this.headerRow.find('.btn-filter').popupmenu({}).on('selected.datagrid', function () {
+      this.headerRow.find('.btn-filter').popupmenu(popupOpts).on('selected.datagrid', function () {
         self.applyFilter();
       });
 
@@ -2786,7 +2792,7 @@ $.fn.datagrid = function(options) {
         }
 
         if (col.menuId) {
-          btn.popupmenu({menuId: col.menuId, trigger: 'immediate'});
+          btn.popupmenu({menuId: col.menuId, trigger: 'immediate', offset: { y: 5 }});
 
           if (col.selected) {
             btn.on('selected.datagrid', col.selected);

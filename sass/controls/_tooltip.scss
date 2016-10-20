@@ -122,6 +122,7 @@
   border: 1px solid $popover-border-color;
   box-shadow: $popover-box-shadow;
   color: $popover-color;
+  //overflow: auto;
   pointer-events: auto;
   z-index: 3010;
 

@@ -582,6 +582,7 @@
 
         var opts = $.extend({}, this.settings.placementOpts);
         switch(this.settings.trigger) {
+          case 'immediate':
           case 'rightClick':
             opts.x = getCoordinates(e, 'x') - (isRTL ? menuDimensions.width : 0) + ((isRTL ? -1 : 1) * this.settings.offset.x);
             opts.y = getCoordinates(e, 'y') + this.settings.offset.y;
@@ -624,9 +625,7 @@
         });
 
         wrapper.place(opts);
-        this.placeAPI = this.placeAPI || wrapper.data('place');
-
-        this.placeAPI.place(opts);
+        wrapper.data('place').place(opts);
       },
 
       handleAfterPlace: function(e, placementObj) {
@@ -1004,7 +1003,11 @@
         });
 
         function unwrapPopup(menu) {
-          if (menu.parent().is('.popupmenu-wrapper')) {
+          var wrapper = menu.parent();
+          if (wrapper.is('.popupmenu-wrapper')) {
+            if (wrapper.data('place')) {
+              wrapper.data('place').destroy();
+            }
             menu.unwrap();
           }
         }
