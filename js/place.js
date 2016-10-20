@@ -399,13 +399,13 @@
         function getBoundary(edge) {
           switch(edge) {
             case 'top':
-              return (containerBleed ? 0 : containerRect.top) - scrollY + placementObj.containerOffsetY; // 0 === top edge of viewport
+              return (containerBleed ? 0 : containerRect.top) - scrollY; // 0 === top edge of viewport
             case 'left':
-              return (containerBleed ? 0 : containerRect.left) - scrollX + placementObj.containerOffsetX; // 0 === left edge of viewport
+              return (containerBleed ? 0 : containerRect.left) - scrollX; // 0 === left edge of viewport
             case 'right':
-              return (containerBleed ? windowW : containerRect.right) - scrollX - placementObj.containerOffsetX;
+              return (containerBleed ? windowW : containerRect.right) - scrollX;
             default: // bottom
-              return (containerBleed ? windowH : containerRect.bottom) - scrollY - placementObj.containerOffsetY;
+              return (containerBleed ? windowH : containerRect.bottom) - scrollY;
           }
         }
 
@@ -599,6 +599,7 @@
         return placementObj;
       },
 
+      // If element height/width is greater than window height/width, shrink to fit
       shrink: function(placementObj) {
         var containerBleed = this.settings.bleedFromContainer,
           container = $(placementObj.container ? placementObj.container : (document.documentElement || document.body.parentNode)),
@@ -607,19 +608,53 @@
           scrollY = (typeof container.scrollTop === 'number' ? container : document.body).scrollTop,
           windowH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
           windowW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
+          leftViewportEdge = (containerBleed ? 0 : containerRect.left) - scrollX + placementObj.containerOffsetX,
+          topViewportEdge = (containerBleed ? 0 : containerRect.top) - scrollY + placementObj.containerOffsetY,
           rightViewportEdge = (containerBleed ? windowW : containerRect.right) - scrollX - placementObj.containerOffsetX,
           bottomViewportEdge = (containerBleed ? windowH : containerRect.bottom) - scrollY - placementObj.containerOffsetY,
           d;
 
-        // If element width is greater than window width, shrink to fit
-        if (rect.right >= rightViewportEdge) {
-          d = rect.right - rightViewportEdge;
+        // Shrink in each direction.
+        // The value of the "containerOffsets" is "factored out" of each calculation, if for some reason the
+        // element is larger than the viewport/container space allowed.
+
+        // Left
+        if (rect.left < leftViewportEdge) {
+          d = Math.abs(leftViewportEdge - rect.left);
+          if (rect.right >= rightViewportEdge) {
+            d = d - placementObj.containerOffsetX;
+          }
+          placementObj.width = rect.width - d;
+          placementObj.setCoordinate('x', placementObj.x + d);
+          placementObj.nudges.x = placementObj.nudges.x + d;
+        }
+
+        // Right
+        if (rect.right > rightViewportEdge) {
+          d = Math.abs(rect.right - rightViewportEdge);
+          if (rect.left <= leftViewportEdge) {
+            d = d - placementObj.containerOffsetX;
+          }
           placementObj.width = rect.width - d;
         }
 
-        // If element height is greater than window height, shrink to fit
-        if (rect.bottom >= bottomViewportEdge) {
-          d = rect.bottom - bottomViewportEdge;
+        // Top
+        if (rect.top < topViewportEdge) {
+          d = Math.abs(topViewportEdge - rect.top);
+          if (rect.bottom >= bottomViewportEdge) {
+            d = d - placementObj.containerOffsetY;
+          }
+          placementObj.height = rect.height - d;
+          placementObj.setCoordinate('y', placementObj.y + d);
+          placementObj.nudges.y = placementObj.nudges.y + d;
+        }
+
+        // Bottom
+        if (rect.bottom > bottomViewportEdge) {
+          d = Math.abs(rect.bottom - bottomViewportEdge);
+          if (rect.top <= topViewportEdge) {
+            d = d - placementObj.containerOffsetY;
+          }
           placementObj.height = rect.height - d;
         }
 
