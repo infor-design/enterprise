@@ -7,6 +7,8 @@ Release Date: 2016-10-20
 * Improved Filtering and Tree grid
 
 ### Breaking Changes
+
+* 2016-10-18 - Tree renamed method setSelectedNode to selectNode for consistency
 * 2016-10-18 - Split place logic into new file place.js. This is a dependency for controls that position like datepicker, tooltip, popup.
 * 2016-10-18 - Split initialize logic into 3 files personalize.js for personalization, environment.js for setting up environmental changes like global browser css tags and initialize.js for initializing controls.
 * 2016-10-11 - Event personalizecolors now called change colors to match changetheme

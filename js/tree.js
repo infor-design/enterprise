@@ -87,7 +87,7 @@
       initSelected: function () {
         var self = this;
         this.element.find('li.is-selected').each(function() {
-          self.setSelectedNode($('a:first', this), true);
+          self.selectNode($('a:first', this), true);
         });
       },
 
@@ -272,12 +272,12 @@
         if (target.length && !target.is('.is-disabled')) {
           var nodes = target.parentsUntil(this.element, 'ul[role=group]');
           this.expandAll(nodes);
-          this.setSelectedNode(target, true);
+          this.selectNode(target, true);
         }
       },
 
-      //Set a node as the unselected one
-      setUnSelectedNode: function (node, focus) {
+      //Set a node as unselected
+      unSelectedNode: function (node, focus) {
         if (node.length === 0) {
           return;
         }
@@ -312,7 +312,7 @@
       },
 
       //Set a node as the selected one
-      setSelectedNode: function (node, focus) {
+      selectNode: function (node, focus) {
         if (node.length === 0) {
           return;
         }
@@ -454,7 +454,7 @@
             }
 
             self.isAnimating = true;
-            self.setUnSelectedNode(node.parent().find('li.is-selected'), false);
+            self.unSelectedNode(node.parent().find('li.is-selected'), false);
             node.find('.is-selected').removeClass('is-selected');
 
             next.one('animateclosedcomplete', function() {
@@ -542,14 +542,14 @@
                 self.toggleNode(target);
               }
               else if (parent.is('.is-selected, .is-partial')) {
-                self.setUnSelectedNode(target, true);
+                self.unSelectedNode(target, true);
               }
               else {
-                self.setSelectedNode(target, true);
+                self.selectNode(target, true);
               }
             }
             else {
-              self.setSelectedNode(target, true);
+              self.selectNode(target, true);
               self.toggleNode(target);
             }
             e.stopPropagation();
@@ -971,7 +971,7 @@
         this.decorateNode(a);
 
         if (nodeData.selected) {
-          this.setSelectedNode(a, nodeData.focus);
+          this.selectNode(a, nodeData.focus);
         }
 
         a.data('jsonData', nodeData);
@@ -1138,14 +1138,21 @@
 
       //Attach Context Menus
       attachMenu: function (menuId) {
+        var self = this;
 
         if (!menuId) {
           return;
         }
 
         this.element.off('contextmenu.tree').on('contextmenu.tree', 'a', function (e) {
+          var node = $(this);
           e.preventDefault();
-          $(e.currentTarget).popupmenu({menuId: menuId, eventObj: e, trigger: 'immediate'});
+
+          $(e.currentTarget).popupmenu({menuId: menuId, eventObj: e, trigger: 'immediate'}).off('selected').on('selected', function (e, args) {
+            self.element.triggerHandler('menuselect', {node: node, item: args});
+          });
+
+          self.element.triggerHandler('menuopen', {menu: $('#' +menuId), node: node});
           return false;
         });
 
