@@ -81,4 +81,5 @@
 | S&OP | Vaadin and GWT | Duncan Simpson | 4x |
 | VR POC | (POS system) works on Windows Forms using the ProvideX language. Win Forms dynamically transformed to a Web Forms (DHTML), | Arnaud Pochon  | 3x to 4x |
 | WFM | complex tables and field sets. desktop with basic mobile only| Edgar Ogando | 4x|
+| Web UI for M3 foundation | Angular 2.0 | Mikael Stalhammar | 4x|
 | Xtreme Support | ASP| Julia Walker | 4x |

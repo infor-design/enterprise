@@ -18,6 +18,13 @@
   </div>
 </div>
 
+<ul id="tree-popupmenu" class="popupmenu">
+  <li><a href="#">Expand/Collapse</a></li>
+  <li><a href="#">Open</a></li>
+  <li><a href="#">Select</a></li>
+</ul>
+
+
 <script>
   var sampleData;
 
@@ -43,7 +50,7 @@
   /* jshint ignore:end */
 
   //Can refer to the data set here
-  $('#json-tree').tree({dataset: sampleDataNoID, source: function (req, response) {
+  $('#json-tree').tree({menuId: 'tree-popupmenu', dataset: sampleDataNoID, source: function (req, response) {
     setTimeout(function () {
 
       var nodes = [{

@@ -1550,7 +1550,7 @@ $.fn.datagrid = function(options) {
                 isMatch = false;
 
                 for (var k = 0; k < conditions[i].value.length; k++) {
-                  var match = conditions[i].value[k].indexOf(rowValue) >= 0 && rowValue.toString() !== '';
+                  var match = conditions[i].value[k].toLowerCase().indexOf(rowValue) >= 0 && rowValue.toString() !== '';
                   if (match) {
                     isMatch = true;
                   }

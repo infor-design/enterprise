@@ -14,16 +14,16 @@
         data = [];
 
       // Some Sample Data
-      data.push({ id: 1, callId: 1, priority: 1, location: '99 Elm Street Bay Shore, NY 11706', nature:  'Civil Disturbance', time: '12:12:21', units: 'R15 R21 E1 R15 R21 E1 R15'});
-      data.push({ id: 2, callId: 1, priority: 1, location: '99 Elm Street Bay Shore, NY 11706', nature:  'Civil Disturbance', time: '12:12:21'});
-      data.push({ id: 3, callId: 2, priority: 1, location: '366 Andover Drive Farmington, MI 48331', nature:  'Man with Gun', time: '12:10:10'});
-      data.push({ id: 4, callId: 2, priority: 1, location: '366 Andover Drive Farmington, MI 48331', nature:  'Man with Gun', time: '12:10:10'});
-      data.push({ id: 5, callId: 2, priority: 1, location: '366 Andover Drive Farmington, MI 48331', nature:  'Man with Gun', time: '12:10:10'});
-      data.push({ id: 5, callId: 3, priority: '11F', location: '20 Mulberry Drive Calhoun, GA 30701', nature:  'Structure Fire', time: '12:07:13'});
-      data.push({ id: 6, callId: 3, priority: '11F', location: '20 Mulberry Drive Calhoun, GA 30701', nature:  'Structure Fire', time: '12:07:13' });
+      data.push({ id: 1, incidentId: 1, priority: 1, location: '99 Elm Street Bay Shore, NY 11706', nature:  'Civil Disturbance', time: '12:12:21', units: 'R15 R21 E1 R15 R21 E1 R15'});
+      data.push({ id: 2, incidentId: 1, priority: 1, location: '99 Elm Street Bay Shore, NY 11706', nature:  'Civil Disturbance', time: '12:12:21'});
+      data.push({ id: 3, incidentId: 2, priority: 1, location: '366 Andover Drive Farmington, MI 48331', nature:  'Man with Gun', time: '12:10:10'});
+      data.push({ id: 4, incidentId: 2, priority: 1, location: '366 Andover Drive Farmington, MI 48331', nature:  'Man with Gun', time: '12:10:10'});
+      data.push({ id: 5, incidentId: 2, priority: 1, location: '366 Andover Drive Farmington, MI 48331', nature:  'Man with Gun', time: '12:10:10'});
+      data.push({ id: 5, incidentId: 3, priority: '11F', location: '20 Mulberry Drive Calhoun, GA 30701', nature:  'Structure Fire', time: '12:07:13'});
+      data.push({ id: 6, incidentId: 3, priority: '11F', location: '20 Mulberry Drive Calhoun, GA 30701', nature:  'Structure Fire', time: '12:07:13' });
 
       //Define Columns for the Grid.
-      columns.push({ id: 'callId', name: 'Call Id', field: 'callId', rowspan: true});
+      columns.push({ id: 'incidentId', name: 'Incident Id', field: 'incidentId', rowspan: true});
       columns.push({ id: 'priority', name: 'Priority', field: 'priority'});
       columns.push({ id: 'location', name: 'Location', field: 'location', formatter: Formatters.Hyperlink});
       columns.push({ id: 'nature', name: 'Nature', field: 'nature'});
