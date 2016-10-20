@@ -219,6 +219,16 @@
         var self = this,
             key = e.which;
 
+        if (key === 32) { // Spacebar
+          e.preventDefault();
+
+          if (self.$focusedStep.hasClass('accordion-header')) {
+            this.stepAccordion.toggle(self.$focusedStep);
+          } else {
+            self.changeSelectedStep(self.$focusedStep.find(self.settings.stepLinks));
+          }
+        }
+
         // Left Arrow/Up Arrow
         if (key === 37 || key === 38) {
           e.preventDefault();
