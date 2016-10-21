@@ -1079,7 +1079,7 @@ window.Chart = function(container) {
               .attr('dy', '.35em')
               .style('text-anchor', 'middle')
               .attr('class', 'chart-donut-text')
-              .html(centerLabel);
+              .text(centerLabel);
           }
         }
       };
