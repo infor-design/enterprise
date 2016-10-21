@@ -1389,16 +1389,24 @@ $.fn.datagrid = function(options) {
         self.applyFilter();
       });
 
+      var lastValue = '';
+
       this.headerRow.on('keydown.datagrid', '.datagrid-filter-wrapper input', function (e) {
+        var input = $(this);
         e.stopPropagation();
 
-        if (e.which === 13) {
+        if (e.which === 13 && lastValue !== input.val()) {
           e.preventDefault();
-          self.applyFilter();
+          $(this).trigger('change');
+          lastValue = input.val();
         }
 
       }).on('change.datagrid', '.datagrid-filter-wrapper input', function () {
-        self.applyFilter();
+        var input = $(this);
+        if (lastValue !== input.val()) {
+          self.applyFilter();
+          lastValue = input.val();
+        }
       });
 
       this.headerRow.find('.dropdown, .multiselect').on('selected.datagrid', function () {
