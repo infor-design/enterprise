@@ -969,6 +969,10 @@
       },
 
       isActive: function(href) {
+        if (!href || !href.length || (href.length === 1 && href.indexOf('#') < 1)) {
+          return false;
+        }
+
         var panel = this.getPanel(href);
         return panel.css('display') !== 'none';
       },
