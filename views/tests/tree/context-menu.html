@@ -19,9 +19,9 @@
 </div>
 
 <ul id="tree-popupmenu" class="popupmenu">
-  <li><a href="#">Expand/Collapse</a></li>
-  <li><a href="#">Open</a></li>
-  <li><a href="#">Select</a></li>
+  <li><a href="#" data-cmd="expand">Expand/Collapse</a></li>
+  <li><a href="#" data-cmd="select">Select</a></li>
+  <li><a href="#" data-cmd="explorer">Explore</a></li>
 </ul>
 
 
@@ -65,9 +65,34 @@
       response(nodes);
     }, 2000);
 
-  }}).on('selected', function (e, args) {
-    console.log(args);
-  });
+  }}).on('menuopen', function (e, args) {
+    //The Menu Open Fires when the menu options - use it to update the menu as needed
+    var expandItem = args.menu.find('li').eq(0).find('a');
 
+    //Depending if its a folder or not disable the expand/collapse
+    if (args.node.parent().hasClass('folder')) {
+      expandItem.removeAttr('disabled');
+    } else {
+      expandItem.attr('disabled', 'disabled');
+    }
+  }).on('menuselect', function (e, args) {
+    var treeApi = $(this).data('tree'),
+      cmd = args.item.attr('data-cmd');
+
+    switch (cmd) {
+      case 'expand':
+        treeApi.toggleNode(args.node);
+        break;
+      case 'select':
+        treeApi.selectNode(args.node, true);
+        break;
+      case 'explorer':
+        alert('Open Explorer View');
+        break;
+      default:
+        break;
+    }
+
+  });
 
 </script>
