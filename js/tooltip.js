@@ -174,6 +174,16 @@
           self.setContent(self.content);
         });
 
+        // Media Query Listener to detect a menu closing on mobile devices that change orientation.
+        this.matchMedia = window.matchMedia('(orientation: landscape)');
+        this.mediaQueryListener = function() {
+          // Match every time.
+          if (self.tooltip.hasClass('is-hidden')) {
+            return;
+          }
+          self.close();
+        };
+        this.matchMedia.addListener(this.mediaQueryListener);
       },
 
       setContent: function(content) {
@@ -442,6 +452,10 @@
         }
         this.element.removeData(pluginName);
         this.element.off('mouseenter.tooltip mouseleave.tooltip mousedown.tooltip click.tooltip focus.tooltip blur.tooltip');
+
+        if (this.matchMedia) {
+          this.matchMedia.removeListener(this.mediaQueryListener);
+        }
 
         return this;
       },

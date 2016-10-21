@@ -316,6 +316,17 @@
             e.stopPropagation();
             self.updated();
           });
+
+          // Media Query Listener to detect a menu closing on mobile devices that change orientation.
+          this.matchMedia = window.matchMedia('(orientation: landscape)');
+          this.mediaQueryListener = function() {
+            // Match every time.
+            if (!self.menu.hasClass('is-open')) {
+              return;
+            }
+            self.close();
+          };
+          this.matchMedia.addListener(this.mediaQueryListener);
       },
 
       handleKeys: function () {
@@ -935,7 +946,7 @@
 
       detach: function () {
         $(document).off('click.popupmenu touchend.popupmenu keydown.popupmenu');
-        $(window).off('scroll.popupmenu resize.popupmenu');
+        $(window).off('scroll.popupmenu resize.popupmenu orientationchange.popupmenu');
         $('.scrollable').off('scroll.popupmenu');
 
         this.menu.off('click.popupmenu touchend.popupmenu touchcancel.popupmenu');
@@ -1019,6 +1030,10 @@
 
         $.removeData(this.menu[0], 'trigger');
         wrapper.remove();
+
+        if (this.matchMedia) {
+          this.matchMedia.removeListener(this.mediaQueryListener);
+        }
 
         this.detach();
         this.element
