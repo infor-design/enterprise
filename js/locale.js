@@ -610,7 +610,7 @@
     //Take a Formatted Number and return a real number
     parseNumber: function(input) {
       var numSettings = this.currentLocale.data.numbers,
-        numString, group;
+        numString, group, decimal, percentSign, currencySign;
 
       numString = input;
 
@@ -619,11 +619,14 @@
       }
 
       group = numSettings ? numSettings.group  : ',';
+      decimal = numSettings ? numSettings.group  : '.';
+      percentSign = numSettings ? numSettings.percentSign  : '%';
+      currencySign = currencySign ? this.currentLocale.data.currencySign  : '$';
 
       numString = numString.replace(new RegExp('\\' + group, 'g'), '');
-      numString = numString.replace(numSettings.decimal, '.');
-      numString = numString.replace(numSettings.percentSign, '');
-      numString = numString.replace(this.currentLocale.data.currencySign, '');
+      numString = numString.replace(decimal, '.');
+      numString = numString.replace(percentSign, '');
+      numString = numString.replace(currencySign, '');
       numString = numString.replace(' ', '');
 
       return parseFloat(numString);
