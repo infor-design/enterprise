@@ -653,7 +653,7 @@ window.Editors = {
 
     this.val = function (value) {
       var fieldValue = this.input.val();
-      if (fieldValue) {
+      if (fieldValue && fieldValue.indexOf('|') > -1) {
         fieldValue = fieldValue.substr(0, fieldValue.indexOf('|'));
       }
       return value ? this.input.val(value) : fieldValue;
