@@ -1,0 +1,84 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    var columns = [];
+    var someData = [
+      {
+        id: 215,
+        escalated: 0,
+        taskName: 'Follow up action with Residental Housing',
+        desc: 'Contact sales representative with the updated purchase order.',
+        comments: 2,
+        time: '22:10 PM',
+        children: [
+          {
+            id: 216,
+            escalated: 0,
+            taskName: 'Follow up action with Universal HMM Logistics',
+            desc: 'Contact sales representative.',
+            comments: 2,
+            time: '22:10 PM'
+          },
+          {
+            id: 217,
+            escalated: 0,
+            expanded: true,
+            taskName: 'Follow up action with Acme Shipping',
+            desc: 'Contact sales representative.',
+            comments: 2,
+            time: '22:10 PM',
+            children: [
+              {
+                id: 218,
+                escalated: 0,
+                taskName: 'Follow up action with Residental Shipping Logistics ',
+                desc: 'Contact sales representative.',
+                comments: 2,
+                time: '7:04 AM'
+              }
+            ]
+          }
+        ]
+    }];
+
+
+    //Define Columns for the Grid.
+    columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree, width: 250});
+    columns.push({ id: 'id', name: 'Id', field: 'id', width: 25});
+    columns.push({ id: 'desc', name: 'Description', field: 'desc', width: 200});
+    columns.push({ id: 'comments', name: 'Comments', field: 'comments',  formatter: Formatters.Hyperlink, width: 60});
+    columns.push({ id: 'time', name: 'Time', field: 'time', width: 60});
+
+    //Get some data via ajax
+    var url = '/api/tree-tasks';
+
+    $.getJSON(url, function(data) {
+
+      $('#datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        treeGrid: true,
+        toolbar: {title: 'Tasks (Hierarchical)', results: true, personalize: true}
+      })
+      .on('expandrow', function (e, args) {
+        var grid = $('#datagrid').data('datagrid');
+        // Lazy loading
+        var deferred = $.Deferred();
+        setTimeout(function() {
+          grid.addChildren(args.row, someData);
+          deferred.resolve();
+        }, 1000);
+        return deferred.promise();
+      });
+
+    });//getJSON
+
+  });//initialized
+</script>
