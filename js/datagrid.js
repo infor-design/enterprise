@@ -1380,8 +1380,14 @@ $.fn.datagrid = function(options) {
       }
 
       //Attach Keyboard support
+      var popupOpts = {
+        offset: {
+          y: 15
+        }
+      };
+
       this.headerRow.addClass('is-filterable');
-      this.headerRow.find('.btn-filter').popupmenu({}).on('selected.datagrid', function () {
+      this.headerRow.find('.btn-filter').popupmenu(popupOpts).on('selected.datagrid', function () {
         self.applyFilter();
       });
 
@@ -1546,7 +1552,7 @@ $.fn.datagrid = function(options) {
                 isMatch = false;
 
                 for (var k = 0; k < conditions[i].value.length; k++) {
-                  var match = conditions[i].value[k].indexOf(rowValue) >= 0 && rowValue.toString() !== '';
+                  var match = conditions[i].value[k].toLowerCase().indexOf(rowValue) >= 0 && rowValue.toString() !== '';
                   if (match) {
                     isMatch = true;
                   }
@@ -2803,8 +2809,8 @@ $.fn.datagrid = function(options) {
 
           if (elem.hasClass('is-focusable')) {
             var target = $(e.target);
-            if (!$(target).is(self.settings.buttonSelector)) {
-              if (!$(target.parent('button')).is(self.settings.buttonSelector)) {
+            if (!target.is(self.settings.buttonSelector)) {
+              if (!target.parent('button').is(self.settings.buttonSelector)) {
                 return;
               }
             }
@@ -2820,7 +2826,7 @@ $.fn.datagrid = function(options) {
         }
 
         if (col.menuId) {
-          btn.popupmenu({menuId: col.menuId, trigger: 'immediate'});
+          btn.popupmenu({menuId: col.menuId, trigger: 'immediate', offset: { y: 5 }});
 
           if (col.selected) {
             btn.on('selected.datagrid', col.selected);
