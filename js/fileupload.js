@@ -81,6 +81,12 @@
 
       // Teardown - Remove added markup and events
       destroy: function() {
+        this.fileInput.removeAttr('tabindex').off('change.fileupload');
+        this.textInput.off('keypress.fileupload');
+        this.element.closest('.field-fileupload')
+          .removeClass('field-fileupload')
+          .find('>label:first, >[type="text"]:first, .trigger').remove();
+
         $.removeData(this.element[0], pluginName);
       },
 
