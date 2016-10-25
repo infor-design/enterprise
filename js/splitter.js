@@ -211,7 +211,7 @@
           w = leftArg + 20;
 
         //Adjust Left and Right Side
-        leftSide.css('width', (w + 'px'));
+        leftSide.css('width', ((w-20) + 'px'));
         rightSide.css('width', ('calc(100% - ' + w + 'px)'));
       },
 
