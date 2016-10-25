@@ -13,30 +13,36 @@
         columns = [],
         data = [];
 
-      // Some Sample Data
-      data.push({ id: 1, incidentId: 1, priority: 1, location: '99 Elm Street Bay Shore, NY 11706', nature:  'Civil Disturbance', time: '12:12:21', units: 'R15 R21 E1 R15 R21 E1 R15'});
-      data.push({ id: 2, incidentId: 1, priority: 1, location: '99 Elm Street Bay Shore, NY 11706', nature:  'Civil Disturbance', time: '12:12:21'});
-      data.push({ id: 3, incidentId: 2, priority: 1, location: '366 Andover Drive Farmington, MI 48331', nature:  'Man with Gun', time: '12:10:10'});
-      data.push({ id: 4, incidentId: 2, priority: 1, location: '366 Andover Drive Farmington, MI 48331', nature:  'Man with Gun', time: '12:10:10'});
-      data.push({ id: 5, incidentId: 2, priority: 1, location: '366 Andover Drive Farmington, MI 48331', nature:  'Man with Gun', time: '12:10:10'});
-      data.push({ id: 5, incidentId: 3, priority: '11F', location: '20 Mulberry Drive Calhoun, GA 30701', nature:  'Structure Fire', time: '12:07:13'});
-      data.push({ id: 6, incidentId: 3, priority: '11F', location: '20 Mulberry Drive Calhoun, GA 30701', nature:  'Structure Fire', time: '12:07:13' });
 
       //Define Columns for the Grid.
-      columns.push({ id: 'incidentId', name: 'Incident Id', field: 'incidentId', rowspan: true});
+      columns.push({ id: 'incidentId', name: 'Incident Id', field: 'incidentId'});
       columns.push({ id: 'priority', name: 'Priority', field: 'priority'});
       columns.push({ id: 'location', name: 'Location', field: 'location', formatter: Formatters.Hyperlink});
       columns.push({ id: 'nature', name: 'Nature', field: 'nature'});
       columns.push({ id: 'time', name: 'Time', field: 'time'});
       columns.push({ id: 'units', name: 'Vehicles on Scene', field: 'units'});
 
-      //Init and get the api for the grid
-      $('#datagrid').datagrid({
-        columns: columns,
-        dataset: data,
-        selectable: 'single',
-        cellNavigation: true,
-        toolbar: {title: 'Data Grid Header Title', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: true,  collapsibleFilter: true}
+      //Get some data via ajax
+      var url = '/api/incidents';
+
+      $.getJSON(url, function(res) {
+
+        var groupBy = function(dataset, key) {
+          return dataset.reduce(function(rv, x) {
+            (rv[x[key]] = rv[x[key]] || []).push(x);
+            return rv;
+          }, {});
+        };
+        console.log(groupBy(res, 'incidentId'));
+
+        $('#datagrid').datagrid({
+          columns: columns,
+          dataset: res,
+          groupBy: ['incidentId'],
+          selectable: 'single',
+          cellNavigation: true,
+          toolbar: {title: 'Data Grid Header Title', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: true,  collapsibleFilter: true}
+        });
       });
  });
 
