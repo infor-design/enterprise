@@ -75,10 +75,10 @@
           lookupOptions = {
             // field: 'productId',
             field: function (row, field, grid) {
-              return row.productId + '|' + row.productName;
+              return row.productId;
             },
             match: function (value, row, field, grid) {
-              return ((row.productId + '|' + row.productName) === value);
+              return (row.productId) === value;
             },
             options: {
               columns: lookupColumns,

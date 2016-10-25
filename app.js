@@ -41,7 +41,7 @@ var express = require('express'),
   };
 
   // Option Handling - Custom Middleware
-  // Writes a set of default options the "req" object.  These options are always eventually passed to the HTML template.
+  // Writes a set of default options the 'req' object.  These options are always eventually passed to the HTML template.
   // In some cases, these options can be modified based on query parameters.  Check the default route for these options.
   var optionHandler = function(req, res, next) {
     res.opts = extend({}, defaults);
@@ -53,13 +53,13 @@ var express = require('express'),
     }
 
     // Normally we will use an external file for loading SVG Icons and Patterns.
-    // Setting "inlineSVG" to true will use the deprecated method of using SVG icons, which was to bake them into the HTML markup.
+    // Setting 'inlineSVG' to true will use the deprecated method of using SVG icons, which was to bake them into the HTML markup.
     // if (req.query.inlineSVG && req.query.inlineSVG.length > 0) {
       res.opts.inlineSVG = true;
       //console.log('Inlining SVG Elements...');
     // }
 
-    // Global settings for forcing a "no frills" layout for test pages.
+    // Global settings for forcing a 'no frills' layout for test pages.
     // This means no header with page title, hamburger, theme swap settings, etc.
     if (req.query.nofrills && req.query.nofrills.length > 0) {
       res.opts.nofrillslayout = true;
@@ -122,14 +122,14 @@ var express = require('express'),
     res.status(500).send('<h2>Internal Server Error</h2><p>' + err.stack +'</p>');
   };
 
-  // place optionHandler() first to augment all "res" objects with an "opts" object
+  // place optionHandler() first to augment all 'res' objects with an 'opts' object
   app.use(optionHandler);
   app.use(responseThrottler);
   app.use(router);
   app.use(timestampLogger);
   app.use(errorHandler);
 
-  // Strips the ".html" from a file path and returns the target route name without it
+  // Strips the '.html' from a file path and returns the target route name without it
   function stripHtml(routeParam) {
     var noHtml = routeParam.replace(/\.html/, '');
     return noHtml;
@@ -406,7 +406,7 @@ var express = require('express'),
       opts.layout = 'tests/tabs-vertical/layout';
     }
 
-    // Global "no-header" layout setting takes precedent
+    // Global 'no-header' layout setting takes precedent
     if (res.opts.nofrillslayout || directory.match(/tests\/patterns/)) {
       opts.layout = 'tests/layout-noheader';
     }
@@ -608,7 +608,7 @@ var express = require('express'),
   });
 
   // =========================================
-  // Fake "API" Calls for use with AJAX-ready Controls
+  // Fake 'API' Calls for use with AJAX-ready Controls
   // =========================================
 
   //Sample Json call that returns States
@@ -1303,6 +1303,287 @@ var express = require('express'),
 
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(companies));
+    next();
+  });
+
+  router.get('/api/incidents', function(req, res, next) {
+    var incidents = [
+          {
+            incidentId: 2292,
+            time: '09:24:49',
+            nature: 'SFPT',
+            priority: '1',
+            priorityBackColor: 'FFFF0000',
+            priorityForeColor: 'FFFFFFFF',
+            location: '2698 Freeland Dr, APT A',
+            fireCode: 'HCF594',
+            unitName1: '01MA',
+            unitName2: '02MA',
+            unitName3: '03MA',
+            unitName4: '04MA',
+            unitName5: '05MA',
+            unitName6: '06MA',
+            unitName7: '07MA',
+            unitName8: '08MA',
+            statusBackColor1: 'FF000000',
+            statusBackColor2: 'FF000000',
+            statusBackColor3: 'FF000000',
+            statusBackColor4: 'FF000000',
+            statusBackColor5: 'FF000000',
+            statusBackColor6: 'FF000000',
+            statusBackColor7: 'FF000000',
+            statusBackColor8: 'FF000000',
+            statusForeColor1: 'FF00FFFF',
+            statusForeColor2: 'FF00FFFF',
+            statusForeColor3: 'FF00FFFF',
+            statusForeColor4: 'FF00FFFF',
+            statusForeColor5: 'FF00FFFF',
+            statusForeColor6: 'FF00FFFF',
+            statusForeColor7: 'FF00FFFF',
+            statusForeColor8: 'FF00FFFF'
+          },
+          {
+            incidentId: 2292,
+            time: '09:24:49',
+            nature: 'SFPT',
+            priority: '1',
+            priorityBackColor: 'FFFF0000',
+            priorityForeColor: 'FFFFFFFF',
+            location: '2698 Freeland Dr, APT A',
+            fireCode: 'HCF594',
+            unitName1: '09MA',
+            unitName2: '10MA',
+            unitName3: '1MA',
+            unitName4: '2MA',
+            unitName5: '3MA',
+            unitName6: '4MA',
+            unitName7: '5MA',
+            unitName8: '6MA',
+            statusBackColor1: 'FF000000',
+            statusBackColor2: 'FF000000',
+            statusBackColor3: 'FF000000',
+            statusBackColor4: 'FF000000',
+            statusBackColor5: 'FF000000',
+            statusBackColor6: 'FF000000',
+            statusBackColor7: 'FF000000',
+            statusBackColor8: 'FF000000',
+            statusForeColor1: 'FF00FFFF',
+            statusForeColor2: 'FF00FFFF',
+            statusForeColor3: 'FF00FFFF',
+            statusForeColor4: 'FF00FFFF',
+            statusForeColor5: 'FF00FFFF',
+            statusForeColor6: 'FF00FFFF',
+            statusForeColor7: 'FF00FFFF',
+            statusForeColor8: 'FF00FFFF'
+          },
+          {
+            incidentId: 2292,
+            time: '09:24:49',
+            nature: 'SFPT',
+            priority: '1',
+            priorityBackColor: 'FFFF0000',
+            priorityForeColor: 'FFFFFFFF',
+            location: '2698 Freeland Dr, APT A',
+            fireCode: 'HCF594',
+            unitName1: '7MA',
+            unitName2: '08MA',
+            unitName3: '9MA',
+            unitName4: '11MAU',
+            unitName5: '12MAU',
+            unitName6: '13MAU',
+            unitName7: '14MAU',
+            unitName8: '15MAU',
+            statusBackColor1: 'FF000000',
+            statusBackColor2: 'FF000000',
+            statusBackColor3: 'FF000000',
+            statusBackColor4: 'FF000000',
+            statusBackColor5: 'FF000000',
+            statusBackColor6: 'FF000000',
+            statusBackColor7: 'FF000000',
+            statusBackColor8: 'FF000000',
+            statusForeColor1: 'FF00FFFF',
+            statusForeColor2: 'FF00FFFF',
+            statusForeColor3: 'FF00FFFF',
+            statusForeColor4: 'FF00FFFF',
+            statusForeColor5: 'FF00FFFF',
+            statusForeColor6: 'FF00FFFF',
+            statusForeColor7: 'FF00FFFF',
+            statusForeColor8: 'FF00FFFF'
+          },
+          {
+            incidentId: 2292,
+            time: '09:24:49',
+            nature: 'SFPT',
+            priority: '1',
+            priorityBackColor: 'FFFF0000',
+            priorityForeColor: 'FFFFFFFF',
+            location: '2698 Freeland Dr, APT A',
+            fireCode: 'HCF594',
+            unitName1: '16MAU',
+            unitName2: '17MAU',
+            unitName3: '18MAU',
+            unitName4: '19MAU',
+            unitName5: '20MAU',
+            unitName6: '21MAU',
+            unitName7: '22MAU',
+            unitName8: '23mau',
+            statusBackColor1: 'FF000000',
+            statusBackColor2: 'FF000000',
+            statusBackColor3: 'FF000000',
+            statusBackColor4: 'FF000000',
+            statusBackColor5: 'FF000000',
+            statusBackColor6: 'FF000000',
+            statusBackColor7: 'FF000000',
+            statusBackColor8: 'FF000000',
+            statusForeColor1: 'FF00FFFF',
+            statusForeColor2: 'FF00FFFF',
+            statusForeColor3: 'FF00FFFF',
+            statusForeColor4: 'FF00FFFF',
+            statusForeColor5: 'FF00FFFF',
+            statusForeColor6: 'FF00FFFF',
+            statusForeColor7: 'FF00FFFF',
+            statusForeColor8: 'FF00FFFF'
+          },
+          {
+            incidentId: 2292,
+            time: '09:24:49',
+            nature: 'SFPT',
+            priority: '1',
+            priorityBackColor: 'FFFF0000',
+            priorityForeColor: 'FFFFFFFF',
+            location: '2698 Freeland Dr, APT A',
+            fireCode: 'HCF594',
+            unitName1: '24mau',
+            unitName2: '25mau',
+            unitName3: '25',
+            unitName4: '26mau',
+            unitName5: '27mau',
+            unitName6: '28mau',
+            unitName7: '30mau',
+            unitName8: '31mau',
+            statusBackColor1: 'FF000000',
+            statusBackColor2: 'FF000000',
+            statusBackColor3: 'FF000000',
+            statusBackColor4: 'FFFFFF00',
+            statusBackColor5: 'FFFFFF00',
+            statusBackColor6: 'FFFFFF00',
+            statusBackColor7: 'FFFFFF00',
+            statusBackColor8: 'FFFFFF00',
+            statusForeColor1: 'FF00FFFF',
+            statusForeColor2: 'FF00FFFF',
+            statusForeColor3: 'FF00FFFF',
+            statusForeColor4: 'FF000000',
+            statusForeColor5: 'FF000000',
+            statusForeColor6: 'FF000000',
+            statusForeColor7: 'FF000000',
+            statusForeColor8: 'FF000000'
+          },
+          {
+            incidentId: 2292,
+            time: '09:24:49',
+            nature: 'SFPT',
+            priorityBackColor: 'FFFF0000',
+            priorityForeColor: 'FFFFFFFF',
+            priority: '1',
+            location: '2698 Freeland Dr, APT A',
+            fireCode: 'HCF594',
+            unitName1: '32mau',
+            unitName2: '33mau',
+            unitName3: '34mau',
+            unitName4: '35mau',
+            unitName5: null,
+            unitName6: null,
+            unitName7: null,
+            unitName8: null,
+            statusBackColor1: 'FFFFFF00',
+            statusBackColor2: 'FFFFFF00',
+            statusBackColor3: 'FFFFFF00',
+            statusBackColor4: 'FFFFFF00',
+            statusBackColor5: null,
+            statusBackColor6: null,
+            statusBackColor7: null,
+            statusBackColor8: null,
+            statusForeColor1: 'FF000000',
+            statusForeColor2: 'FF000000',
+            statusForeColor3: 'FF000000',
+            statusForeColor4: 'FF000000',
+            statusForeColor5: null,
+            statusForeColor6: null,
+            statusForeColor7: null,
+            statusForeColor8: null
+          },
+          {
+            incidentId: 2287,
+            time: '11:30:04',
+            nature: 'SFUN',
+            priority: '1',
+            priorityBackColor: 'FFFF0000',
+            priorityForeColor: 'FFFFFFFF',
+            location: '2601 Night Rains Dr',
+            fireCode: 'HCF559',
+            unitName1: 'E1',
+            unitName2: 'E10',
+            unitName3: 'E11',
+            unitName4: 'E12',
+            unitName5: null,
+            unitName6: null,
+            unitName7: null,
+            unitName8: null,
+            statusBackColor1: 'FF000000',
+            statusBackColor2: 'FFFFFF00',
+            statusBackColor3: 'FFFFFF00',
+            statusBackColor4: 'FFFFFF00',
+            statusBackColor5: null,
+            statusBackColor6: null,
+            statusBackColor7: null,
+            statusBackColor8: null,
+            statusForeColor1: 'FF00FF00',
+            statusForeColor2: 'FF000000',
+            statusForeColor3: 'FF000000',
+            statusForeColor4: 'FF000000',
+            statusForeColor5: null,
+            statusForeColor6: null,
+            statusForeColor7: null,
+            statusForeColor8: null,
+          },
+          {
+            incidentId: 2057,
+            time: '08:05:43',
+            nature: '29',
+            priority: '1',
+            priorityBackColor: 'FFFF0000',
+            priorityForeColor: 'FFFFFFFF',
+            location: '5108 Eisenhower Blvd',
+            fireCode: 'HCF634',
+            unitName1: '700',
+            unitName2: 'PE1',
+            unitName3: 'PE1',
+            unitName4: '1041',
+            unitName5: null,
+            unitName6: null,
+            unitName7: null,
+            unitName8: null,
+            statusBackColor1: 'FFFFFF00',
+            statusBackColor2: 'FFFFD800',
+            statusBackColor3: 'FFFFD800',
+            statusBackColor4: 'FF000000',
+            statusBackColor5: null,
+            statusBackColor6: null,
+            statusBackColor7: null,
+            statusBackColor8: null,
+            statusForeColor1: 'FFFF0000',
+            statusForeColor2: 'FFFFFFFF',
+            statusForeColor3: 'FFFFFFFF',
+            statusForeColor4: 'FF00FFFF',
+            statusForeColor5: null,
+            statusForeColor6: null,
+            statusForeColor7: null,
+            statusForeColor8: null,
+          }
+        ];
+
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(incidents));
     next();
   });
 
