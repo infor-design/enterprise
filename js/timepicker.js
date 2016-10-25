@@ -25,6 +25,7 @@
         defaults = {
           timeFormat: Locale.calendar().timeFormat || 'h:mm a', // The time format
           minuteInterval: 5, // Integer from 1 to 60.  Multiples of this value are displayed as options in the minutes dropdown.
+          secondInterval: 5, // Integer from 1 to 60.
           mode: 'standard', // options: 'standard', 'range',
           roundToInterval: false
         },
@@ -53,13 +54,17 @@
       // Configure any settings for the Timepicker
       setup: function() {
 
-        function sanitizeMinuteInterval(value) {
-          if (value === undefined || isNaN(value)) {
-            return defaults.minuteInterval;
+        function sanitizeIntervals(value, type) {
+          if (!type || ['minute', 'second'].indexOf(type) < 0) {
+            type = 'minute';
           }
 
+          var defaultInterval = defaults[(type + 'Interval')];
+          if (value === undefined || isNaN(value)) {
+            return defaultInterval;
+          }
           var intValue = parseInt(value, 10);
-          return intValue > 0 && intValue < 60 ? intValue : defaults.minuteInterval;
+          return intValue > 0 && intValue < 60 ? intValue : defaultInterval;
         }
 
         function sanitizeTimeFormat(value) {
@@ -80,14 +85,15 @@
         }
 
         if (this.element.is('[data-round-to-interval]')) {
-          this.settings.roundToInterval = this.getBoolean(this.element.attr('data-round-to-interval'));
+          this.settings.roundToInterval = sanitizeRoundToInterval(this.element.attr('data-round-to-interval'));
         }
         if (this.element.is('[data-minute-interval]')) {
-          this.settings.minuteInterval = parseInt(this.element.attr('data-minute-interval'), 10);
+          this.settings.minuteInterval = sanitizeIntervals(this.element.attr('data-minute-interval'), 'minute');
         }
 
         this.settings.timeFormat = sanitizeTimeFormat(parseInt(this.element.attr('data-force-hour-mode')) === 24 ? 'HH:mm' : this.settings.timeFormat);
-        this.settings.minuteInterval = sanitizeMinuteInterval(this.settings.minuteInterval);
+        this.settings.minuteInterval = sanitizeIntervals(this.settings.minuteInterval, 'minute');
+        this.settings.secondInterval = sanitizeIntervals(this.settings.secondInterval, 'second');
         this.settings.mode = sanitizeMode(this.settings.mode);
         this.settings.roundToInterval = sanitizeRoundToInterval(this.settings.roundToInterval);
 
@@ -181,6 +187,11 @@
         return (value.match('HH') || []).length > 0;
       },
 
+      hasSeconds: function(value) {
+        if (!value) { value = this.settings.timeFormat; }
+        return (value.match('ss') || []).length > 0;
+      },
+
       getTimeSeparator: function() {
         return Locale.calendar().dateFormat.timeSeparator;
       },
@@ -235,7 +246,7 @@
         this.element.data('mask', undefined);
 
         var timeSeparator = this.getTimeSeparator(),
-          mask = '##' + timeSeparator + '##' + (!this.is24HourFormat() ? ' am' : ''),
+          mask = '##' + timeSeparator + '##' + (this.hasSeconds() ? timeSeparator + '##' : '') + (!this.is24HourFormat() ? ' am' : ''),
           maskMode = 'group',
           validation = 'time',
           events = {'time': 'blur'},
@@ -267,13 +278,15 @@
           popupContent = $('<div class="timepicker-popup-content"></div>'),
           initValues = self.getTimeFromField(),
           timeSeparator = this.getTimeSeparator(),
-          hourSelect, minuteSelect, periodSelect,
+          textValue = '',
+          hourSelect, minuteSelect, periodSelect, secondSelect,
           selected;
 
         var timeParts = $('<div class="time-parts"></div>').appendTo(popupContent);
 
         // Build the inner-picker HTML
         var is24HourFormat = this.is24HourFormat(),
+          hasSeconds = this.hasSeconds(),
           hourCounter = is24HourFormat ? 0 : 1,
           maxHourCount = is24HourFormat ? 24 : 13;
         hourSelect = $('<select id="timepicker-hours" class="hours dropdown"></select>');
@@ -290,11 +303,12 @@
         timeParts.append(hourSelect);
         timeParts.append($('<span class="label colons">'+ timeSeparator +'</span>'));
 
+        // Minutes Picker
         var minuteCounter = 0;
         minuteSelect = $('<select id="timepicker-minutes" class="minutes dropdown"></select>');
 
         while(minuteCounter <= 59) {
-          var textValue = minuteCounter < 10 ? '0' + minuteCounter : minuteCounter;
+          textValue = minuteCounter < 10 ? '0' + minuteCounter : minuteCounter;
 
           selected = '';
           if (parseInt(initValues.minutes, 10) === minuteCounter) {
@@ -311,6 +325,27 @@
 
         timeParts.append($('<label for="timepicker-minutes" class="audible">' + Locale.translate('TimeMinutes') + '</label>'));
         timeParts.append(minuteSelect);
+
+        // Seconds Picker
+        if (hasSeconds) {
+          var secondCounter = 0;
+          secondSelect = $('<select id="timepicker-seconds" class="seconds dropdown"></select>');
+
+          while(secondCounter <= 59) {
+            textValue = secondCounter < 10 ? '0' + secondCounter : secondCounter;
+
+            selected = '';
+            if (initValues.seconds === secondCounter) {
+              selected = ' selected';
+            }
+            secondSelect.append($('<option' + selected + '>' + textValue + '</option>'));
+            secondCounter = secondCounter + self.settings.secondInterval;
+          }
+
+          timeParts.append($('<span class="label colons">'+ timeSeparator +'</span>'));
+          timeParts.append($('<label for="timepicker-seconds" class="audible">' + Locale.translate('TimeSeconds') + '</label>'));
+          timeParts.append(secondSelect);
+        }
 
         periodSelect = $('<select id="timepicker-period" class="period dropdown"></select>');
         if (!is24HourFormat) {
@@ -448,6 +483,7 @@
           nums = val.split(timeSeparator),
           hours = 1,
           minutes = 0,
+          seconds = 0,
           period = Locale.translateDayPeriod('AM');
 
         nums[0] = parseInt(nums[0].replace(/ /g, ''), 10);
@@ -476,18 +512,26 @@
           minutes = '00';
         }
 
+        // Seconds ?
+        if (nums[2]) {
+          seconds = parseInt(nums[2], 10);
+        }
+
         return {
           hours: hours,
           minutes: minutes,
-          period: period
+          period: period,
+          seconds: seconds
         };
       },
 
       setTimeOnField: function() {
         var hours = $('#timepicker-hours').val() || '',
           minutes = $('#timepicker-minutes').val() || '',
+          seconds = $('#timepicker-seconds').val() || '',
           period = ($('#timepicker-period').val() || '').toUpperCase(),
-          timeString = '' + hours + this.getTimeSeparator() + minutes;
+          sep = this.getTimeSeparator(),
+          timeString = '' + hours + sep + minutes + (this.hasSeconds() ? sep + seconds : '');
 
         period = (!this.is24HourFormat() && period === '') ? $('#timepicker-period-shdo').val() : period;
         timeString += period ? ' ' + Locale.translateDayPeriod(period) : '';
@@ -544,6 +588,9 @@
         if (this.settings.mode === 'standard') {
           $('#timepicker-hours').data('dropdown').destroy();
           $('#timepicker-minutes').data('dropdown').destroy();
+          if (this.hasSeconds()) {
+            $('#timepicker-seconds').data('dropdown').destroy();
+          }
           if (!this.is24HourFormat()) {
             $('#timepicker-period').data('dropdown').destroy();
           }
