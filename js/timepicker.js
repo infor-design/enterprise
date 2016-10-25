@@ -297,12 +297,18 @@
           var textValue = minuteCounter < 10 ? '0' + minuteCounter : minuteCounter;
 
           selected = '';
-          if (initValues.minutes === minuteCounter) {
+          if (parseInt(initValues.minutes, 10) === minuteCounter) {
             selected = ' selected';
           }
           minuteSelect.append($('<option' + selected + '>' + textValue + '</option>'));
           minuteCounter = minuteCounter + self.settings.minuteInterval;
         }
+
+        // If the value inside the picker doesn't match an interval, add the value as the currently selected option, right at the top
+        if (!minuteSelect.find('option[selected]').length) {
+          minuteSelect.prepend($('<option selected>' + initValues.minutes + '</option>'));
+        }
+
         timeParts.append($('<label for="timepicker-minutes" class="audible">' + Locale.translate('TimeMinutes') + '</label>'));
         timeParts.append(minuteSelect);
 
