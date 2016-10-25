@@ -3851,11 +3851,16 @@ $.fn.datagrid = function(options) {
           col = self.columnSettings(cell),
           item = self.settings.dataset[self.dataRowIndex(node)],
           visibleCols = self.visibleColumns(),
+          visibleRows = self.tableBody.find('tr[aria-rowindex]:visible'),
+          visibleRowsInedx = visibleRows.index(self.visualRowNode(row)),
+          getVisibleRows = function(index) {
+            return self.dataRowIndex(visibleRows.eq(index));
+          },
           isSelectionCheckbox = !!($('.datagrid-selection-checkbox', node).length),
           lastRow, lastCell;
 
         lastCell = visibleCols.length-1;
-        lastRow = node.closest('tbody').find('tr:last').index();
+        lastRow = node.closest('tbody').find('tr:visible:last').index();
 
         //Tab, Left and Right arrow keys.
         if ([9, 37, 39].indexOf(key) !== -1) {
@@ -3886,15 +3891,16 @@ $.fn.datagrid = function(options) {
           if (key === 38 && !self.quickEditMode) {
           //Press [Control + Up] arrow to move to the first row on the first page.
           if (e.altKey) {
-            self.setActiveCell(0, cell);
+            self.setActiveCell(getVisibleRows(0), cell);
           }
           //Up arrow key to navigate by row.
           else {
             if (row === 0) {
               node.removeAttr('tabindex');
-              $('th:not(.is-hidden)', this.header).eq(cell).attr('tabindex', '0').focus();
+              $('th:not(.is-hidden)', self.header).eq(cell).attr('tabindex', '0').focus();
+              return;
             }
-            self.setActiveCell(row-1, cell);
+            self.setActiveCell(getVisibleRows(visibleRowsInedx-1), cell);
             handled = true;
           }
         }
@@ -3907,10 +3913,10 @@ $.fn.datagrid = function(options) {
           }
           //Down arrow key to navigate by row.
           else {
-            // if ($('.autocomplete.popupmenu.is-open').is(':hidden')) {
-              self.setActiveCell(((row+1 > lastRow) ? lastRow : row+1), cell);
-              handled = true;
-            // }
+            var n = getVisibleRows(visibleRowsInedx+1);
+            n = isNaN(n) ? lastRow : n;
+            self.setActiveCell(((n >= lastRow) ? lastRow : getVisibleRows(visibleRowsInedx+1)), cell);
+            handled = true;
           }
         }
 
