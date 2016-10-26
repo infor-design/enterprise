@@ -2070,7 +2070,12 @@ $.fn.datagrid = function(options) {
         }
       }
 
-      rowHtml = '<tr role="row" aria-rowindex="' + ((dataRowIdx + 1) + (self.settings.source  ? ((activePage-1) * pagesize) : 0)) + '"' +
+      var ariaRowindex = ((dataRowIdx + 1) + (self.settings.source  ? ((activePage-1) * pagesize) : 0));
+      if (this.settings.indeterminate) {
+        ariaRowindex = (dataRowIdx + 1);
+      }
+
+      rowHtml = '<tr role="row" aria-rowindex="' + ariaRowindex + '"' +
                 (self.settings.treeGrid && rowData.children ? ' aria-expanded="' + (rowData.expanded ? 'true"' : 'false"') : '') +
                 (self.settings.treeGrid ? ' aria-level= "' + depth + '"' : '') +
                 ' class="datagrid-row'+
@@ -4028,13 +4033,6 @@ $.fn.datagrid = function(options) {
             .removeClass('is-partial')
             .attr('aria-checked', 'true');
           self.selectAllRows();
-          // if (!checkbox.hasClass('is-checked') || checkbox.hasClass('is-partial')) {
-          //   checkbox.removeClass('is-partial').addClass('is-checked').attr('aria-checked', 'true');
-          //   self.selectAllRows();
-          // } else {
-          //   checkbox.removeClass('is-checked').attr('aria-checked', 'true');
-          //   self.unSelectedRows([]);
-          // }
           handled = true;
         }
 
@@ -4280,11 +4278,13 @@ $.fn.datagrid = function(options) {
      if (this.pager) {
       rowIdx = rowIdx - ((this.pager.activePage -1) * this.settings.pagesize);
      }
+
      return rowIdx;
     },
 
     visualRowNode: function (idx) {
       var node = this.tableBody.find('tr[aria-rowindex="'+ (idx + 1) +'"]');
+
       return node;
     },
 
