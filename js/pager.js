@@ -184,6 +184,10 @@
           var li = $(this).parent();
           e.preventDefault();
 
+          if ($(this).attr('disabled')) {
+            return;
+          }
+
           if (li.is('.pager-prev')) {
             self.setActivePage(self.activePage - 1, false, 'prev');
             return false;
