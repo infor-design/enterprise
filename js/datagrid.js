@@ -1155,6 +1155,17 @@ $.fn.datagrid = function(options) {
       this.loadData(dataset, pagerInfo);
     },
 
+    triggerSource: function(pagerType) {
+
+      this.pager.pagerInfo = this.pager.pagerInfo || {};
+      this.pager.pagerInfo.type = pagerType;
+
+      if (pagerType !== 'refresh') {
+        this.pager.pagerInfo.activePage = 1;
+      }
+      this.renderPager(this.pager.pagerInfo);
+    },
+
     loadData: function (dataset, pagerInfo, isResponse) {
       this.settings.dataset = dataset;
 
@@ -1182,8 +1193,7 @@ $.fn.datagrid = function(options) {
       if (pagerInfo && pagerInfo.preserveSelected) {
         this.updateSelected();
         this.syncSelectedUI();
-      }
-      else {
+      } else {
         this.unSelectAllRows();
       }
     },
@@ -4644,8 +4654,8 @@ $.fn.datagrid = function(options) {
         this.pager.updatePagingInfo(pagingInfo);
       }
 
-      this.pager.renderBar();
       if (!isResponse) {
+        this.pager.renderBar();
         this.pager.renderPages(pagingInfo.type);
       }
 
