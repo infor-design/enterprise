@@ -59,7 +59,8 @@
         response(pageData, req);
 
         // reset the selected row
-        datagrid.selectRow(selectedIndex === -1 ? -0 : beginIndex);
+        console.log(selectedIndex)
+        datagrid.selectRow(selectedIndex === -1 ? 0 : selectedIndex);
       }
     });
 
