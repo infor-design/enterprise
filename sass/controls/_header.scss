@@ -171,7 +171,8 @@ $header-height: 60px;
         fill: $header-button-color;
       }
 
-      &.is-open .icon {
+      &.is-open .icon,
+      &.btn-menu.is-open .icon {
         fill: $header-button-hover-color !important;
       }
 

@@ -2806,7 +2806,7 @@ $.fn.datagrid = function(options) {
       //Handle Clicking Buttons and links in formatters
       this.table
         .off('mouseup.datagrid touchstart.datagrid')
-        .on('mouseup.datagrid touchstart.datagrid', 'td', function (e) {
+        .on('mouseup.datagrid-formatters touchstart.datagrid-formatters', 'td', function (e) {
 
         var elem = $(this).closest('td'),
           btn = $(this).find('button'),
@@ -2852,8 +2852,11 @@ $.fn.datagrid = function(options) {
         }
 
         if (btn.is('.datagrid-expand-btn')) {
+          e.stopPropagation();
+          e.stopImmediatePropagation();
           self.toggleRowDetail(dataRowIdx);
           self.toggleChildren(e, dataRowIdx);
+          return false;
         }
 
         if (self.isCellEditable(row, cell)) {
@@ -2867,13 +2870,7 @@ $.fn.datagrid = function(options) {
       });
 
       var body = this.table.find('tbody');
-      body.off('touchcancel.datagrid touchend.datagrid').on('touchcancel.datagrid touchend.datagrid', 'td', function (e) {
-        if (!$('input, button, a', this).length) {
-          e.preventDefault();
-        }
-        e.stopPropagation();
-        $(this).trigger('click');
-      }).off('click.datagrid').on('click.datagrid', 'td', function (e) {
+      body.off('click.datagrid').on('click.datagrid', 'td', function (e) {
         var target = $(e.target);
 
         if (target.closest('.datagrid-row-detail').length === 1) {

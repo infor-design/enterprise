@@ -22,7 +22,6 @@
     // Settings and Options
     var pluginName = 'progress',
         defaults = {
-          animationLength: 1000
         },
         settings = $.extend({}, defaults, options);
 

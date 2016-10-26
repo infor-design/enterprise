@@ -255,10 +255,6 @@
 
           for (var i = 0; i < attrTypes.length; i++) {
             if (props[attrTypes[i]]) {
-              if (attrTypes[i] === 'text') {
-                attrs.placeholder = props[attrTypes[i]];
-              }
-
               attrs[attrTypes[i]] = props[attrTypes[i]];
             }
           }

@@ -259,7 +259,7 @@
         }
         this.titlePopupMenu = this.titlePopup.next('.popupmenu');
         if (!this.titlePopupMenu.length) {
-          this.titlePopupMenu = $('<ul class="popupmenu is-selectable has-icons"></ul>').insertAfter(this.titlePopup);
+          this.titlePopupMenu = $('<ul class="popupmenu is-selectable"></ul>').insertAfter(this.titlePopup);
           $('<li class="is-checked"><a href="#">Page One Title</a></li>' +
             '<li><a href="#">Page Two Title</a></li>' +
             '<li><a href="#">Page Three Title</a></li>' +

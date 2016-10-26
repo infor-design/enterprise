@@ -264,6 +264,7 @@
 .card.auto-height,
 .widget.auto-height {
   height: auto;
+  min-height: 0;
 
   .widget-content,
   .card-content {
