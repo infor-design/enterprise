@@ -696,7 +696,7 @@
       // Used for tooltip/popovers/popupmenus
       setArrowPosition: function(e, placementObj, element) {
         var target = placementObj.parent,
-          arrow = element.find('.arrow'),
+          arrow = element.find('div.arrow'),
           dir = placementObj.placement,
           isXCoord = ['left', 'right'].indexOf(dir) > -1,
           targetRect = {},
