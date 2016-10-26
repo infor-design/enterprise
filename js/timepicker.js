@@ -97,6 +97,8 @@
         this.settings.mode = sanitizeMode(this.settings.mode);
         this.settings.roundToInterval = sanitizeRoundToInterval(this.settings.roundToInterval);
 
+        this.dayPeriods = Locale.calendar().dayPeriods;
+
         return this;
       },
 
@@ -293,13 +295,13 @@
 
         while(hourCounter < maxHourCount) {
           selected = '';
-          if (initValues.hours === hourCounter) {
+          if (parseInt(initValues.hours, 10)  === hourCounter) {
             selected = ' selected';
           }
           hourSelect.append($('<option' + selected + '>' + hourCounter + '</option>'));
           hourCounter++;
         }
-        timeParts.append($('<label for="timepicker-hours" class="audible">' + Locale.translate('TimeHours') + '</label>'));
+        timeParts.append($('<label for="timepicker-hours" class="audible">' + Locale.translate('Hours') + '</label>'));
         timeParts.append(hourSelect);
         timeParts.append($('<span class="label colons">'+ timeSeparator +'</span>'));
 
@@ -323,7 +325,7 @@
           minuteSelect.prepend($('<option selected>' + initValues.minutes + '</option>'));
         }
 
-        timeParts.append($('<label for="timepicker-minutes" class="audible">' + Locale.translate('TimeMinutes') + '</label>'));
+        timeParts.append($('<label for="timepicker-minutes" class="audible">' + Locale.translate('Minutes') + '</label>'));
         timeParts.append(minuteSelect);
 
         // Seconds Picker
@@ -342,8 +344,13 @@
             secondCounter = secondCounter + self.settings.secondInterval;
           }
 
+          // If the value inside the picker doesn't match an interval, add the value as the currently selected option, right at the top
+          if (!secondSelect.find('option[selected]').length) {
+            secondSelect.prepend($('<option selected>' + initValues.seconds + '</option>'));
+          }
+
           timeParts.append($('<span class="label colons">'+ timeSeparator +'</span>'));
-          timeParts.append($('<label for="timepicker-seconds" class="audible">' + Locale.translate('TimeSeconds') + '</label>'));
+          timeParts.append($('<label for="timepicker-seconds" class="audible">' + Locale.translate('Seconds') + '</label>'));
           timeParts.append(secondSelect);
         }
 
@@ -358,10 +365,10 @@
           while(localeCount < 2) {
             realDayValue = localeCount === 0 ? 'AM' : 'PM';  // ? AM : PM
             selected = '';
-            if (localeDays[localeCount].match(regexDay)) {
+            if (regexDay.test(localeDays[localeCount])) {
               selected = ' selected';
             }
-            periodSelect.append($('<option value="' + realDayValue + '">' + localeDays[localeCount] + '</option>'));
+            periodSelect.append($('<option value="' + realDayValue + '"'+ selected +'>' + localeDays[localeCount] + '</option>'));
 
             localeCount++;
           }
@@ -478,51 +485,106 @@
       },
 
       getTimeFromField: function() {
-        var val = this.element.val(),
-          timeSeparator = this.getTimeSeparator(),
-          nums = val.split(timeSeparator),
-          hours = 1,
-          minutes = 0,
-          seconds = 0,
-          period = Locale.translateDayPeriod('AM');
+        var self = this,
+          val = this.element.val(),
+          sep = this.getTimeSeparator(),
+          parts = val.split(sep),
+          endParts,
+          timeparts = {};
 
-        nums[0] = parseInt(nums[0].replace(/ /g, ''), 10);
-        if (isNaN(nums[0])) {
-          nums[0] = '1';
-        } else {
-          nums[0] = '' + parseInt(nums[0], 10);
+        // Check the last element in the array for a time period, and add it as an array
+        // member if necessary
+        if (!this.is24HourFormat()) {
+          endParts = parts[parts.length - 1].split(' ');
+          parts.pop();
+          parts = parts.concat(endParts);
         }
-        hours = nums[0];
 
-        if (nums[1]) {
-          // remove leading whitespace
-          nums[1] = nums[1].replace(/^\s+|\s+$/g,'');
-          if (!this.is24HourFormat()) {
-            nums[1] = nums[1].split(' ');
-            minutes = parseInt(nums[1][0], 10);
-            minutes = minutes < 10 ? '0' + minutes : '' + minutes;
-            if (nums[1][1]) {
-              period = '' + nums[1][1];
-            }
-          } else {
-            minutes = parseInt(nums[1], 10);
-            minutes = minutes < 10 ? '0' + minutes : '' + minutes;
+        function isDayPeriod(value) {
+          return self.dayPeriods.indexOf(value) > -1;
+        }
+
+        function removeLeadingWhitespace(value) {
+          return value.replace(/^\s+|\s+$/g, '');
+        }
+
+        function addLeadingZero(value) {
+          if (!value || isNaN(value)) {
+            return '00';
           }
+          value = parseInt(value);
+          value = value < 10 ? '0' + value : value;
+          return value;
+        }
+
+        // Handle Hours
+        if (!parts[0] || !parts[0].length || isNaN(parts[0])) {
+          parts[0] = '1';
+        }
+
+        parts[0] = parseInt(parts[0], 10);
+        if (isNaN(parts[0])) {
+
         } else {
-          minutes = '00';
+          parts[0] = '' + parseInt(parts[0], 10);
+        }
+        timeparts.hours = parts[0];
+
+        // Handle Minutes
+        if (parts[1]) {
+          // remove leading whitespace
+          parts[1] = removeLeadingWhitespace(parts[1]);
+          parts[1] = addLeadingZero(parts[1]);
+          timeparts.minutes = parts[1];
+        } else {
+          timeparts.minutes = '00';
         }
 
-        // Seconds ?
-        if (nums[2]) {
-          seconds = parseInt(nums[2], 10);
+        // Handle Seconds/Period (slot 3)
+        function handleSlot2(value) {
+          // Should not kick off at all if we don't pass it a value, OR if this field is 24-hour display with no seconds
+          if (!value) {
+            if (!self.is24HourFormat()) {
+              if (self.hasSeconds()) {
+                value = '00';
+                timeparts.seconds = value;
+              } else {
+                value = Locale.translateDayPeriod('AM');
+                timeparts.period = value;
+              }
+            }
+
+            return value;
+          }
+
+          value = removeLeadingWhitespace(value);
+
+          // Has seconds
+          if (self.hasSeconds()) {
+            value = addLeadingZero(value);
+            timeparts.seconds = value;
+            return value;
+          }
+          // No seconds, but has a day period
+          if (!isDayPeriod(value)) {
+            value = Locale.translateDayPeriod('AM');
+          }
+          timeparts.period = value;
+          return;
+        }
+        handleSlot2(parts[2]);
+
+        // Handle Period after seconds (slot 4)
+        if (parts[3]) {
+          parts[3] = removeLeadingWhitespace(parts[3]);
+          timeparts.period = parts[3];
+        } else {
+          if (!this.is24HourFormat() && this.hasSeconds()) {
+            timeparts.period = Locale.translateDayPeriod('AM');
+          }
         }
 
-        return {
-          hours: hours,
-          minutes: minutes,
-          period: period,
-          seconds: seconds
-        };
+        return timeparts;
       },
 
       setTimeOnField: function() {

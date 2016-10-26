@@ -255,6 +255,7 @@
       'Save': {id: 'Save', value: 'Save', comment: 'Save tooltip'},
       'SaveCurrentView': {id: 'SaveCurrentView', value: 'Save Current View', comment: 'Datagrids contain view sets. This menu option saves them'},
       'SavedViews': {id: 'SavedViews', value: 'Saved Views', comment: 'Label for a list of Views'},
+      'Seconds': {id: 'Seconds', value: 'Seconds', comment: 'the seconds portion of a time'},
       'Search': {id: 'Search', value: 'Search', comment: 'Search tooltip'},
       'SearchColumnName': {id: 'SearchColumnName', value: 'Search for a column name', comment: 'Search for a datagrid column by name'},
       'SearchFolder': {id: 'SearchFolder', value: 'Search in Folder', comment: 'Search Folder tooltip'},
