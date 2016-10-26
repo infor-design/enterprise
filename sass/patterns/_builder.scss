@@ -79,7 +79,18 @@
   h3,
   h4 {
     color: $white;
+    margin-bottom: 0;
   }
+
+  .panel-subhead {
+    display: block;
+    margin-top: 3px;
+  }
+
+  .panel-title {
+    line-height: 3rem;
+  }
+
 }
 
 .builder-content {
