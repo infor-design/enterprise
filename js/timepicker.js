@@ -405,7 +405,9 @@
             periodSelect.data('dropdown').pseudoElem.find('span').text(initValues.period);
           }
 
-          $(this).find('#timepicker-hours-shdo').focus();
+          ui.find('div.dropdown').first().focus();
+        }).on('hide.timepicker', function() {
+          self.element.focus();
         });
 
         popupContent.find('.set-time').off('click.timepicker').onTouchClick('timepicker').on('click.timepicker', function(e) {
@@ -636,6 +638,7 @@
         }
 
         this.element.attr({'aria-expanded': 'true'});
+        this.popup.find('div.dropdown').first().focus();
       },
 
       // Triggers the "hide" method on the tooltip plugin.  The Timepicker officially "closes" after the popover's
