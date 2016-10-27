@@ -65,7 +65,6 @@
         columns.push({ id: 'activity', name: 'Activity', field: 'activity', editor: Editors.Input});  //maxLength: 2
         columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', required: true, align: 'right', editor: Editors.Input, mask: '###', isEditable: function (row) {
             //For this fake logic just disable odd rows
-            console.log(row);
             return (row % 2 === 0);
           }});
         columns.push({ id: 'portable', name: 'Portable', field: 'portable', align: 'center', formatter: Formatters.Checkbox, editor: Editors.Checkbox});

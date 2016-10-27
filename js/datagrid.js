@@ -193,13 +193,14 @@ window.Formatters = {
   },
 
   // Tree Expand / Collapse Button and Paddings
-  Tree: function (row, cell, value, col, item) {
+  Tree: function (row, cell, value, col, item, api) {
     var isOpen = item.expanded,
-      button = '<button type="button" class="btn-icon datagrid-expand-btn' + (isOpen ? ' is-expanded' : '') + '" tabindex="-1"' +  (item.depth ? ' style="margin-left: ' + (item.depth ? (30* (item.depth -1)) + 'px' : '') + '"' : '') + '>'+
-      '<span class="icon plus-minus'+ (isOpen ? ' active' : '') + '"></span>' +
-      '<span class="audible">' + Locale.translate('ExpandCollapse') + '</span>' +
-      '</button>' + ( value ? '<span> ' + value + '</span>' : ''),
-      node = '<span class="datagrid-tree-node"' + (item.depth ? ' style="margin-left: ' + (item.depth ? (30* (item.depth-1)) + 'px' : '') + '"' : '') + '> ' + value + '</span>';
+      depth = api.settings.treeDepth[row-1].depth,
+      button = '<button type="button" class="btn-icon datagrid-expand-btn'+ (isOpen ? ' is-expanded' : '') +'" tabindex="-1"'+ (depth ? ' style="margin-left: '+ (depth ? (30* (depth -1)) +'px' : '') +'"' : '') +'>'+
+      '<span class="icon plus-minus'+ (isOpen ? ' active' : '') +'"></span>' +
+      '<span class="audible">'+ Locale.translate('ExpandCollapse') +'</span>' +
+      '</button>'+ ( value ? '<span> '+ value +'</span>' : ''),
+      node = '<span class="datagrid-tree-node"'+ (depth ? ' style="margin-left: '+ (depth ? (30* (depth-1)) +'px' : '') +'"' : '') +'> '+ value +'</span>';
 
     return (item[col.children ? col.children : 'children'] ? button : node);
   },
@@ -268,7 +269,7 @@ window.Formatters = {
 
   Button: function (row, cell, value, col) {
     var text = col.text ? col.text : ((value === null || value === undefined || value === '') ? '' : value.toString()),
-      markup ='<button type="button" class="'+ ( col.icon ? 'btn-icon': 'btn') + '  row-btn ' + (col.cssClass ? col.cssClass : '') + '">';
+      markup ='<button type="button" class="'+ ( col.icon ? 'btn-icon': 'btn') + ' row-btn ' + (col.cssClass ? col.cssClass : '') + '">';
 
       if (col.icon) {
         markup += $.createIcon({ icon: col.icon, file: col.iconFile });
@@ -320,19 +321,16 @@ window.Formatters = {
   },
 
   // Possible future Formatters
+  // Percent
   // Image?
-  // Tree
   // Multi Select
-  // Lookup
   // Re Order - Drag Indicator
   // Sparkline
   // Progress Indicator (n of 100%)
   // Process Indicator
   // Currency
-  // Percent
   // File Upload (Simple)
   // Menu Button
-  // Icon Button (Approved and SoHo Xi Standard)
   // Toggle Button (No)
   // Color Picker (Low)
 };
@@ -474,7 +472,7 @@ window.Editors = {
     this.init();
   },
 
-  Dropdown: function(row, cell, value, container, column, event, grid) {
+  Dropdown: function(row, cell, value, container, column, event, grid, rowData) {
 
     this.name = 'dropdown';
     this.originalValue = value;
@@ -488,6 +486,8 @@ window.Editors = {
 
       if (column.options) {
         var html, opt, optionValue;
+        value = grid.fieldValue(rowData,column.field);
+
         var compareValue = column.caseInsensitive && typeof value === 'string' ? value.toLowerCase() : value;
 
         for (var i = 0; i < column.options.length; i++) {
@@ -509,8 +509,9 @@ window.Editors = {
       if (!editorOptions || (editorOptions && !editorOptions.cssClass)) {
         editorOptions = $.extend(column.editorOptions, {'cssClass': 'is-editing'});
       }
+
       this.input.dropdown(editorOptions);
-      this.input = this.input.parent().find('div.dropdown');
+
     };
 
     this.val = function (value) {
@@ -562,14 +563,10 @@ window.Editors = {
 
       //Check if isClick or cell touch and just open the list
       this.select.trigger('openlist');
+      this.input.parent().find('div.dropdown').focus();
 
-      this.select.on('listclosed', function () {
-        if (grid.activeCell.cell === self.cell.cell && grid.activeCell.row === self.cell.row) {
-         self.input.trigger('focusout');
-         container.parent().trigger('focus');
-        } else {
-          grid.commitCellEdit(self.input);
-        }
+      this.input.on('listclosed', function () {
+        grid.commitCellEdit(self.input);
         grid.setNextActiveCell(event);
       });
 
@@ -651,7 +648,11 @@ window.Editors = {
     };
 
     this.val = function (value) {
-      return value ? this.input.val(value) : this.input.val();
+      var fieldValue = this.input.val();
+      if (fieldValue && fieldValue.indexOf('|') > -1) {
+        fieldValue = fieldValue.substr(0, fieldValue.indexOf('|'));
+      }
+      return value ? this.input.val(value) : fieldValue;
     };
 
     this.focus = function () {
@@ -744,6 +745,7 @@ window.Editors = {
         self.input.remove();
       }, 0);
     };
+
     this.init();
   }
 
@@ -791,7 +793,9 @@ $.fn.datagrid = function(options) {
   // Plugin Constructor
   function Datagrid(element) {
     this.element = $(element);
+    Soho.logTimeStart(pluginName);
     this.init();
+    Soho.logTimeEnd(pluginName);
   }
 
   // Actual Plugin Code
@@ -809,6 +813,8 @@ $.fn.datagrid = function(options) {
 
       this.appendToolbar();
       this.restoreColumns();
+      this.setTreeDepth();
+      this.setTreeRootNodes();
       this.render();
       this.initFixedHeader();
       this.createResizeHandle();
@@ -1145,6 +1151,17 @@ $.fn.datagrid = function(options) {
       this.loadData(dataset, pagerInfo);
     },
 
+    triggerSource: function(pagerType) {
+
+      this.pager.pagerInfo = this.pager.pagerInfo || {};
+      this.pager.pagerInfo.type = pagerType;
+
+      if (pagerType !== 'refresh') {
+        this.pager.pagerInfo.activePage = 1;
+      }
+      this.renderPager(this.pager.pagerInfo);
+    },
+
     loadData: function (dataset, pagerInfo, isResponse) {
       this.settings.dataset = dataset;
 
@@ -1164,14 +1181,15 @@ $.fn.datagrid = function(options) {
       }
 
       //Update Paging and Clear Rows
+      this.setTreeDepth();
+      this.setTreeRootNodes();
       this.renderRows();
       this.renderPager(pagerInfo, isResponse);
 
       if (pagerInfo && pagerInfo.preserveSelected) {
         this.updateSelected();
         this.syncSelectedUI();
-      }
-      else {
+      } else {
         this.unSelectAllRows();
       }
     },
@@ -1323,7 +1341,7 @@ $.fn.datagrid = function(options) {
             id = self.uniqueId('-header-' + j),
             header = this.headerRow.find('#'+id),
             filterId = self.uniqueId('-header-filter-' + j),
-            filterMarkup = '<div class="datagrid-filter-wrapper">'+ this.renderFilterButton(col.filterType, col.filterDisabled) +'<label class="audible" for="'+ filterId +'">' +
+            filterMarkup = '<div class="datagrid-filter-wrapper">'+ this.renderFilterButton(col) +'<label class="audible" for="'+ filterId +'">' +
               col.name + '</label>';
 
           switch (col.filterType) {
@@ -1368,21 +1386,35 @@ $.fn.datagrid = function(options) {
       }
 
       //Attach Keyboard support
+      var popupOpts = {
+        offset: {
+          y: 15
+        }
+      };
+
       this.headerRow.addClass('is-filterable');
-      this.headerRow.find('.btn-filter').popupmenu({}).on('selected.datagrid', function () {
+      this.headerRow.find('.btn-filter').popupmenu(popupOpts).on('selected.datagrid', function () {
         self.applyFilter();
       });
 
+      var lastValue = '';
+
       this.headerRow.on('keydown.datagrid', '.datagrid-filter-wrapper input', function (e) {
+        var input = $(this);
         e.stopPropagation();
 
-        if (e.which === 13) {
+        if (e.which === 13 && lastValue !== input.val()) {
           e.preventDefault();
-          self.applyFilter();
+          $(this).trigger('change');
+          lastValue = input.val();
         }
 
       }).on('change.datagrid', '.datagrid-filter-wrapper input', function () {
-        self.applyFilter();
+        var input = $(this);
+        if (lastValue !== input.val()) {
+          self.applyFilter();
+          lastValue = input.val();
+        }
       });
 
       this.headerRow.find('.dropdown, .multiselect').on('selected.datagrid', function () {
@@ -1395,53 +1427,69 @@ $.fn.datagrid = function(options) {
     //Render one filter item as used in renderFilterButton
     renderFilterItem: function (icon, text, checked) {
       var iconMarkup = $.createIcon({ classes: 'icon icon-filter', icon: 'filter-' + icon });
-      return '<li ' + (checked ? 'class="is-checked"' : '') + '><a href="#">' + iconMarkup + '<span>'+ text +'</span></a></li>';
+      return '<li '+ (checked ? 'class="is-checked"' : '') +'><a href="#">'+ iconMarkup +'<span>'+ text +'</span></a></li>';
     },
 
     //Render the Filter Button and Menu based on filterType - which determines the options
-    renderFilterButton: function (filterType, isDisabled) {
-      var btnMarkup = '<button type="button" class="btn-menu btn-filter" data-init="false" ' + (isDisabled ? ' disabled' : '') + ' type="button"><span class="audible">Filter</span>' + $.createIcon({icon: 'dropdown' , classes: 'icon-dropdown'}) +'</button>' +
+    renderFilterButton: function (col) {
+      var self = this,
+        filterType = col.filterType,
+        isDisabled = col.filterDisabled,
+        filterConditions = $.isArray(col.filterConditions) ? col.filterConditions : [],
+        inArray = function (s, array) {
+          array = array || filterConditions;
+          return ($.inArray(s, array) > -1);
+        },
+        render = function (icon, text, checked) {
+          return filterConditions.length && !inArray(icon) ?
+            '' : self.renderFilterItem(icon, text, checked);
+        },
+        btnMarkup = '<button type="button" class="btn-menu btn-filter" data-init="false" ' + (isDisabled ? ' disabled' : '') + ' type="button"><span class="audible">Filter</span>' + $.createIcon({icon: 'dropdown' , classes: 'icon-dropdown'}) +'</button>' +
         '<ul class="popupmenu has-icons is-translatable is-selectable">';
 
-        //Just the dropdown
-        if (filterType === 'contents' || filterType === 'select') {
-          return '';
-        }
+      //Just the dropdown
+      if (filterType === 'contents' || filterType === 'select') {
+        return '';
+      }
 
-        if (filterType === 'text') {
-          btnMarkup += this.renderFilterItem('contains', 'Contains', true);
-        }
+      if (filterType === 'text') {
+        btnMarkup += ''+
+          render('contains', 'Contains', true) +
+          render('does-not-contain', 'DoesNotContain', false);
+      }
 
-        if (filterType === 'checkbox') {
-          btnMarkup += this.renderFilterItem('selected-notselected', 'EitherSelectedOrNotSelected', true);
-          btnMarkup += this.renderFilterItem('selected', 'Selected');
-          btnMarkup += this.renderFilterItem('not-selected', 'NotSelected');
-        }
+      if (filterType === 'checkbox') {
+        btnMarkup += ''+
+          render('selected-notselected', 'EitherSelectedOrNotSelected', true) +
+          render('selected', 'Selected') +
+          render('not-selected', 'NotSelected');
+      }
 
-        if (filterType !== 'checkbox') {
-          btnMarkup += this.renderFilterItem('equals', 'Equals', (filterType === 'integer' || filterType === 'date' ? true : false)) +
-            this.renderFilterItem('does-not-equal', 'DoesNotEqual');
+      if (filterType !== 'checkbox') {
+        btnMarkup += ''+
+          render('equals', 'Equals', (filterType === 'integer' || filterType === 'date')) +
+          render('does-not-equal', 'DoesNotEqual') +
+          render('is-empty', 'IsEmpty') +
+          render('is-not-empty', 'IsNotEmpty');
+      }
 
-          btnMarkup += this.renderFilterItem('is-empty', 'IsEmpty') +
-          this.renderFilterItem('is-not-empty', 'IsNotEmpty');
-        }
+      if (filterType === 'integer' || filterType === 'date' || filterType === 'decimal') {
+        btnMarkup += ''+
+          render('less-than', 'LessThan') +
+          render('less-equals', 'LessOrEquals') +
+          render('greater-than', 'GreaterThan') +
+          render('greater-equals', 'GreaterOrEquals');
+      }
 
-        if (filterType === 'integer' || filterType === 'date' || filterType === 'decimal') {
-          btnMarkup += this.renderFilterItem('less-than', 'LessThan');
-          btnMarkup += this.renderFilterItem('less-equals', 'LessOrEquals');
-          btnMarkup += this.renderFilterItem('greater-than', 'GreaterThan');
-          btnMarkup += this.renderFilterItem('greater-equals', 'GreaterOrEquals');
-        }
+      if (filterType === 'text') {
+        btnMarkup += ''+
+          render('end-with', 'EndWith') +
+          render('does-not-end-with', 'DoesNotEndWith') +
+          render('start-with', 'StartWith') +
+          render('does-not-start-with', 'DoesNotStartWith');
+      }
 
-        if (filterType === 'text') {
-          btnMarkup += this.renderFilterItem('end-with', 'EndWith');
-          btnMarkup += this.renderFilterItem('does-not-end-with', 'DoesNotEndWith');
-          btnMarkup += this.renderFilterItem('start-with', 'StartWith');
-          btnMarkup += this.renderFilterItem('does-not-start-with', 'DoesNotStartWith');
-        }
-
-        btnMarkup += '</ul>';
-
+      btnMarkup += '</ul>';
       return btnMarkup ;
     },
 
@@ -1488,10 +1536,12 @@ $.fn.datagrid = function(options) {
           //Run Data over the formatter
           if (columnDef.filterType === 'text') {
             rowValue = self.formatValue(columnDef.formatter, i , conditions[i].columnId, rowValue, columnDef, rowData, self);
-    		//Strip any html markup that might be in the formatters
+
+            //Strip any html markup that might be in the formatters
             var rex = /(<([^>]+)>)|(&lt;([^>]+)&gt;)/ig;
             rowValue = rowValue.replace(rex , '').toLowerCase();
-            rowValueStr = rowValue;
+
+            rowValueStr = rowValue.toString().toLowerCase();
           }
 
           if (columnDef.filterType === 'contents' || columnDef.filterType === 'select') {
@@ -1516,7 +1566,7 @@ $.fn.datagrid = function(options) {
                 isMatch = false;
 
                 for (var k = 0; k < conditions[i].value.length; k++) {
-                  var match = conditions[i].value[k].indexOf(rowValue) >= 0 && rowValue.toString() !== '';
+                  var match = conditions[i].value[k].toLowerCase().indexOf(rowValue) >= 0 && rowValue.toString() !== '';
                   if (match) {
                     isMatch = true;
                   }
@@ -1531,6 +1581,9 @@ $.fn.datagrid = function(options) {
               break;
             case 'contains':
               isMatch = (rowValueStr.indexOf(conditionValue) > -1 && rowValue.toString() !== '');
+              break;
+            case 'does-not-contain':
+              isMatch = (rowValueStr.indexOf(conditionValue) === -1 && rowValue.toString() !== '');
               break;
             case 'end-with':
               isMatch = (rowValueStr.lastIndexOf(conditionValue) === (rowValueStr.length - conditionValue.toString().length)  && rowValueStr !== '');
@@ -1563,6 +1616,7 @@ $.fn.datagrid = function(options) {
               isMatch = (rowValue >= conditionValue && rowValue !== '');
               break;
             case 'selected':
+
               if (columnDef && columnDef.isChecked) {
                  isMatch = columnDef.isChecked(rowValue);
                  break;
@@ -1590,15 +1644,25 @@ $.fn.datagrid = function(options) {
       };
 
       if (!this.settings.disableClientFilter) {
-        for (var i = 0; i < this.settings.dataset.length; i++) {
-          var isFiltered = !checkRow(this.settings.dataset[i]);
-          this.settings.dataset[i].isFiltered = isFiltered;
+        var dataset, isFiltered, i, len;
+
+        if (this.settings.treeGrid) {
+          dataset = this.settings.treeDepth;
+          for (i = 0, len = dataset.length; i < len; i++) {
+            isFiltered = !checkRow(dataset[i].node);
+            dataset[i].node.isFiltered = isFiltered;
+          }
+        }
+        else {
+          dataset = this.settings.dataset;
+          for (i = 0, len = dataset.length; i < len; i++) {
+            isFiltered = !checkRow(dataset[i]);
+            dataset[i].isFiltered = isFiltered;
+          }
         }
       }
-
       this.renderRows();
       this.resetPager('filtered');
-
     },
 
     //Clear and reset the filter
@@ -1851,13 +1915,43 @@ $.fn.datagrid = function(options) {
       return value;
     },
 
+    // Set tree root nodes
+    setTreeRootNodes: function() {
+      this.settings.treeRootNodes = this.settings.treeDepth
+        .filter(function(node) {
+          return node.depth === 1;
+        });
+    },
+
+    // Set tree depth
+    setTreeDepth: function(dataset) {
+      var self = this,
+        idx = 0,
+        iterate = function(node, depth) {
+          idx++;
+          self.settings.treeDepth.push({idx: idx, depth: depth, node: node});
+          var children = node.children || [];
+          for (var i = 0, len = children.length; i < len; i++) {
+            iterate(children[i], depth + 1);
+          }
+        };
+
+      dataset = dataset || this.settings.dataset;
+      self.settings.treeDepth = [];
+
+      for (var i = 0, len = dataset.length; i < len; i++) {
+        iterate(dataset[i], 1);
+      }
+    },
+
     //Render the Rows
     renderRows: function() {
       var tableHtml = '',
         self = this, i,
+        s = self.settings,
         activePage = self.pager ? self.pager.activePage : 1,
-        pagesize = self.settings.pagesize,
-        dataset = self.settings.dataset;
+        pagesize = s.pagesize,
+        dataset = s.dataset;
 
       var body = self.table.find('tbody');
       if (body.length === 0) {
@@ -1872,21 +1966,26 @@ $.fn.datagrid = function(options) {
       self.recordCount = 0;
       self.filteredCount = 0;
 
+      // Reset recordCount for paging
+      if (s.treeGrid && s.paging && !s.source && activePage > 1) {
+        self.recordCount = s.treeRootNodes[(pagesize * activePage) - pagesize].idx-1;
+      }
+
       for (i = 0; i < dataset.length; i++) {
 
         //For better performance dont render out of page
-        if (this.settings.paging && !this.settings.source) {
+        if (s.paging && !s.source) {
 
           if (activePage === 1 && (i - this.filteredCount) >= pagesize){
             if (!dataset[i].isFiltered) {
-              this.recordCount++;
+              // this.recordCount++;
             }
             continue;
           }
 
           if (activePage > 1 && !((i - this.filteredCount) >= pagesize*(activePage-1) && (i - this.filteredCount) < pagesize*activePage)) {
             if (!dataset[i].isFiltered) {
-              this.recordCount++;
+              // this.recordCount++;
             } else {
               this.filteredCount++;
             }
@@ -1895,13 +1994,13 @@ $.fn.datagrid = function(options) {
         }
 
         //Exclude Filtered Rows
-        if (dataset[i].isFiltered) {
+        if ((s.treeGrid ? s.treeRootNodes[i].node : dataset[i]).isFiltered) {
           this.filteredCount++;
           continue;
         }
 
+        tableHtml += self.rowHtml(dataset[i], s.treeGrid ? this.recordCount : i);
         this.recordCount++;
-        tableHtml += self.rowHtml(dataset[i], false, this.settings.treeGrid ? this.recordCount-1 : i);
       }
 
       self.tableBody.append(tableHtml);
@@ -1911,15 +2010,24 @@ $.fn.datagrid = function(options) {
 
       //Set Tab Index and active Cell
       setTimeout(function () {
-        if (!self.settings.source) {
+        if (!s.source) {
           self.displayCounts();
         }
+        self.setAlternateRowShading();
         self.activeCell = {node: self.cellNode(0, 0).attr('tabindex', '0'), isFocused: false, cell: 0, row: 0};
       }, 100);
     },
 
+    setAlternateRowShading: function() {
+      if (this.settings.alternateRowShading) {
+        $('tr[role="row"]:visible', this.tableBody)
+          .removeClass('alt-shading').filter(':odd').addClass('alt-shading');
+      }
+    },
+
     formatValue: function (formatter, row, cell, fieldValue, columnDef, rowData, api) {
       var formattedValue;
+      api = api || this;
 
       //Use default formatter if undefined
       if (formatter === undefined) {
@@ -1936,13 +2044,27 @@ $.fn.datagrid = function(options) {
 
     recordCount: 0,
 
-    rowHtml: function (rowData, renderHidden, dataRowIdx) {
-
+    rowHtml: function (rowData, dataRowIdx) {
       var isEven = (this.recordCount % 2 === 0),
         self = this,
         activePage = self.pager ? self.pager.activePage : 1,
         pagesize = self.settings.pagesize,
-        rowHtml = '';
+        rowHtml = '',
+        d = self.settings.treeDepth[dataRowIdx],
+        depth, d2, i, l, isHidden;
+
+      // Default
+      d = d ? d.depth : 0;
+      depth = d;
+
+      // Setup if this row will be hidden or not
+      for (i = dataRowIdx; i >= 0 && d > 1 && !isHidden; i--) {
+        d2 = self.settings.treeDepth[i];
+        if (d !== d2.depth && d > d2.depth) {
+          d = d2.depth;
+          isHidden = !d2.node.expanded;
+        }
+      }
 
       var ariaRowindex = ((dataRowIdx + 1) + (self.settings.source  ? ((activePage-1) * pagesize) : 0));
       if (this.settings.indeterminate) {
@@ -1951,22 +2073,28 @@ $.fn.datagrid = function(options) {
 
       rowHtml = '<tr role="row" aria-rowindex="' + ariaRowindex + '"' +
                 (self.settings.treeGrid && rowData.children ? ' aria-expanded="' + (rowData.expanded ? 'true"' : 'false"') : '') +
-                (self.settings.treeGrid ? ' aria-level= "' + rowData.depth + '"' : '') +
+                (self.settings.treeGrid ? ' aria-level= "' + depth + '"' : '') +
                 ' class="datagrid-row'+
                 (self.settings.rowHeight !== ' normal' ? ' ' + self.settings.rowHeight + '-rowheight' : '') +
-                (renderHidden ? ' is-hidden' : '') +
+                (isHidden ? ' is-hidden' : '') +
                 (self.settings.alternateRowShading && !isEven ? ' alt-shading' : '') +
                 (!self.settings.cellNavigation ? ' is-clickable' : '' ) +
-                (self.settings.treeGrid ? (rowData.children ? ' datagrid-tree-parent' : (rowData.depth > 1 ? ' datagrid-tree-child' : '')) : '') +
+                (self.settings.treeGrid ? (rowData.children ? ' datagrid-tree-parent' : (depth > 1 ? ' datagrid-tree-child' : '')) : '') +
                  '"' + '>';
 
       for (var j = 0; j < self.settings.columns.length; j++) {
         var col = self.settings.columns[j],
-            cssClass = '',
-            formatter = (col.formatter ? col.formatter : self.defaultFormatter),
-            formatted = '';
-
-        formatted = self.formatValue(formatter, this.recordCount, j, self.fieldValue(rowData, self.settings.columns[j].field), self.settings.columns[j], rowData, self);
+          cssClass = '',
+          formatter = (col.formatter || self.defaultFormatter),
+          formatted = self.formatValue(
+            formatter,
+            dataRowIdx + 1,
+            j,
+            self.fieldValue(rowData, self.settings.columns[j].field),
+            self.settings.columns[j],
+            rowData,
+            self
+          );
 
         if (formatted.indexOf('<span class="is-readonly">') === 0) {
           col.readonly = true;
@@ -2001,7 +2129,7 @@ $.fn.datagrid = function(options) {
 
         //Run a function that helps check if editable
         if (col.isEditable && !col.readonly) {
-          var canEdit = col.isEditable(ariaRowindex-1, j, self.fieldValue(rowData, self.settings.columns[j].field), col, rowData);
+          var canEdit = col.isEditable(ariaRowindex - 1, j, self.fieldValue(rowData, self.settings.columns[j].field), col, rowData);
 
           if (!canEdit) {
             cssClass += ' is-readonly';
@@ -2029,16 +2157,22 @@ $.fn.datagrid = function(options) {
 
         cssClass += (col.focusable ? ' is-focusable' : '');
 
+        var rowspan = this.calculateRowspan(cellValue, dataRowIdx, col);
+        if (rowspan === '') {
+          continue;
+        }
+
         rowHtml += '<td role="gridcell" ' + ariaReadonly + ' aria-colindex="' + (j+1) + '" '+
             ' aria-describedby="' + self.uniqueId('-header-' + j) + '"' +
            (cssClass ? ' class="' + cssClass + '"' : '') + 'data-idx="' + (j) + '"' +
            (col.tooltip ? ' title="' + col.tooltip.replace('{{value}}', cellValue) + '"' : '') +
            (col.id === 'rowStatus' && rowData.rowStatus && rowData.rowStatus.tooltip ? ' title="' + rowData.rowStatus.tooltip + '"' : '') +
-             (self.settings.columnGroups ? 'headers = "' + self.uniqueId('-header-' + j) + ' ' + self.getColumnGroup(j) + '"' : '') +
+           (self.settings.columnGroups ? 'headers = "' + self.uniqueId('-header-' + j) + ' ' + self.getColumnGroup(j) + '"' : '') +
+           (rowspan ? rowspan : '' ) +
            '><div class="datagrid-cell-wrapper">';
 
         if (col.contentVisible) {
-          var canShow = col.contentVisible(this.recordCount, j, cellValue, col, rowData);
+          var canShow = col.contentVisible(dataRowIdx + 1, j, cellValue, col, rowData);
           if (!canShow) {
             formatted = '';
           }
@@ -2066,14 +2200,37 @@ $.fn.datagrid = function(options) {
 
       //Render Tree Children
       if (rowData.children) {
-
-        for (var l = 0; l < rowData.children.length; l++) {
+        for (i=0, l=rowData.children.length; i<l; i++) {
           this.recordCount++;
-          rowHtml += self.rowHtml(rowData.children[l], !rowData[self.treeExpansionField], dataRowIdx +  l + 1);
+          rowHtml += self.rowHtml(rowData.children[i], this.recordCount);
         }
       }
 
       return rowHtml;
+    },
+
+    rowSpans: [],
+
+    calculateRowspan: function (value, row, col) {
+      var cnt = 0, min = null;
+
+      if (!col.rowspan) {
+        return;
+      }
+
+      for (var i = 0; i < this.settings.dataset.length; i++) {
+        if (value === this.settings.dataset[i][col.field]) {
+          cnt++;
+          if (min === null) {
+            min = i;
+          }
+        }
+      }
+
+      if (row === min) {
+        return ' rowspan ="'+ cnt + '"';
+      }
+      return '';
     },
 
     setupTooltips: function () {
@@ -2183,15 +2340,12 @@ $.fn.datagrid = function(options) {
       if (columnGroups) {
         this.settings.columnGroups = columnGroups;
       }
-
       this.renderRows();
       this.renderHeader();
       this.setColumnWidths();
-
       this.resetPager('updatecolumns');
       this.element.trigger('columnchange', [{type: 'updatecolumns', columns: this.settings.columns}]);
       this.saveColumns();
-
     },
 
     saveColumns: function () {
@@ -2350,7 +2504,7 @@ $.fn.datagrid = function(options) {
 
           for (var i = 0; i < dataset.length; i++) {
             if (!dataset[i].isFiltered) {
-              tableHtml += self.rowHtml(dataset[i], false, i);
+              tableHtml += self.rowHtml(dataset[i], i);
             }
           }
 
@@ -2603,7 +2757,8 @@ $.fn.datagrid = function(options) {
 
     //Returns a cell node
     cellNode: function (row, cell) {
-      var rowNode = this.tableBody.find('tr[role="row"]').eq(row);
+      var rowNode = this.tableBody.find('tr[aria-rowindex]').eq(row);
+
       if (row instanceof jQuery) {
         rowNode = row;
       }
@@ -2643,12 +2798,16 @@ $.fn.datagrid = function(options) {
         });
 
       //Prevent redirects
-      this.table.off('mouseup.datagrid touchstart.datagrid').on('mouseup.datagrid touchstart.datagrid', 'a', function (e) {
+      this.table
+        .off('mouseup.datagrid touchstart.datagrid')
+        .on('mouseup.datagrid touchstart.datagrid', 'a', function (e) {
         e.preventDefault();
       });
 
       //Handle Clicking Buttons and links in formatters
-      this.table.off('mouseup.datagrid touchstart.datagrid').on('mouseup.datagrid touchstart.datagrid', 'td', function (e) {
+      this.table
+        .off('mouseup.datagrid touchstart.datagrid')
+        .on('mouseup.datagrid touchstart.datagrid', 'td', function (e) {
 
         var elem = $(this).closest('td'),
           btn = $(this).find('button'),
@@ -2656,7 +2815,9 @@ $.fn.datagrid = function(options) {
           rowNode = $(this).closest('tr'),
           dataRowIdx = self.dataRowIndex(rowNode),
           col = self.columnSettings(cell),
-          item = self.settings.dataset[dataRowIdx];
+          item = self.settings.treeGrid ?
+            self.settings.treeDepth[dataRowIdx].node :
+            self.settings.dataset[dataRowIdx];
 
         if (e.type === 'mouseup' && e.button === 2) {
           return;
@@ -2665,8 +2826,11 @@ $.fn.datagrid = function(options) {
         function handleClick() {
 
           if (elem.hasClass('is-focusable')) {
-            if (!$(e.target).is(self.settings.buttonSelector)) {
-              return;
+            var target = $(e.target);
+            if (!target.is(self.settings.buttonSelector)) {
+              if (!target.parent('button').is(self.settings.buttonSelector)) {
+                return;
+              }
             }
           }
 
@@ -2680,7 +2844,7 @@ $.fn.datagrid = function(options) {
         }
 
         if (col.menuId) {
-          btn.popupmenu({menuId: col.menuId, trigger: 'immediate'});
+          btn.popupmenu({menuId: col.menuId, trigger: 'immediate', offset: { y: 5 }});
 
           if (col.selected) {
             btn.on('selected.datagrid', col.selected);
@@ -2688,8 +2852,11 @@ $.fn.datagrid = function(options) {
         }
 
         if (btn.is('.datagrid-expand-btn')) {
+          e.stopPropagation();
+          e.stopImmediatePropagation();
           self.toggleRowDetail(dataRowIdx);
-          self.toggleChildren(dataRowIdx);
+          self.toggleChildren(e, dataRowIdx);
+          return false;
         }
 
         if (self.isCellEditable(dataRowIdx, cell)) {
@@ -2703,13 +2870,7 @@ $.fn.datagrid = function(options) {
       });
 
       var body = this.table.find('tbody');
-      body.off('touchcancel.datagrid touchend.datagrid').on('touchcancel.datagrid touchend.datagrid', 'td', function (e) {
-        if (!$('input, button, a', this).length) {
-          e.preventDefault();
-        }
-        e.stopPropagation();
-        $(this).trigger('click');
-      }).off('click.datagrid').on('click.datagrid', 'td', function (e) {
+      body.off('click.datagrid').on('click.datagrid', 'td', function (e) {
         var target = $(e.target);
 
         if (target.closest('.datagrid-row-detail').length === 1) {
@@ -2724,8 +2885,11 @@ $.fn.datagrid = function(options) {
           return;
         }
 
-        var canSelect = self.settings.clickToSelect ? true : $(target).is('.datagrid-selection-checkbox') || $(target).find('.datagrid-selection-checkbox').length === 1;
-        if ($(target).is('.datagrid-drilldown')) {
+        var canSelect = self.settings.clickToSelect ? true :
+          target.is('.datagrid-selection-checkbox') ||
+          target.find('.datagrid-selection-checkbox').length === 1;
+
+        if (target.is('.datagrid-drilldown')) {
           canSelect = false;
         }
 
@@ -2829,7 +2993,7 @@ $.fn.datagrid = function(options) {
       // Implement Editing Commit Functionality
       body.off('focusout.datagrid').on('focusout.datagrid', 'td input, td textarea, div.dropdown', function () {
         //Popups are open
-        if ($('#calendar-popup, .autocomplete.popupmenu.is-open').is(':visible') ||
+        if ($('#calendar-popup, #dropdown-list, .autocomplete.popupmenu.is-open').is(':visible') ||
           $('.lookup-modal.is-visible').length) {
           return;
         }
@@ -3168,9 +3332,11 @@ $.fn.datagrid = function(options) {
     _selectedRows: [],
 
     selectAllRows: function () {
-      var rows = [];
+      var rows = [],
+        dataset = this.settings.treeGrid ?
+          this.settings.treeDepth : this.settings.dataset;
 
-      for (var i = 0; i < this.settings.dataset.length; i++) {
+      for (var i=0, l=dataset.length; i < l; i++) {
         rows.push(i);
       }
 
@@ -3191,9 +3357,12 @@ $.fn.datagrid = function(options) {
 
     //Toggle selection on a single row
     selectRow: function (idx, selectAll) {
-      var checkbox = null, rowNode, dataRowIndex;
+      var rowNode, dataRowIndex,
+        self = this,
+        checkbox = null,
+        s = this.settings;
 
-      if (idx === undefined || idx === -1 || !this.settings.selectable) {
+      if (idx === undefined || idx === -1 || !s.selectable) {
         return;
       }
 
@@ -3215,24 +3384,44 @@ $.fn.datagrid = function(options) {
         return;
       }
 
-      if (this.settings.selectable === 'single' && this._selectedRows.length > 0) {
+      if (s.selectable === 'single' && this._selectedRows.length > 0) {
         this.unselectRow(this._selectedRows[0].idx);
       }
 
       if (!rowNode.hasClass('is-selected')) {
-        checkbox = this.cellNode(rowNode, this.columnIdxById('selectionCheckbox'));
+        var rowData,
+          // Select it
+          selectNode = function(elem, index, data) {
+            checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox'));
+            elem.addClass('is-selected').attr('aria-selected', 'true')
+              .find('td').attr('aria-selected', 'true');
+            checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
+              .addClass('is-checked').attr('aria-checked', 'true');
+            self._selectedRows.push({idx: index, data: data, elem: elem});
+          };
 
-        //Select It
-        var rowData = this.settings.dataset[dataRowIndex];
-        if (this.pager && this.settings.source) {
-          rowData = this.settings.dataset[rowNode.index()];
+        if (s.treeGrid) {
+          if (rowNode.is('.datagrid-tree-parent') && s.selectable === 'multiple') {
+            // Select node and node-children
+            rowNode.add(rowNode.nextUntil('[aria-level="1"]')).each(function() {
+              var elem = $(this),
+                index = elem.attr('aria-rowindex') -1,
+                data = s.treeDepth[index].node;
+              selectNode(elem, index, data);
+            });
+          }
+          // Single element selection
+          else {
+            rowData = s.treeDepth[self.pager && s.source ? rowNode.index() : dataRowIndex].node;
+            selectNode(rowNode, dataRowIndex, rowData);
+          }
+          self.setNodeStatus(rowNode);
         }
-        this._selectedRows.push({idx: dataRowIndex, data: rowData, elem: rowNode});
-        this.lastSelectedRow = idx;// Rememeber index to use shift key
-
-        rowNode.addClass('is-selected').attr('aria-selected', 'true');
-        rowNode.find('td').attr('aria-selected', 'true');
-        checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox').addClass('is-checked').attr('aria-checked', 'true');
+        else {
+          rowData = s.dataset[self.pager && s.source ? rowNode.index() : dataRowIndex];
+          selectNode(rowNode, dataRowIndex, rowData);
+          self.lastSelectedRow = idx;// Rememeber index to use shift key
+        }
       }
 
       this.syncSelectedUI();
@@ -3256,33 +3445,33 @@ $.fn.datagrid = function(options) {
     syncSelectedUI: function () {
 
       var headerCheckbox = this.headerRow.find('.datagrid-checkbox'),
-        self = this;
+        s = this.settings;
 
       //Sync the header checkbox
       if (this._selectedRows.length > 0) {
         headerCheckbox.addClass('is-checked is-partial');
       }
 
-      if (this._selectedRows.length === this.settings.dataset.length) {
+      if (this._selectedRows.length === (s.treeGrid ? s.treeDepth : s.dataset).length) {
         headerCheckbox.addClass('is-checked').removeClass('is-partial');
       }
 
       if (this._selectedRows.length === 0) {
-        headerCheckbox.removeClass('is-checked').removeClass('is-partial');
+        headerCheckbox.removeClass('is-checked is-partial');
       }
 
       //Open or Close the Contextual Toolbar.
-      if (self.contextualToolbar.length !== 1 || self.dontSyncUi) {
+      if (this.contextualToolbar.length !== 1 || this.dontSyncUi) {
         return;
       }
 
-      if (self._selectedRows.length === 0) {
-        self.contextualToolbar.animateClosed();
+      if (this._selectedRows.length === 0) {
+        this.contextualToolbar.animateClosed();
 
       }
 
-      if (self._selectedRows.length > 0 && self.contextualToolbar.height() === 0) {
-        self.contextualToolbar.css('display', 'block').animateOpen();
+      if (this._selectedRows.length > 0 && this.contextualToolbar.height() === 0) {
+        this.contextualToolbar.css('display', 'block').animateOpen();
       }
 
     },
@@ -3319,45 +3508,148 @@ $.fn.datagrid = function(options) {
     },
 
     unselectRow: function (idx, nosync, selectAll) {
-      var rowNode = this.visualRowNode(idx),
-        checkbox = null, selIdx;
+      var self = this,
+        s = self.settings,
+        rowNode = self.visualRowNode(idx),
+        checkbox = null,
+        selIdx;
 
       if (!rowNode || idx === undefined) {
         return;
       }
 
-      checkbox = this.cellNode(rowNode, this.columnIdxById('selectionCheckbox'));
-
       selIdx = undefined;
-      for (var i = 0; i < this._selectedRows.length; i++) {
-        if (this._selectedRows[i].idx === idx) {
-          selIdx = i;
+      for (var i = 0; i < self._selectedRows.length; i++) {
+        if (self._selectedRows[i].idx === idx) {
+          selIdx = idx;
         }
       }
 
-      if (selIdx !== undefined) {
-        this._selectedRows.splice(selIdx, 1);
+      // Unselect it
+      var unselectNode = function(elem, index) {
+        checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox'));
+        elem.removeClass('is-selected').removeAttr('aria-selected')
+          .find('td').removeAttr('aria-selected');
+        checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
+          .removeClass('is-checked').attr('aria-checked', 'false');
+
+        var selIdx;
+        for (var i = 0; i < self._selectedRows.length; i++) {
+          if (self._selectedRows[i].idx === index) {
+            selIdx = i;
+          }
+        }
+        if (selIdx !== undefined) {
+          self._selectedRows.splice(selIdx, 1);
+        }
+      };
+
+      if (s.treeGrid) {
+        if (rowNode.is('.datagrid-tree-parent') && s.selectable === 'multiple') {
+          // Select node and node-children
+          rowNode.add(rowNode.nextUntil('[aria-level="1"]')).each(function() {
+            var elem = $(this),
+              index = elem.attr('aria-rowindex') -1;
+            unselectNode(elem, index);
+          });
+        }
+        // Single element unselection
+        else {
+          unselectNode(rowNode, selIdx);
+        }
+        self.setNodeStatus(rowNode);
+      }
+      else {
+        unselectNode(rowNode, selIdx);
       }
 
-      rowNode.removeClass('is-selected').removeAttr('aria-selected');
-      rowNode.find('td').removeAttr('aria-selected');
-
-      checkbox.find('.datagrid-checkbox').removeClass('is-checked').attr('aria-checked', 'false');
-
       if (!nosync) {
-        this.syncSelectedUI();
+        self.syncSelectedUI();
       }
 
       if (!selectAll) {
-        this.element.trigger('selected', [this._selectedRows]);
+        self.element.trigger('selected', [self._selectedRows]);
       }
     },
+
+    setNodeStatus: function(node) {
+      var self = this,
+        isMultiselect = self.settings.selectable === 'multiple',
+        checkbox = self.cellNode(node, self.columnIdxById('selectionCheckbox')),
+        nodes;
+
+      // Not multiselect
+      if (!isMultiselect) {
+        checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
+          .removeClass('is-checked is-partial').attr('aria-checked', 'false');
+
+        if (node.is('.is-selected')) {
+          checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
+            .addClass('is-checked').attr('aria-checked', 'true');
+        }
+        return;
+      }
+
+      var setStatus = function (nodes, isFirstSkipped) {
+        nodes.each(function() {
+          var node = $(this),
+            checkbox = self.cellNode(node, self.columnIdxById('selectionCheckbox')),
+            status = self.getSelectedStatus(node, isFirstSkipped);
+
+          checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
+            .removeClass('is-checked is-partial').attr('aria-checked', 'false');
+
+          if (status === 'mixed') {
+            checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
+              .addClass('is-checked is-partial').attr('aria-checked', 'mixed');
+          }
+          else if (status) {
+            checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
+              .addClass('is-checked').attr('aria-checked', 'true');
+          }
+        });
+      };
+
+      // Multiselect
+      nodes = node.add(node.nextUntil('[aria-level="1"]')).filter('.datagrid-tree-parent');
+      setStatus(nodes);
+
+      nodes = node;
+      if (+node.attr('aria-level') > 1) {
+        nodes = nodes.add(node.prevUntil('[aria-level="1"]'))
+        .add(node.prevAll('[aria-level="1"]:first'));
+      }
+      nodes = nodes.filter('.datagrid-tree-parent');
+      setStatus(nodes);
+    },
+
+    getSelectedStatus: function(node) {
+      var status,
+        total = 0,
+        selected = 0,
+        unselected = 0;
+
+      node.add(node.nextUntil('[aria-level="1"]')).each(function() {
+        total++;
+        if ($(this).is('.is-selected')) {
+          selected++;
+        } else {
+          unselected++;
+        }
+      });
+
+      status = ((total === selected) ? true : ((total === unselected) ? false : 'mixed'));
+      return status;
+    },
+
 
     //Set the selected rows by passing the row index or an array of row indexes
     selectedRows: function (row, nosync, selectAll) {
       var idx = -1,
           isSingle = this.settings.selectable === 'single',
-          isMultiple = this.settings.selectable === 'multiple';
+          isMultiple = this.settings.selectable === 'multiple',
+          dataset = this.settings.treeGrid ?
+            this.settings.treeDepth : this.settings.dataset;
 
       if (!row) {
         return this._selectedRows;
@@ -3385,7 +3677,7 @@ $.fn.datagrid = function(options) {
           }
 
           if (row.length === 0) {
-            for (var j = 0; j < this.settings.dataset.length; j++) {
+            for (var j=0, l=dataset.length; j < l; j++) {
               this.unselectRow(j, nosync, selectAll);
             }
             this._selectedRows = [];
@@ -3566,11 +3858,16 @@ $.fn.datagrid = function(options) {
           col = self.columnSettings(cell),
           item = self.settings.dataset[self.dataRowIndex(node)],
           visibleCols = self.visibleColumns(),
+          visibleRows = self.tableBody.find('tr[aria-rowindex]:visible'),
+          visibleRowsIndex = visibleRows.index(self.visualRowNode(row)),
+          getVisibleRows = function(index) {
+            return self.dataRowIndex(visibleRows.eq(index));
+          },
           isSelectionCheckbox = !!($('.datagrid-selection-checkbox', node).length),
           lastRow, lastCell;
 
         lastCell = visibleCols.length-1;
-        lastRow = node.closest('tbody').find('tr:last').index();
+        lastRow = node.closest('tbody').find('tr:visible:last').index();
 
         //Tab, Left and Right arrow keys.
         if ([9, 37, 39].indexOf(key) !== -1) {
@@ -3601,15 +3898,16 @@ $.fn.datagrid = function(options) {
           if (key === 38 && !self.quickEditMode) {
           //Press [Control + Up] arrow to move to the first row on the first page.
           if (e.altKey) {
-            self.setActiveCell(0, cell);
+            self.setActiveCell(getVisibleRows(0), cell);
           }
           //Up arrow key to navigate by row.
           else {
             if (row === 0) {
               node.removeAttr('tabindex');
-              $('th:not(.is-hidden)', this.header).eq(cell).attr('tabindex', '0').focus();
+              $('th:not(.is-hidden)', self.header).eq(cell).attr('tabindex', '0').focus();
+              return;
             }
-            self.setActiveCell(row-1, cell);
+            self.setActiveCell(getVisibleRows(visibleRowsIndex-1), cell);
             handled = true;
           }
         }
@@ -3622,10 +3920,10 @@ $.fn.datagrid = function(options) {
           }
           //Down arrow key to navigate by row.
           else {
-            // if ($('.autocomplete.popupmenu.is-open').is(':hidden')) {
-              self.setActiveCell(((row+1 > lastRow) ? lastRow : row+1), cell);
-              handled = true;
-            // }
+            var n = getVisibleRows(visibleRowsIndex+1);
+            n = isNaN(n) ? lastRow : n;
+            self.setActiveCell(((n >= lastRow) ? lastRow : getVisibleRows(visibleRowsIndex+1)), cell);
+            handled = true;
           }
         }
 
@@ -3725,13 +4023,11 @@ $.fn.datagrid = function(options) {
 
         // If multiSelect is enabled, press Control+A to toggle select all rows
         if (isMultiple && !self.editor && ((e.ctrlKey || e.metaKey) && key === 65)) {
-          if (!checkbox.hasClass('is-checked') || checkbox.hasClass('is-partial')) {
-            checkbox.removeClass('is-partial').addClass('is-checked').attr('aria-checked', 'true');
-            self.selectAllRows();
-          } else {
-            checkbox.removeClass('is-checked').attr('aria-checked', 'true');
-            self.unSelectedRows([]);
-          }
+          checkbox
+            .addClass('is-checked')
+            .removeClass('is-partial')
+            .attr('aria-checked', 'true');
+          self.selectAllRows();
           handled = true;
         }
 
@@ -3811,9 +4107,13 @@ $.fn.datagrid = function(options) {
       this.setActiveCell(row, cell);
 
       var dataRowIndex = this.dataRowIndex(this.dataRowNode(row)),
+        rowData = this.settings.treeGrid ?
+          this.settings.treeDepth[dataRowIndex].node :
+          this.settings.dataset[dataRowIndex],
         cellNode = this.activeCell.node.find('.datagrid-cell-wrapper'),
         cellParent = cellNode.parent('td'),
-        cellValue = (cellNode.text() ? cellNode.text() : this.fieldValue(this.settings.dataset[dataRowIndex], col.field));
+        cellValue = (cellNode.text() ?
+          cellNode.text() : this.fieldValue(rowData, col.field));
 
       if (!this.isCellEditable(dataRowIndex, cell)) {
         return;
@@ -3829,10 +4129,10 @@ $.fn.datagrid = function(options) {
       //Editor.init
       cellParent.addClass('is-editing');
       cellNode.empty();
-      this.editor = new col.editor(dataRowIndex, cell, cellValue, cellNode, col, event, this, this.settings.dataset[dataRowIndex]);
+      this.editor = new col.editor(dataRowIndex, cell, cellValue, cellNode, col, event, this, rowData);
 
       if (this.editor.useValue) {
-        cellValue = this.fieldValue(this.settings.dataset[dataRowIndex], col.field);
+        cellValue = this.fieldValue(rowData, col.field);
       }
       this.editor.val(cellValue);
       this.editor.focus();
@@ -3893,14 +4193,18 @@ $.fn.datagrid = function(options) {
     },
 
     updateCellNode: function (row, cell, value, fromApiCall) {
-      var rowNode = this.visualRowNode(row),
+      var coercedVal, escapedVal,
+        rowNode = this.visualRowNode(row),
         cellNode = rowNode.find('td').eq(cell),
         col = this.settings.columns[cell],
         formatted = '',
-        formatter = (col.formatter ? col.formatter : this.defaultFormatter);
+        formatter = (col.formatter ? col.formatter : this.defaultFormatter),
+        isTreeGrid = this.settings.treeGrid,
+        rowData = isTreeGrid ?
+          this.settings.treeDepth[row].node :
+          this.settings.dataset[row];
 
-      var oldVal = (col.field ? this.settings.dataset[row][col.field] : ''),
-        coercedVal, escapedVal;
+      var oldVal = (col.field ? rowData[col.field] : '');
 
       //Coerce/Serialize value if from cell edit
       if (!fromApiCall) {
@@ -3920,7 +4224,6 @@ $.fn.datagrid = function(options) {
       }
 
       //Update the value in the dataset
-      var rowData = this.settings.dataset[row];
       if (col.id === 'rowStatus' && rowData.rowStatus && rowData.rowStatus.tooltip) {
         cellNode.attr('title', rowData.rowStatus.tooltip);
         cellNode.tooltip({placement: 'right',
@@ -3934,24 +4237,24 @@ $.fn.datagrid = function(options) {
         if (col.field.indexOf('.') > -1 ) {
           var parts = col.field.split('.');
           if (parts.length === 2) {
-            this.settings.dataset[row][parts[0]][parts[1]] = coercedVal;
+            rowData[parts[0]][parts[1]] = coercedVal;
           }
 
           if (parts.length === 3) {
-            this.settings.dataset[row][parts[0]][parts[1]][parts[2]] = coercedVal;
+            rowData[parts[0]][parts[1]][parts[2]] = coercedVal;
           }
 
         } else {
-          this.settings.dataset[row][col.field] = coercedVal;
+          rowData[col.field] = coercedVal;
         }
       }
 
       //update cell value
       escapedVal = $.escapeHTML(coercedVal);
-      formatted = this.formatValue(formatter, row, cell, escapedVal, col, settings.dataset[row]);
+      formatted = this.formatValue(formatter, (isTreeGrid ? row+1 : row), cell, escapedVal, col, rowData);
 
       if (col.contentVisible) {
-        var canShow = col.contentVisible(row, cell, escapedVal, col, settings.dataset[row]);
+        var canShow = col.contentVisible(row, cell, escapedVal, col, rowData);
         if (!canShow) {
           formatted = '';
         }
@@ -3970,11 +4273,13 @@ $.fn.datagrid = function(options) {
      if (this.pager) {
       rowIdx = rowIdx - ((this.pager.activePage -1) * this.settings.pagesize);
      }
+
      return rowIdx;
     },
 
     visualRowNode: function (idx) {
       var node = this.tableBody.find('tr[aria-rowindex="'+ (idx + 1) +'"]');
+
       return node;
     },
 
@@ -4050,63 +4355,90 @@ $.fn.datagrid = function(options) {
       }
     },
 
+    // Add children to treegrid dataset
+    addChildren: function(parent, data) {
+      if (!data || (data && !data.length) || parent < 0) {
+        return;
+      }
+      var node = this.settings.treeDepth[parent].node;
+      node.children = node.children || [];
+
+      // Make sure it's not reference pointer to data object, make copy of data
+      data = JSON.parse(JSON.stringify(data));
+
+      for (var i = 0, len = data.length; i < len; i++) {
+        node.children.push(data[i]);
+      }
+      this.updateDataset(this.settings.dataset);
+    },
+
+    // Set expanded property in Dataset
+    setExpandedInDataset: function(dataRowIndex, isExpanded) {
+      this.settings.treeDepth[dataRowIndex].node.expanded = isExpanded;
+    },
+
     //expand the tree rows
-    toggleChildren: function(dataRowIndex) {
-      var rowElement = this.visualRowNode(dataRowIndex),
+    toggleChildren: function(e, dataRowIndex) {
+      var self = this,
+        rowElement = this.visualRowNode(dataRowIndex),
         expandButton = rowElement.find('.datagrid-expand-btn'),
         level = rowElement.attr('aria-level'),
-        children = rowElement.nextAll(),
-        isExpanded = expandButton.hasClass('is-expanded');
+        children = rowElement.nextUntil('[aria-level="1"]'),
+        isExpanded = expandButton.hasClass('is-expanded'),
+        restCollapsed = false,
+        args = [{grid: self, row: dataRowIndex, item: rowElement, children: children}];
 
-      if (!rowElement.hasClass('datagrid-tree-parent')) {
+      if (!rowElement.hasClass('datagrid-tree-parent') ||
+          (!$(e.target).is(expandButton) &&
+            (self.settings.editable || self.settings.selectable))) {
         return;
       }
 
-      if (isExpanded) {
-        expandButton.removeClass('is-expanded')
-          .find('.plus-minus').removeClass('active');
-      } else {
-        expandButton.addClass('is-expanded')
-          .find('.plus-minus').addClass('active');
-      }
+      var toggleExpanded = function() {
+        rowElement = self.visualRowNode(dataRowIndex);
+        expandButton = rowElement.find('.datagrid-expand-btn');
+        children = rowElement.nextUntil('[aria-level="1"]');
 
-      var restCollapsed = false;
+        if (isExpanded) {
+          rowElement.attr('aria-expanded', false);
+          expandButton.removeClass('is-expanded')
+            .find('.plus-minus').removeClass('active');
+        } else {
+          rowElement.attr('aria-expanded', true);
+          expandButton.addClass('is-expanded')
+            .find('.plus-minus').addClass('active');
+        }
+        self.setExpandedInDataset(dataRowIndex, !isExpanded);
 
-      children.each(function () {
-        var node = $(this);
+        children.each(function () {
+          var node = $(this);
 
-        if (node.hasClass('datagrid-tree-parent') && node.attr('aria-level') > level) {
-          restCollapsed = node.find('.datagrid-expand-btn.is-expanded').length === 0;
-
-          if (isExpanded) {
-            node.addClass('is-hidden');
-          } else {
-            node.removeClass('is-hidden');
+          if (node.hasClass('datagrid-tree-parent') &&
+            node.attr('aria-level') > level && !restCollapsed) {
+            restCollapsed = node.find('.datagrid-expand-btn.is-expanded').length === 0;
+            node[isExpanded ? 'addClass' : 'removeClass']('is-hidden');
+            return;
           }
 
-          return;
-        }
-
-        if (restCollapsed) {
-          node.addClass('is-hidden');
-          return;
-        }
-
-        if (node.attr('aria-level') > level) {
-
-          if (isExpanded) {
+          if (restCollapsed) {
             node.addClass('is-hidden');
-          } else {
-            node.removeClass('is-hidden');
+            return;
           }
-        }
 
-        if (node.attr('aria-level') === level) {
-          return false;
-        }
+          if (node.attr('aria-level') > level) {
+            node[isExpanded ? 'addClass' : 'removeClass']('is-hidden');
+          }
 
-     });
+          if (node.attr('aria-level') === level) {
+            return false;
+          }
+        });
+        self.setAlternateRowShading();
+      };
 
+      $.when(self.element.triggerHandler(isExpanded ? 'collapserow' : 'expandrow', args)).done(function() {
+        toggleExpanded();
+      });
     },
 
     //Expand Detail Row Or Tree Row
@@ -4130,7 +4462,7 @@ $.fn.datagrid = function(options) {
 
         detail.animateClosed().on('animateclosedcomplete', function () {
           expandRow.css('display', 'none');
-          self.element.trigger('collapserow', [{grid: self, row: dataRowIndex, detail: detail, item: item}]);
+          self.element.triggerHandler('collapserow', [{grid: self, row: dataRowIndex, detail: detail, item: item}]);
         });
 
       } else {
@@ -4144,7 +4476,7 @@ $.fn.datagrid = function(options) {
         expandRow.find('.constrained-width').css('max-width', this.element.outerWidth());
 
         detail.animateOpen();
-        self.element.trigger('expandrow', [{grid: self, row: dataRowIndex, detail: detail, item: item}]);
+        self.element.triggerHandler('expandrow', [{grid: self, row: dataRowIndex, detail: detail, item: item}]);
       }
     },
 
@@ -4176,6 +4508,8 @@ $.fn.datagrid = function(options) {
 
       var wasFocused = this.activeCell.isFocused;
       this.tableBody.addClass('is-loading');
+      this.setTreeDepth();
+      this.setTreeRootNodes();
       this.renderRows();
       // Update selected and Sync header checkbox
       this.updateSelected();
@@ -4318,8 +4652,8 @@ $.fn.datagrid = function(options) {
         this.pager.updatePagingInfo(pagingInfo);
       }
 
-      this.pager.renderBar();
       if (!isResponse) {
+        this.pager.renderBar();
         this.pager.renderPages(pagingInfo.type);
       }
 
