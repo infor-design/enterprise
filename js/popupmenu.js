@@ -592,19 +592,15 @@
         wrapper.find('.arrow').removeAttr('style');
 
         var opts = $.extend({}, this.settings.placementOpts);
-        switch(this.settings.trigger) {
-          case 'immediate':
-          case 'rightClick':
-            opts.x = getCoordinates(e, 'x') - (isRTL ? menuDimensions.width : 0) + ((isRTL ? -1 : 1) * this.settings.offset.x);
-            opts.y = getCoordinates(e, 'y') + this.settings.offset.y;
-            opts.strategies = ['flip', 'nudge', 'shrink'];
-            break;
-          default:
-            opts.x = this.settings.offset.x || 0;
-            opts.y = this.settings.offset.y || 0;
-            opts.parent = this.element;
-            opts.placement = 'bottom';
-            break;
+        if ((this.settings.trigger === 'immediate' && this.settings.eventObj) || this.settings.trigger === 'rightClick') {
+          opts.x = getCoordinates(e, 'x') - (isRTL ? menuDimensions.width : 0) + ((isRTL ? -1 : 1) * this.settings.offset.x);
+          opts.y = getCoordinates(e, 'y') + this.settings.offset.y;
+          opts.strategies = ['flip', 'nudge', 'shrink'];
+        } else {
+          opts.x = this.settings.offset.x || 0;
+          opts.y = this.settings.offset.y || 0;
+          opts.parent = this.element;
+          opts.placement = 'bottom';
         }
 
         //=======================================================

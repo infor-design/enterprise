@@ -30,8 +30,7 @@
           case 'first': beginIndex = 0; break;
           case 'last': beginIndex = data.length - req.pagesize; break;
           case 'next': beginIndex = beginIndex + req.pagesize; break;
-          case 'prev': beginIndex = beginIndex - req.pagesize; break;
-
+          case 'prev': beginIndex = Math.max(0, beginIndex - req.pagesize); break; 
           case 'sorted': console.log('sorted stub called - implement me'); break;
           case 'filtered': console.log('filtered stub called - implement me'); break;
         }

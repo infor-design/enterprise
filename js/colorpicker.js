@@ -198,18 +198,9 @@
         });
 
         this.element.on('keypress.colorpicker', function () {
-          var input = $(this),
-            val = input.val();
-
-          // Make sure there is always a hash
-          if (val.substr(0,1) !== '#') {
-            input.val('#'+val);
-          }
-
-          if (val.length === 7) {
-            self.setColor(val);
-          }
-
+          self.setColor($(this).val());
+        }).on('change.colorpicker', function () {
+          self.setColor($(this).val());
         });
 
         //Handle Key Down to open
@@ -274,6 +265,16 @@
 
       // Set the Visible Color
       setColor: function (hex, text) {
+        // Make sure there is always a hash
+        if (hex.substr(0,1) !== '#') {
+          hex = '#' + hex;
+          this.element.val(hex);
+        }
+
+        if (hex.length !== 7) {
+          return;
+        }
+
         this.swatch.css('background-color', hex);
         this.element.attr('aria-describedby', text);
       },
