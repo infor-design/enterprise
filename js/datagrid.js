@@ -2133,7 +2133,7 @@ $.fn.datagrid = function(options) {
 
         //Run a function that helps check if editable
         if (col.isEditable && !col.readonly) {
-          var canEdit = col.isEditable(this.recordCount-1, j, self.fieldValue(rowData, self.settings.columns[j].field), col, rowData);
+          var canEdit = col.isEditable(ariaRowindex - 1, j, self.fieldValue(rowData, self.settings.columns[j].field), col, rowData);
 
           if (!canEdit) {
             cssClass += ' is-readonly';
@@ -2761,7 +2761,7 @@ $.fn.datagrid = function(options) {
 
     //Returns a cell node
     cellNode: function (row, cell) {
-      var rowNode = this.visualRowNode(row);
+      var rowNode = this.tableBody.find('tr[aria-rowindex]').eq(row);
 
       if (row instanceof jQuery) {
         rowNode = row;
@@ -2811,13 +2811,12 @@ $.fn.datagrid = function(options) {
       //Handle Clicking Buttons and links in formatters
       this.table
         .off('mouseup.datagrid touchstart.datagrid')
-        .on('mouseup.datagrid-formatters touchstart.datagrid-formatters', 'td', function (e) {
+        .on('mouseup.datagrid touchstart.datagrid', 'td', function (e) {
 
         var elem = $(this).closest('td'),
           btn = $(this).find('button'),
           cell = elem.parent().children(':visible').index(elem),
           rowNode = $(this).closest('tr'),
-          row = self.visualRowIndex(rowNode),
           dataRowIdx = self.dataRowIndex(rowNode),
           col = self.columnSettings(cell),
           item = self.settings.treeGrid ?
@@ -2864,7 +2863,7 @@ $.fn.datagrid = function(options) {
           return false;
         }
 
-        if (self.isCellEditable(row, cell)) {
+        if (self.isCellEditable(dataRowIdx, cell)) {
           setTimeout(function() {
             if (self.isContainTextfield(elem) && self.notContainTextfield(elem)) {
               self.quickEditMode = true;
@@ -3864,7 +3863,7 @@ $.fn.datagrid = function(options) {
           item = self.settings.dataset[self.dataRowIndex(node)],
           visibleCols = self.visibleColumns(),
           visibleRows = self.tableBody.find('tr[aria-rowindex]:visible'),
-          visibleRowsInedx = visibleRows.index(self.visualRowNode(row)),
+          visibleRowsIndex = visibleRows.index(self.visualRowNode(row)),
           getVisibleRows = function(index) {
             return self.dataRowIndex(visibleRows.eq(index));
           },
@@ -3912,7 +3911,7 @@ $.fn.datagrid = function(options) {
               $('th:not(.is-hidden)', self.header).eq(cell).attr('tabindex', '0').focus();
               return;
             }
-            self.setActiveCell(getVisibleRows(visibleRowsInedx-1), cell);
+            self.setActiveCell(getVisibleRows(visibleRowsIndex-1), cell);
             handled = true;
           }
         }
@@ -3925,9 +3924,9 @@ $.fn.datagrid = function(options) {
           }
           //Down arrow key to navigate by row.
           else {
-            var n = getVisibleRows(visibleRowsInedx+1);
+            var n = getVisibleRows(visibleRowsIndex+1);
             n = isNaN(n) ? lastRow : n;
-            self.setActiveCell(((n >= lastRow) ? lastRow : getVisibleRows(visibleRowsInedx+1)), cell);
+            self.setActiveCell(((n >= lastRow) ? lastRow : getVisibleRows(visibleRowsIndex+1)), cell);
             handled = true;
           }
         }
@@ -4099,10 +4098,6 @@ $.fn.datagrid = function(options) {
     // Invoked in three cases: 1) a row click, 2) keyboard and enter, 3) In actionable mode and tabbing
     makeCellEditable: function(row, cell, event) {
 
-      if (!this.isCellEditable(row, cell)) {
-        return;
-      }
-
       //Locate the Editor
       var col = this.columnSettings(cell);
       if (!col.editor) {
@@ -4115,7 +4110,7 @@ $.fn.datagrid = function(options) {
       // Put the Cell into Focus Mode
       this.setActiveCell(row, cell);
 
-      var dataRowIndex = this.dataRowIndex(this.visualRowNode(row)),
+      var dataRowIndex = this.dataRowIndex(this.dataRowNode(row)),
         rowData = this.settings.treeGrid ?
           this.settings.treeDepth[dataRowIndex].node :
           this.settings.dataset[dataRowIndex],
@@ -4123,6 +4118,10 @@ $.fn.datagrid = function(options) {
         cellParent = cellNode.parent('td'),
         cellValue = (cellNode.text() ?
           cellNode.text() : this.fieldValue(rowData, col.field));
+
+      if (!this.isCellEditable(dataRowIndex, cell)) {
+        return;
+      }
 
       if (cellParent.hasClass('is-editing')) {
         //Already in edit mode
@@ -4284,6 +4283,12 @@ $.fn.datagrid = function(options) {
 
     visualRowNode: function (idx) {
       var node = this.tableBody.find('tr[aria-rowindex="'+ (idx + 1) +'"]');
+
+      return node;
+    },
+
+    dataRowNode: function (idx) {
+      var node = this.tableBody.find('tr[aria-rowindex]').eq(idx);
 
       return node;
     },

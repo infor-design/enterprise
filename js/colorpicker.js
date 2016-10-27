@@ -259,6 +259,7 @@
           self.element.parent().removeClass('is-open');
         })
         .on('selected.colorpicker', function (e, item) {
+          alert('#' + item.data('value'));
           self.element.val('#'+item.data('value'));
           self.swatch.css('background-color', '#' + item.data('value'));
           self.element.focus();
