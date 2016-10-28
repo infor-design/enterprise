@@ -1031,7 +1031,8 @@ $.fn.datagrid = function(options) {
 
     //Fixed Header
     fixHeader: function () {
-      var next = this.wrapper.parent().next(),
+      var self = this,
+        next = this.wrapper.parent().next(),
         prev = this.wrapper.parent().prev(),
         diff = (next.length ===0 ? 0 : next.outerHeight()) + (prev.length ===0 ? 0 : prev.outerHeight()),
         outerHeight = 'calc(100% - '+diff+ 'px)';
@@ -1072,6 +1073,12 @@ $.fn.datagrid = function(options) {
       		'transform': translateY,
       	});
       });
+
+      setTimeout(function() {
+        if (self.element.closest('.datagrid-wrapper').outerHeight() > self.table.outerHeight()) {
+          $('tr:visible:last-child td', self.table).css({'border-bottom-width': '1px'});
+        }
+      }, 0);
 
       this.handleEvents();
     },
