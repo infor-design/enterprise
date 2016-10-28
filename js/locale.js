@@ -588,7 +588,14 @@
 
       //Round Decimals
       var decimals = this.decimalPlaces(number);
-        truncatedNum = Math[adjustedNum < 0 ? 'ceil' : 'floor'](adjustedNum);
+
+      //Handle larger numbers
+      if (number.length - decimals - 1 >= 10) {
+        multiplier = Math.pow(100, maxDigits);
+        adjustedNum = number * multiplier;
+      }
+
+      truncatedNum = Math[adjustedNum < 0 ? 'ceil' : 'floor'](adjustedNum);
 
       if (round && decimals >= maxDigits && adjustedNum > 0) {
         truncatedNum = Math.round(adjustedNum);
@@ -619,7 +626,7 @@
       }
 
       group = numSettings ? numSettings.group  : ',';
-      decimal = numSettings ? numSettings.group  : '.';
+      decimal = numSettings ? numSettings.decimal  : '.';
       percentSign = numSettings ? numSettings.percentSign  : '%';
       currencySign = currencySign ? this.currentLocale.data.currencySign  : '$';
 

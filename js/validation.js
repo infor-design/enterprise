@@ -583,15 +583,17 @@
           '<p class="message-text">' + message +'</p>' +
           '</div>';
 
-      // Radio button
-      if (field.is(':radio')) {
+
+      if (field.is(':radio')) { // Radio button handler
         this.toggleRadioError(field, message, markup, true);
-      }
-      // All other
-      else {
+      } else { // All other components
         loc.closest('.field, .field-short').find('.formatter-toolbar').addClass('error');
         loc.closest('.field, .field-short').append(markup);
       }
+
+      //Remove positive errors
+      field.parent().find('.icon-confirm').remove();
+
     },
 
     addPositive: function(field) {
@@ -836,7 +838,8 @@
       email: {
         check: function (value) {
           this.message = Locale.translate('EmailValidation');
-          var regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+          var regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,16}(?:\.[a-z]{2})?)$/i;
+
           return (value.length) ? regex.test(value) : true;
         },
         message: 'EmailValidation'
@@ -862,7 +865,14 @@
           if($.trim(value).length && !field.is('[readonly]')) {
             self.rules.emailPositive.positive = true;
             this.message = Locale.translate('EmailValidation');
-            return self.rules.email.check(value, field);
+
+            var isValid = self.rules.email.check(value, field);
+
+            if (isValid) {
+              this.message = '';
+            }
+
+            return isValid;
           } else {
             self.rules.emailPositive.positive = false;
             return true;
