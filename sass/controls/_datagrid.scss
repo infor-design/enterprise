@@ -2,6 +2,7 @@
 //================================================== //
 
 $datagrid-header-height: 39px;  //1px border in parent
+$datagrid-filterable-header-height: 61px;
 
 $datagrid-medium-header-height: 30px;
 $datagrid-medium-row-height: 40px;
@@ -70,7 +71,7 @@ $datagrid-short-row-height: 30px;
     left: -999px;
     top: auto;
     width: 11px;
-    z-index: 1;
+    z-index: 2;
   }
 
   &.datagrid-contained {
@@ -86,8 +87,8 @@ $datagrid-short-row-height: 30px;
 .datagrid {
   @include font-size(14);
   background-color: transparent;
-  border-collapse: collapse;
-  //height: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
   min-width: 100%;
   overflow: hidden;
   //This lets us resize to lower than content width but it causes layout issues with default col sizes
@@ -251,8 +252,9 @@ $datagrid-short-row-height: 30px;
     border-left: 1px solid $datagrid-header-border-color;
     height: $datagrid-header-height;
     min-width: 40px;
-    overflow: hidden;
+    position: relative;
     text-align: left;
+    z-index: 1;
 
     &:first-child {
       border-left: 0;
@@ -1190,6 +1192,12 @@ td .btn-actions {
 
 }
 
+[aria-readonly="true"] {
+  .datagrid-checkbox {
+    cursor: default;
+  }
+}
+
 //Datagrid Dropdown Formatter
 .datagrid-trigger-cell {
   &:not(.is-readonly) {
@@ -1436,43 +1444,61 @@ html[dir='rtl'] {
 // Sort styles
 //====================================================
 .has-draggable-columns {
+  .is-draggable-target-show {
+    display: none;
+    font-size: 2em;
+    height: $datagrid-header-height;
+    margin: 0;
+    padding: 4px 0 0 7px;
+    position: absolute;
+    top: 0;
+    // top: auto;
+    z-index: 10;
+
+    &.is-over {
+      display: inline-block;
+    }
+
+    &::before,
+    &::after {
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      content: '';
+      display: inline-block;
+      height: 0;
+      left: -6px;
+      position: absolute;
+      width: 0;
+    }
+
+    &::before {
+      border-top: 5px solid $datagrid-header-hover-color;
+      top: -9px;
+    }
+
+    &::after {
+      border-bottom: 5px solid $datagrid-header-hover-color;
+      bottom: -9px;
+    }
+
+  }
+
   th {
     .handle,
     .is-draggable-target {
       display: none;
       font-size: 2em;
       height: $datagrid-header-height;
+      left: 0;
       margin: 0;
       padding: 4px 0 0 7px;
       position: absolute;
       top: 0;
 
       &.is-draggable-target {
-
-        &::before,
-        &::after {
-          border-left: 5px solid transparent;
-          border-right: 5px solid transparent;
-          content: '';
-          display: inline-block;
-          height: 0;
-          left: -6px;
-          position: absolute;
-          width: 0;
-        }
-
-        &::before {
-          border-top: 5px solid $datagrid-header-hover-color;
-          top: -9px;
-        }
-
-        &::after {
-          border-bottom: 5px solid $datagrid-header-hover-color;
-          bottom: -9px;
-        }
-
         &.last {
-          // right: 0;
+          left: auto;
+          right: -15px;
         }
 
         &.is-over {
@@ -1493,7 +1519,7 @@ html[dir='rtl'] {
     }
 
     &.is-dragging {
-      opacity: .5;
+      background-color: lighten($datagrid-header-bg-color, 30%);
     }
 
     &.is-dragging-clone {
@@ -1520,7 +1546,14 @@ html[dir='rtl'] {
     }
   }
 
-  .short-rowheight {
+  &.short-rowheight {
+    .is-draggable-target-show {
+      font-size: 1.5em;
+      height: $datagrid-short-header-height;
+      padding: 1px 0 0 5px;
+      width: 14px;
+    }
+
     th {
       .handle,
       .is-draggable-target {
@@ -1532,7 +1565,14 @@ html[dir='rtl'] {
     }
   }
 
-  .medium-rowheight {
+  &.medium-rowheight {
+    .is-draggable-target-show {
+      font-size: 1.6em;
+      height: $datagrid-medium-header-height;
+      padding: 3px 0 0 5px;
+      width: 16px;
+    }
+
     th {
       .handle,
       .is-draggable-target {
@@ -1541,6 +1581,13 @@ html[dir='rtl'] {
         padding: 3px 0 0 5px;
         width: 16px;
       }
+    }
+  }
+
+  &.has-filterable-columns {
+    .is-draggable-target,
+    .is-draggable-target-show {
+      height: $datagrid-filterable-header-height;
     }
   }
 
