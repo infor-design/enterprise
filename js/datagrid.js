@@ -751,6 +751,123 @@ window.Editors = {
 
 };
 
+window.GroupBy = (function() {
+
+  //Can also use in isEquals: function(obj1, obj2)  in datagrid.js
+  var equals = function(a, b) {
+    return JSON.stringify(a) === JSON.stringify(b);
+  };
+
+  //See if the object has these proprties or not
+  var has = function(obj, target) {
+    return obj.some(function(value) {
+        return equals(value, target);
+    });
+  };
+
+  //Return just the object properties matching the names
+  var pick = function(obj, names) {
+    var chosen = {};
+    for (var i = 0; i < names.length; i++) {
+      chosen[names[i]] = obj[names[i]];
+    }
+    return chosen;
+  };
+
+  //Return the specific keys from the object
+  var keys = function(data, names) {
+    return data.reduce(function(memo, item) {
+      var key = pick(item, names);
+
+      if (!has(memo, key)) {
+        memo.push(key);
+      }
+      return memo;
+    }, []);
+  };
+
+  //Look through each value in the list and return an array of all the values
+  //that contain all of the key-value pairs listed in properties.
+  var where = function (data, names) {
+    var chosen = [];
+
+    data.map(function(item) {
+      var match = true;
+      for (var prop in names) {
+        if (names[prop] !== item[prop]) {
+          match = false;
+          return;
+        }
+      }
+      chosen.push(item);
+      return;
+    });
+
+    return chosen;
+  };
+
+  //Return a copy of the object without the passed in properties
+  var omit = function(data, names) {
+    var chosen = {};
+
+    for (var prop in data) {
+      if (names.indexOf(prop) === -1) {
+        chosen[prop] = data[prop];
+      }
+    }
+
+    return chosen;
+  };
+
+  //Grouping Function with Plugins/accumulator
+  var group = function(data, names) {
+    var stems = keys(data, names);
+
+    return stems.map(function(stem) {
+      return {
+        key: stem,
+        vals: where(data, stem).map(function(item) {
+          return omit(item, names);
+        })
+      };
+    });
+  };
+
+  //Register an accumulator
+  group.register = function(name, converter) {
+    return group[name] = function(data, names, extra) { // jshint ignore:line
+      var that = this;
+      that.extra = extra;
+      return group(data, names).map(converter, that);
+    };
+  };
+
+  return group;
+}());
+
+//Register built in accumulators
+GroupBy.register('sum', function(item) {
+  var sum = $.extend({}, item.key, {Value: item.vals.reduce(function(memo, node) {
+      return memo + Number(node.Value);
+  }, 0)});
+
+  return sum;
+});
+
+GroupBy.register('max', function(item) {
+  return $.extend({}, item.key, {Max: item.vals.reduce(function(memo, node) {
+      return Math.max(memo, Number(node.Value));
+  }, Number.NEGATIVE_INFINITY)});
+});
+
+GroupBy.register('list', function(item) {
+  var extra = this.extra;
+
+  return $.extend({}, item.key, {List: item.vals.map(function(item) {
+    return item[extra];
+  }).join(', ')});
+});
+
 $.fn.datagrid = function(options) {
 
   // Settings and Options
@@ -773,6 +890,7 @@ $.fn.datagrid = function(options) {
         uniqueId: null, //Unique ID for local storage reference and variable names
         rowHeight: 'normal', //(short, medium or normal)
         selectable: false, //false, 'single' or 'multiple'
+        groupable: null, //Use Data grouping fx. {fields: ['incidentId'], supressRow: true, aggregator: 'list', aggregatorOptions: ['unitName1']}
         clickToSelect: true,
         toolbar: false, // or features fx.. {title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true, rowHeight: true, views: true}
         initializeToolbar: true, // can set to false if you will initialize the toolbar yourself
@@ -814,6 +932,7 @@ $.fn.datagrid = function(options) {
       this.appendToolbar();
       this.restoreColumns();
       this.setTreeDepth();
+      this.setRowGrouping();
       this.setTreeRootNodes();
       this.render();
       this.initFixedHeader();
@@ -1182,6 +1301,7 @@ $.fn.datagrid = function(options) {
 
       //Update Paging and Clear Rows
       this.setTreeDepth();
+      this.setRowGrouping();
       this.setTreeRootNodes();
       this.renderRows();
       this.renderPager(pagerInfo, isResponse);
@@ -1942,6 +2062,18 @@ $.fn.datagrid = function(options) {
       for (var i = 0, len = dataset.length; i < len; i++) {
         iterate(dataset[i], 1);
       }
+    },
+
+    setRowGrouping: function () {
+      var groupSettings = this.settings.groupable;
+      if (!groupSettings) {
+        return;
+      }
+
+      this.settings.dataset = window.GroupBy(this.settings.dataset , groupSettings.fields);
+      /*console.table(GroupBy.list(res, ['incidentId'], 'unitName1'));
+      console.table(GroupBy.list(res, ['incidentId'], 'unitName2'));
+      console.table(GroupBy(res, ['incidentId'])); */
     },
 
     //Render the Rows
@@ -4509,6 +4641,7 @@ $.fn.datagrid = function(options) {
       var wasFocused = this.activeCell.isFocused;
       this.tableBody.addClass('is-loading');
       this.setTreeDepth();
+      this.setRowGrouping();
       this.setTreeRootNodes();
       this.renderRows();
       // Update selected and Sync header checkbox
