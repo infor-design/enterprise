@@ -829,7 +829,6 @@ $.fn.datagrid = function(options) {
     },
 
     initSettings: function () {
-
       if (this.settings.dataset !== 'table') {
         this.element.wrap( '<div class="datagrid-wrapper" />');
       }
@@ -865,7 +864,7 @@ $.fn.datagrid = function(options) {
 
       //initialize row height by a setting
       if (settings.rowHeight !== 'normal') {
-        this.element.find('table').addClass(settings.rowHeight + '-rowheight');
+        this.element.add(this.element.find('table')).addClass(settings.rowHeight + '-rowheight');
       }
     },
 
@@ -1024,34 +1023,14 @@ $.fn.datagrid = function(options) {
     },
 
     initFixedHeader: function () {
-      var self = this;
-
-      if (self.element.hasClass('datagrid-contained')) {
+      if (this.element.hasClass('datagrid-contained')) {
         this.fixHeader();
-        this.syncFixedHeader();
       }
 
     },
 
     //Fixed Header
     fixHeader: function () {
-      var self = this;
-
-      //Already Wrapped
-      if (this.wrapper.prev().is('.datagrid-clone')) {
-        return;
-      }
-
-      //Clone and create a table with one row and the table headers in front
-      //make this not readable to screen readers
-      this.clone = $('<table class="datagrid datagrid-clone" role="presentation" aria-hidden="true"></table>').append(this.headerRow.clone()).append('<tbody></tbody>');
-      this.clone.insertBefore(this.element.closest('.datagrid-wrapper'));
-      this.clone.wrap('<div class="datagrid-scrollable-header"></div>');
-
-      this.fixedHeader = true;
-      this.headerRow.addClass('audible');
-      this.rowHeight();
-
       var next = this.wrapper.parent().next(),
         prev = this.wrapper.parent().prev(),
         diff = (next.length ===0 ? 0 : next.outerHeight()) + (prev.length ===0 ? 0 : prev.outerHeight()),
@@ -1082,40 +1061,19 @@ $.fn.datagrid = function(options) {
 
       this.wrapper.css('height', 'calc(100% - '+ (innerHeight)+ 'px)');
 
+      //Freeze header
       this.container.on('scroll.datagrid', function () {
-        self.clone.parent().scrollLeft($(this).scrollLeft());
+        var translateY = 'translateY('+ this.scrollTop +'px)';
+        $('thead th', this).css({
+      		'-webkit-transform': translateY,
+      		'-moz-transform': translateY,
+      		'-ms-transform': translateY,
+      		'-o-transform': translateY,
+      		'transform': translateY,
+      	});
       });
 
       this.handleEvents();
-    },
-
-    //Revert Fixed Header
-    unFixHeader: function () {
-      this.fixedHeader = false;
-
-      if (this.wrapper.prev().is('.datagrid-scrollable-header')) {
-        this.wrapper.prev().remove();
-        this.headerRow.removeClass('audible');
-        this.wrapper.css({'height': '', 'overflow': ''});
-        this.wrapper.find('.datagrid-container').css({'height': '', 'overflow': ''});
-        this.container.off('scroll.datagrid');
-      }
-    },
-
-    syncFixedHeader: function () {
-      if (!this.fixedHeader) {
-        return;
-      }
-
-      var self = this;
-      self.headerRow.find('th').each(function (index) {
-        var th = $(this),
-          w = th.width();
-
-        th.width(w);
-        self.clone.find('th').eq(index).css({'width': w, 'min-width': w});
-      });
-
     },
 
     //Delete a Specific Row
@@ -1331,6 +1289,7 @@ $.fn.datagrid = function(options) {
         return;
       }
 
+      this.element.addClass('has-filterable-columns');
       this.headerRow.find('.datagrid-filter-wrapper').remove();
 
     //Loop the columns looking at the filter types and generate the markup for the various Types
@@ -1727,19 +1686,22 @@ $.fn.datagrid = function(options) {
     // Create draggable columns
     createDraggableColumns: function () {
       var self = this,
-        headers = self.headerNodes();
+        headers = self.headerNodes().not('[data-column-id="selectionCheckbox"]'),
+        showTarget = $('.is-draggable-target-show', self.element);
+
+      if (!showTarget.length) {
+        self.element.prepend('<span class="is-draggable-target-show"></span>');
+        showTarget = $('.is-draggable-target-show', self.element);
+      }
 
       headers.prepend('<span class="is-draggable-target"></span><span class="handle">&#8286;</span>');
       headers.last().append('<span class="is-draggable-target last"></span>');
       self.element.addClass('has-draggable-columns');
 
-      self.element.on('scroll.datagrid', function() {
-        self.adjustDraggablePosition();
-      });
-
       // Initialize Drag api
       $('.handle', headers).each(function() {
-        var handle = $(this),
+        var clone,
+          handle = $(this),
           hader = handle.parent();
 
         handle.on('mousedown.datagrid', function(e) {
@@ -1748,23 +1710,31 @@ $.fn.datagrid = function(options) {
           hader.drag({clone: true, cloneAppentTo: headers.first().parent().parent()})
 
             // Drag start =======================================
-            .on('dragstart.datagrid', function (e, pos, clone) {
+            .on('dragstart.datagrid', function (e, pos, thisClone) {
               var index;
 
-              clone.removeAttr('id').addClass('is-dragging-clone').css({left: pos.left, top: pos.top});
+              pos.top -= self.getTransformTranslateValue(hader).y;
+              clone = thisClone;
+
+              clone.removeAttr('id').addClass('is-dragging-clone')
+                .css({left: pos.left, top: pos.top});
               $('.is-draggable-target', clone).remove();
 
               self.setDraggableColumnTargets();
               index = self.targetColumn(pos);
               self.draggableStatus.startIndex = index;
+              e.stopImmediatePropagation();
             })
 
             // While dragging ===================================
             .on('drag.datagrid', function (e, pos) {
+              pos.top -= self.getTransformTranslateValue(hader).y;
+              clone.css({left: pos.left, top: pos.top});
+
               var i, l, n, target,
                 index = self.targetColumn(pos);
 
-              $('.is-draggable-target', headers).removeClass('is-over');
+              $('.is-draggable-target', headers).add(showTarget).removeClass('is-over');
 
               if (index !== -1) {
                 for (i=0, l=self.draggableColumnTargets.length; i<l; i++) {
@@ -1775,14 +1745,19 @@ $.fn.datagrid = function(options) {
                     if (target.index > self.draggableStatus.startIndex && (n < l)) {
                       target = self.draggableColumnTargets[n];
                     }
-                    target.el.addClass('is-over');
+                    target.el.add(showTarget).addClass('is-over');
+                    showTarget.css('left', target.el.offset().left - self.element.offset().left);
                   }
                 }
               }
+              e.stopImmediatePropagation();
             })
 
             // Drag end =========================================
             .on('dragend.datagrid', function (e, pos) {
+              pos.top -= self.getTransformTranslateValue(hader).y;
+              clone.css({left: pos.left, top: pos.top});
+
               var index = self.targetColumn(pos),
                dragApi = hader.data('drag'),
                tempArray = [],
@@ -1794,14 +1769,15 @@ $.fn.datagrid = function(options) {
               }
 
               self.draggableStatus.endIndex = index;
-              $('.is-draggable-target', headers).removeClass('is-over');
+              $('.is-draggable-target', headers).add(showTarget).removeClass('is-over');
 
               if (self.draggableStatus.endIndex !== -1) {
                 if (self.draggableStatus.startIndex !== self.draggableStatus.endIndex) {
                   // Start to Swap columns
 
                   for (i=0, l=self.settings.columns.length; i < l; i++) {
-                    if (!self.settings.columns[i].hidden) {
+                    if (!self.settings.columns[i].hidden &&
+                        self.settings.columns[i].id !== 'selectionCheckbox') {
                       tempArray.push(i);
                     }
                   }
@@ -1811,6 +1787,10 @@ $.fn.datagrid = function(options) {
 
                   self.arrayIndexMove(self.settings.columns, indexFrom, indexTo);
                   self.updateColumns(self.settings.columns);
+
+                  if (self.element.hasClass('datagrid-contained')) {
+                    self.container.triggerHandler('scroll.datagrid');
+                  }
                 }
                 else {
                   // No need to swap here since same target area, where drag started
@@ -1825,30 +1805,26 @@ $.fn.datagrid = function(options) {
       });
     },
 
-    // Adjust draggable position
-    adjustDraggablePosition: function(header) {
-      var self = this,
-        adjust = function(header) {
-          $('.is-draggable-target, .handle', header).css('left', header.position().left);
-          $('.is-draggable-target.last', header).css('left', header.position().left + header.outerWidth());
-        },
-        adjustAll = function() {
-          self.headerNodes().not('.is-hidden').each(function() {
-            adjust($(this));
-          });
-        };
+    // Get transform translate value
+    getTransformTranslateValue: function(elem) {
+      var transformMatrix = elem.css('-webkit-transform') ||
+          elem.css('-moz-transform') ||
+          elem.css('-ms-transform') ||
+          elem.css('-o-transform') ||
+          elem.css('transform'),
+        matrix = transformMatrix.replace(/[^0-9\-.,]/g, '').split(',');
 
-      if (header) {
-        adjust(header);
-      } else {
-        adjustAll();
-      }
+      return {
+        x: +(matrix[12] || matrix[4] || 0),//translate x
+        y: +(matrix[13] || matrix[5] || 0)//translate y
+      };
     },
 
     // Set draggable columns target
     setDraggableColumnTargets: function () {
       var self = this,
-        headers = self.headerNodes().not('.is-hidden'),
+        headers = self.headerNodes()
+          .not('.is-hidden').not('[data-column-id="selectionCheckbox"]'),
         target, pos, extra;
 
       self.draggableColumnTargets = [];
@@ -1858,6 +1834,7 @@ $.fn.datagrid = function(options) {
         var idx = ($(this).is('.last')) ? index - 1 : index; // Extra target for last header th
         target = headers.eq(idx);
         pos = target.position();
+        pos.top -= self.getTransformTranslateValue(target).y;
         // Extra space around, if dropped item bit off from drop area
         extra = 20;
 
@@ -2137,9 +2114,11 @@ $.fn.datagrid = function(options) {
         }
 
         //Run a function that helps check if readonly
-        var ariaReadonly = ((col.readonly || col.editor === undefined) ? 'aria-readonly="true"': '');
+        var ariaReadonly = (col.id !== 'selectionCheckbox' &&
+          (col.readonly || col.editor === undefined)) ?
+          'aria-readonly="true"': '';
 
-        if (col.isReadonly && !col.readonly) {
+        if (col.isReadonly && !col.readonly && col.id !== 'selectionCheckbox') {
           var isReadonly = col.isReadonly(this.recordCount, j, self.fieldValue(rowData, self.settings.columns[j].field), col, rowData);
 
           if (isReadonly) {
@@ -2287,7 +2266,6 @@ $.fn.datagrid = function(options) {
           header.css('width', parseInt(column.width) + '%');
         }
 
-        self.adjustDraggablePosition(header);
       }
 
       if (widthPercent) {
@@ -2299,14 +2277,6 @@ $.fn.datagrid = function(options) {
     //Returns all header nodes (not the groups)
     headerNodes: function () {
       return this.headerRow.find('tr:not(.datagrid-header-groups) th');
-    },
-
-    cloneHeaderNodes: function () {
-      if (!this.clone) {
-        return [];
-      }
-
-      return this.clone.find('thead').find('tr:not(.datagrid-header-groups) th');
     },
 
     firstRowNodes: function () {
@@ -2642,20 +2612,11 @@ $.fn.datagrid = function(options) {
           col.css({'width': width, 'min-width': width});
         }
 
-        self.adjustDraggablePosition(col);
       });
 
       // Save the column back in settings for later
       if (columnSettings[0] && columnSettings[0].width) {
         columnSettings[0].width = width;
-      }
-
-      if (self.fixedHeader) {
-        self.headerNodes().each(function (i) {
-          var cloneHeader = self.cloneHeaderNodes().eq(i);
-          cloneHeader.css({'width': $(this).outerWidth(), 'min-width': width});
-          self.adjustDraggablePosition(cloneHeader);
-        });
       }
 
     },
@@ -2697,7 +2658,6 @@ $.fn.datagrid = function(options) {
 
         self.dragging = true;
         self.setColumnWidth(id, ui.left - offset.left - 6 + self.element.scrollLeft());
-        self.syncFixedHeader();
       })
       .on('dragend.datagrid', function () {
         self.dragging = false;
@@ -2787,7 +2747,7 @@ $.fn.datagrid = function(options) {
         });
 
       //Handle Sorting
-      this.element.add(this.clone)
+      this.element
         .off('click.datagrid')
         .on('click.datagrid', 'th.is-sortable', function (e) {
           if ($(e.target).parent().is('.datagrid-filter-wrapper')) {
@@ -2927,12 +2887,6 @@ $.fn.datagrid = function(options) {
 
       // Move the drag handle to the end or start of the column
       this.headerRow
-        .add((this.clone ? this.clone.find('thead') : []))
-        .off('mouseenter.datagrid').on('mouseenter.datagrid', 'th', function() {
-          if (!self.draggableStatus) {
-            self.adjustDraggablePosition();
-          }
-        })
         .off('mousemove.datagrid touchstart.datagrid touchmove.datagrid')
         .on('mousemove.datagrid touchstart.datagrid touchmove.datagrid', 'th', function (e) {
           if (self.dragging) {
@@ -2945,8 +2899,7 @@ $.fn.datagrid = function(options) {
             return;
           }
 
-          var isClone = self.currentHeader.closest('.datagrid-clone').length,
-            headerDetail = self.currentHeader.closest('.header-detail'),
+          var headerDetail = self.currentHeader.closest('.header-detail'),
             extraMargin = headerDetail.length ? parseInt(headerDetail.css('margin-left'), 10) : 0,
             leftEdge = parseInt(self.currentHeader.position().left) - (extraMargin || 0),
             rightEdge = leftEdge + self.currentHeader.outerWidth(),
@@ -2969,7 +2922,6 @@ $.fn.datagrid = function(options) {
           }
 
           self.resizeHandle.css('left', leftPos + 'px');
-          self.resizeHandle.css('top', (isClone ? '-40px' : 'auto'));
         });
 
       // Handle Clicking Header Checkbox
@@ -3002,15 +2954,6 @@ $.fn.datagrid = function(options) {
           self.commitCellEdit(self.editor.input);
         }
 
-      });
-
-      // resize datagrid-clone table headers along with based off of #datagrid on resize of window to maintain table header proportions as visually mimicking table column proportions
-      $('body').on('resize.datagrid', function () {
-        $('#datagrid').find('th').each(function (index) {
-          var th = $(this),
-              w = th.width();
-          $('.datagrid-clone').find('th').eq(index).css({'width': w, 'min-width': w});
-        });
       });
 
       //=== BEGIN: isScrolling setup for touch device ==========================
@@ -3236,13 +3179,9 @@ $.fn.datagrid = function(options) {
       }
 
       //TODO: Save in Grid Personalization
-      this.table.removeClass('short-rowheight medium-rowheight normal-rowheight')
+      this.element.add(this.table)
+        .removeClass('short-rowheight medium-rowheight normal-rowheight')
         .addClass(settings.rowHeight + '-rowheight');
-
-      if (this.clone) {
-        this.clone.removeClass('short-rowheight medium-rowheight normal-rowheight')
-        .addClass(settings.rowHeight + '-rowheight');
-      }
 
       return settings.rowHeight;
     },
@@ -3805,24 +3744,6 @@ $.fn.datagrid = function(options) {
           e.preventDefault();
         }
 
-      });
-
-
-      //Set clone's focus state
-      self.table.on('focus.datagrid', 'th', function () {
-        var th = $(this);
-
-        if (self.fixedHeader) {
-          self.clone.find('thead th').eq(th.index()).addClass('is-focused');
-        }
-      });
-
-      self.table.on('blur.datagrid', 'th', function () {
-        var th = $(this);
-
-        if (self.fixedHeader) {
-          self.clone.find('thead th').eq(th.index()).removeClass('is-focused');
-        }
       });
 
       //Handle Editing / Keyboard
@@ -4519,7 +4440,6 @@ $.fn.datagrid = function(options) {
         this.setActiveCell(this.activeCell.row, this.activeCell.cell);
       }
 
-      this.syncFixedHeader();
       this.resetPager('sorted');
       this.tableBody.removeClass('is-loading');
       this.element.trigger('sorted', [this.sortColumn]);
@@ -4531,13 +4451,6 @@ $.fn.datagrid = function(options) {
       this.headerRow.find('[data-column-id="' +id + '"]')
         .addClass(ascending ? 'is-sorted-asc' : 'is-sorted-desc')
         .attr('aria-sort', ascending ? 'ascending' : 'descending');
-
-      if (this.fixedHeader && this.clone) {
-        this.clone.find('.is-sorted-asc, .is-sorted-desc').removeClass('is-sorted-asc is-sorted-desc').attr('aria-sort', 'none');
-        this.clone.find('[data-column-id="' +id + '"]')
-          .addClass(ascending ? 'is-sorted-asc' : 'is-sorted-desc')
-          .attr('aria-sort', ascending ? 'ascending' : 'descending');
-      }
     },
 
     //Overridable function to conduct sorting
