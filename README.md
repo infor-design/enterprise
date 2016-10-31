@@ -57,8 +57,8 @@ IE 9+ ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
 ## Managing Local Dev with Make and Docker Compose
 * `make up` To start your Local Dev ENV which will 
 * `make watch` To start `grunt watch`
-* The synced dev server is available on `http://localhost:4000`
-* NOTE that any changes you make will trigger Sass to recompile and the browser will reload thanks to live reload
+* In a browser, go to: `http://localhost:4000`
+* NOTE any changes that you make will trigger Sass to recompile and the browser will reload thanks to live reload
 
 ## Running The Unit Tests
 * `make unit-test` To run the unit tests
@@ -67,7 +67,7 @@ IE 9+ ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
 * Make sure selenium-standalone is installed by running `selenium-standalone start` once
 * Make sure selenium-standalone is started by running `selenium-standalone start`
 * Run the command: `./node_modules/.bin/intern-runner config=test2/intern.local.functional`
-* Note grunt tasks in the works....
+* NOTE `make` and `grunt` tasks are in the works....
 
 # Getting the Code into your project
 

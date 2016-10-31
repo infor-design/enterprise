@@ -9,5 +9,6 @@ services:
       - 35729:35729
     volumes: 
       - ".:/controls"
+      - "./bin/docker-entrypoint.sh:/docker-entrypoint.sh"
     working_dir: /controls
-    command: ./bin/docker-entrypoint.sh
+    entrypoint: /docker-entrypoint.sh
