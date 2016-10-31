@@ -8,4 +8,5 @@ services:
       - 4000:4000   
     volumes: 
       - ".:/controls"
-    command: "/controls/bin/start-dev.sh"
+    working_dir: /controls
+    command: ./bin/docker-entrypoint.sh
