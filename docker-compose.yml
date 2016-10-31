@@ -1,0 +1,12 @@
+version: '2'
+services:
+  hl-sohoxi:
+    build: .
+    image: hookandloop/hl-builder:1.0.0
+    container_name: hl_sohoxi
+    tty: true
+    command: "cd /controls && npm install && node server && grunt watch"
+    ports:
+      - 4000:4000   
+    volumes: 
+      - ".:/controls"

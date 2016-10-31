@@ -1,6 +1,11 @@
 MOCHA_OPTS = --check-leaks
 REPORTER = spec
 
+# Container Name
+SOHO_CONTAINER = hl_sohoxi
+
+.PHONY: test
+
 test:
 	@node test-runner.js
 
@@ -60,7 +65,7 @@ test-radio:
 
 test-message:
 	@node test-runner.js message
-	
+
 test-toast:
 	@node test-runner.js toast
 
@@ -72,5 +77,30 @@ test-searchfield:
 
 test-tabs:
 	@node test-runner.js tabs
-					
-.PHONY: test
+
+pull :
+	docker-compose pull
+
+up : pull
+	docker-compose up -d
+
+down :
+	docker-compose down
+
+stop :
+	docker-compose stop
+
+restart :
+	docker-compose restart	
+
+reset : down
+	make up
+
+shell :
+	docker exec -ti $(SOHO_CONTAINER) /bin/bash
+
+tail :
+	docker logs -f $(SOHO_CONTAINER)
+
+watch :
+	docker exec -ti $(SOHO_CONTAINER) /bin/bash -c "cd /controls && grunt watch"
