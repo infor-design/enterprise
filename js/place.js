@@ -313,7 +313,7 @@
                 case 'clockwise':
                   return self.clockwise(placementObj);
                 case 'flip':
-                  self.flip(placementObj);
+                  placementObj = self.flip(placementObj);
                   placementObj.setCoordinate('x', placementObj.originalx);
                   placementObj.setCoordinate('y', placementObj.originaly);
                   placementObj = doPlacementAgainstParent(placementObj);
@@ -539,7 +539,7 @@
               d = ((containerBleed ? windowW : containerRect.right) - scrollX) - parentRect.right - placementObj.containerOffsetX;
               break;
             case 'top':
-              d = (containerBleed ? 0 : containerRect.top) - scrollY + placementObj.containerOffsetY;
+              d = (containerBleed ? 0 : containerRect.top) - scrollY - parentRect.top + placementObj.containerOffsetY;
               break;
             default: // bottom
               d = ((containerBleed ? windowH : containerRect.bottom) - scrollY) - parentRect.bottom - placementObj.containerOffsetY;
