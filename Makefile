@@ -104,3 +104,6 @@ tail :
 
 watch :
 	docker exec -ti $(SOHO_CONTAINER) /bin/bash -c "cd /controls && grunt watch"
+
+unit-test :
+	docker exec -ti $(SOHO_CONTAINER) /bin/bash -c "./node_modules/.bin/intern-client config=test2/intern.local.unit"

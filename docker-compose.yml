@@ -5,7 +5,8 @@ services:
     container_name: hl_sohoxi
     tty: true
     ports:
-      - 4000:4000   
+      - 4000:4000
+      - 35729:35729
     volumes: 
       - ".:/controls"
     working_dir: /controls
