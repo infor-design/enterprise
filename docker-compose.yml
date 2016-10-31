@@ -1,7 +1,7 @@
 version: '2'
 services:
   hl-sohoxi:
-    image: hookandloop/hl-builder:1.0.0
+    image: hookandloop/hl-builder:latest
     container_name: hl_sohoxi
     tty: true
     ports:
