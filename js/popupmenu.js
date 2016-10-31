@@ -608,7 +608,8 @@
         //=======================================================
 
         function shouldBeLeftAligned(target) {
-          return target.is('.btn-split-menu, .btn-menu, .tab, .searchfield-category-button');
+          return target.is('.btn-split-menu, .btn-menu, .tab, .searchfield-category-button') &&
+            !target.parent('.pager-pagesize').length;
         }
 
         function shouldBeRightAligned(target) {
