@@ -1,7 +1,6 @@
 version: '2'
 services:
   hl-sohoxi:
-    build: .
     image: hookandloop/hl-builder:1.0.0
     container_name: hl_sohoxi
     tty: true
