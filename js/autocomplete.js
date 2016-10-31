@@ -197,45 +197,21 @@
             self.element.removeClass('is-open');
           });
 
-        this.element.trigger('populated', [matchingOptions]);
+        // Select the first item in the list
+        self.list.children().filter(':not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)').first()
+          .addClass('is-selected');
+
+        this.element.trigger('populated', [matchingOptions]).focus();
 
         // Overrides the 'click' listener attached by the Popupmenu plugin
+        self.list.off('click touchend')
+          .on('touchend.autocomplete click.autocomplete', 'a', function(e) {
+            self.select(e);
+          });
 
-        self.list.off('click touchend').on('touchend.autocomplete click.autocomplete', 'a', function (e) {
-          var a = $(e.currentTarget),
-            ret = a.text().trim();
-
-          self.element.attr('aria-activedescendant', a.parent().attr('id'));
-
-          if (a.parent().attr('data-value')) {
-            for (var i = 0; i < items.length; i++) {
-              if (items[i].value.toString() === a.parent().attr('data-value')) {
-                ret = items[i];
-              }
-            }
-          }
-
-          self.element
-            .trigger('selected', [a, ret])
-            .focus()
-            .data('popupmenu').close();
-
-          e.preventDefault();
-          return false;
-        });
-
+        // Highlight anchors on focus
         var all = self.list.find('a').on('focus.autocomplete touchend.autocomplete', function () {
-          var anchor = $(this),
-            text = anchor.text().trim();
-
-          if (anchor.find('.display-value').length > 0) {
-            text = anchor.find('.display-value').text().trim();
-          }
-
-          all.parent('li').removeClass('is-selected');
-          anchor.parent('li').addClass('is-selected');
-
-          self.element.val(text).focus();
+          self.highlight($(this), all);
         });
 
         if (this.settings.offset && this.settings.offset.left) {
@@ -260,11 +236,24 @@
         this.element.trigger('listopen', [items]);
       },
 
+      closeList: function() {
+        var popup = this.element.data('popupmenu');
+        if (!popup) {
+          return;
+        }
+
+        popup.close();
+      },
+
       handleEvents: function () {
         //similar code as dropdown but close enough to be dry
         var buffer = '',
           timer, selected,
           self = this;
+
+        function getSelected() {
+          return self.list.find('.is-selected');
+        }
 
         this.element.on('updated.autocomplete', function() {
           self.updated();
@@ -274,10 +263,12 @@
             return false;
           }
 
-          var excludes = 'li:not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)';
+          var excludes = 'li:not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)',
+            hasList = self.list && self.list.is(':visible');
+
           //Down - select next
-          if (e.keyCode === 40 && self.list && self.list.is(':visible')) {
-            selected = self.list.find('.is-selected');
+          if (e.keyCode === 40 && hasList) {
+            selected = getSelected();
             if (selected.length) {
               self.noSelect = true;
               selected.removeClass('is-selected is-focused');
@@ -288,8 +279,8 @@
           }
 
           //Up select prev
-          if (e.keyCode === 38 && self.list && self.list.is(':visible')) {
-            selected = self.list.find('.is-selected');
+          if (e.keyCode === 38 && hasList) {
+            selected = getSelected();
             if (selected.length) {
               self.noSelect = true;
               selected.removeClass('is-selected is-focused');
@@ -299,16 +290,14 @@
             }
           }
 
-          if ((e.keyCode === 9 || e.keyCode === 13) && self.list && self.list.is(':visible')) {
-            self.list.find('.is-selected').find('a').trigger('click');
-            if (self.element.data('popupmenu')) {
-              self.element.data('popupmenu').close();
-            }
+          if ((e.keyCode === 9 || e.keyCode === 13) && hasList) {
+            selected = getSelected();
             e.stopPropagation();
             e.preventDefault();
+            self.select(selected);
           }
 
-          if (e.keyCode === 8 && self.list) {
+          if (e.keyCode === 8 && hasList) {
             self.element.trigger('keypress');
           }
 
@@ -392,6 +381,63 @@
         }).on('requestend.autocomplete', function(e, buffer, data) {
           self.openList(buffer, data);
         });
+      },
+
+      highlight: function(anchor, allAnchors) {
+        var text = anchor.text().trim();
+
+        if (anchor.find('.display-value').length > 0) {
+          text = anchor.find('.display-value').text().trim();
+        }
+
+        if (allAnchors && allAnchors.length) {
+          allAnchors.parent('li').removeClass('is-selected');
+        }
+        anchor.parent('li').addClass('is-selected');
+
+        this.element.val(text).focus();
+      },
+
+      select: function(anchorOrEvent, items) {
+        var a, li, ret,
+          isEvent = false;
+
+        // Initial Values
+        if (anchorOrEvent instanceof $.Event) {
+          isEvent = true;
+          a = $(anchorOrEvent.currentTarget);
+        } else {
+          a = anchorOrEvent;
+          if (a.is('li')) {
+            li = a;
+            a = a.children('a');
+          }
+        }
+        li = a.parent('li');
+
+        this.element.attr('aria-activedescendant', li.attr('id'));
+
+        if (items && items.length && li.attr('data-value')) {
+          for (var i = 0; i < items.length; i++) {
+            if (items[i].value.toString() === li.attr('data-value')) {
+              ret = items[i];
+            }
+          }
+        }
+
+        ret = a.text().trim();
+        this.closeList();
+
+        this.element
+          .val(ret)
+          .trigger('selected', [a, ret])
+          .focus();
+
+        if (isEvent) {
+          anchorOrEvent.preventDefault();
+        }
+
+        return false;
       },
 
       updated: function() {
