@@ -294,9 +294,9 @@
 }
 
 .top {
-  .arrow {
+  > .arrow {
     border-bottom-width: 0;
-    bottom: -6px;
+    bottom: -7px;
     left: calc(50% - 6px);
 
     &::after {
@@ -308,10 +308,10 @@
 }
 
 .bottom {
-  .arrow {
+  > .arrow {
     border-top-width: 0;
     left: calc(50% - 6px);
-    top: -6px;
+    top: -7px;
 
     &::after {
       border-top-width: 0;
@@ -319,17 +319,10 @@
       top: 0;
     }
   }
-
-  &.offset {
-    .arrow {
-      left: auto;
-      right: 18px;
-    }
-  }
 }
 
 .right {
-  .arrow {
+  > .arrow {
     border-left-width: 0;
     left: -7px;
     top: calc(50% - 6px);
@@ -343,7 +336,7 @@
 }
 
 .left {
-  .arrow {
+  > .arrow {
     border-right-width: 0;
     right: -7px;
     top: calc(50% - 6px);

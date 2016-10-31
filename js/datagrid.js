@@ -1150,7 +1150,8 @@ $.fn.datagrid = function(options) {
 
     //Fixed Header
     fixHeader: function () {
-      var next = this.wrapper.parent().next(),
+      var self = this,
+        next = this.wrapper.parent().next(),
         prev = this.wrapper.parent().prev(),
         diff = (next.length ===0 ? 0 : next.outerHeight()) + (prev.length ===0 ? 0 : prev.outerHeight()),
         outerHeight = 'calc(100% - '+diff+ 'px)';
@@ -1191,6 +1192,12 @@ $.fn.datagrid = function(options) {
       		'transform': translateY,
       	});
       });
+
+      setTimeout(function() {
+        if (self.element.closest('.datagrid-wrapper').outerHeight() > self.table.outerHeight()) {
+          $('tr:visible:last-child td', self.table).css({'border-bottom-width': '1px'});
+        }
+      }, 0);
 
       this.handleEvents();
     },
@@ -4165,6 +4172,7 @@ $.fn.datagrid = function(options) {
           this.settings.dataset[dataRowIndex],
         cellNode = this.activeCell.node.find('.datagrid-cell-wrapper'),
         cellParent = cellNode.parent('td'),
+        cellWidth = cellParent.outerWidth(),
         cellValue = (cellNode.text() ?
           cellNode.text() : this.fieldValue(rowData, col.field));
 
@@ -4180,7 +4188,9 @@ $.fn.datagrid = function(options) {
       }
 
       //Editor.init
-      cellParent.addClass('is-editing');
+      cellParent
+        .addClass('is-editing')
+        .css({'max-width': cellWidth, 'min-width': cellWidth, 'width': cellWidth});
       cellNode.empty();
       this.editor = new col.editor(dataRowIndex, cell, cellValue, cellNode, col, event, this, rowData);
 
@@ -4212,6 +4222,7 @@ $.fn.datagrid = function(options) {
 
       //Save the Cell Edit back to the data set
       this.updateCellNode(this.dataRowIndex(cellNode.parent()) , cellNode.index(), newValue);
+      cellNode.css({'max-width': '', 'min-width': '', 'width': ''});
       this.element.triggerHandler('exiteditmode');
     },
 

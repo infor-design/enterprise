@@ -80,6 +80,8 @@
           this.mainContainer = widgetContainer;
         }
 
+        this.isRTL = Locale.isRTL();
+
         return this;
       },
 
@@ -345,8 +347,14 @@
 
         //Add functionality to change page size.
         if (this.isTable && this.pagerBar.find('.btn-menu').length === 0) {
-          var pageSize = $('<li class="pager-pagesize"><button type="button" class="btn-menu"> <span>' + Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize) +'</span> '+ $.createIcon({ icon: 'dropdown' }) +' </button></li>');
-          $(pageSize).insertAfter(this.pagerBar.find('.pager-last'));
+          var pageSize = $('<li class="pager-pagesize"></li>'),
+            pageSizeButton = $('<button type="button" class="btn-menu">' +
+              '<span>' + Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize) + '</span> ' +
+              $.createIcon({ icon: 'dropdown' }) +
+              ' </button>').appendTo(pageSize);
+
+          pageSize.insertAfter(this.pagerBar.find('.pager-last'));
+
           var menu = $('<ul class="popupmenu has-icons"></ul>');
 
           for (var k = 0; k < self.settings.pagesizes.length; k++) {
@@ -354,9 +362,17 @@
             menu.append('<li '+ (size === self.settings.pagesize ? ' class="is-checked"' : '') +'><a href="#">' + size + '</a></li>');
           }
 
-          pageSize.find('button').after(menu);
+          pageSizeButton.after(menu);
 
-          this.pagerBar.find('.btn-menu').popupmenu().on('selected.pager', function (e, args) {
+          var popupOpts = {
+            placementOpts: {
+              parent: pageSizeButton,
+              parentXAlignment: (this.isRTL ? 'left' : 'right'),
+              strategies: ['flip']
+            }
+          };
+
+          pageSizeButton.popupmenu(popupOpts).on('selected.pager', function (e, args) {
             var tag = args;
             tag.closest('.popupmenu').find('.is-checked').removeClass('is-checked');
             tag.parent('li').addClass('is-checked');
@@ -364,7 +380,7 @@
             self.setActivePage(1, true, 'first');
            });
 
-          $('[href="#25"]').parent().addClass('is-checked');
+          //$('[href="#25"]').parent().addClass('is-checked');
         }
 
         var pattern = (''+ this._pageCount).replace(/\d/g, '#');

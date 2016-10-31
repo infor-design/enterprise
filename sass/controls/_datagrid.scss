@@ -631,7 +631,7 @@ $datagrid-short-row-height: 30px;
     }
 
     &:last-child td {
-      border-bottom: 0;
+      border-bottom-width: 0;
     }
 
     .icon.plus-minus::before,
@@ -756,6 +756,10 @@ $datagrid-short-row-height: 30px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+
+    &:last-child {
+      border-right-width: 0;
+    }
 
     &.hide-border {
       border-right: 0;
