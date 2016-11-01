@@ -486,6 +486,7 @@
                 //sync data on node
                 nodeData.children = nodes;
                 node.data('jsonData', nodeData);
+                self.selectNode(node, true);
                 self.initSelected();
               };
 
@@ -655,7 +656,7 @@
             target.trigger('click.tree');
           }
 
-          //right arrow
+          // Left arrow
           if (charCode === 37) {
             if (Locale.isRTL()) {
               if (target.next().hasClass('is-open')) {
@@ -676,7 +677,7 @@
             return false;
           }
 
-          //left arrow
+          // Right arrow
           if (charCode === 39) {
             if (Locale.isRTL()) {
               if (target.next().hasClass('is-open')) {
