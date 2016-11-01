@@ -319,12 +319,6 @@ a.btn-menu {
     span {
       color: $tertiary-btn-open-color;
     }
-
-    .icon {
-      // scss-lint:disable ImportantRule
-      fill: $tertiary-btn-open-color !important;
-      // scss-lint:enable ImportantRule
-    }
   }
 }
 

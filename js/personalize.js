@@ -162,9 +162,15 @@
         ' .module-tabs.is-personalizable .tab.is-selected { background-color: '+ Soho.colors.header +'}'  +
         ' .builder-header.is-personalizable{ background-color: '+ Soho.colors.subheader +'}'  +
         ' .header.is-personalizable { background-color: '+ Soho.colors.header +'}' +
+        ' .module-tabs.is-personalizable .tab-more { border-left: '+ Soho.colors.verticalBorder +' }' +
+        ' .module-tabs.is-personalizable .tab-more:hover { background-color: '+ Soho.colors.hover +' }' +
+        ' .module-tabs.is-personalizable .tab-more.is-open { background-color: '+ Soho.colors.hover +' }' +
+        ' .module-tabs.is-personalizable .tab-more.is-selected { background-color: '+ Soho.colors.header +' }' +
         ' .subheader.is-personalizable { background-color: '+ Soho.colors.subheader +'}' +
         ' .builder .sidebar .header {border-right: 1px solid '+ Soho.colors.verticalBorder +'}' +
-        ' .module-tabs.is-personalizable .tab:hover { background-color: '+ Soho.colors.hover +'}';
+        ' .module-tabs.is-personalizable .tab:hover { background-color: '+ Soho.colors.hover +'}' +
+        ' .module-tabs.has-toolbar.is-personalizable .tab-list-container + .toolbar { border-left: '+ Soho.colors.verticalBorder +' }' +
+        ' .module-tabs.is-personalizable [class^="btn"] { background-color: '+ Soho.colors.inactive +' }'; 
         this.stylesheet(cssRules);
 
         this.unBlockUi();
