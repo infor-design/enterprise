@@ -1,0 +1,54 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Dropdown Test: Filter Types</h2>
+    <p>
+      The dropdown on the left/top shows <em>contains</em>-style filtering.<br />
+      The dropdown on the right/bottom shows <em>startsWith</em>-style filtering.
+    </p>
+
+  </div>
+</div>
+
+<div class="row" style="margin-top: 20px;">
+  <div class="six columns">
+
+    <div class="field">
+      <label for="contains-filter">Contains Filter</label>
+      <select id="contains-filter" name="contains-filter" class="dropdown" data-init="false"></select>
+    </div>
+
+  </div>
+  <div class="six columns">
+
+    <div class="field">
+      <label for="startsWith-filter">StartsWith Filter</label>
+      <select id="startsWith-filter" name="startsWith-filter" class="dropdown" data-init="false"></select>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+
+    function statesSource(response, term) {
+      //$.getJSON('/api/states?term='+term, function(data) {
+      $.getJSON('/api/states', function(data, term) {
+        console.log(data, term);
+        response(data);
+      });
+    }
+
+    $('#contains-filter').dropdown({
+      filterMode: 'contains',
+      source: statesSource
+    });
+
+    $('#startsWith-filter').dropdown({
+      filterMode: 'startsWith',
+      source: statesSource
+    });
+
+  });
+</script>
