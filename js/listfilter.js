@@ -88,7 +88,7 @@
 
       function searchItemIterator(item) {
         var isString = typeof item === 'string',
-          text = (isString ? item : $(item).html()),
+          text = (isString ? item : $(item).text()),
           parts = text.split(' '),
           match = false;
 
