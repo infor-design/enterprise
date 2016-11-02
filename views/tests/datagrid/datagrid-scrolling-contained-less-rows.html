@@ -2,14 +2,15 @@
   <div class="six columns">
     <br />
     <h3>Grid Example: Scrolling</h3>
-    <p>Provides a visual example of a fixed height grid. This is done by specifying.
+    <p>Provides a visual example of a fixed height grid. This is done by specifying a height on the parent (with a class of contained).
+       the grid will then take the height </p>
   </div>
 </div>
 
 <div class="row top-padding">
   <div class="twelve columns">
 
-    <div class="contained" style="width: 800px; height: 320px;">
+    <div class="contained" style="width: 800px; height: 320px">
       <div id="datagrid" class="datagrid-contained">
       </div>
     </div>
@@ -69,7 +70,7 @@
 
           //Get Page Based on info in Req, return results into response;
         },
-        toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true}
+        toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: false ,collapsibleFilter: true, keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true}
       });
 
   });
