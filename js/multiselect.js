@@ -24,6 +24,7 @@
     // Settings and Options
     var pluginName = 'multiselect',
         defaults = {
+          filterMode: 'contains',
           maxSelected: undefined,
           source: undefined
         },
@@ -52,6 +53,10 @@
             moveSelectedToTop: true,
             multiple: true
           };
+
+        if (this.settings.filterMode) {
+          ddOpts.filterMode = this.settings.filterMode;
+        }
 
         if (this.settings.source) {
           ddOpts.source = this.settings.source;
