@@ -506,12 +506,11 @@ $toolbarsearchfield-category-empty-width: 54px;
   }
 
   .header,
-  .masthead {
+  .masthead,
+  .module-tabs {
     .toolbar-searchfield-wrapper.non-collapsible {
       // reset all the styling for the searchfield to correctly appear open.
       .searchfield {
-        background-color: rgba($searchfield-header-bg-color, .5);
-        border-bottom-color: rgba($searchfield-header-border-color, .7);
         color: $searchfield-header-text-color;
 
         &::-webkit-input-placeholder {
@@ -531,6 +530,26 @@ $toolbarsearchfield-category-empty-width: 54px;
         .icon {
           fill: $searchfield-header-icon-color;
         }
+      }
+    }
+  }
+
+  .header,
+  .masthead {
+    .toolbar-searchfield-wrapper.non-collapsible {
+      .searchfield {
+        background-color: rgba($searchfield-moduletabs-bg-color, .5);
+        border-bottom-color: rgba($searchfield-moduletabs-border-color, .7);
+      }
+    }
+  }
+
+  .module-tabs {
+    .toolbar-searchfield-wrapper.non-collapsible {
+      // reset all the styling for the searchfield to correctly appear open.
+      .searchfield {
+        background-color: rgba($searchfield-header-bg-color, .5);
+        border-bottom-color: rgba($searchfield-header-border-color, .7);
       }
     }
   }
