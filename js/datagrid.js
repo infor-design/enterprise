@@ -2743,7 +2743,7 @@ $.fn.datagrid = function(options) {
 
         if (col.attr('data-column-id') === id && width > 0) {
           col.css({'width': width, 'min-width': width});
-          
+
           //Updated Fixed Header
           if (self.hasFixedHeader) {
             self.tableBody.find('td').eq(col.index()).css({'width': width, 'min-width': width});
@@ -2812,6 +2812,15 @@ $.fn.datagrid = function(options) {
         count = self.recordCount;
       }
 
+      //Update Selected
+      if (self.contextualToolbar && self.contextualToolbar.length) {
+        self.contextualToolbar.find('.selection-count').text(self._selectedRows.length + ' ' + Locale.translate('Selected'));
+      }
+
+      if (self.settings.source && !totals) {
+        return;
+      }
+
       if (totals && totals !== -1) {
         count = totals;
       }
@@ -2828,9 +2837,6 @@ $.fn.datagrid = function(options) {
       }
       self.element.closest('.modal').find('.datagrid-result-count').html(countText);
 
-      if (self.contextualToolbar) {
-        self.contextualToolbar.find('.selection-count').text(self._selectedRows.length + ' ' + Locale.translate('Selected'));
-      }
     },
 
     //Trigger event on parent and compose the args
