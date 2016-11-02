@@ -347,10 +347,19 @@
       color: $module-tabs-inactive-text-color;
     }
 
+    &.non-collapsible {
+      .searchfield {
+        background-color: rgba($searchfield-moduletabs-bg-color, .4);
+        border-bottom-color: rgba($searchfield-moduletabs-border-color, .4);
+        border-top-color: rgba($searchfield-moduletabs-bg-color, .4);
+        color: $module-tabs-inactive-text-color;
+      }
+    }
+
     &.active {
       .searchfield {
-        background-color: rgba($searchfield-moduletabs-bg-color, 1);
-        border-bottom-color: rgba($searchfield-moduletabs-border-color, 1);
+        background-color: rgba($searchfield-moduletabs-bg-color, .4);
+        border-bottom-color: rgba($searchfield-moduletabs-border-color, .4);
       }
     }
 
@@ -590,6 +599,16 @@
       a > span:not(.icon):not(.audible) {
         width: 0;
       }
+    }
+  }
+}
+
+// For non-collapsible searchfields:  Only be non-collapsible on larger breakpoints.
+@media(min-width: $breakpoint-phone-to-tablet) {
+  .toolbar-searchfield-wrapper.non-collapsible {
+    .searchfield {
+      background-color: rgba($searchfield-moduletabs-bg-color, .4);
+      border-bottom-color: rgba($searchfield-moduletabs-border-color, .4);
     }
   }
 }
