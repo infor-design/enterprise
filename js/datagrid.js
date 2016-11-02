@@ -935,7 +935,6 @@ $.fn.datagrid = function(options) {
       this.setRowGrouping();
       this.setTreeRootNodes();
       this.render();
-      this.initFixedHeader();
       this.createResizeHandle();
       this.handlePaging();
       this.initTableWidth();
@@ -948,15 +947,12 @@ $.fn.datagrid = function(options) {
     },
 
     initSettings: function () {
-      if (this.settings.dataset !== 'table') {
-        this.element.wrap( '<div class="datagrid-wrapper" />');
-      }
 
       this.sortColumn = {sortField: null, sortAsc: true};
       this.gridCount = $('.datagrid').length + 1;
-      this.lastSelectedRow = 0;// Rember index to use shift key
+      this.lastSelectedRow = 0;// Remember index to use shift key
 
-      this.contextualToolbar = this.element.closest('.datagrid-wrapper').prev('.contextual-toolbar');
+      this.contextualToolbar = this.element.prev('.contextual-toolbar');
       this.contextualToolbar.addClass('datagrid-contextual-toolbar');
     },
 
@@ -978,7 +974,6 @@ $.fn.datagrid = function(options) {
 
         this.element.css('max-width', w);
         $('.modal').find('.modal-body').css('overflow-x','hidden');
-        // $('.modal').css('overflow','hidden').find('.modal-body').css('overflow-x','hidden');
       }
 
       //initialize row height by a setting
@@ -995,16 +990,15 @@ $.fn.datagrid = function(options) {
       if (this.settings.dataset === 'table') {
         self.table = $(this.element).addClass('datagrid').attr('role', this.settings.treeGrid ? 'treegrid' : 'grid');
 
-        var wrapper = $(this.element).closest('.datagrid-wrapper');
+        var wrapper = $(this.element).closest('.datagrid-container');
 
         if (wrapper.length === 0) {
-          this.element.wrap('<div class="datagrid-wrapper"><div class="datagrid-container"></div></div>');
+          this.element.wrap('<div class="datagrid-container"></div>');
         }
         self.settings.dataset = self.htmlToDataset();
-        self.container = this.element.closest('.datagrid-wrapper');
       } else {
         self.table = $('<table></table>').addClass('datagrid').attr('role', this.settings.treeGrid ? 'treegrid' : 'grid');
-        self.container = self.element.addClass('datagrid-container');
+        this.element.addClass('datagrid-container');
       }
 
       //A treegrid is considered editable unless otherwise specified.
@@ -1012,15 +1006,15 @@ $.fn.datagrid = function(options) {
         self.table.attr('aria-readonly', 'true');
       }
 
-      $(this.element).closest('.datagrid-wrapper').addClass(this.settings.isList ? ' is-gridlist' : '');
+      $(this.element).addClass(this.settings.isList ? ' is-gridlist' : '');
       self.table.addClass(this.settings.isList ? ' is-gridlist' : '');
 
       self.table.empty();
       self.renderRows();
       self.element.append(self.table);
       self.renderHeader();
-
-      self.wrapper = self.element.closest('.datagrid-wrapper');
+      self.renderFixedHeader();
+      self.container = self.element.closest('.datagrid-container');
 
       self.settings.buttonSelector = '.btn, .btn-secondary, .btn-primary, .btn-modal-primary, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split';
       $(self.settings.buttonSelector, self.table).button();
@@ -1141,65 +1135,61 @@ $.fn.datagrid = function(options) {
       }
     },
 
-    initFixedHeader: function () {
-      if (this.element.hasClass('datagrid-contained')) {
-        this.fixHeader();
+    renderFixedHeader: function () {
+      var self = this;
+      this.hasFixedHeader = this.element.hasClass('datagrid-contained') || this.element.parent().hasClass('contained');
+
+      if (this.hasFixedHeader) {
+
+        //Move Scroll Bar so its always on the left
+        self.table.off('scroll.datagrid').on('scroll.datagrid', function () {
+          $('table > *', self.element).width(self.table.width() + self.table.scrollLeft());
+        });
+
+        //Set a height using calc - This is normal - expand to bottom from top position
+        var body = self.table.find('tbody'),
+          bodyMargin = 40,
+          headerHeight = settings.rowHeight === 'normal' ? 39 : settings.rowHeight === 'short' ? 24 : 29,
+          diff = this.element.offset().top;
+
+        //In this case container has inline height styles TODO Bit Expensive
+        var container = self.element.parent('.contained'),
+          isInline = container.prop('style') && container.prop('style')[$.camelCase('height')],
+          elementCalc = 'calc(100% - ' + ((diff - bodyMargin)) + 'px)',
+          bodyCalc = 'calc(100% - ' + (headerHeight) + 'px)';
+
+        if (isInline) {
+          var toolbarHeight = self.element.prev('.toolbar').height();
+          elementCalc = 'calc(100% - ' + (toolbarHeight + 2) + 'px)'; //2 are the 2 borders
+        }
+        this.element.css('height', elementCalc);
+        body.css('height', bodyCalc);
       }
 
     },
 
-    //Fixed Header
-    fixHeader: function () {
-      var self = this,
-        next = this.wrapper.parent().next(),
-        prev = this.wrapper.parent().prev(),
-        diff = (next.length ===0 ? 0 : next.outerHeight()) + (prev.length ===0 ? 0 : prev.outerHeight()),
-        outerHeight = 'calc(100% - '+diff+ 'px)';
-
-      var container = this.wrapper.parent('.contained'),
-        isInline = container.prop('style') && container.prop('style')[$.camelCase('height')];
-
-      //Container has a fixed height
-      if (isInline) {
-        outerHeight = container.css('height');
-      } else {
-        container.css('height', outerHeight);
-      }
-      this.wrapper.find('.datagrid-container').css({'height': '100%', 'overflow': 'auto'});
-
-      //Next if exist and the pager toolbar height
-      var innerHeight = (this.settings.paging ? (next.length === 0 ? 80 : 48) : 0);
-      innerHeight += (next.length === 0 ? 0 : parseInt(next.outerHeight()));
-
-      if (this.wrapper.parent().is('.pane')) {
-        innerHeight = 146;
+    syncFixedHeader: function () {
+      return;
+      if (!this.headerRow) {
+        return;
       }
 
-      if (isInline) {
-        innerHeight = 18; //header and toolbar - TODO add check
-      }
+      var total = 0,
+        width = 0,
+        headers = this.headerRow.find('th:visible'),
+        columns = this.tableBody.find('tr:visible:first td:visible'),
+        count = headers.length;
 
-      this.wrapper.css('height', 'calc(100% - '+ (innerHeight)+ 'px)');
+      headers.each(function(i) {
+        var th = $(this),
+          thWidth = th.width(),
+          colWidth = columns.eq(i).width();
 
-      //Freeze header
-      this.container.on('scroll.datagrid', function () {
-        var translateY = 'translateY('+ this.scrollTop +'px)';
-        $('thead th', this).css({
-      		'-webkit-transform': translateY,
-      		'-moz-transform': translateY,
-      		'-ms-transform': translateY,
-      		'-o-transform': translateY,
-      		'transform': translateY,
-      	});
+        width = thWidth > colWidth ? thWidth : colWidth;
+        total += width;
+
+        th.add(columns.eq(i)).css({'min-width': (100/count) +'%', 'width': width + 'px'});
       });
-
-      setTimeout(function() {
-        if (self.element.closest('.datagrid-wrapper').outerHeight() > self.table.outerHeight()) {
-          $('tr:visible:last-child td', self.table).css({'border-bottom-width': '1px'});
-        }
-      }, 0);
-
-      this.handleEvents();
     },
 
     //Delete a Specific Row
@@ -1371,7 +1361,7 @@ $.fn.datagrid = function(options) {
          (column.width ? ' style="width:'+ (typeof column.width ==='number' ? column.width+'px': column.width) +'"' : '') + '>';
          headerRow += '<div class="' + (isSelection ? 'datagrid-checkbox-wrapper ': 'datagrid-column-wrapper') + (column.align === undefined || column.filterType ? '' : ' l-'+ column.align +'-text') + '"><span class="datagrid-header-text'+ (column.required ? ' required': '') + '">' + self.headerText(settings.columns[j]) + '</span>';
 
-        //Removed the alignment - even if the column is right aligned data keep the header left aligned
+        //Removed the center alignment - even if the column is right aligned data keep the header left aligned
         //+ (column.align === undefined ? false : ' l-'+ column.align +'-text')
 
         if (isSelection) {
@@ -1915,9 +1905,6 @@ $.fn.datagrid = function(options) {
                   self.arrayIndexMove(self.settings.columns, indexFrom, indexTo);
                   self.updateColumns(self.settings.columns);
 
-                  if (self.element.hasClass('datagrid-contained')) {
-                    self.container.triggerHandler('scroll.datagrid');
-                  }
                 }
                 else {
                   // No need to swap here since same target area, where drag started
@@ -2077,7 +2064,6 @@ $.fn.datagrid = function(options) {
 
       //Save the height during render
       self.tableHeight = self.tableBody.height();
-      self.tableBody.css({'height': self.tableHeight, 'display': 'block'});
       self.tableBody.empty();
       self.recordCount = 0;
       self.filteredCount = 0;
@@ -2120,18 +2106,20 @@ $.fn.datagrid = function(options) {
       }
 
       self.tableBody.append(tableHtml);
-      self.tableBody.css({'height': '', 'display': ''});
+      self.syncFixedHeader();
       self.setupTooltips();
       self.tableBody.find('.dropdown').dropdown();
 
       //Set Tab Index and active Cell
       setTimeout(function () {
+        self.syncFixedHeader();
+
         if (!s.source) {
           self.displayCounts();
         }
         self.setAlternateRowShading();
         self.activeCell = {node: self.cellNode(0, 0).attr('tabindex', '0'), isFocused: false, cell: 0, row: 0};
-      }, 100);
+      }, 0);
     },
 
     setAlternateRowShading: function() {
@@ -2270,7 +2258,7 @@ $.fn.datagrid = function(options) {
 
         //Run a function that dynamically adds a class
         if (col.cssClass && typeof col.cssClass === 'function') {
-          cssClass += col.cssClass(this.recordCount, j, cellValue, col, rowData);
+          cssClass += ' ' + col.cssClass(this.recordCount, j, cellValue, col, rowData);
         }
 
         cssClass += (col.focusable ? ' is-focusable' : '');
@@ -2280,13 +2268,19 @@ $.fn.datagrid = function(options) {
           continue;
         }
 
+        //Set Width of first td row when fixed header
+        var colWidth = '';
+        if (this.hasFixedHeader && ariaRowindex === 1) {
+          colWidth = (col.width ? ' style="min-width:'+ (typeof col.width ==='number' ? col.width+'px': col.width) +'"' : '');
+        }
+
         rowHtml += '<td role="gridcell" ' + ariaReadonly + ' aria-colindex="' + (j+1) + '" '+
             ' aria-describedby="' + self.uniqueId('-header-' + j) + '"' +
            (cssClass ? ' class="' + cssClass + '"' : '') + 'data-idx="' + (j) + '"' +
            (col.tooltip ? ' title="' + col.tooltip.replace('{{value}}', cellValue) + '"' : '') +
            (col.id === 'rowStatus' && rowData.rowStatus && rowData.rowStatus.tooltip ? ' title="' + rowData.rowStatus.tooltip + '"' : '') +
            (self.settings.columnGroups ? 'headers = "' + self.uniqueId('-header-' + j) + ' ' + self.getColumnGroup(j) + '"' : '') +
-           (rowspan ? rowspan : '' ) +
+           (rowspan ? rowspan : '' ) + colWidth  +
            '><div class="datagrid-cell-wrapper">';
 
         if (col.contentVisible) {
@@ -2747,8 +2741,13 @@ $.fn.datagrid = function(options) {
       self.headerNodes().not('.is-hidden').each(function () {
         var col = $(this);
 
-        if (col.attr('data-column-id') === id) {
+        if (col.attr('data-column-id') === id && width > 0) {
           col.css({'width': width, 'min-width': width});
+
+          //Updated Fixed Header
+          if (self.hasFixedHeader) {
+            self.tableBody.find('td').eq(col.index()).css({'width': width, 'min-width': width});
+          }
         }
 
       });
@@ -2813,6 +2812,15 @@ $.fn.datagrid = function(options) {
         count = self.recordCount;
       }
 
+      //Update Selected
+      if (self.contextualToolbar && self.contextualToolbar.length) {
+        self.contextualToolbar.find('.selection-count').text(self._selectedRows.length + ' ' + Locale.translate('Selected'));
+      }
+
+      if (self.settings.source && !totals) {
+        return;
+      }
+
       if (totals && totals !== -1) {
         count = totals;
       }
@@ -2829,9 +2837,6 @@ $.fn.datagrid = function(options) {
       }
       self.element.closest('.modal').find('.datagrid-result-count').html(countText);
 
-      if (self.contextualToolbar) {
-        self.contextualToolbar.find('.selection-count').text(self._selectedRows.length + ' ' + Locale.translate('Selected'));
-      }
     },
 
     //Trigger event on parent and compose the args
@@ -3262,7 +3267,7 @@ $.fn.datagrid = function(options) {
           more.append(menu);
         }
 
-        this.element.parent('.datagrid-wrapper').parent().prepend(toolbar);
+        this.element.before(toolbar);
       }
 
       toolbar.find('.btn-actions').popupmenu().on('selected', function(e, args) {

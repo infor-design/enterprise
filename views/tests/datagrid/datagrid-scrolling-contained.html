@@ -6,9 +6,6 @@
           <div class="title">Custom Toolbar <span class="datagrid-result-count">(N Results)</span></div>
           <div class="buttonset">
 
-            <button class="btn" type="button" id="fix">Fix</button>
-            <button class="btn"  type="button" id="unfix">UnFix</button>
-
           </div>
 
           <div class="more">
@@ -56,6 +53,7 @@
         //dataset: data,
         selectable: 'single',
         paging: true,
+        columnReorder: true,
         pagesize: 20,
         source: function(req, response) {
           var url = '/api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
@@ -78,14 +76,5 @@
 
         toolbar: {results: true}
       });
-
-      $('#fix').on('click', function () {
-          grid.data('datagrid').fixHeader();
-      });
-
-      $('#unfix').on('click', function () {
-        grid.data('datagrid').unFixHeader();
-      });
-
   });
 </script>

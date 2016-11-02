@@ -69,7 +69,7 @@
         if (this.element.is('tbody')) {
           this.isTable = true;
           this.settings.type = 'table';
-          this.mainContainer = this.element.closest('.datagrid-wrapper');
+          this.mainContainer = this.element.closest('.datagrid-container');
         }
 
         // If contained by a widget/card container, build some settings for that
@@ -476,7 +476,7 @@
 
       pagerInfo: {},
       setDatagrid: function() {
-        this.datagrid = this.mainContainer ? this.mainContainer.children('.datagrid-container').data('datagrid') : null;
+        this.datagrid = this.mainContainer ? this.mainContainer.data('datagrid') : null;
       },
 
       // Render Paged Items

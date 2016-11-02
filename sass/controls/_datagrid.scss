@@ -11,7 +11,6 @@ $datagrid-short-row-height: 30px;
 
 .datagrid-wrapper {
   background-color: transparent;
-  border: 1px solid $datagrid-cell-border-color;
   min-width: 100%;
   position: relative;
 
@@ -59,10 +58,12 @@ $datagrid-short-row-height: 30px;
 
 // Grid Container Div
 .datagrid-container {
+  border: 1px solid $datagrid-cell-border-color;
   clear: both;
   height: auto;
   min-width: 100%;
-  overflow-x: auto;
+  //overflow-x: auto;
+  position: relative;
 
   .resize-handle {
     border: 0;
@@ -75,9 +76,22 @@ $datagrid-short-row-height: 30px;
   }
 
   &.datagrid-contained {
-    //Frozen Headers
+    //Sticky Headers
     .datagrid {
-      height: auto;
+      display: block;
+      height: 100%;
+      overflow-x: scroll;
+    }
+
+    thead,
+    tbody {
+      display: block;
+    }
+
+    tbody {
+    //  height: 500px;
+      overflow-x: hidden;
+      overflow-y: scroll;
     }
 
   }
@@ -354,13 +368,11 @@ $datagrid-short-row-height: 30px;
   .datagrid-column-wrapper {
     display: table;
     height: 40px;
-    margin-left: 20px;
+    padding: 0 20px;
 
     &.l-right-text {
       direction: rtl;
       float: right;
-      margin-left: 0;
-      margin-right: 20px;
     }
   }
 
@@ -631,7 +643,7 @@ $datagrid-short-row-height: 30px;
     }
 
     &:last-child td {
-      border-bottom-width: 0;
+    //  border-bottom-width: 0;
     }
 
     .icon.plus-minus::before,
@@ -1456,7 +1468,6 @@ html[dir='rtl'] {
     padding: 4px 0 0 7px;
     position: absolute;
     top: 0;
-    // top: auto;
     z-index: 10;
 
     &.is-over {
