@@ -80,7 +80,7 @@ $datagrid-short-row-height: 30px;
     .datagrid {
       display: block;
       height: 100%;
-      overflow-x: scroll;
+      overflow-x: auto;
     }
 
     thead,
@@ -89,9 +89,12 @@ $datagrid-short-row-height: 30px;
     }
 
     tbody {
-    //  height: 500px;
       overflow-x: hidden;
-      overflow-y: scroll;
+      overflow-y: auto;
+
+      tr:last-child td {
+        border-bottom-color: $datagrid-cell-border-color;
+      }
     }
 
   }
@@ -643,7 +646,7 @@ $datagrid-short-row-height: 30px;
     }
 
     &:last-child td {
-    //  border-bottom-width: 0;
+      border-bottom-color: transparent;
     }
 
     .icon.plus-minus::before,
