@@ -92,7 +92,7 @@ $datagrid-short-row-height: 30px;
       overflow-x: hidden;
       overflow-y: auto;
 
-      tr :last-child td {
+      tr:last-child td {
         border-bottom-color: $datagrid-cell-border-color;
       }
     }
