@@ -2082,13 +2082,11 @@ $.fn.datagrid = function(options) {
       }
 
       self.tableBody.append(tableHtml);
-      self.syncFixedHeader();
       self.setupTooltips();
       self.tableBody.find('.dropdown').dropdown();
 
       //Set Tab Index and active Cell
       setTimeout(function () {
-        self.syncFixedHeader();
 
         if (!s.source) {
           self.displayCounts();
