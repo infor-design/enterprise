@@ -357,7 +357,7 @@ $datagrid-short-row-height: 30px;
   }
 
   //Grouped Headers
-  thead tr + tr {
+  thead tr + tr th {
     border-top: 1px solid $datagrid-header-border-color;
   }
 
