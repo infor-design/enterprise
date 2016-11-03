@@ -1168,29 +1168,6 @@ $.fn.datagrid = function(options) {
 
     },
 
-    syncFixedHeader: function () {
-      /*if (!this.headerRow) {
-        return;
-      }
-
-      var total = 0,
-        width = 0,
-        headers = this.headerRow.find('th:visible'),
-        columns = this.tableBody.find('tr:visible:first td:visible'),
-        count = headers.length;
-
-      headers.each(function(i) {
-        var th = $(this),
-          thWidth = th.width(),
-          colWidth = columns.eq(i).width();
-
-        width = thWidth > colWidth ? thWidth : colWidth;
-        total += width;
-
-        th.add(columns.eq(i)).css({'min-width': (100/count) +'%', 'width': width + 'px'});
-      });*/
-    },
-
     //Delete a Specific Row
     removeRow: function (row, nosync) {
       var rowNode = this.tableBody.find('tr').eq(row),
@@ -2271,6 +2248,10 @@ $.fn.datagrid = function(options) {
         var colWidth = '';
         if (this.hasFixedHeader && ariaRowindex === 1) {
           colWidth = (col.width ? ' style="min-width:'+ (typeof col.width ==='number' ? col.width+'px': col.width) +'"' : '');
+          //TODO - Add Auto Width + Percent Logic
+          //columns = this.tableBody.find('tr:visible:first td:visible'),
+          //count = headers.length;
+          //th.add(columns.eq(i)).css({'min-width': (100/count) +'%', 'width': width + 'px'});
         }
 
         rowHtml += '<td role="gridcell" ' + ariaReadonly + ' aria-colindex="' + (j+1) + '" '+
