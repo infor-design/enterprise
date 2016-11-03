@@ -35,7 +35,10 @@
       },
       settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * @constructor
+     * @param {Object} element
+     */
     function Drag(element) {
       this.element = $(element);
       Soho.logTimeStart(pluginName);

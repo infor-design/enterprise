@@ -38,7 +38,10 @@
       },
       settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * @constructor
+     * @param {Object} element
+     */
     function Editor(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);

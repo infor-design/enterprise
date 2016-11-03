@@ -37,7 +37,10 @@
         },
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * @constructor
+     * @param {Object} element
+     */
     function Lookup(element) {
       this.element = $(element);
       Soho.logTimeStart(pluginName);

@@ -36,7 +36,10 @@
       },
       settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * @constructor
+     * @param {Object} element
+     */
     function Modal(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);

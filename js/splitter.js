@@ -34,7 +34,10 @@
         },
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * @constructor
+     * @param {Object} element
+     */
     function Splitter(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);

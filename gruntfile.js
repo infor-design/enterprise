@@ -223,6 +223,18 @@ module.exports = function(grunt) {
           dest: 'views/docs/changelog-contents.html'
         }]
       }
+    },
+
+    documentation: {
+      default: {
+        files: [{
+          src: ['js/*.js']
+        }],
+        options: {
+          destination: 'documentation',
+          version: 'Alpha'
+        }
+      },
     }
 
   });
@@ -265,5 +277,4 @@ module.exports = function(grunt) {
   grunt.registerTask('sohoxi-watch', [
     'revision', 'sass', 'copy:amd', 'strip_code','concat', 'clean:amd', 'copy:main', 'usebanner'
   ]);
-
 };

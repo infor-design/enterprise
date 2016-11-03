@@ -32,7 +32,10 @@
         tabContainerTypes = ['horizontal', 'vertical', 'module-tabs', 'header-tabs'],
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * @constructor
+     * @param {Object} element
+     */
     function Tabs(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);

@@ -117,7 +117,10 @@
         },
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * @constructor
+     * @param {Object} element
+     */
     function ColorPicker(element) {
       this.element = $(element);
       Soho.logTimeStart(pluginName);

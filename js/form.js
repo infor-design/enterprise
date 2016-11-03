@@ -1,4 +1,3 @@
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -14,8 +13,16 @@
 }(function($) {
 /* end-amd-strip-block */
 
-  /**
+
+/**
+ * The jQuery plugin namespace.
+ * @external "jQuery.fn"
+ * @see {@link http://learn.jquery.com/plugins/|jQuery Plugins}
+ */
+
+ /**
   * Make something disabled
+  * @function external:"jQuery.fn".disable
   */
   $.fn.disable = function() {
     $.each(this.data(), function(index, value) {
@@ -31,8 +38,9 @@
     return this;
   };
 
-  /**
+ /**
   * Make something enabled
+  * @function external:"jQuery.fn".enabled
   */
   $.fn.enable = function() {
     $.each(this.data(), function(index, value) {
@@ -48,8 +56,9 @@
     return this;
   };
 
-  /**
+ /**
   * Make something readonly
+  * @function external:"jQuery.fn".readonly
   */
   $.fn.readonly = function() {
     $.each(this.data(), function(index, value) {
@@ -65,8 +74,9 @@
     return this;
   };
 
-  /**
+ /**
   * Track Input is changed from last submit
+  * @function external:"jQuery.fn".trackdirty
   */
   $.fn.trackdirty = function() {
       this.each(function () {
@@ -126,7 +136,7 @@
     return this;
   };
 
-  /**
+ /**
   * Labels without the "for" attribute
   */
   $(function () {
@@ -146,7 +156,7 @@
     });
   });
 
-  /**
+ /**
   * Fix: Radio buttons was not selecting when click and than use arrow keys on Firefox
   */
   $(function () {

@@ -28,7 +28,10 @@
     var pluginName = 'zoom',
         settings = $.extend({}, options);
 
-    // Plugin Constructor
+    /**
+     * @constructor
+     * @param {Object} element
+     */
     function Zoom(element, settings) {
       this.settings = $.extend({}, settings);
       this.element = $(element);

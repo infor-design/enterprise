@@ -41,6 +41,10 @@
       },
       settings = $.extend({}, defaults, options);
 
+    /**
+     * @constructor
+     * @param {Object} element
+     */
     function Tooltip(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);

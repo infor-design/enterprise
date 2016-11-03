@@ -1,11 +1,19 @@
-node_modules/
+# Compiled #
+###################
 designs/
+dist/
+documentation/
 public/svg/
 public/js/
 public/stylesheets/
-dist/
 temp/
-.DS_Store
+
+# Packages #
+############
+node_modules/
+
+# Misc #
+###################
 junit.xml
 junit-unit.xml
 junit-functional.xml
@@ -19,3 +27,7 @@ xunit.xml
 *.iml
 views/docs/changelog-contents.html
 config.json
+
+# OS generated files #
+######################
+.DS_Store

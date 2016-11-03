@@ -29,7 +29,10 @@
         },
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * @constructor
+     * @param {Object} element
+     */
     function Textarea(element) {
       this.element = $(element);
       Soho.logTimeStart(pluginName);

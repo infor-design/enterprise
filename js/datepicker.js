@@ -50,7 +50,10 @@
         },
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * @constructor
+     * @param {Object} element
+     */
     function DatePicker(element) {
       this.element = $(element);
       this.settings = settings;

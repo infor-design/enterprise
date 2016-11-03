@@ -32,7 +32,10 @@
         },
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * @constructor
+     * @param {Object} element
+     */
     function TimePicker(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);

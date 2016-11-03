@@ -31,7 +31,10 @@
         },
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * @constructor
+     * @param {Object} element
+     */
     function Personalize(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -179,6 +182,7 @@
         ' .hero-widget.is-personalizable .chart-container .bar { stroke: '+ Soho.colors.subheader +' }' +
         ' .hero-widget.is-personalizable .chart-container.line-chart .dot { stroke: '+ Soho.colors.subheader +' }' +
         '';
+
         this.stylesheet(cssRules);
 
         this.unBlockUi();

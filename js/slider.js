@@ -34,7 +34,10 @@
         },
         settings = $.extend(true, {}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * @constructor
+     * @param {Object} element
+     */
     function Slider(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
