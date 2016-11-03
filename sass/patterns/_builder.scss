@@ -63,7 +63,7 @@
 
 .builder-header {
   background-color: $builder-header-bg-color;
-  min-height: 80px;
+  min-height: 75px;
 
   &.is-personalizable {
     @include transition(background-color 500ms ease 0s);
@@ -71,7 +71,7 @@
 
   .toolbar {
     margin: 0 20px;
-    padding-top: 10px;
+    padding-top: 15px;
   }
 
   h1,
@@ -94,7 +94,7 @@
 }
 
 .builder-content {
-  height: calc(100% - 80px);
+  height: calc(100% - 75px);
 
   &.no-sidebar {
     .builder-actions {
@@ -168,7 +168,7 @@
 }
 
 .builder-sidebar-footer {
-  height: 80px;
+  height: 75px;
   margin-top: 10px;
 }
 

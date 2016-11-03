@@ -62,7 +62,7 @@ $datagrid-short-row-height: 30px;
   clear: both;
   height: auto;
   min-width: 100%;
-  //overflow-x: auto;
+  overflow-x: auto;
   position: relative;
 
   .resize-handle {
@@ -956,6 +956,9 @@ $datagrid-short-row-height: 30px;
 
   //Readonly - List Datagrid
   &.is-gridlist {
+    table {
+      margin-bottom: -1px;
+    }
 
     th {
       background-color: $datagrid-list-header-bg-color;

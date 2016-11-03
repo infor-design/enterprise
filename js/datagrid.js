@@ -1169,8 +1169,7 @@ $.fn.datagrid = function(options) {
     },
 
     syncFixedHeader: function () {
-      return;
-      if (!this.headerRow) {
+      /*if (!this.headerRow) {
         return;
       }
 
@@ -1189,7 +1188,7 @@ $.fn.datagrid = function(options) {
         total += width;
 
         th.add(columns.eq(i)).css({'min-width': (100/count) +'%', 'width': width + 'px'});
-      });
+      });*/
     },
 
     //Delete a Specific Row
