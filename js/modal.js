@@ -415,7 +415,7 @@
             return;
           }
 
-          if (e.which === 13 && self.isOnTop()) {
+          if (e.which === 13 && self.isOnTop() && !target.closest('form').find(':submit').length) {
             e.stopPropagation();
             e.preventDefault();
             self.element.find('.btn-modal-primary:enabled').trigger('click');
