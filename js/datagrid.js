@@ -1246,11 +1246,12 @@ $.fn.datagrid = function(options) {
     },
 
     uniqueId: function (suffix) {
-      var uniqueid = (window.location.pathname.split('/').pop().replace('.html', '').replace('.htm', '')) + '-' + (this.element.attr('id') ? this.element.attr('id'): 'datagrid') + '-' + this.gridCount + suffix;
-
-      if (this.settings.uniqueId) {
-        uniqueid = this.settings.uniqueId + '-' + suffix;
-      }
+      var uniqueid = this.settings.uniqueId ?
+        this.settings.uniqueId + '-' + suffix :
+        (window.location.pathname.split('/').pop()
+          .replace(/\.xhtml|\.shtml|\.html|\.htm|\.aspx|\.asp|\.jspx|\.jsp|\.php/g, '')
+          .replace(/\./g, '-') +'-'+
+            (this.element.attr('id') || 'datagrid') +'-'+ this.gridCount + suffix);
 
       return uniqueid.replace(/--/g, '-');
     },
