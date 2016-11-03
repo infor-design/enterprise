@@ -2762,22 +2762,50 @@ $.fn.datagrid = function(options) {
 
       this.table.before(this.resizeHandle);
 
-      this.resizeHandle.drag({axis: 'x', containment: 'parent'}).on('drag.datagrid', function (e, ui) {
-        if (!self.currentHeader) {
-          return;
-        }
+      var handle, colWrapper, columnId, minWidth;
+      this.resizeHandle.drag({axis: 'x', containment: 'parent'})
+        .on('dragstart.datagrid', function () {
+          if (!self.currentHeader) {
+            return;
+          }
+          self.dragging = true;
 
-        var id = self.currentHeader.attr('data-column-id'),
-          offset = (self.element.parent().css('position')!=='static') ?
-            self.getChildOffset(self.currentHeader) :
-            self.currentHeader.offset();
+          handle = $('.handle', self.currentHeader);
+          colWrapper = $('.datagrid-column-wrapper', self.currentHeader);
+          columnId = self.currentHeader.attr('data-column-id');
 
-        self.dragging = true;
-        self.setColumnWidth(id, ui.left - offset.left - 6 + self.element.scrollLeft());
-      })
-      .on('dragend.datagrid', function () {
-        self.dragging = false;
-      });
+          var getMinWidth = function() {
+            var id = self.currentHeader.attr('id'),
+              cellWrappers = $('tbody tr td[aria-describedby="'+ id +'"] .datagrid-cell-wrapper', self.element),
+              widths = [], thMinWidth, colMinWidth;
+            cellWrappers.each(function() {
+              var cell = $(this);
+              widths.push(cell.css('display', 'inline-block').outerWidth());
+              cell.css('display', 'block');
+            });
+            thMinWidth = handle.outerWidth() + colWrapper.outerWidth();
+            colMinWidth = Math.max.apply(Math, widths);
+            return thMinWidth > colMinWidth ? thMinWidth : colMinWidth;
+          };
+          minWidth = getMinWidth();
+        })
+        .on('drag.datagrid', function (e, ui) {
+          if (!self.currentHeader) {
+            return;
+          }
+
+          var offset = (self.element.parent().css('position')!=='static') ?
+              self.getChildOffset(self.currentHeader) :
+              self.currentHeader.offset(),
+            width = ui.left - offset.left - 6 + self.table.scrollLeft();
+
+          if (width > minWidth) {
+            self.setColumnWidth(columnId, width);
+          }
+        })
+        .on('dragend.datagrid', function () {
+          self.dragging = false;
+        });
     },
 
     //Show Summary and any other count info
