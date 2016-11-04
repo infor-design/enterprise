@@ -719,7 +719,6 @@ window.Editors = {
       }
       column.editorOptions.width = container.parent().width();
       column.editorOptions.offset = {};
-      column.editorOptions.offset.left = -20;
       column.editorOptions.offset.top = 11;
 
       if (column.maxLength) {
@@ -1142,9 +1141,9 @@ $.fn.datagrid = function(options) {
       if (this.hasFixedHeader) {
 
         //Move Scroll Bar so its always on the left
-        self.table.off('scroll.datagrid').on('scroll.datagrid', function () {
+        self.table.off('scroll.datagrid').on('scroll.datagrid', function () {
           $('table > *', self.element).width(self.table.width() + self.table.scrollLeft());
-        });
+        });
 
         //Set a height using calc - This is normal - expand to bottom from top position
         var body = self.table.find('tbody'),
@@ -1164,6 +1163,7 @@ $.fn.datagrid = function(options) {
         }
         this.element.css('height', elementCalc);
         body.css('height', bodyCalc);
+
       }
 
     },

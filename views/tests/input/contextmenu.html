@@ -1,0 +1,43 @@
+<div class="row top-padding">
+  <div class="six columns">
+
+    <h2>Input Test: Context Menu</h2>
+
+    <p>Test having a context menu on the input. Right click the input and a menu should show.
+    </p>
+
+    <input id="test" value="test" data-init="false"/>
+    <ul id="action-popupmenu" class="popupmenu">
+        <li><a href="#">Cut</a></li>
+        <li><a href="#">Copy</a></li>
+        <li><a href="#">Paste</a></li>
+        <li>
+            <a href="#">Paste Special</a>
+            <ul class="popupmenu">
+                <li><a href="#">Sub Menu 1</a></li>
+                <li><a href="#">Sub Menu 2</a></li>
+            </ul>
+        </li>
+        <li class="separator"></li>
+        <li><a href="#">Name and project range</a></li>
+        <li><a href="#">Insert comment</a></li>
+        <li><a href="#">Insert note</a></li>
+        <li><a href="#">Clear notes</a></li>
+        <li class="separator"></li>
+        <li><a href="#">Conditional formatting</a></li>
+        <li><a href="#">Data validation</a></li>
+    </ul>
+
+  </div>
+</div>
+
+
+<script>
+  $(function(){
+    $('#test').popupmenu({
+        menu: "action-popupmenu",
+        trigger: 'rightClick'
+      })
+    }
+  );
+</script>
