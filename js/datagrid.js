@@ -1794,20 +1794,19 @@ $.fn.datagrid = function(options) {
 
       // Initialize Drag api
       $('.handle', headers).each(function() {
-        var clone,
+        var clone, haderPos, offPos,
           handle = $(this),
           hader = handle.parent();
 
         handle.on('mousedown.datagrid', function(e) {
           e.preventDefault();
 
-          hader.drag({clone: true, cloneAppentTo: headers.first().parent().parent()})
+          hader.drag({clone: true, cloneAppentTo: headers.first().parent().parent(), clonePosIsFixed: true})
 
             // Drag start =======================================
             .on('dragstart.datagrid', function (e, pos, thisClone) {
               var index;
 
-              pos.top -= self.getTransformTranslateValue(hader).y;
               clone = thisClone;
 
               clone.removeAttr('id').addClass('is-dragging-clone')
@@ -1815,18 +1814,22 @@ $.fn.datagrid = function(options) {
               $('.is-draggable-target', clone).remove();
 
               self.setDraggableColumnTargets();
-              index = self.targetColumn(pos);
+
+              haderPos = hader.position();
+              offPos = {top: (pos.top - haderPos.top), left: (pos.left - haderPos.left)};
+
+              index = self.targetColumn(haderPos);
               self.draggableStatus.startIndex = index;
               e.stopImmediatePropagation();
             })
 
             // While dragging ===================================
             .on('drag.datagrid', function (e, pos) {
-              pos.top -= self.getTransformTranslateValue(hader).y;
               clone.css({left: pos.left, top: pos.top});
+              haderPos = {top: (pos.top - offPos.top), left: (pos.left - offPos.left)};
 
-              var i, l, n, target,
-                index = self.targetColumn(pos);
+              var i, l, n, target, rect,
+                index = self.targetColumn(haderPos);
 
               $('.is-draggable-target', headers).add(showTarget).removeClass('is-over');
 
@@ -1839,8 +1842,12 @@ $.fn.datagrid = function(options) {
                     if (target.index > self.draggableStatus.startIndex && (n < l)) {
                       target = self.draggableColumnTargets[n];
                     }
-                    target.el.add(showTarget).addClass('is-over');
-                    showTarget.css('left', target.el.offset().left - self.element.offset().left);
+                    target.el.addClass('is-over');
+                    if (!self.isHeaderOverflowed(target.el.closest('th'))) {
+                      showTarget.addClass('is-over');
+                      rect = target.el[0].getBoundingClientRect();
+                      showTarget.css({'left': rect.left, 'top': rect.top});
+                    }
                   }
                 }
               }
@@ -1849,13 +1856,13 @@ $.fn.datagrid = function(options) {
 
             // Drag end =========================================
             .on('dragend.datagrid', function (e, pos) {
-              pos.top -= self.getTransformTranslateValue(hader).y;
               clone.css({left: pos.left, top: pos.top});
+              haderPos = {top: (pos.top - offPos.top), left: (pos.left - offPos.left)};
 
-              var index = self.targetColumn(pos),
+              var index = self.targetColumn(haderPos),
                dragApi = hader.data('drag'),
                tempArray = [],
-               i, l, indexFrom, indexTo;
+               i, l, indexFrom, indexTo, target;
 
               // Unbind drag from header
               if (dragApi && dragApi.destroy) {
@@ -1867,28 +1874,34 @@ $.fn.datagrid = function(options) {
 
               if (self.draggableStatus.endIndex !== -1) {
                 if (self.draggableStatus.startIndex !== self.draggableStatus.endIndex) {
-                  // Start to Swap columns
+                  target = self.draggableColumnTargets[index];
+                  if (!self.isHeaderOverflowed(target.el.closest('th'))) {
+                    // Start to Swap columns
 
-                  for (i=0, l=self.settings.columns.length; i < l; i++) {
-                    if (!self.settings.columns[i].hidden &&
-                        self.settings.columns[i].id !== 'selectionCheckbox') {
-                      tempArray.push(i);
+                    for (i=0, l=self.settings.columns.length; i < l; i++) {
+                      if (!self.settings.columns[i].hidden &&
+                          self.settings.columns[i].id !== 'selectionCheckbox') {
+                        tempArray.push(i);
+                      }
                     }
+
+                    indexFrom = tempArray[self.draggableStatus.startIndex] || 0;
+                    indexTo = tempArray[self.draggableStatus.endIndex] || 0;
+
+                    self.arrayIndexMove(self.settings.columns, indexFrom, indexTo);
+                    self.updateColumns(self.settings.columns);
+
                   }
-
-                  indexFrom = tempArray[self.draggableStatus.startIndex] || 0;
-                  indexTo = tempArray[self.draggableStatus.endIndex] || 0;
-
-                  self.arrayIndexMove(self.settings.columns, indexFrom, indexTo);
-                  self.updateColumns(self.settings.columns);
-
+                  else {
+                    // Header overflowed
+                  }
                 }
                 else {
                   // No need to swap here since same target area, where drag started
                 }
               }
               else {
-                //Did not drop in target area
+                // Did not drop in target area
               }
 
             });
@@ -1896,19 +1909,14 @@ $.fn.datagrid = function(options) {
       });
     },
 
-    // Get transform translate value
-    getTransformTranslateValue: function(elem) {
-      var transformMatrix = elem.css('-webkit-transform') ||
-          elem.css('-moz-transform') ||
-          elem.css('-ms-transform') ||
-          elem.css('-o-transform') ||
-          elem.css('transform'),
-        matrix = transformMatrix.replace(/[^0-9\-.,]/g, '').split(',');
-
-      return {
-        x: +(matrix[12] || matrix[4] || 0),//translate x
-        y: +(matrix[13] || matrix[5] || 0)//translate y
-      };
+    // Check if header overflowed
+    isHeaderOverflowed: function(header) {
+      if (!header || header.length === 0) {
+        return true;
+      }
+      var el = this.element,
+        offset = header.offset().left - el.offset().left;
+      return offset >= el.width();
     },
 
     // Set draggable columns target
@@ -1925,7 +1933,6 @@ $.fn.datagrid = function(options) {
         var idx = ($(this).is('.last')) ? index - 1 : index; // Extra target for last header th
         target = headers.eq(idx);
         pos = target.position();
-        pos.top -= self.getTransformTranslateValue(target).y;
         // Extra space around, if dropped item bit off from drop area
         extra = 20;
 

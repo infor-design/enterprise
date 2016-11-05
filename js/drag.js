@@ -27,9 +27,10 @@
       defaults = {
         axis: null, //Constrains dragging to either axis. Possible values: 'x', 'y'
         clone: false, //Clone the object - Useful so you dont have to abs position
+        clonePosIsFixed: false, //Clone object use as css style "position: fixed"
         cloneAppentTo: null, //AppentTo selector for clone ['body'|'parent'|'jquery object'] default:'body'
         containment: false, //Constrains dragging to within the bounds of the specified element or region. Possible values: "parent", "document", "window".
-        obstacle: false //Selector of object(s) that you cannot drag into
+        obstacle: false, //Selector of object(s) that you cannot drag into,
       },
       settings = $.extend({}, defaults, options);
 
@@ -113,7 +114,10 @@
         self.element.on('mousedown.draggable', function(e) {
           e.preventDefault();
 
-          var pos = self.element.position();
+
+          var pos = settings.clonePosIsFixed ?
+            self.element[0].getBoundingClientRect() : self.element.position();
+
           //Save offset
           self.offset = {
             x: e.pageX - pos.left,
