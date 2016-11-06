@@ -1474,7 +1474,7 @@ html[dir='rtl'] {
     height: $datagrid-header-height;
     margin: 0;
     padding: 4px 0 0 7px;
-    position: absolute;
+    position: fixed;
     top: 0;
     z-index: 10;
 
@@ -1548,7 +1548,7 @@ html[dir='rtl'] {
     &.is-dragging-clone {
       max-width: 125px;
       min-width: 100px;
-      position: absolute;
+      position: fixed;
 
       .datagrid-header-text {
         @include ellipsis();
