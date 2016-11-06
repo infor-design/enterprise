@@ -176,11 +176,6 @@
           });
         });
 
-        //Adjust buttons on resize
-        $(window).on('resize.pager', function () {
-          self.renderBar();
-        });
-
         //Attach button click and touch
         this.pagerBar.onTouchClick('pager', 'a').on('click.pager', 'a', function (e) {
           var li = $(this).parent();

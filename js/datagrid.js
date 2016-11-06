@@ -882,7 +882,7 @@ $.fn.datagrid = function(options) {
         columns: [],
         dataset: [],
         columnReorder: false, // Allow Column reorder
-        saveColumns: true, //Save Column Reorder and resize
+        saveColumns: false, //Save Column Reorder and resize
         editable: false,
         isList: false, // Makes a readonly "list"
         menuId: null,  //Id to the right click context menu
@@ -927,6 +927,9 @@ $.fn.datagrid = function(options) {
       this.settings = settings;
       this.initSettings();
       this.originalColumns = this.settings.columns;
+
+      this.hasFixedHeader = this.element.hasClass('datagrid-contained') ||
+        this.element.parent().hasClass('contained');
 
       this.appendToolbar();
       this.restoreColumns();
@@ -974,11 +977,6 @@ $.fn.datagrid = function(options) {
         this.element.css('max-width', w);
         $('.modal').find('.modal-body').css('overflow-x','hidden');
       }
-
-      //initialize row height by a setting
-      if (settings.rowHeight !== 'normal') {
-        this.element.add(this.element.find('table')).addClass(settings.rowHeight + '-rowheight');
-      }
     },
 
     //Render the Header and Rows
@@ -1000,7 +998,12 @@ $.fn.datagrid = function(options) {
         this.element.addClass('datagrid-container');
       }
 
-      //A treegrid is considered editable unless otherwise specified.
+      //initialize row height by a setting
+      if (settings.rowHeight !== 'normal') {
+        self.table.addClass(settings.rowHeight + '-rowheight');
+      }
+
+      //A treegrid is considered not editable unless otherwise specified.
       if (this.settings.treeGrid && !this.settings.editable) {
         self.table.attr('aria-readonly', 'true');
       }
@@ -1136,7 +1139,6 @@ $.fn.datagrid = function(options) {
 
     renderFixedHeader: function () {
       var self = this;
-      this.hasFixedHeader = this.element.hasClass('datagrid-contained') || this.element.parent().hasClass('contained');
 
       if (this.hasFixedHeader) {
 
@@ -1152,8 +1154,8 @@ $.fn.datagrid = function(options) {
           diff = this.element.offset().top;
 
         //In this case container has inline height styles TODO Bit Expensive
-        var container = self.element.parent('.contained'),
-          isInline = container.prop('style') && container.prop('style')[$.camelCase('height')],
+        var container = self.element.parent(),
+          isInline = container.prop('style') && container.prop('style').height,
           elementCalc = 'calc(100% - ' + ((diff - bodyMargin)) + 'px)',
           bodyCalc = 'calc(100% - ' + (headerHeight) + 'px)';
 
@@ -1161,9 +1163,15 @@ $.fn.datagrid = function(options) {
           var toolbarHeight = self.element.prev('.toolbar').height();
           elementCalc = 'calc(100% - ' + (toolbarHeight + 2) + 'px)'; //2 are the 2 borders
         }
+
+        //Assume 100%
+        if (!container.is('.pane')) {
+          elementCalc = 'calc(100% - ' + (bodyMargin) + 'px)';
+          bodyCalc = 'calc(100% - ' + (headerHeight) + 'px)';
+        }
+
         this.element.css('height', elementCalc);
         body.css('height', bodyCalc);
-
       }
 
     },
@@ -1177,7 +1185,6 @@ $.fn.datagrid = function(options) {
       this.settings.dataset.splice(row, 1);
       this.renderRows();
       this.element.trigger('rowremove', {row: row, cell: null, target: rowNode, value: [], oldValue: rowData});
-
     },
 
     //Remove all selected rows
@@ -1192,7 +1199,6 @@ $.fn.datagrid = function(options) {
       }
       this.pagerRefresh();
       this.syncSelectedUI();
-
     },
 
     //Method to Reload the data set
@@ -1335,7 +1341,7 @@ $.fn.datagrid = function(options) {
          ' id="' + id + '" data-column-id="'+ column.id + '"' + (column.field ? ' data-field="'+ column.field +'"' : '') +
          (column.headerTooltip ? 'title="' + column.headerTooltip + '"' : '') +
          (colGroups ? ' headers="' + self.getColumnGroup(j) + '"' : '') +
-         (column.width ? ' style="width:'+ (typeof column.width ==='number' ? column.width+'px': column.width) +'"' : '') + '>';
+         this.calculateColumnWidth(column, true, j) + '>';
          headerRow += '<div class="' + (isSelection ? 'datagrid-checkbox-wrapper ': 'datagrid-column-wrapper') + (column.align === undefined || column.filterType ? '' : ' l-'+ column.align +'-text') + '"><span class="datagrid-header-text'+ (column.required ? ' required': '') + '">' + self.headerText(settings.columns[j]) + '</span>';
 
         //Removed the center alignment - even if the column is right aligned data keep the header left aligned
@@ -1363,7 +1369,7 @@ $.fn.datagrid = function(options) {
       }
 
       self.table.find('th[title]').tooltip();
-      self.setColumnWidths();
+      //self.setColumnWidths();
 
       if (self.settings.columnReorder) {
         self.createDraggableColumns();
@@ -2246,11 +2252,7 @@ $.fn.datagrid = function(options) {
         //Set Width of first td row when fixed header
         var colWidth = '';
         if (this.hasFixedHeader && ariaRowindex === 1) {
-          colWidth = (col.width ? ' style="min-width:'+ (typeof col.width ==='number' ? col.width+'px': col.width) +'"' : '');
-          //TODO - Add Auto Width + Percent Logic
-          //columns = this.tableBody.find('tr:visible:first td:visible'),
-          //count = headers.length;
-          //th.add(columns.eq(i)).css({'min-width': (100/count) +'%', 'width': width + 'px'});
+          colWidth = this.calculateColumnWidth(col, false, j);
         }
 
         rowHtml += '<td role="gridcell" ' + ariaReadonly + ' aria-colindex="' + (j+1) + '" '+
@@ -2298,6 +2300,110 @@ $.fn.datagrid = function(options) {
       }
 
       return rowHtml;
+    },
+
+    canvas:  null,
+    totalWidth: 0,
+
+    //This Function approximates the table auto widthing
+    calculateTextWidth: function (columnDef) {
+      var max = 0,
+        self = this,
+        field = columnDef.field,
+        maxText = '',
+        chooseHeader = false;
+
+      for (var i = 0; i < this.settings.dataset.length; i++) {
+        var val = this.fieldValue(this.settings.dataset[i], field),
+           len = 0, title;
+
+        //Some types should be formatted
+        if (val instanceof Date) {
+          val = self.formatValue(columnDef.formatter, i , null, this.fieldValue(this.settings.dataset[i], field), columnDef, this.settings.dataset[i], self);
+        }
+        len = val.toString().length;
+        title = columnDef.name || '';
+
+        if (title.length > len) {
+          chooseHeader = true;
+          len = title.length;
+          val = title;
+        }
+
+        if (len > max) {
+          max = len;
+          maxText = val;
+        }
+      }
+
+      // if given, use cached canvas for better performance, else, create new canvas
+      this.canvas = this.canvas || (this.canvas = document.createElement('canvas'));
+      var context = this.canvas.getContext('2d');
+      context.font = '14px arial';
+      var metrics = context.measureText(maxText);
+
+      return Math.round(metrics.width + (chooseHeader ? 75 : 52));  //Add padding and borders
+    },
+
+    headerWidths: [],
+    columnWidthType: 'auto', //Auto, Fixed or Percent
+
+    //Calculate the width for a column (upfront with no rendering)
+    calculateColumnWidth: function (col, isHeader, index) {
+      var widthPercent = false;
+
+      if (!col.width && !this.hasFixedHeader) {
+        return '';
+      }
+
+      if (this.headerWidths[index]) {
+        // use cache
+        return ' style="width: '+ this.headerWidths[index].width + 'px; min-width: ' + this.headerWidths[index].minWidth + 'px"';
+      }
+
+      var colWidth = col.width,
+        colMinWidth = (typeof col.minWidth ==='number' ? col.minWidth: colWidth);
+
+      if (typeof col.width === 'string' && col.width.indexOf('px') === -1) {
+        widthPercent = true;
+        this.columnWidthType = 'percent';
+      }
+
+      if (widthPercent && col.width) {
+        colWidth = colMinWidth = col.width.replace('%', '');
+      }
+
+      if (widthPercent && this.hasFixedHeader) {
+        var textWidth = this.calculateTextWidth(col, isHeader) || colMinWidth;
+        colMinWidth = colWidth = (textWidth > colMinWidth || !colMinWidth ? textWidth : colMinWidth);
+      }
+
+      //Default the size of the selection column
+      if (col.id === 'selectionCheckbox') {
+        colWidth = colMinWidth = 43;
+      }
+
+      // cache the header widths
+      this.headerWidths[index] = {id: col.id, width: colWidth, minWidth: colMinWidth};
+      this.totalWidth += col.hidden ? 0 : colWidth;
+
+      //For the last column stretch it TODO May want to check for hidden column as last
+      if (index === this.settings.columns.length-1) {
+        var diff = this.element.width() - this.totalWidth;
+
+        if (diff > 0) {
+          this.headerWidths[index].width = colWidth = this.headerWidths[index].width + diff;
+          this.headerWidths[index].minWidth = colMinWidth = this.headerWidths[index].minWidth + diff;
+        }
+
+        if (this.columnWidthType) {
+          this.table.css('width', '100%');
+        }
+
+      }
+
+      //TODO Max width for resize
+      return ' style="width: '+ colWidth + (widthPercent ? '%' :'px') + '; min-width: ' + colMinWidth + (widthPercent ? '%' :'px') + '"';
     },
 
     rowSpans: [],
@@ -2424,7 +2530,7 @@ $.fn.datagrid = function(options) {
       }
       this.renderRows();
       this.renderHeader();
-      this.setColumnWidths();
+      //this.setColumnWidths();
       this.resetPager('updatecolumns');
       this.element.trigger('columnchange', [{type: 'updatecolumns', columns: this.settings.columns}]);
       this.saveColumns();
@@ -4721,8 +4827,8 @@ $.fn.datagrid = function(options) {
         this.pager.updatePagingInfo(pagingInfo);
       }
 
+      this.pager.renderBar();
       if (!isResponse) {
-        this.pager.renderBar();
         this.pager.renderPages(pagingInfo.type);
       }
 

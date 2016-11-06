@@ -1,0 +1,57 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+
+  $('body').one('initialized', function () {
+
+      var columns = [],
+        data = [],
+        pageSize = 8;
+
+      //Define Columns for the Grid.
+      columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly});
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, formatter: Formatters.Hyperlink});
+      columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
+      columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+
+      //Init and get the api for the grid
+      gridApi = $('#datagrid').datagrid({
+        columns: columns,
+        selectable: 'multiple',
+        paging: true,
+        pagesize: pageSize,
+        source: function(req, response) {
+          var url = '/api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
+          $.getJSON(url, function(res) {
+            req.total = res.total;
+            response(res.data, req);
+          });
+        },
+        toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true, collapsibleFilter: true}
+      }).data('datagrid');
+
+      setInterval(function(){
+        var activePage = gridApi.pager.activePage,
+          pagerInfo = gridApi.pager.pagerInfo;
+
+        pagerInfo.activePage = activePage;
+
+        var url = '/api/compressors?pageNum='+ activePage +'&pageSize='+ pageSize;
+
+        $.getJSON(url, function(res) {
+          pagerInfo.total = res.total;
+          gridApi.loadData(res.data, pagerInfo, true);
+        });
+
+      }, 5000);
+  });
+</script>
