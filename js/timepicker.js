@@ -390,31 +390,29 @@
           width: '200',
           tooltipElement: '#timepicker-popup'})
         .on('show.timepicker', function(e, ui) {
-          ui.find('select').dropdown({
-            //noSearch: true
-          });
           ui.find('button').button();
 
           // Set default values based on what's retrieved from the Timepicker's input field.
-          hourSelect.val(initValues.hours);
+          hourSelect.val(initValues.hours).dropdown();
           hourSelect.data('dropdown').pseudoElem.find('span').text(initValues.hours);
-          minuteSelect.val(initValues.minutes);
+          minuteSelect.val(initValues.minutes).dropdown();
           minuteSelect.data('dropdown').pseudoElem.find('span').text(initValues.minutes);
           if (!self.is24HourFormat()) {
-            periodSelect.val(initValues.period);
+            periodSelect.val(initValues.period).dropdown();
             periodSelect.data('dropdown').pseudoElem.find('span').text(initValues.period);
           }
 
           ui.find('div.dropdown').first().focus();
+          ui.find('.set-time').off('click.timepicker').onTouchClick('timepicker').on('click.timepicker', function(e) {
+            e.preventDefault();
+            self.setTimeOnField();
+            self.closeTimePopup();
+          });
+
         }).on('hide.timepicker', function() {
           self.element.focus();
         });
 
-        popupContent.find('.set-time').off('click.timepicker').onTouchClick('timepicker').on('click.timepicker', function(e) {
-          e.preventDefault();
-          self.setTimeOnField();
-          self.closeTimePopup();
-        });
 
         // Make adjustments to the popup HTML specific to the timepicker
         var tooltip = self.popup = this.trigger.data('tooltip').tooltip;

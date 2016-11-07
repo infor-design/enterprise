@@ -50,6 +50,7 @@
         indeterminate: true,
         source: function(req, response) {
 
+          console.log('1');
           //Load a specific page and set the page - simulating a page state
           //Then we call load data with that.
           if (req.type === 'initial') {
@@ -83,10 +84,13 @@
         var pageInfo = {total: res.total, activePage: 2, pagesize: pageSize, firstPage: false, lastPage: false},
           api = grid.data('datagrid');
 
-        api.loadData(res.data, pageInfo);
+        pageInfo.lastPage = true;
+        pageInfo.refresh = true;
+        api.loadData(res.data, pageInfo, true);
 
         pageInfo.lastPage = true;
-        api.renderPager(pageInfo, true);
+        pageInfo.uiOnly = true;
+        api.refreshPagerState(pageInfo, true);
       });
 
   });

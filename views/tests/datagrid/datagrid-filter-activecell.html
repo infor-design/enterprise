@@ -45,7 +45,7 @@
         selectable: 'single',
         toolbar: {title: 'Filterable Datagrid', filterRow: true, results: true, dateFilter: false ,keywordFilter: false, actions: true, views: false, rowHeight: true, collapsibleFilter: false}
       }).on('activecellchange', function (e, args) {
-        console.log(args);
+        console.log(args.cell, args.row);
       });
 
  });
