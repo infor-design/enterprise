@@ -42,6 +42,7 @@
       data.push({ id: 3, productId: 2342203, productName: 'Compressor', activity:  'Inspect and Repair', quantity: 1, price: 120.99, status: null, orderDate: new Date(2014, 6, 3), action: 'Action'});
 
       //Define Columns for the Grid.
+      columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center', width: 42});
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly, width: 300});
       columns.push({ id: 'productName', name: 'Product Name', field: 'productName',  formatter: Formatters.Hyperlink, width: 300});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 300});
@@ -51,7 +52,7 @@
       grid = $('#datagrid').datagrid({
         columns: columns,
         //dataset: data,
-        selectable: 'single',
+        selectable: 'multiple',
         paging: true,
         columnReorder: true,
         pagesize: 20,

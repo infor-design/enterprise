@@ -9,7 +9,7 @@ $datagrid-medium-row-height: 40px;
 $datagrid-short-header-height: 25px;
 $datagrid-short-row-height: 30px;
 
-.datagrid-wrapper {
+.datagrid-container {
   background-color: transparent;
   min-width: 100%;
   position: relative;
@@ -237,6 +237,11 @@ $datagrid-short-row-height: 30px;
     .datagrid-column-wrapper,
     th {
       height: 25px;
+
+      .handle {
+        @include font-size(23);
+        padding: 0 0 0 7px;
+      }
     }
 
     .datagrid-column-wrapper.l-right-text .datagrid-header-text {
@@ -266,15 +271,15 @@ $datagrid-short-row-height: 30px;
   th {
     @include transition(background-color 700ms ease);
     background-color: $datagrid-header-bg-color;
-    border-left: 1px solid $datagrid-header-border-color;
+    border-right: 1px solid $datagrid-header-border-color;
     height: $datagrid-header-height;
     min-width: 40px;
     position: relative;
     text-align: left;
     z-index: 1;
 
-    &:first-child {
-      border-left: 0;
+    &:last-child {
+      border-right: 0;
     }
 
     &.hide-border + th {
@@ -285,13 +290,9 @@ $datagrid-short-row-height: 30px;
       text-align: center;
 
       .datagrid-header-text {
+        //padding: 0 21px;
         text-align: center;
         width: auto;
-      }
-
-      .sort-indicator {
-        margin-left: 0;
-        margin-top: 7px;
       }
 
       .datagrid-filter-wrapper .btn-filter {
@@ -959,13 +960,11 @@ $datagrid-short-row-height: 30px;
 
   //Readonly - List Datagrid
   &.is-gridlist {
-    table {
-      margin-bottom: -1px;
-    }
 
     th {
       background-color: $datagrid-list-header-bg-color;
-      border-left: 0;
+      border-bottom: 1px solid $datagrid-list-header-border-color;
+      border-right: 0;
 
       .datagrid-header-text {
         color: $datagrid-list-header-color;
@@ -1003,10 +1002,6 @@ $datagrid-short-row-height: 30px;
     tr td {
       border-left: 0;
       border-right: 0;
-    }
-
-    thead {
-      border-bottom: 1px solid $datagrid-list-header-border-color;
     }
 
     tr:hover:not(.datagrid-expandable-row) td:not(.is-editing) {
@@ -1152,7 +1147,7 @@ $datagrid-short-row-height: 30px;
   margin: 0 auto;
 
   .icon {
-    fill: $graphite06;
+    fill: $font-color;
     height: 20px;
     width: 20px;
   }
@@ -1177,7 +1172,7 @@ td .btn-actions {
 .datagrid-checkbox {
   cursor: pointer;
   display: inline-block;
-  left: -9px;
+  left: -7px;
   position: relative;
   top: -12px;
 
@@ -1417,9 +1412,9 @@ html[dir='rtl'] {
   }
 
   .datagrid {
-      //Restore Left Border
-    th:first-child {
-      border-left: 1px solid $datagrid-header-border-color;
+    //Restore right Border
+    th:last-child {
+      border-right: 1px solid $datagrid-header-border-color;
     }
 
     //Push sort indicator over
