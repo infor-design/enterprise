@@ -718,8 +718,7 @@ window.Editors = {
         column.editorOptions = {};
       }
       column.editorOptions.width = container.parent().width();
-      column.editorOptions.offset = {};
-      column.editorOptions.offset.top = 11;
+      column.editorOptions.offset = {left: 1, top: 9};
 
       if (column.maxLength) {
         this.input.attr('maxlength', column.maxLength);
@@ -2105,13 +2104,13 @@ $.fn.datagrid = function(options) {
         if (!s.source) {
           self.displayCounts();
         }
-        self.setAlternateRowShading();
+        //TODO Ask Deepak? self.setAlternateRowShading();
         self.activeCell = {node: self.cellNode(0, 0).attr('tabindex', '0'), isFocused: false, cell: 0, row: 0};
       }, 0);
     },
 
     setAlternateRowShading: function() {
-      if (this.settings.alternateRowShading) {
+      if (this.settings.alternateRowShading && this.settings.treeGrid) {
         $('tr[role="row"]:visible', this.tableBody)
           .removeClass('alt-shading').filter(':odd').addClass('alt-shading');
       }
@@ -2137,7 +2136,7 @@ $.fn.datagrid = function(options) {
     recordCount: 0,
 
     rowHtml: function (rowData, dataRowIdx) {
-      var isEven = (this.recordCount % 2 === 0),
+      var isEven = false,
         self = this,
         activePage = self.pager ? self.pager.activePage : 1,
         pagesize = self.settings.pagesize,
@@ -2162,6 +2161,8 @@ $.fn.datagrid = function(options) {
       if (this.settings.indeterminate) {
         ariaRowindex = (dataRowIdx + 1);
       }
+
+      isEven = (this.recordCount % 2 === 0);
 
       rowHtml = '<tr role="row" aria-rowindex="' + ariaRowindex + '"' +
                 (self.settings.treeGrid && rowData.children ? ' aria-expanded="' + (rowData.expanded ? 'true"' : 'false"') : '') +
@@ -2401,11 +2402,14 @@ $.fn.datagrid = function(options) {
 
       //For the last column stretch it TODO May want to check for hidden column as last
       if (index === this.settings.columns.length-1) {
-        var diff = this.element.width() - this.totalWidth;
 
-        if (diff > 0) {
-          this.headerWidths[index].width = colWidth = this.headerWidths[index].width + diff;
-          this.headerWidths[index].minWidth = colMinWidth = this.headerWidths[index].minWidth + diff;
+        if (this.hasFixedHeader) {
+          var diff = this.element.width() - this.totalWidth;
+
+          if (diff > 0) {
+            this.headerWidths[index].width = colWidth = this.headerWidths[index].width + diff;
+            this.headerWidths[index].minWidth = colMinWidth = this.headerWidths[index].minWidth + diff;
+          }
         }
 
         if (this.columnWidthType === 'percent') {
@@ -4826,7 +4830,7 @@ $.fn.datagrid = function(options) {
 
     },
 
-    renderPager: function (pagingInfo, isResponse) {
+    refreshPagerState: function (pagingInfo) {
       if (!this.pager) {
         return;
       }
@@ -4838,6 +4842,11 @@ $.fn.datagrid = function(options) {
       if (pagingInfo) {
         this.pager.updatePagingInfo(pagingInfo);
       }
+    },
+
+    renderPager: function (pagingInfo, isResponse) {
+
+      this.refreshPagerState(pagingInfo);
 
       this.pager.renderBar();
       if (!isResponse) {

@@ -8,6 +8,7 @@ Release Date: 2016-10-20
 
 ### Breaking Changes
 
+* 2016-11-01 - Datagrid Column widths. In 4.2.1 the column widths would not be exact for plain px with eg: width: 125 in the column definition. This should be noted as you may need to adjust this if columns appear to narrow
 * 2016-11-01 - Made Dropdown Component dependent on ListFilter Behavior (SOHO-4936)
 * 2016-10-18 - Tree renamed method setSelectedNode to selectNode for consistency
 * 2016-10-18 - Split place logic into new file place.js. This is a dependency for controls that position like datepicker, tooltip, popup.
