@@ -2886,7 +2886,8 @@ $.fn.datagrid = function(options) {
 
       this.table.before(this.resizeHandle);
 
-      var handle, colWrapper, columnId, minWidth;
+      var handle, colWrapper, columnId, minWidth, xWidth;
+      var columnDef;
       this.resizeHandle.drag({axis: 'x', containment: 'parent'})
         .on('dragstart.datagrid', function () {
           if (!self.currentHeader) {
@@ -2897,6 +2898,7 @@ $.fn.datagrid = function(options) {
           handle = $('.handle', self.currentHeader);
           colWrapper = $('.datagrid-column-wrapper', self.currentHeader);
           columnId = self.currentHeader.attr('data-column-id');
+          columnDef = self.columnById(columnId)[0];
 
           var getMinWidth = function() {
             var id = self.currentHeader.attr('id'),
@@ -2911,21 +2913,22 @@ $.fn.datagrid = function(options) {
             colMinWidth = Math.max.apply(Math, widths);
             return thMinWidth > colMinWidth ? thMinWidth : colMinWidth;
           };
+          xWidth = self.currentHeader.position().left +
+            (self.element.is('.datagrid-contained') ? self.element : self.table).scrollLeft() -10;
           minWidth = getMinWidth();
         })
         .on('drag.datagrid', function (e, ui) {
           if (!self.currentHeader) {
             return;
           }
-
-          var offset = (self.element.parent().css('position')!=='static') ?
-              self.getChildOffset(self.currentHeader) :
-              self.currentHeader.offset(),
-            width = ui.left - offset.left - 6 + self.table.scrollLeft();
-
-          if (width > minWidth) {
-            self.setColumnWidth(columnId, width);
+          var width = ui.left - xWidth;
+          if (width < minWidth ||
+            (typeof columnDef.minWidth !== 'undefined' && columnDef.minWidth > width) ||
+            (typeof columnDef.maxWidth !== 'undefined' && columnDef.maxWidth < width)) {
+            self.resizeHandle.css('cursor', 'inherit');
+            return;
           }
+          self.setColumnWidth(columnId, width);
         })
         .on('dragend.datagrid', function () {
           self.dragging = false;
@@ -3175,7 +3178,7 @@ $.fn.datagrid = function(options) {
 
           var headerDetail = self.currentHeader.closest('.header-detail'),
             extraMargin = headerDetail.length ? parseInt(headerDetail.css('margin-left'), 10) : 0,
-            leftEdge = parseInt(self.currentHeader.position().left) - (extraMargin || 0),
+            leftEdge = parseInt(self.currentHeader.position().left) - (extraMargin || 0) + self.element.scrollLeft(),
             rightEdge = leftEdge + self.currentHeader.outerWidth(),
             alignToLeft = (e.pageX - leftEdge > rightEdge - e.pageX),
             leftPos = 0;
@@ -3194,8 +3197,7 @@ $.fn.datagrid = function(options) {
           if (!self.currentHeader.hasClass('is-resizable')) {
             return;
           }
-
-          self.resizeHandle.css('left', leftPos + 'px');
+          self.resizeHandle.css({'left': leftPos +'px', 'cursor': ''});
         });
 
       // Handle Clicking Header Checkbox
