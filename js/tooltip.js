@@ -215,10 +215,7 @@
         }
 
         if (this.isPopover) {
-          contentArea = this.tooltip.find('.tooltip-content')
-            .html(settings.content && settings.content.html ?
-              settings.content.html() : this.content)
-            .removeClass('hidden');
+          contentArea = this.tooltip.find('.tooltip-content').html(settings.content).removeClass('hidden');
           settings.content.removeClass('hidden');
           this.tooltip.removeClass('tooltip').addClass('popover');
 
