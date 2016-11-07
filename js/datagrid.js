@@ -881,7 +881,7 @@ $.fn.datagrid = function(options) {
         columns: [],
         dataset: [],
         columnReorder: false, // Allow Column reorder
-        saveColumns: false, //Save Column Reorder and resize TODO SET THIS FOR TRUE
+        saveColumns: true, //Save Column Reorder and resize
         editable: false,
         isList: false, // Makes a readonly "list"
         menuId: null,  //Id to the right click context menu
@@ -2104,7 +2104,8 @@ $.fn.datagrid = function(options) {
         if (!s.source) {
           self.displayCounts();
         }
-        //TODO Ask Deepak? self.setAlternateRowShading();
+
+        self.setAlternateRowShading();
         self.activeCell = {node: self.cellNode(0, 0).attr('tabindex', '0'), isFocused: false, cell: 0, row: 0};
       }, 0);
     },
@@ -4845,6 +4846,9 @@ $.fn.datagrid = function(options) {
     },
 
     renderPager: function (pagingInfo, isResponse) {
+      if (!this.pager) {
+        return;
+      }
 
       this.refreshPagerState(pagingInfo);
 
