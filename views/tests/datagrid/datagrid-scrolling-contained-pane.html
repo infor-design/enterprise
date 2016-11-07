@@ -23,9 +23,6 @@
           <div class="title">Custom Toolbar <span class="datagrid-result-count">(N Results)</span></div>
           <div class="buttonset">
 
-            <button class="btn" type="button" id="fix">Fix</button>
-            <button class="btn"  type="button" id="unfix">UnFix</button>
-
           </div>
 
           <div class="more">
@@ -90,14 +87,6 @@
           //Get Page Based on info in Req, return results into response;
         },
         toolbar: {results: true}
-      });
-
-      $('#fix').on('click', function () {
-          grid.data('datagrid').fixHeader();
-      });
-
-      $('#unfix').on('click', function () {
-        grid.data('datagrid').unFixHeader();
       });
 
   });

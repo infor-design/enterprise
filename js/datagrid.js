@@ -882,7 +882,7 @@ $.fn.datagrid = function(options) {
         columns: [],
         dataset: [],
         columnReorder: false, // Allow Column reorder
-        saveColumns: false, //Save Column Reorder and resize
+        saveColumns: false, //Save Column Reorder and resize TODO SET THIS FOR TRUE
         editable: false,
         isList: false, // Makes a readonly "list"
         menuId: null,  //Id to the right click context menu
@@ -2341,6 +2341,11 @@ $.fn.datagrid = function(options) {
           max = len;
           maxText = val;
         }
+      }
+
+      if (maxText === '' || this.settings.dataset.length === 0) {
+        maxText = columnDef.name || ' Default ';
+        chooseHeader = true;
       }
 
       // if given, use cached canvas for better performance, else, create new canvas

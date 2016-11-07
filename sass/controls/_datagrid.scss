@@ -11,7 +11,11 @@ $datagrid-short-row-height: 30px;
 
 .datagrid-container {
   background-color: transparent;
+  border: 1px solid $datagrid-cell-border-color;
+  clear: both;
+  height: auto;
   min-width: 100%;
+  overflow-x: auto;
   position: relative;
 
   &.is-readonly {
@@ -25,45 +29,6 @@ $datagrid-short-row-height: 30px;
       background-color: transparent;
     }
   }
-}
-
-//The scrollable header
-.datagrid-scrollable-header {
-  border: 1px solid $datagrid-cell-border-color;
-  border-bottom: 0;
-  overflow: hidden;
-  width: 100%;
-
-  //Frozen Header
-  + .datagrid-wrapper {
-    height: calc(100% - 140px);
-
-    .datagrid {
-      margin-top: -40px;
-
-      &.short-rowheight {
-        margin-top: -25px;
-      }
-
-      &.medium-rowheight {
-        margin-top: -30px;
-      }
-    }
-
-    thead {
-      position: relative;
-    }
-  }
-}
-
-// Grid Container Div
-.datagrid-container {
-  border: 1px solid $datagrid-cell-border-color;
-  clear: both;
-  height: auto;
-  min-width: 100%;
-  overflow-x: auto;
-  position: relative;
 
   .resize-handle {
     border: 0;
@@ -97,6 +62,35 @@ $datagrid-short-row-height: 30px;
       }
     }
 
+  }
+}
+
+//The scrollable header
+.datagrid-scrollable-header {
+  border: 1px solid $datagrid-cell-border-color;
+  border-bottom: 0;
+  overflow: hidden;
+  width: 100%;
+
+  //Frozen Header
+  + .datagrid-wrapper {
+    height: calc(100% - 140px);
+
+    .datagrid {
+      margin-top: -40px;
+
+      &.short-rowheight {
+        margin-top: -25px;
+      }
+
+      &.medium-rowheight {
+        margin-top: -30px;
+      }
+    }
+
+    thead {
+      position: relative;
+    }
   }
 }
 
