@@ -2922,7 +2922,6 @@ $.fn.datagrid = function(options) {
             return;
           }
           var width = ui.left - xWidth;
-          // console.log(width, minWidth, width < minWidth);
           if (width < minWidth ||
             (typeof columnDef.minWidth !== 'undefined' && columnDef.minWidth > width) ||
             (typeof columnDef.maxWidth !== 'undefined' && columnDef.maxWidth < width)) {
