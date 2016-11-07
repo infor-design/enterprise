@@ -2908,7 +2908,7 @@ $.fn.datagrid = function(options) {
               widths.push(cell.css('display', 'inline-block').outerWidth());
               cell.css('display', 'block');
             });
-            thMinWidth = handle.outerWidth() + colWrapper.outerWidth();
+            thMinWidth = colWrapper.outerWidth() + (handle.length ? handle.outerWidth() : 0);
             colMinWidth = Math.max.apply(Math, widths);
             return thMinWidth > colMinWidth ? thMinWidth : colMinWidth;
           };
@@ -2921,6 +2921,7 @@ $.fn.datagrid = function(options) {
             return;
           }
           var width = ui.left - xWidth;
+          // console.log(width, minWidth, width < minWidth);
           if (width < minWidth ||
             (typeof columnDef.minWidth !== 'undefined' && columnDef.minWidth > width) ||
             (typeof columnDef.maxWidth !== 'undefined' && columnDef.maxWidth < width)) {
