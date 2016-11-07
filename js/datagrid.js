@@ -2380,7 +2380,7 @@ $.fn.datagrid = function(options) {
         colWidth = colMinWidth = col.width.replace('%', '');
       }
 
-      if (widthPercent && this.hasFixedHeader) {
+      if (!widthPercent && this.hasFixedHeader) {
         var textWidth = this.calculateTextWidth(col, isHeader) || colMinWidth;
         colMinWidth = colWidth = (textWidth > colMinWidth || !colMinWidth ? textWidth : colMinWidth);
       }
@@ -2403,7 +2403,7 @@ $.fn.datagrid = function(options) {
           this.headerWidths[index].minWidth = colMinWidth = this.headerWidths[index].minWidth + diff;
         }
 
-        if (this.columnWidthType) {
+        if (this.columnWidthType === 'percent') {
           this.table.css('width', '100%');
         }
 

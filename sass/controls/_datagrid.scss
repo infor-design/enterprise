@@ -961,12 +961,9 @@ $datagrid-short-row-height: 30px;
   //Readonly - List Datagrid
   &.is-gridlist {
 
-    table {
-      margin-bottom: -1px;
-    }
-
     th {
       background-color: $datagrid-list-header-bg-color;
+      border-bottom: 1px solid $datagrid-list-header-border-color;
       border-right: 0;
 
       .datagrid-header-text {
@@ -1005,10 +1002,6 @@ $datagrid-short-row-height: 30px;
     tr td {
       border-left: 0;
       border-right: 0;
-    }
-
-    thead {
-      border-bottom: 1px solid $datagrid-list-header-border-color;
     }
 
     tr:hover:not(.datagrid-expandable-row) td:not(.is-editing) {
@@ -1154,7 +1147,7 @@ $datagrid-short-row-height: 30px;
   margin: 0 auto;
 
   .icon {
-    fill: $graphite06;
+    fill: $font-color;
     height: 20px;
     width: 20px;
   }
