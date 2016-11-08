@@ -68,7 +68,7 @@
           scrollable.css({
             'border-right': 0,
             'margin-right': '20px',
-            'width': parseInt(scrollable.css('width'), 10) - 20 +'px'
+            'width': parseInt(scrollable.css('width'), 10) +'px'
           });
         }
 
