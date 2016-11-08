@@ -1148,7 +1148,7 @@ $.fn.datagrid = function(options) {
 
         //Set a height using calc - This is normal - expand to bottom from top position
         var body = self.table.find('tbody'),
-          bodyMargin = 40,
+          bodyMargin = settings.rowHeight === 'normal' ? 40 : settings.rowHeight === 'short' ? 45 : 48,
           headerHeight = settings.rowHeight === 'normal' ? 39 : settings.rowHeight === 'short' ? 24 : 29,
           diff = this.element.offset().top;
 
@@ -1270,7 +1270,7 @@ $.fn.datagrid = function(options) {
       return uniqueid.replace(/--/g, '-');
     },
 
-    visibleColumns: function () {
+    visibleColumns: function (skipBuiltIn) {
       var visible = [];
       for (var j = 0; j < this.settings.columns.length; j++) {
         var column = settings.columns[j];
@@ -1279,6 +1279,9 @@ $.fn.datagrid = function(options) {
           continue;
         }
 
+        if (skipBuiltIn && column.id === 'selectionCheckbox') {
+          continue;
+        }
         visible.push(column);
       }
       return visible;
@@ -2372,7 +2375,7 @@ $.fn.datagrid = function(options) {
     columnWidthType: 'auto', //Auto, Fixed or Percent
 
     //Calculate the width for a column (upfront with no rendering)
-    //https://www.w3.org/TR/CSS21/tables.html#width-layout
+    //https://www.w3.org/TR/CSS21/tables.html#fixed-table-layout
     calculateColumnWidth: function (col, isHeader, index) {
       var widthPercent = false;
 
@@ -2401,7 +2404,7 @@ $.fn.datagrid = function(options) {
       if (!widthPercent && this.hasFixedHeader) {
         var textWidth = this.calculateTextWidth(col, isHeader) || colMinWidth;
         colMinWidth = colWidth = (textWidth > colMinWidth || !colMinWidth ? textWidth : colMinWidth);
-        colWidth = parseInt(100 / (this.visibleColumns().length -1));
+        colWidth = (100 / (this.visibleColumns(true).length)).toFixed(2);
         colWidthPercent = true;
       }
 
@@ -2418,14 +2421,16 @@ $.fn.datagrid = function(options) {
       //For the last column stretch it TODO May want to check for hidden column as last
       if (index === this.settings.columns.length-1) {
 
-        if (this.hasFixedHeader) {
+        /*if (this.hasFixedHeader) {
           var diff = this.element.width() - this.totalWidth;
 
           if (diff > 0) {
             this.headerWidths[index].width = colWidth = this.headerWidths[index].width + diff;
             this.headerWidths[index].minWidth = colMinWidth = this.headerWidths[index].minWidth + diff;
+            this.headerWidths[index].colWidthPercent = false;
+            this.headerWidths[index].minWidthPercent = false;
           }
-        }
+        }*/
 
         if (this.columnWidthType === 'percent') {
           this.table.css('width', '100%');

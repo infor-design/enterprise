@@ -4,7 +4,7 @@
 .pager-toolbar {
   @include font-size(14);
   height: 38px;
-  margin: 10px 0;
+  margin: 10px 0 5px 100px;
   max-height: 38px;
   //overflow: hidden;
   text-align: center;
@@ -180,6 +180,7 @@ li + .pager-count {
 
 //Special Styles for Datagrid
 .datagrid + .pager-toolbar {
+
   > li > a {
     margin: 0;
     padding: 0;
@@ -192,8 +193,7 @@ li + .pager-count {
 }
 
 .pager-pagesize {
-  position: absolute;
-  right: 0;
+  float: right;
 
   .btn-menu {
     height: 30px;
