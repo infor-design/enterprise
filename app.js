@@ -396,6 +396,9 @@ var express = require('express'),
     if (directory.match(/tests\/signin/)) {
       opts.layout = 'tests/layout-noheader';
     }
+    if (directory.match(/tests\/datagrid-fixed-header/)) {
+      opts.layout = 'tests/layout-noscroll';
+    }
     if (directory.match(/tests\/tabs-module/)) {
       opts.layout = 'tests/tabs-module/layout';
     }

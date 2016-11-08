@@ -192,7 +192,8 @@ li + .pager-count {
 }
 
 .pager-pagesize {
-  float: right;
+  position: absolute;
+  right: 0;
 
   .btn-menu {
     height: 30px;

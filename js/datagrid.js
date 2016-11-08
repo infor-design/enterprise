@@ -1154,6 +1154,7 @@ $.fn.datagrid = function(options) {
 
         //In this case container has inline height styles TODO Bit Expensive
         var container = self.element.parent(),
+          isPane = container.is('.pane'),
           isInline = container.prop('style') && container.prop('style').height,
           elementCalc = 'calc(100% - ' + ((diff - bodyMargin)) + 'px)',
           bodyCalc = 'calc(100% - ' + (headerHeight) + 'px)';
@@ -1163,10 +1164,18 @@ $.fn.datagrid = function(options) {
           elementCalc = 'calc(100% - ' + (toolbarHeight + 2) + 'px)'; //2 are the 2 borders
         }
 
+        if (isPane) { // A more fixed calc for examples/landmark/pagepanes-grid - based on specs
+          elementCalc = 'calc(100% - 90px)';
+        }
+
         //Assume 100%
-        if (!container.is('.pane')) {
+        if (!isPane) {
           elementCalc = 'calc(100% - ' + (bodyMargin) + 'px)';
           bodyCalc = 'calc(100% - ' + (headerHeight) + 'px)';
+        }
+
+        if (!isPane && !this.toolbar) {
+          elementCalc = '100%';
         }
 
         this.element.css('height', elementCalc);
@@ -2363,6 +2372,7 @@ $.fn.datagrid = function(options) {
     columnWidthType: 'auto', //Auto, Fixed or Percent
 
     //Calculate the width for a column (upfront with no rendering)
+    //https://www.w3.org/TR/CSS21/tables.html#width-layout
     calculateColumnWidth: function (col, isHeader, index) {
       var widthPercent = false;
 
@@ -2372,10 +2382,11 @@ $.fn.datagrid = function(options) {
 
       if (this.headerWidths[index]) {
         // use cache
-        return ' style="width: '+ this.headerWidths[index].width + 'px; min-width: ' + this.headerWidths[index].minWidth + 'px"';
+        var cacheWidths = this.headerWidths[index];
+        return ' style="width: '+ cacheWidths.width + (cacheWidths.widthPercent ? '%' :'px') +'; min-width: ' + this.headerWidths[index].minWidth + (cacheWidths.minWidthPercent ? '%' :'px') + '"';
       }
 
-      var colWidth = col.width,
+      var colWidth = col.width, colWidthPercent = false,
         colMinWidth = (typeof col.minWidth ==='number' ? col.minWidth: colWidth);
 
       if (typeof col.width === 'string' && col.width.indexOf('px') === -1) {
@@ -2390,15 +2401,18 @@ $.fn.datagrid = function(options) {
       if (!widthPercent && this.hasFixedHeader) {
         var textWidth = this.calculateTextWidth(col, isHeader) || colMinWidth;
         colMinWidth = colWidth = (textWidth > colMinWidth || !colMinWidth ? textWidth : colMinWidth);
+        colWidth = parseInt(100 / (this.visibleColumns().length -1));
+        colWidthPercent = true;
       }
 
       //Default the size of the selection column
       if (col.id === 'selectionCheckbox') {
         colWidth = colMinWidth = 43;
+        colWidthPercent = false;
       }
 
       // cache the header widths
-      this.headerWidths[index] = {id: col.id, width: colWidth, minWidth: colMinWidth};
+      this.headerWidths[index] = {id: col.id, width: colWidth, minWidth: colMinWidth, minWidthPercent: this.columnWidthType === 'percent', widthPercent: this.columnWidthType === 'percent' || colWidthPercent};
       this.totalWidth += col.hidden ? 0 : colWidth;
 
       //For the last column stretch it TODO May want to check for hidden column as last
@@ -2420,7 +2434,7 @@ $.fn.datagrid = function(options) {
       }
 
       //TODO Max width for resize
-      return ' style="width: '+ colWidth + (widthPercent ? '%' :'px') + '; min-width: ' + colMinWidth + (widthPercent ? '%' :'px') + '"';
+      return ' style="width: '+ colWidth + (widthPercent || colWidthPercent ? '%' :'px') + '; min-width: ' + colMinWidth + (widthPercent ? '%' :'px') + '"';
     },
 
     rowSpans: [],
