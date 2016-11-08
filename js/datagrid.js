@@ -2327,6 +2327,7 @@ $.fn.datagrid = function(options) {
     totalWidth: 0,
 
     //This Function approximates the table auto widthing
+    //Except use all column values and compare the text width of the header as max
     calculateTextWidth: function (columnDef) {
       var max = 0,
         self = this,
@@ -2339,7 +2340,7 @@ $.fn.datagrid = function(options) {
            len = 0, title;
 
         //Some types should be formatted
-        if (val instanceof Date) {
+        if (val instanceof Date || typeof val === 'number' || columnDef.dateFormat) {
           val = self.formatValue(columnDef.formatter, i , null, this.fieldValue(this.settings.dataset[i], field), columnDef, this.settings.dataset[i], self);
         }
         len = val.toString().length;
@@ -2368,29 +2369,41 @@ $.fn.datagrid = function(options) {
       context.font = '14px arial';
       var metrics = context.measureText(maxText);
 
-      return Math.round(metrics.width + (chooseHeader ? 75 : 52));  //Add padding and borders
+      return Math.round(metrics.width + (chooseHeader ? 80 : 80));  //Add padding and borders
     },
 
-    headerWidths: [],
+    headerWidths: [], //Cache
     columnWidthType: 'auto', //Auto, Fixed or Percent
 
     //Calculate the width for a column (upfront with no rendering)
-    //https://www.w3.org/TR/CSS21/tables.html#fixed-table-layout
+    //https://www.w3.org/TR/CSS21/tables.html#width-layout
     calculateColumnWidth: function (col, isHeader, index) {
-      var widthPercent = false;
+      var widthPercent = false,
+        colMinWidthPercent = false,
+        widthSpecified = false, elemWidth, visibleColumns;
 
       if (!col.width && !this.hasFixedHeader) {
         return '';
       }
 
-      if (this.headerWidths[index]) {
-        // use cache
-        var cacheWidths = this.headerWidths[index];
-        return ' style="width: '+ cacheWidths.width + (cacheWidths.widthPercent ? '%' :'px') +'; min-width: ' + this.headerWidths[index].minWidth + (cacheWidths.minWidthPercent ? '%' :'px') + '"';
+      if (this.hasFixedHeader) {
+        elemWidth = this.element.width();
+        visibleColumns = this.visibleColumns(true);
       }
 
-      var colWidth = col.width, colWidthPercent = false,
-        colMinWidth = (typeof col.minWidth ==='number' ? col.minWidth: colWidth);
+      // use cache
+      if (this.headerWidths[index]) {
+        var cacheWidths = this.headerWidths[index];
+        return ' style="width: '+ cacheWidths.width + (cacheWidths.widthPercent ? '%' :'px') +'; min-width: ' + this.headerWidths[index].minWidth + (cacheWidths.widthPercent || cacheWidths.colMinWidthPercent ? '%' :'px') + '"';
+      }
+
+      //A column element with a value other than 'auto' for the 'width' property sets the width for that column.
+      if (col.width) {
+        widthSpecified = true;
+      }
+
+      var colWidth = col.width,
+          colMinWidth = col.width;
 
       if (typeof col.width === 'string' && col.width.indexOf('px') === -1) {
         widthPercent = true;
@@ -2401,36 +2414,46 @@ $.fn.datagrid = function(options) {
         colWidth = colMinWidth = col.width.replace('%', '');
       }
 
-      if (!widthPercent && this.hasFixedHeader) {
-        var textWidth = this.calculateTextWidth(col, isHeader) || colMinWidth;
-        colMinWidth = colWidth = (textWidth > colMinWidth || !colMinWidth ? textWidth : colMinWidth);
-        colWidth = (100 / (this.visibleColumns(true).length)).toFixed(2);
-        colWidthPercent = true;
+      // Otherwise, a cell in the first row with a value other than 'auto' for the 'width' property
+      //determines the width for that column.
+      // TODO: If the cell spans more than one column, the width is divided over the columns.
+      if (visibleColumns.length < 8) {
+        colWidth = colMinWidth = (parseInt(elemWidth) / visibleColumns.length);
+      }
+
+      if (!widthSpecified && this.hasFixedHeader && visibleColumns.length > 8) {
+        var textWidth = this.calculateTextWidth(col, isHeader) || 150;  //reasonable default on error
+        colWidth = colMinWidth = textWidth;
       }
 
       //Default the size of the selection column
       if (col.id === 'selectionCheckbox') {
         colWidth = colMinWidth = 43;
-        colWidthPercent = false;
+      }
+
+      if (col.id === 'drilldown') {
+        colWidth = colMinWidth =78;
       }
 
       // cache the header widths
-      this.headerWidths[index] = {id: col.id, width: colWidth, minWidth: colMinWidth, minWidthPercent: this.columnWidthType === 'percent', widthPercent: this.columnWidthType === 'percent' || colWidthPercent};
+      this.headerWidths[index] = {id: col.id, width: colWidth, minWidth: colMinWidth,
+                                  widthPercent: this.columnWidthType === 'percent',
+                                  colMinWidthPercent: this.columnWidthType === 'percent'};
       this.totalWidth += col.hidden ? 0 : colWidth;
 
       //For the last column stretch it TODO May want to check for hidden column as last
       if (index === this.settings.columns.length-1) {
 
-        /*if (this.hasFixedHeader) {
+        if (this.hasFixedHeader) {
           var diff = this.element.width() - this.totalWidth;
 
-          if (diff > 0) {
+          if (diff > 0 || (diff === 0 && visibleColumns.length < 8)) {
             this.headerWidths[index].width = colWidth = this.headerWidths[index].width + diff;
-            this.headerWidths[index].minWidth = colMinWidth = this.headerWidths[index].minWidth + diff;
             this.headerWidths[index].colWidthPercent = false;
-            this.headerWidths[index].minWidthPercent = false;
+            this.headerWidths[index].minWidth = colMinWidth = 100;
+            this.headerWidths[index].colMinWidthPercent = colMinWidthPercent = true;
           }
-        }*/
+        }
 
         if (this.columnWidthType === 'percent') {
           this.table.css('width', '100%');
@@ -2438,8 +2461,7 @@ $.fn.datagrid = function(options) {
 
       }
 
-      //TODO Max width for resize
-      return ' style="width: '+ colWidth + (widthPercent || colWidthPercent ? '%' :'px') + '; min-width: ' + colMinWidth + (widthPercent ? '%' :'px') + '"';
+      return ' style="width: '+ colWidth + (widthPercent ? '%' :'px') + '; min-width: ' + colMinWidth + (widthPercent || colMinWidthPercent ? '%' :'px') + '"';
     },
 
     rowSpans: [],
