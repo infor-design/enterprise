@@ -14,6 +14,12 @@
   }
 }
 
+.full-height {
+  height: calc(100% - 60px);
+  margin: 30px;
+  overflow: hidden;
+}
+
 .tab-panel > .full-width {
   margin-top: 0;
 }
