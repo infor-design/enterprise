@@ -4749,8 +4749,7 @@ $.fn.datagrid = function(options) {
         if (typeof a === 'string') {
           a = a.toUpperCase();
 
-          var isNumber = /^\d+$/.test(a);
-          if (isNumber && !isNaN(parseFloat(a))) {
+          if ($.isNumeric(a)) {
             a = parseFloat(a);
           }
 
