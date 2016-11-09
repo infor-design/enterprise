@@ -4749,8 +4749,7 @@ $.fn.datagrid = function(options) {
         if (typeof a === 'string') {
           a = a.toUpperCase();
 
-          var isNumber = /^\d+$/.test(a);
-          if (isNumber && !isNaN(parseFloat(a))) {
+          if ($.isNumeric(a)) {
             a = parseFloat(a);
           }
 
@@ -4884,7 +4883,7 @@ $.fn.datagrid = function(options) {
 
     destroy: function() {
       //Remove the toolbar, clean the div out and remove the pager
-      this.element.off().empty().removeClass('datagrid-container').unwrap();
+      this.element.off().empty().removeClass('datagrid-container');
       this.element.prev('.toolbar').remove();
       this.element.prev('.datagrid-scrollable-header').prev('.toolbar').remove();
       this.element.prev('.datagrid-scrollable-header').remove();
