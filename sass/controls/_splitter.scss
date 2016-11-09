@@ -45,7 +45,7 @@
 
   //Other Layouts
   &.splitter-right {
-
+    top: 0px;
     &.is-dragging {
       box-shadow: 2px 0 3px 0 $splitter-box-shadow-color;
     }
