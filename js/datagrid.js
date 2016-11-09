@@ -2272,7 +2272,7 @@ $.fn.datagrid = function(options) {
 
         //Set Width of first td row when fixed header
         var colWidth = '';
-        if (this.hasFixedHeader && ariaRowindex === 1) {
+        if (this.hasFixedHeader && this.recordCount === 0) {
           colWidth = this.calculateColumnWidth(col, false, j);
         }
 

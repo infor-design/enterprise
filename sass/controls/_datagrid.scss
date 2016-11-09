@@ -205,7 +205,9 @@ $datagrid-short-row-height: 30px;
       }
 
       .hyperlink {
+        line-height: 1.4rem;
         margin-top: 4px;
+        vertical-align: top;
       }
 
       .row-btn {
