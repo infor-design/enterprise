@@ -1,0 +1,63 @@
+
+<div class="container">
+	<div class="row">
+		<div class="twelve columns">
+
+			<div>
+				<div class="chart-container" id="bullet-example1" style="margin-top:20px;"></div>
+			</div>
+			<div>
+				<div class="chart-container" id="bullet-example2" style="margin-top:20px;"></div>
+			</div>
+			<div>
+				<div class="chart-container" id="bullet-example3" style="margin-top:20px;"></div>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	var dataset1 = [{
+		data: [{
+			'title': 'Profit',
+			'subtitle': '%',
+			'ranges': [-60, 10, 70],
+			'measures': [-30, 30],
+			'markers': [35]
+		}],
+		barColors: ['#ADD8EB', '#69B5DD', '#368AC0'], //http://107.170.15.202:4000/controls/colors
+		lineColors: ['#fff', '#fff', '#fff'],
+		markerColors: ['#fff']
+	}];
+
+	var dataset2 = [{
+    data: [{
+			'title': 'Profit',
+			'subtitle': '%',
+			'ranges': [-30, 0, 30],
+			'measures': [10],
+			'markers': [25]
+		}],
+    barColors: ['#ADD8EB', '#69B5DD', '#368AC0'], //http://107.170.15.202:4000/controls/colors
+    lineColors: ['#fff', '#fff', '#fff'],
+    markerColors: ['#fff']
+  }];
+
+  var dataset3 = [{
+		data: [{
+			'title': 'Profit',
+			'subtitle': '%',
+			'ranges': [60, 80, 50],
+			'measures': [20, 50],
+			'markers': [35]
+		}],
+		barColors: ['#ADD8EB', '#69B5DD', '#368AC0'], //http://107.170.15.202:4000/controls/colors
+		lineColors: ['#fff', '#fff', '#fff'],
+		markerColors: ['#fff']
+	}];
+
+	$('#bullet-example1').chart({type: 'bullet', dataset: dataset1});
+	$('#bullet-example2').chart({type: 'bullet', dataset: dataset2});
+	$('#bullet-example3').chart({type: 'bullet', dataset: dataset3});
+</script>

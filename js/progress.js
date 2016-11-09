@@ -22,7 +22,6 @@
     // Settings and Options
     var pluginName = 'progress',
         defaults = {
-          animationLength: 1000
         },
         settings = $.extend({}, defaults, options);
 
@@ -30,7 +29,9 @@
     function Plugin(element) {
       this.element = $(element);
       this.settings = settings;
+      Soho.logTimeStart(pluginName);
       this.init();
+      Soho.logTimeEnd(pluginName);
     }
 
     // Actual Plugin Code

@@ -18,7 +18,7 @@ $indicator-current-size: ($indicator-size * 1.6);
   margin-bottom: 20px;
   @include font-size(14);
 
-  // Main blocks:  .display, .header, .subheader, .details
+  // Main blocks:  .display, .header, .details
   .display {
     margin-bottom: 20px;
     word-spacing: -($indicator-size * .22);

@@ -588,7 +588,14 @@
 
       //Round Decimals
       var decimals = this.decimalPlaces(number);
-        truncatedNum = Math[adjustedNum < 0 ? 'ceil' : 'floor'](adjustedNum);
+
+      //Handle larger numbers
+      if (number.length - decimals - 1 >= 10) {
+        multiplier = Math.pow(100, maxDigits);
+        adjustedNum = number * multiplier;
+      }
+
+      truncatedNum = Math[adjustedNum < 0 ? 'ceil' : 'floor'](adjustedNum);
 
       if (round && decimals >= maxDigits && adjustedNum > 0) {
         truncatedNum = Math.round(adjustedNum);
@@ -610,7 +617,7 @@
     //Take a Formatted Number and return a real number
     parseNumber: function(input) {
       var numSettings = this.currentLocale.data.numbers,
-        numString;
+        numString, group, decimal, percentSign, currencySign;
 
       numString = input;
 
@@ -618,10 +625,15 @@
         return NaN;
       }
 
-      numString = numString.replace(new RegExp('\\' + numSettings.group, 'g'), '');
-      numString = numString.replace(numSettings.decimal, '.');
-      numString = numString.replace(numSettings.percentSign, '');
-      numString = numString.replace(this.currentLocale.data.currencySign, '');
+      group = numSettings ? numSettings.group  : ',';
+      decimal = numSettings ? numSettings.decimal  : '.';
+      percentSign = numSettings ? numSettings.percentSign  : '%';
+      currencySign = currencySign ? this.currentLocale.data.currencySign  : '$';
+
+      numString = numString.replace(new RegExp('\\' + group, 'g'), '');
+      numString = numString.replace(decimal, '.');
+      numString = numString.replace(percentSign, '');
+      numString = numString.replace(currencySign, '');
       numString = numString.replace(' ', '');
 
       return parseFloat(numString);

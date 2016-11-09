@@ -2,6 +2,7 @@
 //================================================== //
 
 .tab-container.module-tabs {
+  @include transition(background-color 500ms cubic-bezier(.17, .04, .03, .94));
   background-color: $module-tabs-bg-color;
   border-bottom: 1px solid $module-tabs-y-border-color;
   border-top: 1px solid $module-tabs-y-border-color;
@@ -20,10 +21,10 @@
   }
 
   [class^="btn"] {
+    @include font-size(12);
     background-color: $module-tabs-bg-color;
     border: 0;
     color: $module-tabs-inactive-text-color;
-    @include font-size(12);
     min-width: 0;
 
     > * {
@@ -85,27 +86,27 @@
   }
 
   .tab {
-    color: $module-tabs-inactive-text-color;
+    @include transition(background-color 500ms cubic-bezier(.17, .04, .03, .94), border-color 500ms cubic-bezier(.17, .04, .03, .94));
     @include font-size(12);
+    color: $module-tabs-inactive-text-color;
     min-width: 120px;
     text-align: center;
-    @include css3(transition, background-color .25s ease);
 
     &:not(:first-child) {
       border-left: 1px solid $module-tabs-x-border-color;
     }
 
-    &:before {
+    &::before {
       display: none !important;
     }
 
-    &:after {
+    &::after {
       display: none !important;
     }
 
     a {
-      display: block;
       @include font-size(12);
+      display: block;
       font-weight: bold;
       margin: 0 auto;
       max-width: 80%;
@@ -177,11 +178,11 @@
 
     &.dismissible {
       .icon {
+        @include css3(transform, translateY(-50%));
         height: 14px;
         position: absolute;
         right: 10px;
         top: 50%;
-        @include css3(transform, translateY(-50%));
       }
 
       a {
@@ -217,9 +218,9 @@
   }
 
   .tab-more {
+    @include font-size(12);
     border-left: 1px solid $module-tabs-x-border-color;
     color: $module-tabs-inactive-text-color;
-    @include font-size(12);
     font-weight: bold;
     padding: 8px 10px;
     text-align: center;
@@ -346,10 +347,19 @@
       color: $module-tabs-inactive-text-color;
     }
 
+    &.non-collapsible {
+      .searchfield {
+        background-color: rgba($searchfield-moduletabs-bg-color, .4);
+        border-bottom-color: rgba($searchfield-moduletabs-border-color, .4);
+        border-top-color: rgba($searchfield-moduletabs-bg-color, .4);
+        color: $module-tabs-inactive-text-color;
+      }
+    }
+
     &.active {
       .searchfield {
-        background-color: rgba($searchfield-moduletabs-bg-color, 1);
-        border-bottom-color: rgba($searchfield-moduletabs-border-color, 1);
+        background-color: rgba($searchfield-moduletabs-bg-color, .4);
+        border-bottom-color: rgba($searchfield-moduletabs-border-color, .4);
       }
     }
 
@@ -589,6 +599,16 @@
       a > span:not(.icon):not(.audible) {
         width: 0;
       }
+    }
+  }
+}
+
+// For non-collapsible searchfields:  Only be non-collapsible on larger breakpoints.
+@media(min-width: $breakpoint-phone-to-tablet) {
+  .toolbar-searchfield-wrapper.non-collapsible {
+    .searchfield {
+      background-color: rgba($searchfield-moduletabs-bg-color, .4);
+      border-bottom-color: rgba($searchfield-moduletabs-border-color, .4);
     }
   }
 }

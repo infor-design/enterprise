@@ -24,6 +24,7 @@
     // Settings and Options
     var pluginName = 'multiselect',
         defaults = {
+          filterMode: 'contains',
           maxSelected: undefined,
           source: undefined
         },
@@ -33,7 +34,9 @@
     function MultiSelect(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
+      Soho.logTimeStart(pluginName);
       this.init();
+      Soho.logTimeEnd(pluginName);
     }
 
     // Plugin Methods
@@ -50,6 +53,10 @@
             moveSelectedToTop: true,
             multiple: true
           };
+
+        if (this.settings.filterMode) {
+          ddOpts.filterMode = this.settings.filterMode;
+        }
 
         if (this.settings.source) {
           ddOpts.source = this.settings.source;

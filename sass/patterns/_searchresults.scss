@@ -10,8 +10,8 @@
     color: $sr-masthead-text-color;
     height: 44px;
     margin-bottom: 3em;
+    overflow: visible;
     position: relative;
-    overflow: hidden;
     width: auto;
 
     &.toolbar {
@@ -45,9 +45,8 @@
     }
 
     .masthead-appname {
-      color: $sr-masthead-text-color;
-      line-height: 34px;
       @include font-size(14);
+      color: $sr-masthead-text-color;
       line-height: 34px;
       margin-left: -28px;
     }
@@ -63,48 +62,42 @@
   }
 
   input.search {
+    @include font-size(72);
     border: 0;
     color: $primary-color;
-    @include font-size(72);
     font-weight: 100;
     padding: 9px 20px 8px;
     width: 100%;
 
     &::-webkit-input-placeholder {
+      @include antialiased();
       @include font-size(60);
       color: $graphite03;
       font-weight: lighter;
       line-height: 72px;
-      @include antialiased();
     }
 
-    &:-moz-placeholder {
+    // scss-lint:disable VendorPrefix
+    &::-moz-placeholder {
+      @include antialiased();
       @include font-size(60);
       color: $graphite03;
       font-weight: lighter;
       line-height: 72px;
-      @include antialiased();
     }
+    // scss-lint:enable VendorPrefix
 
     &:focus {
       border-color: transparent;
       box-shadow: none;
     }
 
-    &::-moz-placeholder {
-      @include font-size(60);
-      color: $graphite03;
-      font-weight: lighter;
-      line-height: 72px;
-      @include antialiased();
-    }
-
     &:-ms-input-placeholder {
+      @include antialiased();
       @include font-size(60);
       color: $graphite03;
       font-weight: lighter;
       line-height: 72px;
-      @include antialiased();
     }
 
   }
@@ -115,8 +108,8 @@
     padding-bottom: 3rem;
 
     &.none {
-      border-bottom: 0;
       @include font-size(18);
+      border-bottom: 0;
       text-align: center;
     }
 
@@ -125,15 +118,15 @@
     }
 
     .type {
-      color: $sr-masthead-item-color;
       @include font-size(14);
+      color: $sr-masthead-item-color;
       line-height: 1.5em;
     }
 
     .description,
     .description > a {
-      color: $primary-color;
       @include font-size(18);
+      color: $primary-color;
       line-height: 1.5em;
       text-decoration: none;
     }
@@ -144,8 +137,8 @@
       margin-right: .3em;
 
       + span {
-        color: $font-color-extrahighcontrast;
         @include font-size(16);
+        color: $font-color-extrahighcontrast;
         line-height: 1.5em;
       }
     }
@@ -156,35 +149,30 @@
     }
 
     .related-business-object {
-      color: $emerald06;
       @include font-size(12);
+      color: $emerald06;
       margin-top: 1rem;
 
       > * {
-        vertical-align: middle;
         margin-right: -6px;
+        vertical-align: middle;
       }
     }
 
     .icon-bo {
-      left: -0.4em;
       height: 1.6em;
+      left: -.4em;
     }
 
     .stamp-text {
-      margin-bottom: 0;
       line-height: 1.2rem;
+      margin-bottom: 0;
     }
 
   }
 }
 
-#search-all {
-  .title {
-    @include font-size(16);
-  }
-}
-
+// scss-lint:disable ImportantRule
 @include respond-to(phone) {
   input.search {
     &::-webkit-input-placeholder {
@@ -192,19 +180,18 @@
       line-height: 72px;
     }
 
-    &:-moz-placeholder {
-      font-size: 3.8rem !important;
-    }
-
+    // scss-lint:disable VendorPrefix
     &::-moz-placeholder {
       font-size: 3.8rem !important;
     }
+    // scss-lint:enable VendorPrefix
 
     &:-ms-input-placeholder {
       font-size: 3.8rem !important;
     }
   }
 }
+// scss-lint:enable ImportantRule
 
 @include respond-to(large) {
   .slider-wrapper {
@@ -212,4 +199,3 @@
     width: 94%;
   }
 }
-

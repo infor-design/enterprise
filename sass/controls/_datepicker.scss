@@ -300,10 +300,6 @@
   border-radius: 2px;
   max-width: inherit;
 
-  .arrow {
-    left: 132px;
-  }
-
   .tooltip-content {
     padding: 0;
   }
@@ -397,14 +393,6 @@ html[dir='rtl'] {
         border-left: 1px solid $popover-separator-color;
         border-right: 1px solid transparent;
       }
-    }
-  }
-
-  // Popup Adjustments
-  #calendar-popup {
-    .arrow {
-      left: auto;
-      right: 137px;
     }
   }
 

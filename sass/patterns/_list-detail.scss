@@ -82,10 +82,6 @@
       &.is-open {
         width: 220px;
 
-        input {
-          color: $header-text-color;
-        }
-
         + .title {
           opacity: 0;
         }
@@ -147,4 +143,8 @@
     margin-left: 0;
   }
 
+  //Make this color target specifically header
+  .header .searchfield-wrapper input {
+    color: $header-text-color;
+  }
 }

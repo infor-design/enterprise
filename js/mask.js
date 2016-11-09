@@ -31,6 +31,7 @@
             '0': /[0-9]/,
             'x': /[\u00C0-\u017Fa-zA-Z]/,
             '*': /[\u00C0-\u017Fa-zA-Z0-9]/,
+            '?': /./,
             '~': /[-0-9]/,
             'a': /[APap]/,
             'm': /[Mm]/
@@ -52,7 +53,9 @@
     function Mask(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
+      Soho.logTimeStart(pluginName);
       this.init();
+      Soho.logTimeEnd(pluginName);
     }
 
     Mask.prototype = {

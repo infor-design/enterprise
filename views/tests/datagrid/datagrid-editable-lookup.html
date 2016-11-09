@@ -75,10 +75,10 @@
           lookupOptions = {
             // field: 'productId',
             field: function (row, field, grid) {
-              return row.productId + '|' + row.productName;
+              return row.productId;
             },
             match: function (value, row, field, grid) {
-              return ((row.productId + '|' + row.productName) === value);
+              return (row.productId) === value;
             },
             options: {
               columns: lookupColumns,
@@ -110,7 +110,7 @@
             //For this fake logic just disable odd rows
             return (row % 2 === 0);
           }});
-        columns.push({ id: 'status', name: 'Status', field: 'price', width: 125, align: 'center', formatter: Formatters.Alert, readonly: true, ranges: [{'min': 0, 'max': 150, 'classes': 'confirm', text: 'Confirmed'}, {'min': 151, 'max': 9999, 'classes': 'error', text: 'Error'}]});
+        columns.push({ id: 'status', name: 'Status', field: 'price', width: 125, formatter: Formatters.Alert, readonly: true, ranges: [{'min': 0, 'max': 150, 'classes': 'confirm', text: 'Confirmed'}, {'min': 151, 'max': 9999, 'classes': 'error', text: 'Error'}]});
         columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Lookup, editor: Editors.Lookup, editorOptions: lookupOptions, width: 125});
         columns.push({ id: 'portable', name: 'Portable', field: 'portable', width: 60, align: 'center', formatter: Formatters.Checkbox, editor: Editors.Checkbox});
         columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, align: 'right', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '###.000'});

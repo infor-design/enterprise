@@ -8,6 +8,7 @@ var express = require('express'),
   mmm = require('mmm'),
   fs = require('fs'),
   http = require('http'),
+  git = require('git-rev-sync'),
   colors = require('colors'); // jshint ignore:line
 
   app.set('view engine', 'html');
@@ -34,10 +35,13 @@ var express = require('express'),
     layout: 'layout',
     locale: 'en-US',
     title: 'SoHo XI',
+    // Ignore this because its not in our control
+    version: process.env.npm_package_version, // jshint ignore:line
+    commit: git.long(),
   };
 
   // Option Handling - Custom Middleware
-  // Writes a set of default options the "req" object.  These options are always eventually passed to the HTML template.
+  // Writes a set of default options the 'req' object.  These options are always eventually passed to the HTML template.
   // In some cases, these options can be modified based on query parameters.  Check the default route for these options.
   var optionHandler = function(req, res, next) {
     res.opts = extend({}, defaults);
@@ -49,13 +53,13 @@ var express = require('express'),
     }
 
     // Normally we will use an external file for loading SVG Icons and Patterns.
-    // Setting "inlineSVG" to true will use the deprecated method of using SVG icons, which was to bake them into the HTML markup.
+    // Setting 'inlineSVG' to true will use the deprecated method of using SVG icons, which was to bake them into the HTML markup.
     // if (req.query.inlineSVG && req.query.inlineSVG.length > 0) {
       res.opts.inlineSVG = true;
       //console.log('Inlining SVG Elements...');
     // }
 
-    // Global settings for forcing a "no frills" layout for test pages.
+    // Global settings for forcing a 'no frills' layout for test pages.
     // This means no header with page title, hamburger, theme swap settings, etc.
     if (req.query.nofrills && req.query.nofrills.length > 0) {
       res.opts.nofrillslayout = true;
@@ -63,15 +67,15 @@ var express = require('express'),
     }
 
     // Set the theme and colorScheme
-    //Fx: http://localhost:4000/controls/modal?colorScheme=123456,123456,827272&themeName=dark
-    if (req.query.themeName && req.query.themeName.length  > 0) {
-      res.opts.themeName = req.query.themeName;
-      console.log('Setting Theme to ' + res.opts.themeName);
+    //Fx: http://localhost:4000/controls/modal?colors=9279a6,ffffff&theme=dark
+    if (req.query.theme && req.query.theme.length  > 0) {
+      res.opts.theme = req.query.theme;
+      console.log('Setting Theme to ' + res.opts.theme);
     }
 
-    if (req.query.colorScheme && req.query.colorScheme.length > 0) {
-      res.opts.colorScheme = req.query.colorScheme;
-      console.log('Setting Colors to ' + res.opts.colorScheme);
+    if (req.query.colors && req.query.colors.length > 0) {
+      res.opts.colors = req.query.colors;
+      console.log('Setting Colors to ' + res.opts.colors);
     }
 
     // Sets a simulated response delay for API Calls
@@ -118,14 +122,14 @@ var express = require('express'),
     res.status(500).send('<h2>Internal Server Error</h2><p>' + err.stack +'</p>');
   };
 
-  // place optionHandler() first to augment all "res" objects with an "opts" object
+  // place optionHandler() first to augment all 'res' objects with an 'opts' object
   app.use(optionHandler);
   app.use(responseThrottler);
   app.use(router);
   app.use(timestampLogger);
   app.use(errorHandler);
 
-  // Strips the ".html" from a file path and returns the target route name without it
+  // Strips the '.html' from a file path and returns the target route name without it
   function stripHtml(routeParam) {
     var noHtml = routeParam.replace(/\.html/, '');
     return noHtml;
@@ -392,6 +396,9 @@ var express = require('express'),
     if (directory.match(/tests\/signin/)) {
       opts.layout = 'tests/layout-noheader';
     }
+    if (directory.match(/tests\/datagrid-fixed-header/)) {
+      opts.layout = 'tests/layout-noscroll';
+    }
     if (directory.match(/tests\/tabs-module/)) {
       opts.layout = 'tests/tabs-module/layout';
     }
@@ -402,7 +409,7 @@ var express = require('express'),
       opts.layout = 'tests/tabs-vertical/layout';
     }
 
-    // Global "no-header" layout setting takes precedent
+    // Global 'no-header' layout setting takes precedent
     if (res.opts.nofrillslayout || directory.match(/tests\/patterns/)) {
       opts.layout = 'tests/layout-noheader';
     }
@@ -604,7 +611,7 @@ var express = require('express'),
   });
 
   // =========================================
-  // Fake "API" Calls for use with AJAX-ready Controls
+  // Fake 'API' Calls for use with AJAX-ready Controls
   // =========================================
 
   //Sample Json call that returns States
@@ -841,24 +848,36 @@ var express = require('express'),
   // Sample Tasks
   router.get('/api/tree-tasks', function(req, res, next) {
     var tasks = [
-      { id: 1, escalated: 2, depth: 1, expanded: false, taskName: 'Follow up action with HMM Global', desc: '', comments: null, time: '', children: [
-        { id: 2, escalated: 1, depth: 2, taskName: 'Quotes due to expire', desc: 'Update pending quotes and send out again to customers.', comments: 3, time: '7:10 AM'},
-        { id: 3, escalated: 0, depth: 2, taskName: 'Follow up action with Universal Shipping Logistics Customers', desc: 'Contact sales representative with the updated purchase order.', comments: 2, time: '9:10 AM'},
-        { id: 4, escalated: 0, depth: 2, taskName: 'Follow up action with Acme Trucking', desc: 'Contact sales representative with the updated purchase order.', comments: 2, time: '14:10 PM'},
+      { id: 1, escalated: 2, depth: 1, expanded: false, taskName: 'Follow up action with HMM Global', desc: '', comments: null, orderDate: new Date(2014, 12, 8), time: '', children: [
+        { id: 2, escalated: 1, depth: 2, taskName: 'Quotes due to expire', desc: 'Update pending quotes and send out again to customers.', comments: 3, orderDate: new Date(2015, 7, 3), time: '7:10 AM'},
+        { id: 3, escalated: 0, depth: 2, taskName: 'Follow up action with Universal Shipping Logistics Customers', desc: 'Contact sales representative with the updated purchase order.', comments: 2, orderDate: new Date(2014, 6, 3), time: '9:10 AM'},
+        { id: 4, escalated: 0, depth: 2, taskName: 'Follow up action with Acme Trucking', desc: 'Contact sales representative with the updated purchase order.', comments: 2, orderDate: new Date(2015, 3, 4), time: '14:10 PM'},
       ]},
-      { id: 5, escalated: 0, depth: 1, taskName: 'Follow up action with Residental Housing', desc: 'Contact sales representative with the updated purchase order.', comments: 2, time: '18:10 PM'},
-      { id: 6, escalated: 0, depth: 1, taskName: 'Follow up action with HMM Global', desc: 'Contact sales representative with the updated purchase order.', comments: 2, time: '20:10 PM'},
-      { id: 7, escalated: 0, depth: 1, expanded: true, taskName: 'Follow up action with Residental Housing', desc: 'Contact sales representative with the updated purchase order.', comments: 2, time: '22:10 PM', children: [
-        { id: 8, escalated: 0, depth: 2, taskName: 'Follow up action with Universal HMM Logistics', desc: 'Contact sales representative.', comments: 2, time: '22:10 PM'},
-        { id: 9, escalated: 0, depth: 2, taskName: 'Follow up action with Acme Shipping', desc: 'Contact sales representative.', comments: 2, time: '22:10 PM'},
-        { id: 10, escalated: 0, depth: 2, expanded: true, taskName: 'Follow up action with Residental Shipping Logistics ', desc: 'Contact sales representative.', comments: 2, time: '7:04 AM', children: [
-          { id: 11, escalated: 0, depth: 3, taskName: 'Follow up action with Universal Shipping Logistics Customers', desc: 'Contact sales representative.', comments: 2, time: '14:10 PM'},
-          { id: 12, escalated: 0, depth: 3, expanded: true,  taskName: 'Follow up action with Acme Universal Logistics Customers', desc: 'Contact sales representative.', comments: 2, time: '7:04 AM', children: [
-            { id: 13, escalated: 0, depth: 4, taskName: 'More Contact', desc: 'Contact sales representative.', comments: 2, time: '14:10 PM'},
-            { id: 14, escalated: 0, depth: 4, taskName: 'More Follow up', desc: 'Contact sales representative.', comments: 2, time: '7:04 AM'},
+      { id: 5, escalated: 0, depth: 1, taskName: 'Follow up action with Residental Housing', desc: 'Contact sales representative with the updated purchase order.', comments: 2, orderDate: new Date(2015, 5, 5), time: '18:10 PM'},
+      { id: 6, escalated: 0, depth: 1, taskName: 'Follow up action with HMM Global', desc: 'Contact sales representative with the updated purchase order.', comments: 2, orderDate: new Date(2014, 6, 9), time: '20:10 PM', portable: true},
+      { id: 7, escalated: 0, depth: 1, expanded: true, taskName: 'Follow up action with Residental Housing', desc: 'Contact sales representative with the updated purchase order.', comments: 2, orderDate: new Date(2014, 6, 8), time: '22:10 PM', portable: true, children: [
+        { id: 8, escalated: 0, depth: 2, taskName: 'Follow up action with Universal HMM Logistics', desc: 'Contact sales representative.', comments: 2, orderDate: new Date(2014, 5, 2), time: '22:10 PM'},
+        { id: 9, escalated: 0, depth: 2, taskName: 'Follow up action with Acme Shipping', desc: 'Contact sales representative.', comments: 2, orderDate: new Date(2014, 6, 9), time: '22:10 PM'},
+        { id: 10, escalated: 0, depth: 2, expanded: true, taskName: 'Follow up action with Residental Shipping Logistics ', desc: 'Contact sales representative.', comments: 2, orderDate: new Date(2014, 2, 8), time: '7:04 AM', children: [
+          { id: 11, escalated: 0, depth: 3, taskName: 'Follow up action with Universal Shipping Logistics Customers', desc: 'Contact sales representative.', comments: 2, orderDate: new Date(2015, 10, 18), time: '14:10 PM', portable: true},
+          { id: 12, escalated: 0, depth: 3, expanded: true,  taskName: 'Follow up action with Acme Universal Logistics Customers', desc: 'Contact sales representative.', comments: 2, orderDate: new Date(2014, 3, 22), time: '7:04 AM', children: [
+            { id: 13, escalated: 0, depth: 4, taskName: 'More Contact', desc: 'Contact sales representative.', comments: 2, orderDate: new Date(2015, 3, 8), time: '14:10 PM'},
+            { id: 14, escalated: 0, depth: 4, taskName: 'More Follow up', desc: 'Contact sales representative.', comments: 2, orderDate: new Date(2014, 3, 9), time: '7:04 AM'},
+          ]},
+        ]}
+      ]},
+      { id: 15, escalated: 0, depth: 1, expanded: true, taskName: 'Follow up action with Residental Housing', desc: 'Contact sales representative with the updated purchase order.', comments: 2, orderDate: new Date(2015, 5, 23), time: '22:10 PM', children: [
+        { id: 16, escalated: 0, depth: 2, taskName: 'Follow up action with Universal HMM Logistics', desc: 'Contact sales representative.', comments: 2, orderDate: new Date(2014, 12, 18), time: '22:10 PM'},
+        { id: 17, escalated: 0, depth: 2, taskName: 'Follow up action with Acme Shipping', desc: 'Contact sales representative.', comments: 2, orderDate: new Date(2014, 4, 5), time: '22:10 PM', portable: true},
+        { id: 18, escalated: 0, depth: 2, expanded: true, taskName: 'Follow up action with Residental Shipping Logistics ', desc: 'Contact sales representative.', comments: 2, orderDate: new Date(2015, 5, 5), time: '7:04 AM', children: [
+          { id: 19, escalated: 0, depth: 3, taskName: 'Follow up action with Universal Shipping Logistics Customers', desc: 'Contact sales representative.', comments: 2, orderDate: new Date(2014, 5, 16), time: '14:10 PM'},
+          { id: 20, escalated: 0, depth: 3, expanded: true,  taskName: 'Follow up action with Acme Universal Logistics Customers', desc: 'Contact sales representative.', comments: 2, orderDate: new Date(2015, 5, 28), time: '7:04 AM', portable: true, children: [
+            { id: 21, escalated: 0, depth: 4, taskName: 'More Contact', desc: 'Contact sales representative.', comments: 2, orderDate: new Date(2014, 1, 21), time: '14:10 PM'},
+            { id: 22, escalated: 0, depth: 4, taskName: 'More Follow up', desc: 'Contact sales representative.', comments: 2, orderDate: new Date(2014, 9, 3), time: '7:04 AM'},
           ]},
         ]}
       ]}
+
     ];
 
     res.setHeader('Content-Type', 'application/json');
@@ -1258,7 +1277,14 @@ var express = require('express'),
       { id: 5, companyName: 'United Construction', phone: '299-166-7016', location: 'New Abdul, TX', contact: 'Paul Strayer', customerSince: '04/21/2016' },
       { id: 6, companyName: 'Gravel, Gravel, Gravel', phone: '299-166-7067', location: 'Smithsville, UT', contact: 'John Nasmith', customerSince: '06/25/2016'  },
       { id: 7, companyName: 'Stone Gravel Supply Company', phone: '202-504-5299', location: 'Ryesmith, AK', contact: 'Spring Adams', customerSince: '07/25/2015' },
-   ];
+      { id: 8, companyName: 'Smith Gravel & Stone', phone: '411-821-0697', location: 'Lancaster, TX', contact: 'Mary Adams', customerSince: '04/25/2016', favorite: true },
+      { id: 9, companyName: 'Hidden Valley Gravel', phone: '202-389-9973', location: 'Shark City, UT', contact: 'Donald Cunningham', customerSince: '05/01/2016'  },
+      { id: 10, companyName: 'Copperhead Building Supply', phone: '929-769-3984', location: 'Hermistonhaven, AZ', contact: 'Johnny Smith', customerSince: '08/21/2016', favorite: true  },
+      { id: 11, companyName: 'Gravel Lovers Inc', phone: '299-166-7016', location: 'North Beau, NV', contact: 'Paulo Mendez', customerSince: '03/25/2014'  },
+      { id: 12, companyName: 'United Gravel', phone: '299-126-7016', location: 'New Manilla, TX', contact: 'Paul Strayer', customerSince: '04/21/2016' },
+      { id: 13, companyName: 'Construction City', phone: '399-166-7067', location: 'Joanestown, UT', contact: 'Andy Nasmith', customerSince: '06/25/2015'  },
+      { id: 14, companyName: 'Stone City Supply Company', phone: '202-504-5299', location: 'River Ridge, PA', contact: 'Winter Adams', customerSince: '01/25/2015' },
+  ];
 
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(companies));
@@ -1287,6 +1313,287 @@ var express = require('express'),
 
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(companies));
+    next();
+  });
+
+  router.get('/api/incidents', function(req, res, next) {
+    var incidents = [
+          {
+            incidentId: 2292,
+            time: '09:24:49',
+            nature: 'SFPT',
+            priority: '1',
+            priorityBackColor: 'FFFF0000',
+            priorityForeColor: 'FFFFFFFF',
+            location: '2698 Freeland Dr, APT A',
+            fireCode: 'HCF594',
+            unitName1: '01MA',
+            unitName2: '02MA',
+            unitName3: '03MA',
+            unitName4: '04MA',
+            unitName5: '05MA',
+            unitName6: '06MA',
+            unitName7: '07MA',
+            unitName8: '08MA',
+            statusBackColor1: 'FF000000',
+            statusBackColor2: 'FF000000',
+            statusBackColor3: 'FF000000',
+            statusBackColor4: 'FF000000',
+            statusBackColor5: 'FF000000',
+            statusBackColor6: 'FF000000',
+            statusBackColor7: 'FF000000',
+            statusBackColor8: 'FF000000',
+            statusForeColor1: 'FF00FFFF',
+            statusForeColor2: 'FF00FFFF',
+            statusForeColor3: 'FF00FFFF',
+            statusForeColor4: 'FF00FFFF',
+            statusForeColor5: 'FF00FFFF',
+            statusForeColor6: 'FF00FFFF',
+            statusForeColor7: 'FF00FFFF',
+            statusForeColor8: 'FF00FFFF'
+          },
+          {
+            incidentId: 2292,
+            time: '09:24:49',
+            nature: 'SFPT',
+            priority: '1',
+            priorityBackColor: 'FFFF0000',
+            priorityForeColor: 'FFFFFFFF',
+            location: '2698 Freeland Dr, APT A',
+            fireCode: 'HCF594',
+            unitName1: '09MA',
+            unitName2: '10MA',
+            unitName3: '1MA',
+            unitName4: '2MA',
+            unitName5: '3MA',
+            unitName6: '4MA',
+            unitName7: '5MA',
+            unitName8: '6MA',
+            statusBackColor1: 'FF000000',
+            statusBackColor2: 'FF000000',
+            statusBackColor3: 'FF000000',
+            statusBackColor4: 'FF000000',
+            statusBackColor5: 'FF000000',
+            statusBackColor6: 'FF000000',
+            statusBackColor7: 'FF000000',
+            statusBackColor8: 'FF000000',
+            statusForeColor1: 'FF00FFFF',
+            statusForeColor2: 'FF00FFFF',
+            statusForeColor3: 'FF00FFFF',
+            statusForeColor4: 'FF00FFFF',
+            statusForeColor5: 'FF00FFFF',
+            statusForeColor6: 'FF00FFFF',
+            statusForeColor7: 'FF00FFFF',
+            statusForeColor8: 'FF00FFFF'
+          },
+          {
+            incidentId: 2292,
+            time: '09:24:49',
+            nature: 'SFPT',
+            priority: '1',
+            priorityBackColor: 'FFFF0000',
+            priorityForeColor: 'FFFFFFFF',
+            location: '2698 Freeland Dr, APT A',
+            fireCode: 'HCF594',
+            unitName1: '7MA',
+            unitName2: '08MA',
+            unitName3: '9MA',
+            unitName4: '11MAU',
+            unitName5: '12MAU',
+            unitName6: '13MAU',
+            unitName7: '14MAU',
+            unitName8: '15MAU',
+            statusBackColor1: 'FF000000',
+            statusBackColor2: 'FF000000',
+            statusBackColor3: 'FF000000',
+            statusBackColor4: 'FF000000',
+            statusBackColor5: 'FF000000',
+            statusBackColor6: 'FF000000',
+            statusBackColor7: 'FF000000',
+            statusBackColor8: 'FF000000',
+            statusForeColor1: 'FF00FFFF',
+            statusForeColor2: 'FF00FFFF',
+            statusForeColor3: 'FF00FFFF',
+            statusForeColor4: 'FF00FFFF',
+            statusForeColor5: 'FF00FFFF',
+            statusForeColor6: 'FF00FFFF',
+            statusForeColor7: 'FF00FFFF',
+            statusForeColor8: 'FF00FFFF'
+          },
+          {
+            incidentId: 2292,
+            time: '09:24:49',
+            nature: 'SFPT',
+            priority: '1',
+            priorityBackColor: 'FFFF0000',
+            priorityForeColor: 'FFFFFFFF',
+            location: '2698 Freeland Dr, APT A',
+            fireCode: 'HCF594',
+            unitName1: '16MAU',
+            unitName2: '17MAU',
+            unitName3: '18MAU',
+            unitName4: '19MAU',
+            unitName5: '20MAU',
+            unitName6: '21MAU',
+            unitName7: '22MAU',
+            unitName8: '23mau',
+            statusBackColor1: 'FF000000',
+            statusBackColor2: 'FF000000',
+            statusBackColor3: 'FF000000',
+            statusBackColor4: 'FF000000',
+            statusBackColor5: 'FF000000',
+            statusBackColor6: 'FF000000',
+            statusBackColor7: 'FF000000',
+            statusBackColor8: 'FF000000',
+            statusForeColor1: 'FF00FFFF',
+            statusForeColor2: 'FF00FFFF',
+            statusForeColor3: 'FF00FFFF',
+            statusForeColor4: 'FF00FFFF',
+            statusForeColor5: 'FF00FFFF',
+            statusForeColor6: 'FF00FFFF',
+            statusForeColor7: 'FF00FFFF',
+            statusForeColor8: 'FF00FFFF'
+          },
+          {
+            incidentId: 2292,
+            time: '09:24:49',
+            nature: 'SFPT',
+            priority: '1',
+            priorityBackColor: 'FFFF0000',
+            priorityForeColor: 'FFFFFFFF',
+            location: '2698 Freeland Dr, APT A',
+            fireCode: 'HCF594',
+            unitName1: '24mau',
+            unitName2: '25mau',
+            unitName3: '25',
+            unitName4: '26mau',
+            unitName5: '27mau',
+            unitName6: '28mau',
+            unitName7: '30mau',
+            unitName8: '31mau',
+            statusBackColor1: 'FF000000',
+            statusBackColor2: 'FF000000',
+            statusBackColor3: 'FF000000',
+            statusBackColor4: 'FFFFFF00',
+            statusBackColor5: 'FFFFFF00',
+            statusBackColor6: 'FFFFFF00',
+            statusBackColor7: 'FFFFFF00',
+            statusBackColor8: 'FFFFFF00',
+            statusForeColor1: 'FF00FFFF',
+            statusForeColor2: 'FF00FFFF',
+            statusForeColor3: 'FF00FFFF',
+            statusForeColor4: 'FF000000',
+            statusForeColor5: 'FF000000',
+            statusForeColor6: 'FF000000',
+            statusForeColor7: 'FF000000',
+            statusForeColor8: 'FF000000'
+          },
+          {
+            incidentId: 2292,
+            time: '09:24:49',
+            nature: 'SFPT',
+            priorityBackColor: 'FFFF0000',
+            priorityForeColor: 'FFFFFFFF',
+            priority: '1',
+            location: '2698 Freeland Dr, APT A',
+            fireCode: 'HCF594',
+            unitName1: '32mau',
+            unitName2: '33mau',
+            unitName3: '34mau',
+            unitName4: '35mau',
+            unitName5: null,
+            unitName6: null,
+            unitName7: null,
+            unitName8: null,
+            statusBackColor1: 'FFFFFF00',
+            statusBackColor2: 'FFFFFF00',
+            statusBackColor3: 'FFFFFF00',
+            statusBackColor4: 'FFFFFF00',
+            statusBackColor5: null,
+            statusBackColor6: null,
+            statusBackColor7: null,
+            statusBackColor8: null,
+            statusForeColor1: 'FF000000',
+            statusForeColor2: 'FF000000',
+            statusForeColor3: 'FF000000',
+            statusForeColor4: 'FF000000',
+            statusForeColor5: null,
+            statusForeColor6: null,
+            statusForeColor7: null,
+            statusForeColor8: null
+          },
+          {
+            incidentId: 2287,
+            time: '11:30:04',
+            nature: 'SFUN',
+            priority: '1',
+            priorityBackColor: 'FFFF0000',
+            priorityForeColor: 'FFFFFFFF',
+            location: '2601 Night Rains Dr',
+            fireCode: 'HCF559',
+            unitName1: 'E1',
+            unitName2: 'E10',
+            unitName3: 'E11',
+            unitName4: 'E12',
+            unitName5: null,
+            unitName6: null,
+            unitName7: null,
+            unitName8: null,
+            statusBackColor1: 'FF000000',
+            statusBackColor2: 'FFFFFF00',
+            statusBackColor3: 'FFFFFF00',
+            statusBackColor4: 'FFFFFF00',
+            statusBackColor5: null,
+            statusBackColor6: null,
+            statusBackColor7: null,
+            statusBackColor8: null,
+            statusForeColor1: 'FF00FF00',
+            statusForeColor2: 'FF000000',
+            statusForeColor3: 'FF000000',
+            statusForeColor4: 'FF000000',
+            statusForeColor5: null,
+            statusForeColor6: null,
+            statusForeColor7: null,
+            statusForeColor8: null,
+          },
+          {
+            incidentId: 2057,
+            time: '08:05:43',
+            nature: '29',
+            priority: '1',
+            priorityBackColor: 'FFFF0000',
+            priorityForeColor: 'FFFFFFFF',
+            location: '5108 Eisenhower Blvd',
+            fireCode: 'HCF634',
+            unitName1: '700',
+            unitName2: 'PE1',
+            unitName3: 'PE1',
+            unitName4: '1041',
+            unitName5: null,
+            unitName6: null,
+            unitName7: null,
+            unitName8: null,
+            statusBackColor1: 'FFFFFF00',
+            statusBackColor2: 'FFFFD800',
+            statusBackColor3: 'FFFFD800',
+            statusBackColor4: 'FF000000',
+            statusBackColor5: null,
+            statusBackColor6: null,
+            statusBackColor7: null,
+            statusBackColor8: null,
+            statusForeColor1: 'FFFF0000',
+            statusForeColor2: 'FFFFFFFF',
+            statusForeColor3: 'FFFFFFFF',
+            statusForeColor4: 'FF00FFFF',
+            statusForeColor5: null,
+            statusForeColor6: null,
+            statusForeColor7: null,
+            statusForeColor8: null,
+          }
+        ];
+
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(incidents));
     next();
   });
 

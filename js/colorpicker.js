@@ -24,11 +24,11 @@
     var pluginName = 'colorpicker',
         defaults = {
 
-          // Theme key: MUST match with theme file name (ie: [filename: 'grey-theme.css' -> 'grey-theme'])
+          // Theme key: MUST match with theme file name (ie: [filename: 'light-theme.css' -> 'light-theme'])
 
           // BORDERS
           // Use (,) commas to separate themes or single entry for border as:
-          // colors[{label: 'Slate', number: '01', value: 'F0F0F0', border: 'grey-theme, high-contrast-theme'}]
+          // colors[{label: 'Slate', number: '01', value: 'F0F0F0', border: 'light-theme, high-contrast-theme'}]
           // and assign which swatch theborder should apply ['all' or 'matched-only']
           // themes: { 'high-contrast-theme': {'border': 'all'} }
 
@@ -38,21 +38,21 @@
           // will add class "checkmark-one", where current colors number is in range [1 to 3]
           // and will add class "checkmark-two", where current colors number is in range [3 to 10]
           themes: {
-            'grey-theme': {'border': 'matched-only', checkmark: {'one': [1, 2], 'two': [3, 10]} },
-            'dark-theme': {'border': 'matched-only', checkmark: {'one': [1, 2], 'two': [3, 10]} },
-            'high-contrast-theme': {'border': 'all', checkmark: {'one': [1, 3], 'two': [4, 10]} }
+            'light': {'border': 'matched-only', checkmark: {'one': [1, 2], 'two': [3, 10]} },
+            'dark': {'border': 'matched-only', checkmark: {'one': [1, 2], 'two': [3, 10]} },
+            'high-contrast': {'border': 'all', checkmark: {'one': [1, 3], 'two': [4, 10]} }
           },
           colors: [
             {label: 'Slate', number: '10', value: '1a1a1a'},
             {label: 'Slate', number: '09', value: '292929'},
-            {label: 'Slate', number: '08', value: '383838', border: 'dark-theme'},
-            {label: 'Slate', number: '07', value: '454545', border: 'dark-theme'},
+            {label: 'Slate', number: '08', value: '383838', border: 'dark'},
+            {label: 'Slate', number: '07', value: '454545', border: 'dark'},
             {label: 'Slate', number: '06', value: '5C5C5C'},
             {label: 'Slate', number: '05', value: '737373'},
             {label: 'Slate', number: '04', value: '999999'},
             {label: 'Slate', number: '03', value: 'BDBDBD'},
             {label: 'Slate', number: '02', value: 'D8D8D8'},
-            {label: 'Slate', number: '01', value: 'F0F0F0', border: 'grey-theme, high-contrast-theme'},
+            {label: 'Slate', number: '01', value: 'F0F0F0', border: 'light, high-contrast'},
             {label: 'Amber', number: '10', value: 'D66221'},
             {label: 'Amber', number: '09', value: 'DE7223'},
             {label: 'Amber', number: '08', value: 'E68425'},
@@ -120,7 +120,9 @@
     // Plugin Constructor
     function ColorPicker(element) {
       this.element = $(element);
+      Soho.logTimeStart(pluginName);
       this.init();
+      Soho.logTimeEnd(pluginName);
     }
 
     // Plugin Methods
@@ -196,18 +198,9 @@
         });
 
         this.element.on('keypress.colorpicker', function () {
-          var input = $(this),
-            val = input.val();
-
-          // Make sure there is always a hash
-          if (val.substr(0,1) !== '#') {
-            input.val('#'+val);
-          }
-
-          if (val.length === 7) {
-            self.setColor(val);
-          }
-
+          self.setColor($(this).val());
+        }).on('change.colorpicker', function () {
+          self.setColor($(this).val());
         });
 
         //Handle Key Down to open
@@ -230,9 +223,25 @@
         //Append Color Menu
         self.updateColorMenu();
 
+        var popupmenuOpts = {
+          ariaListbox: true,
+          menuId: 'colorpicker-menu',
+          trigger: 'immediate',
+          placementOpts: {
+            containerOffsetX: 10,
+            containerOffsetY: 10,
+            parentXAlignment: (Locale.isRTL() ? 'right': 'left'),
+            strategies: ['flip', 'nudge', 'shrink']
+          },
+          offset: {
+            x: 0,
+            y: 10
+          }
+        };
+
         // Show Menu
         self.element
-        .popupmenu({trigger: 'immediate', ariaListbox: true, menuId: 'colorpicker-menu'})
+        .popupmenu(popupmenuOpts)
         .on('open.colorpicker', function () {
           self.element.parent().addClass('is-open');
         })
@@ -248,10 +257,6 @@
 
         //Append Buttons
         this.menu = $('#colorpicker-menu');
-        //if (this.menu.find('.popup-footer').length === 0) {
-        //this.menu.append('<li class="popup-footer"> <button class="cancel btn-tertiary" type="button">' + Locale.translate('Cancel') + '</button> <button class="btn-primary" type="button">' + Locale.translate('Select') + '</button> </li>');
-        ////var btns = this.menu.find('button').button();
-        //}
 
         setTimeout(function () {
           self.menu.find('.is-selected').focus();
@@ -260,6 +265,16 @@
 
       // Set the Visible Color
       setColor: function (hex, text) {
+        // Make sure there is always a hash
+        if (hex.substr(0,1) !== '#') {
+          hex = '#' + hex;
+          this.element.val(hex);
+        }
+
+        if (hex.length !== 7) {
+          return;
+        }
+
         this.swatch.css('background-color', hex);
         this.element.attr('aria-describedby', text);
       },
@@ -268,13 +283,7 @@
       updateColorMenu: function () {
         var isMenu =  !!($('#colorpicker-menu').length),
           menu = $('<ul id="colorpicker-menu" class="popupmenu colorpicker"></ul>'),
-          currentTheme = $('#sohoxi-stylesheet').get(0).href.replace(/^.*[\\\/]/, '').replace(/\.[^\.]+$/, '');
-
-        //remove from ? to end
-        var idx = currentTheme.indexOf('?');
-        if (currentTheme !== '' && idx > -1) {
-          currentTheme = currentTheme.substr(0, idx).replace('.css', '');
-        }
+          currentTheme = Soho.theme;
 
         var isBorderAll = (settings.themes[currentTheme].border === 'all'),
           checkmark = settings.themes[currentTheme].checkmark,

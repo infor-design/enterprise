@@ -38,7 +38,9 @@
     function Initialize(element, settings) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
+      Soho.logTimeStart(pluginName);
       this.init();
+      Soho.logTimeEnd(pluginName);
     }
 
     // Plugin Methods
@@ -296,13 +298,14 @@
             matchedItems('[data-popover]:not('+ noinitExcludes +')').each(function () {
               var obj = $(this),
                 trigger = obj.attr('data-trigger'),
-                title = obj.attr('data-title');
+                title = obj.attr('data-title'),
+                placement = obj.attr('data-placement');
 
               obj.popover({
                 content: $('#' + obj.attr('data-popover')),
                 trigger: trigger ? trigger : 'click',
                 title: title ? title : undefined,
-                placement: 'right'
+                placement: placement || 'right'
               });
             });
           }

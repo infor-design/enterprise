@@ -122,6 +122,7 @@
   border: 1px solid $popover-border-color;
   box-shadow: $popover-box-shadow;
   color: $popover-color;
+  //overflow: auto;
   pointer-events: auto;
   z-index: 3010;
 
@@ -134,7 +135,7 @@
     .arrow {
       border-top-color: $popover-arrow-border-color;
       bottom: -14px;
-      margin-left: -7px;
+      left: calc(50% - 12px);
     }
 
     .arrow::after {
@@ -147,6 +148,7 @@
   &.bottom {
     .arrow {
       border-bottom-color: $popover-arrow-border-color;
+      left: calc(50% - 12px);
       top: -12px;
     }
 
@@ -161,7 +163,7 @@
     .arrow {
       border-right-color: $popover-arrow-border-color;
       left: -12px;
-      margin-top: -11px;
+      top: calc(50% - 12px);
     }
 
     .arrow::after {
@@ -173,8 +175,8 @@
   &.left {
     .arrow {
       border-left-color: $popover-arrow-border-color;
-      margin-top: -11px;
-      right: -11px;
+      right: -12px;
+      top: calc(50% - 12px);
     }
 
     .arrow::after {
@@ -292,11 +294,10 @@
 }
 
 .top {
-  .arrow {
+  > .arrow {
     border-bottom-width: 0;
     bottom: -7px;
-    left: 50%;
-    margin-left: -7px;
+    left: calc(50% - 6px);
 
     &::after {
       border-bottom-width: 0;
@@ -307,11 +308,10 @@
 }
 
 .bottom {
-  .arrow {
+  > .arrow {
     border-top-width: 0;
-    left: 50%;
-    margin-left: -4px;
-    top: -6px;
+    left: calc(50% - 6px);
+    top: -7px;
 
     &::after {
       border-top-width: 0;
@@ -319,21 +319,13 @@
       top: 0;
     }
   }
-
-  &.offset {
-    .arrow {
-      left: auto;
-      right: 18px;
-    }
-  }
 }
 
 .right {
-  .arrow {
+  > .arrow {
     border-left-width: 0;
     left: -7px;
-    margin-top: -6px;
-    top: 50%;
+    top: calc(50% - 6px);
 
     &::after {
       border-left-width: 0;
@@ -344,11 +336,10 @@
 }
 
 .left {
-  .arrow {
+  > .arrow {
     border-right-width: 0;
-    margin-top: -6px;
     right: -7px;
-    top: 50%;
+    top: calc(50% - 6px);
 
     &::after {
       border-right-width: 0;
@@ -423,44 +414,12 @@ html[dir='rtl'] {
     margin-right: 0;
   }
 
-  .top {
-    .arrow {
-      &::after {
-        left: auto;
-        right: -8px;
-      }
-    }
-  }
-
-  .bottom {
-    .arrow {
-      &::after {
-        left: auto;
-        right: -8px;
-      }
-    }
-
-    &.offset {
-      .arrow {
-        left: 18px;
-        right: auto;
-      }
-    }
-  }
-
   .right {
     .arrow {
       border-left-width: 11px;
       border-right-width: 0;
       left: auto;
       right: -11px;
-
-      &::after {
-        border-left-width: 11px;
-        border-right-width: 0;
-        left: auto;
-        right: 1px;
-      }
     }
   }
 
@@ -470,13 +429,6 @@ html[dir='rtl'] {
       border-right-width: 11px;
       left: -10px;
       right: auto;
-
-      &::after {
-        border-left-width: 0;
-        border-right-width: 11px;
-        left: inherit;
-        right: -11px;
-      }
     }
   }
 

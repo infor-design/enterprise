@@ -47,19 +47,36 @@ IE 9+ ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
 
 # Running the Development Project
 
-## Install
+## Run with Docker
+
+### Environment setup
+* Requires [Docker for Mac](https://docs.docker.com/docker-for-mac/) to be installed for Mac users
+* Requires `make` to be installed. To install on your Mac, run: `xcode-select --install`
+* Clone this repo, navigate to it
+  - Clone the repo: `git clone http://git.infor.com/scm/soho/controls.git`
+  - `cd controls`
+
+### Managing Local Dev with Make and Docker Compose
+* `make up` To start your Local Dev ENV which will 
+* `make watch` To start `grunt watch`
+* In a browser, go to: `http://localhost:4000`
+* NOTE any changes that you make will trigger Sass to recompile and the browser will reload thanks to live reload
+
+### Running The Unit Tests
+* `make unit-test` To run the unit tests
+
+## Manually Install
 * Install nodejs as paying attention to your OS directions: http://nodejs.org/
 * Install gruntjs: http://gruntjs.com/ by running the command (`npm install -g grunt-cli`)
 
-## Get The Code
+### Get The Code
 
 * Clone the repo: `git clone http://git.infor.com/scm/soho/controls.git`
 * Move into your new repo folder: `cd controls`
 * Then  `npm install` to install node package dependencies. On mac you may need `sudo npm install` as some packages require elevated permissions.
 * For details info and great tutorials on Git scenarios see `https://www.atlassian.com/git/tutorials/`
 
-
-## Running The App
+### Running The App
 * `cd` into project folder
 * Run `grunt` to compile initial assets
 * Run `node server` to start the web server
@@ -67,15 +84,15 @@ IE 9+ ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
 * Go to `http://localhost:4000/`
 * Note that at this point any changes you make will cause Sass to recomplile and the browser will reload thanks to live reload
 
-## Running The Unit Tests
+### Running The Unit Tests
 
 * Run the command: `./node_modules/.bin/intern-client config=test2/intern.local.unit`
 
-## Running The Functional Tests
+### Running The Functional Tests
 * Make sure selenium-standalone is installed by running `selenium-standalone start` once
 * Make sure selenium-standalone is started by running `selenium-standalone start`
 * Run the command: `./node_modules/.bin/intern-runner config=test2/intern.local.functional`
-* Note grunt tasks in the works....
+* NOTE `make` and `grunt` tasks are in the works....
 
 # Getting the Code into your project
 

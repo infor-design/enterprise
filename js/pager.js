@@ -36,7 +36,9 @@
     function Pager(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
+      Soho.logTimeStart(pluginName);
       this.init();
+      Soho.logTimeEnd(pluginName);
     }
 
     // Actual Plugin Code
@@ -67,7 +69,7 @@
         if (this.element.is('tbody')) {
           this.isTable = true;
           this.settings.type = 'table';
-          this.mainContainer = this.element.closest('.datagrid-wrapper');
+          this.mainContainer = this.element.closest('.datagrid-container');
         }
 
         // If contained by a widget/card container, build some settings for that
@@ -77,6 +79,8 @@
           this.settings.type = 'list';
           this.mainContainer = widgetContainer;
         }
+
+        this.isRTL = Locale.isRTL();
 
         return this;
       },
@@ -172,15 +176,14 @@
           });
         });
 
-        //Adjust buttons on resize
-        $(window).on('resize.pager', function () {
-          self.renderBar();
-        });
-
         //Attach button click and touch
         this.pagerBar.onTouchClick('pager', 'a').on('click.pager', 'a', function (e) {
           var li = $(this).parent();
           e.preventDefault();
+
+          if ($(this).attr('disabled')) {
+            return;
+          }
 
           if (li.is('.pager-prev')) {
             self.setActivePage(self.activePage - 1, false, 'prev');
@@ -339,8 +342,14 @@
 
         //Add functionality to change page size.
         if (this.isTable && this.pagerBar.find('.btn-menu').length === 0) {
-          var pageSize = $('<li class="pager-pagesize"><button type="button" class="btn-menu"> <span>' + Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize) +'</span> '+ $.createIcon({ icon: 'dropdown' }) +' </button></li>');
-          $(pageSize).insertAfter(this.pagerBar.find('.pager-last'));
+          var pageSize = $('<li class="pager-pagesize"></li>'),
+            pageSizeButton = $('<button type="button" class="btn-menu">' +
+              '<span>' + Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize) + '</span> ' +
+              $.createIcon({ icon: 'dropdown' }) +
+              ' </button>').appendTo(pageSize);
+
+          pageSize.insertAfter(this.pagerBar.find('.pager-last'));
+
           var menu = $('<ul class="popupmenu has-icons"></ul>');
 
           for (var k = 0; k < self.settings.pagesizes.length; k++) {
@@ -348,9 +357,17 @@
             menu.append('<li '+ (size === self.settings.pagesize ? ' class="is-checked"' : '') +'><a href="#">' + size + '</a></li>');
           }
 
-          pageSize.find('button').after(menu);
+          pageSizeButton.after(menu);
 
-          this.pagerBar.find('.btn-menu').popupmenu().on('selected.pager', function (e, args) {
+          var popupOpts = {
+            placementOpts: {
+              parent: pageSizeButton,
+              parentXAlignment: (this.isRTL ? 'left' : 'right'),
+              strategies: ['flip']
+            }
+          };
+
+          pageSizeButton.popupmenu(popupOpts).on('selected.pager', function (e, args) {
             var tag = args;
             tag.closest('.popupmenu').find('.is-checked').removeClass('is-checked');
             tag.parent('li').addClass('is-checked');
@@ -358,7 +375,7 @@
             self.setActivePage(1, true, 'first');
            });
 
-          $('[href="#25"]').parent().addClass('is-checked');
+          //$('[href="#25"]').parent().addClass('is-checked');
         }
 
         var pattern = (''+ this._pageCount).replace(/\d/g, '#');
@@ -454,7 +471,7 @@
 
       pagerInfo: {},
       setDatagrid: function() {
-        this.datagrid = this.mainContainer ? this.mainContainer.children('.datagrid-container').data('datagrid') : null;
+        this.datagrid = this.mainContainer ? this.mainContainer.data('datagrid') : null;
       },
 
       // Render Paged Items
@@ -529,11 +546,11 @@
             elements.hide();
 
             //collapse expanded rows
-            self.element.children().filter('.datagrid-expandable-row.is-expanded').removeClass('is-expanded').hide();
-            self.element.children().find('.datagrid-expand-btn').each(function () {
-              $(this).removeClass('.is-expanded');
-              $(this).find('.plus-minus').removeClass('active');
-            });
+            self.element.children()
+              .filter('.datagrid-expandable-row.is-expanded')
+                .removeClass('is-expanded').hide()
+                .prev().removeClass('.is-expanded')
+                  .find('.plus-minus').removeClass('active');
 
             expr = (self.activePage === 1 ? ':not(".is-filtered"):lt('+ rows +')' : ':not(".is-filtered"):lt('+ ((self.activePage) * rows) +'):gt('+ (((self.activePage-1) * rows) -1) +')');
 

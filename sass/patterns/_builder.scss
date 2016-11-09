@@ -63,7 +63,7 @@
 
 .builder-header {
   background-color: $builder-header-bg-color;
-  min-height: 80px;
+  min-height: 75px;
 
   &.is-personalizable {
     @include transition(background-color 500ms ease 0s);
@@ -71,17 +71,7 @@
 
   .toolbar {
     margin: 0 20px;
-    padding-top: 10px;
-  }
-
-  .panel-title {
-    @include font-size(20);
-    line-height: 1.2;
-  }
-
-  .panel-subhead {
-    @include font-size(15);
-    line-height: 1;
+    padding-top: 15px;
   }
 
   h1,
@@ -89,11 +79,22 @@
   h3,
   h4 {
     color: $white;
+    margin-bottom: 0;
   }
+
+  .panel-subhead {
+    display: block;
+    margin-top: 3px;
+  }
+
+  .panel-title {
+    line-height: 3rem;
+  }
+
 }
 
 .builder-content {
-  height: calc(100% - 80px);
+  height: calc(100% - 75px);
 
   &.no-sidebar {
     .builder-actions {
@@ -167,7 +168,7 @@
 }
 
 .builder-sidebar-footer {
-  height: 80px;
+  height: 75px;
   margin-top: 10px;
 }
 

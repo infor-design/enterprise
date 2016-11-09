@@ -125,6 +125,16 @@ $header-height: 60px;
       }
     }
 
+    .panel-title {
+      @include font-size(20);
+      line-height: 1.2;
+    }
+
+    .panel-subhead {
+      @include font-size(14);
+      line-height: 1;
+    }
+
     &.has-title-button + .breadcrumb {
       padding-left: 65px;
     }
@@ -142,6 +152,10 @@ $header-height: 60px;
     z-index: 9000;
   }
 
+  &.subheader {
+    background-color: $subhead-bg-color;
+  }
+
 }
 
 .header,
@@ -157,7 +171,8 @@ $header-height: 60px;
         fill: $header-button-color;
       }
 
-      &.is-open .icon {
+      &.is-open .icon,
+      &.btn-menu.is-open .icon {
         fill: $header-button-hover-color !important;
       }
 

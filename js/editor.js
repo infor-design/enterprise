@@ -45,7 +45,9 @@
 
       this.isMac = $('html').is('.is-mac');
       this.isFirefox = $('html').is('.is-firefox');
+      Soho.logTimeStart(pluginName);
       this.init();
+      Soho.logTimeEnd(pluginName);
     }
 
     // Actual Plugin Code

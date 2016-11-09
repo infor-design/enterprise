@@ -1,6 +1,6 @@
 /**
 * Responsive Popup Menu Control (Context)
-* @name popupmen
+* @name popupmenu
 */
 
 /* start-amd-strip-block */
@@ -31,7 +31,16 @@
         beforeOpen: null, //Ajax callback for open event
         ariaListbox: false,   //Switches aria to use listbox construct instead of menu construct (internal)
         useCoordsForClick: false, //By default, menus open up underneath their target element.  Set this to true to use mouse coordinates for positioning a menu inside of its target element.
-        eventObj: undefined  //Can pass in the event object so you can do a right click with immediate
+        eventObj: undefined,  //Can pass in the event object so you can do a right click with immediate,
+        placementOpts: { // Gets passed to this control's Place behavior
+          containerOffsetX: 10,
+          containerOffsetY: 10,
+          strategies: ['flip', 'shrink']
+        },
+        offset: {
+          x: 0,
+          y: 0,
+        }
       },
       settings = $.extend({}, defaults, options);
 
@@ -40,7 +49,9 @@
       this.settings = $.extend({}, settings);
       this.element = $(element);
       this.isOldIe  = $('html').is('.ie11, .ie10, .ie9');
+      Soho.logTimeStart(pluginName);
       this.init();
+      Soho.logTimeEnd(pluginName);
     }
 
     // Plugin Object
@@ -142,8 +153,6 @@
         }
         if (this.wrapper.parents().filter(scrollableFilter).length === 0) {
           this.wrapper.css('position', 'absolute');
-        } else {
-          this.wrapper.css('position', 'fixed');
         }
 
         // Wrap submenu ULs in a 'wrapper' to help break it out of overflow.
@@ -307,6 +316,17 @@
             e.stopPropagation();
             self.updated();
           });
+
+          // Media Query Listener to detect a menu closing on mobile devices that change orientation.
+          this.matchMedia = window.matchMedia('(orientation: landscape)');
+          this.mediaQueryListener = function() {
+            // Match every time.
+            if (!self.menu.hasClass('is-open')) {
+              return;
+            }
+            self.close();
+          };
+          this.matchMedia.addListener(this.mediaQueryListener);
       },
 
       handleKeys: function () {
@@ -546,8 +566,6 @@
           target = this.element,
           isRTL = this.isRTL(),
           wrapper = this.menu.parent('.popupmenu-wrapper'),
-          windowH = $(window).height(),
-          windowW = $(window).width(),
           mouse =  {
             x: e && e.clientX ? e.clientX : (window.event && window.event.clientX) ? window.event.clientX : 0,
             y: e && e.clientY ? e.clientY : (window.event && window.event.clientY) ? window.event.clientY : 0
@@ -555,11 +573,7 @@
           menuDimensions = {
             width: this.menu.outerWidth(),
             height: this.menu.outerHeight()
-          },
-          left, top,
-          wasFlipped = false,
-          usedCoords = false,
-          d;
+          };
 
         if (!wrapper.length) {
           return;
@@ -569,293 +583,74 @@
           target = target.closest('.tab');
         }
 
-        function sanitizeAxis(axis) {
-          return ((axis === 'x' || axis === 'y') ? axis : 'x');
-        }
-
         function getCoordinates(e, axis) {
-          axis = sanitizeAxis(axis);
-          usedCoords = true;
+          axis = ((axis === 'x' || axis === 'y') ? axis : 'x');
           return mouse[axis]; // use mouseX/mouseY if this doesn't work
-        }
-
-        function getBorder(axis) {
-          return (axis === 'x' ? 'left' : 'top');
-        }
-
-        function getTargetOffset(el, axis) {
-          axis = sanitizeAxis(axis);
-          var border = getBorder(axis),
-            offset = el.offset();
-          return offset[border];
-        }
-
-        function isKeyboardEvent(e) {
-          var eventTypes = ['keydown', 'keypress'];
-          return (e === undefined || e === null || eventTypes.indexOf(e.type) > -1 );
-        }
-
-        function useCoords(e, axis) {
-          var s = self.settings.eventObj;
-
-          if (s && s.clientX && s.clientY) {
-            return getCoordinates(s, axis);
-          }
-
-          if (e.type === 'click' && self.settings.useCoordsForClick === true) {
-            return getCoordinates(e, axis);
-          }
-
-          return getTargetOffset($(e.target), axis);
-        }
-
-        function getOffsetsFromTrigger(axis) {
-          if (isKeyboardEvent(e)) {
-            return getTargetOffset(target, axis);
-          }
-          return useCoords(e, axis);
-        }
-
-        switch(this.settings.trigger) {
-          case 'rightClick':
-            left = getCoordinates(e, 'x');
-            top = getCoordinates(e, 'y');
-            break;
-          default:
-            left = getOffsetsFromTrigger('x');
-            top = getOffsetsFromTrigger('y');
-            break;
-        }
-
-        function useArrow() {
-          return target.is('.btn-menu, .btn-actions, .btn-split-menu, .searchfield-category-button, .trigger');
-        }
-        function hideArrow() {
-          if (useArrow()) {
-            wrapper.find('.arrow').css({ 'display': 'none' });
-          }
         }
 
         // Reset the arrow
         wrapper.find('.arrow').removeAttr('style');
 
-        // if the target "is" a certain set of classes, or meets certain criteria, the target's
-        // size (height or width) will be added to the left/top placement.
-        function useTargetSize(axis) {
-          var cssConstraints = {
-            x: '',
-            y: '.autocomplete, .btn-menu, .btn-actions, .btn-split-menu, .searchfield-category-button, .trigger'
-          };
-          var jsConstraints = {
-            x: function() {
-              return false;
-            },
-            y: function() {
-              return target.closest('.tab').length ||
-                target.closest('.tab-more').length ||
-                target.closest('.colorpicker-container').length;
-            }
-          };
-
-          return target.is(cssConstraints[axis]) || jsConstraints[axis]();
-        }
-
-        // If there's more room on the opposite side of the target,
-        // the popupmenu should open on the opposite side.
-        function flipIfNotEnoughRoom(axis, value) {
-          var targetOffset = target.offset(),
-            targetW = target.outerWidth(),
-            targetH = target.outerHeight();
-
-          if (axis === 'x') {
-            var leftEdge = targetOffset.left,
-              rightEdge = targetOffset.left + targetW;
-
-            if (leftEdge > windowW - rightEdge) {
-              value = targetOffset.left - menuDimensions.width;
-              wasFlipped = true;
-            }
-          }
-          if (axis === 'y') {
-            var topEdge = targetOffset.top,
-              bottomEdge = targetOffset.top + targetH;
-
-            if (topEdge > windowH - bottomEdge) {
-              value = targetOffset.top - menuDimensions.height;
-              wasFlipped = true;
-            }
-          }
-
-          return value;
-        }
-
-        // Same thing, but uses the "menu" size.
-        function useMenuSize(axis) {
-          var cssConstraints = {
-            x: '.btn-actions',
-            y: ''
-          };
-          return target.is(cssConstraints[axis]);
-        }
-
-        // Factor in the "size" of both the target element and the menu into the left/top positions
-        // of the menu.
-        function getAdjustedForSize(axis, value) {
-          axis = sanitizeAxis(axis);
-          var dimension = axis === 'x' ? 'Width' : 'Height';
-
-          if (useTargetSize(axis)) {
-            value = value + target['outer' + dimension]();
-          }
-
-          if (useMenuSize(axis)) {
-            value = value - menuDimensions[dimension.toLowerCase()];
-          }
-
-          // Custom adjustments on a per-element/axis basis
-          if (axis === 'x') {
-            if (target.is('.btn-actions')) {
-              value = value + (isRTL ? -(target.outerWidth()) : target.outerWidth());
-            }
-            if (target.is('.btn-filter')) {
-              value = value + (isRTL ? 10 : -10);
-            }
-            if (target.is('.btn-split-menu')) {
-              value = value + (isRTL ? 13 : -13);
-            }
-          }
-
-          if (axis === 'y') {
-            if (target.is('.btn-actions')) {
-              value = value + 5;
-            }
-            if (target.is('.btn-filter, .searchfield-category-button') || target.closest('.colorpicker-container').length) {
-              value = value + 10; // extra spacing to keep arrow from overlapping
-            }
-          }
-
-          return value;
-        }
-        left = getAdjustedForSize('x', left);
-        top = getAdjustedForSize('y', top);
-
-        var modalParent = wrapper.closest('.modal'),
-          mpOffset = modalParent.offset();
-
-        function getModalParentOffset(axis) {
-          axis = sanitizeAxis(axis);
-          var border = getBorder(axis);
-          return modalParent.length ? mpOffset[border] : 0;
-        }
-
-        //left = flipIfNotEnoughRoom('x', left);
-        top = flipIfNotEnoughRoom('y', top);
-
-        // Fix these values if we're sitting inside a modal, since the modal element is "fixed"
-        // IE11 handles fixed positioning differently so add the offset instead of subtracting
-        if (this.isOldIe) {
-          left = left + getModalParentOffset('x');
-          top = top + getModalParentOffset('y');
+        var opts = $.extend({}, this.settings.placementOpts);
+        if ((this.settings.trigger === 'immediate' && this.settings.eventObj) || this.settings.trigger === 'rightClick') {
+          opts.x = getCoordinates(e, 'x') - (isRTL ? menuDimensions.width : 0) + ((isRTL ? -1 : 1) * this.settings.offset.x);
+          opts.y = getCoordinates(e, 'y') + this.settings.offset.y;
+          opts.strategies = ['flip', 'nudge', 'shrink'];
         } else {
-          left = left - getModalParentOffset('x');
-          top = top - getModalParentOffset('y');
+          opts.x = this.settings.offset.x || 0;
+          opts.y = this.settings.offset.y || 0;
+          opts.parent = this.element;
+          opts.placement = 'bottom';
         }
 
-        // place the element so we can get some height/width and bleeds
-        wrapper.css({'left': left, 'top': top});
+        //=======================================================
+        // BEGIN Temporary stuff until we sort out passing these settings from the controls that utilize them
+        //=======================================================
 
-        left = wrapper.offset().left;
-        top = wrapper.offset().top;
-
-        var scrollPosY = $(window).height() + $(document).scrollTop(),
-          scrollPosX = $(window).width() + $(document).scrollLeft();
-
-        function shrinkY(onTop) {
-          if (onTop) {
-            d = top * -1;
-            top = top + d;
-            menuDimensions.height = menuDimensions.height - d;
-            return;
-          }
-
-          d = (top + menuDimensions.height) - windowH;
-          menuDimensions.height = menuDimensions.height - d;
+        function shouldBeLeftAligned(target) {
+          return target.is('.btn-split-menu, .btn-menu, .tab, .searchfield-category-button') &&
+            !target.parent('.pager-pagesize').length;
         }
 
-        function shrinkX(reposition) {
-          d = left * -1;
-          if (!reposition) {
-            left = left + d;
-          }
-          menuDimensions.width = menuDimensions.width - d;
+        function shouldBeRightAligned(target) {
+          return target.is('.btn-actions, .btn-filter');
         }
 
-        //If the menu is off the bottom, fix its position so it's on-screen
-        if ((top + menuDimensions.height) > scrollPosY) {
-
-          // Only nudge on Y if we're using coordinate-based positioning.
-          if (usedCoords) {
-            d = (top + menuDimensions.height) - scrollPosY;
-            top = top - d;
-
-            hideArrow();
-
-            // Check if we've bled off the top edge.  If yes, shrink the menu's height
-            if (top - $(document).scrollTop() < 0) {
-              shrinkY(true);
-            }
-          } else {
-            shrinkY();
-          }
+        // Customize some settings based on the type of element that is doing the triggering.
+        if (shouldBeRightAligned(target)) {
+          opts.parentXAlignment = (isRTL ? 'left' : 'right');
+        }
+        if (shouldBeLeftAligned(target)) {
+          opts.parentXAlignment = (isRTL ? 'right': 'left');
         }
 
-        // If menu is off the top at this point, shrink to fit
-        if (top - $(document).scrollTop() < 0) {
-          shrinkY(true);
+        //=======================================================
+        // END Temporary stuff until we sort out passing these settings from the controls that utilize them
+        //=======================================================
+
+        wrapper.one('afterplace.popupmenu', function(e, positionObj) {
+          self.handleAfterPlace(e, positionObj);
+        });
+
+        wrapper.place(opts);
+        wrapper.data('place').place(opts);
+      },
+
+      handleAfterPlace: function(e, placementObj) {
+        var wrapper = this.menu.parent('.popupmenu-wrapper');
+        wrapper.data('place').setArrowPosition(e, placementObj, wrapper);
+
+        if (placementObj.height) {
+          wrapper.css('height', '');
+          this.menu.height(placementObj.height);
+        }
+        if (placementObj.width) {
+          wrapper.css('width', '');
+          this.menu.width(placementObj.width);
         }
 
-        //Handle Case where menu is off the right
-        if ((left + menuDimensions.width) > scrollPosX) {
-          d = (left + menuDimensions.width) - scrollPosX;
-          left = left - d;
-
-          // Check if we've bled off the left edge.  If yes, shrink the menu's width
-          if (left - $(document).scrollLeft() < 0) {
-            shrinkX(true);
-          }
-
-          hideArrow();
-        }
-
-        //Handle Case where menu is off the left
-        if (left - $(document).scrollLeft() < 0) {
-          d = left * -1;
-          left = left + d;
-
-          hideArrow();
-        }
-
-        left = left - getModalParentOffset('x');
-        top = top - getModalParentOffset('y');
-
-        // If menu is off the top at this point, shrink to fit
-        if (top - $(document).scrollTop() < 0) {
-          shrinkY(true);
-        }
-
-        // Re-apply adjusted positioning
-        wrapper.css({'top': top, 'left': left});
-        this.menu.css({'height': menuDimensions.height, 'width': menuDimensions.width});
-
-        // Flip arrow to the opposite side
-        var arrow = wrapper.find('div.arrow');
-        if (wasFlipped) {
-          wrapper.removeClass('bottom').addClass('top');
-        }
-
-        if (this.element.is('.btn-menu', '.btn-filter, .btn-split-menu, .searchfield-category-button')) {
-          arrow.css({ 'right': (isRTL ? '20px' : 'auto'), 'left': (isRTL ? 'auto' : '20px') });
-        }
+        wrapper.triggerHandler('popupmenuafterplace', [placementObj]);
+        return placementObj;
       },
 
       open: function(e, ajaxReturn) {
@@ -906,7 +701,7 @@
             }
 
             if ($(e.target).closest('.popupmenu').length === 0) {
-              self.close();
+              self.close(true, self.settings.trigger ==='rightClick');
             }
           });
 
@@ -1148,7 +943,7 @@
 
       detach: function () {
         $(document).off('click.popupmenu touchend.popupmenu keydown.popupmenu');
-        $(window).off('scroll.popupmenu resize.popupmenu');
+        $(window).off('scroll.popupmenu resize.popupmenu orientationchange.popupmenu');
         $('.scrollable').off('scroll.popupmenu');
 
         this.menu.off('click.popupmenu touchend.popupmenu touchcancel.popupmenu');
@@ -1216,7 +1011,11 @@
         });
 
         function unwrapPopup(menu) {
-          if (menu.parent().is('.popupmenu-wrapper')) {
+          var wrapper = menu.parent();
+          if (wrapper.is('.popupmenu-wrapper')) {
+            if (wrapper.data('place')) {
+              wrapper.data('place').destroy();
+            }
             menu.unwrap();
           }
         }
@@ -1228,6 +1027,10 @@
 
         $.removeData(this.menu[0], 'trigger');
         wrapper.remove();
+
+        if (this.matchMedia) {
+          this.matchMedia.removeListener(this.mediaQueryListener);
+        }
 
         this.detach();
         this.element

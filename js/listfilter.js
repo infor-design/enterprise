@@ -28,7 +28,9 @@
 
   function ListFilter(settings) {
     this.settings = $.extend({}, defaults, settings);
+    Soho.logTimeStart('ListFilter');
     this.init();
+    Soho.logTimeEnd('ListFilter');
   }
 
   ListFilter.prototype = {
@@ -86,7 +88,7 @@
 
       function searchItemIterator(item) {
         var isString = typeof item === 'string',
-          text = (isString ? item : $(item).html()),
+          text = (isString ? item : $(item).text()),
           parts = text.split(' '),
           match = false;
 

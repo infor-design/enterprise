@@ -294,9 +294,9 @@ define([
 
     'be work with either no-NO or nb-NO': function() {
       Locale.set('no-NO');
-      expect(Locale.translate('Loading')).to.equal('Laster opp');
+      expect(Locale.translate('Loading')).to.equal('Laster');
       Locale.set('nb-NO');
-      expect(Locale.translate('Loading')).to.equal('Laster opp');
+      expect(Locale.translate('Loading')).to.equal('Laster');
       expect(Locale.calendar().timeFormat).to.equal('HH.mm');
       Locale.set('en-US');
     },
@@ -474,6 +474,11 @@ define([
       expect(Locale.formatNumber('12.344', {minimumFractionDigits: 0, maximumFractionDigits: 2, round: true})).to.equal('12.34')
       expect(Locale.formatNumber('12.349', {minimumFractionDigits: 0, maximumFractionDigits: 2, round: true})).to.equal('12.35')
       expect(Locale.formatNumber('12345.12345678', {minimumFractionDigits:2 , maximumFractionDigits: 4, round: true})).to.equal('12,345.1235');
+    },
+
+    'truncate decimals': function() {
+      expect(Locale.truncateDecimals('1111111111.11', 2, 2)).to.equal('1111111111.11');
+      expect(Locale.truncateDecimals('11111111111.11', 2, 2)).to.equal('11111111111.11');
     }
 
   });

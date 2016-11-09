@@ -26,6 +26,7 @@
         defaults = {
           closeOnSelect: true, // When an option is selected, the list will close if set to "true".  List stays open if "false".
           cssClass: null,  //Append a css class to dropdown-list
+          filterMode: 'contains',  // startsWith and contains Supported - false will not client side filter
           maxSelected: undefined, //If in multiple mode, sets a limit on the number of items that can be selected
           moveSelectedToTop: false, //When the menu is opened, displays all selected options at the top of the list
           multiple: false, //Turns the dropdown into a multiple selection box
@@ -40,7 +41,9 @@
     function Dropdown(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
+      Soho.logTimeStart(pluginName);
       this.init();
+      Soho.logTimeEnd(pluginName);
     }
 
     // Actual DropDown Code
@@ -146,6 +149,10 @@
             this.pseudoElem.addClass('dropdown' + s);
           }
         }
+
+        this.listfilter = new ListFilter({
+          filterMode: this.settings.filterMode
+        });
 
         this.updateList();
         this.setValue();
@@ -397,7 +404,7 @@
         //for form resets.
         self.element.closest('form').on('reset.dropdown', function() {
           setTimeout(function () {
-            self.element.triggerHandle('updated');
+            self.element.triggerHandler('updated');
           }, 1);
         });
 
@@ -473,45 +480,43 @@
 
       filterList: function(term) {
         var self = this,
-          selected = false;
+          selected = false,
+          list = this.listUl.find('li'),
+          results;
 
         if (!term) {
           term = '';
         }
 
+        if (term && term.length) {
+          results = this.listfilter.filter(list, term);
+        }
+
         this.list.addClass('search-mode');
         this.list.find('.icon').attr('class', 'icon search').changeIcon('search');
-
-        this.listUl.find('li').hide();
         this.searchInput.removeAttr('aria-activedescendant');
 
         this.unhighlightOptions();
 
-        //var highlighted = $();
-        $.each(this.element[0].options, function () {
-          //Filter List
-          var opt = $(this),
-            text = opt.text(),
-            listOpt = self.listUl.find('li[data-val="'+ opt.val() +'"]'),
-            containsTerm = false;
+        if (!results || !results.length && !term) {
+          this.resetList();
+          return;
+        }
 
-          // Match the search term to a portion or all of the list option
-          if (text && text.toString().toUpperCase().indexOf(term.toUpperCase()) !== -1) {
-            containsTerm = true;
+        list.not(results).addClass('hidden');
+        list.filter(results).each(function(i) {
+          var li = $(this);
+          li.attr('tabindex', i === 0 ? '0' : '-1');
+
+          if (!selected) {
+            self.highlightOption(li);
+            selected = true;
           }
 
-          //Find List Item - Starts With
-          if (containsTerm) {
-            if (!selected) {
-              self.highlightOption(listOpt);
-              selected = true;
-            }
-
-            //Highlight Term
-            var exp = new RegExp('(' + term + ')', 'i');
-            text = listOpt.text().replace(exp, '<i>$1</i>');
-            listOpt.show().children('a').html(text);
-          }
+          //Highlight Term
+          var exp = new RegExp('(' + term + ')', 'i');
+          var text = li.text().replace(exp, '<i>$1</i>');
+          li.removeClass('hidden').children('a').html(text);
         });
 
         term = '';
@@ -1190,9 +1195,7 @@
 
         $(window).off('resize.dropdown');
         this.element.trigger('listclosed');
-
         this.activate();
-        //this.pseudoElem.focus();
       },
 
       //Set option into view
@@ -1613,6 +1616,7 @@
         this.pseudoElem.off().remove();
         this.icon.remove();
         this.wrapper.remove();
+        this.listfilter.destroy();
         this.element.removeAttr('style');
       }
 

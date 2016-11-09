@@ -38,7 +38,9 @@
     function SearchField(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
+      Soho.logTimeStart(pluginName);
       this.init();
+      Soho.logTimeEnd(pluginName);
     }
 
     // Plugin Methods
@@ -140,7 +142,10 @@
           this.list.insertAfter(icon);
 
           icon.popupmenu({
-            menu: this.list
+            menu: this.list,
+            offset: {
+              y: 10
+            }
           });
         }
 

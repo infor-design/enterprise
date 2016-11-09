@@ -36,7 +36,9 @@
     function Tabs(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
+      Soho.logTimeStart(pluginName);
       this.init();
+      Soho.logTimeEnd(pluginName);
     }
 
     // Actual Plugin Code
@@ -967,6 +969,10 @@
       },
 
       isActive: function(href) {
+        if (!href || !href.length || (href.length === 1 && href.indexOf('#') < 1)) {
+          return false;
+        }
+
         var panel = this.getPanel(href);
         return panel.css('display') !== 'none';
       },
@@ -2281,8 +2287,15 @@
           .init();
       },
 
-      disable: function() {
-        this.element.prop('disabled', true).addClass('is-disabled');
+      // Disables all tabs in the
+      disableOtherTabs: function() {
+        return this.disable(true);
+      },
+
+      disable: function(isPartial) {
+        if (!isPartial) {
+          this.element.prop('disabled', true).addClass('is-disabled');
+        }
 
         if (!this.disabledElems) {
           this.disabledElems = [];
@@ -2290,10 +2303,18 @@
 
         var self = this,
           tabs = this.tablist.children('li:not(.separator)');
+          if (isPartial) {
+            tabs = tabs.filter(':not(.application-menu-trigger)');
+          }
+
 
         tabs.each(function() {
           var li = $(this);
           var a = li.children('a');
+
+          if (isPartial && self.isActive(a.attr('href'))) {
+            return;
+          }
 
           if (li.is('.is-disabled') || a.prop('disabled') === true) {
             self.disabledElems.push({
@@ -2332,7 +2353,9 @@
           });
         });
 
-        if (this.isModuleTabs()) {
+        this.moreButton.addClass('is-disabled');
+
+        if (this.isModuleTabs() && !isPartial) {
           this.element.children('.toolbar').disable();
         }
 
@@ -2385,6 +2408,8 @@
             attrTarget.prop('disabled', obj.originalDisabled);
           });
         });
+
+        this.moreButton.removeClass('is-disabled');
 
         if (this.isModuleTabs()) {
           this.element.children('.toolbar').enable();

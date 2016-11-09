@@ -1,0 +1,14 @@
+version: '2'
+services:
+  hl-sohoxi:
+    image: hookandloop/hl-builder:latest
+    container_name: hl_sohoxi
+    tty: true
+    ports:
+      - 4000:4000
+      - 35729:35729
+    volumes: 
+      - ".:/controls"
+      - "./bin/docker-entrypoint.sh:/docker-entrypoint.sh"
+    working_dir: /controls
+    entrypoint: /docker-entrypoint.sh

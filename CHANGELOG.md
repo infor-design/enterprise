@@ -1,5 +1,37 @@
+## 4.2.3 - Minor Release
+Release Date: 2016-11-30
+
+### Key New Features
+* Datagrid Grouping
+
+### Breaking Changes
+
+* 2016-11-01 -
+
+## 4.2.2 - Minor Release
+Release Date: 2016-10-20
+
+### Key New Features
+* Personalization
+* Improved Positioning logic
+* Improved Filtering and Tree grid
+
+### Breaking Changes
+
+* 2016-11-01 - Datagrid Column widths. In 4.2.1 the column widths would not be exact for plain px with eg: width: 125 in the column definition. This should be noted as you may need to adjust this if columns appear to narrow
+* 2016-11-01 - Made Dropdown Component dependent on ListFilter Behavior (SOHO-4936)
+* 2016-10-18 - Tree renamed method setSelectedNode to selectNode for consistency
+* 2016-10-18 - Split place logic into new file place.js. This is a dependency for controls that position like datepicker, tooltip, popup.
+* 2016-10-18 - Split initialize logic into 3 files personalize.js for personalization, environment.js for setting up environmental changes like global browser css tags and initialize.js for initializing controls.
+* 2016-10-11 - Event personalizecolors now called change colors to match changetheme
+* 2016-10-11 - Css File is now called light.scss not grey.css to match Soho Naming standards
+* 2016-10-11 - tab-container module-tabs should have class is-personalizable appended for module tabs to handle personalization - SOHO-4162
+
+### Ui Changes
+* 2016-08-30 -
+
 ## 4.2.1 - Minor Release
-Release Date: Approx 1-2 Weeks
+Release Date: 2016-10-06
 
 ### Key New Features
 

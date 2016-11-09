@@ -814,7 +814,7 @@ window.Chart = function(container) {
     dims.height = dims.height > dims.widgetheight ? dims.widgetheight : dims.height;
     dims.height = isSmall && !lb.hideLabels ? dims.width : dims.height;
 
-    dims.outerRadius = ((Math.min(dims.width, dims.height) / 2) - 35);
+    dims.outerRadius = ((Math.min(dims.width, dims.height) / 2) - 40);
     dims.innerRadius = isDonut ? dims.outerRadius - (!lb.hideLabels ? 50 : 30) : 0;
     dims.labelRadius = dims.outerRadius + 20;
     dims.center = { x: dims.width / 2, y: dims.height / 2 };
@@ -1079,19 +1079,21 @@ window.Chart = function(container) {
               .attr('dy', '.35em')
               .style('text-anchor', 'middle')
               .attr('class', 'chart-donut-text')
-              .html(centerLabel);
+              .text(centerLabel);
           }
         }
       };
       addLabels();
 
       if (lb.hideLabels) {
+        var isRunning = true,
+          orgLabelPos,
+          spacing = Math.round(textLabels.node().getBBox().height) + 1;
+
         // Resolve label positioning collisions
         (function () {
-          var spacing = Math.round(textLabels.node().getBBox().height) + 1;
-
           // Record org x, y position
-          var orgLabelPos = textLabels[0].map(function(d) {
+          orgLabelPos = textLabels[0].map(function(d) {
             d = d3.select(d);
             return { x: +d.attr('x'), y: +d.attr('y') };
           });
@@ -1112,10 +1114,18 @@ window.Chart = function(container) {
                     y2 = +db.attr('y');
 
                   if (da.attr('text-anchor') === db.attr('text-anchor')) {
-                    deltaY = y1 - y2;
-                    if (Math.abs(deltaY) < spacing) {
+                    deltaY = Math.round(Math.abs(y1 - y2));
+                    if (deltaY < spacing) {
+                      deltaY += 1;
+                      var newY = y2 > 0 ? y2-(deltaY/2) : y2+(deltaY/2);
                       again = true;
-                      db.attr('y', y2 > 0 ? y2-1 : y2+1); //padding
+                      db.attr('y', newY); //padding
+
+                      if (Math.round(Math.abs(newY)) < 2) {
+                        again = false;
+                        newY = y2 > 0 ? y2-(spacing) : y2+(spacing/2);
+                        db.attr('y', newY);
+                      }
                     }
                   }
                 }
@@ -1123,10 +1133,22 @@ window.Chart = function(container) {
             });
 
             if(again) {
-              relax();
+              setTimeout(function() {
+                relax();
+              }, 0);
+            } else {
+              isRunning = false;
             }
           }
           relax();
+        })();
+
+        // Draw lines and set short name
+        var intervalId = setInterval(function() {
+          if (isRunning) {
+            return;
+          }
+          clearInterval(intervalId);
 
           // Fix x position
           textLabels.each(function(d, i) {
@@ -1137,7 +1159,7 @@ window.Chart = function(container) {
               x = (dims.labelRadius - Math.abs(y1) + Math.abs(orgLabelPos[i].x + (spacing * 2.5))) * sign;
 
             if (orgLabelPos[i].y !== y1 || (i === 0 && chartData[i].percent < 10)) {
-              x += chartData[i].percent < 10 ? x1 : Math.ceil(x1/3);
+              x += chartData[i].percent < 10 ? Math.ceil(x1/2) : Math.ceil(x1-x)- (spacing/2);
               label.attr('x', x);
 
               if (lb.isTwoline) {
@@ -1146,10 +1168,6 @@ window.Chart = function(container) {
             }
           });
 
-        })();
-
-        // Draw lines and set short name
-        (function () {
           var lineFunction = d3.svg.line()
             .x(function(d) { return d.x; })
             .y(function(d) { return d.y; })
@@ -1196,7 +1214,8 @@ window.Chart = function(container) {
               }
           });
 
-        })();
+        }, 1);
+
       } // END: lb.hideLabels
       else {
         showLegend = true;
@@ -2713,11 +2732,13 @@ window.Chart = function(container) {
       width = parent.width() - margin.left - margin.right,
       height = parent.height() - margin.top - margin.bottom - 30; //legend
 
+    height = height < 0 ? 50 : height; //default minimum height
+
     var svg = d3.select(container).append('svg')
-        .attr('width', width + margin.left + margin.right)
-        .attr('height', height + margin.top + margin.bottom)
-      .append('g')
-        .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+              .attr('width', width + margin.left + margin.right)
+              .attr('height', height + margin.top + margin.bottom)
+              .append('g')
+                .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
     //Functions Used in the Loop
     function bulletWidth(x) {
@@ -2733,10 +2754,14 @@ window.Chart = function(container) {
           rowData = dataset[0].data[i],
           ranges = rowData.ranges.slice().sort(d3.descending),
           markers = (rowData.markers ? rowData.markers.slice().sort(d3.descending) : []),
-          measures = (rowData.measures ? rowData.measures.slice().sort(d3.descending) : []);
+          measures = (rowData.measures ? rowData.measures.slice().sort(d3.descending) : []),
+          rangesAsc = rowData.ranges.slice().sort(d3.ascending),
+          markersAsc = (rowData.markers ? rowData.markers.slice().sort(d3.ascending) : []),
+          measuresAsc = (rowData.measures ? rowData.measures.slice().sort(d3.ascending) : []);
 
       if (markers.length === 0) {
         markers = measures;
+        markersAsc = measuresAsc;
         noMarkers = true;
       }
 
@@ -2757,10 +2782,16 @@ window.Chart = function(container) {
           .attr('dx', '15px')
           .text(function() { return rowData.subtitle; });
 
+      var maxAll = Math.max(ranges[0], markers[0], measures[0]),
+          minAll = Math.min(rangesAsc[0], markersAsc[0], measuresAsc[0]);
+
+      minAll = minAll < 0 ? minAll : 0;
+
       // Compute the new x-scale.
       var x1 = d3.scale.linear()
-          .domain([0, Math.max(ranges[0], markers[0], measures[0])])
-          .range([0, width]);
+          .domain([minAll, maxAll])
+          .range([0, width])
+          .nice();
 
       // Derive width-scales from the x-scales.
       var w1 = bulletWidth(x1);
@@ -2773,7 +2804,8 @@ window.Chart = function(container) {
           .attr('class', function(d, i) { return 'range s' + i; })
           .attr('data-idx', i)
           .attr('width', 0)
-          .style('fill', function(d,i) {
+          .attr('x', function (d) { return x1(d < 0 ? d : 0); })
+          .style('fill', function(d, i) {
             if (chartData[0].barColors) {
               return chartData[0].barColors[i];
             }
@@ -2844,6 +2876,7 @@ window.Chart = function(container) {
           .attr('class', function(d, i) { return 'measure s' + i; })
           .attr('width', 0)
           .attr('height', 3)
+          .attr('x', function (d) { return x1(d < 0 ? d : 0); })
           .style('fill', function(d,i) {
             if (chartData[0].lineColors) {
               return chartData[0].lineColors[i];
@@ -2863,7 +2896,7 @@ window.Chart = function(container) {
           .attr('class', (noMarkers ? 'hidden' : 'marker'))
           .attr('x1', 0)
           .attr('x2', 0)
-          .style('stroke', function(d,i) {
+          .style('stroke', function(d, i) {
             if (chartData[0].markerColors) {
               return chartData[0].markerColors[i];
             }
@@ -2931,6 +2964,292 @@ window.Chart = function(container) {
     charts.appendTooltip();
     $(container).trigger('rendered');
 
+  };
+
+  //Completion chart
+  this.Completion = function(chartData) {
+    $(container).addClass('completion-chart');
+
+    // Set dataset
+    var dataset = chartData[0].data[0],
+      isTarget = charts.settings.type === 'completion-target';
+
+    // Set total defaults
+    dataset.total = $.extend({}, {value: 100}, dataset.total);
+
+    // Basic functions
+    var isUndefined = function(value) {
+        return typeof value === 'undefined';
+      },
+      fixUndefined = function(value, isNumber) {
+        return !isUndefined(value) ? value : (isNumber ? 0 : '');
+      },
+      toValue = function(percent) {
+        return percent /100 * fixUndefined(dataset.total.value, true);
+      },
+      toPercent = function(value) {
+        return d3.round(100 * (value / fixUndefined(dataset.total.value, true)));
+      },
+      format = function (value, formatterString) {
+        if (formatterString === '.0%') {
+          return toPercent(value) +'%';
+        }
+        return d3.format(formatterString || '')(value);
+      },
+      fixPercent = function(value) {
+        var s = value.toString();
+        if (s.indexOf('%') !== -1) {
+          return toValue(s.replace(/%/g, ''));
+        }
+        return value;
+      },
+      updateWidth = function(elem, value) {
+        var w = toPercent(value) > 100 ? 100 : (toPercent(value) < 0 ? 0 : toPercent(value));
+        elem.css({'width': w +'%'});
+      },
+      updateTargetline = function(elem, value) {
+        var w = value > 100 ? 100 : (value < 0 ? 0 : value);
+        elem.css({'left': w +'%'});
+      },
+      setFormat = function(obj) {
+        return (obj && !isUndefined(obj.value) && obj.format) ?
+          format(fixPercent(obj.value), obj.format) : (obj ? fixPercent(obj.value) : 0);
+      },
+      setOverlap = function() {
+        if (isTarget) {
+          setTimeout(function() {
+            var remaining = $('.remaining', container),
+              total = $('.total', container),
+              rect1 = $('.completed .value', container)[0].getBoundingClientRect(),
+              rect2 = remaining.find('.value')[0].getBoundingClientRect();
+
+            remaining.add(total)
+              [(rect1.right > rect2.left-20) ? 'addClass' : 'removeClass']('overlap');
+          }, 500);
+        }
+      };
+
+      this.update = function(o) {
+        var type, bar, nodes, jsonData;
+        if (!o.data) {
+          return;
+        }
+
+        if (!o.type) {
+          nodes = o.node;
+        }
+        else {
+          type = o.type;
+          if (!dataset[type]) {
+            return;
+          }
+          nodes = (type === 'name') ?
+            $('.name', container) : ((type === 'total') ?
+              $('.total.value', container) :
+                $('.'+ type +' .value, .'+ type +' .text', container));
+        }
+        jsonData = (nodes.length === 1 ? nodes : nodes.first()).data('jsonData');
+        type = jsonData ? Object.keys(jsonData)[0] : 'name';
+        bar = $('.'+ type +'.bar', container);
+        $.extend(true, dataset[type], o.data);
+
+        nodes.each(function() {
+          var node = $(this);
+
+          // Update text
+          if (o.data.text && node.is('.name, .text')) {
+            node.html(fixUndefined(dataset[type].text));
+          }
+
+          // Update color for text, value, bar
+          if (o.data.color && node.is('.name, .info, .text, .value')) {
+            if (o.data.color.indexOf('#') === -1) {
+              ((type === 'completed' && (!dataset.info || (dataset.info && isUndefined(dataset.info.value)))) ?
+                node.add($('.info .value', container)) : node).add(bar)
+                  .removeClass('error dark good primary amethyst07')
+                  .addClass(o.data.color);
+            }
+            else {
+              if (node.is('.name, .total')) {
+                node.css('color', dataset[type].color);
+              }
+              else {
+                ((type === 'completed' && (!dataset.info || (dataset.info && isUndefined(dataset.info.value)))) ?
+                  $('.'+ type +' .value, .'+ type +' .text, .info .value', container) :
+                  $('.'+ type +' .value, .'+ type +' .text', container))
+                    .css('color', dataset[type].color);
+                bar.css('background-color', dataset[type].color);
+              }
+            }
+          }
+
+          // Update value & bar width
+          if (o.data.value && node.is('.value')) {
+            var w,
+              completed = $('.completed', container),
+              remaining = $('.remaining', container);
+
+            if (type === 'completed') {
+              ((!dataset.info || (dataset.info && isUndefined(dataset.info.value))) ?
+                node.add($('.info .value', container)) : node)
+                  .html(setFormat(dataset[type]));
+
+              if (toPercent(fixPercent(dataset[type].value)) >= 100) {
+                remaining.hide();
+                completed.css({'margin-top': 'inherit'});
+              }
+            }
+            else {
+              node.html(setFormat(dataset[type]));
+            }
+
+            if (!node.is('.name, .total') && type !== 'targetline') {
+              if (type === 'completed') {
+                w = fixPercent(dataset[type].value);
+                updateWidth(bar, w);
+                w += fixPercent(dataset.remaining.value);
+                updateWidth($('.remaining.bar', container), w);
+              }
+              else if (type === 'remaining') {
+                w = fixPercent(dataset[type].value) + fixPercent(dataset.completed.value);
+                updateWidth(bar, w);
+              }
+            }
+            else if (!node.is('.name, .total, .remaining') && type === 'targetline') {
+              w = fixPercent(dataset[type].value);
+              updateTargetline(bar, w);
+            }
+            setOverlap();
+          }
+        });
+      };
+
+    // Render
+    var html = {body: $('<div class="total bar" />')};
+    if (isTarget) {
+      html.body.addClass('chart-completion-target');
+      html.label = ''+
+      '<span class="label">'+
+        '<span class="name">'+ fixUndefined(dataset.name.text) +'</span>'+
+        '<span class="l-pull-right total value">'+ setFormat(dataset.total) +'</span>'+
+      '</span>';
+    }
+    else {
+      html.body.addClass('chart-completion');
+      html.label = ''+
+      '<b class="label name ">'+ fixUndefined(dataset.name.text) +'</b>'+
+      '<b class="label info '+ (dataset.info.color ?
+        fixUndefined(dataset.info.color) :
+          fixUndefined(dataset.completed.color) +' colored') +'">'+
+        '<span class="value">'+
+        (dataset.info && !isUndefined(dataset.info.value) ? fixUndefined(dataset.info.value) :
+          setFormat(dataset.completed)) +
+        '</span> '+
+        '<span class="text">'+ fixUndefined(dataset.info.text) +'</span>'+
+      '</b>';
+    }
+
+    if (dataset.remaining) {
+      html.remaining = ''+
+      '<div class="target remaining bar '+ fixUndefined(dataset.remaining.color) +'">'+
+        '<span aria-hidden="true"'+ (!isTarget ? ' class="audible"' : '') +'>'+
+          '<span class="value">'+
+            setFormat(dataset.remaining) +
+          '</span><br />'+
+          '<span class="text">'+
+            fixUndefined(dataset.remaining.text) +
+          '</span>'+
+        '</span>'+
+      '</div>';
+    }
+    if (dataset.completed) {
+      html.completed = ''+
+      '<div class="completed bar '+ fixUndefined(dataset.completed.color) +'">'+
+        '<span aria-hidden="true"'+ (!isTarget ? ' class="audible"' : '') +'>'+
+          '<span class="value">'+
+            setFormat(dataset.completed) +
+          '</span><br />'+
+          '<span class="text">'+
+            fixUndefined(dataset.completed.text) +
+          '</span>'+
+        '</span>'+
+      '</div>';
+    }
+    if (dataset.targetline) {
+      html.targetline = ''+
+      '<div class="target-line targetline bar">'+
+        '<span aria-hidden="true"'+ (!isTarget ? ' class="audible"' : '') +'>'+
+          '<span class="value">'+
+            setFormat(dataset.targetline) +
+            '</span><br />'+
+            '<span class="text">'+
+              fixUndefined(dataset.targetline.text) +
+            '</span>'+
+        '</span>'+
+      '</div>';
+    }
+
+    html.body.append(html.remaining, html.completed, html.targetline);
+    $(container).append(html.label, html.body);
+
+    // Caching elements
+    var c = {
+      name: $('.name', container),
+      info: {
+        value: $('.info .value', container),
+        text: $('.info .text', container)
+      },
+      completed: {
+        bar: $('.completed.bar', container),
+        value: $('.completed .value', container),
+        text: $('.completed .text', container)
+      },
+      remaining: {
+        bar: $('.remaining.bar', container),
+        value: $('.remaining .value', container),
+        text: $('.remaining .text', container)
+      },
+      targetline: {
+        bar: $('.targetline', container),
+        value: $('.targetline .value', container),
+        text: $('.targetline .text', container)
+      },
+      total: {
+        bar: $('.total.bar', container),
+        value: $('.total.value', container),
+      }
+    };
+
+    // Set jsonData
+    c.name.data('jsonData', {name: dataset.name});
+    c.info.value.add(c.info.text).data('jsonData', {info: dataset.info});
+    c.completed.bar.add(c.completed.value).add(c.completed.text)
+      .data('jsonData', {completed: dataset.completed});
+    c.remaining.bar.add(c.remaining.value).add(c.remaining.text)
+      .data('jsonData', {remaining: dataset.remaining});
+    c.targetline.bar.add(c.targetline.value).add(c.targetline.text)
+      .data('jsonData', {targetline: dataset.targetline});
+    c.total.bar.add(c.total.value).data('jsonData', {total: dataset.total});
+
+    var w;
+    // Update completed bar width
+    if (dataset.completed) {
+      w = fixPercent(dataset.completed.value);
+      updateWidth(c.completed.bar, w);
+    }
+
+    // Update remaining bar width
+    if (dataset.remaining) {
+      w = fixPercent(dataset.completed.value) + fixPercent(dataset.remaining.value);
+      updateWidth(c.remaining.bar, w);
+      setOverlap();
+    }
+
+    // Update target line bar position
+    if (dataset.targetline) {
+      w = fixPercent(dataset.targetline.value);
+      updateTargetline(c.targetline.bar, w);
+    }
   };
 
   //Select the element and fire the event, make the inverse selector opace
@@ -3162,7 +3481,12 @@ window.Chart = function(container) {
       this.Line(options.dataset, options, false, true);
     }
     if (options.type === 'bullet') {
-      this.Bullet(options.dataset, options);
+      this.Bullet(options.dataset);
+    }
+    if (options.type === 'completion' ||
+        options.type === 'completion-target') {
+      this.redrawOnResize = false;
+      this.Completion(options.dataset);
     }
   };
 

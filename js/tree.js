@@ -23,14 +23,17 @@
     var pluginName = 'tree',
       defaults = {
         selectable: 'single', // ['single'|'multiple']
-        hideCheckboxes: false // [true|false] -apply only with [selectable: 'multiple']
+        hideCheckboxes: false, // [true|false] -apply only with [selectable: 'multiple']
+        menuId: null //Context Menu to add to nodes
       },
       settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
     function Plugin(element) {
       this.element = $(element);
+      Soho.logTimeStart(pluginName);
       this.init();
+      Soho.logTimeEnd(pluginName);
     }
 
     // Plugin Methods
@@ -44,6 +47,7 @@
         this.syncDataset(this.element);
         this.initSelected();
         this.focusFirst();
+        this.attachMenu(this.settings.menuId);
       },
 
       //Init Tree from ul, li, a markup structure in DOM
@@ -83,7 +87,7 @@
       initSelected: function () {
         var self = this;
         this.element.find('li.is-selected').each(function() {
-          self.setSelectedNode($('a:first', this), true);
+          self.selectNode($('a:first', this), true);
         });
       },
 
@@ -212,13 +216,7 @@
           file = 'icons-extended.svg';
         }
 
-        var self = this,
-          loadingInterval = setInterval(function() {
-            if (!self.loading) {
-              clearInterval(loadingInterval);
-            }
-            svg.changeIcon(iconStr, file);
-          }, 10);
+        svg.changeIcon(iconStr, file);
       },
 
       //Expand all Parents
@@ -274,18 +272,17 @@
         if (target.length && !target.is('.is-disabled')) {
           var nodes = target.parentsUntil(this.element, 'ul[role=group]');
           this.expandAll(nodes);
-          this.setSelectedNode(target, true);
+          this.selectNode(target, true);
         }
       },
 
-      //Set a node as the unselected one
-      setUnSelectedNode: function (node, focus) {
+      //Set a node as unselected
+      unSelectedNode: function (node, focus) {
         if (node.length === 0) {
           return;
         }
 
-        var top,
-          self = this,
+        var self = this,
           aTags = $('a', this.element);
 
         aTags.attr('tabindex', '-1');
@@ -297,8 +294,7 @@
         this.setNodeStatus(node);
 
         if (this.selectedIndicator.length) {
-          top = this.getAbsoluteOffset(node[0], this.container[0]).top;
-          this.selectedIndicator.css({top: top});
+          this.selectedIndicator.css('top', '');
         }
 
         if (focus) {
@@ -316,7 +312,7 @@
       },
 
       //Set a node as the selected one
-      setSelectedNode: function (node, focus) {
+      selectNode: function (node, focus) {
         if (node.length === 0) {
           return;
         }
@@ -458,8 +454,8 @@
             }
 
             self.isAnimating = true;
+            self.unSelectedNode(node.parent().find('li.is-selected'), false);
             node.find('.is-selected').removeClass('is-selected');
-            // this.element.parent().find('.selected-item-indicator').css('top', '');
 
             next.one('animateclosedcomplete', function() {
               next.removeClass('is-open');
@@ -467,6 +463,9 @@
             }).animateClosed();
 
             node.attr('aria-expanded', node.attr('aria-expanded')!=='true');
+
+
+
           } else {
             var nodeData = node.data('jsonData');
 
@@ -487,6 +486,7 @@
                 //sync data on node
                 nodeData.children = nodes;
                 node.data('jsonData', nodeData);
+                self.selectNode(node, true);
                 self.initSelected();
               };
 
@@ -543,14 +543,14 @@
                 self.toggleNode(target);
               }
               else if (parent.is('.is-selected, .is-partial')) {
-                self.setUnSelectedNode(target, true);
+                self.unSelectedNode(target, true);
               }
               else {
-                self.setSelectedNode(target, true);
+                self.selectNode(target, true);
               }
             }
             else {
-              self.setSelectedNode(target, true);
+              self.selectNode(target, true);
               self.toggleNode(target);
             }
             e.stopPropagation();
@@ -656,7 +656,7 @@
             target.trigger('click.tree');
           }
 
-          //right arrow
+          // Left arrow
           if (charCode === 37) {
             if (Locale.isRTL()) {
               if (target.next().hasClass('is-open')) {
@@ -677,7 +677,7 @@
             return false;
           }
 
-          //left arrow
+          // Right arrow
           if (charCode === 39) {
             if (Locale.isRTL()) {
               if (target.next().hasClass('is-open')) {
@@ -856,14 +856,12 @@
 
       //Sync a node with its dataset 'record'
       syncNode: function (node) {
-        var entry = {},
+        var entry = node.data('jsonData') || {},
           self = this;
 
-        entry = {
-          node: node,
-          id: node.attr('id'),
-          text: node.find('.tree-text').text()
-        };
+        entry.node = node;
+        entry.id = node.attr('id');
+        entry.text = node.find('.tree-text').text();
 
         if (node.hasClass('is-open')) {
           entry.open = true;
@@ -974,7 +972,7 @@
         this.decorateNode(a);
 
         if (nodeData.selected) {
-          this.setSelectedNode(a, nodeData.focus);
+          this.selectNode(a, nodeData.focus);
         }
 
         a.data('jsonData', nodeData);
@@ -1139,10 +1137,32 @@
         this.syncDataset(this.element);
       },
 
+      //Attach Context Menus
+      attachMenu: function (menuId) {
+        var self = this;
+
+        if (!menuId) {
+          return;
+        }
+
+        this.element.off('contextmenu.tree').on('contextmenu.tree', 'a', function (e) {
+          var node = $(this);
+          e.preventDefault();
+
+          $(e.currentTarget).popupmenu({menuId: menuId, eventObj: e, trigger: 'immediate'}).off('selected').on('selected', function (e, args) {
+            self.element.triggerHandler('menuselect', {node: node, item: args});
+          });
+
+          self.element.triggerHandler('menuopen', {menu: $('#' +menuId), node: node});
+          return false;
+        });
+
+      },
+
       // Plugin Related Functions
       destroy: function() {
         this.element.removeData(pluginName);
-        this.element.off('updated.tree click.tree focus.tree keydown.tree keypress.tree').empty();
+        this.element.off('contextmenu.tree updated.tree click.tree focus.tree keydown.tree keypress.tree').empty();
       }
     };
 

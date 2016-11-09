@@ -1,0 +1,98 @@
+<div class="row top-padding">
+  <div class="six columns">
+
+    <h3>Tree Control: Ajax</h3>
+
+    <p>This example shows how to use the source callback to load child nodes.
+       Clicking the node two to open should after a simulated delay; load a result with the children for this node </p>
+    <br />
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <ul role="tree" aria-label="Asset Types" class="tree" data-init="false" id="json-tree">
+    </ul>
+
+  </div>
+</div>
+
+<ul id="tree-popupmenu" class="popupmenu">
+  <li><a href="#" data-cmd="expand">Expand/Collapse</a></li>
+  <li><a href="#" data-cmd="select">Select</a></li>
+  <li><a href="#" data-cmd="explorer">Explore</a></li>
+</ul>
+
+
+<script>
+  var sampleData;
+
+  /* jshint ignore:start */
+  sampleData = [{
+    "id": "node1",
+    "text": "Node One"
+  }, {
+    "id": "node2",
+    "text": "Node Two",
+    "open": false,
+    "children": []
+  }];
+
+  sampleDataNoID = [{
+    "text": "Node One"
+  }, {
+    "text": "Node Two",
+    "open": false,
+    "children": []
+  }];
+
+  /* jshint ignore:end */
+
+  //Can refer to the data set here
+  $('#json-tree').tree({menuId: 'tree-popupmenu', dataset: sampleDataNoID, source: function (req, response) {
+    setTimeout(function () {
+
+      var nodes = [{
+        "id": "node2.1",
+        "text": "Node 2.1"
+      },{
+        "id": "node2.2",
+        "text": "Node 2.2",
+        "children": []
+      }];
+
+      response(nodes);
+    }, 2000);
+
+  }}).on('menuopen', function (e, args) {
+    //The Menu Open Fires when the menu options - use it to update the menu as needed
+    var expandItem = args.menu.find('li').eq(0).find('a');
+
+    //Depending if its a folder or not disable the expand/collapse
+    if (args.node.parent().hasClass('folder')) {
+      expandItem.removeAttr('disabled');
+    } else {
+      expandItem.attr('disabled', 'disabled');
+    }
+  }).on('menuselect', function (e, args) {
+    var treeApi = $(this).data('tree'),
+      cmd = args.item.attr('data-cmd');
+
+    switch (cmd) {
+      case 'expand':
+        treeApi.toggleNode(args.node);
+        break;
+      case 'select':
+        treeApi.selectNode(args.node, true);
+        break;
+      case 'explorer':
+        alert('Open Explorer View');
+        break;
+      default:
+        break;
+    }
+
+  });
+
+</script>

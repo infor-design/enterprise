@@ -3,7 +3,7 @@
     <br />
     <h3>Grid Example: Customization</h3>
     <p>Shows passing an argument when reloading rows that makes it possible to restore selected rows.</p><br />
-    <hr class="fieldset-hr">
+    <br>
   </div>
 </div>
 
@@ -79,7 +79,7 @@
               data[6].activity = 'Reloaded';
 
               var api = $('#datagrid').data('datagrid');
-              api.loadData(data, {preserveSelected: false});
+              api.loadData(data, {preserveSelected: true});
             });
         });
 

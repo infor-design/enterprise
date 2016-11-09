@@ -40,7 +40,9 @@
     function Modal(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
+      Soho.logTimeStart(pluginName);
       this.init();
+      Soho.logTimeEnd(pluginName);
       this.reStructure();
     }
 
@@ -253,10 +255,6 @@
 
           for (var i = 0; i < attrTypes.length; i++) {
             if (props[attrTypes[i]]) {
-              if (attrTypes[i] === 'text') {
-                attrs.placeholder = props[attrTypes[i]];
-              }
-
               attrs[attrTypes[i]] = props[attrTypes[i]];
             }
           }
@@ -417,7 +415,7 @@
             return;
           }
 
-          if (e.which === 13 && self.isOnTop()) {
+          if (e.which === 13 && self.isOnTop() && !target.closest('form').find(':submit').length) {
             e.stopPropagation();
             e.preventDefault();
             self.element.find('.btn-modal-primary:enabled').trigger('click');
