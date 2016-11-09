@@ -1000,6 +1000,7 @@ $.fn.datagrid = function(options) {
       //initialize row height by a setting
       if (settings.rowHeight !== 'normal') {
         self.table.addClass(settings.rowHeight + '-rowheight');
+        this.element.addClass(settings.rowHeight + '-rowheight');
       }
 
       //A treegrid is considered not editable unless otherwise specified.
@@ -1174,7 +1175,7 @@ $.fn.datagrid = function(options) {
           bodyCalc = 'calc(100% - ' + (headerHeight) + 'px)';
         }
 
-        if (!isPane && !this.toolbar) {
+        if (!isPane && !this.toolbar && !this.settings.paging) {
           elementCalc = '100%';
         }
 
@@ -1380,7 +1381,6 @@ $.fn.datagrid = function(options) {
       }
 
       self.table.find('th[title]').tooltip();
-      //self.setColumnWidths();
 
       if (self.settings.columnReorder) {
         self.createDraggableColumns();
@@ -1798,11 +1798,11 @@ $.fn.datagrid = function(options) {
     createDraggableColumns: function () {
       var self = this,
         headers = self.headerNodes().not('[data-column-id="selectionCheckbox"]'),
-        showTarget = $('.is-draggable-target-show', self.element);
+        showTarget = $('.drag-target-arrows', self.element);
 
       if (!showTarget.length) {
-        self.element.prepend('<span class="is-draggable-target-show"></span>');
-        showTarget = $('.is-draggable-target-show', self.element);
+        self.element.prepend('<span class="drag-target-arrows"></span>');
+        showTarget = $('.drag-target-arrows', self.element);
       }
 
       headers.prepend('<span class="is-draggable-target"></span><span class="handle">&#8286;</span>');
@@ -2342,7 +2342,9 @@ $.fn.datagrid = function(options) {
         //Some types should be formatted
         if (val instanceof Date || typeof val === 'number' || columnDef.dateFormat) {
           val = self.formatValue(columnDef.formatter, i , null, this.fieldValue(this.settings.dataset[i], field), columnDef, this.settings.dataset[i], self);
+          val = val.replace(/<\/?[^>]+(>|$)/g, '');
         }
+
         len = val.toString().length;
         title = columnDef.name || '';
 
@@ -2368,8 +2370,7 @@ $.fn.datagrid = function(options) {
       var context = this.canvas.getContext('2d');
       context.font = '14px arial';
       var metrics = context.measureText(maxText);
-
-      return Math.round(metrics.width + (chooseHeader ? 80 : 80));  //Add padding and borders
+      return Math.round(metrics.width + (chooseHeader ? 60 : 52));  //Add padding and borders
     },
 
     headerWidths: [], //Cache
@@ -2379,7 +2380,7 @@ $.fn.datagrid = function(options) {
     //https://www.w3.org/TR/CSS21/tables.html#width-layout
     calculateColumnWidth: function (col, isHeader, index) {
       var widthPercent = false,
-        colMinWidthPercent = false,
+        minWidthPercent = false,
         widthSpecified = false, elemWidth, visibleColumns;
 
       if (!col.width && !this.hasFixedHeader) {
@@ -2387,14 +2388,14 @@ $.fn.datagrid = function(options) {
       }
 
       if (this.hasFixedHeader) {
-        elemWidth = this.element.width();
+        elemWidth = this.element.outerWidth();
         visibleColumns = this.visibleColumns(true);
       }
 
       // use cache
       if (this.headerWidths[index]) {
         var cacheWidths = this.headerWidths[index];
-        return ' style="width: '+ cacheWidths.width + (cacheWidths.widthPercent ? '%' :'px') +'; min-width: ' + this.headerWidths[index].minWidth + (cacheWidths.widthPercent || cacheWidths.colMinWidthPercent ? '%' :'px') + '"';
+        return ' style="width: '+ cacheWidths.width + (cacheWidths.widthPercent ? '%' :'px') +'; min-width: ' + this.headerWidths[index].minWidth + (cacheWidths.widthPercent || cacheWidths.minWidthPercent ? '%' :'px') + '"';
       }
 
       //A column element with a value other than 'auto' for the 'width' property sets the width for that column.
@@ -2417,28 +2418,30 @@ $.fn.datagrid = function(options) {
       // Otherwise, a cell in the first row with a value other than 'auto' for the 'width' property
       //determines the width for that column.
       // TODO: If the cell spans more than one column, the width is divided over the columns.
-      if (visibleColumns.length < 8) {
-        colWidth = colMinWidth = (parseInt(elemWidth) / visibleColumns.length);
-      }
-
-      if (!widthSpecified && this.hasFixedHeader && visibleColumns.length > 8) {
-        var textWidth = this.calculateTextWidth(col, isHeader) || 150;  //reasonable default on error
-        colWidth = colMinWidth = textWidth;
-      }
 
       //Default the size of the selection column
+      var colPercWidth = 0;
+      if (this.hasFixedHeader && visibleColumns.length < 8 && col.id !== 'selectionCheckbox' && elemWidth > 0) {
+        colPercWidth = (parseInt(elemWidth) / visibleColumns.length).toFixed(0);
+      }
+
+      if (this.hasFixedHeader) {
+        var textWidth = this.calculateTextWidth(col, isHeader);  //reasonable default on error
+        colWidth = colMinWidth = Math.max(textWidth, colWidth || 0, (widthSpecified ? 0 : colPercWidth || 0));
+      }
+
       if (col.id === 'selectionCheckbox') {
         colWidth = colMinWidth = 43;
       }
 
       if (col.id === 'drilldown') {
-        colWidth = colMinWidth =78;
+        colWidth = colMinWidth = 78;
       }
 
       // cache the header widths
       this.headerWidths[index] = {id: col.id, width: colWidth, minWidth: colMinWidth,
                                   widthPercent: this.columnWidthType === 'percent',
-                                  colMinWidthPercent: this.columnWidthType === 'percent'};
+                                  minWidthPercent: this.columnWidthType === 'percent'};
       this.totalWidth += col.hidden ? 0 : colWidth;
 
       //For the last column stretch it TODO May want to check for hidden column as last
@@ -2447,11 +2450,11 @@ $.fn.datagrid = function(options) {
         if (this.hasFixedHeader) {
           var diff = this.element.width() - this.totalWidth;
 
-          if (diff > 0 || (diff === 0 && visibleColumns.length < 8)) {
-            this.headerWidths[index].width = colWidth = this.headerWidths[index].width + diff;
-            this.headerWidths[index].colWidthPercent = false;
+          if ((diff !== 0 || diff === 0) && !widthSpecified) {
+            this.headerWidths[index].width = colWidth = 100;
+            this.headerWidths[index].widthPercent = widthPercent = true;
             this.headerWidths[index].minWidth = colMinWidth = 100;
-            this.headerWidths[index].colMinWidthPercent = colMinWidthPercent = true;
+            this.headerWidths[index].minWidthPercent = minWidthPercent = true;
           }
         }
 
@@ -2461,7 +2464,7 @@ $.fn.datagrid = function(options) {
 
       }
 
-      return ' style="width: '+ colWidth + (widthPercent ? '%' :'px') + '; min-width: ' + colMinWidth + (widthPercent || colMinWidthPercent ? '%' :'px') + '"';
+      return ' style="width: '+ colWidth + (widthPercent ? '%' :'px') + '; min-width: ' + colMinWidth + (widthPercent || minWidthPercent ? '%' :'px') + '"';
     },
 
     rowSpans: [],
@@ -2509,47 +2512,6 @@ $.fn.datagrid = function(options) {
       }});
     },
 
-    setColumnWidths: function () {
-      var total = 0, self = this, widthProvided, widthPercent;
-
-      for (var i = 0; i < self.settings.columns.length; i++) {
-        var column = self.settings.columns[i],
-          header = self.headerNodes().eq(i);
-
-        widthProvided = false;
-
-        if (column.hidden) {
-          continue;
-        }
-
-        if (column.width) {
-          widthProvided = true;
-        }
-
-        if (typeof column.width === 'string' && column.width.indexOf('px') === -1) {
-          widthPercent = true;
-        }
-
-        var colWidth =  parseInt(column.width) || header.outerWidth();
-        total+= colWidth;
-
-        if (widthProvided && colWidth) {
-          header.css('width', colWidth);
-          header.css('min-width', colWidth);
-        }
-
-        if (widthPercent && column.width) {
-          header.css('width', parseInt(column.width) + '%');
-        }
-
-      }
-
-      if (widthPercent) {
-        this.table.css('width', '100%');
-      }
-
-    },
-
     //Returns all header nodes (not the groups)
     headerNodes: function () {
       return this.headerRow.find('tr:not(.datagrid-header-groups) th');
@@ -2588,7 +2550,6 @@ $.fn.datagrid = function(options) {
       }
       this.renderRows();
       this.renderHeader();
-      //this.setColumnWidths();
       this.resetPager('updatecolumns');
       this.element.trigger('columnchange', [{type: 'updatecolumns', columns: this.settings.columns}]);
       this.saveColumns();
@@ -2896,10 +2857,11 @@ $.fn.datagrid = function(options) {
       });
 
       // Save the column back in settings for later
-      if (columnSettings[0] && columnSettings[0].width) {
+      if (columnSettings[0]) {
         columnSettings[0].width = width;
       }
 
+      this.headerWidths = [];
     },
 
     // Get child offset

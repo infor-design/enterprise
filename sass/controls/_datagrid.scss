@@ -686,10 +686,14 @@ $datagrid-short-row-height: 30px;
     }
 
     .badge {
-      color: $inverse-color;
+      color: $font-color-extrahighcontrast;
       line-height: 24px;
       margin-top: 0;
       top: 0;
+
+      &[class*='azure'] {
+        color: $inverse-color;
+      }
 
       &.info .audible {
         background-color: $graphite05;
@@ -1348,6 +1352,10 @@ td .btn-actions {
   // scss-lint:enable ImportantRule
 }
 
+.is-firefox .datagrid-result-count {
+  margin-top: 0;
+}
+
 .datagrid-row-count {
   line-height: 10px;
 }
@@ -1458,7 +1466,7 @@ html[dir='rtl'] {
 // Sort styles
 //====================================================
 .has-draggable-columns {
-  .is-draggable-target-show {
+  .drag-target-arrows {
     display: none;
     font-size: 2em;
     height: $datagrid-header-height;
@@ -1560,7 +1568,7 @@ html[dir='rtl'] {
   }
 
   &.short-rowheight {
-    .is-draggable-target-show {
+    .drag-target-arrows {
       font-size: 1.5em;
       height: $datagrid-short-header-height;
       padding: 1px 0 0 5px;
@@ -1579,7 +1587,7 @@ html[dir='rtl'] {
   }
 
   &.medium-rowheight {
-    .is-draggable-target-show {
+    .drag-target-arrows {
       font-size: 1.6em;
       height: $datagrid-medium-header-height;
       padding: 3px 0 0 5px;
@@ -1599,7 +1607,7 @@ html[dir='rtl'] {
 
   &.has-filterable-columns {
     .is-draggable-target,
-    .is-draggable-target-show {
+    .drag-target-arrows {
       height: $datagrid-filterable-header-height;
     }
   }

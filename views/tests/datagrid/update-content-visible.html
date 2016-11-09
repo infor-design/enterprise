@@ -5,7 +5,7 @@
     <p>A visual test that solved an issue about contentVisible not refreshing on row updates.
        Every second click the content should hide.
     </p>
-    <hr class="fieldset-hr">
+    <br>
   </div>
 </div>
 
@@ -39,20 +39,13 @@
 
 
     //Define Columns for the Grid.
-    columns.push({
-      id: 'isEven',
-      name: 'Is it even?',
-      field: 'isEven',
+    columns.push({id: 'isEven', name: 'Is it even?', field: 'isEven',
       contentVisible: function(row, cell, data, col, item) {
         return item.secret % 2 === 0;
       }
     });
 
-    columns.push({
-      id: 'incrementer',
-      name: 'Add One',
-      field: 'incrementer',
-      formatter: Formatters.Button,
+    columns.push({id: 'incrementer', name: 'Reload', field: 'incrementer', icon: 'reset',formatter: Formatters.Button,
       click: function(e, rows) {
         var rowData = rows[0].item;
         rowData.secret++;
@@ -62,11 +55,11 @@
     });
 
     //Init and get the api for the grid
-    grid = $('#datagrid').datagrid({
+    $('#datagrid').datagrid({
       columns: columns,
       idProperty:'index',
       dataset: data,
       rowHeight: 'short'
-    }).data('datagrid');
+    });
   });
 </script>

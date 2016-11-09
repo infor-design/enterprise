@@ -51,6 +51,7 @@
         selectable: 'multiple',
         paging: false,
         pagesize: 10,
+        saveColumns: false,
         source: function(req, response) {
           var url = '/api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
 
