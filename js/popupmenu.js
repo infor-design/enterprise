@@ -701,7 +701,7 @@
             }
 
             if ($(e.target).closest('.popupmenu').length === 0) {
-              self.close();
+              self.close(true, self.settings.trigger ==='rightClick');
             }
           });
 
