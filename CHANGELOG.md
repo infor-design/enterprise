@@ -30,6 +30,9 @@ Release Date: 2016-10-20
 ### Ui Changes
 * 2016-08-30 -
 
+Jira Release Notes
+http://bit.ly/2cwBELt
+
 ## 4.2.1 - Minor Release
 Release Date: 2016-10-06
 
