@@ -74,11 +74,11 @@ git checkout master
 * Create branch for major versions inside stash
 
 ### Update version in @infor/sohoxi-angular
-* Close repo
+* Clone repo
 ```bash
 $ git clone ssh://git@git.infor.com:7999/soho/angular-components.git
 ```
-* Bump version in package.json to match `@infor/sohoxi` to match new version
+* Bump version in package.json to match new version of `@infor/sohoxi`
 * Bump `@infor/sohoxi's verion` under dependencies to match new version (i.e "^4.2.3-develop")
 * Commit, tag and push changes
 
