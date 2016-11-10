@@ -51,10 +51,6 @@ button {
     }
   }
 
-  &:not(.no-caps) {
-    text-transform: uppercase;
-  }
-
   span {
     color: inherit;
     font-size: inherit;
