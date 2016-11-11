@@ -70,6 +70,7 @@
 | SmartStream | ASP | Wim Denayer | 3x to 4x |
 | Smart Mobile CityWatch app | ?? | Nicholas Gabb | 3x |
 | Softbrands FourthShift ERP | ASP | Steve Duepner | 3x |
+| SoftClock | WFM, Soft Clock App - Angular 2.0| Edgar Ogando | 4x|
 | S3 Worklist | Webpart (Black) | Jeremy Spring | 3x to 4x |
 | Sunsystems  | Theo Harper | Angular | 4x |
 | Sunsystems  | Geoff Parkes | GWT | 4x |
