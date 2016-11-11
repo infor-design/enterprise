@@ -48,6 +48,7 @@
       init: function() {
         this.settings = settings;
         this.isTransitionsSupports = this.supportsTransitions();
+        this.initHeroWidget();
         this.attachEvents();
 
         //Initial Sizing
@@ -61,6 +62,14 @@
         for (var i = 0, l = this.settings.columns; i < l; i++) {
           this.rowsAndCols[row][i] = true;// Make all columns available in first row[true]
         }
+      },
+
+      initHeroWidget: function() {
+        var heroWidget = $('.hero-widget');
+        if (heroWidget.length > 1) {
+          heroWidget = heroWidget.not(':first').remove();
+        }
+        this.heroWidget = heroWidget;
       },
 
       initRowsAndCols: function() {
@@ -331,6 +340,7 @@
           // Mark all spots as unavailable for this block, as we just used this one
           self.fitBlock(available.row, available.col, block);
         }
+        self.element.triggerHandler('resize', self.settings.columns);
       },
 
       applyCubicBezier: function (el, cubicBezier) {
