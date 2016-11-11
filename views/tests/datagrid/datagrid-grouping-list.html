@@ -6,6 +6,21 @@
   </div>
 </div>
 
+<style>
+  .unit-on-scene {
+    border-radius: 3px;
+    display: inline-block;
+    height: 30px;
+    line-height: 15px;
+    margin: 10px;
+    overflow-wrap: break-word;
+    padding: 10px 20px;
+    text-overflow: clip;
+    vertical-align: middle;
+    white-space: pre-line;
+  }
+</style>
+
 <script>
   $('body').one('initialized', function () {
 
@@ -13,6 +28,22 @@
         columns = [],
         data = [];
 
+      //Custom Formatter for vehical columns
+      Formatters.VehicalsOnScene = function(row, cell, value, column, rowData, api) {
+        var vehicals = rowData.list.split(','),
+          html = '';
+
+        for (var i = 0; i < vehicals.length; i++) {
+          //"Convert" ARGB values - Since this data is all FF for alpha channel
+          //Just drop that. Use your code here for that. #simple example
+          var foreColor = rowData['statusForeColor'+(i+1)].substr(2),
+            backColor = rowData['statusBackColor'+(i+1)].substr(2);
+
+          html += '<span class="unit-on-scene" style="background-color: #'+ backColor+ ';' +
+                  'color: #' + foreColor + '">' + vehicals[i] + '</span>'
+        }
+        return html;
+      };
 
       //Define Columns for the Grid.
       columns.push({ id: 'incidentId', name: 'Incident Id', field: 'incidentId'});
@@ -20,20 +51,22 @@
       columns.push({ id: 'location', name: 'Location', field: 'location', formatter: Formatters.Hyperlink});
       columns.push({ id: 'nature', name: 'Nature', field: 'nature'});
       columns.push({ id: 'time', name: 'Time', field: 'time'});
-      columns.push({ id: 'units', name: 'Vehicles on Scene', field: 'units'});
+      columns.push({ id: 'units', width: 300, name: 'Vehicles on Scene', field: 'units', formatter: Formatters.VehicalsOnScene});
 
       //Get some data via ajax
       var url = '/api/incidents';
 
       $.getJSON(url, function(res) {
-
+        console.log(res);
         $('#datagrid').datagrid({
           columns: columns,
           dataset: res,
+          columnReorder: true,
           groupable: {
             fields: ['incidentId'],
-            supressRow: true, //Do not show the grouping row
-            aggregator: 'list', //sum, averge, max ect
+            suppressGroupRow: true, //Do not show the grouping row
+            aggregator: 'list', //Sum, averge, max ect
+            showOnlyGroupRow: true, //Show only the group row not the children (spanning)
             aggregatorOptions: ['unitName1']
           },
           selectable: 'single',

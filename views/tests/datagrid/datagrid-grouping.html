@@ -1,12 +1,11 @@
+
 <div class="row">
   <div class="twelve columns">
-    <br />
-    <h3>Grid Example: Grouping</h3>
-    <p>
-    Shows using the Datagrid Group By API object.
-    </p>
+    <div id="datagrid">
+    </div>
   </div>
 </div>
+
 
 <script>
   $('body').one('initialized', function () {
@@ -15,14 +14,14 @@
         columns = [],
         data = [];
 
-
       //Define Columns for the Grid.
-      columns.push({ id: 'incidentId', name: 'Incident Id', field: 'incidentId'});
-      columns.push({ id: 'priority', name: 'Priority', field: 'priority'});
+      columns.push({ id: 'id', name: 'Customer Id', field: 'id'});
+      columns.push({ id: 'type', name: 'Type', field: 'type', width: 200});
       columns.push({ id: 'location', name: 'Location', field: 'location', formatter: Formatters.Hyperlink});
-      columns.push({ id: 'nature', name: 'Nature', field: 'nature'});
-      columns.push({ id: 'time', name: 'Time', field: 'time'});
-      columns.push({ id: 'units', name: 'Vehicles on Scene', field: 'units'});
+      columns.push({ id: 'firstname', name: 'First Name', field: 'firstname'});
+      columns.push({ id: 'lastname', name: 'Last Name', field: 'lastname'});
+      columns.push({ id: 'phone', name: 'Phone', field: 'phone'});
+      columns.push({ id: 'purchases', name: 'Purchases', field: 'purchases'});
 
       //Get some data via ajax
       var url = '/api/accounts';
@@ -33,14 +32,11 @@
           columns: columns,
           dataset: res,
           groupable: {
-            fields: ['incidentId'],
-            supressRow: true, //Do not show the grouping row
-            aggregator: 'list', //sum, averge, max ect
-            aggregatorOptions: ['unitName1']
+            fields: ['type'],
+            expanded: false, //TODO
+            aggregator: 'sum' //sum, averge, max ect
           },
-          selectable: 'single',
-          cellNavigation: true,
-          toolbar: {title: 'Data Grid Header Title', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: true,  collapsibleFilter: true}
+          toolbar: {title: 'Accounts', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: false}
         });
       });
  });

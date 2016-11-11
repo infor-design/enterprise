@@ -192,6 +192,25 @@ window.Formatters = {
     return button;
   },
 
+  // Datagrid Group Row
+  GroupRow: function (row, cell, value, col, item, api) {
+    var groupSettings = api.settings.groupable,
+      groups = '',
+      isOpen = true;
+
+    for (var i = 0; i < groupSettings.fields.length ; i++) {
+      groups += item[groupSettings.fields[i]] + (i === 0 ? '' : ',');
+    }
+
+    //TODO Add Formatter to groupSettings
+    var button = '<button type="button" class="btn-icon datagrid-expand-btn'+ (isOpen ? ' is-expanded' : '') +'" tabindex="-1"' +'>'+
+    '<span class="icon plus-minus'+ (isOpen ? ' active' : '') +'"></span>' +
+    '<span class="audible">'+ Locale.translate('ExpandCollapse') +'</span>' +
+    '</button>'+ '<span> '+ groups +'</span>';
+
+    return button;
+  },
+
   // Tree Expand / Collapse Button and Paddings
   Tree: function (row, cell, value, col, item, api) {
     var isOpen = item.expanded,
@@ -804,19 +823,6 @@ window.GroupBy = (function() {
     return chosen;
   };
 
-  //Return a copy of the object without the passed in properties
-  var omit = function(data, names) {
-    var chosen = {};
-
-    for (var prop in data) {
-      if (names.indexOf(prop) === -1) {
-        chosen[prop] = data[prop];
-      }
-    }
-
-    return chosen;
-  };
-
   //Grouping Function with Plugins/accumulator
   var group = function(data, names) {
     var stems = keys(data, names);
@@ -824,8 +830,8 @@ window.GroupBy = (function() {
     return stems.map(function(stem) {
       return {
         key: stem,
-        vals: where(data, stem).map(function(item) {
-          return omit(item, names);
+        values: where(data, stem).map(function(item) {
+          return item;
         })
       };
     });
@@ -845,15 +851,13 @@ window.GroupBy = (function() {
 
 //Register built in accumulators
 GroupBy.register('sum', function(item) {
-  var sum = $.extend({}, item.key, {Value: item.vals.reduce(function(memo, node) {
+  return $.extend({}, item.key, {values: item.values}, {sum: item.values.reduce(function(memo, node) {
       return memo + Number(node.Value);
   }, 0)});
-
-  return sum;
 });
 
 GroupBy.register('max', function(item) {
-  return $.extend({}, item.key, {Max: item.vals.reduce(function(memo, node) {
+  return $.extend({}, item.key, {values: item.values}, {max: item.values.reduce(function(memo, node) {
       return Math.max(memo, Number(node.Value));
   }, Number.NEGATIVE_INFINITY)});
 });
@@ -861,7 +865,7 @@ GroupBy.register('max', function(item) {
 GroupBy.register('list', function(item) {
   var extra = this.extra;
 
-  return $.extend({}, item.key, {List: item.vals.map(function(item) {
+  return $.extend({}, item.key, {values: item.values}, {list: item.values.map(function(item) {
     return item[extra];
   }).join(', ')});
 });
@@ -2042,10 +2046,29 @@ $.fn.datagrid = function(options) {
         return;
       }
 
+      this.settings.orginalDataset = this.settings.dataset;
+      if (groupSettings.aggregator === 'sum') {
+        this.settings.dataset = GroupBy.sum(this.settings.dataset , groupSettings.fields);
+        return;
+      }
+
+      if (groupSettings.aggregator === 'max') {
+        this.settings.dataset = GroupBy.max(this.settings.dataset , groupSettings.fields);
+        return;
+      }
+
+      //TODO
+      if (groupSettings.aggregator === 'avg') {
+        this.settings.dataset = GroupBy.avg(this.settings.dataset , groupSettings.fields);
+        return;
+      }
+
+      if (groupSettings.aggregator === 'list') {
+        this.settings.dataset = GroupBy.list(this.settings.dataset , groupSettings.fields , groupSettings.aggregatorOptions[0]);
+        return;
+      }
+
       this.settings.dataset = window.GroupBy(this.settings.dataset , groupSettings.fields);
-      /*console.table(GroupBy.list(res, ['incidentId'], 'unitName1'));
-      console.table(GroupBy.list(res, ['incidentId'], 'unitName2'));
-      console.table(GroupBy(res, ['incidentId'])); */
     },
 
     //Render the Rows
@@ -2102,6 +2125,35 @@ $.fn.datagrid = function(options) {
           continue;
         }
 
+        //Handle Grouping
+        if (this.settings.groupable) {
+          //First push group row
+          if (!this.settings.groupable.suppressGroupRow) {
+            //Show the grouping row
+            tableHtml += self.rowHtml(dataset[i].key, this.recordCount, true);
+          }
+
+          if (this.settings.groupable.showOnlyGroupRow && dataset[i].values[0]) {
+            var rowData = dataset[i].values[0];
+
+            if (dataset[i].list) {
+              rowData.list = dataset[i].list;
+            }
+
+            tableHtml += self.rowHtml(rowData, this.recordCount);
+            this.recordCount++;
+            continue;
+          }
+
+          //Now Push Groups
+          for (var k = 0; k < dataset[i].values.length; k++) {
+            tableHtml += self.rowHtml(dataset[i].values[k], this.recordCount);
+            this.recordCount++;
+          }
+
+          continue;
+        }
+
         tableHtml += self.rowHtml(dataset[i], s.treeGrid ? this.recordCount : i);
         this.recordCount++;
       }
@@ -2109,6 +2161,9 @@ $.fn.datagrid = function(options) {
       self.tableBody.append(tableHtml);
       self.setupTooltips();
       self.tableBody.find('.dropdown').dropdown();
+
+      //Cache First Row
+      self.firstRow =this.tableBody.find('tr:not(.datagrid-group-row):first');
 
       //Set Tab Index and active Cell
       setTimeout(function () {
@@ -2148,7 +2203,7 @@ $.fn.datagrid = function(options) {
 
     recordCount: 0,
 
-    rowHtml: function (rowData, dataRowIdx) {
+    rowHtml: function (rowData, dataRowIdx, isGroup) {
       var isEven = false,
         self = this,
         activePage = self.pager ? self.pager.activePage : 1,
@@ -2168,6 +2223,14 @@ $.fn.datagrid = function(options) {
           d = d2.depth;
           isHidden = !d2.node.expanded;
         }
+      }
+
+      //Group Rows
+      if (this.settings.groupable && isGroup) {
+        rowHtml = '<tr class="datagrid-rowgroup-header is-expanded" role="rowgroup"><td colspan="'+ this.visibleColumns().length +'">' +
+          Formatters.GroupRow(dataRowIdx, 0, null, null, rowData, this) +
+          '</td></tr>';
+        return rowHtml;
       }
 
       var ariaRowindex = ((dataRowIdx + 1) + (self.settings.source  ? ((activePage-1) * pagesize) : 0));
@@ -2266,6 +2329,7 @@ $.fn.datagrid = function(options) {
         cssClass += (col.focusable ? ' is-focusable' : '');
 
         var rowspan = this.calculateRowspan(cellValue, dataRowIdx, col);
+
         if (rowspan === '') {
           continue;
         }
@@ -3095,6 +3159,7 @@ $.fn.datagrid = function(options) {
           e.stopPropagation();
           e.stopImmediatePropagation();
           self.toggleRowDetail(dataRowIdx);
+          self.toggleGroupChildren(rowNode);
           self.toggleChildren(e, dataRowIdx);
           return false;
         }
@@ -4367,11 +4432,13 @@ $.fn.datagrid = function(options) {
     },
 
     //Returns Column Settings from a cell
+    firstRow: null,
+
     columnSettings: function (cell) {
-      var cellNode = this.tableBody.find('tr:first').find('td:not(.is-hidden)').eq(cell),
+      var cellNode = this.firstRow.find('td:not(.is-hidden)').eq(cell),
         column = settings.columns[parseInt(cellNode.attr('data-idx'))];
 
-      return column;
+      return column || {};
     },
 
     //Attempt to serialize the value back
@@ -4682,6 +4749,39 @@ $.fn.datagrid = function(options) {
         detail.animateOpen();
         self.element.triggerHandler('expandrow', [{grid: self, row: dataRowIndex, detail: detail, item: item}]);
       }
+    },
+
+    toggleGroupChildren: function(rowElement) {
+      if (!this.settings.groupable) {
+        return;
+      }
+
+      var self = this,
+        children = rowElement.nextUntil('.datagrid-rowgroup-header'),
+        expandButton = rowElement.find('.datagrid-expand-btn');
+
+      if (rowElement.hasClass('is-expanded')) {
+        expandButton.removeClass('is-expanded')
+          .find('.plus-minus').removeClass('active');
+
+        children.animateClosed({timing: 200}).on('animateclosedcomplete', function () {
+          children.addClass('is-hidden');
+          self.element.triggerHandler('collapserow', [{grid: self, row: rowElement.index(), detail: children, item: {}}]);
+        });
+
+        rowElement.removeClass('is-expanded');
+      } else {
+      expandButton.addClass('is-expanded')
+        .find('.plus-minus').addClass('active');
+
+        children.on('animateopencomplete', function () {
+          children.removeClass('is-hidden');
+          self.element.triggerHandler('expandrow', [{grid: self, row: rowElement.index(), detail: children, item: {}}]);
+        }).animateOpen({timing: 200});
+
+        rowElement.addClass('is-expanded');
+      }
+
     },
 
     //Api Event to set the sort Column
