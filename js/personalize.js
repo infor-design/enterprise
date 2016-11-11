@@ -149,6 +149,7 @@
         // If an event sends a blank string through instead of a hex,
         // reset any color values back to the theme defaults.  Otherwise, get a valid hex value.
         Soho.colors.header = this.validateHex(Soho.colors.header || defaultColors.header);
+        Soho.colors.text = this.validateHex(Soho.colors.text || defaultColors.text);
         Soho.colors.subheader = this.validateHex(Soho.colors.subheader || this.getLuminousColorShade(Soho.colors.header, 0.2));
         Soho.colors.inactive = this.validateHex(Soho.colors.inactive || this.getLuminousColorShade(Soho.colors.header, -0.22));
         Soho.colors.verticalBorder = this.validateHex(Soho.colors.verticalBorder || this.getLuminousColorShade(Soho.colors.header, 0.1));
@@ -170,7 +171,17 @@
         ' .builder .sidebar .header {border-right: 1px solid '+ Soho.colors.verticalBorder +'}' +
         ' .module-tabs.is-personalizable .tab:hover { background-color: '+ Soho.colors.hover +'}' +
         ' .module-tabs.has-toolbar.is-personalizable .tab-list-container + .toolbar { border-left: '+ Soho.colors.verticalBorder +' }' +
-        ' .module-tabs.is-personalizable [class^="btn"] { background-color: '+ Soho.colors.inactive +' }'; 
+        ' .module-tabs.is-personalizable [class^="btn"] { background-color: '+ Soho.colors.inactive +' }' +
+        ' .hero-widget.is-personalizable { background-color: '+ Soho.colors.subheader +' }' +
+        ' .hero-widget.is-personalizable .hero-bottom { background-color: '+ Soho.colors.header +' }' +
+        ' .hero-widget.is-personalizable { color: '+ Soho.colors.text +' }' +
+        ' .hero-widget.is-personalizable .hero-footer .hero-footer-nav li::before { color: '+ Soho.colors.verticalBorder +' }' +
+        ' .hero-widget.is-personalizable .title { color: '+ Soho.colors.text +' }' +
+        ' .hero-widget.is-personalizable .btn-tertiary, .hero-widget.is-personalizable .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary) { color: '+ Soho.colors.text +' }' +
+        ' .hero-widget.is-personalizable .btn-tertiary:hover, .hero-widget.is-personalizable .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary):hover { color: '+ Soho.colors.hover +' }' +
+        ' .hero-widget.is-personalizable .btn-tertiary .icon, .hero-widget.is-personalizable .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary) .icon, .hero-widget.is-personalizable .chart-container text { fill: '+ Soho.colors.text +' }' +
+        ' .hero-widget.is-personalizable .chart-container .arc { stroke: '+ Soho.colors.subheader +' }' +
+        ' .hero-widget.is-personalizable .btn-tertiary:hover .icon, .hero-widget.is-personalizable .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary):hover .icon { fill: '+ Soho.colors.hover +' }';
         this.stylesheet(cssRules);
 
         this.unBlockUi();
