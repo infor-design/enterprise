@@ -923,7 +923,7 @@ $.fn.datagrid = function(options) {
   // Actual Plugin Code
   Datagrid.prototype = {
 
-    init: function(){
+    init: function() {
       var self = this;
       this.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
       this.isFirefoxMac = (navigator.platform.indexOf('Mac') !== -1 && navigator.userAgent.indexOf(') Gecko') !== -1);
@@ -2048,7 +2048,8 @@ $.fn.datagrid = function(options) {
         return;
       }
 
-      this.settings.orginalDataset = this.settings.dataset;
+      this.originalDataset = this.settings.dataset.slice();
+
       if (groupSettings.aggregator === 'sum') {
         this.settings.dataset = GroupBy.sum(this.settings.dataset , groupSettings.fields);
         return;
@@ -4803,6 +4804,10 @@ $.fn.datagrid = function(options) {
 
       this.sortColumn.sortId = id;
       this.sortColumn.sortField = (this.columnById(id)[0] ? this.columnById(id)[0].field : id);
+
+      if (this.originalDataset) {
+        this.settings.dataset = this.originalDataset;
+      }
 
       //Do Sort on Data Set
       this.setSortIndicator(id, ascending);
