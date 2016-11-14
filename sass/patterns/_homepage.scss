@@ -357,6 +357,11 @@
     max-width: 1500px;
     width: 100%;
 
+    .toolbar {
+      padding-left: 15px;
+      padding-right: 0;
+    }
+
     .title {
       color: $header-button-color;
     }
@@ -391,6 +396,7 @@
   }
 
   .hero-footer {
+    padding: 0 15px;
     width: 100%;
 
     .hero-footer-nav {
