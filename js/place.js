@@ -617,6 +617,9 @@
         // Shrink in each direction.
         // The value of the "containerOffsets" is "factored out" of each calculation, if for some reason the
         // element is larger than the viewport/container space allowed.
+        if (!placementObj.nudges) {
+          placementObj.nudges = {x: 0, y: 0};
+        }
 
         // Left
         if (rect.left < leftViewportEdge) {
