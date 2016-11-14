@@ -3,10 +3,10 @@ Release Date: 2016-11-30
 
 ### Key New Features
 * Datagrid Grouping
+* Swap List API Improvements
 
 ### Breaking Changes
 
-* 2016-11-01 -
 * 2016-11-11 - Swaplist (SOHO-4552) - now returns data arrays instead of jQuery object array, so datasets should be kept in sync with the UI. This will allow for additional data, like the key values, that is not displayed to the user to be used.
 
 ## 4.2.2 - Minor Release

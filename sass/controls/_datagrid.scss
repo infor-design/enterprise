@@ -4,6 +4,7 @@
 $datagrid-header-height: 39px;  //1px border in parent
 $datagrid-filterable-header-height: 61px;
 
+$datagrid-row-height: 50px;
 $datagrid-medium-header-height: 30px;
 $datagrid-medium-row-height: 40px;
 $datagrid-short-header-height: 25px;
@@ -119,8 +120,8 @@ $datagrid-short-row-height: 30px;
   //Row Height Feature
   &.medium-rowheight {
     tbody tr {
-      //height: $datagrid-medium-row-height;
       line-height: $datagrid-medium-row-height;
+      //min-height: $datagrid-medium-row-height;
 
       td {
 
@@ -167,8 +168,8 @@ $datagrid-short-row-height: 30px;
   &.short-rowheight {
 
     tbody tr {
-      //height: $datagrid-short-row-height;
       line-height: $datagrid-short-row-height;
+      //min-height: $datagrid-short-row-height;
 
       td {
 
@@ -212,7 +213,7 @@ $datagrid-short-row-height: 30px;
 
         .hyperlink {
           line-height: 1.4rem;
-          margin-top: 4px;
+          margin-top: 5px;
           vertical-align: top;
         }
 
@@ -602,8 +603,8 @@ $datagrid-short-row-height: 30px;
 
   // Table Rows
   tbody tr {
-    //height: 50px;
-    line-height: 50px;
+    line-height: $datagrid-row-height;
+  //  min-height: $datagrid-row-height;
 
     &.is-active-row {
       outline: 1px solid $primary-color;
@@ -1189,7 +1190,7 @@ td .btn-actions {
   background-color: transparent;
 }
 
-.datagrid-textarea {
+.datagrid-multiline-text {
   display: block;
   height: inherit;
   line-height: 22px;
@@ -1716,11 +1717,11 @@ html[dir='rtl'] {
   }
 
   li {
-    height: 32px;
-    padding: 3px 14px;
+    height: 30px;
+    padding: 2px 14px;
 
     &:first-child {
-      margin-top: 5px;
+      margin-top: 3px;
     }
 
     .checkbox {
