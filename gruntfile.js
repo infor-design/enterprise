@@ -2,6 +2,168 @@ module.exports = function(grunt) {
 
   grunt.file.defaultEncoding = 'utf-8';
   grunt.file.preserveBOM = true;
+  let controls = grunt.option('controls'),
+    excludeControls = grunt.option('excludeControls');
+  const mapperPath = grunt.option('mapperPath'),
+    extractNameFromPath = function(path) {
+      const matches = path.match(/.*(\/.*)(\.js)/),
+        name = matches[1].replace('/', '');
+      return name;
+    },
+    dependencyPusher = function(arr, dependencies) {
+      let name;
+      for (var i = 0, arrLength = arr.length; i < arrLength; i++) {
+        name = extractNameFromPath(arr[i].fileFound);
+        dependencies.push(name);
+      }
+      return dependencies;
+    },
+    dependencyBuilder = function(mapperPath) {
+
+      if (mapperPath && controls) {
+        const obj = grunt.file.readJSON(mapperPath);
+        let paths,
+          deps = [];
+
+        //1st pass at dependencies
+        for (let i in controls) {
+          let firstLevelName = controls[i],
+            arr = obj[firstLevelName];
+          deps = dependencyPusher(arr, deps);
+        }
+
+        //2nd pass at dependencies of dependencies
+        for (let k = 0, depsLength = deps.length; k < depsLength; k++) {
+          let secondLevelName = deps[k],
+            arrDeps = obj[secondLevelName];
+          if(arrDeps) {
+            deps = dependencyPusher(arrDeps, deps);
+          }
+        }
+
+        const depsSet = new Set(deps),
+          arrDepsSet= [...depsSet];
+
+        let dist = arrDepsSet.concat(controls);
+
+        //Include initialize by default
+        dist.unshift('initialize');
+
+        //Modify array based on options, include, exclude options
+        if (excludeControls) {
+          for (let i in excludeControls) {
+            dist = dist.filter( function(err) {
+              return err !== excludeControls[i];
+            });
+          }
+
+        }
+
+        paths = dist.map((path) => {
+          return `temp/amd/${path}.js`;
+        });
+
+
+        grunt.log.writeln('List of included controls in sohoxi.*.js'['green']); //jshint ignore:line
+        const logOptions = {
+          separator: '\n'
+        };
+        grunt.log.write(grunt.log.wordlist(paths, logOptions)); // jshint ignore:line
+        return paths;
+      } else {
+        return;
+      }
+
+  };
+
+  //Convert string to array, if one option
+  if(!Array.isArray(controls)) {
+    const control = controls;
+    controls = [];
+    controls.push(control);
+  }
+
+  if(!Array.isArray(excludeControls)) {
+    const excludeControl = excludeControls;
+    excludeControls = [];
+    excludeControls.push(excludeControl);
+  }
+
+  const arrControls = dependencyBuilder(mapperPath) ||
+    [
+      'temp/amd/personalize.js',
+      'temp/amd/initialize.js',
+      'temp/amd/base.js',
+      'temp/amd/utils.js',
+      'temp/amd/animations.js',
+      'temp/amd/locale.js',
+      'temp/amd/listfilter.js',
+      'temp/amd/about.js',
+      'temp/amd/accordion.js',
+      'temp/amd/applicationmenu.js',
+      'temp/amd/autocomplete.js',
+      'temp/amd/busyindicator.js',
+      'temp/amd/button.js',
+      'temp/amd/chart.js',
+      'temp/amd/colorpicker.js',
+      'temp/amd/contextualactionpanel.js',
+      'temp/amd/datepicker.js',
+      'temp/amd/datagrid.js',
+      'temp/amd/dropdown.js',
+      'temp/amd/drag.js',
+      'temp/amd/editor.js',
+      'temp/amd/environment.js',
+      'temp/amd/expandablearea.js',
+      'temp/amd/flyingfocus.js',
+      'temp/amd/form.js',
+      'temp/amd/fileupload.js',
+      'temp/amd/fileuploadadvanced.js',
+      'temp/amd/header.js',
+      'temp/amd/hierarchy.js',
+      'temp/amd/highlight.js',
+      'temp/amd/homepage.js',
+      'temp/amd/icon.js',
+      'temp/amd/lookup.js',
+      'temp/amd/lifecycle.js',
+      'temp/amd/lightbox.js',
+      'temp/amd/listview.js',
+      'temp/amd/pager.js',
+      'temp/amd/place.js',
+      'temp/amd/popdown.js',
+      'temp/amd/popupmenu.js',
+      'temp/amd/progress.js',
+      'temp/amd/mask.js',
+      'temp/amd/multiselect.js',
+      'temp/amd/message.js',
+      'temp/amd/modal.js',
+      'temp/amd/modalsearch.js',
+      'temp/amd/rating.js',
+      'temp/amd/resize.js',
+      'temp/amd/searchfield.js',
+      'temp/amd/sidebar.js',
+      'temp/amd/shell.js',
+      'temp/amd/signin.js',
+      'temp/amd/slider.js',
+      'temp/amd/arrange.js',
+      'temp/amd/scrollaction.js',
+      'temp/amd/spinbox.js',
+      'temp/amd/splitter.js',
+      'temp/amd/steppedprocess.js',
+      'temp/amd/swaplist.js',
+      'temp/amd/toast.js',
+      'temp/amd/tabs.js',
+      'temp/amd/tag.js',
+      'temp/amd/textarea.js',
+      'temp/amd/timepicker.js',
+      'temp/amd/tmpl.js',
+      'temp/amd/toolbar.js',
+      'temp/amd/toolbarsearchfield.js',
+      'temp/amd/tooltip.js',
+      'temp/amd/tree.js',
+      'temp/amd/validation.js',
+      'temp/amd/wizard.js',
+      'temp/amd/zoom.js'
+    ];
 
   grunt.initConfig({
 
@@ -51,80 +213,7 @@ module.exports = function(grunt) {
       },
       basic: {
         files: {
-          'dist/js/<%= pkg.shortName %>.js': [
-            'temp/amd/personalize.js',
-            'temp/amd/initialize.js',
-            'temp/amd/base.js',
-            'temp/amd/utils.js',
-            'temp/amd/animations.js',
-            'temp/amd/locale.js',
-            'temp/amd/listfilter.js',
-            'temp/amd/about.js',
-            'temp/amd/accordion.js',
-            'temp/amd/applicationmenu.js',
-            'temp/amd/autocomplete.js',
-            'temp/amd/busyindicator.js',
-            'temp/amd/button.js',
-            'temp/amd/chart.js',
-            'temp/amd/colorpicker.js',
-            'temp/amd/contextualactionpanel.js',
-            'temp/amd/datepicker.js',
-            'temp/amd/datagrid.js',
-            'temp/amd/dropdown.js',
-            'temp/amd/drag.js',
-            'temp/amd/editor.js',
-            'temp/amd/environment.js',
-            'temp/amd/expandablearea.js',
-            'temp/amd/flyingfocus.js',
-            'temp/amd/form.js',
-            'temp/amd/fileupload.js',
-            'temp/amd/fileuploadadvanced.js',
-            'temp/amd/header.js',
-            'temp/amd/hierarchy.js',
-            'temp/amd/highlight.js',
-            'temp/amd/homepage.js',
-            'temp/amd/icon.js',
-            'temp/amd/lookup.js',
-            'temp/amd/lifecycle.js',
-            'temp/amd/lightbox.js',
-            'temp/amd/listview.js',
-            'temp/amd/pager.js',
-            'temp/amd/place.js',
-            'temp/amd/popdown.js',
-            'temp/amd/popupmenu.js',
-            'temp/amd/progress.js',
-            'temp/amd/mask.js',
-            'temp/amd/multiselect.js',
-            'temp/amd/message.js',
-            'temp/amd/modal.js',
-            'temp/amd/modalsearch.js',
-            'temp/amd/rating.js',
-            'temp/amd/resize.js',
-            'temp/amd/searchfield.js',
-            'temp/amd/sidebar.js',
-            'temp/amd/shell.js',
-            'temp/amd/signin.js',
-            'temp/amd/slider.js',
-            'temp/amd/arrange.js',
-            'temp/amd/scrollaction.js',
-            'temp/amd/spinbox.js',
-            'temp/amd/splitter.js',
-            'temp/amd/steppedprocess.js',
-            'temp/amd/swaplist.js',
-            'temp/amd/toast.js',
-            'temp/amd/tabs.js',
-            'temp/amd/tag.js',
-            'temp/amd/textarea.js',
-            'temp/amd/timepicker.js',
-            'temp/amd/tmpl.js',
-            'temp/amd/toolbar.js',
-            'temp/amd/toolbarsearchfield.js',
-            'temp/amd/tooltip.js',
-            'temp/amd/tree.js',
-            'temp/amd/validation.js',
-            'temp/amd/wizard.js',
-            'temp/amd/zoom.js'
-          ]
+          'dist/js/<%= pkg.shortName %>.js': arrControls
         }
       }
     },
