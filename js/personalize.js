@@ -174,14 +174,9 @@
         ' .module-tabs.is-personalizable [class^="btn"] { background-color: '+ Soho.colors.inactive +' }' +
         ' .hero-widget.is-personalizable { background-color: '+ Soho.colors.subheader +' }' +
         ' .hero-widget.is-personalizable .hero-bottom { background-color: '+ Soho.colors.header +' }' +
-        ' .hero-widget.is-personalizable { color: '+ Soho.colors.text +' }' +
         ' .hero-widget.is-personalizable .hero-footer .hero-footer-nav li::before { color: '+ Soho.colors.verticalBorder +' }' +
-        ' .hero-widget.is-personalizable .title { color: '+ Soho.colors.text +' }' +
-        ' .hero-widget.is-personalizable .btn-tertiary, .hero-widget.is-personalizable .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary) { color: '+ Soho.colors.text +' }' +
-        ' .hero-widget.is-personalizable .btn-tertiary:hover, .hero-widget.is-personalizable .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary):hover { color: '+ Soho.colors.hover +' }' +
-        ' .hero-widget.is-personalizable .btn-tertiary .icon, .hero-widget.is-personalizable .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary) .icon, .hero-widget.is-personalizable .chart-container text { fill: '+ Soho.colors.text +' }' +
         ' .hero-widget.is-personalizable .chart-container .arc { stroke: '+ Soho.colors.subheader +' }' +
-        ' .hero-widget.is-personalizable .btn-tertiary:hover .icon, .hero-widget.is-personalizable .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary):hover .icon { fill: '+ Soho.colors.hover +' }';
+        '';
         this.stylesheet(cssRules);
 
         this.unBlockUi();
