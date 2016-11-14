@@ -179,7 +179,7 @@ window.Formatters = {
   // Multi Line TextArea
   Textarea: function (row, cell, value) {
     var formatted = ((value === null || value === undefined) ? '' : value);
-    return '<span class="datagrid-textarea">'+ formatted + '</span>';
+    return '<span class="datagrid-multiline-text">'+ formatted + '</span>';
   },
 
   // Expand / Collapse Button
@@ -851,14 +851,16 @@ window.GroupBy = (function() {
 
 //Register built in accumulators
 GroupBy.register('sum', function(item) {
+  var extra = this.extra;
   return $.extend({}, item.key, {values: item.values}, {sum: item.values.reduce(function(memo, node) {
-      return memo + Number(node.Value);
+      return memo + Number(node[extra]);
   }, 0)});
 });
 
 GroupBy.register('max', function(item) {
+  var extra = this.extra;
   return $.extend({}, item.key, {values: item.values}, {max: item.values.reduce(function(memo, node) {
-      return Math.max(memo, Number(node.Value));
+      return Math.max(memo, Number(node[extra]));
   }, Number.NEGATIVE_INFINITY)});
 });
 
@@ -921,7 +923,7 @@ $.fn.datagrid = function(options) {
   // Actual Plugin Code
   Datagrid.prototype = {
 
-    init: function(){
+    init: function() {
       var self = this;
       this.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
       this.isFirefoxMac = (navigator.platform.indexOf('Mac') !== -1 && navigator.userAgent.indexOf(') Gecko') !== -1);
@@ -2046,7 +2048,8 @@ $.fn.datagrid = function(options) {
         return;
       }
 
-      this.settings.orginalDataset = this.settings.dataset;
+      this.originalDataset = this.settings.dataset.slice();
+
       if (groupSettings.aggregator === 'sum') {
         this.settings.dataset = GroupBy.sum(this.settings.dataset , groupSettings.fields);
         return;
@@ -2130,7 +2133,7 @@ $.fn.datagrid = function(options) {
           //First push group row
           if (!this.settings.groupable.suppressGroupRow) {
             //Show the grouping row
-            tableHtml += self.rowHtml(dataset[i].key, this.recordCount, true);
+            tableHtml += self.rowHtml(dataset[i], this.recordCount, true);
           }
 
           if (this.settings.groupable.showOnlyGroupRow && dataset[i].values[0]) {
@@ -2244,7 +2247,7 @@ $.fn.datagrid = function(options) {
                 (self.settings.treeGrid && rowData.children ? ' aria-expanded="' + (rowData.expanded ? 'true"' : 'false"') : '') +
                 (self.settings.treeGrid ? ' aria-level= "' + depth + '"' : '') +
                 ' class="datagrid-row'+
-                (self.settings.rowHeight !== ' normal' ? ' ' + self.settings.rowHeight + '-rowheight' : '') +
+                //(self.settings.rowHeight !== ' normal' ? ' ' + self.settings.rowHeight + '-rowheight' : '') +
                 (isHidden ? ' is-hidden' : '') +
                 (self.settings.alternateRowShading && !isEven ? ' alt-shading' : '') +
                 (!self.settings.cellNavigation ? ' is-clickable' : '' ) +
@@ -4801,6 +4804,10 @@ $.fn.datagrid = function(options) {
 
       this.sortColumn.sortId = id;
       this.sortColumn.sortField = (this.columnById(id)[0] ? this.columnById(id)[0].field : id);
+
+      if (this.originalDataset) {
+        this.settings.dataset = this.originalDataset;
+      }
 
       //Do Sort on Data Set
       this.setSortIndicator(id, ascending);

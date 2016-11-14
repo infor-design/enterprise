@@ -11,15 +11,38 @@
     border-radius: 3px;
     display: inline-block;
     height: 30px;
-    line-height: 15px;
-    margin: 10px;
+    line-height: 16px;
+    margin: 5px;
     overflow-wrap: break-word;
-    padding: 10px 20px;
+    padding: 9px 20px;
     text-overflow: clip;
     vertical-align: middle;
     white-space: pre-line;
   }
+
+  .short-rowheight .unit-on-scene {
+    height: 19px;
+    line-height: 3px !important;
+    margin: 3px 5px 0 0;
+    position: relative;
+    top: -3px;
+  }
+
+  .medium-rowheight .unit-on-scene {
+    height: 18px;
+    line-height: 5px !important;
+    margin: 2px 5px 0 0;
+    position: relative;
+    top: -1px;
+  }
+
 </style>
+
+<ul id="units-popupmenu" class="popupmenu">
+  <li><a href="#">Option One</a></li>
+  <li><a href="#">Option Two</a></li>
+  <li><a href="#">Option Three</a></li>
+</ul>
 
 <script>
   $('body').one('initialized', function () {
@@ -33,6 +56,7 @@
         var vehicals = rowData.list.split(','),
           html = '';
 
+        html += '<span class="datagrid-multiline-text">';
         for (var i = 0; i < vehicals.length; i++) {
           //"Convert" ARGB values - Since this data is all FF for alpha channel
           //Just drop that. Use your code here for that. #simple example
@@ -42,22 +66,22 @@
           html += '<span class="unit-on-scene" style="background-color: #'+ backColor+ ';' +
                   'color: #' + foreColor + '">' + vehicals[i] + '</span>'
         }
+        html += '</span>';
         return html;
       };
 
       //Define Columns for the Grid.
-      columns.push({ id: 'incidentId', name: 'Incident Id', field: 'incidentId'});
-      columns.push({ id: 'priority', name: 'Priority', field: 'priority'});
-      columns.push({ id: 'location', name: 'Location', field: 'location', formatter: Formatters.Hyperlink});
-      columns.push({ id: 'nature', name: 'Nature', field: 'nature'});
-      columns.push({ id: 'time', name: 'Time', field: 'time'});
+      columns.push({ id: 'incidentId', name: 'Incident Id', field: 'incidentId', width: 60});
+      columns.push({ id: 'priority', name: 'Priority', field: 'priority', width: 60});
+      columns.push({ id: 'location', name: 'Location', field: 'location', formatter: Formatters.Hyperlink, width: 120});
+      columns.push({ id: 'nature', name: 'Nature', field: 'nature', width: 60});
+      columns.push({ id: 'time', name: 'Time', field: 'time', width: 60});
       columns.push({ id: 'units', width: 300, name: 'Vehicles on Scene', field: 'units', formatter: Formatters.VehicalsOnScene});
 
       //Get some data via ajax
       var url = '/api/incidents';
 
       $.getJSON(url, function(res) {
-        console.log(res);
         $('#datagrid').datagrid({
           columns: columns,
           dataset: res,
@@ -73,7 +97,22 @@
           cellNavigation: true,
           toolbar: {title: 'Data Grid Header Title', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: true,  collapsibleFilter: true}
         });
+
+        //Attach Right Click menu via a delegate
+        $('.unit-on-scene').on('contextmenu', function (e) {
+
+          if (e.button !== 2) { //Right Click
+            return;
+          }
+
+          //Prevent Browser Menu
+          e.preventDefault();
+
+          // Show Soho XI Menu
+          $(this).popupmenu({menuId: 'units-popupmenu', trigger: 'immediate', offset: {y: 5}})
+        });
+
       });
- });
+});
 
 </script>
