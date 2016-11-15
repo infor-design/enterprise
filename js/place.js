@@ -606,7 +606,6 @@
       shrink: function(placementObj) {
         var containerBleed = this.settings.bleedFromContainer,
           container = $(placementObj.container ? placementObj.container : document.body),
-          containerIsBody = container.length && container[0] === document.body,
           containerRect = container ? container[0].getBoundingClientRect() : {},
           rect = this.element[0].getBoundingClientRect(),
           scrollX = (typeof container.scrollLeft === 'number' ? container : document.body).scrollLeft,
