@@ -350,12 +350,8 @@
 
         $('#validation-tooltip').addClass('is-hidden');
 
-        if (this.popup && this.popup.is(':visible')) {
-          self.closeCalendar();
-        }
 
-        this.element.addClass('is-active');
-        this.element.trigger('listopened');
+        this.element.addClass('is-active').trigger('listopened');
 
         // Calendar Html in Popups
         this.table = $('<table class="calendar-table" aria-label="'+ Locale.translate('Calendar') +'" role="application"></table>');
@@ -446,13 +442,12 @@
             // Wait for timepicker popup
             setTimeout(function() {
               var timepickerPopup = $('#timepicker-popup').css({'border': 0, 'box-shadow': 'none', 'width': ''}),
-                position = timepickerInput.offset();
-
-              position.top -= timepickerPopup.parent().is('body') ? 0 : timepickerPopup.height()/2 - 2;
-              position.left -= ((timepickerPopup.width() - timepickerInput.width())/2) - 30;
+                position = {
+                  top: parseInt(self.popup.css('top'), 10) + (self.table.height() + self.header.height() + 28),
+                  left: parseInt(self.popup.css('left'), 10) + (self.popup.outerWidth() - timepickerPopup.outerWidth() + 5)
+                };
 
               timepickerPopup.css(position);
-
               self.timepickerInput.css({'visibility': 'hidden'});
 
               $('.arrow, .modal-buttonset', timepickerPopup).hide();
