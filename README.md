@@ -377,3 +377,21 @@ or eventually the SoHo XI site pages
 - Any issues or inconsistencies would be reported to http://jira.infor.com/browse/HFC
 - Create Selenium (Javascript based) scripts or similar tests (see tests folder in git project)
 - Help contribute to questions on Jira and make test examples to test different scenarios like the current test examples.
+
+
+### Custom Soho Builder Tool
+
+Run the [Soho Mapper Tool](http://git.infor.com/projects/SOHO/repos/mapper/browse) on the local source.
+
+#### Usage
+`npm run build -- --mapperPath='/Users/username/mapper/dist/globalsHashMap.min.json' --controls='datagrid' --excludeControls='initialize' --excludeControls='datagrid'`
+
+#### Options
+Set the hash map path
+`--mapperPath='/Users/username/mapper/dist/globalsHashMap.min.json'`
+
+Set a control(s) to include, one control per flag,
+`--controls='datagrid'` or many, `--controls='datagrid' --controls='expandableara' --controls='accordion' ...`
+
+Set a control(s) to exclude, one control per flag,
+`--excludeControls='datagrid'` or many, `--excludeControls='datagrid' --excludeControls='expandableara' --excludeControls='button' ...`
