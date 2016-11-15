@@ -1,5 +1,4 @@
 module.exports = function(grunt) {
-
   grunt.file.defaultEncoding = 'utf-8';
   grunt.file.preserveBOM = true;
   let controls = grunt.option('controls'),
@@ -10,41 +9,54 @@ module.exports = function(grunt) {
         name = matches[1].replace('/', '');
       return name;
     },
-    dependencyPusher = function(arr, dependencies) {
-      let name;
-      for (var i = 0, arrLength = arr.length; i < arrLength; i++) {
-        name = extractNameFromPath(arr[i].fileFound);
-        dependencies.push(name);
-      }
-      return dependencies;
+
+    setUniqueDependencies = function(arr) {
+      const set = new Set(arr),
+        arrSet = [...set];
+      return arrSet;
     },
-    dependencyBuilder = function(mapperPath) {
 
-      if (mapperPath && controls) {
-        const obj = grunt.file.readJSON(mapperPath);
-        let paths,
-          deps = [];
+    //Traverse object for dependencies of dependencies, 1-3 levels deep based on architecture
 
-        //1st pass at dependencies
-        for (let i in controls) {
-          let firstLevelName = controls[i],
-            arr = obj[firstLevelName];
-          deps = dependencyPusher(arr, deps);
-        }
+    setTraverse = function(hashMap, dependencies) {
+      let names = [];
+      for (let obj of dependencies) {
+        names.push(extractNameFromPath(obj.fileFound));
+      }
 
-        //2nd pass at dependencies of dependencies
-        for (let k = 0, depsLength = deps.length; k < depsLength; k++) {
-          let secondLevelName = deps[k],
-            arrDeps = obj[secondLevelName];
-          if(arrDeps) {
-            deps = dependencyPusher(arrDeps, deps);
+      names = setUniqueDependencies(names);
+
+      for (let name of names) {
+        if (hashMap[name]) {
+          let subObjs = hashMap[name];
+          for (let obj of subObjs) {
+            let objName = extractNameFromPath(obj.fileFound);
+            if (!names.includes(objName)) {
+              names.push(objName);
+            }
           }
+        } else if (!names.includes(name)) {
+          names.push(name);
+        }
+      }
+
+      return names;
+    },
+
+    dependencyBuilder = function(mapperPath) {
+      let paths,
+        deps = [];
+      if (mapperPath && controls) {
+        const hashMap = grunt.file.readJSON(mapperPath);
+
+        for (let i in controls) {
+          let highLevelDependencies = controls[i],
+            lowLevelDependencies = hashMap[highLevelDependencies];
+          deps = setTraverse(hashMap, lowLevelDependencies);
         }
 
-        const depsSet = new Set(deps),
-          arrDepsSet= [...depsSet];
-
-        let dist = arrDepsSet.concat(controls);
+        let combinedDeps = deps.concat(controls);
+        let dist = setUniqueDependencies(combinedDeps);
 
         //Include initialize by default
         dist.unshift('initialize');
@@ -165,11 +177,22 @@ module.exports = function(grunt) {
       'temp/amd/zoom.js'
     ];
 
+  let strBanner = '/**\n* Soho XI Controls v<%= pkg.version %> \n* Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %> \n* Revision: <%= meta.revision %> \n */ \n';
+
+  if(mapperPath) {
+    let paths = arrControls.map((path) => {
+      return extractNameFromPath(path);
+    });
+
+    const strControls = paths.join(', '); //jshint ignore: line
+    strBanner = `/**\n* Soho XI Controls v<%= pkg.version %> \n* ${strControls} \n* Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %> \n* Revision: <%= meta.revision %> \n */ \n`;
+  }
+
   grunt.initConfig({
 
     pkg: grunt.file.readJSON('package.json'),
 
-    banner: '/**\n* Soho XI Controls v<%= pkg.version %> \n* Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %> \n* Revision: <%= meta.revision %> \n */ \n',
+    banner: strBanner,
     amdHeader: '(function(factory) {\n\n  if (typeof define === \'function\' && define.amd) {\n    // AMD. Register as an anonymous module\n    define([\'jquery\'], factory);\n  } else if (typeof exports === \'object\') {\n    // Node/CommonJS\n    module.exports = factory(require(\'jquery\'));\n} else {\n    // Browser globals \n    factory(jQuery);\n  }\n\n}(function($) {\n\n',
 
     sass: {
