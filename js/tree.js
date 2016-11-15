@@ -69,12 +69,10 @@
 
         this.element.wrap('<div class="tree-container'+ (this.isMultiselect ? ' is-muliselect' : '') +'"></div>');
         this.element.parent('.tree-container').prepend(
-          '<div class="selected-item-indicator"></div>' +
-          '<div class="focused-item-indicator"></div>'
+          '<div class="selected-item-indicator"></div>'
         );
 
         this.container = this.element.closest('.tree-container');
-        this.focusedIndicator = $('.focused-item-indicator', this.container);
         this.selectedIndicator = $('.selected-item-indicator', this.container);
 
         links.each(function() {
@@ -572,21 +570,6 @@
               target.trigger(e);
               return;
             }
-          }
-          // Incase we decide to have border around whole background on focus
-          // then we can make this block of code active
-          // and deactivate focus state border in css
-          // if (!target.is('.hide-focus')) {
-          //   var top = self.getAbsoluteOffsetFromGivenElement(this, self.container[0]).top;
-          //   if (self.focusedIndicator.length) {
-          //     self.focusedIndicator.css({top: top});
-          //   }
-          // }
-        })
-        //Blur on "a" elements
-        .on('blur.tree', 'a', function() {
-          if (self.focusedIndicator.length) {
-            self.focusedIndicator.css({top: ''});
           }
         });
 
