@@ -29,7 +29,8 @@
         defaults = {
           axis: 'x',
           resize: 'immediate',
-          containment: null //document or parent
+          containment: null, //document or parent
+          save: false
         },
         settings = $.extend({}, defaults, options);
 
@@ -51,30 +52,19 @@
           .handleEvents();
       },
 
-      // Add markup to the control
+      // Build the Control and Events
       build: function() {
         var self = this,
           splitter = this.element,
-          scrollable = splitter.closest('.scrollable'),
           parentHeight = splitter.parent().height();
 
         //Restore from local storage
-        if (localStorage) {
+        if (localStorage && this.settings.save) {
           var w = localStorage[this.uniqueId()];
           this.splitTo(parseInt(w), parentHeight);
         }
 
-        // Set extra margin for right splitter
-        if (splitter.is('.splitter-right')) {
-          splitter.css({'border-right': self.getBorderString(scrollable, 'right')});
-          scrollable.css({
-            'border-right': 0,
-            'margin-right': '20px',
-            'width': parseInt(scrollable.css('width'), 10) +'px'
-          });
-        }
-
-        //Set the height
+        //Add the Splitter Events
         this.element.drag({axis: this.settings.axis,
           containment: this.settings.containment ? this.settings.containment :
           this.settings.axis === 'x' ? 'document' : 'parent'})
@@ -112,28 +102,7 @@
         //Aria
         this.element.attr({'aria-dropeffect': 'move', 'tabindex': '0', 'aria-grabbed': 'false'});
 
-
-        //move handle to left
-        if (this.element.is('.splitter-right')) {
-          this.orgLeft = this.element.parent().outerWidth() + 20;
-
-          if (this.element.parent().is('.content')) {
-            this.orgLeft = this.element.parent().parent().outerWidth();
-          }
-
-          this.orgLeft -= 21;
-
-          this.element.css('left', this.orgLeft + 'px');
-        }
-
         return this;
-      },
-
-      // Workaround since shorthand CSS properties are not supported.
-      getBorderString: function(el, side) {
-        return el.css('border-'+ side +'-width') + ' ' +
-          el.css('border-'+ side +'-style') + ' ' +
-          el.css('border-'+ side +'-color');
       },
 
       // Sets up event handlers for this control and its sub-elements
@@ -208,11 +177,12 @@
         }
 
         var rightSide = leftSide.next(),
-          w = leftArg + 20;
+          w = leftArg;
 
         //Adjust Left and Right Side
-        leftSide.css('width', ((w-20) + 'px'));
         rightSide.css('width', ('calc(100% - ' + w + 'px)'));
+        leftSide.css('width', ((w) + 'px'));
+        splitter.css('left', leftArg-1);
       },
 
       //Preferably use the id, but if none that make one based on the url and count
