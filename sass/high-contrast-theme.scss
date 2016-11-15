@@ -122,7 +122,7 @@ $btn-focus-bg-color: $primary-color;
 $btn-focus-border-color: $primary-color;
 $btn-active-bg-color: $graphite05;
 $btn-disabled-bg-color: $graphite07;
-$btn-disabled-color: $white;
+$btn-disabled-color: $graphite07;
 $btn-disabled-border-color: $graphite07;
 $btn-disabled-opacity: .5;
 
@@ -196,6 +196,7 @@ $listview-toolbar-button-icon-selected-color: $white;
 // Toolbar
 $toolbar-standalone-bg-color: $graphite01;
 $toolbar-standalone-border-color: $graphite06;
+$toolbar-standalone-disabled-color: $graphite08;
 $toolbar-separator-color: $graphite06;
 
 // Formatter Toolbar
