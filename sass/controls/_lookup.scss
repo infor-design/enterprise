@@ -71,6 +71,15 @@
 }
 
 .lookup-modal {
+
+  &.lookup-no-search .modal-body-wrapper {
+    margin-top: -40px;
+
+    .datagrid-container {
+      margin-top: -10px;
+    }
+  }
+
   .modal-body-wrapper {
     background-color: inherit;
     padding: 0 18px 10px;
@@ -177,8 +186,8 @@ html[dir="rtl"] {
 
     .icon {
       height: 14px;
-      right: auto;
       left: 0;
+      right: auto;
       top: 6px;
       width: 18px;
     }
@@ -194,8 +203,8 @@ html[dir="rtl"] {
 
     .icon {
       height: 14px;
-      right: auto;
       left: 0;
+      right: auto;
       top: 3px;
       width: 18px;
     }
