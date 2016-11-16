@@ -4,17 +4,18 @@
 $datagrid-header-height: 39px;  //1px border in parent
 $datagrid-filterable-header-height: 61px;
 
-$datagrid-row-height: 50px;
+$datagrid-row-height: 48px;
 $datagrid-medium-header-height: 30px;
-$datagrid-medium-row-height: 40px;
+$datagrid-medium-row-height: 39px;
 $datagrid-short-header-height: 25px;
-$datagrid-short-row-height: 30px;
+$datagrid-short-row-height: 29px;
 
 .datagrid-container {
   background-color: transparent;
   border: 1px solid $datagrid-cell-border-color;
   clear: both;
   height: auto;
+  margin-right: -10px;
   min-width: 100%;
   overflow-x: auto;
   position: relative;
@@ -139,6 +140,7 @@ $datagrid-short-row-height: 30px;
 
         .hyperlink {
           margin-top: 8px;
+          vertical-align: top;
         }
       }
     }
@@ -218,17 +220,25 @@ $datagrid-short-row-height: 30px;
         }
 
         .row-btn {
-          height: 18px;
-          margin-left: 9px;
-          min-height: 18px;
-          min-width: 18px;
-          padding: 0;
-          top: -2px;
-          width: 18px;
+          height: 26px;
+          min-width: 80px;
+          top: 0;
+          vertical-align: middle;
+
+          span {
+            line-height: 26px;
+          }
+
+          &.btn-icon {
+            height: 20px;
+            margin-bottom: -15px;
+            min-width: 20px;
+          }
         }
 
+
+
         a.row-btn {
-          margin-bottom: -5px;
 
           .icon {
             margin: 0;
@@ -725,7 +735,6 @@ $datagrid-short-row-height: 30px;
     }
 
     .tag {
-      // line-height: 26px;
 
       &[class*='azure'] {
         color: $white;
@@ -737,15 +746,15 @@ $datagrid-short-row-height: 30px;
     }
 
     a.row-btn {
-      height: 36px;
-      margin-bottom: -14px;
-      min-height: 36px;
-      min-width: 36px;
+      height: 34px;
+      min-height: 34px;
+      min-width: 34px;
       padding: 0;
-      width: 36px;
+      vertical-align: middle;
+      width: 34px;
 
       .icon {
-        margin: 8px 0 0 8px;
+        margin: 7px 0 0;
       }
     }
 
