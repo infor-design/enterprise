@@ -4121,6 +4121,9 @@ $.fn.datagrid = function(options) {
           handled = false,
           isRTL = Locale.isRTL(),
           node = self.activeCell.node,
+          rowNode = $(this).closest('tr[aria-rowindex]'),
+          prevRow = rowNode.prev(),
+          nextRow = rowNode.next(),
           row = self.activeCell.row,
           cell = self.activeCell.cell,
           col = self.columnSettings(cell),
@@ -4170,6 +4173,10 @@ $.fn.datagrid = function(options) {
           }
           //Up arrow key to navigate by row.
           else {
+            if (prevRow.is('.datagrid-rowgroup-header')) {
+              prevRow.find('td:visible:first').attr('tabindex', '0').focus();
+              return;
+            }
             if (row === 0) {
               node.removeAttr('tabindex');
               $('th:not(.is-hidden)', self.header).eq(cell).attr('tabindex', '0').focus();
@@ -4188,6 +4195,10 @@ $.fn.datagrid = function(options) {
           }
           //Down arrow key to navigate by row.
           else {
+            if (nextRow.is('.datagrid-rowgroup-header')) {
+              nextRow.find('td:visible:first').attr('tabindex', '0').focus();
+              return;
+            }
             var n = getVisibleRows(visibleRowsIndex+1);
             n = isNaN(n) ? lastRow : n;
             self.setActiveCell(((n >= lastRow) ? lastRow : getVisibleRows(visibleRowsIndex+1)), cell);
