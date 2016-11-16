@@ -868,8 +868,16 @@ GroupBy.register('list', function(item) {
   var extra = this.extra;
 
   return $.extend({}, item.key, {values: item.values}, {list: item.values.map(function(item) {
-    return item[extra];
-  }).join(', ')});
+    var list = [];
+
+    for (var i = 0; i < extra.list.length; i++) {
+      var exclude = extra.exclude ? item[extra.exclude] : false;
+      if (item[extra.list[i]] && !exclude) {
+        list.push({value: item[extra.list[i]], key: extra.list[i]});
+      }
+    }
+    return list;
+  })});
 });
 
 $.fn.datagrid = function(options) {
@@ -2060,14 +2068,8 @@ $.fn.datagrid = function(options) {
         return;
       }
 
-      //TODO
-      if (groupSettings.aggregator === 'avg') {
-        this.settings.dataset = GroupBy.avg(this.settings.dataset , groupSettings.fields);
-        return;
-      }
-
       if (groupSettings.aggregator === 'list') {
-        this.settings.dataset = GroupBy.list(this.settings.dataset , groupSettings.fields , groupSettings.aggregatorOptions[0]);
+        this.settings.dataset = GroupBy.list(this.settings.dataset , groupSettings.fields , groupSettings.aggregatorOptions);
         return;
       }
 
@@ -2142,6 +2144,8 @@ $.fn.datagrid = function(options) {
             if (dataset[i].list) {
               rowData.list = dataset[i].list;
             }
+
+            rowData.values = dataset[i].values;
 
             tableHtml += self.rowHtml(rowData, this.recordCount);
             this.recordCount++;
@@ -2527,6 +2531,10 @@ $.fn.datagrid = function(options) {
 
         if (this.columnWidthType === 'percent') {
           this.table.css('width', '100%');
+        }
+
+        if (widthSpecified && this.columnWidthType === 'auto') {
+          this.table.css('width', this.totalWidth + 'px');
         }
 
       }

@@ -36,6 +36,14 @@
     top: -1px;
   }
 
+  .row-note {
+    border: 1px solid #bdbdbd;
+    display: block;
+    height: 36px;
+    margin: 7px -20px 0 5px;
+    padding: 10px 22px;
+    width: 100%;
+  }
 </style>
 
 <ul id="units-popupmenu" class="popupmenu">
@@ -63,29 +71,37 @@
           for (var j = 0; j < list.length; j++) {
             var unitNo = list[j].key.replace('unitName', '');
 
-            //"Convert" ARGB values - Since this data is all FF for alpha channel
-            //Just drop that. Use your code here for that. #simple example
-            var foreColor = rowData.values[i]['statusForeColor'+(unitNo)].substr(2),
-              backColor = rowData.values[i]['statusBackColor'+(unitNo)].substr(2);
-
+            var foreColor = 'ffff00',
+              backColor = '000000';
+            console.log(list[j], j, rowData)
             html += '<span class="unit-on-scene" style="background-color: #'+ backColor+ ';' +
-                'color: #' + foreColor + '">' + list[j].value + '</span>'
+                'color: #' + foreColor + '">' + list[j].value + '</span>';
+
           }
         }
+
+        //Find the NoteRow
+        var noteRow = {};
+        for (var k = 0; k < rowData.values.length; k++) {
+          if (rowData.values[k].isNoteRow) {
+            noteRow = rowData.values[k];
+          }
+        }
+
+        html += '<span class="row-note" >' + noteRow.unitName1 + '</span>';
+
         html += '</span>';
         return html;
       };
 
       //Define Columns for the Grid.
       //columns.push({ id: 'incidentId', name: 'Incident Id', field: 'incidentId', width: 50});
-      columns.push({ id: 'priority', name: 'Priority', field: 'priority', width: 40});
-      columns.push({ id: 'location', name: 'Location', field: 'location', formatter: Formatters.Hyperlink, width: 100});
-      columns.push({ id: 'nature', name: 'Nature', field: 'nature', width: 40});
-      columns.push({ id: 'time', name: 'Time', field: 'time', width: 50});
+      columns.push({ id: 'alarm', name: 'Alarm', field: 'alarmLabel', width: 40});
+      columns.push({ id: 'time', name: 'Time', field: 'alarmTime', formatter: Formatters.Hyperlink, width: 100});
       columns.push({ id: 'units', width: 450, name: 'Vehicles on Scene', field: 'units', formatter: Formatters.VehicalsOnScene});
 
       //Get some data via ajax
-      var url = '/api/incidents';
+      var url = '/api/fires';
 
       $.getJSON(url, function(res) {
         $('#datagrid').datagrid({
@@ -93,12 +109,13 @@
           dataset: res,
           columnReorder: true,
           groupable: {
-            fields: ['incidentId'],
+            fields: ['alarmNumber'],
             suppressGroupRow: true, //Do not show the grouping row
             aggregator: 'list', //Sum, averge, max ect
             showOnlyGroupRow: true, //Show only the group row not the children (spanning)
             aggregatorOptions: {list: ['unitName1', 'unitName2', 'unitName3', 'unitName4',
-                                'unitName5', 'unitName6', 'unitName7','unitName8']}
+                                'unitName5', 'unitName6', 'unitName7','unitName8'], exclude: 'isNoteRow'},
+
           },
           selectable: 'single',
           cellNavigation: true,
