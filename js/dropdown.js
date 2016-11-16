@@ -150,6 +150,8 @@
           }
         }
 
+        this.dataset = [];
+
         this.listfilter = new ListFilter({
           filterMode: this.settings.filterMode
         });
@@ -1292,7 +1294,6 @@
 
       //Select an option and optionally trigger events
       selectOption: function(option, noTrigger) {
-
         if (!option) {
           return option;
         }
@@ -1314,7 +1315,7 @@
           li = this.listUl.find('li[data-val="'+ option.val() +'"]');
         }
 
-        if (option.hasClass('.is-disabled') || option.is(':disabled')) {
+        if (option.hasClass('is-disabled') || option.is(':disabled')) {
           return;
         }
 
@@ -1449,25 +1450,30 @@
               }
             }
 
-            //populate
-            self.element.empty();
-            for (var i=0; i < data.length; i++) {
-              var opts;
+            // If the incoming dataset is different than the one we started with,
+            // replace the contents of the list, and rerender it.
+            if (data !== self.dataset) {
+              self.dataset = data;
 
-              if (data[i].group) {
-                opts = data[i].options;
-                list += '<optgroup label="' + data[i].group + '">';
-                for (var ii = 0; ii < opts.length; ii++) {
-                  buildOption(opts[ii]);
+              self.element.empty();
+              for (var i=0; i < data.length; i++) {
+                var opts;
+
+                if (data[i].group) {
+                  opts = data[i].options;
+                  list += '<optgroup label="' + data[i].group + '">';
+                  for (var ii = 0; ii < opts.length; ii++) {
+                    buildOption(opts[ii]);
+                  }
+                  list += '</optgroup>';
+                } else {
+                  buildOption(data[i]);
                 }
-                list += '</optgroup>';
-              } else {
-                buildOption(data[i]);
               }
-            }
 
-            self.element.append(list);
-            self.updateList();
+              self.element.append(list);
+              self.updateList();
+            }
 
             self.element.triggerHandler('complete'); // For Busy Indicator
             self.element.trigger('requestend', [searchTerm, data]);
