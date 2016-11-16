@@ -193,13 +193,7 @@
 
         var self = this,
           contentArea,
-          specified = false,
-          closeBtnX = $('<button type="button" class="btn-icon l-pull-right"><span>Close</span></button>')
-                        .prepend($.createIconElement({ classes: ['icon-close'], icon: 'close' }))
-                        .css({'margin-top':'-9px'})
-                        .on('click', function() {
-                          self.hide();
-                        });
+          specified = false;
 
         content = Locale.translate(content) || content;
 
@@ -230,6 +224,14 @@
           }
 
           if (settings.closebutton) {
+            var closeBtnX = $(
+              '<button type="button" class="btn-icon l-pull-right" style="margin-top: -9px">'+
+                $.createIcon({ classes: ['icon-close'], icon: 'close' }) +
+                '<span>Close</span>'+
+              '</button>'
+            ).on('click', function() {
+              self.hide();
+            });
             $('.tooltip-title', this.tooltip).append(closeBtnX);
           }
 
