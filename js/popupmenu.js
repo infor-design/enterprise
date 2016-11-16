@@ -366,7 +366,7 @@
           }
 
           // Trigger a selected event containing the anchor that was selected
-          self.element.trigger('selected', selectionResult);
+          self.element.triggerHandler('selected', selectionResult);
 
           // MultiSelect Lists should act like other "multiselect" items and not close the menu when options are chosen.
           if (self.menu.hasClass('is-multiselectable') || self.isInMultiselectSection(anchor)) {
