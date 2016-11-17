@@ -83,6 +83,7 @@ body.no-scroll {
 
     + .sidebar {
       border-right: 0;
+      margin-right: 0 !important;
     }
   }
 
@@ -117,7 +118,8 @@ body.no-scroll {
   &.fixed {
 
     .sidebar {
-      width: 250px;
+      margin-right: 20px;
+      width: 230px;
     }
 
     .main {
