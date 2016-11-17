@@ -30,7 +30,7 @@
           axis: 'x',
           resize: 'immediate',
           containment: null, //document or parent
-          save: true
+          save: false
         },
         settings = $.extend({}, defaults, options);
 
@@ -65,11 +65,14 @@
         }
 
         //Add the Splitter Events
+        this.documentWidth = 0;
+
         this.element.drag({axis: this.settings.axis,
           containment: this.settings.containment ? this.settings.containment :
-          this.settings.axis === 'x' ? 'document' : 'parent'})
+          this.settings.axis === 'x' ? 'document' : 'parent', containmentOffset: {left: 20, top: 0}})
           .on('dragstart.splitter', function () {
             var iframes = $('iframe');
+            self.documentWidth = $(document).width();
 
             if (iframes.length > 0) {
               iframes.each(function() {
@@ -89,6 +92,10 @@
 
           })
           .on('drag.splitter', function (e, args) {
+            if (args.left <= 0) {
+              return false;
+            }
+
             if (self.settings.resize === 'immediate') {
               self.splitTo(self.settings.axis === 'x' ? args.left : args.top, parentHeight);
             }
@@ -180,7 +187,7 @@
           w = leftArg;
 
         //Adjust Left and Right Side
-        rightSide.css('width', ('calc(100% - ' + w + 'px)'));
+        rightSide.css('width', ('calc(100% - ' + (w + 20) + 'px)'));
         leftSide.css('width', ((w) + 'px'));
         splitter.css('left', leftArg-1);
       },
