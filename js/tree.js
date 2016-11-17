@@ -24,7 +24,8 @@
       defaults = {
         selectable: 'single', // ['single'|'multiple']
         hideCheckboxes: false, // [true|false] -apply only with [selectable: 'multiple']
-        menuId: null //Context Menu to add to nodes
+        menuId: null, //Context Menu to add to nodes
+        useStepUI: false // When using the UI as a stepped tree
       },
       settings = $.extend({}, defaults, options);
 
@@ -73,6 +74,19 @@
           var a = $(this);
           self.decorateNode(a);
         });
+
+
+        if (s.useStepUI) {
+          s.treeIcons = {
+            open: 'caret-up',
+            closed: 'caret-down'
+          }
+        } else {
+          s.treeIcons = {
+            open: 'open-folder',
+            closed: 'closed-folder'
+          }
+        }
       },
 
       //Init selected notes
@@ -98,11 +112,12 @@
         var subNode,
         parentCount = 0,
         badgeData = a.attr('data-badge'),
+        alertIcon = a.attr('data-alert-icon'),
         badge = {elem: $('<span class="tree-badge badge"></span>')};
 
-      if (typeof badgeData !== 'undefined') {
-        badgeData = $.fn.parseOptions(a, 'data-badge');
-      }
+        if (typeof badgeData !== 'undefined') {
+          badgeData = $.fn.parseOptions(a, 'data-badge');
+        }
 
         //set initial 'role', 'tabindex', and 'aria selected' on each link (except the first)
         a.attr({'role': 'treeitem', 'tabindex': '-1', 'aria-selected': 'false'});
@@ -144,8 +159,12 @@
         }).text();
 
         a.text('');
-        if (a.children('svg').length === 0) {
+        if (a.children('svg.icon-tree').length === 0) {
           a.prepend($.createIcon({ icon: 'tree-node', classes: ['icon-tree'] }));
+
+          if (this.settings.useStepUI) {
+            a.prepend($.createIcon({ icon: alertIcon, classes: ['step-alert', 'icon-' + alertIcon] }));
+          }
         }
 
         //Inject checkbox
@@ -179,20 +198,20 @@
 
         if (a.is('[class^="icon"]')) {
           //createIconPath
-          this.setTreeIcon(a.find('svg'), a.attr('class'));
+          this.setTreeIcon(a.find('svg.icon-tree'), a.attr('class'));
         }
 
         if (subNode.is('ul')) {
           subNode.attr('role', 'group').parent().addClass('folder');
-          this.setTreeIcon(a.find('svg'), subNode.hasClass('is-open') ? 'open-folder' : 'closed-folder' );
+          this.setTreeIcon(a.find('svg.icon-tree'), subNode.hasClass('is-open') ? this.settings.treeIcons.open : this.settings.treeIcons.closed);
 
           if (a.attr('class') && a.attr('class').indexOf('open') === -1 && a.attr('class').indexOf('closed') === -1) {
             a.attr('class', '');
-            this.setTreeIcon(a.find('svg'), subNode.hasClass('is-open') ? 'open-folder' : 'closed-folder' );
+            this.setTreeIcon(a.find('svg.icon-tree'), subNode.hasClass('is-open') ? this.settings.treeIcons.open : this.settings.treeIcons.closed);
           }
 
           if (a.is('[class^="icon"]')) {
-            this.setTreeIcon(a.find('svg'), subNode.hasClass('is-open') ?  a.attr('class') : a.attr('class').replace('open', 'closed') );
+            this.setTreeIcon(a.find('svg.icon-tree'), subNode.hasClass('is-open') ?  a.attr('class') : a.attr('class').replace('open', 'closed') );
           }
         }
 
@@ -201,14 +220,8 @@
       },
 
       setTreeIcon: function(svg, icon) {
-        var iconStr = icon.replace('icon-',''),
-          file = 'icons.svg';
-
-        if (iconStr.match('jpg|mp3|gif|msg|pdf|png|ppt|prj|psd|pub|rar|tif|vis|xls')) {
-          file = 'icons-extended.svg';
-        }
-
-        svg.changeIcon(iconStr, file);
+        var iconStr = icon.replace('icon-','');
+        svg.changeIcon(iconStr);
       },
 
       //Expand all Parents
@@ -219,10 +232,10 @@
         nodes.each(function () {
           var node = $(this);
           node.addClass('is-open');
-          self.setTreeIcon(node.prev('a').find('svg'), 'open-folder');
+          self.setTreeIcon(node.prev('a').find('svg.icon-tree'), self.settings.treeIcons.open);
 
           if (node.prev('a').is('[class^="icon"]')) {
-            self.setTreeIcon(node.prev('svg'), node.prev('a').attr('class'));
+            self.setTreeIcon(node.prev('svg.icon-tree'), node.prev('a').attr('class'));
           }
 
         });
@@ -235,14 +248,14 @@
         nodes.each(function () {
           var node = $(this);
           node.removeClass('is-open');
-          self.setTreeIcon(node.prev('a').find('svg'), 'closed-folder');
+          self.setTreeIcon(node.prev('a').find('svg.icon-tree'), self.settings.treeIcons.closed);
 
           if (node.prev('a').is('[class^="icon"]')) {
-            self.setTreeIcon(node.prev('a').find('svg'), node.prev('a').attr('class').replace('open', 'closed').replace(' hide-focus', '').replace(' is-selected', '') );
+            self.setTreeIcon(node.prev('a').find('svg.icon-tree'), node.prev('a').attr('class').replace('open', 'closed').replace(' hide-focus', '').replace(' is-selected', '') );
           }
 
           if (node.prev('a').is('[class^="icon"]')) {
-            self.setTreeIcon(node.prev('svg'), node.prev('a').attr('class').replace('open', 'closed'));
+            self.setTreeIcon(node.prev('svg.icon-tree'), node.prev('a').attr('class').replace('open', 'closed'));
           }
 
         });
@@ -428,11 +441,10 @@
         if (next.is('ul[role="group"]')) {
           if (next.hasClass('is-open')) {
 
-            self.setTreeIcon(node.closest('.folder').removeClass('is-open').end().find('svg'),
-                'closed-folder');
+            self.setTreeIcon(node.closest('.folder').removeClass('is-open').end().find('svg.icon-tree'), self.settings.treeIcons.closed);
 
             if (node.closest('.folder a').is('[class^="icon"]')) {
-              self.setTreeIcon(node.closest('.folder a').find('svg'),
+              self.setTreeIcon(node.closest('.folder a').find('svg.icon-tree'),
                 node.closest('.folder a').attr('class').replace('open', 'closed').replace(' hide-focus', '').replace(' is-selected', ''));
             }
 
@@ -489,10 +501,10 @@
       openNode: function(next, node) {
         var self = this;
 
-        self.setTreeIcon(node.closest('.folder').addClass('is-open').end().find('svg'), 'open-folder');
+        self.setTreeIcon(node.closest('.folder').addClass('is-open').end().find('svg.icon-tree'), self.settings.treeIcons.open);
 
         if (node.is('[class^="icon"]')) {
-          self.setTreeIcon(node.find('svg'), node.attr('class').replace(' hide-focus', '').replace(' is-selected', ''));
+          self.setTreeIcon(node.find('svg.icon-tree'), node.attr('class').replace(' hide-focus', '').replace(' is-selected', ''));
         }
 
         self.isAnimating = true;
@@ -507,6 +519,7 @@
       setupEvents: function () {
         var self = this;
         self.element.on('updated.tree', function () {
+          console.log('here');
           self.initTree();
         });
       },
@@ -571,52 +584,14 @@
 
           //down arrow
           if (charCode === 40) {
-            next = target.parent().next().find('a:first');
-
-            //Move Into Children
-            if (target.next().is('ul') && target.next().hasClass('is-open')) {
-              next = target.next().find('a:first');
-            }
-
-            //skip disabled
-            if(next.hasClass('is-disabled')) {
-              next = next.parent().next().find('a:first');
-            }
-
-            //bottom of a group..{l=1000: max folders to be deep }
-            if (next.length === 0) {
-              for (var i=0,l=1000,closest=target; i<l; i++) {
-                closest = closest.parent().closest('.folder');
-                next = closest.next().find('a:first');
-                if (next.length) {
-                  break;
-                }
-              }
-            }
-            self.setFocus(next);
+            var node = self.getNextNode(target);
+            self.setFocus(node);
           }
 
           //up arrow,
           if (charCode === 38) {
-            prev = target.parent().prev().find('a:first');
-
-            //move into children at bottom
-            if (prev.parent().is('.folder.is-open') &&
-                prev.parent().find('ul.is-open a').length &&
-                !prev.parent().find('ul.is-disabled').length) {
-              prev = prev.parent().find('ul.is-open a:last');
-            }
-
-            //skip disabled
-            if(prev.hasClass('is-disabled')) {
-              prev = prev.parent().prev().find('a:first');
-            }
-
-            //top of a group
-            if (prev.length === 0) {
-              prev = target.closest('ul').prev('a');
-            }
-            self.setFocus(prev);
+            var node = self.getPreviousNode(target);
+            self.setFocus(node);
           }
 
           //space
@@ -804,6 +779,55 @@
         return selected;
       },
 
+      getNextNode: function(target) {
+        var next = target.parent().next().find('a:first');
+
+        //Move Into Children
+        if (target.next().is('ul') && target.next().hasClass('is-open')) {
+          next = target.next().find('a:first');
+        }
+
+        //skip disabled
+        if(next.hasClass('is-disabled')) {
+          next = next.parent().next().find('a:first');
+        }
+
+        //bottom of a group..{l=1000: max folders to be deep }
+        if (next.length === 0) {
+          for (var i=0, l=1000, closest=target; i<l; i++) {
+            closest = closest.parent().closest('.folder');
+            next = closest.next().find('a:first');
+            if (next.length) {
+              break;
+            }
+          }
+        }
+        return next;
+      },
+
+      getPreviousNode: function(target) {
+        var prev = target.parent().prev().find('a:first');
+
+        //move into children at bottom
+        if (prev.parent().is('.folder.is-open') &&
+            prev.parent().find('ul.is-open a').length &&
+            !prev.parent().find('ul.is-disabled').length) {
+          prev = prev.parent().find('ul.is-open a:last');
+        }
+
+        //skip disabled
+        if(prev.hasClass('is-disabled')) {
+          prev = prev.parent().prev().find('a:first');
+        }
+
+        //top of a group
+        if (prev.length === 0) {
+          prev = target.closest('ul').prev('a');
+        }
+        return prev;
+      },
+
+
       //Sync the tree with the underlying dataset
       syncDataset: function (node) {
 
@@ -880,7 +904,8 @@
         a.attr({
           'id': nodeData.id,
           'href': nodeData.href,
-          'data-badge': badgeAttr
+          'data-badge': badgeAttr,
+          'data-alert-icon': nodeData.alertIcon
         }).text(nodeData.text);
 
         if (nodeData.open) {
@@ -1053,7 +1078,7 @@
         }
 
         if (nodeData.icon) {
-          this.setTreeIcon(elem.node.find('svg').first(), nodeData.icon);
+          this.setTreeIcon(elem.node.find('svg.icon-tree').first(), nodeData.icon);
           elem.icon = nodeData.icon;
         }
 
@@ -1087,7 +1112,7 @@
       removeChildren: function (nodeData, li) {
         var ul = li.find('ul');
 
-        this.setTreeIcon(li.find('svg').first(), (nodeData.icon || 'icon-tree-node'));
+        this.setTreeIcon(li.find('svg.icon-tree').first(), (nodeData.icon || 'icon-tree-node'));
         li.removeClass('folder is-open');
         ul.remove();
       },
