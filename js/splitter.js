@@ -30,7 +30,7 @@
           axis: 'x',
           resize: 'immediate',
           containment: null, //document or parent
-          save: false
+          save: true
         },
         settings = $.extend({}, defaults, options);
 
