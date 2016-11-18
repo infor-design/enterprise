@@ -68,12 +68,7 @@
         s.hideCheckboxes = s.hideCheckboxes || !this.isMultiselect;
 
         this.element.wrap('<div class="tree-container'+ (this.isMultiselect ? ' is-muliselect' : '') +'"></div>');
-        this.element.parent('.tree-container').prepend(
-          '<div class="selected-item-indicator"></div>'
-        );
-
         this.container = this.element.closest('.tree-container');
-        this.selectedIndicator = $('.selected-item-indicator', this.container);
 
         links.each(function() {
           var a = $(this);
@@ -291,10 +286,6 @@
         this.syncNode(node);
         this.setNodeStatus(node);
 
-        if (this.selectedIndicator.length) {
-          this.selectedIndicator.css('top', '');
-        }
-
         if (focus) {
           node.focus();
         }
@@ -315,8 +306,7 @@
           return;
         }
 
-        var top,
-          self = this,
+        var self = this,
           aTags = $('a', this.element);
 
         aTags.attr('tabindex', '-1');
@@ -328,17 +318,13 @@
         }
         else {
           aTags.attr('aria-selected', 'false').parent().removeClass('is-selected');
+          aTags.attr('aria-selected', 'false').removeClass('is-selected');
           node.attr('aria-selected', 'true').parent().addClass('is-selected');
         }
 
         this.syncNode(node);
         if (!this.loading) {
           this.setNodeStatus(node);
-        }
-
-        if (this.selectedIndicator.length) {
-          top = this.getAbsoluteOffset(node[0], this.container[0]).top;
-          this.selectedIndicator.css({top: top});
         }
 
         if (focus) {

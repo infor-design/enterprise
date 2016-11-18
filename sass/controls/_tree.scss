@@ -78,17 +78,6 @@
       }
     }
 
-    //Active State
-    &:active {
-      background-color: $tree-active-bg-color;
-      border: 1px solid transparent;
-      border-radius: 5px;
-
-      .tree-text {
-        border-bottom-color: transparent;
-      }
-    }
-
     //Disable State
     &.is-disabled {
       @include unselectable;
@@ -130,6 +119,10 @@
       }
     }
 
+    a.is-selected {
+      background-color: $tree-selected-bg-color;
+    }
+
     // Selected State
     &.is-selected {
       > a {
@@ -143,14 +136,6 @@
         .tree-text {
           border-color: transparent;
           color: $tree-selected-color;
-        }
-      }
-    }
-
-    &.is-active {
-      > a {
-        .tree-badge:not(.info):not(.good):not(.error):not(.alert):not(.pending) {
-          background-color: $badge-neutral-hover-bg-color;
         }
       }
     }
@@ -197,24 +182,6 @@
 .tree-container {
   position: relative;
   z-index: 1;
-
-  .focused-item-indicator,
-  .selected-item-indicator {
-    // border-radius: 2px;
-    height: 26px;
-    position: absolute;
-    top: -999999px;
-    width: 100%;
-    z-index: -1;
-
-    &.focused-item-indicator {
-      border: 1px solid $tree-focus-border-color;
-    }
-
-    &.selected-item-indicator {
-      background-color: $tree-selected-bg-color;
-    }
-  }
 
   &.is-muliselect {
     li {
@@ -277,14 +244,6 @@
 
 // Firefox only
 .is-firefox {
-
-  &.is-mac {// Firefox on Mac only
-    .tree-container {
-      .selected-item-indicator {
-        margin-top: -2px;
-      }
-    }
-  }
 
   .tree-container {
     &.is-muliselect {
