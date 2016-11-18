@@ -505,45 +505,7 @@
 
   window.Soho = window.Soho || {};
   window.Soho.utils = {};
-
-  // Deep compare two arrays to discover whether or not they are equal.
-  // Example:                             arrayEquals( [1,2,3], [1,2,3] ); // true
-  // Does no array sorting, so:           arrayEquals( [1,2,3], [3,2,1] ); // false
-  // Stringifies objects inside the array for comparison.
-  // Example:                             arrayEquals( [{x: 1, y: 2}], [{x: 1, y: 2}] ); // true
-  // Example:                             arrayEquals
-  window.Soho.utils.arrayEquals = function arrayEquals(array1, array2) {
-    if (!array1 || !array2 || !(array1 instanceof Array) || !(array2 instanceof Array)) {
-      return false;
-    }
-    if (!array1.length || !array2.length) {
-      return false;
-    }
-
-    // Compare each item in each array
-    for (var i = 0, l = array1.length; i < l; i++) {
-      // Run this same method recursively if we have nested arrays
-      if (array1[i] instanceof Array && array2[i] instanceof Array) {
-        if (arrayEquals(array1[i], array2[i])) {
-          return false;
-        }
-      }
-      // Compare the values here
-      // TODO: Make this accurately deep-compare objects at some point
-      if (typeof array1[i] === 'object') {
-        if (JSON.stringify(array1[i]) !== JSON.stringify(array2[i])) {
-          return false;
-        }
-      } else {
-        // Simple comparison
-        if (array1[i] !== array2[i]) {
-          return false;
-        }
-      }
-    }
-    return true;
-  };
-
+  
   window.Soho.utils.equals = function equals(a, b) {
     return JSON.stringify(a) === JSON.stringify(b);
   };
