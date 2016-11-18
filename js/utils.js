@@ -501,7 +501,13 @@
       }
 
       return character;
+  };
 
+  window.Soho = window.Soho || {};
+  window.Soho.utils = {};
+  
+  window.Soho.utils.equals = function equals(a, b) {
+    return JSON.stringify(a) === JSON.stringify(b);
   };
 
 /* start-amd-strip-block */

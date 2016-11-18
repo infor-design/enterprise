@@ -772,9 +772,7 @@ window.Editors = {
 window.GroupBy = (function() {
 
   //Can also use in isEquals: function(obj1, obj2)  in datagrid.js
-  var equals = function(a, b) {
-    return JSON.stringify(a) === JSON.stringify(b);
-  };
+  var equals = window.Soho.utils.equals;
 
   //See if the object has these proprties or not
   var has = function(obj, target) {

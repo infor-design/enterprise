@@ -216,22 +216,13 @@
       display: none;
     }
 
-    > header {
-      position: relative;
-      z-index: 1;
-    }
-
-    > .page-container {
-      height: 100%;
-    }
-
     .main,
     .sidebar {
       $this-height: calc(100% - #{$header-height});
       position: absolute;
       height: $this-height;
       min-height: $this-height !important;
-      top: $header-height;
+      height: 100%;
     }
 
     .main {

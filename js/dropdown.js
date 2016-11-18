@@ -31,7 +31,8 @@
           moveSelectedToTop: false, //When the menu is opened, displays all selected options at the top of the list
           multiple: false, //Turns the dropdown into a multiple selection box
           noSearch: false, //If true, disables the ability of the user to enter text in the Search Input field in the open combo box
-          source: undefined,  //A function that can do an ajax call.
+          source: undefined, //A function that can do an ajax call.
+          reloadSourceOnOpen: false, // If set to true, will always perform an ajax call whenever the list is opened.  If false, the first AJAX call's results are cached.
           empty: false, //Initialize Empty Value
           delay: 300 //Typing Buffer Delay
         },
@@ -149,6 +150,9 @@
             this.pseudoElem.addClass('dropdown' + s);
           }
         }
+
+        // Cached dataset (from AJAX, if applicable)
+        this.dataset = [];
 
         this.listfilter = new ListFilter({
           filterMode: this.settings.filterMode
@@ -330,15 +334,21 @@
         }
 
         //Set initial values for the edit box
-        this.pseudoElem.find('span').text(text);
+        this.setPseudoElemDisplayText(text);
         if (this.element.attr('maxlength')) {
-           this.pseudoElem.find('span').text(text.substr(0, this.element.attr('maxlength')));
+           this.setPseudoElemDisplayText(text.substr(0, this.element.attr('maxlength')));
         }
 
         //Set the "previousActiveDescendant" to the first of the items
         this.previousActiveDescendant = opts.first().val();
 
         this.setBadge(opts);
+      },
+
+      // Sets only the display text of the Dropdown/Mutliselect
+      // Can be used for setting a pre-populated value when working with an AJAX call.
+      setPseudoElemDisplayText: function(text) {
+        this.pseudoElem.find('span').text(text);
       },
 
       copyClass: function(from, to, prop) {
@@ -755,9 +765,7 @@
             self.searchInput.val(self.filterTerm);
             self.toggleList();
           } else {
-            self.callSource(function () {
-              self.filterList(self.searchInput.val().toLowerCase());
-            });
+            self.filterList(self.searchInput.val().toLowerCase());
           }
         }, self.settings.delay);
       },
@@ -897,7 +905,7 @@
 
         this.position();
 
-        if (this.initialFilter) {
+        if (!this.settings.multiple && this.initialFilter) {
           setTimeout(function () {
             self.searchInput.val(self.filterTerm);
             self.filterList(self.searchInput.val());
@@ -997,10 +1005,7 @@
         function isDropdownElement(target) {
           return target.closest('.dropdown, .multiselect').length > 0 ||
             target.closest('.dropdown-list').length > 0 ||
-            self.touchmove === true; /*target.is('.dropdown, multiselect') /||
-            target.is('.option-text') || target.is('.dropdown-option') ||
-            target.is('.group-label') || target.is('.dropdown-search')  ||
-            self.touchmove === true;*/
+            self.touchmove === true;
         }
 
         // Triggered when the user scrolls the page.
@@ -1292,7 +1297,6 @@
 
       //Select an option and optionally trigger events
       selectOption: function(option, noTrigger) {
-
         if (!option) {
           return option;
         }
@@ -1314,7 +1318,7 @@
           li = this.listUl.find('li[data-val="'+ option.val() +'"]');
         }
 
-        if (option.hasClass('.is-disabled') || option.is(':disabled')) {
+        if (option.hasClass('is-disabled') || option.is(':disabled')) {
           return;
         }
 
@@ -1425,11 +1429,6 @@
         var self = this, searchTerm = '';
 
         if (this.settings.source) {
-          searchTerm = self.searchInput.val();
-
-          if (!this.isFiltering) {
-            searchTerm = '';
-          }
           this.isFiltering = false;
 
           var sourceType = typeof this.settings.source,
@@ -1449,25 +1448,30 @@
               }
             }
 
-            //populate
-            self.element.empty();
-            for (var i=0; i < data.length; i++) {
-              var opts;
+            // If the incoming dataset is different than the one we started with,
+            // replace the contents of the list, and rerender it.
+            if (!self.isFiltering && !Soho.utils.equals(data, self.dataset)) {
+              self.dataset = data;
 
-              if (data[i].group) {
-                opts = data[i].options;
-                list += '<optgroup label="' + data[i].group + '">';
-                for (var ii = 0; ii < opts.length; ii++) {
-                  buildOption(opts[ii]);
+              self.element.empty();
+              for (var i=0; i < data.length; i++) {
+                var opts;
+
+                if (data[i].group) {
+                  opts = data[i].options;
+                  list += '<optgroup label="' + data[i].group + '">';
+                  for (var ii = 0; ii < opts.length; ii++) {
+                    buildOption(opts[ii]);
+                  }
+                  list += '</optgroup>';
+                } else {
+                  buildOption(data[i]);
                 }
-                list += '</optgroup>';
-              } else {
-                buildOption(data[i]);
               }
-            }
 
-            self.element.append(list);
-            self.updateList();
+              self.element.append(list);
+              self.updateList();
+            }
 
             self.element.triggerHandler('complete'); // For Busy Indicator
             self.element.trigger('requestend', [searchTerm, data]);
@@ -1594,7 +1598,7 @@
         if (this.element.prop('readonly') === true) {
           this.readonly();
         } else {
-          this.pseudoElem.removeClass('is-readonly')/*.prop('readonly', false)*/;
+          this.pseudoElem.removeClass('is-readonly');
         }
 
         // update "disabled" prop
