@@ -31,7 +31,8 @@
           moveSelectedToTop: false, //When the menu is opened, displays all selected options at the top of the list
           multiple: false, //Turns the dropdown into a multiple selection box
           noSearch: false, //If true, disables the ability of the user to enter text in the Search Input field in the open combo box
-          source: undefined,  //A function that can do an ajax call.
+          source: undefined, //A function that can do an ajax call.
+          reloadSourceOnOpen: false, // If set to true, will always perform an ajax call whenever the list is opened.  If false, the first AJAX call's results are cached.
           empty: false, //Initialize Empty Value
           delay: 300 //Typing Buffer Delay
         },
@@ -150,6 +151,7 @@
           }
         }
 
+        // Cached dataset (from AJAX, if applicable)
         this.dataset = [];
 
         this.listfilter = new ListFilter({
@@ -332,15 +334,21 @@
         }
 
         //Set initial values for the edit box
-        this.pseudoElem.find('span').text(text);
+        this.setPseudoElemDisplayText(text);
         if (this.element.attr('maxlength')) {
-           this.pseudoElem.find('span').text(text.substr(0, this.element.attr('maxlength')));
+           this.setPseudoElemDisplayText(text.substr(0, this.element.attr('maxlength')));
         }
 
         //Set the "previousActiveDescendant" to the first of the items
         this.previousActiveDescendant = opts.first().val();
 
         this.setBadge(opts);
+      },
+
+      // Sets only the display text of the Dropdown/Mutliselect
+      // Can be used for setting a pre-populated value when working with an AJAX call.
+      setPseudoElemDisplayText: function(text) {
+        this.pseudoElem.find('span').text(text);
       },
 
       copyClass: function(from, to, prop) {
@@ -757,9 +765,9 @@
             self.searchInput.val(self.filterTerm);
             self.toggleList();
           } else {
-            self.callSource(function () {
-              self.filterList(self.searchInput.val().toLowerCase());
-            });
+            //self.callSource(function () {
+            self.filterList(self.searchInput.val().toLowerCase());
+            //});
           }
         }, self.settings.delay);
       },
@@ -899,7 +907,7 @@
 
         this.position();
 
-        if (this.initialFilter) {
+        if (!this.settings.multiple && this.initialFilter) {
           setTimeout(function () {
             self.searchInput.val(self.filterTerm);
             self.filterList(self.searchInput.val());
@@ -999,10 +1007,7 @@
         function isDropdownElement(target) {
           return target.closest('.dropdown, .multiselect').length > 0 ||
             target.closest('.dropdown-list').length > 0 ||
-            self.touchmove === true; /*target.is('.dropdown, multiselect') /||
-            target.is('.option-text') || target.is('.dropdown-option') ||
-            target.is('.group-label') || target.is('.dropdown-search')  ||
-            self.touchmove === true;*/
+            self.touchmove === true;
         }
 
         // Triggered when the user scrolls the page.
@@ -1426,11 +1431,6 @@
         var self = this, searchTerm = '';
 
         if (this.settings.source) {
-          searchTerm = self.searchInput.val();
-
-          if (!this.isFiltering) {
-            searchTerm = '';
-          }
           this.isFiltering = false;
 
           var sourceType = typeof this.settings.source,
@@ -1452,7 +1452,7 @@
 
             // If the incoming dataset is different than the one we started with,
             // replace the contents of the list, and rerender it.
-            if (data !== self.dataset) {
+            if (!self.isFiltering && !Soho.utils.equals(data, self.dataset)) {
               self.dataset = data;
 
               self.element.empty();
@@ -1600,7 +1600,7 @@
         if (this.element.prop('readonly') === true) {
           this.readonly();
         } else {
-          this.pseudoElem.removeClass('is-readonly')/*.prop('readonly', false)*/;
+          this.pseudoElem.removeClass('is-readonly');
         }
 
         // update "disabled" prop
