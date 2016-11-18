@@ -765,9 +765,7 @@
             self.searchInput.val(self.filterTerm);
             self.toggleList();
           } else {
-            //self.callSource(function () {
             self.filterList(self.searchInput.val().toLowerCase());
-            //});
           }
         }, self.settings.delay);
       },
