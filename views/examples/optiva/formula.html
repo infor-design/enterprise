@@ -1,0 +1,287 @@
+
+<header class="header">
+  <div class="toolbar">
+    <div class="title">
+      <button class="btn-icon application-menu-trigger" type="button">
+        <span class="audible">Application Menu</span>
+        <span class="icon app-header">
+          <span class="one"></span>
+          <span class="two"></span>
+          <span class="three"></span>
+        </span>
+      </button>
+
+      <button type="button" class="btn-icon">
+         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+             <use xlink:href="#icon-home"/>
+         </svg>
+         <span>Home</span>
+      </button>
+
+      <button type="button" class="btn-icon">
+       <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-bookmark-filled"/>
+       </svg>
+       <span>Bookmarked</span>
+      </button>
+
+      <h1>Formula EX-001\0001 : CHICKEN CAESAR SALAD</h1>
+    </div>
+
+    <div class="buttonset">
+      <label for="searchfield-header" class="audible">Header Search Field</label>
+      <input placeholder="Type to Search" id="searchfield-header" type="text" class="searchfield" data-options="{clearable: true}">
+
+      <button type="button" class="btn-icon">
+         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+             <use xlink:href="#icon-search-list"/>
+         </svg>
+         <span>Search List</span>
+      </button>
+
+      <button type="button" class="btn-icon hide-focus">
+         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+             <use xlink:href="#icon-help"/>
+         </svg>
+         <span>Help</span>
+      </button>
+    </div>
+
+    {{> includes/header-actionbutton}}
+  </div>
+</header>
+
+<div class="two-column fixed page-container" role="main">
+
+  <div class="sidebar scrollable">
+
+      <ul role="tree" aria-label="Ingredients" class="tree" data-init="false" id="left-top-tree">
+      </ul>
+
+      <div class="twelve columns">
+        <hr class="fieldset-hr"/>
+        <ul role="tree" aria-label="Recently Viewed" class="tree" data-init="false" id="left-bottom-tree">
+        </ul>
+      </div>
+
+    <div class="splitter splitter-right"></div>
+  </div>
+
+  <div class="main" role="main">
+    <div class="content">
+        <div class="toolbar standalone">
+          <div class="buttonset">
+
+            <button type="button" class="btn-icon" title="Save">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-save"></use>
+              </svg>
+              <span>Save</span>
+            </button>
+
+            <button type="button" class="btn-icon" title="Save As">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-copy"></use>
+              </svg>
+              <span>Save As</span>
+            </button>
+
+            <button type="button" class="btn-icon" title="Delete">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-delete"></use>
+              </svg>
+              <span>Delete</span>
+            </button>
+
+            <div class="separator"></div>
+
+            <button type="button" class="btn-icon" title="Open">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-binoculars"></use>
+              </svg>
+              <span>Open</span>
+            </button>
+
+            <button type="button" class="btn-icon" title="New Document">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-new-document"></use>
+              </svg>
+              <span>New Document</span>
+            </button>
+
+            <div class="separator"></div>
+
+            <button type="button" class="btn-icon" title="Workflow">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-workflow"></use>
+              </svg>
+              <span>Workflow</span>
+            </button>
+
+            <button type="button" class="btn-icon" title="Calculator">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-calculator"></use>
+              </svg>
+              <span>Calculator</span>
+            </button>
+
+            <button type="button" class="btn-icon" title="Search Folder">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-search-folder"></use>
+              </svg>
+              <span>Search Folder</span>
+            </button>
+
+            <button type="button" class="btn-tertiary">
+              <span>Test Plan</span>
+            </button>
+
+            <button type="button" class="btn-menu">
+              <span>Test Results</span>
+            </button>
+
+            <button type="button" class="btn-icon" title="Check Guidelines">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-queries"></use>
+              </svg>
+              <span>Check Guidelines</span>
+            </button>
+
+            <button type="button" class="btn-icon" title="Where Search Used">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-search-list"></use>
+              </svg>
+              <span>Where Search Used</span>
+            </button>
+
+            <button type="button" class="btn-icon" title="Rescale Formula">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-formula-constituents"></use>
+              </svg>
+              <span>Rescale Formula</span>
+            </button>
+
+            <button type="button" class="btn-icon" title="Item Contributions">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-launch"></use>
+              </svg>
+              <span>Item Contributions</span>
+            </button>
+
+          </div>
+        </div>
+
+        <div class="full-width no-padding">
+            <div id="tabs-normal" class="tab-container">
+            <ul class="tab-list">
+              <li class="tab"><a href="#tabs-main">Main</a></li>
+              <li class="tab"><a href="#tabs-item-lines">Item Lines</a></li>
+              <li class="tab"><a href="#tabs-references">References</a></li>
+              <li class="tab"><a href="#tabs-reports">Reports</a></li>
+              <li class="tab"><a href="#tabs-custom-tables">Custom Tables</a></li>
+            </ul>
+            <div id="tabs-main" class="tab-panel">
+              <p>Facilitate cultivate monetize, seize e-services peer-to-peer content integrateAJAX-enabled user-centric strategize. Mindshare; repurpose integrate global addelivery leading-edge frictionless, harness real-time plug-and-play standards-compliant 24/7 enterprise strategize robust infomediaries: functionalities back-end. Killer disintermediate web-enabled ubiquitous empower relationships, solutions, metrics architectures.<p>
+            </div>
+            <div id="tabs-normal-opportunities" class="tab-panel" style="display: none;">
+              <p>Bricks-and-clicks? Evolve ubiquitous matrix B2B 24/365 vertical 24/365 platforms standards-compliant global leverage dynamic 24/365 intuitive ROI seamless rss-capable. Cutting-edge grow morph web services leverage; ROI, unleash reinvent innovative podcasts citizen-media networking.<p>
+              <div class="field">
+                <label class="required" for="text-normal-opportunities">Text</label>
+                <input type="text" name="text-normal-opportunities" id="text-normal-opportunities" data-validate="required">
+              </div>
+              <div class="field">
+                <label class="required" for="tel-normal-opportunities">Telephone</label>
+                <input type="tel" name="tel-normal-opportunities" id="tel-normal-opportunities" data-validate="required" aria-required="true">
+              </div>
+            </div>
+            <div id="tabs-normal-attachments" class="tab-panel" style="display: none;">
+              <p>Frictionless webservices, killer open-source innovate, best-of-breed, whiteboard interactive back-end optimize capture dynamic front-end. Initiatives ubiquitous 24/7 enhance channels B2B drive frictionless web-readiness generate recontextualize widgets applications. Sexy sticky matrix, user-centred, rich user-centric: peer-to-peer podcasting networking addelivery optimize streamline integrated proactive: granular morph.<p>
+            </div>
+            <div id="tabs-normal-contacts" class="tab-panel" style="display: none;">
+              <p>Exploit niches; enable A-list web-enabled holistic end-to-end. Exploit experiences value-added tagclouds, open-source cross-platform e-tailers, user-contributed, implement! Convergence, solutions front-end, "synergize markets initiatives integrateAJAX-enabled platforms; wireless, supply-chains reinvent, mindshare, synergies implement, drive evolve!" Post incentivize; rich-clientAPIs customized revolutionize 24/365 killer incentivize integrate intuitive utilize!</p>
+              <br>
+              <div class="field">
+                <label class="required" for="text-normal-contacts">Text</label>
+                <input type="text" name="text-normal-contacts" id="text-normal-contacts" data-validate="required">
+              </div>
+              <div class="field">
+                <label class="required" for="tel-normal-contacts">Telephone</label>
+                <input type="tel" name="tel-normal-contacts" id="tel-normal-contacts" data-validate="required" aria-required="true">
+              </div>
+              <div class="field">
+                <label class="required" for="email-normal-contacts">Email</label>
+                <input type="email" name="email-normal-contacts" id="email-normal-contacts" autocomplete="off" data-validate="required email" aria-required="true">
+              </div>
+            </div>
+            <div id="tabs-normal-notes" class="tab-panel" style="display: none;">
+              <p> Post incentivize; rich-clientAPIs customized revolutionize 24/365 killer incentivize integrate intuitive utilize!<p>
+              <div class="field">
+                <label class="required" for="name-normal-notes">Name</label>
+                <input type="text" name="name-normal-notes" id="name-normal-notes" data-validate="required" aria-required="true">
+              </div>
+              <div class="field">
+                <label for="message-normal-notes">Textarea</label>
+                <textarea name="message-normal-notes" id="message-normal-notes" autocomplete="off"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+  //Initialize the Left Tree
+  var sampleData;
+
+  /* jshint ignore:start */
+  sampleData = [{
+    "id": "node1",
+    "text": "EX-001/\ : CHICKEN CAESAR SALAD",
+    "open": true,
+    "children": [{
+        "id": "node2",
+        "text": "11250 : Lettuce, butterjead (includes boston and bibb types), raw"
+      }, {
+        "id": "node3",
+        "text": "01032 : Cheese Parmasan, grated"
+      }, {
+        "id": "node4",
+        "text": "05064 : Chicken, broilers or fryers, breast, meat only, cooked, roasted"
+      }, {
+        "id": "node5",
+        "text": "18243 : Croutons, seasoned"
+      }, {
+        "id": "Hydrocan",
+        "text": "11587 : Vinespinach, (basella) raw"
+      }]
+  }];
+  /* jshint ignore:end */
+
+  $('#left-top-tree').tree({dataset: sampleData});
+
+  //Initialize Recently Used
+  /* jshint ignore:start */
+  sampleData = [{
+    "id": "node1",
+    "text": "Recently Viewed",
+    "open": true,
+    "children": [{
+        "id": "node2",
+        "text": "EX-001/\0001 CHICKEN CAESAR SALAD"
+      }, {
+        "id": "node3",
+        "text": "EX-003/\0001 STUFF CRUST PIZZE DOUGH - READY TO USE"
+      }, {
+        "id": "node4",
+        "text": "EX-002/\0001 PIZZA DOUGH WITH GARLIC"
+      }]
+  }];
+  /* jshint ignore:end */
+  $('#left-bottom-tree').tree({dataset: sampleData});
+
+  //Init Random Controls
+  $('button').tooltip();
+</script>
