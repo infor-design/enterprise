@@ -177,12 +177,7 @@
     }
   }
 
-}
-
-.tree-container {
-  position: relative;
-  z-index: 1;
-
+  //Multi Select
   &.is-muliselect {
     li {
       .tree-checkbox {
@@ -240,12 +235,13 @@
 
     }
   }
+
 }
 
 // Firefox only
 .is-firefox {
 
-  .tree-container {
+  .tree {
     &.is-muliselect {
       li {
         .tree-checkbox::before {

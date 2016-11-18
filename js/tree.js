@@ -67,8 +67,7 @@
         this.isMultiselect = s.selectable === 'multiple';
         s.hideCheckboxes = s.hideCheckboxes || !this.isMultiselect;
 
-        this.element.wrap('<div class="tree-container'+ (this.isMultiselect ? ' is-muliselect' : '') +'"></div>');
-        this.container = this.element.closest('.tree-container');
+        this.element.addClass(this.isMultiselect ? ' is-muliselect' : '');
 
         links.each(function() {
           var a = $(this);
