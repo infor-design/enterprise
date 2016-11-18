@@ -115,9 +115,9 @@
 // Isn't actually attached to each tab, but is a separate element that moves around
 // This helps break overflow issues and simplifies the CSS
 .tab-focus-indicator {
+  @include tab-outline;
   pointer-events: none;
   z-index: 10;
-  @include tab-outline;
 
   &.is-visible {
     @include tab-outline-focus;
@@ -126,6 +126,8 @@
 
 // Tab Body
 .tab-panel {
+  //Thinking about this but might be better to do it inline in the page
+  //display: none;
   padding-top: 20px;
 
   &.padding {
@@ -146,7 +148,11 @@
       color: inherit;
     }
 
-    h1, h2, h3, h4, p {
+    h1,
+    h2,
+    h3,
+    h4,
+    p {
       color: inherit;
     }
 
@@ -162,12 +168,12 @@
 
 // More Button
 .tab-more {
+  @include css3(transition, background-color .25s ease);
   cursor: pointer;
   display: inline-block;
   position: absolute;
   right: 0;
   top: 0;
-  @include css3(transition, background-color .25s ease);
   visibility: hidden;
 
   &:focus {

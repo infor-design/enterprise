@@ -1101,7 +1101,9 @@ $datagrid-short-row-height: 29px;
 
   td {
     background-color: $datagrid-rowgroup-header;
-    padding: 0 17px;
+    border: 1px solid transparent;
+    border-bottom: 1px solid $datagrid-cell-border-color;
+    padding: 0 20px;
 
     &:focus ,
     &.is-focused {

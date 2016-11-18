@@ -187,8 +187,8 @@
           w = leftArg;
 
         //Adjust Left and Right Side
-        rightSide.css('width', ('calc(100% - ' + (w + 20) + 'px)'));
-        leftSide.css('width', ((w) + 'px'));
+        rightSide.css({'width': ('calc(100% - ' + (w + 20) + 'px)')});
+        leftSide.css({'width': ((w) + 'px') , 'margin-right' : '20px'});
         splitter.css('left', leftArg-1);
       },
 

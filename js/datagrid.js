@@ -5,27 +5,27 @@
 window.Formatters = {
 
   Text: function(row, cell, value) {
-    var str = ((value === null || value === undefined || value === '') ? '' : value.toString());
+    var str = ((value === null || value === undefined || value === '') ? '&nbsp;' : value.toString());
     return str;
   },
 
   Ellipsis: function(row, cell, value, col) {
-    var str = ((value === null || value === undefined || value === '') ? '' : value.toString());
+    var str = ((value === null || value === undefined || value === '') ? '&nbsp;' : value.toString());
     col.textOverflow = 'ellipsis';
     return str;
   },
 
   Password: function(row, cell, value) {
-    var str = ((value === null || value === undefined || value === '') ? '' : value.toString());
+    var str = ((value === null || value === undefined || value === '') ? '&nbsp;' : value.toString());
     return str.replace(/./g, '*');
   },
 
   Readonly: function(row, cell, value) {
-    return '<span class="is-readonly">' + ((value === null || value === undefined) ? '' : value) + '</span>';
+    return '<span class="is-readonly">' + ((value === null || value === undefined) ? '&nbsp;' : value) + '</span>';
   },
 
   Date: function(row, cell, value, col) {
-    var formatted = ((value === null || value === undefined) ? '' : value);
+    var formatted = ((value === null || value === undefined) ? '&nbsp;' : value);
 
     if (typeof value === 'string' && value) {
       var value2 = Locale.parseDate(value, (typeof col.dateFormat === 'string' ? {pattern: col.dateFormat}: col.dateFormat));
@@ -45,12 +45,12 @@ window.Formatters = {
   },
 
   Autocomplete: function(row, cell, value) {
-    var formatted = ((value === null || value === undefined) ? '' : value);
+    var formatted = ((value === null || value === undefined) ? '&nbsp;' : value);
     return formatted;
   },
 
   Lookup: function(row, cell, value, col, item) {
-    var formatted = ((value === null || value === undefined) ? '' : value);
+    var formatted = ((value === null || value === undefined) ? '&nbsp;' : value);
 
     if (!col.editor) {
       return formatted;
@@ -72,7 +72,7 @@ window.Formatters = {
        formatted = Locale.formatNumber(value, (col.numberFormat ? col.numberFormat : null));
     }
 
-    formatted = ((formatted === null || formatted === undefined) ? '' : formatted);
+    formatted = ((formatted === null || formatted === undefined) ? '&nbsp;' : formatted);
     return formatted;
   },
 
@@ -85,7 +85,7 @@ window.Formatters = {
       formatted = Locale.formatNumber(value, (col.numberFormat ? col.numberFormat : {style: 'integer'}));
     }
 
-    formatted = ((formatted === null || formatted === undefined) ? '' : formatted);
+    formatted = ((formatted === null || formatted === undefined) ? '&nbsp;' : formatted);
     return formatted;
   },
 
@@ -178,7 +178,7 @@ window.Formatters = {
 
   // Multi Line TextArea
   Textarea: function (row, cell, value) {
-    var formatted = ((value === null || value === undefined) ? '' : value);
+    var formatted = ((value === null || value === undefined) ? '&nbsp;' : value);
     return '<span class="datagrid-multiline-text">'+ formatted + '</span>';
   },
 
@@ -199,7 +199,7 @@ window.Formatters = {
       isOpen = true;
 
     for (var i = 0; i < groupSettings.fields.length ; i++) {
-      groups += item[groupSettings.fields[i]] + (i === 0 ? '' : ',');
+      groups += item[groupSettings.fields[i]] + (i === 0 ? '&nbsp;' : ',');
     }
 
     //TODO Add Formatter to groupSettings
@@ -281,19 +281,20 @@ window.Formatters = {
 
   Color: function (row, cell, value, col) {
     var ranges = Formatters.ClassRange(row, cell, value, col),
-      text = ((value === null || value === undefined || value === '') ? '' : value.toString());
+      text = ((value === null || value === undefined || value === '') ? '&nbsp;' : value.toString());
 
     return '<span class="' + ranges.classes + '">' + text + '</span>';
   },
 
   Button: function (row, cell, value, col) {
-    var text = col.text ? col.text : ((value === null || value === undefined || value === '') ? '' : value.toString()),
+    var text = col.text ? col.text : ((value === null || value === undefined || value === '') ? '&nbsp;' : value.toString()),
       markup ='<button type="button" class="'+ ( col.icon ? 'btn-icon': 'btn') + ' row-btn ' + (col.cssClass ? col.cssClass : '') + '">';
 
       if (col.icon) {
         markup += $.createIcon({ icon: col.icon, file: col.iconFile });
       }
       markup += '<span>' + text + '</span></button>';
+
     return markup;
   },
 
@@ -327,7 +328,7 @@ window.Formatters = {
       isChecked = (value == undefined ? false : value == true); // jshint ignore:line
     }
 
-    return !isChecked ? '' : '<span class="audible">'+ Locale.translate('Favorite') + '</span><span class="icon-favorite">' + $.createIcon({ icon: 'star-filled' }) + '</span>';
+    return !isChecked ? '&nbsp;' : '<span class="audible">'+ Locale.translate('Favorite') + '</span><span class="icon-favorite">' + $.createIcon({ icon: 'star-filled' }) + '</span>';
   },
 
   Status: function (row, cell, value, col, item) {
@@ -2357,7 +2358,7 @@ $.fn.datagrid = function(options) {
         if (col.contentVisible) {
           var canShow = col.contentVisible(dataRowIdx + 1, j, cellValue, col, rowData);
           if (!canShow) {
-            formatted = '';
+            formatted = '&nbsp;';
           }
         }
 
