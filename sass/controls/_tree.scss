@@ -119,14 +119,10 @@
       }
     }
 
-    a.is-selected {
-      background-color: $tree-selected-bg-color;
-    }
-
     // Selected State
     &.is-selected {
       > a {
-        // background-color: $tree-selected-bg-color;
+        background-color: $tree-selected-bg-color;
         color: $tree-selected-color;
 
         svg {

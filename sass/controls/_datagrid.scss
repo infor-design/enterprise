@@ -4,11 +4,11 @@
 $datagrid-header-height: 39px;  //1px border in parent
 $datagrid-filterable-header-height: 61px;
 
-$datagrid-row-height: 48px;
+$datagrid-row-height: 43px;
 $datagrid-medium-header-height: 30px;
-$datagrid-medium-row-height: 39px;
+$datagrid-medium-row-height: 33px;
 $datagrid-short-header-height: 25px;
-$datagrid-short-row-height: 29px;
+$datagrid-short-row-height: 23px;
 
 .datagrid-container {
   background-color: transparent;
@@ -188,11 +188,7 @@ $datagrid-short-row-height: 29px;
         }
 
         .datagrid-expand-btn {
-          top: -2px;
-
-          + span {
-            top: -3px;
-          }
+          vertical-align: middle;
         }
 
         .datagrid-drilldown {
@@ -764,7 +760,7 @@ $datagrid-short-row-height: 29px;
       margin: 0;
       min-height: inherit;
       overflow: hidden;
-      padding: 0 20px;
+      padding: 4px 20px 0;
     }
 
     .icon-favorite {
@@ -1319,13 +1315,12 @@ td .btn-actions {
 //Grid Expand Button
 .datagrid-expand-btn {
   background-color: transparent;
-  height: 34px;
+  height: 32px;
   left: -10px;
-  min-height: 34px;
-  min-width: 35px;
-  top: 1px;
+  min-height: 32px;
+  min-width: 32px;
   vertical-align: middle;
-  width: 35px;
+  width: 32px;
 
   span:not(.icon) {
     color: transparent;
@@ -1333,7 +1328,7 @@ td .btn-actions {
 
   + span {
     color: $datagrid-cell-color;
-    margin-left: -15px;
+    margin-left: -10px;
     position: relative;
   }
 

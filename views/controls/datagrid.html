@@ -29,9 +29,9 @@
 
       //Define Columns for the Grid.
       columns.push({id: 'productId', minWidth: 200, width: 300, name: 'Product Id', field: 'productId', formatter: Formatters.Text});
-      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, click: function (e, args) {
-          console.log(args);
-      }});
+      //columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, click: function (e, args) {
+      //    console.log(args);
+      //}});
       columns.push({ hidden: true, name: 'Activity', field: 'activity'});
       columns.push({ id: 'quantity', hidden: true, name: 'Quantity', field: 'quantity'});
       columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
