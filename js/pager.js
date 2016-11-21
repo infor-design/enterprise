@@ -191,7 +191,7 @@
           }
 
           if (li.is('.pager-next')) {
-            self.setActivePage(self.activePage + 1, false, 'next');
+            self.setActivePage((self.activePage === -1 ? 0 : self.activePage)  + 1, false, 'next');
             return false;
           }
 
