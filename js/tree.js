@@ -824,7 +824,7 @@
 
       //Sync a node with its dataset 'record'
       syncNode: function (node) {
-        var entry = node.data('jsonData') || {},
+        var entry = {},
           self = this;
 
         entry.node = node;
