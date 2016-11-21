@@ -525,13 +525,30 @@ window.Editors = {
         }
       }
 
-      var editorOptions = column.editorOptions;
-      if (!editorOptions || (editorOptions && !editorOptions.cssClass)) {
-        editorOptions = $.extend(column.editorOptions, {'cssClass': 'is-editing'});
+      var editorOptions = column.editorOptions || {};
+
+      function hasEditingClass() {
+        return editorOptions.cssClass && /is-editing/g.test(editorOptions.cssClass);
+      }
+      // Add the class to both the options being passed, as well as the column's original options
+      if (!hasEditingClass()) {
+        editorOptions.cssClass = editorOptions.cssClass || '';
+        editorOptions.cssClass += ' is-editing';
       }
 
-      this.input.dropdown(editorOptions);
+      // Append the Dropdown's sourceArguments with some row/col meta-data
+      editorOptions.sourceArguments = $.extend({}, editorOptions.sourceArguments, {
+        column: column,
+        container: container,
+        grid: grid,
+        cell: cell,
+        event: event,
+        row: row,
+        rowData: rowData,
+        value: value
+      });
 
+      this.input.dropdown(editorOptions);
     };
 
     this.val = function (value) {
@@ -2263,7 +2280,7 @@ $.fn.datagrid = function(options) {
           formatter = (col.formatter || self.defaultFormatter),
           formatted = self.formatValue(
             formatter,
-            dataRowIdx + 1,
+            dataRowIdx,
             j,
             self.fieldValue(rowData, self.settings.columns[j].field),
             self.settings.columns[j],
