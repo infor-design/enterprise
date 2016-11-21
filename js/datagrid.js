@@ -525,13 +525,22 @@ window.Editors = {
         }
       }
 
-      var editorOptions = column.editorOptions;
-      if (!editorOptions || (editorOptions && !editorOptions.cssClass)) {
-        editorOptions = $.extend(column.editorOptions, {'cssClass': 'is-editing'});
+      var editorOptions = column.editorOptions || {};
+
+      function hasEditingClass() {
+        return editorOptions.cssClass && /is-editing/g.test(editorOptions.cssClass);
+      }
+      // Add the class to both the options being passed, as well as the column's original options
+      if (!hasEditingClass()) {
+        editorOptions.cssClass = editorOptions.cssClass || '';
+        editorOptions.cssClass += ' is-editing';
+        column.editorOptions.cssClass = editorOptions.cssClass;
       }
 
-      this.input.dropdown(editorOptions);
+      // Append the Dropdown's sourceArguments with some row/col meta-data
+      editorOptions.sourceArguments = editorOptions.sourceArguments || {};
 
+      this.input.dropdown(editorOptions);
     };
 
     this.val = function (value) {

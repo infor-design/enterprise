@@ -32,6 +32,7 @@
           multiple: false, //Turns the dropdown into a multiple selection box
           noSearch: false, //If true, disables the ability of the user to enter text in the Search Input field in the open combo box
           source: undefined, //A function that can do an ajax call.
+          sourceArguments: {}, // If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
           reloadSourceOnOpen: false, // If set to true, will always perform an ajax call whenever the list is opened.  If false, the first AJAX call's results are cached.
           empty: false, //Initialize Empty Value
           delay: 300 //Typing Buffer Delay
@@ -1484,7 +1485,7 @@
 
           if (sourceType === 'function') {
             // Call the 'source' setting as a function with the done callback.
-            this.settings.source(response, searchTerm);
+            this.settings.source(response, searchTerm, this.settings.sourceArguments);
           } else if (sourceType === 'object') {
             // Use the 'source' setting as pre-existing data.
             // Sanitize accordingly.
