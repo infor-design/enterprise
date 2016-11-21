@@ -79,5 +79,18 @@
   }
 }
 
-// html[dir='rtl'] {
-// }
+html[dir='rtl'] {
+  .circlepager {
+    &.is-active {
+      .controls {
+        .control-button {
+          margin: 0 0 0 20px;
+
+          &:last-child {
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+}

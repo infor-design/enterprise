@@ -531,4 +531,31 @@ html[dir='rtl'] {
       }
     }
   }
+
+  .hero-widget {
+    .hero-header,
+    .hero-content,
+    .hero-footer {
+      .toolbar {
+        padding-left: 0;
+        padding-right: 15px;
+      }
+    }
+
+    .hero-footer {
+      .hero-footer-nav {
+        li {
+          &::before {
+            margin-left: 2px;
+            margin-right: inherit;
+          }
+
+          &:first-child::before {
+            margin-left: inherit;
+            margin-right: 15px;
+          }
+        }
+      }
+    }
+  }
 }

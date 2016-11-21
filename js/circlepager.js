@@ -150,7 +150,8 @@
         index = typeof index !== 'undefined' ? index : this.activeIndex;
         this.activeIndex = index;
 
-        var left = index > 0 ? ('-'+ (index * 100) +'%') : 0;
+        var isRTL = Locale.isRTL(),
+          left = index > 0 ? ((isRTL ? '' : '-') + (index * 100) +'%') : 0;
         this.controlButtons.removeClass('is-active').eq(index).addClass('is-active').focus();
         this.container.css('left', left);
       },
