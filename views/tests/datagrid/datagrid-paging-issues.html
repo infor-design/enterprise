@@ -30,7 +30,7 @@
           case 'first': beginIndex = 0; break;
           case 'last': beginIndex = data.length - req.pagesize; break;
           case 'next': beginIndex = beginIndex + req.pagesize; break;
-          case 'prev': beginIndex = Math.max(0, beginIndex - req.pagesize); break; 
+          case 'prev': beginIndex = Math.max(0, beginIndex - req.pagesize); break;
           case 'sorted': console.log('sorted stub called - implement me'); break;
           case 'filtered': console.log('filtered stub called - implement me'); break;
         }
@@ -55,10 +55,13 @@
         }
 
         // send the data to the data grid
+        req.activePage = -1;
+        console.log(beginIndex /req.pagesize);
+        //pageData[0].id, req.activePage, req.lastPage, req.firstPage);
         response(pageData, req);
 
         // reset the selected row
-        console.log(selectedIndex)
+        //console.log(selectedIndex)
         datagrid.selectRow(selectedIndex === -1 ? 0 : selectedIndex);
       }
     });
