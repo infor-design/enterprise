@@ -534,11 +534,19 @@ window.Editors = {
       if (!hasEditingClass()) {
         editorOptions.cssClass = editorOptions.cssClass || '';
         editorOptions.cssClass += ' is-editing';
-        column.editorOptions.cssClass = editorOptions.cssClass;
       }
 
       // Append the Dropdown's sourceArguments with some row/col meta-data
-      editorOptions.sourceArguments = editorOptions.sourceArguments || {};
+      editorOptions.sourceArguments = editorOptions.sourceArguments || {
+        column: column,
+        container: container,
+        grid: grid,
+        cell: cell,
+        event: event,
+        row: row,
+        rowData: rowData,
+        value: value
+      };
 
       this.input.dropdown(editorOptions);
     };
