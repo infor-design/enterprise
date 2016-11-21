@@ -8,6 +8,7 @@ Release Date: 2016-11-30
 ### Breaking Changes
 
 * 2016-11-11 - Swaplist (SOHO-4552) - now returns data arrays instead of jQuery object array, so datasets should be kept in sync with the UI. This will allow for additional data, like the key values, that is not displayed to the user to be used.
+* 2016-11-21 - The Button with id = "masthead-icon" on the mast head was changed to use a class. Use: <button type="button" class="masthead-icon" class="btn">
 
 ### Ui Changes
 * 2016-11-17 - Tree - Changed the selection state to only focus the element instead of the longer bar. This is more performant.
