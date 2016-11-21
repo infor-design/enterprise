@@ -39,12 +39,13 @@
     columns.push({ id: 'productId', name: 'Product Id', field: 'productId'});
     columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink});
     columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity'});
-    columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
+    columns.push({ id: 'quantity', filterType: 'text', name: 'Quantity', field: 'quantity'});
     columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal});
 
     //Init and get the api for the grid
     grid = $('#product-lookup').lookup({
       field: 'productId',
+      autoApply: true,
       options: {
         columns: columns,
         dataset: data,
@@ -54,6 +55,8 @@
           keywordFilter: true,
           advancedFilter: true,
           actions: true,
+          selectable: 'single',
+          filterable: true,
           views: true,
           rowHeight: false,
           collapsibleFilter: false,

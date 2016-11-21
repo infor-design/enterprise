@@ -3,7 +3,7 @@
 
 .full-width {
   padding: 30px;
-  width: calc(100% - 60px);
+  width: 100%;
 
   &.contained {
     height: inherit;
@@ -12,10 +12,6 @@
   &.no-padding {
     margin: 0;
   }
-}
-
-.content .full-width {
-  width: 100%;
 }
 
 .full-height {
