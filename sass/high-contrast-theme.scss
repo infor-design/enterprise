@@ -54,6 +54,29 @@ $alert-red: $ruby09;
 $hr-top-color: $graphite03;
 $hr-bottom-color: transparent;
 
+// Circle Pager
+$circlepager-control-button-bg-color: $white;
+$circlepager-control-button-border-color: $graphite06;
+$circlepager-control-button-hover-bg-color: $white;
+$circlepager-control-button-hover-border-color: $black;
+$circlepager-control-button-focus-bg-color: $white;
+$circlepager-control-button-focus-border-color: $azure07;
+
+$circlepager-control-button-active-bg-color: $primary-color;
+$circlepager-control-button-active-border-color: $primary-color;
+$circlepager-control-button-active-hover-bg-color: $primary-color;
+$circlepager-control-button-active-hover-border-color: $primary-color;
+$circlepager-control-button-active-focus-bg-color: $primary-color;
+$circlepager-control-button-active-focus-border-color: $primary-color;
+
+$circlepager-control-button-disable-bg-color: transparent;
+$circlepager-control-button-disable-border-color: $graphite04;
+$circlepager-control-button-disable-hover-bg-color: transparent;
+$circlepager-control-button-disable-hover-border-color: $graphite04;
+$circlepager-control-button-disable-focus-bg-color: transparent;
+$circlepager-control-button-disable-focus-border-color: $graphite04;
+
+
 // Popovers
 $popover-bg-color: $graphite01;
 $popover-border-color: $graphite06;

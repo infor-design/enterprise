@@ -2386,7 +2386,7 @@ window.Chart = function(container) {
       isViewSmall = parent.width() < 450,
       margin = {
         top: (isAxisLabels.top ? 40 : 30),
-        right: (isAxisLabels.right ? (isViewSmall ? 45 : 65) : (isViewSmall ? 35 : 55)),
+        right: (isAxisLabels.right ? (isViewSmall ? 45 : 65) : (isViewSmall ? 45 : 55)),
         bottom: (isAxisLabels.bottom ? 50 : 35),
         left: (isAxisLabels.right ? (isViewSmall ? 55 : 75) : (isViewSmall ? 45 : 65))
       },
@@ -2540,19 +2540,20 @@ window.Chart = function(container) {
 
         lineGroups.append('path')
           .datum(d.data)
-          .attr('fill', function (d) { return charts.chartColor(i, 'line', d); })
+          .attr('fill', function () { return charts.chartColor(i, 'line', d); })
           .style('opacity', '.2')
           .attr('class', 'area')
           .attr('d', area);
       }
 
       var path = lineGroups.append('path')
+        .datum(d.data)
         .attr('d', line(d.data))
-        .attr('stroke', function (d) { return isBubble ? '' : charts.chartColor(i, 'line', d); })
+        .attr('stroke', function () { return isBubble ? '' : charts.chartColor(i, 'line', d); })
         .attr('stroke-width', 2)
         .attr('fill', 'none')
         .attr('class', 'line')
-        .on('click.chart', function(d) {
+        .on('click.chart', function() {
           charts.selectElement(d3.select(this.parentNode), svg.selectAll('.line-group'), d);
         });
 
@@ -2575,9 +2576,8 @@ window.Chart = function(container) {
           .attr('cx', function (d, i) { return xScale(isBubble ? d.value.x : i); })
           .attr('cy', function (d) { return yScale(isBubble ? 0 : d.value); })
           .attr('r', (isBubble ? 0 : 5))
-          .style('stroke', '#ffffff')
           .style('stroke-width', (isBubble ? 0 : 2))
-          .style('fill', function (d) { return charts.chartColor(i, 'line', d); })
+          .style('fill', function () { return charts.chartColor(i, 'line', d); })
           .style('opacity', (isBubble ? '.7' : '1'))
           .on('mouseenter.chart', function(d2) {
             var rect = this.getBoundingClientRect(),
@@ -2677,7 +2677,9 @@ window.Chart = function(container) {
       return {name: d.name, selectionObj: svg.selectAll('.line-group'), selectionInverse: svg.selectAll('.line-group'), data: d};
     });
 
-    charts.addLegend(series);
+    if (charts.showLegend) {
+      charts.addLegend(series);
+    }
     charts.appendTooltip();
 
     // Set initial selected
@@ -3472,12 +3474,15 @@ window.Chart = function(container) {
       this.Sparkline(options.dataset, {isMedianRange: true, isPeakDot: true});
     }
     if (options.type === 'line') {
+      this.showLegend = typeof options.showLegend !== 'undefined' ? options.showLegend : true;
       this.Line(options.dataset, options);
     }
     if (options.type === 'area') {
+      this.showLegend = typeof options.showLegend !== 'undefined' ? options.showLegend : true;
       this.Line(options.dataset, options, true);
     }
     if (options.type === 'bubble') {
+      this.showLegend = typeof options.showLegend !== 'undefined' ? options.showLegend : true;
       this.Line(options.dataset, options, false, true);
     }
     if (options.type === 'bullet') {

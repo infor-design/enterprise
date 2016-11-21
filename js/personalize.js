@@ -176,6 +176,8 @@
         ' .hero-widget.is-personalizable .hero-bottom { background-color: '+ Soho.colors.header +' }' +
         ' .hero-widget.is-personalizable .hero-footer .hero-footer-nav li::before { color: '+ Soho.colors.verticalBorder +' }' +
         ' .hero-widget.is-personalizable .chart-container .arc { stroke: '+ Soho.colors.subheader +' }' +
+        ' .hero-widget.is-personalizable .chart-container .bar { stroke: '+ Soho.colors.subheader +' }' +
+        ' .hero-widget.is-personalizable .chart-container.line-chart .dot { stroke: '+ Soho.colors.subheader +' }' +
         '';
         this.stylesheet(cssRules);
 
