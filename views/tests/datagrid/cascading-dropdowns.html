@@ -16,20 +16,14 @@
 <div class="row">
   <div class="twelve columns">
     <div role="toolbar" class="toolbar">
-
       <div class="title">
-        Data Grid Header Title
+        <span>Cascading Dropdown Example</span>
         <span class="datagrid-result-count">(N Results)</span>
       </div>
-
-      <div class="buttonset">
-
-      </div>
+      <div class="buttonset"></div>
     </div>
 
-    <div id="datagrid">
-
-    </div>
+    <div id="datagrid"></div>
   </div>
 </div>
 
@@ -66,7 +60,7 @@
     // Define a filter function that executes in the grid
     var dropDownFilter = function(response, term, gridArgs) {
       function isError() {
-        return gridArgs.rowData.price < HIGH_RANGE_LOW_NUMBER;
+        return gridArgs.rowData.price >= HIGH_RANGE_LOW_NUMBER;
       }
 
       // Only return options that qualify against this row's price

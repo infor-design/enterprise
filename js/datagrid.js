@@ -537,7 +537,7 @@ window.Editors = {
       }
 
       // Append the Dropdown's sourceArguments with some row/col meta-data
-      editorOptions.sourceArguments = editorOptions.sourceArguments || {
+      editorOptions.sourceArguments = $.extend({}, editorOptions.sourceArguments, {
         column: column,
         container: container,
         grid: grid,
@@ -546,7 +546,7 @@ window.Editors = {
         row: row,
         rowData: rowData,
         value: value
-      };
+      });
 
       this.input.dropdown(editorOptions);
     };
@@ -2280,7 +2280,7 @@ $.fn.datagrid = function(options) {
           formatter = (col.formatter || self.defaultFormatter),
           formatted = self.formatValue(
             formatter,
-            dataRowIdx + 1,
+            dataRowIdx,
             j,
             self.fieldValue(rowData, self.settings.columns[j].field),
             self.settings.columns[j],
