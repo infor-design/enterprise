@@ -54,8 +54,12 @@
           datagrid.unSelectAllRows();
         }
 
-        // send the data to the data grid
+        // set activePage to -1 to indicate to the datagrid that req.firstPage and
+        // req.lastPage should solely be used to determine whether paging bar buttons
+        // should be enabled/disabled
         req.activePage = -1;
+
+        // send the data to the data grid
         response(pageData, req);
 
         // reset the selected row
