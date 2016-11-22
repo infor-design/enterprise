@@ -44,6 +44,29 @@ $hyperlink-hover-color: $primary-color;
 $hr-top-color: $graphite03;
 $hr-bottom-color: $white;
 
+// Circle Pager
+$circlepager-control-button-bg-color: transparent;
+$circlepager-control-button-border-color: $graphite04;
+$circlepager-control-button-hover-bg-color: transparent;
+$circlepager-control-button-hover-border-color: $graphite08;
+$circlepager-control-button-focus-bg-color: transparent;
+$circlepager-control-button-focus-border-color: $primary-color;
+
+$circlepager-control-button-active-bg-color: $primary-color;
+$circlepager-control-button-active-border-color: $primary-color;
+$circlepager-control-button-active-hover-bg-color: $primary-color;
+$circlepager-control-button-active-hover-border-color: $primary-color;
+$circlepager-control-button-active-focus-bg-color: $primary-color;
+$circlepager-control-button-active-focus-border-color: $primary-color;
+
+$circlepager-control-button-disable-bg-color: transparent;
+$circlepager-control-button-disable-border-color: $graphite03;
+$circlepager-control-button-disable-hover-bg-color: transparent;
+$circlepager-control-button-disable-hover-border-color: $graphite03;
+$circlepager-control-button-disable-focus-bg-color: transparent;
+$circlepager-control-button-disable-focus-border-color: $graphite03;
+
+
 // Popovers
 $popover-bg-color: $white;
 $popover-border-color: $graphite03;

@@ -386,12 +386,32 @@
     }
 
     .chart-container {
-      .arc {
+      .arc,
+      .bar,
+      &.line-chart .dot {
         stroke: $subhead-bg-color;
       }
 
       text {
         fill: $header-text-color;
+      }
+    }
+
+    .circlepager.is-active .controls .control-button {
+      border-color: $header-button-color;
+
+      &:hover {
+        border-color: $header-text-color;
+      }
+
+      &.is-active {
+        background-color: $header-text-color;
+        border-color: $header-text-color;
+
+        &:hover {
+          background-color: $header-text-color;
+          border-color: $header-text-color;
+        }
       }
     }
   }
@@ -508,6 +528,33 @@ html[dir='rtl'] {
       &:not(.has-toolbar) > .btn-actions {
         left: 18px;
         right: auto;
+      }
+    }
+  }
+
+  .hero-widget {
+    .hero-header,
+    .hero-content,
+    .hero-footer {
+      .toolbar {
+        padding-left: 0;
+        padding-right: 15px;
+      }
+    }
+
+    .hero-footer {
+      .hero-footer-nav {
+        li {
+          &::before {
+            margin-left: 2px;
+            margin-right: inherit;
+          }
+
+          &:first-child::before {
+            margin-left: inherit;
+            margin-right: 15px;
+          }
+        }
       }
     }
   }

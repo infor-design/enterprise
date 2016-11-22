@@ -1,0 +1,128 @@
+<style>
+  .circlepager.example1 .slides .slide .slide-content {
+    height: 318px;
+    padding: 20px;
+    width: 100%;
+  }
+  .circlepager.example1 .slides .slide .slide-content .icon {
+    height: auto;
+    width: 100%;
+  }
+  .circlepager.example1 .slides .slide .slide-content .text {
+    font-size: 3em;
+    text-align: center;
+  }
+  .circlepager.example1 .slides .slide:nth-child(1) .slide-content {
+    background-color: #cbebf4;
+  }
+  .circlepager.example1 .slides .slide:nth-child(2) .slide-content {
+    background-color: #d5f6c0;
+  }
+  .circlepager.example1 .slides .slide:nth-child(3) .slide-content {
+    background-color: #fbe9bf;
+  }
+</style>
+
+<div class="row">
+  <div class="twelve columns">
+    <p>
+      <br><strong>Resize browser window to toggle circle pager.</strong><br>
+      <a href="#" class="hyperlink prev">Prev</a> | <a href="#" class="hyperlink next">Next</a>
+    </p>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="full-width column">
+    <div class="card">
+      <div class="card-header">
+          <h2 class="widget-title">Circle Pager Example</h2>
+          <button type="button" class="btn-actions" type="button">
+            <span class="audible">Actions</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-more"></use>
+            </svg>
+          </button>
+          <ul class="popupmenu actions top">
+            <li><a href="#">Action One</a></li>
+            <li><a href="#">Action Two</a></li>
+          </ul>
+      </div>
+      <div class="card-content">
+
+
+        <!-- BEGIN: circlepager -->
+        <div class="circlepager example1">
+          <!-- BEGIN: slides -->
+          <div class="slides">
+
+            <div class="slide">
+              <div class="slide-content">
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use xlink:href="#icon-camera"></use>
+                </svg>
+                <p class="text">Slide One</p>
+              </div>
+            </div>
+
+            <div class="slide">
+              <div class="slide-content">
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use xlink:href="#icon-camera"></use>
+                </svg>
+                <p class="text">Slide Two</p>
+              </div>
+            </div>
+
+            <div class="slide" data-button-text="Custom link text">
+              <div class="slide-content">
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use xlink:href="#icon-camera"></use>
+                </svg>
+                <p class="text">Slide Three</p>
+              </div>
+            </div>
+
+          </div>
+          <!-- END: slides -->
+        </div>
+        <!-- END: circlepager -->
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+// Wait for initialize
+$('body').on('initialized', function() {
+  var circlepagerApi = $('.circlepager').data('circlepager'),
+    cardContent = $('.card-content');
+
+  window.onresize = function() {
+    if (cardContent.width() < 1000) {
+      circlepagerApi.active();
+    } else {
+      circlepagerApi.unactive();
+    }
+  }
+
+  // Init resize
+  window.onresize();
+
+
+  // previous / next
+  $('.prev').on('click', function(e) {
+    e.preventDefault();
+    circlepagerApi.prev();
+  });
+  $('.next').on('click', function(e) {
+    e.preventDefault();
+    circlepagerApi.next();
+  });
+
+});
+</script>
