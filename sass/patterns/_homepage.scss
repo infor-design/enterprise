@@ -383,6 +383,14 @@
           fill: $header-text-color;
         }
       }
+
+      &:focus:not(.hide-focus) {
+        box-shadow: 0 0 0 2px transparent, 0 0 0 1px $header-button-color;
+
+        &:active {
+          box-shadow: none;
+        }
+      }
     }
 
     .chart-container {
@@ -412,6 +420,10 @@
           background-color: $header-text-color;
           border-color: $header-text-color;
         }
+      }
+
+      &:focus:not(.hide-focus) {
+        outline-color: $header-button-color;
       }
     }
   }

@@ -54,6 +54,11 @@
           border-color: $circlepager-control-button-hover-border-color;
         }
 
+        &:focus {
+          background-color: $circlepager-control-button-focus-bg-color;
+          border-color: $circlepager-control-button-focus-border-color;
+        }
+
         &.is-active {
           background-color: $circlepager-control-button-active-bg-color;
           border-color: $circlepager-control-button-active-border-color;
@@ -61,6 +66,11 @@
           &:hover {
             background-color: $circlepager-control-button-active-hover-bg-color;
             border-color: $circlepager-control-button-active-hover-border-color;
+          }
+
+          &:focus {
+            background-color: $circlepager-control-button-active-focus-bg-color;
+            border-color: $circlepager-control-button-active-focus-border-color;
           }
         }
 
@@ -72,6 +82,11 @@
           &:hover {
             background-color: $circlepager-control-button-disable-hover-bg-color;
             border-color: $circlepager-control-button-disable-hover-border-color;
+          }
+
+          &:focus {
+            background-color: $circlepager-control-button-disable-focus-bg-color;
+            border-color: $circlepager-control-button-disable-focus-border-color;
           }
         }
       }
