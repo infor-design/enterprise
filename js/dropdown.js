@@ -198,16 +198,16 @@
         }
       },
 
-      // Update List Values
+      // Keep a generated list of items and update as needed
       updateList: function() {
         var self = this,
           isMobile = self.isMobile(),
           isOpen = self.list && self.list.is(':visible'),
           listContents = '',
           ulContents = '',
-          upTopOpts = 0;
+          upTopOpts = 0,
+          hasOptGroups = this.element.find('optgroup').length;
 
-        //Keep a list generated and append as needed
         if (!isOpen) {
           listContents = '<div class="dropdown-list' +
             (this.isMobile() ? ' mobile' : '') +
@@ -228,7 +228,6 @@
         if (!opts || !opts.length) {
           return;
         }
-
         var selectedOpts = opts.filter(':selected');
 
         function buildLiHeader(textContent) {
@@ -245,14 +244,16 @@
             title = attributes.getNamedItem('title'),
             badge = attributes.getNamedItem('data-badge'),
             badgeColor = attributes.getNamedItem('data-badge-color'),
-            isSelected = attributes.getNamedItem('selected'),
-            isDisabled = attributes.getNamedItem('isDisabled'),
-            cssClasses = attributes.getNamedItem('class');
+            isSelected = option.selected,
+            isDisabled = option.disabled,
+            cssClasses = option.className;
+
+          var trueValue = value && value.value ? value.value : text;
 
           liMarkup += '<li role="presentation" class="dropdown-option'+ (isSelected ? ' is-selected' : '') +
                         (isDisabled ? ' is-disabled' : '') +
                         (cssClasses ? ' ' + cssClasses.value : '' ) +
-                        (value ? '" data-val="' + value.value + '"' : '') +
+                        '" data-val="' + trueValue + '"' +
                         '" tabindex="' + (index && index === 0 ? 0 : -1) + '">' +
                         (title ? '" title="' + title.value + '"' : '') +
                         '<a role="option" href="#" id="list-option'+ index +'">' +
@@ -267,23 +268,25 @@
         // Move all selected options to the top of the list if the setting is true.
         // Also adds a group heading if other option groups are found in the <select> element.
         if (self.settings.moveSelectedToTop) {
-          // Show a "selected" header if any options have been selected.
-          if (selectedOpts.length > 0) {
-            // Only show the "all" header if there are no other optgroups present
-            if (!self.element.find('optgroup').length) {
-              ulContents += buildLiHeader('All ' + (self.isInlineLabel ? self.inlineLabelText.text() : this.label.text()));
-            } else {
-              ulContents += buildLiHeader(Locale.translate('Selected') + ' ' + (self.isInlineLabel ? self.inlineLabelText.text() : this.label.text()));
-            }
+          opts = opts.not(selectedOpts);
 
-            selectedOpts.each(function(i) {
-              ulContents += buildLiOption(this, i);
-              upTopOpts++;
-            });
+          // Show a "selected" header if there are selected options
+          if (selectedOpts.length > 0) {
+            ulContents += buildLiHeader(Locale.translate('Selected') + ' ' + (self.isInlineLabel ? self.inlineLabelText.text() : this.label.text()));
+          }
+
+          selectedOpts.each(function(i) {
+            ulContents += buildLiOption(this, i);
+            upTopOpts++;
+          });
+
+          // Only show the "all" header beneath the selected options if there are no other optgroups present
+          if (!hasOptGroups) {
+            ulContents += buildLiHeader('All ' + (self.isInlineLabel ? self.inlineLabelText.text() : this.label.text()));
           }
         }
 
-        self.element.find('option').each(function(i) {
+        opts.each(function(i) {
           var count = i + upTopOpts,
             option = $(this);
 
