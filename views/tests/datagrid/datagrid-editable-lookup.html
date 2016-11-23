@@ -100,13 +100,13 @@
 
         //Define Columns for the Grid.
         columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, width: 50, formatter: Formatters.SelectionCheckbox, align: 'center'});
-        columns.push({ id: 'id', name: 'Row Id', field: 'id', width: 10, formatter: Formatters.Readonly});
+        columns.push({ id: 'id', name: 'Row Id', field: 'id', width: 60, formatter: Formatters.Readonly});
 
         columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 125, formatter: Formatters.Hyperlink, editor: Editors.Input});
 
 
-        columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 125, editor: Editors.Input});
-        columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125, align: 'right', editor: Editors.Input, mask: '###', isEditable: function (row) {
+        columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 155, editor: Editors.Input});
+        columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 155, align: 'right', editor: Editors.Input, mask: '###', isEditable: function (row) {
             //For this fake logic just disable odd rows
             return (row % 2 === 0);
           }});

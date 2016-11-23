@@ -77,7 +77,7 @@
 | Supply Chain Execution | Mark Schaible, Anindhya Sharma | Apache, Jboss - Many Screens - Reviewing Upgrade | 3x to 4x |
 | SupplyWeb | Eric Andrews | Reviewing | 3x |
 | System Console | New app by S3 team  | Andy Buboltz | 4x |
-| System I |   | Richard Sankey | 3x |
+| System i Workspace | Infor System21, LX, XA and Anael products | Richard Sankey | 3x to 4x |
 | SXE | Angular 1.0 - using XI directly - Huge app it will be another year. | Aaron Pikkarainen <aaron.pikkarainen@infor.com> | 4x |
 | S&OP | Vaadin and GWT | Duncan Simpson | 4x |
 | VR POC | (POS system) works on Windows Forms using the ProvideX language. Win Forms dynamically transformed to a Web Forms (DHTML), | Arnaud Pochon  | 3x to 4x |
