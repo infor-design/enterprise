@@ -34,8 +34,8 @@
       width: 100%;
 
       .control-button {
-        background-color: $circlepager-control-button-bg-color;
-        border: 1px solid $circlepager-control-button-border-color;
+        background-color: $circlepager-bg-color;
+        border: 1px solid $circlepager-border-color;
         border-radius: 50%;
         cursor: pointer;
         display: inline-block;
@@ -50,43 +50,43 @@
         }
 
         &:hover {
-          background-color: $circlepager-control-button-hover-bg-color;
-          border-color: $circlepager-control-button-hover-border-color;
+          background-color: $circlepager-hover-bg-color;
+          border-color: $circlepager-hover-border-color;
         }
 
         &:focus {
-          background-color: $circlepager-control-button-focus-bg-color;
-          border-color: $circlepager-control-button-focus-border-color;
+          background-color: $circlepager-focus-bg-color;
+          border-color: $circlepager-focus-border-color;
         }
 
         &.is-active {
-          background-color: $circlepager-control-button-active-bg-color;
-          border-color: $circlepager-control-button-active-border-color;
+          background-color: $circlepager-active-bg-color;
+          border-color: $circlepager-active-border-color;
 
           &:hover {
-            background-color: $circlepager-control-button-active-hover-bg-color;
-            border-color: $circlepager-control-button-active-hover-border-color;
+            background-color: $circlepager-active-hover-bg-color;
+            border-color: $circlepager-active-hover-border-color;
           }
 
           &:focus {
-            background-color: $circlepager-control-button-active-focus-bg-color;
-            border-color: $circlepager-control-button-active-focus-border-color;
+            background-color: $circlepager-active-focus-bg-color;
+            border-color: $circlepager-active-focus-border-color;
           }
         }
 
         &[disabled],
         &.is-disable {
-          background-color: $circlepager-control-button-disable-bg-color;
-          border-color: $circlepager-control-button-disable-border-color;
+          background-color: $circlepager-disable-bg-color;
+          border-color: $circlepager-disable-border-color;
 
           &:hover {
-            background-color: $circlepager-control-button-disable-hover-bg-color;
-            border-color: $circlepager-control-button-disable-hover-border-color;
+            background-color: $circlepager-disable-hover-bg-color;
+            border-color: $circlepager-disable-hover-border-color;
           }
 
           &:focus {
-            background-color: $circlepager-control-button-disable-focus-bg-color;
-            border-color: $circlepager-control-button-disable-focus-border-color;
+            background-color: $circlepager-disable-focus-bg-color;
+            border-color: $circlepager-disable-focus-border-color;
           }
         }
       }
