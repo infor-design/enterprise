@@ -43,17 +43,22 @@
           this.createControls();
           this.handleEvents();
           this.active();
-
-          // Initialize active slide
-          this.show();
+          this.initActiveSlide();
         }
       },
 
       // Set elements
       setElements: function() {
-        var s = this.settings;
+        var self = this,
+          s = this.settings;
+
         this.container = $('.slides', this.element);
-        this.slides = $('.slide', this.element);
+        this.slidesJQ = $('.slide', this.element);
+        this.slides = [];
+        this.slidesJQ.each(function() {
+          self.slides.push({ node: $(this) });
+        });
+
         this.activeIndex = s.startingSlide !== null &&
           s.startingSlide > -1 && s.startingSlide < this.slides.length ?
             s.startingSlide : 0;
@@ -64,17 +69,18 @@
         var html = '<div class="controls">';
 
         for (var i=0,l=this.slides.length; i<l; i++) {
-          var slide = $(this.slides[i]),
+          var slide = this.slides[i].node,
             text = slide.attr('data-button-text'),
             href = '#slide'+ i,
             isDisabled = '';
 
-          if (slide.is('.active') && this.settings.startingSlide === null && !slide.is('.is-disabled')) {
-            this.activeIndex = i;
+          if (slide.is('.is-disabled, [disabled]') && !slide.is('[disabled="false"]')) {
+            isDisabled = ' disabled tabindex="-1"';
+            this.slides[i].isDisabled = true;
           }
 
-          if (slide.is('.is-disabled')) {
-            isDisabled = ' disabled tabindex="-1"';
+          if (slide.is('.active') && this.settings.startingSlide === null && isDisabled === '') {
+            this.activeIndex = i;
           }
 
           if (text && text.length) {
@@ -83,7 +89,7 @@
             text = 'Slide '+ i;
           }
 
-          html += '<a href="'+ href +'" class="control-button"'+ isDisabled +'><span class="audible">'+ text +'</span></a>';
+          html += '<a href="'+ href +'" class="control-button hyperlink hide-focus"'+ isDisabled +'><span class="audible">'+ text +'</span></a>';
         }
         html += '</div>';
 
@@ -93,17 +99,21 @@
       // Handle events
       handleEvents: function() {
         var self = this;
-
         this.controlButtons = $('.control-button', this.element);
 
-        // Handle clicks for bottom bullet links
-        this.controlButtons.on('click.circlepager', function(e) {
-          e.preventDefault();
+        this.controlButtons.each(function(index) {
           var btn = $(this);
-          if (btn.is('[disabled]')) {
-            return;
-          }
-          self.show(btn.index());
+          btn.hideFocus();
+
+          // Handle clicks for bottom bullet links
+          btn.on('click.circlepager', function(e) {
+            e.preventDefault();
+            if (self.slides[index].isDisabled) {
+              return;
+            }
+            self.show(index);
+          });
+
         });
 
         // Handle keyboard events
@@ -114,6 +124,7 @@
 
           // Left and Right arrow keys
           if ([37, 39].indexOf(key) !== -1) {
+            self.isFocus = true; // Move focus
             if (e.altKey) {
               // [Alt + Left/Right arrow] to move to the first or last
               if ((key === 37 && !isRTL) || (key === 39 && isRTL)) {
@@ -150,10 +161,15 @@
         index = typeof index !== 'undefined' ? index : this.activeIndex;
         this.activeIndex = index;
 
-        var isRTL = Locale.isRTL(),
-          left = index > 0 ? ((isRTL ? '' : '-') + (index * 100) +'%') : 0;
-        this.controlButtons.removeClass('is-active').eq(index).addClass('is-active').focus();
+        var left = index > 0 ? ((Locale.isRTL() ? '' : '-') + (index * 100) +'%') : 0;
+        this.controlButtons.removeClass('is-active').eq(index).addClass('is-active');
         this.container.css('left', left);
+
+        // Set focus
+        if (this.isFocus) {
+          this.isFocus = false;
+          this.controlButtons.eq(index).focus();
+        }
       },
 
       // First slide
@@ -172,7 +188,7 @@
           prev = this.activeIndex > 0 ?
             this.activeIndex -1 : (this.settings.loop ? this.slides.length-1 : 0);
 
-        if (this.controlButtons.eq(prev).is('[disabled]')) {
+        if (this.slides[prev].isDisabled) {
           setTimeout(function() {
             self.prev();
           }, 0);
@@ -188,7 +204,7 @@
           next = this.activeIndex >= this.slides.length-1 ?
             (this.settings.loop ? 0 : this.activeIndex) : this.activeIndex + 1;
 
-        if (this.controlButtons.eq(next).is('[disabled]')) {
+        if (this.slides[next].isDisabled) {
           setTimeout(function() {
             self.next();
           }, 0);
@@ -203,7 +219,7 @@
         this.isActive = true;
         this.element.addClass('is-active');
         this.container.css('width', (100 * this.slides.length) +'%');
-        this.slides.css('width', (100 / this.slides.length) +'%');
+        this.slidesJQ.css('width', (100 / this.slides.length) +'%');
         this.show();
       },
 
@@ -212,6 +228,15 @@
         this.isActive = false;
         this.element.removeClass('is-active').css('width', '');
         this.container.css({'width': '', 'left': ''});
+      },
+
+      // Initialize active slide
+      initActiveSlide: function() {
+        if (this.slides[this.activeIndex].isDisabled) {
+          this.next();
+          return false;
+        }
+        this.show();
       },
 
       unbind: function() {
