@@ -164,6 +164,10 @@
           fields.each(function () {
 
             var field = $(this);
+            if (field.closest('.datagrid-filter-wrapper').length > 0) {
+              return;
+            }
+
             if (!field.val()) {
               allValid = false;
             }

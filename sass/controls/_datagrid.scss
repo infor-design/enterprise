@@ -210,7 +210,6 @@ $datagrid-short-row-height: 23px;
 
         .hyperlink {
           line-height: 1.4rem;
-          margin-top: 5px;
           vertical-align: top;
         }
 
@@ -693,7 +692,7 @@ $datagrid-short-row-height: 23px;
     .datagrid-alert-icon {
       display: inline-block;
       height: 20px;
-      top: 14px;
+      top: 10px;
 
       &.icon-dirty {
         height: 16px;

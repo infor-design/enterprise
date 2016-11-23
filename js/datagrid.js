@@ -25,7 +25,7 @@ window.Formatters = {
   },
 
   Date: function(row, cell, value, col) {
-    var formatted = ((value === null || value === undefined) ? '&nbsp;' : value);
+    var formatted = ((value === null || value === undefined) ? '' : value);
 
     if (typeof value === 'string' && value) {
       var value2 = Locale.parseDate(value, (typeof col.dateFormat === 'string' ? {pattern: col.dateFormat}: col.dateFormat));
@@ -39,7 +39,7 @@ window.Formatters = {
     }
 
     if (!col.editor) {
-      return formatted;
+      return formatted === '' ? '&nbsp;' : formatted;
     }
     return '<span class="trigger">' + formatted + '</span>' + $.createIcon({ icon: 'calendar', classes: ['icon-calendar'] });
   },
@@ -196,13 +196,20 @@ window.Formatters = {
   GroupRow: function (row, cell, value, col, item, api) {
     var groupSettings = api.settings.groupable,
       groups = '',
-      isOpen = true;
+      isOpen = groupSettings.expanded === undefined ? true : groupSettings.expanded;
+
+    if (groupSettings.expanded && typeof groupSettings.expanded === 'function') {
+      isOpen = groupSettings.expanded(row, cell, value, col, item, api);
+    }
 
     for (var i = 0; i < groupSettings.fields.length ; i++) {
       groups += item[groupSettings.fields[i]] + (i === 0 ? '&nbsp;' : ',');
     }
 
-    //TODO Add Formatter to groupSettings
+    if (groupSettings.groupRowFormatter) {
+      groups = groupSettings.groupRowFormatter(row, cell, value, col, item, api);
+    }
+
     var button = '<button type="button" class="btn-icon datagrid-expand-btn'+ (isOpen ? ' is-expanded' : '') +'" tabindex="-1"' +'>'+
     '<span class="icon plus-minus'+ (isOpen ? ' active' : '') +'"></span>' +
     '<span class="audible">'+ Locale.translate('ExpandCollapse') +'</span>' +
@@ -211,10 +218,30 @@ window.Formatters = {
     return button;
   },
 
+  GroupFooterRow: function (row, cell, value, col, item, api) {
+    var groupSettings = api.settings.groupable,
+      groups = '',
+      isOpen = groupSettings.expanded === undefined ? true : groupSettings.expanded;
+
+    if (groupSettings.expanded && typeof groupSettings.expanded === 'function') {
+      isOpen = groupSettings.expanded(row, cell, value, col, item, api);
+    }
+
+    //TODO: Add Test Case for this
+    if (groupSettings.groupFooterRowFormatter) {
+      groups = groupSettings.groupFooterRowFormatter(row, cell, value, col, item, api);
+    }
+
+    var idx = api.columnIdxById(groupSettings.aggregate),
+        button = '<td colspan=' + (idx) + '></td><td><div class="datagrid-cell-wrapper"> '+ item.sum +'</div></td>';
+
+    return button;
+  },
+
   // Tree Expand / Collapse Button and Paddings
   Tree: function (row, cell, value, col, item, api) {
     var isOpen = item.expanded,
-      depth = api.settings.treeDepth[row-1].depth,
+      depth = api.settings.treeDepth[row].depth,
       button = '<button type="button" class="btn-icon datagrid-expand-btn'+ (isOpen ? ' is-expanded' : '') +'" tabindex="-1"'+ (depth ? ' style="margin-left: '+ (depth ? (30* (depth -1)) +'px' : '') +'"' : '') +'>'+
       '<span class="icon plus-minus'+ (isOpen ? ' active' : '') +'"></span>' +
       '<span class="audible">'+ Locale.translate('ExpandCollapse') +'</span>' +
@@ -1824,7 +1851,7 @@ $.fn.datagrid = function(options) {
 
       // Initialize Drag api
       $('.handle', headers).each(function() {
-        var clone, haderPos, offPos,
+        var clone, headerPos, offPos,
           handle = $(this),
           hader = handle.parent();
 
@@ -1845,10 +1872,10 @@ $.fn.datagrid = function(options) {
 
               self.setDraggableColumnTargets();
 
-              haderPos = hader.position();
-              offPos = {top: (pos.top - haderPos.top), left: (pos.left - haderPos.left)};
+              headerPos = hader.position();
+              offPos = {top: (pos.top - headerPos.top), left: (pos.left - headerPos.left)};
 
-              index = self.targetColumn(haderPos);
+              index = self.targetColumn(headerPos);
               self.draggableStatus.startIndex = index;
               e.stopImmediatePropagation();
             })
@@ -1856,10 +1883,10 @@ $.fn.datagrid = function(options) {
             // While dragging ===================================
             .on('drag.datagrid', function (e, pos) {
               clone.css({left: pos.left, top: pos.top});
-              haderPos = {top: (pos.top - offPos.top), left: (pos.left - offPos.left)};
+              headerPos = {top: (pos.top - offPos.top), left: (pos.left - offPos.left)};
 
               var i, l, n, target, rect,
-                index = self.targetColumn(haderPos);
+                index = self.targetColumn(headerPos);
 
               $('.is-draggable-target', headers).add(showTarget).removeClass('is-over');
 
@@ -1887,9 +1914,9 @@ $.fn.datagrid = function(options) {
             // Drag end =========================================
             .on('dragend.datagrid', function (e, pos) {
               clone.css({left: pos.left, top: pos.top});
-              haderPos = {top: (pos.top - offPos.top), left: (pos.left - offPos.left)};
+              headerPos = {top: (pos.top - offPos.top), left: (pos.left - offPos.left)};
 
-              var index = self.targetColumn(haderPos),
+              var index = self.targetColumn(headerPos),
                dragApi = hader.data('drag'),
                tempArray = [],
                i, l, indexFrom, indexTo, target;
@@ -2058,17 +2085,17 @@ $.fn.datagrid = function(options) {
       this.originalDataset = this.settings.dataset.slice();
 
       if (groupSettings.aggregator === 'sum') {
-        this.settings.dataset = GroupBy.sum(this.settings.dataset , groupSettings.fields);
+        this.settings.dataset = GroupBy.sum(this.settings.dataset , groupSettings.fields, groupSettings.aggregate);
         return;
       }
 
       if (groupSettings.aggregator === 'max') {
-        this.settings.dataset = GroupBy.max(this.settings.dataset , groupSettings.fields);
+        this.settings.dataset = GroupBy.max(this.settings.dataset , groupSettings.fields, groupSettings.aggregate);
         return;
       }
 
       if (groupSettings.aggregator === 'list') {
-        this.settings.dataset = GroupBy.list(this.settings.dataset , groupSettings.fields , groupSettings.aggregatorOptions);
+        this.settings.dataset = GroupBy.list(this.settings.dataset , groupSettings.fields, groupSettings.aggregatorOptions);
         return;
       }
 
@@ -2157,6 +2184,11 @@ $.fn.datagrid = function(options) {
             this.recordCount++;
           }
 
+          // Now Push summary rowHtml
+          if (this.settings.groupable.groupFooterRow) {
+            tableHtml += self.rowHtml(dataset[i], this.recordCount, true, true);
+          }
+
           continue;
         }
 
@@ -2179,7 +2211,7 @@ $.fn.datagrid = function(options) {
         }
 
         self.setAlternateRowShading();
-        self.activeCell = {node: self.cellNode(0, 0).attr('tabindex', '0'), isFocused: false, cell: 0, row: 0};
+        self.activeCell = {node: self.cellNode(0, 0, true).attr('tabindex', '0'), isFocused: false, cell: 0, row: 0};
       }, 0);
     },
 
@@ -2209,7 +2241,7 @@ $.fn.datagrid = function(options) {
 
     recordCount: 0,
 
-    rowHtml: function (rowData, dataRowIdx, isGroup) {
+    rowHtml: function (rowData, dataRowIdx, isGroup, isFooter) {
       var isEven = false,
         self = this,
         activePage = self.pager ? self.pager.activePage : 1,
@@ -2231,11 +2263,28 @@ $.fn.datagrid = function(options) {
         }
       }
 
+      if (this.settings.groupable) {
+        var groupSettings = this.settings.groupable;
+        isHidden  = (groupSettings.expanded === undefined ? false : !groupSettings.expanded);
+
+        if (groupSettings.expanded && typeof groupSettings.expanded === 'function') {
+          isHidden = !groupSettings.expanded(dataRowIdx, 0, null, null, rowData, this);
+        }
+
+      }
+
       //Group Rows
-      if (this.settings.groupable && isGroup) {
-        rowHtml = '<tr class="datagrid-rowgroup-header is-expanded" role="rowgroup"><td colspan="'+ this.visibleColumns().length +'">' +
+      if (this.settings.groupable && isGroup && !isFooter) {
+        rowHtml = '<tr class="datagrid-rowgroup-header ' + (isHidden ? '' : 'is-expanded') + '" role="rowgroup"><td role="gridcell" colspan="'+ this.visibleColumns().length +'">' +
           Formatters.GroupRow(dataRowIdx, 0, null, null, rowData, this) +
           '</td></tr>';
+        return rowHtml;
+      }
+
+      if (this.settings.groupable && isGroup && isFooter) {
+        rowHtml = '<tr class="datagrid-row datagrid-rowgroup-footer ' + (isHidden ? '' : 'is-expanded') + '" role="rowgroup">' +
+          Formatters.GroupFooterRow(dataRowIdx, 0, null, null, rowData, this) +
+          '</tr>';
         return rowHtml;
       }
 
@@ -2263,7 +2312,7 @@ $.fn.datagrid = function(options) {
           formatter = (col.formatter || self.defaultFormatter),
           formatted = self.formatValue(
             formatter,
-            dataRowIdx + 1,
+            dataRowIdx,
             j,
             self.fieldValue(rowData, self.settings.columns[j].field),
             self.settings.columns[j],
@@ -3070,11 +3119,15 @@ $.fn.datagrid = function(options) {
     },
 
     //Returns a cell node
-    cellNode: function (row, cell) {
+    cellNode: function (row, cell, includeGroups) {
       var rowNode = this.tableBody.find('tr[aria-rowindex]').eq(row);
 
       if (row instanceof jQuery) {
         rowNode = row;
+      }
+
+      if (includeGroups) {
+        rowNode = this.tableBody.find('tr:visible').eq(row);
       }
 
       if (cell === -1) {
@@ -4128,24 +4181,27 @@ $.fn.datagrid = function(options) {
           handled = false,
           isRTL = Locale.isRTL(),
           node = self.activeCell.node,
-          rowNode = $(this).closest('tr[aria-rowindex]'),
-          prevRow = rowNode.prev(),
-          nextRow = rowNode.next(),
+          rowNode = $(this).parent(),
+          prevRow = rowNode.prevAll(':not(.is-hidden)').first(),
+          nextRow = rowNode.nextAll(':not(.is-hidden)').first(),
           row = self.activeCell.row,
           cell = self.activeCell.cell,
           col = self.columnSettings(cell),
           item = self.settings.dataset[self.dataRowIndex(node)],
           visibleCols = self.visibleColumns(),
-          visibleRows = self.tableBody.find('tr[aria-rowindex]:visible'),
-          visibleRowsIndex = visibleRows.index(self.visualRowNode(row)),
+          visibleRows = self.tableBody.find('tr:visible'),
           getVisibleRows = function(index) {
-            return self.dataRowIndex(visibleRows.eq(index));
+            var row = visibleRows.eq(index);
+            if (row.is('.datagrid-rowgroup-header')) {
+              return row.index();
+            }
+            return self.dataRowIndex(row);
           },
           isSelectionCheckbox = !!($('.datagrid-selection-checkbox', node).length),
           lastRow, lastCell;
 
         lastCell = visibleCols.length-1;
-        lastRow = node.closest('tbody').find('tr:visible:last').index();
+        lastRow = visibleRows.last();
 
         //Tab, Left and Right arrow keys.
         if ([9, 37, 39].indexOf(key) !== -1) {
@@ -4175,21 +4231,17 @@ $.fn.datagrid = function(options) {
         //Up arrow key
           if (key === 38 && !self.quickEditMode) {
           //Press [Control + Up] arrow to move to the first row on the first page.
-          if (e.altKey) {
+          if (e.altKey || e.metaKey) {
             self.setActiveCell(getVisibleRows(0), cell);
-          }
-          //Up arrow key to navigate by row.
-          else {
-            if (prevRow.is('.datagrid-rowgroup-header')) {
-              prevRow.find('td:visible:first').attr('tabindex', '0').focus();
-              return;
-            }
+            handled = true;
+          } else { //Up arrow key to navigate by row.
+
             if (row === 0) {
               node.removeAttr('tabindex');
               $('th:not(.is-hidden)', self.header).eq(cell).attr('tabindex', '0').focus();
               return;
             }
-            self.setActiveCell(getVisibleRows(visibleRowsIndex-1), cell);
+            self.setActiveCell(prevRow, cell);
             handled = true;
           }
         }
@@ -4197,18 +4249,11 @@ $.fn.datagrid = function(options) {
         //Down arrow key
         if (key === 40 && !self.quickEditMode) {
           //Press [Control + Down] arrow to move to the last row on the last page.
-          if (e.altKey) {
+          if (e.altKey|| e.metaKey) {
             self.setActiveCell(lastRow, cell);
-          }
-          //Down arrow key to navigate by row.
-          else {
-            if (nextRow.is('.datagrid-rowgroup-header')) {
-              nextRow.find('td:visible:first').attr('tabindex', '0').focus();
-              return;
-            }
-            var n = getVisibleRows(visibleRowsIndex+1);
-            n = isNaN(n) ? lastRow : n;
-            self.setActiveCell(((n >= lastRow) ? lastRow : getVisibleRows(visibleRowsIndex+1)), cell);
+            handled = true;
+          } else { //Down arrow key to navigate by row.
+            self.setActiveCell(nextRow, cell);
             handled = true;
           }
         }
@@ -4232,11 +4277,25 @@ $.fn.datagrid = function(options) {
         //Press Home or End to move to the first or last cell on the current row.
         if (key === 36) {
           self.setActiveCell(row, 0);
+          handled = true;
         }
 
+        //Home to Move to the end of the current row
         if (key === 35) {
-          // lastCell = self.activeCell.node.closest('tr').find('td:last').index();
           self.setActiveCell(row, lastCell);
+          handled = true;
+        }
+
+        //End to Move to last row of current cell
+        if (key === 34) {
+          self.setActiveCell(lastRow, cell);
+          handled = true;
+        }
+
+        //End to Move to first row of current cell
+        if (key === 33) {
+          self.setActiveCell(getVisibleRows(0), cell);
+          handled = true;
         }
 
         // For mode 'Selectable':
@@ -4561,12 +4620,15 @@ $.fn.datagrid = function(options) {
 
     //For the row node get the index - adjust for paging / invisible rowsCache
     visualRowIndex: function (row) {
-     var rowIdx = (row.attr('aria-rowindex')-1);
-     if (this.pager) {
-      rowIdx = rowIdx - ((this.pager.activePage -1) * this.settings.pagesize);
-     }
+      var rowIdx = (row.attr('aria-rowindex')-1);
+      if (this.pager) {
+        rowIdx = rowIdx - ((this.pager.activePage -1) * this.settings.pagesize);
+      }
 
-     return rowIdx;
+      if (isNaN(rowIdx)) {  //Grouped Rows
+        return row.index();
+      }
+      return rowIdx;
     },
 
     visualRowNode: function (idx) {
@@ -4590,15 +4652,29 @@ $.fn.datagrid = function(options) {
     // Update a specific Cell
     setActiveCell: function (row, cell) {
       var self = this,
-        prevCell = self.activeCell;
+        prevCell = self.activeCell,
+        rowElem = row, rowNum,
+        isGroupRow = row instanceof jQuery && row.is('.datagrid-rowgroup-header');
 
-      //Support passing the td in
-      if (row instanceof jQuery) {
-        cell = row.siblings(':visible').addBack().index(row);
-        row = this.visualRowIndex(row.parent());
+      if (row instanceof jQuery && row.length === 0) {
+        return;
       }
 
-      if (row < 0 || cell < 0) {
+      if (typeof row === 'number') {
+        rowNum = row;
+      }
+
+      //Support passing the td in
+      if (row instanceof jQuery && row.is('td')) {
+        cell = row.siblings(':visible').addBack().index(row);
+        rowNum = this.visualRowIndex(row.parent());
+      }
+
+      if (row instanceof jQuery && row.is('tr')) {
+        rowNum = this.visualRowIndex(row);
+      }
+
+      if (rowNum < 0 || cell < 0) {
         return;
       }
 
@@ -4608,10 +4684,10 @@ $.fn.datagrid = function(options) {
       }
 
       //Find the cell if it exists
-      self.activeCell.node = self.cellNode(row, cell).attr('tabindex', '0');
+      self.activeCell.node = self.cellNode((isGroupRow ? rowElem: rowNum), (isGroupRow ? 0 : cell)).attr('tabindex', '0');
 
       if (self.activeCell.node && prevCell.node.length === 1) {
-        self.activeCell.row = row;
+        self.activeCell.row = rowNum;
         self.activeCell.cell = cell;
       } else {
         self.activeCell = prevCell;
@@ -4624,7 +4700,10 @@ $.fn.datagrid = function(options) {
         self.activeCell.node.find('button').focus();
       }
 
-      // var headers = self.headerNodes();
+      if (isGroupRow) {
+        self.activeCell.node.find('td:visible:first').attr('tabindex', '0').focus();
+      }
+
       var headers = self.headerNodes().not('.is-hidden');
       headers.removeClass('is-active');
       headers.eq(cell).addClass('is-active');
