@@ -51,8 +51,11 @@ module.exports = function(grunt) {
 
         for (let i in controls) {
           let highLevelDependencies = controls[i],
-            lowLevelDependencies = hashMap[highLevelDependencies];
-          deps = setTraverse(hashMap, lowLevelDependencies);
+            lowLevelDependencies = hashMap[highLevelDependencies],
+            setTraverseDeps = setTraverse(hashMap, lowLevelDependencies);
+          for (let j in setTraverseDeps) {
+            deps.push(setTraverseDeps[j]);
+          }
         }
 
         let combinedDeps = deps.concat(controls);
