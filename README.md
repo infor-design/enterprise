@@ -384,7 +384,7 @@ or eventually the SoHo XI site pages
 Run the [Soho Mapper Tool](http://git.infor.com/projects/SOHO/repos/mapper/browse) on the local source.
 
 #### Usage
-`npm run build -- --mapperPath='/Users/username/mapper/dist/globalsHashMap.min.json' --controls='datagrid' --excludeControls='initialize' --excludeControls='datagrid'`
+`npm run build -- --mapperPath='/Users/username/mapper/dist/globalsHashMap.min.json' --controls='datagrid' --excludeControls='initialize'`
 
 #### Options
 Set the hash map path
