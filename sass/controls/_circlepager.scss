@@ -1,0 +1,111 @@
+// Circle Pager
+//================================================== //
+
+.circlepager {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+
+  .slides {
+    left: 0;
+    overflow: hidden;
+    position: relative;
+    transition: left .3s ease 0s;
+
+    > .slide {
+      float: left;
+      position: relative;
+    }
+  }
+
+  .controls {
+    display: none;
+  }
+
+
+  &.is-active {
+    .controls {
+      bottom: 20px;
+      display: block;
+      left: 50%;
+      margin-left: -50%;
+      position: absolute;
+      text-align: center;
+      width: 100%;
+
+      .control-button {
+        background-color: $circlepager-bg-color;
+        border: 1px solid $circlepager-border-color;
+        border-radius: 50%;
+        cursor: pointer;
+        display: inline-block;
+        height: 10px;
+        margin: 0 20px 0 0;
+        text-align: center;
+        text-decoration: none;
+        width: 10px;
+
+        &:last-child {
+          margin: 0;
+        }
+
+        &:hover {
+          background-color: $circlepager-hover-bg-color;
+          border-color: $circlepager-hover-border-color;
+        }
+
+        &:focus {
+          background-color: $circlepager-focus-bg-color;
+          border-color: $circlepager-focus-border-color;
+        }
+
+        &.is-active {
+          background-color: $circlepager-active-bg-color;
+          border-color: $circlepager-active-border-color;
+
+          &:hover {
+            background-color: $circlepager-active-hover-bg-color;
+            border-color: $circlepager-active-hover-border-color;
+          }
+
+          &:focus {
+            background-color: $circlepager-active-focus-bg-color;
+            border-color: $circlepager-active-focus-border-color;
+          }
+        }
+
+        &[disabled],
+        &.is-disable {
+          background-color: $circlepager-disable-bg-color;
+          border-color: $circlepager-disable-border-color;
+
+          &:hover {
+            background-color: $circlepager-disable-hover-bg-color;
+            border-color: $circlepager-disable-hover-border-color;
+          }
+
+          &:focus {
+            background-color: $circlepager-disable-focus-bg-color;
+            border-color: $circlepager-disable-focus-border-color;
+          }
+        }
+      }
+    }
+  }
+}
+
+html[dir='rtl'] {
+  .circlepager {
+    &.is-active {
+      .controls {
+        .control-button {
+          margin: 0 0 0 20px;
+
+          &:last-child {
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+}

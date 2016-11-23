@@ -192,6 +192,9 @@
             //Hide Focus
             ['hideFocus', 'a.hide-focus, a.tick, a.hyperlink'],
 
+            //Circle Pager
+            ['circlepager'],
+
             //Pager
             ['pager', '.paginated'],
 
