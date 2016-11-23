@@ -233,7 +233,7 @@ window.Formatters = {
     }
 
     var idx = api.columnIdxById(groupSettings.aggregate),
-        button = '<td colspan=' + (idx) + '></td><td><div class="datagrid-cell-wrapper"> '+ item.sum +'</div></td>';
+        button = '<td role="gridcell" colspan=' + (idx) + '><div class="datagrid-cell-wrapper">&nbsp;</div></td><td role="gridcell"><div class="datagrid-cell-wrapper"> '+ item.sum +'</div></td>';
 
     return button;
   },
@@ -4139,6 +4139,7 @@ $.fn.datagrid = function(options) {
           }
 
           // Makeing move
+          //datagrid-rowgroup-header
           th.removeAttr('tabindex').removeClass('is-active');
           $('th:not(.is-hidden)', this.header).eq(move).attr('tabindex', '0').addClass('is-active').focus();
           e.preventDefault();
@@ -4147,7 +4148,7 @@ $.fn.datagrid = function(options) {
         // Down arrow
         if (key === 40) {
           th.removeAttr('tabindex');
-          self.setActiveCell(0, index);
+          self.activeCell.node = self.cellNode(0, self.settings.groupable ? 0 : self.activeCell.cell, true).attr('tabindex', '0').focus();
           e.preventDefault();
         }
 
@@ -4182,8 +4183,8 @@ $.fn.datagrid = function(options) {
           isRTL = Locale.isRTL(),
           node = self.activeCell.node,
           rowNode = $(this).parent(),
-          prevRow = rowNode.prevAll(':not(.is-hidden)').first(),
-          nextRow = rowNode.nextAll(':not(.is-hidden)').first(),
+          prevRow = rowNode.prevAll(':not(.is-hidden, .datagrid-expandable-row)').first(),
+          nextRow = rowNode.nextAll(':not(.is-hidden, .datagrid-expandable-row)').first(),
           row = self.activeCell.row,
           cell = self.activeCell.cell,
           col = self.columnSettings(cell),
@@ -4236,7 +4237,7 @@ $.fn.datagrid = function(options) {
             handled = true;
           } else { //Up arrow key to navigate by row.
 
-            if (row === 0) {
+            if (row === 0 && !prevRow.is('.datagrid-rowgroup-header')) {
               node.removeAttr('tabindex');
               $('th:not(.is-hidden)', self.header).eq(cell).attr('tabindex', '0').focus();
               return;
@@ -4654,7 +4655,7 @@ $.fn.datagrid = function(options) {
       var self = this,
         prevCell = self.activeCell,
         rowElem = row, rowNum,
-        isGroupRow = row instanceof jQuery && row.is('.datagrid-rowgroup-header');
+        isGroupRow = row instanceof jQuery && row.is('.datagrid-rowgroup-header, .datagrid-rowgroup-footer');
 
       if (row instanceof jQuery && row.length === 0) {
         return;
@@ -4666,8 +4667,12 @@ $.fn.datagrid = function(options) {
 
       //Support passing the td in
       if (row instanceof jQuery && row.is('td')) {
-        cell = row.siblings(':visible').addBack().index(row);
-        rowNum = this.visualRowIndex(row.parent());
+        isGroupRow = row.parent().is('.datagrid-rowgroup-header, .datagrid-rowgroup-footer');
+        if (isGroupRow) {
+          rowElem = row.parent();
+        }
+        cell = isGroupRow ? 0 : row.siblings(':visible').addBack().index(row);
+        rowNum = isGroupRow ? 0 : this.visualRowIndex(row.parent());
       }
 
       if (row instanceof jQuery && row.is('tr')) {
@@ -4702,6 +4707,14 @@ $.fn.datagrid = function(options) {
 
       if (isGroupRow) {
         self.activeCell.node.find('td:visible:first').attr('tabindex', '0').focus();
+      }
+
+      if (isGroupRow && self.activeCell.node && prevCell.node) {
+        var colSpan = self.activeCell.node.attr('colspan');
+        if (colSpan >= prevCell.cell) {
+          self.activeCell.node = self.activeCell.node.parent().find('td').eq((prevCell.cell - colSpan) + 1);
+          self.activeCell.node.attr('tabindex', '0').focus();
+        }
       }
 
       var headers = self.headerNodes().not('.is-hidden');
@@ -5009,7 +5022,7 @@ $.fn.datagrid = function(options) {
 
     //Default formatter just plain text style
     defaultFormatter: function(row, cell, value) {
-      return ((value === null || value === undefined || value === '') ? '' : value.toString());
+      return ((value === null || value === undefined || value === '') ? '&nbsp;' : value.toString());
     },
 
     //Handle Adding Paging
