@@ -17,16 +17,15 @@ module.exports = function(grunt) {
     },
 
     //Traverse object for dependencies of dependencies, 1-3 levels deep based on architecture
-
     setTraverse = function(hashMap, dependencies) {
       let names = [];
       for (let obj of dependencies) {
         names.push(extractNameFromPath(obj.fileFound));
       }
 
-      names = setUniqueDependencies(names);
+      let uniqueArr = setUniqueDependencies(names);
 
-      for (let name of names) {
+      for (let name of uniqueArr) {
         if (hashMap[name]) {
           let subObjs = hashMap[name];
           for (let obj of subObjs) {
@@ -57,12 +56,13 @@ module.exports = function(grunt) {
             deps.push(setTraverseDeps[j]);
           }
         }
-
         let combinedDeps = deps.concat(controls);
         let dist = setUniqueDependencies(combinedDeps);
 
         //Include initialize by default
-        dist.unshift('initialize');
+        if (!dist.includes('initialize')) {
+          dist.unshift('initialize');
+        }
 
         //Modify array based on options, include, exclude options
         if (excludeControls) {
