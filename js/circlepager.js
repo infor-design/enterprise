@@ -42,7 +42,7 @@
         if (this.slides.length) {
           this.createControls();
           this.handleEvents();
-          this.showCollapseView();
+          this.showCollapsedView();
           this.initActiveSlide();
         }
       },
@@ -215,7 +215,7 @@
       },
 
       // Make active
-      showCollapseView: function() {
+      showCollapsedView: function() {
         this.isActive = true;
         this.element.addClass('is-active');
         this.container.css('width', (100 * this.slides.length) +'%');
@@ -224,7 +224,7 @@
       },
 
       // Make un-active
-      showExpandView: function() {
+      showExpandedView: function() {
         this.isActive = false;
         this.element.removeClass('is-active').css('width', '');
         this.container.css({'width': '', 'left': ''});
