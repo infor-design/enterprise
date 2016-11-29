@@ -42,7 +42,7 @@
         if (this.slides.length) {
           this.createControls();
           this.handleEvents();
-          this.active();
+          this.showCollapseView();
           this.initActiveSlide();
         }
       },
@@ -215,7 +215,8 @@
       },
 
       // Make active
-      active: function() {
+      showCollapseView: function() {
+      // active: function() {
         this.isActive = true;
         this.element.addClass('is-active');
         this.container.css('width', (100 * this.slides.length) +'%');
@@ -224,7 +225,8 @@
       },
 
       // Make un-active
-      unactive: function() {
+      showExpandView: function() {
+      // unactive: function() {
         this.isActive = false;
         this.element.removeClass('is-active').css('width', '');
         this.container.css({'width': '', 'left': ''});
@@ -242,7 +244,7 @@
       unbind: function() {
         this.controlButtons.off('click.circlepager keydown.circlepager');
         $('.controls', this.element).remove();
-        this.makeUnActive();
+        this.showExpandedView();
         return this;
       },
 

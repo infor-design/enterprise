@@ -199,9 +199,9 @@
 
     homepageApi.element.on('resize', function(e, numberOfColumns) {
       if (numberOfColumns > 2) {
-        circlepagerApi.unactive();
+        circlepagerApi.showExpandView();
       } else {
-        circlepagerApi.active();
+        circlepagerApi.showCollapseView();
       }
     });
 
