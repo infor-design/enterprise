@@ -276,8 +276,6 @@
           this.pattern = this.settings.dateFormat + (this.settings.showTime ? ' ' + this.settings.timeFormat : '');
         }
 
-        console.log(this.pattern);
-
         this.show24Hours = (this.pattern.match('HH') || []).length > 0;
       },
 
@@ -319,8 +317,6 @@
             $.extend(events, $.fn.parseOptions(this.element, 'data-validation-events'));
           }
         }
-
-        console.log(this.show24Hours, mask);
 
         this.element
           .attr({
