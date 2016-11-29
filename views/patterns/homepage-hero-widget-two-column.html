@@ -41,17 +41,12 @@
               <div class="slides">
 
                 <div class="slide">
-                  <div style="height: 325px; width: 400px;">
-                    <div id="donut-alert1" class="chart-container"></div>
-                  </div>
-                </div>
-                <div class="slide">
-                  <div style="height: 325px; width: 400px;">
+                  <div style="height: 325px; width: 600px;">
                     <div id="bar-grouped-example" class="chart-container"></div>
                   </div>
                 </div>
                 <div class="slide">
-                  <div style="height: 325px; width: 400px;">
+                  <div style="height: 325px; width: 600px;">
                     <div id="area-example" class="chart-container"></div>
                   </div>
                 </div>
@@ -199,9 +194,9 @@
 
     homepageApi.element.on('resize', function(e, numberOfColumns) {
       if (numberOfColumns > 2) {
-        circlepagerApi.showExpandedView();
+        circlepagerApi.unactive();
       } else {
-        circlepagerApi.showCollapsedView();
+        circlepagerApi.active();
       }
     });
 
