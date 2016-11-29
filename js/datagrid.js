@@ -2701,14 +2701,24 @@ $.fn.datagrid = function(options) {
       }
 
       //Save to local storage
-      if (localStorage) {
+      if (this.canUseLocalStorage()) {
         localStorage[this.uniqueId('columns')] = JSON.stringify(this.settings.columns);
+      }
+    },
+
+    canUseLocalStorage: function () {
+      try {
+        if (localStorage.getItem) {
+          return true;
+        }
+      } catch (exception) {
+        return false;
       }
     },
 
     //Restore the columns from a saved list or local storage
     restoreColumns: function (cols) {
-      if (!localStorage || !this.settings.saveColumns) {
+      if (!this.settings.saveColumns || !this.canUseLocalStorage()) {
         return;
       }
 
@@ -2748,8 +2758,10 @@ $.fn.datagrid = function(options) {
     },
 
     resetColumns: function () {
-      localStorage.clear();
-      localStorage[this.uniqueId('columns')] = '';
+      if (this.canUseLocalStorage()) {
+        localStorage.clear();
+        localStorage[this.uniqueId('columns')] = '';
+      }
 
       if (this.originalColumns) {
         this.updateColumns(this.originalColumns);
