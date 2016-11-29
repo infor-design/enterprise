@@ -293,6 +293,7 @@
                    .replace(/mm/g,'##')
                    .replace(/dd/g,'##')
                    .replace(/hh/g,'##')
+                   .replace(/ss/g,'##')
                    .replace(/[mdh]/g,'##')
                    .replace(/[a]/g,'am');
 
