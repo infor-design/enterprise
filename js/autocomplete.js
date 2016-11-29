@@ -206,7 +206,7 @@
         // Overrides the 'click' listener attached by the Popupmenu plugin
         self.list.off('click touchend')
           .on('touchend.autocomplete click.autocomplete', 'a', function(e) {
-            self.select(e);
+            self.select(e, items);
           });
 
         // Highlight anchors on focus
@@ -399,7 +399,7 @@
       },
 
       select: function(anchorOrEvent, items) {
-        var a, li, ret,
+        var a, li, ret, dataValue,
           isEvent = false;
 
         // Initial Values
@@ -414,22 +414,24 @@
           }
         }
         li = a.parent('li');
+        ret = a.text().trim();
+        dataValue = li.attr('data-value');
 
         this.element.attr('aria-activedescendant', li.attr('id'));
 
-        if (items && items.length && li.attr('data-value')) {
-          for (var i = 0; i < items.length; i++) {
-            if (items[i].value.toString() === li.attr('data-value')) {
-              ret = items[i];
+        if (items && items.length && dataValue) {
+          for (var i = 0, value; i < items.length; i++) {
+            value = items[i].value.toString();
+            if (value === dataValue) {
+              ret = value;
             }
           }
         }
 
-        ret = a.text().trim();
         this.closeList();
 
         this.element
-          .val(ret)
+          .val(a.text().trim())
           .trigger('selected', [a, ret])
           .focus();
 
