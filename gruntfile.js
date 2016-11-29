@@ -3,7 +3,11 @@ module.exports = function(grunt) {
   grunt.file.preserveBOM = true;
   let controls = grunt.option('controls'),
     excludeControls = grunt.option('excludeControls');
+
   const mapperPath = grunt.option('mapperPath'),
+    configPath = grunt.option('configPath'),
+    config = grunt.option('config'),
+
     extractNameFromPath = function(path) {
       const matches = path.match(/.*(\/.*)(\.js)/),
         name = matches[1].replace('/', '');
@@ -17,16 +21,15 @@ module.exports = function(grunt) {
     },
 
     //Traverse object for dependencies of dependencies, 1-3 levels deep based on architecture
-
     setTraverse = function(hashMap, dependencies) {
       let names = [];
       for (let obj of dependencies) {
         names.push(extractNameFromPath(obj.fileFound));
       }
 
-      names = setUniqueDependencies(names);
+      let uniqueArr = setUniqueDependencies(names);
 
-      for (let name of names) {
+      for (let name of uniqueArr) {
         if (hashMap[name]) {
           let subObjs = hashMap[name];
           for (let obj of subObjs) {
@@ -43,9 +46,37 @@ module.exports = function(grunt) {
       return names;
     },
 
-    dependencyBuilder = function(mapperPath) {
+    printOut = function(dist) {
+
+      const paths = dist.map((path) => {
+        return `temp/amd/${path}.js`;
+      });
+
+      grunt.log.writeln('List of included controls in sohoxi.*.js'.green);
+
+      const logOptions = {
+        separator: '\n'
+      };
+
+      grunt.log.write(grunt.log.wordlist(paths, logOptions));
+      return paths;
+
+    },
+
+    dependencyBuilder = function(mapperPath, configPath) {
       let paths,
         deps = [];
+
+      if (configPath) {
+        let path = grunt.file.readJSON(configPath);
+        let dist = path.js;
+        paths = dist.map((path) => {
+          return `temp/amd/${path}.js`;
+        });
+
+        return printOut(dist);
+      }
+
       if (mapperPath && controls) {
         const hashMap = grunt.file.readJSON(mapperPath);
 
@@ -57,12 +88,13 @@ module.exports = function(grunt) {
             deps.push(setTraverseDeps[j]);
           }
         }
-
         let combinedDeps = deps.concat(controls);
         let dist = setUniqueDependencies(combinedDeps);
 
         //Include initialize by default
-        dist.unshift('initialize');
+        if (!dist.includes('initialize')) {
+          dist.unshift('initialize');
+        }
 
         //Modify array based on options, include, exclude options
         if (excludeControls) {
@@ -71,20 +103,8 @@ module.exports = function(grunt) {
               return err !== excludeControls[i];
             });
           }
-
         }
-
-        paths = dist.map((path) => {
-          return `temp/amd/${path}.js`;
-        });
-
-
-        grunt.log.writeln('List of included controls in sohoxi.*.js'['green']); //jshint ignore:line
-        const logOptions = {
-          separator: '\n'
-        };
-        grunt.log.write(grunt.log.wordlist(paths, logOptions)); // jshint ignore:line
-        return paths;
+        return printOut(dist);
       } else {
         return;
       }
@@ -104,7 +124,7 @@ module.exports = function(grunt) {
     excludeControls.push(excludeControl);
   }
 
-  const arrControls = dependencyBuilder(mapperPath) ||
+  const arrControls = dependencyBuilder(mapperPath, configPath) ||
     [
       'temp/amd/personalize.js',
       'temp/amd/initialize.js',
@@ -186,9 +206,19 @@ module.exports = function(grunt) {
   if(mapperPath) {
     let paths = arrControls.map((path) => {
       return extractNameFromPath(path);
-    });
+    }),
+    configObj,
+    strControls;
 
-    const strControls = paths.join(', '); //jshint ignore: line
+    if (config) {
+      configObj = { js : paths };
+      grunt.file.write('config.json', JSON.stringify(configObj, null, 2));
+      grunt.log.writeln('\u2714'.green, ' File', 'config.json'.magenta, 'created.');
+      grunt.log.write(JSON.stringify(configObj, null, 2).cyan);
+      grunt.log.writeln();
+    }
+
+    strControls = paths.join(', ');
     strBanner = `/**\n* Soho XI Controls v<%= pkg.version %> \n* ${strControls} \n* Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %> \n* Revision: <%= meta.revision %> \n */ \n`;
   }
 
@@ -205,12 +235,12 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'dist/css/demo.css'       : 'sass/demo.scss',
-          'dist/css/light-theme.css' : 'sass/light-theme.scss',
-          'dist/css/dark-theme.css' : 'sass/dark-theme.scss',
-          'dist/css/high-contrast-theme.css'  : 'sass/high-contrast-theme.scss',
-          'dist/css/css-only.css'   : 'sass/css-only.scss',
-          'dist/css/site.css'       : 'sass/site.scss'
+          'dist/css/demo.css'                : 'sass/demo.scss',
+          'dist/css/light-theme.css'         : 'sass/light-theme.scss',
+          'dist/css/dark-theme.css'          : 'sass/dark-theme.scss',
+          'dist/css/high-contrast-theme.css' : 'sass/high-contrast-theme.scss',
+          'dist/css/css-only.css'            : 'sass/css-only.scss',
+          'dist/css/site.css'                : 'sass/site.scss'
         }
       }
     },
