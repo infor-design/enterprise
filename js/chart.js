@@ -976,6 +976,16 @@ window.Chart = function(container) {
 
       drawTextlabels = function (isShortName) {
         svg.selectAll('.lb-top').each(function(d, i) {
+          if ((dims.center.x + (+d3.select(this).attr('x')) - (d.data.name.length*5)) < 15) {// 15: extra padding
+            isShortName = {isShortName: true};
+          }
+
+          // var labelsRect = d3.select(this).node().getBoundingClientRect();
+          // if ((dims.center.x + (+d3.select(this).attr('x')) - (d.data.name.length*5)) < 15 ||
+          //  labelsRect.width > (dims.width - 15)) {// 15: extra padding
+          //   isShortName = {isShortName: true};
+          // }
+          //
           d3.select(this)
             .text(function() {
               return labelsContextFormatter(d, lb.contentsTop, lb.formatterTop, isShortName);
@@ -991,6 +1001,18 @@ window.Chart = function(container) {
 
         if (lb.isTwoline) {
           svg.selectAll('.lb-bottom').each(function(d, i) {
+            // var labelsRect = d3.select(this).node().getBoundingClientRect();
+            //
+            // if ((dims.center.x + (+d3.select(this).attr('x')) - (d.data.name.length*5)) < 15 ||
+            // // if ((labelsRect.left - svgRect.left - (d.data.name.length*4)) < 15 ||
+            //  labelsRect.width > (dims.width - 15)) {// 15: extra padding
+            //   isShortName = {isShortName: true};
+            // }
+
+            if ((dims.center.x + (+d3.select(this).attr('x')) - (d.data.name.length*5)) < 15) {// 15: extra padding
+              isShortName = {isShortName: true};
+            }
+
             d3.select(this)
               .text(function() {
                 return labelsContextFormatter(d, lb.contentsBottom, lb.formatterBottom, isShortName);
@@ -1001,6 +1023,8 @@ window.Chart = function(container) {
                   return labelsColorFormatter(d, i, lb.colorBottom);
                 }
               });
+
+              isShortName = null;
           });
         }
       },
@@ -1087,6 +1111,7 @@ window.Chart = function(container) {
 
       if (lb.hideLabels) {
         var isRunning = true,
+          maxRunning = textLabels.length*15,
           orgLabelPos,
           spacing = Math.round(textLabels.node().getBBox().height) + 1;
 
@@ -1101,6 +1126,7 @@ window.Chart = function(container) {
           // Fix y position
           function relax() {
             var again = false;
+            maxRunning--;
             textLabels.each(function (d, i) {
               var a = this,
                 da = d3.select(a),
@@ -1132,7 +1158,7 @@ window.Chart = function(container) {
               });
             });
 
-            if(again) {
+            if(again && maxRunning > 0) {
               setTimeout(function() {
                 relax();
               }, 0);
@@ -1173,18 +1199,13 @@ window.Chart = function(container) {
             .y(function(d) { return d.y; })
             .interpolate('basis');
 
-          var labels = svg.selectAll('.label'),
-            labelsRect = svg.select('.labels').node().getBoundingClientRect();
+          var labels = svg.selectAll('.label');
 
-            // Set short names
-            if(labelsRect.left < 45 || labelsRect.width > (dims.width - 15)) {// 15: extra padding
-              drawTextlabels({ isShortName: true });
-              svg.selectAll('.label-text tspan').each(function() {
-                if (d3.select(this).text().substring(5) === '...') {
-                  showLegend = true;
-                }
-              });
+          svg.selectAll('.label-text tspan').each(function() {
+            if (d3.select(this).text().substring(5) === '...') {
+              showLegend = true;
             }
+          });
 
           // Collect source and targets [x, y] position
           labels.each(function(d, i) {
