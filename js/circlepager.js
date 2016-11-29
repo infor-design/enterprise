@@ -216,7 +216,6 @@
 
       // Make active
       showCollapseView: function() {
-      // active: function() {
         this.isActive = true;
         this.element.addClass('is-active');
         this.container.css('width', (100 * this.slides.length) +'%');
@@ -226,7 +225,6 @@
 
       // Make un-active
       showExpandView: function() {
-      // unactive: function() {
         this.isActive = false;
         this.element.removeClass('is-active').css('width', '');
         this.container.css({'width': '', 'left': ''});
