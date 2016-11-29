@@ -397,9 +397,9 @@ Set a control(s) to exclude, one control per flag
 `--excludeControls='datagrid'` or many, `--excludeControls='datagrid' --excludeControls='expandableara' --excludeControls='button' ...`
 
 Import a config file
-`--configPath='/Users/username/controls/config.json'`
+`--configPath='/Users/username/controls/config.json'` or simply, at root as `--configPath='config.json'`
 
-Create a config file at root
+Create a config file at root, exports as `config.json`
 `--config`
 
 Sample config file
