@@ -57,7 +57,7 @@ IE 9+ ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
   - `cd controls`
 
 ### Managing Local Dev with Make and Docker Compose
-* `make up` To start your Local Dev ENV which will 
+* `make up` To start your Local Dev ENV which will
 * `make watch` To start `grunt watch`
 * In a browser, go to: `http://localhost:4000`
 * NOTE any changes that you make will trigger Sass to recompile and the browser will reload thanks to live reload
@@ -235,7 +235,7 @@ h3. Technical details:
 
 Feature requests are welcome. Before you submit one be sure to have:
 
-1. Read the [Roadmap and Planned Features](http://jira.infor.com/browse/HFC#selectedTab=com.atlassian.jira.plugin.system.project%3Aroadmap-panel) and check the feature hasn't already been requested. 
+1. Read the [Roadmap and Planned Features](http://jira.infor.com/browse/HFC#selectedTab=com.atlassian.jira.plugin.system.project%3Aroadmap-panel) and check the feature hasn't already been requested.
 2. Take a moment to think about whether your idea fits with the scope and aims of the project, or if it might better fit being an app/plugin/extension. Also think if anyone else but your team would want it..
 3. Remember, it's up to *you* to make a strong case to convince the merits of this feature. "We did it before" isnt strong enough. Please provide as much detail and context as possible, this means explaining the use case and why it is likely to be common.
 
