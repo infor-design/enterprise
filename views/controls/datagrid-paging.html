@@ -14,6 +14,9 @@
         data = [];
 
       //Define Columns for the Grid.
+      columns.push({ id: 'drilldown', name: '', field: '', width: 95, formatter: Formatters.Drilldown, click: function(e, args) {
+          console.log(args);
+        }, align: 'center', sortable: false});
       columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly});
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly});
       columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, formatter: Formatters.Hyperlink});

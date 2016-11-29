@@ -3201,7 +3201,7 @@ $.fn.datagrid = function(options) {
           col = self.columnSettings(cell),
           item = self.settings.treeGrid ?
             self.settings.treeDepth[dataRowIdx].node :
-            self.settings.dataset[dataRowIdx];
+            self.settings.dataset[self.pager && self.settings.source ? rowNode.index() : dataRowIdx];
 
         if (e.type === 'mouseup' && e.button === 2) {
           return;
