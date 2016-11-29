@@ -9,7 +9,6 @@ var express = require('express'),
   fs = require('fs'),
   http = require('http'),
   git = require('git-rev-sync'),
-  colors = require('colors'),
   getJSONFile = require(path.resolve(__dirname, 'demoapp', 'js', 'getJSONFile')); // jshint ignore:line
 
   app.set('view engine', 'html');
