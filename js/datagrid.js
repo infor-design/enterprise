@@ -4706,7 +4706,10 @@ $.fn.datagrid = function(options) {
       }
 
       //Find the cell if it exists
-      self.activeCell.node = self.cellNode((isGroupRow ? rowElem: rowNum), (isGroupRow ? 0 : cell)).attr('tabindex', '0');
+      if (row instanceof jQuery && ((row.is('td') && !isGroupRow) || row.is('tr')))
+        self.activeCell.node = row;
+      else
+        self.activeCell.node = self.cellNode((isGroupRow ? rowElem: rowNum), (isGroupRow ? 0 : cell)).attr('tabindex', '0');
 
       if (self.activeCell.node && prevCell.node.length === 1) {
         self.activeCell.row = rowNum;
