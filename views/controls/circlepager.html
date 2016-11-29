@@ -98,9 +98,9 @@ $('body').on('initialized', function() {
 
   window.onresize = function() {
     if (parent.width() < 1000) {
-      api.active();
+      api.showCollapsedView();
     } else {
-      api.unactive();
+      api.showExpandedView();
     }
   }
 
