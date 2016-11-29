@@ -198,129 +198,125 @@
         }
       },
 
-      // Update List Values
+      // Keep a generated list of items and update as needed
       updateList: function() {
         var self = this,
-          isOpen = self.list && self.list.is(':visible'),
-          upTopOpts = 0;
+          isMobile = self.isMobile(),
+          listExists = self.list !== undefined && self.list.length > 0,
+          listContents = '',
+          ulContents = '',
+          upTopOpts = 0,
+          hasOptGroups = this.element.find('optgroup').length;
 
-        //Keep a list generated and append as needed
-        if (isOpen) {
-          self.listUl.empty();
-        } else {
-          self.list = $('<div class="dropdown-list" id="dropdown-list" role="application">');
-          self.listUl = $('<ul role="listbox"></ul>').appendTo(self.list);
-
-          // "Close (X)" icon on Mobile.
-          // "Collapse" (up-arrow) icon by default.
-          var isMobile = self.isMobile();
-          self.list.prepend('<span class="trigger">' +
-            (isMobile ? $.createIcon({ icon: 'close', classes: ['close'] }) : $.createIcon('dropdown')) +
-            '<span class="audible">' + (isMobile ? Locale.translate('Close') : Locale.translate('Collapse')) + '</span>' +
-          '</span>');
+        if (!listExists) {
+          listContents = '<div class="dropdown-list' +
+            (this.isMobile() ? ' mobile' : '') +
+            (this.isFullScreen() ? ' full-screen' : '') +
+            (this.settings.multiple ? ' multiple' : '') + '" id="dropdown-list" role="application" ' + (this.settings.multiple ? 'aria-multiselectable="true"' : '') + '>' +
+            '<label for="dropdown-search" class="audible">' + Locale.translate('Search') + '</label>' +
+            '<input type="text" class="dropdown-search" role="combobox" aria-expanded="true" id="dropdown-search" aria-autocomplete="list">' +
+            '<span class="trigger">' +
+              (isMobile ? $.createIcon({ icon: 'close', classes: ['close'] }) : $.createIcon('dropdown')) +
+              '<span class="audible">' + (isMobile ? Locale.translate('Close') : Locale.translate('Collapse')) + '</span>' +
+            '</span>' +
+            '<ul role="listbox">';
         }
 
-        function setOptions(option, listOption) {
-          //Add a data-val attribute that matches the original option value
-          listOption.attr('data-val', option.val());
+        // Get a current list of <option> elements
+        // If none are available, simply return out
+        var opts = this.element.find('option');
+        if (!opts || !opts.length) {
+          return;
+        }
+        var selectedOpts = opts.filter(':selected');
 
-          //Image Support
-          if (option.attr('class')) {
-            listOption.addClass(option.attr('class'));
-          }
-          //Disabled Support
-          if (option.attr('disabled')) {
-            listOption.addClass('is-disabled');
-          }
-          //Special Data Attribute
-          if (option.attr('data-attr')) {
-            listOption.attr('data-attr', option.attr('data-attr'));
-          }
-
-          //Tooltip Support
-          if (option.attr('title') && $.fn.tooltip) {
-            listOption.attr('title', option.attr('title')).tooltip();
-          }
-
-          //Badge Support
-          self.badges = false;
-
-          if (option.attr('data-badge')) {
-            self.badges = true;
-            listOption.append('<span class="badge ' + (option.attr('data-badge-color') ? option.attr('data-badge-color') : 'azure07') + '">' + option.attr('data-badge') + '</span>');
-          }
+        function buildLiHeader(textContent) {
+          return '<li role="presentation" class="group-label" focusable="false">' +
+              textContent +
+            '</li>';
         }
 
-        if (self.settings.multiple) {
-          self.list.addClass('multiple').attr('aria-multiselectable', 'true');
+        function buildLiOption(option, index) {
+          var liMarkup = '',
+            attributes = Soho.DOM.getAttributes(option),
+            text = option.innerHTML,
+            value = attributes.getNamedItem('value'),
+            title = attributes.getNamedItem('title'),
+            badge = attributes.getNamedItem('data-badge'),
+            badgeColor = attributes.getNamedItem('data-badge-color'),
+            isSelected = option.selected,
+            isDisabled = option.disabled,
+            cssClasses = option.className;
+
+          var trueValue = value && value.value ? value.value : text;
+
+          liMarkup += '<li role="presentation" class="dropdown-option'+ (isSelected ? ' is-selected' : '') +
+                        (isDisabled ? ' is-disabled' : '') +
+                        (cssClasses ? ' ' + cssClasses.value : '' ) +
+                        '" data-val="' + trueValue + '"' +
+                        '" tabindex="' + (index && index === 0 ? 0 : -1) + '">' +
+                        (title ? '" title="' + title.value + '"' : '') +
+                        '<a role="option" href="#" id="list-option'+ index +'">' +
+                          text +
+                        '</a>' +
+                        (badge ? '<span class="badge "' + (badgeColor ? badgeColor.value : 'azure07') + '"> '+ badge.value + '</span>' : '') +
+                      '</li>';
+
+          return liMarkup;
         }
 
         // Move all selected options to the top of the list if the setting is true.
         // Also adds a group heading if other option groups are found in the <select> element.
         if (self.settings.moveSelectedToTop) {
-          var selectedOpts = self.element.find('option:selected');
-          // Show a "selected" header if any options have been selected.
-          if (selectedOpts.length > 0) {
-            self.listUl.append($('<li role="presentation" class="group-label" focusable="false"></li>').text(Locale.translate('Selected') + ' ' + (self.isInlineLabel ? self.inlineLabelText.text() : this.label.text())));
-          }
-          selectedOpts.each(function(i) {
-            var option = $(this),
-              listOption = $('<li role="presentation" class="dropdown-option is-selected" tabindex="-1">' +
-                '<a role="option" href="#" id="list-option'+ i +'" >' +
-                option.html() +
-                '</a>' +
-                '</li>');
+          opts = opts.not(selectedOpts);
 
-            setOptions(option, listOption);
-            self.listUl.append(listOption);
+          // Show a "selected" header if there are selected options
+          if (selectedOpts.length > 0) {
+            ulContents += buildLiHeader(Locale.translate('Selected') + ' ' + (self.isInlineLabel ? self.inlineLabelText.text() : this.label.text()));
+          }
+
+          selectedOpts.each(function(i) {
+            ulContents += buildLiOption(this, i);
             upTopOpts++;
           });
-          // Only show the "all" header if there are no other optgroups present
-          if (selectedOpts.length > 0 && !self.element.find('optgroup').length) {
-            self.listUl.append($('<li role="presentation" class="group-label"></li>').text('All ' +
-              (self.isInlineLabel ? self.inlineLabelText.text() : this.label.text())));
+
+          // Only show the "all" header beneath the selected options if there are no other optgroups present
+          if (!hasOptGroups) {
+            ulContents += buildLiHeader('All ' + (self.isInlineLabel ? self.inlineLabelText.text() : this.label.text()));
           }
         }
 
-        self.element.find('option').each(function(i) {
+        opts.each(function(i) {
           var count = i + upTopOpts,
-            option = $(this),
-            listOption;
+            option = $(this);
 
           // Add Group Header if this is an <optgroup>
           if (option.is(':first-child') && option.parent().is('optgroup')) {
-            var groupHeader = $('<li role="presentation" class="group-label" focusable="false"></li>').text(option.parent().attr('label'));
-            self.listUl.append(groupHeader);
+            ulContents += buildLiHeader('' + option.parent().attr('label'));
           }
 
           if (self.settings.moveSelectedToTop && option.is(':selected')) {
             return;
           }
 
-          listOption = $('<li role="presentation" class="dropdown-option" tabindex="-1">' +
-            '<a role="option" href="#" id="list-option'+ count +'">' +
-            option.html() +
-            '</a>' +
-            '</li>');
-
-          self.listUl.append(listOption);
-          if (option.is(':selected')) {
-            listOption.addClass('is-selected').attr({'tabindex': '0'});
-          }
-
-          setOptions(option, listOption);
+          ulContents += buildLiOption(this, count);
         });
 
-        // Add the class that switches the UI view to the enlarged "mobile" view in some
-        // form factors and operating systems.
-        self.list[self.isMobile() ? 'addClass' : 'removeClass']('mobile');
-        self.list[self.isFullScreen() ? 'addClass' : 'removeClass']('full-screen');
+        // Render the new list contents to the page.
+        // Build the entire thing and set references if this is the first opening.
+        // Otherwise, simply replace the elements inside the <ul>.
+        if (!listExists) {
+          listContents += ulContents + '</ul>' +
+            '</div>';
 
-        //Add Input Element and
-        if (!isOpen) {
-          this.searchInput = $('<input type="text" class="dropdown-search" role="combobox" aria-expanded="true" id="dropdown-search" aria-autocomplete="list">');
-          this.list.prepend(this.searchInput);
-          this.searchInput.before('<label for="dropdown-search" class="audible">Search</label>');
+          // Append markup to the DOM
+          this.list = $(listContents);
+
+          // Get references
+          this.listUl = this.list.find('ul');
+          this.searchInput = this.list.find('#dropdown-search');
+        } else {
+          this.listUl.html(ulContents);
         }
       },
 
@@ -1187,16 +1183,20 @@
         this.filterTerm = '';
         this.searchInput.off('keydown.dropdown keypress.dropdown keypress.dropdown');
 
-        this.list.hide().remove();
+        //this.list.hide().remove();
         this.list
-          //.offTouchClick('list')
-          .off('click.list touchmove.list touchend.list touchcancel.list mousewheel.list mouseenter.list');
-        this.listUl.find('li').show();
-        this.pseudoElem.removeClass('is-open').attr('aria-expanded', 'false');
-        this.searchInput.removeAttr('aria-activedescendant');
+          .off('click.list touchmove.list touchend.list touchcancel.list mousewheel.list mouseenter.list')
+          .remove();
+
+        //this.listUl.find('li').show();
+        this.pseudoElem
+          .removeClass('is-open')
+          .attr('aria-expanded', 'false');
+
+        this.searchInput
+          .removeAttr('aria-activedescendant');
 
         $(document)
-          //.offTouchClick('dropdown')
           .off('click.dropdown scroll.dropdown touchmove.dropdown touchend.dropdown touchcancel.dropdown');
 
         $(window).off('resize.dropdown');
