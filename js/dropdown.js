@@ -202,13 +202,13 @@
       updateList: function() {
         var self = this,
           isMobile = self.isMobile(),
-          isOpen = self.list && self.list.is(':visible'),
+          listExists = self.list !== undefined && self.list.length > 0,
           listContents = '',
           ulContents = '',
           upTopOpts = 0,
           hasOptGroups = this.element.find('optgroup').length;
 
-        if (!isOpen) {
+        if (!listExists) {
           listContents = '<div class="dropdown-list' +
             (this.isMobile() ? ' mobile' : '') +
             (this.isFullScreen() ? ' full-screen' : '') +
@@ -300,17 +300,12 @@
           }
 
           ulContents += buildLiOption(this, count);
-
-          // TODO: Make sure selection of items works properly
-          //if (option.is(':selected')) {
-            //listOption.addClass('is-selected').attr({'tabindex': '0'});
-          //}
         });
 
         // Render the new list contents to the page.
         // Build the entire thing and set references if this is the first opening.
         // Otherwise, simply replace the elements inside the <ul>.
-        if (!isOpen) {
+        if (!listExists) {
           listContents += ulContents + '</ul>' +
             '</div>';
 
@@ -319,7 +314,7 @@
 
           // Get references
           this.listUl = this.list.find('ul');
-          this.searchInput = $(this.list.find('#dropdown-search'));
+          this.searchInput = this.list.find('#dropdown-search');
         } else {
           this.listUl.html(ulContents);
         }
@@ -1188,16 +1183,20 @@
         this.filterTerm = '';
         this.searchInput.off('keydown.dropdown keypress.dropdown keypress.dropdown');
 
-        this.list.hide().remove();
+        //this.list.hide().remove();
         this.list
-          //.offTouchClick('list')
-          .off('click.list touchmove.list touchend.list touchcancel.list mousewheel.list mouseenter.list');
-        this.listUl.find('li').show();
-        this.pseudoElem.removeClass('is-open').attr('aria-expanded', 'false');
-        this.searchInput.removeAttr('aria-activedescendant');
+          .off('click.list touchmove.list touchend.list touchcancel.list mousewheel.list mouseenter.list')
+          .remove();
+
+        //this.listUl.find('li').show();
+        this.pseudoElem
+          .removeClass('is-open')
+          .attr('aria-expanded', 'false');
+
+        this.searchInput
+          .removeAttr('aria-activedescendant');
 
         $(document)
-          //.offTouchClick('dropdown')
           .off('click.dropdown scroll.dropdown touchmove.dropdown touchend.dropdown touchcancel.dropdown');
 
         $(window).off('resize.dropdown');

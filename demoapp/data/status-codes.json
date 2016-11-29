@@ -1,0 +1,32 @@
+[
+	{
+		"id": 0,
+		"name": "Archived",
+		"color": "graphite03"
+	},
+	{
+		"id": 1,
+		"name": "Inactive",
+		"color": "graphite03"
+	},
+	{
+		"id": 2,
+		"name": "Active",
+		"color": "info"
+	},
+	{
+		"id": 3,
+		"name": "Late",
+		"color": "error"
+	},
+	{
+		"id": 4,
+		"name": "On Hold",
+		"color": "alert"
+	},
+	{
+		"id": 5,
+		"name": "Complete",
+		"color": "good"
+	}
+]
