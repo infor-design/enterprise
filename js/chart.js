@@ -980,12 +980,6 @@ window.Chart = function(container) {
             isShortName = {isShortName: true};
           }
 
-          // var labelsRect = d3.select(this).node().getBoundingClientRect();
-          // if ((dims.center.x + (+d3.select(this).attr('x')) - (d.data.name.length*5)) < 15 ||
-          //  labelsRect.width > (dims.width - 15)) {// 15: extra padding
-          //   isShortName = {isShortName: true};
-          // }
-          //
           d3.select(this)
             .text(function() {
               return labelsContextFormatter(d, lb.contentsTop, lb.formatterTop, isShortName);
@@ -1001,14 +995,6 @@ window.Chart = function(container) {
 
         if (lb.isTwoline) {
           svg.selectAll('.lb-bottom').each(function(d, i) {
-            // var labelsRect = d3.select(this).node().getBoundingClientRect();
-            //
-            // if ((dims.center.x + (+d3.select(this).attr('x')) - (d.data.name.length*5)) < 15 ||
-            // // if ((labelsRect.left - svgRect.left - (d.data.name.length*4)) < 15 ||
-            //  labelsRect.width > (dims.width - 15)) {// 15: extra padding
-            //   isShortName = {isShortName: true};
-            // }
-
             if ((dims.center.x + (+d3.select(this).attr('x')) - (d.data.name.length*5)) < 15) {// 15: extra padding
               isShortName = {isShortName: true};
             }
