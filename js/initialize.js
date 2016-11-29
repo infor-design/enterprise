@@ -413,10 +413,7 @@
 
     // Initialize the plugin (Once)
     return this.each(function() {
-      var instance = $.data(this, pluginName);
-      if (!instance) {
-        instance = $.data(this, pluginName, new Initialize(this, settings));
-      }
+      var instance = new Initialize(this, settings); // jshint ignore:line
     });
   };
 

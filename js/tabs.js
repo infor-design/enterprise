@@ -2235,7 +2235,7 @@
           var thisHeight = 0;
 
           jqObj.each(function(i, el) {
-            thisHeight += $(el).outerHeight(true);
+            thisHeight += $(el).outerHeight(true) + parseInt($(el).parent().css('padding-top'));
           });
 
           return thisHeight;

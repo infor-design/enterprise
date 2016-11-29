@@ -2701,14 +2701,24 @@ $.fn.datagrid = function(options) {
       }
 
       //Save to local storage
-      if (localStorage) {
+      if (this.canUseLocalStorage()) {
         localStorage[this.uniqueId('columns')] = JSON.stringify(this.settings.columns);
+      }
+    },
+
+    canUseLocalStorage: function () {
+      try {
+        if (localStorage.getItem) {
+          return true;
+        }
+      } catch (exception) {
+        return false;
       }
     },
 
     //Restore the columns from a saved list or local storage
     restoreColumns: function (cols) {
-      if (!localStorage || !this.settings.saveColumns) {
+      if (!this.settings.saveColumns || !this.canUseLocalStorage()) {
         return;
       }
 
@@ -2748,8 +2758,10 @@ $.fn.datagrid = function(options) {
     },
 
     resetColumns: function () {
-      localStorage.clear();
-      localStorage[this.uniqueId('columns')] = '';
+      if (this.canUseLocalStorage()) {
+        localStorage.clear();
+        localStorage[this.uniqueId('columns')] = '';
+      }
 
       if (this.originalColumns) {
         this.updateColumns(this.originalColumns);
@@ -3201,7 +3213,7 @@ $.fn.datagrid = function(options) {
           col = self.columnSettings(cell),
           item = self.settings.treeGrid ?
             self.settings.treeDepth[dataRowIdx].node :
-            self.settings.dataset[dataRowIdx];
+            self.settings.dataset[self.pager && self.settings.source ? rowNode.index() : dataRowIdx];
 
         if (e.type === 'mouseup' && e.button === 2) {
           return;
@@ -4706,10 +4718,11 @@ $.fn.datagrid = function(options) {
       }
 
       //Find the cell if it exists
-      if (row instanceof jQuery && ((row.is('td') && !isGroupRow) || row.is('tr')))
+      if (row instanceof jQuery && ((row.is('td') && !isGroupRow) || row.is('tr'))) {
         self.activeCell.node = row;
-      else
+      } else {
         self.activeCell.node = self.cellNode((isGroupRow ? rowElem: rowNum), (isGroupRow ? 0 : cell)).attr('tabindex', '0');
+      }
 
       if (self.activeCell.node && prevCell.node.length === 1) {
         self.activeCell.row = rowNum;
