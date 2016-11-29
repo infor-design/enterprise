@@ -1717,8 +1717,8 @@ html[dir='rtl'] {
     @include font-size(14);
   }
 
-  label.inline .checkbox ~ .label-text {
-    line-height: 18px;
+  label.inline {
+    line-height: 30px;
   }
 
   .label {
@@ -1727,17 +1727,10 @@ html[dir='rtl'] {
 
   li {
     height: 30px;
-    padding: 2px 14px;
+    padding: 0 15px;
 
     &:first-child {
       margin-top: 3px;
-    }
-
-    .checkbox {
-      // scss-lint:disable ImportantRule
-      margin: 6px 0 0 !important;
-      // scss-lint:enable ImportantRule
-      position: relative;
     }
   }
 
