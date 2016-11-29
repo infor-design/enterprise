@@ -17,3 +17,4 @@ xunit.xml
 .idea/
 .idea
 views/docs/changelog-contents.html
+config.json

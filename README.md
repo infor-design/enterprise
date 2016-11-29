@@ -390,8 +390,62 @@ Run the [Soho Mapper Tool](http://git.infor.com/projects/SOHO/repos/mapper/brows
 Set the hash map path
 `--mapperPath='/Users/username/mapper/dist/globalsHashMap.min.json'`
 
-Set a control(s) to include, one control per flag,
+Set a control(s) to include, one control per flag
 `--controls='datagrid'` or many, `--controls='datagrid' --controls='expandableara' --controls='accordion' ...`
 
-Set a control(s) to exclude, one control per flag,
+Set a control(s) to exclude, one control per flag
 `--excludeControls='datagrid'` or many, `--excludeControls='datagrid' --excludeControls='expandableara' --excludeControls='button' ...`
+
+Import a config file
+`--configPath='/Users/username/controls/config.json'`
+
+Create a config file at root
+`--config`
+
+Sample config file
+```json
+{
+  "js": [
+    "initialize",
+    "autocomplete",
+    "button",
+    "datepicker",
+    "drag",
+    "datagrid",
+    "dropdown",
+    "environment",
+    "icon",
+    "lifecycle",
+    "locale",
+    "lookup",
+    "mask",
+    "multiselect",
+    "popupmenu",
+    "tmpl",
+    "tooltip",
+    "utils",
+    "animations",
+    "listview",
+    "modal",
+    "searchfield",
+    "toolbar",
+    "editor",
+    "pager",
+    "toast",
+    "validation",
+    "base",
+    "form",
+    "listfilter",
+    "highlight",
+    "place",
+    "initialize",
+    "resize",
+    "popdown",
+    "toolbarsearchfield",
+    "applicationmenu",
+    "personalize",
+    "zoom",
+    "accordion"
+  ]
+}
+```
