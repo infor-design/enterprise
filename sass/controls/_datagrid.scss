@@ -1771,6 +1771,18 @@ html[dir='rtl'] {
   }
 }
 
+//Summary totals
+.datagrid-summary-row {
+  td {
+    border-right-color: transparent;
+  }
+
+  .datagrid-summary-totals {
+    color: font-color-lowcontrast;
+    float: left;
+  }
+}
+
 //Ios Hack
 .ios .datagrid:not(.short-rowheight):not(.medium-rowheight) {
   .icon-error,

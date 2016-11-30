@@ -107,7 +107,7 @@ window.Formatters = {
 
     textValue = col.text || value;
     if (!textValue && !col.icon) {
-      return '';
+      return '&nbsp;';
     }
 
     return col.icon ?
@@ -236,6 +236,22 @@ window.Formatters = {
         button = '<td role="gridcell" colspan=' + (idx) + '><div class="datagrid-cell-wrapper">&nbsp;</div></td><td role="gridcell"><div class="datagrid-cell-wrapper"> '+ item.sum +'</div></td>';
 
     return button;
+  },
+
+  SummaryRow: function (row, cell, value, col) {
+    var afterText = '',
+        beforeText = col.summaryText ||  '<b class="datagrid-summary-totals">' + Locale.translate('Total') + ' </b>';
+
+    if (col.summaryTextPlacement === 'after') {
+      afterText = beforeText;
+      beforeText = '';
+    }
+
+    if (typeof Locale !== undefined && col.numberFormat) {
+       value = Locale.formatNumber(value, (col.numberFormat ? col.numberFormat : null));
+    }
+
+    return (beforeText + ((value === null || value === undefined || value === '') ? '&nbsp;' : value.toString()) + afterText);
   },
 
   // Tree Expand / Collapse Button and Paddings
@@ -866,7 +882,7 @@ window.GroupBy = (function() {
     return chosen;
   };
 
-  //Grouping Function with Plugins/accumulator
+  //Grouping Function with Plugins/Aggregator
   var group = function(data, names) {
     var stems = keys(data, names);
 
@@ -880,7 +896,7 @@ window.GroupBy = (function() {
     });
   };
 
-  //Register an accumulator
+  //Register an aggregator
   group.register = function(name, converter) {
     return group[name] = function(data, names, extra) { // jshint ignore:line
       var that = this;
@@ -892,7 +908,7 @@ window.GroupBy = (function() {
   return group;
 }());
 
-//Register built in accumulators
+//Register built in aggregators
 GroupBy.register('sum', function(item) {
   var extra = this.extra;
   return $.extend({}, item.key, {values: item.values}, {sum: item.values.reduce(function(memo, node) {
@@ -922,6 +938,27 @@ GroupBy.register('list', function(item) {
     return list;
   })});
 });
+
+//Simple Summary Row Accumlator
+window.Aggregators = {};
+window.Aggregators.aggregate = function(items, columns) {
+  var totals = {}, self = this;
+
+  for (var i = 0; i < columns.length; i++) {
+    if (columns[i].aggregator) {
+      var field = columns[i].field;
+
+      self.sum = function(sum, node) {
+        return sum + Number(node[field]);
+      };
+
+      var total = items.reduce(self[columns[i].aggregator], 0);
+      totals[field] = total;
+    }
+  }
+
+  return totals;
+};
 
 $.fn.datagrid = function(options) {
 
@@ -2213,6 +2250,12 @@ $.fn.datagrid = function(options) {
         this.recordCount++;
       }
 
+
+      //Append a Summary Row
+      if (this.settings.summaryRow) {
+        tableHtml += self.rowHtml(self.calculateTotals(), this.recordCount, false, true);
+      }
+
       self.tableBody.append(tableHtml);
       self.setupTooltips();
       self.tableBody.find('.dropdown').dropdown();
@@ -2261,6 +2304,7 @@ $.fn.datagrid = function(options) {
     rowHtml: function (rowData, dataRowIdx, isGroup, isFooter) {
       var isEven = false,
         self = this,
+        isSummaryRow = this.settings.summaryRow && !isGroup && isFooter,
         activePage = self.pager ? self.pager.activePage : 1,
         pagesize = self.settings.pagesize,
         rowHtml = '',
@@ -2316,9 +2360,9 @@ $.fn.datagrid = function(options) {
                 (self.settings.treeGrid && rowData.children ? ' aria-expanded="' + (rowData.expanded ? 'true"' : 'false"') : '') +
                 (self.settings.treeGrid ? ' aria-level= "' + depth + '"' : '') +
                 ' class="datagrid-row'+
-                //(self.settings.rowHeight !== ' normal' ? ' ' + self.settings.rowHeight + '-rowheight' : '') +
                 (isHidden ? ' is-hidden' : '') +
                 (self.settings.alternateRowShading && !isEven ? ' alt-shading' : '') +
+                (isSummaryRow ? ' datagrid-summary-row' : '') +
                 (!self.settings.cellNavigation ? ' is-clickable' : '' ) +
                 (self.settings.treeGrid ? (rowData.children ? ' datagrid-tree-parent' : (depth > 1 ? ' datagrid-tree-child' : '')) : '') +
                  '"' + '>';
@@ -2326,7 +2370,7 @@ $.fn.datagrid = function(options) {
       for (var j = 0; j < self.settings.columns.length; j++) {
         var col = self.settings.columns[j],
           cssClass = '',
-          formatter = (col.formatter || self.defaultFormatter),
+          formatter = isSummaryRow ? col.summaryRowFormatter || col.formatter || self.defaultFormatter : col.formatter || self.defaultFormatter,
           formatted = self.formatValue(
             formatter,
             dataRowIdx,
@@ -2629,6 +2673,12 @@ $.fn.datagrid = function(options) {
         return ' rowspan ="'+ cnt + '"';
       }
       return '';
+    },
+
+    //Summary Row Totals use the aggregators
+    calculateTotals: function() {
+      this.settings.totals = Aggregators.aggregate(this.settings.dataset, this.settings.columns);
+      return this.settings.totals;
     },
 
     setupTooltips: function () {

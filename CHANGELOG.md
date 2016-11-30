@@ -2,8 +2,9 @@
 Release Date: 2016-11-30
 
 ### Key New Features
-* Datagrid Grouping
+* Datagrid Grouping and Summary Row
 * Swap List API Improvements
+* Circle Pager
 
 ### Breaking Changes
 

@@ -295,6 +295,7 @@
       'Toolbar': {id: 'Toolbar', value: 'Toolbar', comment: 'describing the toolbar component'},
       'TopAlign': {id: 'TopAlign', value: 'Top Align', comment: 'Top Align tooltip'},
       'Total': {id: 'Total', value: 'Total', comment: 'Mathematic total of a calculation'},
+      'Totals': {id: 'Totals', value: 'Totals', comment: 'Mathematic total of a calculation (plural)'},
       'TreeCollapse': {id: 'TreeCollapse', value: 'Collapse Tree', comment: 'Tree Collapse tooltip'},
       'TreeExpand': {id: 'TreeExpand', value: 'Expand Tree', comment: 'Tree Expand tooltip'},
       'Turquoise': {id: 'Turquoise', value: 'Turquoise', comment: 'Color in our color pallette'},
