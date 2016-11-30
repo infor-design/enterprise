@@ -61,7 +61,10 @@
 
         //Get Page Based on info in Req, return results into response.
         $.getJSON(url, function(res) {
-          req.total = res.total;
+          req.total = -1;
+          console.log(req);
+          req.lastPage = false;
+          req.firstPage = true;
           response(res.data, req);
         });
       },
