@@ -882,7 +882,7 @@ window.GroupBy = (function() {
     return chosen;
   };
 
-  //Grouping Function with Plugins/accumulator
+  //Grouping Function with Plugins/Aggregator
   var group = function(data, names) {
     var stems = keys(data, names);
 
@@ -896,7 +896,7 @@ window.GroupBy = (function() {
     });
   };
 
-  //Register an accumulator
+  //Register an aggregator
   group.register = function(name, converter) {
     return group[name] = function(data, names, extra) { // jshint ignore:line
       var that = this;
@@ -908,7 +908,7 @@ window.GroupBy = (function() {
   return group;
 }());
 
-//Register built in accumulators
+//Register built in aggregators
 GroupBy.register('sum', function(item) {
   var extra = this.extra;
   return $.extend({}, item.key, {values: item.values}, {sum: item.values.reduce(function(memo, node) {
@@ -940,19 +940,19 @@ GroupBy.register('list', function(item) {
 });
 
 //Simple Summary Row Accumlator
-window.Accumulators = {};
-window.Accumulators.accumulate = function(items, columns) {
+window.Aggregators = {};
+window.Aggregators.aggregate = function(items, columns) {
   var totals = {}, self = this;
 
   for (var i = 0; i < columns.length; i++) {
-    if (columns[i].accumulator) {
+    if (columns[i].aggregator) {
       var field = columns[i].field;
 
       self.sum = function(sum, node) {
         return sum + Number(node[field]);
       };
 
-      var total = items.reduce(self[columns[i].accumulator], 0);
+      var total = items.reduce(self[columns[i].aggregator], 0);
       totals[field] = total;
     }
   }
@@ -2675,9 +2675,9 @@ $.fn.datagrid = function(options) {
       return '';
     },
 
-    //Summary Row Totals use the Accumulators
+    //Summary Row Totals use the aggregators
     calculateTotals: function() {
-      this.settings.totals = Accumulators.accumulate(this.settings.dataset, this.settings.columns);
+      this.settings.totals = Aggregators.aggregate(this.settings.dataset, this.settings.columns);
       return this.settings.totals;
     },
 
