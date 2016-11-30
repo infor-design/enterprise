@@ -271,7 +271,7 @@
           localeTimeFormat = ((typeof Locale === 'object' && Locale.calendar().timeFormat) ? Locale.calendar().timeFormat : null);
 
         if (this.settings.dateFormat === 'locale') {
-          this.pattern = localeDateFormat.short + (this.settings.showTime ? ' ' + localeTimeFormat: '');
+          this.pattern = localeDateFormat.short + (this.settings.showTime ? ' ' + (this.settings.timeFormat || localeTimeFormat) : '');
         } else {
           this.pattern = this.settings.dateFormat + (this.settings.showTime ? ' ' + this.settings.timeFormat : '');
         }
@@ -445,7 +445,7 @@
               var timepickerPopup = $('#timepicker-popup').css({'border': 0, 'box-shadow': 'none', 'width': ''}),
                 position = {
                   top: parseInt(self.popup.css('top'), 10) + (self.table.height() + self.header.height() + 28),
-                  left: parseInt(self.popup.css('left'), 10) + (self.popup.outerWidth() - timepickerPopup.outerWidth() + 5)
+                  left: (parseInt(self.popup.css('left'), 10) + (self.popup.outerWidth()/2)) - (timepickerPopup.outerWidth()/2) + 20
                 };
 
               timepickerPopup.css(position);
