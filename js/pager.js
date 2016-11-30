@@ -567,8 +567,6 @@
       },
 
       updatePagingInfo: function(pagingInfo) {
-        // console.log(pagingInfo);
-
         this.settings.pagesize = pagingInfo.pagesize || this.settings.pagesize;
 
         if (this.isTable && this.datagrid) {
