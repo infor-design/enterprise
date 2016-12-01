@@ -41,7 +41,6 @@
       },
       settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
     function Tooltip(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -50,21 +49,24 @@
       Soho.logTimeEnd(pluginName);
     }
 
-    // Plugin Object
     Tooltip.prototype = {
       init: function() {
         this.setup();
         this.appendTooltip();
 
+        // Initial Content Setting.
+        // Don't do this if we're using an "immediate" trigger because _setContent()_ is handled at
+        // display time in that case.
         var shouldRender = this.settings.trigger !== 'immediate';
+        if (shouldRender) {
+          this.setContent(this.settings.content, true);
+        }
 
-        // Initial Content Setting
-        this.setContent(this.settings.content, shouldRender);
         this.handleEvents();
       },
 
       setup: function() {
-        // this.activeElement is the element that the tooltip displays and positions against
+        // "this.activeElement" is the target element that the Tooltip will display itself against
         this.activeElement = this.settings.parentElement instanceof $ && this.settings.parentElement.length ? this.settings.parentElement : this.element;
 
         this.descriptionId = $('.tooltip-description').length + 1;
@@ -154,40 +156,36 @@
             });
         }
 
+        function toggleTooltipDisplay() {
+          if (!self.tooltip.hasClass('is-hidden')) {
+            self.hide();
+          }
+          self.show();
+        }
+
         if (this.settings.trigger === 'click') {
           this.element.on('click.tooltip', function() {
-            if (self.tooltip.hasClass('is-hidden')) {
-              self.show();
-            } else {
-              self.hide();
-            }
+            toggleTooltipDisplay();
           });
         }
 
         if (this.settings.trigger === 'immediate') {
           timer = setTimeout(function() {
-            if (self.tooltip.hasClass('is-hidden')) {
-              self.show();
-            } else {
-              self.hide();
-            }
+            toggleTooltipDisplay();
           }, 1);
         }
 
-        if (this.settings.trigger === 'focus') {
+        var isFocusable = (this.element.filter('button, a').length && this.settings.trigger !== 'click') || this.settings.trigger === 'focus';
+        if (isFocusable) {
           this.element.on('focus.tooltip', function() {
             self.show();
           })
           .on('blur.tooltip', function() {
-            self.hide();
+            if (!self.settings.keepOpen) {
+              self.hide();
+            }
           });
         }
-
-        /*
-        this.element.filter('button, a').on('focus.tooltip', function() {
-          self.setContent(self.content);
-        });
-        */
 
         // Media Query Listener to detect a menu closing on mobile devices that change orientation.
         this.matchMedia = window.matchMedia('(orientation: landscape)');
@@ -202,19 +200,20 @@
       },
 
       setContent: function(content, dontRender) {
-        var self = this;
+        var self = this,
+          specified;
+
         function doRender() {
           if (dontRender === true) {
             return;
           }
-
           self.addAria();
           self.render();
         }
 
         // If the incoming content is exactly the same as the stored content, don't continue with this step.
         // Deep object comparison for jQuery objects is done further down the chain.
-        if (content === this.content) {
+        if (content !== undefined && content !== null && content === this.content) {
           doRender();
           return true;
         }
@@ -224,6 +223,8 @@
           return false;
         }
 
+        // Handle setting of content based on its Object type.
+        // If type isn't handled, the tooltip will not display.
         if (typeof content === 'string') {
           if (!content.length) {
             return false;
@@ -235,6 +236,7 @@
           // Could be an ID attribute
           // If it matches an element already on the page, grab that element's content and store it
           if (content.indexOf('#') === 0) {
+            specified = true;
             content = $(content).html();
           }
         } else if (typeof content === 'function') {
@@ -244,6 +246,7 @@
           }
           content = callbackResult;
         } else if (content instanceof $ && content.length) {
+          specified = true;
           content = content.html();
         } else {
           return false;
@@ -251,6 +254,11 @@
 
         // Store an internal copy of the content
         this.content = content;
+
+        // Wrap tooltip content in <p> tags if there isn't already one present
+        if (!specified) {
+          this.content = '<p>' + this.content + '</p>';
+        }
 
         doRender();
         return true;
@@ -276,13 +284,7 @@
           contentArea.before('<div class="arrow"></div>');
         }
 
-        // Wrap the tooltip content in <p> tags if there isn't already one present
-        var content = this.content;
-        if (!(/^<p/.test(this.content))) {
-          content = '<p>' + this.content + '</p>';
-        }
-
-        contentArea.html(content);
+        contentArea.html(this.content);
       },
 
       renderPopover: function() {
@@ -398,7 +400,7 @@
           }
 
           if (window.orientation === undefined) {
-            $(window).on('resize.tooltip', function() {
+            $('body').on('resize.tooltip', function() {
               self.hide();
             });
           }
@@ -496,9 +498,17 @@
       },
 
       updated: function() {
-        return this
-          .teardown()
-          .init();
+        var self = this;
+
+        if (settings.trigger === 'immediate') {
+          setTimeout(function() {
+            self.show();
+          }, 100);
+        } else {
+          self.setContent();
+        }
+
+        return this;
       },
 
       teardown: function() {
@@ -508,7 +518,7 @@
         if (!this.tooltip.hasClass('is-hidden')) {
           this.hide();
         }
-        this.element.removeData(pluginName);
+
         this.element.off('mouseenter.tooltip mouseleave.tooltip mousedown.tooltip click.tooltip focus.tooltip blur.tooltip');
 
         if (this.matchMedia) {
@@ -537,12 +547,6 @@
 
         instance.settings = $.extend({}, instance.settings, options);
         instance.updated();
-
-        if (settings.trigger === 'immediate') {
-          setTimeout(function() {
-            instance.show();
-          }, 100);
-        }
 
         return;
       }
