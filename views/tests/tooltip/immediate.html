@@ -1,5 +1,12 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Tooltip Test: "Immediate" Trigger</h2>
+    <p>When a tooltip is used with an "immediate" trigger, as soon as the tooltip is invoked, it will show itself.</p>
+    <p>In this example, the tooltip is being re-invoked on the button's activation.</p>
+  </div>
+</div>
 
-<div class="row" style="margin-top:30px;">
+<div class="row">
   <div class="six columns">
     <button class="btn" type="button" id="tooltip-btn">Show Tooltip
     </button>
@@ -7,11 +14,16 @@
 </div>
 
 <script>
-  var cnt = 0;
+  var cnt = 0,
+    tooltipOpts = {
+      trigger: 'immediate',
+      content: function tooltipContentGenerator() {
+        cnt++;
+        return 'Activated ' + cnt + ' times!';
+      }
+    };
+
   $('#tooltip-btn').on('click', function () {
-    $('#tooltip-btn').tooltip({trigger: 'immediate', content: function() {
-      cnt++;
-      return cnt === 2 ? '' : 'Test'+cnt;
-    }});
+    $('#tooltip-btn').tooltip(tooltipOpts);
   });
 </script>

@@ -41,7 +41,6 @@
       },
       settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
     function Tooltip(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -50,23 +49,29 @@
       Soho.logTimeEnd(pluginName);
     }
 
-    // Plugin Object
     Tooltip.prototype = {
       init: function() {
         this.setup();
         this.appendTooltip();
+
+        // Initial Content Setting.
+        // Don't do this if we're using an "immediate" trigger because _setContent()_ is handled at
+        // display time in that case.
+        var shouldRender = this.settings.trigger !== 'immediate';
+        if (shouldRender) {
+          this.setContent(this.settings.content, true);
+        }
+
         this.handleEvents();
-        this.addAria();
-        this.isPopover = (settings.content !== null && typeof settings.content === 'object') || settings.popover;
       },
 
       setup: function() {
-        // this.activeElement is the element that the tooltip displays and positions against
+        // "this.activeElement" is the target element that the Tooltip will display itself against
         this.activeElement = this.settings.parentElement instanceof $ && this.settings.parentElement.length ? this.settings.parentElement : this.element;
 
         this.descriptionId = $('.tooltip-description').length + 1;
         this.description = this.element.parent().find('.tooltip-description');
-        if (!this.description.length && settings.isError) {
+        if (!this.description.length && this.settings.isError) {
           this.description = $('<span id="tooltip-description-'+ this.descriptionId +'" class="tooltip-description audible"></span>').insertAfter(this.element);
         }
 
@@ -74,17 +79,27 @@
           this.activeElement = this.element.nextAll('.dropdown-wrapper:first').find('>.dropdown');
         }
 
-        settings.closebutton = (settings.closebutton || this.element.data('closebutton')) ? true : false;
+        var titleAttr = this.element.attr('title');
+        if (titleAttr && titleAttr.length) {
+          this.settings.content = titleAttr;
+        }
+
+        this.isPopover = (this.settings.content !== null && typeof this.settings.content === 'object') || this.settings.popover === true;
+
+        this.settings.closebutton = (this.settings.closebutton || this.element.data('closebutton')) ? true : false;
 
         if (this.element.data('extraClass') && this.element.data('extraClass').length) {
-          settings.extraClass = this.element.data('extraClass');
+          this.settings.extraClass = this.element.data('extraClass');
         }
 
         this.isRTL = Locale.isRTL();
       },
 
       addAria: function() {
-        this.content = this.element.attr('title') || settings.content;
+        if (!this.content) {
+          return;
+        }
+
         this.description.text(this.content);
         this.content = this.addClassToLinks(this.content, 'links-clickable');
 
@@ -92,7 +107,7 @@
           this.element.removeAttr('title').attr('aria-describedby', this.description.attr('id'));
         }
 
-        if (this.isPopover && settings.trigger === 'click') {
+        if (this.isPopover && this.settings.trigger === 'click') {
           this.element.attr('aria-haspopup', true);
         }
       },
@@ -104,9 +119,9 @@
       },
 
       appendTooltip: function() {
-        this.tooltip = settings.tooltipElement ? $(settings.tooltipElement) : $('#tooltip');
+        this.tooltip = this.settings.tooltipElement ? $(this.settings.tooltipElement) : $('#tooltip');
         if (!this.tooltip.length) {
-          var name = (settings.tooltipElement ? settings.tooltipElement.substring(1, settings.tooltipElement.length) : 'tooltip');
+          var name = (this.settings.tooltipElement ? this.settings.tooltipElement.substring(1, this.settings.tooltipElement.length) : 'tooltip');
           this.tooltip = $('<div class="' + (this.isPopover ? 'popover' : 'tooltip') + ' bottom is-hidden" role="tooltip" id="' + name + '"><div class="arrow"></div><div class="tooltip-content"></div></div>');
         }
 
@@ -123,7 +138,7 @@
       handleEvents: function() {
         var self = this, timer, delay = 400;
 
-        if (settings.trigger === 'hover' && !settings.isError) {
+        if (this.settings.trigger === 'hover' && !this.settings.isError) {
           this.element
             .on('mouseenter.tooltip', function() {
               timer = setTimeout(function() {
@@ -141,38 +156,36 @@
             });
         }
 
-        if (settings.trigger === 'click') {
+        function toggleTooltipDisplay() {
+          if (!self.tooltip.hasClass('is-hidden')) {
+            self.hide();
+          }
+          self.show();
+        }
+
+        if (this.settings.trigger === 'click') {
           this.element.on('click.tooltip', function() {
-            if (self.tooltip.hasClass('is-hidden')) {
-              self.show();
-            } else {
-              self.hide();
-            }
+            toggleTooltipDisplay();
           });
         }
 
-        if (settings.trigger === 'immediate') {
+        if (this.settings.trigger === 'immediate') {
           timer = setTimeout(function() {
-            if (self.tooltip.hasClass('is-hidden')) {
-              self.show();
-            } else {
-              self.hide();
-            }
+            toggleTooltipDisplay();
           }, 1);
         }
 
-        if (settings.trigger === 'focus') {
+        var isFocusable = (this.element.filter('button, a').length && this.settings.trigger !== 'click') || this.settings.trigger === 'focus';
+        if (isFocusable) {
           this.element.on('focus.tooltip', function() {
             self.show();
           })
           .on('blur.tooltip', function() {
-            self.hide();
+            if (!self.settings.keepOpen) {
+              self.hide();
+            }
           });
         }
-
-        this.element.filter('button, a').on('focus.tooltip', function() {
-          self.setContent(self.content);
-        });
 
         // Media Query Listener to detect a menu closing on mobile devices that change orientation.
         this.matchMedia = window.matchMedia('(orientation: landscape)');
@@ -186,83 +199,129 @@
         this.matchMedia.addListener(this.mediaQueryListener);
       },
 
-      setContent: function(content) {
-        if ((!content || !content.length) && typeof settings.content !== 'function') {
+      setContent: function(content, dontRender) {
+        var self = this,
+          specified;
+
+        function doRender() {
+          if (dontRender === true) {
+            return;
+          }
+          self.addAria();
+          self.render();
+        }
+
+        // If the incoming content is exactly the same as the stored content, don't continue with this step.
+        // Deep object comparison for jQuery objects is done further down the chain.
+        if (content !== undefined && content !== null && content === this.content) {
+          doRender();
+          return true;
+        }
+
+        content = content || this.settings.content;
+        if (!content) {
           return false;
         }
 
-        var self = this,
-          contentArea,
-          specified = false;
-
-        content = Locale.translate(content) || content;
-
-        if (content.indexOf('#') === 0) {
-          content = $(content).html();
-          specified = true;
-        }
-
-        if (settings.extraClass && typeof settings.extraClass === 'string') {
-          this.tooltip.addClass(settings.extraClass);
-        } else {
-          this.tooltip.removeAttr('class').addClass('tooltip bottom is-hidden');
-        }
-
-        if (this.isPopover) {
-          contentArea = this.tooltip.find('.tooltip-content').html(settings.content).removeClass('hidden');
-          settings.content.removeClass('hidden');
-          this.tooltip.removeClass('tooltip').addClass('popover');
-
-          if (settings.title !== null) {
-            var title = this.tooltip.find('.tooltip-title');
-            if (title.length === 0) {
-              title = $('<div class="tooltip-title"></div>').prependTo(this.tooltip);
-            }
-            title.html(settings.title).show();
-          } else {
-            this.tooltip.find('.tooltip-title').hide();
-          }
-
-          if (settings.closebutton) {
-            var closeBtnX = $(
-              '<button type="button" class="btn-icon l-pull-right" style="margin-top: -9px">'+
-                $.createIcon({ classes: ['icon-close'], icon: 'close' }) +
-                '<span>Close</span>'+
-              '</button>'
-            ).on('click', function() {
-              self.hide();
-            });
-            $('.tooltip-title', this.tooltip).append(closeBtnX);
-          }
-
-          contentArea.initialize();
-          return true;
-
-        } else {
-          this.tooltip.find('.tooltip-title').hide();
-        }
-
-        this.tooltip.removeClass('popover').addClass('tooltip');
-        if (typeof settings.content === 'function') {
-          content = this.content = settings.content.call(this.element);
-          if (!content) {
+        // Handle setting of content based on its Object type.
+        // If type isn't handled, the tooltip will not display.
+        if (typeof content === 'string') {
+          if (!content.length) {
             return false;
           }
+
+          // Could be a translation definition
+          content = Locale.translate(content) || content;
+
+          // Could be an ID attribute
+          // If it matches an element already on the page, grab that element's content and store it
+          if (content.indexOf('#') === 0) {
+            specified = true;
+            content = $(content).html();
+          }
+        } else if (typeof content === 'function') {
+          var callbackResult = content.call(this.element);
+          if (!callbackResult || typeof callbackResult !== 'string' || !callbackResult.length) {
+            return false;
+          }
+          content = callbackResult;
+        } else if (content instanceof $ && content.length) {
+          specified = true;
+          content = content.html();
+        } else {
+          return false;
         }
 
-        contentArea = this.tooltip.find('.tooltip-content');
+        // Store an internal copy of the content
+        this.content = content;
 
+        // Wrap tooltip content in <p> tags if there isn't already one present
+        if (!specified) {
+          this.content = '<p>' + this.content + '</p>';
+        }
+
+        doRender();
+        return true;
+      },
+
+      render: function() {
+        if (this.isPopover) {
+          return this.renderPopover();
+        }
+        return this.renderTooltip();
+      },
+
+      renderTooltip: function() {
+        var titleArea = this.tooltip.find('.tooltip-title'),
+          contentArea = this.tooltip.find('.tooltip-content'),
+          cssClass = 'tooltip' + (this.settings.extraClass ? ' ' + this.settings.extraClass : '') + ' is-hidden';
+
+        this.tooltip.attr('class', cssClass);
+        titleArea.hide();
+
+        // Generate an arrow if one doesn't already exist
         if (contentArea.prev('.arrow').length === 0) {
           contentArea.before('<div class="arrow"></div>');
         }
 
-        if (specified) {
-          contentArea.html(content);
+        contentArea.html(this.content);
+      },
+
+      renderPopover: function() {
+        var self = this,
+          cssClass = 'popover' + (this.settings.extraClass ? ' ' + this.settings.extraClass : '') + ' is-hidden',
+          contentArea = this.tooltip.find('.tooltip-content'),
+          content = this.content;
+
+        // Use currently-set content to render a popover
+        contentArea.html(content).removeClass('hidden');
+        content = contentArea.children().removeClass('hidden');
+
+        this.tooltip.attr('class', cssClass);
+
+        if (this.settings.title !== null) {
+          var title = this.tooltip.find('.tooltip-title');
+          if (title.length === 0) {
+            title = $('<div class="tooltip-title"></div>').prependTo(this.tooltip);
+          }
+          title.html(this.settings.title).show();
+        } else {
+          this.tooltip.find('.tooltip-title').hide();
         }
-        else {
-          contentArea.html('<p>' + (content === undefined ? '(Content)' : content) + '</p>');
+
+        if (this.settings.closebutton) {
+          var closeBtnX = $(
+            '<button type="button" class="btn-icon l-pull-right" style="margin-top: -9px">'+
+              $.createIcon({ classes: ['icon-close'], icon: 'close' }) +
+              '<span>Close</span>'+
+            '</button>'
+          ).on('click', function() {
+            self.hide();
+          });
+          $('.tooltip-title', this.tooltip).append(closeBtnX);
         }
-        return true;
+
+        content.initialize();
       },
 
       // Alias for _show()_.
@@ -275,39 +334,39 @@
         this.isInPopup = false;
 
         if (newSettings) {
-          settings = newSettings;
+          this.settings = $.extend({}, this.settings, newSettings);
         }
 
-        if (settings.beforeShow && !ajaxReturn) {
+        if (this.settings.beforeShow && !ajaxReturn) {
           var response = function (content) {
-            self.content = content;
-            self.show(settings, true);
+            self.show({content: content}, true);
           };
 
-          if (typeof settings.beforeShow === 'string') {
-            window[settings.beforeShow](response);
+          if (typeof this.settings.beforeShow === 'string') {
+            window[this.settings.beforeShow](response);
             return;
           }
 
-          settings.beforeShow(response);
+          this.settings.beforeShow(response);
           return;
         }
 
         var okToShow = true;
-        okToShow = this.setContent(this.content);
-        if (okToShow  === false) {
+
+        okToShow = this.setContent();
+        if (okToShow === false) {
           return;
         }
 
         okToShow = this.element.triggerHandler('beforeshow', [this.tooltip]);
-        if (okToShow  === false) {
+        if (okToShow === false) {
           return;
         }
 
         this.tooltip.removeAttr('style');
-        this.tooltip.removeClass('bottom right left top offset is-error').addClass(settings.placement);
+        this.tooltip.addClass(this.settings.placement);
 
-        if (settings.isError || settings.isErrorColor) {
+        if (this.settings.isError || this.settings.isErrorColor) {
           this.tooltip.addClass('is-error');
         }
 
@@ -317,7 +376,7 @@
         setTimeout(function () {
           $(document).on('mouseup.tooltip', function (e) {
 
-            if (settings.isError || settings.trigger === 'focus') {
+            if (self.settings.isError || self.settings.trigger === 'focus') {
              return;
             }
 
@@ -331,30 +390,29 @@
             }
           })
           .on('keydown.tooltip', function (e) {
-            if (e.which === 27 || settings.isError) {
+            if (e.which === 27 || self.settings.isError) {
               self.hide();
             }
           });
 
-          if (settings.isError && !self.element.is(':visible') && !self.element.is('.dropdown')) {
+          if (self.settings.isError && !self.element.is(':visible') && !self.element.is('.dropdown')) {
             self.hide();
           }
 
           if (window.orientation === undefined) {
-            $(window).on('resize.tooltip', function() {
+            $('body').on('resize.tooltip', function() {
               self.hide();
             });
           }
 
           // Click to close
-          if (settings.isError) {
+          if (self.settings.isError) {
             self.tooltip.on('click.tooltip', function () {
               self.hide();
             });
           }
 
           self.element.trigger('aftershow', [self.tooltip]);
-
         }, 400);
 
       },
@@ -417,12 +475,12 @@
       },
 
       hide: function() {
-        if (settings.keepOpen) {
+        if (this.settings.keepOpen) {
           return;
         }
 
         if (this.isInPopup) {
-          settings.content.addClass('hidden');
+          this.settings.content.addClass('hidden');
           return;
         }
 
@@ -440,9 +498,17 @@
       },
 
       updated: function() {
-        return this
-          .teardown()
-          .init();
+        var self = this;
+
+        if (settings.trigger === 'immediate') {
+          setTimeout(function() {
+            self.show();
+          }, 100);
+        } else {
+          self.setContent();
+        }
+
+        return this;
       },
 
       teardown: function() {
@@ -452,7 +518,7 @@
         if (!this.tooltip.hasClass('is-hidden')) {
           this.hide();
         }
-        this.element.removeData(pluginName);
+
         this.element.off('mouseenter.tooltip mouseleave.tooltip mousedown.tooltip click.tooltip focus.tooltip blur.tooltip');
 
         if (this.matchMedia) {
@@ -474,22 +540,18 @@
       var instance = $.data(this, pluginName);
 
       //Allow one tooltip and one popover
-      if (instance && (instance.settings.popover == null || instance.settings.popover !== settings.popover)) {
+      if (instance /*&& (instance.settings.popover == null || instance.settings.popover !== settings.popover)*/) {
         if (typeof instance[options] === 'function') {
           instance[options](args);
         }
 
-        instance.settings = $.extend(instance.settings, options);
+        instance.settings = $.extend({}, instance.settings, options);
+        instance.updated();
 
-        if (settings.trigger === 'immediate') {
-         setTimeout(function() {
-            instance.show(settings);
-          }, 100);
-        }
-      } else {
-        instance = $.data(this, pluginName, new Tooltip(this, settings));
-        instance.settings = settings;
+        return;
       }
+
+      instance = $.data(this, pluginName, new Tooltip(this, settings));
     });
   };
 

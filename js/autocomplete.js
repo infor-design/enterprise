@@ -429,9 +429,9 @@
         }
 
         this.closeList();
+        this.highlight(a, items);
 
         this.element
-          .val(a.text().trim())
           .trigger('selected', [a, ret])
           .focus();
 
