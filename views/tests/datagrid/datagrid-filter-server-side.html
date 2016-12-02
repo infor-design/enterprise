@@ -33,7 +33,7 @@
          columns.push({ id: 'status', name: 'Active Status', field: 'status', formatter: Formatters.Checkbox, align: 'center', filterType: 'checkbox', isChecked: function (value) {
             return value && value.toLowerCase() === 'a';
          }});
-         columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal, filterType: 'decimal', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '####.000'});
+         columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal, filterType: 'decimal', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '-####.000'});
 
          //Init and get the api for the grid
          $('#datagrid').datagrid({

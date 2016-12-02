@@ -72,7 +72,7 @@
   $('body').on('initialized', function() {
     $('#task-listview').listview({
       paging: true,
-      pagesize: 10,
+      pagesize: 20,
       source: function(req, response) {
         // Build the URL
         var url = '/api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;

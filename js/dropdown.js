@@ -225,9 +225,6 @@
         // Get a current list of <option> elements
         // If none are available, simply return out
         var opts = this.element.find('option');
-        if (!opts || !opts.length) {
-          return;
-        }
         var selectedOpts = opts.filter(':selected');
 
         function buildLiHeader(textContent) {

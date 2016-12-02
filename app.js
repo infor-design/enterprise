@@ -941,13 +941,10 @@ var express = require('express'),
 
       if (!filteredOut) {
         filteredTotal++;
-        productsAll.push({ id: j, productId: 214220+j, productName: 'Compressor ' + (seed + start), activity:  'Assemble Paint', quantity: 1+(j/2), price: 210.99-j, status: statuses[status], orderDate: new Date(2014, 12, seed), action: 'Action'});
+        productsAll.push({ id: j, productId: 214220+j, productName: 'Compressor ' + j, activity:  'Assemble Paint', quantity: 1+(j/2), price: 210.99-j, status: statuses[status], orderDate: new Date(2014, 12, seed), action: 'Action'});
       }
 
       seed ++;
-      if (seed > 10) {
-        seed = 1;
-      }
     }
 
     var sortBy = function(field, reverse, primer){

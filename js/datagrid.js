@@ -1516,7 +1516,7 @@ $.fn.datagrid = function(options) {
               filterMarkup += '<input ' + (col.filterDisabled ? ' disabled' : '') + ' type="text" class="datepicker" id="'+ filterId +'"/>';
               break;
             case 'decimal':
-              filterMarkup += '<input ' + (col.filterDisabled ? ' disabled' : '') + ' type="text" id="'+ filterId +'"/ data-mask-mode="number" data-mask="'+ (col.mask ? col.mask : '####.00') +'">';
+              filterMarkup += '<input ' + (col.filterDisabled ? ' disabled' : '') + ' type="text" id="'+ filterId +'" data-mask-mode="number" data-mask="'+ (col.mask ? col.mask : '####.00') + '">';
               break;
             case 'contents':
             case 'select':
@@ -2458,7 +2458,7 @@ $.fn.datagrid = function(options) {
 
         rowHtml += '<td role="gridcell" ' + ariaReadonly + ' aria-colindex="' + (j+1) + '" '+
             ' aria-describedby="' + self.uniqueId('-header-' + j) + '"' +
-           (cssClass ? ' class="' + cssClass + '"' : '') + 'data-idx="' + (j) + '"' +
+           (cssClass ? ' class="' + cssClass + '"' : '') +
            (col.tooltip ? ' title="' + col.tooltip.replace('{{value}}', cellValue) + '"' : '') +
            (col.id === 'rowStatus' && rowData.rowStatus && rowData.rowStatus.tooltip ? ' title="' + rowData.rowStatus.tooltip + '"' : '') +
            (self.settings.columnGroups ? 'headers = "' + self.uniqueId('-header-' + j) + ' ' + self.getColumnGroup(j) + '"' : '') +
@@ -3213,7 +3213,7 @@ $.fn.datagrid = function(options) {
         return $();
       }
 
-      return rowNode.find('td[role="gridcell"]:not(.is-hidden)').eq(cell);
+      return rowNode.find('td').eq(cell);
     },
 
     // Attach All relevant events
@@ -4268,7 +4268,6 @@ $.fn.datagrid = function(options) {
           cell = self.activeCell.cell,
           col = self.columnSettings(cell),
           item = self.settings.dataset[self.dataRowIndex(node)],
-          visibleCols = self.visibleColumns(),
           visibleRows = self.tableBody.find('tr:visible'),
           getVisibleRows = function(index) {
             var row = visibleRows.eq(index);
@@ -4277,10 +4276,22 @@ $.fn.datagrid = function(options) {
             }
             return self.dataRowIndex(row);
           },
+          getNextVisibleCell = function(currentCell, lastCell, prev) {
+            var nextCell = currentCell + (prev ? -1 : +1);
+
+            if (nextCell > lastCell) {
+             return;
+            }
+
+            while (self.settings.columns[nextCell] && self.settings.columns[nextCell].hidden) {
+              nextCell = prev ? nextCell-1 : nextCell+1;
+            }
+            return nextCell;
+          },
           isSelectionCheckbox = !!($('.datagrid-selection-checkbox', node).length),
           lastRow, lastCell;
 
-        lastCell = visibleCols.length-1;
+        lastCell = self.settings.columns.length-1;
         lastRow = visibleRows.last();
 
         //Tab, Left and Right arrow keys.
@@ -4298,9 +4309,9 @@ $.fn.datagrid = function(options) {
           else if (!self.quickEditMode || (key === 9)) {
             if ((!isRTL && (key === 37 || key === 9 && e.shiftKey)) ||
                 (isRTL && (key === 39 || key === 9))) {
-              cell--;
+              cell = getNextVisibleCell(cell, lastCell, true);
             } else {
-              cell = (cell+1 > lastCell) ? lastCell : cell+1;
+              cell = getNextVisibleCell(cell, lastCell);
             }
             self.setActiveCell(row, cell);
             self.quickEditMode = false;
@@ -4438,7 +4449,7 @@ $.fn.datagrid = function(options) {
           handled = true;
         }
 
-        //A printable character navigatable
+        //Any printable character - well make it editable
         if ([9, 13, 32, 35, 36, 37, 38, 39, 40, 113].indexOf(key) === -1 &&
           !e.altKey && !e.shiftKey && !e.ctrlKey && !e.metaKey && self.settings.editable) {
           if (!self.editor) {
@@ -4521,8 +4532,10 @@ $.fn.datagrid = function(options) {
 
       //Locate the Editor
       var col = this.columnSettings(cell);
+
+      //Select the Rows if the cell is editable
       if (!col.editor) {
-        if (event.keyCode === 32) {
+        if (event.keyCode === 32 && !$(event.currentTarget).find('.datagrid-selection-checkbox').length) {
           this.toggleRowSelection(this.activeCell.node.closest('tr'));
         }
         return;
@@ -4591,12 +4604,85 @@ $.fn.datagrid = function(options) {
       this.element.triggerHandler('exiteditmode');
     },
 
+    //Validation
+    //Validate a particular cell if it has validation on the column and its visible
+    validateCell: function (row, cell) {
+      var self = this,
+        column = this.columnSettings(cell),
+        validate = column.validate;
+
+      if (!validate) {
+        return;
+      }
+
+      var rules = column.validate.split(','),
+        validator = $.fn.validation,
+        cellValue = this.fieldValue(this.settings.dataset[row], column.field);
+
+      for (var i = 0; i < rules.length; i++) {
+        var rule = validator.rules[rules[i]],
+          isValid = rule.check(cellValue, $('<input>').val(cellValue));
+
+        if (!isValid) {
+          self.showCellError(row, cell, rule.message);
+        } else {
+          self.clearCellError(row, cell);
+        }
+      }
+
+    },
+
+    showCellError: function (row, cell, errorMessage) {
+      var node = this.cellNode(row, cell);
+
+      if (!node.length) {
+        return;
+      }
+
+      //Add icon and classes
+      node.addClass('error').attr('data-errormessage', errorMessage);
+      var icon = $($.createIcon({ classes: ['icon-error'], icon: 'error' }));
+      //Add and show tooltip
+      node.find('.datagrid-cell-wrapper').append(icon);
+      icon.tooltip({placement: 'bottom', isErrorColor: true, content: errorMessage});
+      icon.data('tooltip').show();
+
+    },
+
+    clearCellError: function (row, cell) {
+      var node = this.cellNode(row, cell);
+
+      if (!node.length) {
+        return;
+      }
+
+      node.removeClass('error').removeAttr('data-errormessage');
+      node.find('.icon-error').remove();
+    },
+
+    clearAllErrors: function () {
+      this.tableBody.find('td.error').each(function () {
+        var node = $(this);
+        node.removeClass('error').removeAttr('data-errormessage');
+        node.find('.icon-error').remove();
+      });
+    },
+
+    //Validate all visible cells in a row if they have validation on the column
+    validateRow: function () {
+
+    },
+
+    //Validate all rows and cells with validation on them
+    validateAll: function () {
+
+    },
+
     //Returns Column Settings from a cell
     firstRow: null,
 
     columnSettings: function (cell) {
-      var cellNode = this.firstRow.find('td:not(.is-hidden)').eq(cell),
-        column = settings.columns[parseInt(cellNode.attr('data-idx'))];
+      var column = settings.columns[cell];
 
       return column || {};
     },
@@ -4694,6 +4780,8 @@ $.fn.datagrid = function(options) {
       cellNode.find('.datagrid-cell-wrapper').html(formatted);
 
       if (coercedVal !== oldVal && !fromApiCall) {
+        //Validate the cell
+        this.validateCell(row, cell);
         this.element.trigger('cellchange', {row: row, cell: cell, target: cellNode, value: coercedVal, oldValue: oldVal, column: col});
       }
     },
@@ -4750,7 +4838,7 @@ $.fn.datagrid = function(options) {
         if (isGroupRow) {
           rowElem = row.parent();
         }
-        cell = isGroupRow ? 0 : row.siblings(':visible').addBack().index(row);
+        cell = isGroupRow ? 0 : row.index();
         rowNum = isGroupRow ? 0 : this.visualRowIndex(row.parent());
       }
 
@@ -4765,6 +4853,11 @@ $.fn.datagrid = function(options) {
       //Remove previous tab index
       if (prevCell.node && prevCell.node.length ===1) {
         self.activeCell.node.removeAttr('tabindex');
+      }
+
+      //Hide any cell tooltips (Primarily for validation)
+      if (prevCell.cell !== cell || prevCell.row !== row) {
+        $('#tooltip').hide();
       }
 
       //Find the cell if it exists

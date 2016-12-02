@@ -1,5 +1,5 @@
 ## 4.2.3 - Minor Release
-Release Date: 2016-11-30
+Release Date: 2016-12-15
 
 ### Key New Features
 * Datagrid Grouping and Summary Row

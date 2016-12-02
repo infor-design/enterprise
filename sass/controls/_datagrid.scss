@@ -626,7 +626,7 @@ $datagrid-short-row-height: 23px;
     }
 
     // Hover States
-    &:not(.datagrid-expandable-row):hover td:not(.is-editing) {
+    &:not(.datagrid-expandable-row):hover td:not(.is-editing):not(.error) {
       background-color: $datagrid-row-hover-color;
 
       .is-readonly {
@@ -643,7 +643,9 @@ $datagrid-short-row-height: 23px;
       background-color: $datagrid-row-selected-color-dark;
 
       span {
-        background-color: transparent;
+        // scss-lint:disable ImportantRule
+        background-color: transparent !important;
+        // scss-lint:enable ImportantRule
       }
     }
 
@@ -802,6 +804,26 @@ $datagrid-short-row-height: 23px;
       }
     }
 
+    // Validation Cell Styles
+    &.error {
+      background-color: $alert-bg-color;
+
+      .datagrid-cell-wrapper {
+        //border-color: $alert-red;
+
+        .icon-error {
+          left: 100%;
+          margin-left: -15px;
+          position: relative;
+        }
+
+      }
+
+      &:focus .datagrid-cell-wrapper {
+        border-color: $alert-red;
+      }
+    }
+
     &.is-hidden {
       display: none;
     }
@@ -919,13 +941,13 @@ $datagrid-short-row-height: 23px;
       //Date Picker
       .datepicker {
         border: 0;
-        padding: 9px 20px 8px;
+        padding: 17px 20px 15px;
 
         + .icon {
           height: 16px;
           left: 4px;
           position: relative;
-          top: 3px;
+          top: 4px;
           width: 19px;
         }
 
