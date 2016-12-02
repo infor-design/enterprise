@@ -113,6 +113,11 @@
       },
 
       addClassToLinks: function(content, thisClass) {
+        var isjQuery = (content instanceof $ && content.length > 0);
+        if (isjQuery) {
+          return content;
+        }
+
         var d = $('<div/>').html(content);
         $('a', d).addClass(thisClass);
         return d.html();
@@ -203,7 +208,10 @@
 
       setContent: function(content, dontRender) {
         var self = this,
-          specified;
+          specified,
+          settingsContent = this.settings.content,
+          noIncomingContent = (content === undefined || content === null),
+          noSettingsContent = (settingsContent === undefined || settingsContent === null);
 
         function doRender() {
           if (dontRender === true) {
@@ -213,23 +221,36 @@
           self.render();
         }
 
-        // If the original content type is a function, we need to re-run the function to update the content.
-        // NOTE: If you need to use a function to generate content, understand that the tooltip/popover will not
-        // cache your content for future reuse.
-        if (typeof this.settings.content === 'function') {
-          content = this.settings.content;
+        // If all sources of content are undefined, just return false and don't show anything.
+        if (noIncomingContent && noSettingsContent) {
+          return false;
         }
 
-        // If the incoming content is exactly the same as the stored content, don't continue with this step.
+        // If the settingsContent type is a function, we need to re-run that function to update the content.
+        // NOTE: If you need to use a function to generate content, understand that the tooltip/popover will not
+        // cache your content for future reuse.  It will ALWAYS override incoming content.
+        if (typeof settingsContent === 'function') {
+          content = settingsContent;
+        }
+
+        // Use the pre-set content if we have no incoming content
+        if (noIncomingContent) {
+          content = settingsContent;
+        }
+
+        // If the incoming/preset content is exactly the same as the stored content, don't continue with this step.
         // Deep object comparison for jQuery objects is done further down the chain.
-        if (content !== undefined && content !== null && content === this.content) {
+        if (content === this.content) {
           doRender();
           return true;
         }
 
-        content = content || this.settings.content;
-        if (!content) {
-          return false;
+        // jQuery-wrapped elements don't get manipulated.
+        // Simply store the reference, render, and return.
+        if (content instanceof $ && content.length) {
+          this.content = content;
+          doRender();
+          return true;
         }
 
         // Handle setting of content based on its Object type.
@@ -243,28 +264,35 @@
           content = Locale.translate(content) || content;
 
           // Could be an ID attribute
-          // If it matches an element already on the page, grab that element's content and store it
+          // If it matches an element already on the page, grab that element's content and store the reference only.
           if (content.indexOf('#') === 0) {
-            specified = true;
-            content = $(content).html();
+            var contentCheck = $('' + content);
+            if (contentCheck.length) {
+              this.content = contentCheck;
+              doRender();
+              return true;
+            }
+            return false;
           }
+
+        // functions
         } else if (typeof content === 'function') {
           var callbackResult = content.call(this.element);
           if (!callbackResult || typeof callbackResult !== 'string' || !callbackResult.length) {
             return false;
           }
           content = callbackResult;
-        } else if (content instanceof $ && content.length) {
-          specified = true;
-          content = content.html();
+
+        // if type isn't handled, return false
         } else {
           return false;
         }
 
-        // Store an internal copy of the content
+        // Store an internal copy of the processed content
         this.content = content;
 
-        // Wrap tooltip content in <p> tags if there isn't already one present
+        // Wrap tooltip content in <p> tags if there isn't already one present.
+        // Only happens for non-jQuery markup.
         if (!specified) {
           this.content = '<p>' + this.content + '</p>';
         }
@@ -283,7 +311,8 @@
       renderTooltip: function() {
         var titleArea = this.tooltip.find('.tooltip-title'),
           contentArea = this.tooltip.find('.tooltip-content'),
-          cssClass = 'tooltip' + (this.settings.extraClass ? ' ' + this.settings.extraClass : '') + ' is-hidden';
+          cssClass = 'tooltip' + (this.settings.extraClass ? ' ' + this.settings.extraClass : '') + ' is-hidden',
+          content = this.content;
 
         this.tooltip.attr('class', cssClass);
         titleArea.hide();
@@ -293,7 +322,12 @@
           contentArea.before('<div class="arrow"></div>');
         }
 
-        contentArea.html(this.content);
+        if (typeof content === 'string') {
+          content = $(content);
+        }
+
+        contentArea.html(content).removeClass('hidden');
+        content.removeClass('hidden');
       },
 
       renderPopover: function() {
@@ -302,9 +336,13 @@
           contentArea = this.tooltip.find('.tooltip-content'),
           content = this.content;
 
+        if (typeof this.content === 'string') {
+          content = $(content);
+        }
+
         // Use currently-set content to render a popover
         contentArea.html(content).removeClass('hidden');
-        content = contentArea.children().removeClass('hidden');
+        content.removeClass('hidden');
 
         this.tooltip.attr('class', cssClass);
 
