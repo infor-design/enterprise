@@ -185,7 +185,6 @@
           mouseFocus: false,
           trigger: 'immediate',
           autoFocus: false,
-          offset: {left: 10},
           placementOpts: {
             parent: this.element
           }
