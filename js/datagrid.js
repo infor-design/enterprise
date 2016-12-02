@@ -1516,7 +1516,7 @@ $.fn.datagrid = function(options) {
               filterMarkup += '<input ' + (col.filterDisabled ? ' disabled' : '') + ' type="text" class="datepicker" id="'+ filterId +'"/>';
               break;
             case 'decimal':
-              filterMarkup += '<input ' + (col.filterDisabled ? ' disabled' : '') + ' type="text" id="'+ filterId +'"/ data-mask-mode="number" data-mask="'+ (col.mask ? col.mask : '####.00') +'">';
+              filterMarkup += '<input ' + (col.filterDisabled ? ' disabled' : '') + ' type="text" id="'+ filterId +'" data-mask-mode="number" data-mask="'+ (col.mask ? col.mask : '####.00') + '">';
               break;
             case 'contents':
             case 'select':
@@ -4268,7 +4268,6 @@ $.fn.datagrid = function(options) {
           cell = self.activeCell.cell,
           col = self.columnSettings(cell),
           item = self.settings.dataset[self.dataRowIndex(node)],
-          visibleCols = self.visibleColumns(),
           visibleRows = self.tableBody.find('tr:visible'),
           getVisibleRows = function(index) {
             var row = visibleRows.eq(index);
