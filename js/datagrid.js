@@ -4277,7 +4277,7 @@ $.fn.datagrid = function(options) {
             }
             return self.dataRowIndex(row);
           },
-          getVisibleCell = function(currentCell, lastCell, prev) {
+          getNextVisibleCell = function(currentCell, lastCell, prev) {
             var nextCell = currentCell + (prev ? -1 : +1);
 
             if (nextCell > lastCell) {
@@ -4292,7 +4292,7 @@ $.fn.datagrid = function(options) {
           isSelectionCheckbox = !!($('.datagrid-selection-checkbox', node).length),
           lastRow, lastCell;
 
-        lastCell = visibleCols.length-1;
+        lastCell = self.settings.columns.length-1;
         lastRow = visibleRows.last();
 
         //Tab, Left and Right arrow keys.
@@ -4310,9 +4310,9 @@ $.fn.datagrid = function(options) {
           else if (!self.quickEditMode || (key === 9)) {
             if ((!isRTL && (key === 37 || key === 9 && e.shiftKey)) ||
                 (isRTL && (key === 39 || key === 9))) {
-              cell = getVisibleCell(cell, lastCell, true);
+              cell = getNextVisibleCell(cell, lastCell, true);
             } else {
-              cell = getVisibleCell(cell, lastCell);
+              cell = getNextVisibleCell(cell, lastCell);
             }
             self.setActiveCell(row, cell);
             self.quickEditMode = false;
