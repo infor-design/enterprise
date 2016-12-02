@@ -277,6 +277,7 @@
         }
 
         this.show24Hours = (this.pattern.match('HH') || []).length > 0;
+        this.isSeconds = (this.pattern.match('ss') || []).length > 0;
       },
 
       // Add masking with the mask function
@@ -299,7 +300,9 @@
 
         //TO DO - Time seperator
         // '##/##/#### ##:## am' -or- ##/##/#### ##:##' -or- ##/##/####'
-        mask = (this.settings.showTime ? (this.show24Hours ? mask.substr(0, 16) : mask) : mask);
+        // '##/##/#### ##:##:## am' -or- ##/##/#### ##:##:##'
+        mask = (this.settings.showTime ?
+          (this.show24Hours ? mask.substr(0, (this.isSeconds ? 19:16)) : mask) : mask);
 
         if (customValidation === 'required' && !customEvents) {
           validation = customValidation + ' ' + validation;
@@ -442,11 +445,18 @@
 
             // Wait for timepicker popup
             setTimeout(function() {
-              var timepickerPopup = $('#timepicker-popup').css({'border': 0, 'box-shadow': 'none', 'width': ''}),
-                position = {
-                  top: parseInt(self.popup.css('top'), 10) + (self.table.height() + self.header.height() + 28),
-                  left: (parseInt(self.popup.css('left'), 10) + (self.popup.outerWidth()/2)) - (timepickerPopup.outerWidth()/2) + 20
-                };
+              var timepickerPopup = $('#timepicker-popup').css({'border': 0, 'box-shadow': 'none', 'width': ''});
+
+              if (self.isSeconds) {
+                timepickerPopup
+                  .find('.time-parts .colons').css({'min-width': '13px'}).end()
+                  .find('.dropdown').css({'width': '60px', 'padding': '8px 0px 7px 10px'});
+              }
+
+              var position = {
+                top: parseInt(self.popup.css('top'), 10) + (self.table.height() + self.header.height() + 28),
+                left: (parseInt(self.popup.css('left'), 10) + (self.popup.outerWidth()/2)) - (timepickerPopup.outerWidth()/2) + 20
+              };
 
               timepickerPopup.css(position);
               self.timepickerInput.css({'visibility': 'hidden'});
@@ -745,9 +755,10 @@
           if (i >= leadDays && dayCnt <= thisMonthDays) {
             th.html('<span aria-hidden="true">' + dayCnt + '</span>');
             var tHours = elementDate.getHours(),
-              tMinutes = elementDate.getMinutes();
+              tMinutes = elementDate.getMinutes(),
+              tSeconds = self.isSeconds ? elementDate.getSeconds() : 0;
 
-            if ((new Date(year, month, dayCnt)).setHours(tHours, tMinutes, 0,0) === elementDate.setHours(tHours, tMinutes, 0,0)) {
+            if ((new Date(year, month, dayCnt)).setHours(tHours, tMinutes, tSeconds,0) === elementDate.setHours(tHours, tMinutes, tSeconds, 0)) {
               th.addClass('is-selected').attr('aria-selected', 'true');
             }
 
@@ -840,25 +851,45 @@
         this.element.val(Locale.formatDate(date, {pattern: this.pattern}));
       },
 
+      // Make enable
+      enable: function() {
+        this.element.removeAttr('disabled readonly').closest('.field').removeClass('is-disabled');
+      },
+
+      // Make disable
+      disable: function() {
+        this.enable();
+        this.element.attr('disabled', 'disabled').closest('.field').addClass('is-disabled');
+      },
+
+      // Make readonly
+      readonly: function() {
+        this.enable();
+        this.element.attr('readonly', 'readonly');
+      },
+
       // Set time
       setTime: function(date) {
         var hours = $('#timepicker-hours').val(),
           minutes = $('#timepicker-minutes').val(),
+          seconds = this.isSeconds ? $('#timepicker-seconds').val() : 0,
           period = $('#timepicker-period');
 
         var timepicker = $('.timepicker.is-active');
-        if (!minutes && timepicker.length) {
-          var d = new Date(date);
-          var time = timepicker.val().match(/(\d+)(?::(\d\d))?\s*(p?)/);
-          d.setHours( parseInt(time[1]) + (time[3] ? 12 : 0) );
-          d.setMinutes( parseInt(time[2]) || 0 );
+        if (timepicker.length && (!minutes || this.isSeconds && !seconds)) {
+          var d = new Date(date),
+            regex = new RegExp('(\\d+)(?::(\\d\\d))'+ (this.isSeconds ? '(?::(\\d\\d))' : '') +'?\\s*(p?)'),
+            time = timepicker.val().match(regex);
+          d.setHours(parseInt(time[1]) + (time[3] ? 12 : 0));
+          d.setMinutes(parseInt(time[2]) || 0);
+          d.setSeconds(parseInt(time[3]) || 0);
           minutes = d.getMinutes();
+          seconds = d.getSeconds();
         }
-
         hours = (period.length && period.val() === 'PM' && hours < 12) ? (parseInt(hours, 10) + 12) : hours;
         hours = (period.length && period.val() === 'AM' && parseInt(hours, 10) === 12) ? 0 : hours;
 
-        date.setHours(hours, minutes, 0);
+        date.setHours(hours, minutes, seconds);
         return date;
       },
 
@@ -869,8 +900,10 @@
           },
           d = (date || new Date()),
           h = d.getHours(),
-          h12 = (h % 12 || 12) + ':' + twodigit(d.getMinutes()) + ' ' + (h < 12 ? 'AM' : 'PM'),
-          h24 = h + ':' + twodigit(d.getMinutes());
+          m = twodigit(d.getMinutes()),
+          s = twodigit(d.getSeconds()),
+          h12 = (h % 12 || 12) +':'+ m + (this.isSeconds ? ':'+ s : '') +' ' + (h < 12 ? 'AM' : 'PM'),
+          h24 = h + ':' + m + (this.isSeconds ? ':'+ s : '');
 
         return isHours24 ? h24 : h12;
       },

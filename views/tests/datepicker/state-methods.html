@@ -1,0 +1,46 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <h2>Datepicker Example</h2>
+    <p>Shows an example for support to enable(), disable(), and readonly() methods.</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+    <div class="field">
+      <label for="date-field" class="label">Date Field</label>
+      <input id="date-field" class="datepicker" name="date-field" type="text" value="2/26/2016">
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+    <button class="btn-secondary" type="button" id="btn-disable">
+      <span>Disable</span>
+    </button>
+    <button class="btn-secondary" type="button" id="btn-readonly">
+      <span>Readonly</span>
+    </button>
+    <button class="btn-primary" type="button" id="btn-enable">
+      <span>Enable</span>
+    </button>
+  </div>
+</div>
+
+<script>
+    $('body').on('initialized', function () {
+      var api = $('#date-field').data('datepicker');
+
+      $('#btn-disable').on('click', function() {
+        api.disable();
+      });
+      $('#btn-readonly').on('click', function() {
+        api.readonly();
+      });
+      $('#btn-enable').on('click', function() {
+        api.enable();
+      });
+    });
+</script>
