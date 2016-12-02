@@ -423,13 +423,13 @@
           for (var i = 0, value; i < items.length; i++) {
             value = items[i].value.toString();
             if (value === dataValue) {
-              ret = value;
+              ret = items[i];
             }
           }
         }
 
         this.closeList();
-        this.highlight(a, items);
+        this.highlight(a);
 
         this.element
           .trigger('selected', [a, ret])
