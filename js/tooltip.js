@@ -175,7 +175,9 @@
           }, 1);
         }
 
-        var isFocusable = (this.element.filter('button, a').length && this.settings.trigger !== 'click') || this.settings.trigger === 'focus';
+        // Uncomment the line below to get focus support on some elements all the time, regardless of trigger setting.
+        //var isFocusable = (this.element.filter('button, a').length && this.settings.trigger !== 'click') || this.settings.trigger === 'focus';
+        var isFocusable = this.settings.trigger === 'focus';
         if (isFocusable) {
           this.element.on('focus.tooltip', function() {
             self.show();
@@ -209,6 +211,13 @@
           }
           self.addAria();
           self.render();
+        }
+
+        // If the original content type is a function, we need to re-run the function to update the content.
+        // NOTE: If you need to use a function to generate content, understand that the tooltip/popover will not
+        // cache your content for future reuse.
+        if (typeof this.settings.content === 'function') {
+          content = this.settings.content;
         }
 
         // If the incoming content is exactly the same as the stored content, don't continue with this step.
@@ -353,7 +362,7 @@
 
         var okToShow = true;
 
-        okToShow = this.setContent();
+        okToShow = this.setContent(this.content);
         if (okToShow === false) {
           return;
         }
