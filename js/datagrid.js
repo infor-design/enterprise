@@ -100,8 +100,7 @@ window.Formatters = {
       if (colHref == null) {
         return col.text || value;
       }
-    }
-    else  {
+    } else  {
       colHref = colHref.replace('{{value}}', value);
     }
 
@@ -115,7 +114,7 @@ window.Formatters = {
           $.createIcon({ icon: col.icon, file: col.iconFile }) +
           '<span class="audible">'+ textValue +'</span>'+
         '</a>') :
-      ('<a href="'+ colHref +'" tabindex="-1" role="presentation" class="hyperlink '+ (col.cssClass || '') +'">'+ textValue +'</a>');
+      ('<a href="'+ colHref +'" tabindex="-1" role="presentation" class="hyperlink '+ (col.cssClass || '') + '"' + (col.target ? ' target="' + col.target + '"' : '') + '>'+ textValue +'</a>');
   },
 
   Template: function(row, cell, value, col, item) {

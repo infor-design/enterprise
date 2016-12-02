@@ -64,6 +64,7 @@
 
         if (value) {
           perc = value;
+          this.element.attr('data-value', value);
         }
 
         this.element.css('width', perc + '%');

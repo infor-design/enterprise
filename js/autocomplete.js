@@ -201,6 +201,7 @@
         self.list.children().filter(':not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)').first()
           .addClass('is-selected');
 
+        this.noSelect = true;
         this.element.trigger('populated', [matchingOptions]).focus();
 
         // Overrides the 'click' listener attached by the Popupmenu plugin
@@ -264,10 +265,10 @@
           }
 
           var excludes = 'li:not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)',
-            hasList = self.list && self.list.is(':visible');
+            isOpen = self.list && self.list.is(':visible');
 
           //Down - select next
-          if (e.keyCode === 40 && hasList) {
+          if (e.keyCode === 40 && isOpen) {
             selected = getSelected();
             if (selected.length) {
               self.noSelect = true;
@@ -279,7 +280,7 @@
           }
 
           //Up select prev
-          if (e.keyCode === 38 && hasList) {
+          if (e.keyCode === 38 && isOpen) {
             selected = getSelected();
             if (selected.length) {
               self.noSelect = true;
@@ -290,19 +291,20 @@
             }
           }
 
-          if ((e.keyCode === 9 || e.keyCode === 13) && hasList) {
+          if ((e.keyCode === 9 || e.keyCode === 13) && isOpen) {
             selected = getSelected();
             e.stopPropagation();
             e.preventDefault();
             self.select(selected);
           }
 
-          if (e.keyCode === 8 && hasList) {
-            self.element.trigger('keypress');
+          if (e.keyCode === 8 && isOpen) {
+            self.element.trigger('input');
           }
 
         })
-        .on('keypress.autocomplete', function (e) {
+        .on('input.autocomplete', function (e) {
+
           if (self.isLoading()) {
             e.preventDefault();
             return false;
@@ -310,11 +312,6 @@
 
           var field = $(this);
           clearTimeout(timer);
-
-          if (e.altKey && e.keyCode === 40) {  //open list
-            self.openList(field.val(), self.settings.source);
-            return;
-          }
 
           timer = setTimeout(function () {
             if (self.isLoading()) {
@@ -329,11 +326,6 @@
               return;
             }
             buffer = buffer;
-
-            //This checks all printable characters - except backspace
-            if (e.which === 0 || (e.charCode === 0 && e.which !== 8) || e.ctrlKey || e.metaKey || e.altKey) {
-              return;
-            }
 
             var sourceType = typeof self.settings.source,
               done = function(searchTerm, response) {
@@ -395,6 +387,7 @@
         }
         anchor.parent('li').addClass('is-selected');
 
+        this.noSelect = true;
         this.element.val(text).focus();
       },
 
@@ -431,6 +424,7 @@
         this.closeList();
         this.highlight(a);
 
+        this.noSelect = true;
         this.element
           .trigger('selected', [a, ret])
           .focus();
