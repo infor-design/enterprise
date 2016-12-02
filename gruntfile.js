@@ -69,10 +69,15 @@ module.exports = function(grunt) {
       }
 
       for (let i in orderedDepsIndex) {
-        if (orderedDepsIndex[i] > 0) {
-          dist.splice(orderedDepsIndex[i], 1);
+        if (orderedDepsIndex[i] > -1) {
           foundOrderedDeps.push(orderedDeps[i]);
         }
+      }
+
+      for (let i in foundOrderedDeps) {
+        dist = dist.filter((err) => {
+          return err !== foundOrderedDeps[i];
+        });
       }
 
       combinedDist = foundOrderedDeps.concat(dist);
@@ -80,7 +85,7 @@ module.exports = function(grunt) {
       //Modify array based on options, include, exclude options
       if (excludeControls) {
         for (let i in excludeControls) {
-          combinedDist = combinedDist.filter( function(err) {
+          combinedDist = combinedDist.filter((err) => {
             return err !== excludeControls[i];
           });
         }
