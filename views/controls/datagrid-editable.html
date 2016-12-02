@@ -9,8 +9,12 @@
       </div>
 
       <div class="buttonset">
-        <label class="audible" for="searchfield-01">Keyword Search</label>
-        <input id="searchfield-01" name="searchfield-01" class="searchfield" />
+        <button class="btn" type="button" id="add-reset">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-reset"></use>
+          </svg>
+          <span>Reset</span>
+        </button>
 
         <button class="btn" type="button" id="add-btn">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
@@ -62,7 +66,7 @@
         columns.push({ id: 'rowStatus', resizable: false, formatter: Formatters.Status, align: 'center'});
         columns.push({ id: 'id', name: 'Row Id', field: 'id', formatter: Formatters.Readonly});
         columns.push({ id: 'productName', hidden: true, name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input});
-        columns.push({ id: 'activity', name: 'Activity', field: 'activity', editor: Editors.Input});  //maxLength: 2
+        columns.push({ id: 'activity', name: 'Activity', field: 'activity', editor: Editors.Input, validate: 'required'});  //maxLength: 2
         columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', required: true, align: 'right', editor: Editors.Input, mask: '###', isEditable: function (row) {
             //For this fake logic just disable odd rows
             return (row % 2 === 0);
@@ -86,7 +90,7 @@
           pagesize: 5,
           pagesizes: [5, 10, 25, 50]
         }).on('cellchange', function (e, args) {
-          console.log(e, args);
+        //  console.log(e, args);
         }).on('rowadd', function (e, args) {
           console.log(e, args);
         }).on('rowremove', function (e, args) {
@@ -120,4 +124,10 @@
   $('#remove-btn').on('click', function () {
     gridApi.removeSelected();
   });
+
+  //Example of clearing all cell errors
+  $('#add-reset').on('click', function () {
+    gridApi.clearAllErrors();
+  });
+
 </script>
