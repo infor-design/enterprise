@@ -595,6 +595,11 @@
           this.popup.hide().remove();
         }
 
+        var popoverAPI = this.trigger.data('tooltip');
+        if (popoverAPI) {
+          popoverAPI.destroy();
+        }
+
         this.element.removeClass('is-active');
         this.element.trigger('listclosed');
       },
@@ -882,15 +887,50 @@
             handlers.splice(newIndex, 0, handlers.pop());
           });
         });
-      }
+      },
 
+      updated: function() {
+        return this
+          .teardown()
+          .init();
+      },
+
+      teardown: function() {
+        if (this.isOpen()) {
+          this.closeCalendar();
+        }
+
+        this.trigger.off('click.datepicker keydown.datepicker');
+
+        var maskAPI = this.element.data('mask');
+        if (maskAPI) {
+          maskAPI.destroy();
+        }
+
+        /*
+        if (this.settings.trigger === 'immediate') {
+          this.destroy();
+        }
+        */
+
+        this.calendar.remove();
+        this.popup.remove();
+
+        return this;
+      },
+
+      destroy: function() {
+        this.teardown();
+        $.removeData(this.element[0], pluginName);
+      }
     };
 
     // Initialize the plugin (Once)
     return this.each(function() {
       var instance = $.data(this, pluginName);
       if (instance) {
-        instance.settings = $.extend({}, defaults, options);
+        instance.settings = $.extend({}, instance.settings, options);
+        instance.updated();
       } else {
         instance = $.data(this, pluginName, new DatePicker(this, settings));
       }

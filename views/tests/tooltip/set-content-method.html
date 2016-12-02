@@ -18,10 +18,6 @@
       </div>
 
       <div class="field">
-        <button id="reset" type="reset" class="btn-secondary">
-          <span>Reset</span>
-        </button>
-
         <button id="set" type="submit" class="btn-primary">
           <span>Set Tooltip Content</span>
         </button>
@@ -57,11 +53,6 @@
       api.setContent(textarea.val());
     });
 
-    $('#reset').on('click.test', function() {
-      textarea.val(defaultSettings.content);
-      api.setContent(defaultSettings.content);
-    });
-
-    textarea.val(defaultSettings.content);
+    textarea.html(defaultSettings.content);
   });
 </script>
