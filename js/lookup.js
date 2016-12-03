@@ -303,6 +303,11 @@
           self.modal.element.find('.title').html('&nbsp;');
         }
 
+        var hasKeywordSearch = this.settings.options && this.settings.options.toolbar && this.settings.options.toolbar.keywordFilter;
+        if (!hasKeywordSearch) {
+          self.modal.element.find('.toolbar').appendTo(self.modal.element.find('.modal-header'));
+        }
+
         //Mark selected rows
         lookupGrid.off('selected.lookup');
         var val = self.element.val();
