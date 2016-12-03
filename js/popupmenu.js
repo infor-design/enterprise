@@ -607,21 +607,25 @@
         // BEGIN Temporary stuff until we sort out passing these settings from the controls that utilize them
         //=======================================================
 
+        // change the width of the menu if it's shorter than the trigger, in some conditions
+        var triggerWidth = this.element.outerWidth(true),
+          menuIsSmallerThanTrigger = (target.is('.btn-menu') && menuDimensions.width < triggerWidth);
+
         function shouldBeLeftAligned(target) {
           return target.is('.btn-split-menu, .btn-menu, .tab, .searchfield-category-button') &&
             !target.parent('.pager-pagesize').length;
         }
 
         function shouldBeRightAligned(target) {
-          return target.is('.btn-actions, .btn-filter');
+          return target.is('.btn-actions, .btn-filter') || menuIsSmallerThanTrigger;
         }
 
         // Customize some settings based on the type of element that is doing the triggering.
-        if (shouldBeRightAligned(target)) {
-          opts.parentXAlignment = (isRTL ? 'left' : 'right');
-        }
         if (shouldBeLeftAligned(target)) {
           opts.parentXAlignment = (isRTL ? 'right': 'left');
+        }
+        if (shouldBeRightAligned(target)) {
+          opts.parentXAlignment = (isRTL ? 'left' : 'right');
         }
 
         //=======================================================
@@ -682,7 +686,7 @@
         this.element.addClass('is-open');
         this.menu.addClass('is-open').attr('aria-hidden', 'false');
 
-        self.position(e);
+        this.position(e);
 
         if (this.element.closest('.header').length > 0) {
           this.menu.parent().css('z-index', '9001');
