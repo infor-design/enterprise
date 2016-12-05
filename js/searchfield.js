@@ -311,24 +311,29 @@
           this.wrapper.addClass('has-focus');
         }
 
+        /*
         setTimeout(function() {
-          function deactivate() {
-            self.element.removeClass('active').blur();
+          function deactivate(e) {
+            var target = $(e.target),
+              elems = self.element.add(self.element.parent('.searchfield-wrapper'));
+            if (target.is(elems)) {
+              return;
+            }
+
+            //self.element.removeClass('active').blur();
             toolbar.removeClass('searchfield-active');
             $(document).offTouchClick('searchfield').off('click.searchfield');
           }
 
           $(document).onTouchClick('searchfield', '.searchfield').on('click.searchfield', function(e) {
-            var target = $(e.target);
-            if (target[0] !== self.element[0] && target[0] !== self.element.parent('.searchfield-wrapper')[0]) {
-              deactivate();
-            }
+            deactivate(e);
           });
 
-          self.element.one('blur.searchfield', function() {
-            deactivate();
+          self.element.one('blur.searchfield', function(e) {
+            deactivate(e);
           });
         }, 100);
+        */
         this.recalculateParent();
       },
 

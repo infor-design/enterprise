@@ -172,7 +172,7 @@
           }
         }
 
-        this.focusTimer = setTimeout(searchfieldDeactivationTimer, 0);
+        this.focusTimer = setTimeout(searchfieldDeactivationTimer, 100);
       },
 
       handleOutsideClick: function(e) {
@@ -446,14 +446,14 @@
           this.inputWrapper.detach().prependTo(this.containmentParent.find('.buttonset'));
         }
 
-        self.inputWrapper.removeClass('active').removeClass('has-focus');
+        self.inputWrapper.removeClass('active has-focus');
 
         if (this.fastActivate || this.settings.collapsible === false) {
           deactivateCallback();
           return;
         }
 
-        this.animationTimer = setTimeout(deactivateCallback, 0);
+        this.animationTimer = setTimeout(deactivateCallback, 100);
       },
 
       shouldBeFullWidth: function() {
