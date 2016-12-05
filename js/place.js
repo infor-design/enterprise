@@ -229,7 +229,7 @@
         var self = this,
           parentRect = placementObj.parent[0].getBoundingClientRect(),
           elRect = this.element[0].getBoundingClientRect(),
-          container = $(placementObj.container ? placementObj.container : document.body),
+          container = this.getContainer(placementObj),
           containerIsBody = container.length && container[0] === document.body,
           scrollX = (typeof container.scrollLeft === 'number' ? container : document.body).scrollLeft,
           scrollY = (typeof container.scrollTop === 'number' ? container : document.body).scrollTop;
@@ -384,11 +384,25 @@
         return placementObj;
       },
 
+      // Gets a parent container element.
+      getContainer: function(placementObj) {
+        if (placementObj.container instanceof $ && placementObj.container.length) {
+          return placementObj.container;
+        }
+
+        var modalParent = this.element.parents('.modal');
+        if (modalParent.length) {
+          return modalParent;
+        }
+
+        return $(document.body);
+      },
+
       // Re-adjust a previously-placed element to account for bleeding off the edges.
       // Element must fit within the boundaries of the page or it's current scrollable pane.
       checkBleeds: function(placementObj) {
         var containerBleed = this.settings.bleedFromContainer,
-          container = $(placementObj.container ? placementObj.container : document.body),
+          container = this.getContainer(placementObj),
           containerIsBody = container.length && container[0] === document.body,
           rect = this.element[0].getBoundingClientRect(),
           containerRect = container ? container[0].getBoundingClientRect() : {},
@@ -508,7 +522,7 @@
 
         var isXCoord = ['left', 'right'].indexOf(placementObj.placement) > -1,
           containerBleed = this.settings.bleedFromContainer,
-          container = $(placementObj.container ? placementObj.container : document.body),
+          container = this.getContainer(placementObj),
           containerIsBody = container.length && container[0] === document.body,
           containerRect = container ? container[0].getBoundingClientRect() : {},
           parentRect = placementObj.parent[0].getBoundingClientRect(),
@@ -605,7 +619,7 @@
       // If element height/width is greater than window height/width, shrink to fit
       shrink: function(placementObj) {
         var containerBleed = this.settings.bleedFromContainer,
-          container = $(placementObj.container ? placementObj.container : document.body),
+          container = this.getContainer(placementObj),
           containerRect = container ? container[0].getBoundingClientRect() : {},
           rect = this.element[0].getBoundingClientRect(),
           scrollX = (typeof container.scrollLeft === 'number' ? container : document.body).scrollLeft,
