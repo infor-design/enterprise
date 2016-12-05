@@ -82,6 +82,7 @@
         var titleAttr = this.element.attr('title');
         if (titleAttr && titleAttr.length) {
           this.settings.content = titleAttr;
+          this.element.removeAttr('title');
         }
 
         this.isPopover = (this.settings.content !== null && typeof this.settings.content === 'object') || this.settings.popover === true;
