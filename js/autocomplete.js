@@ -249,7 +249,7 @@
       handleEvents: function () {
         //similar code as dropdown but close enough to be dry
         var buffer = '',
-          timer, selected,
+          timer, selected, items,
           self = this;
 
         function getSelected() {
@@ -295,7 +295,7 @@
             selected = getSelected();
             e.stopPropagation();
             e.preventDefault();
-            self.select(selected);
+            self.select(selected, items);
           }
 
           if (e.keyCode === 8 && isOpen) {
@@ -313,6 +313,14 @@
           var field = $(this);
           clearTimeout(timer);
 
+          function done(searchTerm, response) {
+            items = response;
+            self.openList(buffer, items);
+
+            self.element.triggerHandler('complete'); // For Busy Indicator
+            self.element.trigger('requestend', [searchTerm, response]);
+          }
+
           timer = setTimeout(function () {
             if (self.isLoading()) {
               return;
@@ -327,12 +335,7 @@
             }
             buffer = buffer;
 
-            var sourceType = typeof self.settings.source,
-              done = function(searchTerm, response) {
-                self.element.triggerHandler('complete'); // For Busy Indicator
-                self.element.trigger('requestend', [searchTerm, response]);
-              };
-
+            var sourceType = typeof self.settings.source;
             self.element.triggerHandler('start'); // For Busy Indicator
             self.element.trigger('requeststart', [buffer]);
 
@@ -370,8 +373,6 @@
           setTimeout(function () {
             self.element.select();
           }, 10);
-        }).on('requestend.autocomplete', function(e, buffer, data) {
-          self.openList(buffer, data);
         });
       },
 
@@ -401,11 +402,13 @@
           a = $(anchorOrEvent.currentTarget);
         } else {
           a = anchorOrEvent;
-          if (a.is('li')) {
-            li = a;
-            a = a.children('a');
-          }
         }
+
+        if (a.is('li')) {
+          li = a;
+          a = a.children('a');
+        }
+
         li = a.parent('li');
         ret = a.text().trim();
         dataValue = li.attr('data-value');
