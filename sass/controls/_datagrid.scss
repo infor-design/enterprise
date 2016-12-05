@@ -619,14 +619,19 @@ $datagrid-short-row-height: 23px;
       }
     }
 
-    //Tree - Collapsed rows
+    //Error validation
+    &.error td {
+      background-color: $alert-bg-color;
+      //border-color: $alert-red; - Use for focus state
+    }
 
+    //Tree - Collapsed rows
     &.is-hidden {
       display: none;
     }
 
     // Hover States
-    &:not(.datagrid-expandable-row):hover td:not(.is-editing):not(.error) {
+    &:not(.error):not(.datagrid-expandable-row):hover td:not(.is-editing):not(.error) {
       background-color: $datagrid-row-hover-color;
 
       .is-readonly {
@@ -815,8 +820,14 @@ $datagrid-short-row-height: 23px;
           left: 100%;
           margin-left: -15px;
           position: relative;
+          visibility: visible;
         }
+      }
 
+      &.datagrid-trigger-cell .icon-error {
+        left: 0;
+        margin-left: -40px;
+        margin-top: 7px;
       }
 
       &:focus .datagrid-cell-wrapper {
@@ -986,13 +997,7 @@ $datagrid-short-row-height: 23px;
   }
 
   // States
-  .is-readonly {
-    background-color: $datagrid-cell-readonly-bg-color;
 
-    span {
-      color: $datagrid-cell-readonly-color;
-    }
-  }
 
   //Readonly - List Datagrid
   &.is-gridlist {
@@ -1441,8 +1446,11 @@ td .btn-actions {
   }
 
   input {
-    height: 48px;
+    height: 50px;
     text-indent: 10px;
+    // scss-lint:disable ImportantRule
+    width: 100% !important;
+    // scss-lint:enable ImportantRule
   }
 
   &.short-rowheight {
@@ -1461,7 +1469,7 @@ td .btn-actions {
 
   .icon {
     fill: $graphite10;
-    margin-top: 7px;
+    margin-top: 9px;
     right: 2px;
 
     &.search {

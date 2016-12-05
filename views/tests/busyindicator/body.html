@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Busy Indicator Test: Initial Calls</h2>
+    <p>You can initialize busy on initial load by adding the elements to the page upfront.</p>
+  </div>
+</div>
+
+<div class="overlay busy">
+</div>
+<div class="busy-indicator-container blocked-ui" aria-live="polite" role="status">
+  <div class="busy-indicator active">
+    <div class="bar one"></div>
+    <div class="bar two"></div>
+    <div class="bar three"></div>
+    <div class="bar four"></div>
+    <div class="bar five"></div>
+  </div>
+  <span>Loading...</span>
+</div>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+    setTimeout(function () {
+      $('.busy, .busy-indicator-container').remove();
+    }, 4000);
+  });
+</script>
