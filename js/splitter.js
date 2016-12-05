@@ -56,13 +56,15 @@
       build: function() {
         var self = this,
           splitter = this.element,
+          w = splitter.parent().width(),
           parentHeight = splitter.parent().height();
 
         //Restore from local storage
-        if (localStorage && this.settings.save) {
-          var w = localStorage[this.uniqueId()];
-          this.splitTo(parseInt(w), parentHeight);
+        if (localStorage && this.settings.save &&
+          !isNaN(parseInt(localStorage[this.uniqueId()]))) {
+          w = localStorage[this.uniqueId()];
         }
+        this.splitTo(parseInt(w), parentHeight);
 
         //Add the Splitter Events
         this.documentWidth = 0;
