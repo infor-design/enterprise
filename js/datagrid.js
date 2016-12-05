@@ -33,6 +33,10 @@ window.Formatters = {
         formatted = Locale.formatDate(value2, (typeof col.dateFormat === 'string' ? {pattern: col.dateFormat}: col.dateFormat));
       } else {
 		    formatted = Locale.formatDate(value, (typeof col.dateFormat === 'string' ? {pattern: col.dateFormat}: col.dateFormat));
+
+        if (formatted === 'NaN/NaN/NaN') { //show invalid dates not NA/NA/NA
+          formatted = value;
+        }
       }
     } else if (value) {
       formatted = Locale.formatDate(value, (typeof col.dateFormat === 'string' ? {pattern: col.dateFormat}: col.dateFormat));
@@ -683,7 +687,7 @@ window.Editors = {
       this.input.select().focus();
 
       //Check if isClick or cell touch and just open the list
-      if (event.type === 'click') {
+      if (event.type === 'click' && $(event.target).is('.icon')) {
         this.input.parent().find('.icon').trigger('click');
         this.input.closest('td').addClass('is-focused');
       }
@@ -4614,19 +4618,27 @@ $.fn.datagrid = function(options) {
         return;
       }
 
-      var rules = column.validate.split(','),
+      var rules = column.validate.split(' '),
         validator = $.fn.validation,
-        cellValue = this.fieldValue(this.settings.dataset[row], column.field);
+        cellValue = this.fieldValue(this.settings.dataset[row], column.field),
+        isValid = true,
+        messages = '';
 
       for (var i = 0; i < rules.length; i++) {
         var rule = validator.rules[rules[i]],
-          isValid = rule.check(cellValue, $('<input>').val(cellValue));
+          ruleValid = rule.check(cellValue, $('<input>').val(cellValue));
 
-        if (!isValid) {
-          self.showCellError(row, cell, rule.message);
-        } else {
-          self.clearCellError(row, cell);
+        if (!ruleValid) {
+          messages += rule.message;
+          isValid = false;
         }
+      }
+
+      if (!isValid) {
+        self.showCellError(row, cell, messages);
+        self.element.trigger('cellerror', {row: row, cell: cell, message: messages, target: this.cellNode(row, cell), value: cellValue, column: column});
+      } else {
+        self.clearCellError(row, cell);
       }
 
     },
@@ -4645,7 +4657,6 @@ $.fn.datagrid = function(options) {
       node.find('.datagrid-cell-wrapper').append(icon);
       icon.tooltip({placement: 'bottom', isErrorColor: true, content: errorMessage});
       icon.data('tooltip').show();
-
     },
 
     clearCellError: function (row, cell) {
@@ -4659,6 +4670,13 @@ $.fn.datagrid = function(options) {
       node.find('.icon-error').remove();
     },
 
+    clearRowError: function (row) {
+      var rowNode = this.dataRowNode(row);
+
+      rowNode.removeClass('error alert');
+      this.rowStatus(row, '', '');
+    },
+
     clearAllErrors: function () {
       this.tableBody.find('td.error').each(function () {
         var node = $(this);
@@ -4668,13 +4686,30 @@ $.fn.datagrid = function(options) {
     },
 
     //Validate all visible cells in a row if they have validation on the column
-    validateRow: function () {
+    //Row Id, Error Text and 'error' or 'alert' (default alert)
+    showRowError: function (row, message, type) {
+      var messageType = type || 'error',
+        rowNode = this.dataRowNode(row);
 
+      rowNode.addClass('error');
+      this.rowStatus(row, messageType, message);
+    },
+
+    //Validate all visible cells in a row if they have validation on the column
+    //Row Id, Error Text and 'error' or 'alert' (default alert)
+    validateRow: function (row) {
+      for (var i = 0; i < this.settings.columns.length; i++) {
+        this.validateCell(row, i);
+      }
     },
 
     //Validate all rows and cells with validation on them
     validateAll: function () {
-
+      for (var j = 0; j < this.settings.dataset.length; j++) {
+        for (var i = 0; i < this.settings.columns.length; i++) {
+          this.validateCell(j, i);
+        }
+      }
     },
 
     //Returns Column Settings from a cell

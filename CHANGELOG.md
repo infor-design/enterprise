@@ -5,6 +5,8 @@ Release Date: 2016-12-15
 * Datagrid Grouping and Summary Row
 * Swap List API Improvements
 * Circle Pager
+* Datagrid Validation
+* Ajax Dropdowns in Datagrid
 
 ### Breaking Changes
 
