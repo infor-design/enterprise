@@ -4283,7 +4283,7 @@ $.fn.datagrid = function(options) {
             var nextCell = currentCell + (prev ? -1 : +1);
 
             if (nextCell > lastCell) {
-             return;
+             return lastCell;
             }
 
             while (self.settings.columns[nextCell] && self.settings.columns[nextCell].hidden) {
