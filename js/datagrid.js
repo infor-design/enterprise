@@ -3527,8 +3527,8 @@ $.fn.datagrid = function(options) {
       }
 
       //Allow menu to be added manually
-      if (this.element.parent().parent().find('.toolbar:not(.contextual-toolbar)').length === 1) {
-        toolbar = this.element.parent().parent().find('.toolbar:not(.contextual-toolbar)');
+      if (this.element.parent().find('.toolbar:not(.contextual-toolbar)').length === 1) {
+        toolbar = this.element.parent().find('.toolbar:not(.contextual-toolbar)');
       } else {
         toolbar = $('<div class="toolbar" role="toolbar"></div>');
 

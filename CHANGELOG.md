@@ -10,6 +10,8 @@ Release Date: 2016-12-15
 
 ### Breaking Changes
 
+* 2016-12-05 - builder-header / subheader should have class header added fx:
+class="builder-header header subheader is-personalizable"
 * 2016-11-29 - Circlepager - Changed api method names **active** to **showCollapsedView** and **unactive** to **showExpandedView**.
 * 2016-11-11 - Swaplist (SOHO-4552) - now returns data arrays instead of jQuery object array, so datasets should be kept in sync with the UI. This will allow for additional data, like the key values, that is not displayed to the user to be used.
 * 2016-11-21 - The Button with id = "masthead-icon" on the mast head was changed to use a class. Use: <button type="button" class="masthead-icon" class="btn">
