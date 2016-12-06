@@ -3069,6 +3069,20 @@ $.fn.datagrid = function(options) {
       this.headerWidths = [];
     },
 
+    //size the first row
+    resyncColumnWidths: function () {
+      if (!this.hasFixedHeader) {
+        return;
+      }
+
+      for (var j = 0; j < this.settings.columns.length; j++) {
+        var column = this.settings.columns[j],
+          node = this.tableBody.find('tr:visible:first td').eq(j);
+
+        node.attr('style', this.calculateColumnWidth(column, true, j).replace('style="', '').replace('"', ''));
+      }
+    },
+
     // Get child offset
     getChildOffset: function(obj) {
       var childPos = obj.offset(),
@@ -3749,19 +3763,20 @@ $.fn.datagrid = function(options) {
 
           });
 
-        // Hide non matching rows
-
-        if (!found) {
-          row.addClass('is-filtered').hide();
-        } else if (found && row.is('.datagrid-expandable-row')) {
-          row.prev().show();
-          row.prev().find('.datagrid-expand-btn').addClass('is-expanded');
-          row.prev().find('.plus-minus').addClass('active');
-          row.addClass('is-expanded').css('display', 'table-row');
-          row.find('.datagrid-row-detail').css('height', 'auto');
-        }
+          // Hide non matching rows
+          if (!found) {
+            row.addClass('is-filtered').hide();
+          } else if (found && row.is('.datagrid-expandable-row')) {
+            row.prev().show();
+            row.prev().find('.datagrid-expand-btn').addClass('is-expanded');
+            row.prev().find('.plus-minus').addClass('active');
+            row.addClass('is-expanded').css('display', 'table-row');
+            row.find('.datagrid-row-detail').css('height', 'auto');
+          }
 
       });
+
+      this.resyncColumnWidths();
     },
 
     //Get or Set Selected Rows
