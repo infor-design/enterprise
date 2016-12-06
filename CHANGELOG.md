@@ -1,3 +1,21 @@
+## 4.2.4 - Minor Release
+Release Date: 2017-01-04
+
+### Key New Features
+* Datagrid - Reset Default Layout
+
+### Breaking Changes
+
+* 2016-12-05 -
+
+### Ui Changes
+
+### Affects
+- Datagrid (Columns)
+
+Jira Release Notes
+http://bit.ly/2h1veF3
+
 ## 4.2.3 - Minor Release
 Release Date: 2016-12-06
 
