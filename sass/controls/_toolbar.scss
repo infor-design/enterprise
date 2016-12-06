@@ -7,8 +7,6 @@ $toolbar-buttonset-height: 40px;
 .toolbar,
 .formatter-toolbar {
   @include no-select();
-  overflow-x: hidden;
-  overflow-y: visible;
   padding: 0 1rem;
   position: relative;
   -webkit-touch-callout: none;
