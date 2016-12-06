@@ -265,8 +265,16 @@
         }
 
         function doOpen(e) {
+          var rightClick = self.settings.trigger === 'rightClick';
+
           e.stopPropagation();
           e.preventDefault();
+
+          if (rightClick && self.menu.hasClass('is-open')) {
+            self.close();
+            self.open(e);
+            return;
+          }
 
           if (self.menu.hasClass('is-open')){
             self.close();

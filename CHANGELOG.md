@@ -1,5 +1,5 @@
 ## 4.2.3 - Minor Release
-Release Date: 2016-12-15
+Release Date: 2016-12-06
 
 ### Key New Features
 * Datagrid Grouping and Summary Row
@@ -7,6 +7,7 @@ Release Date: 2016-12-15
 * Circle Pager
 * Datagrid Validation
 * Ajax Dropdowns in Datagrid
+* Hero Widget on Home Pages
 
 ### Breaking Changes
 
@@ -18,6 +19,22 @@ class="builder-header header subheader is-personalizable"
 
 ### Ui Changes
 * 2016-11-17 - Tree - Changed the selection state to only focus the element instead of the longer bar. This is more performant.
+
+### Affects:
+* Autocomplete
+* Datagrid
+* Popups
+* Datepicker
+* Tooltip
+* Bullet Chart
+* Popover
+* Paging (list and Datagrid)
+* Tabs
+* Home pages
+* Select/Dropdown
+
+Jira Release Notes
+http://bit.ly/2h1veF3
 
 ## 4.2.2 - Minor Release
 Release Date: 2016-10-20
