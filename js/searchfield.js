@@ -311,7 +311,6 @@
           this.wrapper.addClass('has-focus');
         }
 
-        /*
         setTimeout(function() {
           function deactivate(e) {
             var target = $(e.target),
@@ -333,7 +332,7 @@
             deactivate(e);
           });
         }, 100);
-        */
+        
         this.recalculateParent();
       },
 

@@ -110,7 +110,7 @@
           .add(this.more);
 
         this.buttonsetItems = this.buttonset.children('button, input')
-          .add(this.buttonset.find('.searchfield-wrapper').children('input'));
+          .add(this.buttonset.find('.searchfield-wrapper, .toolbar-searchfield-wrapper').children('input'));
 
         // Invoke buttons
         var buttons = this.items.filter('button, input[type="button"], [class^="btn"]');
@@ -118,6 +118,20 @@
           var buttonControl = $(this).data('button');
           if (!buttonControl) {
             $(this).button();
+          }
+        });
+
+        // Invoke searchfields
+        var searchfields = this.items.filter('.searchfield, .toolbar-searchfield-wrapper, .searchfield-wrapper');
+        searchfields.each(function(i, item) {
+          var sf = $(item);
+          if (sf.is('.toolbar-searchfield-wrapper, .searchfield-wrapper')) {
+            sf = sf.children('.searchfield');
+          }
+
+          if (!sf.data('searchfield')) {
+            var searchfieldOpts = $.extend({}, $.fn.parseOptions(sf[0]));
+            sf.toolbarsearchfield(searchfieldOpts);
           }
         });
 
@@ -178,13 +192,6 @@
           if (linkspan.length) {
             self.moreMenu.addClass('has-icons');
             linkspan.detach().prependTo(popupLi);
-          }
-
-          if (item.is('.searchfield')) {
-            if (!item.data('searchfield')) {
-              var searchfieldOpts = $.extend({}, $.fn.parseOptions(item[0]));
-              item.toolbarsearchfield(searchfieldOpts);
-            }
           }
 
           function addItemLinksRecursively(menu, diffMenu, parentItem) {
