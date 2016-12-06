@@ -486,7 +486,8 @@ body.no-scroll {
   }
 
   + .splitter {
-    height: calc(100% - 50px);
+    height: 100%;
+    top: 0;
   }
 }
 
