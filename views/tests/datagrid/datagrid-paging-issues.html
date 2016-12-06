@@ -30,7 +30,7 @@
           case 'first': beginIndex = 0; break;
           case 'last': beginIndex = data.length - req.pagesize; break;
           case 'next': beginIndex = beginIndex + req.pagesize; break;
-          case 'prev': beginIndex = Math.max(0, beginIndex - req.pagesize); break; 
+          case 'prev': beginIndex = Math.max(0, beginIndex - req.pagesize); break;
           case 'sorted': console.log('sorted stub called - implement me'); break;
           case 'filtered': console.log('filtered stub called - implement me'); break;
         }
@@ -54,11 +54,16 @@
           datagrid.unSelectAllRows();
         }
 
+        // set activePage to -1 to indicate to the datagrid that req.firstPage and
+        // req.lastPage should solely be used to determine whether paging bar buttons
+        // should be enabled/disabled
+        req.activePage = -1;
+
         // send the data to the data grid
         response(pageData, req);
 
         // reset the selected row
-        console.log(selectedIndex)
+        //console.log(selectedIndex)
         datagrid.selectRow(selectedIndex === -1 ? 0 : selectedIndex);
       }
     });

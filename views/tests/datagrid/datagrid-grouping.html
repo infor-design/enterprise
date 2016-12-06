@@ -1,13 +1,44 @@
+
 <div class="row">
   <div class="twelve columns">
-    <br />
-    <h3>Grid Example: Grouping</h3>
-    <p>
-    Shows using the Datagrid Group By API object.
-    </p>
+    <div id="datagrid">
+    </div>
   </div>
 </div>
 
+
 <script>
+  $('body').one('initialized', function () {
+
+      var grid,
+        columns = [],
+        data = [];
+
+      //Define Columns for the Grid.
+      columns.push({ id: 'id', name: 'Customer Id', field: 'id'});
+      columns.push({ id: 'type', name: 'Type', field: 'type', width: 200});
+      columns.push({ id: 'location', name: 'Location', field: 'location', formatter: Formatters.Hyperlink});
+      columns.push({ id: 'firstname', name: 'First Name', field: 'firstname'});
+      columns.push({ id: 'lastname', name: 'Last Name', field: 'lastname'});
+      columns.push({ id: 'phone', name: 'Phone', field: 'phone'});
+      columns.push({ id: 'purchases', name: 'Purchases', field: 'purchases'});
+
+      //Get some data via ajax
+      var url = '/api/accounts';
+
+      $.getJSON(url, function(res) {
+
+        $('#datagrid').datagrid({
+          columns: columns,
+          dataset: res,
+          groupable: {
+            fields: ['type'],
+            expanded: true,
+            aggregator: 'sum' //sum, averge, max ect
+          },
+          toolbar: {title: 'Accounts', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: false}
+        });
+      });
+ });
 
 </script>

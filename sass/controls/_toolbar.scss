@@ -120,6 +120,13 @@ $toolbar-buttonset-height: 40px;
   &.standalone {
     background-color: $toolbar-standalone-bg-color;
     border-bottom: 1px solid $toolbar-standalone-border-color;
+
+    [class^="btn"] {
+      &[disabled],
+      &[disabled]:hover {
+        color: $toolbar-standalone-disabled-color;
+      }
+    }
   }
 }
 

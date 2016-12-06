@@ -3,47 +3,104 @@
 
     <h2>Multiselect Test: AJAX</h2>
 
-    <p>The multiselect control on this page has its options created by loading from an external source with an AJAX request.
-
-    If you click the term option will be blank meaning - fetch all.
-    If you type to filter the term will show that value. In this case in the ajax call you should get BOTH the records that match and all the selected records.
+    <p>
+      The multiselect control on this page has its options created by loading from an external source with an AJAX request.<br />
+      If you click the term option will be blank meaning - fetch all.<br />
+      If you type to filter the term will show that value. In this case in the ajax call you should get BOTH the records that match and all the selected records.<br/>
     </p>
 
   </div>
 </div>
 
 <div class="row">
-  <div class="twelve columns">
+  <div class="six columns">
 
     <div class="field">
       <label for="ajax-test">Ajax Test</label>
-      <select id="ajax-test" name="ajax-test" class="dropdown" data-init="false"></select>
+      <select id="ajax-test" name="ajax-test" class="dropdown" data-init="false" multiple></select>
+    </div>
+
+  </div>
+  <div class="six columns">
+
+    <div class="field">
+      <span class="label">Search Caching</span>
+      <fieldset class="radio-group">
+        <input type="radio" id="caching-on" name="cache" class="radio" value="true" checked>
+        <label class="radio-label" for="caching-on">Enabled</label>
+        <br />
+        <input type="radio" id="caching-off" name="cache" class="radio" value="false">
+        <label class="radio-label" for="caching-off">Disabled</label>
+      </fieldset>
+    </div>
+
+    <div class="field">
+      <button id="clear" class="btn-secondary" type="reset">
+        <span>Clear Cache</span>
+      </button>
     </div>
 
   </div>
 </div>
 
 <script type="text/javascript">
+  var cachedTerm,
+    cachedData,
+    cachingEnabled = true;
+
+  function getCacheSetting() {
+    return $('#caching-on').prop('checked');
+  }
+
+  function resetCache() {
+    cachedTerm = undefined;
+    cachedData = undefined;
+    console.log('Multiselect search term/data cache has been cleared');
+  }
+
+  // Source method implementation that contains support for caching search terms/retreived data.
+  function callExternalSource(response, term) {
+    if (cachingEnabled && cachedData && cachedTerm === term) {
+      console.log('Using cached data for search term "' + term + '" instead of performing a new search...');
+      response(cachedData);
+      return;
+    }
+
+    cachedTerm = term;
+
+    var apiRoute = '/api/states';
+    if (term && typeof term === 'string' && term.length) {
+      apiRoute += '?term=' + term;
+    }
+
+    console.log('Searching for term: "' + term + '".');
+    $.getJSON(apiRoute, function(data) {
+      cachedData = data;
+      response(data);
+    });
+  }
+
   $('body').on('initialized', function() {
+    cachingEnabled = getCacheSetting();
 
-    $('#ajax-test').multiselect({
-      source: function (response, term) {
-        console.log('Searching for term:' + term);
-        if (term === '') {
-          response([]);
-          return;
-        }
-
-        $.getJSON('/api/states' + (term ? '?term='+term : '') , function(data) {
-          //Structure the data with val, label syntax. In this example its down on the server
-
-          //Fake two selected since we dont have persistence
-          //data[0].selected = true;
-          //data[1].selected = true;
-          response(data);
-        });
+    $('[name="cache"]').on('change', function() {
+      cachingEnabled = getCacheSetting();
+      if (!cachingEnabled) {
+        resetCache();
+        $('#clear').disable();
+        return;
       }
+
+      $('#clear').enable();
     });
 
+    $('#clear').on('click', function() {
+      resetCache();
+    });
+
+    // Tie the external source method to the multiselect
+    $('#ajax-test').multiselect({
+      source: callExternalSource
+    });
   });
 </script>

@@ -197,45 +197,22 @@
             self.element.removeClass('is-open');
           });
 
-        this.element.trigger('populated', [matchingOptions]);
+        // Select the first item in the list
+        self.list.children().filter(':not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)').first()
+          .addClass('is-selected');
+
+        this.noSelect = true;
+        this.element.trigger('populated', [matchingOptions]).focus();
 
         // Overrides the 'click' listener attached by the Popupmenu plugin
+        self.list.off('click touchend')
+          .on('touchend.autocomplete click.autocomplete', 'a', function(e) {
+            self.select(e, items);
+          });
 
-        self.list.off('click touchend').on('touchend.autocomplete click.autocomplete', 'a', function (e) {
-          var a = $(e.currentTarget),
-            ret = a.text().trim();
-
-          self.element.attr('aria-activedescendant', a.parent().attr('id'));
-
-          if (a.parent().attr('data-value')) {
-            for (var i = 0; i < items.length; i++) {
-              if (items[i].value.toString() === a.parent().attr('data-value')) {
-                ret = items[i];
-              }
-            }
-          }
-
-          self.element
-            .trigger('selected', [a, ret])
-            .focus()
-            .data('popupmenu').close();
-
-          e.preventDefault();
-          return false;
-        });
-
+        // Highlight anchors on focus
         var all = self.list.find('a').on('focus.autocomplete touchend.autocomplete', function () {
-          var anchor = $(this),
-            text = anchor.text().trim();
-
-          if (anchor.find('.display-value').length > 0) {
-            text = anchor.find('.display-value').text().trim();
-          }
-
-          all.parent('li').removeClass('is-selected');
-          anchor.parent('li').addClass('is-selected');
-
-          self.element.val(text).focus();
+          self.highlight($(this), all);
         });
 
         if (this.settings.offset && this.settings.offset.left) {
@@ -260,11 +237,24 @@
         this.element.trigger('listopen', [items]);
       },
 
+      closeList: function() {
+        var popup = this.element.data('popupmenu');
+        if (!popup) {
+          return;
+        }
+
+        popup.close();
+      },
+
       handleEvents: function () {
         //similar code as dropdown but close enough to be dry
         var buffer = '',
-          timer, selected,
+          timer, selected, items,
           self = this;
+
+        function getSelected() {
+          return self.list.find('.is-selected');
+        }
 
         this.element.on('updated.autocomplete', function() {
           self.updated();
@@ -274,10 +264,12 @@
             return false;
           }
 
-          var excludes = 'li:not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)';
+          var excludes = 'li:not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)',
+            isOpen = self.list && self.list.is(':visible');
+
           //Down - select next
-          if (e.keyCode === 40 && self.list && self.list.is(':visible')) {
-            selected = self.list.find('.is-selected');
+          if (e.keyCode === 40 && isOpen) {
+            selected = getSelected();
             if (selected.length) {
               self.noSelect = true;
               selected.removeClass('is-selected is-focused');
@@ -288,8 +280,8 @@
           }
 
           //Up select prev
-          if (e.keyCode === 38 && self.list && self.list.is(':visible')) {
-            selected = self.list.find('.is-selected');
+          if (e.keyCode === 38 && isOpen) {
+            selected = getSelected();
             if (selected.length) {
               self.noSelect = true;
               selected.removeClass('is-selected is-focused');
@@ -299,21 +291,20 @@
             }
           }
 
-          if ((e.keyCode === 9 || e.keyCode === 13) && self.list && self.list.is(':visible')) {
-            self.list.find('.is-selected').find('a').trigger('click');
-            if (self.element.data('popupmenu')) {
-              self.element.data('popupmenu').close();
-            }
+          if ((e.keyCode === 9 || e.keyCode === 13) && isOpen) {
+            selected = getSelected();
             e.stopPropagation();
             e.preventDefault();
+            self.select(selected, items);
           }
 
-          if (e.keyCode === 8 && self.list) {
-            self.element.trigger('keypress');
+          if (e.keyCode === 8 && isOpen) {
+            self.element.trigger('input');
           }
 
         })
-        .on('keypress.autocomplete', function (e) {
+        .on('input.autocomplete', function (e) {
+
           if (self.isLoading()) {
             e.preventDefault();
             return false;
@@ -322,9 +313,12 @@
           var field = $(this);
           clearTimeout(timer);
 
-          if (e.altKey && e.keyCode === 40) {  //open list
-            self.openList(field.val(), self.settings.source);
-            return;
+          function done(searchTerm, response) {
+            items = response;
+            self.openList(buffer, items);
+
+            self.element.triggerHandler('complete'); // For Busy Indicator
+            self.element.trigger('requestend', [searchTerm, response]);
           }
 
           timer = setTimeout(function () {
@@ -341,17 +335,7 @@
             }
             buffer = buffer;
 
-            //This checks all printable characters - except backspace
-            if (e.which === 0 || (e.charCode === 0 && e.which !== 8) || e.ctrlKey || e.metaKey || e.altKey) {
-              return;
-            }
-
-            var sourceType = typeof self.settings.source,
-              done = function(searchTerm, response) {
-                self.element.triggerHandler('complete'); // For Busy Indicator
-                self.element.trigger('requestend', [searchTerm, response]);
-              };
-
+            var sourceType = typeof self.settings.source;
             self.element.triggerHandler('start'); // For Busy Indicator
             self.element.trigger('requeststart', [buffer]);
 
@@ -389,9 +373,70 @@
           setTimeout(function () {
             self.element.select();
           }, 10);
-        }).on('requestend.autocomplete', function(e, buffer, data) {
-          self.openList(buffer, data);
         });
+      },
+
+      highlight: function(anchor, allAnchors) {
+        var text = anchor.text().trim();
+
+        if (anchor.find('.display-value').length > 0) {
+          text = anchor.find('.display-value').text().trim();
+        }
+
+        if (allAnchors && allAnchors.length) {
+          allAnchors.parent('li').removeClass('is-selected');
+        }
+        anchor.parent('li').addClass('is-selected');
+
+        this.noSelect = true;
+        this.element.val(text).focus();
+      },
+
+      select: function(anchorOrEvent, items) {
+        var a, li, ret, dataValue,
+          isEvent = false;
+
+        // Initial Values
+        if (anchorOrEvent instanceof $.Event) {
+          isEvent = true;
+          a = $(anchorOrEvent.currentTarget);
+        } else {
+          a = anchorOrEvent;
+        }
+
+        if (a.is('li')) {
+          li = a;
+          a = a.children('a');
+        }
+
+        li = a.parent('li');
+        ret = a.text().trim();
+        dataValue = li.attr('data-value');
+
+        this.element.attr('aria-activedescendant', li.attr('id'));
+
+        if (items && items.length && dataValue) {
+          for (var i = 0, value; i < items.length; i++) {
+            value = items[i].value.toString();
+            if (value === dataValue) {
+              ret = items[i];
+            }
+          }
+        }
+
+        this.closeList();
+        this.highlight(a);
+
+        this.noSelect = true;
+        this.element
+          .trigger('selected', [a, ret])
+          .focus();
+
+        if (isEvent) {
+          anchorOrEvent.preventDefault();
+        }
+
+        return false;
       },
 
       updated: function() {

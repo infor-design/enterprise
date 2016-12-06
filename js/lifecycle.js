@@ -18,7 +18,8 @@
 }(function($) {
   /* end-amd-strip-block */
 
-  var excluded = ['.expandable-area', '.accordion'];
+  var EXCLUDED_FROM_CLOSE_CHILDREN = ['.expandable-area', '.accordion'],
+      EXCLUDED_FROM_HANDLE_RESIZE = [];
 
   // Used by several of these plugins to detect whether or not the "data" property in question
   // is a valid SoHo Xi Control.
@@ -89,7 +90,11 @@
   };
 
   $.fn.closeChildren = function() {
-    return siftFor($(this), 'close', excluded);
+    return siftFor($(this), 'close', EXCLUDED_FROM_CLOSE_CHILDREN);
+  };
+
+  $.fn.handleResize = function() {
+    return siftFor($(this), 'handleResize', EXCLUDED_FROM_HANDLE_RESIZE);
   };
 
   /* start-amd-strip-block */

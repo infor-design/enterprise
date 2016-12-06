@@ -1,0 +1,67 @@
+<div class="row top-padding">
+  <div class="six columns">
+
+    <h3>Tree Control: Destroy</h3>
+
+    <p>Testing the destroy function, which will remove the tree cleanly</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <button class="btn" id="destroy">Destroy</button>
+    <button class="btn" id="invoke">Invoke</button><br><br><br>
+
+    <ul role="tree" aria-label="Asset Types" class="tree" data-init="false" id="json-tree">
+    </ul>
+
+  </div>
+</div>
+
+<script>
+  var sampleData, treeApi;
+
+  /* jshint ignore:start */
+  sampleData = [{
+    "id": "node1",
+    "text": "Node One"
+  }, {
+    "id": "node2",
+    "text": "Node Two",
+    "open": false,
+    "children": []
+  }];
+  /* jshint ignore:end */
+
+  var invoke = function () {
+    treeApi = $('#json-tree').tree({dataset: sampleData, source: function (req, response) {
+      setTimeout(function () {
+
+        var nodes = [{
+          "id": "node2.1",
+          "text": "Node 2.1"
+        },{
+          "id": "node2.2",
+          "text": "Node 2.2",
+          "children": []
+        }];
+
+        response(nodes);
+      }, 2000);
+
+    }}).data('tree');
+  };
+
+
+  //Can refer to the data set here
+  invoke();
+
+  $('#destroy').on('click', function () {
+      treeApi.destroy();
+  });
+
+  $('#invoke').on('click', function () {
+      invoke();
+  });
+
+</script>

@@ -67,11 +67,12 @@
   "loopfunc": true,
 
   // Allow Some Globals used in tests and packages
-  "predef": ["Tmpl", "GroupBy", "Range", "define", "d3", "describe", "it", "before", "after", "beforeEach", "Modernizr", "Locale", "chai", "assert", "expect", "should", "Editors", "Formatters", "Chart", "angular", "Soho", "jquery", "module", "__dirname", "Buffer", "require", "ko", "ListFilter", "unescape"],
+  "predef": ["Tmpl", "Aggregators", "GroupBy", "Range", "define", "d3", "describe", "it", "before", "after", "beforeEach", "Modernizr", "Locale", "chai", "assert", "expect", "should", "Editors", "Formatters", "Chart", "angular", "Soho", "jquery", "module", "__dirname", "Buffer", "require", "ko", "ListFilter", "unescape"],
 
   "globals": {
     "globals": true,
     "chai": true,
     "should": true
-  }
+  },
+  "esversion":6
 }

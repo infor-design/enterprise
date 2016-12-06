@@ -83,6 +83,7 @@ body.no-scroll {
 
     + .sidebar {
       border-right: 0;
+      margin-right: 0 !important;
     }
   }
 
@@ -388,7 +389,12 @@ body.no-scroll {
   }
 
   > .row:first-child {
+    padding-bottom: 20px;
     padding-top: 20px;
+  }
+
+  > .row:last-child {
+    padding-bottom: 20px;
   }
 
   .svg-patterns + .row {

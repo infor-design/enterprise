@@ -28,8 +28,8 @@
 
 
       //Define Columns for the Grid.
-      columns.push({id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Text});
-      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, click: function (e, args) {
+      columns.push({id: 'productId', minWidth: 200, width: 300, name: 'Product Id', field: 'productId', formatter: Formatters.Text});
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, target: '_blank', href: 'http://google.com', click: function (e, args) {
           console.log(args);
       }});
       columns.push({ hidden: true, name: 'Activity', field: 'activity'});

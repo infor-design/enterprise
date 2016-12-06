@@ -1,12 +1,58 @@
-## 4.2.3 - Minor Release
-Release Date: 2016-11-30
+## 4.2.4 - Minor Release
+Release Date: 2017-01-04
 
 ### Key New Features
-* Datagrid Grouping
+* Datagrid - Reset Default Layout
 
 ### Breaking Changes
 
-* 2016-11-01 -
+* 2016-12-05 -
+
+### Ui Changes
+
+### Affects
+- Datagrid (Columns)
+
+Jira Release Notes
+http://bit.ly/2h1veF3
+
+## 4.2.3 - Minor Release
+Release Date: 2016-12-06
+
+### Key New Features
+* Datagrid Grouping and Summary Row
+* Swap List API Improvements
+* Circle Pager
+* Datagrid Validation
+* Ajax Dropdowns in Datagrid
+* Hero Widget on Home Pages
+
+### Breaking Changes
+
+* 2016-12-05 - builder-header / subheader should have class header added fx:
+class="builder-header header subheader is-personalizable"
+* 2016-11-29 - Circlepager - Changed api method names **active** to **showCollapsedView** and **unactive** to **showExpandedView**.
+* 2016-11-11 - Swaplist (SOHO-4552) - now returns data arrays instead of jQuery object array, so datasets should be kept in sync with the UI. This will allow for additional data, like the key values, that is not displayed to the user to be used.
+* 2016-11-21 - The Button with id = "masthead-icon" on the mast head was changed to use a class. Use: <button type="button" class="masthead-icon" class="btn">
+
+### Ui Changes
+* 2016-11-17 - Tree - Changed the selection state to only focus the element instead of the longer bar. This is more performant.
+
+### Affects:
+* Autocomplete
+* Datagrid
+* Popups
+* Datepicker
+* Tooltip
+* Bullet Chart
+* Popover
+* Paging (list and Datagrid)
+* Tabs
+* Home pages
+* Select/Dropdown
+
+Jira Release Notes
+http://bit.ly/2h1veF3
 
 ## 4.2.2 - Minor Release
 Release Date: 2016-10-20
@@ -29,6 +75,9 @@ Release Date: 2016-10-20
 
 ### Ui Changes
 * 2016-08-30 -
+
+Jira Release Notes
+http://bit.ly/2cwBELt
 
 ## 4.2.1 - Minor Release
 Release Date: 2016-10-06

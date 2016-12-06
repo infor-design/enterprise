@@ -48,7 +48,9 @@
 
   &.is-disabled {
     .tab {
+      // scss-lint:disable ImportantRule
       cursor: default !important;
+      // scss-lint:enable ImportantRule
     }
   }
 }
@@ -86,11 +88,13 @@
   }
 
   &.is-disabled {
+    // scss-lint:disable ImportantRule
     cursor: default !important;
 
     .icon {
       color: $disabled-color !important;
     }
+    // scss-lint:enable ImportantRule
   }
 }
 
@@ -115,9 +119,9 @@
 // Isn't actually attached to each tab, but is a separate element that moves around
 // This helps break overflow issues and simplifies the CSS
 .tab-focus-indicator {
+  @include tab-outline;
   pointer-events: none;
   z-index: 10;
-  @include tab-outline;
 
   &.is-visible {
     @include tab-outline-focus;
@@ -129,7 +133,9 @@
   padding-top: 20px;
 
   &.padding {
+    // scss-lint:disable ImportantRule
     padding: 20px !important;
+    // scss-lint:enable ImportantRule
   }
 
   &.alternate {
@@ -146,7 +152,11 @@
       color: inherit;
     }
 
-    h1, h2, h3, h4, p {
+    h1,
+    h2,
+    h3,
+    h4,
+    p {
       color: inherit;
     }
 
@@ -162,12 +172,12 @@
 
 // More Button
 .tab-more {
+  @include css3(transition, background-color .25s ease);
   cursor: pointer;
   display: inline-block;
   position: absolute;
   right: 0;
   top: 0;
-  @include css3(transition, background-color .25s ease);
   visibility: hidden;
 
   &:focus {
@@ -187,7 +197,7 @@
   .tab-more {
     @include font-size(14);
     background-color: transparent;
-    max-width: 102px;
+    max-width: 105px;
 
     .icon {
       height: 16px;
@@ -206,15 +216,15 @@
 
   > .tab-list {
     > .tab {
+      @include css3(transition, background-color .25s ease);
       border-radius: 2px 2px 0 0;
       padding: 0;
-      @include css3(transition, background-color .25s ease);
 
       &:not(.last-child) {
         margin-right: 10px;
       }
 
-      &:before {
+      &::before {
         @include tab-after-off;
       }
 
@@ -230,17 +240,19 @@
       }
 
       &.is-focused {
-        &:after {
+        &::after {
           @include tab-outline-focus;
         }
       }
 
       &.is-disabled {
+        // scss-lint:disable ImportantRule
         color: $disabled-color !important;
 
-        &:before {
+        &::before {
           content: none !important;
         }
+        // scss-lint:enable ImportantRule
 
         a,
         &:hover a,
@@ -254,22 +266,23 @@
 
         .icon {
           position: relative;
-        }
 
-        .icon.close {
-          height: 10px;
-          margin-left: -3px;
-          margin-top: -1px;
-          padding-right: 1px;
-          right: auto;
-          top: 1px;
-        }
+          &.close {
+            height: 10px;
+            margin-left: -3px;
+            margin-top: -1px;
+            padding-right: 1px;
+            right: auto;
+            top: 1px;
+          }
 
-        .icon.icon-error {
-          height: 16px;
-          right: -9px;
-          top: -1px;
-          width: 16px;
+          &.icon-error {
+            height: 16px;
+            right: -9px;
+            top: -1px;
+            width: 16px;
+          }
+
         }
       }
 
@@ -289,9 +302,9 @@
       }
 
       a {
-        color: inherit;
         @include antialiased();
         @include font-size(14);
+        color: inherit;
         font-weight: normal;
         text-decoration: none;
 
@@ -320,34 +333,34 @@
     }
 
     .separator {
+      @include css3(user-select, none);
       cursor: default;
       display: inline-block;
       margin: 0 12px;
       padding: 11px 0;
       position: relative;
-      @include css3(user-select, none);
 
-      &:before {
+      &::before {
+        @include css3(transition, none);
         border-left: 1px solid $tab-border-color;
         content: '';
         display: block;
         height: 100%;
         position: absolute;
         top: calc(50% - 6px);
-        @include css3(transition, none);
         width: 1px;
       }
 
-      &:after {
-        display: none;
+      &::after {
         @include css3(transition, none);
+        display: none;
       }
 
       &:hover {
         background-color: transparent;
       }
 
-      &:hover:before {
+      &:hover::before {
         background-color: transparent;
       }
     }
@@ -366,7 +379,11 @@
       color: inherit;
     }
 
-    h1, h2, h3, h4, p {
+    h1,
+    h2,
+    h3,
+    h4,
+    p {
       color: inherit;
     }
 
@@ -380,6 +397,7 @@
     }
 
     .tab {
+      // scss-lint:disable ImportantRule
       color: $disabled-color !important;
 
       &::before {
@@ -397,6 +415,8 @@
       .icon {
         fill: $disabled-color !important;
       }
+      // scss-lint:enable ImportantRule
+
     }
 
     .separator {
@@ -421,7 +441,9 @@
 
   .icon.icon-error {
     height: 14px;
+    // scss-lint:disable ImportantRule
     left: auto !important;
+    // scss-lint:enable ImportantRule
     width: 14px;
   }
 
@@ -457,8 +479,8 @@
       > a {
 
         > .icon.close {
-          position: absolute;
           display: inline-block;
+          position: absolute;
         }
       }
     }

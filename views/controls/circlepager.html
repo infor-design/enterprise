@@ -1,0 +1,121 @@
+<style>
+  .example1 .slide-content {
+    height: 318px;
+    padding: 230px 20px 20px 20px;
+    text-align: center;
+    width: 100%;
+  }
+  .example1 .slides .slide:nth-child(1) .slide-content {
+    background: url('/images/circlepager-bg-slide-1.png') 50% -30px no-repeat;
+  }
+  .example1 .slides .slide:nth-child(2) .slide-content {
+    background: url('/images/circlepager-bg-slide-2.png') 50% 0 no-repeat;
+  }
+  .example1 .slides .slide:nth-child(3) .slide-content {
+    background: url('/images/circlepager-bg-slide-3.png') 50% 20px no-repeat;
+  }
+</style>
+
+<div class="row">
+  <div class="twelve columns">
+    <p>
+      <br><strong>Resize browser window to toggle circle pager.</strong><br>
+      <a href="#" class="hyperlink prev">Prev</a> | <a href="#" class="hyperlink next">Next</a>
+    </p>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="full-width column">
+    <div class="card">
+      <div class="card-header">
+          <h2 class="widget-title">Circle Pager Example</h2>
+          <button type="button" class="btn-actions" type="button">
+            <span class="audible">Actions</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-more"></use>
+            </svg>
+          </button>
+          <ul class="popupmenu actions top">
+            <li><a href="#">Action One</a></li>
+            <li><a href="#">Action Two</a></li>
+          </ul>
+      </div>
+      <div class="card-content">
+
+
+        <!-- BEGIN: circlepager -->
+        <div class="circlepager example1">
+          <!-- BEGIN: slides -->
+          <div class="slides">
+
+            <div class="slide">
+              <div class="slide-content">
+                <p>
+                  <a href="#" class="hyperlink">Nikon 24-85mm f/2.8-4.0D IF Auto Focus Zoom</a><br />
+                $750.00
+                </p>
+              </div>
+            </div>
+
+            <div class="slide">
+              <div class="slide-content">
+                <p>
+                  <a href="#" class="hyperlink">Nikon 24-85mm f/2.8-4.0D IF Auto Focus Zoom</a><br />
+                $750.00
+                </p>
+              </div>
+            </div>
+
+            <div class="slide">
+              <div class="slide-content">
+                <p>
+                  <a href="#" class="hyperlink">Nikon 24-85mm f/2.8-4.0D IF Auto Focus Zoom</a><br />
+                $750.00
+                </p>
+              </div>
+            </div>
+
+          </div>
+          <!-- END: slides -->
+        </div>
+        <!-- END: circlepager -->
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+// Wait for initialize
+$('body').on('initialized', function() {
+  var example1 = $('.example1'),
+    parent = $('.card-content'),
+    api = example1.data('circlepager');
+
+  window.onresize = function() {
+    if (parent.width() < 1000) {
+      api.showCollapsedView();
+    } else {
+      api.showExpandedView();
+    }
+  }
+
+  // Init resize
+  window.onresize();
+
+  // previous / next
+  $('.prev').on('click', function(e) {
+    e.preventDefault();
+    api.prev();
+  });
+  $('.next').on('click', function(e) {
+    e.preventDefault();
+    api.next();
+  });
+
+});
+</script>

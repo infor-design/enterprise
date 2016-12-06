@@ -21,13 +21,13 @@
     {Phase: 'Phase 2', Step: 'Step 2', Task: 'Task 2', Value: '40'}
   ];
 
-  console.table(GroupBy.sum(data, ['Phase', 'Step']));
-  console.table(GroupBy.list(data, ['Phase'], 'Task'));
-  console.table(GroupBy.list(data, ['Phase', 'Step'], 'Task'));
-  console.table(GroupBy.max(data, ['Phase']));
-  console.table(GroupBy.max(data, ['Phase', 'Step']));
-  console.table(GroupBy.list(data, ['Phase'], 'Task'));
-  console.table(GroupBy.list(data, ['Phase', 'Step'], 'Task'));
+//  console.table(GroupBy.sum(data, ['Phase', 'Step'], 'Value'));
+//  console.table(GroupBy.list(data, ['Phase'], 'Task'));
+//  console.table(GroupBy.list(data, ['Phase', 'Step'], 'Task'));
+  console.table(GroupBy.max(data, ['Phase'], 'Value'));
+  console.table(GroupBy.max(data, ['Phase', 'Step'], 'Value'));
+  console.table(GroupBy.list(data, ['Phase'], {list: ['Task']}));
+  console.table(GroupBy.list(data, ['Phase', 'Step'], {list: ['Task']}));
   console.table(GroupBy(data, ['Phase']));
   console.table(GroupBy(data, ['Phase', 'Step']));
 

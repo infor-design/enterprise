@@ -142,6 +142,7 @@
     height: 318px;
     min-height: 318px;
     overflow: auto;
+    width: 100%;
   }
 
   .card-footer,
@@ -327,6 +328,189 @@
   text-align: center;
 }
 
+// Hero widget
+.hero-widget {
+  background-color: $subhead-bg-color;
+  color: $header-button-color;
+  max-height: 410px;
+  min-height: 370px;
+  overflow: hidden;
+  width: 100%;
+
+  .hero-top {
+    height: 370px;
+    max-height: 370px;
+    min-height: 370px;
+  }
+
+  .hero-bottom {
+    background-color: $header-bg-color;
+    height: 40px;
+    max-height: 40px;
+    min-height: 40px;
+    width: 100%;
+  }
+
+  .hero-header,
+  .hero-content,
+  .hero-footer {
+    margin: 0 auto;
+    max-width: 1500px;
+    width: 100%;
+
+    .toolbar {
+      padding-left: 15px;
+      padding-right: 0;
+    }
+
+    .title {
+      color: $header-button-color;
+    }
+
+    .btn-tertiary,
+    .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary).is-open span,
+    .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary) {
+      color: $header-button-color;
+
+      .icon {
+        fill: $header-button-color;
+      }
+
+      &:hover {
+        color: $header-text-color;
+
+        .icon {
+          fill: $header-text-color;
+        }
+      }
+
+      &:focus:not(.hide-focus) {
+        box-shadow: 0 0 0 2px transparent, 0 0 0 1px $header-button-color;
+
+        &:active {
+          box-shadow: none;
+        }
+      }
+    }
+
+    .chart-container {
+      .arc,
+      .bar,
+      &.line-chart .dot {
+        stroke: $subhead-bg-color;
+      }
+
+      text {
+        fill: $header-text-color;
+      }
+    }
+
+    .circlepager.is-active .controls .control-button {
+      border-color: $header-button-color;
+
+      &:hover {
+        border-color: $header-text-color;
+      }
+
+      &.is-active {
+        background-color: $header-text-color;
+        border-color: $header-text-color;
+
+        &:hover {
+          background-color: $header-text-color;
+          border-color: $header-text-color;
+        }
+      }
+
+      &:focus:not(.hide-focus) {
+        outline-color: $header-button-color;
+      }
+    }
+  }
+
+  .hero-footer {
+    padding: 0 15px;
+    width: 100%;
+
+    .hero-footer-nav {
+      display: inline-block;
+      margin: 0;
+      padding: 0;
+
+      li {
+        display: inline-block;
+        height: 40px;
+        line-height: 40px;
+
+        // scss-lint:disable UnicodeRule
+        &::before {
+          @include font-size(20);
+          color: $panel-border-color;
+          content: '\2758';
+          display: inline-block;
+          margin-right: 2px;
+          padding-top: 2px;
+          vertical-align: top;
+        }
+        // scss-lint:enable UnicodeRule
+
+        &:first-child::before {
+          margin-left: 15px;
+        }
+      }
+
+      a {
+        margin-top: 5px;
+        text-transform: uppercase;
+      }
+    }
+
+    .hero-footer-nav-title {
+      @include font-size(16);
+      display: inline-block;
+      float: left;
+      height: 40px;
+      line-height: 40px;
+
+      &::after,
+      &::before {
+        content: '';
+        display: table;
+      }
+
+      &::after {
+        clear: both;
+      }
+
+    }
+  }
+}
+
+@media only screen and (max-width: 1500px) {
+  .hero-widget {
+    .hero-content {
+      max-width: 1120px;
+    }
+
+    .hero-bottom {
+      display: none;
+    }
+  }
+}
+
+@media only screen and (max-width: 1120px) {
+  .hero-widget {
+    .hero-content {
+      max-width: 400px;
+    }
+
+    .hero-bottom {
+      display: none;
+    }
+  }
+}
+
+
 //RTL Styles
 html[dir='rtl'] {
   .card,
@@ -346,6 +530,7 @@ html[dir='rtl'] {
       > button {
         float: right;
       }
+
       > h2,
       > h1 {
         float: right;
@@ -355,6 +540,33 @@ html[dir='rtl'] {
       &:not(.has-toolbar) > .btn-actions {
         left: 18px;
         right: auto;
+      }
+    }
+  }
+
+  .hero-widget {
+    .hero-header,
+    .hero-content,
+    .hero-footer {
+      .toolbar {
+        padding-left: 0;
+        padding-right: 15px;
+      }
+    }
+
+    .hero-footer {
+      .hero-footer-nav {
+        li {
+          &::before {
+            margin-left: 2px;
+            margin-right: inherit;
+          }
+
+          &:first-child::before {
+            margin-left: inherit;
+            margin-right: 15px;
+          }
+        }
       }
     }
   }

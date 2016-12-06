@@ -150,8 +150,6 @@
   </ul>
 </script>
 
-
-
 <script>
   $('body').one('initialized', function () {
       var grid,
@@ -171,7 +169,7 @@
           return (data.status === 'Queued');
         }});
 
-       var url = '/api/servicerequests';
+      var url = '/api/servicerequests';
 
       $.getJSON(url, function(res) {
          //Init and get the api for the grid

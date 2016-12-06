@@ -31,6 +31,7 @@
         cloneAppentTo: null, //AppentTo selector for clone ['body'|'parent'|'jquery object'] default:'body'
         containment: false, //Constrains dragging to within the bounds of the specified element or region. Possible values: "parent", "document", "window".
         obstacle: false, //Selector of object(s) that you cannot drag into,
+        containmentOffset: {left: 0, top: 0}
       },
       settings = $.extend({}, defaults, options);
 
@@ -186,17 +187,22 @@
           this.clone = null;
         }
 
+        //Clear Cached Sizes
         if (this.obstacle) {
           this.obstacle = null;
         }
-
+        if (this.upperYLimit) {
+          this.upperYLimit = null;
+        }
+        if (this.upperXLimit) {
+          this.upperXLimit = null;
+        }
         $('body').removeClass('disable-select');
       },
 
       //Move the object from the event coords
       move: function(left, top) {
-        var upperXLimit, upperYLimit,
-          self = this;
+        var self = this;
 
         var css = {
           left: left,
@@ -224,15 +230,18 @@
             this.container = $(document);
           }
 
-          upperXLimit = this.container.width() - this.element.outerWidth();
-          upperYLimit = this.container.height() - this.element.outerHeight();
-
-          if (css.top > upperYLimit) {
-            css.top = upperYLimit;
+          if (!this.upperXLimit) {
+            this.upperXLimit = this.container.width() - this.element.outerWidth() + settings.containmentOffset.left;
+          }
+          if (!this.upperXLimit) {
+            this.upperYLimit = this.container.height() - this.element.outerHeight() + settings.containmentOffset.top;
+          }
+          if (css.top > this.upperYLimit) {
+            css.top = this.upperYLimit;
           }
 
-          if (css.left > upperXLimit) {
-            css.left = upperXLimit;
+          if (css.left > this.upperXLimit) {
+            css.left = this.upperXLimit;
           }
 
           if (css.top < 0) {

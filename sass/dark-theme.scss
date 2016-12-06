@@ -12,6 +12,7 @@
 // Form Background Color
 $body-bg-color:  $slate08;
 $header-bg-color: $slate09;
+$subhead-bg-color: $slate07;
 $header-border-color: $slate10;
 $header-button-color: rgba($white, .7);
 $header-button-focus-color: rgba($white, 1);
@@ -49,6 +50,14 @@ $hyperlink-hover-color: $azure04;
 // Rules
 $hr-top-color: $slate09;
 $hr-bottom-color: transparent;
+
+// Circle Pager
+$circlepager-border-color: $slate04;
+$circlepager-hover-border-color: $slate02;
+$circlepager-disable-border-color: $slate05;
+$circlepager-disable-hover-border-color: $slate05;
+$circlepager-disable-focus-border-color: $slate05;
+
 
 // Popovers
 $popover-bg-color: $slate07;
@@ -200,6 +209,7 @@ $listview-full-width-hover-color: $slate06;
 // Toolbar
 $toolbar-standalone-bg-color: $slate06;
 $toolbar-standalone-border-color: $slate05;
+$toolbar-standalone-disabled-color: $slate03;
 $toolbar-separator-color: $slate05;
 
 // Formatter Toolbar
@@ -514,6 +524,9 @@ $datagrid-list-filter-icon-color: $slate03;
 $datagrid-list-filter-disabled-color: $slate06;
 $datagrid-list-filter-focus-color: $azure06;
 $datagrid-list-filter-active-color: $azure06;
+
+$datagrid-rowgroup-header: $slate07;
+$datagrid-rowgroup-color: $font-color;
 
 // Search Results
 $sr-masthead-text-color: $font-color;

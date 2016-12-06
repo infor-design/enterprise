@@ -5,7 +5,7 @@
     <div class="toolbar" role="toolbar">
       <div class="title">
         Compressors
-        <span class="datagrid-result-count">(10 Results)</span>
+        <span class="datagrid-result-count">(N Results)</span>
       </div>
       <div class="buttonset">
         <button  type="button" class="btn">
@@ -25,6 +25,8 @@
         </button>
         <ul class="popupmenu">
           <li><a data-option="personalize-columns" href="#">Personalize Columns</a></li>
+          <li><a data-option="reset-layout" href="#">Reset Default Layout</a></li>
+          <li class="separator"></li>
           <li><a data-option="export-to-excel" href="#">Export to Excel</a></li>
           <li class="separator single-selectable-section"></li>
           <li class="heading">Row Height</li>
@@ -71,7 +73,7 @@
       columns: columns,
       columnReorder: true,
       dataset: data,
-      toolbar: {personalize: true, results: true}
+      toolbar: {personalize: true, results: true, resetLayout: true}
     }).on('columnchange', function (e, args) {
       console.log('Changed', args.columns);
     });

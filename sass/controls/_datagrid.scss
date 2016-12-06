@@ -4,10 +4,11 @@
 $datagrid-header-height: 39px;  //1px border in parent
 $datagrid-filterable-header-height: 61px;
 
+$datagrid-row-height: 43px;
 $datagrid-medium-header-height: 30px;
-$datagrid-medium-row-height: 40px;
+$datagrid-medium-row-height: 33px;
 $datagrid-short-header-height: 25px;
-$datagrid-short-row-height: 30px;
+$datagrid-short-row-height: 23px;
 
 .datagrid-container {
   background-color: transparent;
@@ -118,28 +119,30 @@ $datagrid-short-row-height: 30px;
 
   //Row Height Feature
   &.medium-rowheight {
-    tr td {
-      height: $datagrid-medium-row-height;
+    tbody tr {
       line-height: $datagrid-medium-row-height;
-      min-height: $datagrid-medium-row-height;
+      //min-height: $datagrid-medium-row-height;
 
-      .datagrid-row-heading {
-        margin-top: 25px;
-      }
+      td {
 
-      .btn-actions {
-        top: 13px;
-      }
+        .datagrid-row-heading {
+          margin-top: 25px;
+        }
 
-      .datagrid-alert-icon {
-        top: 9px;
-      }
+        .btn-actions {
+          top: 13px;
+        }
 
-      .hyperlink {
-        margin-top: 8px;
+        .datagrid-alert-icon {
+          top: 9px;
+        }
+
+        .hyperlink {
+          margin-top: 8px;
+          vertical-align: top;
+        }
       }
     }
-
     //Resize the headers too
     .datagrid-column-wrapper,
     th {
@@ -165,70 +168,76 @@ $datagrid-short-row-height: 30px;
 
   &.short-rowheight {
 
-    tr td {
-      height: $datagrid-short-row-height;
+    tbody tr {
       line-height: $datagrid-short-row-height;
-      min-height: $datagrid-short-row-height;
+      //min-height: $datagrid-short-row-height;
 
-      span {
-        line-height: $datagrid-short-row-height;
-      }
+      td {
 
-      .badge {
-        line-height: 22px;
-        top: 0;
+        span {
+          line-height: $datagrid-short-row-height;
+        }
 
-        &::before {
+        .badge {
+          line-height: 22px;
+          top: 0;
+
+          &::before {
+            margin-top: 0;
+          }
+        }
+
+        .datagrid-expand-btn {
+          vertical-align: middle;
+        }
+
+        .datagrid-drilldown {
+          top: -4px;
+        }
+
+        .datagrid-alert-icon {
+          // scss-lint:disable ImportantRule
+          top: 5px !important;
+          // scss-lint:enable ImportantRule
+        }
+
+        .tag {
+          height: 22px;
+          line-height: 24px;
           margin-top: 0;
+          padding: 0 10px 4px;
         }
-      }
 
-      .datagrid-expand-btn {
-        top: -2px;
-
-        + span {
-          top: -3px;
+        .hyperlink {
+          line-height: 1.4rem;
+          padding-top: 0;
+          vertical-align: top;
         }
-      }
 
-      .datagrid-drilldown {
-        top: -4px;
-      }
+        .row-btn {
+          height: 26px;
+          min-width: 80px;
+          top: 0;
+          vertical-align: middle;
 
-      .datagrid-alert-icon {
-        // scss-lint:disable ImportantRule
-        top: 5px !important;
-        // scss-lint:enable ImportantRule
-      }
+          span {
+            line-height: 26px;
+          }
 
-      .tag {
-        height: 22px;
-        line-height: 24px;
-        margin-top: 0;
-        padding: 0 10px 4px;
-      }
+          &.btn-icon {
+            height: 20px;
+            margin-bottom: -15px;
+            min-width: 20px;
+          }
+        }
 
-      .hyperlink {
-        line-height: 1.4rem;
-        margin-top: 4px;
-        vertical-align: top;
-      }
 
-      .row-btn {
-        height: 18px;
-        margin-left: 9px;
-        min-height: 18px;
-        min-width: 18px;
-        padding: 0;
-        top: -2px;
-        width: 18px;
-      }
 
-      a.row-btn {
-        margin-bottom: -5px;
+        a.row-btn {
 
-        .icon {
-          margin: 0;
+          .icon {
+            margin: 0;
+          }
         }
       }
     }
@@ -598,7 +607,9 @@ $datagrid-short-row-height: 30px;
   }
 
   // Table Rows
-  tr {
+  tbody tr {
+    line-height: $datagrid-row-height;
+  //  min-height: $datagrid-row-height;
 
     &.is-active-row {
       outline: 1px solid $primary-color;
@@ -609,14 +620,19 @@ $datagrid-short-row-height: 30px;
       }
     }
 
-    //Tree - Collapsed rows
+    //Error validation
+    &.error td {
+      background-color: $alert-bg-color;
+      //border-color: $alert-red; - Use for focus state
+    }
 
+    //Tree - Collapsed rows
     &.is-hidden {
       display: none;
     }
 
     // Hover States
-    &:not(.datagrid-expandable-row):hover td:not(.is-editing) {
+    &:not(.error):not(.datagrid-expandable-row):hover td:not(.is-editing):not(.error) {
       background-color: $datagrid-row-hover-color;
 
       .is-readonly {
@@ -633,7 +649,9 @@ $datagrid-short-row-height: 30px;
       background-color: $datagrid-row-selected-color-dark;
 
       span {
-        background-color: transparent;
+        // scss-lint:disable ImportantRule
+        background-color: transparent !important;
+        // scss-lint:enable ImportantRule
       }
     }
 
@@ -682,7 +700,7 @@ $datagrid-short-row-height: 30px;
     .datagrid-alert-icon {
       display: inline-block;
       height: 20px;
-      top: 14px;
+      top: 10px;
 
       &.icon-dirty {
         height: 16px;
@@ -719,7 +737,6 @@ $datagrid-short-row-height: 30px;
     }
 
     .tag {
-      // line-height: 26px;
 
       &[class*='azure'] {
         color: $white;
@@ -731,15 +748,15 @@ $datagrid-short-row-height: 30px;
     }
 
     a.row-btn {
-      height: 36px;
-      margin-bottom: -14px;
-      min-height: 36px;
-      min-width: 36px;
+      height: 34px;
+      min-height: 34px;
+      min-width: 34px;
       padding: 0;
-      width: 36px;
+      vertical-align: middle;
+      width: 34px;
 
       .icon {
-        margin: 8px 0 0 8px;
+        margin: 7px 0 0;
       }
     }
 
@@ -750,7 +767,7 @@ $datagrid-short-row-height: 30px;
       margin: 0;
       min-height: inherit;
       overflow: hidden;
-      padding: 0 20px;
+      padding: 4px 20px 0;
     }
 
     .icon-favorite {
@@ -770,8 +787,9 @@ $datagrid-short-row-height: 30px;
     border-bottom: 1px solid $datagrid-cell-border-color;
     border-right: 1px solid $datagrid-cell-border-color;
     color: $datagrid-data-color;
-    line-height: 50px;
-    min-height: 50px;
+    height: inherit;
+    line-height: inherit;
+    min-height: inherit;
     outline: none;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -789,6 +807,32 @@ $datagrid-short-row-height: 30px;
     &.is-focused {
       .datagrid-cell-wrapper {
         border: 1px solid $primary-color;
+      }
+    }
+
+    // Validation Cell Styles
+    &.error {
+      background-color: $alert-bg-color;
+
+      .datagrid-cell-wrapper {
+        //border-color: $alert-red;
+
+        .icon-error {
+          left: 100%;
+          margin-left: -15px;
+          position: relative;
+          visibility: visible;
+        }
+      }
+
+      &.datagrid-trigger-cell .icon-error {
+        left: 0;
+        margin-left: -40px;
+        margin-top: 7px;
+      }
+
+      &:focus .datagrid-cell-wrapper {
+        border-color: $alert-red;
       }
     }
 
@@ -909,13 +953,13 @@ $datagrid-short-row-height: 30px;
       //Date Picker
       .datepicker {
         border: 0;
-        padding: 9px 20px 8px;
+        padding: 17px 20px 15px;
 
         + .icon {
           height: 16px;
           left: 4px;
           position: relative;
-          top: 3px;
+          top: 4px;
           width: 19px;
         }
 
@@ -954,13 +998,7 @@ $datagrid-short-row-height: 30px;
   }
 
   // States
-  .is-readonly {
-    background-color: $datagrid-cell-readonly-bg-color;
 
-    span {
-      color: $datagrid-cell-readonly-color;
-    }
-  }
 
   //Readonly - List Datagrid
   &.is-gridlist {
@@ -1077,6 +1115,35 @@ $datagrid-short-row-height: 30px;
   }
 }
 
+.datagrid-rowgroup-header {
+
+  //Animating while closing
+  &.is-animating {
+    opacity: .2;
+  }
+
+  td {
+    background-color: $datagrid-rowgroup-header;
+    border: 1px solid transparent;
+    border-bottom: 1px solid $datagrid-cell-border-color;
+    padding: 0 20px;
+
+    &:focus ,
+    &.is-focused {
+      border: 1px solid $primary-color;
+    }
+
+    span {
+      color: $datagrid-rowgroup-color;
+      font-weight: bold;
+    }
+
+    .icon {
+      fill: $datagrid-rowgroup-color;
+    }
+  }
+}
+
 // Sorting
 .sort-indicator {
   display: inline-block;
@@ -1147,7 +1214,7 @@ $datagrid-short-row-height: 30px;
 
 .datagrid-drilldown {
   background-color: transparent;
-  border-radius: 0;
+  border-radius: 50%;
   margin: 0 auto;
 
   .icon {
@@ -1161,7 +1228,7 @@ td .btn-actions {
   background-color: transparent;
 }
 
-.datagrid-textarea {
+.datagrid-multiline-text {
   display: block;
   height: inherit;
   line-height: 22px;
@@ -1275,9 +1342,12 @@ td .btn-actions {
 //Grid Expand Button
 .datagrid-expand-btn {
   background-color: transparent;
+  height: 32px;
   left: -10px;
-  top: 1px;
+  min-height: 32px;
+  min-width: 32px;
   vertical-align: middle;
+  width: 32px;
 
   span:not(.icon) {
     color: transparent;
@@ -1285,7 +1355,7 @@ td .btn-actions {
 
   + span {
     color: $datagrid-cell-color;
-    margin-left: -15px;
+    margin-left: -10px;
     position: relative;
   }
 
@@ -1377,8 +1447,11 @@ td .btn-actions {
   }
 
   input {
-    height: 48px;
+    height: 50px;
     text-indent: 10px;
+    // scss-lint:disable ImportantRule
+    width: 100% !important;
+    // scss-lint:enable ImportantRule
   }
 
   &.short-rowheight {
@@ -1397,7 +1470,7 @@ td .btn-actions {
 
   .icon {
     fill: $graphite10;
-    margin-top: 7px;
+    margin-top: 9px;
     right: 2px;
 
     &.search {
@@ -1675,8 +1748,8 @@ html[dir='rtl'] {
     @include font-size(14);
   }
 
-  label.inline .checkbox ~ .label-text {
-    line-height: 18px;
+  label.inline {
+    line-height: 30px;
   }
 
   .label {
@@ -1685,10 +1758,10 @@ html[dir='rtl'] {
 
   li {
     height: 30px;
-    padding: 5px 14px;
+    padding: 0 15px;
 
     &:first-child {
-      margin-top: 5px;
+      margin-top: 3px;
     }
   }
 
@@ -1726,6 +1799,18 @@ html[dir='rtl'] {
       margin-top: 6px;
       width: 16px;
     }
+  }
+}
+
+//Summary totals
+.datagrid-summary-row {
+  td {
+    border-right-color: transparent;
+  }
+
+  .datagrid-summary-totals {
+    color: font-color-lowcontrast;
+    float: left;
   }
 }
 

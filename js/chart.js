@@ -976,6 +976,10 @@ window.Chart = function(container) {
 
       drawTextlabels = function (isShortName) {
         svg.selectAll('.lb-top').each(function(d, i) {
+          if ((dims.center.x + (+d3.select(this).attr('x')) - (d.data.name.length*5)) < 15) {// 15: extra padding
+            isShortName = {isShortName: true};
+          }
+
           d3.select(this)
             .text(function() {
               return labelsContextFormatter(d, lb.contentsTop, lb.formatterTop, isShortName);
@@ -991,6 +995,10 @@ window.Chart = function(container) {
 
         if (lb.isTwoline) {
           svg.selectAll('.lb-bottom').each(function(d, i) {
+            if ((dims.center.x + (+d3.select(this).attr('x')) - (d.data.name.length*5)) < 15) {// 15: extra padding
+              isShortName = {isShortName: true};
+            }
+
             d3.select(this)
               .text(function() {
                 return labelsContextFormatter(d, lb.contentsBottom, lb.formatterBottom, isShortName);
@@ -1001,6 +1009,8 @@ window.Chart = function(container) {
                   return labelsColorFormatter(d, i, lb.colorBottom);
                 }
               });
+
+              isShortName = null;
           });
         }
       },
@@ -1087,6 +1097,7 @@ window.Chart = function(container) {
 
       if (lb.hideLabels) {
         var isRunning = true,
+          maxRunning = textLabels.length*15,
           orgLabelPos,
           spacing = Math.round(textLabels.node().getBBox().height) + 1;
 
@@ -1101,6 +1112,7 @@ window.Chart = function(container) {
           // Fix y position
           function relax() {
             var again = false;
+            maxRunning--;
             textLabels.each(function (d, i) {
               var a = this,
                 da = d3.select(a),
@@ -1132,7 +1144,7 @@ window.Chart = function(container) {
               });
             });
 
-            if(again) {
+            if(again && maxRunning > 0) {
               setTimeout(function() {
                 relax();
               }, 0);
@@ -1173,18 +1185,13 @@ window.Chart = function(container) {
             .y(function(d) { return d.y; })
             .interpolate('basis');
 
-          var labels = svg.selectAll('.label'),
-            labelsRect = svg.select('.labels').node().getBoundingClientRect();
+          var labels = svg.selectAll('.label');
 
-            // Set short names
-            if(labelsRect.left < 45 || labelsRect.width > (dims.width - 15)) {// 15: extra padding
-              drawTextlabels({ isShortName: true });
-              svg.selectAll('.label-text tspan').each(function() {
-                if (d3.select(this).text().substring(5) === '...') {
-                  showLegend = true;
-                }
-              });
+          svg.selectAll('.label-text tspan').each(function() {
+            if (d3.select(this).text().substring(5) === '...') {
+              showLegend = true;
             }
+          });
 
           // Collect source and targets [x, y] position
           labels.each(function(d, i) {
@@ -2386,7 +2393,7 @@ window.Chart = function(container) {
       isViewSmall = parent.width() < 450,
       margin = {
         top: (isAxisLabels.top ? 40 : 30),
-        right: (isAxisLabels.right ? (isViewSmall ? 45 : 65) : (isViewSmall ? 35 : 55)),
+        right: (isAxisLabels.right ? (isViewSmall ? 45 : 65) : (isViewSmall ? 45 : 55)),
         bottom: (isAxisLabels.bottom ? 50 : 35),
         left: (isAxisLabels.right ? (isViewSmall ? 55 : 75) : (isViewSmall ? 45 : 65))
       },
@@ -2540,19 +2547,20 @@ window.Chart = function(container) {
 
         lineGroups.append('path')
           .datum(d.data)
-          .attr('fill', function (d) { return charts.chartColor(i, 'line', d); })
+          .attr('fill', function () { return charts.chartColor(i, 'line', d); })
           .style('opacity', '.2')
           .attr('class', 'area')
           .attr('d', area);
       }
 
       var path = lineGroups.append('path')
+        .datum(d.data)
         .attr('d', line(d.data))
-        .attr('stroke', function (d) { return isBubble ? '' : charts.chartColor(i, 'line', d); })
+        .attr('stroke', function () { return isBubble ? '' : charts.chartColor(i, 'line', d); })
         .attr('stroke-width', 2)
         .attr('fill', 'none')
         .attr('class', 'line')
-        .on('click.chart', function(d) {
+        .on('click.chart', function() {
           charts.selectElement(d3.select(this.parentNode), svg.selectAll('.line-group'), d);
         });
 
@@ -2575,9 +2583,8 @@ window.Chart = function(container) {
           .attr('cx', function (d, i) { return xScale(isBubble ? d.value.x : i); })
           .attr('cy', function (d) { return yScale(isBubble ? 0 : d.value); })
           .attr('r', (isBubble ? 0 : 5))
-          .style('stroke', '#ffffff')
           .style('stroke-width', (isBubble ? 0 : 2))
-          .style('fill', function (d) { return charts.chartColor(i, 'line', d); })
+          .style('fill', function () { return charts.chartColor(i, 'line', d); })
           .style('opacity', (isBubble ? '.7' : '1'))
           .on('mouseenter.chart', function(d2) {
             var rect = this.getBoundingClientRect(),
@@ -2677,7 +2684,9 @@ window.Chart = function(container) {
       return {name: d.name, selectionObj: svg.selectAll('.line-group'), selectionInverse: svg.selectAll('.line-group'), data: d};
     });
 
-    charts.addLegend(series);
+    if (charts.showLegend) {
+      charts.addLegend(series);
+    }
     charts.appendTooltip();
 
     // Set initial selected
@@ -3472,12 +3481,15 @@ window.Chart = function(container) {
       this.Sparkline(options.dataset, {isMedianRange: true, isPeakDot: true});
     }
     if (options.type === 'line') {
+      this.showLegend = typeof options.showLegend !== 'undefined' ? options.showLegend : true;
       this.Line(options.dataset, options);
     }
     if (options.type === 'area') {
+      this.showLegend = typeof options.showLegend !== 'undefined' ? options.showLegend : true;
       this.Line(options.dataset, options, true);
     }
     if (options.type === 'bubble') {
+      this.showLegend = typeof options.showLegend !== 'undefined' ? options.showLegend : true;
       this.Line(options.dataset, options, false, true);
     }
     if (options.type === 'bullet') {

@@ -15,7 +15,7 @@ $masthead-button-focus-color: $white;
   width: 100%;
   z-index: 9000;
 
-  #logo-homepage {
+  .masthead-icon {
     border-radius: 0;
     height: 32px;
     margin-right: 0;
@@ -52,10 +52,10 @@ $masthead-button-focus-color: $white;
   .toolbar-searchfield-wrapper {
 
     > .icon:not(.close) {
-      height: 18px;
       fill: $masthead-button-color;
-      top: 8px;
+      height: 18px;
       opacity: 1;
+      top: 8px;
     }
 
     &.has-focus:not(.active) {
@@ -110,12 +110,14 @@ $masthead-button-focus-color: $white;
 
       .icon {
         fill: $masthead-button-color;
-      }
 
-      .icon.app-drawer {
-        left: -6px;
-        position: relative !important;
-        top: -6px;
+        &.app-drawer {
+          left: -6px;
+          // scss-lint:disable ImportantRule
+          position: relative !important;
+          // scss-lint:enable ImportantRule
+          top: -6px;
+        }
       }
 
       &:hover:not([disabled]) {

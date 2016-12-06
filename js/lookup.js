@@ -242,11 +242,13 @@
           }];
         }
 
+        var hasKeywordSearch = this.settings.options && this.settings.options.toolbar && this.settings.options.toolbar.keywordFilter;
+
         $('body').modal({
           title: labelText,
           content: content,
           buttons: buttons,
-          cssClass: 'lookup-modal'
+          cssClass: 'lookup-modal' + (!hasKeywordSearch ? ' lookup-no-search' : '')
         }).off('open').on('open', function () {
           self.createGrid();
           self.element.trigger('afteropen', [self.modal, self.grid]);
@@ -299,6 +301,11 @@
         self.grid = lookupGrid.data('datagrid');
         if (!this.settings.title && self.modal) {
           self.modal.element.find('.title').html('&nbsp;');
+        }
+
+        var hasKeywordSearch = this.settings.options && this.settings.options.toolbar && this.settings.options.toolbar.keywordFilter;
+        if (!hasKeywordSearch) {
+          self.modal.element.find('.toolbar').appendTo(self.modal.element.find('.modal-header'));
         }
 
         //Mark selected rows

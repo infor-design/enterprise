@@ -71,6 +71,18 @@
 }
 
 .lookup-modal {
+
+  &.lookup-no-search {
+    .toolbar {
+      margin-top: -40px;
+    }
+
+    .modal-header {
+      margin-bottom: -15px;
+      padding: 12px 20px 0;
+    }
+  }
+
   .modal-body-wrapper {
     background-color: inherit;
     padding: 0 18px 10px;
@@ -90,7 +102,7 @@
   }
 
   .modal-header {
-    padding: 20px 22px 0;
+    padding: 20px 20px 15px;
   }
 
   .title {
@@ -177,8 +189,8 @@ html[dir="rtl"] {
 
     .icon {
       height: 14px;
-      right: auto;
       left: 0;
+      right: auto;
       top: 6px;
       width: 18px;
     }
@@ -194,8 +206,8 @@ html[dir="rtl"] {
 
     .icon {
       height: 14px;
-      right: auto;
       left: 0;
+      right: auto;
       top: 3px;
       width: 18px;
     }

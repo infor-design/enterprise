@@ -1,0 +1,39 @@
+
+<div class="full-width">
+    <div id="datagrid">
+    </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+    //Locale.set('en-US').done(function () {
+    var grid,
+      columns = [],
+      data = [];
+
+    var url = '/api/compressors?pageNum=1&pageSize=100';
+    $.getJSON(url, function(res) {
+      data = res.data;
+
+      //Define Columns for the Grid.
+      columns.push({id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Text});
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink});
+      columns.push({ hidden: true, name: 'Activity', field: 'activity'});
+      columns.push({ id: 'quantity', hidden: true, name: 'Quantity', field: 'quantity'});
+      columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+      columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Text});
+      columns.push({ id: 'action', name: 'Action Item', field: 'action'});
+
+      //Init and get the api for the grid
+      $('#datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        paging: true,
+        pagesize: 10
+      });
+    });
+
+  });
+</script>

@@ -467,17 +467,16 @@
     @include font-size(14);
     @include transition(background-color .15s ease 0s);
     color: $listview-color;
-    font-weight: lighter;
     padding: 13px 15px;
   }
+
 
   tr {
     border-bottom: 1px solid $listview-border-color;
   }
 
   tr:focus {
-    // @include css3(box-shadow, 0 0 1px 1px $primary-color inset);
-    outline: 1px solid $input-focus-border-color;
+    outline: none;
   }
 
   th {

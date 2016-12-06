@@ -13,7 +13,7 @@
   <script>
 
     $('#upd-progressbar').on('click', function () {
-      $('#progress-bar1').attr('data-value', '100').trigger('updated');
+      $('#progress-bar1').data('progress').update('100');
     });
 
   </script>

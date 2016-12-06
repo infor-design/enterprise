@@ -166,7 +166,7 @@
         <div class="toolbar contextual-toolbar is-hidden">
           <div class="buttonset">
             <button class="btn-tertiary" title="Assign Selected Items" type="button">Assign</button>
-            <button class="btn-tertiary" title="Remove Selected Items"type="button">Remove</button>
+            <button class="btn-tertiary" title="Remove Selected Items" type="button">Remove</button>
           </div>
         </div>
         <div class="listview" id="multiselect-listview" data-tmpl="multiselect-tmpl" data-selectable="multiple" data-dataset="demoTasks"></div>
@@ -291,7 +291,7 @@
             <button class="btn-tertiary" title="Remove Selected Items" type="button">Remove</button>
           </div>
         </div>
-        <div class="listview" id="multiselect-listview" data-tmpl="multiselect-tmpl" data-selectable="multiple" data-dataset="demoTasks"></div>
+        <div class="listview" id="multiselect-listview2" data-tmpl="multiselect-tmpl" data-selectable="multiple" data-dataset="demoTasks"></div>
       </div>
     </div>
 
@@ -303,7 +303,7 @@
     console.log('Drill Down on: '+ $(this).attr('data-id'));
   });
 
-  $('#task-listview, #emp-listview, #multiselect-listview').on('selectionchange',function (e, args) {
+  $('#task-listview, #emp-listview, #multiselect-listview, #multiselect-listview2').on('selectionchange',function (e, args) {
     console.log(args);
   });
 

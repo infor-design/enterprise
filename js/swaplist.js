@@ -67,17 +67,20 @@
     Plugin.prototype = {
 
       init: function() {
-        var self = this;
+        var self = this,
+          s = self.settings;
         self.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        self.isAdditional = $(s.additionalClass +' .listview', self.element).length > 0;
         self.loadListview();
+        self.initDataset();
         self.setElements();
         self.isMultiSelectClass();
 
         setTimeout(function() { // Wait for Listview availability
           self.makeDraggable();
           self.handleEvents();
-          self.initSelected(self.settings.availableClass);
-          self.initSelected(self.settings.additionalClass);
+          self.initSelected(s.availableClass);
+          self.initSelected(s.additionalClass);
         }, 0);
       },
 
@@ -184,7 +187,6 @@
           }
 
           self.clearSelections(); // Clear selection before fill
-          self.element.triggerHandler('beforeswap', [selections.items]);
 
           selections.owner = target.closest('.card');
           selections.dragged = target;
@@ -192,7 +194,11 @@
           selections.placeholder = target.clone(true);
           selections.placeholder.attr('id', 'sl-placeholder');
 
+          self.setSelectionsItems(selections.owner);
+
           selections.items = list.selectedItems;
+          self.element.triggerHandler('beforeswap', [selections.itemsData]);
+
           $('.'+ settings.numOfSelectionsClass, settings.itemContentTempl).html(selections.items.length);
           self.addDropeffects();
 
@@ -247,7 +253,7 @@
           if (!selections.dragged) {
             return;
           }
-          self.element.triggerHandler('draggingswap', [selections.items]);
+          self.element.triggerHandler('draggingswap', [selections.itemsData]);
           selections.related = e.target;
           $('ul, li', self.element).removeClass('over');
           $(e.target).closest('ul, li').addClass('over');
@@ -298,7 +304,7 @@
             }
             self.draggTouchElement(e, selections.placeholderTouch);
 
-            self.element.triggerHandler('draggingswap', [selections.items]);
+            self.element.triggerHandler('draggingswap', [selections.itemsData]);
             selections.related = overItem;
             $('ul, li', this.element).removeClass('over');
             overItem.closest('ul, li').addClass('over');
@@ -450,7 +456,7 @@
       // Initialize pre selected items
       initSelected: function(container) {
         var list;
-        container = (typeof container !== 'string') ? container : $(container, this.element);
+        container = this.isjQuery(container) ? container : $(container, this.element);
         if (container.length) {
           list = $('.listview', container).data('listview');
           $('li[selected]', container).each(function() {
@@ -483,10 +489,11 @@
           self.selections.items = list.selectedItems;
         }
 
+        self.setSelectionsItems(self.selections.owner);
         self.unselectElements(list);
 
         if (self.selections.items.length) {
-          self.element.triggerHandler('beforeswap', [self.selections.items]);
+          self.element.triggerHandler('beforeswap', [self.selections.itemsData]);
 
           ul = $('ul', to);
           currentSize = $('li', ul).length;
@@ -610,6 +617,7 @@
       // Clear selections
       clearSelections: function() {
         this.selections.items = [];
+        this.selections.itemsData = [];
         this.selections.owner = null;
         this.selections.related = null;
         this.selections.droptarget = null;
@@ -619,6 +627,103 @@
         this.selections.placeholderTouch = null;
         $('ul, li', this.element).removeClass('over');
         $('#sl-placeholder-container, #sl-placeholder-touch, #sl-placeholder-touch2, #sl-placeholder').remove();
+      },
+
+      // Set selections items
+      setSelectionsItems: function(container) {
+        container = this.isjQuery(container) ? container : $(container, this.element);
+        var nodes = $('.listview li', container),
+          dataList = this.getDataList(container);
+        for (var i=0,l=nodes.length; i<l; i++) {
+          var li = $(nodes[i]);
+          if (li.is('.is-selected')) {
+            this.selections.itemsData.push(dataList[i]);
+          }
+        }
+      },
+
+      // Init dataset
+      initDataset: function() {
+        var s = this.settings,
+          containers = [
+            {type: 'available', dataset: s.available, class: s.availableClass},
+            {type: 'selected', dataset: s.selected, class: s.selectedClass},
+            {type: 'additional', dataset: s.additional, class: s.additionalClass}
+          ];
+
+        this.dataset = {'available': [], 'selected': []};
+        if (this.isAdditional) {
+          this.dataset.additional = [];
+        }
+
+        for (var i=0,l=containers.length; i<l; i++) {
+          var c = containers[i],
+            nodes = $(c.class +' .listview li', this.element);
+          for (var nodeIndex=0,l2=nodes.length; nodeIndex<l2; nodeIndex++) {
+            var data, value,
+              li = $(nodes[nodeIndex]);
+            if (c.dataset) {
+              // Make sure it's not reference pointer to data object, make copy of data
+              data = JSON.parse(JSON.stringify(c.dataset[nodeIndex]));
+              delete data.selected;
+            }
+            else {
+              data = {text: $.trim($('.swaplist-item-content', li).text())};
+              value = li.attr('data-value');
+              if (value) {
+                data.value = value;
+              }
+            }
+            if (this.dataset[c.type]) {
+              data.node = li;
+              this.dataset[c.type].push(data);
+            }
+          }
+        }
+      },
+
+      // Get data list
+      getDataList: function(container) {
+        var s = this.settings,
+          d = this.dataset;
+        container = this.isjQuery(container) ? container : $(container, this.element);
+        return container.is(s.additionalClass) ? d.additional :
+          (container.is(s.selectedClass) ? d.selected :
+            (container.is(s.availableClass) ? d.available : []));
+      },
+
+      // Move an array element position
+      arrayIndexMove: function(arr, from, to) {
+        arr.splice(to, 0, arr.splice(from, 1)[0]);
+      },
+
+      // Sync dataset
+      syncDataset: function(owner, droptarget) {
+        var droptargetNodes = $('.listview li', droptarget),
+          ownerDataList = this.getDataList(owner),
+          dtDataList = this.getDataList(droptarget);
+
+        for (var i=0,l=this.selections.items.length; i<l; i++) {
+          var item = this.selections.items[i];
+          for (var dtIndex=0,l2=droptargetNodes.length; dtIndex<l2; dtIndex++) {
+            if ($(droptargetNodes[dtIndex]).is(item)) {
+              for (var ownerIndex=0,l3=ownerDataList.length; ownerIndex<l3; ownerIndex++) {
+                var ownerItem = ownerDataList[ownerIndex];
+                if (ownerItem.node && ownerItem.node.is(item)) {
+                  dtDataList.push(ownerItem);
+                  ownerDataList.splice(ownerIndex, 1);
+                  this.arrayIndexMove(dtDataList, dtDataList.length-1, dtIndex);
+                  break;
+                }
+              }
+            }
+          }
+        }
+      },
+
+      // Check if a object is jQuery object
+      isjQuery: function (obj) {
+        return (obj && (obj instanceof jQuery || obj.constructor.prototype.jquery));
       },
 
       // Update attributes
@@ -642,10 +747,11 @@
               self.selections.placeholder.focus();
             }
             self.unselectElements(list);
+            self.syncDataset(self.selections.owner, self.selections.droptarget);
             self.updateAttributes($('.listview', self.selections.owner));
             self.updateAttributes($('.listview', self.selections.droptarget));
             if (self.selections.items.length) {
-              self.element.triggerHandler('swapupdate', [self.selections.items]);
+              self.element.triggerHandler('swapupdate', [self.selections.itemsData]);
             }
           }
           self.clearDropeffects();
@@ -656,8 +762,23 @@
 
       // Get items from provided container
       getItems: function(container) {
-        container = (typeof container !== 'string') ? container : $(container, this.element);
-        return $('.listview li', container);
+        container = this.isjQuery(container) ? container : $(container, this.element);
+        return this.getDataList(container);
+      },
+
+      // Get available dataset
+      getAvailable: function() {
+        return this.getDataList(this.settings.availableClass);
+      },
+
+      // Get selected dataset
+      getSelected: function() {
+        return this.getDataList(this.settings.selectedClass);
+      },
+
+      // Get additional dataset
+      getAdditional: function() {
+        return this.getDataList(this.settings.additionalClass);
       },
 
       // Make selected if dragged element was not selected

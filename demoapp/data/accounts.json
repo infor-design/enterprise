@@ -1,0 +1,162 @@
+[
+	{
+		"id": 1,
+		"name": "Abbott Ltd.",
+		"type": "Hardware Customer",
+		"location": "CA, USA",
+		"firstname": "Jonathon",
+		"lastname": "Hardy",
+		"phone": "(312) 555-7854",
+		"purchases": 1200
+	},
+	{
+		"id": 2,
+		"name": "Access GMBH",
+		"type": "Hardware Customer",
+		"location": "Germany",
+		"firstname": "Coyle",
+		"lastname": "Rita",
+		"phone": "+49 (897) 104-6155",
+		"purchases": 1800
+	},
+	{
+		"id": 3,
+		"name": "Ad Foods",
+		"type": "Service Customer",
+		"location": "OR, USA",
+		"firstname": "Mike",
+		"lastname": "Warneke",
+		"phone": "(503) 555-1358",
+		"purchases": 2200
+	},
+	{
+		"id": 4,
+		"name": "Adams Waste Systems",
+		"type": "Hardware Prospect",
+		"location": "FL, USA",
+		"firstname": "Marc",
+		"lastname": "Bianco",
+		"phone": "(924) 555-8609",
+		"purchases": 3200
+	},
+	{
+		"id": 5,
+		"name": "Advanced Billing Inc.",
+		"type": "Service Customer",
+		"location": "On, Canada",
+		"firstname": "Bill",
+		"lastname": "Elliot",
+		"phone": "(905) 555-8992",
+		"purchases": 1500
+	},
+	{
+		"id": 6,
+		"name": "Affiliated",
+		"type": "Hardware Customer",
+		"location": "Australia",
+		"firstname": "Kelly",
+		"lastname": "Sheri",
+		"phone": "+61 (029) 377-7044",
+		"purchases": 1700
+	},
+	{
+		"id": 7,
+		"name": "Akorn Lines",
+		"type": "Service Customer",
+		"location": "AZ, USA",
+		"firstname": "Bill",
+		"lastname": "Yolierie",
+		"phone": "(602) 922-2828",
+		"purchases": 1900
+	},
+	{
+		"id": 8,
+		"name": "Alexander Kan Ltd.",
+		"type": "Service Customer",
+		"location": "Germany",
+		"firstname": "Neil",
+		"lastname": "Amalfitano",
+		"phone": "+49 (894) 580-8913",
+		"purchases": 2000
+	},
+	{
+		"id": 9,
+		"name": "Alfa Quality",
+		"type": "Service Customer",
+		"location": "Spain",
+		"firstname": "Teran",
+		"lastname": "Sampson",
+		"phone": "+34 (932) 227-1103",
+		"purchases": 2100
+	},
+	{
+		"id": 10,
+		"name": "ALMI Electronic Associates",
+		"type": "OEM Partner",
+		"location": "Australia",
+		"firstname": "Emily",
+		"lastname": "Hali",
+		"phone": "+61 (293) 777-7030",
+		"purchases": 4200
+	},
+	{
+		"id": 11,
+		"name": "Alpert Fan Inc.",
+		"type": "Service Prospect",
+		"location": "IL, USA",
+		"firstname": "Peter",
+		"lastname": "Bates",
+		"phone": "(312) 555-8762)",
+		"purchases": 4200
+	},
+	{
+		"id": 12,
+		"name": "Alpha Data",
+		"type": "Software Prospect",
+		"location": "London, UK",
+		"firstname": "Jim",
+		"lastname": "Marzullo",
+		"phone": "+44(208) 708-4202",
+		"purchases": 4200
+	},
+	{
+		"id": 13,
+		"name": "Alphabet Data",
+		"type": "Service Prospect",
+		"location": "MD, USA",
+		"firstname": "Greg",
+		"lastname": "Winslow",
+		"phone": "828 308-4202",
+		"purchases": 3200
+	},
+	{
+		"id": 14,
+		"name": "Altus Outfitters LTD",
+		"type": "Software Customer",
+		"location": "Australia",
+		"firstname": "Will",
+		"lastname": "McCoy",
+		"phone": "+61(392) 747-2202",
+		"purchases": 2200
+	},
+	{
+		"id": 15,
+		"name": "Amalfitano B Inc",
+		"type": "Hardware Prospect",
+		"location": "Spain",
+		"firstname": "Craig",
+		"lastname": "Anderson",
+		"phone": "+34(233) 828-2202",
+		"purchases": 3200
+	},
+	{
+		"id": 16,
+		"name": "American Audio Inc.",
+		"type": "Software Prospect",
+		"location": "Mo, USA",
+		"firstname": "Don",
+		"lastname": "Shroeder",
+		"phone": "(252) 262-2821",
+		"purchases": 2200
+	}
+]

@@ -45,7 +45,10 @@
 
   //Other Layouts
   &.splitter-right {
-    top: 0px;
+    border-right: 1px solid $panel-border-color;
+    left: 229px;
+    position: absolute;
+
     &.is-dragging {
       box-shadow: 2px 0 3px 0 $splitter-box-shadow-color;
     }
@@ -69,6 +72,10 @@
       position: absolute;
       top: 30%;
     }
+  }
+
+  + .tab-container.horizontal {
+    margin: 0 20px;
   }
 }
 

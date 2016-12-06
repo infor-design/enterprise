@@ -1,0 +1,365 @@
+[
+	{
+		"group": "Burlington County",
+		"options": [
+			{
+				"value": "Bass River Township"
+			},
+			{
+				"value": "Beverly"
+			},
+			{
+				"value": "Bordentown"
+			},
+			{
+				"value": "Bordentown City"
+			},
+			{
+				"value": "Browns Mills"
+			},
+			{
+				"value": "Burlington City"
+			},
+			{
+				"value": "Burlington Township"
+			},
+			{
+				"value": "Chesterfield"
+			},
+			{
+				"value": "Cinnaminson"
+			},
+			{
+				"value": "Columbus"
+			},
+			{
+				"value": "Delanco"
+			},
+			{
+				"value": "Delran"
+			},
+			{
+				"value": "Eastampton"
+			},
+			{
+				"value": "Edgewater Park"
+			},
+			{
+				"value": "Evesham"
+			},
+			{
+				"value": "Fieldsboro"
+			},
+			{
+				"value": "Florence"
+			},
+			{
+				"value": "Fort Dix"
+			},
+			{
+				"value": "Hainesport"
+			},
+			{
+				"value": "Lumberton"
+			},
+			{
+				"value": "Mansfield"
+			},
+			{
+				"value": "Maple Shade"
+			},
+			{
+				"value": "Marlton"
+			},
+			{
+				"value": "Medford"
+			},
+			{
+				"value": "Medford Lakes"
+			},
+			{
+				"value": "Moorestown"
+			},
+			{
+				"value": "Mount Holly"
+			},
+			{
+				"value": "Mount Laurel"
+			},
+			{
+				"value": "New Hanover"
+			},
+			{
+				"value": "North Hanover"
+			},
+			{
+				"value": "Palmyra"
+			},
+			{
+				"value": "Pemberton"
+			},
+			{
+				"value": "Roebling"
+			},
+			{
+				"value": "Riverside"
+			},
+			{
+				"value": "Riverton"
+			},
+			{
+				"value": "Shamong"
+			},
+			{
+				"value": "Southampton"
+			},
+			{
+				"value": "Springfield"
+			},
+			{
+				"value": "Tabernacle"
+			},
+			{
+				"value": "Washington Township"
+			},
+			{
+				"value": "Westampton"
+			},
+			{
+				"value": "Willingboro"
+			},
+			{
+				"value": "Woodland"
+			},
+			{
+				"value": "Wrightstown"
+			}
+		]
+	},
+	{
+		"group": "Camden County",
+		"options": [
+			{
+				"value": "Audubon"
+			},
+			{
+				"value": "Audubon Park"
+			},
+			{
+				"value": "Barrington"
+			},
+			{
+				"value": "Bellmawr"
+			},
+			{
+				"value": "Berlin Boro"
+			},
+			{
+				"value": "Berlin Township"
+			},
+			{
+				"value": "Brooklawn"
+			},
+			{
+				"value": "Camden"
+			},
+			{
+				"value": "Cherry Hill"
+			},
+			{
+				"value": "Chesilhurst"
+			},
+			{
+				"value": "Clementon"
+			},
+			{
+				"value": "Collingswood"
+			},
+			{
+				"value": "Erial"
+			},
+			{
+				"value": "Gibbsboro"
+			},
+			{
+				"value": "Gloucester City"
+			},
+			{
+				"value": "Gloucester Township"
+			},
+			{
+				"value": "Haddon Heights"
+			},
+			{
+				"value": "Haddon Township"
+			},
+			{
+				"value": "Haddonfield"
+			},
+			{
+				"value": "Hi-Nella"
+			},
+			{
+				"value": "Laurel Springs"
+			},
+			{
+				"value": "Lawnside"
+			},
+			{
+				"value": "Lindenwold"
+			},
+			{
+				"value": "Magnolia"
+			},
+			{
+				"value": "Merchantville"
+			},
+			{
+				"value": "Mount Ephraim"
+			},
+			{
+				"value": "Oaklyn"
+			},
+			{
+				"value": "Pennsauken"
+			},
+			{
+				"value": "Pine Hill"
+			},
+			{
+				"value": "Pine Valley"
+			},
+			{
+				"value": "Runnemede"
+			},
+			{
+				"value": "Sicklerville"
+			},
+			{
+				"value": "Somerdale"
+			},
+			{
+				"value": "Stratford"
+			},
+			{
+				"value": "Tavistock"
+			},
+			{
+				"value": "Voorhees"
+			},
+			{
+				"value": "Waterford"
+			},
+			{
+				"value": "Winslow"
+			},
+			{
+				"value": "Woodlynne"
+			}
+		]
+	},
+	{
+		"group": "Gloucester County",
+		"options": [
+			{
+				"value": "Bridgeport"
+			},
+			{
+				"value": "Clayton"
+			},
+			{
+				"value": "Cross Keys"
+			},
+			{
+				"value": "Deptford"
+			},
+			{
+				"value": "East Greenwich"
+			},
+			{
+				"value": "Elk Township"
+			},
+			{
+				"value": "Franklin Township"
+			},
+			{
+				"value": "Franklinville"
+			},
+			{
+				"value": "Gibbstown"
+			},
+			{
+				"value": "Glassboro"
+			},
+			{
+				"value": "Greenwich Township"
+			},
+			{
+				"value": "Harrison"
+			},
+			{
+				"value": "Malaga"
+			},
+			{
+				"value": "Mullica Hill"
+			},
+			{
+				"value": "Logan"
+			},
+			{
+				"value": "Mantua"
+			},
+			{
+				"value": "Monroe"
+			},
+			{
+				"value": "National Park"
+			},
+			{
+				"value": "New Brooklyn"
+			},
+			{
+				"value": "Newfield"
+			},
+			{
+				"value": "Paulsboro"
+			},
+			{
+				"value": "Pitman"
+			},
+			{
+				"value": "South Harrison"
+			},
+			{
+				"value": "Swedesboro"
+			},
+			{
+				"value": "Turnersville"
+			},
+			{
+				"value": "Washington Township"
+			},
+			{
+				"value": "Wenonah"
+			},
+			{
+				"value": "West Deptford Township"
+			},
+			{
+				"value": "Westville"
+			},
+			{
+				"value": "Williamstown"
+			},
+			{
+				"value": "Woodbury"
+			},
+			{
+				"value": "Woodbury Heights"
+			},
+			{
+				"value": "Woolwich"
+			}
+		]
+	}
+]

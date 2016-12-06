@@ -1,0 +1,46 @@
+[
+	{
+		"id": 1,
+		"name": "Abbott Ltd.",
+		"type": "Hardware Customer",
+		"location": "CA, USA",
+		"firstname": "Jonathon",
+		"lastname": "Hardy",
+		"phone": "(312) 555-7854",
+		"purchases": 2000,
+		"percentage": 25
+	},
+	{
+		"id": 2,
+		"name": "Access GMBH",
+		"type": "Hardware Customer",
+		"location": "Germany",
+		"firstname": "Coyle",
+		"lastname": "Rita",
+		"phone": "+49 (897) 104-6155",
+		"purchases": 2000,
+		"percentage": 25
+	},
+	{
+		"id": 3,
+		"name": "Ad Foods",
+		"type": "Service Customer",
+		"location": "OR, USA",
+		"firstname": "Mike",
+		"lastname": "Warneke",
+		"phone": "(503) 555-1358",
+		"purchases": 2000,
+		"percentage": 25
+	},
+	{
+		"id": 4,
+		"name": "Adams Waste Systems",
+		"type": "Hardware Prospect",
+		"location": "FL, USA",
+		"firstname": "Marc",
+		"lastname": "Bianco",
+		"phone": "(924) 555-8609",
+		"purchases": 2000,
+		"percentage": 25
+	}
+]
