@@ -3577,6 +3577,10 @@ $.fn.datagrid = function(options) {
           menu.append('<li><a href="#" data-option="personalize-columns">' + Locale.translate('PersonalizeColumns') + '</a></li>');
         }
 
+        if (settings.toolbar.resetLayout) {
+          menu.append('<li><a href="#" data-option="reset-layout">' + Locale.translate('ResetDefaultLayout') + '</a></li>');
+        }
+
         if (settings.toolbar.exportToExcel) {
           menu.append('<li><a href="#" data-option="export-to-excel">' + Locale.translate('ExportToExcel') + '</a></li>');
         }
@@ -3623,6 +3627,10 @@ $.fn.datagrid = function(options) {
 
         if (action === 'personalize-columns') {
           self.personalizeColumns();
+        }
+
+        if (action === 'reset-layout') {
+          self.resetColumns();
         }
 
         if (action === 'export-to-excel') {

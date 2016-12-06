@@ -244,6 +244,7 @@
       'Refresh': {id: 'Refresh', value: 'Refresh', comment: 'Refresh tooltip'},
       'Required': {id: 'Required', value: 'Required', comment: 'indicates a form field is manditory'},
       'Reset': {id: 'Reset', value: 'Reset', comment: 'Reset tooltip'},
+      'ResetDefaultLayout': {id: 'ResetDefaultLayout', value: 'Reset Default Layout', comment: 'Reset Datagrid Columns, Filter and other Layout'},
       'Results': {id: 'Results', value: 'Results', comment: 'As in showing N Results in a List'},
       'RightAlign': {id: 'RightAlign', value: 'Align Right', comment: 'Right Align tooltip'},
       'RightAlignText': {id: 'RightAlignText', value: 'Align Right', comment: 'Right Align Text tooltip'},
