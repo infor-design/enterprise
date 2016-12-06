@@ -933,21 +933,15 @@
           this.closeCalendar();
         }
 
-        this.trigger.off('click.datepicker keydown.datepicker');
+        this.trigger.remove();
+        this.element.attr('data-mask', '');
 
-        var maskAPI = this.element.data('mask');
-        if (maskAPI) {
-          maskAPI.destroy();
+        var api = this.element.data('mask');
+        if (api) {
+          api.destroy();
         }
 
-        /*
-        if (this.settings.trigger === 'immediate') {
-          this.destroy();
-        }
-        */
-
-        this.calendar.remove();
-        this.popup.remove();
+        this.element.off('keydown.datepicker blur.validate change.validate keyup.validate');
 
         return this;
       },
