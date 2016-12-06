@@ -316,6 +316,10 @@ a.btn-menu {
     span {
       color: $tertiary-btn-open-color;
     }
+
+    .icon-dropdown {
+      fill: $tertiary-btn-open-color !important;
+    }
   }
 }
 
