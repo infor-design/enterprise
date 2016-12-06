@@ -332,7 +332,6 @@
             deactivate(e);
           });
         }, 100);
-        
         this.recalculateParent();
       },
 
