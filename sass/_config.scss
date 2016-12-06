@@ -44,6 +44,29 @@ $hyperlink-hover-color: $primary-color;
 $hr-top-color: $graphite03;
 $hr-bottom-color: $white;
 
+// Circle Pager
+$circlepager-bg-color: transparent;
+$circlepager-border-color: $graphite04;
+$circlepager-hover-bg-color: transparent;
+$circlepager-hover-border-color: $graphite08;
+$circlepager-focus-bg-color: transparent;
+$circlepager-focus-border-color: $primary-color;
+
+$circlepager-active-bg-color: $primary-color;
+$circlepager-active-border-color: $primary-color;
+$circlepager-active-hover-bg-color: $primary-color;
+$circlepager-active-hover-border-color: $primary-color;
+$circlepager-active-focus-bg-color: $primary-color;
+$circlepager-active-focus-border-color: $primary-color;
+
+$circlepager-disable-bg-color: transparent;
+$circlepager-disable-border-color: $graphite03;
+$circlepager-disable-hover-bg-color: transparent;
+$circlepager-disable-hover-border-color: $graphite03;
+$circlepager-disable-focus-bg-color: transparent;
+$circlepager-disable-focus-border-color: $graphite03;
+
+
 // Popovers
 $popover-bg-color: $white;
 $popover-border-color: $graphite03;
@@ -206,6 +229,7 @@ $listview-full-width-border-color: $graphite03;
 // Toolbar
 $toolbar-standalone-bg-color: $graphite02;
 $toolbar-standalone-border-color: $graphite03;
+$toolbar-standalone-disabled-color: $graphite08;
 $toolbar-separator-color: $graphite03;
 
 // Formatter Toolbar
@@ -521,7 +545,7 @@ $datagrid-row-selected-color-dark: #d4ebf3;
 $datagrid-row-hover-color: $graphite02;
 $datagrid-row-icon-color: $graphite06;
 
-$datagrid-alternate-bg-color: #ebebeb;
+$datagrid-alternate-bg-color: $graphite01;
 $datagrid-alternate-row-hover-color: $graphite02;
 $datagrid-list-header-bg-color: $graphite02;
 $datagrid-list-header-border-color: $graphite03;
@@ -531,7 +555,7 @@ $datagrid-list-row-hover-color: transparent;
 $datagrid-list-sort-icon-color: $graphite03;
 $datagrid-list-sort-icon-hover-color: $graphite05;
 $datagrid-header-focus-bg-color: $datagrid-header-bg-color;
-$datagrid-header-focus-border-color: $primary-color;
+$datagrid-header-focus-border-color: $subhead-bg-color;
 $datagrid-list-header-checkbox-border-color: $graphite04;
 
 $datagrid-filter-border-color: $slate04;
@@ -551,6 +575,9 @@ $datagrid-list-filter-icon-color: $slate04;
 $datagrid-list-filter-disabled-color: $slate03;
 $datagrid-list-filter-focus-color: $azure04;
 $datagrid-list-filter-active-color: $azure04;
+
+$datagrid-rowgroup-header: $graphite01;
+$datagrid-rowgroup-color: $graphite06;
 
 // Search Results
 $sr-masthead-text-color: $font-color;

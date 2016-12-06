@@ -70,13 +70,14 @@
 | SmartStream | ASP | Wim Denayer | 3x to 4x |
 | Smart Mobile CityWatch app | ?? | Nicholas Gabb | 3x |
 | Softbrands FourthShift ERP | ASP | Steve Duepner | 3x |
+| SoftClock | WFM, Soft Clock App - Angular 2.0| Edgar Ogando | 4x|
 | S3 Worklist | Webpart (Black) | Jeremy Spring | 3x to 4x |
 | Sunsystems  | Theo Harper | Angular | 4x |
 | Sunsystems  | Geoff Parkes | GWT | 4x |
 | Supply Chain Execution | Mark Schaible, Anindhya Sharma | Apache, Jboss - Many Screens - Reviewing Upgrade | 3x to 4x |
 | SupplyWeb | Eric Andrews | Reviewing | 3x |
 | System Console | New app by S3 team  | Andy Buboltz | 4x |
-| System I |   | Richard Sankey | 3x |
+| System i Workspace | Infor System21, LX, XA and Anael products | Richard Sankey | 3x to 4x |
 | SXE | Angular 1.0 - using XI directly - Huge app it will be another year. | Aaron Pikkarainen <aaron.pikkarainen@infor.com> | 4x |
 | S&OP | Vaadin and GWT | Duncan Simpson | 4x |
 | VR POC | (POS system) works on Windows Forms using the ProvideX language. Win Forms dynamically transformed to a Web Forms (DHTML), | Arnaud Pochon  | 3x to 4x |

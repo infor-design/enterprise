@@ -72,7 +72,7 @@
   $('body').on('initialized', function() {
     $('#task-listview').listview({
       paging: true,
-      pagesize: 10,
+      pagesize: 20,
       source: function(req, response) {
         // Build the URL
         var url = '/api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
@@ -80,6 +80,8 @@
         //Get Page Based on info in Req, return results into response.
         $.getJSON(url, function(res) {
           req.total = res.total;
+          req.firstPage = req.activePage === 1;
+          req.lastPage  = (req.activePage * req.pagesize) >= res.total;
           response(res.data, req);
         });
       },

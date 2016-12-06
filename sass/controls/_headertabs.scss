@@ -15,7 +15,7 @@
       font-weight: bold;
       overflow: hidden;
 
-      &:before {
+      &::before {
         background-color: rgba($header-tab-normal-color, 0);
         bottom: 0;
       }
@@ -36,7 +36,7 @@
       &:hover:not(.is-disabled) {
         color: $header-tab-hover-color;
 
-        &:before {
+        &::before {
           background-color: rgba($header-tab-hover-color, 1);
         }
 
@@ -48,14 +48,14 @@
       &.is-selected:not(.is-disabled) {
         color: $header-tab-hover-color;
 
-        &:before {
+        &::before {
           background-color: rgba($header-tab-hover-color, 1);
         }
 
         &:hover {
           color: $header-tab-hover-color;
 
-          &:before {
+          &::before {
             background-color: rgba($header-tab-hover-color, 1);
           }
         }

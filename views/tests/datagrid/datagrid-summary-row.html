@@ -1,0 +1,47 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+
+<script>
+  $('body').one('initialized', function () {
+
+      var grid,
+        columns = [],
+        data = [];
+
+      //Sample Custom Formatters
+
+      /*Formatters.customSummaryRow = function (row, cell, value, col) {
+        return value + ' %';
+      };*/
+
+      //Define Columns for the Grid.
+      columns.push({ id: 'id', name: 'Customer Id', field: 'id'});
+      //columns.push({ id: 'type', name: 'Type', field: 'type', width: 200});
+      columns.push({ id: 'location', name: 'Location', field: 'location', formatter: Formatters.Hyperlink});
+      columns.push({ id: 'firstname', name: 'First Name', field: 'firstname'});
+      columns.push({ id: 'lastname', name: 'Last Name', field: 'lastname'});
+      columns.push({ id: 'phone', name: 'Phone', field: 'phone'});
+      columns.push({ id: 'purchases', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 2, maximumFractionDigits: 2}, summaryRowFormatter: Formatters.SummaryRow, aggregator: 'sum', align: 'right', name: 'Purchases', field: 'purchases'});
+      columns.push({ id: 'percentage', summaryRowFormatter: Formatters.SummaryRow, aggregator: 'sum', summaryText: ' %', summaryTextPlacement: 'after', name: 'Percentage', field: 'percentage'});
+
+      //Get some data via ajax
+      var url = '/api/accounts-sm';
+
+      $.getJSON(url, function(res) {
+
+        $('#datagrid').datagrid({
+          columns: columns,
+          dataset: res,
+          summaryRow: true,
+          toolbar: {title: 'Accounts', results: true, personalize: true, rowHeight: true}
+        });
+      });
+ });
+
+</script>

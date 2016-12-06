@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Dropdown Test: 1000 Nodes</h2>
+
+    <p>
+      This is a performance test for the Dropdown Component which creates 1000 nodes.  All the nodes are initialized on page load.
+    </p>
+
+    <p></p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    {{#dropdownListData}}
+      <div class="field">
+        <label for="{{id}}">{{name}}</label>
+        <select id="{{id}}" class="dropdown">
+          {{#data}}
+            <option value="{{value}}">{{label}}</option>
+          {{/data}}
+        </select>
+      </div>
+    {{/dropdownListData}}
+
+  </div>
+</div>

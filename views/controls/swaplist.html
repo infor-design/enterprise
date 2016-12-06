@@ -191,8 +191,9 @@
     // On swap update ==========================================================
     var api1 = $('#example-swaplist-1').data('swaplist');
     api1.element.on('swapupdate', function (e, items) {
-      console.log(items);
-      // console.log(api1.getItems('.card.selected'));
+      console.log(api1.dataset);
+      console.log(api1.getAvailable());
+      console.log(api1.getSelected());
     });
 
   });

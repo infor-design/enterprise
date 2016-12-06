@@ -28,3 +28,23 @@
     </a>
   </li>
 </script>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+    $('#auto-default, #auto-template').on('selected.test', function(e, anchor, item) {
+      var anchorText = $(anchor).text().trim(),
+        displayValue = $(anchor).find('.display-value'),
+        indicatorText;
+
+      if (displayValue && displayValue.length) {
+        anchorText = displayValue.text().trim();
+        indicatorText = '(was a display value)';
+      }
+
+      $('body').toast({
+        title: 'Selected',
+        message: 'Selected the <b>"' + anchorText + '"</b> item with value <b>' + item.value + '</b>!' + (indicatorText ? '<br/><em>' + indicatorText + '</em>' : '')
+      });
+    });
+  });
+</script>

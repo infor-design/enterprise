@@ -191,7 +191,7 @@
           }
 
           if (li.is('.pager-next')) {
-            self.setActivePage(self.activePage + 1, false, 'next');
+            self.setActivePage((self.activePage === -1 ? 0 : self.activePage)  + 1, false, 'next');
             return false;
           }
 
@@ -583,31 +583,25 @@
         }
 
         //Update the UI
-        this.pagerBar.find('.pager-count input').val(this.activePage);
+        this.pagerBar
+          .find('.pager-count input').val(this.activePage);
 
         if (this._pageCount !== '0' && !isNaN(this._pageCount)) {
           this.pagerBar.find('.pager-total-pages').text(this._pageCount);
         }
 
-        if (pagingInfo.firstPage) {
-          // this.pagerBar.find('.pager-first a').attr('disabled', 'disabled');
-          // this.pagerBar.find('.pager-prev a').attr('disabled', 'disabled');
-          this.pagerBar.find('.pager-first a')
-            .attr({'disabled':'disabled', 'tabIndex': -1});
-
-          this.pagerBar.find('.pager-prev a')
-            .attr({'disabled':'disabled', 'tabIndex': -1});
+        if (pagingInfo.firstPage || pagingInfo.activePage === 0) {
+          this.pagerBar
+          .find('.pager-first a, .pager-prev a, .pager-next a, .pager-last a').removeAttr('disabled tabindex').end()
+          .find('.pager-first a, .pager-prev a')
+            .attr({'disabled':'disabled', 'tabindex': -1});
         }
 
         if (pagingInfo.lastPage) {
-          // this.pagerBar.find('.pager-next a').attr('disabled', 'disabled');
-          // this.pagerBar.find('.pager-last a').attr('disabled', 'disabled');
-
-          this.pagerBar.find('.pager-next a')
-            .attr({'disabled':'disabled', 'tabIndex': -1});
-
-          this.pagerBar.find('.pager-last a')
-            .attr({'disabled':'disabled', 'tabIndex': -1});
+          this.pagerBar
+            .find('.pager-first a, .pager-prev a, .pager-next a, .pager-last a').removeAttr('disabled tabindex').end()
+            .find('.pager-next a, .pager-last a')
+            .attr({'disabled':'disabled', 'tabindex': -1});
         }
       },
 

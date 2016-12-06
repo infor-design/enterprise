@@ -49,9 +49,9 @@
       }
 
       var columns = [];
-      columns.push({ id: "vendor_id", name: "Vendor Id", field: "vendor_id", width: 125, formatter: Formatters.Text, editor: Editors.Input });
-      columns.push({ id: "vendor_loc", name: "Vendor loc", field: "vendor_loc", width: 125, formatter: Formatters.Text, editor: Editors.Input });
-      columns.push({ id: "pmt_rqst_nbr", name: "Invoice Nbr", field: "pmt_rqst_nbr", width: 125, formatter: Formatters.Text, editor: Editors.Input });
+      columns.push({ id: "vendor_id", name: "Vendor Id", field: "vendor_id", formatter: Formatters.Text, editor: Editors.Input });
+      columns.push({ id: "vendor_loc", name: "Vendor loc", field: "vendor_loc", formatter: Formatters.Text, editor: Editors.Input });
+      columns.push({ id: "pmt_rqst_nbr", name: "Invoice Nbr", field: "pmt_rqst_nbr", formatter: Formatters.Text, editor: Editors.Input });
 
       //Init and get the api for the grid
       grid = $('#datagrid').datagrid({

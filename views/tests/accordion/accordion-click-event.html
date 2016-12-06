@@ -1,0 +1,121 @@
+<div id="maincontent" class="page-container scrollable" role="main">
+   <div class="row top-padding">
+      <div class="six columns">
+
+         <h3>Accordion: Test Click Event</h3>
+         <p>
+            Each item in the accordion has a click event attached to it (on the &lt;a&gt;). If the click event is
+            successfully fired, you will see a toast message when the item is clicked. Disabled items
+            should not fire the click event.
+         </p>
+         <p></p>
+
+         <div id="regular-panel-accordion-example" class="accordion panel">
+            <div class="accordion-header">
+               <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use xlink:href="#icon-user"></use>
+               </svg>
+               <a href="#"><span>Personal</span></a>
+            </div>
+            <div class="accordion-pane">
+               <div class="accordion-header">
+                  <a href=""><span>Item 1</span></a>
+               </div>
+               <div class="accordion-header">
+                  <a><span>Item 2</span></a>
+               </div>
+            </div>
+
+            <div class="accordion-header">
+               <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use xlink:href="#icon-roles"></use>
+               </svg>
+               <a href="#"><span>Position</span></a>
+            </div>
+            <div class="accordion-pane">
+               <div class="accordion-header">
+                  <a href="#"><span>Item 1</span></a>
+               </div>
+               <div class="accordion-header is-disabled">
+                  <a href="#"><span>Item 2</span></a>
+               </div>
+               <div class="accordion-header">
+                  <a href="#"><span>Item 3</span></a>
+               </div>
+            </div>
+
+            <div class="accordion-header">
+               <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use xlink:href="#icon-quick-reference"></use>
+               </svg>
+               <a href="#"><span>Learning</span></a>
+            </div>
+            <div class="accordion-pane">
+               <div class="accordion-header">
+                  <a href="#"><span>Education</span></a>
+               </div>
+               <div class="accordion-pane">
+                  <div class="accordion-header">
+                     <a href="#"><span>Undergraduate</span></a>
+                  </div>
+                  <div class="accordion-header">
+                     <a href="#"><span>Graduate</span></a>
+                  </div>
+               </div>
+
+               <div class="accordion-header">
+                  <a href="#"><span>Skills</span></a>
+               </div>
+               <div class="accordion-pane">
+                  <div class="accordion-content">
+                     <p>Need some content here</p>
+                  </div>
+               </div>
+
+               <div class="accordion-header">
+                  <a href="#"><span>Certifications</span></a>
+               </div>
+               <div class="accordion-pane">
+                  <div class="accordion-content">
+                     <p>Need some content here</p>
+                  </div>
+               </div>
+
+               <div class="accordion-header">
+                  <a href="#"><span>Compliance Training</span></a>
+               </div>
+               <div class="accordion-pane">
+                  <div class="accordion-content">
+                     <p>Need some content here</p>
+                  </div>
+               </div>
+            </div>
+
+            <div class="accordion-header is-disabled">
+               <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use xlink:href="#icon-payment-request"></use>
+               </svg>
+               <a href="#"><span>Financials</span></a>
+            </div>
+            <div class="accordion-pane">
+               <div class="accordion-header">
+                  <a href="#"><span>Item 1</span></a>
+               </div>
+               <div class="accordion-header">
+                  <a href="#"><span>Item 2</span></a>
+               </div>
+            </div>
+         </div>
+
+      </div>
+   </div>
+
+   <script>
+      $('#regular-panel-accordion-example a').onTouchClick().on('click', function () {
+         $('body').toast({
+            title: 'Click Event Fired',
+            message: $(this).text()
+         });
+      });
+   </script>
+</div>

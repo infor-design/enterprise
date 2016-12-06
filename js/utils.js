@@ -501,7 +501,23 @@
       }
 
       return character;
+  };
 
+  window.Soho = window.Soho || {};
+  window.Soho.utils = {};
+  window.Soho.DOM = {};
+
+  window.Soho.utils.equals = function equals(a, b) {
+    return JSON.stringify(a) === JSON.stringify(b);
+  };
+
+  // Returns an array containing an element's attributes.
+  window.Soho.DOM.getAttributes = function getAttributes(element) {
+    if (!element || (!(element instanceof HTMLElement) && !(element instanceof SVGElement))) {
+      return;
+    }
+
+    return element.attributes;
   };
 
 /* start-amd-strip-block */

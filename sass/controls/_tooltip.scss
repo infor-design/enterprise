@@ -3,7 +3,6 @@
 .popover,
 .tooltip {
   @include font-size(15);
-  background-clip: padding-box;
   background-color: $tooltip-bg-color;
   border: 1px solid $tooltip-border-color;
   border-radius: 2px;

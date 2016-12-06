@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Tooltip Test: <em>setContent()</em> Method</h2>
+    <p>
+      Use the textbox below to create some text, and click the button to apply it to a hover-activated Tooltip Component using
+      the <em>setContent()</em> method on its API.
+    </p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+
+    <form id="set-tooltip-content" action="#" method="POST">
+      <div class="field">
+        <label for="tooltip-desc" class="required">Tooltip Content</label>
+        <textarea id="tooltip-desc" aria-required="true" data-validate="required" name="tooltip-desc" maxlength="50"></textarea>
+      </div>
+
+      <div class="field">
+        <button id="set" type="submit" class="btn-primary">
+          <span>Set Tooltip Content</span>
+        </button>
+      </div>
+    </form>
+
+
+  </div>
+  <div class="six columns">
+
+    <p>Have a look at this <a id="content-hyperlink" class="hyperlink" href="#">pretty important information</a>...</p>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  var hyperlink,
+    textarea,
+    api,
+    defaultSettings = {
+      content: 'This information is pretty important!',
+      trigger: 'hover',
+      keepOpen: true
+    };
+
+  $('body').on('initialized', function() {
+    hyperlink = $('#content-hyperlink').tooltip(defaultSettings);
+    api = hyperlink.data('tooltip');
+    textarea = $('#tooltip-desc');
+
+    $('#set').on('click.test', function(e) {
+      e.preventDefault();
+      api.setContent(textarea.val());
+    });
+
+    textarea.html(defaultSettings.content);
+  });
+</script>

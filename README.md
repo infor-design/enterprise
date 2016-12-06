@@ -57,7 +57,7 @@ IE 9+ ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
   - `cd controls`
 
 ### Managing Local Dev with Make and Docker Compose
-* `make up` To start your Local Dev ENV which will 
+* `make up` To start your Local Dev ENV which will
 * `make watch` To start `grunt watch`
 * In a browser, go to: `http://localhost:4000`
 * NOTE any changes that you make will trigger Sass to recompile and the browser will reload thanks to live reload
@@ -235,7 +235,7 @@ h3. Technical details:
 
 Feature requests are welcome. Before you submit one be sure to have:
 
-1. Read the [Roadmap and Planned Features](http://jira.infor.com/browse/HFC#selectedTab=com.atlassian.jira.plugin.system.project%3Aroadmap-panel) and check the feature hasn't already been requested. 
+1. Read the [Roadmap and Planned Features](http://jira.infor.com/browse/HFC#selectedTab=com.atlassian.jira.plugin.system.project%3Aroadmap-panel) and check the feature hasn't already been requested.
 2. Take a moment to think about whether your idea fits with the scope and aims of the project, or if it might better fit being an app/plugin/extension. Also think if anyone else but your team would want it..
 3. Remember, it's up to *you* to make a strong case to convince the merits of this feature. "We did it before" isnt strong enough. Please provide as much detail and context as possible, this means explaining the use case and why it is likely to be common.
 
@@ -377,3 +377,75 @@ or eventually the SoHo XI site pages
 - Any issues or inconsistencies would be reported to http://jira.infor.com/browse/HFC
 - Create Selenium (Javascript based) scripts or similar tests (see tests folder in git project)
 - Help contribute to questions on Jira and make test examples to test different scenarios like the current test examples.
+
+
+### Custom Soho Builder Tool
+
+Run the [Soho Mapper Tool](http://git.infor.com/projects/SOHO/repos/mapper/browse) on the local source.
+
+#### Usage
+`npm run build -- --mapperPath='/Users/username/mapper/dist/globalsHashMap.min.json' --controls='datagrid' --excludeControls='initialize'`
+
+#### Options
+Set the hash map path
+`--mapperPath='/Users/username/mapper/dist/globalsHashMap.min.json'`
+
+Set a control(s) to include, one control per flag
+`--controls='datagrid'` or many, `--controls='datagrid' --controls='expandableara' --controls='accordion' ...`
+
+Set a control(s) to exclude, one control per flag
+`--excludeControls='datagrid'` or many, `--excludeControls='datagrid' --excludeControls='expandableara' --excludeControls='button' ...`
+
+Import a config file
+`--configPath='/Users/username/controls/config.json'` or simply, at root as `--configPath='config.json'`
+
+Create a config file at root, exports as `config.json`
+`--config`
+
+Sample config file
+```json
+{
+  "js": [
+    "initialize",
+    "autocomplete",
+    "button",
+    "datepicker",
+    "drag",
+    "datagrid",
+    "dropdown",
+    "environment",
+    "icon",
+    "lifecycle",
+    "locale",
+    "lookup",
+    "mask",
+    "multiselect",
+    "popupmenu",
+    "tmpl",
+    "tooltip",
+    "utils",
+    "animations",
+    "listview",
+    "modal",
+    "searchfield",
+    "toolbar",
+    "editor",
+    "pager",
+    "toast",
+    "validation",
+    "base",
+    "form",
+    "listfilter",
+    "highlight",
+    "place",
+    "initialize",
+    "resize",
+    "popdown",
+    "toolbarsearchfield",
+    "applicationmenu",
+    "personalize",
+    "zoom",
+    "accordion"
+  ]
+}
+```

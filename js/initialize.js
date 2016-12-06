@@ -192,6 +192,9 @@
             //Hide Focus
             ['hideFocus', 'a.hide-focus, a.tick, a.hyperlink'],
 
+            //Circle Pager
+            ['circlepager'],
+
             //Pager
             ['pager', '.paginated'],
 
@@ -410,10 +413,7 @@
 
     // Initialize the plugin (Once)
     return this.each(function() {
-      var instance = $.data(this, pluginName);
-      if (!instance) {
-        instance = $.data(this, pluginName, new Initialize(this, settings));
-      }
+      var instance = new Initialize(this, settings); // jshint ignore:line
     });
   };
 

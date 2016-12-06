@@ -271,12 +271,13 @@
           localeTimeFormat = ((typeof Locale === 'object' && Locale.calendar().timeFormat) ? Locale.calendar().timeFormat : null);
 
         if (this.settings.dateFormat === 'locale') {
-          this.pattern = localeDateFormat.short + (this.settings.showTime ? ' ' + localeTimeFormat: '');
+          this.pattern = localeDateFormat.short + (this.settings.showTime ? ' ' + (this.settings.timeFormat || localeTimeFormat) : '');
         } else {
           this.pattern = this.settings.dateFormat + (this.settings.showTime ? ' ' + this.settings.timeFormat : '');
         }
 
         this.show24Hours = (this.pattern.match('HH') || []).length > 0;
+        this.isSeconds = (this.pattern.match('ss') || []).length > 0;
       },
 
       // Add masking with the mask function
@@ -293,12 +294,15 @@
                    .replace(/mm/g,'##')
                    .replace(/dd/g,'##')
                    .replace(/hh/g,'##')
+                   .replace(/ss/g,'##')
                    .replace(/[mdh]/g,'##')
                    .replace(/[a]/g,'am');
 
         //TO DO - Time seperator
         // '##/##/#### ##:## am' -or- ##/##/#### ##:##' -or- ##/##/####'
-        mask = (this.settings.showTime ? (this.show24Hours ? mask.substr(0, 16) : mask) : mask);
+        // '##/##/#### ##:##:## am' -or- ##/##/#### ##:##:##'
+        mask = (this.settings.showTime ?
+          (this.show24Hours ? mask.substr(0, (this.isSeconds ? 19:16)) : mask) : mask);
 
         if (customValidation === 'required' && !customEvents) {
           validation = customValidation + ' ' + validation;
@@ -350,12 +354,8 @@
 
         $('#validation-tooltip').addClass('is-hidden');
 
-        if (this.popup && this.popup.is(':visible')) {
-          self.closeCalendar();
-        }
 
-        this.element.addClass('is-active');
-        this.element.trigger('listopened');
+        this.element.addClass('is-active').trigger('listopened');
 
         // Calendar Html in Popups
         this.table = $('<table class="calendar-table" aria-label="'+ Locale.translate('Calendar') +'" role="application"></table>');
@@ -445,14 +445,20 @@
 
             // Wait for timepicker popup
             setTimeout(function() {
-              var timepickerPopup = $('#timepicker-popup').css({'border': 0, 'box-shadow': 'none', 'width': ''}),
-                position = timepickerInput.offset();
+              var timepickerPopup = $('#timepicker-popup').css({'border': 0, 'box-shadow': 'none', 'width': ''});
 
-              position.top -= timepickerPopup.parent().is('body') ? 0 : timepickerPopup.height()/2 - 2;
-              position.left -= ((timepickerPopup.width() - timepickerInput.width())/2) - 30;
+              if (self.isSeconds) {
+                timepickerPopup
+                  .find('.time-parts .colons').css({'min-width': '13px'}).end()
+                  .find('.dropdown').css({'width': '60px', 'padding': '8px 0px 7px 10px'});
+              }
+
+              var position = {
+                top: parseInt(self.popup.css('top'), 10) + (self.table.height() + self.header.height() + 28),
+                left: (parseInt(self.popup.css('left'), 10) + (self.popup.outerWidth()/2)) - (timepickerPopup.outerWidth()/2) + 20
+              };
 
               timepickerPopup.css(position);
-
               self.timepickerInput.css({'visibility': 'hidden'});
 
               $('.arrow, .modal-buttonset', timepickerPopup).hide();
@@ -597,6 +603,11 @@
 
         if (this.popup && this.popup.length) {
           this.popup.hide().remove();
+        }
+
+        var popoverAPI = this.trigger.data('tooltip');
+        if (popoverAPI) {
+          popoverAPI.destroy();
         }
 
         this.element.removeClass('is-active');
@@ -744,9 +755,10 @@
           if (i >= leadDays && dayCnt <= thisMonthDays) {
             th.html('<span aria-hidden="true">' + dayCnt + '</span>');
             var tHours = elementDate.getHours(),
-              tMinutes = elementDate.getMinutes();
+              tMinutes = elementDate.getMinutes(),
+              tSeconds = self.isSeconds ? elementDate.getSeconds() : 0;
 
-            if ((new Date(year, month, dayCnt)).setHours(tHours, tMinutes, 0,0) === elementDate.setHours(tHours, tMinutes, 0,0)) {
+            if ((new Date(year, month, dayCnt)).setHours(tHours, tMinutes, tSeconds,0) === elementDate.setHours(tHours, tMinutes, tSeconds, 0)) {
               th.addClass('is-selected').attr('aria-selected', 'true');
             }
 
@@ -839,25 +851,45 @@
         this.element.val(Locale.formatDate(date, {pattern: this.pattern}));
       },
 
+      // Make enable
+      enable: function() {
+        this.element.removeAttr('disabled readonly').closest('.field').removeClass('is-disabled');
+      },
+
+      // Make disable
+      disable: function() {
+        this.enable();
+        this.element.attr('disabled', 'disabled').closest('.field').addClass('is-disabled');
+      },
+
+      // Make readonly
+      readonly: function() {
+        this.enable();
+        this.element.attr('readonly', 'readonly');
+      },
+
       // Set time
       setTime: function(date) {
         var hours = $('#timepicker-hours').val(),
           minutes = $('#timepicker-minutes').val(),
+          seconds = this.isSeconds ? $('#timepicker-seconds').val() : 0,
           period = $('#timepicker-period');
 
         var timepicker = $('.timepicker.is-active');
-        if (!minutes && timepicker.length) {
-          var d = new Date(date);
-          var time = timepicker.val().match(/(\d+)(?::(\d\d))?\s*(p?)/);
-          d.setHours( parseInt(time[1]) + (time[3] ? 12 : 0) );
-          d.setMinutes( parseInt(time[2]) || 0 );
+        if (timepicker.length && (!minutes || this.isSeconds && !seconds)) {
+          var d = new Date(date),
+            regex = new RegExp('(\\d+)(?::(\\d\\d))'+ (this.isSeconds ? '(?::(\\d\\d))' : '') +'?\\s*(p?)'),
+            time = timepicker.val().match(regex);
+          d.setHours(parseInt(time[1]) + (time[3] ? 12 : 0));
+          d.setMinutes(parseInt(time[2]) || 0);
+          d.setSeconds(parseInt(time[3]) || 0);
           minutes = d.getMinutes();
+          seconds = d.getSeconds();
         }
-
         hours = (period.length && period.val() === 'PM' && hours < 12) ? (parseInt(hours, 10) + 12) : hours;
         hours = (period.length && period.val() === 'AM' && parseInt(hours, 10) === 12) ? 0 : hours;
 
-        date.setHours(hours, minutes, 0);
+        date.setHours(hours, minutes, seconds);
         return date;
       },
 
@@ -868,8 +900,10 @@
           },
           d = (date || new Date()),
           h = d.getHours(),
-          h12 = (h % 12 || 12) + ':' + twodigit(d.getMinutes()) + ' ' + (h < 12 ? 'AM' : 'PM'),
-          h24 = h + ':' + twodigit(d.getMinutes());
+          m = twodigit(d.getMinutes()),
+          s = twodigit(d.getSeconds()),
+          h12 = (h % 12 || 12) +':'+ m + (this.isSeconds ? ':'+ s : '') +' ' + (h < 12 ? 'AM' : 'PM'),
+          h24 = h + ':' + m + (this.isSeconds ? ':'+ s : '');
 
         return isHours24 ? h24 : h12;
       },
@@ -886,15 +920,50 @@
             handlers.splice(newIndex, 0, handlers.pop());
           });
         });
-      }
+      },
 
+      updated: function() {
+        return this
+          .teardown()
+          .init();
+      },
+
+      teardown: function() {
+        if (this.isOpen()) {
+          this.closeCalendar();
+        }
+
+        this.trigger.off('click.datepicker keydown.datepicker');
+
+        var maskAPI = this.element.data('mask');
+        if (maskAPI) {
+          maskAPI.destroy();
+        }
+
+        /*
+        if (this.settings.trigger === 'immediate') {
+          this.destroy();
+        }
+        */
+
+        this.calendar.remove();
+        this.popup.remove();
+
+        return this;
+      },
+
+      destroy: function() {
+        this.teardown();
+        $.removeData(this.element[0], pluginName);
+      }
     };
 
     // Initialize the plugin (Once)
     return this.each(function() {
       var instance = $.data(this, pluginName);
       if (instance) {
-        instance.settings = $.extend({}, defaults, options);
+        instance.settings = $.extend({}, instance.settings, options);
+        instance.updated();
       } else {
         instance = $.data(this, pluginName, new DatePicker(this, settings));
       }

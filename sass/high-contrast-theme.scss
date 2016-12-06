@@ -12,6 +12,7 @@
 // Form Background Color
 $body-bg-color:  $graphite03;
 $header-bg-color: $azure09;
+$subhead-bg-color: $azure08;
 $header-border-color: $slate10;
 $header-button-color: rgba($white, 1);
 $header-button-focus-color: rgba($white, 1);
@@ -52,6 +53,29 @@ $alert-red: $ruby09;
 // Rules
 $hr-top-color: $graphite03;
 $hr-bottom-color: transparent;
+
+// Circle Pager
+$circlepager-bg-color: $white;
+$circlepager-border-color: $graphite06;
+$circlepager-hover-bg-color: $white;
+$circlepager-hover-border-color: $black;
+$circlepager-focus-bg-color: $white;
+$circlepager-focus-border-color: $azure07;
+
+$circlepager-active-bg-color: $primary-color;
+$circlepager-active-border-color: $primary-color;
+$circlepager-active-hover-bg-color: $primary-color;
+$circlepager-active-hover-border-color: $primary-color;
+$circlepager-active-focus-bg-color: $primary-color;
+$circlepager-active-focus-border-color: $primary-color;
+
+$circlepager-disable-bg-color: transparent;
+$circlepager-disable-border-color: $graphite04;
+$circlepager-disable-hover-bg-color: transparent;
+$circlepager-disable-hover-border-color: $graphite04;
+$circlepager-disable-focus-bg-color: transparent;
+$circlepager-disable-focus-border-color: $graphite04;
+
 
 // Popovers
 $popover-bg-color: $graphite01;
@@ -121,7 +145,7 @@ $btn-focus-bg-color: $primary-color;
 $btn-focus-border-color: $primary-color;
 $btn-active-bg-color: $graphite05;
 $btn-disabled-bg-color: $graphite07;
-$btn-disabled-color: $white;
+$btn-disabled-color: $graphite07;
 $btn-disabled-border-color: $graphite07;
 $btn-disabled-opacity: .5;
 
@@ -195,6 +219,7 @@ $listview-toolbar-button-icon-selected-color: $white;
 // Toolbar
 $toolbar-standalone-bg-color: $graphite01;
 $toolbar-standalone-border-color: $graphite06;
+$toolbar-standalone-disabled-color: $graphite08;
 $toolbar-separator-color: $graphite06;
 
 // Formatter Toolbar
@@ -515,6 +540,9 @@ $datagrid-list-filter-icon-color: $slate06;
 $datagrid-list-filter-disabled-color: $slate04;
 $datagrid-list-filter-focus-color: $azure09;
 $datagrid-list-filter-active-color: $azure09;
+
+$datagrid-rowgroup-header: $graphite02;
+$datagrid-rowgroup-color: $font-color;
 
 // Search Results
 $sr-masthead-text-color: $font-color;

@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Autocomplete Test: Selected Event</h2>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+
+    <div class="field">
+      <label for="autocomplete-default">States</label>
+      <input id="autocomplete-default" type="text" autocomplete="off" class='autocomplete' data-options='{source: "/api/states?term="}' placeholder="Type to Search">
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  // Event Listener for this code
+  $('#autocomplete-default').on('selected.test', function(e, item, value) {
+    var contents = $(item).text().trim();
+
+    console.log(value);
+    console.dir(item);
+
+    $('body').toast({
+      title: '<span style="color: #aa1111; font-weight: bold;">' + contents + '</span> selected!',
+      message: 'Autocomplete Item <b>"' + contents + '"</b> selected!  It\'s value is: <b>"' + value + '"</b>.'
+    });
+  });
+</script>

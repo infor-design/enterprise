@@ -911,6 +911,7 @@
         this.focusBar();
 
         this.handleVerticalTabResize();
+        this.renderVisiblePanel();
       },
 
       handleVerticalTabResize: function() {
@@ -1020,6 +1021,8 @@
         return this.panels.filter('[id="' + href.replace(/#/g, '') + '"]');
       },
 
+
+
       getMenuItem: function(href) {
         if (this.isAnchor(href)) {
           href = href.attr('href');
@@ -1101,7 +1104,7 @@
         self.element.trigger('activated', [a]);
 
         function fadeStart() {
-          self.resizeNestedTabs();
+          self.renderVisiblePanel();
         }
 
         function fadeComplete() {
@@ -1137,6 +1140,12 @@
           $('#validation-tooltip').hide();
           $('#tooltip').hide();
         }, 100);
+      },
+
+      renderVisiblePanel: function() {
+        // Recalculate all components inside of the visible tab to adjust widths/heights/display if necessary
+        this.resizeNestedTabs();
+        this.panels.filter(':visible').handleResize();
       },
 
       changeHash: function(href) {
@@ -2235,7 +2244,7 @@
           var thisHeight = 0;
 
           jqObj.each(function(i, el) {
-            thisHeight += $(el).outerHeight(true);
+            thisHeight += $(el).outerHeight(true) + parseInt($(el).parent().css('padding-top'));
           });
 
           return thisHeight;

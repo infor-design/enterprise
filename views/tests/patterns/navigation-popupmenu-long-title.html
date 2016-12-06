@@ -1,0 +1,34 @@
+<body class="no-scroll">
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+  {{> includes/svg-inline-refs}}
+  {{> includes/masthead}}
+
+  <div class="page-container no-scroll">
+    <header class="header is-personalizable" data-options="{usePopupmenu: true}">
+      <div class="toolbar">
+        <div class="title">
+          <button type="button" id="header-menu" class="btn-menu">
+            <h1>Page One Title</h1>
+          </button>
+          <ul class="popupmenu is-selectable">
+            <li class="is-checked"><a href="#">Page One Title</a></li>
+            <li><a href="#">Page Two Title</a></li>
+            <li><a href="#">Page Three Title</a></li>
+            <li class="is-disabled"><a href="#">Page Four Title</a></li>
+            <li><a href="#">Page Five EXTRA Long Title</a></li>
+          </ul>
+
+        </div>
+
+        <div class="buttonset">
+          <input class="searchfield" />
+        </div>
+
+        {{> includes/header-actionbutton}}
+      </div>
+    </header>
+
+    <div id="maincontent" class="page-container scrollable" role="main">
+
+    </div>
+  </div>

@@ -87,7 +87,7 @@ span.checkbox > label {
   @include font-size(14);
   cursor: pointer;
   display: inline-block;
-  margin-bottom: 10px;
+  margin-bottom: 9px;
   padding-left: 26px;
   position: relative;
 }
@@ -204,6 +204,14 @@ label.inline .checkbox ~ .label-text,
 .checkbox-label {
   display: inline-block;
   line-height: 17px;
+}
+
+.is-firefox {
+  label.inline .checkbox ~ .label-text,
+  .checkbox-label {
+    display: inline-block;
+    line-height: 19px;
+  }
 }
 
 @include keyframes(check) {

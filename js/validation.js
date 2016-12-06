@@ -775,6 +775,10 @@
         check: function (value, field) {
           this.message = Locale.translate('InvalidDate');
 
+          if (value instanceof Date) {
+            return value && value.getTime && !isNaN(value.getTime());
+          }
+
           var dateFormat = (value.indexOf(':') > -1) ? Locale.calendar().dateFormat.datetime: Locale.calendar().dateFormat.short;
 
           if (field && field.data('datepicker')) {

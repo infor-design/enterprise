@@ -379,13 +379,11 @@
           e.stopPropagation();
           self.updated();
         }).off('recalculateButtons.toolbar').on('recalculateButtons.toolbar', function() {
-          self.adjustButtonVisibility();
-          self.toggleMoreMenu(); // Added 9/16/2015 due to issue HFC-2876
+          self.handleResize();
         });
 
         $(window).off('resize.toolbar-' + this.id).on('resize.toolbar-' + this.id, function() {
-          self.adjustButtonVisibility();
-          self.toggleMoreMenu();
+          self.handleResize();
         });
 
         return this;
@@ -482,6 +480,11 @@
         }
 
         return;
+      },
+
+      handleResize: function() {
+        this.adjustButtonVisibility();
+        this.toggleMoreMenu(); // Added 9/16/2015 due to issue HFC-2876
       },
 
       // Go To a button

@@ -226,11 +226,13 @@
           return [undefined, undefined]; // can't simply return x and y here because they are not coordinates, they are offsets
         }
 
-        this.render(placementObj);
-
         var self = this,
           parentRect = placementObj.parent[0].getBoundingClientRect(),
-          elRect = this.element[0].getBoundingClientRect();
+          elRect = this.element[0].getBoundingClientRect(),
+          container = this.getContainer(placementObj),
+          containerIsBody = container.length && container[0] === document.body,
+          scrollX = (typeof container.scrollLeft === 'number' ? container : document.body).scrollLeft,
+          scrollY = (typeof container.scrollTop === 'number' ? container : document.body).scrollTop;
 
         function getCoordsFromPlacement(placementObj) {
           var cX, cY,
@@ -241,16 +243,16 @@
           // Set initial placements
           switch(p) {
             case 'top':
-              cY = parentRect.top - elRect.height - placementObj.y;
+              cY = parentRect.top - elRect.height - placementObj.y + (containerIsBody ? scrollY : 0);
               break;
             case 'left':
-              cX = parentRect.left - elRect.width - placementObj.x;
+              cX = parentRect.left - elRect.width - placementObj.x + (containerIsBody ? scrollX : 0);
               break;
             case 'right':
-              cX = parentRect.right + placementObj.x;
+              cX = parentRect.right + placementObj.x + (containerIsBody ? scrollX : 0);
               break;
             default: // Bottom
-              cY = parentRect.bottom + placementObj.y;
+              cY = parentRect.bottom + placementObj.y + (containerIsBody ? scrollY : 0);
               break;
           }
 
@@ -258,13 +260,13 @@
           if (p === 'top' || p === 'bottom') {
             switch(aX) {
               case 'left':
-                cX = parentRect.left - placementObj.x;
+                cX = parentRect.left - placementObj.x + (containerIsBody ? scrollX : 0);
                 break;
               case 'right':
-                cX = (parentRect.right - elRect.width) + placementObj.x;
+                cX = (parentRect.right - elRect.width) + placementObj.x + (containerIsBody ? scrollX : 0);
                 break;
               default: // center
-                cX = (parentRect.left + ((parentRect.width - elRect.width) / 2)) + placementObj.x;
+                cX = (parentRect.left + ((parentRect.width - elRect.width) / 2)) + placementObj.x + (containerIsBody ? scrollX : 0);
                 break;
             }
           }
@@ -273,13 +275,13 @@
           if (p === 'right' || p === 'left') {
             switch(aY) {
               case 'top':
-                cY = parentRect.top - placementObj.y;
+                cY = parentRect.top - placementObj.y + (containerIsBody ? scrollY : 0);
                 break;
               case 'bottom':
-                cY = (parentRect.bottom - elRect.height) + placementObj.y;
+                cY = (parentRect.bottom - elRect.height) + placementObj.y + (containerIsBody ? scrollY : 0);
                 break;
               default: // center
-                cY = (parentRect.top + ((parentRect.height - elRect.height) / 2)) + placementObj.y;
+                cY = (parentRect.top + ((parentRect.height - elRect.height) / 2)) + placementObj.y + (containerIsBody ? scrollY : 0);
                 break;
             }
           }
@@ -298,7 +300,6 @@
 
         // Simple placement logic
         placementObj = doPlacementAgainstParent(placementObj);
-        this.render(placementObj);
 
         // Adjusts the placement coordinates based on a defined strategy
         // Will only adjust the current strategy if bleeding outside the viewport/container are detected.
@@ -383,11 +384,26 @@
         return placementObj;
       },
 
+      // Gets a parent container element.
+      getContainer: function(placementObj) {
+        if (placementObj.container instanceof $ && placementObj.container.length) {
+          return placementObj.container;
+        }
+
+        var modalParent = this.element.parents('.modal');
+        if (modalParent.length) {
+          return modalParent;
+        }
+
+        return $(document.body);
+      },
+
       // Re-adjust a previously-placed element to account for bleeding off the edges.
       // Element must fit within the boundaries of the page or it's current scrollable pane.
       checkBleeds: function(placementObj) {
         var containerBleed = this.settings.bleedFromContainer,
-          container = $(placementObj.container ? placementObj.container : (document.documentElement || document.body.parentNode)),
+          container = this.getContainer(placementObj),
+          containerIsBody = container.length && container[0] === document.body,
           rect = this.element[0].getBoundingClientRect(),
           containerRect = container ? container[0].getBoundingClientRect() : {},
           scrollX = (typeof container.scrollLeft === 'number' ? container : document.body).scrollLeft,
@@ -399,13 +415,13 @@
         function getBoundary(edge) {
           switch(edge) {
             case 'top':
-              return (containerBleed ? 0 : containerRect.top) - scrollY; // 0 === top edge of viewport
+              return (containerBleed ? 0 : containerRect.top) - (!containerIsBody ? scrollY : scrollY * -1); // 0 === top edge of viewport
             case 'left':
-              return (containerBleed ? 0 : containerRect.left) - scrollX; // 0 === left edge of viewport
+              return (containerBleed ? 0 : containerRect.left) - (!containerIsBody ? scrollX : scrollX * -1); // 0 === left edge of viewport
             case 'right':
-              return (containerBleed ? windowW : containerRect.right) - scrollX;
+              return (containerBleed ? windowW : containerRect.right) - (!containerIsBody ? scrollX : scrollX * -1);
             default: // bottom
-              return (containerBleed ? windowH : containerRect.bottom) - scrollY;
+              return (containerBleed ? windowH : containerRect.bottom) - (!containerIsBody ? scrollY : scrollY * -1);
           }
         }
 
@@ -506,7 +522,8 @@
 
         var isXCoord = ['left', 'right'].indexOf(placementObj.placement) > -1,
           containerBleed = this.settings.bleedFromContainer,
-          container = $(placementObj.container ? placementObj.container : (document.documentElement || document.body.parentNode)),
+          container = this.getContainer(placementObj),
+          containerIsBody = container.length && container[0] === document.body,
           containerRect = container ? container[0].getBoundingClientRect() : {},
           parentRect = placementObj.parent[0].getBoundingClientRect(),
           scrollX = (typeof container.scrollLeft === 'number' ? container : document.body).scrollLeft,
@@ -533,16 +550,16 @@
 
           switch (dir) {
             case 'left':
-              d = (containerBleed ? 0 : containerRect.left) - scrollX - parentRect.left + placementObj.containerOffsetX;
+              d = (containerBleed ? 0 : containerRect.left) - (!containerIsBody ? scrollX : 0) - parentRect.left + placementObj.containerOffsetX;
               break;
             case 'right':
-              d = ((containerBleed ? windowW : containerRect.right) - scrollX) - parentRect.right - placementObj.containerOffsetX;
+              d = ((containerBleed ? windowW : containerRect.right) - (!containerIsBody ? scrollX : 0)) - parentRect.right - placementObj.containerOffsetX;
               break;
             case 'top':
-              d = (containerBleed ? 0 : containerRect.top) - scrollY - parentRect.top + placementObj.containerOffsetY;
+              d = (containerBleed ? 0 : containerRect.top) - (!containerIsBody ? scrollY : 0) - parentRect.top + placementObj.containerOffsetY;
               break;
             default: // bottom
-              d = ((containerBleed ? windowH : containerRect.bottom) - scrollY) - parentRect.bottom - placementObj.containerOffsetY;
+              d = ((containerBleed ? windowH : containerRect.bottom) - (!containerIsBody ? scrollY : 0)) - parentRect.bottom - placementObj.containerOffsetY;
               break;
           }
 
@@ -602,21 +619,23 @@
       // If element height/width is greater than window height/width, shrink to fit
       shrink: function(placementObj) {
         var containerBleed = this.settings.bleedFromContainer,
-          container = $(placementObj.container ? placementObj.container : (document.documentElement || document.body.parentNode)),
-          containerRect = container ? container[0].getBoundingClientRect() : {},rect = this.element[0].getBoundingClientRect(),
+          container = this.getContainer(placementObj),
+          containerRect = container ? container[0].getBoundingClientRect() : {},
+          rect = this.element[0].getBoundingClientRect(),
           scrollX = (typeof container.scrollLeft === 'number' ? container : document.body).scrollLeft,
           scrollY = (typeof container.scrollTop === 'number' ? container : document.body).scrollTop,
           windowH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
           windowW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
-          leftViewportEdge = (containerBleed ? 0 : containerRect.left) - scrollX + placementObj.containerOffsetX,
-          topViewportEdge = (containerBleed ? 0 : containerRect.top) - scrollY + placementObj.containerOffsetY,
-          rightViewportEdge = (containerBleed ? windowW : containerRect.right) - scrollX - placementObj.containerOffsetX,
-          bottomViewportEdge = (containerBleed ? windowH : containerRect.bottom) - scrollY - placementObj.containerOffsetY,
+          leftViewportEdge = (containerBleed ? 0 : containerRect.left + placementObj.containerOffsetX) + scrollX,
+          topViewportEdge = (containerBleed ? 0 : containerRect.top + placementObj.containerOffsetY) + scrollY,
+          rightViewportEdge = (containerBleed ? windowW : containerRect.right - placementObj.containerOffsetX) + scrollX,
+          bottomViewportEdge = (containerBleed ? windowH : containerRect.bottom - placementObj.containerOffsetY) + scrollY,
           d;
 
         // Shrink in each direction.
         // The value of the "containerOffsets" is "factored out" of each calculation, if for some reason the
         // element is larger than the viewport/container space allowed.
+        placementObj.nudges = placementObj.nudges || {};
 
         // Left
         if (rect.left < leftViewportEdge) {

@@ -94,9 +94,9 @@
 
         if (this.hasTitleButton) {
           this.toolbarElem.addClass('has-title-button');
-          var appMenu = $('#application-menu').data('application-menu');
+          var appMenu = $('#application-menu').data('applicationmenu');
           if (appMenu) {
-            //appMenu.modifyTriggers([this.titleButton]);
+            appMenu.modifyTriggers([this.titleButton], null, true);
           } else {
             $('#application-menu').applicationmenu({
               triggers: [this.titleButton]

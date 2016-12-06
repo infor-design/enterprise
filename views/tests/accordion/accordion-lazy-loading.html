@@ -1,0 +1,57 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Accordion Test: AJAX</h2>
+    <p>Expanding the header below causes an AJAX request to be made.  When the request successfully returns, the header opens with content that was retrieved from the response.</p>
+    <p></p>
+
+    <div id="ajax-accordion" class="accordion panel alternate no-init">
+      <div class="accordion-header">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-url"></use>
+        </svg>
+        <a href="#"><span>Fruits</span></a>
+      </div>
+      <div class="accordion-pane"></div>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  // Re-invoke this accordion with a source function to set external content on expand
+  $(document).ready(function() {
+    var loadedCategories = [];
+
+    $('#ajax-accordion').accordion({
+      source: function(ui, callback) {
+        var categoryId = ui.anchor.attr('data-category-id'),
+          setContent = function (htmlString) {
+            ui.pane.append(htmlString);
+            callback();
+          },
+          isCategory = categoryId || 'fruits';
+          url = '/api/fruits';
+
+        // Don't add more than once
+        if ($.inArray(isCategory, loadedCategories) > -1) {
+          return false;
+        }
+
+        url += categoryId ? '?categoryId='+ categoryId : '';
+
+        $.get(url)
+          .done(function(data) {
+            setContent(data);
+
+            // Keep track what has been loaded
+            loadedCategories.push(categoryId || 'fruits');
+          })
+          .fail(function() {
+            setContent('<div class="accordion-content" style="color: red;"><p>AJAX Error: Couldn\'t find any fruits...</p></div>');
+          });
+        return true;
+      }
+    });
+  });
+</script>
