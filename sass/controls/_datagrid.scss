@@ -843,7 +843,7 @@ $datagrid-short-row-height: 23px;
       @include font-size(14);
       color: $hyperlink-color;
       display: inline-block;
-      //margin-top: 14px;
+      margin-top: -4px;
       overflow: hidden;
       //text-overflow: ellipsis;
       vertical-align: middle;

@@ -168,13 +168,13 @@
               var compiledTmpl = Tmpl.compile(this.tmpl),
                 renderedTmpl = compiledTmpl.render(dataset);
 
-              self.list.append(renderedTmpl);
+              self.list.append($.santizeHtml(renderedTmpl));
             } else {
               var listItem = $('<li role="listitem"></li>');
               listItem.attr('id', dataset.listItemId);
               listItem.attr('data-value', dataset.value);
               listItem.append('<a href="#" tabindex="-1"><span>' + dataset.label + '</span></a>');
-              self.list.append(listItem);
+              self.list.append($.santizeHtml(listItem));
             }
           }
         }
