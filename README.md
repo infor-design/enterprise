@@ -57,8 +57,8 @@ IE 9+ ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
   - `cd controls`
 
 ### Managing Local Dev with Make and Docker Compose
-* `make up` To start your Local Dev ENV which will
-* `make watch` To start `grunt watch`
+* `make up` To start your Local Dev ENV which will build SoHo and run `node server`
+* `make watch` If you want to start `grunt watch`
 * In a browser, go to: `http://localhost:4000`
 * NOTE any changes that you make will trigger Sass to recompile and the browser will reload thanks to live reload
 
