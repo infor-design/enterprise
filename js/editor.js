@@ -400,7 +400,8 @@
           self.sourceView.addClass('is-focused');
         }).on('blur.editor', function(e) {
           self.sourceView.removeClass('is-focused');
-          self.element.empty().html(self.textarea.val());
+          self.element.empty().html($.santizeHtml(self.textarea.val()));
+
           if (self.element.data('validate')) {
             self.element.data('validate').validate(self.element, true, e);
           }
@@ -1330,7 +1331,7 @@
 
       toggleSource: function() {
         if (this.sourceViewActive()) {
-          this.element.empty().html(this.textarea.val());
+          this.element.empty().html($.santizeHtml(this.textarea.val()));
           this.element.removeClass('source-view-active hidden');
           this.sourceView.addClass('hidden').removeClass('is-focused');
           this.element.trigger('focus.editor');
