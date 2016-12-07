@@ -25,7 +25,7 @@
     var pluginName = 'editor',
       defaults = {
         buttons: {
-          editor: ['header1', 'header2', 'separator', 'bold', 'italic', 'underline', 'separator', 'justifyLeft', 'justifyCenter', 'justifyRight', 'separator', 'quote', 'orderedlist', 'unorderedlist', 'separator', 'anchor', 'separator', 'image', 'separator', 'source'],
+          editor: ['header1', 'header2', 'separator', 'bold', 'italic', 'underline', 'strikethrough', 'separator', 'justifyLeft', 'justifyCenter', 'justifyRight', 'separator', 'quote', 'orderedlist', 'unorderedlist', 'separator', 'anchor', 'separator', 'image', 'separator', 'source'],
           source: ['bold','italic','underline', 'separator', 'anchor', 'separator', 'quote', 'separator', 'visual']
         },
         delay: 200,
@@ -525,7 +525,7 @@
             'bold': '<button type="button" class="btn" title="'+ Locale.translate('ToggleBold') + '" data-action="bold" data-element="b">' + buttonLabels.bold + '</button>',
             'italic': '<button type="button" class="btn" title="'+ Locale.translate('ToggleItalic') + '" data-action="italic" data-element="i">' + buttonLabels.italic + '</button>',
             'underline': '<button type="button" class="btn underline" title="'+ Locale.translate('ToggleUnderline') + '" data-action="underline" data-element="u">' + buttonLabels.underline + '</button>',
-            'strikethrough': '<button type="button" class="btn" title="'+ Locale.translate('StrikeThrough') + '" data-action="strikethrough" data-element="strike"><strike>A</strike></button>',
+            'strikethrough': '<button type="button" class="btn" title="'+ Locale.translate('StrikeThrough') + '" data-action="strikethrough" data-element="strike">' + buttonLabels.strikethrough + '</button>',
             'superscript': '<button type="button" class="btn" title="'+ Locale.translate('Superscript') + '" data-action="superscript" data-element="sup">' + buttonLabels.superscript + '</button>',
             'subscript': '<button type="button" class="btn" title="'+ Locale.translate('Subscript') + '" data-action="subscript" data-element="sub">' + buttonLabels.subscript + '</button>',
             'separator': '<div class="separator"></div>',
@@ -558,6 +558,7 @@
             'underline': this.getIcon('Underline', 'underline'),
             'superscript': '<span aria-hidden="true"><b>x<sup>1</sup></b></span>',
             'subscript': '<span aria-hidden="true"><b>x<sub>1</sub></b></span>',
+            'strikethrough': this.getIcon('StrikeThrough', 'strike-through'),
             'anchor': this.getIcon('InsertAnchor', 'link'),
             'image': this.getIcon('InsertImage', 'insert-image'),
             'header1': this.getIcon('ToggleH3', 'h3'),
