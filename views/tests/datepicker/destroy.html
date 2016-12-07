@@ -1,0 +1,29 @@
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="datepicker-destroy" class="label">Date Picker</label>
+      <input id="datepicker-destroy" data-init="false" class="datepicker" name="datepicker-destroy" type="text">
+    </div>
+    <button type="button" class="btn" type="button" id="destroy">Destroy</button>
+  </div>
+</div>
+
+<script>
+    var opts = {dateFormat: 'yyyy-MM-dd'},
+        element = $('#datepicker-destroy').datepicker(opts);
+
+    $('#destroy').on('click', function () {
+
+      if (element.data('datepicker')) {
+        element.data('datepicker').destroy(opts);
+        $(this).text('Invoke');
+      } else {
+        element.datepicker();
+        $(this).text('Destroy');
+      }
+
+    });
+
+</script>
