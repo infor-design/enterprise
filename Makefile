@@ -83,6 +83,8 @@ pull :
 
 up : pull
 	docker-compose up -d
+	@echo "Building SoHo XI..." 
+	@echo "Can take up to 5 mins to start. Check http://localhost:4000"
 
 down :
 	docker-compose down
