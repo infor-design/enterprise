@@ -717,26 +717,26 @@
         return $('<div class="modal editor-modal-url" id="editor-modal-url"></div>')
           .html('<div class="modal-content">' +
             '<div class="modal-header">' +
-              '<h1 class="modal-title">Insert Url</h1>' +
+              '<h1 class="modal-title">' + Locale.translate('InsertAnchor') + '</h1>' +   //TODO: Rename to link when you get strings
             '</div>' +
             '<div class="modal-body">' +
               '<div class="field">' +
-                '<label for="em-url">URL</label>' +
+                '<label for="em-url">' + Locale.translate('Url') + '</label>' +
                 '<input id="em-url" name="em-url" type="text" value="'+ settings.anchor.url +'">' +
               '</div>' +
               '<div class="field">' +
-                '<label for="em-class">Css Class</label>' +
+                '<label for="em-class">' + Locale.translate('CssClass') + '</label>' +
                 '<input id="em-class" name="em-class" type="text" value="'+ settings.anchor.class +'">' +
               '</div>' +
               '<div class="field">' +
-                '<label for="em-target" class="label">Target</label>' +
+                '<label for="em-target" class="label">' + Locale.translate('Target') + '</label>' +
                 '<select id="em-target" name="em-target" class="dropdown">' +
                   targetOptions +
                 '</select>' +
               '</div>' +
               '<div class="modal-buttonset">' +
-                '<button type="button" class="btn-modal btn-cancel">Cancel</button>' +
-                '<button type="button" class="btn-modal-primary">Insert</button>' +
+                '<button type="button" class="btn-modal btn-cancel">' + Locale.translate('Cancel') + '</button>' +
+                '<button type="button" class="btn-modal-primary">' + Locale.translate('Insert') + '</button>' +
               '</div>' +
             '</div>' +
           '</div>').appendTo('body');
@@ -750,16 +750,16 @@
         return $('<div class="modal editor-modal-image" id="editor-modal-image"></div>')
           .html('<div class="modal-content">' +
             '<div class="modal-header">' +
-              '<h1 class="modal-title">Insert Image</h1>' +
+              '<h1 class="modal-title">' + Locale.translate('InsertImage') + '</h1>' +
             '</div>' +
             '<div class="modal-body">' +
               '<div class="field">' +
-                '<label for="image">URL</label>' +
+                '<label for="image">' + Locale.translate('Url') + '</label>' +
                 '<input id="image" name="image" type="text" value="'+ settings.image.url +'">' +
               '</div>' +
               '<div class="modal-buttonset">' +
-                '<button type="button" class="btn-modal btn-cancel">Cancel</button>' +
-                '<button type="button" class="btn-modal-primary">Insert</button>' +
+                '<button type="button" class="btn-modal btn-cancel">' + Locale.translate('Cancel') + '</button>' +
+                '<button type="button" class="btn-modal-primary">' + Locale.translate('Insert') + '</button>' +
               '</div>' +
             '</div>' +
           '</div>').appendTo('body');
