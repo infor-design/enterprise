@@ -1,0 +1,45 @@
+﻿<div class="page-container scrollable" id="maincontent" role="main" initialize>
+
+   <div class="row">
+      <div class="twelve columns">
+         <h2>Autocomplete Test: Script Injection Attacks</h2>
+
+         <p>
+            This tests the security of the Autocomplete control. It has a few numbered options for different tests.
+            Some html is raw and some is escaped. Test multiple browsers. IE 11 and FireFox have trouble with
+            svg onload even when html is escaped.
+         </p>
+
+         <p>
+            Some tests involve mousing over the word "THIS". Others test protection against the svg onload attack.
+            If an alert box pops up, then there is a security vulnerability.
+         </p>
+
+         <br /><br />
+
+         <div class="field">
+            <label for="autocomplete">Script Injection Tests</label>
+            <input id="autocomplete" type="text" autocomplete="off" class='autocomplete' placeholder="Type a number 1-6">
+         </div>
+      </div>
+   </div>
+
+   <script>
+      $(function() {
+         $('#autocomplete').autocomplete({
+            source: function(request, response) {
+               var data = [
+                  '1. Raw html i onmouseover <i onmouseover="alert()">THIS</i>',
+                  '2. Escaped html i onmouseover &lt;i onmouseover="alert()"&gt;THIS&lt;/i&gt;',
+                  '3. Raw html span onmouseover <span onmouseover="alert()">THIS</span>',
+                  '4. Escaped html span onmouseover &lt;span onmouseover="alert()"&gt;THIS&lt;/span&gt;',
+                  '5. Raw html svg onload <svg onload="alert()" />',
+                  '6. Escaped html svg onload &lt;svg onload="alert()" /&gt;'
+               ];
+
+               response(request, data);
+            }
+         });
+      });
+   </script>
+</div>
