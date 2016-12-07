@@ -249,7 +249,7 @@
         // jQuery-wrapped elements don't get manipulated.
         // Simply store the reference, render, and return.
         if (content instanceof $ && content.length) {
-          this.content = content;
+          this.content = $.santizeHtml(content);
           doRender();
           return true;
         }
@@ -269,7 +269,7 @@
           if (content.indexOf('#') === 0) {
             var contentCheck = $('' + content);
             if (contentCheck.length) {
-              this.content = contentCheck;
+              this.content = $.santizeHtml(contentCheck);
               doRender();
               return true;
             }
@@ -290,7 +290,7 @@
         }
 
         // Store an internal copy of the processed content
-        this.content = content;
+        this.content = $.santizeHtml(content);
 
         // Wrap tooltip content in <p> tags if there isn't already one present.
         // Only happens for non-jQuery markup.
