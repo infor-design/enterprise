@@ -62,9 +62,10 @@ IE 9+ ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
 * `make watch` If you want to start `grunt watch` `ctrl-c` to stop
 * In a browser, go to: `http://localhost:4000`
 * NOTE any changes that you make will trigger Sass to recompile and the browser will reload thanks to live reload
+* `make down` To stop the running container
 
 ### Running The Unit Tests
-* `make unit-test` To run the unit tests
+* `make unit-tests` To run the unit tests
 
 ## Manually Install
 * Install nodejs as paying attention to your OS directions: http://nodejs.org/
