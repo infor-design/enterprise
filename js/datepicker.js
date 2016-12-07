@@ -936,6 +936,14 @@
         this.trigger.remove();
         this.element.attr('data-mask', '');
 
+        if (this.calendar && this.calendar.length) {
+          this.calendar.remove();
+        }
+
+        if (this.popup && this.popup.length) {
+          this.popup.remove();
+        }
+
         var api = this.element.data('mask');
         if (api) {
           api.destroy();
