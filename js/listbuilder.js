@@ -70,10 +70,11 @@
     Plugin.prototype = {
 
       init: function() {
-        this.loadListview();
-        this.initDataset();
-        this.setElements();
-        this.handleEvents();
+        this
+          .loadListview()
+          .initDataset()
+          .setElements()
+          .handleEvents();
       },
 
       // Load listview
@@ -86,6 +87,7 @@
         } else if (lv.length) {
           this.listApi = lv.listview({dataset: s.dataset, template: s.template, selectable: 'single'}).data('listview');
         }
+        return this;
       },
 
       // Init dataset
@@ -94,7 +96,7 @@
           nodes = $('.listview li', this.element);
 
         this.dataset = [];
-        for (var i=0,l=nodes.length; i<l; i++) {
+        for (var i = 0, l = nodes.length; i < l; i++) {
           var data,
             li = $(nodes[i]);
           if (s.dataset) {
@@ -103,14 +105,15 @@
             data.node = li;
           }
           else {
-            data = this.scrapeNodeData(li);
+            data = this.extractNodeData(li);
           }
           this.dataset.push(data);
         }
+        return this;
       },
 
-      // Scrape node data
-      scrapeNodeData: function(node) {
+      // Extract node data
+      extractNodeData: function(node) {
         var data = {node: node, text: $.trim($('.item-content', node).text())},
           value = node.attr('data-value');
         if (typeof value !== 'undefined') {
@@ -143,6 +146,8 @@
         // Make Draggable
         this.ul = $('.listview ul', this.element);
         this.arrangeApi = this.ul.arrange().data('arrange');
+
+        return this;
       },
 
       // Handle Events
@@ -157,9 +162,9 @@
             self[method]();
           });
         };
-        topButtonsClick(s.btnAdd, 'addNewItem');
-        topButtonsClick(s.btnGoUp, 'goUpItem');
-        topButtonsClick(s.btnGoDown, 'goDownItem');
+        topButtonsClick(s.btnAdd, 'addItem');
+        topButtonsClick(s.btnGoUp, 'moveItemUp');
+        topButtonsClick(s.btnGoDown, 'moveItemDown');
         topButtonsClick(s.btnEdit, 'editItem');
         topButtonsClick(s.btnDelete, 'deleteItem');
 
@@ -167,15 +172,16 @@
         self.arrangeApi.element.on('arrangeupdate.listbuilder', function(e, status) {
           self.updateAttributes();
           self.arrayIndexMove(self.dataset, status.startIndex, status.endIndex);
-          data = self.getNodeData(status.end);
+          data = self.getDataByNode(status.end);
           data.indexBeforeMove = status.startIndex;
           self.element.triggerHandler('arrangeupdate', [data]);
         });
 
+        return this;
       }, // END: Handle Events ---------------------------------------------------------------------
 
       // Add new item
-      addNewItem: function() {
+      addItem: function() {
         var self = this,
           s = self.settings;
 
@@ -185,7 +191,7 @@
             node = self.listApi.selectedItems[0];
 
           if (node && node.length > 0) {
-            data = self.getNodeData(node);
+            data = self.getDataByNode(node);
             index = data.index + 1;
             $(s.templateNewItem).insertAfter(node);
             li = $('li', self.ul).eq(index);
@@ -195,8 +201,8 @@
             li = $('li:first-child', self.ul);
           }
 
-          self.dataset.push(self.scrapeNodeData(li));
-          self.arrayIndexMove(self.dataset, self.dataset.length-1, index);
+          self.dataset.push(self.extractNodeData(li));
+          self.arrayIndexMove(self.dataset, self.dataset.length - 1, index);
           self.updateAttributes();
           self.listApi.select(li);
           self.arrangeApi.updated();
@@ -209,40 +215,40 @@
         });
       },
 
-      // Go up item
-      goUpItem: function() {
+      // Move item up
+      moveItemUp: function() {
         var self = this,
           node = self.listApi.selectedItems[0];
         if (node && node.length > 0) {
-          var data = self.getNodeData(node);
+          var data = self.getDataByNode(node);
           if (typeof data.index !== 'undefined' && data.index > 0) {
             $.when(self.element.triggerHandler('beforegoup', [data])).done(function() {
               var prev = node.prev();
               node.insertBefore(prev);
               self.updateAttributes();
-              self.arrayIndexMove(self.dataset, data.index, data.index-1);
+              self.arrayIndexMove(self.dataset, data.index, data.index - 1);
               data.indexBeforeMove = data.index;
-              data.index = data.index-1;
+              data.index = data.index - 1;
               self.element.triggerHandler('aftergoup', [data]);
             });
           }
         }
       },
 
-      // Go down item
-      goDownItem: function() {
+      // Move item down
+      moveItemDown: function() {
         var self = this,
           node = self.listApi.selectedItems[0];
         if (node && node.length > 0) {
-          var data = self.getNodeData(node);
-          if (typeof data.index !== 'undefined' && data.index < self.dataset.length-1) {
+          var data = self.getDataByNode(node);
+          if (typeof data.index !== 'undefined' && data.index < self.dataset.length - 1) {
             $.when(self.element.triggerHandler('beforegodown', [data])).done(function() {
               var next = node.next();
               node.insertAfter(next);
               self.updateAttributes();
-              self.arrayIndexMove(self.dataset, data.index, data.index+1);
+              self.arrayIndexMove(self.dataset, data.index, data.index + 1);
               data.indexBeforeMove = data.index;
-              data.index = data.index+1;
+              data.index = data.index + 1;
               self.element.triggerHandler('aftergodown', [data]);
             });
           }
@@ -264,10 +270,10 @@
       // Make item editable
       makeEditable: function(node, isNewItem) {
         var self = this,
-          data = self.getNodeData(node),
+          data = self.getDataByNode(node),
           container = $('.item-content', node);
 
-        if (typeof data.index !== 'undefined' && data.index < self.dataset.length-1) {
+        if (typeof data.index !== 'undefined' && data.index < self.dataset.length - 1) {
           $.when(self.element.triggerHandler('beforeedit', [data])).done(function() {
             var origValue = container.text().trim(),
               editInput = $('<input name="edit-input" class="edit-input" type="text" value="'+ origValue +'" />');
@@ -289,7 +295,7 @@
       commitEdit: function(node, isNewItem) {
         var self = this,
           s = this.settings,
-          data = self.getNodeData(node),
+          data = self.getDataByNode(node),
           container = $('.item-content', node),
           editInput = $('.edit-input', container);
 
@@ -308,7 +314,7 @@
         var self = this,
           node = self.listApi.selectedItems[0];
         if (node && node.length > 0) {
-          var data = self.getNodeData(node);
+          var data = self.getDataByNode(node);
           if (typeof data.index !== 'undefined') {
             $.when(self.element.triggerHandler('beforedelete', [data])).done(function() {
               self.listApi.removeAllSelected();
@@ -320,10 +326,10 @@
         }
       },
 
-      // Get node data from dataset
-      getNodeData: function(node) {
+      // Get data from dataset by node
+      getDataByNode: function(node) {
         var data = {};
-        for (var i=0,l=this.dataset.length; i<l; i++) {
+        for (var i = 0,l = this.dataset.length; i < l; i++) {
           var d = this.dataset[i];
           if ($(d.node).is(node)) {
             data = {index: i, data: d};
@@ -338,7 +344,7 @@
         arr.splice(to, 0, arr.splice(from, 1)[0]);
       },
 
-      // Check if a jQuery object
+      // Check if given object is a jQuery object
       isjQuery: function (obj) {
         return (obj && (obj instanceof jQuery || obj.constructor.prototype.jquery));
       },
@@ -349,10 +355,11 @@
           size = nodes.length;
 
         nodes.each(function(i) {
-          $(this).attr({'aria-posinset': i+1, 'aria-setsize': size});
+          $(this).attr({'aria-posinset': i + 1, 'aria-setsize': size});
         });
       },
 
+      // Make enable
       enable: function () {
         this.element.removeClass('is-disabled')
           .find('.toolbar .buttonset button').removeAttr('disabled').end()
@@ -364,6 +371,7 @@
           .find('li[data-original-disabled]').addClass('is-disabled').removeAttr('data-original-disabled');
       },
 
+      // Make disable
       disable: function () {
         this.element.addClass('is-disabled')
           .find('.toolbar .buttonset button[disabled]').attr('data-original-disabled', 'disabled').end()
@@ -374,6 +382,7 @@
           .find('li').addClass('is-disabled');
       },
 
+      // Unbind all events
       unbind: function() {
         this.arrangeApi.element.off('arrangeupdate.listbuilder').destroy();
         this.topButtons.off('click.listbuilder').each(function() {
@@ -383,6 +392,7 @@
         return this;
       },
 
+      // Update this plugin
       updated: function() {
         return this
           .unbind()
