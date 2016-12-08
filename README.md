@@ -57,13 +57,15 @@ IE 9+ ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
   - `cd controls`
 
 ### Managing Local Dev with Make and Docker Compose
-* `make up` To start your Local Dev ENV which will build SoHo and run `node server`
-* `make watch` If you want to start `grunt watch`
+* `make up` To start your Local Dev ENV which will build SoHo and run `node server`. NOTE: docker the runs `hl-sohoxi` container in the background and can take up to 5 mins to start the test site.
+* `make tail` To watch container startup logs. `ctrl-c` to stop
+* `make watch` If you want to start `grunt watch` `ctrl-c` to stop
 * In a browser, go to: `http://localhost:4000`
 * NOTE any changes that you make will trigger Sass to recompile and the browser will reload thanks to live reload
+* `make down` To stop the running container
 
 ### Running The Unit Tests
-* `make unit-test` To run the unit tests
+* `make unit-tests` To run the unit tests
 
 ## Manually Install
 * Install nodejs as paying attention to your OS directions: http://nodejs.org/
