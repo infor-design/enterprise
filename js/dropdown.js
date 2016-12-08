@@ -884,7 +884,7 @@
         this.isInGrid = this.pseudoElem.closest('.datagrid-row').length === 1;
 
         if (this.isInGrid) {
-          var rowHeight = this.pseudoElem.closest('.datagrid-row').attr('class').replace('datagrid-row  ', '');
+          var rowHeight = this.pseudoElem.closest('.datagrid').attr('class').replace('datagrid', '');
           this.list.addClass('datagrid-dropdown-list ' + rowHeight);
         }
 
