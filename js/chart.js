@@ -950,12 +950,12 @@ window.Chart = function(container) {
     // Now we'll draw our label lines, etc.
     var textLabels, textX=[], textY=[],
       labelsContextFormatter = function (d, context, formatterString, isShortName) {
-        formatterString = /percentage/i.test(context) ? '0.0%' : formatterString;
+        formatterString = /percentage/i.test(context) ? '.2%' : formatterString;
         var r,
           format = d3.format(formatterString || ''),
-          percentage = format(d.value / total),
+          percentage = (format(d.value / total)).replace(/\.?0+%$/, '%'),
           name = isShortName ? (d.data.shortName || d.data.name.substring(0, 6) +'...') : d.data.name,
-          value = formatterString && formatterString !== '0.0%' ? format(d.value) : d.value;
+          value = formatterString && formatterString !== '.2%' ? format(d.value) : d.value;
 
         // 'name'|'value'|'percentage'|'name, value'|'name (value)'|'name (percentage)'
         switch (context) {
@@ -1171,7 +1171,7 @@ window.Chart = function(container) {
               x = (dims.labelRadius - Math.abs(y1) + Math.abs(orgLabelPos[i].x + (spacing * 2.5))) * sign;
 
             if (orgLabelPos[i].y !== y1 || (i === 0 && chartData[i].percent < 10)) {
-              x += chartData[i].percent < 10 ? Math.ceil(x1/2) : Math.ceil(x1-x)- (spacing/2);
+              x += chartData[i].percent <= 10 ? Math.ceil(x1/2) : Math.ceil(x1-x)- (spacing/2);
               label.attr('x', x);
 
               if (lb.isTwoline) {
