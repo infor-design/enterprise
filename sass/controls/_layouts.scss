@@ -295,6 +295,10 @@ body.no-scroll {
         width: 100% !important; //Override Inline Css
         // scss-lint:enable ImportantRule
       }
+
+      .sidebar {
+        display: none;
+      }
     }
 
     // In List-Detail View, Main/Sidebar slide left/right instead of being stacked

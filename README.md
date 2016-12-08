@@ -57,15 +57,13 @@ IE 9+ ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
   - `cd controls`
 
 ### Managing Local Dev with Make and Docker Compose
-* `make up` To start your Local Dev ENV which will build SoHo and run `node server`. NOTE: docker the runs `hl-sohoxi` container in the background and can take up to 5 mins to start the test site.
-* `make tail` To watch container startup logs. `ctrl-c` to stop
-* `make watch` If you want to start `grunt watch` `ctrl-c` to stop
+* `make up` To start your Local Dev ENV which will build SoHo and run `node server`
+* `make watch` If you want to start `grunt watch`
 * In a browser, go to: `http://localhost:4000`
 * NOTE any changes that you make will trigger Sass to recompile and the browser will reload thanks to live reload
-* `make down` To stop the running container
 
 ### Running The Unit Tests
-* `make unit-tests` To run the unit tests
+* `make unit-test` To run the unit tests
 
 ## Manually Install
 * Install nodejs as paying attention to your OS directions: http://nodejs.org/
@@ -203,6 +201,8 @@ Spend a little time in recreating and isolating the issue and you might learn an
   - Send a video in place of a reduced test case
   - Send a link to your application
   - Just send an image of the source code
+
+If a video is useful to show the problem please use a cross platform format such as MP4 and .webm for the video. We have found https://chrome.google.com/webstore/detail/screencastify-screen-vide/mmeijimgabbpbgpdklnllpncmdofkcpn?hl=en to be useful.
 
 4. Use the Bug Report template below
 

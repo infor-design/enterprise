@@ -831,6 +831,10 @@
         entry.id = node.attr('id');
         entry.text = node.find('.tree-text').text();
 
+        if (node.data('jsonData')) {
+          entry.extra = node.data('jsonData').extra;
+        }
+
         if (node.hasClass('is-open')) {
           entry.open = true;
         }
