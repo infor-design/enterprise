@@ -635,7 +635,7 @@
           }
         });
 
-        if (!this.moreMenu.find('.icon').length) {
+        if (this.moreMenu.find('.icon').length) {
           this.moreMenu[addIconClassToMenu]('has-icons');
         }
 
