@@ -635,7 +635,9 @@
           }
         });
 
-        this.moreMenu[addIconClassToMenu]('has-icons');
+        if (!this.moreMenu.find('.icon').length) {
+          this.moreMenu[addIconClassToMenu]('has-icons');
+        }
 
         return {
           visible: visibleLis
@@ -666,8 +668,6 @@
 
       checkOverflowItems: function() {
         var items = this.adjustButtonVisibility();
-
-
 
         // Focus the more menu if the current item is focused
         if (!$.contains(this.buttonset[0], document.activeElement)) {

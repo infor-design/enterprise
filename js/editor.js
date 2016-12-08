@@ -25,7 +25,7 @@
     var pluginName = 'editor',
       defaults = {
         buttons: {
-          editor: ['header1', 'header2', 'separator', 'bold', 'italic', 'underline', 'separator', 'justifyLeft', 'justifyCenter', 'justifyRight', 'separator', 'quote', 'orderedlist', 'unorderedlist', 'separator', 'anchor', 'separator', 'image', 'separator', 'source'],
+          editor: ['header1', 'header2', 'separator', 'bold', 'italic', 'underline', 'strikethrough', 'separator', 'justifyLeft', 'justifyCenter', 'justifyRight', 'separator', 'quote', 'orderedlist', 'unorderedlist', 'separator', 'anchor', 'separator', 'image', 'separator', 'source'],
           source: ['bold','italic','underline', 'separator', 'anchor', 'separator', 'quote', 'separator', 'visual']
         },
         delay: 200,
@@ -400,7 +400,8 @@
           self.sourceView.addClass('is-focused');
         }).on('blur.editor', function(e) {
           self.sourceView.removeClass('is-focused');
-          self.element.empty().html(self.textarea.val());
+          self.element.empty().html($.santizeHtml(self.textarea.val()));
+
           if (self.element.data('validate')) {
             self.element.data('validate').validate(self.element, true, e);
           }
@@ -524,7 +525,7 @@
             'bold': '<button type="button" class="btn" title="'+ Locale.translate('ToggleBold') + '" data-action="bold" data-element="b">' + buttonLabels.bold + '</button>',
             'italic': '<button type="button" class="btn" title="'+ Locale.translate('ToggleItalic') + '" data-action="italic" data-element="i">' + buttonLabels.italic + '</button>',
             'underline': '<button type="button" class="btn underline" title="'+ Locale.translate('ToggleUnderline') + '" data-action="underline" data-element="u">' + buttonLabels.underline + '</button>',
-            'strikethrough': '<button type="button" class="btn" title="'+ Locale.translate('StrikeThrough') + '" data-action="strikethrough" data-element="strike"><strike>A</strike></button>',
+            'strikethrough': '<button type="button" class="btn" title="'+ Locale.translate('StrikeThrough') + '" data-action="strikethrough" data-element="strike">' + buttonLabels.strikethrough + '</button>',
             'superscript': '<button type="button" class="btn" title="'+ Locale.translate('Superscript') + '" data-action="superscript" data-element="sup">' + buttonLabels.superscript + '</button>',
             'subscript': '<button type="button" class="btn" title="'+ Locale.translate('Subscript') + '" data-action="subscript" data-element="sub">' + buttonLabels.subscript + '</button>',
             'separator': '<div class="separator"></div>',
@@ -557,6 +558,7 @@
             'underline': this.getIcon('Underline', 'underline'),
             'superscript': '<span aria-hidden="true"><b>x<sup>1</sup></b></span>',
             'subscript': '<span aria-hidden="true"><b>x<sub>1</sub></b></span>',
+            'strikethrough': this.getIcon('StrikeThrough', 'strike-through'),
             'anchor': this.getIcon('InsertAnchor', 'link'),
             'image': this.getIcon('InsertImage', 'insert-image'),
             'header1': this.getIcon('ToggleH3', 'h3'),
@@ -715,26 +717,26 @@
         return $('<div class="modal editor-modal-url" id="editor-modal-url"></div>')
           .html('<div class="modal-content">' +
             '<div class="modal-header">' +
-              '<h1 class="modal-title">Insert Url</h1>' +
+              '<h1 class="modal-title">' + Locale.translate('InsertAnchor') + '</h1>' +   //TODO: Rename to link when you get strings
             '</div>' +
             '<div class="modal-body">' +
               '<div class="field">' +
-                '<label for="em-url">URL</label>' +
+                '<label for="em-url">' + Locale.translate('Url') + '</label>' +
                 '<input id="em-url" name="em-url" type="text" value="'+ settings.anchor.url +'">' +
               '</div>' +
               '<div class="field">' +
-                '<label for="em-class">Css Class</label>' +
+                '<label for="em-class">' + Locale.translate('CssClass') + '</label>' +
                 '<input id="em-class" name="em-class" type="text" value="'+ settings.anchor.class +'">' +
               '</div>' +
               '<div class="field">' +
-                '<label for="em-target" class="label">Target</label>' +
+                '<label for="em-target" class="label">' + Locale.translate('Target') + '</label>' +
                 '<select id="em-target" name="em-target" class="dropdown">' +
                   targetOptions +
                 '</select>' +
               '</div>' +
               '<div class="modal-buttonset">' +
-                '<button type="button" class="btn-modal btn-cancel">Cancel</button>' +
-                '<button type="button" class="btn-modal-primary">Insert</button>' +
+                '<button type="button" class="btn-modal btn-cancel">' + Locale.translate('Cancel') + '</button>' +
+                '<button type="button" class="btn-modal-primary">' + Locale.translate('Insert') + '</button>' +
               '</div>' +
             '</div>' +
           '</div>').appendTo('body');
@@ -748,16 +750,16 @@
         return $('<div class="modal editor-modal-image" id="editor-modal-image"></div>')
           .html('<div class="modal-content">' +
             '<div class="modal-header">' +
-              '<h1 class="modal-title">Insert Image</h1>' +
+              '<h1 class="modal-title">' + Locale.translate('InsertImage') + '</h1>' +
             '</div>' +
             '<div class="modal-body">' +
               '<div class="field">' +
-                '<label for="image">URL</label>' +
+                '<label for="image">' + Locale.translate('Url') + '</label>' +
                 '<input id="image" name="image" type="text" value="'+ settings.image.url +'">' +
               '</div>' +
               '<div class="modal-buttonset">' +
-                '<button type="button" class="btn-modal btn-cancel">Cancel</button>' +
-                '<button type="button" class="btn-modal-primary">Insert</button>' +
+                '<button type="button" class="btn-modal btn-cancel">' + Locale.translate('Cancel') + '</button>' +
+                '<button type="button" class="btn-modal-primary">' + Locale.translate('Insert') + '</button>' +
               '</div>' +
             '</div>' +
           '</div>').appendTo('body');
@@ -1330,7 +1332,7 @@
 
       toggleSource: function() {
         if (this.sourceViewActive()) {
-          this.element.empty().html(this.textarea.val());
+          this.element.empty().html($.santizeHtml(this.textarea.val()));
           this.element.removeClass('source-view-active hidden');
           this.sourceView.addClass('hidden').removeClass('is-focused');
           this.element.trigger('focus.editor');

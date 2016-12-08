@@ -1487,17 +1487,17 @@ td .btn-actions {
   visibility: visible;
 }
 
+// scss-lint:disable ImportantRule
 //RTL Styles
 html[dir='rtl'] {
-  .datagrid-column-wrapper {
-    margin-left: inherit;
-    margin-right: 20px;
-  }
-
   .datagrid {
     //Restore right Border
     th:last-child {
       border-right: 1px solid $datagrid-header-border-color;
+    }
+
+    td:last-child {
+      border-right: 1px solid $datagrid-cell-border-color;
     }
 
     //Push sort indicator over
@@ -1530,7 +1530,7 @@ html[dir='rtl'] {
 
     &.is-checked::after {
       left: auto;
-      right: 6px;
+      right: 5px;
     }
 
     &.is-partial::after {
@@ -1539,7 +1539,52 @@ html[dir='rtl'] {
     }
   }
 
+  //Filter Row
+  .datagrid-filter-wrapper {
+    .btn-filter {
+      left: 0 !important;
+      margin-left: 0;
+      width: 37px !important;
+
+      .icon-dropdown {
+        margin-left: 0;
+        padding-right: 0;
+        right: -7px;
+      }
+    }
+
+    input {
+      left: 0 !important;
+      right: 5px;
+    }
+
+    .dropdown-wrapper {
+      left: 0 !important;
+      right: 6px;
+    }
+
+    .dropdown + .icon {
+      margin-left: 0 !important;
+      margin-right: -9px;
+    }
+
+    .datepicker + .icon {
+      margin-left: 0;
+      margin-right: -15px;
+    }
+  }
+
+  th.l-center-text .btn-filter {
+    left: 0;
+    right: 9px;
+  }
+
+  tr .datagrid-alert-text {
+    padding-left: 0;
+    padding-right: 10px;
+  }
 }
+// scss-lint:enable ImportantRule
 
 // Sort styles
 //====================================================

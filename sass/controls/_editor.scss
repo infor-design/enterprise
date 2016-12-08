@@ -329,10 +329,20 @@
       margin-right: 8px;
     }
 
+    &[data-element='strike'] {
+      margin-right: 8px;
+
+      svg {
+        height: 22px;
+        width: 15px;
+      }
+    }
+
     &[data-element='u'] {
-      margin-right: 12px;
+      margin-right: 10px;
 
       .icon {
+        height: 17px;
         margin-top: 2px;
       }
     }

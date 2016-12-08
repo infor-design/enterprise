@@ -3273,7 +3273,7 @@ $.fn.datagrid = function(options) {
           cell = elem.parent().children(':visible').index(elem),
           rowNode = $(this).closest('tr'),
           dataRowIdx = self.dataRowIndex(rowNode),
-          col = self.columnSettings(cell),
+          col = self.columnSettings(cell, true),
           item = self.settings.treeGrid ?
             self.settings.treeDepth[dataRowIdx].node :
             self.settings.dataset[self.pager && self.settings.source ? rowNode.index() : dataRowIdx];
@@ -4734,8 +4734,12 @@ $.fn.datagrid = function(options) {
     //Returns Column Settings from a cell
     firstRow: null,
 
-    columnSettings: function (cell) {
+    columnSettings: function (cell, onlyVisible) {
       var column = settings.columns[cell];
+
+      if (onlyVisible) {
+        column = this.visibleColumns()[cell];
+      }
 
       return column || {};
     },
