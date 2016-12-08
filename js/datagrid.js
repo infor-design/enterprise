@@ -3588,7 +3588,7 @@ $.fn.datagrid = function(options) {
         }
 
         if (settings.toolbar.resetLayout) {
-          menu.append('<li><a href="#" data-option="reset-layout">' + Locale.translate('ResetDefaultLayout') + '</a></li>');
+          menu.append('<li><a href="#" data-option="reset-layout">' + Locale.translate('ResetDefault') + '</a></li>');
         }
 
         if (settings.toolbar.exportToExcel) {

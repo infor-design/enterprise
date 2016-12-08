@@ -2,7 +2,7 @@
 Release Date: 2017-01-04
 
 ### Key New Features
-* Datagrid - Reset Default Layout
+* Datagrid - Reset to Default
 
 ### Breaking Changes
 

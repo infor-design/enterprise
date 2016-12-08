@@ -824,12 +824,16 @@
 
       //Sync a node with its dataset 'record'
       syncNode: function (node) {
-        var entry = node.data('jsonData') || {},
+        var entry = {},
           self = this;
 
         entry.node = node;
         entry.id = node.attr('id');
         entry.text = node.find('.tree-text').text();
+
+        if (node.data('jsonData')) {
+          entry.extra = node.data('jsonData').extra;
+        }
 
         if (node.hasClass('is-open')) {
           entry.open = true;
