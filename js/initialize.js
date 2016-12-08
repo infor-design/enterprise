@@ -174,6 +174,9 @@
             //Light Box
             ['lightbox'],
 
+            //Listbuilder
+            ['listbuilder'],
+
             //Progress
             ['progress', '.progress-bar'],
 

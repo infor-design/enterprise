@@ -226,6 +226,16 @@ $listview-full-width-bg-color: $graphite01;
 $listview-full-width-hover-color: $graphite02;
 $listview-full-width-border-color: $graphite03;
 
+// Listbuilder
+$listbuilder-bg-color: transparent;
+$listbuilder-bg-color-hover: $graphite02;
+$listbuilder-bg-color-selected: $azure06;
+$listbuilder-border-color: $input-border-color;
+$listbuilder-border-color-focus: $primary-color;
+$listbuilder-icon-color-hover: $graphite10;
+$listbuilder-text-color: $graphite10;
+$listbuilder-text-color-selected: $white;
+
 // Toolbar
 $toolbar-standalone-bg-color: $graphite02;
 $toolbar-standalone-border-color: $graphite03;
