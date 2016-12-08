@@ -138,7 +138,7 @@
 
         // Init tooltips
         this.topButtons = s.btnAdd.add(s.btnGoUp).add(s.btnGoDown).add(s.btnEdit).add(s.btnDelete);
-        this.tooltipApi = this.topButtons.tooltip().data('tooltip');
+        this.topButtons.tooltip();
 
         // Make Draggable
         this.ul = $('.listview ul', this.element);
