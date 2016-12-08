@@ -77,8 +77,10 @@
             .data('connectWith', self.connectWith);
         }
 
+        self.items = items;
+
         // Draggable Items
-        items
+        self.items
         .attr('draggable', true).addClass(self.handle ? '' : 'draggable')
         .add([this, placeholder])
         .not('a[href], img').on('selectstart.arrange', function() {
@@ -191,13 +193,28 @@
         return returns;
       },
 
+      unbind: function() {
+        this.items
+          .removeClass('draggable')
+          .removeAttr('draggable')
+          .off('selectstart.arrange '+ this.dragStart +' '+ this.dragEnd +' '+ this.dragWhileDragging);
+
+        $(this.handle, this.items)
+          .removeClass('draggable')
+          .off('mousedown.arrange mouseup.arrange touchstart.arrange touchend.arrange');
+
+        return this;
+      },
+
+      updated: function() {
+        return this
+          .unbind()
+          .init();
+      },
+
       // Teardown
       destroy: function() {
-        var items = (this.connectWith) ?
-          this.element.children().add($(this.connectWith).children()) : this.element.children();
-
-        items.off('selectstart.arrange '+ this.dragStart +' '+ this.dragEnd +' '+ this.dragWhileDragging);
-        $(this.handle, items).off('mousedown.arrange mouseup.arrange touchstart.arrange touchend.arrange');
+        this.unbind();
         $.removeData(this.element[0], pluginName);
       }
     };
@@ -206,8 +223,8 @@
     return this.each(function() {
       var instance = $.data(this, pluginName);
       if (instance) {
-        instance.settings = $.extend({}, defaults, options);
-        instance.show();
+        instance.settings = $.extend({}, instance.settings, options);
+        instance.updated();
       } else {
         instance = $.data(this, pluginName, new Plugin(this, settings));
       }

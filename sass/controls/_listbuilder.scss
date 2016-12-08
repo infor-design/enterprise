@@ -1,0 +1,136 @@
+// Listbuilder
+//================================================== //
+
+.listbuilder {
+  .listbuilder-content {
+    background-color: $listbuilder-bg-color;
+    border: 1px solid;
+    border-color: transparent $listbuilder-border-color $listbuilder-border-color;
+    border-radius: 2px;
+    height: 230px;
+    margin-bottom: 20px;
+    overflow: auto;
+    width: 100%;
+  }
+
+  .arrange-placeholder {
+    min-height: 34px;
+  }
+
+  .toolbar.formatter-toolbar {
+    margin-bottom: -1px;
+
+    .buttonset {
+      [class^="btn"] {
+        margin-right: 9px;
+        // scss-lint:disable ImportantRule
+        padding: 0 6px !important; //overrides some media queries
+        // scss-lint:enable ImportantRule
+
+        &:first-child {
+          margin-left: inherit;
+        }
+      }
+
+      > .separator {
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .handle {
+    color: $listbuilder-icon-color-hover;
+    display: none;
+    font-size: 2.5em;
+    left: 6px;
+    position: absolute;
+    top: 3px;
+  }
+
+  .listview {
+    ul {
+      min-height: 100%;
+      padding: 5px 0;
+    }
+
+    li {
+      border: 1px solid transparent;
+      margin-bottom: 1px;
+      padding: 9px 20px;
+      position: relative;
+
+      &::after,
+      &::before,
+      &.is-selected::after {
+        content: none;
+      }
+
+      &.draggable {
+        cursor: move;
+      }
+
+      &:hover:not(.is-disabled):not(.is-selected),
+      &:focus:not(.is-disabled):not(.is-selected), {
+        background-color: $listbuilder-bg-color-hover;
+
+        .handle {
+          color: $listbuilder-text-color;
+          display: inline-block;
+        }
+
+        &:focus {
+          border-color: $listbuilder-border-color-focus;
+        }
+      }
+
+      &.is-selected {
+        background-color: $listbuilder-bg-color-selected;
+
+        &.is-disabled {
+          background-color: $listbuilder-bg-color-hover;
+        }
+
+        p {
+          color: $listbuilder-text-color-selected;
+          font-weight: bold;
+        }
+
+        &:hover:not(.is-disabled),
+        &:focus:not(.is-disabled) {
+          background-color: $listbuilder-bg-color-selected;
+
+          .handle {
+            color: $listbuilder-text-color-selected;
+            display: inline-block;
+          }
+
+          &:focus {
+            border-color: $listbuilder-border-color-focus;
+          }
+        }
+      }
+
+      &.is-editing {
+        padding: 1px 10px;
+
+        &:hover:not(.is-disabled),
+        &:focus:not(.is-disabled) {
+          .handle {
+            display: none;
+          }
+        }
+
+        .edit-input {
+          border: 0;
+          color: $listbuilder-text-color-selected;
+          font-weight: bold;
+        }
+      }
+    }
+
+    .over {
+      border: 1px dashed $listbuilder-border-color;
+    }
+  }
+
+}
