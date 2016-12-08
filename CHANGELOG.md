@@ -3,6 +3,7 @@ Release Date: 2017-01-04
 
 ### Key New Features
 * Datagrid - Reset to Default
+* List Builder
 
 ### Breaking Changes
 
