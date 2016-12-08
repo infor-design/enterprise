@@ -134,13 +134,54 @@ $datagrid-short-row-height: 23px;
         }
 
         .datagrid-alert-icon {
-          top: 9px;
+          top: 5px;
         }
 
         .hyperlink {
           margin-top: 8px;
           vertical-align: top;
         }
+
+        //Editing
+        // scss-lint:disable NestingDepth
+        &.is-editing {
+
+          .datepicker {
+            padding: 12px 20px 10px;
+
+            + .icon {
+              margin-bottom: -4px;
+              top: -1px;
+            }
+          }
+
+          input {
+            padding: 8px 0 7px;
+          }
+
+          .dropdown {
+            padding: 2px 20px;
+          }
+
+          div.dropdown + .icon,
+          div.multiselect + .icon {
+            top: 2px;
+          }
+
+        }
+        // scss-lint:enable NestingDepth
+
+        //validation
+        &.error {
+          &.datagrid-trigger-cell .icon-error {
+            margin-top: auto;
+          }
+
+          .datagrid-cell-wrapper .icon-error {
+            top: 6px;
+          }
+        }
+
       }
     }
     //Resize the headers too
@@ -197,7 +238,9 @@ $datagrid-short-row-height: 23px;
 
         .datagrid-alert-icon {
           // scss-lint:disable ImportantRule
-          top: 5px !important;
+          height: 19px;
+          top: 0 !important;
+          width: 18px;
           // scss-lint:enable ImportantRule
         }
 
@@ -241,6 +284,59 @@ $datagrid-short-row-height: 23px;
             margin: 0;
           }
         }
+
+        &.datagrid-trigger-cell {
+          .icon {
+            height: 16px;
+            margin-bottom: -1px;
+            top: 3px;
+
+            // scss-lint:disable NestingDepth
+            &.icon-calendar {
+              height: 15px;
+              top: 2px;
+            }
+            // scss-lint:enable NestingDepth
+          }
+        }
+
+        //Editing
+        // scss-lint:disable NestingDepth
+        &.is-editing {
+
+          .datepicker {
+            padding: 2px 20px 3px;
+
+            + .icon {
+              height: 15px;
+              margin-bottom: -4px;
+              top: -2px;
+            }
+          }
+
+          input {
+            padding: 2px 0 3px;
+          }
+
+          .dropdown {
+            padding: 2px 20px;
+          }
+
+        }
+        // scss-lint:enable NestingDepth
+
+        //validation
+        &.error {
+          &.datagrid-trigger-cell .icon-error {
+            margin-top: auto;
+          }
+
+          .datagrid-cell-wrapper .icon-error {
+            height: 16px;
+            top: 2px;
+          }
+        }
+
       }
     }
 
@@ -1457,7 +1553,7 @@ td .btn-actions {
 
   &.short-rowheight {
     input {
-      height: 31px;
+      height: 32px;
       padding-top: 10px;
       // scss-lint:disable ImportantRule
       width: 100% !important;
@@ -1466,6 +1562,20 @@ td .btn-actions {
 
     .trigger .icon {
       margin-top: 0;
+    }
+  }
+
+  &.medium-rowheight {
+    input {
+      height: 40px;
+      padding-top: 10px;
+      // scss-lint:disable ImportantRule
+      width: 100% !important;
+      // scss-lint:enable ImportantRule
+    }
+
+    .trigger .icon {
+      margin-top: 4px;
     }
   }
 

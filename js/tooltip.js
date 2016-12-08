@@ -249,7 +249,7 @@
         // jQuery-wrapped elements don't get manipulated.
         // Simply store the reference, render, and return.
         if (content instanceof $ && content.length) {
-          this.content = $.santizeHtml(content);
+          this.content = content;
           doRender();
           return true;
         }
