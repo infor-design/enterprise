@@ -29,7 +29,7 @@
       columns.push({ id: 'drilldown', name: '', field: '', width: 80, formatter: Formatters.Drilldown, click: function(a, b) {console.log(b[0].item, b[0].row);}, align: 'center'});
       columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 165, formatter: Formatters.Hyperlink});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 160});
-      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 80});
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 100});
       columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal, width: 80});
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', width: 100, formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
       columns.push({ id: 'status', name: 'Status', field: 'status', width: 200, formatter: Formatters.Text});
@@ -38,7 +38,7 @@
       var rowTemplate = '<div class="datagrid-cell-layout"><div class="img-placeholder"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-camera"></use></svg></div></div>'+
                         '<div class="datagrid-cell-layout"><p class="datagrid-row-heading">Expandable Content Area</p>' +
                         '<p class="datagrid-row-micro-text">{{sku}}</p>'+
-                        '<span class="datagrid-textarea">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only...</span>'+
+                        '<span class="datagrid-wrapped-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only...</span>'+
                         '<a class="hyperlink">Read more</a>';
 
       //Init and get the api for the grid
