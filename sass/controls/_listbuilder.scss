@@ -7,14 +7,21 @@
     border: 1px solid;
     border-color: transparent $listbuilder-border-color $listbuilder-border-color;
     border-radius: 2px;
+    box-sizing: content-box;
     height: 230px;
     margin-bottom: 20px;
-    overflow: auto;
-    width: 100%;
+    width: calc(100% - 2px);
   }
 
   .arrange-placeholder {
+    background-color: $listbuilder-bg-color-hover;
+    border-color: transparent;
     min-height: 34px;
+    opacity: .4;
+
+    .handle {
+      display: inline-block;
+    }
   }
 
   .toolbar.formatter-toolbar {
@@ -88,6 +95,10 @@
 
         &.is-disabled {
           background-color: $listbuilder-bg-color-hover;
+        }
+
+        .edit-input {
+          background: transparent;
         }
 
         p {

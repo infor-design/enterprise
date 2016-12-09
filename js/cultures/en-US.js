@@ -215,6 +215,7 @@
       'MoreActions': {id: 'MoreActions', value: 'More Actions', comment: 'Text on the More Actions button indictating hidden functions'},
       'MsgDirty': {id: 'MsgDirty', value: ', Modified', comment: 'for modified form fields'},
       'NewDocument': {id: 'NewDocument', value: 'New Document', comment: 'New Document tooltip'},
+      'NewItem': {id: 'NewItem', value: 'New item', comment: 'New item in listbuilder'},
       'Next': {id: 'Next', value: 'Next', comment: 'Next in icons tooltip'},
       'NextPage': {id: 'NextPage', value: 'Next Page', comment: 'Next on Pager'},
       'NextMonth': {id: 'NextMonth', value: 'Next Month', comment: 'the label for the button that moves calendar to next/prev'},

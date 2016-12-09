@@ -133,10 +133,7 @@
 
     // Before delete
     api.element.on('beforedelete', function(e, args) {
-      var msg = 'Are you sure you want to delete?\n['+ args.data.text +']';
-      if (!confirm(msg)) {
-        return $.Deferred().reject().promise();
-      }
+      console.log('beforedelete: ', args);
     });
 
     // After delete
