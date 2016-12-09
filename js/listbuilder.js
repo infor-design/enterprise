@@ -48,9 +48,9 @@
             '</ul>',
 
           'templateNewItem': ''+
-            '<li data-value="New item" role="option">'+
+            '<li data-value="{{text}}" role="option">'+
               '<span class="handle" focusable="false" aria-hidden="true" role="presentation">&#8286;</span>'+
-              '<div class="item-content"><p>New item</p></div>'+
+              '<div class="item-content"><p>{{text}}</p></div>'+
             '</li>',
 
           'templateItemContent': '<p>{{text}}</p>'
@@ -145,7 +145,9 @@
 
         // Make Draggable
         this.ul = $('.listview ul', this.element);
-        this.arrangeApi = this.ul.arrange().data('arrange');
+        this.arrangeApi = this.ul.arrange({
+          placeholder: s.templateNewItem
+        }).data('arrange');
 
         return this;
       },
@@ -169,13 +171,29 @@
         topButtonsClick(s.btnDelete, 'deleteItem');
 
         // DRAGGABLE ===============================================================================
-        self.arrangeApi.element.on('arrangeupdate.listbuilder', function(e, status) {
+        self.arrangeApi.element
+        .on('beforearrange.listbuilder', function(e, status) {
+          var d = self.getDataByNode(status.start),
+            str = s.templateItemContent.replace(/{{text}}/g, d.data.text);
+
+          self.arrangeApi.placeholders.attr('data-value', d.data.text)
+            .find('.item-content').html(str);
+        })
+        .on('arrangeupdate.listbuilder', function(e, status) {
           self.updateAttributes();
           self.arrayIndexMove(self.dataset, status.startIndex, status.endIndex);
           data = self.getDataByNode(status.end);
           data.indexBeforeMove = status.startIndex;
           self.element.triggerHandler('arrangeupdate', [data]);
         });
+
+        $('li:not(.is-disabled) '+ self.arrangeApi.handle, self.ul)
+          .on('mousedown.listbuilder touchstart.listbuilder', function() {
+            var li = $(this);
+            if (!li.is('.is-selected')) {
+              li.trigger('click');
+            }
+          });
 
         return this;
       }, // END: Handle Events ---------------------------------------------------------------------
@@ -188,27 +206,26 @@
         $.when(self.element.triggerHandler('beforeadd')).done(function() {
           var li, data,
             index = 0,
-            node = self.listApi.selectedItems[0];
+            node = self.listApi.selectedItems[0],
+            str = s.templateNewItem.replace(/{{text}}/g, Locale.translate('NewItem'));
 
           if (node && node.length > 0) {
             data = self.getDataByNode(node);
             index = data.index + 1;
-            $(s.templateNewItem).insertAfter(node);
+            $(str).insertAfter(node);
             li = $('li', self.ul).eq(index);
           }
           else {
-            self.ul.prepend(s.templateNewItem);
+            self.ul.prepend(str);
             li = $('li:first-child', self.ul);
           }
 
           self.dataset.push(self.extractNodeData(li));
           self.arrayIndexMove(self.dataset, self.dataset.length - 1, index);
           self.updateAttributes();
-          self.listApi.select(li);
+          li.trigger('click');
           self.arrangeApi.updated();
-
           self.editItem(true);
-          li.addClass('is-selected');
 
           data = self.dataset[index];
           self.element.triggerHandler('afteradd', [data]);
@@ -280,10 +297,17 @@
 
             node.addClass('is-editing');
             container.html(editInput);
-            editInput.focus().select();
+            self.moveCursorToEnd(editInput.focus()[0]);
 
             editInput.on('blur.listbuilder', function() {
               self.commitEdit(node, isNewItem);
+            })
+            .on('keypress.listbuilder', function (e) {
+              var key = e.keyCode || e.charCode || 0;
+              if (key === 13) {
+                self.commitEdit(node, isNewItem);
+                node.focus();
+              }
             });
 
             self.element.triggerHandler('entereditmode', [data]);
@@ -303,8 +327,8 @@
           data.data.value = editInput.val();
         }
         data.data.text = editInput.val();
-        editInput.off('blur.listbuilder');
-        container.html(s.templateItemContent.replace('{{text}}', editInput.val()));
+        editInput.off('blur.listbuilder keypress.listbuilder');
+        container.html(s.templateItemContent.replace(/{{text}}/g, editInput.val()));
         node.removeClass('is-editing');
         self.element.triggerHandler('exiteditmode', [data]);
       },
@@ -349,6 +373,20 @@
         return (obj && (obj instanceof jQuery || obj.constructor.prototype.jquery));
       },
 
+      // Move cursor to end
+      // http://stackoverflow.com/a/26900921
+      moveCursorToEnd: function (el) {
+        setTimeout(function() {
+          if (typeof el.selectionStart === 'number') {
+            el.selectionStart = el.selectionEnd = el.value.length;
+          } else if (typeof el.createTextRange !== 'undefined') {
+            var range = el.createTextRange();
+            range.collapse(false);
+            range.select();
+          }
+        }, 100);
+      },
+
       // Update attributes
       updateAttributes: function() {
         var nodes = $('li', this.ul),
@@ -384,10 +422,16 @@
 
       // Unbind all events
       unbind: function() {
-        this.arrangeApi.element.off('arrangeupdate.listbuilder').destroy();
+        $('li '+ this.arrangeApi.handle, this.ul)
+          .off('mousedown.listbuilder touchstart.listbuilder');
+
+        this.arrangeApi.element
+          .off('beforearrange.listbuilder arrangeupdate.listbuilder').destroy();
+
         this.topButtons.off('click.listbuilder').each(function() {
           $(this).data('tooltip').destroy();
         });
+
         this.listApi.destroy();
         return this;
       },

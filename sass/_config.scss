@@ -227,7 +227,7 @@ $listview-full-width-hover-color: $graphite02;
 $listview-full-width-border-color: $graphite03;
 
 // Listbuilder
-$listbuilder-bg-color: transparent;
+$listbuilder-bg-color: $panel-bg-color;
 $listbuilder-bg-color-hover: $graphite02;
 $listbuilder-bg-color-selected: $azure06;
 $listbuilder-border-color: $input-border-color;

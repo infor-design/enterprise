@@ -8,7 +8,6 @@
   overflow: hidden;
 }
 .example li {
-  border: 1px solid #BDBDBD;
   font-size: 1.3em;
   height: 35px;
   list-style: none;
@@ -16,11 +15,10 @@
   padding: 7px 10px;
 }
 .grid > div {
-  border: 1px solid #BDBDBD;
   float: left;
   font-size: 1.3em;
   height: 80px;
-  line-height: 80px;
+  line-height: 67px;
   margin: 3px;
   padding: 7px 10px;
   text-align: center;
@@ -38,6 +36,10 @@
 }
 .connected .green {
   background: #D5F6C0;
+}
+.example li:not(.arrange-placeholder),
+.grid > div:not(.arrange-placeholder) {
+  border: 1px solid #BDBDBD;
 }
 html[dir='rtl'] .connected.no2 {
   float: left;
