@@ -1492,6 +1492,14 @@ td .btn-actions {
     display: none;
   }
 
+  .datagrid-wrapped-text {
+    display: table;
+    line-height: 1.4em;
+    margin-bottom: 10px;
+    max-width: calc(100% - 30px);
+    white-space: normal;
+  }
+
   .datagrid-row-detail {
     border-bottom: 1px solid $datagrid-cell-border-color;
     height: 0;
