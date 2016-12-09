@@ -238,14 +238,10 @@ body {
     margin-left: 0;
     width: 100%;
   }
-
-  .icon {
-    top: 0 !important;
-  }
 }
 
 .ks-component {
-  .btn-menu {
+  > .btn-menu {
     float: right;
     margin-top: -46px;
   }
