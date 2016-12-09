@@ -516,6 +516,7 @@
         var originalVal = val,
           patternHasDecimal = workingPattern.indexOf(DECIMAL_SYMBOL) > -1,
           currentDecimalIndex = val.indexOf(DECIMAL_SYMBOL),
+          decimalInBuffer = this.buffer.indexOf(DECIMAL_SYMBOL) > -1,
           insertBufferBeforeDecimal = true,
           decimalAlreadyExists = false;
 
@@ -563,65 +564,48 @@
         val = val.replace(PUNCTUATION_REGEX, '');
         separatorLength = originalVal.length - val.length;
 
+        // cut down the total length of the number if it's longer than the total number of integer
+        // and decimal places
+        if (val.length > totalLengthMinusSeparators) {
+          val = val.substring(0, totalLengthMinusSeparators);
+        }
+
         // if the original value had a decimal point, place it back in the right spot
         if (patternHasDecimal) {
-
-          // Lots of checking of decimal position is necessary if it already exists in the value string.
           if (decimalAlreadyExists) {
-
-            var inputParts = originalVal.split(DECIMAL_SYMBOL);
-
-            // cut down the total length of the number if it's longer than the total number of integer
-            // and decimal places
-            if (val.length > totalLengthMinusSeparators) {
-              val = val.substring(0, totalLengthMinusSeparators);
-            }
+            var inputParts = originalVal.split(DECIMAL_SYMBOL),
+              targetDecimalIndex;
 
             // reposition the decimal in the correct spot based on total number of characters
             // in either part of the mask.
-            var targetDecimalIndex;
-
             if (inputParts[1].length < maskParts[1].length) {
               if (inputParts[0].length >= maskParts[0].length) {
                 targetDecimalIndex = maskParts[0].length;
               } else {
                 targetDecimalIndex = currentDecimalIndex;
               }
+            } else if (inputParts[1].length === maskParts[1].length) {
+              targetDecimalIndex = (val.length - maskParts[1].length);
             } else {
               targetDecimalIndex = (val.length - maskParts[1].length);
             }
 
             val = this.insertAtIndex(val, DECIMAL_SYMBOL, targetDecimalIndex);
             if (pos.begin === targetDecimalIndex) {
-              moveCaret(1); // -1 ?
+              moveCaret(1);
             }
 
           } else {
-
-            // cut down the total length of the number if it's longer than the total number of integer
-            // and decimal places
-            if (val.length > totalLengthMinusSeparators) {
-              val = val.substring(0, totalLengthMinusSeparators);
-            }
             // The decimal doesn't already exist in the value string.
             // if the current value has more characters than the "integer" portion of the mask,
             // automatically add the decimal at index of the last pre-decimal pattern character.
-            if (val.length > maskParts[0].length) {
+            if (val.length > maskParts[0].length || decimalInBuffer) {
               val = this.insertAtIndex(val, DECIMAL_SYMBOL, maskParts[0].length);
               if (pos.begin === maskParts[0].length) {
-                moveCaret(1); // -1 ?
+                moveCaret(1);
               }
             }
-
           }
-        } else {
-
-          // cut down the total length of the number if it's longer than the total number of integer
-          // and decimal places
-          if (val.length > totalLengthMinusSeparators) {
-            val = val.substring(0, totalLengthMinusSeparators);
-          }
-
         }
 
         // Only do this part if the thousands separator should be present.
