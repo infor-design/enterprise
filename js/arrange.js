@@ -21,6 +21,7 @@
         defaults = {
           itemsSelector: null,
           connectWith: false,
+          placeholder: null,
           placeholderCssClass: 'arrange-placeholder'
         },
         settings = $.extend({}, defaults, options);
@@ -55,6 +56,10 @@
         if (settings.itemsSelector) {
           items = $(settings.itemsSelector, self.element).not('[data-arrange-exclude="true"]');
           placeholder = $('<'+ items.first()[0].tagName +' />');
+        }
+
+        if (settings.placeholder) {
+          placeholder = $(settings.placeholder);
         }
 
         self.dragStart = 'dragstart.arrange touchstart.arrange gesturestart.arrange';
@@ -173,7 +178,7 @@
             }
             else if (!self.placeholders.is(this)) {
               self.placeholders.detach();
-              this.element.append(placeholder);
+              self.element.append(placeholder);
             }
             return false;
           });//-------------------------------------------------------------------------------------
