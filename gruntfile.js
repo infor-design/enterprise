@@ -124,10 +124,6 @@ module.exports = function(grunt) {
         let combinedDeps = deps.concat(controls);
         dist = setUniqueDependencies(combinedDeps);
 
-        //Include initialize by default
-        if (!dist.includes('initialize')) {
-          dist.unshift('initialize');
-        }
       }
 
       return orderedDist(dist) || false;
