@@ -96,10 +96,10 @@
 
         // Open the searchfield once on intialize if it's a "non-collapsible" searchfield
         if (!this.settings.collapsible) {
-          this.inputWrapper.addClass('no-transition').one('activated.' + this.id, function() {
+          this.inputWrapper.addClass('no-transition').one('expanded.' + this.id, function() {
             $(this).removeClass('no-transition');
           });
-          this.activate();
+          this.expand();
         }
 
         return this;
@@ -110,11 +110,11 @@
         var self = this;
 
         this.inputWrapper.on('mousedown.toolbarsearchfield', function() {
-          self.fastActivate = true;
+          self.fastExpand = true;
         }).on('focusin.toolbarsearchfield', function(e) {
           self.handleFocus(e);
-        }).on('deactivate.toolbarsearchfield', function() {
-          self.deactivate();
+        }).on('collapse.toolbarsearchfield', function() {
+          self.collapse();
         });
 
         if (this.button && this.button.length) {
@@ -150,10 +150,10 @@
         this.inputWrapper.addClass('has-focus');
 
         function searchfieldActivationTimer() {
-          self.activate();
+          self.expand();
         }
 
-        if (this.fastActivate) {
+        if (this.fastExpand) {
           searchfieldActivationTimer();
           return;
         }
@@ -165,14 +165,14 @@
         var self = this;
         clearTimeout(this.focusTimer);
 
-        function searchfieldDeactivationTimer() {
+        function searchfieldCollapseTimer() {
           if (!$.contains(self.inputWrapper[0], document.activeElement) && self.inputWrapper.hasClass('active')) {
-            self.inputWrapper.removeClass('has-focus');
-            self.deactivate();
+            //self.inputWrapper.removeClass('has-focus');
+            self.collapse();
           }
         }
 
-        this.focusTimer = setTimeout(searchfieldDeactivationTimer, 0);
+        this.focusTimer = setTimeout(searchfieldCollapseTimer, 100);
       },
 
       handleOutsideClick: function(e) {
@@ -192,15 +192,15 @@
         }
 
         $(document).offTouchClick(this.id).off('click.' + this.id);
-        this.deactivate();
+        this.collapse();
       },
 
       handleOutsideKeydown: function(e) {
         var key = e.which;
 
-        this.fastActivate = false;
+        this.fastExpand = false;
         if (key === 9) { // Tab
-          this.fastActivate = true;
+          this.fastExpand = true;
           return this.handleFakeBlur();
         }
 
@@ -363,7 +363,7 @@
           hasStyleAttr = this.inputWrapper.attr('style');
 
         if (this.isActive()) {
-          this.deactivate();
+          this.collapse();
         }
 
         if (!isFullWidth && !hasStyleAttr) {
@@ -371,7 +371,7 @@
         }
       },
 
-      activate: function() {
+      expand: function() {
         if (this.inputWrapper.hasClass('active')) {
           return;
         }
@@ -391,24 +391,24 @@
         this.inputWrapper.addClass('active');
         this.handleDeactivationEvents();
 
-        function activateCallback() {
+        function expandCallback() {
           self.inputWrapper.addClass('is-open');
           self.calculateOpenWidth();
           self.setOpenWidth();
           self.input.focus(); // for iOS
           self.toolbarParent.trigger('recalculateButtons');
-          self.inputWrapper.triggerHandler('activated');
+          self.inputWrapper.triggerHandler('expanded');
         }
 
         if (this.settings.collapsible === false && !this.shouldBeFullWidth()) {
-          activateCallback();
+          expandCallback();
           return;
         }
 
-        this.animationTimer = setTimeout(activateCallback, 0);
+        this.animationTimer = setTimeout(expandCallback, 0);
       },
 
-      deactivate: function() {
+      collapse: function() {
         var self = this,
           textMethod = 'removeClass';
 
@@ -427,9 +427,9 @@
           clearTimeout(this.animationTimer);
         }
 
-        function deactivateCallback() {
+        function collapseCallback() {
           self.inputWrapper.removeClass('is-open');
-          self.fastActivate = false;
+          self.fastExpand = false;
 
           closeWidth();
 
@@ -438,7 +438,7 @@
           }
 
           self.toolbarParent.trigger('recalculateButtons');
-          self.inputWrapper.trigger('deactivated');
+          self.inputWrapper.triggerHandler('collapsed');
         }
 
         // Puts the input wrapper back where it should be if it's been moved due to small form factors.
@@ -446,14 +446,14 @@
           this.inputWrapper.detach().prependTo(this.containmentParent.find('.buttonset'));
         }
 
-        self.inputWrapper.removeClass('active').removeClass('has-focus');
+        self.inputWrapper.removeClass('active has-focus');
 
-        if (this.fastActivate || this.settings.collapsible === false) {
-          deactivateCallback();
+        if (this.fastExpand || this.settings.collapsible === false) {
+          collapseCallback();
           return;
         }
 
-        this.animationTimer = setTimeout(deactivateCallback, 0);
+        this.animationTimer = setTimeout(collapseCallback, 100);
       },
 
       shouldBeFullWidth: function() {

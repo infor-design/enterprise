@@ -33,6 +33,7 @@
         </button>
         <ul class="popupmenu">
           <li><a data-option="personalize-columns" href="#">Personalize Columns</a></li>
+          <li><a data-option="reset-layout" href="#">Reset to Default</a></li>
           <li class="separator single-selectable-section"></li>
           <li class="heading">Row Height</li>
           <li class="is-selectable"><a data-option="row-short" href="#">Short</a></li>
@@ -76,6 +77,7 @@
         </button>
         <ul class="popupmenu">
           <li><a data-option="personalize-columns" href="#">Personalize Columns</a></li>
+          <li><a data-option="reset-layout" href="#">Reset to Default</a></li>
           <li class="separator single-selectable-section"></li>
           <li class="heading">Row Height</li>
           <li class="is-selectable"><a data-option="row-short" href="#">Short</a></li>
@@ -109,26 +111,28 @@
       data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '123.99', status: 'OK', orderDate: null, action: 'On Hold'});
 
       //Define Columns for the Grid.
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly});
-      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink});
-      columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity'});
-      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
-      columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal});
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
-      columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Text});
-      columns.push({ id: 'action', name: 'Action Item', field: 'action'});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', filterType: 'text', formatter: Formatters.Readonly});
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', filterType: 'text', formatter: Formatters.Hyperlink});
+      columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', filterType: 'text'});
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', filterType: 'text'});
+      columns.push({ id: 'price', name: 'Price', field: 'price', filterType: 'text', formatter: Formatters.Decimal});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', filterType: 'text', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+      columns.push({ id: 'status', name: 'Status', field: 'status', filterType: 'text', formatter: Formatters.Text});
+      columns.push({ id: 'action', name: 'Action Item', field: 'action', filterType: 'text'});
 
       //Init and get the api for the grid
       $('#datagrid').datagrid({
         columns: columns,
         columnReorder: true,
-        dataset: data,
+        filterable: true,
+        dataset: data.slice(0, 2),
         toolbar: {personalize: true, results: true}
       });
 
       $('#datagrid2').datagrid({
         columns: columns,
         columnReorder: true,
+        filterable: true,
         dataset: data,
         toolbar: {personalize: true, results: true}
       });

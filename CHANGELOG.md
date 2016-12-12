@@ -1,3 +1,25 @@
+## 4.2.4 - Minor Release
+Release Date: 2017-01-04
+
+### Key New Features
+* Datagrid - Reset to Default
+* List Builder
+
+### Breaking Changes
+
+* 2016-12-06 - Changed the name of the `deactivate` event listener on Toolbar Searchfield to `collapse`, as well as the _deactivate()_ method to _collapse()_, to avoid conflicts with the native "deactivate" event propogated in IE.  This was causing some focus issues and visual glitches in the Toolbar Searchfield (SOHO-5297).  Additionally, the `activated` event trigger was renamed to `expanded`, as well as the _activate()_ method to _expand()_, for the purposes of keeping nomenclature consistent.
+
+### Ui Changes
+
+### Affects
+- Datagrid (Columns)
+- Toolbar Searchfield
+- Toolbar (scroll bar)
+- Auto Complete / Editor (xss)
+
+Jira Release Notes
+http://jira.infor.com/secure/ReleaseNote.jspa?version=27962&styleName=Html&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX%7Cdfaec3f836ea373670a7da5f351101b3cdec20fd%7Clin
+
 ## 4.2.3 - Minor Release
 Release Date: 2016-12-06
 

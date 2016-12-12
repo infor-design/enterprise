@@ -185,6 +185,7 @@ module.exports = function(grunt) {
       'temp/amd/lifecycle.js',
       'temp/amd/lightbox.js',
       'temp/amd/listview.js',
+      'temp/amd/listbuilder.js',
       'temp/amd/circlepager.js',
       'temp/amd/pager.js',
       'temp/amd/place.js',

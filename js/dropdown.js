@@ -191,7 +191,7 @@
         var style = this.element[0].style;
 
         if (style.width) {
-          this.pseudoElem.width(style.width);
+          this.pseudoElem.css('width', style.width);
         }
         if (style.position === 'absolute') {
           this.pseudoElem.css({position: 'absolute', left: style.left, top: style.top, bottom: style.bottom, right: style.right});
@@ -884,7 +884,7 @@
         this.isInGrid = this.pseudoElem.closest('.datagrid-row').length === 1;
 
         if (this.isInGrid) {
-          var rowHeight = this.pseudoElem.closest('.datagrid-row').attr('class').replace('datagrid-row  ', '');
+          var rowHeight = this.pseudoElem.closest('.datagrid').attr('class').replace('datagrid', '');
           this.list.addClass('datagrid-dropdown-list ' + rowHeight);
         }
 

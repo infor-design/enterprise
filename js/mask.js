@@ -1224,7 +1224,7 @@
           this.element.parent('.field').removeClass('currency').attr('data-currency-symbol', '');
           this.element.prev('label').find('.currency').remove();
         }
-        this.element.off('keydown.mask keypress.mask keyup.mask focus.mask blur.mask ' + this.env.pasteEvent);
+        this.element.off('updated.mask keydown.mask keypress.mask keyup.mask focus.mask blur.mask ' + this.env.pasteEvent);
 
         this.element.removeClass('is-mask').removeClass('is-number-mask');
 

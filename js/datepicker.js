@@ -933,21 +933,23 @@
           this.closeCalendar();
         }
 
-        this.trigger.off('click.datepicker keydown.datepicker');
+        this.trigger.remove();
+        this.element.attr('data-mask', '');
 
-        var maskAPI = this.element.data('mask');
-        if (maskAPI) {
-          maskAPI.destroy();
+        if (this.calendar && this.calendar.length) {
+          this.calendar.remove();
         }
 
-        /*
-        if (this.settings.trigger === 'immediate') {
-          this.destroy();
+        if (this.popup && this.popup.length) {
+          this.popup.remove();
         }
-        */
 
-        this.calendar.remove();
-        this.popup.remove();
+        var api = this.element.data('mask');
+        if (api) {
+          api.destroy();
+        }
+
+        this.element.off('keydown.datepicker blur.validate change.validate keyup.validate');
 
         return this;
       },

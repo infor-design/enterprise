@@ -375,6 +375,15 @@
     return newValue;
   };
 
+  //Remove Script tags and all onXXX functions
+  $.santizeHtml = function(html) {
+    var santizedHtml = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/g, '');
+     santizedHtml = santizedHtml.replace(/on\w+="[^"]*"/g, '');
+     santizedHtml = santizedHtml.replace(/ on\w+='[^']*'/g, '');
+
+    return santizedHtml;
+  };
+
   //Hide Focus - Only show on key entry
   $.fn.hideFocus = function() {
     var element = $(this);

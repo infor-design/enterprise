@@ -152,6 +152,10 @@
         var topPanel = splitter.prev(),
           bottomPanel = splitter.next();
 
+        if (top > parentHeight || top < 0) {
+          top = parseInt(parentHeight) / 2;
+        }
+
         topPanel.css('height', top + 'px');
         bottomPanel.css('height', (parentHeight - top) + 'px');
       },
