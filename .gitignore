@@ -16,5 +16,6 @@ sohoxi-test-report.html
 xunit.xml
 .idea/
 .idea
+*.iml
 views/docs/changelog-contents.html
 config.json
