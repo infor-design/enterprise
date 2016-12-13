@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 tabindex="0" class="widget-title">Stacked Bar Chart Title</h2>
+        </div>
+        <div class="widget-content">
+          <div id="bar-stacked-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+  var dataset = [{
+      data: [{
+          name: '2008',
+          value: 123
+      }, {
+          name: '2009',
+          value: 234
+      }, {
+          name: '2010',
+          value: 345
+      }],
+      name: 'Series 1',
+  }, {
+      data: [{
+          name: '2008',
+          value: 235
+      }, {
+          name: '2009',
+          value: 267
+      }, {
+          name: '2010',
+          value: 573
+      }],
+      name: 'Series 2',
+  }];
+
+  $('#bar-stacked-example').chart({
+    type: 'bar',
+    dataset: dataset,
+
+    // Use d3 Format
+    // http://koaning.s3-website-us-west-2.amazonaws.com/html/d3format.html
+    // [formatter string] - Only value will be formated
+    formatterString: '$,.2f'// Currency
+  });
+</script>
