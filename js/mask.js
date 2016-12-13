@@ -440,8 +440,8 @@
       insertAtIndex: function(string, value, index) {
           return string.substring(0, index) + value + string.substring(index);
       },
-      replaceAtIndex: function(string, value, index) {
-        return string.substr(0, index) + value + string.substr(index+value.length);
+      replaceAtIndex: function(string, value, indexStart, indexEnd) {
+        return string.substr(0, indexStart) + value + string.substr(isNaN(indexEnd) ? (indexStart + value.length) : indexEnd);
       },
       deleteAtIndex: function(string, value, index) {
         return string.substr(0, index) + string.substr(index + value.length);
@@ -466,7 +466,8 @@
           buffSize = this.buffer.length,
           workingPattern = '' + this.settings.pattern, // copy the pattern, don't reference it
           pattSize = workingPattern.length,
-          isNumberMask = (this.settings.mode === 'number');
+          isNumberMask = (this.settings.mode === 'number'),
+          replaceAtIndex = this.replaceAtIndex;
 
         var DASH_SYMBOL = '-';
         var DASH_REGEX = new RegExp(DASH_REGEX, 'g'); // original: \-\g
@@ -482,7 +483,7 @@
 
         function stripSelection() {
           var selection = val.substring(pos.begin, pos.end/* + buffSize*/);
-          val = val.replace(selection, '');
+          val = replaceAtIndex(val, '', pos.begin, pos.end);
           pos.end = pos.end - selection.length/* + buffSize*/;
         }
 
