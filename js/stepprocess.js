@@ -17,10 +17,10 @@
   /**
    * Stepped Wizard Tree
    */
-  $.fn.treesteps = function(options) {
+  $.fn.stepprocess = function(options) {
 
     // Tab Settings and Options
-    var pluginName = 'treesteps',
+    var pluginName = 'stepprocess',
         defaults = {
           dataset: [],
           afterFolderOpen: function() {}
@@ -28,13 +28,13 @@
         settings = $.extend({}, defaults, options);
 
     // Plugin Constructor
-    function TreeSteps(element) {
+    function StepProcess(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
       this.init();
     }
 
-    TreeSteps.prototype = {
+    StepProcess.prototype = {
 
       /**
        * Init the plugin
@@ -191,7 +191,7 @@
         instance.settings = $.extend({}, instance.settings, options);
         instance.updated();
       } else {
-        instance = $.data(this, pluginName, new TreeSteps(this, settings));
+        instance = $.data(this, pluginName, new StepProcess(this, settings));
       }
     });
   };

@@ -17,7 +17,7 @@
   </div>
 </header>
 
-<div class="tree-steps-ui two-column fixed page-container no-scroll show-main" role="main">
+<div class="step-process-container two-column fixed page-container no-scroll show-main" role="main">
 
   <div class="sidebar">
     <div class="toolbar toolbar-custom toolbar-collapsible phone-visible">
@@ -221,7 +221,7 @@
     /* jshint ignore:end */
 
     // Init Tree Steps
-    $('.tree-steps-ui').treesteps({
+    $('.step-process-container').stepprocess({
       'dataset': sampleData,
       'afterFolderOpen': stepFunctions.afterFolderOpen
     });
@@ -311,10 +311,10 @@
 
         stepFunctions.ajaxGetSubstepsForStep(stepId, function(subSteps) {
 
-          var $treeSteps = $('.tree-steps-ui');
+          var $treeSteps = $('.step-process-container');
 
-          // Call treesteps api to update the tree node list
-          $treeSteps.data('treesteps').updateNode({
+          // Call stepprocess api to update the tree node list
+          $treeSteps.data('stepprocess').updateNode({
             node: $(step),
             children: subSteps
           }, true);

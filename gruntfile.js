@@ -208,6 +208,7 @@ module.exports = function(grunt) {
       'temp/amd/scrollaction.js',
       'temp/amd/spinbox.js',
       'temp/amd/splitter.js',
+      'temp/amd/stepprocess.js',
       'temp/amd/swaplist.js',
       'temp/amd/toast.js',
       'temp/amd/tabs.js',
@@ -219,7 +220,6 @@ module.exports = function(grunt) {
       'temp/amd/toolbarsearchfield.js',
       'temp/amd/tooltip.js',
       'temp/amd/tree.js',
-      'temp/amd/treesteps.js',
       'temp/amd/validation.js',
       'temp/amd/wizard.js',
       'temp/amd/zoom.js'

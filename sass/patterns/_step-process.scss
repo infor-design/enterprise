@@ -3,7 +3,7 @@
 //==================================================//
 
 
-.tree-steps-ui {
+.step-process-container {
 
   // Additional custom toolbar styles
   .toolbar-custom {
@@ -148,7 +148,7 @@
 }
 
 @include respond-to(tablet) {
-  .tree-steps-ui {
+  .step-process-container {
     .sidebar,
     .main {
       @include transform(translateX(0));
@@ -169,7 +169,7 @@
 }
 
 @include respond-to(tabletdown) {
-  .tree-steps-ui {
+  .step-process-container {
     .main,
     .sidebar {
       @include transform-transition-list(300ms cubic-bezier(.17, .04, .03, .94));
@@ -200,7 +200,7 @@
 }
 
 @include respond-to(phone) {
-  .tree-steps-ui {
+  .step-process-container {
     $header-height: 60px;
 
     .phone-visible {
