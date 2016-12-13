@@ -124,7 +124,7 @@
           this.theTreeApi.selectNode(nodeToSelect);
 
           // Get a possible folder for the selected node
-          $nodeToSelectFolder = nodeToSelect.next('ul.folder');
+          var $nodeToSelectFolder = nodeToSelect.next('ul.folder');
 
           if ($nodeToSelectFolder) {
 
@@ -136,7 +136,7 @@
             // Makse sure folder is populated before navigating up into it
             if ($nodeToSelectFolder.children().length) {
               var $foldersLastChild = $nodeToSelectFolder.children().last().find('a');
-              this.theTreeApi.selectNode($foldersLastChild)
+              this.theTreeApi.selectNode($foldersLastChild);
             }
           }
         }

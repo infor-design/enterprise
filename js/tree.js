@@ -75,17 +75,16 @@
           self.decorateNode(a);
         });
 
-
         if (s.useStepUI) {
           s.treeIcons = {
             open: 'caret-up',
             closed: 'caret-down'
-          }
+          };
         } else {
           s.treeIcons = {
             open: 'open-folder',
             closed: 'closed-folder'
-          }
+          };
         }
       },
 
@@ -519,7 +518,6 @@
       setupEvents: function () {
         var self = this;
         self.element.on('updated.tree', function () {
-          console.log('here');
           self.initTree();
         });
       },
@@ -584,14 +582,14 @@
 
           //down arrow
           if (charCode === 40) {
-            var node = self.getNextNode(target);
-            self.setFocus(node);
+            var nextNode = self.getNextNode(target);
+            self.setFocus(nextNode);
           }
 
           //up arrow,
           if (charCode === 38) {
-            var node = self.getPreviousNode(target);
-            self.setFocus(node);
+            var prevNode = self.getPreviousNode(target);
+            self.setFocus(prevNode);
           }
 
           //space
@@ -603,8 +601,8 @@
           if (charCode === 37) {
             if (Locale.isRTL()) {
               if (target.next().hasClass('is-open')) {
-                next = target.next().find('a:first');
-                self.setFocus(next);
+                prev = target.next().find('a:first');
+                self.setFocus(prev);
               } else {
                 self.toggleNode(target);
               }
@@ -612,8 +610,8 @@
               if (target.next().hasClass('is-open')) {
                 self.toggleNode(target);
               } else {
-                next = target.closest('.folder').find('a:first');
-                self.setFocus(next);
+                prev = target.closest('.folder').find('a:first');
+                self.setFocus(prev);
               }
             }
             e.stopPropagation();
