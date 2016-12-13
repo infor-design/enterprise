@@ -482,9 +482,9 @@
         }
 
         function stripSelection() {
-          var selection = val.substring(pos.begin, pos.end/* + buffSize*/);
+          var selection = val.substring(pos.begin, pos.end);
           val = replaceAtIndex(val, '', pos.begin, pos.end);
-          pos.end = pos.end - selection.length/* + buffSize*/;
+          pos.end = pos.end - selection.length;
         }
 
         if (!isNumberMask) {
@@ -637,16 +637,6 @@
 
         // put it back!
         this.element.val(val);
-
-        /*
-        // Get the caret position against the final value.
-        // If the next character in the string is the decimal or a comma, move the caret one spot forward
-        var nextChar = val.substring(pos.end, pos.end + 1);
-        while (pos.end < val.length && PUNCTUATION_REGEX.test(nextChar)) {
-          moveCaret(1);
-          nextChar = val.substring(pos.end, pos.end + 1);
-        }
-        */
 
         // reposition the caret to be in the correct spot (after the content we just added).
         this.caret(pos.end >= pattSize ? pattSize : pos.end);
