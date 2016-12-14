@@ -1,7 +1,4 @@
 
-<!--This is only needed because it renders first on the server on the first one-->
-{{={{{ }}}=}}
-
 <div class="row">
   <div class="twelve columns">
 
@@ -21,6 +18,9 @@
       </div>
     </div>
 
+    <div class="listview" id="task-listview" data-options="{ selectable: false, template: 'shopping-lists-tmpl', source: '{{basepath}}api/supplies' }"></div>
+
+    {{={{{ }}}=}}
     <script id="shopping-lists-tmpl" type="text/html">
 
         <table role="grid" class="listview-table show-headers">
@@ -46,8 +46,6 @@
 
         </table>
     </script>
-
-    <div class="listview" id="task-listview" data-options="{ selectable: false, template: 'shopping-lists-tmpl', source: '{{basepath}}api/supplies' }"></div>
 
   </div>
 </div>

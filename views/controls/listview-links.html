@@ -1,12 +1,14 @@
 
 <div class="row">
   <div class="twelve columns">
-      <h2 class="fieldset-title">ListView  - Readonly / No Select</h2>
+      <h2 class="fieldset-title">ListView  - Links / No Hover</h2>
   </div>
 </div>
 
+
 <div class="row">
   <div class="one-third column">
+
     <div class="card" >
       <div class="card-header">
         <h2 class="card-title">Tasks</h2>
@@ -24,7 +26,7 @@
       </div>
 
       <div class="card-content">
-        <div class="listview" id="task-listview" data-options="{'dataset': 'demoTasks', 'template': 'task-tmpl', 'selectable': 'false'}"></div>
+        <div class="listview" id="task-listview" data-options="{'hoverable': 'false', 'selectable': 'false', 'dataset': 'demoTasks', 'template': 'task-tmpl'}"></div>
       </div>
     </div>
 
@@ -39,7 +41,9 @@
             <li>
           {{/disabled}}
             <p class="listview-heading">Task #{{task}}</p>
-            <p class="listview-subheading">{{desc}} </p>
+            <p class="listview-subheading">
+              <a class="hyperlink">{{desc}}</a>
+            </p>
             <p class="listview-micro">Due: {{date}}</p>
           </li>
         {{/dataset}}
@@ -48,7 +52,3 @@
 
   </div>
 </div>
-
-<script type="text/javascript">
-  $('#task-listview').on('selected', console.log.bind(console))
-</script>

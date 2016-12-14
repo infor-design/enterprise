@@ -1,0 +1,51 @@
+
+<div class="row">
+  <div class="twelve columns">
+      <h2 class="fieldset-title">Status Indicator (Alert)</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="one-third column">
+
+    <div class="card" >
+      <div class="card-header">
+        <h2 class="card-title">My Alerts</h2>
+        <button class="btn-actions" type="button">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Action One</a></li>
+          <li><a href="#">Action Two</a></li>
+        </ul>
+      </div>
+
+      <div class="card-content">
+        <div class="listview" data-options="{ template: 'alerts-tmpl', source: '{{basepath}}api/tasks' }"></div>
+      </div>
+    </div>
+
+    {{={{{ }}}=}}
+    <script id="alerts-tmpl" type="text/html">
+       <ul>
+         {{#dataset}}
+           <li>
+             {{#escalated}}
+               <small class="alert-text">Escalated ({{escalated}}X)</small>
+             {{/escalated}}
+             <p class="listview-heading">{{taskName}}</p>
+             <p class="listview-subheading">{{desc}}</p>
+             <p class="listview-micro">
+               <span class="l-pull-left">{{comments}} Comments</span>
+               <span class="l-pull-right">{{time}}</span>
+             </p>
+           </li>
+         {{/dataset}}
+       </ul>
+     </script>
+
+  </div>
+</div>

@@ -218,6 +218,12 @@
     }
   }
 
+  &.disable-hover {
+    li:hover {
+      background-color: transparent;
+    }
+  }
+
   i {
     color: $listview-color;
     font-style: normal;

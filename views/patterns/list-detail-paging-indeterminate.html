@@ -50,24 +50,6 @@
     </div>
   </div>
 
-{{={{{ }}}=}}
-
-<script id="task-tmpl" type="text/html">
-  <ul>
-    {{#dataset}}
-      {{#disabled}}
-        <li class="is-disabled" style="position: relative;">
-      {{/disabled}}
-      {{^disabled}}
-        <li style="position: relative;">
-      {{/disabled}}
-        <p class="listview-heading">{{productName}}</p>
-        <p class="listview-subheading">{{activity}}</p>
-      </li>
-    {{/dataset}}
-  </ul>
-</script>
-
 <script type="text/javascript">
   $('body').on('initialized', function() {
     $('#task-listview').listview({
@@ -90,11 +72,19 @@
   });
 </script>
 
-<!-- Change Colors -->
-<script type="text/javascript">
-  $('body').on('initialized', function() {
-    $(this).personalize({
-      startingColor: '#2578A9' // Azure07
-    });
-  });
+{{={{{ }}}=}}
+<script id="task-tmpl" type="text/html">
+  <ul>
+    {{#dataset}}
+      {{#disabled}}
+        <li class="is-disabled" style="position: relative;">
+      {{/disabled}}
+      {{^disabled}}
+        <li style="position: relative;">
+      {{/disabled}}
+        <p class="listview-heading">{{productName}}</p>
+        <p class="listview-subheading">{{activity}}</p>
+      </li>
+    {{/dataset}}
+  </ul>
 </script>
