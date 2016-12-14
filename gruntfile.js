@@ -8,6 +8,14 @@ module.exports = function(grunt) {
     configPath = grunt.option('configPath'),
     config = grunt.option('config'),
 
+    checkGruntControlOptions = function(controls) {
+      if (!Array.isArray(controls) && controls) {
+        return controls.split();
+      } else {
+        return controls;
+      }
+    },
+
     extractNameFromPath = function(path) {
       const matches = path.match(/.*(\/.*)(\.js)/),
         name = matches[1].replace('/', '');
@@ -20,30 +28,33 @@ module.exports = function(grunt) {
       return arrSet;
     },
 
-    //Traverse object for dependencies of dependencies, 1-3 levels deep based on architecture
-    setTraverse = function(hashMap, dependencies) {
-      let names = [];
-      for (let obj of dependencies) {
-        names.push(extractNameFromPath(obj.fileFound));
+    setHashMapUniqueDependencies = function(arr) {
+      let uniqDependencies = [];
+      if (Array.isArray(arr)) {
+        for (let obj of arr) {
+          uniqDependencies.push(extractNameFromPath(obj.fileFound));
+        }
+        return setUniqueDependencies(uniqDependencies);
       }
+    },
 
-      let uniqueArr = setUniqueDependencies(names);
-
-      for (let name of uniqueArr) {
-        if (hashMap[name]) {
-          let subObjs = hashMap[name];
-          for (let obj of subObjs) {
-            let objName = extractNameFromPath(obj.fileFound);
-            if (!names.includes(objName)) {
-              names.push(objName);
-            }
-          }
-        } else if (!names.includes(name)) {
-          names.push(name);
+    basePusher = function(arrHashMap, arrBases) {
+      for (let i of arrHashMap) {
+        if(!arrBases.includes(i)) {
+          arrBases.push(i);
         }
       }
+      return arrBases;
+    },
 
-      return names;
+    setTraverse = function(hashMap, collection) {
+      for (let name of collection) {
+        if (hashMap[name]) {
+          let arrHashMap = setHashMapUniqueDependencies(hashMap[name]);
+          collection = basePusher(arrHashMap, collection);
+        }
+      }
+      return collection;
     },
 
     orderedDist = function(dist) {
@@ -112,40 +123,32 @@ module.exports = function(grunt) {
       if (mapperPath && controls && !configPath) {
         const hashMap = grunt.file.readJSON(mapperPath);
 
-        for (let i in controls) {
-          let highLevelDependencies = controls[i],
-            lowLevelDependencies = hashMap[highLevelDependencies],
-            setTraverseDeps = setTraverse(hashMap, lowLevelDependencies);
-          for (let j in setTraverseDeps) {
-            deps.push(setTraverseDeps[j]);
+        for (let control of controls) {
+          if (control !== 'initialize') {
+            let highLevelDependencies = control,
+              lowLevelDependencies = hashMap[highLevelDependencies],
+              uniqs = setHashMapUniqueDependencies(lowLevelDependencies),
+              setTraverseDeps = setTraverse(hashMap, uniqs);
+
+            for (let dep of setTraverseDeps) {
+              deps.push(dep);
+            }
+          } else {
+            deps.push(control);
           }
         }
 
         let combinedDeps = deps.concat(controls);
         dist = setUniqueDependencies(combinedDeps);
 
-        //Include initialize by default
-        if (!dist.includes('initialize')) {
-          dist.unshift('initialize');
-        }
       }
 
       return orderedDist(dist) || false;
 
   };
 
-  //Convert string to array, if one option
-  if(!Array.isArray(controls)) {
-    const control = controls;
-    controls = [];
-    controls.push(control);
-  }
-
-  if(!Array.isArray(excludeControls)) {
-    const excludeControl = excludeControls;
-    excludeControls = [];
-    excludeControls.push(excludeControl);
-  }
+  controls = checkGruntControlOptions(controls);
+  excludeControls = checkGruntControlOptions(excludeControls);
 
   const arrControls = dependencyBuilder(mapperPath, configPath) ||
     [
