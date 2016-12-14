@@ -31,7 +31,7 @@
         columns.push({ id: 'productName', name: 'Product Name', sortable: false,  width: 200, field: 'productName', formatter: Formatters.Hyperlink });
         columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity'});
         columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
-        columns.push({ id: 'status', name: 'Status', field: 'price', textOverflow: 'none', formatter: Formatters.Alert, ranges: [{'min': 0, 'max': 150, 'classes': 'confirm', text: 'Confirmed'}, {'min': 151, 'max': 9999, 'classes': 'error', text: 'Error'}]});
+        columns.push({ id: 'status', name: 'Status', field: 'price', textOverflow: 'none', width: 155, formatter: Formatters.Alert, ranges: [{'min': 0, 'max': 150, 'classes': 'confirm', text: 'Confirmed'}, {'min': 151, 'max': 9999, 'classes': 'error', text: 'Error'}]});
         columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal});
         columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
         columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 360, formatter: Formatters.Ellipsis});
@@ -49,7 +49,6 @@
  
         columns.push({ id: "queries", name: '', field: '', width: 65, formatter: Formatters.Button, click: function() {}, icon: 'queries', iconFile: '', sortable: false, tooltip: 'Approval Status' });
  
-
         //Init the grid
         $('#datagrid').datagrid({
           columns: columns,

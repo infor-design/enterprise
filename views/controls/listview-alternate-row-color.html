@@ -1,0 +1,49 @@
+
+<div class="row">
+  <div class="twelve columns">
+      <h2 class="fieldset-title">Alternate Row Colors</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="one-third column">
+
+    <div class="card" >
+      <div class="card-header">
+        <h2 class="card-title">Alternate Row Colors</h2>
+        <button class="btn-actions" type="button">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Action One</a></li>
+          <li><a href="#">Action Two</a></li>
+        </ul>
+      </div>
+
+      <div class="card-content">
+        <div class="listview alternate-row" data-options="{ template: 'alternate-row-tmpl', source: '{{basepath}}api/construction-cart-items' }"></div>
+      </div>
+    </div>
+
+    {{={{{ }}}=}}
+    <script id="alternate-row-tmpl" type="text/html">
+      <ul>
+        {{#dataset}}
+          <li>
+            <p class="listview-heading">{{itemName}}</p>
+            <p class="listview-subheading">{{itemId}}</p>
+            <p class="listview-text">
+              Item Price: {{itemPrice}}/{{quantifier}}<br>
+              Quantity: {{quantity}}
+            </p>
+            <p class="listview-micro l-pull-right">{{totalPrice}}</p>
+          </li>
+        {{/dataset}}
+      </ul>
+    </script>
+
+  </div>
+</div>

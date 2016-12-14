@@ -56,22 +56,6 @@
             $('#bar-stacked-example').chart({type: 'bar', dataset: dataset});
           </script>
 
-          {{={{{ }}}=}}
-          <script id="alerts-tmpl" type="text/html">
-            <ul>
-              {{#dataset}}
-                <li>
-                  {{#escalated}}
-                    <small class="alert-text">Escalated ({{escalated}}X)</small>
-                  {{/escalated}}
-                  <span class="listview-micro l-pull-right">{{time}}</span>
-                  <p class="listview-heading">{{taskName}}</p>
-                  <p class="listview-subheading">{{desc}}</p>
-                  <p class="listview-micro">{{comments}} Comments</p>
-                </li>
-              {{/dataset}}
-            </ul>
-          </script>
         <div class="widget">
           <div class="widget-header">
             <h2 class="widget-title">Alerts</h2>
@@ -91,7 +75,24 @@
           <div class="listview" data-tmpl="alerts-tmpl" data-dataset="{{basepath}}api/tasks"></div>
           </div>
         </div>
-        <script id="multiselect-tmpl" type="text/html">
+
+          {{={{{ }}}=}}
+          <script id="alerts-tmpl" type="text/html">
+              <ul>
+                {{#dataset}}
+                  <li>
+                    {{#escalated}}
+                      <small class="alert-text">Escalated ({{escalated}}X)</small>
+                    {{/escalated}}
+                    <span class="listview-micro l-pull-right">{{time}}</span>
+                    <p class="listview-heading">{{taskName}}</p>
+                    <p class="listview-subheading">{{desc}}</p>
+                    <p class="listview-micro">{{comments}} Comments</p>
+                  </li>
+                {{/dataset}}
+              </ul>
+            </script>
+          <script id="multiselect-tmpl" type="text/html">
           <ul>
             {{#dataset}}
                <li>

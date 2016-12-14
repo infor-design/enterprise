@@ -34,6 +34,7 @@
         searchable: false, // If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
         selectable: 'single', //false, 'single' or 'multiple'
         selectOnFocus: true, //true or false
+        hoverable: true, //true or false - can disable hover state
         source: null, // External function that can be used to provide a datasource
       },
       settings = $.extend({}, defaults, options);
@@ -450,6 +451,10 @@
 
             isFocused = false;
           });
+        }
+
+        if (!this.settings.hoverable || this.settings.hoverable === 'false') {
+          this.element.addClass('disable-hover');
         }
 
         if (this.settings.selectable === 'multiple') {

@@ -7,6 +7,7 @@ Release Date: 2017-01-04
 
 ### Breaking Changes
 
+* 2016-14-06 - Moved all the list view examples into seperate files fx listview-status
 * 2016-12-06 - Changed the name of the `deactivate` event listener on Toolbar Searchfield to `collapse`, as well as the _deactivate()_ method to _collapse()_, to avoid conflicts with the native "deactivate" event propogated in IE.  This was causing some focus issues and visual glitches in the Toolbar Searchfield (SOHO-5297).  Additionally, the `activated` event trigger was renamed to `expanded`, as well as the _activate()_ method to _expand()_, for the purposes of keeping nomenclature consistent.
 
 ### Ui Changes

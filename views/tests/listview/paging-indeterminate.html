@@ -2,14 +2,10 @@
   <div class="six columns">
 
     <h2>Listview Test:  Indeterminate Paging</h2>
-
     <p><a class="hyperlink" href="http://jira/browse/HFC-3121" target="_blank">Related JIRA Ticket</a>.</p>
 
   </div>
 </div>
-
-<!--This is only needed because it renders first on the server on the first one-->
-{{={{{ }}}=}}
 
 <div class="row">
   <div class="four columns">
@@ -28,27 +24,6 @@
 
   </div>
 </div>
-
-<script id="project-tmpl" type="text/html">
-  <ul>
-    {{#dataset}}
-      {{#disabled}}
-        <li class="is-disabled" style="position: relative;">
-      {{/disabled}}
-      {{^disabled}}
-        <li style="position: relative;">
-      {{/disabled}}
-        <p class="listview-heading">{{productName}}</p>
-        <p class="listview-subheading">{{activity}}</p>
-        {{#status}}
-        <span class="tag" style="position: absolute; top: calc(50% - 13px); right: 25px; text-align: center; min-width: 80px;">
-          {{status}}
-        </span>
-        {{/status}}
-      </li>
-    {{/dataset}}
-  </ul>
-</script>
 
 <script type="text/javascript">
   $('body').on('initialized', function() {
@@ -70,4 +45,27 @@
       template: $('#project-tmpl').html()
     });
   });
+</script>
+
+
+{{={{{ }}}=}}
+<script id="project-tmpl" type="text/html">
+  <ul>
+    {{#dataset}}
+      {{#disabled}}
+        <li class="is-disabled" style="position: relative;">
+      {{/disabled}}
+      {{^disabled}}
+        <li style="position: relative;">
+      {{/disabled}}
+        <p class="listview-heading">{{productName}}</p>
+        <p class="listview-subheading">{{activity}}</p>
+        {{#status}}
+        <span class="tag" style="position: absolute; top: calc(50% - 13px); right: 25px; text-align: center; min-width: 80px;">
+          {{status}}
+        </span>
+        {{/status}}
+      </li>
+    {{/dataset}}
+  </ul>
 </script>
