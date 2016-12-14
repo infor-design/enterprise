@@ -295,7 +295,7 @@
     <div class="field">
       <label>
         <span class="label-text">States</span>
-        <input type="text" autocomplete="off" class='autocomplete' data-options='{delay: 300, source: "/api/states?term="}' placeholder="Type to Search">
+        <input type="text" autocomplete="off" class='autocomplete' data-options='{delay: 300, source: "{{basepath}}api/states?term="}' placeholder="Type to Search">
       </label>
     </div>
 
@@ -412,7 +412,7 @@
     <div class="field">
       <label>
         <span class="label-text">Search</span>
-        <input data-autocomplete="/api/states?term=" name="searchfield" class="searchfield" data-options= "{'clearable': 'true'}">
+        <input data-autocomplete="{{basepath}}api/states?term=" name="searchfield" class="searchfield" data-options= "{'clearable': 'true'}">
       </label>
     </div>
 

@@ -18,7 +18,7 @@
     columns.push({ id: 'action', name: 'Action Item', field: 'portable', text: 'New Order', formatter: Formatters.Button, focusable: true, click: function () {console.log('Nice Clicking'); } });
 
     //Get some data via ajax
-    var url = '/api/tree-tasks';
+    var url = '{{basepath}}api/tree-tasks';
 
     $.getJSON(url, function(data) {
 

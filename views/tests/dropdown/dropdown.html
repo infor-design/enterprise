@@ -161,8 +161,8 @@
     source: function (response) {
       //TODO: Add Term Back
       //function (term, response
-      //$.getJSON('/api/states?term='+term, function(data) {
-      $.getJSON('/api/states', function(data) {
+      //$.getJSON('{{basepath}}api/states?term='+term, function(data) {
+      $.getJSON('{{basepath}}api/states', function(data) {
         //Structure the data with val, label syntax is done on the server
         response(data);
       });

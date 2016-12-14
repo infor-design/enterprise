@@ -57,7 +57,7 @@
     columns.push({ id: 'desc', name: 'Description', field: 'desc', editor: Editors.Input, width: 200});
 
     //Get some data via ajax
-    var url = '/api/tree-tasks';
+    var url = '{{basepath}}api/tree-tasks';
 
     $.getJSON(url, function(data) {
 

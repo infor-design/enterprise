@@ -68,7 +68,7 @@
 
     cachedTerm = term;
 
-    var apiRoute = '/api/states';
+    var apiRoute = '{{basepath}}api/states';
     if (term && typeof term === 'string' && term.length) {
       apiRoute += '?term=' + term;
     }

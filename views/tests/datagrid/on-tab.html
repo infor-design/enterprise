@@ -75,7 +75,7 @@
         columns = [],
         data = [];
 
-      $.get('/api/compressors?pageNum=1&sort=productId&pageSize=10', function(data) {
+      $.get('{{basepath}}api/compressors?pageNum=1&sort=productId&pageSize=10', function(data) {
         grid = grid.data('datagrid');
         console.log(grid)
         grid.loadData(data.data);

@@ -388,6 +388,9 @@ Run the [Soho Mapper Tool](http://git.infor.com/projects/SOHO/repos/mapper/brows
 #### Usage
 `npm run build -- --mapperPath='/Users/username/mapper/dist/globalsHashMap.min.json' --controls='datagrid' --excludeControls='initialize'`
 
+*To view a functioning build you will need to add initialize which is not included by default*
+`npm run build -- --mapperPath='/Users/username/mapper/dist/globalsHashMap.min.json' --controls='datagrid' --controls='initialize'`
+
 #### Options
 Set the hash map path
 `--mapperPath='/Users/username/mapper/dist/globalsHashMap.min.json'`

@@ -70,11 +70,7 @@
 
         this.element.addClass(this.isMultiselect ? ' is-muliselect' : '');
 
-        links.each(function() {
-          var a = $(this);
-          self.decorateNode(a);
-        });
-
+        // Set the proper folder icon
         if (s.useStepUI) {
           s.treeIcons = {
             open: 'caret-up',
@@ -86,6 +82,11 @@
             closed: 'closed-folder'
           };
         }
+
+        links.each(function() {
+          var a = $(this);
+          self.decorateNode(a);
+        });
       },
 
       //Init selected notes

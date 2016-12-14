@@ -25,8 +25,8 @@
 
     $('#ajax-test').dropdown({
       source: function (response, term) {
-        //$.getJSON('/api/states?term='+term, function(data) {
-        $.getJSON('/api/states', function(data, term) {
+        //$.getJSON('{{basepath}}api/states?term='+term, function(data) {
+        $.getJSON('{{basepath}}api/states', function(data, term) {
           console.log(data, term);
           response(data);
         });

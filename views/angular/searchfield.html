@@ -5,7 +5,7 @@
 
         <div class="field">
           <label for="searchfield">Search</label>
-          <input data-autocomplete="/api/states?term=" data-init="false" id="searchfield" name="searchfield" data-ng-attr-placeholder="{{placeholder}}" class="searchfield" />
+          <input data-autocomplete="{{basepath}}api/states?term=" data-init="false" id="searchfield" name="searchfield" data-ng-attr-placeholder="{{placeholder}}" class="searchfield" />
         </div>
 
         <button  type="button" class="btn" data-ng-click="change()">Change</button>
