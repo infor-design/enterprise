@@ -33,11 +33,11 @@
   + .tooltip-description + .icon {
     cursor: pointer;
     fill: $trigger-icon-fill-color;
-    height: 18px;
-    margin-left: -29px;
-    margin-top: 8px;
+    height: 17px;
+    margin-left: -28px;
+    margin-top: 7px;
     position: absolute;
-    width: 18px;
+    width: 17px;
     z-index: 1;
 
     &:hover {
@@ -212,27 +212,15 @@
     }
   }
 
-  // &.is-timepicker {
-  //   td {
-  //     &.is-selected,
-  //     &.is-selected:hover {
-  //       border-width: 0;
-  //       box-shadow: 0 0 0 2px $popover-bg-color inset;
-
-  //       &.is-selected:hover {
-  //         border-width: 1px;
-  //       }
-  //     }
-
-  //     &:focus {
-  //       border-color: $datepicker-focus-border-color;
-  //       border-width: 1px;
-  //       box-shadow: 0 0 0 2px $popover-bg-color inset;
-  //       outline: none;
-  //       -moz-outline-style: none;
-  //     }
-  //   }
-  // }
+  .datepicker-timepicker {
+    border: 0;
+    box-shadow: none;
+    left: 0;
+    margin-bottom: -40px;
+    position: relative;
+    top: -108px;
+    width: 300px;
+  }
 
   .calendar-table {
     margin: 17px auto 0;

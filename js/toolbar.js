@@ -743,7 +743,7 @@
           .init();
 
         setTimeout(function () {
-          $(window).trigger('resize');
+          $(window).triggerHandler('resize');
         }, 0);
 
       },

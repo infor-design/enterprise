@@ -476,6 +476,10 @@
           targetContainer = this.scrollparent;
         }
 
+        if (this.settings.parentElement) {
+          targetContainer = this.settings.parentElement;
+        }
+
         this.tooltip.detach().appendTo(targetContainer);
       },
 

@@ -420,19 +420,6 @@
         return status;
       },
 
-      // Finds the offset of el from relativeEl
-      // http://stackoverflow.com/questions/442404/retrieve-the-position-x-y-of-an-html-element
-      getAbsoluteOffset: function(el, relativeEl) {
-        var x = 0, y = 0;
-
-        while(el && el !== relativeEl && !isNaN(el.offsetLeft) && !isNaN(el.offsetTop)) {
-          x += el.offsetLeft - el.scrollLeft + el.clientLeft;
-          y += el.offsetTop - el.scrollTop + el.clientTop;
-          el = el.offsetParent;
-        }
-        return { top: y, left: x };
-      },
-
       //Animate open/closed the node
       toggleNode: function(node) {
         var next = node.next(),
