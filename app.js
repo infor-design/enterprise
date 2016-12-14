@@ -230,7 +230,7 @@ var express = require('express'),
 
       // Map with links, add to
       function pathMapper(link) {
-        var href = path.join('/', directory, link).replace(/\\/g, '/'),
+        var href = path.join(basepath, directory, link).replace(/\\/g, '/'),
           icon;
 
         if (is('directory', href)) {
