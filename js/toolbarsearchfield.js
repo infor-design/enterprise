@@ -484,7 +484,11 @@
 
       // Tears down events, properties, etc. and resets the control to "factory" state
       teardown: function() {
-        this.inputWrapper.off('mousedown.toolbarsearchfield focusin.toolbarsearchfield');
+        this.inputWrapper.off('mousedown.toolbarsearchfield focusin.toolbarsearchfield collapse.toolbarsearchfield');
+
+        if (this.button && this.button.length) {
+          this.button.off('beforeopen.toolbarsearchfield');
+        }
 
         // Used to determine if the "Tab" key was involved in switching focus to the searchfield.
         $(document).off('keydown.' + this.id);

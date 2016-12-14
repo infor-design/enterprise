@@ -1788,7 +1788,9 @@ html[dir='rtl'] {
 
     &.is-dragging-clone {
       max-width: 125px;
-      min-width: 100px;
+      // scss-lint:disable ImportantRule
+      min-width: 100px !important;
+      // scss-lint:enable ImportantRule
       position: fixed;
 
       .datagrid-header-text {

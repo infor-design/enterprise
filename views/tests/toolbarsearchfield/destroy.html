@@ -1,12 +1,8 @@
 <div class="row top-padding">
   <div class="six columns">
 
-    <!-- Fill out all the information about this test page below, in plain English -->
-    <h2>Toolbar Searchfield Test: Inside Lookup</h2>
-
-    <p><a class="hyperlink" href="http://jira/browse/HFC-3748" target="_blank">Related JIRA Ticket</a>.  This test demonstrates a use case presented by a SoHo Xi v4.2 Design Comp where a Toolbar Searchfield control should size to fill at most 60% of its containing toolbar when it's present inside of a lookup or other type of modal.</p>
-
-    <p></p>
+    <h2>Toolbar Searchfield Test: Destroy</h2>
+    <p><a class="hyperlink" href="http://jira/browse/SOHO-5330" target="_blank">Related JIRA Ticket</a>.  This test demonstrates destroying and invoking search field</p>
 
   </div>
 </div>
@@ -14,44 +10,42 @@
 <div class="row">
   <div class="twelve columns">
 
-    <!-- insert example of control configured for the test here -->
-    <!-- CLEAN UP AFTER YOURSELF and remove these example comments from the completed test pages. -->
+    <div class="toolbar" role="toolbar">
+      <div class="title">
+        Toolbar Title
+      </div>
+      <div class="buttonset">
+
+        <div class="searchfield-wrapper toolbar-searchfield-wrapper">
+          <label class="audible" for="regular-toolbar-searchfield">Toolbar Searchfield</label>
+          <input class="searchfield" placeholder="keyword" id="regular-toolbar-searchfield" name="regular-toolbar-searchfield" />
+        </div>
+
+        <button type="button" class="btn" type="button" id="destroy">Destroy</button>
+
+      </div>
+    </div>
 
   </div>
 </div>
 
-
 <script>
-    var element,
-    opts = {field: 'productId',
-            beforeShow: function (api, response) {
-              var url = '/api/lookupInfo';
-
-              $.getJSON(url, function(data) {
-                api.settings.options.columns = data[0].columns;
-                api.settings.options.dataset = data[0].dataset;
-                response();
-              });
-            },
-            options: {
-              selectable: 'single', //multiple or single
-              toolbar: {title: 'Products', results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true , rowHeight: true}
-            }
-        };
-
-    //In this Test we have an Ajax call that returns the columns and lookup data
-    element = $('#product-lookup').lookup(opts);
 
     $('#destroy').on('click', function () {
+      var element = $('#regular-toolbar-searchfield');
+      console.log(element.data());
 
-      if (element.data('lookup')) {
-        element.data('lookup').destroy();
+      if (element.data('searchfield')) {
+        element.data('searchfield').destroy();
+        element.data('toolbarsearchfield').destroy();
         $(this).text('Invoke');
       } else {
-        element.lookup(opts);
+        element.searchfield();
+        element.toolbarsearchfield();
+        console.log(element.data());
         $(this).text('Destroy');
       }
-
+  //regular-toolbar-searchfield
     });
 
 </script>
