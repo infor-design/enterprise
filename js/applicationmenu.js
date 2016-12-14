@@ -51,7 +51,11 @@
       setup: function() {
         this.hasTrigger = false;
         this.isAnimating = false;
-        this.triggers = $();
+
+        if (!this.hasTriggers()) {
+          this.triggers = $();
+        }
+
         this.menu = this.element;
 
         var openOnLarge = this.element.attr('data-open-on-large');
@@ -100,25 +104,7 @@
       handleEvents: function() {
         var self = this;
 
-        // Setup click events on this.element if it's not the menu itself
-        // (this means that it's a trigger button)
-        if (this.triggers.length) {
-          this.triggers.on('touchend.applicationmenu touchcancel.applicationmenu', function(e) {
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            $(e.target).click();
-          }).on('click.applicationmenu', function() {
-            if ($(this).find('.icon.app-header').hasClass('go-back')) {
-              return false;
-            }
-
-            if (!self.menu.hasClass('is-open') && self.isAnimating === false) {
-              self.openMenu();
-            } else if (self.menu.hasClass('is-open')) {
-              self.closeMenu();
-            }
-          });
-        }
+        this.handleTriggerEvents();
 
         // Setup notification change events
         this.menu.on('notify.applicationmenu', function(e, anchor, value) {
@@ -156,6 +142,35 @@
         }, 800);
 
         return this;
+      },
+
+      // Setup click events on this.element if it's not the menu itself
+      // (this means that it's a trigger button)
+      handleTriggerEvents: function() {
+        var self = this;
+
+        function triggerClickHandler(e) {
+          // Don't allow hamburger buttons that have changed state to activate/deactivate the app menu.
+          if ($(e.currentTarget).find('.icon.app-header').hasClass('go-back')) {
+            return false;
+          }
+
+          if (self.isAnimating) {
+            return false;
+          }
+
+          var isOpen = self.menu.hasClass('is-open');
+          if (!isOpen) {
+            self.openMenu();
+          } else {
+            self.closeMenu();
+          }
+          return true;
+        }
+
+        if (this.triggers.length) {
+          this.triggers.off('click.applicationmenu').on('click.applicationmenu', triggerClickHandler);
+        }
       },
 
       handleKeyDown: function(e) {
@@ -334,6 +349,10 @@
         $(document).off('touchend.applicationmenu touchcancel.applicationmenu click.applicationmenu keydown.applicationmenu');
       },
 
+      hasTriggers: function() {
+        return (this.triggers !== undefined && this.triggers instanceof $ && this.triggers.length);
+      },
+
       // Externally Facing function that can be used to add/remove application nav menu triggers.
       // If the 'remove' argument is defined, triggers that are defined will be removed internally instead of added.
       // If the 'norebuild' argument is defined, this control's events won't automatically be rebound to include
@@ -349,6 +368,7 @@
         });
 
         this.triggers = this.triggers[!remove ? 'add' : 'not'](changed);
+        this.handleTriggerEvents();
 
         if (norebuild && norebuild === true) {
           return;
@@ -364,6 +384,10 @@
         $(document).off('touchend.applicationmenu touchcancel.applicationmenu click.applicationmenu open-applicationmenu close-applicationmenu');
 
         this.accordion.data('accordion').destroy();
+
+        if (this.hasTriggers()) {
+          this.triggers.off('click.applicationmenu');
+        }
 
         return this;
       },
