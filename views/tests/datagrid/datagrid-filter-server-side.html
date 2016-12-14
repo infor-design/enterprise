@@ -44,7 +44,7 @@
             pagesize: 10,
             source: function(req, response) {
               console.log('source callback', req);
-              var url = '/api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
+              var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
 
               if (req.sortId) {
                 url += '&sortId=' + req.sortId + '&sortAsc=' + req.sortAsc;

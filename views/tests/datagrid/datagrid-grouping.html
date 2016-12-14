@@ -24,7 +24,7 @@
       columns.push({ id: 'purchases', name: 'Purchases', field: 'purchases'});
 
       //Get some data via ajax
-      var url = '/api/accounts';
+      var url = '{{basepath}}api/accounts';
 
       $.getJSON(url, function(res) {
 

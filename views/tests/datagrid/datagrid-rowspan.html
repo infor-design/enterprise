@@ -23,7 +23,7 @@
       columns.push({ id: 'units', name: 'Vehicles on Scene', field: 'units'});
 
       //Get some data via ajax
-      var url = '/api/incidents';
+      var url = '{{basepath}}api/incidents';
 
       $.getJSON(url, function(res) {
 

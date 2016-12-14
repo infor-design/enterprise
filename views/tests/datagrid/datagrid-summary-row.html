@@ -31,7 +31,7 @@
       columns.push({ id: 'percentage', summaryRowFormatter: Formatters.SummaryRow, aggregator: 'sum', summaryText: ' %', summaryTextPlacement: 'after', name: 'Percentage', field: 'percentage'});
 
       //Get some data via ajax
-      var url = '/api/accounts-sm';
+      var url = '{{basepath}}api/accounts-sm';
 
       $.getJSON(url, function(res) {
 

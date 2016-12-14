@@ -31,7 +31,7 @@
             callback();
           },
           isCategory = categoryId || 'fruits';
-          url = '/api/fruits';
+          url = '{{basepath}}api/fruits';
 
         // Don't add more than once
         if ($.inArray(isCategory, loadedCategories) > -1) {

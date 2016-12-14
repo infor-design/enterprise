@@ -37,7 +37,7 @@
       </div>
 
       <div class="card-content">
-        <div class="listview" data-tmpl="employee-tmpl" data-dataset="/api/people"></div>
+        <div class="listview" data-tmpl="employee-tmpl" data-dataset="{{basepath}}api/people"></div>
       </div>
     </div>
   </div>
@@ -130,7 +130,7 @@
       </div>
 
       <div class="card-content">
-        <div class="listview" id="emp-listview" data-tmpl="drilldown-tmpl" data-dataset="/api/people"></div>
+        <div class="listview" id="emp-listview" data-tmpl="drilldown-tmpl" data-dataset="{{basepath}}api/people"></div>
       </div>
     </div>
   </div>
@@ -209,7 +209,7 @@
       </div>
 
       <div class="card-content">
-        <div class="listview" data-tmpl="alerts-tmpl" data-dataset="/api/tasks"></div>
+        <div class="listview" data-tmpl="alerts-tmpl" data-dataset="{{basepath}}api/tasks"></div>
       </div>
     </div>
   </div>
@@ -248,7 +248,7 @@
       </div>
 
       <div class="card-content">
-        <div class="listview" data-tmpl="team-tmpl" data-dataset="/api/people"></div>
+        <div class="listview" data-tmpl="team-tmpl" data-dataset="{{basepath}}api/people"></div>
       </div>
     </div>
   </div>
@@ -312,7 +312,7 @@
   var shareList = $('#share-rbhp').on('click', 'button', function (e) {
     var api = shareList.data('listview');
     api.remove($(this).closest('li'));
-    //api.clear();
+    /{{basepath}}api.clear();
    });
 
 </script>

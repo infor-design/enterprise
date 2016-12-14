@@ -75,7 +75,7 @@
       pagesize: 20,
       source: function(req, response) {
         // Build the URL
-        var url = '/api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
+        var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
 
         //Get Page Based on info in Req, return results into response.
         $.getJSON(url, function(res) {
