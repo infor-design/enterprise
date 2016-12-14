@@ -366,7 +366,7 @@
 
         this.periodSelect = $('<select id="timepicker-period" class="period dropdown"></select>');
         if (!is24HourFormat) {
-          timeParts.append($('<span class="label colons">&nbsp;</span>'));
+          timeParts.append($('<span class="label colons"></span>'));
           var localeDays = Locale.calendar().dayPeriods,
             localeCount = 0,
             regexDay = new RegExp(self.initValues.period, 'i'),
