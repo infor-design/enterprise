@@ -1,0 +1,93 @@
+<div class="row">
+  <div class="twelve columns">
+    <br />
+    <h3>Grid Example: Core</h3>
+    <p>
+    Shows a "stress test" with some hidden columns.
+    </p>
+    <hr class="fieldset-hr">
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <div class="toolbar" role="toolbar">
+      <div class="title">
+        Compressors
+        <span class="datagrid-result-count">(10 Results)</span>
+      </div>
+      <div class="buttonset">
+        <button type="button" class="btn">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-filter"></use>
+          </svg>
+          <span>Filter</span>
+        </button>
+      </div>
+
+      <div class="more">
+        <button type="button" class="btn-actions">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+          <span class="audible">More Actions</span>
+        </button>
+        <ul class="popupmenu">
+          <li><a data-option="personalize-columns" href="#">Personalize Columns</a></li>
+          <li><a data-option="reset-layout" href="#">Reset to Default</a></li>
+          <li class="separator"></li>
+          <li><a data-option="export-to-excel" href="#">Export to Excel</a></li>
+          <li class="separator single-selectable-section"></li>
+          <li class="heading">Row Height</li>
+          <li class="is-selectable"><a data-option="row-short" href="#">Short</a></li>
+          <li class="is-selectable"><a data-option="row-medium" href="#">Medium</a></li>
+          <li class="is-selectable is-checked"><a data-option="row-normal" href="#">Normal</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+    var grid,
+      columns = [],
+      data = [],
+      max = 10,
+      hiddenColumns = [2,7,8,9,10];
+
+      // Some Sample Data
+      for (var j = 0; j < max; j++) {
+        var colName = 'column'+j,
+          dataObj = {},
+          columnObj;
+
+        for (var i = 0; i < max; i++) {
+          var col = 'column'+i;
+          dataObj[col] = 'Data '+ j;
+        }
+
+        columnObj = { id: colName, name: colName, field: colName, width: 40, formatter: Formatters.Input};
+
+        if ($.inArray(j, hiddenColumns) !== -1) {
+          columnObj.hidden = true;
+        }
+
+        data.push(dataObj);
+        columns.push(columnObj);
+      }
+
+      //Init and get the api for the grid
+      $('#datagrid').datagrid({
+        columns: columns,
+        columnReorder: true,
+        saveColumns: false,
+        dataset: data,
+        toolbar: {personalize: true, results: true}
+      });
+    });
+
+</script>

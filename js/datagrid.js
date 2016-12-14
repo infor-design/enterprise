@@ -2039,6 +2039,11 @@ $.fn.datagrid = function(options) {
       self.draggableColumnTargets = [];
       self.draggableStatus = {};
 
+      // Move last target if not found in last header
+      if (!$('.is-draggable-target.last', headers.last()).length) {
+        headers.last().append($('.is-draggable-target.last', self.headerNodes()));
+      }
+
       $('.is-draggable-target', headers).each(function (index) {
         var idx = ($(this).is('.last')) ? index - 1 : index; // Extra target for last header th
         target = headers.eq(idx);
