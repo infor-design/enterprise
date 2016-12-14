@@ -11,6 +11,8 @@ module.exports = function(grunt) {
     checkGruntControlOptions = function(controls) {
       if (!Array.isArray(controls) && controls) {
         return controls.split();
+      } else {
+        return controls;
       }
     },
 
@@ -121,14 +123,18 @@ module.exports = function(grunt) {
       if (mapperPath && controls && !configPath) {
         const hashMap = grunt.file.readJSON(mapperPath);
 
-        for (let i in controls) {
-          let highLevelDependencies = controls[i],
-            lowLevelDependencies = hashMap[highLevelDependencies],
-            uniqs = setHashMapUniqueDependencies(lowLevelDependencies),
-            setTraverseDeps = setTraverse(hashMap, uniqs);
+        for (let control of controls) {
+          if (control !== 'initialize') {
+            let highLevelDependencies = control,
+              lowLevelDependencies = hashMap[highLevelDependencies],
+              uniqs = setHashMapUniqueDependencies(lowLevelDependencies),
+              setTraverseDeps = setTraverse(hashMap, uniqs);
 
-          for (let j in setTraverseDeps) {
-            deps.push(setTraverseDeps[j]);
+            for (let dep of setTraverseDeps) {
+              deps.push(dep);
+            }
+          } else {
+            deps.push(control);
           }
         }
 
