@@ -14,7 +14,7 @@
     var element,
     opts = {field: 'productId',
             beforeShow: function (api, response) {
-              var url = '/api/lookupInfo';
+              var url = '{{basepath}}api/lookupInfo';
 
               $.getJSON(url, function(data) {
                 api.settings.options.columns = data[0].columns;

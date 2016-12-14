@@ -85,7 +85,7 @@
       columns.push({ id: 'units', width: 450, name: 'Vehicles on Scene', field: 'units', formatter: Formatters.VehicalsOnScene});
 
       //Get some data via ajax
-      var url = '/api/incidents';
+      var url = '{{basepath}}api/incidents';
 
       $.getJSON(url, function(res) {
         $('#datagrid').datagrid({

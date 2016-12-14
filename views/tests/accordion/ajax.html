@@ -30,7 +30,7 @@
           return false;
         }
 
-        request = $.get('/api/nav-items');
+        request = $.get('{{basepath}}api/nav-items');
 
         function setContent(htmlString) {
           ui.pane.append(htmlString);

@@ -53,8 +53,8 @@
 </script>
 
 <script type="text/javascript">
-  var statusCodes = $.get({url: '/api/general/status-codes'}),
-    myProjects = $.get({url: '/api/my-projects'}),
+  var statusCodes = $.get({url: '{{basepath}}api/general/status-codes'}),
+    myProjects = $.get({url: '{{basepath}}api/my-projects'}),
     testData;
 
   function replaceStatus(dataObj) {

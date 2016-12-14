@@ -26,7 +26,7 @@
       columns.push({ id: 'customerSince', name: 'Customer Since', field: 'customerSince'});
       columns.push({ id: 'action', name: 'Action Item', field: 'action', text: 'New Order', formatter: Formatters.Button, focusable: true, click: function () {console.log('Nice Clicking'); } });
 
-       var url = '/api/companies';
+       var url = '{{basepath}}api/companies';
 
       $.getJSON(url, function(res) {
          //Init and get the api for the grid

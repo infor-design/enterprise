@@ -9,6 +9,7 @@ var express = require('express'),
   fs = require('fs'),
   http = require('http'),
   git = require('git-rev-sync'),
+  basepath = process.env.BASEPATH || '/',
   getJSONFile = require(path.resolve(__dirname, 'demoapp', 'js', 'getJSONFile')); // jshint ignore:line
 
   app.set('view engine', 'html');
@@ -35,6 +36,7 @@ var express = require('express'),
     layout: 'layout',
     locale: 'en-US',
     title: 'SoHo XI',
+    basepath: basepath,
     // Ignore this because its not in our control
     version: process.env.npm_package_version, // jshint ignore:line
     commit: git.long(),
@@ -230,7 +232,7 @@ var express = require('express'),
 
       // Map with links, add to
       function pathMapper(link) {
-        var href = path.join('/', directory, link),
+        var href = path.join(basepath, directory, link),
           icon;
 
         if (is('directory', href)) {

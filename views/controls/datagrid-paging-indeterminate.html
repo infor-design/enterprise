@@ -48,7 +48,7 @@
             return; //Or can ignore and call loadData
           }
 
-          var url = '/api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
+          var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
 
           if (req.sortField) {
             url += '&sortField=' + req.sortField + '&sortAsc=' + req.sortAsc;
@@ -69,7 +69,7 @@
       });
 
       // Option 2: Bi-Pass Source Function
-      var url = '/api/compressors?pageNum='+ 2 +'&pageSize='+ pageSize;
+      var url = '{{basepath}}api/compressors?pageNum='+ 2 +'&pageSize='+ pageSize;
       $.getJSON(url, function(res) {
         var pageInfo = {total: res.total, activePage: 2, pagesize: pageSize, firstPage: false, lastPage: false};
         grid.data('datagrid').loadData(res.data, pageInfo);

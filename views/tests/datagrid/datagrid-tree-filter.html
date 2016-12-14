@@ -57,7 +57,7 @@
     columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', width: 130, formatter: Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date'});
 
     //Get some data via ajax
-    var url = '/api/tree-tasks';
+    var url = '{{basepath}}api/tree-tasks';
 
     $.getJSON(url, function(data) {
 

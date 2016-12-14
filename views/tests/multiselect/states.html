@@ -5,12 +5,12 @@
     <h2 class="fieldset-title">Multiselect Controls with External Source</h2>
     <div class="field">
       <label for="states-multi" class="label">States (Max 10)</label>
-      <select multiple id="states-multi" data-source="/api/states?term=" name="states-multi" data-maxselected="10" class="multiselect"></select>
+      <select multiple id="states-multi" data-source="{{basepath}}api/states?term=" name="states-multi" data-maxselected="10" class="multiselect"></select>
     </div>
 
     <div class="field">
       <label for="towns-multi-optgroup" class="label">Towns (Max 5)</label>
-      <select multiple data-maxselected="5" data-source="/api/towns" data-init="false" id="towns-multi-optgroup" name="towns-multi-optgroup" class="multiselect">
+      <select multiple data-maxselected="5" data-source="{{basepath}}api/towns" data-init="false" id="towns-multi-optgroup" name="towns-multi-optgroup" class="multiselect">
       </select>
     </div>
 

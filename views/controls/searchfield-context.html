@@ -5,7 +5,7 @@
 
       <div class="field">
         <label for="searchfield-context-white">Context Search</label>
-        <input data-autocomplete="/api/states?term=" id="searchfield-context-white" name="searchfield" class="searchfield context" data-options= "{'clearable': 'true'}" placeholder="Search for U.S. States..." />
+        <input data-autocomplete="{{basepath}}api/states?term=" id="searchfield-context-white" name="searchfield" class="searchfield context" data-options= "{'clearable': 'true'}" placeholder="Search for U.S. States..." />
       </div>
 
     </div>
@@ -18,7 +18,7 @@
 
     <div class="field">
       <label for="searchfield-context-gray">Context Search</label>
-      <input data-autocomplete="/api/states?term=" id="searchfield-context-gray" name="searchfield" class="searchfield context alternate" data-options= "{'clearable': 'true'}" placeholder="Search for U.S. States..." />
+      <input data-autocomplete="{{basepath}}api/states?term=" id="searchfield-context-gray" name="searchfield" class="searchfield context alternate" data-options= "{'clearable': 'true'}" placeholder="Search for U.S. States..." />
       <button type="button" class="btn">Add Bespoke Product</button>
     </div>
 

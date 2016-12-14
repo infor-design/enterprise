@@ -21,7 +21,7 @@
         columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input});
         columns.push({ id: 'activity', name: 'Activity', field: 'activity', editor: Editors.Input});
 
-        var url = '/api/compressors?pageNum=1&pageSize=100';
+        var url = '{{basepath}}api/compressors?pageNum=1&pageSize=100';
 
         $.getJSON(url, function(res) {
 

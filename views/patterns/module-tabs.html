@@ -179,7 +179,7 @@
 
         var ret = '';
         for (var i = 0; i < buildRandomParagraphs; i++) {
-          ret += '<p>' + $.get('/api/garbage?size=120') + '</p>';
+          ret += '<p>' + $.get('{{basepath}}api/garbage?size=120') + '</p>';
         }
         return ret;
       }
@@ -216,12 +216,12 @@
 
         // Do different things depending on the checkbox
         if ($('#use-garbage').prop('checked')) {
-          var title = $.get('/api/garbage?size=1'),
-            body1 = $.get('/api/garbage?size=120'),
-            body2 = $.get('/api/garbage?size=120'),
-            body3 = $.get('/api/garbage?size=120'),
-            body4 = $.get('/api/garbage?size=120'),
-            body5 = $.get('/api/garbage?size=120');
+          var title = $.get('{{basepath}}api/garbage?size=1'),
+            body1 = $.get('{{basepath}}api/garbage?size=120'),
+            body2 = $.get('{{basepath}}api/garbage?size=120'),
+            body3 = $.get('{{basepath}}api/garbage?size=120'),
+            body4 = $.get('{{basepath}}api/garbage?size=120'),
+            body5 = $.get('{{basepath}}api/garbage?size=120');
 
           $.when(title, body1, body2, body3, body4, body5).done(function completed(title, body1, body2, body3, body4, body5) {
 

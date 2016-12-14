@@ -113,7 +113,7 @@
             <button class="btn-tertiary" title="Remove Selected Items" type="button">Remove</button>
           </div>
         </div>
-        <div class="listview" id="period-end" data-options="{template: 'period-end-tmpl', selectable: 'single', source: '/api/periods'}"></div>
+        <div class="listview" id="period-end" data-options="{template: 'period-end-tmpl', selectable: 'single', source: '{{basepath}}api/periods'}"></div>
       </div>
     </div>
   </div>
@@ -218,7 +218,7 @@
       </div>
 
       <div class="card-content">
-        <div class="listview" data-options="{ template: 'alerts-tmpl', source: '/api/tasks' }"></div>
+        <div class="listview" data-options="{ template: 'alerts-tmpl', source: '{{basepath}}api/tasks' }"></div>
       </div>
     </div>
   </div>
@@ -266,7 +266,7 @@
       </div>
 
       <div class="card-content">
-        <div class="listview alternate-row" data-options="{ template: 'alternate-row-tmpl', source: '/api/construction-cart-items' }"></div>
+        <div class="listview alternate-row" data-options="{ template: 'alternate-row-tmpl', source: '{{basepath}}api/construction-cart-items' }"></div>
       </div>
     </div>
   </div>

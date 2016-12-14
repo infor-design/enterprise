@@ -12,7 +12,7 @@
 
     <div class="field">
       <label for="autocomplete-busy">Autocomplete</label>
-      <input type="text" autocomplete="off" class='autocomplete busy' data-options='{blockUI: false, displayDelay: 0, source: "/api/states?delay=4000&amp;term="}' placeholder="Type to Search" id="autocomplete-busy">
+      <input type="text" autocomplete="off" class='autocomplete busy' data-options='{blockUI: false, displayDelay: 0, source: "{{basepath}}api/states?delay=4000&amp;term="}' placeholder="Type to Search" id="autocomplete-busy">
     </div>
 
   </div>
@@ -20,7 +20,7 @@
 
     <div class="field">
       <label for="searchfield-busy">Searchfield</label>
-      <input type="text" autocomplete="off" class='searchfield busy' data-options='{displayDelay: 0, source: "/api/states?delay=4000&amp;term="}' placeholder="Type to Search" id="searchfield-busy">
+      <input type="text" autocomplete="off" class='searchfield busy' data-options='{displayDelay: 0, source: "{{basepath}}api/states?delay=4000&amp;term="}' placeholder="Type to Search" id="searchfield-busy">
     </div>
 
   </div>
@@ -60,7 +60,7 @@
   $('body').on('initialized', function() {
 
     function genericSource(response, term) {
-      $.getJSON('/api/states?delay=4000', function(data, term) {
+      $.getJSON('{{basepath}}api/states?delay=4000', function(data, term) {
         console.log(data, term);
         response(data);
       });
@@ -100,7 +100,7 @@
     $('#lookup-busy').lookup({
         field: 'productId',
         beforeShow: function (api, response) {
-          var url = '/api/lookupInfo?delay=4000';
+          var url = '{{basepath}}api/lookupInfo?delay=4000';
 
           $.getJSON(url, function(data) {
             api.settings.options.columns = data[0].columns;
