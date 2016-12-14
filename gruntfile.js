@@ -141,8 +141,8 @@ module.exports = function(grunt) {
 
   };
 
-  checkGruntControlOptions(controls);
-  checkGruntControlOptions(excludeControls);
+  controls = checkGruntControlOptions(controls);
+  excludeControls = checkGruntControlOptions(excludeControls);
 
   const arrControls = dependencyBuilder(mapperPath, configPath) ||
     [
