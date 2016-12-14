@@ -235,7 +235,7 @@ var express = require('express'),
         var href = path.join(basepath, directory, link).replace(/\\/g, '/'),
           icon;
 
-        if (is('directory', href)) {
+        if (is('directory', href.replace(basepath,''))) {
           icon = '#icon-folder';
 
           if (href.charAt(href.length - 1) !== '/') {
