@@ -1145,7 +1145,8 @@
       renderVisiblePanel: function() {
         // Recalculate all components inside of the visible tab to adjust widths/heights/display if necessary
         this.resizeNestedTabs();
-        this.panels.filter(':visible').handleResize();
+        //TJM: Prioritizing performance fix.
+        //this.panels.filter(':visible').handleResize();
       },
 
       changeHash: function(href) {

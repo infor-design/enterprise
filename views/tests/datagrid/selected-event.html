@@ -21,6 +21,10 @@
   $('body').on('initialized', function() {
 
     function selectedHandler(e, args) {
+      if (!args.length) {
+        return;
+      }
+
       var data = args[0].data;
 
       $('body').toast({
