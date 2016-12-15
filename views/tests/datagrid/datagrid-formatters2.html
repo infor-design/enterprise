@@ -1,0 +1,78 @@
+<!-- Setup -->
+<ul id="grid-actions-menu" class="popupmenu">
+  <li><a href="#">Action One</a></li>
+  <li><a href="#">Action Two</a></li>
+  <li><a href="#">Action Three</a></li>
+</ul>
+
+{{={{{ }}}=}}
+
+<!-- Readonly Grid -->
+<div class="row">
+  <div class="twelve columns">
+    <h2 class="fieldset-title">Datagrid - Kitchen sink</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="readonly-datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+    $('body').on('initialized', function () {
+     //Locale.set('en-US').done(function () {
+      var grid,
+        columns = [],
+        data = [];
+
+      // Some Sample Data
+      data.push({ id: 1, productId: 2142201, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1, price: 210.99, status: 'OK', orderDate: '20141208', action: 'Action', ordered: 1, setting: {optionOne: 'One', optionTwo: 'One'}});
+      data.push({ id: 2, productId: 2241202, productName: 'Different Compressor', activity:  'Inspect and Repair', quantity: 2, price: 210.99, status: '', orderDate: '20150703', action: 'On Hold', ordered: true, setting: {optionOne: 'One', optionTwo: 'One'}});
+      data.push({ id: 3, productId: 2342203, productName: 'Compressor', activity:  'Inspect and Repair', quantity: 1, price: 120.99, status: null, orderDate: '20140603', action: 'Action', ordered: true, comment: 'Dynamic harness out-of-the-box /n syndicate models deliver. Disintermediate, technologies /n scale deploy social streamline, methodologies, killer podcasts innovate. Platforms A-list disintermediate, value visualize dot-com /n tagclouds platforms incentivize interactive vortals disintermediate networking, webservices envisioneer; tag share value-added, disintermediate, revolutionary.'});
+      data.push({ id: 4, productId: 2445204, productName: 'Another Compressor', activity:  'Assemble Paint', quantity: 9, price: 210.99, status: 'OK', orderDate: '20150303', action: 'Action', ordered: true});
+      data.push({ id: 5, productId: 2542205, productName: 'I Love Compressors', activity:  'Inspect and Repair', quantity: 4, price: 18.00, status: 'OK', orderDate: '20150505', action: 'On Hold', ordered: false});
+      data.push({ id: 5, productId: 2642205, productName: 'Air Compressors', activity:  'Inspect and Repair', quantity: 18, price: 9, status: 'OK', orderDate: '20140609', action: 'On Hold', comment: 'B2C ubiquitous communities maximize B2C synergies extend dynamic revolutionize, world-class robust peer-to-peer. Action-items semantic technologies clicks-and-mortar iterate min'});
+      data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: 123.99, status: 'OK', orderDate: '20140609', action: 'On Hold', ordered: 0});
+      data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '100.99', status: 'OK', orderDate: '20140609', action: 'On Hold', ordered: 0});
+
+      //Define Columns for the Grid.
+
+      var cellTemplate = '<p class="datagrid-row-heading">{{productId}}</p>' +
+                        '<p class="datagrid-row-subheading">{{productName}}</p>';
+
+      columns.push({ id: 'drillDown', name: 'Drill In', field: '', formatter: Formatters.Drilldown, cssClass: 'l-center-text', click: function (e, args) {console.log('clicked', args);}});
+      //columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Template, template: cellTemplate});
+      columns.push({ id: 'productId', hidden: true, name: 'Product Id', field: 'productId', formatter: Formatters.Readonly });
+      columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, click: function (e, args) {console.log('link was clicked', args);}});
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
+      columns.push({ id: 'activity', name: 'Password', field: 'activity', formatter: Formatters.Password, inputType: 'password'});
+      columns.push({ id: 'price1', name: 'Actual long Price', field: 'price', formatter: Formatters.Decimal});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateSourceFormat: 'yyyyMMdd', dateShowFormat: 'yyyy-MM-dd'});
+
+      //{date: 'datetime'
+      columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Text});
+      columns.push({ id: 'alert', name: 'Alert', field: 'quantity', formatter: Formatters.Alert, ranges: [{'min': 0, 'max': 8, 'classes': 'info', 'text': ' '}, {'min': 9, 'max': 1000, 'classes': 'error', 'text': 'value'}]});
+      columns.push({ id: 'ordered', name: 'Ordered', field: 'ordered', formatter: Formatters.Checkbox});
+      columns.push({ id: '', name: 'Actions', field: '', formatter: Formatters.Actions, menuId: 'grid-actions-menu', selected: function(e, a) { console.log(e, a); }});
+      columns.push({ id: 'nested', name: 'Nested Prop', field: 'setting.optionOne', formatter: Formatters.Text});
+      //columns.push({ id: 'comment', name: 'Comment', field: 'comment', formatter: Formatters.Ellipsis, width: 300});
+
+      //Init and get the api for the grid
+      grid = $('#readonly-datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        menuId: 'grid-actions-menu'
+      }).on('click', function (e, args) {
+        console.log('Row Was Clicked', args);
+      }).on('dblclick', function (e, args) {
+        console.log('Row Was DblClicked', args);
+      }).on('contextmenu', function (e, args) {
+        console.log('Row Was Context Menu-d', args);
+      }).data('datagrid');
+    });
+
+</script>
