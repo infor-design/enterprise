@@ -7,11 +7,10 @@ module.exports = function(grunt) {
     controls = require('./build/controls.js');
 
   let selectedControls = dependencyBuilder(grunt),
-    bannerList = '',
     bannerText = `/**\n* Soho XI Controls v<%= pkg.version %>\n* Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %>\n* Revision: <%= meta.revision %>\n*/\n`;
 
   if (selectedControls) {
-    bannerList = strBanner(selectedControls);
+    let bannerList = strBanner(selectedControls);
     bannerText = `/**\n* Soho XI Controls v<%= pkg.version %>\n* ${bannerList}\n* Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %>\n* Revision: <%= meta.revision %>\n*/ \n`;
   } else {
     selectedControls = controls;
