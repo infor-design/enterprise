@@ -152,7 +152,7 @@
       },
 
       destroy: function() {
-        this.element.off('touchstart.button touchend.button touchcancel.button mousedown.button mouseup.button mouseleave.button focusout.button');
+        this.element.off('click.button touchstart.button focusin.hide-focus focusout.hide-focus mousedown.hide-focus touchstart.hide-focus');
 
         var moreTooltip = this.element.data('tooltip');
         if (this.element.hasClass('btn-actions') && moreTooltip) {
