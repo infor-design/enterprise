@@ -392,7 +392,7 @@ Run the [Soho Mapper Tool](http://git.infor.com/projects/SOHO/repos/mapper/brows
 `npm run build -- --mapperPath='/Users/username/mapper/dist/globalsHashMap.min.json' --controls='datagrid' --controls='initialize'`
 
 *To run a js build only*, assumes you ran the build completely before building the js alone
-`npm run build -- js --mapperPath='/Users/dhall1/mapper/dist/globalsHashMap.json' --controls='expandablearea' --controls='initialize' --controls='autocomplete' --controls='button'`
+`npm run build -- js --mapperPath='/Users/username/mapper/dist/globalsHashMap.json' --controls='expandablearea' --controls='initialize' --controls='autocomplete' --controls='button'`
 
 #### Options
 Set the hash map path
