@@ -6,15 +6,15 @@ module.exports = function(grunt) {
     strBanner = require('./build/strbanner.js'),
     controls = require('./build/controls.js');
 
-  let arrControls = dependencyBuilder(grunt),
+  let selectedControls = dependencyBuilder(grunt),
     bannerList = '',
     bannerText = `/**\n* Soho XI Controls v<%= pkg.version %>\n* Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %>\n* Revision: <%= meta.revision %>\n*/\n`;
 
-  if (arrControls) {
-    bannerList = strBanner(arrControls);
+  if (selectedControls) {
+    bannerList = strBanner(selectedControls);
     bannerText = `/**\n* Soho XI Controls v<%= pkg.version %>\n* ${bannerList}\n* Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %>\n* Revision: <%= meta.revision %>\n*/ \n`;
   } else {
-    arrControls = controls;
+    selectedControls = controls;
   }
 
   grunt.initConfig({
@@ -65,7 +65,7 @@ module.exports = function(grunt) {
       },
       basic: {
         files: {
-          'dist/js/<%= pkg.shortName %>.js': arrControls
+          'dist/js/<%= pkg.shortName %>.js': selectedControls
         }
       }
     },
