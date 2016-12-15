@@ -231,8 +231,10 @@
           elRect = this.element[0].getBoundingClientRect(),
           container = this.getContainer(placementObj),
           containerIsBody = container.length && container[0] === document.body,
-          scrollX = (typeof container.scrollLeft === 'number' ? container : document.body).scrollLeft,
-          scrollY = (typeof container.scrollTop === 'number' ? container : document.body).scrollTop;
+          // NOTE: Usage of $(window) instead of $('body') is deliberate here - http://stackoverflow.com/a/17776759/4024149.
+          // Firefox $('body').scrollTop() will always return zero.
+          scrollX = containerIsBody ? $(window).scrollLeft() : container.scrollLeft(),
+          scrollY = containerIsBody ? $(window).scrollTop() : container.scrollTop();
 
         function getCoordsFromPlacement(placementObj) {
           var cX, cY,
@@ -406,8 +408,10 @@
           containerIsBody = container.length && container[0] === document.body,
           rect = this.element[0].getBoundingClientRect(),
           containerRect = container ? container[0].getBoundingClientRect() : {},
-          scrollX = (typeof container.scrollLeft === 'number' ? container : document.body).scrollLeft,
-          scrollY = (typeof container.scrollTop === 'number' ? container : document.body).scrollTop,
+          // NOTE: Usage of $(window) instead of $('body') is deliberate here - http://stackoverflow.com/a/17776759/4024149.
+          // Firefox $('body').scrollTop() will always return zero.
+          scrollX = containerIsBody ? $(window).scrollLeft() : container.scrollLeft(),
+          scrollY = containerIsBody ? $(window).scrollTop() : container.scrollTop(),
           windowH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
           windowW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
           d;
@@ -415,13 +419,13 @@
         function getBoundary(edge) {
           switch(edge) {
             case 'top':
-              return (containerBleed ? 0 : containerRect.top) - (!containerIsBody ? scrollY : scrollY * -1); // 0 === top edge of viewport
+              return (containerBleed ? 0 : containerRect.top) - (!containerIsBody ? 0 : scrollY * -1); // 0 === top edge of viewport
             case 'left':
-              return (containerBleed ? 0 : containerRect.left) - (!containerIsBody ? scrollX : scrollX * -1); // 0 === left edge of viewport
+              return (containerBleed ? 0 : containerRect.left) - (!containerIsBody ? 0 : scrollX * -1); // 0 === left edge of viewport
             case 'right':
-              return (containerBleed ? windowW : containerRect.right) - (!containerIsBody ? scrollX : scrollX * -1);
+              return (containerBleed ? windowW : containerRect.right) - (!containerIsBody ? 0 : scrollX * -1);
             default: // bottom
-              return (containerBleed ? windowH : containerRect.bottom) - (!containerIsBody ? scrollY : scrollY * -1);
+              return (containerBleed ? windowH : containerRect.bottom) - (!containerIsBody ? 0 : scrollY * -1);
           }
         }
 
@@ -526,8 +530,10 @@
           containerIsBody = container.length && container[0] === document.body,
           containerRect = container ? container[0].getBoundingClientRect() : {},
           parentRect = placementObj.parent[0].getBoundingClientRect(),
-          scrollX = (typeof container.scrollLeft === 'number' ? container : document.body).scrollLeft,
-          scrollY = (typeof container.scrollTop === 'number' ? container : document.body).scrollTop,
+          // NOTE: Usage of $(window) instead of $('body') is deliberate here - http://stackoverflow.com/a/17776759/4024149.
+          // Firefox $('body').scrollTop() will always return zero.
+          scrollX = containerIsBody ? $(window).scrollLeft() : container.scrollLeft(),
+          scrollY = containerIsBody ? $(window).scrollTop() : container.scrollTop(),
           windowH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
           windowW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
 
@@ -621,9 +627,12 @@
         var containerBleed = this.settings.bleedFromContainer,
           container = this.getContainer(placementObj),
           containerRect = container ? container[0].getBoundingClientRect() : {},
+          containerIsBody = container.length && container[0] === document.body,
           rect = this.element[0].getBoundingClientRect(),
-          scrollX = (typeof container.scrollLeft === 'number' ? container : document.body).scrollLeft,
-          scrollY = (typeof container.scrollTop === 'number' ? container : document.body).scrollTop,
+          // NOTE: Usage of $(window) instead of $('body') is deliberate here - http://stackoverflow.com/a/17776759/4024149.
+          // Firefox $('body').scrollTop() will always return zero.
+          scrollX = containerIsBody ? $(window).scrollLeft() : container.scrollLeft(),
+          scrollY = containerIsBody ? $(window).scrollTop() : container.scrollTop(),
           windowH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
           windowW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
           leftViewportEdge = (containerBleed ? 0 : containerRect.left + placementObj.containerOffsetX) + scrollX,
