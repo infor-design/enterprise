@@ -209,9 +209,8 @@ var express = require('express'),
       // Strip out paths that aren't going to ever work
       paths.forEach(function pathIterator(val) {
         var excludes = [
-          /layout\.html/,
+          /^(layout)(\s)?(\.html)?/gm, // matches any filename that begins with "layout" (fx: "layout***.html")
           /footer\.html/,
-          /layout-noheader\.html/,
           /\.DS_Store/
         ],
         match = false;
@@ -415,11 +414,17 @@ var express = require('express'),
     if (directory.match(/tests\/header/)) {
       opts.layout = 'tests/header/layout';
     }
-    if (directory.match(/tests\/signin/)) {
-      opts.layout = 'tests/layout-noheader';
-    }
     if (directory.match(/tests\/datagrid-fixed-header/)) {
       opts.layout = 'tests/layout-noscroll';
+    }
+    if (directory.match(/tests\/place\/scrolling\/container-is-body/)) {
+      opts.layout = 'tests/place/scrolling/layout-body';
+    }
+    if (directory.match(/tests\/place\/scrolling\/container-is-nested/)) {
+      opts.layout = 'tests/place/scrolling/layout-nested';
+    }
+    if (directory.match(/tests\/signin/)) {
+      opts.layout = 'tests/layout-noheader';
     }
     if (directory.match(/tests\/tabs-module/)) {
       opts.layout = 'tests/tabs-module/layout';
