@@ -157,9 +157,12 @@
       disableSubmit: function () {
         var body = this.element,
           fields = body.find('[data-validate]'),
-          inlineBtns = body.find('.modal-buttonset button');
+          inlineBtns = body.find('.modal-buttonset button'),
+          primaryButton = inlineBtns.filter('.btn-modal-primary').not('.no-validation');
 
         if (fields.length > 0) {
+          primaryButton.removeAttr('disabled');
+
           var allValid = true;
           fields.each(function () {
 
@@ -178,7 +181,7 @@
           });
 
           if (!allValid && !inlineBtns.filter('.btn-modal-primary').is(':disabled')) {
-             inlineBtns.filter('.btn-modal-primary').not('.no-validation').attr('disabled', 'true');
+             primaryButton.attr('disabled', 'true');
           }
         }
 

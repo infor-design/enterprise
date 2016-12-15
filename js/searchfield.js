@@ -474,7 +474,7 @@
       },
 
       teardown: function() {
-        this.element.off('updated.searchfield populated.searchfield');
+        this.element.off('updated.searchfield focus.searchfield blur.searchfield click.searchfield keydown.searchfield beforeopen.searchfield listopen.searchfield');
 
         if (this.autocomplete) {
           this.autocomplete.destroy();
