@@ -385,7 +385,7 @@
         this.element.off('updated.toolbar').on('updated.toolbar', function(e) {
           e.stopPropagation();
           self.updated();
-        }).off('recalculateButtons.toolbar').on('recalculateButtons.toolbar', function() {
+        }).off('recalculate-buttons.toolbar').on('recalculate-buttons.toolbar', function() {
           self.handleResize();
         });
 
@@ -776,7 +776,7 @@
             a = li.children('a'),
             itemLink = a.data('original-button');
 
-          a.off('mousedown.toolbar click.toolbar touchend.toolbar touchcancel.toolbar');
+          a.off('updated.toolbar mousedown.toolbar click.toolbar touchend.toolbar touchcancel.toolbar recalculate-buttons.toolbar');
 
           if (itemLink && itemLink.length) {
             $.removeData(a[0], 'original-button');

@@ -285,7 +285,7 @@
           // Needs to be done after a CSS animation on the searchfield finishes.
           // TODO: Bolster this to work with CSS TransitonEnd
           setTimeout(function() {
-            toolbar.triggerHandler('recalculateButtons');
+            toolbar.triggerHandler('recalculate-buttons');
           }, 300);
         }
       },
