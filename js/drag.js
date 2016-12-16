@@ -1,7 +1,3 @@
-/**
-* Drag and Drop Functions with Touch Support
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -36,6 +32,7 @@
       settings = $.extend({}, defaults, options);
 
     /**
+     * Drag and Drop Functions with Touch Support
      * @constructor
      * @param {Object} element
      */

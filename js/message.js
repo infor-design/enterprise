@@ -1,8 +1,3 @@
-/**
-* Responsive Messages
-* Deps: modal
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -34,6 +29,7 @@
         settings = $.extend({}, defaults, options);
 
     /**
+     * Responsive Messages
      * @constructor
      * @param {Object} element
      */

@@ -1,9 +1,3 @@
-/**
-* Responsive and Accessible Modal Control
-* @name modal
-* @param {string} trigger - click, immediate,  manual
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -37,6 +31,7 @@
       settings = $.extend({}, defaults, options);
 
     /**
+     * Responsive and Accessible Modal Control
      * @constructor
      * @param {Object} element
      */

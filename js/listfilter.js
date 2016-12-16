@@ -1,8 +1,3 @@
-/**
-* ListFilter - Abstracted search/filter for use in other controls
-* TODO: Add Docs Link
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -26,6 +21,10 @@
     },
     filterModes = ['startsWith', 'contains'];
 
+  /**
+   * Abstracted search/filter for use in other controls
+   * @constructor
+   */
   function ListFilter(settings) {
     this.settings = $.extend({}, defaults, settings);
     Soho.logTimeStart('ListFilter');

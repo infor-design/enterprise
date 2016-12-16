@@ -1,9 +1,3 @@
-/**
-* Splitter Control
-*/
-
-// NOTE:  There are AMD Blocks available
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {

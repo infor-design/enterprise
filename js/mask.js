@@ -1,9 +1,3 @@
-/**
-* Inline Field Formatter (Mask) Control
-* Adds a text-based formatting "mask" to input fields that displays how data should be entered into the field.
-* Does not allow text entry that does not match the provided mask.
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -53,6 +47,9 @@
         settings = $.extend({}, defaults, options);
 
     /**
+     * Inline Field Formatter (Mask) Control
+     * Adds a text-based formatting "mask" to input fields that displays how data should be entered into the field.
+     * Does not allow text entry that does not match the provided mask.
      * @constructor
      * @param {Object} element
      */

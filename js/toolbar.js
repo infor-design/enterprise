@@ -1,9 +1,3 @@
-/**
-* Toolbar Control (TODO: bitly link to soho xi docs)
-*/
-
-// NOTE:  There are AMD Blocks available
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {

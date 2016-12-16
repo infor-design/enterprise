@@ -1,7 +1,3 @@
-/**
-* Hierarchy Chart - For Org Charts and Trees ect...
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
 
@@ -72,18 +68,19 @@
     };
 
     /**
+     * For Org Charts and Trees ect...
      * @constructor
      * @param {Object} element
      */
-    function Plugin(element) {
+    function Hierarchy(element) {
       this.element = $(element);
       Soho.logTimeStart(pluginName);
       this.init();
       Soho.logTimeEnd(pluginName);
     }
 
-    // Plugin Methods
-    Plugin.prototype = {
+    // Hierarchy Methods
+    Hierarchy.prototype = {
       init: function() {
 
         var isMobile = $(this.element).parent().width() < 610; //Phablet down
@@ -709,7 +706,7 @@
       if (instance) {
         instance.settings = $.extend({}, defaults, options);
       } else {
-        instance = $.data(this, pluginName, new Plugin(this, settings));
+        instance = $.data(this, pluginName, new Hierarchy(this, settings));
       }
 
     });

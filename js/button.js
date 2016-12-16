@@ -1,7 +1,3 @@
-/**
-* Button Control - Adds wripple effect
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {

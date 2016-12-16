@@ -24,7 +24,6 @@
     /**
      * A control that applies a class based on scroll direction
      * @constructor
-     * @param {Object} element
      * @param {Object} options
      * @param {string} [options.scrollActionTarget='.js-scroll-target'] - The selector of the element to add the class to
      * @param {string} [options.classToAdd='scrolled-down'] - The class name
@@ -84,9 +83,7 @@
     // Keep the Chaining and Init the Controls or Settings
     return this.each(function() {
       var instance = $.data(this, pluginName);
-      if (instance) {
-
-      } else {
+      if (!instance) {
         instance = $.data(this, pluginName, new ScrollAction(this, settings));
       }
     });

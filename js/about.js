@@ -31,7 +31,6 @@
     /**
      * @constructor
      * @param {Object} element
-     * @todo bitly link to soho xi docs
      */
     function About(element) {
       this.settings = $.extend({}, settings);

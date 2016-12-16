@@ -1,7 +1,3 @@
-/**
-* Datepicker Control (TODO link to docs)
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {

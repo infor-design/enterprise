@@ -13,15 +13,16 @@
 }(function($) {
 /* end-amd-strip-block */
 
-
 /**
  * The jQuery plugin namespace.
  * @external "jQuery.fn"
  * @see {@link http://learn.jquery.com/plugins/|jQuery Plugins}
+ * @private
  */
 
  /**
   * Make something disabled
+  * @private
   * @function external:"jQuery.fn".disable
   */
   $.fn.disable = function() {
@@ -40,6 +41,7 @@
 
  /**
   * Make something enabled
+  * @private
   * @function external:"jQuery.fn".enabled
   */
   $.fn.enable = function() {
@@ -58,6 +60,7 @@
 
  /**
   * Make something readonly
+  * @private
   * @function external:"jQuery.fn".readonly
   */
   $.fn.readonly = function() {
@@ -76,6 +79,7 @@
 
  /**
   * Track Input is changed from last submit
+  * @private
   * @function external:"jQuery.fn".trackdirty
   */
   $.fn.trackdirty = function() {
@@ -136,9 +140,7 @@
     return this;
   };
 
- /**
-  * Labels without the "for" attribute
-  */
+  // Fix: Labels without the "for" attribute
   $(function () {
     var str, control,
       labelText = $('.label-text'),
@@ -156,9 +158,7 @@
     });
   });
 
- /**
-  * Fix: Radio buttons was not selecting when click and than use arrow keys on Firefox
-  */
+  // Fix: Radio buttons was not selecting when click and than use arrow keys on Firefox
   $(function () {
     $('input:radio').on('click.radios', function() {
       this.focus();

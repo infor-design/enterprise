@@ -1,7 +1,3 @@
-/**
-* File Upload Advance Control (TODO link to docs)
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -47,7 +43,7 @@
      * @constructor
      * @param {Object} element
      */
-    function Plugin(element) {
+    function FileUploadAdvanced(element) {
       this.element = $(element);
       this.settings = settings;
       Soho.logTimeStart(pluginName);
@@ -55,8 +51,8 @@
       Soho.logTimeEnd(pluginName);
     }
 
-    // Plugin Methods
-    Plugin.prototype = {
+    // FileUploadAdvanced Methods
+    FileUploadAdvanced.prototype = {
 
       init: function() {
         this.build();
@@ -398,7 +394,7 @@
       if (instance) {
         instance.settings = $.extend({}, defaults, options);
       } else {
-        instance = $.data(this, pluginName, new Plugin(this, settings));
+        instance = $.data(this, pluginName, new FileUploadAdvanced(this, settings));
       }
     });
   };

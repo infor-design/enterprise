@@ -29,7 +29,6 @@
     /**
      * @constructor
      * @param {Object} element
-     * @todo: bitly link to soho xi docs
      */
     function ApplicationMenu(element) {
       this.settings = $.extend({}, settings);

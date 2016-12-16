@@ -1,7 +1,3 @@
-/**
-* Tooltip and Popover Control
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -42,6 +38,7 @@
       settings = $.extend({}, defaults, options);
 
     /**
+     * Tooltip and Popover Control
      * @constructor
      * @param {Object} element
      */

@@ -1,7 +1,3 @@
-/**
-* Color Picker Control (TODO: bitly link to docs)
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -119,7 +115,7 @@
 
     /**
      * @constructor
-     * @param {Object} element
+     * @param {Object} options
      */
     function ColorPicker(element) {
       this.element = $(element);

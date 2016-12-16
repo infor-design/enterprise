@@ -1,7 +1,3 @@
-/**
-* Datagrid Control
-*/
-
 window.Formatters = {
 
   Text: function(row, cell, value) {
@@ -1003,7 +999,10 @@ $.fn.datagrid = function(options) {
       },
       settings = $.extend({}, defaults, options);
 
-  // Plugin Constructor
+  /**
+   * @constructor
+   * @param {Object} element
+   */
   function Datagrid(element) {
     this.element = $(element);
     Soho.logTimeStart(pluginName);

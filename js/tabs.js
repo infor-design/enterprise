@@ -1,4 +1,3 @@
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -14,9 +13,6 @@
 }(function($) {
 /* end-amd-strip-block */
 
-  /**
-  * Tab Control
-  */
   $.fn.tabs = function(options) {
 
     // Tab Settings and Options

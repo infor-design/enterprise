@@ -1,7 +1,3 @@
-/**
-* Resizable Control (TODO: bitly link to docs)
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -31,15 +27,15 @@
      * @constructor
      * @param {Object} element
      */
-    function Plugin(element) {
+    function Resize(element) {
       this.element = $(element);
       Soho.logTimeStart(pluginName);
       this.init();
       Soho.logTimeEnd(pluginName);
     }
 
-    // Plugin Methods
-    Plugin.prototype = {
+    // Resize Methods
+    Resize.prototype = {
 
       init: function() {
         //Original Prototype http://jsfiddle.net/41h9pcpb/2/
@@ -69,7 +65,7 @@
         instance.settings = $.extend({}, defaults, options);
         instance.show();
       } else {
-        instance = $.data(this, pluginName, new Plugin(this, settings));
+        instance = $.data(this, pluginName, new Resize(this, settings));
       }
     });
   };

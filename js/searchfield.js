@@ -1,7 +1,3 @@
-/**
-* Searchfield Control (TODO: bitly link to soho xi docs)
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -35,6 +31,7 @@
         settings = $.extend({}, defaults, options);
 
     /**
+     * Searchfield Control
      * @constructor
      * @param {Object} element
      */

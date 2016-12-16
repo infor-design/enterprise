@@ -33,7 +33,6 @@
     /**
      * @constructor
      * @param {Object} element
-     * @todo: bitly link to soho xi docs
      */
     function Accordion(element) {
       this.settings = $.extend({}, settings);

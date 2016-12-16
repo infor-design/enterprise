@@ -1,7 +1,3 @@
-/**
-* Contextual Action Panel Control (TODO: bitly link to soho xi docs)
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {

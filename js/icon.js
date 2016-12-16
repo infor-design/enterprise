@@ -1,11 +1,3 @@
-/**
-* Icon Control (TODO: bitly link to soho xi docs)
-* Wraps SVG Icons with a Javascript control that can change the icon type, reference
-* relative or absolute URLs, and clean up after itself.  Works with the Base tag.
-*/
-
-// NOTE:  There are AMD Blocks available
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -35,6 +27,9 @@
         settings = $.extend({}, defaults, options);
 
     /**
+     * Icon Control
+     * Wraps SVG Icons with a Javascript control that can change the icon type, reference
+     * relative or absolute URLs, and clean up after itself.  Works with the Base tag.
      * @constructor
      * @param {Object} element
      */
