@@ -189,7 +189,7 @@
           passEvent(e);
         }).on('afteropen.contextualactionpanel', function() {
           if (self.toolbar) {
-            self.toolbar.trigger('recalculatebuttons');
+            self.toolbar.trigger('recalculate-buttons');
           }
 
           // Select the proper element on the toolbar
