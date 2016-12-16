@@ -42,9 +42,6 @@ $datagrid-short-row-height: 23px;
   }
 
   &.datagrid-contained {
-    &.datagrid-container {
-      overflow-x: hidden;
-    }
 
     //Sticky Headers
     .datagrid {

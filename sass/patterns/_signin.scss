@@ -32,6 +32,10 @@
     text-align: center;
   }
 
+  input[name='password'] {
+    display: none;
+  }
+
   &.sent h1,
   &.sent p {
     margin: 0;
