@@ -1,12 +1,11 @@
-const extractNameFromPath = require('./extractnamefrompath.js'),
-  setUniqueDependencies = require('./setuniquedependencies.js');
+const extractNameFromPath = require('./extractnamefrompath.js');
 
 module.exports = function(arr) {
-  let uniqDependencies = [];
+  let uniqDependencies = new Set();
   if (Array.isArray(arr)) {
     for (let obj of arr) {
-      uniqDependencies.push(extractNameFromPath(obj.fileFound));
+      uniqDependencies.add(extractNameFromPath(obj.fileFound));
     }
-    return setUniqueDependencies(uniqDependencies);
+    return uniqDependencies;
   }
 };

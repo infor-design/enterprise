@@ -1,12 +1,16 @@
-const setHashMapUniqueDependencies = require('./sethashmapuniquedependencies.js'),
-    basePusher = require('./basepusher.js');
+const setHashMapUniqueDependencies = require('./sethashmapuniquedependencies.js');
 
-module.exports = function(hashMap, collection) {
-  for (let name of collection) {
-    if (hashMap[name]) {
+module.exports = function(hashMap, setCollection, excludeControls = []) {
+  for (let name of setCollection) {
+    if (hashMap[name] && !excludeControls.includes(name) && name !== 'initialize') {
       let arrHashMap = setHashMapUniqueDependencies(hashMap[name]);
-      collection = basePusher(arrHashMap, collection);
+      for (let control of arrHashMap) {
+        setCollection.add(control);
+      }
+    } else {
+      setCollection.add(name);
     }
   }
-  return collection;
+
+  return setCollection;
 };

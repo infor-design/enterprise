@@ -1,7 +1,6 @@
 module.exports = function(grunt) {
 
   const checkGruntControlOptions = require('./helpers/checkgruntcontroloptions.js'),
-    setUniqueDependencies = require('./helpers/setuniquedependencies.js'),
     setHashMapUniqueDependencies = require('./helpers/sethashmapuniquedependencies.js'),
     setTraverse = require('./helpers/settraverse.js'),
     orderedDist = require('./helpers/ordereddist.js'),
@@ -11,8 +10,8 @@ module.exports = function(grunt) {
 
   let controls = grunt.option('controls'),
     excludeControls = grunt.option('excludeControls'),
-    dist,
-    deps = [];
+    dist = new Set(),
+    deps = new Set();
 
   controls = checkGruntControlOptions(controls);
   excludeControls = checkGruntControlOptions(excludeControls);
@@ -30,26 +29,24 @@ module.exports = function(grunt) {
         let highLevelDependencies = control,
           lowLevelDependencies = hashMap[highLevelDependencies],
           uniqs = setHashMapUniqueDependencies(lowLevelDependencies),
-          setTraverseDeps = setTraverse(hashMap, uniqs);
+          setTraverseDeps = setTraverse(hashMap, uniqs, excludeControls);
 
         for (let dep of setTraverseDeps) {
-          deps.push(dep);
+          deps.add(dep);
         }
       } else {
-        deps.push(control);
+        deps.add(control);
       }
     }
 
-    let combinedDeps = deps.concat(controls);
-    dist = setUniqueDependencies(combinedDeps);
-
+    dist = new Set([...deps, ...controls]);
   }
 
   if(mapperPath || config || configPath) {
     let configObj;
 
     if (config) {
-      configObj = { js : dist };
+      configObj = { js : [...dist] };
       grunt.file.write('config.json', JSON.stringify(configObj, null, 2));
       grunt.log.writeln();
       grunt.log.writeln('\u2714'.green, ' File', 'config.json'.magenta, 'created.');
