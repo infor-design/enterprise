@@ -812,7 +812,6 @@
             menuToClose.removeClass('is-open').removeAttr('style');
             menuToClose.parent('.wrapper').removeAttr('style');
             menuToClose.parent().parent().removeClass('is-submenu-open');
-            self.element.removeClass('is-open');
           }
           clearTimeout(timeout);
         });

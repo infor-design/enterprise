@@ -293,10 +293,6 @@
     letter-spacing: -.1;
   }
 
-  .icon.icon-dropdown {
-    margin-right: 0;
-  }
-
   b {
     text-overflow: ellipsis;
   }
@@ -329,14 +325,6 @@
       position: absolute;
       z-index: 4000;
     }
-
-    /*
-    .icon.icon-dropdown {
-      fill: $popupmenu-arrow-color;
-      height: 24px;
-      width: 40px;
-    }
-    */
 
     .popupmenu.is-open {
       display: block;

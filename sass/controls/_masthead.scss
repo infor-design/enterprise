@@ -32,17 +32,18 @@ $masthead-button-focus-color: $white;
     }
   }
 
-  [class^="btn"],
-  .btn {
+  [class^="btn"] {
     height: 32px;
     min-width: 32px;
-    padding: 0;
+  }
+
+  .btn {
+    padding: 0 10px;
   }
 
   .btn-icon,
   .btn-actions,
   .btn-close {
-    height: 32px;
     min-height: 32px;
     min-width: 32px;
     width: 32px;
@@ -96,12 +97,11 @@ $masthead-button-focus-color: $white;
       }
     }
 
-    [class^="btn"],
-    .btn {
+    [class^="btn"] {
       color: $masthead-text-color;
 
       .ripple-effect {
-        background-color: transparent;
+        background-color: $white;
       }
 
       span {
@@ -121,6 +121,15 @@ $masthead-button-focus-color: $white;
       }
 
       &:hover:not([disabled]) {
+        color: $masthead-button-hover-color;
+
+        .icon {
+          fill: $masthead-button-hover-color;
+        }
+      }
+
+      &.is-open,
+      &.is-open:hover {
         color: $masthead-button-hover-color;
 
         .icon {

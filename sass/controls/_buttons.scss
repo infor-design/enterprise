@@ -20,6 +20,7 @@ button {
   @include css3-extended(transform, translate3d(0, 0, 0), (-webkit-, -moz-));
   @include css3-extended(color, transparent, (-webkit-tap-highlight-));
   @include font-size($button-font-size);
+  @include transition(color 300ms cubic-bezier(.17, .04, .03, .94), background-color 300ms cubic-bezier(.17, .04, .03, .94));
   color: inherit;
   font-weight: 700;
   height: 34px;
@@ -44,12 +45,20 @@ button {
     width: 16px;
 
     + span:not(.audible) {
-      padding-left: 10px;
+      padding-left: 5px;
     }
 
     + * + span {
       padding-left: 0;
     }
+
+    + .icon {
+      margin-left: 0;
+    }
+  }
+
+  .icon {
+    @include transition(fill 300ms cubic-bezier(.17, .04, .03, .94));
   }
 
   span {
@@ -61,13 +70,13 @@ button {
       margin-left: 5px;
     }
 
-    + * + .icon {
+    + .icon {
       margin-left: 5px;
     }
 
     &.audible {
       + .icon {
-        padding-left: 0;
+        margin-left: 0;
       }
     }
 
@@ -81,13 +90,8 @@ button {
 .btn,
 .btn-primary,
 .btn-secondary {
-  @include transition(color 300ms cubic-bezier(.17, .04, .03, .94), background-color 300ms cubic-bezier(.17, .04, .03, .94));
   border-radius: 2px;
   padding: 0 15px;
-
-  .icon {
-    @include transition(fill 300ms cubic-bezier(.17, .04, .03, .94));
-  }
 }
 
 // standard, primary, destructive
@@ -255,7 +259,7 @@ a.btn-menu {
 .btn-tertiary,
 .btn-icon,
 .btn-actions,
-.btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary) {
+.btn-menu {
   border: 1px solid transparent;
   border-radius: 2px;
   box-shadow: none;
@@ -308,17 +312,13 @@ a.btn-menu {
 }
 
 // Menu Buttons have a special state that shows up when their menus are visible.
-.btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary),
+.btn-menu,
 .btn-actions {
   &.is-open {
     color: $tertiary-btn-open-color;
 
-    span {
-      color: $tertiary-btn-open-color;
-    }
-
-    .icon-dropdown {
-      fill: $tertiary-btn-open-color !important;
+    .icon {
+      fill: $tertiary-btn-open-color;
     }
   }
 }
@@ -362,6 +362,10 @@ a.btn-menu {
 
 // Specific Icon Button styles
 .btn-icon {
+  > span:not(.icon) {
+    visibility: hidden;
+  }
+
   .icon.app-header {
     left: 0;
     margin-left: 0;
@@ -491,12 +495,12 @@ html[dir='rtl'] {
       }
 
       + * + .icon {
-        padding-right: 5px;
+        margin-right: 5px;
       }
 
       &.audible {
         + .icon {
-          padding-right: 0;
+          margin-right: 0;
         }
       }
     }
