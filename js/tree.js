@@ -25,7 +25,9 @@
         selectable: 'single', // ['single'|'multiple']
         hideCheckboxes: false, // [true|false] -apply only with [selectable: 'multiple']
         menuId: null, //Context Menu to add to nodes
-        useStepUI: false // When using the UI as a stepped tree
+        useStepUI: false, // When using the UI as a stepped tree
+        folderIconOpen: 'open-folder',
+        folderIconClosed: 'closed-folder'
       },
       settings = $.extend({}, defaults, options);
 
@@ -69,19 +71,6 @@
         s.hideCheckboxes = s.hideCheckboxes || !this.isMultiselect;
 
         this.element.addClass(this.isMultiselect ? ' is-muliselect' : '');
-
-        // Set the proper folder icon
-        if (s.useStepUI) {
-          s.treeIcons = {
-            open: 'caret-up',
-            closed: 'caret-down'
-          };
-        } else {
-          s.treeIcons = {
-            open: 'open-folder',
-            closed: 'closed-folder'
-          };
-        }
 
         links.each(function() {
           var a = $(this);
@@ -203,11 +192,11 @@
 
         if (subNode.is('ul')) {
           subNode.attr('role', 'group').parent().addClass('folder');
-          this.setTreeIcon(a.find('svg.icon-tree'), subNode.hasClass('is-open') ? this.settings.treeIcons.open : this.settings.treeIcons.closed);
+          this.setTreeIcon(a.find('svg.icon-tree'), subNode.hasClass('is-open') ? this.settings.folderIconOpen : this.settings.folderIconClosed);
 
           if (a.attr('class') && a.attr('class').indexOf('open') === -1 && a.attr('class').indexOf('closed') === -1) {
             a.attr('class', '');
-            this.setTreeIcon(a.find('svg.icon-tree'), subNode.hasClass('is-open') ? this.settings.treeIcons.open : this.settings.treeIcons.closed);
+            this.setTreeIcon(a.find('svg.icon-tree'), subNode.hasClass('is-open') ? this.settings.folderIconOpen : this.settings.folderIconClosed);
           }
 
           if (a.is('[class^="icon"]')) {
@@ -232,7 +221,7 @@
         nodes.each(function () {
           var node = $(this);
           node.addClass('is-open');
-          self.setTreeIcon(node.prev('a').find('svg.icon-tree'), self.settings.treeIcons.open);
+          self.setTreeIcon(node.prev('a').find('svg.icon-tree'), self.settings.folderIconOpen);
 
           if (node.prev('a').is('[class^="icon"]')) {
             self.setTreeIcon(node.prev('svg.icon-tree'), node.prev('a').attr('class'));
@@ -248,7 +237,7 @@
         nodes.each(function () {
           var node = $(this);
           node.removeClass('is-open');
-          self.setTreeIcon(node.prev('a').find('svg.icon-tree'), self.settings.treeIcons.closed);
+          self.setTreeIcon(node.prev('a').find('svg.icon-tree'), self.settings.folderIconClosed);
 
           if (node.prev('a').is('[class^="icon"]')) {
             self.setTreeIcon(node.prev('a').find('svg.icon-tree'), node.prev('a').attr('class').replace('open', 'closed').replace(' hide-focus', '').replace(' is-selected', '') );
@@ -428,7 +417,7 @@
         if (next.is('ul[role="group"]')) {
           if (next.hasClass('is-open')) {
 
-            self.setTreeIcon(node.closest('.folder').removeClass('is-open').end().find('svg.icon-tree'), self.settings.treeIcons.closed);
+            self.setTreeIcon(node.closest('.folder').removeClass('is-open').end().find('svg.icon-tree'), self.settings.folderIconClosed);
 
             if (node.closest('.folder a').is('[class^="icon"]')) {
               self.setTreeIcon(node.closest('.folder a').find('svg.icon-tree'),
@@ -488,7 +477,7 @@
       openNode: function(next, node) {
         var self = this;
 
-        self.setTreeIcon(node.closest('.folder').addClass('is-open').end().find('svg.icon-tree'), self.settings.treeIcons.open);
+        self.setTreeIcon(node.closest('.folder').addClass('is-open').end().find('svg.icon-tree'), self.settings.folderIconOpen);
 
         if (node.is('[class^="icon"]')) {
           self.setTreeIcon(node.find('svg.icon-tree'), node.attr('class').replace(' hide-focus', '').replace(' is-selected', ''));

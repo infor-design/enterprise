@@ -44,7 +44,9 @@
         var self = this;
         var $theTree = $('#json-tree').tree({
           dataset: this.settings.dataset,
-          useStepUI: true
+          useStepUI: true,
+          folderIconOpen: 'caret-up',
+          folderIconClosed: 'caret-down'
         });
 
         this.theTreeApi = $theTree.data('tree');
