@@ -603,7 +603,7 @@
         if ((this.settings.trigger === 'immediate' && this.settings.eventObj) || this.settings.trigger === 'rightClick') {
           opts.x = getCoordinates(e, 'x') - (isRTL ? menuDimensions.width : 0) + ((isRTL ? -1 : 1) * this.settings.offset.x);
           opts.y = getCoordinates(e, 'y') + this.settings.offset.y;
-          opts.strategies = ['flip', 'nudge', 'shrink'];
+          opts.strategies = ['flip', 'nudge', 'shrink-y'];
         } else {
           opts.x = this.settings.offset.x || 0;
           opts.y = this.settings.offset.y || 0;
@@ -617,22 +617,44 @@
 
         // change the width of the menu if it's shorter than the trigger, in some conditions
         var triggerWidth = this.element.outerWidth(true),
-          menuIsSmallerThanTrigger = (target.is('.btn-menu') && menuDimensions.width < triggerWidth);
+          menuIsSmallerThanTrigger = menuDimensions.width < triggerWidth;
 
-        function shouldBeLeftAligned(target) {
-          return target.is('.btn-split-menu, .btn-menu, .tab, .searchfield-category-button') &&
-            !target.parent('.pager-pagesize').length;
-        }
+        function shouldBeAligned(direction, target) {
+          var directions = ['left', 'right'];
 
-        function shouldBeRightAligned(target) {
-          return target.is('.btn-actions, .btn-filter') || menuIsSmallerThanTrigger;
+          if (directions.indexOf(direction) < 0) {
+            direction = 'left';
+          }
+
+          var isMenuButtonType = target.is('.btn-menu, .btn-actions'),
+            relevantParents;
+
+          switch(direction) {
+            case 'right':
+              relevantParents = target.parents('.buttonset, .more, .toolbar');
+
+              if (isMenuButtonType) {
+                return (
+                  relevantParents.length === 0 || // menubutton types that are not inside a toolbar at all
+                  relevantParents.length > 1 || // menubutton types that sit inside a buttonset inside a toolbar.
+                  menuIsSmallerThanTrigger
+                );
+              }
+
+              return target.is('.btn-filter');
+            default:
+              relevantParents = target.parents('.title, .toolbar');
+
+              return (target.is('.btn-split-menu, .tab, .searchfield-category-button') &&
+                !target.parent('.pager-pagesize').length) ||
+                (target.is('.btn-menu, .btn-actions') && relevantParents.length > 1); // menubutton types that sit inside a title inside a toolbar.
+          }
         }
 
         // Customize some settings based on the type of element that is doing the triggering.
-        if (shouldBeLeftAligned(target)) {
+        if (shouldBeAligned('left', target)) {
           opts.parentXAlignment = (isRTL ? 'right': 'left');
-        }
-        if (shouldBeRightAligned(target)) {
+        } else if (shouldBeAligned('right', target)) {
           opts.parentXAlignment = (isRTL ? 'left' : 'right');
         }
 

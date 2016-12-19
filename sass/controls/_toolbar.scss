@@ -372,7 +372,6 @@ $toolbar-buttonset-height: 40px;
     // See respond-to(tabletdown) below.
     .btn-tertiary,
     .btn {
-      border-radius: 18px;
       min-width: 0;
       padding: 0;
       width: auto;
@@ -387,8 +386,6 @@ $toolbar-buttonset-height: 40px;
       }
 
       .icon {
-        width: 32px;
-
         + span {
           color: transparent;
           padding: 0;

@@ -385,6 +385,7 @@
 
         // Places the input wrapper into the toolbar on smaller breakpoints
         if (!notFullWidth) {
+          this.elemBeforeWrapper = this.inputWrapper.prev();
           this.inputWrapper.detach().prependTo(this.containmentParent);
         }
 
@@ -443,7 +444,8 @@
 
         // Puts the input wrapper back where it should be if it's been moved due to small form factors.
         if (this.inputWrapper.parent().is(this.containmentParent)) {
-          this.inputWrapper.detach().prependTo(this.containmentParent.find('.buttonset'));
+          this.inputWrapper.detach().insertAfter(this.elemBeforeWrapper);
+          this.elemBeforeWrapper = null;
         }
 
         self.inputWrapper.removeClass('active has-focus');
