@@ -578,6 +578,13 @@
 
 //RTL Styles
 html[dir='rtl'] {
+  .chart-legend {
+    .chart-legend-color {
+      margin-left: 10px;
+      margin-right: inherit;
+    }
+  }
+
   // Progess Bar Charts
   .chart-completion-target,
   .chart-completion {
