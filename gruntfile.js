@@ -231,12 +231,11 @@ module.exports = function(grunt) {
           src: ['js/*.js']
         }],
         options: {
-          name: 'SoHo Documentation',
-          destination: 'documentation',
-          version: '4.2.x',
+          name: 'Soho XI Controls Docs',
+          destination: 'docs',
+          version: `v<%= pkg.version %>`,
           output: 'html',
-          github: 'true',
-          external: "!(soho-*)"
+          github: 'true'
         }
       },
     }
