@@ -66,7 +66,21 @@ module.exports = function(grunt) {
         files: {
           'dist/js/<%= pkg.shortName %>.js': selectedControls
         }
+      },
+
+      missingFiles: {
+        src: selectedControls,
+        dest: 'temp/missing-files.js',
+        filter: function (filepath) {
+          if (!grunt.file.exists(filepath)) {
+            grunt.fail.warn('Could not find: ' + filepath);
+          } else {
+            return true;
+          }
+        },
+        nonull: true
       }
+
     },
 
     uglify: {
