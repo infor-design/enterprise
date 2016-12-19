@@ -82,6 +82,7 @@ pull :
 	docker-compose pull
 
 up : pull
+	rm -rf node_modules
 	docker-compose up -d
 	@echo "[Info] Building SoHo XI..." 
 	@echo "[Info] Can take up to 5 mins to start. Check http://localhost:4000"
