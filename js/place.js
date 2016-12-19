@@ -766,7 +766,7 @@
         }
 
         if (target.is('.btn-split-menu, .btn-menu, .btn-actions, .btn-filter, .tab')) {
-          target = target.find('.icon');
+          target = target.find('.icon').last();
         }
         if (target.is('.searchfield-category-button')) {
           target = target.find('.icon.icon-dropdown');
