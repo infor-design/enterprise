@@ -771,7 +771,8 @@ window.Chart = function(container) {
     }
 
     var self = this,
-      parent = $(container).parent();
+      parent = $(container).parent(),
+      isRTL = charts.isRTL;
 
     var tooltipInterval,
       tooltipDataCache = [],
@@ -782,11 +783,11 @@ window.Chart = function(container) {
     var showLegend = charts.showLegend || false;
 
     var chartData = initialData[0].data;
-    chartData = chartData.sort(function(a,b) {
+    chartData = chartData.sort(function(a, b) {
       return +a.value - +b.value;
     });
 
-    var total = d3.sum(chartData, function(d){ return d.value; });
+    var total = d3.sum(chartData, function(d) { return d.value; });
 
     chartData = chartData.map(function (d) {
       return { data: d, elm: d, name: d.name, color: d.color, value: d.value, percent:d3.round(100*(d.value/total)) };
@@ -803,6 +804,10 @@ window.Chart = function(container) {
       return d.value;
     });
     // .sort(null);
+
+    if (isRTL) {
+      pie.sort(null);
+    }
 
     // Store our chart dimensions
     var dims = {
@@ -1161,7 +1166,7 @@ window.Chart = function(container) {
             var centroid = pieArcs.centroid(d),
              midAngle = Math.atan2(centroid[1], centroid[0]),
               x = Math.cos(midAngle) * dims.labelRadius;
-            return (x > 0) ? 'start' : 'end';
+            return isRTL ? (x > 0 ? 'end' : 'start') : (x > 0 ? 'start' : 'end');
           }
         });
 
@@ -1260,11 +1265,15 @@ window.Chart = function(container) {
 
           // Fix x position
           textLabels.each(function(d, i) {
-            var label = d3.select(this),
+            var x,
+              label = d3.select(this),
               x1 = +label.attr('x'),
               y1 = +label.attr('y'),
-              sign = (x1 > 0 ? 1 : -1),
-              x = (dims.labelRadius - Math.abs(y1) + Math.abs(orgLabelPos[i].x + (spacing * 2.5))) * sign;
+              sign = (x1 > 0 ? 1 : -1);
+
+              x = isRTL ?
+                ((dims.labelRadius - Math.abs(y1) + Math.abs(orgLabelPos[i].x - (spacing * 2.5))) * sign):
+                ((dims.labelRadius - Math.abs(y1) + Math.abs(orgLabelPos[i].x + (spacing * 2.5))) * sign);
 
             if (orgLabelPos[i].y !== y1 || (i === 0 && chartData[i].percent < 10)) {
               x += chartData[i].percent <= 10 ? Math.ceil(x1/2) : Math.ceil(x1-x)- (spacing/2);
@@ -1350,6 +1359,20 @@ window.Chart = function(container) {
         }
       });
     })();
+
+    if (isRTL && lb.isTwoline) {
+      // Fix: incorrect text tspan position when RTL
+      // https://connect.microsoft.com/IE/feedback/details/846683
+      setTimeout(function() {
+        svg.selectAll('.label-text').each(function() {
+          var label = d3.select(this),
+            parent = d3.select(label.node().parentNode),
+            clone = d3.select(parent.node().appendChild(label.node().cloneNode(true)));
+          label.select('.lb-bottom').remove();
+          clone.select('.lb-top').remove();
+        });
+      }, 100);
+    }
 
     $(container).trigger('rendered');
     return $(container);
@@ -3515,6 +3538,7 @@ window.Chart = function(container) {
     //default
     this.options = options;
     this.redrawOnResize = true;
+    this.isRTL = Locale.isRTL();
 
     if (options.redrawOnResize !== undefined) {
       this.redrawOnResize = options.redrawOnResize;
@@ -3624,7 +3648,7 @@ $.fn.chart = function(options) {
     setTimeout(function () {
       chartInst.initChartType(options);
       chartInst.handleResize();
-    }, instance ? 0 :300);
+    }, instance ? 0 : 300);
 
   });
 };
