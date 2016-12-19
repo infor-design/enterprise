@@ -25,18 +25,32 @@ window.Formatters = {
   },
 
   Date: function(row, cell, value, col) {
-    var formatted = ((value === null || value === undefined) ? '' : value);
+    var formatted = ((value === null || value === undefined) ? '' : value),
+      value2;
 
     if (typeof value === 'string' && value) {
-      var value2 = Locale.parseDate(value, (typeof col.dateFormat === 'string' ? {pattern: col.dateFormat}: col.dateFormat));
-      if (value2) {
-        formatted = Locale.formatDate(value2, (typeof col.dateFormat === 'string' ? {pattern: col.dateFormat}: col.dateFormat));
+
+      if (!col.sourceFormat) {
+        value2 = Locale.parseDate(value, (typeof col.dateFormat === 'string' ? {pattern: col.dateFormat}: col.dateFormat));
       } else {
-		    formatted = Locale.formatDate(value, (typeof col.dateFormat === 'string' ? {pattern: col.dateFormat}: col.dateFormat));
+        value2 = Locale.parseDate(value, (typeof col.sourceFormat === 'string' ? {pattern: col.sourceFormat}: col.sourceFormat));
+      }
+
+      if (value2) {
+
+        if (!col.sourceFormat) {
+          formatted = Locale.formatDate(value2, (typeof col.dateFormat === 'string' ? {pattern: col.dateFormat}: col.dateFormat));
+        } else {
+          formatted = Locale.formatDate(value2, (typeof col.dateShowFormat === 'string' ? {pattern: col.dateShowFormat}: col.dateShowFormat));
+        }
+
+      } else {
+        formatted = Locale.formatDate(value, (typeof col.dateFormat === 'string' ? {pattern: col.dateFormat}: col.dateFormat));
 
         if (formatted === 'NaN/NaN/NaN') { //show invalid dates not NA/NA/NA
           formatted = value;
         }
+
       }
     } else if (value) {
       formatted = Locale.formatDate(value, (typeof col.dateFormat === 'string' ? {pattern: col.dateFormat}: col.dateFormat));
