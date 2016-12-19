@@ -379,7 +379,7 @@
         }
 
         var pattern = (''+ this._pageCount).replace(/\d/g, '#');
-        this.pagerBar.find('.pager-count input').attr('data-mask', pattern).mask();
+        this.pagerBar.find('.pager-count input').attr('data-mask', '').mask({pattern: pattern, mode: 'number', processOnInitialize: false});
 
         this._pageCount = this._pageCount || 1;
 
