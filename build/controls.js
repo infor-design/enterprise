@@ -58,7 +58,7 @@ module.exports = [
   'temp/amd/scrollaction.js',
   'temp/amd/spinbox.js',
   'temp/amd/splitter.js',
-  'temp/amd/steppedprocess.js',
+  'temp/amd/stepprocess.js',
   'temp/amd/swaplist.js',
   'temp/amd/toast.js',
   'temp/amd/tabs.js',
