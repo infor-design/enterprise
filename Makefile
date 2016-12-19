@@ -89,6 +89,7 @@ up : pull
 	@echo "[Info] Run make down to stop containers."
 
 down :
+	rm -rf node_modules
 	docker-compose down
 
 restart :
