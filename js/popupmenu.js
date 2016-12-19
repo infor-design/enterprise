@@ -615,48 +615,50 @@
         // BEGIN Temporary stuff until we sort out passing these settings from the controls that utilize them
         //=======================================================
 
-        // change the width of the menu if it's shorter than the trigger, in some conditions
         var triggerWidth = this.element.outerWidth(true),
-          menuIsSmallerThanTrigger = menuDimensions.width < triggerWidth;
+          menuIsSmallerThanTrigger = menuDimensions.width < triggerWidth,
+          toolbarParent = target.parents('.toolbar'),
+          insideToolbar = toolbarParent.length > 0,
+          insideToolbarTitle = target.parents('.title').length > 0,
+          isNotFullToolbar = insideToolbar && toolbarParent.children('.buttonset, .title').length > 1;
 
-        function shouldBeAligned(direction, target) {
-          var directions = ['left', 'right'];
-
-          if (directions.indexOf(direction) < 0) {
-            direction = 'left';
-          }
-
-          var isMenuButtonType = target.is('.btn-menu, .btn-actions'),
-            relevantParents;
-
-          switch(direction) {
-            case 'right':
-              relevantParents = target.parents('.buttonset, .more, .toolbar');
-
-              if (isMenuButtonType) {
-                return (
-                  relevantParents.length === 0 || // menubutton types that are not inside a toolbar at all
-                  relevantParents.length > 1 || // menubutton types that sit inside a buttonset inside a toolbar.
-                  menuIsSmallerThanTrigger
-                );
-              }
-
-              return target.is('.btn-filter');
-            default:
-              relevantParents = target.parents('.title, .toolbar');
-
-              return (target.is('.btn-split-menu, .tab, .searchfield-category-button') &&
-                !target.parent('.pager-pagesize').length) ||
-                (target.is('.btn-menu, .btn-actions') && relevantParents.length > 1); // menubutton types that sit inside a title inside a toolbar.
-          }
+        function alignLeft() {
+          opts.parentXAlignment = (isRTL ? 'right': 'left');
         }
 
-        // Customize some settings based on the type of element that is doing the triggering.
-        if (shouldBeAligned('left', target)) {
-          opts.parentXAlignment = (isRTL ? 'right': 'left');
-        } else if (shouldBeAligned('right', target)) {
+        function alignRight() {
           opts.parentXAlignment = (isRTL ? 'left' : 'right');
         }
+
+        // Change the alignment of the popupmenu based on certain conditions
+        (function doAlignment() {
+          if (menuIsSmallerThanTrigger) {
+            return alignLeft();
+          }
+
+          if (target.is('.btn-menu')) {
+            if (insideToolbar) {
+              if (!isNotFullToolbar) {
+                return alignLeft();
+              }
+              if (insideToolbarTitle) {
+                return alignLeft();
+              }
+              return alignRight();
+            }
+
+            return alignLeft();
+          }
+
+          if (target.is('.btn-actions')) {
+            return alignRight();
+          }
+
+          if ((target.is('.btn-split-menu, .tab, .searchfield-category-button') &&
+            !target.parent('.pager-pagesize').length)) {
+              return alignLeft();
+            }
+        })();
 
         //=======================================================
         // END Temporary stuff until we sort out passing these settings from the controls that utilize them
@@ -711,8 +713,14 @@
           return;
         }
 
+        var otherMenus = $('.popupmenu').not(this.menu);  //close others.
+        otherMenus.each(function() {
+          var api = $(this).data('popupmenu');
+          if (api && typeof api.close === 'function') {
+            api.close();
+          }
+        });
 
-        $('.popupmenu').not(this.menu).removeClass('is-open');  //close others.
         this.element.addClass('is-open');
         this.menu.addClass('is-open').attr('aria-hidden', 'false');
 

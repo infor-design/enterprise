@@ -296,7 +296,6 @@
   > .arrow {
     border-bottom-width: 0;
     bottom: -7px;
-    left: calc(50% - 6px);
 
     &::after {
       border-bottom-width: 0;
@@ -309,7 +308,6 @@
 .bottom {
   > .arrow {
     border-top-width: 0;
-    left: calc(50% - 6px);
     top: -7px;
 
     &::after {
