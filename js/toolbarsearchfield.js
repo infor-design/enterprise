@@ -441,7 +441,12 @@
 
         // Puts the input wrapper back where it should be if it's been moved due to small form factors.
         if (this.inputWrapper.parent().is(this.containmentParent)) {
-          this.inputWrapper.detach().insertAfter(this.elemBeforeWrapper);
+          if (!(this.elemBeforeWrapper instanceof $) || !this.elemBeforeWrapper.length) {
+            this.inputWrapper.prependTo(this.toolbarParent.children('.buttonset'));
+          } else {          
+            this.inputWrapper.detach().insertAfter(this.elemBeforeWrapper);
+          }
+
           this.elemBeforeWrapper = null;
         }
 
