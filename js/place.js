@@ -1,9 +1,3 @@
-/**
-* Place Behavior (TODO: bitly link to soho xi docs)
-*/
-
-// NOTE:  There are AMD Blocks available
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -42,9 +36,13 @@
         yAlignments = ['top', 'center', 'bottom'],
         settings = $.extend({}, defaults, options);
 
-    // Object that contains coordinates along with temporary, changeable properties.
-    // This object gets passed around the Place Behavior and modified during each phase of positioning.
-    // This object is also passed to all callbacks and event listeners for further modification.
+    /**
+     * Object that contains coordinates along with temporary, changeable properties.
+     * This object gets passed around the Place Behavior and modified during each phase of positioning.
+     * This object is also passed to all callbacks and event listeners for further modification.
+     * @constructor
+     * @param {object} placementOptions
+     */
     function PlacementObject(placementOptions) {
       var self = this,
         possibleSettings = [

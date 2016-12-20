@@ -1,10 +1,3 @@
-/**
-* Toolbar Searchfield (TODO: bitly link to soho xi docs)
-* NOTE:  Depends on both a Toolbar control and Searchfield control to be present
-*/
-
-// NOTE:  There are AMD Blocks available
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -33,7 +26,11 @@
         },
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * Depends on both a Toolbar control and Searchfield control to be present
+     * @constructor
+     * @param {Object} element
+     */
     function ToolbarSearchfield(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);

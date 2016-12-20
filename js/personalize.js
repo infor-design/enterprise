@@ -1,9 +1,3 @@
-/**
-* Personalize Control (TODO: bitly link to soho xi docs)
-*/
-
-// NOTE:  There are AMD Blocks available
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -31,7 +25,11 @@
         },
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * Personalize Control
+     * @constructor
+     * @param {Object} element
+     */
     function Personalize(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -179,6 +177,7 @@
         ' .hero-widget.is-personalizable .chart-container .bar { stroke: '+ Soho.colors.subheader +' }' +
         ' .hero-widget.is-personalizable .chart-container.line-chart .dot { stroke: '+ Soho.colors.subheader +' }' +
         '';
+
         this.stylesheet(cssRules);
 
         this.unBlockUi();

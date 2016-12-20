@@ -1,7 +1,3 @@
-/**
-* Button Control - Adds wripple effect
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -24,7 +20,10 @@
     // Settings and Options
     var pluginName = 'button';
 
-    // Plugin Constructor
+    /**
+     * @constructor
+     * @param {Object} element
+     */
     function Button(element) {
       this.element = $(element);
       Soho.logTimeStart(pluginName);

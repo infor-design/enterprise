@@ -1,7 +1,3 @@
-/**
-* Toast Control (TODO: bitly link to docs)
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -32,16 +28,19 @@
         },
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
-    function Plugin(element) {
+    /**
+     * @constructor
+     * @param {Object} element
+     */
+    function Toast(element) {
       this.element = $(element);
       Soho.logTimeStart(pluginName);
       this.init();
       Soho.logTimeEnd(pluginName);
     }
 
-    // Plugin Methods
-    Plugin.prototype = {
+    // Toast Methods
+    Toast.prototype = {
 
       init: function() {
         this.settings = settings;
@@ -143,7 +142,7 @@
         instance.settings = $.extend({}, defaults, options);
         instance.show();
       } else {
-        instance = $.data(this, pluginName, new Plugin(this, settings));
+        instance = $.data(this, pluginName, new Toast(this, settings));
       }
     });
   };

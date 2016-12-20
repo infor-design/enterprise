@@ -1,7 +1,3 @@
-/**
-* Drag and Drop Functions with Touch Support
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -35,7 +31,11 @@
       },
       settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * Drag and Drop Functions with Touch Support
+     * @constructor
+     * @param {Object} element
+     */
     function Drag(element) {
       this.element = $(element);
       Soho.logTimeStart(pluginName);

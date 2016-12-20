@@ -1,7 +1,3 @@
-/**
- * Page Bootstrapper
- */
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -34,7 +30,11 @@
         settings = $.extend({}, defaults, options);
       }
 
-    // Plugin Constructor
+    /**
+     * Page Bootstrapper
+     * @constructor
+     * @param {Object} element
+     */
     function Initialize(element, settings) {
       this.settings = $.extend({}, settings);
       this.element = $(element);

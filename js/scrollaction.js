@@ -1,4 +1,3 @@
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -14,12 +13,7 @@
 }(function($) {
 /* end-amd-strip-block */
 
-  /**
-  * Scroll Action Control
-  */
   $.fn.scrollaction = function(options) {
-
-    // Tab Settings and Options
     var pluginName = 'scrollaction',
         defaults = {
           scrollActionTarget: '.js-scroll-target', // The element to add a class to based on scrolling logic
@@ -27,14 +21,19 @@
         },
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
-    function ScrollAction(element) {
-      this.settings = $.extend({}, settings);
+    /**
+     * A control that applies a class based on scroll direction
+     * @constructor
+     * @param {Object} options
+     * @param {string} [options.scrollActionTarget='.js-scroll-target'] - The selector of the element to add the class to
+     * @param {string} [options.classToAdd='scrolled-down'] - The class name
+     */
+    function ScrollAction(element, options) {
+      this.settings = $.extend({}, options);
       this.element = $(element);
       this.init();
     }
 
-    // Actual Plugin Code
     ScrollAction.prototype = {
 
       init: function() {
@@ -43,7 +42,8 @@
       },
 
       /**
-       * Attach scrolling logic to specified element
+       * @private
+       * @description Attach scrolling logic to specified element
        */
       trackScrolling: function() {
         var self = this;
@@ -63,14 +63,16 @@
       },
 
       /**
-       * Slide element down on scroll up
+       * @private
+       * @description Slide element down on scroll up
        */
       didScrollUp: function() {
         $(this.settings.scrollActionTarget).removeClass(this.settings.classToAdd);
       },
 
       /**
-       * Slide element up on scroll down
+       * @private
+       * @description Slide element up on scroll down
        */
       didScrollDown: function() {
         $(this.settings.scrollActionTarget).addClass(this.settings.classToAdd);
@@ -81,9 +83,7 @@
     // Keep the Chaining and Init the Controls or Settings
     return this.each(function() {
       var instance = $.data(this, pluginName);
-      if (instance) {
-
-      } else {
+      if (!instance) {
         instance = $.data(this, pluginName, new ScrollAction(this, settings));
       }
     });

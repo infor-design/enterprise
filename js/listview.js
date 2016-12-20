@@ -1,7 +1,3 @@
-/**
-* List View Control
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -39,7 +35,10 @@
       },
       settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * @constructor
+     * @param {Object} element
+     */
     function ListView(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);

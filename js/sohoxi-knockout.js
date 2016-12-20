@@ -1,5 +1,7 @@
-// SoHo XI Knockout Binding Handlers
-
+/**
+ * SoHo XI Knockout Binding Handlers
+ * @private
+ */
 $(function () {
 
   ko.bindingHandlers.datepicker = {

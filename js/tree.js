@@ -1,7 +1,3 @@
-/**
-* Tree Control
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -31,16 +27,19 @@
       },
       settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
-    function Plugin(element) {
+    /**
+     * @constructor
+     * @param {Object} element
+     */
+    function Tree(element) {
       this.element = $(element);
       Soho.logTimeStart(pluginName);
       this.init();
       Soho.logTimeEnd(pluginName);
     }
 
-    // Plugin Methods
-    Plugin.prototype = {
+    // Tree Methods
+    Tree.prototype = {
       init: function() {
         this.settings = $.extend({}, settings);
         this.initTree();
@@ -1131,7 +1130,7 @@
 
       },
 
-      // Plugin Related Functions
+      // Tree Related Functions
       destroy: function() {
         this.element.removeData(pluginName);
         this.element.off('contextmenu.tree updated.tree click.tree focus.tree keydown.tree keypress.tree').empty();
@@ -1144,7 +1143,7 @@
       if (instance) {
         instance.settings = $.extend({}, defaults, options);
       } else {
-        instance = $.data(this, pluginName, new Plugin(this, settings));
+        instance = $.data(this, pluginName, new Tree(this, settings));
       }
     });
 

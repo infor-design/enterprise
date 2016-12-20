@@ -54,8 +54,11 @@
         },
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
-    function Plugin(element) {
+    /**
+     * @constructor
+     * @param {Object} element
+     */
+    function SwapList(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
       Soho.logTimeStart(pluginName);
@@ -63,8 +66,8 @@
       Soho.logTimeEnd(pluginName);
     }
 
-    // Plugin Methods
-    Plugin.prototype = {
+    // SwapList Methods
+    SwapList.prototype = {
 
       init: function() {
         var self = this,
@@ -829,7 +832,7 @@
         instance.settings = $.extend({}, instance.settings, options);
         instance.updated();
       } else {
-        instance = $.data(this, pluginName, new Plugin(this, settings));
+        instance = $.data(this, pluginName, new SwapList(this, settings));
       }
     });
   };

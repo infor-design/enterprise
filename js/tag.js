@@ -22,8 +22,11 @@
         },
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
-    function Plugin(element) {
+    /**
+     * @constructor
+     * @param {Object} element
+     */
+    function Tag(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
       Soho.logTimeStart(pluginName);
@@ -31,8 +34,8 @@
       Soho.logTimeEnd(pluginName);
     }
 
-    // Plugin Methods
-    Plugin.prototype = {
+    // Tag Methods
+    Tag.prototype = {
 
       init: function() {
         this.handleEvents();
@@ -92,7 +95,7 @@
         instance.settings = $.extend({}, instance.settings, options);
         instance.updated();
       } else {
-        instance = $.data(this, pluginName, new Plugin(this, settings));
+        instance = $.data(this, pluginName, new Tag(this, settings));
       }
     });
   };

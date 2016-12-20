@@ -1,9 +1,3 @@
-/**
-* XYZ Control (TODO: bitly link to soho xi docs)
-*/
-
-// NOTE:  There are AMD Blocks available
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -31,7 +25,11 @@
         },
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * XYZ Control
+     * @constructor
+     * @param {Object} element
+     */
     function Template(element, settings) {
       this.settings = $.extend({}, settings);
       this.element = $(element);

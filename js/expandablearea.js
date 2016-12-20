@@ -1,7 +1,3 @@
-/**
-* Expandable Area Control (TODO: bitly link to soho xi docs)
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -26,7 +22,10 @@
         defaults = {},
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * @constructor
+     * @param {Object} element
+     */
     function ExpandableArea(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);

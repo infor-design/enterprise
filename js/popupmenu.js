@@ -1,8 +1,3 @@
-/**
-* Responsive Popup Menu Control (Context)
-* @name popupmenu
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -44,7 +39,11 @@
       },
       settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * Responsive Popup Menu Control (Context)
+     * @constructor
+     * @param {Object} element
+     */
     function PopupMenu(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);

@@ -1,6 +1,4 @@
-/**
- * Page Bootstrapper
- */
+// Page Bootstrapper
 
 /* start-amd-strip-block */
 (function(factory) {

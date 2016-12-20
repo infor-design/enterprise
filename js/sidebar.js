@@ -1,7 +1,3 @@
-/**
-* Side Bar Menu Control
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -27,7 +23,11 @@
       },
       settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * Side Bar Menu Control
+     * @constructor
+     * @param {Object} element
+     */
     function Sidebar(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
