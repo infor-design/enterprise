@@ -1,5 +1,5 @@
 # Compiled #
-###################
+############
 designs/
 dist/
 documentation/
@@ -14,7 +14,7 @@ docs/
 node_modules/
 
 # Misc #
-###################
+############
 junit.xml
 junit-unit.xml
 junit-functional.xml
@@ -30,5 +30,5 @@ views/docs/changelog-contents.html
 config.json
 
 # OS generated files #
-######################
+############
 .DS_Store

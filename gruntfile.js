@@ -279,7 +279,6 @@ module.exports = function(grunt) {
 
   grunt.registerTask('js', ['documentation']);
 
-
   // Don't do any uglify/minify/jshint while the Dev Watch is running.
   grunt.registerTask('sohoxi-watch', [
     'revision', 'sass', 'copy:amd', 'strip_code','concat', 'clean:amd', 'copy:main', 'usebanner'
