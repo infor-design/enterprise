@@ -30,7 +30,7 @@
           placement: 'bottom', // If defined, changes the direction in which placement of the element happens
           strategies: ['nudge'] // Determines the "strategy" for alternatively placing the element if it doesn't fit in the defined boundaries.  Only matters when "parent" is a defined setting.  It's possible to define multiple strategies and execute them in order.
         },
-        strategies = ['nudge', 'clockwise', 'flip', 'shrink'],
+        strategies = ['nudge', 'clockwise', 'flip', 'shrink', 'shrink-x', 'shrink-y'],
         placements = ['top', 'left', 'right', 'bottom', 'center'],
         xAlignments = ['left', 'center', 'right'],
         yAlignments = ['top', 'center', 'bottom'],
@@ -321,6 +321,10 @@
                   return placementObj;
                 case 'shrink':
                   return self.shrink(placementObj);
+                case 'shrink-x':
+                  return self.shrink(placementObj, 'x');
+                case 'shrink-y':
+                  return self.shrink(placementObj, 'y');
                 default:
                   return placementObj;
               }
@@ -621,12 +625,14 @@
       },
 
       // If element height/width is greater than window height/width, shrink to fit
-      shrink: function(placementObj) {
+      shrink: function(placementObj, dimension) {
         var containerBleed = this.settings.bleedFromContainer,
           container = this.getContainer(placementObj),
           containerRect = container ? container[0].getBoundingClientRect() : {},
           containerIsBody = container.length && container[0] === document.body,
           rect = this.element[0].getBoundingClientRect(),
+          useX = dimension === undefined || dimension === null || dimension === 'x',
+          useY = dimension === undefined || dimension === null || dimension === 'y',
           // NOTE: Usage of $(window) instead of $('body') is deliberate here - http://stackoverflow.com/a/17776759/4024149.
           // Firefox $('body').scrollTop() will always return zero.
           scrollX = containerIsBody ? $(window).scrollLeft() : container.scrollLeft(),
@@ -644,44 +650,48 @@
         // element is larger than the viewport/container space allowed.
         placementObj.nudges = placementObj.nudges || {};
 
-        // Left
-        if (rect.left < leftViewportEdge) {
-          d = Math.abs(leftViewportEdge - rect.left);
-          if (rect.right >= rightViewportEdge) {
-            d = d - placementObj.containerOffsetX;
+        if (useX) {
+          // Left
+          if (rect.left < leftViewportEdge) {
+            d = Math.abs(leftViewportEdge - rect.left);
+            if (rect.right >= rightViewportEdge) {
+              d = d - placementObj.containerOffsetX;
+            }
+            placementObj.width = rect.width - d;
+            placementObj.setCoordinate('x', placementObj.x + d);
+            placementObj.nudges.x = placementObj.nudges.x + d;
           }
-          placementObj.width = rect.width - d;
-          placementObj.setCoordinate('x', placementObj.x + d);
-          placementObj.nudges.x = placementObj.nudges.x + d;
+
+          // Right
+          if (rect.right > rightViewportEdge) {
+            d = Math.abs(rect.right - rightViewportEdge);
+            if (rect.left <= leftViewportEdge) {
+              d = d - placementObj.containerOffsetX;
+            }
+            placementObj.width = rect.width - d;
+          }
         }
 
-        // Right
-        if (rect.right > rightViewportEdge) {
-          d = Math.abs(rect.right - rightViewportEdge);
-          if (rect.left <= leftViewportEdge) {
-            d = d - placementObj.containerOffsetX;
+        if (useY) {
+          // Top
+          if (rect.top < topViewportEdge) {
+            d = Math.abs(topViewportEdge - rect.top);
+            if (rect.bottom >= bottomViewportEdge) {
+              d = d - placementObj.containerOffsetY;
+            }
+            placementObj.height = rect.height - d;
+            placementObj.setCoordinate('y', placementObj.y + d);
+            placementObj.nudges.y = placementObj.nudges.y + d;
           }
-          placementObj.width = rect.width - d;
-        }
 
-        // Top
-        if (rect.top < topViewportEdge) {
-          d = Math.abs(topViewportEdge - rect.top);
-          if (rect.bottom >= bottomViewportEdge) {
-            d = d - placementObj.containerOffsetY;
+          // Bottom
+          if (rect.bottom > bottomViewportEdge) {
+            d = Math.abs(rect.bottom - bottomViewportEdge);
+            if (rect.top <= topViewportEdge) {
+              d = d - placementObj.containerOffsetY;
+            }
+            placementObj.height = rect.height - d;
           }
-          placementObj.height = rect.height - d;
-          placementObj.setCoordinate('y', placementObj.y + d);
-          placementObj.nudges.y = placementObj.nudges.y + d;
-        }
-
-        // Bottom
-        if (rect.bottom > bottomViewportEdge) {
-          d = Math.abs(rect.bottom - bottomViewportEdge);
-          if (rect.top <= topViewportEdge) {
-            d = d - placementObj.containerOffsetY;
-          }
-          placementObj.height = rect.height - d;
         }
 
         return placementObj;
@@ -754,7 +764,7 @@
         }
 
         if (target.is('.btn-split-menu, .btn-menu, .btn-actions, .btn-filter, .tab')) {
-          target = target.find('.icon');
+          target = target.find('.icon').last();
         }
         if (target.is('.searchfield-category-button')) {
           target = target.find('.icon.icon-dropdown');

@@ -417,6 +417,9 @@ var express = require('express'),
     if (directory.match(/tests\/datagrid-fixed-header/)) {
       opts.layout = 'tests/layout-noscroll';
     }
+    if (directory.match(/tests\/masthead/)) {
+      opts.layout = 'tests/masthead/layout';
+    }
     if (directory.match(/tests\/place\/scrolling\/container-is-body/)) {
       opts.layout = 'tests/place/scrolling/layout-body';
     }

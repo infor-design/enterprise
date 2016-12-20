@@ -71,6 +71,10 @@ $toolbar-buttonset-height: 40px;
 
     > h1 {
       text-overflow: ellipsis;
+
+      + [class^="btn"] {
+        margin-left: 5px;
+      }
     }
 
     + .buttonset {
@@ -168,6 +172,16 @@ $toolbar-buttonset-height: 40px;
         fill: $tertiary-btn-hover-color;
       }
     }
+
+    &.is-open,
+    &.is-open:hover {
+      color: $tertiary-btn-active-color;
+
+      .icon {
+        fill: $tertiary-btn-active-color;
+      }
+    }
+
 
     &[disabled],
     &[disabled]:hover {
@@ -372,29 +386,11 @@ $toolbar-buttonset-height: 40px;
     // See respond-to(tabletdown) below.
     .btn-tertiary,
     .btn {
-      border-radius: 18px;
       min-width: 0;
-      padding: 0;
       width: auto;
 
       span:not(.audible) {
         display: inline-block;
-        padding: 0 10px;
-
-        &:last-child {
-          padding-right: 10px;
-        }
-      }
-
-      .icon {
-        width: 32px;
-
-        + span {
-          color: transparent;
-          padding: 0;
-          position: absolute;
-          width: 0;
-        }
       }
     }
   }
