@@ -384,13 +384,21 @@ $toolbar-buttonset-height: 40px;
     // Show text with icon buttons by using this class.
     // Text will still become invisible on small breakpoint (but still visible to screen readers).
     // See respond-to(tabletdown) below.
-    .btn-tertiary,
-    .btn {
-      min-width: 0;
+    [class^="btn"] {
       width: auto;
 
-      span:not(.audible) {
+      > .icon + span {
         display: inline-block;
+        visibility: hidden;
+        width: 0;
+
+        &:not(.audible) {
+          padding-left: 0;
+        }
+
+        + .icon {
+          margin-left: 0;
+        }
       }
     }
   }
