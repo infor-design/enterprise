@@ -310,11 +310,11 @@
             switch(e.which) {
               case 13:
               case 32:
-                self.open(e, true);
+                self.open(e);
                 break;
               case 121:
                 if (e.shiftKey) { //Shift F10
-                  self.open(e, true);
+                  self.open(e);
                 }
                 break;
             }
@@ -697,18 +697,22 @@
         }
 
         if (this.settings.beforeOpen && !ajaxReturn) {
-         var response = function (content) {
-            self.menu.empty().append(content);
+          var response = function(content) {
+            if (self.ajaxContent instanceof $) {
+              self.ajaxContent.off().remove();
+            }
+            self.ajaxContent = $(content);
+            self.menu.append(self.ajaxContent);
             self.markupItems();
             self.open(e, true);
           };
 
-          if (typeof settings.beforeOpen === 'string') {
-            window[settings.beforeOpen](response);
+          if (typeof this.settings.beforeOpen === 'string') {
+            window[this.settings.beforeOpen](response);
             return;
           }
 
-          settings.beforeOpen(response);
+          this.settings.beforeOpen(response);
           return;
         }
 
@@ -1036,6 +1040,10 @@
 
       teardown: function() {
         var wrapper = this.menu.parent('.popupmenu-wrapper');
+
+        if (this.ajaxContent) {
+          this.ajaxContent.off().remove();
+        }
 
         this.menu.parent().off('contextmenu.popupmenu');
         if (this.element.hasClass('btn-actions')) {
