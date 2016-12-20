@@ -204,7 +204,7 @@
         var field = $(this);
         if (field.attr('data-validate')) {
 
-          if (field.attr('data-disable-validation') === 'true' || field.hasClass('disable-validation')) {
+          if (field.attr('data-disable-validation') === 'true' || field.hasClass('disable-validation') || field.css('visibility') === 'is-hidden' || !field.is(':visible')) {
             return true;
           }
 
