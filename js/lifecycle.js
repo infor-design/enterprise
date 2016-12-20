@@ -1,7 +1,5 @@
-/**
- * Lifecycle Methods for jQuery Controls
- * Recursive methods that "globally" call certain methods on large groups of controls
- */
+ // Lifecycle Methods for jQuery Controls
+ // Recursive methods that "globally" call certain methods on large groups of controls
 
 /* start-amd-strip-block */
 (function(factory) {

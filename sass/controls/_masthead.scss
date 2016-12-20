@@ -32,18 +32,18 @@ $masthead-button-focus-color: $white;
     }
   }
 
-  [class^="btn"],
-  .btn {
+  [class^="btn"] {
     height: 32px;
     min-width: 32px;
-    padding: 0;
+  }
+
+  .btn {
+    padding: 0 10px;
   }
 
   .btn-icon,
   .btn-actions,
   .btn-close {
-    border-radius: 16px;
-    height: 32px;
     min-height: 32px;
     min-width: 32px;
     width: 32px;
@@ -51,11 +51,10 @@ $masthead-button-focus-color: $white;
 
   .toolbar-searchfield-wrapper {
 
-    > .icon:not(.close) {
+    > .icon:not(.close, .error) {
       fill: $masthead-button-color;
       height: 18px;
       opacity: 1;
-      top: 8px;
     }
 
     &.has-focus:not(.active) {
@@ -98,14 +97,15 @@ $masthead-button-focus-color: $white;
       }
     }
 
-    [class^="btn"],
-    .btn {
+    [class^="btn"] {
+      color: $masthead-text-color;
+
       .ripple-effect {
-        background-color: transparent;
+        background-color: $white;
       }
 
       span {
-        color: $masthead-text-color;
+        color: inherit;
       }
 
       .icon {
@@ -123,9 +123,14 @@ $masthead-button-focus-color: $white;
       &:hover:not([disabled]) {
         color: $masthead-button-hover-color;
 
-        span {
-          color: $masthead-button-hover-color;
+        .icon {
+          fill: $masthead-button-hover-color;
         }
+      }
+
+      &.is-open,
+      &.is-open:hover {
+        color: $masthead-button-hover-color;
 
         .icon {
           fill: $masthead-button-hover-color;
@@ -135,10 +140,6 @@ $masthead-button-focus-color: $white;
       &:focus:not(.hide-focus) {
         box-shadow: 0 0 0 2px transparent, 0 0 0 1px $masthead-button-focus-color;
 
-        span {
-          color: $masthead-button-focus-color;
-        }
-
         .icon {
           fill: $masthead-button-focus-color;
         }
@@ -147,10 +148,6 @@ $masthead-button-focus-color: $white;
       &.is-selected {
         &:focus:not(.hide-focus) {
           color: $masthead-button-focus-color;
-
-          span {
-            color: $masthead-button-focus-color;
-          }
 
           .icon {
             fill: $masthead-button-focus-color;

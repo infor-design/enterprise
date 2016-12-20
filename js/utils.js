@@ -1,8 +1,9 @@
 /**
-* Transition Support Check
-* Returns the vendor-prefixed name of the 'transition' property available by the browser.
-* If the browser doesn't support transitions, it returns null.
-*/
+ * Transition Support Check
+ * Returns the vendor-prefixed name of the 'transition' property available by the browser.
+ * If the browser doesn't support transitions, it returns null.
+ * @private
+ */
 
 /* start-amd-strip-block */
 (function(factory) {

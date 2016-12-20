@@ -1,8 +1,3 @@
-/**
-* Modal Search Control (TODO: bitly link to soho xi docs)
-* Used Mostly for the Site, but could be used elsewhere with some modifications
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -26,7 +21,11 @@
         defaults = {},
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * Used Mostly for the Site, but could be used elsewhere with some modifications
+     * @constructor
+     * @param {Object} element
+     */
     function ModalSearch(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);

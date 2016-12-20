@@ -1,8 +1,3 @@
-/**
-* Html Editor
-* @name editor
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -38,7 +33,11 @@
       },
       settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * Html Editor
+     * @constructor
+     * @param {Object} element
+     */
     function Editor(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);

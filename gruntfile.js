@@ -66,7 +66,21 @@ module.exports = function(grunt) {
         files: {
           'dist/js/<%= pkg.shortName %>.js': selectedControls
         }
+      },
+
+      missingFiles: {
+        src: selectedControls,
+        dest: 'temp/missing-files.js',
+        filter: function (filepath) {
+          if (!grunt.file.exists(filepath)) {
+            grunt.fail.warn('Could not find: ' + filepath);
+          } else {
+            return true;
+          }
+        },
+        nonull: true
       }
+
     },
 
     uglify: {
@@ -209,6 +223,21 @@ module.exports = function(grunt) {
           dest: 'views/docs/changelog-contents.html'
         }]
       }
+    },
+
+    documentation: {
+      default: {
+        files: [{
+          src: ['js/*.js']
+        }],
+        options: {
+          name: 'Soho XI Controls Docs',
+          destination: 'docs',
+          version: `v<%= pkg.version %>`,
+          output: 'html',
+          github: 'true'
+        }
+      },
     }
 
   });
@@ -247,9 +276,9 @@ module.exports = function(grunt) {
     'copy:main',
     'usebanner'
   ]);
+
   // Don't do any uglify/minify/jshint while the Dev Watch is running.
   grunt.registerTask('sohoxi-watch', [
     'revision', 'sass', 'copy:amd', 'strip_code','concat', 'clean:amd', 'copy:main', 'usebanner'
   ]);
-
 };

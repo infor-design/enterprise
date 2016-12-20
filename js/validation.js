@@ -1,7 +1,3 @@
-/**
-* Validation Plugin
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -17,6 +13,11 @@
 }(function($) {
 /* end-amd-strip-block */
 
+
+  /**
+   * @constructor
+   * @param {Object} element
+   */
   function Validator(element) {
     this.element = $(element);
     Soho.logTimeStart('Validator');

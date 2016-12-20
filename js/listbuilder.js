@@ -57,8 +57,11 @@
         },
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
-    function Plugin(element) {
+    /**
+     * @constructor
+     * @param {Object} element
+     */
+    function ListBuilder(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
       Soho.logTimeStart(pluginName);
@@ -66,8 +69,8 @@
       Soho.logTimeEnd(pluginName);
     }
 
-    // Plugin Methods
-    Plugin.prototype = {
+    // ListBuilder Methods
+    ListBuilder.prototype = {
 
       init: function() {
         this
@@ -457,7 +460,7 @@
         instance.settings = $.extend({}, instance.settings, options);
         instance.updated();
       } else {
-        instance = $.data(this, pluginName, new Plugin(this, settings));
+        instance = $.data(this, pluginName, new ListBuilder(this, settings));
       }
     });
   };

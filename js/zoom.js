@@ -1,9 +1,3 @@
-/**
-* Zoom Behavior (TODO: bitly link to soho xi docs)
-*/
-
-// NOTE:  There are AMD Blocks available
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -28,7 +22,11 @@
     var pluginName = 'zoom',
         settings = $.extend({}, options);
 
-    // Plugin Constructor
+    /**
+     * @constructor
+     * @param {Object} element
+     * @param {Object} settings
+     */
     function Zoom(element, settings) {
       this.settings = $.extend({}, settings);
       this.element = $(element);

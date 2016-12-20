@@ -1,7 +1,3 @@
-/**
-* File Upload Control (TODO: bitly link to soho xi docs)
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -24,16 +20,19 @@
     // Settings and Options
     var pluginName = 'fileupload';
 
-    // Plugin Constructor
-    function Plugin(element) {
+    /**
+     * @constructor
+     * @param {Object} element
+     */
+    function FileUpload(element) {
       this.element = $(element);
       Soho.logTimeStart(pluginName);
       this.init();
       Soho.logTimeEnd(pluginName);
     }
 
-    // Plugin Methods
-    Plugin.prototype = {
+    // FileUpload Methods
+    FileUpload.prototype = {
 
       init: function() {
         this.build();
@@ -111,7 +110,7 @@
     return this.each(function() {
       var instance = $.data(this, pluginName);
       if (!instance) {
-        instance = $.data(this, pluginName, new Plugin(this));
+        instance = $.data(this, pluginName, new FileUpload(this));
       }
     });
   };

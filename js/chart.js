@@ -1,13 +1,11 @@
 /**
-* Chart Controls
-* @name Charts
-* TODO:
-
-  Make vertical bar chart (have horizontal)
-  Work on update functions or routine
-  Make responsive
-  Make Area/Dot Chart
-  Test With Screen readers
+* @constructor
+* @todo:
+*   Make vertical bar chart (have horizontal)
+*   Work on update functions or routine
+*   Make responsive
+*   Make Area/Dot Chart
+*   Test With Screen readers
 */
 
 window.Chart = function(container) {

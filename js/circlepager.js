@@ -24,8 +24,11 @@
         },
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
-    function Plugin(element) {
+    /**
+     * @constructor
+     * @param {Object} element
+     */
+    function CirclePager(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
       Soho.logTimeStart(pluginName);
@@ -33,8 +36,8 @@
       Soho.logTimeEnd(pluginName);
     }
 
-    // Plugin Methods
-    Plugin.prototype = {
+    // CirclePager Methods
+    CirclePager.prototype = {
 
       init: function() {
         this.setElements();
@@ -266,7 +269,7 @@
         instance.settings = $.extend({}, instance.settings, options);
         instance.updated();
       } else {
-        instance = $.data(this, pluginName, new Plugin(this, settings));
+        instance = $.data(this, pluginName, new CirclePager(this, settings));
       }
     });
   };

@@ -1,4 +1,3 @@
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -14,20 +13,20 @@
 }(function($) {
 /* end-amd-strip-block */
 
-  /**
-   * Stepped Wizard Tree
-   */
   $.fn.stepprocess = function(options) {
 
-    // Tab Settings and Options
     var pluginName = 'stepprocess',
         defaults = {
-          dataset: [],
+          dataset: undefined,
           afterFolderOpen: function() {}
         },
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * A Stepped process UI/UX extending the tree control
+     * @constructor
+     * @param {Object} element
+     */
     function StepProcess(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -44,7 +43,9 @@
         var self = this;
         var $theTree = $('#json-tree').tree({
           dataset: this.settings.dataset,
-          useStepUI: true
+          useStepUI: true,
+          folderIconOpen: 'caret-up',
+          folderIconClosed: 'caret-down'
         });
 
         this.theTreeApi = $theTree.data('tree');
@@ -173,8 +174,8 @@
 
       /**
        * Updates a node through the tree.js API
-       * @param  {Object} node
-       * @param  {Bool} selectFirstChild
+       * @param  {Object} - node The JSON node to update
+       * @param  {Bool} selectFirstChild - Whether or not to select the first child by default
        */
       updateNode: function(node, selectFirstChild) {
         this.theTreeApi.updateNode(node);
@@ -188,8 +189,7 @@
     return this.each(function() {
       var instance = $.data(this, pluginName);
       if (instance) {
-        instance.settings = $.extend({}, instance.settings, options);
-        instance.updated();
+
       } else {
         instance = $.data(this, pluginName, new StepProcess(this, settings));
       }

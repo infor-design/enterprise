@@ -1,10 +1,3 @@
-/**
-* Toolbar Searchfield (TODO: bitly link to soho xi docs)
-* NOTE:  Depends on both a Toolbar control and Searchfield control to be present
-*/
-
-// NOTE:  There are AMD Blocks available
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -33,7 +26,11 @@
         },
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * Depends on both a Toolbar control and Searchfield control to be present
+     * @constructor
+     * @param {Object} element
+     */
     function ToolbarSearchfield(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -385,6 +382,7 @@
 
         // Places the input wrapper into the toolbar on smaller breakpoints
         if (!notFullWidth) {
+          this.elemBeforeWrapper = this.inputWrapper.prev();
           this.inputWrapper.detach().prependTo(this.containmentParent);
         }
 
@@ -443,7 +441,8 @@
 
         // Puts the input wrapper back where it should be if it's been moved due to small form factors.
         if (this.inputWrapper.parent().is(this.containmentParent)) {
-          this.inputWrapper.detach().prependTo(this.containmentParent.find('.buttonset'));
+          this.inputWrapper.detach().insertAfter(this.elemBeforeWrapper);
+          this.elemBeforeWrapper = null;
         }
 
         self.inputWrapper.removeClass('active has-focus');

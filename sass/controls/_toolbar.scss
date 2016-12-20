@@ -71,6 +71,10 @@ $toolbar-buttonset-height: 40px;
 
     > h1 {
       text-overflow: ellipsis;
+
+      + [class^="btn"] {
+        margin-left: 5px;
+      }
     }
 
     + .buttonset {
@@ -168,6 +172,16 @@ $toolbar-buttonset-height: 40px;
         fill: $tertiary-btn-hover-color;
       }
     }
+
+    &.is-open,
+    &.is-open:hover {
+      color: $tertiary-btn-active-color;
+
+      .icon {
+        fill: $tertiary-btn-active-color;
+      }
+    }
+
 
     &[disabled],
     &[disabled]:hover {
@@ -370,30 +384,20 @@ $toolbar-buttonset-height: 40px;
     // Show text with icon buttons by using this class.
     // Text will still become invisible on small breakpoint (but still visible to screen readers).
     // See respond-to(tabletdown) below.
-    .btn-tertiary,
-    .btn {
-      border-radius: 18px;
-      min-width: 0;
-      padding: 0;
+    [class^="btn"] {
       width: auto;
 
-      span:not(.audible) {
+      > .icon + span {
         display: inline-block;
-        padding: 0 10px;
+        visibility: hidden;
+        width: 0;
 
-        &:last-child {
-          padding-right: 10px;
+        &:not(.audible) {
+          padding-left: 0;
         }
-      }
 
-      .icon {
-        width: 32px;
-
-        + span {
-          color: transparent;
-          padding: 0;
-          position: absolute;
-          width: 0;
+        + .icon {
+          margin-left: 0;
         }
       }
     }

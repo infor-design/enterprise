@@ -1,7 +1,3 @@
-/**
-* Progress Indicator Control
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -25,8 +21,12 @@
         },
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
-    function Plugin(element) {
+    /**
+     * Progress Indicator Control
+     * @constructor
+     * @param {Object} element
+     */
+    function Progress(element) {
       this.element = $(element);
       this.settings = settings;
       Soho.logTimeStart(pluginName);
@@ -34,8 +34,8 @@
       Soho.logTimeEnd(pluginName);
     }
 
-    // Actual Plugin Code
-    Plugin.prototype = {
+    // Actual Progress Code
+    Progress.prototype = {
 
       init: function() {
         var self = this;
@@ -84,7 +84,7 @@
       if (instance) {
         instance.settings = $.extend({}, defaults, options);
       } else {
-        instance = $.data(this, pluginName, new Plugin(this, settings));
+        instance = $.data(this, pluginName, new Progress(this, settings));
       }
     });
   };

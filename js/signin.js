@@ -1,7 +1,3 @@
-/**
-* SignIn Control
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -25,7 +21,10 @@
         defaults = {},
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * @constructor
+     * @param {Object} element
+     */
     function SignIn(element) {
       this.element = $(element);
       Soho.logTimeStart(pluginName);

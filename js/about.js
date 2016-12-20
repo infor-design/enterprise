@@ -1,7 +1,3 @@
-/**
-* About Control (TODO: bitly link to soho xi docs)
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -32,7 +28,10 @@
         },
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * @constructor
+     * @param {Object} element
+     */
     function About(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);

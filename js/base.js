@@ -1,11 +1,3 @@
-/**
-* Base Tag Object (TODO: bitly link to soho xi docs)
-* Provides a global object that detects the existence of a Base Tag, and provides some methods
-* that can be used to get an accurate relative URL using the base tag.
-*/
-
-// NOTE:  There are AMD Blocks available
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -34,6 +26,9 @@
     return this;
   }
 
+  // Provides a global object that detects the existence of a Base Tag,
+  // and provides some methods that can be used to get an accurate relative
+  // URL using the base tag.
   Base.prototype = {
     getCurrentURL: function() {
       return window.location.href

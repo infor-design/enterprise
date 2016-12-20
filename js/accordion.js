@@ -1,7 +1,3 @@
-/**
-* Accordion Control (TODO: bitly link to soho xi docs)
-*/
-
 // NOTE:  There are AMD Blocks available
 
 /* start-amd-strip-block */
@@ -34,7 +30,10 @@
         },
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * @constructor
+     * @param {Object} element
+     */
     function Accordion(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
