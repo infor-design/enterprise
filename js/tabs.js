@@ -2178,7 +2178,9 @@
         this.animatedBar.css({'left': left +'px', 'width': '0'});
 
         this.animationTimeout = setTimeout(function() {
-          self.animatedBar.removeClass('visible').removeAttr('style');
+          if (self.animatedBar && self.animatedBar.length) {
+            self.animatedBar.removeClass('visible').removeAttr('style');
+          }
         }, 350);
       },
 
