@@ -97,7 +97,6 @@
         if (html5DataThousands) {
           this.settings.thousandsSeparator = (html5DataThousands === 'true');
         }
-        this.settings.thousandsSeparator = this.settings.pattern.indexOf(',') !== -1 || this.settings.thousandsSeparator;
 
         // If "negative" is defined, you can type the negative symbol in front of the number.
         // Will automatically set to "true" if a negative symbol is detected inside the mask.
