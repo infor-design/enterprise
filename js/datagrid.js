@@ -2658,10 +2658,6 @@ $.fn.datagrid = function(options) {
           this.table.css('width', '100%');
         }
 
-        //if (widthSpecified && this.columnWidthType === 'auto') {
-        //  this.table.css('width', this.totalWidth + 'px');
-        //}
-
       }
 
       return ' style="width: '+ colWidth + (widthPercent ? '%' :'px') + '; min-width: ' + colMinWidth + (widthPercent || minWidthPercent ? '%' :'px') + '"';
