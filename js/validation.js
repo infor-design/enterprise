@@ -87,19 +87,7 @@
 
     attachEvents: function () {
       var self = this,
-        attribs = '[data-validate],[data-validation]',
-        clickObj = null;
-
-      $(document).on('mousedown.validate',function(e) {
-        // The latest element clicked
-        clickObj = $(e.target);
-      });
-
-      // when 'clickObj == null' on blur, we know it was not caused by a click
-      // but maybe by pressing the tab key
-      $(document).on('mouseup.validate', function() {
-        clickObj = null;
-      });
+        attribs = '[data-validate],[data-validation]';
 
       //Attach required
       this.inputs.each(function () {
