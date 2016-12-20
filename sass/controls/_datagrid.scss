@@ -42,9 +42,6 @@ $datagrid-short-row-height: 23px;
   }
 
   &.datagrid-contained {
-    &.datagrid-container {
-      overflow-x: hidden;
-    }
 
     //Sticky Headers
     .datagrid {
@@ -672,7 +669,7 @@ $datagrid-short-row-height: 23px;
           width: 14px;
 
           + .icon-dropdown {
-            left: -11px;
+            left: -5px;
           }
         }
 

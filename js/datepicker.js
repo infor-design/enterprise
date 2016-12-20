@@ -856,7 +856,7 @@
           api.destroy();
         }
 
-        this.element.off('keydown.datepicker blur.validate change.validate keyup.validate');
+        this.element.off('keydown.datepicker blur.validate change.validate keyup.validate focus.validate');
 
         return this;
       },

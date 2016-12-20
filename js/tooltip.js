@@ -572,7 +572,9 @@
           this.hide();
         }
 
-        this.element.off('mouseenter.tooltip mouseleave.tooltip mousedown.tooltip click.tooltip focus.tooltip blur.tooltip');
+        this.element.off('mouseenter.tooltip mouseleave.tooltip mousedown.tooltip click.tooltip mouseup.tooltip updated.tooltip focus.tooltip blur.tooltip');
+        $(document).off('mouseup.tooltip');
+        $('body').off('resize.tooltip');
 
         if (this.matchMedia) {
           this.matchMedia.removeListener(this.mediaQueryListener);

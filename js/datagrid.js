@@ -1046,7 +1046,6 @@ $.fn.datagrid = function(options) {
       this.setRowGrouping();
       this.setTreeRootNodes();
       this.render();
-      this.createResizeHandle();
       this.handlePaging();
       this.initTableWidth();
       this.handleEvents();
@@ -2647,7 +2646,7 @@ $.fn.datagrid = function(options) {
         if (this.hasFixedHeader) {
           var diff = this.element.width() - this.totalWidth;
 
-          if ((diff !== 0 || diff === 0) && !widthSpecified) {
+          if ((diff !== 0 || diff === 0)) {
             this.headerWidths[index].width = colWidth = 100;
             this.headerWidths[index].widthPercent = widthPercent = true;
             this.headerWidths[index].minWidth = colMinWidth = 100;
@@ -2657,10 +2656,6 @@ $.fn.datagrid = function(options) {
 
         if (this.columnWidthType === 'percent') {
           this.table.css('width', '100%');
-        }
-
-        if (widthSpecified && this.columnWidthType === 'auto') {
-          this.table.css('width', this.totalWidth + 'px');
         }
 
       }
@@ -3110,6 +3105,9 @@ $.fn.datagrid = function(options) {
     //Generate Resize Handles
     createResizeHandle: function() {
       var self = this;
+      if (this.resizeHandle) {
+        return;
+      }
 
       this.resizeHandle = $('<div class="resize-handle" aria-hidden="true"></div>');
       if (this.settings.columnGroups) {
@@ -3427,7 +3425,12 @@ $.fn.datagrid = function(options) {
           //TODO: Test Touch support - may need handles on each column
           leftPos = (alignToLeft ? (rightEdge - 6): (leftEdge - 6));
 
+          //Ignore first one
           if (self.currentHeader.index() === 0 && !alignToLeft) {
+            leftPos = '-999';
+          }
+
+          if (self.currentHeader.index() === self.currentHeader.parent().find('th:last').index()) {
             leftPos = '-999';
           }
 
@@ -3438,6 +3441,8 @@ $.fn.datagrid = function(options) {
           if (!self.currentHeader.hasClass('is-resizable')) {
             return;
           }
+
+          self.createResizeHandle();
           self.resizeHandle.css({'left': leftPos +'px', 'cursor': ''});
         });
 
@@ -4640,7 +4645,6 @@ $.fn.datagrid = function(options) {
 
       //Save the Cell Edit back to the data set
       this.updateCellNode(this.dataRowIndex(cellNode.parent()) , cellNode.index(), newValue);
-      cellNode.css({'max-width': '', 'min-width': '', 'width': ''});
       this.element.triggerHandler('exiteditmode');
     },
 
@@ -4859,6 +4863,7 @@ $.fn.datagrid = function(options) {
         this.validateCell(row, cell);
         this.element.trigger('cellchange', {row: row, cell: cell, target: cellNode, value: coercedVal, oldValue: oldVal, column: col});
       }
+
     },
 
     //For the row node get the index - adjust for paging / invisible rowsCache
