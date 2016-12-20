@@ -17,7 +17,7 @@
 
     var pluginName = 'stepprocess',
         defaults = {
-          dataset: [],
+          dataset: undefined,
           afterFolderOpen: function() {}
         },
         settings = $.extend({}, defaults, options);
