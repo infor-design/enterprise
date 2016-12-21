@@ -286,7 +286,7 @@
           if (content.indexOf('#') === 0) {
             var contentCheck = $('' + content);
             if (contentCheck.length) {
-              this.content = $.santizeHtml(contentCheck);
+              this.content = contentCheck;
               doRender();
               return true;
             }
