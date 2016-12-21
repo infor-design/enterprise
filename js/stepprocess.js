@@ -19,26 +19,25 @@
         defaults = {
           dataset: undefined,
           afterFolderOpen: function() {}
-        },
-        settings = $.extend({}, defaults, options);
+        };
 
     /**
      * A Stepped process UI/UX extending the tree control
      * @constructor
      * @param {Object} element
+     * @param {Object} options
+     * @param {Object} [options.dataset] - Initial object to create the tree
+     * @param {function(event)} [options.afterFolderOpen] - After folder open event callback
      */
-    function StepProcess(element) {
-      this.settings = $.extend({}, settings);
+    function StepProcess(element, options) {
+      this.settings = $.extend({}, defaults, options);
       this.element = $(element);
       this.init();
     }
 
     StepProcess.prototype = {
 
-      /**
-       * Init the plugin
-       * @private
-       */
+      /** @private  */
       init: function() {
         var self = this;
         var $theTree = $('#json-tree').tree({
@@ -96,7 +95,6 @@
 
       /**
        * Go to the previous step in the tree
-       * @private
        */
       goToPreviousStep: function() {
         var selectedNodes = this.theTreeApi.getSelectedNodes();
@@ -145,7 +143,6 @@
 
       /**
        * Go to the next step in the tree
-       * @private
        */
       goToNextStep: function() {
         var selectedNodes = this.theTreeApi.getSelectedNodes();
@@ -189,9 +186,9 @@
     return this.each(function() {
       var instance = $.data(this, pluginName);
       if (instance) {
-
+        instance.settings = $.extend({}, instance.settings, options);
       } else {
-        instance = $.data(this, pluginName, new StepProcess(this, settings));
+        instance = $.data(this, pluginName, new StepProcess(this, options));
       }
     });
   };
