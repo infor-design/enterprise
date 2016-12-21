@@ -27,10 +27,12 @@
     "develop-tag": "./bin/add-npm-tag.js develop",
     "bump-version": "./bin/bump-version.js"
   },
-  "main": "sohoxi.js",
   "dependencies": {
     "d3": "^3.4.6",
     "jquery": "^3.1.0"
+  },
+  "jspm": {
+    "main": "dist/js/sohoxi"
   },
   "devDependencies": {
     "chai": "^1.10.0",
