@@ -15,20 +15,6 @@
 
   $.fn.scrollaction = function(options) {
 
-    /**
-     * A control that applies a class based on scroll direction
-     * @constructor
-     * @param {Object} [element=this] - The element to attach to (only when manually calling the constructor)
-     * @param {Object} [options]
-     * @param {string} [options.scrollActionTarget='.js-scroll-target'] - The selector of the element to add the class to
-     * @param {string} [options.classToAdd='scrolled-down'] - The class name
-     */
-    function ScrollAction(element, options) {
-      this.settings = $.extend({}, defaults, options);
-      this.element = $(element);
-      functions.trackScrolling.call(this);
-    }
-
     var pluginName = 'scrollaction';
     var defaults = {
       scrollActionTarget: '.js-scroll-target', // The element to add a class to based on scrolling logic
@@ -53,6 +39,20 @@
         });
       }
     };
+
+    /**
+     * A control that applies a class based on scroll direction
+     * @constructor
+     * @param {Object} [element=this] - The element to attach to (only when manually calling the constructor)
+     * @param {Object} [options]
+     * @param {string} [options.scrollActionTarget='.js-scroll-target'] - The selector of the element to add the class to
+     * @param {string} [options.classToAdd='scrolled-down'] - The class name
+     */
+    function ScrollAction(element, options) {
+      this.settings = $.extend({}, defaults, options);
+      this.element = $(element);
+      functions.trackScrolling.call(this);
+    }
 
     return this.each(function() {
       var instance = $.data(this, pluginName);

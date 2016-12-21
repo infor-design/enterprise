@@ -569,7 +569,7 @@
       updated: function() {
         var self = this;
 
-        if (settings.trigger === 'immediate') {
+        if (self.settings.trigger === 'immediate') {
           setTimeout(function() {
             self.show();
           }, 100);
