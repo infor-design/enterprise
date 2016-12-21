@@ -14,37 +14,28 @@
 /* end-amd-strip-block */
 
   $.fn.scrollaction = function(options) {
-    var pluginName = 'scrollaction',
-        defaults = {
-          scrollActionTarget: '.js-scroll-target', // The element to add a class to based on scrolling logic
-          classToAdd: 'scrolled-down' // The class added to the target element
-        },
-        settings = $.extend({}, defaults, options);
 
     /**
      * A control that applies a class based on scroll direction
      * @constructor
-     * @param {Object} options
+     * @param {Object} [element=this] - The element to attach to (only when manually calling the constructor)
+     * @param {Object} [options]
      * @param {string} [options.scrollActionTarget='.js-scroll-target'] - The selector of the element to add the class to
      * @param {string} [options.classToAdd='scrolled-down'] - The class name
      */
     function ScrollAction(element, options) {
-      this.settings = $.extend({}, options);
+      this.settings = $.extend({}, defaults, options);
       this.element = $(element);
-      this.init();
+      functions.trackScrolling.call(this);
     }
 
-    ScrollAction.prototype = {
+    var pluginName = 'scrollaction';
+    var defaults = {
+      scrollActionTarget: '.js-scroll-target', // The element to add a class to based on scrolling logic
+      classToAdd: 'scrolled-down' // The class added to the target element
+    };
 
-      init: function() {
-        this.trackScrolling();
-        return this;
-      },
-
-      /**
-       * @private
-       * @description Attach scrolling logic to specified element
-       */
+    var functions = {
       trackScrolling: function() {
         var self = this;
         self.lastScrollTop = 0;
@@ -53,38 +44,22 @@
           var st = $(this).scrollTop();
 
           if (st > self.lastScrollTop){
-            self.didScrollDown();
+            $(self.settings.scrollActionTarget).addClass(self.settings.classToAdd);
           } else {
-            self.didScrollUp();
+            $(self.settings.scrollActionTarget).removeClass(self.settings.classToAdd);
           }
 
           self.lastScrollTop = st;
         });
-      },
-
-      /**
-       * @private
-       * @description Slide element down on scroll up
-       */
-      didScrollUp: function() {
-        $(this.settings.scrollActionTarget).removeClass(this.settings.classToAdd);
-      },
-
-      /**
-       * @private
-       * @description Slide element up on scroll down
-       */
-      didScrollDown: function() {
-        $(this.settings.scrollActionTarget).addClass(this.settings.classToAdd);
       }
-
     };
 
-    // Keep the Chaining and Init the Controls or Settings
     return this.each(function() {
       var instance = $.data(this, pluginName);
-      if (!instance) {
-        instance = $.data(this, pluginName, new ScrollAction(this, settings));
+      if (instance) {
+        instance.settings = $.extend({}, instance.settings, options);
+      } else {
+        instance = $.data(this, pluginName, new ScrollAction(this, options));
       }
     });
   };
