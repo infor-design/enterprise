@@ -102,7 +102,7 @@ This node module is hosted on a private repo [npm.infor.com](http://npm.infor.co
 Also your project should be initialized with a package.json. This can be done via npm init.
 
 ```bash
-npm set registry http://npm.infor.com:4873 --scope=@infor
+npm config set @infor:registry=http://npm.infor.com:4873
 ```
 
 ### Installation
