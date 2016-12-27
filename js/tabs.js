@@ -142,16 +142,20 @@
         }
 
         // Add Tab Button
-        if (self.settings.addTabButton && (!this.addTabButton || !this.addTabButton.length)) {
-          this.addTabButton = $('<li class="tab add-tab-button"><a href="#">' +
-            '+ ' +
-            '<span class="audible">'+ Locale.translate('AddNewTab') +'</span>' +
-            '</a></tab>');
-
-          this.tablist.append(this.addTabButton);
+        if (this.settings.addTabButton) {
+          this.addTabButton = this.moreButton.next('.add-tab-button');
+          if (!this.addTabButton || !this.addTabButton.length) {
+            this.addTabButton = $('<div class="add-tab-button">' +
+              '<span>+</span>' +
+              '<span class="audible">'+ Locale.translate('AddNewTab') +'</span>' +
+              '</div>');
+            this.addTabButton.insertAfter(this.moreButton);
+            this.element.addClass('has-add-button');
+          }
         }
-        if (!self.settings.addTabButton && this.addTabButton && this.addTabButton.length) {
+        if (!this.settings.addTabButton && this.addTabButton && this.addTabButton.length) {
           this.addTabButton.remove();
+          this.element.removeClass('has-add-button');
         }
 
         //for each item in the tabsList...
@@ -1734,14 +1738,14 @@
 
       adjustHeaderTabs: function() {
         var self = this,
-          sizeableTabs = this.tablist.find('li:not(.separator):not(.application-menu-trigger):not(.add-tab-button)'),
+          sizeableTabs = this.tablist.find('li:not(.separator):not(.application-menu-trigger)'),
           tabContainerW = this.tablist.width(),
           totalSize = 0;
 
-        sizeableTabs.add(this.moreButton).removeAttr('style');
+        sizeableTabs = sizeableTabs.add(this.moreButton);
 
         // Remove overflowed tabs
-        sizeableTabs.each(function() {
+        sizeableTabs.removeAttr('style').each(function() {
           var t = $(this),
             width = t.outerWidth(true);
 
@@ -1764,21 +1768,16 @@
 
       adjustModuleTabs: function() {
         var self = this,
-          sizeableTabs = this.tablist.find('li:not(.separator):not(.application-menu-trigger):not(.add-tab-button)'),
+          sizeableTabs = this.tablist.find('li:not(.separator):not(.application-menu-trigger)'),
           appTrigger = this.tablist.find('.application-menu-trigger'),
           hasAppTrigger = appTrigger.length > 0,
-          addButton = this.tablist.find('.add-tab-button'),
-          hasAddButton = addButton.length > 0,
           tabContainerW = this.tablist.outerWidth(),
           defaultTabSize = 120,
           visibleTabSize = 120,
-          appTriggerSize = (hasAppTrigger ? appTrigger.outerWidth() : 0),
-          addButtonSize = (hasAddButton ? addButton.outerWidth(true) : 0);
-
-        sizeableTabs.add(this.moreButton).removeAttr('style');
+          appTriggerSize = (hasAppTrigger ? appTrigger.outerWidth() : 0);
 
         // Remove overflowed tabs
-        sizeableTabs.each(function() {
+        sizeableTabs.removeAttr('style').each(function() {
           var t = $(this);
 
           if (self.isTabOverflowed(t)) {
@@ -1794,15 +1793,11 @@
           return;
         }
 
-        if (self.isTabOverflowed(addButton)) {
-          addButtonSize = 0;
-        }
-
         // Math explanation:
         // Width of tab container - possible applcation menu trigger
         // Divided by number of visible tabs (doesn't include app menu trigger which shouldn't change size)
         // Minus one (for the left-side border of each tab)
-        visibleTabSize = ((tabContainerW - (appTriggerSize + addButtonSize)) / sizeableTabs.length - 1);
+        visibleTabSize = ((tabContainerW - appTriggerSize) / sizeableTabs.length - 1);
 
         if (visibleTabSize < defaultTabSize) {
           visibleTabSize = defaultTabSize;

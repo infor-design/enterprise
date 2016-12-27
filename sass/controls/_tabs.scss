@@ -40,6 +40,12 @@
   font-size: 0;
   position: relative;
 
+  &.has-add-button {
+    .add-tab-button {
+      visibility: visible;
+    }
+  }
+
   &.has-more-button {
     .tab-more {
       visibility: visible;
@@ -171,13 +177,12 @@
 }
 
 // More Button
-.tab-more {
+.tab-more,
+.add-tab-button {
   @include css3(transition, background-color .25s ease);
   cursor: pointer;
   display: inline-block;
   position: absolute;
-  right: 0;
-  top: 0;
   visibility: hidden;
 
   &:focus {
@@ -194,16 +199,57 @@
 .tab-container.horizontal,
 .tab-container.header-tabs {
 
-  .tab-more {
+  .tab-more,
+  .add-tab-button {
     @include font-size(14);
     background-color: transparent;
-    max-width: 105px;
 
     .icon {
       height: 16px;
       margin: 0;
       vertical-align: middle;
       width: 32px;
+    }
+  }
+
+  .tab-more {
+    max-width: 105px;
+  }
+
+  .add-tab-button {
+    max-width: 44px;
+  }
+
+  &.has-add-button {
+    .tab-list {
+      padding-right: 45px;
+    }
+
+    .add-tab-button {
+      right: 0;
+      top: 0;
+    }
+  }
+
+  &.has-more-button {
+    .tab-list {
+      padding-right: 102px;
+    }
+
+    .tab-more {
+      right: 0;
+      top: 0;
+    }
+
+    &.has-add-button {
+      .tab-list {
+        padding-right: 166px;
+      }
+
+      .tab-more {
+        right: 45px;
+        top: 0;
+      }
     }
   }
 
@@ -366,10 +412,6 @@
     }
   }
 
-  &.has-more-button .tab-list {
-    padding-right: 102px;
-  }
-
   // Entire tab control disabled state
   &.is-disabled {
     color: $disabled-color;
@@ -495,10 +537,14 @@
 //RTL Styles
 html[dir='rtl'] {
   // More Button
-  .tab-more {
-    left: 0;
+  .tab-more,
+  .add-tab-button {
     padding: 8px 14px 8px 0;
     right: auto;
+  }
+
+  .tab-more {
+    left: 0;
   }
 
   .tab-container:not(.vertical) {
