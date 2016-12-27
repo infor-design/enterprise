@@ -14,6 +14,12 @@
   vertical-align: middle;
   width: 300px;
 
+  .field::after {
+    clear: both;
+    content: '';
+    display: block;
+  }
+
   label {
     text-align: left;
   }
@@ -71,10 +77,12 @@
 
 }
 
+// scss-lint:disable ImportantRule
 .ios .signin .icon-error,
 .ios .signin .icon-confirm {
   top: 26.5px !important;
 }
+// scss-lint:enable ImportantRule
 
 .password-hint {
   strong {
