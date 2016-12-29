@@ -576,8 +576,32 @@
   .measure.s4 {fill: $azure10;};
 }
 
+// Temporary fix for SVG Tooltips
+#svg-tooltip.tooltip {
+  &.top,
+  &.bottom {
+    .arrow {
+      left: calc(50% - 6px);
+    }
+  }
+
+  &.left,
+  &.right {
+    .arrow {
+      top: calc(50% - 6px);
+    }
+  }
+}
+
 //RTL Styles
 html[dir='rtl'] {
+  .chart-legend {
+    .chart-legend-color {
+      margin-left: 10px;
+      margin-right: inherit;
+    }
+  }
+
   // Progess Bar Charts
   .chart-completion-target,
   .chart-completion {

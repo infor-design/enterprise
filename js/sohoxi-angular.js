@@ -1,4 +1,7 @@
-// SoHo XI Angular Directives
+/**
+ * SoHo XI Angular Directives
+ * @private
+ */
 (function () {
 
   var button = function () {

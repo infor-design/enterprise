@@ -1,7 +1,3 @@
-/**
-* Touch Enabled/Responsive and Accessible Slider Control
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -34,7 +30,11 @@
         },
         settings = $.extend(true, {}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * Touch Enabled/Responsive and Accessible Slider Control
+     * @constructor
+     * @param {Object} element
+     */
     function Slider(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);

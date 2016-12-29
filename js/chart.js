@@ -1,13 +1,11 @@
 /**
-* Chart Controls
-* @name Charts
-* TODO:
-
-  Make vertical bar chart (have horizontal)
-  Work on update functions or routine
-  Make responsive
-  Make Area/Dot Chart
-  Test With Screen readers
+* @constructor
+* @todo:
+*   Make vertical bar chart (have horizontal)
+*   Work on update functions or routine
+*   Make responsive
+*   Make Area/Dot Chart
+*   Test With Screen readers
 */
 
 window.Chart = function(container) {
@@ -574,7 +572,7 @@ window.Chart = function(container) {
                   '<div style="background-color:'+ (series[j].pattern ? 'transparent' : hexColor) +';">'+
                     setPattern(series[j].pattern, hexColor)+
                   '</div>'+
-                  '<span>'+ series[j].name +'</span><b> '+ Math.round((totals[j]/total)*100) +'% </b>'+
+                  '<span>'+ series[j].name +'</span><b> '+ (isFormatter ? format(totals[j]) : (Math.round((totals[j]/total)*100)+'%')) +' </b>'+
                 '</div>';
             }
 
@@ -771,7 +769,8 @@ window.Chart = function(container) {
     }
 
     var self = this,
-      parent = $(container).parent();
+      parent = $(container).parent(),
+      isRTL = charts.isRTL;
 
     var tooltipInterval,
       tooltipDataCache = [],
@@ -782,11 +781,11 @@ window.Chart = function(container) {
     var showLegend = charts.showLegend || false;
 
     var chartData = initialData[0].data;
-    chartData = chartData.sort(function(a,b) {
+    chartData = chartData.sort(function(a, b) {
       return +a.value - +b.value;
     });
 
-    var total = d3.sum(chartData, function(d){ return d.value; });
+    var total = d3.sum(chartData, function(d) { return d.value; });
 
     chartData = chartData.map(function (d) {
       return { data: d, elm: d, name: d.name, color: d.color, value: d.value, percent:d3.round(100*(d.value/total)) };
@@ -803,6 +802,10 @@ window.Chart = function(container) {
       return d.value;
     });
     // .sort(null);
+
+    if (isRTL) {
+      pie.sort(null);
+    }
 
     // Store our chart dimensions
     var dims = {
@@ -949,7 +952,98 @@ window.Chart = function(container) {
 
     // Now we'll draw our label lines, etc.
     var textLabels, textX=[], textY=[],
-      labelsContextFormatter = function (d, context, formatterString, isShortName) {
+      perEvenRound = [], perRound = [], perRoundTotal = 0,
+
+      // http://stackoverflow.com/a/13484393
+      // Fix: http://jira/browse/SOHO-4951
+      evenRound = function(orig, target) {
+        var i = orig.length,
+          j = 0,
+          total = 0,
+          change,
+          newVals = [],
+          next, factor1,
+          factor2,
+          len = orig.length,
+          marginOfErrors = [],
+          errorFactor = function (oldNum, newNum) {
+            return Math.abs(oldNum - newNum) / oldNum;
+          };
+
+        // map original values to new array
+        while (i--) {
+          total += newVals[i] = Math.round(orig[i]);
+        }
+
+        change = total < target ? 1 : -1;
+
+        while (total !== target) {
+          // Iterate through values and select the one that once changed will introduce
+          // the least margin of error in terms of itself. e.g. Incrementing 10 by 1
+          // would mean an error of 10% in relation to the value itself.
+          for (i = 0; i < len; i++) {
+            next = i === len - 1 ? 0 : i + 1;
+            factor2 = errorFactor(orig[next], newVals[next] + change);
+            factor1 = errorFactor(orig[i], newVals[i] + change);
+
+            if (factor1 > factor2) {
+              j = next;
+            }
+          }
+          newVals[j] += change;
+          total += change;
+        }
+        for (i = 0; i < len; i++) {
+          marginOfErrors[i] = newVals[i] && Math.abs(orig[i] - newVals[i]) / orig[i];
+        }
+
+        // Math.round() causes some problems as it is difficult to know at the beginning
+        // whether numbers should have been rounded up or down to reduce total margin of error.
+        // This section of code increments and decrements values by 1 to find the number
+        // combination with least margin of error.
+        for (i = 0; i < len; i++) {
+          for (j = 0; j < len; j++) {
+            if (j === i) {
+              continue;
+            }
+            var roundUpFactor = errorFactor(orig[i], newVals[i] + 1)  + errorFactor( orig[j], newVals[j] - 1);
+            var roundDownFactor = errorFactor(orig[i], newVals[i] - 1) + errorFactor( orig[j], newVals[j] + 1);
+            var sumMargin = marginOfErrors[i] + marginOfErrors[j];
+
+            if(roundUpFactor < sumMargin) {
+              newVals[i] = newVals[i] + 1;
+              newVals[j] = newVals[j] - 1;
+              marginOfErrors[i] = newVals[i] && Math.abs(orig[i] - newVals[i]) / orig[i];
+              marginOfErrors[j] = newVals[j] && Math.abs(orig[j] - newVals[j]) / orig[j];
+            }
+            if(roundDownFactor < sumMargin) {
+              newVals[i] = newVals[i] - 1;
+              newVals[j] = newVals[j] + 1;
+              marginOfErrors[i] = newVals[i] && Math.abs(orig[i] - newVals[i]) / orig[i];
+              marginOfErrors[j] = newVals[j] && Math.abs(orig[j] - newVals[j]) / orig[j];
+            }
+          }
+        }
+        return newVals;
+      },
+
+      setEvenRoundPercentage = function() {
+        var arr = [];
+        for (var i = 0, l = chartData.length; i < l; i++) {
+          var d = chartData[i],
+            v = d.value / total,
+            f1 = d3.format('0.0%'),
+            f2 = d3.format('0.3%'),
+            r1 = f1(v),
+            r2 = f2(v);
+          perRound.push(+(r1.replace('%','')));
+          arr.push(+(r2.replace('%','')));
+        }
+        perEvenRound = evenRound(arr, 100);
+        perRoundTotal = perRound.reduce(function(a, b) { return a + b; });
+      },
+
+      labelsContextFormatter = function (d, context, formatterString, isShortName, i) {
         formatterString = /percentage/i.test(context) ? '0.0%' : formatterString;
         var r,
           format = d3.format(formatterString || ''),
@@ -957,6 +1051,9 @@ window.Chart = function(container) {
           name = isShortName ? (d.data.shortName || d.data.name.substring(0, 6) +'...') : d.data.name,
           value = formatterString && formatterString !== '0.0%' ? format(d.value) : d.value;
 
+        if (/percentage/i.test(context) && perRoundTotal !== 100) {
+          percentage = perEvenRound[i] +'%';
+        }
         // 'name'|'value'|'percentage'|'name, value'|'name (value)'|'name (percentage)'
         switch (context) {
           case 'name': r = name; break;
@@ -982,7 +1079,7 @@ window.Chart = function(container) {
 
           d3.select(this)
             .text(function() {
-              return labelsContextFormatter(d, lb.contentsTop, lb.formatterTop, isShortName);
+              return labelsContextFormatter(d, lb.contentsTop, lb.formatterTop, isShortName, i);
             })
             .style({
               'font-weight': lb.isTwoline ? 'bold' : 'normal',
@@ -1067,7 +1164,7 @@ window.Chart = function(container) {
             var centroid = pieArcs.centroid(d),
              midAngle = Math.atan2(centroid[1], centroid[0]),
               x = Math.cos(midAngle) * dims.labelRadius;
-            return (x > 0) ? 'start' : 'end';
+            return isRTL ? (x > 0 ? 'end' : 'start') : (x > 0 ? 'start' : 'end');
           }
         });
 
@@ -1080,6 +1177,8 @@ window.Chart = function(container) {
             });
         }
 
+        setEvenRoundPercentage();
+
         if (lb.hideLabels) {
           drawTextlabels();
 
@@ -1089,7 +1188,7 @@ window.Chart = function(container) {
               .attr('dy', '.35em')
               .style('text-anchor', 'middle')
               .attr('class', 'chart-donut-text')
-              .text(centerLabel);
+              .html(centerLabel);
           }
         }
       };
@@ -1164,14 +1263,18 @@ window.Chart = function(container) {
 
           // Fix x position
           textLabels.each(function(d, i) {
-            var label = d3.select(this),
+            var x,
+              label = d3.select(this),
               x1 = +label.attr('x'),
               y1 = +label.attr('y'),
-              sign = (x1 > 0 ? 1 : -1),
-              x = (dims.labelRadius - Math.abs(y1) + Math.abs(orgLabelPos[i].x + (spacing * 2.5))) * sign;
+              sign = (x1 > 0 ? 1 : -1);
+
+              x = isRTL ?
+                ((dims.labelRadius - Math.abs(y1) + Math.abs(orgLabelPos[i].x - (spacing * 2.5))) * sign):
+                ((dims.labelRadius - Math.abs(y1) + Math.abs(orgLabelPos[i].x + (spacing * 2.5))) * sign);
 
             if (orgLabelPos[i].y !== y1 || (i === 0 && chartData[i].percent < 10)) {
-              x += chartData[i].percent < 10 ? Math.ceil(x1/2) : Math.ceil(x1-x)- (spacing/2);
+              x += chartData[i].percent <= 10 ? Math.ceil(x1/2) : Math.ceil(x1-x)- (spacing/2);
               label.attr('x', x);
 
               if (lb.isTwoline) {
@@ -1254,6 +1357,20 @@ window.Chart = function(container) {
         }
       });
     })();
+
+    if (isRTL && lb.isTwoline) {
+      // Fix: incorrect text tspan position when RTL
+      // https://connect.microsoft.com/IE/feedback/details/846683
+      setTimeout(function() {
+        svg.selectAll('.label-text').each(function() {
+          var label = d3.select(this),
+            parent = d3.select(label.node().parentNode),
+            clone = d3.select(parent.node().appendChild(label.node().cloneNode(true)));
+          label.select('.lb-bottom').remove();
+          clone.select('.lb-top').remove();
+        });
+      }, 100);
+    }
 
     $(container).trigger('rendered');
     return $(container);
@@ -3419,6 +3536,7 @@ window.Chart = function(container) {
     //default
     this.options = options;
     this.redrawOnResize = true;
+    this.isRTL = Locale.isRTL();
 
     if (options.redrawOnResize !== undefined) {
       this.redrawOnResize = options.redrawOnResize;
@@ -3528,7 +3646,7 @@ $.fn.chart = function(options) {
     setTimeout(function () {
       chartInst.initChartType(options);
       chartInst.handleResize();
-    }, instance ? 0 :300);
+    }, instance ? 0 : 300);
 
   });
 };

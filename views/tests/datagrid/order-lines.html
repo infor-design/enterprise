@@ -22,7 +22,7 @@
       columns.push({ id: 'total', name: 'Total', field: 'total', formatter: Formatters.Decimal});
 
       //Get some data via ajax
-      var url = '/api/construction-orders';
+      var url = '{{basepath}}api/construction-orders';
 
       $.getJSON(url, function(res) {
 

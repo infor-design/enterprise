@@ -36,7 +36,7 @@
         </button>
         <ul class="popupmenu">
           <li><a data-option="personalize-columns" href="#">Personalize Columns</a></li>
-          <li><a data-option="reset-layout" href="#">Reset Default Layout</a></li>
+          <li><a data-option="reset-layout" href="#">Reset to Default</a></li>
           <li class="separator"></li>
           <li class="heading">Row Height</li>
           <li class="is-selectable"><a data-option="row-short" href="#">Short</a></li>
@@ -66,7 +66,7 @@
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', width: 130, formatter: Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date'});
 
       //Get some data via ajax
-      var url = '/api/compressors?pageNum=1&pageSize=1000';
+      var url = '{{basepath}}api/compressors?pageNum=1&pageSize=1000';
 
       $.getJSON(url, function(res) {
         //Show the grid

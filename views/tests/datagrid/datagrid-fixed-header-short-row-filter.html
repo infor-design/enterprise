@@ -23,7 +23,7 @@
         </button>
         <ul class="popupmenu">
           <li><a data-option="personalize-columns" href="#">Personalize Columns</a></li>
-          <li><a data-option="reset-layout" href="#">Reset Default Layout</a></li>
+          <li><a data-option="reset-layout" href="#">Reset to Default</a></li>
           <li class="separator"></li>
           <li><a data-option="export-to-excel" href="#">Export to Excel</a></li>
           <li class="separator single-selectable-section"></li>
@@ -47,7 +47,7 @@
         columns = [],
         data = [];
 
-      var url = '/api/compressors?pageNum=1&pageSize=100';
+      var url = '{{basepath}}api/compressors?pageNum=1&pageSize=100';
       $.getJSON(url, function(res) {
         data = res.data;
 

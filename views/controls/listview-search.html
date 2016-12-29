@@ -1,18 +1,6 @@
 <div class="row">
   <div class="twelve columns">
 
-    <!--This is only needed because it renders first on the server on the first one-->
-    {{={{{ }}}=}}
-    <script id="search-tmpl" type="text/html">
-        <ul>
-          {{#dataset}}
-             <li>
-              <p>{{desc}}</p>
-            </li>
-          {{/dataset}}
-        </ul>
-    </script>
-
     <div class="card">
       <div class="card-header">
         <h2 class="card-title">Tasks</h2>
@@ -35,7 +23,18 @@
           <input class="searchfield" placeholder="Search My Alerts" name="searchfield" id="gridfilter" data-options="{clearable: true}">
         </div>
 
-        <div class="listview" id="search-listview" data-options="{template: 'search-tmpl', source: '/api/tasks', searchable: true}"></div>
+        <div class="listview" id="search-listview" data-options="{template: 'search-tmpl', source: '{{basepath}}api/tasks', searchable: true}"></div>
+
+        {{={{{ }}}=}}
+        <script id="search-tmpl" type="text/html">
+            <ul>
+              {{#dataset}}
+                 <li>
+                  <p>{{desc}}</p>
+                </li>
+              {{/dataset}}
+            </ul>
+        </script>
       </div>
     </div>
 

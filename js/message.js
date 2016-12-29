@@ -1,8 +1,3 @@
-/**
-* Responsive Messages
-* Deps: modal
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -33,7 +28,11 @@
         },
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * Responsive Messages
+     * @constructor
+     * @param {Object} element
+     */
     function Message(element) {
       this.element = $(element);
       Soho.logTimeStart(pluginName);

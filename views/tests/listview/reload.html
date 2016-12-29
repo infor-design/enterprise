@@ -4,21 +4,8 @@
   </div>
 </div>
 
-<!--This is only needed because it renders first on the server on the first one-->
-{{={{{ }}}=}}
-
 <div class="row">
   <div class="one-third column">
-
-    <script id="employee-tmpl" type="text/html">
-      <ul>
-        {{#dataset}}
-           <li>
-            <p>{{firstName}} {{lastName}}, {{title}}</p>
-          </li>
-        {{/dataset}}
-      </ul>
-    </script>
 
     <div class="card" >
       <div class="card-header">
@@ -46,17 +33,32 @@
 </div>
 
 <script>
-  data = [];
-  data.push({firstName: 'Item', lastName: 'One'});
-  data.push({firstName: 'Item', lastName: 'Two'});
+  $('body').on('initialized', function() {
 
-  $('#list-one').listview({dataset: data, template: $('#employee-tmpl').html()});
+    data = [];
+    data.push({firstName: 'Item', lastName: 'One'});
+    data.push({firstName: 'Item', lastName: 'Two'});
 
-  $('#btn1').on('click', function () {
-    data.push({firstName: 'Item', lastName: 'Updated'});
-    data.push({firstName: 'Item', lastName: 'Updated'});
+    $('#list-one').listview({dataset: data, template: $('#employee-tmpl').html()});
 
-    $('#list-one').trigger('updated');
-    //api.refresh();
+    $('#btn1').on('click', function () {
+      data.push({firstName: 'Item', lastName: 'Updated'});
+      data.push({firstName: 'Item', lastName: 'Updated'});
+
+      $('#list-one').trigger('updated');
+
+    });
+
   });
+</script>
+
+{{={{{ }}}=}}
+<script id="employee-tmpl" type="text/html">
+  <ul>
+    {{#dataset}}
+       <li>
+        <p>{{firstName}} {{lastName}}, {{title}}</p>
+      </li>
+    {{/dataset}}
+  </ul>
 </script>

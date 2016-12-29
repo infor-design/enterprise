@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="twelve columns">
+     <h2>Editor Test: Script Injection Attacks</h2>
+     <p>
+        This tests the security of the Editor control. As per <a target ="_blank" href="http://jira.infor.com/browse/SOHO-4630">SOHO-4630</a>
+        Go to the html tab and paste in the test string on that issue.
+        Then switch back to the html tab.
+        The test passed if no alerts are shown.
+    </p>
+     <br />
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+
+    <div class="field">
+      <span class="label">Comments</span>
+      <div class="editor" data-init="false" aria-label="Comments - Type To Replace Existing Content">
+        <p>Embrace <a href="http://en.wikipedia.org/wiki/e-commerce">e-commerce action-items</a>, reintermediate, ecologies paradigms wireless share life-hacks create innovative harness. Evolve solutions rich-clientAPIs synergies harness relationships virtual vertical facilitate end-to-end, wireless, evolve synergistic synergies.</p>
+        <p>Cross-platform, evolve, ROI scale cultivate eyeballs addelivery, e-services content cross-platform leverage extensible viral incentivize integrateAJAX-enabled sticky evolve magnetic cultivate leverage; cutting-edge. Innovate, end-to-end podcasting, whiteboard streamline e-business social; compelling, "cross-media exploit infomediaries innovative integrate integrateAJAX-enabled." Killer interactive reinvent, cultivate widgets leverage morph.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $(function() {
+    $('.editor').editor();
+  });
+</script>

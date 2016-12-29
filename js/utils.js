@@ -1,8 +1,9 @@
 /**
-* Transition Support Check
-* Returns the vendor-prefixed name of the 'transition' property available by the browser.
-* If the browser doesn't support transitions, it returns null.
-*/
+ * Transition Support Check
+ * Returns the vendor-prefixed name of the 'transition' property available by the browser.
+ * If the browser doesn't support transitions, it returns null.
+ * @private
+ */
 
 /* start-amd-strip-block */
 (function(factory) {
@@ -373,6 +374,15 @@
       newValue = newValue.replace(/&amp;/g, '&');
     }
     return newValue;
+  };
+
+  //Remove Script tags and all onXXX functions
+  $.santizeHtml = function(html) {
+    var santizedHtml = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/g, '');
+     santizedHtml = santizedHtml.replace(/on\w+="[^"]*"/g, '');
+     santizedHtml = santizedHtml.replace(/ on\w+='[^']*'/g, '');
+
+    return santizedHtml;
   };
 
   //Hide Focus - Only show on key entry

@@ -1,7 +1,3 @@
-/**
-* Rating Control
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -24,16 +20,19 @@
         defaults = {},
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
-    function Plugin(element) {
+    /**
+     * @constructor
+     * @param {Object} element
+     */
+    function Rating(element) {
       this.element = $(element);
       Soho.logTimeStart(pluginName);
       this.init();
       Soho.logTimeEnd(pluginName);
     }
 
-    // Actual Plugin Code
-    Plugin.prototype = {
+    // Actual Rating Code
+    Rating.prototype = {
       init: function() {
         this.handleEvents();
         this.allInputs = this.element.find('input');
@@ -104,7 +103,7 @@
       if (instance) {
         instance.settings = $.extend({}, defaults, options);
       } else {
-        instance = $.data(this, pluginName, new Plugin(this, settings));
+        instance = $.data(this, pluginName, new Rating(this, settings));
       }
     });
   };

@@ -21,20 +21,24 @@
         defaults = {
           itemsSelector: null,
           connectWith: false,
+          placeholder: null,
           placeholderCssClass: 'arrange-placeholder'
         },
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
-    function Plugin(element) {
+    /**
+     * @constructor
+     * @param {Object} element
+     */
+    function Arrange(element) {
       this.element = $(element);
       Soho.logTimeStart(pluginName);
       this.init();
       Soho.logTimeEnd(pluginName);
     }
 
-    // Plugin Methods
-    Plugin.prototype = {
+    // Arrange Methods
+    Arrange.prototype = {
 
       init: function() {
         this.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -57,6 +61,10 @@
           placeholder = $('<'+ items.first()[0].tagName +' />');
         }
 
+        if (settings.placeholder) {
+          placeholder = $(settings.placeholder);
+        }
+
         self.dragStart = 'dragstart.arrange touchstart.arrange gesturestart.arrange';
         self.dragEnd = 'dragend.arrange touchend.arrange touchcancel.arrange gestureend.arrange';
         self.dragWhileDragging = 'dragover.arrange dragenter.arrange drop.arrange touchmove.arrange gesturechange.arrange';
@@ -77,8 +85,10 @@
             .data('connectWith', self.connectWith);
         }
 
+        self.items = items;
+
         // Draggable Items
-        items
+        self.items
         .attr('draggable', true).addClass(self.handle ? '' : 'draggable')
         .add([this, placeholder])
         .not('a[href], img').on('selectstart.arrange', function() {
@@ -171,7 +181,7 @@
             }
             else if (!self.placeholders.is(this)) {
               self.placeholders.detach();
-              this.element.append(placeholder);
+              self.element.append(placeholder);
             }
             return false;
           });//-------------------------------------------------------------------------------------
@@ -191,13 +201,28 @@
         return returns;
       },
 
+      unbind: function() {
+        this.items
+          .removeClass('draggable')
+          .removeAttr('draggable')
+          .off('selectstart.arrange '+ this.dragStart +' '+ this.dragEnd +' '+ this.dragWhileDragging);
+
+        $(this.handle, this.items)
+          .removeClass('draggable')
+          .off('mousedown.arrange mouseup.arrange touchstart.arrange touchend.arrange');
+
+        return this;
+      },
+
+      updated: function() {
+        return this
+          .unbind()
+          .init();
+      },
+
       // Teardown
       destroy: function() {
-        var items = (this.connectWith) ?
-          this.element.children().add($(this.connectWith).children()) : this.element.children();
-
-        items.off('selectstart.arrange '+ this.dragStart +' '+ this.dragEnd +' '+ this.dragWhileDragging);
-        $(this.handle, items).off('mousedown.arrange mouseup.arrange touchstart.arrange touchend.arrange');
+        this.unbind();
         $.removeData(this.element[0], pluginName);
       }
     };
@@ -206,10 +231,10 @@
     return this.each(function() {
       var instance = $.data(this, pluginName);
       if (instance) {
-        instance.settings = $.extend({}, defaults, options);
-        instance.show();
+        instance.settings = $.extend({}, instance.settings, options);
+        instance.updated();
       } else {
-        instance = $.data(this, pluginName, new Plugin(this, settings));
+        instance = $.data(this, pluginName, new Arrange(this, settings));
       }
     });
   };

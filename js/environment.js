@@ -1,6 +1,4 @@
-/**
- * Page Bootstrapper
- */
+// Page Bootstrapper
 
 /* start-amd-strip-block */
 (function(factory) {
@@ -38,61 +36,76 @@
     // Global Classes for browser, version and device as needed.
     addBrowserClasses: function() {
       var ua = navigator.userAgent || navigator.vendor || window.opera,
-        html = $('html'); // User-agent string
+        html = $('html'),
+        cssClasses = ''; // User-agent string
 
       if (ua.indexOf('Safari')  !== -1 &&
           ua.indexOf('Chrome')  === -1 &&
           ua.indexOf('Android') === -1) {
-        html.addClass('is-safari');
+        cssClasses += 'is-safari ';
+        Soho.env.browser.name = 'safari';
       }
 
       if (ua.indexOf('Mac OS X') !== -1) {
-        html.addClass('is-mac');
+        cssClasses += 'is-mac ';
+        Soho.env.os.name = 'Mac OS X';
       }
 
       if (ua.indexOf('Firefox') > 0) {
-        html.addClass('is-firefox');
+        cssClasses += 'is-firefox ';
+        Soho.env.browser.name = 'firefox';
       }
 
       //Class-based detection for IE
       if (ua.match(/Edge\//)) {
-        html.addClass('ie ie-edge');
+        cssClasses += 'ie ie-edge ';
+        Soho.env.browser.name = 'edge';
       }
       if (ua.match(/Trident/)) {
-        html.addClass('ie');
+        cssClasses += 'ie ';
+        Soho.env.browser.name = 'ie';
       }
       if (navigator.appVersion.indexOf('MSIE 8.0') > -1 ||
         ua.indexOf('MSIE 8.0') > -1 ||
         document.documentMode === 8) {
-        html.addClass('ie8');
+        cssClasses += 'ie8 ';
+        Soho.env.browser.version = '8';
       }
       if (navigator.appVersion.indexOf('MSIE 9.0') > -1) {
-        html.addClass('ie9');
+        cssClasses += 'ie9 ';
+        Soho.env.browser.version = '9';
       }
       if (navigator.appVersion.indexOf('MSIE 10.0') > -1) {
-        html.addClass('ie10');
+        cssClasses += 'ie10 ';
+        Soho.env.browser.version = '10';
       } else {
         if (ua.match(/Trident\/7\./)) {
-          html.addClass('ie11');
+          cssClasses += 'ie11 ';
+          Soho.env.browser.version = '11';
         }
       }
 
       // Class-based detection for iOS
       // /iPhone|iPod|iPad|Silk|Android|BlackBerry|Opera Mini|IEMobile/
       if ((/iPhone|iPod|iPad/).test(ua)) {
-        html.addClass('ios');
+        cssClasses += 'ios ';
+        Soho.env.os.name = 'ios';
 
         var iDevices = ['iPod', 'iPad', 'iPhone'];
         for (var i = 0; i < iDevices.length; i++) {
           if (new RegExp(iDevices[i]).test(ua)) {
-            html.addClass(iDevices[i].toLowerCase());
+            cssClasses += iDevices[i].toLowerCase() + ' ';
+            Soho.env.device = iDevices[i];
           }
         }
       }
 
       if ((/Android/.test(ua))) {
-        html.addClass('android');
+        cssClasses += 'android ';
+        Soho.env.os.name = 'android';
       }
+
+      html.addClass(cssClasses);
 
       return this;
     },
@@ -100,17 +113,31 @@
     makeSohoObject: function() {
       window.Soho = window.Soho || {};
 
-      window.Soho.logTimeStart = function(label) { // jshint ignore:line
+      window.Soho.logTimeStart = function(label) {
         if (window.Soho.logTime) {
           console.time(label); // jshint ignore:line
         }
       };
 
-      window.Soho.logTimeEnd = function(label) { // jshint ignore:line
+      window.Soho.logTimeEnd = function(label) {
         if (window.Soho.logTime) {
           console.timeEnd(label); // jshint ignore:line
         }
       };
+
+      // Environment object provides JS-friendly way to figure out our browser support
+      window.Soho.env = {
+        browser: {},
+        os: {}
+      };
+
+      // Get the name of the paste event.  Could be "paste" or "input" based on the browser.
+      window.Soho.env.pasteEvent = (function getPasteEvent() {
+        var el = document.createElement('input'),
+            name = 'onpaste';
+        el.setAttribute(name, '');
+        return ((typeof el[name] === 'function') ? 'paste' : 'input');
+      })();
 
       window.Soho.theme = 'light';
       return this;

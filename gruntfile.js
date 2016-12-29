@@ -1,254 +1,26 @@
 module.exports = function(grunt) {
   grunt.file.defaultEncoding = 'utf-8';
   grunt.file.preserveBOM = true;
-  let controls = grunt.option('controls'),
-    excludeControls = grunt.option('excludeControls');
 
-  const mapperPath = grunt.option('mapperPath'),
-    configPath = grunt.option('configPath'),
-    config = grunt.option('config'),
+  const dependencyBuilder = require('./build/dependencybuilder.js'),
+    strBanner = require('./build/strbanner.js'),
+    controls = require('./build/controls.js');
 
-    extractNameFromPath = function(path) {
-      const matches = path.match(/.*(\/.*)(\.js)/),
-        name = matches[1].replace('/', '');
-      return name;
-    },
+  let selectedControls = dependencyBuilder(grunt),
+    bannerText = `/**\n* Soho XI Controls v<%= pkg.version %>\n* Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %>\n* Revision: <%= meta.revision %>\n*/\n`;
 
-    setUniqueDependencies = function(arr) {
-      const set = new Set(arr),
-        arrSet = [...set];
-      return arrSet;
-    },
-
-    //Traverse object for dependencies of dependencies, 1-3 levels deep based on architecture
-    setTraverse = function(hashMap, dependencies) {
-      let names = [];
-      for (let obj of dependencies) {
-        names.push(extractNameFromPath(obj.fileFound));
-      }
-
-      let uniqueArr = setUniqueDependencies(names);
-
-      for (let name of uniqueArr) {
-        if (hashMap[name]) {
-          let subObjs = hashMap[name];
-          for (let obj of subObjs) {
-            let objName = extractNameFromPath(obj.fileFound);
-            if (!names.includes(objName)) {
-              names.push(objName);
-            }
-          }
-        } else if (!names.includes(name)) {
-          names.push(name);
-        }
-      }
-
-      return names;
-    },
-
-    orderedDist = function(dist) {
-      if (!dist) { return; }
-
-      //Reorder paths correctly
-      let orderedDeps = [
-        'personalize',
-        'initialize',
-        'base',
-        'utils',
-        'animations',
-        'locale',
-        'listfilter'
-      ];
-
-      let orderedDepsIndex = [],
-        foundOrderedDeps   = [],
-        combinedDist       = [];
-
-      for (let i in orderedDeps) {
-        orderedDepsIndex.push(dist.indexOf(orderedDeps[i]));
-      }
-
-      for (let i in orderedDepsIndex) {
-        if (orderedDepsIndex[i] > -1) {
-          foundOrderedDeps.push(orderedDeps[i]);
-        }
-      }
-
-      for (let i in foundOrderedDeps) {
-        dist = dist.filter((err) => {
-          return err !== foundOrderedDeps[i];
-        });
-      }
-
-      combinedDist = foundOrderedDeps.concat(dist);
-
-      //Modify array based on options, include, exclude options
-      if (excludeControls) {
-        for (let i in excludeControls) {
-          combinedDist = combinedDist.filter((err) => {
-            return err !== excludeControls[i];
-          });
-        }
-      }
-
-      const paths = combinedDist.map((path) => { return `temp/amd/${path}.js`; }),
-        logOptions = { separator: '\n' };
-
-      grunt.log.writeln('List of included controls in sohoxi.*.js'.green);
-      grunt.log.write(grunt.log.wordlist(paths, logOptions));
-
-      return paths;
-    },
-
-    dependencyBuilder = function(mapperPath, configPath) {
-      let dist,
-        deps = [];
-
-      if (configPath) {
-        let path = grunt.file.readJSON(configPath);
-        dist = path.js;
-      }
-
-      if (mapperPath && controls && !configPath) {
-        const hashMap = grunt.file.readJSON(mapperPath);
-
-        for (let i in controls) {
-          let highLevelDependencies = controls[i],
-            lowLevelDependencies = hashMap[highLevelDependencies],
-            setTraverseDeps = setTraverse(hashMap, lowLevelDependencies);
-          for (let j in setTraverseDeps) {
-            deps.push(setTraverseDeps[j]);
-          }
-        }
-
-        let combinedDeps = deps.concat(controls);
-        dist = setUniqueDependencies(combinedDeps);
-
-        //Include initialize by default
-        if (!dist.includes('initialize')) {
-          dist.unshift('initialize');
-        }
-      }
-
-      return orderedDist(dist) || false;
-
-  };
-
-  //Convert string to array, if one option
-  if(!Array.isArray(controls)) {
-    const control = controls;
-    controls = [];
-    controls.push(control);
-  }
-
-  if(!Array.isArray(excludeControls)) {
-    const excludeControl = excludeControls;
-    excludeControls = [];
-    excludeControls.push(excludeControl);
-  }
-
-  const arrControls = dependencyBuilder(mapperPath, configPath) ||
-    [
-      'temp/amd/personalize.js',
-      'temp/amd/initialize.js',
-      'temp/amd/base.js',
-      'temp/amd/utils.js',
-      'temp/amd/animations.js',
-      'temp/amd/locale.js',
-      'temp/amd/listfilter.js',
-      'temp/amd/about.js',
-      'temp/amd/accordion.js',
-      'temp/amd/applicationmenu.js',
-      'temp/amd/autocomplete.js',
-      'temp/amd/busyindicator.js',
-      'temp/amd/button.js',
-      'temp/amd/chart.js',
-      'temp/amd/colorpicker.js',
-      'temp/amd/contextualactionpanel.js',
-      'temp/amd/datepicker.js',
-      'temp/amd/datagrid.js',
-      'temp/amd/dropdown.js',
-      'temp/amd/drag.js',
-      'temp/amd/editor.js',
-      'temp/amd/environment.js',
-      'temp/amd/expandablearea.js',
-      'temp/amd/flyingfocus.js',
-      'temp/amd/form.js',
-      'temp/amd/fileupload.js',
-      'temp/amd/fileuploadadvanced.js',
-      'temp/amd/header.js',
-      'temp/amd/hierarchy.js',
-      'temp/amd/highlight.js',
-      'temp/amd/homepage.js',
-      'temp/amd/icon.js',
-      'temp/amd/lookup.js',
-      'temp/amd/lifecycle.js',
-      'temp/amd/lightbox.js',
-      'temp/amd/listview.js',
-      'temp/amd/circlepager.js',
-      'temp/amd/pager.js',
-      'temp/amd/place.js',
-      'temp/amd/popdown.js',
-      'temp/amd/popupmenu.js',
-      'temp/amd/progress.js',
-      'temp/amd/mask.js',
-      'temp/amd/multiselect.js',
-      'temp/amd/message.js',
-      'temp/amd/modal.js',
-      'temp/amd/modalsearch.js',
-      'temp/amd/rating.js',
-      'temp/amd/resize.js',
-      'temp/amd/searchfield.js',
-      'temp/amd/sidebar.js',
-      'temp/amd/shell.js',
-      'temp/amd/signin.js',
-      'temp/amd/slider.js',
-      'temp/amd/arrange.js',
-      'temp/amd/scrollaction.js',
-      'temp/amd/spinbox.js',
-      'temp/amd/splitter.js',
-      'temp/amd/steppedprocess.js',
-      'temp/amd/swaplist.js',
-      'temp/amd/toast.js',
-      'temp/amd/tabs.js',
-      'temp/amd/tag.js',
-      'temp/amd/textarea.js',
-      'temp/amd/timepicker.js',
-      'temp/amd/tmpl.js',
-      'temp/amd/toolbar.js',
-      'temp/amd/toolbarsearchfield.js',
-      'temp/amd/tooltip.js',
-      'temp/amd/tree.js',
-      'temp/amd/validation.js',
-      'temp/amd/wizard.js',
-      'temp/amd/zoom.js'
-    ];
-
-  let strBanner = '/**\n* Soho XI Controls v<%= pkg.version %> \n* Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %> \n* Revision: <%= meta.revision %> \n */ \n';
-
-  if(mapperPath || config || configPath) {
-    let paths = arrControls.map((path) => { return extractNameFromPath(path); }),
-    configObj,
-    strControls;
-
-    if (config) {
-      configObj = { js : paths };
-      grunt.file.write('config.json', JSON.stringify(configObj, null, 2));
-      grunt.log.writeln();
-      grunt.log.writeln('\u2714'.green, ' File', 'config.json'.magenta, 'created.');
-      grunt.log.write(JSON.stringify(configObj, null, 2).cyan);
-      grunt.log.writeln();
-    }
-
-    strControls = paths.join(', ');
-    strBanner = `/**\n* Soho XI Controls v<%= pkg.version %> \n* ${strControls} \n* Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %> \n* Revision: <%= meta.revision %> \n */ \n`;
+  if (selectedControls) {
+    let bannerList = strBanner(selectedControls);
+    bannerText = `/**\n* Soho XI Controls v<%= pkg.version %>\n* ${bannerList}\n* Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %>\n* Revision: <%= meta.revision %>\n*/ \n`;
+  } else {
+    selectedControls = controls;
   }
 
   grunt.initConfig({
 
     pkg: grunt.file.readJSON('package.json'),
 
-    banner: strBanner,
+    banner: bannerText,
     amdHeader: '(function(factory) {\n\n  if (typeof define === \'function\' && define.amd) {\n    // AMD. Register as an anonymous module\n    define([\'jquery\'], factory);\n  } else if (typeof exports === \'object\') {\n    // Node/CommonJS\n    module.exports = factory(require(\'jquery\'));\n} else {\n    // Browser globals \n    factory(jQuery);\n  }\n\n}(function($) {\n\n',
 
     sass: {
@@ -278,7 +50,7 @@ module.exports = function(grunt) {
     },
 
     jshint: {
-      files: ['gruntfile.js', 'app.js', 'js/*.js'],
+      files: ['gruntfile.js', 'app.js', 'js/*.js', 'build/**/*.js'],
       options: {
         jshintrc: '.jshintrc'
       }
@@ -292,9 +64,23 @@ module.exports = function(grunt) {
       },
       basic: {
         files: {
-          'dist/js/<%= pkg.shortName %>.js': arrControls
+          'dist/js/<%= pkg.shortName %>.js': selectedControls
         }
+      },
+
+      missingFiles: {
+        src: selectedControls,
+        dest: 'temp/missing-files.js',
+        filter: function (filepath) {
+          if (!grunt.file.exists(filepath)) {
+            grunt.fail.warn('Could not find: ' + filepath);
+          } else {
+            return true;
+          }
+        },
+        nonull: true
       }
+
     },
 
     uglify: {
@@ -437,6 +223,21 @@ module.exports = function(grunt) {
           dest: 'views/docs/changelog-contents.html'
         }]
       }
+    },
+
+    documentation: {
+      default: {
+        files: [{
+          src: ['js/*.js']
+        }],
+        options: {
+          name: 'Soho XI Controls Docs',
+          destination: 'docs',
+          version: `v<%= pkg.version %>`,
+          output: 'html',
+          github: 'true'
+        }
+      },
     }
 
   });
@@ -462,9 +263,22 @@ module.exports = function(grunt) {
     'md2html'
   ]);
 
+  grunt.registerTask('js', [
+    'clean:dist',
+    'clean:public',
+    'revision',
+    'jshint',
+    'copy:amd',
+    'strip_code',
+    'concat',
+    'clean:amd',
+    'uglify',
+    'copy:main',
+    'usebanner'
+  ]);
+
   // Don't do any uglify/minify/jshint while the Dev Watch is running.
   grunt.registerTask('sohoxi-watch', [
     'revision', 'sass', 'copy:amd', 'strip_code','concat', 'clean:amd', 'copy:main', 'usebanner'
   ]);
-
 };

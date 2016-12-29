@@ -1,9 +1,3 @@
-/**
-* Splitter Control
-*/
-
-// NOTE:  There are AMD Blocks available
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -34,7 +28,10 @@
         },
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * @constructor
+     * @param {Object} element
+     */
     function Splitter(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -151,6 +148,10 @@
         //Find the top and bottom panels and set the height
         var topPanel = splitter.prev(),
           bottomPanel = splitter.next();
+
+        if (top > parentHeight || top < 0) {
+          top = parseInt(parentHeight) / 2;
+        }
 
         topPanel.css('height', top + 'px');
         bottomPanel.css('height', (parentHeight - top) + 'px');

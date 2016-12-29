@@ -28,7 +28,7 @@
           window.location = 'http:\\www.google.com';
         }});
       columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});
-      columns.push({ id: 'quantity', name: 'Accuml. Quantity', field: 'quantity', width: 125});
+      columns.push({ id: 'quantity', name: 'Accuml. Quantity', field: 'quantity', width: 155});
       //  columns.push({ id: 'quantity', name: 'Accuml. Quantity', field: 'quantity', align: 'right', width: 125});
       columns.push({ id: 'price', name: 'Status', field: 'price', width: 125, formatter: Formatters.Alert, ranges: [{'min': 0, 'max': 150, 'classes': 'confirm', text: 'Confirmed'}, {'min': 151, 'max': 9999, 'classes': 'error', text: 'Error'}]});
       columns.push({ id: 'quantity', name: 'Badge', field: 'quantity', width: 125, align: 'center', formatter: Formatters.Badge, ranges: [{'min': 0, 'max': 150, 'classes': 'azure07', sortable: false}]});

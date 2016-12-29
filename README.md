@@ -57,8 +57,8 @@ IE 9+ ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
   - `cd controls`
 
 ### Managing Local Dev with Make and Docker Compose
-* `make up` To start your Local Dev ENV which will
-* `make watch` To start `grunt watch`
+* `make up` To start your Local Dev ENV which will build SoHo and run `node server`
+* `make watch` If you want to start `grunt watch`
 * In a browser, go to: `http://localhost:4000`
 * NOTE any changes that you make will trigger Sass to recompile and the browser will reload thanks to live reload
 
@@ -102,7 +102,7 @@ This node module is hosted on a private repo [npm.infor.com](http://npm.infor.co
 Also your project should be initialized with a package.json. This can be done via npm init.
 
 ```bash
-npm set registry http://npm.infor.com:4873 --scope=@infor
+npm config set @infor:registry=http://npm.infor.com:4873
 ```
 
 ### Installation
@@ -201,6 +201,8 @@ Spend a little time in recreating and isolating the issue and you might learn an
   - Send a video in place of a reduced test case
   - Send a link to your application
   - Just send an image of the source code
+
+If a video is useful to show the problem please use a cross platform format such as MP4 and .webm for the video. We have found https://chrome.google.com/webstore/detail/screencastify-screen-vide/mmeijimgabbpbgpdklnllpncmdofkcpn?hl=en to be useful.
 
 4. Use the Bug Report template below
 
@@ -385,6 +387,12 @@ Run the [Soho Mapper Tool](http://git.infor.com/projects/SOHO/repos/mapper/brows
 
 #### Usage
 `npm run build -- --mapperPath='/Users/username/mapper/dist/globalsHashMap.min.json' --controls='datagrid' --excludeControls='initialize'`
+
+*To view a functioning build you will need to add initialize which is not included by default*
+`npm run build -- --mapperPath='/Users/username/mapper/dist/globalsHashMap.min.json' --controls='datagrid' --controls='initialize'`
+
+*To run a js build only*, assumes you ran the build completely before building the js alone
+`npm run build -- js --mapperPath='/Users/username/mapper/dist/globalsHashMap.json' --controls='expandablearea' --controls='initialize' --controls='autocomplete' --controls='button'`
 
 #### Options
 Set the hash map path

@@ -1,7 +1,3 @@
-/**
-* Searchfield Control (TODO: bitly link to soho xi docs)
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -34,7 +30,11 @@
         },
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * Searchfield Control
+     * @constructor
+     * @param {Object} element
+     */
     function SearchField(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -285,7 +285,7 @@
           // Needs to be done after a CSS animation on the searchfield finishes.
           // TODO: Bolster this to work with CSS TransitonEnd
           setTimeout(function() {
-            toolbar.triggerHandler('recalculateButtons');
+            toolbar.triggerHandler('recalculate-buttons');
           }, 300);
         }
       },
@@ -312,21 +312,24 @@
         }
 
         setTimeout(function() {
-          function deactivate() {
-            self.element.removeClass('active').blur();
+          function deactivate(e) {
+            var target = $(e.target),
+              elems = self.element.add(self.element.parent('.searchfield-wrapper'));
+            if (target.is(elems)) {
+              return;
+            }
+
+            //self.element.removeClass('active').blur();
             toolbar.removeClass('searchfield-active');
             $(document).offTouchClick('searchfield').off('click.searchfield');
           }
 
           $(document).onTouchClick('searchfield', '.searchfield').on('click.searchfield', function(e) {
-            var target = $(e.target);
-            if (target[0] !== self.element[0] && target[0] !== self.element.parent('.searchfield-wrapper')[0]) {
-              deactivate();
-            }
+            deactivate(e);
           });
 
-          self.element.one('blur.searchfield', function() {
-            deactivate();
+          self.element.one('blur.searchfield', function(e) {
+            deactivate(e);
           });
         }, 100);
         this.recalculateParent();
@@ -471,7 +474,7 @@
       },
 
       teardown: function() {
-        this.element.off('updated.searchfield populated.searchfield');
+        this.element.off('updated.searchfield focus.searchfield blur.searchfield click.searchfield keydown.searchfield beforeopen.searchfield listopen.searchfield');
 
         if (this.autocomplete) {
           this.autocomplete.destroy();

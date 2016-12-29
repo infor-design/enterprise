@@ -42,9 +42,6 @@ $datagrid-short-row-height: 23px;
   }
 
   &.datagrid-contained {
-    &.datagrid-container {
-      overflow-x: hidden;
-    }
 
     //Sticky Headers
     .datagrid {
@@ -134,13 +131,54 @@ $datagrid-short-row-height: 23px;
         }
 
         .datagrid-alert-icon {
-          top: 9px;
+          top: 5px;
         }
 
         .hyperlink {
           margin-top: 8px;
           vertical-align: top;
         }
+
+        //Editing
+        // scss-lint:disable NestingDepth
+        &.is-editing {
+
+          .datepicker {
+            padding: 12px 20px 10px;
+
+            + .icon {
+              margin-bottom: -4px;
+              top: -1px;
+            }
+          }
+
+          input {
+            padding: 8px 0 7px;
+          }
+
+          .dropdown {
+            padding: 2px 20px;
+          }
+
+          div.dropdown + .icon,
+          div.multiselect + .icon {
+            top: 2px;
+          }
+
+        }
+        // scss-lint:enable NestingDepth
+
+        //validation
+        &.error {
+          &.datagrid-trigger-cell .icon-error {
+            margin-top: auto;
+          }
+
+          .datagrid-cell-wrapper .icon-error {
+            top: 6px;
+          }
+        }
+
       }
     }
     //Resize the headers too
@@ -197,7 +235,9 @@ $datagrid-short-row-height: 23px;
 
         .datagrid-alert-icon {
           // scss-lint:disable ImportantRule
-          top: 5px !important;
+          height: 19px;
+          top: 0 !important;
+          width: 18px;
           // scss-lint:enable ImportantRule
         }
 
@@ -210,6 +250,7 @@ $datagrid-short-row-height: 23px;
 
         .hyperlink {
           line-height: 1.4rem;
+          margin-top: 3px;
           padding-top: 0;
           vertical-align: top;
         }
@@ -217,7 +258,7 @@ $datagrid-short-row-height: 23px;
         .row-btn {
           height: 26px;
           min-width: 80px;
-          top: 0;
+          top: -10px;
           vertical-align: middle;
 
           span {
@@ -226,19 +267,73 @@ $datagrid-short-row-height: 23px;
 
           &.btn-icon {
             height: 20px;
-            margin-bottom: -15px;
+            margin-bottom: -20px;
             min-width: 20px;
           }
         }
 
-
-
         a.row-btn {
+          // scss-lint:disable ImportantRule
+          top: -3px;
+          // scss-lint:disable ImportantRule
 
           .icon {
             margin: 0;
           }
         }
+
+        &.datagrid-trigger-cell {
+          .icon {
+            height: 16px;
+            margin-bottom: -1px;
+            top: 3px;
+
+            // scss-lint:disable NestingDepth
+            &.icon-calendar {
+              height: 15px;
+              top: 2px;
+            }
+            // scss-lint:enable NestingDepth
+          }
+        }
+
+        //Editing
+        // scss-lint:disable NestingDepth
+        &.is-editing {
+
+          .datepicker {
+            padding: 2px 20px 3px;
+
+            + .icon {
+              height: 15px;
+              margin-bottom: -4px;
+              top: -2px;
+            }
+          }
+
+          input {
+            padding: 2px 0 3px;
+          }
+
+          .dropdown {
+            padding: 2px 20px;
+          }
+
+        }
+        // scss-lint:enable NestingDepth
+
+        //validation
+        &.error {
+          &.datagrid-trigger-cell .icon-error {
+            margin-top: auto;
+          }
+
+          .datagrid-cell-wrapper .icon-error {
+            height: 16px;
+            top: 2px;
+          }
+        }
+
       }
     }
 
@@ -285,7 +380,6 @@ $datagrid-short-row-height: 23px;
     min-width: 40px;
     position: relative;
     text-align: left;
-    z-index: 1;
 
     &:last-child {
       border-right: 0;
@@ -575,7 +669,7 @@ $datagrid-short-row-height: 23px;
           width: 14px;
 
           + .icon-dropdown {
-            left: -11px;
+            left: -5px;
           }
         }
 
@@ -844,7 +938,7 @@ $datagrid-short-row-height: 23px;
       @include font-size(14);
       color: $hyperlink-color;
       display: inline-block;
-      //margin-top: 14px;
+      margin-top: -4px;
       overflow: hidden;
       //text-overflow: ellipsis;
       vertical-align: middle;
@@ -1395,6 +1489,14 @@ td .btn-actions {
     display: none;
   }
 
+  .datagrid-wrapped-text {
+    display: table;
+    line-height: 1.4em;
+    margin-bottom: 10px;
+    max-width: calc(100% - 30px);
+    white-space: normal;
+  }
+
   .datagrid-row-detail {
     border-bottom: 1px solid $datagrid-cell-border-color;
     height: 0;
@@ -1456,7 +1558,7 @@ td .btn-actions {
 
   &.short-rowheight {
     input {
-      height: 31px;
+      height: 32px;
       padding-top: 10px;
       // scss-lint:disable ImportantRule
       width: 100% !important;
@@ -1465,6 +1567,20 @@ td .btn-actions {
 
     .trigger .icon {
       margin-top: 0;
+    }
+  }
+
+  &.medium-rowheight {
+    input {
+      height: 40px;
+      padding-top: 10px;
+      // scss-lint:disable ImportantRule
+      width: 100% !important;
+      // scss-lint:enable ImportantRule
+    }
+
+    .trigger .icon {
+      margin-top: 4px;
     }
   }
 
@@ -1488,17 +1604,17 @@ td .btn-actions {
   visibility: visible;
 }
 
+// scss-lint:disable ImportantRule
 //RTL Styles
 html[dir='rtl'] {
-  .datagrid-column-wrapper {
-    margin-left: inherit;
-    margin-right: 20px;
-  }
-
   .datagrid {
     //Restore right Border
     th:last-child {
       border-right: 1px solid $datagrid-header-border-color;
+    }
+
+    td:last-child {
+      border-right: 1px solid $datagrid-cell-border-color;
     }
 
     //Push sort indicator over
@@ -1531,7 +1647,7 @@ html[dir='rtl'] {
 
     &.is-checked::after {
       left: auto;
-      right: 6px;
+      right: 5px;
     }
 
     &.is-partial::after {
@@ -1540,7 +1656,52 @@ html[dir='rtl'] {
     }
   }
 
+  //Filter Row
+  .datagrid-filter-wrapper {
+    .btn-filter {
+      left: 0 !important;
+      margin-left: 0;
+      width: 37px !important;
+
+      .icon-dropdown {
+        margin-left: 0;
+        padding-right: 0;
+        right: -7px;
+      }
+    }
+
+    input {
+      left: 0 !important;
+      right: 5px;
+    }
+
+    .dropdown-wrapper {
+      left: 0 !important;
+      right: 6px;
+    }
+
+    .dropdown + .icon {
+      margin-left: 0 !important;
+      margin-right: -9px;
+    }
+
+    .datepicker + .icon {
+      margin-left: 0;
+      margin-right: -15px;
+    }
+  }
+
+  th.l-center-text .btn-filter {
+    left: 0;
+    right: 9px;
+  }
+
+  tr .datagrid-alert-text {
+    padding-left: 0;
+    padding-right: 10px;
+  }
 }
+// scss-lint:enable ImportantRule
 
 // Sort styles
 //====================================================
@@ -1598,7 +1759,7 @@ html[dir='rtl'] {
       &.is-draggable-target {
         &.last {
           left: auto;
-          right: -15px;
+          right: -8px;
         }
 
         &.is-over {
@@ -1624,7 +1785,9 @@ html[dir='rtl'] {
 
     &.is-dragging-clone {
       max-width: 125px;
-      min-width: 100px;
+      // scss-lint:disable ImportantRule
+      min-width: 100px !important;
+      // scss-lint:enable ImportantRule
       position: fixed;
 
       .datagrid-header-text {

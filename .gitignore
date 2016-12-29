@@ -1,11 +1,20 @@
-node_modules/
+# Compiled #
+############
 designs/
+dist/
+documentation/
 public/svg/
 public/js/
 public/stylesheets/
-dist/
 temp/
-.DS_Store
+docs/
+
+# Packages #
+############
+node_modules/
+
+# Misc #
+############
 junit.xml
 junit-unit.xml
 junit-functional.xml
@@ -16,5 +25,10 @@ sohoxi-test-report.html
 xunit.xml
 .idea/
 .idea
+*.iml
 views/docs/changelog-contents.html
 config.json
+
+# OS generated files #
+############
+.DS_Store

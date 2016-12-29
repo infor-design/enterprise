@@ -98,7 +98,7 @@
           return (data.status === 'Queued');
         }});
 
-       var url = '/api/servicerequests';
+       var url = '{{basepath}}api/servicerequests';
 
       $.getJSON(url, function(res) {
          //Init and get the api for the grid

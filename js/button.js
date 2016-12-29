@@ -1,7 +1,3 @@
-/**
-* Button Control - Adds wripple effect
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -24,7 +20,10 @@
     // Settings and Options
     var pluginName = 'button';
 
-    // Plugin Constructor
+    /**
+     * @constructor
+     * @param {Object} element
+     */
     function Button(element) {
       this.element = $(element);
       Soho.logTimeStart(pluginName);
@@ -152,7 +151,7 @@
       },
 
       destroy: function() {
-        this.element.off('touchstart.button touchend.button touchcancel.button mousedown.button mouseup.button mouseleave.button focusout.button');
+        this.element.off('click.button touchstart.button focusin.hide-focus focusout.hide-focus mousedown.hide-focus touchstart.hide-focus');
 
         var moreTooltip = this.element.data('tooltip');
         if (this.element.hasClass('btn-actions') && moreTooltip) {

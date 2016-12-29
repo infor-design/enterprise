@@ -1,9 +1,6 @@
 <div class="row">
   <div class="twelve columns">
 
-    <!--This is only needed because it renders first on the server on the first one-->
-    {{={{{ }}}=}}
-
     <div class="row">
       <div class="four columns">
 
@@ -22,32 +19,9 @@
       </div>
     </div>
 
-    <script id="project-tmpl" type="text/html">
-      <ul>
-        {{#dataset}}
-          {{#disabled}}
-            <li class="is-disabled" style="position: relative;">
-          {{/disabled}}
-          {{^disabled}}
-            <li style="position: relative;">
-          {{/disabled}}
-            <p class="listview-heading">{{name}}</p>
-            <p class="listview-subheading">{{client}}</p>
-            {{#status}}
-            <span class="tag {{status.color}}" style="position: absolute; top: calc(50% - 13px); right: 25px; text-align: center; min-width: 80px;">
-              {{status.name}}
-            </span>
-            {{/status}}
-            {{^status}}
-            {{/status}}
-          </li>
-        {{/dataset}}
-      </ul>
-    </script>
-
-    <script type="text/javascript">
-      var statusCodes = $.get({url: '/api/general/status-codes'}),
-        myProjects = $.get({url: '/api/my-projects'}),
+   <script type="text/javascript">
+      var statusCodes = $.get({url: '{{basepath}}api/general/status-codes'}),
+        myProjects = $.get({url: '{{basepath}}api/my-projects'}),
         testData;
 
       function replaceStatus(dataObj) {
@@ -77,6 +51,30 @@
         });
       });
     </script>
+
+  {{={{{ }}}=}}
+   <script id="project-tmpl" type="text/html">
+    <ul>
+      {{#dataset}}
+        {{#disabled}}
+          <li class="is-disabled" style="position: relative;">
+        {{/disabled}}
+        {{^disabled}}
+          <li style="position: relative;">
+        {{/disabled}}
+          <p class="listview-heading">{{name}}</p>
+          <p class="listview-subheading">{{client}}</p>
+          {{#status}}
+          <span class="tag {{status.color}}" style="position: absolute; top: calc(50% - 13px); right: 25px; text-align: center; min-width: 80px;">
+            {{status.name}}
+          </span>
+          {{/status}}
+          {{^status}}
+          {{/status}}
+        </li>
+      {{/dataset}}
+    </ul>
+   </script>
 
   </div>
 </div>

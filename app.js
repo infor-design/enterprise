@@ -9,6 +9,7 @@ var express = require('express'),
   fs = require('fs'),
   http = require('http'),
   git = require('git-rev-sync'),
+  basepath = process.env.BASEPATH || '/',
   getJSONFile = require(path.resolve(__dirname, 'demoapp', 'js', 'getJSONFile')); // jshint ignore:line
 
   app.set('view engine', 'html');
@@ -35,6 +36,7 @@ var express = require('express'),
     layout: 'layout',
     locale: 'en-US',
     title: 'SoHo XI',
+    basepath: basepath,
     // Ignore this because its not in our control
     version: process.env.npm_package_version, // jshint ignore:line
     commit: git.long(),
@@ -207,9 +209,8 @@ var express = require('express'),
       // Strip out paths that aren't going to ever work
       paths.forEach(function pathIterator(val) {
         var excludes = [
-          /layout\.html/,
+          /^(layout)(\s)?(\.html)?/gm, // matches any filename that begins with "layout" (fx: "layout***.html")
           /footer\.html/,
-          /layout-noheader\.html/,
           /\.DS_Store/
         ],
         match = false;
@@ -230,16 +231,20 @@ var express = require('express'),
 
       // Map with links, add to
       function pathMapper(link) {
-        var href = path.join('/', directory, link),
+        var href = path.join(basepath, directory, link).replace(/\\/g, '/'),
           icon;
 
-        if (is('directory', href)) {
+        if (is('directory', href.replace(basepath,''))) {
           icon = '#icon-folder';
+
+          if (href.charAt(href.length - 1) !== '/') {
+            href = href + '/';
+          }
         }
 
         return {
           icon: icon,
-          href: href.replace(/\\/g,'/'),
+          href: href,
           text: link
         };
       }
@@ -409,11 +414,20 @@ var express = require('express'),
     if (directory.match(/tests\/header/)) {
       opts.layout = 'tests/header/layout';
     }
-    if (directory.match(/tests\/signin/)) {
-      opts.layout = 'tests/layout-noheader';
-    }
     if (directory.match(/tests\/datagrid-fixed-header/)) {
       opts.layout = 'tests/layout-noscroll';
+    }
+    if (directory.match(/tests\/masthead/)) {
+      opts.layout = 'tests/masthead/layout';
+    }
+    if (directory.match(/tests\/place\/scrolling\/container-is-body/)) {
+      opts.layout = 'tests/place/scrolling/layout-body';
+    }
+    if (directory.match(/tests\/place\/scrolling\/container-is-nested/)) {
+      opts.layout = 'tests/place/scrolling/layout-nested';
+    }
+    if (directory.match(/tests\/signin/)) {
+      opts.layout = 'tests/layout-noheader';
     }
     if (directory.match(/tests\/tabs-module/)) {
       opts.layout = 'tests/tabs-module/layout';

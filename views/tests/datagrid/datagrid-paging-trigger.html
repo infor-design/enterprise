@@ -52,7 +52,7 @@
           //Load a specific page and set the page - simulating a page state
           console.log(req.type);
 
-          var url = '/api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
+          var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
           if (req.sortField) {
             url += '&sortField=' + req.sortField + '&sortAsc=' + req.sortAsc;
           }

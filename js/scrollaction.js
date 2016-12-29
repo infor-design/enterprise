@@ -1,4 +1,3 @@
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -14,37 +13,15 @@
 }(function($) {
 /* end-amd-strip-block */
 
-  /**
-  * Scroll Action Control
-  */
   $.fn.scrollaction = function(options) {
 
-    // Tab Settings and Options
-    var pluginName = 'scrollaction',
-        defaults = {
-          scrollActionTarget: '.js-scroll-target', // The element to add a class to based on scrolling logic
-          classToAdd: 'scrolled-down' // The class added to the target element
-        },
-        settings = $.extend({}, defaults, options);
+    var pluginName = 'scrollaction';
+    var defaults = {
+      scrollActionTarget: '.js-scroll-target', // The element to add a class to based on scrolling logic
+      classToAdd: 'scrolled-down' // The class added to the target element
+    };
 
-    // Plugin Constructor
-    function ScrollAction(element) {
-      this.settings = $.extend({}, settings);
-      this.element = $(element);
-      this.init();
-    }
-
-    // Actual Plugin Code
-    ScrollAction.prototype = {
-
-      init: function() {
-        this.trackScrolling();
-        return this;
-      },
-
-      /**
-       * Attach scrolling logic to specified element
-       */
+    var functions = {
       trackScrolling: function() {
         var self = this;
         self.lastScrollTop = 0;
@@ -53,38 +30,36 @@
           var st = $(this).scrollTop();
 
           if (st > self.lastScrollTop){
-            self.didScrollDown();
+            $(self.settings.scrollActionTarget).addClass(self.settings.classToAdd);
           } else {
-            self.didScrollUp();
+            $(self.settings.scrollActionTarget).removeClass(self.settings.classToAdd);
           }
 
           self.lastScrollTop = st;
         });
-      },
-
-      /**
-       * Slide element down on scroll up
-       */
-      didScrollUp: function() {
-        $(this.settings.scrollActionTarget).removeClass(this.settings.classToAdd);
-      },
-
-      /**
-       * Slide element up on scroll down
-       */
-      didScrollDown: function() {
-        $(this.settings.scrollActionTarget).addClass(this.settings.classToAdd);
       }
-
     };
 
-    // Keep the Chaining and Init the Controls or Settings
+    /**
+     * A control that applies a class based on scroll direction
+     * @constructor
+     * @param {Object} [element=this] - The element to attach to (only when manually calling the constructor)
+     * @param {Object} [options]
+     * @param {string} [options.scrollActionTarget='.js-scroll-target'] - The selector of the element to add the class to
+     * @param {string} [options.classToAdd='scrolled-down'] - The class name
+     */
+    function ScrollAction(element, options) {
+      this.settings = $.extend({}, defaults, options);
+      this.element = $(element);
+      functions.trackScrolling.call(this);
+    }
+
     return this.each(function() {
       var instance = $.data(this, pluginName);
       if (instance) {
-
+        instance.settings = $.extend({}, instance.settings, options);
       } else {
-        instance = $.data(this, pluginName, new ScrollAction(this, settings));
+        instance = $.data(this, pluginName, new ScrollAction(this, options));
       }
     });
   };

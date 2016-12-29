@@ -1,7 +1,3 @@
-/**
-* List View Control
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -34,11 +30,15 @@
         searchable: false, // If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
         selectable: 'single', //false, 'single' or 'multiple'
         selectOnFocus: true, //true or false
+        hoverable: true, //true or false - can disable hover state
         source: null, // External function that can be used to provide a datasource
       },
       settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * @constructor
+     * @param {Object} element
+     */
     function ListView(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -452,6 +452,10 @@
           });
         }
 
+        if (!this.settings.hoverable || this.settings.hoverable === 'false') {
+          this.element.addClass('disable-hover');
+        }
+
         if (this.settings.selectable === 'multiple') {
           this.element.on('change.selectable-listview', '.listview-checkbox input', function (e) {
            $(this).parent().trigger('click');
@@ -746,7 +750,7 @@
           // Menu toggle takes place after the animation starts
           toolbar.one('animateopencomplete', function() {
             self.element.addClass('is-toolbar-open');
-            toolbar.trigger('recalculateButtons').removeClass('is-hidden');
+            toolbar.trigger('recalculate-buttons').removeClass('is-hidden');
           }).css('display', 'block');
           // toolbar.animateOpen({distance: 52});
           toolbar.animateOpen({distance: 40});

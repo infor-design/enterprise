@@ -1,4 +1,3 @@
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -14,9 +13,6 @@
 }(function($) {
 /* end-amd-strip-block */
 
-  /**
-  * Tab Control
-  */
   $.fn.tabs = function(options) {
 
     // Tab Settings and Options
@@ -32,7 +28,10 @@
         tabContainerTypes = ['horizontal', 'vertical', 'module-tabs', 'header-tabs'],
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * @constructor
+     * @param {Object} element
+     */
     function Tabs(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -1145,7 +1144,8 @@
       renderVisiblePanel: function() {
         // Recalculate all components inside of the visible tab to adjust widths/heights/display if necessary
         this.resizeNestedTabs();
-        this.panels.filter(':visible').handleResize();
+        //TJM: Prioritizing performance fix.
+        //this.panels.filter(':visible').handleResize();
       },
 
       changeHash: function(href) {
@@ -2178,7 +2178,9 @@
         this.animatedBar.css({'left': left +'px', 'width': '0'});
 
         this.animationTimeout = setTimeout(function() {
-          self.animatedBar.removeClass('visible').removeAttr('style');
+          if (self.animatedBar && self.animatedBar.length) {
+            self.animatedBar.removeClass('visible').removeAttr('style');
+          }
         }, 350);
       },
 

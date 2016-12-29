@@ -1,7 +1,3 @@
-/**
-* Validation Plugin
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -17,6 +13,11 @@
 }(function($) {
 /* end-amd-strip-block */
 
+
+  /**
+   * @constructor
+   * @param {Object} element
+   */
   function Validator(element) {
     this.element = $(element);
     Soho.logTimeStart('Validator');
@@ -86,19 +87,7 @@
 
     attachEvents: function () {
       var self = this,
-        attribs = '[data-validate],[data-validation]',
-        clickObj = null;
-
-      $(document).on('mousedown.validate',function(e) {
-        // The latest element clicked
-        clickObj = $(e.target);
-      });
-
-      // when 'clickObj == null' on blur, we know it was not caused by a click
-      // but maybe by pressing the tab key
-      $(document).on('mouseup.validate', function() {
-        clickObj = null;
-      });
+        attribs = '[data-validate],[data-validation]';
 
       //Attach required
       this.inputs.each(function () {
@@ -203,7 +192,7 @@
         var field = $(this);
         if (field.attr('data-validate')) {
 
-          if (field.attr('data-disable-validation') === 'true' || field.hasClass('disable-validation')) {
+          if (field.attr('data-disable-validation') === 'true' || field.hasClass('disable-validation') || field.css('visibility') === 'is-hidden' || !field.is(':visible')) {
             return true;
           }
 

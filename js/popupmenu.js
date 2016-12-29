@@ -1,8 +1,3 @@
-/**
-* Responsive Popup Menu Control (Context)
-* @name popupmenu
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -44,7 +39,11 @@
       },
       settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * Responsive Popup Menu Control (Context)
+     * @constructor
+     * @param {Object} element
+     */
     function PopupMenu(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -311,11 +310,11 @@
             switch(e.which) {
               case 13:
               case 32:
-                self.open(e, true);
+                self.open(e);
                 break;
               case 121:
                 if (e.shiftKey) { //Shift F10
-                  self.open(e, true);
+                  self.open(e);
                 }
                 break;
             }
@@ -603,7 +602,7 @@
         if ((this.settings.trigger === 'immediate' && this.settings.eventObj) || this.settings.trigger === 'rightClick') {
           opts.x = getCoordinates(e, 'x') - (isRTL ? menuDimensions.width : 0) + ((isRTL ? -1 : 1) * this.settings.offset.x);
           opts.y = getCoordinates(e, 'y') + this.settings.offset.y;
-          opts.strategies = ['flip', 'nudge', 'shrink'];
+          opts.strategies = ['flip', 'nudge', 'shrink-y'];
         } else {
           opts.x = this.settings.offset.x || 0;
           opts.y = this.settings.offset.y || 0;
@@ -615,26 +614,50 @@
         // BEGIN Temporary stuff until we sort out passing these settings from the controls that utilize them
         //=======================================================
 
-        // change the width of the menu if it's shorter than the trigger, in some conditions
         var triggerWidth = this.element.outerWidth(true),
-          menuIsSmallerThanTrigger = (target.is('.btn-menu') && menuDimensions.width < triggerWidth);
+          menuIsSmallerThanTrigger = menuDimensions.width < triggerWidth,
+          toolbarParent = target.parents('.toolbar'),
+          insideToolbar = toolbarParent.length > 0,
+          insideToolbarTitle = target.parents('.title').length > 0,
+          isNotFullToolbar = insideToolbar && toolbarParent.children('.buttonset, .title').length > 1;
 
-        function shouldBeLeftAligned(target) {
-          return target.is('.btn-split-menu, .btn-menu, .tab, .searchfield-category-button') &&
-            !target.parent('.pager-pagesize').length;
-        }
-
-        function shouldBeRightAligned(target) {
-          return target.is('.btn-actions, .btn-filter') || menuIsSmallerThanTrigger;
-        }
-
-        // Customize some settings based on the type of element that is doing the triggering.
-        if (shouldBeLeftAligned(target)) {
+        function alignLeft() {
           opts.parentXAlignment = (isRTL ? 'right': 'left');
         }
-        if (shouldBeRightAligned(target)) {
+
+        function alignRight() {
           opts.parentXAlignment = (isRTL ? 'left' : 'right');
         }
+
+        // Change the alignment of the popupmenu based on certain conditions
+        (function doAlignment() {
+          if (menuIsSmallerThanTrigger) {
+            return alignLeft();
+          }
+
+          if (target.is('.btn-menu')) {
+            if (insideToolbar) {
+              if (!isNotFullToolbar) {
+                return alignLeft();
+              }
+              if (insideToolbarTitle) {
+                return alignLeft();
+              }
+              return alignRight();
+            }
+
+            return alignLeft();
+          }
+
+          if (target.is('.btn-actions')) {
+            return alignRight();
+          }
+
+          if ((target.is('.btn-split-menu, .tab, .searchfield-category-button') &&
+            !target.parent('.pager-pagesize').length)) {
+              return alignLeft();
+            }
+        })();
 
         //=======================================================
         // END Temporary stuff until we sort out passing these settings from the controls that utilize them
@@ -674,23 +697,33 @@
         }
 
         if (this.settings.beforeOpen && !ajaxReturn) {
-         var response = function (content) {
-            self.menu.empty().append(content);
+          var response = function(content) {
+            if (self.ajaxContent instanceof $) {
+              self.ajaxContent.off().remove();
+            }
+            self.ajaxContent = $(content);
+            self.menu.append(self.ajaxContent);
             self.markupItems();
             self.open(e, true);
           };
 
-          if (typeof settings.beforeOpen === 'string') {
-            window[settings.beforeOpen](response);
+          if (typeof this.settings.beforeOpen === 'string') {
+            window[this.settings.beforeOpen](response);
             return;
           }
 
-          settings.beforeOpen(response);
+          this.settings.beforeOpen(response);
           return;
         }
 
+        var otherMenus = $('.popupmenu').not(this.menu);  //close others.
+        otherMenus.each(function() {
+          var api = $(this).data('popupmenu');
+          if (api && typeof api.close === 'function') {
+            api.close();
+          }
+        });
 
-        $('.popupmenu').not(this.menu).removeClass('is-open');  //close others.
         this.element.addClass('is-open');
         this.menu.addClass('is-open').attr('aria-hidden', 'false');
 
@@ -790,7 +823,6 @@
             menuToClose.removeClass('is-open').removeAttr('style');
             menuToClose.parent('.wrapper').removeAttr('style');
             menuToClose.parent().parent().removeClass('is-submenu-open');
-            self.element.removeClass('is-open');
           }
           clearTimeout(timeout);
         });
@@ -1008,6 +1040,10 @@
 
       teardown: function() {
         var wrapper = this.menu.parent('.popupmenu-wrapper');
+
+        if (this.ajaxContent) {
+          this.ajaxContent.off().remove();
+        }
 
         this.menu.parent().off('contextmenu.popupmenu');
         if (this.element.hasClass('btn-actions')) {

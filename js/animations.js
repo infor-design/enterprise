@@ -1,8 +1,6 @@
-/**
-* Height Animation Controls (TODO: bitly link to soho xi docs)
-* Adapted from: http://n12v.com/css-transition-to-from-auto/
-* Contains a handful of animation helper methods that attempt to DRY up CSS-powered sliding animations.
-*/
+// Height Animation Controls
+// Adapted from: http://n12v.com/css-transition-to-from-auto/
+// Contains a handful of animation helper methods that attempt to DRY up CSS-powered sliding animations.
 
 /* start-amd-strip-block */
 (function(factory) {

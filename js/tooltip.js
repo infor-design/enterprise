@@ -1,7 +1,3 @@
-/**
-* Tooltip and Popover Control
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -23,26 +19,46 @@
     // Settings and Options
     var pluginName = 'tooltip',
       defaults = {
-        content: null, //Takes title attribute or feed content. Can be a function or jQuery markup
-        offset: {top: 10, left: 10}, //how much room to leave
-        placement: 'top',  //can be top/left/bottom/right/offset
-        trigger: 'hover', //supports click and immediate and hover (and maybe in future focus)
-        title: null, //Title for Infor Tips
-        beforeShow: null, //Call back for ajax tooltip
-        popover: null , //force it to be a popover (no content)
-        closebutton: null, //Show X close button next to title in popover
-        isError: false, //Add error classes
-        isErrorColor: false, //Add error color only not description
-        tooltipElement: null, // ID selector for an alternate element to use to contain the tooltip classes
-        parentElement: null, // jQuery-wrapped element that gets passed to the 'place' behavior as the element to place the tooltip against.  Defaults to "this.element" in tooltip, if not set.
-        keepOpen: false, // Forces the tooltip to stay open in situations where it would normally close.
-        extraClass: null, // Extra css class
-        maxWidth: null // Toolip max width
-      },
-      settings = $.extend({}, defaults, options);
+        content: null,
+        offset: {top: 10, left: 10},
+        placement: 'top',
+        trigger: 'hover',
+        title: null,
+        beforeShow: null,
+        popover: null ,
+        closebutton: null,
+        isError: false,
+        isErrorColor: false,
+        tooltipElement: null,
+        parentElement: null,
+        keepOpen: false,
+        extraClass: null,
+        maxWidth: null
+      };
 
-    function Tooltip(element) {
-      this.settings = $.extend({}, settings);
+    /**
+     * Tooltip and Popover Control
+     * @constructor
+     * @param {Object} element
+     * @param {Object|Function} options
+     * @param {(string|Function)} [options.content] - Takes title attribute or feed content. Can be a function or jQuery markup
+     * @param {Object} [options.offset={top: 10, left: 10}] - How much room to leave
+     * @param {string} [options.placement=top|bottom|right|offset]
+     * @param {string} [options.trigger=hover] - supports click and immediate and hover (and maybe in future focus)
+     * @param {string} [options.title] - Title for Infor Tips
+     * @param {string} [options.beforeShow] - Call back for ajax tooltip
+     * @param {string} [options.popover] - force it to be a popover (no content)
+     * @param {string} [options.closebutton] - Show X close button next to title in popover
+     * @param {Boolean} [options.isError=false] - Add error classes
+     * @param {Boolean} [options.isErrorColor=false] - Add error color only not description
+     * @param {string} [options.tooltipElement] - ID selector for an alternate element to use to contain the tooltip classes
+     * @param {Object} [options.parentElement=this.element] - jQuery-wrapped element that gets passed to the 'place' behavior as the element to place the tooltip against.
+     * @param {Boolean} [options.keepOpen=false] - Forces the tooltip to stay open in situations where it would normally close.
+     * @param {string} [options.extraClass] - Extra css class
+     * @param {string} [options.maxWidth] - Toolip max width
+     */
+    function Tooltip(element, options) {
+      this.settings = $.extend({}, defaults, options);
       this.element = $(element);
       Soho.logTimeStart(pluginName);
       this.init();
@@ -64,6 +80,7 @@
 
         this.handleEvents();
       },
+
 
       setup: function() {
         // "this.activeElement" is the target element that the Tooltip will display itself against
@@ -290,7 +307,7 @@
         }
 
         // Store an internal copy of the processed content
-        this.content = content;
+        this.content = $.santizeHtml(content);
 
         // Wrap tooltip content in <p> tags if there isn't already one present.
         // Only happens for non-jQuery markup.
@@ -476,6 +493,10 @@
           targetContainer = this.scrollparent;
         }
 
+        if (this.settings.parentElement) {
+          targetContainer = this.settings.parentElement;
+        }
+
         this.tooltip.detach().appendTo(targetContainer);
       },
 
@@ -548,7 +569,7 @@
       updated: function() {
         var self = this;
 
-        if (settings.trigger === 'immediate') {
+        if (self.settings.trigger === 'immediate') {
           setTimeout(function() {
             self.show();
           }, 100);
@@ -567,7 +588,9 @@
           this.hide();
         }
 
-        this.element.off('mouseenter.tooltip mouseleave.tooltip mousedown.tooltip click.tooltip focus.tooltip blur.tooltip');
+        this.element.off('mouseenter.tooltip mouseleave.tooltip mousedown.tooltip click.tooltip mouseup.tooltip updated.tooltip focus.tooltip blur.tooltip');
+        $(document).off('mouseup.tooltip');
+        $('body').off('resize.tooltip');
 
         if (this.matchMedia) {
           this.matchMedia.removeListener(this.mediaQueryListener);
@@ -599,7 +622,7 @@
         return;
       }
 
-      instance = $.data(this, pluginName, new Tooltip(this, settings));
+      instance = $.data(this, pluginName, new Tooltip(this, options));
     });
   };
 

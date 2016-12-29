@@ -1,5 +1,27 @@
-{{={{{ }}}=}}
+<figure class="hierarchy" id="hierarchy"></figure>
 
+<script>
+
+  $.getJSON('{{basepath}}api/orgstructure', function(data) {
+
+    var legendData = [
+      { 'value' : 'FT', 'label' : 'Full Time'     },
+      { 'value' : 'PT', 'label' : 'Part Time'     },
+      { 'value' : 'C',  'label' : 'Contractor'    },
+      { 'value' : 'O',  'label' : 'Open Position' }
+    ];
+
+    $('#hierarchy').hierarchy({
+      templateId: 'hierarchyChartTemplate',
+      legendKey: 'EmploymentType',
+      legend: legendData,
+      dataset: data
+    });
+
+  });
+</script>
+
+{{={{{ }}}=}}
 <script type="text/html" id="hierarchyChartTemplate">
   <div class="leaf {{colorClass}}" id="{{id}}">
 
@@ -25,44 +47,4 @@
     </div>
 
   </div>
-</script>
-
-<figure class="hierarchy" id="hierarchy"></figure>
-
-<script>
-
-  $.getJSON('/api/orgstructure', function(data) {
-
-    var legendData = [
-      { 'value' : 'FT', 'label' : 'Full Time'     },
-      { 'value' : 'PT', 'label' : 'Part Time'     },
-      { 'value' : 'C',  'label' : 'Contractor'    },
-      { 'value' : 'O',  'label' : 'Open Position' }
-    ];
-
-    $('#hierarchy').hierarchy({
-      templateId: 'hierarchyChartTemplate',
-      legendKey: 'EmploymentType',
-      legend: legendData,
-      dataset: data
-    });
-
-  });
-
-
-/*var dataset = [{
-      data: [{
-          name: 'Category A',
-          value: 373
-      }, {
-          name: 'Category B',
-          value: 372
-      }, {
-          name: 'Category C',
-          value: 236.35
-      }],
-      name: ''  //Can be optionally passed in makes less sense with one: Group 1
-    }];
-*/
-  //$('#bar-example').chart({type: 'bar', dataset: dataset});
 </script>

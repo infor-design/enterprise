@@ -1,9 +1,3 @@
-/**
-* Toolbar Control (TODO: bitly link to soho xi docs)
-*/
-
-// NOTE:  There are AMD Blocks available
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -32,7 +26,10 @@
         },
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * @constructor
+     * @param {Object} element
+     */
     function Toolbar(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -110,7 +107,7 @@
           .add(this.more);
 
         this.buttonsetItems = this.buttonset.children('button, input')
-          .add(this.buttonset.find('.searchfield-wrapper').children('input'));
+          .add(this.buttonset.find('.searchfield-wrapper, .toolbar-searchfield-wrapper').children('input'));
 
         // Invoke buttons
         var buttons = this.items.filter('button, input[type="button"], [class^="btn"]');
@@ -118,6 +115,20 @@
           var buttonControl = $(this).data('button');
           if (!buttonControl) {
             $(this).button();
+          }
+        });
+
+        // Invoke searchfields
+        var searchfields = this.items.filter('.searchfield, .toolbar-searchfield-wrapper, .searchfield-wrapper');
+        searchfields.each(function(i, item) {
+          var sf = $(item);
+          if (sf.is('.toolbar-searchfield-wrapper, .searchfield-wrapper')) {
+            sf = sf.children('.searchfield');
+          }
+
+          if (!sf.data('searchfield')) {
+            var searchfieldOpts = $.extend({}, $.fn.parseOptions(sf[0]));
+            sf.toolbarsearchfield(searchfieldOpts);
           }
         });
 
@@ -178,13 +189,6 @@
           if (linkspan.length) {
             self.moreMenu.addClass('has-icons');
             linkspan.detach().prependTo(popupLi);
-          }
-
-          if (item.is('.searchfield')) {
-            if (!item.data('searchfield')) {
-              var searchfieldOpts = $.extend({}, $.fn.parseOptions(item[0]));
-              item.toolbarsearchfield(searchfieldOpts);
-            }
           }
 
           function addItemLinksRecursively(menu, diffMenu, parentItem) {
@@ -378,7 +382,7 @@
         this.element.off('updated.toolbar').on('updated.toolbar', function(e) {
           e.stopPropagation();
           self.updated();
-        }).off('recalculateButtons.toolbar').on('recalculateButtons.toolbar', function() {
+        }).off('recalculate-buttons.toolbar').on('recalculate-buttons.toolbar', function() {
           self.handleResize();
         });
 
@@ -628,7 +632,9 @@
           }
         });
 
-        this.moreMenu[addIconClassToMenu]('has-icons');
+        if (this.moreMenu.find('.icon').length) {
+          this.moreMenu[addIconClassToMenu]('has-icons');
+        }
 
         return {
           visible: visibleLis
@@ -659,8 +665,6 @@
 
       checkOverflowItems: function() {
         var items = this.adjustButtonVisibility();
-
-
 
         // Focus the more menu if the current item is focused
         if (!$.contains(this.buttonset[0], document.activeElement)) {
@@ -736,7 +740,7 @@
           .init();
 
         setTimeout(function () {
-          $(window).trigger('resize');
+          $(window).triggerHandler('resize');
         }, 0);
 
       },
@@ -769,7 +773,7 @@
             a = li.children('a'),
             itemLink = a.data('original-button');
 
-          a.off('mousedown.toolbar click.toolbar touchend.toolbar touchcancel.toolbar');
+          a.off('updated.toolbar mousedown.toolbar click.toolbar touchend.toolbar touchcancel.toolbar recalculate-buttons.toolbar');
 
           if (itemLink && itemLink.length) {
             $.removeData(a[0], 'original-button');

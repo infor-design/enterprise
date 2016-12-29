@@ -1,7 +1,4 @@
 
-<!--This is only needed because it renders first on the server on the first one-->
-{{={{{ }}}=}}
-
 <div class="row">
   <div class="twelve columns">
 
@@ -24,6 +21,14 @@
       </div>
     </div>
 
+    <div class="listview-header">
+      <button type="button" tabindex="-1" class="btn-icon btn-expand"><span class="icon plus-minus active"></span><span class="audible">Expand / Collapse</span></button>
+      <a href="#" class="hyperlink listview-heading">Order #10001-123</a>
+      <p class="listview-subheading">Order Placed: May 12, 2015</p>
+    </div>
+    <div class="listview" id="task-listview" data-options="{ selectable: false, source: '{{basepath}}api/product?limit=4', template: 'products-tmpl' }"></div>
+
+    {{={{{ }}}=}}
     <script id="products-tmpl" type="text/html">
 
         <table role="grid" class="listview-table">
@@ -66,13 +71,6 @@
 
         </table>
     </script>
-
-    <div class="listview-header">
-      <button type="button" tabindex="-1" class="btn-icon btn-expand"><span class="icon plus-minus active"></span><span class="audible">Expand / Collapse</span></button>
-      <a href="#" class="hyperlink listview-heading">Order #10001-123</a>
-      <p class="listview-subheading">Order Placed: May 12, 2015</p>
-    </div>
-    <div class="listview" id="task-listview" data-options="{ selectable: false, source: '/api/product?limit=4', template: 'products-tmpl' }"></div>
 
   </div>
 </div>

@@ -1,6 +1,4 @@
-/**
-* Code used in Samples and Demo Pages
-*/
+// Code used in Samples and Demo Pages
 
 // Public Variable with some sample data
 var demoTasks = [];

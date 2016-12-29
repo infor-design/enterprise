@@ -1,7 +1,3 @@
-/**
-* Spinbox Control (link to docs)
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -25,7 +21,10 @@
         defaults = {},
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * @constructor
+     * @param {Object} element
+     */
     function Spinbox(element) {
       this.element = $(element);
       Soho.logTimeStart(pluginName);
@@ -43,13 +42,26 @@
         this
           .setInitialValue()
           .addMarkup()
-          .bindEvents();
+          .bindEvents()
+          .setWidth();
+      },
+
+      setWidth: function() {
+        var style = this.element[0].style;
+
+        if (style.width) {
+          this.element.parent().css('width', style.width);
+          this.element.css('width', (parseInt(style.width) - (this.element.parent().find('.down').outerWidth() *2)) + 'px');
+        }
+
+        return this;
       },
 
       // Sanitize the initial value of the input field.
       setInitialValue: function() {
         var self = this,
           val = self.checkForNumeric(self.element.val());
+
         this.element.val(val);
         // If using Dirty Tracking, reset the "original" value of the dirty tracker to the current value
         // of the input, since it may have changed after re-invoking the input field.

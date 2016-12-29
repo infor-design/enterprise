@@ -1,9 +1,3 @@
-/**
-* Inline Field Formatter (Mask) Control
-* Adds a text-based formatting "mask" to input fields that displays how data should be entered into the field.
-* Does not allow text entry that does not match the provided mask.
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -18,6 +12,9 @@
   }
 }(function($) {
 /* end-amd-strip-block */
+
+  var DECIMAL_SYMBOL = '.';
+  var THOUSANDS_SEPARATOR = ',';
 
   $.fn.mask = function(options) {
 
@@ -49,7 +46,13 @@
         symbols = ['currency', 'percent'],
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * Inline Field Formatter (Mask) Control
+     * Adds a text-based formatting "mask" to input fields that displays how data should be entered into the field.
+     * Does not allow text entry that does not match the provided mask.
+     * @constructor
+     * @param {Object} element
+     */
     function Mask(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -62,13 +65,6 @@
       init: function(){
         var self = this;
         self.buffer = '';
-
-        // environment strings/bools
-        self.env = {
-          pasteEvent: self.getPasteEvent(),
-          ua: navigator.userAgent,
-          iPhone: /iphone/i.test(this.ua)
-        };
 
         this.element.addClass('is-mask');
 
@@ -101,7 +97,6 @@
         if (html5DataThousands) {
           this.settings.thousandsSeparator = (html5DataThousands === 'true');
         }
-        this.settings.thousandsSeparator = this.settings.pattern.indexOf(',') !== -1 || this.settings.thousandsSeparator;
 
         // If "negative" is defined, you can type the negative symbol in front of the number.
         // Will automatically set to "true" if a negative symbol is detected inside the mask.
@@ -163,7 +158,7 @@
 
         // Point all keyboard related events to the handleKeyEvents() method, which knows how to
         // deal with key syphoning and event propogation.
-        self.element.on('keypress.mask ' + self.env.pasteEvent, function(e) {
+        self.element.on('keypress.mask ' + self.getPasteEvent(), function(e) {
           if (self.element.prop('readonly')) {
             e.preventDefault();
             return false;
@@ -224,10 +219,7 @@
       // Builds a fake element and gets the name of the event that will be used for "paste"
       // Used for cross-browser compatability.
       getPasteEvent: function() {
-        var el = document.createElement('input'),
-            name = 'onpaste';
-        el.setAttribute(name, '');
-        return ((typeof el[name] === 'function') ? 'paste' : 'input') + '.mask';
+        return window.Soho.env.pasteEvent + '.mask';
       },
 
       // Gets rid of event firing and bubbling in all browsers.
@@ -447,11 +439,15 @@
       insertAtIndex: function(string, value, index) {
           return string.substring(0, index) + value + string.substring(index);
       },
-      replaceAtIndex: function(string, value, index) {
-        return string.substr(0, index) + value + string.substr(index+value.length);
+      replaceAtIndex: function(string, value, indexStart, indexEnd) {
+        return string.substr(0, indexStart) + value + string.substr(isNaN(indexEnd) ? (indexStart + value.length) : indexEnd);
       },
       deleteAtIndex: function(string, value, index) {
         return string.substr(0, index) + string.substr(index + value.length);
+      },
+
+      getCharacterAtIndex: function(string, index) {
+        return string.substr(index, 1);
       },
 
       // Resets properties used for internal storage between keypresses to their default values
@@ -468,127 +464,173 @@
           pos = this.originalPos,
           buffSize = this.buffer.length,
           workingPattern = '' + this.settings.pattern, // copy the pattern, don't reference it
-          pattSize = workingPattern.length;
+          pattSize = workingPattern.length,
+          isNumberMask = (this.settings.mode === 'number'),
+          replaceAtIndex = this.replaceAtIndex;
 
-        // insert the buffer's contents
+        var DASH_SYMBOL = '-';
+        var DASH_REGEX = new RegExp(DASH_REGEX, 'g'); // original: \-\g
+        var DECIMAL_REGEX = new RegExp('\\' + DECIMAL_SYMBOL, 'g'); // original: /\./g
+        var LEADING_ZERO_REGEX = new RegExp('^0+(?!\\'+ DECIMAL_SYMBOL +'|$)'); // original: /^0+(?!\.|$)/
+        var THOUSANDS_SEP_REGEX = new RegExp(THOUSANDS_SEPARATOR, 'g');
+        var PUNCTUATION_REGEX = new RegExp('(\\' + DECIMAL_SYMBOL + '|' + THOUSANDS_SEPARATOR + ')', 'g'); // original: /(\.|,)/g
+
+        function moveCaret(amount) {
+          pos.begin = pos.begin + amount;
+          pos.end = pos.end + amount;
+        }
+
+        function stripSelection() {
+          var selection = val.substring(pos.begin, pos.end);
+          val = replaceAtIndex(val, '', pos.begin, pos.end);
+          pos.end = pos.end - selection.length;
+        }
+
+        if (!isNumberMask) {
+          // strip out the portion of the text that would be selected by the caret
+          stripSelection();
+
+          // insert the buffer's contents
+          val = this.insertAtIndex(val, this.buffer, pos.begin);
+          moveCaret(buffSize);
+
+          // cut down the total length of the string to make it no larger than the pattern mask
+          val = val.substring(0, pattSize);
+
+          // put it back!
+          this.element.val(val);
+
+          // reposition the caret to be in the correct spot (after the content we just added).
+          this.caret(pos.begin >= pattSize ? pattSize : pos.begin);
+
+          // trigger the 'write' event
+          this.element.trigger('write.mask');
+          return;
+        }
+
+        //================================================
+        // Handle Number Inputs with a bit more scaffolding
+
+        stripSelection();
+
+        var originalVal = val,
+          patternHasDecimal = workingPattern.indexOf(DECIMAL_SYMBOL) > -1,
+          currentDecimalIndex = val.indexOf(DECIMAL_SYMBOL),
+          decimalInBuffer = this.buffer.indexOf(DECIMAL_SYMBOL) > -1,
+          insertBufferBeforeDecimal = true,
+          decimalAlreadyExists = false;
+
+        // Are we placing the new content after the decimal?
+        insertBufferBeforeDecimal = currentDecimalIndex < pos.begin;
+
+        // Does it already exist?
+        decimalAlreadyExists = currentDecimalIndex !== -1;
+
         val = this.insertAtIndex(val, this.buffer, pos.begin);
-
-        // strip out the portion of the text that would be selected by the caret
-        var selectedText = val.substring(pos.begin + buffSize, pos.end + buffSize);
-        val = val.replace(selectedText, '');
-
-        // cut down the total length of the string to make it no larger than the pattern mask
-        val = val.substring(0, pattSize);
+        moveCaret(buffSize);
 
         // If the mask supports negative numbers, but a positive number is present,
         // don't calculate the negative symbol as part of the current pattern.
         // Also, Reduce the size of the buffer to the new maximum (pattern size minus one, representing the newly removed minus)
-        if (this.settings.negative && val.indexOf('-') === -1) {
+        if (this.settings.negative && val.indexOf(DASH_SYMBOL) === -1) {
           workingPattern = workingPattern.substring(1);
           pattSize = workingPattern.length;
           val = val.substring(0, pattSize);
         }
 
-        // if we're dealing with numbers, figure out commas and adjust caret position accordingly.
-        if (this.settings.mode === 'number') {
+        // cut all but the first occurence of the negative symbol and decimal
+        val = this.replaceAllButFirst(DASH_REGEX, val, '');
+        val = this.replaceAllButFirst(DECIMAL_REGEX, val, '');
 
-          // cut all but the first occurence of the negative symbol and decimal
-          val = this.replaceAllButFirst(/-/g, val, '');
-          val = this.replaceAllButFirst(/\./g, val, '');
+        // cut any extra leading zeros.
+        var valWithoutLeadZeros = val.replace(LEADING_ZERO_REGEX, ''),
+          numLeadingZeros = val.length - valWithoutLeadZeros.length;
 
-          // cut any extra leading zeros.
-          var valWithoutLeadZeros = val.replace(/^0+(?!\.|$)/, ''),
-            numLeadingZeros = val.length - valWithoutLeadZeros.length;
+        val = valWithoutLeadZeros;
+        moveCaret(-(numLeadingZeros));
 
-          val = valWithoutLeadZeros;
+        var maskParts = workingPattern.replace(THOUSANDS_SEP_REGEX, '').split(DECIMAL_SYMBOL),
+          totalLengthMinusSeparators = maskParts[0].length + (maskParts[1] ? maskParts[1].length : 0),
+          separatorLength;
 
-          var originalVal = val,
-            maskParts = workingPattern.replace(/,/g, '').split('.'),
-            totalLengthMinusSeparators = maskParts[0].length + (maskParts[1] ? maskParts[1].length : 0);
+        // move the caret backward only the number of punctuation marks that were removed
+        // up to the current caret position.
+        var currentSliceUpToCaret = val.substring(0, pos.begin),
+          commasUpToCaret = currentSliceUpToCaret.length - currentSliceUpToCaret.replace(THOUSANDS_SEP_REGEX, '').length;
 
-          // strip out the decimal and any commas from the current value
-          val = val.replace(/(\.|,)/g, '');
+        moveCaret(-(commasUpToCaret));
 
-          // if the original value had a decimal point, place it back in the right spot
-          if (workingPattern.indexOf('.') !== -1) {
-            // Lots of checking of decimal position is necessary if it already exists in the value string.
-            if (originalVal.indexOf('.') !== -1) {
-              var inputParts = originalVal.split('.');
+        // strip out the decimal and any commas from the current value
+        val = val.replace(PUNCTUATION_REGEX, '');
+        separatorLength = originalVal.length - val.length;
 
-              // cut down the total length of the number if it's longer than the total number of integer
-              // and decimal places
-              if (val.length > totalLengthMinusSeparators) {
-                val = val.substring(0, totalLengthMinusSeparators);
-              }
+        // cut down the total length of the number if it's longer than the total number of integer
+        // and decimal places
+        if (val.length > totalLengthMinusSeparators) {
+          val = val.substring(0, totalLengthMinusSeparators);
+        }
 
-              // reposition the decimal in the correct spot based on total number of characters
-              // in either part of the mask.
-              if (inputParts[1].length <= maskParts[1].length) {
-                if (inputParts[0].length >= maskParts[0].length) {
-                  val = this.insertAtIndex(val, '.', maskParts[0].length);
-                } else {
-                  val = this.insertAtIndex(val, '.', originalVal.replace(/,/g, '').indexOf('.'));
-                }
+        // if the original value had a decimal point, place it back in the right spot
+        if (patternHasDecimal) {
+          if (decimalAlreadyExists) {
+            var inputParts = originalVal.split(DECIMAL_SYMBOL),
+              targetDecimalIndex;
+
+            // reposition the decimal in the correct spot based on total number of characters
+            // in either part of the mask.
+            if (inputParts[1].length < maskParts[1].length) {
+              if (inputParts[0].length >= maskParts[0].length) {
+                targetDecimalIndex = maskParts[0].length;
               } else {
-                val = this.insertAtIndex(val, '.', val.length - maskParts[1].length);
+                targetDecimalIndex = currentDecimalIndex;
               }
+            } else if (inputParts[1].length === maskParts[1].length) {
+              targetDecimalIndex = (val.length - maskParts[1].length);
             } else {
-              // cut down the total length of the number if it's longer than the total number of integer
-              // and decimal places
-              if ( val.length > totalLengthMinusSeparators) {
-                val = val.substring(0, totalLengthMinusSeparators);
-              }
-              // The decimal doesn't already exist in the value string.
-              // if the current value has more characters than the "integer" portion of the mask,
-              // automatically add the decimal at index of the last pre-decimal pattern character.
-              if (val.length > maskParts[0].length) {
-                val = this.insertAtIndex(val, '.', maskParts[0].length);
-              }
+              targetDecimalIndex = (val.length - maskParts[1].length);
             }
+
+            val = this.insertAtIndex(val, DECIMAL_SYMBOL, targetDecimalIndex);
+            if (pos.begin === targetDecimalIndex) {
+              moveCaret(1);
+            }
+
           } else {
-            // cut down the total length of the number if it's longer than the total number of integer
-            // and decimal places
-            if ( val.length > totalLengthMinusSeparators) {
-              val = val.substring(0, totalLengthMinusSeparators);
+            // The decimal doesn't already exist in the value string.
+            // if the current value has more characters than the "integer" portion of the mask,
+            // automatically add the decimal at index of the last pre-decimal pattern character.
+            if (val.length > maskParts[0].length || decimalInBuffer) {
+              val = this.insertAtIndex(val, DECIMAL_SYMBOL, maskParts[0].length);
+              if (pos.begin === maskParts[0].length) {
+                moveCaret(1);
+              }
             }
           }
+        }
 
-          // Only do this part if the thousands separator should be present.
-          if (this.settings.thousandsSeparator) {
-            // Reposition all the commas before the decimal point to be in the proper order.
-            // Store the values of "added" and "removed" commas.
-            var valHasDecimal = val.length - val.replace(/\./g, '').length > 0,
-              parts = valHasDecimal ? val.split('.') : [val],
-              reAddTheCommas = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        // Only do this part if the thousands separator should be present.
+        if (this.settings.thousandsSeparator) {
+          // Reposition all the commas before the decimal point to be in the proper order.
+          // Store the values of "added" and "removed" commas.
+          var valHasDecimal = val.length - val.replace(DECIMAL_REGEX, '').length > 0,
+            parts = valHasDecimal ? val.split(DECIMAL_SYMBOL) : [val],
+            reAddTheCommas = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, THOUSANDS_SEPARATOR);
 
-            // add the commas back in
-            parts[0] = reAddTheCommas;
-            val = (parts[1] && parts[1] !== '') ? parts.join('.') : parts[0] + (valHasDecimal ? '.' : '');
+          // add the commas back in
+          parts[0] = reAddTheCommas;
+          val = valHasDecimal ? parts.join(DECIMAL_SYMBOL) : parts[0] + (valHasDecimal ? DECIMAL_SYMBOL : '');
 
-            // move the caret position to the correct spot, based on the adjustments we made to commas
-            // NOTE: This needs to happen AFTER we figure out the number of commas up to the caret.
-            var originalSliceUpToCaret = originalVal.substring(0, (pos.end !== pos.begin ? pos.end : pos.begin)),
-              originalSliceLength = originalSliceUpToCaret.length,
-              originalSliceCommas = originalSliceLength - originalSliceUpToCaret.replace(/,/g, '').length,
-              currentSliceUpToCaret = val.substring(0, originalSliceLength),
-              currentSliceLength = currentSliceUpToCaret.length,
-              currentSliceCommas = currentSliceLength - currentSliceUpToCaret.replace(/,/g, '').length;
+          currentSliceUpToCaret = reAddTheCommas.substring(0, this.originalPos.begin + separatorLength);
+          commasUpToCaret = currentSliceUpToCaret.length - currentSliceUpToCaret.replace(THOUSANDS_SEP_REGEX, '').length;
 
-            if (originalSliceCommas > currentSliceCommas) {
-              pos.begin = pos.begin - numLeadingZeros - (originalSliceCommas - currentSliceCommas);
-            }
-            if (originalSliceCommas < currentSliceCommas) {
-              pos.begin = pos.begin - numLeadingZeros + (currentSliceCommas - originalSliceCommas);
-            }
+          if (commasUpToCaret > 0) {
+            moveCaret(commasUpToCaret);
+          }
 
-            // Get the caret position against the final value.
-            // If the next character in the string is the decimal or a comma, move the caret one spot forward
-            var commaDecRegex = /(\.|,)/,
-              nextChar = val.substring(pos.begin, pos.begin + 1);
-            while (pos.begin < val.length && commaDecRegex.test(nextChar)) {
-               pos.begin = pos.begin + 1;
-               nextChar = val.substring(pos.begin, pos.begin + 1);
-            }
+          // Manual adjustment for situations where the cursor won't move if you type a number while the
+          // cursor sits in the position immediately after a thousands separator.
+          if (val.substring(pos.begin - 1, pos.begin) === THOUSANDS_SEPARATOR && val.substr(pos.begin, buffSize) === this.buffer) {
+            moveCaret(buffSize);
           }
         }
 
@@ -596,9 +638,7 @@
         this.element.val(val);
 
         // reposition the caret to be in the correct spot (after the content we just added).
-        var totalCaretPos = pos.begin + buffSize,
-          actualCaretPos = totalCaretPos >= pattSize ? pattSize : totalCaretPos;
-        this.caret(actualCaretPos);
+        this.caret(pos.end >= pattSize ? pattSize : pos.end);
 
         // trigger the 'write' event
         this.element.trigger('write.mask');
@@ -1224,7 +1264,7 @@
           this.element.parent('.field').removeClass('currency').attr('data-currency-symbol', '');
           this.element.prev('label').find('.currency').remove();
         }
-        this.element.off('keydown.mask keypress.mask keyup.mask focus.mask blur.mask ' + this.env.pasteEvent);
+        this.element.off('updated.mask keydown.mask keypress.mask keyup.mask focus.mask blur.mask ' + this.getPasteEvent());
 
         this.element.removeClass('is-mask').removeClass('is-number-mask');
 

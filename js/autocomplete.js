@@ -1,7 +1,3 @@
-/**
-* Autocomplete for inputs and searches
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -32,7 +28,10 @@
       },
       settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * @constructor
+     * @param {Object} element
+     */
     function Autocomplete(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -168,13 +167,13 @@
               var compiledTmpl = Tmpl.compile(this.tmpl),
                 renderedTmpl = compiledTmpl.render(dataset);
 
-              self.list.append(renderedTmpl);
+              self.list.append($.santizeHtml(renderedTmpl));
             } else {
               var listItem = $('<li role="listitem"></li>');
               listItem.attr('id', dataset.listItemId);
               listItem.attr('data-value', dataset.value);
               listItem.append('<a href="#" tabindex="-1"><span>' + dataset.label + '</span></a>');
-              self.list.append(listItem);
+              self.list.append($.santizeHtml(listItem));
             }
           }
         }

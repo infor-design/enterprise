@@ -1,8 +1,3 @@
-/**
-* Header Control (TODO: Link to Docs)
-* Special Toolbar at the top of the page used to faciliate SoHo Xi Nav Patterns
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -36,7 +31,11 @@
         },
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * Special Toolbar at the top of the page used to faciliate SoHo Xi Nav Patterns
+     * @constructor
+     * @param {Object} element
+     */
     function Header(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);

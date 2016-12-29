@@ -395,6 +395,7 @@ input.error {
 ::-moz-selection {
   background: $primary-color;
   color: $inverse-color;
+  -webkit-text-fill-color: $inverse-color;
 }
 
 // Mask Control Adjustment Classes

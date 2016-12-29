@@ -1,7 +1,3 @@
-/**
-* Datepicker Control (TODO link to docs)
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -28,10 +24,9 @@
           minuteInterval: undefined, // Integer from 1 to 60. Multiples of this value are displayed as options in the minutes dropdown.
           mode: undefined, // options: 'standard', 'range',
           roundToInterval: undefined, // If a non-matching minutes value is entered, rounds the minutes value to the nearest interval when the field is blurred.
-          timepickerMarkup: '<label class="label"><input class="timepicker" name="calendar-timepicker" type="text"></label>',
           dateFormat: 'locale', //or can be a specific format like 'yyyy-MM-dd' iso8601 format
           placeholder: false,
-          /*  disable:
+          /*  Disabling of dates
           **    dates: 'M/d/yyyy' or
           **      ['M/d/yyyy'] or
           **      ['M/d/yyyy', new Date('M/d/yyyy')] or
@@ -51,7 +46,10 @@
         },
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * @constructor
+     * @param {Object} element
+     */
     function DatePicker(element) {
       this.element = $(element);
       this.settings = settings;
@@ -76,9 +74,8 @@
           this.element.closest('.field').addClass('is-disabled');
         }
 
-        //Append a Button
+        //Append a trigger button
         this.trigger = $.createIconElement('calendar').insertAfter(this.element);
-
         this.addAria();
       },
 
@@ -116,8 +113,7 @@
           if (focusedlabel) {
             var focusedDate = new Date(focusedlabel);
             self.currentDate = new Date(focusedDate.getTime());
-          }
-          else if (focused.hasClass('alternate')) {
+          } else if (focused.hasClass('alternate')) {
               var year = parseInt(self.header.find('.year').text()),
               month = parseInt(self.header.find('.month').attr('data-month')),
               day = parseInt(focused.text());
@@ -130,8 +126,7 @@
               else {
                 month--;
               }
-            }
-            else if (focused.hasClass('next-month')) {
+            } else if (focused.hasClass('next-month')) {
               if(month === 11) {
                 month = 0;
                 year++;
@@ -195,15 +190,15 @@
             self.insertDate(self.currentDate);
           }
 
-          //Alt + Page Up Selects Same Day Next Year
-          if (key === 33 && e.altKey && self.isOpen()) {
+          //ctrl + Page Up Selects Same Day Next Year
+          if (key === 33 && e.ctrlKey && self.isOpen()) {
             handled = true;
             self.currentDate.setFullYear(self.currentDate.getFullYear() + 1);
             self.insertDate(self.currentDate);
           }
 
-          //Alt + Page Down Selects Same Day Prev Year
-          if (key === 34 && e.altKey && self.isOpen()) {
+          //ctrl + Page Down Selects Same Day Prev Year
+          if (key === 34 && e.ctrlKey && self.isOpen()) {
             handled = true;
             self.currentDate.setFullYear(self.currentDate.getFullYear() - 1);
             self.insertDate(self.currentDate);
@@ -266,6 +261,7 @@
         });
       },
 
+      //Parse the Date Format Options
       setFormat: function () {
         var localeDateFormat = ((typeof Locale === 'object' && Locale.calendar().dateFormat) ? Locale.calendar().dateFormat : null),
           localeTimeFormat = ((typeof Locale === 'object' && Locale.calendar().timeFormat) ? Locale.calendar().timeFormat : null);
@@ -307,8 +303,7 @@
         if (customValidation === 'required' && !customEvents) {
           validation = customValidation + ' ' + validation;
           $.extend(events, {'required': 'change blur'});
-        }
-        else if (!!customValidation && !!customEvents) {
+        } else if (!!customValidation && !!customEvents) {
           // Remove default validation, if found "no-default-validation" string in "data-validate" attribute
           if (customValidation.indexOf('no-default-validation') > -1) {
             validation = customValidation.replace(/no-default-validation/g, '');
@@ -346,7 +341,9 @@
 
       // Open the calendar in a popup
       openCalendar: function () {
-        var self = this;
+        var self = this,
+          timeOptions = {};
+
 
         if (this.element.is(':disabled') || this.element.attr('readonly')) {
           return;
@@ -362,13 +359,11 @@
         this.header = $('<div class="calendar-header"><span class="month">november</span><span class="year"> 2015</span><button type="button" class="btn-icon prev" tabindex="-1">' + $.createIcon('caret-left') + '<span>'+ Locale.translate('PreviousMonth') +'</span></button><button type="button" class="btn-icon next" tabindex="-1">' + $.createIcon('caret-right') + '<span>'+ Locale.translate('NextMonth') +'</span></button></div>');
         this.dayNames = $('<thead><tr><th>SU</th> <th>MO</th> <th>TU</th> <th>WE</th> <th>TH</th> <th>FR</th> <th>SA</th> </tr> </thead>').appendTo(this.table);
         this.days = $('<tbody> <tr> <td class="alternate">26</td> <td class="alternate">27</td> <td class="alternate">28</td> <td class="alternate">29</td> <td class="alternate" >30</td> <td class="alternate">31</td> <td>1</td> </tr> <tr> <td>2</td> <td>3</td> <td>4</td> <td>5</td> <td>6</td> <td>7</td> <td>8</td> </tr> <tr> <td>9</td> <td>10</td> <td>11</td> <td>12</td> <td>13</td> <td>14</td> <td>15</td> </tr> <tr> <td>16</td> <td>17</td> <td>18</td> <td>19</td> <td class="is-today">20</td> <td>21</td> <td>22</td> </tr> <tr> <td>23</td> <td>24</td> <td>25</td> <td>26</td> <td>27</td> <td>28</td> <td class="alternate">1</td> </tr> <tr> <td class="alternate">2</td> <td class="alternate">3</td> <td class="alternate">4</td> <td class="alternate">5</td> <td class="alternate">6</td> <td class="alternate">7</td> <td class="alternate">8</td> </tr> </tbody>').appendTo(this.table);
-        this.timepickerInput = $(this.settings.timepickerMarkup);
+        this.timepickerContainer = $('<div class="datepicker-time-container"></div>');
         this.footer = $('<div class="popup-footer"> <button type="button" class="cancel btn-tertiary" tabindex="-1">'+ Locale.translate('Clear') +'</button> <button type="button" tabindex="-1" class="is-today btn-tertiary">'+Locale.translate('Today')+'</button> </div>');
 
         // Timepicker options
         if (this.settings.showTime) {
-          var timeOptions = {};
-
           if (this.settings.timeFormat !== undefined) {
             timeOptions.timeFormat = this.settings.timeFormat;
           }
@@ -381,14 +376,14 @@
           if (this.settings.roundToInterval !== undefined) {
             timeOptions.roundToInterval = this.settings.roundToInterval;
           }
-          $('.timepicker', this.timepickerInput).attr('data-options', JSON.stringify(timeOptions));
+
         }
 
         this.calendar = $('<div class="calendar'+ (this.settings.showTime ? ' is-timepicker' : '') +'"></div')
           .append(
             this.header,
             this.table,
-            (this.settings.showTime ? this.timepickerInput : ''),
+            (this.settings.showTime ? this.timepickerContainer : ''),
             this.footer
           );
 
@@ -406,11 +401,11 @@
         };
 
         this.trigger.popover(popoverOpts)
-          .on('hide.datepicker', function () {
-            self.closeCalendar();
-          }).on('open.datepicker', function () {
-            self.days.find('.is-selected').attr('tabindex', 0).focus();
-          });
+        .on('hide.datepicker', function () {
+          self.closeCalendar();
+        }).on('open.datepicker', function () {
+          self.days.find('.is-selected').attr('tabindex', 0).focus();
+        });
 
         // ICONS: Right to Left Direction
         setTimeout(function() {
@@ -431,82 +426,17 @@
         this.currentDay = this.currentDate.getDate();
 
         // Set timepicker
-        // TODO: Break this out so we don't have issues with Timepicker placement.
         if (this.settings.showTime) {
+          timeOptions.parentElement = this.timepickerContainer;
+          this.time = self.getTimeString(currentVal, self.show24Hours);
+          this.timepicker = this.timepickerContainer.timepicker(timeOptions).data('timepicker');
+          this.timepickerContainer.find('dropdown').dropdown();
 
-          // Wait for timepicker
+          // Wait for timepicker to initialize
           setTimeout(function() {
-            var timepickerInput = $('.timepicker', this.calendar);
-
-            self.timepickerControl = timepickerInput.data('timepicker');
-            self.time = self.getTimeString(currentVal, self.show24Hours);
-            self.timepickerInput.css({'margin': '10px 0 25px'}).find('.timepicker').val(self.time);
-            self.timepickerControl.toggleTimePopup();
-
-            // Wait for timepicker popup
-            setTimeout(function() {
-              var timepickerPopup = $('#timepicker-popup').css({'border': 0, 'box-shadow': 'none', 'width': ''});
-
-              if (self.isSeconds) {
-                timepickerPopup
-                  .find('.time-parts .colons').css({'min-width': '13px'}).end()
-                  .find('.dropdown').css({'width': '60px', 'padding': '8px 0px 7px 10px'});
-              }
-
-              var position = {
-                top: parseInt(self.popup.css('top'), 10) + (self.table.height() + self.header.height() + 28),
-                left: (parseInt(self.popup.css('left'), 10) + (self.popup.outerWidth()/2)) - (timepickerPopup.outerWidth()/2) + 20
-              };
-
-              timepickerPopup.css(position);
-              self.timepickerInput.css({'visibility': 'hidden'});
-
-              $('.arrow, .modal-buttonset', timepickerPopup).hide();
-              $('.time-parts', timepickerPopup).css({'padding': 0});
-
-              if (self.isOpen()) {
-                var timepickerInputs = timepickerPopup.find('input.dropdown');
-
-                // Keydown Events
-                timepickerInputs.on('keydown.datepicker', function(e) {
-                  var key = e.keyCode || e.charCode || 0;
-
-                  // Press Esc on timpicker -or- Tab-out from AM/PM field on timpicker go back to selected date
-                  if (key === 27 || (key === 9 && this === timepickerInputs.last().get(0))) {
-                    self.calendar.find('.is-selected').focus();
-                    return false;
-                  }
-
-                  // Do nothing when pressing Spacebar
-                  if (key === 32) {
-                    return false;
-                  }
-                });
-                // Change the order were bound for execute (run this first {0})
-                self.changeEventOrder(timepickerInputs, 'keydown.timepicker', 0);
-
-                // On change time
-                self.timepickerControl.element.on('change.datepicker', function() {
-                  var t, fields;
-
-                  self.timepickerControl.settings.roundToInterval = self.settings.roundToInterval;
-                  self.timepickerControl.roundMinutes();
-                  t = self.timepickerControl.getTimeFromField();
-                  fields = {
-                    '#timepicker-hours': t.hours,
-                    '#timepicker-period': t.period
-                  };
-                  if (self.getBoolean(self.settings.roundToInterval)) {
-                    fields['#timepicker-minutes'] = t.minutes;
-                  }
-                  $.each(fields, function(key, val) {
-                    $(key, timepickerPopup).val(val).triggerHandler('updated');
-                  });
-                });
-                self.timepickerControl.element.trigger('change.datepicker');
-              }
-
-            }, 1);
+            self.timepicker.initValues = self.timepicker.getTimeFromField(self.time);
+            self.timepicker.afterShow(self.timepickerContainer);
+            return;
           }, 1);
         }
 
@@ -571,7 +501,8 @@
           }
 
           if (btn.hasClass('is-today')) {
-            self.insertDate(new Date(), true);
+            self.currentDate = new Date();
+            self.insertDate(self.currentDate);
             self.closeCalendar();
           }
           self.element.focus();
@@ -614,31 +545,8 @@
         this.element.trigger('listclosed');
       },
 
-      // Get the closest parent by position type
-      // elem: jQuery element
-      // position: 'fixed'|'relative'|'absolute'
-      getClosestParent: function(elem, position) {
-        var closestParent = elem.parents().filter(function() {
-          return $(this).css('position') === position;
-        }).slice(0,1); // grab only the "first"
-        return closestParent;
-      },
-
-      // Finds the offset of el from relativeEl
-      // http://stackoverflow.com/questions/442404/retrieve-the-position-x-y-of-an-html-element
-      getAbsoluteOffset: function(el, relativeEl) {
-        var x = 0, y = 0;
-
-        while(el && el !== relativeEl && !isNaN(el.offsetLeft) && !isNaN(el.offsetTop)) {
-          x += el.offsetLeft - el.scrollLeft + el.clientLeft;
-          y += el.offsetTop - el.scrollTop + el.clientTop;
-          el = el.offsetParent;
-        }
-        return { top: y, left: x };
-      },
-
-      // Check date in obj, return: true|false
-      checkDates: function (year, month, date) {
+      // Check through the options to see if the date is disabled
+      isDateDisabled: function (year, month, date) {
         var d, i, l,
           self = this,
           d2 = new Date(year, month, date),
@@ -653,7 +561,7 @@
         d2 = d2.setHours(0,0,0,0);
 
         //min and max
-        if((d2 <= min) || (d2 >= max)) {
+        if ((d2 <= min) || (d2 >= max)) {
           return true;
         }
 
@@ -673,11 +581,11 @@
       },
 
       // Set disable Date
-      setDisable: function (elem, year, month, date) {
-        var checkDates = this.checkDates(year, month, date);
+      setDisabled: function (elem, year, month, date) {
+        var dateIsDisabled = this.isDateDisabled(year, month, date);
         elem.removeClass('is-disabled').removeAttr('aria-disabled');
 
-        if ((checkDates && !this.settings.disable.isEnable) || (!checkDates && this.settings.disable.isEnable)) {
+        if ((dateIsDisabled && !this.settings.disable.isEnable) || (!dateIsDisabled && this.settings.disable.isEnable)) {
           elem
             .addClass('is-disabled').attr('aria-disabled','true')
             .removeClass('is-selected').removeAttr('aria-selected');
@@ -748,7 +656,7 @@
             exMonth = (month === 0) ? 11 : month - 1;
             exYear = (month === 0) ? year - 1 : year;
 
-            self.setDisable(th, exYear, exMonth, exDay);
+            self.setDisabled(th, exYear, exMonth, exDay);
             th.addClass('alternate prev-month').html('<span aria-hidden="true">' + exDay + '</span>');
           }
 
@@ -769,7 +677,7 @@
 
             th.attr('aria-label', Locale.formatDate(new Date(self.currentYear, self.currentMonth, dayCnt), {date: 'full'}));
 
-            self.setDisable(th, year, month, dayCnt);
+            self.setDisabled(th, year, month, dayCnt);
 
             th.attr('role', 'link');
             dayCnt++;
@@ -781,7 +689,7 @@
             exMonth = (month === 11) ? 0 : month + 1;
             exYear = (month === 11) ? year + 1 : year;
 
-            self.setDisable(th, exYear, exMonth, exDay);
+            self.setDisabled(th, exYear, exMonth, exDay);
             th.addClass('alternate next-month').html('<span aria-hidden="true">' + nextMonthDayCnt + '</span>');
             nextMonthDayCnt++;
           }
@@ -821,7 +729,6 @@
           if (this.settings.showTime) {
             if (isReset) {
               this.time = this.getTimeString(date, this.show24Hours);
-              this.timepickerInput.find('.timepicker').val(this.time).trigger('change');
 
               if (this.settings.roundToInterval) {
                 $('#timepicker-minutes').val('');
@@ -845,24 +752,24 @@
         return !isNaN(num) ? !!num : !!String(val).toLowerCase().replace(!!0, '');
       },
 
-      // Helper Function
+      // Set the Formatted value in the input
       setValue: function(date) {
         this.currentDate = date;
         this.element.val(Locale.formatDate(date, {pattern: this.pattern}));
       },
 
-      // Make enable
+      // Make input enabled
       enable: function() {
         this.element.removeAttr('disabled readonly').closest('.field').removeClass('is-disabled');
       },
 
-      // Make disable
+      // Make input disabled
       disable: function() {
         this.enable();
         this.element.attr('disabled', 'disabled').closest('.field').addClass('is-disabled');
       },
 
-      // Make readonly
+      // Make input readonly
       readonly: function() {
         this.enable();
         this.element.attr('readonly', 'readonly');
@@ -933,21 +840,23 @@
           this.closeCalendar();
         }
 
-        this.trigger.off('click.datepicker keydown.datepicker');
+        this.trigger.remove();
+        this.element.attr('data-mask', '');
 
-        var maskAPI = this.element.data('mask');
-        if (maskAPI) {
-          maskAPI.destroy();
+        if (this.calendar && this.calendar.length) {
+          this.calendar.remove();
         }
 
-        /*
-        if (this.settings.trigger === 'immediate') {
-          this.destroy();
+        if (this.popup && this.popup.length) {
+          this.popup.remove();
         }
-        */
 
-        this.calendar.remove();
-        this.popup.remove();
+        var api = this.element.data('mask');
+        if (api) {
+          api.destroy();
+        }
+
+        this.element.off('keydown.datepicker blur.validate change.validate keyup.validate focus.validate');
 
         return this;
       },

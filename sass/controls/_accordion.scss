@@ -423,6 +423,10 @@
     }
 
   }
+
+  > .accordion-content {
+    padding-left: 20px;
+  }
 }
 
 .accordion-content {
@@ -836,6 +840,11 @@
 html[dir='rtl'] {
 
   .accordion {
+
+    > .accordion-content {
+      padding-left: auto;
+      padding-right: 20px;
+    }
 
     // Level 1
     .accordion-header {

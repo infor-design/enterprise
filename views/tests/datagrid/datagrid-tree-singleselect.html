@@ -17,7 +17,7 @@
     columns.push({ id: 'time', name: 'Time', field: 'time', width: 60});
 
     //Get some data via ajax
-    var url = '/api/tree-tasks';
+    var url = '{{basepath}}api/tree-tasks';
 
     $.getJSON(url, function(data) {
 

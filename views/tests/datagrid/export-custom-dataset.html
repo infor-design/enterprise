@@ -36,7 +36,7 @@
         </button>
         <ul class="popupmenu">
           <li><a data-option="personalize-columns" href="#">Personalize Columns</a></li>
-          <li><a data-option="reset-layout" href="#">Reset Default Layout</a></li>
+          <li><a data-option="reset-layout" href="#">Reset to Default</a></li>
           <li class="separator"></li>
           <li class="separator single-selectable-section"></li>
           <li class="heading">Row Height</li>
@@ -67,7 +67,7 @@
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
 
       //Get some data via ajax
-      var url = '/api/compressors?pageNum=1&pageSize=100';
+      var url = '{{basepath}}api/compressors?pageNum=1&pageSize=100';
 
       $.getJSON(url, function(res) {
         //Show the grid
@@ -85,7 +85,7 @@
       });
 
       $('#export').on('click', function () {
-        var url = '/api/compressors?pageNum=1&pageSize=1000';
+        var url = '{{basepath}}api/compressors?pageNum=1&pageSize=1000';
 
         $.getJSON(url, function(res) {
           //Note even tho this is custom it uses the grid columns.

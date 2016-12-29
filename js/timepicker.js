@@ -1,7 +1,3 @@
-/**
-* Timepicker Control (TODO: bitly link to docs)
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -27,11 +23,15 @@
           minuteInterval: 5, // Integer from 1 to 60.  Multiples of this value are displayed as options in the minutes dropdown.
           secondInterval: 5, // Integer from 1 to 60.
           mode: 'standard', // options: 'standard', 'range',
-          roundToInterval: false
+          roundToInterval: false,
+          parentElement: null
         },
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * @constructor
+     * @param {Object} element
+     */
     function TimePicker(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -104,6 +104,14 @@
 
       //Add any markup
       build: function() {
+        //With this option forgoe the input and append the dropdowns/popup to the parent element
+        if (this.settings.parentElement) {
+          this.trigger = $();
+          this.buildStandardPopup();
+          this.setupStandardEvents();
+          return this;
+        }
+
         //Append a Button
         this.trigger = this.element.next('svg.icon');
         if (this.trigger.length === 0) {
@@ -278,12 +286,12 @@
       buildStandardPopup: function() {
         var self = this,
           popupContent = $('<div class="timepicker-popup-content"></div>'),
-          initValues = self.getTimeFromField(),
           timeSeparator = this.getTimeSeparator(),
           textValue = '',
-          hourSelect, minuteSelect, periodSelect, secondSelect,
+          secondSelect,
           selected;
 
+        this.initValues = self.getTimeFromField();
         var timeParts = $('<div class="time-parts"></div>').appendTo(popupContent);
 
         // Build the inner-picker HTML
@@ -291,42 +299,43 @@
           hasSeconds = this.hasSeconds(),
           hourCounter = is24HourFormat ? 0 : 1,
           maxHourCount = is24HourFormat ? 24 : 13;
-        hourSelect = $('<select id="timepicker-hours" class="hours dropdown"></select>');
+
+        this.hourSelect = $('<select id="timepicker-hours" class="hours dropdown"></select>');
 
         while(hourCounter < maxHourCount) {
           selected = '';
-          if (parseInt(initValues.hours, 10)  === hourCounter) {
+          if (parseInt(self.initValues.hours, 10)  === hourCounter) {
             selected = ' selected';
           }
-          hourSelect.append($('<option' + selected + '>' + hourCounter + '</option>'));
+          self.hourSelect.append($('<option' + selected + '>' + hourCounter + '</option>'));
           hourCounter++;
         }
         timeParts.append($('<label for="timepicker-hours" class="audible">' + Locale.translate('Hours') + '</label>'));
-        timeParts.append(hourSelect);
+        timeParts.append(this.hourSelect);
         timeParts.append($('<span class="label colons">'+ timeSeparator +'</span>'));
 
         // Minutes Picker
         var minuteCounter = 0;
-        minuteSelect = $('<select id="timepicker-minutes" class="minutes dropdown"></select>');
+        this.minuteSelect = $('<select id="timepicker-minutes" class="minutes dropdown"></select>');
 
         while(minuteCounter <= 59) {
           textValue = minuteCounter < 10 ? '0' + minuteCounter : minuteCounter;
 
           selected = '';
-          if (parseInt(initValues.minutes, 10) === minuteCounter) {
+          if (parseInt(self.initValues.minutes, 10) === minuteCounter) {
             selected = ' selected';
           }
-          minuteSelect.append($('<option' + selected + '>' + textValue + '</option>'));
+          self.minuteSelect.append($('<option' + selected + '>' + textValue + '</option>'));
           minuteCounter = minuteCounter + self.settings.minuteInterval;
         }
 
         // If the value inside the picker doesn't match an interval, add the value as the currently selected option, right at the top
-        if (!minuteSelect.find('option[selected]').length) {
-          minuteSelect.prepend($('<option selected>' + initValues.minutes + '</option>'));
+        if (!this.minuteSelect.find('option[selected]').length) {
+          this.minuteSelect.prepend($('<option selected>' + self.initValues.minutes + '</option>'));
         }
 
         timeParts.append($('<label for="timepicker-minutes" class="audible">' + Locale.translate('Minutes') + '</label>'));
-        timeParts.append(minuteSelect);
+        timeParts.append(this.minuteSelect);
 
         // Seconds Picker
         if (hasSeconds) {
@@ -337,7 +346,7 @@
             textValue = secondCounter < 10 ? '0' + secondCounter : secondCounter;
 
             selected = '';
-            if (initValues.seconds === secondCounter) {
+            if (self.initValues.seconds === secondCounter || (!self.initValues.seconds && textValue === '00')) {
               selected = ' selected';
             }
             secondSelect.append($('<option' + selected + '>' + textValue + '</option>'));
@@ -346,7 +355,7 @@
 
           // If the value inside the picker doesn't match an interval, add the value as the currently selected option, right at the top
           if (!secondSelect.find('option[selected]').length) {
-            secondSelect.prepend($('<option selected>' + initValues.seconds + '</option>'));
+            secondSelect.prepend($('<option selected>' + self.initValues.seconds + '</option>'));
           }
 
           timeParts.append($('<span class="label colons">'+ timeSeparator +'</span>'));
@@ -354,12 +363,12 @@
           timeParts.append(secondSelect);
         }
 
-        periodSelect = $('<select id="timepicker-period" class="period dropdown"></select>');
+        this.periodSelect = $('<select id="timepicker-period" class="period dropdown"></select>');
         if (!is24HourFormat) {
-          timeParts.append($('<span class="label colons">&nbsp;</span>'));
+          timeParts.append($('<span class="label colons"></span>'));
           var localeDays = Locale.calendar().dayPeriods,
             localeCount = 0,
-            regexDay = new RegExp(initValues.period, 'i'),
+            regexDay = new RegExp(self.initValues.period, 'i'),
             realDayValue = 'AM'; // AM
 
           while(localeCount < 2) {
@@ -368,55 +377,69 @@
             if (regexDay.test(localeDays[localeCount])) {
               selected = ' selected';
             }
-            periodSelect.append($('<option value="' + realDayValue + '"'+ selected +'>' + localeDays[localeCount] + '</option>'));
+            this.periodSelect.append($('<option value="' + realDayValue + '"'+ selected +'>' + localeDays[localeCount] + '</option>'));
 
             localeCount++;
           }
           timeParts.append($('<label for="timepicker-period" class="audible">' + Locale.translate('TimePeriod') + '</label>'));
-          timeParts.append(periodSelect);
+          timeParts.append(this.periodSelect);
         }
 
-        popupContent.append('<div class="modal-buttonset"><button type="button" class="btn-modal-primary set-time">' + Locale.translate('SetTime') + '</button></div>');
+        if (this.settings.parentElement) {
+          this.settings.parentElement.append(popupContent);
+          //self.afterShow(this.settings.parentElement);
+          self.popup = this.settings.parentElement.find('.timepicker-popup-content').addClass('timepicker-popup').attr('id', 'timepicker-popup');
+        } else {
 
-        this.trigger.popover({
-          content: popupContent,
-          trigger: 'immediate',
-          placement: 'bottom',
-          placementOpts: {
-            parent: this.element,
-            parentXAlignment: (Locale.isRTL() ? 'right' : 'left'),
-            strategies: ['flip', 'nudge', 'shrink']
-          },
-          width: '200',
-          tooltipElement: '#timepicker-popup'})
-        .on('show.timepicker', function(e, ui) {
-          ui.find('button').button();
+          popupContent.append('<div class="modal-buttonset"><button type="button" class="btn-modal-primary set-time">' + Locale.translate('SetTime') + '</button></div>');
 
-          // Set default values based on what's retrieved from the Timepicker's input field.
-          hourSelect.val(initValues.hours).dropdown();
-          hourSelect.data('dropdown').pseudoElem.find('span').text(initValues.hours);
-          minuteSelect.val(initValues.minutes).dropdown();
-          minuteSelect.data('dropdown').pseudoElem.find('span').text(initValues.minutes);
-          if (!self.is24HourFormat()) {
-            periodSelect.val(initValues.period).dropdown();
-            periodSelect.data('dropdown').pseudoElem.find('span').text(initValues.period);
-          }
-
-          ui.find('div.dropdown').first().focus();
-          ui.find('.set-time').off('click.timepicker').onTouchClick('timepicker').on('click.timepicker', function(e) {
-            e.preventDefault();
-            self.setTimeOnField();
-            self.closeTimePopup();
+          this.trigger.popover({
+            content: popupContent,
+            trigger: 'immediate',
+            placement: 'bottom',
+            placementOpts: {
+              parent: this.element,
+              parentXAlignment: (Locale.isRTL() ? 'right' : 'left'),
+              strategies: ['flip', 'nudge', 'shrink']
+            },
+            width: '200',
+            tooltipElement: '#timepicker-popup'})
+          .on('show.timepicker', function(e, ui) {
+            self.afterShow(ui);
+          }).on('hide.timepicker', function() {
+            self.element.focus();
           });
-
-        }).on('hide.timepicker', function() {
-          self.element.focus();
-        });
-
+        }
 
         // Make adjustments to the popup HTML specific to the timepicker
-        var tooltip = self.popup = this.trigger.data('tooltip').tooltip;
-        tooltip.addClass('timepicker-popup');
+        if (this.trigger.data('tooltip')) {
+          var tooltip = self.popup = this.trigger.data('tooltip').tooltip;
+          tooltip.addClass('timepicker-popup');
+        }
+      },
+
+      afterShow: function (ui) {
+        var self = this;
+
+        ui.find('button').button();
+
+        // Set default values based on what's retrieved from the Timepicker's input field.
+        this.hourSelect.val(this.initValues.hours);
+        this.hourSelect.data('dropdown').pseudoElem.find('span').text(this.initValues.hours);
+        this.minuteSelect.val(this.initValues.minutes);
+        this.minuteSelect.data('dropdown').pseudoElem.find('span').text(this.initValues.minutes);
+
+        if (!self.is24HourFormat()) {
+          this.periodSelect.val(this.initValues.period);
+          this.periodSelect.data('dropdown').pseudoElem.find('span').text(this.initValues.period);
+        }
+
+        ui.find('div.dropdown').first().focus();
+        ui.find('.set-time').off('click.timepicker').onTouchClick('timepicker').on('click.timepicker', function(e) {
+          e.preventDefault();
+          self.setTimeOnField();
+          self.closeTimePopup();
+        });
       },
 
       setupStandardEvents: function() {
@@ -484,9 +507,9 @@
         // TODO: Build this
       },
 
-      getTimeFromField: function() {
+      getTimeFromField: function(value) {
         var self = this,
-          val = this.element.val(),
+          val = value || this.element.val(),
           sep = this.getTimeSeparator(),
           parts = val.split(sep),
           endParts,
@@ -643,7 +666,11 @@
       // hide event fully completes because certain events need to be turned off and certain markup needs to be
       // removed only AFTER the popover is hidden.
       closeTimePopup: function() {
-        this.trigger.data('tooltip').hide();
+
+        if (this.trigger.data('tooltip')) {
+          this.trigger.data('tooltip').hide();
+        }
+
       },
 
       // This gets fired on the popover's "hide" event

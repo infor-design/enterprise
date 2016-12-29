@@ -40,15 +40,15 @@
           if (item.id === 1 || item.id === 2) {
             return null;
           }
-          return '/functions/'+ item.productId + '?'+ item.id;
+          return '#';//'/functions/'+ item.productId + '?'+ item.id;
         },
         click: function (e, args) {
-          alert();
+          console.log(args);
         }});
-      columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 160});
-      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 200});
-      columns.push({ id: 'price1', name: 'Price', field: 'price', width: 10, formatter: Formatters.Decimal});
-      columns.push({ id: 'price2', name: 'Price', field: 'price', width: 10, formatter: Formatters.Integer});
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
+      columns.push({ id: 'price1', name: 'Price', field: 'price', formatter: Formatters.Decimal});
+      columns.push({ id: 'price2', name: 'Price', field: 'price', formatter: Formatters.Integer});
 
       //Init the grid
       $('#readonly-datagrid').datagrid({

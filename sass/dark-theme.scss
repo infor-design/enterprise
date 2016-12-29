@@ -51,6 +51,10 @@ $hyperlink-hover-color: $azure04;
 $hr-top-color: $slate09;
 $hr-bottom-color: transparent;
 
+// Sticky Footer
+$sticky-footer-light-bg-color: $slate07;
+$sticky-footer-light-border-color: $slate06;
+
 // Circle Pager
 $circlepager-border-color: $slate04;
 $circlepager-hover-border-color: $slate02;
@@ -205,6 +209,13 @@ $listview-toolbar-button-text-selected-color: $primary-color;
 $listview-toolbar-button-icon-selected-color: $primary-color;
 $listview-full-width-bg-color: $slate08;
 $listview-full-width-hover-color: $slate06;
+
+// Listbuilder
+$listbuilder-bg-color: $panel-bg-color;
+$listbuilder-bg-color-hover: $slate06;
+$listbuilder-border-color: $slate04;
+$listbuilder-icon-color-hover: $white;
+$listbuilder-text-color: $white;
 
 // Toolbar
 $toolbar-standalone-bg-color: $slate06;

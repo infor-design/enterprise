@@ -1,7 +1,3 @@
-/**
-* Accordion Control (TODO: bitly link to soho xi docs)
-*/
-
 // NOTE:  There are AMD Blocks available
 
 /* start-amd-strip-block */
@@ -34,7 +30,10 @@
         },
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * @constructor
+     * @param {Object} element
+     */
     function Accordion(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -899,7 +898,7 @@
 
       teardown: function() {
         this.headers
-          .off('touchend.accordion click.accordion focusin.accordion focusout.accordion keydown.accordion')
+          .off('touchend.accordion click.accordion focusin.accordion focusout.accordion keydown.accordion mousedown.accordion mouseup.accordion')
           .each(function() {
             var expander = $(this).data('addedExpander');
             if (expander) {
@@ -913,7 +912,7 @@
         this.headers.children('[class^="btn"]')
           .off('touchend.accordion click.accordion keydown.accordion');
 
-        this.element.off('updated.accordion');
+        this.element.off('updated.accordion selected.accordion');
 
         return this;
       },

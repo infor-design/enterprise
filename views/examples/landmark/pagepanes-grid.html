@@ -128,7 +128,7 @@
           pagesize = gridPageSize;
         }
 
-        var url = '/api/compressors?pageNum='+ pageNum +'&pageSize='+ pagesize;
+        var url = '{{basepath}}api/compressors?pageNum='+ pageNum +'&pageSize='+ pagesize;
 
         if (req.sortField){
           url += '&sortField=' + req.sortField + '&sortAsc=' + req.sortAsc;

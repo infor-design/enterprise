@@ -38,9 +38,15 @@
             <label for="username" class="audible">Username</label>
             <input type="hidden" name="username" id="username" >
             <label for="password" class="audible">Password</label>
-            <input type="hidden" id="password" name="password">
+            <input type="password" id="xxx" name="password">
         </form>
     </section>
   </div>
 
 </div>
+
+<script>
+  $('#signin').on('submit', function () {
+    console.log($(this).serialize());
+  });
+</script>

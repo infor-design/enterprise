@@ -1,7 +1,3 @@
-/**
-* Contextual Action Panel Control (TODO: bitly link to soho xi docs)
-*/
-
 /* start-amd-strip-block */
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -30,7 +26,10 @@
         },
         settings = $.extend({}, defaults, options);
 
-    // Plugin Constructor
+    /**
+     * @constructor
+     * @param {Object} element
+     */
     function ContextualActionPanel(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -189,7 +188,7 @@
           passEvent(e);
         }).on('afteropen.contextualactionpanel', function() {
           if (self.toolbar) {
-            self.toolbar.trigger('recalculatebuttons');
+            self.toolbar.trigger('recalculate-buttons');
           }
 
           // Select the proper element on the toolbar
