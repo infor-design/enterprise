@@ -1808,10 +1808,6 @@
           this.adjustModuleTabs();
         }
 
-        if (this.isHeaderTabs()) {
-          this.adjustHeaderTabs();
-        }
-
         if (self.tablist[0].scrollHeight > self.tablist.outerHeight() + 3.5) {
           self.element.addClass('has-more-button');
         } else {
@@ -1819,36 +1815,6 @@
         }
 
         this.adjustSpilloverNumber();
-      },
-
-      adjustHeaderTabs: function() {
-        var self = this,
-          sizeableTabs = this.tablist.find('li:not(.separator):not(.application-menu-trigger)'),
-          tabContainerW = this.tablist.width(),
-          totalSize = 0;
-
-        sizeableTabs = sizeableTabs.add(this.moreButton);
-
-        // Remove overflowed tabs
-        sizeableTabs.removeAttr('style').each(function() {
-          var t = $(this),
-            width = t.outerWidth(true);
-
-          if (self.isTabOverflowed(t)) {
-            sizeableTabs = sizeableTabs.not(t);
-          }
-
-          // Don't let the individual tabs be larger than the tabs container
-          if (width > tabContainerW) {
-            width = tabContainerW;
-          }
-
-          // Set each tab to an explicitly-defined width so we can properly wrap/overflow their text.
-          t.width(width);
-          totalSize = totalSize + width;
-        });
-
-        return this;
       },
 
       adjustModuleTabs: function() {
