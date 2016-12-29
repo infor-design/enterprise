@@ -38,13 +38,12 @@
     }
   }
 
-  .tab-more {
+  .tab-more,
+  .add-tab-button {
     @include font-size(14);
     background-color: transparent;
     color: $tab-text-color;
     line-height: 12px;
-    max-width: 102px;
-    padding: 17px 0 16px 11px;
 
     .icon {
       fill: $tab-text-color;
@@ -70,6 +69,16 @@
         fill: $tab-selected-color;
       }
     }
+  }
+
+  .tab-more {
+    max-width: 102px;
+    padding: 17px 0 16px 11px;
+  }
+
+  .add-tab-button {
+    padding: 17px 0 16px 17px;
+    width: 44px;
   }
 
   .animated-bar {

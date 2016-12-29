@@ -440,6 +440,7 @@
             }
 
             a.focus();
+            li.addClass('is-selected');
             return false;
           });
         }
@@ -495,12 +496,11 @@
         // back to the currently selected tab.
         this.element.on('focusout.tabs', function allTabsFocusOut() {
           var noFocusedTabs = !$.contains(self.element[0], document.activeElement),
-            noPopupMenusOpen = self.tablist.children('[aria-expanded="true"]').length === 0;
+            noPopupMenusOpen = self.tablist.children('.has-popupmenu.is-open').length === 0;
 
           if (noFocusedTabs && noPopupMenusOpen && !self.moreButton.is('.is-selected, .popup-is-open')) {
             self.positionFocusState();
           }
-          self.checkFocusedElements();
         }).on('updated.tabs', function() {
           self.updated();
         }).on('activated.tabs', function(e) {
@@ -538,8 +538,10 @@
 
         a.data('focused-by-click', true);
 
+        /*
         this.tablist.children('li' + nonVisibleExcludes).removeClass('is-selected');
         li.addClass('is-selected');
+        */
 
         if (this.popupmenu) {
           this.popupmenu.close();
@@ -939,8 +941,6 @@
       },
 
       handleAddButtonKeydown: function(e) {
-        console.log('Add Button Keydown with keycode ' + e.which);
-
         if (this.element.is('.is-disabled')) {
           e.preventDefault();
           return false;
@@ -971,6 +971,8 @@
           case 40: // down
             targetLi = this.tablist.find(filter).first();
             break;
+          default:
+            return;
         }
 
         targetLi.children('a').focus();
@@ -978,7 +980,7 @@
 
       handleAddButtonFocus: function() {
         var tabs = this.tablist.find('li:not(.separator)');
-        tabs.add(this.moreButton).removeClass('is-selected').removeClass('is-focused');
+        tabs.add(this.moreButton).removeClass('is-focused');
 
         this.addTabButton.addClass('is-focused');
         this.positionFocusState(this.addTabButton, true);
@@ -1163,7 +1165,8 @@
       activate: function(href) {
         var self = this,
           a = self.getAnchor(href),
-          targetTab, targetPanel, oldTab, oldPanel;
+          targetTab, targetPanel, oldTab, oldPanel,
+          selectedStateTarget;
 
         targetTab = a.parent();
         targetPanel = self.getPanel(href);
@@ -1198,19 +1201,28 @@
 
         // Update the currently-selected tab
         self.updateAria(a);
-        oldTab.removeClass('is-selected');
+        oldTab.add(this.moreButton).removeClass('is-selected');
 
         if (targetTab.is('.tab')) {
-          targetTab.addClass('is-selected');
+          selectedStateTarget = targetTab;
         }
 
         var ddMenu = targetTab.parents('.popupmenu');
         if (ddMenu.length) {
           var tab = ddMenu.data('trigger');
           if (tab.length) {
-            tab.addClass('is-selected');
+            selectedStateTarget = tab;
           }
         }
+
+        var activeStateTarget = targetTab;
+        if (this.isTabOverflowed(targetTab)) {
+          activeStateTarget = this.moreButton;
+          selectedStateTarget = this.moreButton;
+        }
+        this.focusBar(activeStateTarget);
+
+        selectedStateTarget.addClass('is-selected');
 
         // Hide tooltips that may have been generated inside a tab.
         setTimeout(function () {
@@ -1807,7 +1819,6 @@
         }
 
         this.adjustSpilloverNumber();
-        //self.setMoreActive();
       },
 
       adjustHeaderTabs: function() {
@@ -1916,17 +1927,6 @@
         anchor.focus();
       },
 
-      setMoreActive: function () {
-        var selectedTab = this.tablist.find('.is-selected');
-
-        if (this.isTabOverflowed(selectedTab)) {
-          this.moreButton.addClass('is-selected');
-        } else {
-          this.moreButton.removeClass('is-selected');
-          this.checkFocusedElements();
-        }
-      },
-
       buildPopupMenu: function(startingHref) {
         var self = this;
         if (self.popupmenu) {
@@ -2006,7 +2006,6 @@
         function closeMenu() {
           $(this).off('close.tabs selected.tabs');
           self.moreButton.removeClass('popup-is-open');
-          //self.setMoreActive();
           self.positionFocusState(undefined);
           self.focusBar();
         }
@@ -2190,15 +2189,18 @@
           return;
         }
 
+        if (!(li instanceof $) || !li.length) {
+          return;
+        }
+
         var self = this,
-          target = li !== undefined ? li :
-            self.moreButton.hasClass('is-selected') ? self.moreButton :
-            self.addTabButton.hasClass('is-selected') ? self.addTabButton :
-            self.tablist.children('.is-selected').length > 0 ? self.tablist.children('.is-selected') : undefined,
+          target = li,
           paddingLeft, paddingRight, width;
 
+        this.animatedBar.removeClass('no-transition');
+
         if (!target || target === undefined || !target.length || !self.anchors.length) {
-          self.animatedBar.removeClass('visible').removeClass('no-transition');
+          this.animatedBar.removeClass('visible');
           return;
         }
         paddingLeft = parseInt(target.css('padding-left'), 10) || 0;
@@ -2208,9 +2210,9 @@
         if (target.is('.tab')) {
           paddingLeft += parseInt(target.children('a').css('padding-left'), 10) || 0;
           paddingRight += parseInt(target.children('a').css('padding-right'), 10) || 0;
-          width = target/*.children('a')*/.width() /*+ (paddingLeft*2)*/;
+          width = target.width();
 
-          // Dirty hack
+          // Dirty hack for first/last tab types, and Firefox.
           if (target.is(':first-child, :last-child')) {
             width = width - 1;
           }
@@ -2285,8 +2287,13 @@
           isRTL = Locale.isRTL(),
           left, top;
 
-        if (!this.isModuleTabs() && (target.is('.dismissible.tab > a') || target.is('.has-popupmenu.tab > a'))) {
-          width = width + 22;
+        if (!this.isModuleTabs()) {
+          if (target.is('.dismissible.tab > a')) {
+            width = width + 28;
+          }
+          if (target.is('.has-popupmenu.tab > a')) {
+            width = width + 33;
+          }
         }
 
         left = pos.left - offset.left;
