@@ -988,8 +988,19 @@
 
       handleResize: function() {
         this.setOverflow();
-        this.positionFocusState();
-        this.focusBar();
+
+        var selected = this.tablist.find('.is-selected');
+        if (this.moreButton.is('.is-selected') || this.isTabOverflowed(selected)) {
+          selected = this.moreButton;
+        }
+
+        if (!selected.length) {
+          this.defocusBar();
+          this.positionFocusState();
+        } else {
+          this.focusBar(selected);
+          this.positionFocusState(selected);
+        }
 
         this.handleVerticalTabResize();
         this.renderVisiblePanel();
@@ -2290,7 +2301,8 @@
           var thisHeight = 0;
 
           jqObj.each(function(i, el) {
-            thisHeight += $(el).outerHeight(true) + parseInt($(el).parent().css('padding-top'));
+            var elem = $(el);
+            thisHeight += elem.outerHeight(true) + parseInt(elem.parent().css('padding-top'));
           });
 
           return thisHeight;
@@ -2299,11 +2311,14 @@
         // Vertical Tabs need some manual adjustment when used directly inside a page container.
         // Takes into account all the "information" sections possible in the tab list container.
         if (this.isVerticalTabs()) {
-          var tablistInfo = this.tablist.prevAll('.tab-list-info');
-          width = this.tablist.outerWidth(true);
+          var tablistContainerPadding = parseInt(this.element.children('.tab-list-container').css('padding-top')),
+            tablistInfo = this.tablist.prevAll('.tab-list-info');
 
+          width = this.tablist.outerWidth(true);
           if (parentContainer.is('.page-container')) {
             top = top + (tablistInfo.length ? tablistInfoAdditionalHeight(tablistInfo) : 0);
+          } else if (tablistContainerPadding > 0) {
+            top = top + tablistContainerPadding;
           }
         }
 

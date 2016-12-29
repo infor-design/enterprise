@@ -653,6 +653,10 @@
             return alignRight();
           }
 
+          if (target.is('.tab-more')) {
+            return alignRight();
+          }
+
           if ((target.is('.btn-split-menu, .tab, .searchfield-category-button') &&
             !target.parent('.pager-pagesize').length)) {
               return alignLeft();

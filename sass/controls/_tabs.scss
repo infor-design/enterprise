@@ -233,7 +233,7 @@
 
   &.has-more-button {
     .tab-list {
-      padding-right: 102px;
+      padding-right: 110px;
     }
 
     .tab-more {
@@ -550,7 +550,7 @@ html[dir='rtl'] {
   .tab-container:not(.vertical) {
     &.has-more-button {
       .tab-list {
-        padding-left: 102px;
+        padding-left: 110px;
         padding-right: inherit;
       }
     }
