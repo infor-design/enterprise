@@ -145,8 +145,8 @@
         if (this.settings.addTabButton) {
           this.addTabButton = this.moreButton.next('.add-tab-button');
           if (!this.addTabButton || !this.addTabButton.length) {
-            this.addTabButton = $('<div class="add-tab-button">' +
-              '<span>+</span>' +
+            this.addTabButton = $('<div class="add-tab-button" tabindex="0" role="button">' +
+              '<span aria-hidden="true" role="presentation">+</span>' +
               '<span class="audible">'+ Locale.translate('AddNewTab') +'</span>' +
               '</div>');
             this.addTabButton.insertAfter(this.moreButton);
@@ -472,6 +472,20 @@
             self.handleMoreButtonFocus(e);
           });
 
+        if (this.settings.addTabButton) {
+          this.addTabButton
+            .onTouchClick('tabs')
+            .on('click.tabs', function() {
+              self.handleAddButton();
+            })
+            .on('keydown.tabs', function(e) {
+              self.handleAddButtonKeydown(e);
+            })
+            .on('focus.tabs', function(e) {
+              self.handleAddButtonFocus(e);
+            });
+        }
+
         this.panels.on('keydown.tabs', function(e) {
           self.handlePanelKeydown(e);
         });
@@ -665,6 +679,10 @@
             }
             i = i - 1;
           }
+
+          if (self.settings.addTabButton) {
+            return self.addTabButton;
+          }
           return self.tablist.children('li' + allExcludes).last();
         }
 
@@ -675,6 +693,10 @@
               return tabs.eq(i);
             }
             i++;
+          }
+
+          if (self.settings.addTabButton) {
+            return self.addTabButton;
           }
           return self.tablist.children('li' + allExcludes).first();
         }
@@ -740,6 +762,9 @@
             break;
         }
 
+        var isAddTabButton = targetLi.is('.add-tab-button'),
+          focusStateTarget = isAddTabButton ? targetLi : targetLi.children('a');
+
         // Use the matching option in the popup menu if the target is hidden by overflow.
         if (this.isTabOverflowed(targetLi)) {
           e.preventDefault();
@@ -751,9 +776,14 @@
           return;
         }
 
-        var a = targetLi.children('a').focus();
+        if (!isAddTabButton) {
+          focusStateTarget.focus();
+        } else {
+          self.addTabButton.focus();
+        }
+
         if (self.hasSquareFocusState()) {
-          self.positionFocusState(a, true);
+          self.positionFocusState(focusStateTarget, true);
         }
       },
 
@@ -908,6 +938,52 @@
         return this.anchors.filter('[href="#'+ newId +'"]');
       },
 
+      handleAddButtonKeydown: function(e) {
+        console.log('Add Button Keydown with keycode ' + e.which);
+
+        if (this.element.is('.is-disabled')) {
+          e.preventDefault();
+          return false;
+        }
+
+        var targetLi,
+          filter = 'li:not(.separator):not(.is-disabled):not(:hidden)';
+
+        switch(e.which) {
+          case 37: // left
+          case 38: // up
+            e.preventDefault();
+            targetLi = this.tablist.find(filter).last();
+
+            if (this.isTabOverflowed(targetLi)) {
+              // Open the spillover
+              this.buildPopupMenu(targetLi.children('a').attr('href'));
+              this.positionFocusState(this.moreButton, true);
+              return;
+            }
+
+            break;
+          case 13: // enter
+          case 32: // spacebar
+            e.preventDefault(); //jshint ignore:line
+            return this.handleAddButton();
+          case 39: // right
+          case 40: // down
+            targetLi = this.tablist.find(filter).first();
+            break;
+        }
+
+        targetLi.children('a').focus();
+      },
+
+      handleAddButtonFocus: function() {
+        var tabs = this.tablist.find('li:not(.separator)');
+        tabs.add(this.moreButton).removeClass('is-selected').removeClass('is-focused');
+
+        this.addTabButton.addClass('is-focused');
+        this.positionFocusState(this.addTabButton, true);
+      },
+
       handleResize: function() {
         this.setOverflow();
         this.positionFocusState();
@@ -1023,8 +1099,6 @@
 
         return this.panels.filter('[id="' + href.replace(/#/g, '') + '"]');
       },
-
-
 
       getMenuItem: function(href) {
         if (this.isAnchor(href)) {
@@ -1733,7 +1807,7 @@
         }
 
         this.adjustSpilloverNumber();
-        self.setMoreActive();
+        //self.setMoreActive();
       },
 
       adjustHeaderTabs: function() {
@@ -1843,23 +1917,21 @@
       },
 
       setMoreActive: function () {
-        var self = this,
-          selectedTab = self.tablist.find('.is-selected');
+        var selectedTab = this.tablist.find('.is-selected');
 
-        if (self.isTabOverflowed(selectedTab)) {
-          self.moreButton.addClass('is-selected');
+        if (this.isTabOverflowed(selectedTab)) {
+          this.moreButton.addClass('is-selected');
         } else {
-          self.moreButton.removeClass('is-selected');
-          self.checkFocusedElements();
+          this.moreButton.removeClass('is-selected');
+          this.checkFocusedElements();
         }
       },
 
       buildPopupMenu: function(startingHref) {
         var self = this;
         if (self.popupmenu) {
-          $('#tab-container-popupmenu').off('focus.popupmenu');
-          self.popupmenu.close();
-          $('#tab-container-popupmenu').remove();
+          self.popupmenu.destroy();
+          $('#tab-container-popupmenu').off('focus.popupmenu').remove();
           $(document).off('keydown.popupmenu');
         }
 
@@ -1934,7 +2006,7 @@
         function closeMenu() {
           $(this).off('close.tabs selected.tabs');
           self.moreButton.removeClass('popup-is-open');
-          self.setMoreActive();
+          //self.setMoreActive();
           self.positionFocusState(undefined);
           self.focusBar();
         }
@@ -2039,6 +2111,11 @@
               e.preventDefault();
               $(document).off(e);
               self.popupmenu.close();
+
+              if (self.settings.addTabButton) {
+                self.addTabButton.focus();
+                return;
+              }
               self.findFirstVisibleTab();
             }
           }
@@ -2116,6 +2193,7 @@
         var self = this,
           target = li !== undefined ? li :
             self.moreButton.hasClass('is-selected') ? self.moreButton :
+            self.addTabButton.hasClass('is-selected') ? self.addTabButton :
             self.tablist.children('.is-selected').length > 0 ? self.tablist.children('.is-selected') : undefined,
           paddingLeft, paddingRight, width;
 
@@ -2224,12 +2302,10 @@
 
         // Module Tabs get a slight modification
         if (this.isModuleTabs()) {
-          width = parseInt(target.parent().outerWidth(true));
-          left = left - parseInt(target.css('margin-left'));
-
-          if (target.parent().is('.add-tab-button')) {
-            left = left - 1;
+          if (!target.is('.add-tab-button, .tab-more')) {
+            width = parseInt(target.parent().outerWidth(true));
           }
+          left = left - parseInt(target.css('margin-left'));
         }
 
         // Vertical Tabs
@@ -2259,9 +2335,9 @@
         }
 
         this.focusState.css({
-          left: left,
+          left: isRTL ? left - width : left,
           top: top,
-          right: isRTL ? '' : left + width,
+          right: isRTL ? left : left + width,
           bottom: top + height,
           width: width,
           height: height
