@@ -533,15 +533,8 @@
           return;
         }
 
-        var nonVisibleExcludes = ':not(.separator):not(:hidden)',
-          a = li.children('a');
-
+        var a = li.children('a');
         a.data('focused-by-click', true);
-
-        /*
-        this.tablist.children('li' + nonVisibleExcludes).removeClass('is-selected');
-        li.addClass('is-selected');
-        */
 
         if (this.popupmenu) {
           this.popupmenu.close();
