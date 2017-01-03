@@ -1761,7 +1761,7 @@ $.fn.datagrid = function(options) {
               isMatch = (rowValueStr.indexOf(conditionValue) === -1 && rowValue.toString() !== '');
               break;
             case 'end-with':
-              isMatch = (rowValueStr.lastIndexOf(conditionValue) === (rowValueStr.length - conditionValue.toString().length)  && rowValueStr !== '');
+              isMatch = (rowValueStr.lastIndexOf(conditionValue) === (rowValueStr.length - conditionValue.toString().length)  && rowValueStr !== '' && (rowValueStr.length >= conditionValue.toString().length));
               break;
             case 'start-with':
               isMatch = (rowValueStr.indexOf(conditionValue) === 0 && rowValueStr !== '');
