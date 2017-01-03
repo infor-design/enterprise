@@ -21,7 +21,6 @@
       }
 
       a {
-        display: block;
         line-height: 12px;
         overflow: hidden;
         padding: 15px 11px 13px;
@@ -67,9 +66,10 @@
           opacity: .6;
         }
 
-        &:hover {
+        &:hover,
+        &.is-selected {
           .icon:not(.is-error):not(.icon-error) {
-            fill: $white !important;
+            fill: $white;
             opacity: 1;
           }
         }
@@ -86,10 +86,9 @@
     border-color: $header-tab-hover-color;
   }
 
-  .tab-more {
+  .tab-more,
+  .add-tab-button {
     color: $header-tab-normal-color;
-    padding: 12px 0 12px 14px;
-    right: 20px;
 
     span {
       color: inherit;
@@ -115,7 +114,33 @@
         fill: $header-tab-selected-color;
       }
     }
+  }
 
+  .tab-more {
+    padding: 12px 0 12px 14px;
+  }
+
+  .add-tab-button {
+    padding: 12px 0 12px 18px;
+  }
+
+  &.has-more-button {
+    .tab-more {
+      right: 20px;
+    }
+  }
+
+  &.has-add-button {
+    .add-tab-button {
+      right: 20px;
+      width: 44px;
+    }
+
+    &.has-more-button {
+      .tab-more {
+        right: 86px;
+      }
+    }
   }
 
 // Alternate Header-Tab Backgrounds (Page Context)
