@@ -701,6 +701,54 @@ body.no-scroll {
   }
 }
 
+// Scrollable Canvas
+//==============================================================
+.scrollable.canvas,
+.scrollable-x.canvas,
+.scrollable-y.canvas {
+  min-height: calc(100% - 60px);
+  min-width: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+// Sticky Footer
+.has-sticky-footer {
+  bottom: 60px;
+  height: calc(100% - 60px);
+}
+
+.sticky-footer {
+  @include font-size(12);
+  background-color: $body-bg-color;
+  bottom: 0;
+  left: 50%;
+  max-width: 1280px;
+  padding: 20px;
+  position: fixed;
+  transform: translateX(-50%);
+  width: 100%;
+
+  .footer-list {
+    margin: 0;
+    padding: 0;
+
+    &::after {
+      clear: both;
+      content: '';
+      display: block;
+    }
+
+    li {
+      display: inline-block;
+      margin-left: 20px;
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+}
+
 @include respond-to(phone) {
 
   .builder {
@@ -728,59 +776,32 @@ body.no-scroll {
       }
     }
   }
-}
 
-// Scrollable Canvas
-//==============================================================
-.scrollable.canvas,
-.scrollable-x.canvas,
-.scrollable-y.canvas {
-  min-height: calc(100% - 60px);
-  min-width: 100%;
-  -webkit-overflow-scrolling: touch;
-}
-
-// Sticky Footer
-.has-sticky-footer::after {
-  content: '';
-  display: block;
-  height: 75px;
-}
-
-.sticky-footer {
-  background-color: $body-bg-color;
-  border-top: 1px solid $body-bg-color;
-  bottom: 0;
-  font-size: 12px;
-  padding: 21px 20px 20px;
-  position: fixed;
-  width: 100%;
-
-  &.light {
-    background-color: $sticky-footer-light-bg-color;
-    border-top: 1px solid $sticky-footer-light-border-color;
+  .has-sticky-footer {
+    bottom: 150px;
+    height: calc(100% - 150px);
   }
 
-  .footer-list {
-    margin: 0;
-    padding: 0;
+  .sticky-footer {
+    .footer-list {
+      &.l-pull-left,
+      &.l-pull-right {
+        float: none;
+      }
 
-    &::after {
-      clear: both;
-      content: '';
-      display: block;
-    }
+      &:not(:last-child) {
+        margin-bottom: 10px;
+      }
 
-    li {
-      display: inline-block;
-      margin-left: 20px;
-
-      &:first-child {
+      li {
+        display: block;
         margin-left: 0;
       }
+
     }
   }
 }
+
 
 //RTL Styles
 html[dir='rtl'] {
