@@ -1231,6 +1231,29 @@ $pageslice-download-link-border-color: #3dcd65;
 
 }
 
+// Internationalization Page
+//==================================================//
+
+.internationalization {
+
+  &.header {
+    background-color: $ruby06;
+
+    h1 {
+      display: inline-block;
+    }
+  }
+
+  .site-footer {
+    background-color: $ruby06;
+
+    .version-no,
+    .version-no b {
+      color: $ruby03;
+    }
+  }
+
+}
 // articles Page
 //==================================================//
 .row {
