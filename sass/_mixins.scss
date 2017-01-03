@@ -241,3 +241,13 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
   visibility: hidden;
   width: 1px;
 }
+
+// Horizontal gradient
+@mixin horizontal-gradient($start-color, $end-color) {
+  background: $start-color;
+  background: -webkit-gradient(linear, 0 0, 100% 0, from($start-color), to($end-color));
+  background: -webkit-linear-gradient(left, $start-color, $end-color);
+  background: -moz-linear-gradient(left, $start-color, $end-color);
+  background: -ms-linear-gradient(left, $start-color, $end-color);
+  background: -o-linear-gradient(left, $start-color, $end-color);
+}
