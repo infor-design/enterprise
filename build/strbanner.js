@@ -1,10 +1,10 @@
-const extractNameFromPath = require('./helpers/extractnamefrompath.js');
+const path = require('path');
 
 module.exports = function(arrControls) {
   let strControls = '';
 
   if (arrControls) {
-    let controls = arrControls.map((path) => { return extractNameFromPath(path); });
+    let controls = arrControls.map((strPath) => { return path.basename(strPath, '.js'); });
     strControls = controls.join(', ');
   }
 
