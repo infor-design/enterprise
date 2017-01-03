@@ -46,7 +46,7 @@ module.exports = function(grunt) {
     let configObj;
 
     if (config) {
-      configObj = { js : [...dist] };
+      configObj = { js : orderedDist(dist, excludeControls) };
       grunt.file.write('config.json', JSON.stringify(configObj, null, 2));
       grunt.log.writeln();
       grunt.log.writeln('\u2714'.green, ' File', 'config.json'.magenta, 'created.');
