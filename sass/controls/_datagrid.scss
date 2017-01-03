@@ -940,6 +940,14 @@ $datagrid-short-row-height: 23px;
       &:focus .datagrid-cell-wrapper {
         border-color: $alert-red;
       }
+
+      &.l-right-text {
+        .datagrid-cell-wrapper .icon-error {
+          left: -100%;
+          margin-left: 0;
+          margin-right: -15px;
+        }
+      }
     }
 
     &.is-hidden {
