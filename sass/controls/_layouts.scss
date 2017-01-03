@@ -720,16 +720,13 @@ body.no-scroll {
 .sticky-footer {
   @include font-size(12);
   background-color: $body-bg-color;
-  border-top: 1px solid $body-bg-color;
   bottom: 0;
-  padding: 21px 20px 20px;
+  left: 50%;
+  max-width: 1280px;
+  padding: 20px;
   position: fixed;
+  transform: translateX(-50%);
   width: 100%;
-
-  &.light {
-    background-color: $sticky-footer-light-bg-color;
-    border-top: 1px solid $sticky-footer-light-border-color;
-  }
 
   .footer-list {
     margin: 0;
