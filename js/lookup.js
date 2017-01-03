@@ -194,7 +194,7 @@
       //Overidable function to create the modal dialog
       createModal: function () {
         var self = this,
-          content = '<div id="'+lookupGridId+'" class="datagrid-contained"></div>',
+          content = '<div id="'+lookupGridId+'"></div>',
           thisLabel = $('label[for="'+self.element.attr('id')+'"]'),
           labelText = self.isInlineLabel ? self.inlineLabelText : (thisLabel.length ? thisLabel.clone().find('span').remove().end().text() : '');
 
