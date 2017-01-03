@@ -23,7 +23,8 @@
         menuId: null, //Context Menu to add to nodes
         useStepUI: false, // When using the UI as a stepped tree
         folderIconOpen: 'open-folder',
-        folderIconClosed: 'closed-folder'
+        folderIconClosed: 'closed-folder',
+        sortable: false // Allow nodes to be sortable
       },
       settings = $.extend({}, defaults, options);
 
@@ -50,6 +51,7 @@
         this.initSelected();
         this.focusFirst();
         this.attachMenu(this.settings.menuId);
+        this.createSortable();
       },
 
       //Init Tree from ul, li, a markup structure in DOM
@@ -80,8 +82,8 @@
       //Init selected notes
       initSelected: function () {
         var self = this;
-        this.element.find('li.is-selected').each(function() {
-          self.selectNode($('a:first', this), true);
+        this.element.find('li').each(function() {
+          self.setNodeStatus($('a:first', this));
         });
       },
 
@@ -424,8 +426,11 @@
             }
 
             self.isAnimating = true;
-            self.unSelectedNode(node.parent().find('li.is-selected'), false);
-            node.find('.is-selected').removeClass('is-selected');
+
+            if (!self.isMultiselect) {
+              self.unSelectedNode(node.parent().find('li.is-selected'), false);
+              node.removeClass('is-selected');
+            }
 
             next.one('animateclosedcomplete', function() {
               next.removeClass('is-open');
@@ -504,7 +509,7 @@
         //Key Behavior as per: http://access.aol.com/dhtml-style-guide-working-group/#treeview
         var self = this;
         //on click give clicked element 0 tabindex and 'aria-selected=true', resets all other links
-        this.element.on('click.tree', 'a', function (e) {
+        this.element.on('click.tree', 'a:not(.is-clone)', function (e) {
           var target = $(this),
             parent = target.parent();
           if (!target.is('.is-disabled, .is-loading')) {
@@ -1130,8 +1135,264 @@
 
       },
 
+      // Create sortable
+      createSortable: function() {
+        if (!this.settings.sortable) {
+          return;
+        }
+
+        var self = this,
+          clone, interval, doDrag;
+
+        self.targetArrow = self.element.prev('.tree-drag-target-arrow');
+
+        if (!self.targetArrow.length) {
+          $('<div class="tree-drag-target-arrow"></div>').insertBefore(self.element);
+          self.targetArrow = self.element.prev('.tree-drag-target-arrow');
+        }
+
+        function isReady() {
+          // Make sure all dynamic nodes sync
+          if (!self.loading) {
+            clearInterval(interval);
+
+            $('a:not(.is-dragging-clone, .is-disabled)', self.element).each(function(i) {
+              var a = $(this);
+
+              // Don't drag with folder icon, save for toggle nodes
+              a.on('mousedown.tree', function(e) {
+                e.preventDefault();
+                doDrag = $(e.target).is('.icon') ? !a.parent().is('.folder') : true;
+              })
+
+              // Invoke drag
+              .drag({
+                clone: true,
+                cloneAppentTo: a.closest('li'),
+                clonePosIsFixed: true
+              })
+
+              // Drag start =======================================
+              .on('dragstart.tree', function (e, pos, thisClone) {
+                if (!thisClone || !doDrag) {
+                  return;
+                }
+                clone = thisClone;
+                clone.removeAttr('id').addClass('is-dragging-clone');
+                clone.find('.tree-checkbox, .tree-badge').remove();
+
+                self.sortable = {
+                  startNode: a,
+                  startIndex: i,
+                  startWidth: a.outerWidth()
+                };
+
+                e.preventDefault();
+                e.stopImmediatePropagation();
+              })
+
+              // While dragging ===================================
+              .on('drag.tree', function (e, pos) {
+                if (!clone) {
+                  return;
+                }
+                clone.css({left: pos.left, top: pos.top, opacity: 1});
+                self.setDragOver(clone, pos);
+              })
+
+              // Drag end =========================================
+              .on('dragend.tree', function (e, pos) {
+                self.targetArrow.hide();
+                if (!clone || !self.sortable.overDirection) {
+                  return;
+                }
+                clone.css({left: pos.left, top: pos.top});
+
+                var start = self.sortable.startNode.parent(),
+                  end = self.sortable.overNode.parent();
+
+                // Over
+                if (self.sortable.overDirection === 'over') {
+                  var node = self.sortable.overNode;
+                  if (end.is('.folder')) {
+                    $('ul:first', end).append(start);
+                  }
+                  else {
+                    var newFolder = $('<ul role="group"></ul>');
+                    newFolder.append(start);
+                    end.addClass('folder').append(newFolder);
+                    self.setTreeIcon($('svg.icon-tree', node), self.settings.folderIconClosed);
+                    if (node.is('[class^="icon"]')) {
+                      var iconClass = node.attr('class').replace(' hide-focus', '').replace(' is-selected', '');
+                      node.removeClass(iconClass);
+                    }
+                  }
+                  if (!end.is('.is-open')) {
+                    self.toggleNode(node);
+                  }
+                }
+
+                // Up
+                else if (self.sortable.overDirection === 'up') {
+                  start.insertBefore(end);
+                }
+                // Down
+                else if (self.sortable.overDirection === 'down') {
+                  start.insertAfter(end);
+                }
+
+                // Sync dataset and ui
+                self.syncDataset(self.element);
+                if (self.isMultiselect) {
+                  self.initSelected();
+                }
+
+              });
+            });
+
+          }
+        }
+        // Wait for make sure all dynamic nodes sync
+        interval = setInterval(isReady, 10);
+      },
+
+      // Set actions while drag over
+      setDragOver: function(clone, pos) {
+        var self = this,
+          treeRec = self.element[0].getBoundingClientRect(),
+          extra = 20,
+          exMargin, isParentsStartNode, isFolder, isBeforeStart, isAfterSttart,
+          li, a, links, rec, i, l, left, top, direction, doAction,
+
+          // Icons used while moving
+          icons = {
+            disabled: 'icon-cancel',
+            over: 'icon-add',
+            list: 'icon-minus'
+          },
+
+          // Set as out of range
+          outOfRange = function() {
+            self.sortable.overNode = null;
+            self.sortable.overIndex = null;
+            self.sortable.overDirection = null;
+
+            self.targetArrow.hide();
+            self.setTreeIcon($('svg.icon-tree', clone), icons.disabled);
+          };
+
+        // Moving inside tree
+        if (pos.top > (treeRec.top - extra) &&
+            pos.top < (treeRec.bottom + extra) &&
+            pos.left > (treeRec.left - extra - self.sortable.startWidth) &&
+            pos.left < (treeRec.left + treeRec.height + extra)) {
+
+          links = $('a:not(.is-dragging-clone, .is-disabled)', self.element);
+          extra = 2;
+
+          for (i = 0, l = links.length; i < l; i++) {
+            direction = null;
+            rec = links[i].getBoundingClientRect();
+
+            // Moving on/around node range
+            if (pos.top > rec.top - extra && pos.top < rec.bottom + extra) {
+              a = $(links[i]);
+
+              // Moving on/around node has parents as same node need to rearrange
+              // Cannot rearrange parents to child
+              isParentsStartNode = !!a.parentsUntil(self.element, '.folder')
+                .filter(function() {
+                  return $('a:first', this).is(self.sortable.startNode);
+                }).length;
+              if (isParentsStartNode) {
+                outOfRange();
+                continue;
+              }
+
+              li = a.parent();
+              left = rec.left;
+              isFolder = li.is('.folder');
+              exMargin = parseInt(li.css('margin-top'), 10) > 0 ? 2 : 0;
+              isBeforeStart = ((i-1) === self.sortable.startIndex);
+              isAfterSttart = ((i+1) === self.sortable.startIndex);
+
+              // Apply actions
+              doAction = function() {
+                if (!direction) {
+                  outOfRange();
+                  return;
+                }
+
+                // Over
+                if (direction === 'over') {
+                  self.targetArrow.hide();
+                  if (!a.is('.is-disabled')) {
+                    self.setTreeIcon($('svg.icon-tree', clone), icons.over);
+                  }
+                }
+                // Up -or- Down
+                else {
+                  self.setTreeIcon($('svg.icon-tree', clone), icons.list);
+                  top = (direction === 'up') ?
+                    (rec.top - 1.5 - (li.is('.is-active') ? 3 : 0)) :
+                    (rec.bottom + (li.next().is('.is-active') ? -1 : 1.5) + exMargin);
+                  self.targetArrow.css({ left: left, top: top }).show();
+                }
+
+                // Set changes
+                self.sortable.overNode = a;
+                self.sortable.overIndex = i;
+                self.sortable.overDirection = direction;
+              };
+
+              // Set moveing directions
+              if (i !== self.sortable.startIndex) {
+                // If hover on link
+                if (pos.left > rec.left - extra - self.sortable.startWidth &&
+                  pos.left < rec.right + extra) {
+                  if (!isBeforeStart && pos.top < rec.top) {
+                    direction = 'up';
+                  }
+                  else if (!isAfterSttart && !isFolder && pos.top > rec.top + (extra * 2)) {
+                    direction = 'down';
+                  }
+                  else {
+                    direction = 'over';
+                  }
+                }
+                // Not hover on link
+                else {
+                  if (!isBeforeStart && pos.top < rec.top) {
+                    direction = 'up';
+                  }
+                  else if (!isAfterSttart) {
+                    direction = 'down';
+                  }
+                }
+              }
+              doAction(direction);
+            }
+          }
+
+        }
+        else {
+          // Out side from tree area
+          outOfRange();
+        }
+      },
+
       // Tree Related Functions
       destroy: function() {
+        if (this.settings.sortable) {
+          this.element.find('a').each(function() {
+            var a = $(this), dragApi = a.data('drag');
+            a.off('mousedown.tree');
+            if (!!dragApi && !!dragApi.destroy) {
+              dragApi.destroy();
+            }
+          });
+          this.element.prev('.tree-drag-target-arrow').remove();
+        }
         this.element.removeData(pluginName);
         this.element.off('contextmenu.tree updated.tree click.tree focus.tree keydown.tree keypress.tree').empty();
       }

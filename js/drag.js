@@ -23,6 +23,7 @@
       defaults = {
         axis: null, //Constrains dragging to either axis. Possible values: 'x', 'y'
         clone: false, //Clone the object - Useful so you dont have to abs position
+        cloneCssClass: 'is-clone', // Css class added to clone element
         clonePosIsFixed: false, //Clone object use as css style "position: fixed"
         cloneAppentTo: null, //AppentTo selector for clone ['body'|'parent'|'jquery object'] default:'body'
         containment: false, //Constrains dragging to within the bounds of the specified element or region. Possible values: "parent", "document", "window".
@@ -154,7 +155,9 @@
             if (settings.cloneAppentTo === 'parent') {
               settings.cloneAppentTo = self.element.parent();
             }
-            self.clone.appendTo(settings.cloneAppentTo || 'body');
+            self.clone
+              .addClass(settings.cloneCssClass)
+              .appendTo(settings.cloneAppentTo || 'body');
 
           }
 
