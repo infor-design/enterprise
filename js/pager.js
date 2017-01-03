@@ -162,8 +162,9 @@
           if (!isVisible.length) {
             $('li:visible:first, td:visible:first', self.element).attr('tabindex', '0');
           }
-          // Fix: Firefox by default not allow keyboard focus on links
-          $('li a', this.pagerBar).each(function() {
+
+          // Fix: Firefox by default to not allow keyboard focus on links
+          $('li a', self.pagerBar).each(function() {
             var a = $(this),
               li = a.closest('li');
 
