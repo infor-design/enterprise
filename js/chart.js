@@ -650,7 +650,10 @@ window.Chart = function(container) {
     });
 
     //Adjust the labels
-    svg.selectAll('.axis.y text').attr({'x': -15});
+    svg.selectAll('.axis.y text').attr({'x': charts.isRTL ? 15 : -15});
+    svg.selectAll('.axis.x text').attr('class', function(d) {
+      return d < 0 ? 'negative-value' : 'positive-value';
+    });
 
     //Animate the Bars In
     svg.selectAll('.bar')

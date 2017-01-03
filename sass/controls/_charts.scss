@@ -596,9 +596,18 @@
 //RTL Styles
 html[dir='rtl'] {
   .chart-legend {
+    margin-left: inherit;
+    margin-right: 55px;
+
     .chart-legend-color {
       margin-left: 10px;
       margin-right: inherit;
+    }
+
+    .chart-legend-item {
+      float: right;
+      margin-left: 10px;
+      margin-right: 0;
     }
   }
 
@@ -638,6 +647,27 @@ html[dir='rtl'] {
     .target-line {
       left: auto;
       right: 45px;
+    }
+  }
+
+  .chart-container.chart-vertical-bar {
+    svg {
+      transform: scale(-1, 1);
+
+      text {
+        transform: scale(-1, 1);
+
+        &.negative-value {
+          direction: ltr;
+        }
+      }
+
+      .axis.y {
+        text {
+          text-anchor: start;
+        }
+      }
+
     }
   }
 }
