@@ -701,35 +701,6 @@ body.no-scroll {
   }
 }
 
-@include respond-to(phone) {
-
-  .builder {
-    .main,
-    .sidebar {
-      @include transform-transition-list(300ms cubic-bezier(.17, .04, .03, .94));
-      position: absolute;
-    }
-
-    .main {
-      @include css3(transform, translateX(100%));
-    }
-
-    .sidebar {
-      @include css3(transform, translateX(0));
-    }
-
-    &.show-detail {
-      .main {
-        @include css3(transform, translateX(0));
-      }
-
-      .sidebar {
-        @include css3(transform, translateX(-100%));
-      }
-    }
-  }
-}
-
 // Scrollable Canvas
 //==============================================================
 .scrollable.canvas,
@@ -741,17 +712,16 @@ body.no-scroll {
 }
 
 // Sticky Footer
-.has-sticky-footer::after {
-  content: '';
-  display: block;
-  height: 75px;
+.has-sticky-footer {
+  bottom: 60px;
+  height: calc(100% - 60px);
 }
 
 .sticky-footer {
+  @include font-size(12);
   background-color: $body-bg-color;
   border-top: 1px solid $body-bg-color;
   bottom: 0;
-  font-size: 12px;
   padding: 21px 20px 20px;
   position: fixed;
   width: 100%;
@@ -781,6 +751,60 @@ body.no-scroll {
     }
   }
 }
+
+@include respond-to(phone) {
+
+  .builder {
+    .main,
+    .sidebar {
+      @include transform-transition-list(300ms cubic-bezier(.17, .04, .03, .94));
+      position: absolute;
+    }
+
+    .main {
+      @include css3(transform, translateX(100%));
+    }
+
+    .sidebar {
+      @include css3(transform, translateX(0));
+    }
+
+    &.show-detail {
+      .main {
+        @include css3(transform, translateX(0));
+      }
+
+      .sidebar {
+        @include css3(transform, translateX(-100%));
+      }
+    }
+  }
+
+  .has-sticky-footer {
+    bottom: 150px;
+    height: calc(100% - 150px);
+  }
+
+  .sticky-footer {
+    .footer-list {
+      &.l-pull-left,
+      &.l-pull-right {
+        float: none;
+      }
+
+      &:not(:last-child) {
+        margin-bottom: 10px;
+      }
+
+      li {
+        display: block;
+        margin-left: 0;
+      }
+
+    }
+  }
+}
+
 
 //RTL Styles
 html[dir='rtl'] {
