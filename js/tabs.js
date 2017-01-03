@@ -142,16 +142,20 @@
         }
 
         // Add Tab Button
-        if (self.settings.addTabButton && (!this.addTabButton || !this.addTabButton.length)) {
-          this.addTabButton = $('<li class="tab add-tab-button"><a href="#">' +
-            '+ ' +
-            '<span class="audible">'+ Locale.translate('AddNewTab') +'</span>' +
-            '</a></tab>');
-
-          this.tablist.append(this.addTabButton);
+        if (this.settings.addTabButton) {
+          this.addTabButton = this.moreButton.next('.add-tab-button');
+          if (!this.addTabButton || !this.addTabButton.length) {
+            this.addTabButton = $('<div class="add-tab-button" tabindex="0" role="button">' +
+              '<span aria-hidden="true" role="presentation">+</span>' +
+              '<span class="audible">'+ Locale.translate('AddNewTab') +'</span>' +
+              '</div>');
+            this.addTabButton.insertAfter(this.moreButton);
+            this.element.addClass('has-add-button');
+          }
         }
-        if (!self.settings.addTabButton && this.addTabButton && this.addTabButton.length) {
+        if (!this.settings.addTabButton && this.addTabButton && this.addTabButton.length) {
           this.addTabButton.remove();
+          this.element.removeClass('has-add-button');
         }
 
         //for each item in the tabsList...
@@ -436,6 +440,7 @@
             }
 
             a.focus();
+            li.addClass('is-selected');
             return false;
           });
         }
@@ -468,6 +473,20 @@
             self.handleMoreButtonFocus(e);
           });
 
+        if (this.settings.addTabButton) {
+          this.addTabButton
+            .onTouchClick('tabs')
+            .on('click.tabs', function() {
+              self.handleAddButton();
+            })
+            .on('keydown.tabs', function(e) {
+              self.handleAddButtonKeydown(e);
+            })
+            .on('focus.tabs', function(e) {
+              self.handleAddButtonFocus(e);
+            });
+        }
+
         this.panels.on('keydown.tabs', function(e) {
           self.handlePanelKeydown(e);
         });
@@ -477,12 +496,11 @@
         // back to the currently selected tab.
         this.element.on('focusout.tabs', function allTabsFocusOut() {
           var noFocusedTabs = !$.contains(self.element[0], document.activeElement),
-            noPopupMenusOpen = self.tablist.children('[aria-expanded="true"]').length === 0;
+            noPopupMenusOpen = self.tablist.children('.has-popupmenu.is-open').length === 0;
 
           if (noFocusedTabs && noPopupMenusOpen && !self.moreButton.is('.is-selected, .popup-is-open')) {
             self.positionFocusState();
           }
-          self.checkFocusedElements();
         }).on('updated.tabs', function() {
           self.updated();
         }).on('activated.tabs', function(e) {
@@ -515,13 +533,8 @@
           return;
         }
 
-        var nonVisibleExcludes = ':not(.separator):not(:hidden)',
-          a = li.children('a');
-
+        var a = li.children('a');
         a.data('focused-by-click', true);
-
-        this.tablist.children('li' + nonVisibleExcludes).removeClass('is-selected');
-        li.addClass('is-selected');
 
         if (this.popupmenu) {
           this.popupmenu.close();
@@ -661,6 +674,10 @@
             }
             i = i - 1;
           }
+
+          if (self.settings.addTabButton) {
+            return self.addTabButton;
+          }
           return self.tablist.children('li' + allExcludes).last();
         }
 
@@ -671,6 +688,10 @@
               return tabs.eq(i);
             }
             i++;
+          }
+
+          if (self.settings.addTabButton) {
+            return self.addTabButton;
           }
           return self.tablist.children('li' + allExcludes).first();
         }
@@ -736,6 +757,9 @@
             break;
         }
 
+        var isAddTabButton = targetLi.is('.add-tab-button'),
+          focusStateTarget = isAddTabButton ? targetLi : targetLi.children('a');
+
         // Use the matching option in the popup menu if the target is hidden by overflow.
         if (this.isTabOverflowed(targetLi)) {
           e.preventDefault();
@@ -747,9 +771,14 @@
           return;
         }
 
-        var a = targetLi.children('a').focus();
+        if (!isAddTabButton) {
+          focusStateTarget.focus();
+        } else {
+          self.addTabButton.focus();
+        }
+
         if (self.hasSquareFocusState()) {
-          self.positionFocusState(a, true);
+          self.positionFocusState(focusStateTarget, true);
         }
       },
 
@@ -904,10 +933,67 @@
         return this.anchors.filter('[href="#'+ newId +'"]');
       },
 
+      handleAddButtonKeydown: function(e) {
+        if (this.element.is('.is-disabled')) {
+          e.preventDefault();
+          return false;
+        }
+
+        var targetLi,
+          filter = 'li:not(.separator):not(.is-disabled):not(:hidden)';
+
+        switch(e.which) {
+          case 37: // left
+          case 38: // up
+            e.preventDefault();
+            targetLi = this.tablist.find(filter).last();
+
+            if (this.isTabOverflowed(targetLi)) {
+              // Open the spillover
+              this.buildPopupMenu(targetLi.children('a').attr('href'));
+              this.positionFocusState(this.moreButton, true);
+              return;
+            }
+
+            break;
+          case 13: // enter
+          case 32: // spacebar
+            e.preventDefault(); //jshint ignore:line
+            return this.handleAddButton();
+          case 39: // right
+          case 40: // down
+            targetLi = this.tablist.find(filter).first();
+            break;
+          default:
+            return;
+        }
+
+        targetLi.children('a').focus();
+      },
+
+      handleAddButtonFocus: function() {
+        var tabs = this.tablist.find('li:not(.separator)');
+        tabs.add(this.moreButton).removeClass('is-focused');
+
+        this.addTabButton.addClass('is-focused');
+        this.positionFocusState(this.addTabButton, true);
+      },
+
       handleResize: function() {
         this.setOverflow();
-        this.positionFocusState();
-        this.focusBar();
+
+        var selected = this.tablist.find('.is-selected');
+        if (this.moreButton.is('.is-selected') || this.isTabOverflowed(selected)) {
+          selected = this.moreButton;
+        }
+
+        if (!selected.length) {
+          this.defocusBar();
+          this.positionFocusState();
+        } else {
+          this.focusBar(selected);
+          this.positionFocusState(selected);
+        }
 
         this.handleVerticalTabResize();
         this.renderVisiblePanel();
@@ -1020,8 +1106,6 @@
         return this.panels.filter('[id="' + href.replace(/#/g, '') + '"]');
       },
 
-
-
       getMenuItem: function(href) {
         if (this.isAnchor(href)) {
           href = href.attr('href');
@@ -1085,7 +1169,8 @@
       activate: function(href) {
         var self = this,
           a = self.getAnchor(href),
-          targetTab, targetPanel, oldTab, oldPanel;
+          targetTab, targetPanel, oldTab, oldPanel,
+          selectedStateTarget;
 
         targetTab = a.parent();
         targetPanel = self.getPanel(href);
@@ -1120,19 +1205,28 @@
 
         // Update the currently-selected tab
         self.updateAria(a);
-        oldTab.removeClass('is-selected');
+        oldTab.add(this.moreButton).removeClass('is-selected');
 
         if (targetTab.is('.tab')) {
-          targetTab.addClass('is-selected');
+          selectedStateTarget = targetTab;
         }
 
         var ddMenu = targetTab.parents('.popupmenu');
         if (ddMenu.length) {
           var tab = ddMenu.data('trigger');
           if (tab.length) {
-            tab.addClass('is-selected');
+            selectedStateTarget = tab;
           }
         }
+
+        var activeStateTarget = targetTab;
+        if (this.isTabOverflowed(targetTab)) {
+          activeStateTarget = this.moreButton;
+          selectedStateTarget = this.moreButton;
+        }
+        this.focusBar(activeStateTarget);
+
+        selectedStateTarget.addClass('is-selected');
 
         // Hide tooltips that may have been generated inside a tab.
         setTimeout(function () {
@@ -1718,10 +1812,6 @@
           this.adjustModuleTabs();
         }
 
-        if (this.isHeaderTabs()) {
-          this.adjustHeaderTabs();
-        }
-
         if (self.tablist[0].scrollHeight > self.tablist.outerHeight() + 3.5) {
           self.element.addClass('has-more-button');
         } else {
@@ -1729,56 +1819,20 @@
         }
 
         this.adjustSpilloverNumber();
-        self.setMoreActive();
-      },
-
-      adjustHeaderTabs: function() {
-        var self = this,
-          sizeableTabs = this.tablist.find('li:not(.separator):not(.application-menu-trigger):not(.add-tab-button)'),
-          tabContainerW = this.tablist.width(),
-          totalSize = 0;
-
-        sizeableTabs.add(this.moreButton).removeAttr('style');
-
-        // Remove overflowed tabs
-        sizeableTabs.each(function() {
-          var t = $(this),
-            width = t.outerWidth(true);
-
-          if (self.isTabOverflowed(t)) {
-            sizeableTabs = sizeableTabs.not(t);
-          }
-
-          // Don't let the individual tabs be larger than the tabs container
-          if (width > tabContainerW) {
-            width = tabContainerW;
-          }
-
-          // Set each tab to an explicitly-defined width so we can properly wrap/overflow their text.
-          t.width(width);
-          totalSize = totalSize + width;
-        });
-
-        return this;
       },
 
       adjustModuleTabs: function() {
         var self = this,
-          sizeableTabs = this.tablist.find('li:not(.separator):not(.application-menu-trigger):not(.add-tab-button)'),
+          sizeableTabs = this.tablist.find('li:not(.separator):not(.application-menu-trigger)'),
           appTrigger = this.tablist.find('.application-menu-trigger'),
           hasAppTrigger = appTrigger.length > 0,
-          addButton = this.tablist.find('.add-tab-button'),
-          hasAddButton = addButton.length > 0,
           tabContainerW = this.tablist.outerWidth(),
           defaultTabSize = 120,
           visibleTabSize = 120,
-          appTriggerSize = (hasAppTrigger ? appTrigger.outerWidth() : 0),
-          addButtonSize = (hasAddButton ? addButton.outerWidth(true) : 0);
-
-        sizeableTabs.add(this.moreButton).removeAttr('style');
+          appTriggerSize = (hasAppTrigger ? appTrigger.outerWidth() : 0);
 
         // Remove overflowed tabs
-        sizeableTabs.each(function() {
+        sizeableTabs.removeAttr('style').each(function() {
           var t = $(this);
 
           if (self.isTabOverflowed(t)) {
@@ -1794,15 +1848,11 @@
           return;
         }
 
-        if (self.isTabOverflowed(addButton)) {
-          addButtonSize = 0;
-        }
-
         // Math explanation:
         // Width of tab container - possible applcation menu trigger
         // Divided by number of visible tabs (doesn't include app menu trigger which shouldn't change size)
         // Minus one (for the left-side border of each tab)
-        visibleTabSize = ((tabContainerW - (appTriggerSize + addButtonSize)) / sizeableTabs.length - 1);
+        visibleTabSize = ((tabContainerW - appTriggerSize) / sizeableTabs.length - 1);
 
         if (visibleTabSize < defaultTabSize) {
           visibleTabSize = defaultTabSize;
@@ -1847,24 +1897,11 @@
         anchor.focus();
       },
 
-      setMoreActive: function () {
-        var self = this,
-          selectedTab = self.tablist.find('.is-selected');
-
-        if (self.isTabOverflowed(selectedTab)) {
-          self.moreButton.addClass('is-selected');
-        } else {
-          self.moreButton.removeClass('is-selected');
-          self.checkFocusedElements();
-        }
-      },
-
       buildPopupMenu: function(startingHref) {
         var self = this;
         if (self.popupmenu) {
-          $('#tab-container-popupmenu').off('focus.popupmenu');
-          self.popupmenu.close();
-          $('#tab-container-popupmenu').remove();
+          self.popupmenu.destroy();
+          $('#tab-container-popupmenu').off('focus.popupmenu').remove();
           $(document).off('keydown.popupmenu');
         }
 
@@ -1939,7 +1976,6 @@
         function closeMenu() {
           $(this).off('close.tabs selected.tabs');
           self.moreButton.removeClass('popup-is-open');
-          self.setMoreActive();
           self.positionFocusState(undefined);
           self.focusBar();
         }
@@ -2044,6 +2080,11 @@
               e.preventDefault();
               $(document).off(e);
               self.popupmenu.close();
+
+              if (self.settings.addTabButton) {
+                self.addTabButton.focus();
+                return;
+              }
               self.findFirstVisibleTab();
             }
           }
@@ -2118,14 +2159,18 @@
           return;
         }
 
+        if (!(li instanceof $) || !li.length) {
+          return;
+        }
+
         var self = this,
-          target = li !== undefined ? li :
-            self.moreButton.hasClass('is-selected') ? self.moreButton :
-            self.tablist.children('.is-selected').length > 0 ? self.tablist.children('.is-selected') : undefined,
+          target = li,
           paddingLeft, paddingRight, width;
 
+        this.animatedBar.removeClass('no-transition');
+
         if (!target || target === undefined || !target.length || !self.anchors.length) {
-          self.animatedBar.removeClass('visible').removeClass('no-transition');
+          this.animatedBar.removeClass('visible');
           return;
         }
         paddingLeft = parseInt(target.css('padding-left'), 10) || 0;
@@ -2135,9 +2180,9 @@
         if (target.is('.tab')) {
           paddingLeft += parseInt(target.children('a').css('padding-left'), 10) || 0;
           paddingRight += parseInt(target.children('a').css('padding-right'), 10) || 0;
-          width = target/*.children('a')*/.width() /*+ (paddingLeft*2)*/;
+          width = target.width();
 
-          // Dirty hack
+          // Dirty hack for first/last tab types, and Firefox.
           if (target.is(':first-child, :last-child')) {
             width = width - 1;
           }
@@ -2212,8 +2257,13 @@
           isRTL = Locale.isRTL(),
           left, top;
 
-        if (!this.isModuleTabs() && (target.is('.dismissible.tab > a') || target.is('.has-popupmenu.tab > a'))) {
-          width = width + 22;
+        if (!this.isModuleTabs()) {
+          if (target.is('.dismissible.tab > a')) {
+            width = width + 28;
+          }
+          if (target.is('.has-popupmenu.tab > a')) {
+            width = width + 33;
+          }
         }
 
         left = pos.left - offset.left;
@@ -2229,12 +2279,10 @@
 
         // Module Tabs get a slight modification
         if (this.isModuleTabs()) {
-          width = parseInt(target.parent().outerWidth(true));
-          left = left - parseInt(target.css('margin-left'));
-
-          if (target.parent().is('.add-tab-button')) {
-            left = left - 1;
+          if (!target.is('.add-tab-button, .tab-more')) {
+            width = parseInt(target.parent().outerWidth(true));
           }
+          left = left - parseInt(target.css('margin-left'));
         }
 
         // Vertical Tabs
@@ -2246,7 +2294,8 @@
           var thisHeight = 0;
 
           jqObj.each(function(i, el) {
-            thisHeight += $(el).outerHeight(true) + parseInt($(el).parent().css('padding-top'));
+            var elem = $(el);
+            thisHeight += elem.outerHeight(true) + parseInt(elem.parent().css('padding-top'));
           });
 
           return thisHeight;
@@ -2255,18 +2304,21 @@
         // Vertical Tabs need some manual adjustment when used directly inside a page container.
         // Takes into account all the "information" sections possible in the tab list container.
         if (this.isVerticalTabs()) {
-          var tablistInfo = this.tablist.prevAll('.tab-list-info');
-          width = this.tablist.outerWidth(true);
+          var tablistContainerPadding = parseInt(this.element.children('.tab-list-container').css('padding-top')),
+            tablistInfo = this.tablist.prevAll('.tab-list-info');
 
+          width = this.tablist.outerWidth(true);
           if (parentContainer.is('.page-container')) {
             top = top + (tablistInfo.length ? tablistInfoAdditionalHeight(tablistInfo) : 0);
+          } else if (tablistContainerPadding > 0) {
+            top = top + tablistContainerPadding;
           }
         }
 
         this.focusState.css({
-          left: left,
+          left: isRTL ? left - width : left,
           top: top,
-          right: isRTL ? '' : left + width,
+          right: isRTL ? left : left + width,
           bottom: top + height,
           width: width,
           height: height
