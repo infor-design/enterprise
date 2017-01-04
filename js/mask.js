@@ -194,6 +194,8 @@
             self.checkCompletion();
           }
           if (val && self.initValue !== val) {
+            self.element.val('');
+            self.processStringAgainstMask(val);
             self.element.trigger('change');
           }
 
