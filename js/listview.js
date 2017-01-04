@@ -411,6 +411,7 @@
 
         // Selection View Click/Touch
         if (this.settings.selectable) {
+
           this.element.addClass('is-selectable');
           var trigger = $('.list-detail-back-button').find('.app-header'),
             pattern = $(this.element).closest('.list-detail, .builder');
@@ -453,6 +454,12 @@
         }
 
         if (!this.settings.hoverable || this.settings.hoverable === 'false') {
+          this.element.removeClass('is-selectable');
+          this.element.addClass('disable-hover');
+        }
+
+        if (!this.settings.selectable || this.settings.selectable === 'false') {
+          this.element.removeClass('is-selectable');
           this.element.addClass('disable-hover');
         }
 

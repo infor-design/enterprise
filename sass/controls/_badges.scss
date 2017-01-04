@@ -83,6 +83,7 @@
     border: 1px solid transparent;
     cursor: default;
     line-height: 21px;
+    padding: 0 20px 0 10px;
 
     &:focus {
       border-color: $primary-color;
@@ -93,7 +94,9 @@
 
     .dismissable-btn {
       cursor: pointer;
-      padding-left: 4px;
+      margin-top: 5px;
+      padding-left: 5px;
+      position: absolute;
 
       .icon {
         fill: $badge-neutral-icon-color;
@@ -143,7 +146,9 @@
     }
 
     [class*='ie'] &::before {
+      // scss-lint:disable ImportantRule
       left: 3px !important;
+      // scss-lint:enable ImportantRule
       top: 2.5px;
     }
 

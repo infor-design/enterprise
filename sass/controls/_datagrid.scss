@@ -135,8 +135,16 @@ $datagrid-short-row-height: 23px;
         }
 
         .hyperlink {
-          margin-top: 8px;
+          margin-top: 5px;
           vertical-align: top;
+        }
+
+        .datagrid-drilldown {
+          height: 25px;
+          min-height: 25px;
+          min-width: 25px;
+          top: -2px;
+          width: 25px;
         }
 
         //Editing
@@ -230,7 +238,11 @@ $datagrid-short-row-height: 23px;
         }
 
         .datagrid-drilldown {
-          top: -4px;
+          height: 22px;
+          min-height: inherit;
+          min-width: 22px;
+          top: -2px;
+          width: 22px;
         }
 
         .datagrid-alert-icon {
@@ -927,6 +939,14 @@ $datagrid-short-row-height: 23px;
 
       &:focus .datagrid-cell-wrapper {
         border-color: $alert-red;
+      }
+
+      &.l-right-text {
+        .datagrid-cell-wrapper .icon-error {
+          left: -100%;
+          margin-left: 0;
+          margin-right: -15px;
+        }
       }
     }
 
