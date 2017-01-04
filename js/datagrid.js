@@ -33,13 +33,7 @@ window.Formatters = {
       }
 
       if (value2) {
-
-        if (!col.sourceFormat) {
-          formatted = Locale.formatDate(value2, (typeof col.dateFormat === 'string' ? {pattern: col.dateFormat}: col.dateFormat));
-        } else {
-          formatted = Locale.formatDate(value2, (typeof col.dateShowFormat === 'string' ? {pattern: col.dateShowFormat}: col.dateShowFormat));
-        }
-
+        formatted = Locale.formatDate(value2, (typeof col.dateFormat === 'string' ? {pattern: col.dateFormat}: col.dateFormat));
       } else {
         formatted = Locale.formatDate(value, (typeof col.dateFormat === 'string' ? {pattern: col.dateFormat}: col.dateFormat));
 
