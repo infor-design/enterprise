@@ -2,7 +2,22 @@ module.exports = function(grunt) {
   grunt.file.defaultEncoding = 'utf-8';
   grunt.file.preserveBOM = true;
 
-  const dependencyBuilder = require('./build/dependencybuilder.js'),
+  const sass = require('./build/configs/sass.js'),
+    watch = require('./build/configs/watch.js'),
+    amdHeader = require('./build/configs/amdHeader.js'),
+    copy = require('./build/configs/copy.js'),
+    cssmin = require('./build/configs/cssmin.js'),
+    usebanner = require('./build/configs/usebanner.js'),
+    documentation = require('./build/configs/documentation.js'),
+    compress = require('./build/configs/compress.js'),
+    meta = require('./build/configs/meta.js'),
+    revision = require('./build/configs/revision.js'),
+    md2html = require('./build/configs/md2html.js'),
+    stripCode = require('./build/configs/strip_code.js'),
+    clean = require('./build/configs/clean.js'),
+    jshint = require('./build/configs/jshint.js'),
+    uglify = require('./build/configs/uglify.js'),
+    dependencyBuilder = require('./build/dependencybuilder.js'),
     strBanner = require('./build/strbanner.js'),
     controls = require('./build/controls.js');
 
@@ -16,45 +31,11 @@ module.exports = function(grunt) {
     selectedControls = controls;
   }
 
-  grunt.initConfig({
+  let config = {
 
     pkg: grunt.file.readJSON('package.json'),
 
     banner: bannerText,
-    amdHeader: '(function(factory) {\n\n  if (typeof define === \'function\' && define.amd) {\n    // AMD. Register as an anonymous module\n    define([\'jquery\'], factory);\n  } else if (typeof exports === \'object\') {\n    // Node/CommonJS\n    module.exports = factory(require(\'jquery\'));\n} else {\n    // Browser globals \n    factory(jQuery);\n  }\n\n}(function($) {\n\n',
-
-    sass: {
-      options: {
-        sourceMap: true
-      },
-      dist: {
-        files: {
-          'dist/css/demo.css'                : 'sass/demo.scss',
-          'dist/css/light-theme.css'         : 'sass/light-theme.scss',
-          'dist/css/dark-theme.css'          : 'sass/dark-theme.scss',
-          'dist/css/high-contrast-theme.css' : 'sass/high-contrast-theme.scss',
-          'dist/css/css-only.css'            : 'sass/css-only.scss',
-          'dist/css/site.css'                : 'sass/site.scss'
-        }
-      }
-    },
-
-    watch: {
-      source: {
-        files: ['sass/**/*.scss', 'svg/*.svg', 'views/docs/**.html', 'views/**.html', 'views/includes/**.html', 'views/controls/**.html', 'js/*/*.js', 'js/*.js', 'js/cultures/*.*'],
-        tasks: ['sohoxi-watch'],
-        options: {
-          livereload: true
-        }
-      }
-    },
-
-    jshint: {
-      files: ['gruntfile.js', 'app.js', 'js/*.js', 'build/**/*.js'],
-      options: {
-        jshintrc: '.jshintrc'
-      }
-    },
 
     concat: {
       options: {
@@ -67,7 +48,6 @@ module.exports = function(grunt) {
           'dist/js/<%= pkg.shortName %>.js': selectedControls
         }
       },
-
       missingFiles: {
         src: selectedControls,
         dest: 'temp/missing-files.js',
@@ -80,167 +60,28 @@ module.exports = function(grunt) {
         },
         nonull: true
       }
-
-    },
-
-    uglify: {
-      dist: {
-        options: {
-          banner: '<%= banner %>',
-          sourceMap: true,
-          sourceMapName: 'dist/js/sohoxi.map',
-          separator: ';'
-        },
-        files: {
-          'dist/js/sohoxi.min.js': ['dist/js/sohoxi.js']
-        }
-      }
-    },
-
-    copy: {
-      main: {
-        files: [
-          {expand: true, flatten: true, src: ['dist/js/sohoxi.js'], dest: 'public/js/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['dist/js/sohoxi.min.js'], dest: 'public/js/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['js/sohoxi-angular.js'], dest: 'public/js/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['js/sohoxi-angular.js'], dest: 'dist/js/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['js/sohoxi-knockout.js'], dest: 'public/js/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['js/sohoxi-knockout.js'], dest: 'dist/js/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['js/*.js'], dest: 'dist/js/all/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['dist/css/*'], dest: 'public/stylesheets/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['js/demo/*.js'], dest: 'public/js/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['js/vendor/jquery-3*.js'], dest: 'public/js/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['js/vendor/jquery-3*.min.js'], dest: 'public/js/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['js/vendor/jquery-3*.map'], dest: 'public/js/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['js/vendor/jquery-3*.js'], dest: 'dist/js/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['js/vendor/jquery-3*.min.js'], dest: 'dist/js/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['js/vendor/jquery-3*.map'], dest: 'dist/js/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['js/vendor/d3.*'], dest: 'public/js/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['js/vendor/jquery-2*.js'], dest: 'dist/js/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['js/vendor/jquery-2*.min.js'], dest: 'dist/js/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['js/vendor/jquery-2*.map'], dest: 'dist/js/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['js/vendor/d3.*'], dest: 'dist/js/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['js/cultures/*.*'], dest: 'public/js/cultures/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['js/cultures/*.*'], dest: 'dist/js/cultures/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['views/controls/svg*.html'], dest: 'dist/svg/', filter: 'isFile'},
-          {expand: true, flatten: true, src: ['views/controls/svg*.html'], dest: 'public/svg/', filter: 'isFile'}
-        ]
-      },
-      amd: {
-        files: [
-          {expand: true, flatten: true, src: ['js/*.*'], dest: 'temp/amd/', filter: 'isFile'}
-        ]
-      }
-    },
-
-    // Minify css
-    cssmin: {
-      options: {
-        roundingPrecision: -1
-      },
-      dist: {
-        files: {
-          'dist/css/high-contrast-theme.min.css': ['dist/css/high-contrast-theme.css'],
-          'dist/css/dark-theme.min.css': ['dist/css/dark-theme.css'],
-          'dist/css/light-theme.min.css': ['dist/css/light-theme.css'],
-          'dist/css/css-only.min.css': ['dist/css/css-only.css'],
-        }
-      }
-    },
-
-    usebanner: {
-      dist: {
-        options: {
-          position: 'top',
-          banner: '<%= banner %>',
-          linebreak: true
-        },
-
-        files: {
-          src: [
-            'dist/css/508-theme.css',
-            'dist/css/508-theme.min.css',
-            'dist/css/dark-theme.css',
-            'dist/css/dark-theme.min.css',
-            'dist/css/light-theme.css',
-            'dist/css/light-theme.min.css',
-            'dist/css/css-only.css',
-            'dist/css/css-only.min.css',
-            'dist/js/all/*.js'
-          ]
-        }
-      }
-    },
-
-    // Git Revision
-    revision: {
-      options: {
-        property: 'meta.revision',
-        ref: 'HEAD',
-        short: false
-      }
-    },
-
-    meta: {
-      revision: undefined
-    },
-
-    strip_code: { // jshint ignore:line
-      options: {
-        start_comment: 'start-amd-strip-block', // jshint ignore:line
-        end_comment: 'end-amd-strip-block' // jshint ignore:line
-      },
-      src: {
-        src: 'temp/amd/*.js'
-      }
-    },
-
-    clean: {
-      amd: ['temp'],
-      dist: ['dist/js/*', 'dist/svg/*', 'dist/css/*'],
-      public: ['public/js/*','public/svg/*','public/stylesheets/*']
-    },
-
-    compress: {
-      main: {
-        options: {
-          archive: 'dist/all.zip'
-        },
-
-        files: [
-          {src: ['dist/**'], dest: 'dist/'}
-        ]
-      }
-    },
-
-    md2html: {
-      changelog: {
-        options: {
-          // Task-specific options go here.
-        },
-        files: [{
-          src: ['CHANGELOG.md'],
-          dest: 'views/docs/changelog-contents.html'
-        }]
-      }
-    },
-
-    documentation: {
-      default: {
-        files: [{
-          src: ['js/*.js']
-        }],
-        options: {
-          name: 'Soho XI Controls Docs',
-          destination: 'docs',
-          version: `v<%= pkg.version %>`,
-          output: 'html',
-          github: 'true'
-        }
-      },
     }
 
-  });
+  };
+
+  grunt.initConfig(Object.assign({},
+    config,
+    watch,
+    clean,
+    jshint,
+    sass,
+    meta,
+    amdHeader,
+    copy,
+    cssmin,
+    documentation,
+    revision,
+    stripCode,
+    uglify,
+    usebanner,
+    compress,
+    md2html
+  ));
 
   // load all grunt tasks from 'node_modules' matching the `grunt-*` pattern
   require('load-grunt-tasks')(grunt);
