@@ -1145,6 +1145,7 @@
           clone, interval, doDrag;
 
         self.targetArrow = self.element.prev('.tree-drag-target-arrow');
+        self.linkSelector = 'a:not(.is-dragging-clone, .is-disabled)';
 
         if (!self.targetArrow.length) {
           $('<div class="tree-drag-target-arrow"></div>').insertBefore(self.element);
@@ -1156,13 +1157,14 @@
           if (!self.loading) {
             clearInterval(interval);
 
-            $('a:not(.is-dragging-clone, .is-disabled)', self.element).each(function(i) {
+            $(self.linkSelector, self.element).each(function() {
               var a = $(this);
 
               // Don't drag with folder icon, save for toggle nodes
               a.on('mousedown.tree', function(e) {
                 e.preventDefault();
-                doDrag = $(e.target).is('.icon') ? !a.parent().is('.folder') : true;
+                doDrag = (e.which === 3) ? false : // 3 - Right mouse button clicked
+                  ($(e.target).is('.icon') ? !a.parent().is('.folder') : true);
               })
 
               // Invoke drag
@@ -1175,6 +1177,10 @@
               // Drag start =======================================
               .on('dragstart.tree', function (e, pos, thisClone) {
                 if (!thisClone || !doDrag) {
+                  a.removeClass('is-dragging');
+                  if (thisClone) {
+                    thisClone.remove();
+                  }
                   return;
                 }
                 clone = thisClone;
@@ -1183,7 +1189,9 @@
 
                 self.sortable = {
                   startNode: a,
-                  startIndex: i,
+                  // Do not use index from each loop, get updated index on drag start
+                  startIndex: $(self.linkSelector, self.element).index(a),
+                  startUl: a.closest('ul'),
                   startWidth: a.outerWidth()
                 };
 
@@ -1238,7 +1246,12 @@
                 }
                 // Down
                 else if (self.sortable.overDirection === 'down') {
-                  start.insertAfter(end);
+                  if (end.is('.is-open')) {
+                    $('ul:first', end).prepend(start);
+                  }
+                  else {
+                    start.insertAfter(end);
+                  }
                 }
 
                 // Sync dataset and ui
@@ -1261,13 +1274,13 @@
         var self = this,
           treeRec = self.element[0].getBoundingClientRect(),
           extra = 20,
-          exMargin, isParentsStartNode, isFolder, isBeforeStart, isAfterSttart,
-          li, a, links, rec, i, l, left, top, direction, doAction,
+          exMargin, isParentsStartNode, isBeforeStart, isAfterSttart,
+          li, a, ul, links, rec, i, l, left, top, direction, doAction,
 
           // Icons used while moving
           icons = {
             disabled: 'icon-cancel',
-            over: 'icon-add',
+            over: 'icon-open-folder',
             list: 'icon-minus'
           },
 
@@ -1287,7 +1300,7 @@
             pos.left > (treeRec.left - extra - self.sortable.startWidth) &&
             pos.left < (treeRec.left + treeRec.height + extra)) {
 
-          links = $('a:not(.is-dragging-clone, .is-disabled)', self.element);
+          links = $(self.linkSelector, self.element);
           extra = 2;
 
           for (i = 0, l = links.length; i < l; i++) {
@@ -1311,10 +1324,10 @@
 
               li = a.parent();
               left = rec.left;
-              isFolder = li.is('.folder');
+              ul = a.closest('ul');
               exMargin = parseInt(li.css('margin-top'), 10) > 0 ? 2 : 0;
-              isBeforeStart = ((i-1) === self.sortable.startIndex);
-              isAfterSttart = ((i+1) === self.sortable.startIndex);
+              isBeforeStart = ((i-1) === self.sortable.startIndex && ul.is(self.sortable.startUl));
+              isAfterSttart = ((i+1) === self.sortable.startIndex && ul.is(self.sortable.startUl));
 
               // Apply actions
               doAction = function() {
@@ -1353,7 +1366,7 @@
                   if (!isBeforeStart && pos.top < rec.top) {
                     direction = 'up';
                   }
-                  else if (!isAfterSttart && !isFolder && pos.top > rec.top + (extra * 2)) {
+                  else if (!isAfterSttart && pos.top > rec.top + (extra * 2)) {
                     direction = 'down';
                   }
                   else {
