@@ -181,6 +181,24 @@
           self.evaluateCurrentContents(undefined, e);
         });
 
+        function reprocess() {
+          var val = self.element.val();
+
+          if (self.settings.mustComplete) {
+            self.checkCompletion();
+          }
+          if (val && self.initValue !== val) {
+            self.element.val('');
+            self.processStringAgainstMask(val);
+            self.element.trigger('change');
+          }
+        }
+
+        // custom event that can be triggered for forcing a remasking of the input field
+        self.element.on('remask.mask', function() {
+          reprocess();
+        });
+
         // remove the value when blurred
         self.element.on('blur.mask', function(e) {
           if (self.element.prop('readonly')) {
@@ -188,15 +206,7 @@
             return false;
           }
 
-          var val = self.element.val();
-
-          if (self.settings.mustComplete) {
-            self.checkCompletion();
-          }
-          if (val && self.initValue !== val) {
-            self.element.trigger('change');
-          }
-
+          reprocess();
           self.initValue = null;
         });
 
