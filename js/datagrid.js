@@ -26,6 +26,10 @@ window.Formatters = {
 
     if (typeof value === 'string' && value) {
 
+      if (value === '00000000') { //Means no date in some applications
+        return '&nbsp;';
+      }
+
       if (!col.sourceFormat) {
         value2 = Locale.parseDate(value, (typeof col.dateFormat === 'string' ? {pattern: col.dateFormat}: col.dateFormat));
       } else {
