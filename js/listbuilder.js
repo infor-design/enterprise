@@ -300,9 +300,14 @@
 
             node.addClass('is-editing');
             container.html(editInput);
-            self.moveCursorToEnd(editInput.focus()[0]);
+            editInput.focus().select();
+            // self.moveCursorToEnd(editInput.focus()[0]);
 
-            editInput.on('blur.listbuilder', function() {
+            editInput
+            .on('click.listbuilder', function() {
+              return false;
+            })
+            .on('blur.listbuilder', function() {
               self.commitEdit(node, isNewItem);
             })
             .on('keypress.listbuilder', function (e) {
@@ -330,7 +335,7 @@
           data.data.value = editInput.val();
         }
         data.data.text = editInput.val();
-        editInput.off('blur.listbuilder keypress.listbuilder');
+        editInput.off('click.listbuilder blur.listbuilder keypress.listbuilder');
         container.html(s.templateItemContent.replace(/{{text}}/g, editInput.val()));
         node.removeClass('is-editing');
         self.element.triggerHandler('exiteditmode', [data]);
