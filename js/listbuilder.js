@@ -308,7 +308,7 @@
               return false;
             })
             .on('blur.listbuilder', function() {
-              // self.commitEdit(node, isNewItem);
+              self.commitEdit(node, isNewItem);
             })
             .on('keypress.listbuilder', function (e) {
               var key = e.keyCode || e.charCode || 0;
