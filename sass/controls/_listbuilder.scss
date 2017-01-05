@@ -135,6 +135,10 @@
           border: 0;
           color: $listbuilder-text-color-selected;
           font-weight: bold;
+
+          &::selection {
+            background: $listbuilder-input-selection-bg-color;
+          }
         }
       }
     }
