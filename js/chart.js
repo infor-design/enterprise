@@ -2857,7 +2857,7 @@ window.Chart = function(container) {
     var dataset = chartData,
       noMarkers = false,
       parent = $(container).parent(),
-      margin = {top: 30, right: 55, bottom: 35, left: 65},
+      margin = {top: 30, right: 55, bottom: 35, left: 55},
       width = parent.width() - margin.left - margin.right,
       height = parent.height() - margin.top - margin.bottom - 30; //legend
 
@@ -2879,7 +2879,7 @@ window.Chart = function(container) {
 
     for (var i = 0; i < dataset[0].data.length; i++) {
       var duration = 600,
-          barHeight = 25,
+          barHeight = 20,
           rowData = dataset[0].data[i],
           ranges = rowData.ranges.slice().sort(d3.descending),
           markers = (rowData.markers ? rowData.markers.slice().sort(d3.descending) : []),
@@ -2896,14 +2896,14 @@ window.Chart = function(container) {
 
       var g = svg.append('g')
               .attr('class', 'bullet')
-              .attr('transform', 'translate(0, ' + (i * (barHeight*3)) + ')');
+              .attr('transform', 'translate(0, ' + (i * (barHeight * 3.5)) + ')');
 
       //Add Title and Subtitle
       var title = g.append('g');
 
       var text = title.append('text')
           .attr('class', 'title')
-          .attr('dy', '-6px')
+          .attr('dy', '-10px')
           .text(function() { return rowData.title; });
 
       text.append('tspan')
@@ -3011,7 +3011,7 @@ window.Chart = function(container) {
               return chartData[0].lineColors[i];
             }
           })
-          .attr('y', 11);
+          .attr('y', 8.5);
 
       measure.transition()
           .duration(duration)
@@ -3045,17 +3045,17 @@ window.Chart = function(container) {
 
       if (Math.abs(markers[0] - measures[0]) !== 0) {
         marker.enter().append('text')
-            .attr('class', 'inverse')
+            .attr('class', 'inverse dir-ltr')
             .attr('text-anchor', 'middle')
             .attr('y', barHeight /2 + 4)
-            .attr('dx', '-50px')
+            .attr('dx', charts.isRTL ? '50px' : '-50px')
             .attr('x', 0)
             .text(dif);
       }
 
       marker.transition()
           .duration(duration)
-          .attr('x', width);  //x1
+          .attr('x', charts.isRTL ? (width * -1) : width);  //x1
 
       // Update the tick groups.
       var tick = g.selectAll('g.tick')
@@ -3069,12 +3069,15 @@ window.Chart = function(container) {
 
       tickEnter.append('line')
           .attr('y1', barHeight)
-          .attr('y2', barHeight * 7 / 6);
+          .attr('y2', Math.round((barHeight * 7) / 4.7));
 
       tickEnter.append('text')
           .attr('text-anchor', 'middle')
           .attr('dy', '1.1em')
-          .attr('y', barHeight * 7 / 6)
+          .attr('y', Math.round((barHeight * 7) / 4.7))
+          .attr('class', function(d) {
+            return d < 0 ? 'negative-value' : 'positive-value';
+          })
           .text(function (d) {
             return d;
           });

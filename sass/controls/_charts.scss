@@ -650,6 +650,7 @@ html[dir='rtl'] {
     }
   }
 
+  .chart-container.bullet-chart,
   .chart-container.chart-vertical-bar {
     svg {
       transform: scale(-1, 1);
@@ -657,9 +658,14 @@ html[dir='rtl'] {
       text {
         transform: scale(-1, 1);
 
+        &.dir-ltr,
         &.negative-value {
           direction: ltr;
         }
+      }
+
+      tspan {
+        unicode-bidi: embed;
       }
 
       .axis.y {
