@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="twelve columns">
+    <h2 class="fieldset-title">Date Picker - Color Coded Legend</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="date-field" class="label">Date Field with Legend</label>
+      <input id="date-field" data-init="false" class="datepicker" name="date-field" type="text">
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('#date-field').datepicker({
+    showLegend: true,
+    dateFormat: 'yyyy-MM-dd',
+    legend: [
+      {name: 'Public Holiday', color: '#76B051', dates: ['1/1/2017', '1/12/2017']},
+      {name: 'Weekends', color: '#EFA836', dayOfWeek: [0,6]},
+      {name: 'Other', color: '#B94E4E', dates: ['1/18/2017', '1/19/2017']},
+      {name: 'Half Days', color: '#9279A6', dates: ['1/21/2017', '1/22/2017']},
+      {name: 'Full Days', color: '#368AC0', dates: ['1/24/2017', '1/25/2017']}
+    ]
+  });
+</script>

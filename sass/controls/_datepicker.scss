@@ -33,11 +33,11 @@
   + .tooltip-description + .icon {
     cursor: pointer;
     fill: $trigger-icon-fill-color;
-    height: 17px;
-    margin-left: -28px;
-    margin-top: 7px;
+    height: 16px;
+    margin-left: -26px;
+    margin-top: 8px;
     position: absolute;
-    width: 17px;
+    width: 16px;
     z-index: 1;
 
     &:hover {
@@ -279,6 +279,31 @@
     @include font-size(18);
     color: $datepicker-month-year-color;
     text-transform: capitalize;
+  }
+}
+
+//Calendar legend
+.calendar-legend {
+  margin: 0 auto;
+  max-width: 300px;
+  padding: 10px 5px 0;
+
+  .calendar-legend-item {
+    display: inline-block;
+  }
+
+  .calendar-legend-text {
+    @include font-size(11);
+    color: $chart-font-color;
+    padding: 0 17px 0 8px;
+    position: relative;
+    top: -2px;
+  }
+
+  .calendar-legend-swatch {
+    display: inline-block;
+    height: 12px;
+    width: 12px;
   }
 }
 
