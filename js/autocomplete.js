@@ -245,134 +245,178 @@
         popup.close();
       },
 
+      listIsOpen: function() {
+        return this.list && this.list.is(':visible');
+      },
+
       handleEvents: function () {
         //similar code as dropdown but close enough to be dry
-        var buffer = '',
-          timer, selected, items,
-          self = this;
+        var self = this;
+
+        this.element.on('updated.autocomplete', function() {
+          self.updated();
+        }).on('keydown.autocomplete', function(e) {
+          self.handleAutocompleteKeydown(e);
+        })
+        .on('input.autocomplete', function (e) {
+          self.handleAutocompleteInput(e);
+        }).on('focus.autocomplete', function () {
+          self.handleAutocompleteFocus();
+        });
+      },
+
+      // Handles the Autocomplete's "keydown" event
+      handleAutocompleteKeydown: function(e) {
+        var self = this,
+          selected;
 
         function getSelected() {
           return self.list.find('.is-selected');
         }
 
-        this.element.on('updated.autocomplete', function() {
-          self.updated();
-        }).on('keydown.autocomplete', function(e) {
-          if (self.isLoading()) {
+        if (self.isLoading()) {
+          e.preventDefault();
+          return false;
+        }
+
+        var excludes = 'li:not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)';
+
+        //Down - select next
+        if (e.keyCode === 40 && this.listIsOpen()) {
+          selected = getSelected();
+          if (selected.length) {
+            self.noSelect = true;
+            selected.removeClass('is-selected is-focused');
+            selected.next(excludes).addClass('is-selected').find('a').focus();
             e.preventDefault();
-            return false;
-          }
-
-          var excludes = 'li:not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)',
-            isOpen = self.list && self.list.is(':visible');
-
-          //Down - select next
-          if (e.keyCode === 40 && isOpen) {
-            selected = getSelected();
-            if (selected.length) {
-              self.noSelect = true;
-              selected.removeClass('is-selected is-focused');
-              selected.next(excludes).addClass('is-selected').find('a').focus();
-              e.preventDefault();
-              e.stopPropagation();
-            }
-          }
-
-          //Up select prev
-          if (e.keyCode === 38 && isOpen) {
-            selected = getSelected();
-            if (selected.length) {
-              self.noSelect = true;
-              selected.removeClass('is-selected is-focused');
-              selected.prev(excludes).addClass('is-selected').find('a').focus();
-              e.preventDefault();
-              e.stopPropagation();
-            }
-          }
-
-          if ((e.keyCode === 9 || e.keyCode === 13) && isOpen) {
-            selected = getSelected();
             e.stopPropagation();
+          }
+        }
+
+        //Up select prev
+        if (e.keyCode === 38 && this.listIsOpen()) {
+          selected = getSelected();
+          if (selected.length) {
+            self.noSelect = true;
+            selected.removeClass('is-selected is-focused');
+            selected.prev(excludes).addClass('is-selected').find('a').focus();
             e.preventDefault();
-            self.select(selected, items);
+            e.stopPropagation();
           }
+        }
 
-          if (e.keyCode === 8 && isOpen) {
-            self.element.trigger('input');
+        if ((e.keyCode === 9 || e.keyCode === 13) && this.listIsOpen()) {
+          selected = getSelected();
+          e.stopPropagation();
+          e.preventDefault();
+          self.select(selected, this.currentDataSet);
+        }
+
+        if (e.keyCode === 8 && this.listIsOpen()) {
+          self.element.trigger('input');
+        }
+      },
+
+      // Handles the Autocomplete's "input" event
+      handleAutocompleteInput: function(e) {
+        var self = this;
+
+        if (self.isLoading()) {
+          e.preventDefault();
+          return false;
+        }
+
+        // Makes a new AJAX call every time a key is pressed.
+        var waitForSource = this.getDataFromSource();
+        waitForSource.done(function doneHandler(term, response) {
+          self.currentDataSet = response;
+          self.openList(term, response);
+        });
+      },
+
+      getDataFromSource: function() {
+        var self = this;
+
+        // Don't attempt to load if we're already loading.
+        if (self.isLoading()) {
+          return false;
+        }
+
+        var field = this.element,
+          dfd = $.Deferred(),
+          buffer;
+
+        clearTimeout(this.loadingTimeout);
+
+        function done(searchTerm, response, deferredStatus) {
+          self.element.triggerHandler('complete'); // For Busy Indicator
+          self.element.trigger('requestend', [searchTerm, response]);
+
+          if (deferredStatus === false) {
+            return dfd.reject(searchTerm);
           }
+          return dfd.resolve(searchTerm, response);
+        }
 
-        })
-        .on('input.autocomplete', function (e) {
-
+        this.loadingTimeout = setTimeout(function () {
           if (self.isLoading()) {
-            e.preventDefault();
-            return false;
-          }
-
-          var field = $(this);
-          clearTimeout(timer);
-
-          function done(searchTerm, response) {
-            items = response;
-            self.openList(buffer, items);
-
-            self.element.triggerHandler('complete'); // For Busy Indicator
-            self.element.trigger('requestend', [searchTerm, response]);
-          }
-
-          timer = setTimeout(function () {
-            if (self.isLoading()) {
-              return;
-            }
-
-            buffer = field.val();
-            if (buffer === '') {
-              if (self.element.data('popupmenu')) {
-                self.element.data('popupmenu').close();
-              }
-              return;
-            }
-            buffer = buffer;
-
-            var sourceType = typeof self.settings.source;
-            self.element.triggerHandler('start'); // For Busy Indicator
-            self.element.trigger('requeststart', [buffer]);
-
-            if (sourceType === 'function') {
-              // Call the 'source' setting as a function with the done callback.
-              self.settings.source(buffer, done);
-            } else if (sourceType === 'object') {
-              // Use the 'source' setting as pre-existing data.
-              // Sanitize accordingly.
-              var sourceData = $.isArray(self.settings.source) ? self.settings.source : [self.settings.source];
-              done(buffer, sourceData);
-            } else if (!self.settings.source) {
-              return;
-            } else {
-              // Attempt to resolve source as a URL string.  Do an AJAX get with the URL
-              var sourceURL = self.settings.source.toString(),
-                request = $.getJSON(sourceURL + buffer);
-
-              request.done(function(data) {
-                done(buffer, data);
-              }).fail(function() {
-                done(buffer, []);
-              });
-            }
-
-          }, self.settings.delay);
-
-        }).on('focus.autocomplete', function () {
-          if (self.noSelect) {
-            self.noSelect = false;
             return;
           }
 
-          //select all
-          setTimeout(function () {
-            self.element.select();
-          }, 10);
-        });
+          buffer = field.val();
+          if (buffer === '') {
+            if (self.element.data('popupmenu')) {
+              self.element.data('popupmenu').close();
+            }
+            return;
+          }
+          buffer = buffer;
+
+          var sourceType = typeof self.settings.source;
+          self.element.triggerHandler('start'); // For Busy Indicator
+          self.element.trigger('requeststart', [buffer]);
+
+          if (sourceType === 'function') {
+            // Call the 'source' setting as a function with the done callback.
+            self.settings.source(buffer, done);
+          } else if (sourceType === 'object') {
+            // Use the 'source' setting as pre-existing data.
+            // Sanitize accordingly.
+            var sourceData = $.isArray(self.settings.source) ? self.settings.source : [self.settings.source];
+            done(buffer, sourceData, true);
+          } else if (!self.settings.source) {
+            dfd.reject(buffer);
+            return;
+          } else {
+
+            // Attempt to resolve source as a URL string.  Do an AJAX get with the URL
+            var sourceURL = self.settings.source.toString(),
+              request = $.getJSON(sourceURL + buffer);
+
+            request.done(function(data) {
+              done(buffer, data, true);
+            }).fail(function() {
+              done(buffer, [], false);
+            });
+          }
+
+        }, self.settings.delay);
+
+        return dfd;
+      },
+
+      // Handles the Autocomplete's "focus" event
+      handleAutocompleteFocus: function() {
+        var self = this;
+        if (this.noSelect) {
+          this.noSelect = false;
+          return;
+        }
+
+        //select all
+        setTimeout(function () {
+          self.element.select();
+        }, 10);
       },
 
       highlight: function(anchor, allAnchors) {
