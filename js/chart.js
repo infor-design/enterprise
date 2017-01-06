@@ -3076,21 +3076,40 @@ window.Chart = function(container) {
           .attr('y2', barHeight * 5 / 6);
 
       //Difference
-      var dif = (markers[0] > measures[0] ? '-' : '+') + Math.abs(markers[0] - measures[0]);
+      var diff = (markers[0] > measures[0] ? '-' : '+') + Math.abs(markers[0] - measures[0]),
+        line;
 
       if (Math.abs(markers[0] - measures[0]) !== 0) {
-        marker.enter().append('text')
-            .attr('class', 'inverse dir-ltr')
+        line = marker.enter().append('text')
+            .attr('class', 'inverse')
             .attr('text-anchor', 'middle')
             .attr('y', barHeight /2 + 4)
-            .attr('dx', charts.isRTL ? '50px' : '-50px')
+            .attr('dx', '20px')
             .attr('x', 0)
-            .text(dif);
-      }
+            .text(diff);
 
-      marker.transition()
-          .duration(duration)
-          .attr('x', charts.isRTL ? (width * -1) : width);  //x1
+          marker.transition()
+              .duration(duration)
+              .attr('x', function() {
+                var total = 0;
+
+                g.selectAll('.measure').each(function(d) {
+                  var w = w1(d),
+                    x = x1(d);
+
+                  if (w > total) {
+                    total = w;
+                  }
+
+                  if (x > total) {
+                    total = x;
+                  }
+                });
+
+                return charts.isRTL ? -total : total;
+              })
+              .style('opacity', 1);
+      }
 
       // Update the tick groups.
       var tick = g.selectAll('g.tick')
