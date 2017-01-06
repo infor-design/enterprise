@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="twelve columns">
+    <h1>Toolbar Overflow Events</h1>
+    <span class="label">Interaction</span>
+    <hr>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="toolbar-overflow" class="toolbar" role="toolbar" data-init="false">
+      <div class="title">
+        Mixed Menus And Buttons
+      </div>
+      <div class="buttonset">
+        <button type="button" class="btn" data-action="{'item':'Button 1'}">Button 1</button>
+
+        <button type="button" class="btn-menu" data-action="{'item':'BTN Menu 1'}">BTN Menu 1</button>
+        <ul class="popupmenu is-selectable">
+          <li><a href="#" data-action="{'item':'setting #1'}">Setting #1</a></li>
+          <li><a href="#" data-action="{'item':'setting #2'}">Setting #2</a></li>
+          <li><a href="#" data-action="{'item':'setting #3'}">Setting #3</a></li>
+        </ul>
+
+        <button type="button" class="btn" data-action="{'item':'Button 2'}">Button 2</button>
+        <button type="button" class="btn" data-action="{'item':'Button 3'}">Button 3</button>
+
+        <button type="button" class="btn-menu" data-action="{'item':'BTN Menu 2'}">BTN Menu 2</button>
+        <ul class="popupmenu is-selectable">
+          <li><a href="#" data-action="{'item':'setting #1'}">Setting #1</a></li>
+          <li><a href="#" data-action="{'item':'setting #2'}">Setting #2</a></li>
+          <li><a href="#" data-action="{'item':'setting #3'}">Setting #3</a></li>
+        </ul>
+        <button type="button" class="btn-menu" data-action="{'item':'BTN Menu 3'}">BTN Menu 3</button>
+        <ul class="popupmenu is-selectable">
+          <li><a href="#" data-action="{'item':'setting #1'}">Setting #1</a></li>
+          <li><a href="#" data-action="{'item':'setting #2'}">Setting #2</a></li>
+          <li><a href="#" data-action="{'item':'setting #3'}">Setting #3</a></li>
+        </ul>
+        <button type="button" class="btn-menu" data-action="{'item':'BTN Menu 4'}">BTN Menu 4</button>
+        <ul class="popupmenu is-selectable">
+          <li><a href="#" data-action="{'item':'setting #1'}">Setting #1</a></li>
+          <li><a href="#" data-action="{'item':'setting #2'}">Setting #2</a></li>
+          <li><a href="#" data-action="{'item':'setting #3'}">Setting #3</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('#toolbar-overflow').toolbar({maxVisibleButtons:7});
+
+  $('#toolbar-overflow').on('selected', function(event, item) {
+    var data = $(item).data().action;
+    alert(data);
+  });
+</script>
