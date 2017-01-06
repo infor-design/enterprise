@@ -85,7 +85,11 @@
 </div>
 
 <script>
+$('body').on('initialized', function () {
+
   $('#upd-progressbar-chart').on('click', function () {
     $('#chart-progressbar1').find('.completed').css('width', '100%').find('span:first').html('$95,000<br>Spent');
   });
+
+});
 </script>

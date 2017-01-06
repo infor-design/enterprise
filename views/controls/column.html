@@ -16,6 +16,8 @@
 {{={{{ }}}=}}
 
 <script>
+$('body').on('initialized', function () {
+
     var dataset = [{
             data: [{
                 name: 'Automotive',
@@ -58,4 +60,5 @@
 
     $('#column-bar-example').chart({type: 'column', dataset: dataset});
 
+});
 </script>

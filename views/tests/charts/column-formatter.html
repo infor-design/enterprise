@@ -14,6 +14,8 @@
 </div>
 
 <script>
+$('body').on('initialized', function () {
+
     var dataset = [{
         data: [{
             name: 'Overall score',
@@ -75,4 +77,6 @@
     dataset: dataset,
     formatterString: '.2f'
   });
+
+});
 </script>

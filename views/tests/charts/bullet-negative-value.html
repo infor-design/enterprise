@@ -18,6 +18,8 @@
 </div>
 
 <script type="text/javascript">
+$('body').on('initialized', function () {
+
 	var dataset1 = [{
 		data: [{
 			'title': 'Profit',
@@ -60,4 +62,6 @@
 	$('#bullet-example1').chart({type: 'bullet', dataset: dataset1});
 	$('#bullet-example2').chart({type: 'bullet', dataset: dataset2});
 	$('#bullet-example3').chart({type: 'bullet', dataset: dataset3});
+
+});
 </script>

@@ -88,6 +88,7 @@
   </div>
 
  <script>
+ $('body').on('initialized', function () {
 
   //Facility
    var facilityChartData = [{
@@ -172,5 +173,6 @@
 
    $('#pie-authorizedBy').chart({type: 'pie', dataset: authorizedByChartData, labels: {isTwoline: false, contentsTop: 'name (percentage)'}, format: '0.1%'});
 
+});
  </script>
  </div>
