@@ -12,6 +12,11 @@
     padding: 0;
     width: 255px;
   }
+
+  /* RTL Styles */
+  html[dir='rtl'] .test-sparkline-wrap hr {
+    float: right;
+  }
 </style>
 
 <div class="test-sparkline-wrap">
@@ -60,6 +65,8 @@
 
 
 <script>
+$('body').on('initialized', function () {
+
     var sparkData1 = [{
         data: [25, 20, 55, 28, 41, 30, 50, 27, 24, 27],
         name: 'Inventory'
@@ -88,4 +95,6 @@
   $('#sparkline-chart-example-3').chart({type: 'sparkline-medianrange-n-peak', dataset: sparkData3});
   $('#sparkline-chart-example-4').chart({type: 'sparkline-minmax', dataset: sparkData4});
   $('#sparkline-chart-example-5').chart({type: 'sparkline', dataset: sparkData1});
+
+});
 </script>

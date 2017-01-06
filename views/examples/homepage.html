@@ -27,6 +27,8 @@
           </div>
 
           <script>
+          $('body').on('initialized', function () {
+
             var dataset = [{
                 data: [{
                     name: '2008',
@@ -54,6 +56,8 @@
             }];
 
             $('#bar-stacked-example').chart({type: 'bar', dataset: dataset});
+
+          });
           </script>
 
         <div class="widget">
@@ -143,6 +147,8 @@
           </div>
         </div>
         <script>
+        $('body').on('initialized', function () {
+
           var pieData = [{
               data: [{
                   name: 'Component A',
@@ -166,6 +172,8 @@
             }];
 
           $('#pie-chart-example').chart({type: 'pie', dataset: pieData});
+
+        });
         </script>
       </div>
   </div>

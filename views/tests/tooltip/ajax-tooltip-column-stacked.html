@@ -14,6 +14,8 @@
 </div>
 
 <script>
+$('body').on('initialized', function () {
+
     var dataset = [{
         data: [{
             name: 'JAN',
@@ -137,7 +139,7 @@
 
     // $('#column-bar-stacked-example').chart({type: 'column-stacked', dataset: dataset, tooltip: 'Tooltip by attribute'});
 
-    $('#column-bar-stacked-example').chart({type: 'column-stacked', dataset: dataset, 
+    $('#column-bar-stacked-example').chart({type: 'column-stacked', dataset: dataset,
       tooltip: function(response) {
         //Ajax Call or async op
         setTimeout(function () {
@@ -146,4 +148,5 @@
       }
     });
 
+});
 </script>

@@ -14,6 +14,11 @@
     padding: 0;
     width: 255px;
   }
+
+  /* RTL Styles */
+  html[dir='rtl'] .test-sparkline-wrap hr {
+    float: right;
+  }
 </style>
 
 <div class="test-sparkline-wrap">
@@ -29,6 +34,8 @@
 
 
 <script>
+$('body').on('initialized', function () {
+
     var sparkData = [{
         data: [25, 20, 61, 28, 10, 30, 50, 35, 13, 27],
         name: 'Inventory',
@@ -47,4 +54,6 @@
       }, 400);
     }
   });
+
+});
 </script>

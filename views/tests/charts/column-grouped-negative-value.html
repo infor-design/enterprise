@@ -14,6 +14,8 @@
 </div>
 
 <script>
+$('body').on('initialized', function () {
+
     var dataset = [{
         data: [{
             name: 'JAN',
@@ -80,4 +82,6 @@
       }];
 
   $('#column-grouped-example').chart({type: 'column-grouped', dataset: dataset});
+
+});
 </script>

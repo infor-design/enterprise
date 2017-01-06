@@ -16,6 +16,8 @@
 </div>
 
 <script>
+$('body').on('initialized', function () {
+
  var dataset = [{
       data: [{
           name: 'Category A',
@@ -37,4 +39,6 @@
     }];
 
   $('#bar-example').chart({type: 'bar', dataset: dataset});
+
+});
 </script>

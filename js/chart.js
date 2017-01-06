@@ -1670,6 +1670,7 @@ window.Chart = function(container) {
       dataset = chartData,
       self = this,
       parent = $(container).parent(),
+      isRTL = charts.isRTL,
       isPositiveNegative = (charts.settings.type === 'column-positive-negative'),
       isSingular = (dataset.length === 1),
       margin = {top: 40, right: 40, bottom: (isSingular && chartData[0].name === undefined ? (isStacked ? 20 : 50) : 35), left: 45},
@@ -1807,7 +1808,7 @@ window.Chart = function(container) {
     var yAxis = d3.svg.axis()
         .scale(y)
         .tickSize(-width)
-        .tickPadding(12)
+        .tickPadding(isRTL ? -12 : 12)
         .tickFormat(d3.format(charts.format || 's'))
         .orient('left');
 
@@ -1889,6 +1890,21 @@ window.Chart = function(container) {
     svg.append('g')
         .attr('class', 'y axis')
         .call(yAxis);
+
+    // Adjust extra(x) space for negative values for RTL
+    if (isRTL && yMin < 0) {
+      var yMaxLength = 0,
+        tempLength;
+      svg.selectAll('.axis.y text')
+        .attr('class', function(d) {
+          tempLength = d3.select(this).text().length;
+          yMaxLength = (tempLength > yMaxLength) ? tempLength : yMaxLength;
+          return d < 0 ? 'negative-value' : 'positive-value';
+        })
+        .attr('x', function(d) {
+          return d < 0 ? ((yMaxLength ) * 9) : ((yMaxLength ) * 5);
+        });
+    }
 
     //Make an Array of objects with name + array of all values
     var dataArray = [];
@@ -1977,7 +1993,7 @@ window.Chart = function(container) {
             })
             .attr('text-anchor', 'middle')
             .attr('x', function(d) {
-              return x1(d.name) + (x1.rangeBand())/2;
+              return (x1(d.name) + (x1.rangeBand())/2) * (isRTL ? -1 : 1);
             })
             .attr('y', function(d) {
               return isTargetBars ?
@@ -2349,6 +2365,13 @@ window.Chart = function(container) {
 
     if (charts.labelsColide(svg)) {
       charts.applyAltLabels(svg, dataArray, null, null, true);
+
+      // Adjust extra(x) space with short name for RTL
+      if (isPositiveNegative) {
+        svg.selectAll('.target-bartext, .bartext').attr('x', function() {
+          return +d3.select(this).attr('x') - (isRTL ? -6 : 6);
+        });
+      }
     }
 
     // Set initial selected
@@ -2484,6 +2507,8 @@ window.Chart = function(container) {
 
     $(container).addClass('line-chart' + (isBubble ? ' bubble' : ''));
 
+    var isRTL = charts.isRTL;
+
     var tooltipInterval,
       tooltipDataCache = [],
       tooltipData = charts.options.tooltip;
@@ -2591,7 +2616,7 @@ window.Chart = function(container) {
     var yAxis = d3.svg.axis()
       .scale(yScale)
       .tickSize(-(width + 20))
-      .tickPadding(20)
+      .tickPadding(isRTL ? -18 : 20)
       .orient('left');
 
     //Append The Axis Labels
@@ -2603,14 +2628,24 @@ window.Chart = function(container) {
           bottom: 'translate('+ (width/2) +','+(height+40)+')',
           left: 'translate('+ (-40) +','+(height/2)+')rotate(-90)'
         },
+        placeStyle = {
+          top: 'rotate(0deg) scaleX(-1) translate(-'+(width/2)+'px, '+ (-10) +'px)',
+          right: 'rotate(90deg) scaleX(-1) translate(-'+(height/2)+'px, -'+ (width+28) +'px)',
+          bottom: 'rotate(0deg) scaleX(-1) translate(-'+(width/2)+'px, '+ (height+40) +'px)',
+          left: 'rotate(90deg) scaleX(-1) translate(-'+(height/2)+'px, '+ (55) +'px)'
+        },
         addAxis = function(pos) {
           if (isAxisLabels[pos]) {
             axisLabelsGroup.append('text')
               .attr({
+                'class': 'axis-label-'+ pos,
                 'text-anchor': 'middle',
-                'transform': place[pos]
+                'transform': isRTL ? '' : place[pos]
               })
-              .style('font-size', '1.3em')
+              .style({
+                'font-size': '1.3em',
+                'transform': isRTL ? placeStyle[pos] : ''
+              })
               .text(axisLabels[pos]);
           }
         };

@@ -17,6 +17,8 @@
 
 
 <script>
+$('body').on('initialized', function () {
+
   var pieData = [{
     data: [{
         name: 'Wages',
@@ -133,4 +135,6 @@
       formatterTop: '$,.2f'// Currency
     }
   });
+
+});
 </script>
