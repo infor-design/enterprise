@@ -3041,21 +3041,20 @@ window.Chart = function(container) {
           .attr('y2', barHeight * 5 / 6);
 
       //Difference
-      var dif = (markers[0] > measures[0] ? '-' : '+') + Math.abs(markers[0] - measures[0]);
+      var diff = (markers[0] > measures[0] ? '-' : '+') + Math.abs(markers[0] - measures[0]),
+        line;
 
       if (Math.abs(markers[0] - measures[0]) !== 0) {
-        marker.enter().append('text')
-            .attr('class', 'inverse dir-ltr')
+        line = marker.enter().append('text')
+            .attr('class', 'inverse')
             .attr('text-anchor', 'middle')
             .attr('y', barHeight /2 + 4)
-            .attr('dx', charts.isRTL ? '50px' : '-50px')
-            .attr('x', 0)
-            .text(dif);
+            .attr('dx', charts.isRTL ? '-20px' : '20px')
+            .attr('x', function(d) {
+              return charts.isRTL ? -x1(d) : x1(d);
+            })
+            .text(diff);
       }
-
-      marker.transition()
-          .duration(duration)
-          .attr('x', charts.isRTL ? (width * -1) : width);  //x1
 
       // Update the tick groups.
       var tick = g.selectAll('g.tick')

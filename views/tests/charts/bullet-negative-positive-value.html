@@ -14,19 +14,23 @@
 </div>
 
 
-<script type="text/javascript">
-	var dataset1 = [{
-		data: [{
-			'title': 'Production Progress',
-			'subtitle': '(pcs)',
-			'ranges': [-100, 100],
-			'measures': [35, 50],
-			'markers': [35]
-		}],
-		barColors: ['#80CE4D', '#E84F4F'], //http://107.170.15.202:4000{{basepath}}controls/colors
-		lineColors: ['#80CE4D', '#000'],
-		markerColors: ['#000']
-	}];
+<script>
+  $('body').on('initialized', function () {
 
-	$('#bullet-example1').chart({type: 'bullet', dataset: dataset1});
+    var dataset1 = [{
+      data: [{
+        'title': 'Production Progress',
+        'subtitle': '(pcs)',
+        'ranges': [-100, 100],
+        'measures': [35, 50],
+        'markers': [35]
+      }],
+      barColors: ['#80CE4D', '#E84F4F'], //http://107.170.15.202:4000{{basepath}}controls/colors
+      lineColors: ['#80CE4D', '#000'],
+      markerColors: ['#000']
+    }];
+
+    $('#bullet-example1').chart({type: 'bullet', dataset: dataset1});
+
+  });
 </script>
