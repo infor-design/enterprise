@@ -3050,10 +3050,24 @@ window.Chart = function(container) {
             .attr('text-anchor', 'middle')
             .attr('y', barHeight /2 + 4)
             .attr('dx', charts.isRTL ? '-20px' : '20px')
-            .attr('x', function(d) {
-              return charts.isRTL ? -x1(d) : x1(d);
-            })
+            .attr('x', 0)
             .text(diff);
+
+          marker.transition()
+              .duration(duration)
+              .attr('x', function() {
+                var total = 0;
+
+                g.selectAll('.measure').each(function(d) {
+                  var m = w1(d);
+                  if (m > total) {
+                    total = m;
+                  }
+                });
+
+                return charts.isRTL ? -total : total;
+              })
+              .style('opacity', 1);
       }
 
       // Update the tick groups.
