@@ -2310,7 +2310,6 @@
         }
 
         var targetPos = target[0].getBoundingClientRect(),
-          isVerticalTabs = this.isVerticalTabs(),
           isModuleTabs = this.isModuleTabs(),
           isRTL = Locale.isRTL(),
           parentContainer = this.element.parent();
@@ -2336,7 +2335,7 @@
           delta = targetRectObj.top - containerRectObj.top;
           adjustment.top = adjustment.top - delta;
 
-          if (!isVerticalTabs) {
+          if (!self.isVerticalTabs()) {
             if (isRTL) {
               delta = targetRectObj.right - containerRectObj.right;
               adjustment.right = adjustment.right - delta;
