@@ -59,90 +59,96 @@
 }
 
 // Visibility classes for different form factors
-[class*="visible-sm-"] {
-  display: none;
-}
-
-.visible-sm-block {
-  @include respond-to(phone) { display: block; }
-}
-
-.visible-sm-inline {
-  @include respond-to(phone) { display: inline; }
-}
-
-.visible-sm-inline-block {
-  @include respond-to(phone) { display: inline-block; }
-}
-
 // scss-lint:disable ImportantRule
-.hidden-sm {
-  @include respond-to(phone) { display: none !important; }
+[class*="visible-sm-"] {
+  display: none !important;
 }
-// scss-lint:enable ImportantRule
+
+@include respond-to(phone) {
+  .visible-sm-block {
+    display: block !important;
+  }
+
+  .visible-sm-inline {
+    display: inline !important;
+  }
+
+  .visible-sm-inline-block {
+    display: inline-block !important;
+  }
+
+  .hidden-sm {
+    display: none !important;
+  }
+}
 
 [class*="visible-md-"] {
-  display: none;
+  display: none !important;
 }
 
-.visible-md-block {
-  @include respond-to(tablet) { display: block; }
-}
+@include respond-to(tablet) {
+  .visible-md-block {
+    display: block !important;
+  }
 
-.visible-md-inline {
-  @include respond-to(tablet) { display: inline; }
-}
+  .visible-md-inline {
+    display: inline !important;
+  }
 
-.visible-md-inline-block {
-  @include respond-to(tablet) { display: inline-block; }
-}
+  .visible-md-inline-block {
+    display: inline-block !important;
+  }
 
-.hidden-md {
-  @include respond-to(tablet) { display: none; }
+  .hidden-md {
+    display: none !important;
+  }
 }
 
 [class*="visible-lg-"] {
-  display: none;
+  display: none !important;
 }
 
-.visible-lg-block {
-  @include respond-to(desktop) { display: block; }
-}
+@include respond-to(desktop) {
+  .visible-lg-block {
+    display: block !important;
+  }
 
-.visible-lg-inline {
-  @include respond-to(desktop) { display: inline; }
-}
+  .visible-lg-inline {
+    display: inline !important;
+  }
 
-.visible-lg-inline-block {
-  @include respond-to(desktop) { display: inline-block; }
-}
+  .visible-lg-inline-block {
+    display: inline-block !important;
+  }
 
-.hidden-lg {
-  @include respond-to(desktop) { display: none; }
+  .hidden-lg {
+    display: none !important;
+  }
 }
 
 [class*="visible-xl-"] {
-  display: none;
+  display: none !important;
 }
 
-.visible-xl-block {
-  @include respond-to(extralarge) { display: block; }
-}
+@include respond-to(extralarge) {
+  .visible-xl-block {
+    display: block !important;
+  }
 
-.visible-xl-inline {
-  @include respond-to(extralarge) { display: inline; }
-}
+  .visible-xl-inline {
+    display: inline !important;
+  }
 
-.visible-xl-inline-block {
-  @include respond-to(extralarge) { display: inline-block; }
-}
+  .visible-xl-inline-block {
+    display: inline-block !important;
+  }
 
-.hidden-xl {
-  @include respond-to(extralarge) { display: none; }
+  .hidden-xl {
+    display: none !important;
+  }
 }
 
 // Print Visibility Clases
-// scss-lint:disable ImportantRule
 [class*="visible-print-"] {
   display: none !important;
 }
