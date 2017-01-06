@@ -227,11 +227,13 @@
           }
           self.container = undefined;
           self.loader = undefined;
+          self.label = undefined;
           if (self.overlay) {
             self.overlay.remove();
             self.element.css('position', self.originalPositionProp);
             self.originalPositionProp = undefined;
           }
+          self.overlay = undefined;
           self.element.trigger('aftercomplete.busyindicator');
           self.element.off('complete.busyindicator');
         }, 500);
