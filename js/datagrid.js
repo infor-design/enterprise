@@ -1563,7 +1563,7 @@ $.fn.datagrid = function(options) {
       }
 
       //Attach Keyboard support
-      var popupOpts = {offset: {y: 15}, placementOpts: {strategies: ['flip', 'nudge']}};
+      var popupOpts = {attachToBody: $('html').hasClass('ios'), offset: {y: 15}, placementOpts: {strategies: ['flip', 'nudge']}};
 
       this.headerRow.addClass('is-filterable');
       this.headerRow.find('.btn-filter').popupmenu(popupOpts).on('selected.datagrid', function () {
