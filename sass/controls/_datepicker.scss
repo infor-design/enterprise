@@ -60,7 +60,9 @@
   &.error,
   &.error:hover {
     ~ .icon {
+      // scss-lint:disable ImportantRule
       fill: $alert-red !important;
+      // scss-lint:enable ImportantRule
     }
   }
 
@@ -161,6 +163,14 @@
     //Selected
     &:hover span {
       background-color: $datepicker-hover-bg-color;
+    }
+
+    //Color Coded
+    &.is-colored.is-selected span {
+      height: 34px;
+      line-height: 34px;
+      margin: 2px;
+      width: 34px;
     }
 
     &.is-disabled,

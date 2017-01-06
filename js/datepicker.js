@@ -642,7 +642,7 @@
 
         if (hex) {
           //set color on elem at .3 of provided color as per design
-          elem.css('background-color', this.hexToRgba(hex, 0.3));
+          elem.css('background-color', this.hexToRgba(hex, 0.3)).addClass('is-colored');
 
           var normalColor = self.hexToRgba(hex, 0.3),
             hoverColor = self.hexToRgba(hex, 0.7);
