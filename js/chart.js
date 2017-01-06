@@ -3049,7 +3049,7 @@ window.Chart = function(container) {
             .attr('class', 'inverse')
             .attr('text-anchor', 'middle')
             .attr('y', barHeight /2 + 4)
-            .attr('dx', charts.isRTL ? '-20px' : '20px')
+            .attr('dx', '20px')
             .attr('x', 0)
             .text(diff);
 
@@ -3059,9 +3059,15 @@ window.Chart = function(container) {
                 var total = 0;
 
                 g.selectAll('.measure').each(function(d) {
-                  var m = w1(d);
-                  if (m > total) {
-                    total = m;
+                  var w = w1(d),
+                    x = x1(d);
+
+                  if (w > total) {
+                    total = w;
+                  }
+
+                  if (x > total) {
+                    total = x;
                   }
                 });
 
