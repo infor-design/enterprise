@@ -1,0 +1,13 @@
+// Code Style
+//================================================== //
+
+.inline-code {
+  background-color: $white;
+  border: 1px solid $azure07;
+  border-radius: 3px;
+  display: inline-block;
+
+  font-family: 'Source Code Pro', 'Lucida Console', monospace;
+  padding: 2px 6px;
+  vertical-align: middle;
+}
