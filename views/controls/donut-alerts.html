@@ -15,6 +15,7 @@
 
 
 <script>
+$('body').on('initialized', function () {
 
   // error, alert, alertYellow, good, neutral or hex can be used
   var donutData = [{
@@ -35,5 +36,6 @@
   }];
 
   $('#donut-alert').chart({type: 'donut', dataset: donutData});
-</script>
 
+});
+</script>

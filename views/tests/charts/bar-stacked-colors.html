@@ -13,6 +13,8 @@
 </div>
 
 <script>
+$('body').on('initialized', function () {
+
   var dataset = [{
       data: [{
           name: '2008',
@@ -42,4 +44,6 @@
   }];
 
   $('#bar-stacked-example').chart({type: 'bar', dataset: dataset});
+
+});
 </script>

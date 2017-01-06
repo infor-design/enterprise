@@ -22,6 +22,8 @@
 </div>
 
 <script>
+$('body').on('initialized', function () {
+
   var pieData = [{
       data: [{
           name: 'Component A',
@@ -39,22 +41,21 @@
     }];
 
   $('#pie-chart-example').chart({type: 'pie', dataset: pieData});
-</script>
 
-
-<script>
-    $('#change').click(function () {
-      var pieData = [{
-        data: [{
-            name: 'Component A',
-            value: 7.6
-        }, {
-            name: 'Component B',
-            value: 12.6
-        }],
+  $('#change').click(function () {
+    var pieData = [{
+      data: [{
+        name: 'Component A',
+        value: 7.6
+      }, {
+        name: 'Component B',
+        value: 12.6
+      }],
       centerLabel: 'Donut Chart'
     }];
 
-    $('#pie-chart-example').chart({type: 'donut', dataset: pieData})
+    $('#pie-chart-example').chart({type: 'donut', dataset: pieData});
   });
+
+});
 </script>

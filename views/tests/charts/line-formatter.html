@@ -15,6 +15,8 @@
 </div>
 
 <script>
+$('body').on('initialized', function () {
+
   var dataset = [{
     data: [{
         name: 'JAN',
@@ -85,4 +87,6 @@
     dataset: dataset,
     formatterString: 'f'
   });
+
+});
 </script>

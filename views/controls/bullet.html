@@ -9,6 +9,8 @@
 </div>
 
 <script>
+$('body').on('initialized', function () {
+
   //Example 1
   var dataset1 = [{
       data: [
@@ -37,4 +39,5 @@
 
    $('#bullet-example2').chart({type: 'bullet', dataset: dataset2});
 
+});
 </script>

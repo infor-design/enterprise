@@ -14,6 +14,8 @@
 </div>
 
 <script>
+$('body').on('initialized', function () {
+
     var dataset = [{
         data: [{
             name: 'JAN',
@@ -139,4 +141,6 @@
       .on('selected', function (e, bar, d, i, selectedBars) {
         console.log(e, bar, d, i, selectedBars);
       });
+
+});
 </script>
