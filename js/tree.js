@@ -1188,9 +1188,10 @@
                 clone.find('.tree-checkbox, .tree-badge').remove();
 
                 self.sortable = {
-                  startNode: a,
                   // Do not use index from each loop, get updated index on drag start
                   startIndex: $(self.linkSelector, self.element).index(a),
+                  startNode: a,
+                  startIcon: $('svg.icon-tree', a).getIconName(),
                   startUl: a.closest('ul'),
                   startWidth: a.outerWidth()
                 };
@@ -1211,6 +1212,8 @@
               // Drag end =========================================
               .on('dragend.tree', function (e, pos) {
                 self.targetArrow.hide();
+                $(self.linkSelector, self.element).removeClass('is-over');
+
                 if (!clone || !self.sortable.overDirection) {
                   return;
                 }
@@ -1277,13 +1280,6 @@
           exMargin, isParentsStartNode, isBeforeStart, isAfterSttart,
           li, a, ul, links, rec, i, l, left, top, direction, doAction,
 
-          // Icons used while moving
-          icons = {
-            disabled: 'icon-cancel',
-            over: 'icon-open-folder',
-            list: 'icon-minus'
-          },
-
           // Set as out of range
           outOfRange = function() {
             self.sortable.overNode = null;
@@ -1291,7 +1287,7 @@
             self.sortable.overDirection = null;
 
             self.targetArrow.hide();
-            self.setTreeIcon($('svg.icon-tree', clone), icons.disabled);
+            self.setTreeIcon($('svg.icon-tree', clone), 'icon-cancel');
           };
 
         // Moving inside tree
@@ -1328,6 +1324,7 @@
               exMargin = parseInt(li.css('margin-top'), 10) > 0 ? 2 : 0;
               isBeforeStart = ((i-1) === self.sortable.startIndex && ul.is(self.sortable.startUl));
               isAfterSttart = ((i+1) === self.sortable.startIndex && ul.is(self.sortable.startUl));
+              links.removeClass('is-over');
 
               // Apply actions
               doAction = function() {
@@ -1336,16 +1333,19 @@
                   return;
                 }
 
+                // Reset icon
+                self.setTreeIcon($('svg.icon-tree', clone), self.sortable.startIcon);
+
                 // Over
                 if (direction === 'over') {
                   self.targetArrow.hide();
                   if (!a.is('.is-disabled')) {
-                    self.setTreeIcon($('svg.icon-tree', clone), icons.over);
+                    a.addClass('is-over');
                   }
                 }
                 // Up -or- Down
                 else {
-                  self.setTreeIcon($('svg.icon-tree', clone), icons.list);
+                  links.removeClass('is-over');
                   top = (direction === 'up') ?
                     (rec.top - 1.5 - (li.is('.is-active') ? 3 : 0)) :
                     (rec.bottom + (li.next().is('.is-active') ? -1 : 1.5) + exMargin);
