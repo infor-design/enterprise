@@ -744,13 +744,17 @@
             activate();
             return false;
           case 38:
+            targetLi = previousTab();
             e.preventDefault(); // jshint ignore:line
+            break;
           case 37:
             targetLi = isRTL ? nextTab() : previousTab();
             e.preventDefault();
             break;
           case 40:
+            targetLi = nextTab();
             e.preventDefault(); // jshint ignore:line
+            break;
           case 39:
             targetLi = isRTL ? previousTab() : nextTab();
             e.preventDefault();
@@ -834,20 +838,43 @@
           return false;
         }
 
+        var self = this,
+          isRTL = Locale.isRTL();
+
+        function openMenu() {
+          e.preventDefault();
+          self.buildPopupMenu(self.tablist.find('.is-selected').children('a').attr('href'));
+          self.positionFocusState(self.moreButton, true);
+        }
+
+        function lastTab() {
+          e.preventDefault();
+          self.findLastVisibleTab();
+        }
+
         switch(e.which) {
           case 37: // left
+            if (isRTL) {
+              openMenu();
+              break;
+            }
+            lastTab();
+            break;
           case 38: // up
-            e.preventDefault();
-            this.findLastVisibleTab();
+            lastTab();
             break;
           case 13: // enter
           case 32: // spacebar
             e.preventDefault(); //jshint ignore:line
           case 39: // right
+            if (isRTL) {
+              lastTab();
+              break;
+            }
+            openMenu();
+            break;
           case 40: // down
-            e.preventDefault();
-            this.buildPopupMenu(this.tablist.find('.is-selected').children('a').attr('href'));
-            this.positionFocusState(this.moreButton, true);
+            openMenu();
             break;
         }
       },
@@ -939,30 +966,51 @@
           return false;
         }
 
-        var targetLi,
+        var self = this,
+          isRTL = Locale.isRTL(),
+          targetLi,
           filter = 'li:not(.separator):not(.is-disabled):not(:hidden)';
+
+        function openMenu() {
+          e.preventDefault();
+          targetLi = self.tablist.find(filter).last();
+
+          if (self.isTabOverflowed(targetLi)) {
+            // Open the spillover
+            self.buildPopupMenu(targetLi.children('a').attr('href'));
+            self.positionFocusState(self.moreButton, true);
+            return;
+          }
+        }
+
+        function firstTab() {
+          targetLi = self.tablist.find(filter).first();
+        }
 
         switch(e.which) {
           case 37: // left
-          case 38: // up
-            e.preventDefault();
-            targetLi = this.tablist.find(filter).last();
-
-            if (this.isTabOverflowed(targetLi)) {
-              // Open the spillover
-              this.buildPopupMenu(targetLi.children('a').attr('href'));
-              this.positionFocusState(this.moreButton, true);
-              return;
+            if (isRTL) {
+              firstTab();
+              break;
             }
-
+            openMenu();
+            break;
+          case 38: // up
+            openMenu();
             break;
           case 13: // enter
           case 32: // spacebar
             e.preventDefault(); //jshint ignore:line
             return this.handleAddButton();
           case 39: // right
+            if (isRTL) {
+              openMenu();
+              break;
+            }
+            firstTab();
+            break;
           case 40: // down
-            targetLi = this.tablist.find(filter).first();
+            firstTab();
             break;
           default:
             return;
@@ -1915,7 +1963,9 @@
         }
 
         // Build menu options from hidden tabs
-        var tabs = self.tablist.children('li:not(.separator)');
+        var tabs = self.tablist.children('li:not(.separator)'),
+          isRTL = Locale.isRTL();
+
         $.each(tabs, function(i, item) {
           var popupLi;
 
@@ -2099,25 +2149,29 @@
             return;
           }
 
+          var pseudoKeycode;
+
           switch(key) {
             case 8:
             case 46:
               closeDropdownMenuItem(e);
               break;
             case 37: // left
+              pseudoKeycode = isRTL ? 40 : 38;
               if (currentMenuItem.is('a')) {
                 if (currentMenuItem.parent().is(':not(:first-child)')) {
                   e.preventDefault(); // Prevent popupmenu from closing on left key
                 }
-                $(document).trigger({type: 'keydown.popupmenu', which: 38});
+                $(document).trigger({type: 'keydown.popupmenu', which: pseudoKeycode});
               }
               break;
             case 38: // up
               prevMenuItem();
               break;
             case 39: // right
+              pseudoKeycode = isRTL ? 38 : 40;
               if (currentMenuItem.is('a') && !currentMenuItem.parent('.submenu').length) {
-                $(document).trigger({type: 'keydown.popupmenu', which: 40});
+                $(document).trigger({type: 'keydown.popupmenu', which: pseudoKeycode});
               }
               break;
             case 40: // down
@@ -2250,79 +2304,80 @@
           return;
         }
 
-        var pos = target.offset(),
-          offset = this.tablist.offset(),
-          width = parseInt(target.outerWidth()),
-          height = parseInt(target.outerHeight()),
+        // Use the parent <li> for anchors to get their dimensions.
+        if (target.is('a')) {
+          target = target.parent();
+        }
+
+        var targetPos = target[0].getBoundingClientRect(),
+          isModuleTabs = this.isModuleTabs(),
           isRTL = Locale.isRTL(),
-          left, top;
+          parentContainer = this.element.parent();
 
-        if (!this.isModuleTabs()) {
-          if (target.is('.dismissible.tab > a')) {
-            width = width + 28;
-          }
-          if (target.is('.has-popupmenu.tab > a')) {
-            width = width + 33;
-          }
+        function convertClientRectToObj(clientRect) {
+          return {
+            left: clientRect.left,
+            right: clientRect.right,
+            top: clientRect.top,
+            bottom: clientRect.bottom,
+            width: clientRect.width,
+            height: clientRect.height
+          };
         }
 
-        left = pos.left - offset.left;
-        top = pos.top - offset.top;
+        /*
+        function subtractTabContainerOffsets(targetRectObj) {
+          var containerRectObj = self.element[0].getBoundingClientRect(),
+            adjustment = targetRectObj,
+            delta = 0;
 
-        // Header tabs get a slight modification
-        var parentContainer = this.element.parent();
-        if (parentContainer.is('.header, header')) {
-          left = left + parseInt(this.element.css('padding-left'));
-          height = height - 4;
-          top = top + 5;
-        }
+          // Get top placement delta
+          delta = targetRectObj.top - containerRectObj.top;
+          adjustment.top = adjustment.top - delta;
 
-        // Module Tabs get a slight modification
-        if (this.isModuleTabs()) {
-          if (!target.is('.add-tab-button, .tab-more')) {
-            width = parseInt(target.parent().outerWidth(true));
-          }
-          left = left - parseInt(target.css('margin-left'));
-        }
-
-        // Vertical Tabs
-        function tablistInfoAdditionalHeight(jqObj) {
-          if (!jqObj || !(jqObj instanceof jQuery)) {
-            return 0;
+          if (!self.isVerticalTabs()) {
+            if (isRTL) {
+              delta = targetRectObj.right - containerRectObj.right;
+              adjustment.right = adjustment.right - delta;
+            } else {
+              delta = targetRectObj.left + containerRectObj.left;
+              adjustment.left = adjustment.left + delta;
+            }
           }
 
-          var thisHeight = 0;
-
-          jqObj.each(function(i, el) {
-            var elem = $(el);
-            thisHeight += elem.outerHeight(true) + parseInt(elem.parent().css('padding-top'));
-          });
-
-          return thisHeight;
+          return adjustment;
         }
+        */
 
-        // Vertical Tabs need some manual adjustment when used directly inside a page container.
-        // Takes into account all the "information" sections possible in the tab list container.
-        if (this.isVerticalTabs()) {
-          var tablistContainerPadding = parseInt(this.element.children('.tab-list-container').css('padding-top')),
-            tablistInfo = this.tablist.prevAll('.tab-list-info');
+        function adjustForParentContainer(targetRectObj, parentElement) {
+          var parentRect = parentElement[0].getBoundingClientRect();
+          targetRectObj.top = targetRectObj.top - parentRect.top;
 
-          width = this.tablist.outerWidth(true);
-          if (parentContainer.is('.page-container')) {
-            top = top + (tablistInfo.length ? tablistInfoAdditionalHeight(tablistInfo) : 0);
-          } else if (tablistContainerPadding > 0) {
-            top = top + tablistContainerPadding;
+          if (isRTL) {
+            targetRectObj.right = parentRect.right - targetRectObj.right;
+          } else {
+            targetRectObj.left = targetRectObj.left - parentRect.left;
           }
+
+          // Dirty Hack for Module Tabs
+          // TODO: Explore why this happens
+          if (isModuleTabs) {
+            targetRectObj.top = targetRectObj.top - 1;
+          }
+
+          return targetRectObj;
         }
 
-        this.focusState.css({
-          left: isRTL ? left - width : left,
-          top: top,
-          right: isRTL ? left : left + width,
-          bottom: top + height,
-          width: width,
-          height: height
-        });
+        // convert ClientRects to objects so we can mess with them
+        var targetPosObj = convertClientRectToObj(targetPos);
+
+        // Adjust for the offsets of the Tab Contianer, if necessary
+        //targetPosObj = subtractTabContainerOffsets(targetPosObj);
+
+        // Adjust the values one more time if we have tabs contained inside of a page-container, or some other scrollable container.
+        targetPosObj = adjustForParentContainer(targetPosObj, parentContainer);
+
+        this.focusState.css(targetPosObj);
 
         var method = 'addClass';
         if (unhide) {
