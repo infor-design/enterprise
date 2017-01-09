@@ -27,8 +27,7 @@
           ticks: [],
           tooltipContent: undefined,
           persistTooltip: false
-        },
-        settings = $.extend(true, {}, defaults, options);
+        };
 
     /**
      * Touch Enabled/Responsive and Accessible Slider Control
@@ -36,7 +35,7 @@
      * @param {Object} element
      */
     function Slider(element) {
-      this.settings = $.extend({}, settings);
+      this.settings = $.extend({}, defaults, options);
       this.element = $(element);
       Soho.logTimeStart(pluginName);
       this.init();
@@ -88,25 +87,29 @@
         if (!this.settings) {
           this.settings = {};
         }
-        this.settings.value = this.element.attr('value') !== undefined ? this.element.attr('value') : settings.value;
-        this.settings.min = this.element.attr('min') !== undefined ? parseInt(this.element.attr('min')) : settings.min;
-        this.settings.max = this.element.attr('max') !== undefined ? parseInt(this.element.attr('max')) : settings.max;
-        this.settings.range = this.element.attr('data-range') !== undefined ? (this.element.attr('data-range') === 'true') : settings.range;
-        this.settings.step = !isNaN(this.element.attr('step')) ? Number(this.element.attr('step')) : settings.step;
+        this.settings.value = this.element.attr('value') !== undefined ? this.element.attr('value') : this.settings.value;
+        this.settings.min = this.element.attr('min') !== undefined ? parseInt(this.element.attr('min')) : this.settings.min;
+        this.settings.max = this.element.attr('max') !== undefined ? parseInt(this.element.attr('max')) : this.settings.max;
+        this.settings.range = this.element.attr('data-range') !== undefined ? (this.element.attr('data-range') === 'true') : this.settings.range;
+        this.settings.step = !isNaN(this.element.attr('step')) ? Number(this.element.attr('step')) : this.settings.step;
 
         // build tick list
-        this.settings.ticks = settings.ticks;
+        var parsedTicks;
         if (this.element.attr('data-ticks') !== undefined) {
           try {
-            self.settings.ticks = JSON.parse(self.element.attr('data-ticks'));
+            parsedTicks = JSON.parse(self.element.attr('data-ticks'));
           } catch (e) {
+          }
+
+          if ($.isArray(parsedTicks)) {
+            this.settings.ticks = parsedTicks;
           }
         }
 
         // build tooltip content
         var isTooltipPersist = (this.element.attr('data-tooltip-persist') === 'true' || this.element.attr('data-tooltip-persist') === true);
-        this.settings.persistTooltip = this.element.attr('data-tooltip-persist') !== undefined ? isTooltipPersist : settings.persistTooltip;
-        this.settings.tooltip = settings.tooltipContent;
+        this.settings.persistTooltip = this.element.attr('data-tooltip-persist') !== undefined ? isTooltipPersist : this.settings.persistTooltip;
+        this.settings.tooltip = this.settings.tooltipContent;
         if (this.element.attr('data-tooltip-content') !== undefined) {
           try {
             self.settings.tooltip = JSON.parse(self.element.attr('data-tooltip-content'));
@@ -330,64 +333,10 @@
       },
 
       bindEvents: function() {
-        var self = this,
-          isVertical = this.wrapper.hasClass('vertical');
-
-        function updateHandleFromDraggable(e, handle, args) {
-          if (self.isDisabled()) {
-            return;
-          }
-
-          function conversion() {
-            if (isVertical) {
-              var wh = self.wrapper.height(),
-              // Vertical Slider accounts for limits set on the height by SoHo Xi Drag.js
-              adjustedHeight = wh - handle.outerHeight();
-
-              return ((adjustedHeight - args.top) / adjustedHeight) * 100;
-            }
-            return args.left / (self.wrapper.width() - handle.outerWidth()) * 100;
-          }
-
-          var val = conversion(),
-            rangeVal = self.convertPercentageToValue(val);
-
-          // Ranged values need to check to make sure that the higher-value handle doesn't drawindowg past the
-          // lower-value handle, and vice-versa.
-          if (self.settings.range) {
-            var originalVal = self.value();
-            if (handle.hasClass('higher') && rangeVal <= originalVal[0]) {
-              rangeVal = originalVal[0];
-            }
-            if (handle.hasClass('lower') && rangeVal >= originalVal[1]) {
-              rangeVal = originalVal[1];
-            }
-          }
-
-          // Round the value to the nearest step, if the step is defined
-          if (self.settings.step) {
-            rangeVal = Math.round(rangeVal / self.settings.step) * self.settings.step;
-          }
-
-          if (!e.defaultPrevented) {
-            self.value(handle.hasClass('higher') ? [undefined, rangeVal] : [rangeVal]);
-            self.updateRange();
-            self.updateTooltip(handle);
-            self.element.trigger('sliding', handle, rangeVal);
-          }
-
-          return;
-        }
+        var self = this;
 
         $.each(self.handles, function (i, handle) {
-          var draggableOptions = {
-            containment: 'parent',
-            axis: (isVertical ? 'y' : 'x'),
-            clone: false
-          };
-
-          handle.drag(draggableOptions)
-          .on('mousedown.slider', function () {
+          handle.on('mousedown.slider', function () {
             if (self.isDisabled()) {
               return;
             }
@@ -396,27 +345,15 @@
           .on('click.slider', function (e) {
             e.preventDefault(); //Prevent from jumping to top.
           })
-          .on('drag.slider', function (e, args) {
-            updateHandleFromDraggable(e, $(e.currentTarget), args);
-          })
           .on('keydown.slider', function(e) {
             self.activateHandle(handle);
             self.handleKeys(e, self);
           })
           .on('keyup.slider blur.slider', function() {
             self.deactivateHandle(handle);
-          })
-          // Add/Remove Classes for canceling animation of handles on the draggable's events.
-          .on('dragstart', function() {
-            $(this).addClass('is-dragging');
-            self.range.addClass('is-dragging');
-            self.element.trigger('slidestart', handle);
-          })
-          .on('dragend', function() {
-            $(this).removeClass('is-dragging');
-            self.range.removeClass('is-dragging');
-            self.element.trigger('slidestop', handle);
           });
+
+          self.enableHandleDrag(handle);
         });
 
         self.wrapper.on('click.slider touchend.slider touchcancel.slider', function(e) {
@@ -510,6 +447,93 @@
 
       deactivateHandle: function(handle) {
         handle.removeClass('is-active');
+      },
+
+      enableHandleDrag: function(handle) {
+        if (this.isDisabled()) {
+          return;
+        }
+
+        var self = this,
+          draggableOptions = {
+            containment: 'parent',
+            axis: (this.isVertical() ? 'y' : 'x'),
+            clone: false
+          };
+
+        function updateHandleFromDraggable(e, handle, args) {
+          if (self.isDisabled()) {
+            return;
+          }
+
+          function conversion() {
+            if (self.isVertical()) {
+              var wh = self.wrapper.height(),
+              // Vertical Slider accounts for limits set on the height by SoHo Xi Drag.js
+              adjustedHeight = wh - handle.outerHeight();
+
+              return ((adjustedHeight - args.top) / adjustedHeight) * 100;
+            }
+            return args.left / (self.wrapper.width() - handle.outerWidth()) * 100;
+          }
+
+          var val = conversion(),
+            rangeVal = self.convertPercentageToValue(val);
+
+          // Ranged values need to check to make sure that the higher-value handle doesn't drawindowg past the
+          // lower-value handle, and vice-versa.
+          if (self.settings.range) {
+            var originalVal = self.value();
+            if (handle.hasClass('higher') && rangeVal <= originalVal[0]) {
+              rangeVal = originalVal[0];
+            }
+            if (handle.hasClass('lower') && rangeVal >= originalVal[1]) {
+              rangeVal = originalVal[1];
+            }
+          }
+
+          // Round the value to the nearest step, if the step is defined
+          if (self.settings.step) {
+            rangeVal = Math.round(rangeVal / self.settings.step) * self.settings.step;
+          }
+
+          if (!e.defaultPrevented) {
+            self.value(handle.hasClass('higher') ? [undefined, rangeVal] : [rangeVal]);
+            self.updateRange();
+            self.updateTooltip(handle);
+            self.element.trigger('sliding', handle, rangeVal);
+          }
+
+          return;
+        }
+
+        // Add/Remove Classes for canceling animation of handles on the draggable's events.
+        handle.drag(draggableOptions)
+        .on('drag.slider', function (e, args) {
+          updateHandleFromDraggable(e, $(e.currentTarget), args);
+        })
+        .on('dragstart', function() {
+          $(this).addClass('is-dragging');
+          self.range.addClass('is-dragging');
+          self.element.trigger('slidestart', handle);
+        })
+        .on('dragend', function() {
+          $(this).removeClass('is-dragging');
+          self.range.removeClass('is-dragging');
+          self.element.trigger('slidestop', handle);
+        });
+      },
+
+      disableHandleDrag: function(handle) {
+        handle.off('drag.slider dragstart dragend');
+
+        this.range.removeClass('is-dragging');
+        handle.removeClass('is-dragging');
+
+        var dragAPI = handle.data('drag');
+        if (dragAPI) {
+          dragAPI.destroy();
+        }
       },
 
       convertValueToPercentage: function(value) {
@@ -889,17 +913,33 @@
       enable: function() {
         this.element.prop('disabled', false);
         this.wrapper.removeClass('is-disabled');
+
+        var self = this;
+        $.each(this.handles, function(i, handle) {
+          self.enableHandleDrag(handle);
+        });
+
         return this;
       },
 
       disable: function() {
         this.element.prop('disabled', true);
         this.wrapper.addClass('is-disabled');
+
+        var self = this;
+        $.each(this.handles, function(i, handle) {
+          self.disableHandleDrag(handle);
+        });
+
         return this;
       },
 
       isDisabled: function() {
         return this.element.prop('disabled');
+      },
+
+      isVertical: function() {
+        return this.wrapper.hasClass('vertical');
       },
 
       // Externally-facing function that updates the current values and correctly animates the
@@ -939,7 +979,8 @@
       teardown: function() {
         var self = this;
         $.each(self.handles, function (i, handle) {
-          handle.off('mousedown.slider click.slider blur.slider drag.slider keydown.slider keyup.slider dragstart dragend');
+          self.disableHandleDrag(handle);
+          handle.off('mousedown.slider click.slider blur.slider keydown.slider keyup.slider');
         });
         this.wrapper.off('click.slider touchend.slider touchcancel.slider').remove();
         this.element.attr('type', this.originalElement.type);
@@ -964,7 +1005,7 @@
         }
         instance.updated();
       } else {
-        instance = $.data(this, pluginName, new Slider(this, settings));
+        instance = $.data(this, pluginName, new Slider(this, options));
       }
     });
   };

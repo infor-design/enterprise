@@ -155,6 +155,7 @@ input[type="range"] {
 
   }
 
+  // scss-lint:disable ImportantRule
   &.is-disabled {
     background-color: $slider-disabled-color !important;
 
@@ -167,22 +168,28 @@ input[type="range"] {
 
       > .label {
         color: $slider-disabled-labels-color;
-        // opacity: .4;
       }
 
       &:after {
         background-color: $slider-disabled-color;
       }
+
+      &.complete {
+        background-color: $slider-disabled-active-bg-color !important;
+      }
     }
 
     > .slider-range {
-      visibility: hidden;
+      background-color: $slider-disabled-range-color !important;
+      border-color: $slider-disabled-range-color !important;
     }
 
     > .slider-handle {
-      visibility: hidden;
+      background-color: $slider-disabled-handle-color !important;
+      border-color: $slider-disabled-handle-color !important;
     }
   }
+  // scss-lint:enable ImportantRule
 
 }
 
