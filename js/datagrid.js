@@ -2632,6 +2632,10 @@ $.fn.datagrid = function(options) {
         colWidth = colMinWidth = 78;
       }
 
+      if (col.id === 'rowStatus') {
+        colWidth = colMinWidth = 78;
+      }
+
       // cache the header widths
       this.headerWidths[index] = {id: col.id, width: colWidth, minWidth: colMinWidth,
                                   widthPercent: this.columnWidthType === 'percent',
