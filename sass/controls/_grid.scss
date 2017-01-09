@@ -52,8 +52,8 @@ $gutter-neg-size: -20px;
 .column,
 .columns {
   float: left;
-  margin: 0 20px;
-  width: calc(100% - 40px);
+  padding: 0 20px;
+  width: 100%;
 
   &.l-center {
     .field {
