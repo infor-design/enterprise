@@ -2312,7 +2312,7 @@
         var targetPos = target[0].getBoundingClientRect(),
           isModuleTabs = this.isModuleTabs(),
           isRTL = Locale.isRTL(),
-          parentContainer = this.element.parent();
+          parentContainer = this.element;
 
         function convertClientRectToObj(clientRect) {
           return {
@@ -2324,30 +2324,6 @@
             height: clientRect.height
           };
         }
-
-        /*
-        function subtractTabContainerOffsets(targetRectObj) {
-          var containerRectObj = self.element[0].getBoundingClientRect(),
-            adjustment = targetRectObj,
-            delta = 0;
-
-          // Get top placement delta
-          delta = targetRectObj.top - containerRectObj.top;
-          adjustment.top = adjustment.top - delta;
-
-          if (!self.isVerticalTabs()) {
-            if (isRTL) {
-              delta = targetRectObj.right - containerRectObj.right;
-              adjustment.right = adjustment.right - delta;
-            } else {
-              delta = targetRectObj.left + containerRectObj.left;
-              adjustment.left = adjustment.left + delta;
-            }
-          }
-
-          return adjustment;
-        }
-        */
 
         function adjustForParentContainer(targetRectObj, parentElement) {
           var parentRect = parentElement[0].getBoundingClientRect();
@@ -2370,9 +2346,6 @@
 
         // convert ClientRects to objects so we can mess with them
         var targetPosObj = convertClientRectToObj(targetPos);
-
-        // Adjust for the offsets of the Tab Contianer, if necessary
-        //targetPosObj = subtractTabContainerOffsets(targetPosObj);
 
         // Adjust the values one more time if we have tabs contained inside of a page-container, or some other scrollable container.
         targetPosObj = adjustForParentContainer(targetPosObj, parentContainer);
