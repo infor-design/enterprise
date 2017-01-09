@@ -429,8 +429,11 @@ $pager-disabled-color: $graphite02;
 $slider-bg-color: $graphite04;
 $slider-active-bg-color: $primary-color;
 $slider-labels-color: $graphite06;
-$slider-disabled-color: $graphite03;
+$slider-disabled-color: $graphite02;
+$slider-disabled-active-bg-color: $graphite03;
 $slider-disabled-labels-color: $graphite04;
+$slider-disabled-handle-color: $graphite03;
+$slider-disabled-range-color: $graphite03;
 $slider-hover-shadow: 0 2px 5px 0 rgba($black, .2);
 
 //Modal
