@@ -629,6 +629,10 @@
           opts.parentXAlignment = (isRTL ? 'left' : 'right');
         }
 
+        function shiftDown() {
+          opts.y = opts.y + 15;
+        }
+
         // Change the alignment of the popupmenu based on certain conditions
         (function doAlignment() {
           if (menuIsSmallerThanTrigger) {
@@ -662,6 +666,10 @@
               return alignLeft();
             }
         })();
+
+        if (target.parents('.masthead').length > 0) {
+          shiftDown();
+        }
 
         //=======================================================
         // END Temporary stuff until we sort out passing these settings from the controls that utilize them
