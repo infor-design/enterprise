@@ -2823,7 +2823,7 @@ $.fn.datagrid = function(options) {
 
     resetColumns: function () {
       if (this.canUseLocalStorage()) {
-        localStorage.clear();
+        localStorage.removeItem(this.uniqueId('columns'));
         localStorage[this.uniqueId('columns')] = '';
       }
 
