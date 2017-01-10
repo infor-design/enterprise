@@ -50,6 +50,10 @@ git cherry-pick 802b102fda5420a0f714d9d0efa5eff635fe77d9 //from http://git.infor
 git push
 git checkout master
 ```
+# How To Publish with New Process
+
+- Update date and version and release notes link in PUBLISH.MD
+- Push
 
 # How To Make Release
 
@@ -103,7 +107,7 @@ $ grunt
   * Server Address: smb://usmvvwdev53/c$
   * Click Connect
   * Login with Infor user/pass
-    * User is INFOR\<username> 
+    * User is INFOR\<username>
     * Talk to Chris or Tim if you don't have access
 * Copy and replace contents of dist/js/ to /inetpub/wwwroot/public/js/
 * Copy and replace contents of dist/css/ to /inetpub/wwwroot/public/stylesheets/
