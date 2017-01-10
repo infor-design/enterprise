@@ -1,78 +1,18 @@
-<div class="page-contents">
+<div class="row">
+  <div class="six columns">
+    <h2>Popupmenu Test:  Scrolled-to-Bottom Trigger Button</h2>
+    <p>The menu button below is at the bottom of the scrollable container.  Its popupmenu should still open properly, above the trigger, and not bleed off the viewport.</p>
+  </div>
+</div>
 
-  <div class="row">
-    <div class="twelve columns">
+<div class="row">
+  <div class="twelve columns">
+    <div style="height: 850px;">&nbsp;</div>
 
-      <div class="field" style="position: fixed; top: 269px">
-        <label for="fixed-menus">Menu Is Fixed</label>
-        <button class="btn" type="button" id="fixed-menus" data-popupmenu="action-big-popupmenu" data-options="{trigger: 'click'}">Show Fixed Menu</button>
-      </div>
-
-      <div class="field" style="position: absolute; bottom: 10px; right: 10px;">
-        <label for="offset-menus">Button should open menu that needs to shift left.</label>
-        <button class="btn" type="button" id="offset-menus" data-popupmenu="action-popupmenu" data-options="{trigger: 'click'}">Show Offset Menu</button>
-      </div>
-
-      <div class="field">
-        <label for="input-menu">Pop Menu With Images</label>
-        <input type="text" data-popupmenu="image-popupmenu" class="is-focused" value="Click Me" id="input-menu" data-options="{trigger: 'click'}">
-      </div>
-
-      <div class="field">
-        <label for="input-menu">Really BIG Popup Menu</label>
-        <button class="btn" type="button" id="big-menus" data-popupmenu="action-big-popupmenu" data-options="{trigger: 'click'}">Show Offset Menu</button>
-      </div>
-
-      <div style="height: 850px;">&nbsp;</div>
-
-      <div class="field">
-        <label for="pushed-down-menu">Menu Toggler is Scrolled Off-Screen</label>
-        <button class="btn" type="button" id="pushed-down-menu" data-popupmenu="action-big-popupmenu" data-options="{trigger: 'click'}">Show Scrolled-Off-Screen Menu</button>
-      </div>
-
-      <ul id="image-popupmenu" class="popupmenu has-icons">
-        <li>
-          <a href="#">
-            <svg class="icon icon-filter" focusable="false" aria-hidden="true" role="presentation">
-               <use xlink:href="#icon-filter-contains"/>
-            </svg>
-            Contains
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <svg class="icon icon-filter" focusable="false" aria-hidden="true" role="presentation">
-               <use xlink:href="#icon-filter-equals"/>
-            </svg>
-            Equals
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <svg class="icon icon-filter" focusable="false" aria-hidden="true" role="presentation">
-               <use xlink:href="#icon-filter-does-not-equal"/>
-            </svg>
-            Does Not Equal
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <svg class="icon icon-filter" focusable="false" aria-hidden="true" role="presentation">
-               <use xlink:href="#icon-filter-is-empty"/>
-            </svg>
-            Is Empty
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <svg class="icon icon-filter" focusable="false" aria-hidden="true" role="presentation">
-               <use xlink:href="#icon-filter-contains"/>
-            </svg>
-            Contains
-          </a>
-        </li>
-      </ul>
-
+    <div class="field">
+      <button class="btn-menu" type="button" id="off-viewport-trigger">
+        <span>Show Menu</span>
+      </button>
       <ul id="action-big-popupmenu" class="popupmenu">
         <li><a href="#">...</a></li>
         <li><a href="#">...</a></li>
@@ -162,6 +102,6 @@
       </ul>
 
     </div>
-  </div>
 
+  </div>
 </div>
