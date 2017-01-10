@@ -236,7 +236,7 @@
           if (!this.upperXLimit) {
             this.upperXLimit = this.container.width() - this.element.outerWidth() + settings.containmentOffset.left;
           }
-          if (!this.upperXLimit) {
+          if (!this.upperYLimit) {
             this.upperYLimit = this.container.height() - this.element.outerHeight() + settings.containmentOffset.top;
           }
           if (css.top > this.upperYLimit) {
