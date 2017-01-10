@@ -716,7 +716,6 @@
         this.range.css(cssProps);
 
         function positionHandle(handle, percentage) {
-          // isVertical ? 'top' : 'left';
           var basePosition = isVertical ? posAttrs[1] : posAttrs[0],
             realPercentage = isVertical ? 100 - percentage : percentage;
 
