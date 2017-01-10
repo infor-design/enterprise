@@ -5052,7 +5052,7 @@ $.fn.datagrid = function(options) {
           var node = $(this);
 
           if (node.hasClass('datagrid-tree-parent') &&
-            node.attr('aria-level') > level && !restCollapsed) {
+            node.attr('aria-level') > level) {
             restCollapsed = node.find('.datagrid-expand-btn.is-expanded').length === 0;
             node[isExpanded ? 'addClass' : 'removeClass']('is-hidden');
             return;
