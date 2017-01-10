@@ -1685,7 +1685,7 @@ window.Chart = function(container) {
       margin = {top: 40, right: 40, bottom: (isSingular && chartData[0].name === undefined ? (isStacked ? 20 : 50) : 35), left: 45},
       legendHeight = 40,
       width = parent.width() - margin.left - margin.right - 10,
-      height = parent.height() - margin.top - margin.bottom - (isSingular && chartData[0].name === undefined ? (isStacked || isPositiveNegative ? legendHeight : 0) : legendHeight),
+      height = parent.height() - margin.top - margin.bottom - (isSingular && chartData[0].name === undefined ? (isStacked || isPositiveNegative ? (legendHeight - 10) : 0) : legendHeight),
       yMin, yMax, yMinTarget, yMaxTarget, series, seriesStacked,
       pnColors, pnPatterns, pnLegends, pnSeries;
 
@@ -1892,7 +1892,7 @@ window.Chart = function(container) {
     if (!isSingular || (isSingular && !isStacked)) {
       svg.append('g')
         .attr('class', 'x axis')
-        .attr('transform', 'translate(0,' + height + ')')
+        .attr('transform', 'translate(0,' + (height + (isPositiveNegative ? 10 : 0)) + ')')
         .call(xAxis);
     }
 
