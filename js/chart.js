@@ -655,6 +655,11 @@ window.Chart = function(container) {
       return d < 0 ? 'negative-value' : 'positive-value';
     });
 
+    if (charts.isRTL && charts.isIE) {
+      svg.selectAll('text').attr('transform', 'scale(-1, 1)');
+      svg.selectAll('.y.axis text').style('text-anchor', 'start');
+    }
+
     //Animate the Bars In
     svg.selectAll('.bar')
       .transition().duration(1000)
@@ -952,7 +957,6 @@ window.Chart = function(container) {
         return function(t) { d.endAngle = i(t); return pieArcs(d); };
       });
 
-
     // Now we'll draw our label lines, etc.
     var textLabels, textX=[], textY=[],
       perEvenRound = [], perRound = [], perRoundTotal = 0,
@@ -1167,6 +1171,11 @@ window.Chart = function(container) {
             var centroid = pieArcs.centroid(d),
              midAngle = Math.atan2(centroid[1], centroid[0]),
               x = Math.cos(midAngle) * dims.labelRadius;
+
+            if (isRTL && charts.isIE) {
+              return (x > 0 ? 'start' : 'end');
+            }
+
             return isRTL ? (x > 0 ? 'end' : 'start') : (x > 0 ? 'start' : 'end');
           }
         });
@@ -1895,6 +1904,7 @@ window.Chart = function(container) {
     if (isRTL && yMin < 0) {
       var yMaxLength = 0,
         tempLength;
+
       svg.selectAll('.axis.y text')
         .attr('class', function(d) {
           tempLength = d3.select(this).text().length;
@@ -1904,6 +1914,7 @@ window.Chart = function(container) {
         .attr('x', function(d) {
           return d < 0 ? ((yMaxLength ) * 9) : ((yMaxLength ) * 5);
         });
+
     }
 
     //Make an Array of objects with name + array of all values
@@ -2113,8 +2124,7 @@ window.Chart = function(container) {
               (chartData[0].data[i].pattern ? 'url(#'+ chartData[0].data[i].pattern +')' : null) :
               (series[i].pattern ? 'url(#'+ series[i].pattern +')' : null);
           });
-      }
-      else if (isStacked && !isSingular) {
+      } else if (isStacked && !isSingular) {
         bars
           .style('fill', function() {
             var thisGroup = d3.select(this.parentNode).attr('data-group-id');
@@ -2124,8 +2134,7 @@ window.Chart = function(container) {
             var thisGroup = d3.select(this.parentNode).attr('data-group-id');
             return (dataset[thisGroup].pattern ? 'url(#'+ dataset[thisGroup].pattern +')' : null);
           });
-      }
-      else if (isStacked && isSingular) {
+      } else if (isStacked && isSingular) {
         bars
           .style('fill', function(d, i) {
             return charts.chartColor(i, 'bar', d[0]);
@@ -2242,8 +2251,7 @@ window.Chart = function(container) {
           }
           else if (dataset.length === 1) {
             content = '<p><b>'+ format(d.value) + '</b> '+ d.name +'</p>';
-          }
-          else {
+          } else {
             var data = d3.select(this.parentNode).datum().values;
 
             content = '<div class="chart-swatch">';
@@ -2280,6 +2288,7 @@ window.Chart = function(container) {
                 content = tooltipDataCache[i] = data;
               });
             }
+
             if (content !== '') {
               clearInterval(tooltipInterval);
               show();
@@ -2339,15 +2348,22 @@ window.Chart = function(container) {
     //Add Legend
     if (isSingular && chartData[0].name) {
       charts.addLegend([{name: chartData[0].name}]);
-    }
-    else if (isPositiveNegative) {
+    } else if (isPositiveNegative) {
       charts.addLegend(pnSeries);
-    }
-    else if (isStacked && isSingular) {
+    } else if (isStacked && isSingular) {
       charts.addLegend(series);
-    }
-    else if (!isSingular) {
+    } else if (!isSingular) {
       charts.addLegend(isStacked ? seriesStacked : series);
+    }
+
+    if (charts.isRTL && charts.isIE) {
+      svg.selectAll('text').attr('transform', 'scale(-1, 1)');
+      svg.selectAll('.y.axis text').style('text-anchor', 'start');
+
+      if (isPositiveNegative) {
+        svg.selectAll('.negative-value').style('text-anchor', 'end');
+      }
+
     }
 
     //Add Tooltips
@@ -2673,6 +2689,11 @@ window.Chart = function(container) {
       svg.selectAll('.x.axis .tick line, .y.axis .tick line').style('opacity', 0);
       svg.select('.x.axis .tick line').attr('x2', '-10').style('opacity', 1);
       svg.select('.y.axis .tick line').style('opacity', 1);
+    }
+
+    if (charts.isRTL) {
+      svg.selectAll('text').attr('transform', 'scale(-1, 1)');
+      svg.selectAll('.y.axis text').style('text-anchor', 'start');
     }
 
     // Create the line generator
@@ -3084,7 +3105,7 @@ window.Chart = function(container) {
             .attr('class', 'inverse')
             .attr('text-anchor', 'middle')
             .attr('y', barHeight /2 + 4)
-            .attr('dx', '20px')
+            .attr('dx', charts.isRTL ? '-20px' : '20px')
             .attr('x', 0)
             .text(diff);
 
@@ -3143,6 +3164,11 @@ window.Chart = function(container) {
             return 'translate(' + x1(d) + ',0)';
           })
           .style('opacity', 1);
+
+      if (charts.isRTL && charts.isIE) {
+        svg.selectAll('text').attr('transform', 'scale(-1, 1)');
+      }
+
     }
 
     //Add Legends
@@ -3597,6 +3623,7 @@ window.Chart = function(container) {
     this.options = options;
     this.redrawOnResize = true;
     this.isRTL = Locale.isRTL();
+    this.isIE = $('html').hasClass('ie');
 
     if (options.redrawOnResize !== undefined) {
       this.redrawOnResize = options.redrawOnResize;
