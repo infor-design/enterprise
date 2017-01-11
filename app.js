@@ -578,6 +578,19 @@ var express = require('express'),
   router.get('/examples', exampleRouteHandler);
 
   // =========================================
+  // Collection of Performance Tests Pages
+  // =========================================
+
+  router.get('/performance-tests', function(req, res, next) {
+
+    var performanceOpts = { subtitle: 'Performance Tests' },
+      opts = extend({}, res.opts, performanceOpts);
+
+    res.render('performance-tests/index', opts);
+    next();
+  });
+
+  // =========================================
   // Angular Support Test Pages
   // =========================================
 
