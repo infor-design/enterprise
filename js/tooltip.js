@@ -560,7 +560,7 @@
 
         if ($('.popover').not('.is-hidden').length === 0) {
           $(document).off('mouseup.tooltip keydown.tooltip');
-          $(window).off('resize.tooltip');
+          $('body').off('resize.tooltip');
         }
 
         this.element.trigger('hide', [this.tooltip]);

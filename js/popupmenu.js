@@ -763,7 +763,7 @@
           });
 
           if (window.orientation === undefined) {
-            $(window).on('resize.popupmenu', function() {
+            $('body').on('resize.popupmenu', function() {
               self.close();
             });
           }
@@ -1000,7 +1000,8 @@
 
       detach: function () {
         $(document).off('click.popupmenu touchend.popupmenu keydown.popupmenu');
-        $(window).off('scroll.popupmenu resize.popupmenu orientationchange.popupmenu');
+        $(window).off('scroll.popupmenu orientationchange.popupmenu');
+        $('body').off('resize.popupmenu');
         $('.scrollable').off('scroll.popupmenu');
 
         this.menu.off('click.popupmenu touchend.popupmenu touchcancel.popupmenu');

@@ -167,7 +167,7 @@
             }
           });
 
-          $(window).on('resize.popdown', function() {
+          $('body').on('resize.popdown', function() {
             if (!$(document.activeElement).closest('.popdown').length) {
               self.close();
             }
@@ -197,7 +197,7 @@
 
         // Turn off events
         this.popdown.off('focusin.popdown');
-        $(window).off('resize.popdown');
+        $('body').off('resize.popdown');
         $(document).off('click.popdown focusin.popdown');
 
         // Sets the element to "display: none" to prevent interactions while hidden.

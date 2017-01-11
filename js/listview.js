@@ -484,7 +484,7 @@
           });
         }
 
-        $(window).on('resize.listview', function() {
+        $('body').on('resize.listview', function() {
           self.handleResize();
         });
 
@@ -784,6 +784,7 @@
       },
 
       teardown: function() {
+        $('body').off('resize.listview');
         this.element.off('focus.listview click.listview touchend.listview keydown.listview change.selectable-listview afterpaging.listview').empty();
         return this;
       },
