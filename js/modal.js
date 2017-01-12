@@ -327,7 +327,7 @@
 
         messageArea = self.element.find('.detailed-message');
         if (messageArea.length === 1) {
-          $(window).on('resize.modal-' + this.id, function () {
+          $('body').on('resize.modal-' + this.id, function () {
             self.sizeInner();
           });
           self.sizeInner();
@@ -391,7 +391,7 @@
         this.removeNoScroll = !this.mainContent.hasClass('no-scroll');
         this.mainContent.addClass('no-scroll');
 
-        $(window).on('resize.modal-' + this.id, function() {
+        $('body').on('resize.modal-' + this.id, function() {
           self.resize();
         });
 
@@ -578,7 +578,7 @@
         if (this.mainContent && this.removeNoScroll) {
           this.mainContent.removeClass('no-scroll');
         }
-        $(window).off('resize.modal-' + this.id);
+        $('body').off('resize.modal-' + this.id);
 
         this.element.off('keypress.modal keydown.modal');
         this.element.removeClass('is-visible');
@@ -636,7 +636,7 @@
           }
 
           if (self.element.find('.detailed-message').length === 1) {
-            $(window).off('resize.modal-' + this.id);
+            $('body').off('resize.modal-' + this.id);
           }
 
           if (self.settings.trigger === 'click') {
