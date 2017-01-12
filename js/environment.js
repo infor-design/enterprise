@@ -19,7 +19,7 @@
 
     // Setup a global resize event trigger for controls to listen to
     addGlobalResize: function() {
-      $(window).on('resize', function() {
+      $(window).debouncedResize(function() {
         $('body').triggerHandler('resize', [window]);
       });
 

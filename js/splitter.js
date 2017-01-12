@@ -206,7 +206,8 @@
       },
 
       splitTo: function (split, parentHeight) {
-        var splitter = this.element;
+        var self = this,
+          splitter = this.element;
 
         if (splitter.is('.splitter-right')) {
           this.resizeRight(splitter, split);
@@ -217,7 +218,11 @@
         }
 
         this.element.trigger('split', [split]);
-        $('body').triggerHandler('resize', [this]);
+        
+        function triggerResize() {
+          $('body').triggerHandler('resize', [self]);
+        }
+        Soho.utils.debounce(triggerResize);
 
         //Save to local storage
         if (localStorage) {

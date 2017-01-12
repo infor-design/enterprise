@@ -66,7 +66,7 @@
           self.showImage();
         });
 
-        $(window).on('resize.'+ pluginName, function() {
+        $('body').on('resize.'+ pluginName, function() {
           self.resize();
         });
 
@@ -114,7 +114,7 @@
           self.busyindicator = $('.modal-body-wrapper').addClass('busy').busyindicator();
 
           modalApi.extraHeight = 0;
-          $(window).off('resize.modal-' + modalApi.id);
+          $('body').off('resize.modal-' + modalApi.id);
 
           $('.overlay').onTouchClick(pluginName).on('click.' + pluginName, function () {
             modalApi.close();
@@ -275,6 +275,7 @@
 
       // Simple Teardown - remove events & rebuildable markup.
       teardown: function() {
+        $('body').off('resize.' + pluginName);
         this.element.off('updated.' + pluginName).
           offTouchClick().off('click.' + pluginName);
         return this;
