@@ -1,0 +1,63 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    var columns = [];
+    var someData = [
+      {
+        id: 219,
+        escalated: 0,
+        taskName: 'Follow up action with Residental Housing',
+        desc: 'Contact sales representative with the updated purchase order.',
+        comments: 2,
+        time: '22:10 PM',
+        children: []
+      },
+      {
+        id: 215,
+        escalated: 0,
+        taskName: 'Follow up action with Residental Housing',
+        desc: 'Contact sales representative with the updated purchase order.',
+        comments: 2,
+        time: '22:10 PM',
+        children: []
+    }];
+
+
+    //Define Columns for the Grid.
+    columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree, width: 250});
+    columns.push({ id: 'id', name: 'Id', field: 'id', width: 25});
+    columns.push({ id: 'desc', name: 'Description', field: 'desc', width: 200});
+    columns.push({ id: 'comments', name: 'Comments', field: 'comments',  formatter: Formatters.Hyperlink, width: 60});
+    columns.push({ id: 'time', name: 'Time', field: 'time', width: 60});
+
+    $('#datagrid').datagrid({
+      columns: columns,
+      dataset: someData,
+      treeGrid: true,
+      toolbar: {title: 'Tasks (Hierarchical)', results: true, personalize: true}
+    })
+      .on('expandrow', function (e, args) {
+        var grid = args.grid;
+        // Lazy loading
+        var deferred = $.Deferred();
+        setTimeout(function () {
+          grid.addChildren(args.row, [{
+            id: Math.floor(Math.random() * 1000),
+            escalated: 1,
+            taskName: 'Parent row has id: ' + args.rowData.id,
+            desc: 'Cool stuff right here'
+          }]);
+          deferred.resolve();
+        }, 1000);
+        return deferred.promise();
+      });
+
+  });//initialized
+</script>

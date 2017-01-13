@@ -214,15 +214,10 @@
       },
 
       attachEvents: function () {
-        var self = this,
-          timeout;
+        var self = this;
 
-        //Throttle the Resize Down
-        $(window).on('resize.homepage', function() {
-          clearTimeout(timeout);
-          timeout = setTimeout(function () {
-            self.resize(self, self.settings.animate);
-          }, 100);
+        $('body').on('resize.homepage', function() {
+          self.resize(self, self.settings.animate);
         });
 
         $('.application-menu').on('applicationmenuopen.homepage applicationmenuclose.homepage', function () {
@@ -373,7 +368,7 @@
       },
 
       detachEvents: function () {
-        $(window).off('resize.homepage');
+        $('body').off('resize.homepage');
         $('.application-menu').off('applicationmenuopen.homepage applicationmenuclose.homepage');
       },
 

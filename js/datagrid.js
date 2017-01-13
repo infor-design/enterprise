@@ -5027,6 +5027,10 @@ $.fn.datagrid = function(options) {
         restCollapsed = false,
         args = [{grid: self, row: dataRowIndex, item: rowElement, children: children}];
 
+      if (self.settings.treeDepth[dataRowIndex]) {
+        args[0].rowData = self.settings.treeDepth[dataRowIndex].node;
+      }
+
       if (!rowElement.hasClass('datagrid-tree-parent') ||
           (!$(e.target).is(expandButton) &&
             (self.settings.editable || self.settings.selectable))) {

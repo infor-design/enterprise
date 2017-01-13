@@ -1193,6 +1193,7 @@
                   startNode: a,
                   startIcon: $('svg.icon-tree', a).getIconName(),
                   startUl: a.closest('ul'),
+                  startFolderNode: a.closest('ul').prev('a'),
                   startWidth: a.outerWidth()
                 };
 
@@ -1224,22 +1225,12 @@
 
                 // Over
                 if (self.sortable.overDirection === 'over') {
-                  var node = self.sortable.overNode;
-                  if (end.is('.folder')) {
-                    $('ul:first', end).append(start);
+                  if (!end.is('.folder')) {
+                    self.convertFileToFolder(self.sortable.overNode);
                   }
-                  else {
-                    var newFolder = $('<ul role="group"></ul>');
-                    newFolder.append(start);
-                    end.addClass('folder').append(newFolder);
-                    self.setTreeIcon($('svg.icon-tree', node), self.settings.folderIconClosed);
-                    if (node.is('[class^="icon"]')) {
-                      var iconClass = node.attr('class').replace(' hide-focus', '').replace(' is-selected', '');
-                      node.removeClass(iconClass);
-                    }
-                  }
+                  $('ul:first', end).append(start);
                   if (!end.is('.is-open')) {
-                    self.toggleNode(node);
+                    self.toggleNode(self.sortable.overNode);
                   }
                 }
 
@@ -1255,6 +1246,13 @@
                   else {
                     start.insertAfter(end);
                   }
+                }
+
+                // Restore file type
+                if ($('li', self.sortable.startUl).length === 0 &&
+                  !!self.sortable.startFolderNode.data('oldData') &&
+                    self.sortable.startFolderNode.data('oldData').type === 'file') {
+                  self.convertFolderToFile(self.sortable.startFolderNode);
                 }
 
                 // Sync dataset and ui
@@ -1391,6 +1389,40 @@
         else {
           // Out side from tree area
           outOfRange();
+        }
+      },
+
+      // Convert file node to folder type
+      convertFileToFolder: function(node) {
+        var newFolder = $('<ul role="group"></ul>'),
+          oldData = {
+            icon: $('svg.icon-tree', node).getIconName(),
+            type: 'file'
+          };
+        if (node.is('[class^="icon"]')) {
+          var iconClass = node.attr('class').replace(' hide-focus', '').replace(' is-selected', '');
+          oldData.iconClass = iconClass;
+          node.removeClass(iconClass);
+        }
+        node.data('oldData', oldData);
+        node.parent('li').addClass('folder').append(newFolder);
+        this.setTreeIcon($('svg.icon-tree', node), this.settings.folderIconClosed);
+      },
+
+      // Convert folder node to file type
+      convertFolderToFile: function(node) {
+        var parent = node.parent('.folder');
+        parent.removeClass('folder is-open');
+        $('ul:first', parent).remove();
+        if (parent.length) {
+          this.setTreeIcon(
+            $('svg.icon-tree', node),
+            node.data('oldData') ? node.data('oldData').icon : 'tree-node'
+          );
+          if (node.data('oldData') && node.data('oldData').iconClass) {
+            node.addClass(node.data('oldData').iconClass);
+          }
+          node.data('oldData', null);
         }
       },
 

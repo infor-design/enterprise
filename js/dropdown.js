@@ -1195,7 +1195,7 @@
         $(document)
           .off('click.dropdown scroll.dropdown touchmove.dropdown touchend.dropdown touchcancel.dropdown');
 
-        $(window).off('resize.dropdown');
+        $('body').off('resize.dropdown');
         this.element.trigger('listclosed');
         this.activate();
         this.list = null;

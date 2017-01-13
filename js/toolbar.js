@@ -388,7 +388,7 @@
           self.handleResize();
         });
 
-        $(window).off('resize.toolbar-' + this.id).on('resize.toolbar-' + this.id, function() {
+        $('body').off('resize.toolbar-' + this.id).on('resize.toolbar-' + this.id, function() {
           self.handleResize();
         });
 
@@ -742,7 +742,7 @@
           .init();
 
         setTimeout(function () {
-          $(window).triggerHandler('resize');
+          $('body').triggerHandler('resize');
         }, 0);
 
       },
@@ -765,7 +765,7 @@
           .off('keydown.toolbar click.toolbar focus.toolbar blur.toolbar');
 
         this.more.off('keydown.toolbar beforeopen.toolbar selected.toolbar');
-        $(window).off('resize.toolbar-' + this.id);
+        $('body').off('resize.toolbar-' + this.id);
         return this;
       },
 
