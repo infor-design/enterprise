@@ -16,6 +16,7 @@ Release Date: TBD
 * 2017-01-31 - The Datagrid column with the id: 'drilldown' will have an auto size now
 * 2017-01-31 - The Datagrid columns are now more exact. If you have specified widths they will be exactly that width
 * 2017-01-31 - The Datagrid fixed header is now default. You can control the grid by setting height on the parent container and datagrid-body element.
+* 2017-01-13 - Revised the Tabs Component to have CSS-based transitions instead of Javascript-based.  This change includes a new method of hiding tab panels by default, instead of showing them by default.  This caused a breaking change that requires removing any `display: none;` inline-styles from `.tab-panel` elements that may have been pre-defined in older versions. (SOHO-5530)
 
 ### Ui Changes
 * 2017-01-31 - The Duplicate Icon has visually changed. Make sure to update your SVG
