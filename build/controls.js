@@ -1,4 +1,5 @@
 module.exports = [
+  'temp/amd/environment.js',
   'temp/amd/personalize.js',
   'temp/amd/initialize.js',
   'temp/amd/base.js',
@@ -20,7 +21,6 @@ module.exports = [
   'temp/amd/dropdown.js',
   'temp/amd/drag.js',
   'temp/amd/editor.js',
-  'temp/amd/environment.js',
   'temp/amd/expandablearea.js',
   'temp/amd/form.js',
   'temp/amd/fileupload.js',
