@@ -264,7 +264,7 @@
         self.anchors.each(associateAnchorWithPanel);
         self.panels
           .addClass('tab-panel')
-          .attr({'role': 'tabpanel'}).hide()
+          .attr({'role': 'tabpanel'})
           .find('h3:first').attr('tabindex', '0');
 
         var excludes = ':not(.separator):not(.is-disabled):not(.is-hidden)',
@@ -1117,7 +1117,7 @@
         }
 
         var panel = this.getPanel(href);
-        return panel[0].style.display !== 'none';
+        return panel[0].className.indexOf('can-show') > -1;
       },
 
       isNestedInLayoutTabs: function() {
@@ -1267,26 +1267,18 @@
           return this.callSource(href);
         }
 
-        oldPanel.closeChildren();
-
-        self.panels.hide();
+        oldPanel.removeClass('is-visible can-show').closeChildren();
         self.element.trigger('activated', [a]);
 
-        function fadeStart() {
-          self.renderVisiblePanel();
-        }
-
-        function fadeComplete() {
-          $('#tooltip').addClass('is-hidden');
-          $('#dropdown-list, #multiselect-list').remove();
+        targetPanel.addClass('can-show');
+        self.renderVisiblePanel();
+        targetPanel[0].offsetHeight; // jshint ignore:line
+        targetPanel.one($.fn.transitionEndName() + '.tabs', function() {
           self.element.trigger('afteractivated', [a]);
-        }
-
-        targetPanel.stop().fadeIn({
-          duration: 250,
-          start: fadeStart,
-          complete: fadeComplete
         });
+
+        // Triggers the CSS Animation
+        targetPanel.addClass('is-visible');
 
         // Update the currently-selected tab
         self.updateAria(a);
@@ -1315,12 +1307,6 @@
         this.focusBar(activeStateTarget);
 
         selectedStateTarget.addClass('is-selected');
-
-        // Hide tooltips that may have been generated inside a tab.
-        setTimeout(function () {
-          $('#validation-tooltip').hide();
-          $('#tooltip').hide();
-        }, 100);
       },
 
       /**
