@@ -1,9 +1,9 @@
 module.exports = [
-  'temp/amd/environment.js',
   'temp/amd/personalize.js',
   'temp/amd/initialize.js',
   'temp/amd/base.js',
   'temp/amd/utils.js',
+  'temp/amd/environment.js',
   'temp/amd/animations.js',
   'temp/amd/locale.js',
   'temp/amd/listfilter.js',
