@@ -23,6 +23,8 @@
           containerElement: null, // Defines a separate element to be used for containing the tab panels.  Defaults to the Tab Container itself
           changeTabOnHashChange: false, // If true, will change the selected tab on invocation based on the URL that exists after the hash
           hashChangeCallback: null, // If defined as a function, provides an external method for adjusting the current page hash used by these tabs
+          source: null, // If defined, will serve as a way of pulling in external content to fill tabs.
+          sourceArguments: {}, // If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
           tabCounts: false, // If true, Displays a modifiable count above each tab.
         },
         tabContainerTypes = ['horizontal', 'vertical', 'module-tabs', 'header-tabs'],
@@ -1230,6 +1232,10 @@
           return;
         }
 
+        if (this.settings.source && targetPanel.length < 1) {
+          return this.callSource(href);
+        }
+
         oldPanel.closeChildren();
 
         self.panels.hide();
@@ -1281,6 +1287,58 @@
           $('#validation-tooltip').hide();
           $('#tooltip').hide();
         }, 100);
+      },
+
+      /**
+       * Calls an options-provided source method to fetch content that will be displayed inside a tab.
+       * @param {string} href - string representing the target tab to load content under.
+       * @param {function} callback - method that fires after a successful source call.
+       * @returns {boolean|$.Deferred} true if source call was successful, false for failure/ignore, or a promise object that will fire callbacks in either "success" or "failure" scenarios.
+       */
+      callSource: function(href, callback) {
+        if (!this.settings.source) {
+          return false;
+        }
+
+        var self = this,
+          sourceType = typeof this.settings.source,
+          response = function(htmlContent) {
+            if (htmlContent === undefined || htmlContent === null) {
+              return;
+            }
+
+            htmlContent = $.sanitizeHTML(htmlContent);
+
+            self.createTabPanel(href, htmlContent, true);
+            self.activate(href);
+
+            self.container.triggerHandler('complete'); // For Busy Indicator
+            self.container.trigger('requestend', [href, htmlContent]);
+
+            if (callback && typeof callback === 'function') {
+              callback();
+            }
+          };
+
+        this.container.triggerHandler('start'); // For Busy Indicator
+        this.container.trigger('requeststart');
+
+        // return _true_ from this source function on if we're just loading straight content
+        // return a promise if you'd like to
+        if (sourceType === 'function') {
+          return this.settings.source(response, href, this.settings.sourceArguments);
+        }
+
+        if (sourceType === 'string') {
+          // Attempt to resolve source as a URL string.  Do an AJAX get with the URL
+          var sourceURL = this.settings.source.toString(),
+            request = $.getJSON(sourceURL);
+
+          request.done(response);
+          return request;
+        }
+
+        return false;
       },
 
       renderVisiblePanel: function() {
@@ -1401,10 +1459,9 @@
         // Build
         var tabHeaderMarkup = $('<li role="presentation" class="tab"></li>'),
           anchorMarkup = $('<a href="#'+ tabId +'" role="tab" aria-expanded="false" aria-selected="false" tabindex="-1">'+ options.name +'</a>'),
-          tabContentMarkup = $('<div id="'+ tabId +'" class="tab-panel" role="tabpanel" style="display: none;"></div>');
+          tabContentMarkup = this.createTabPanel(tabId, options.content);
 
         tabHeaderMarkup.html(anchorMarkup);
-        tabContentMarkup.html(options.content);
 
         if (options.isDismissible) {
           tabHeaderMarkup.addClass('dismissible');
@@ -1625,6 +1682,21 @@
         this.element.trigger('afterclose', [targetLi]);
 
         return this;
+      },
+
+
+      createTabPanel: function(tabId, content, doInsert) {
+        tabId = tabId.replace(/#/g, '');
+
+        var markup = $('<div id="'+ tabId +'" class="tab-panel" role="tabpanel" style="display: none;">'+ content +'</div>');
+
+        if (doInsert === true) {
+          this.container.append(markup);
+        }
+
+        this.panels = this.panels.add(markup);
+
+        return markup;
       },
 
       checkPopupMenuItems: function(tab) {

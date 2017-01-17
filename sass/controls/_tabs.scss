@@ -59,6 +59,10 @@
       // scss-lint:enable ImportantRule
     }
   }
+
+  > .busy-indicator-container {
+    @include font-size(14);
+  }
 }
 
 .tab-list {
@@ -174,6 +178,10 @@
 .page-container > .tab-panel {
   height: 100%;
   padding-top: 0;
+
+  > .busy-indicator-container {
+    @include font-size(14);
+  }
 }
 
 // More Button
