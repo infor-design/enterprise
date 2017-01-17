@@ -96,7 +96,7 @@
 
         w = parseInt(w);
 
-        if (splitter.is('.splitter-horizontal')) {
+        if (this.isSplitterHorizontal) {
           splitter[0].style.top = w + 'px';
         }
 
