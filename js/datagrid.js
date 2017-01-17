@@ -1536,7 +1536,7 @@ $.fn.datagrid = function(options) {
               filterMarkup += '<select ' + (col.filterDisabled ? ' disabled' : '') + (col.filterType ==='select' ? ' class="dropdown"' : ' multiple class="multiselect"') + 'id="'+ filterId +'">';
               if (col.options) {
                 if (col.filterType ==='select') {
-                  filterMarkup += '<option>&nbsp;</option>';
+                  filterMarkup += '<option></option>';
                 }
 
                 for (var i = 0; i < col.options.length; i++) {
@@ -1563,7 +1563,7 @@ $.fn.datagrid = function(options) {
       }
 
       //Attach Keyboard support
-      var popupOpts = {offset: {y: 15}, placementOpts: {strategies: ['flip', 'nudge']}};
+      var popupOpts = {attachToBody: $('html').hasClass('ios'), offset: {y: 15}, placementOpts: {strategies: ['flip', 'nudge']}};
 
       this.headerRow.addClass('is-filterable');
       this.headerRow.find('.btn-filter').popupmenu(popupOpts).on('selected.datagrid', function () {
@@ -1765,7 +1765,8 @@ $.fn.datagrid = function(options) {
               isMatch = (rowValueStr.indexOf(conditionValue) === 0 && rowValueStr !== '');
               break;
             case 'does-not-end-with':
-              isMatch = !(rowValueStr.lastIndexOf(conditionValue) === (rowValueStr.length - conditionValue.toString().length)  && rowValueStr !== '');
+              isMatch = (rowValueStr.lastIndexOf(conditionValue) === (rowValueStr.length - conditionValue.toString().length)  && rowValueStr !== '' && (rowValueStr.length >= conditionValue.toString().length));
+              isMatch = !isMatch;
               break;
             case 'does-not-start-with':
               isMatch = !(rowValueStr.indexOf(conditionValue) === 0 && rowValueStr !== '');
@@ -2632,6 +2633,10 @@ $.fn.datagrid = function(options) {
         colWidth = colMinWidth = 78;
       }
 
+      if (col.id === 'rowStatus') {
+        colWidth = colMinWidth = 78;
+      }
+
       // cache the header widths
       this.headerWidths[index] = {id: col.id, width: colWidth, minWidth: colMinWidth,
                                   widthPercent: this.columnWidthType === 'percent',
@@ -2819,7 +2824,7 @@ $.fn.datagrid = function(options) {
 
     resetColumns: function () {
       if (this.canUseLocalStorage()) {
-        localStorage.clear();
+        localStorage.removeItem(this.uniqueId('columns'));
         localStorage[this.uniqueId('columns')] = '';
       }
 
@@ -5022,6 +5027,10 @@ $.fn.datagrid = function(options) {
         restCollapsed = false,
         args = [{grid: self, row: dataRowIndex, item: rowElement, children: children}];
 
+      if (self.settings.treeDepth[dataRowIndex]) {
+        args[0].rowData = self.settings.treeDepth[dataRowIndex].node;
+      }
+
       if (!rowElement.hasClass('datagrid-tree-parent') ||
           (!$(e.target).is(expandButton) &&
             (self.settings.editable || self.settings.selectable))) {
@@ -5048,7 +5057,7 @@ $.fn.datagrid = function(options) {
           var node = $(this);
 
           if (node.hasClass('datagrid-tree-parent') &&
-            node.attr('aria-level') > level && !restCollapsed) {
+            node.attr('aria-level') > level) {
             restCollapsed = node.find('.datagrid-expand-btn.is-expanded').length === 0;
             node[isExpanded ? 'addClass' : 'removeClass']('is-hidden');
             return;

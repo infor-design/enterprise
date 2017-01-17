@@ -15,6 +15,8 @@
 </div>
 
 <script>
+$('body').on('initialized', function () {
+
  var dataset = [{
       data: [{
           name: 'Category A',
@@ -34,7 +36,7 @@
 
   // $('#bar-example').chart({type: 'bar', dataset: dataset, tooltip: 'Tooltip by attribute'});
 
-  $('#bar-example').chart({type: 'bar', dataset: dataset, 
+  $('#bar-example').chart({type: 'bar', dataset: dataset,
     tooltip: function(response) {
       //Ajax Call or async op
       setTimeout(function () {
@@ -42,4 +44,6 @@
       }, 400);
     }
   });
+
+});
 </script>

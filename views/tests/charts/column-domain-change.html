@@ -13,6 +13,8 @@
 </div>
 
 <script>
+$('body').on('initialized', function () {
+
     var dataset = [{
             data: [{
                 name: 'Server A',
@@ -40,4 +42,5 @@
 
     $('#column-bar-example').chart({type: 'column', dataset: dataset, minValue: 90});
 
+});
 </script>

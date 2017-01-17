@@ -15,6 +15,7 @@
 
 
 <script>
+$('body').on('initialized', function () {
 
   var donutData = [{
     data: [{
@@ -30,4 +31,6 @@
   $('#pie-donut-example').chart({type: 'donut', dataset: donutData}).on('selected', function (e, elem, args) {
     console.log(e, elem, args);
   });
+
+});
 </script>

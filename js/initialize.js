@@ -141,6 +141,8 @@
             // Icons
             ['icon'],
 
+            ['splitter'],
+
             //Tabs
             ['tabs', '.tab-container:not(.vertical)'],
 
@@ -257,8 +259,6 @@
             ['lookup', '.lookup:not([data-init])'],
 
             ['wizard'],
-
-            ['splitter'],
 
             ['popdown', '[data-popdown]']
           ];

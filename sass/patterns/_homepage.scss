@@ -38,7 +38,7 @@
         -webkit-font-smoothing: antialiased;
         font-weight: 100;
         margin: 0;
-        padding-top: 8px;
+        padding-top: 3px;
         text-rendering: optimizeLegibility !important;
       }
 
@@ -48,19 +48,7 @@
       }
 
       .searchfield-wrapper {
-        margin: 8px 5px 5px 0;
-      }
-
-      .buttonset {
-        > *:not(.searchfield-wrapper) {
-          margin-top: 6px;
-        }
-      }
-
-      .more {
-        > * {
-          margin-top: 6px;
-        }
+        margin: 4px 5px 5px 0;
       }
     }
 

@@ -301,7 +301,6 @@
             node.addClass('is-editing');
             container.html(editInput);
             editInput.focus().select();
-            // self.moveCursorToEnd(editInput.focus()[0]);
 
             editInput
             .on('click.listbuilder', function() {

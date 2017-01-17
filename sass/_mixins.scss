@@ -228,6 +228,18 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
   outline-style: none;
 }
 
+// Enable Text Selection
+@mixin selectable() {
+  -webkit-touch-callout: auto;
+  -webkit-user-select: auto;
+  -khtml-user-select: auto;
+  -moz-user-select: auto;
+  -ms-user-select: auto;
+  -o-user-select: auto;
+  user-select: auto;
+  outline-style: none;
+}
+
 // Vertical Alignment Spacer
 // When using "vertical-align: middle;" to align inline-block elements in a container,
 // attach this as a Psuedo-element (::before or ::after) to the container that will hold these elements.

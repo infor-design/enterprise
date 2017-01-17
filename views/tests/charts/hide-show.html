@@ -18,7 +18,9 @@
 
 
 <script>
-  var pieData = [{
+$('body').on('initialized', function () {
+
+var pieData = [{
       data: [{
           name: 'Component A',
           value: 10.1
@@ -45,4 +47,6 @@
       $('.widget').toggle();
       $('.chart-container').triggerHandler('resize');
   });
+
+});
 </script>

@@ -1,5 +1,25 @@
+## 4.2.5
+Release Date: TBD
+
+### Key New Features
+* Change jQuery from 3.1.0 to 3.1.1 (non breaking)
+
+### Breaking Changes
+* Listview will no longer initialize components in it. You can do this manually using the resize method.
+
+* 2016-12-28 - TBD
+
+### Ui Changes
+
+### Affects
+- TBD
+
+Jira Release Notes
+TBD
+
+
 ## 4.2.4 - Minor Release
-Release Date: 2017-01-04
+Release Date: 2017-01-10
 
 ### Key New Features
 * Datagrid - Reset to Default
@@ -28,7 +48,7 @@ Release Date: 2017-01-04
 - Mask
 
 Jira Release Notes
-http://jira.infor.com/secure/ReleaseNote.jspa?version=27962&styleName=Html&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX%7Cdfaec3f836ea373670a7da5f351101b3cdec20fd%7Clin
+http://jira.infor.com/secure/ReleaseNote.jspa?version=27962&styleName=Html&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX%7C7c9b3f18b5f46187205e0d24b1489b80c8b4e1a1%7Clin
 
 ## 4.2.3 - Minor Release
 Release Date: 2016-12-06

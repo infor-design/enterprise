@@ -1188,10 +1188,12 @@
                 clone.find('.tree-checkbox, .tree-badge').remove();
 
                 self.sortable = {
-                  startNode: a,
                   // Do not use index from each loop, get updated index on drag start
                   startIndex: $(self.linkSelector, self.element).index(a),
+                  startNode: a,
+                  startIcon: $('svg.icon-tree', a).getIconName(),
                   startUl: a.closest('ul'),
+                  startFolderNode: a.closest('ul').prev('a'),
                   startWidth: a.outerWidth()
                 };
 
@@ -1211,6 +1213,8 @@
               // Drag end =========================================
               .on('dragend.tree', function (e, pos) {
                 self.targetArrow.hide();
+                $(self.linkSelector, self.element).removeClass('is-over');
+
                 if (!clone || !self.sortable.overDirection) {
                   return;
                 }
@@ -1221,22 +1225,12 @@
 
                 // Over
                 if (self.sortable.overDirection === 'over') {
-                  var node = self.sortable.overNode;
-                  if (end.is('.folder')) {
-                    $('ul:first', end).append(start);
+                  if (!end.is('.folder')) {
+                    self.convertFileToFolder(self.sortable.overNode);
                   }
-                  else {
-                    var newFolder = $('<ul role="group"></ul>');
-                    newFolder.append(start);
-                    end.addClass('folder').append(newFolder);
-                    self.setTreeIcon($('svg.icon-tree', node), self.settings.folderIconClosed);
-                    if (node.is('[class^="icon"]')) {
-                      var iconClass = node.attr('class').replace(' hide-focus', '').replace(' is-selected', '');
-                      node.removeClass(iconClass);
-                    }
-                  }
+                  $('ul:first', end).append(start);
                   if (!end.is('.is-open')) {
-                    self.toggleNode(node);
+                    self.toggleNode(self.sortable.overNode);
                   }
                 }
 
@@ -1252,6 +1246,13 @@
                   else {
                     start.insertAfter(end);
                   }
+                }
+
+                // Restore file type
+                if ($('li', self.sortable.startUl).length === 0 &&
+                  !!self.sortable.startFolderNode.data('oldData') &&
+                    self.sortable.startFolderNode.data('oldData').type === 'file') {
+                  self.convertFolderToFile(self.sortable.startFolderNode);
                 }
 
                 // Sync dataset and ui
@@ -1277,13 +1278,6 @@
           exMargin, isParentsStartNode, isBeforeStart, isAfterSttart,
           li, a, ul, links, rec, i, l, left, top, direction, doAction,
 
-          // Icons used while moving
-          icons = {
-            disabled: 'icon-cancel',
-            over: 'icon-open-folder',
-            list: 'icon-minus'
-          },
-
           // Set as out of range
           outOfRange = function() {
             self.sortable.overNode = null;
@@ -1291,7 +1285,7 @@
             self.sortable.overDirection = null;
 
             self.targetArrow.hide();
-            self.setTreeIcon($('svg.icon-tree', clone), icons.disabled);
+            self.setTreeIcon($('svg.icon-tree', clone), 'icon-cancel');
           };
 
         // Moving inside tree
@@ -1328,6 +1322,7 @@
               exMargin = parseInt(li.css('margin-top'), 10) > 0 ? 2 : 0;
               isBeforeStart = ((i-1) === self.sortable.startIndex && ul.is(self.sortable.startUl));
               isAfterSttart = ((i+1) === self.sortable.startIndex && ul.is(self.sortable.startUl));
+              links.removeClass('is-over');
 
               // Apply actions
               doAction = function() {
@@ -1336,16 +1331,19 @@
                   return;
                 }
 
+                // Reset icon
+                self.setTreeIcon($('svg.icon-tree', clone), self.sortable.startIcon);
+
                 // Over
                 if (direction === 'over') {
                   self.targetArrow.hide();
                   if (!a.is('.is-disabled')) {
-                    self.setTreeIcon($('svg.icon-tree', clone), icons.over);
+                    a.addClass('is-over');
                   }
                 }
                 // Up -or- Down
                 else {
-                  self.setTreeIcon($('svg.icon-tree', clone), icons.list);
+                  links.removeClass('is-over');
                   top = (direction === 'up') ?
                     (rec.top - 1.5 - (li.is('.is-active') ? 3 : 0)) :
                     (rec.bottom + (li.next().is('.is-active') ? -1 : 1.5) + exMargin);
@@ -1391,6 +1389,40 @@
         else {
           // Out side from tree area
           outOfRange();
+        }
+      },
+
+      // Convert file node to folder type
+      convertFileToFolder: function(node) {
+        var newFolder = $('<ul role="group"></ul>'),
+          oldData = {
+            icon: $('svg.icon-tree', node).getIconName(),
+            type: 'file'
+          };
+        if (node.is('[class^="icon"]')) {
+          var iconClass = node.attr('class').replace(' hide-focus', '').replace(' is-selected', '');
+          oldData.iconClass = iconClass;
+          node.removeClass(iconClass);
+        }
+        node.data('oldData', oldData);
+        node.parent('li').addClass('folder').append(newFolder);
+        this.setTreeIcon($('svg.icon-tree', node), this.settings.folderIconClosed);
+      },
+
+      // Convert folder node to file type
+      convertFolderToFile: function(node) {
+        var parent = node.parent('.folder');
+        parent.removeClass('folder is-open');
+        $('ul:first', parent).remove();
+        if (parent.length) {
+          this.setTreeIcon(
+            $('svg.icon-tree', node),
+            node.data('oldData') ? node.data('oldData').icon : 'tree-node'
+          );
+          if (node.data('oldData') && node.data('oldData').iconClass) {
+            node.addClass(node.data('oldData').iconClass);
+          }
+          node.data('oldData', null);
         }
       },
 

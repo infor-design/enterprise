@@ -13,6 +13,8 @@
 </div>
 
 <script>
+$('body').on('initialized', function () {
+
   var dataset = [{
       data: [{
           name: '2008',
@@ -48,4 +50,6 @@
     // [formatter string] - Only value will be formated
     formatterString: '$,.2f'// Currency
   });
+
+});
 </script>

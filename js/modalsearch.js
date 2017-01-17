@@ -66,7 +66,7 @@
 
         // Disconnect the Modal plugin's resize event, because CSS can completely handle window resizing
         // now that we don't need to calculate margins.
-        $(window).off('resize.modal-' + this.modal.id);
+        $('body').off('resize.modal-' + this.modal.id);
 
         $(document).on('keydown.modalsearch', function(e) {
           var key = e.which;

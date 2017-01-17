@@ -48,7 +48,7 @@
         self.handle = null;
 
         this.element.find('.resize-handle').drag({axis: settings.axis}).on('drag.resziable', function (e, args) {
-          self.element.width(args.left);
+          self.element[0].style.width = args.left;
         });
       },
 

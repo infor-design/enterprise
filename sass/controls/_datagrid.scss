@@ -648,7 +648,7 @@ $datagrid-short-row-height: 23px;
           // scss-lint:disable ImportantRule
           fill: $datagrid-list-filter-disabled-color !important;
           // scss-lint:enable ImportantRule
-          opacity: .7;
+          opacity: .6;
         }
 
       }
@@ -663,7 +663,7 @@ $datagrid-short-row-height: 23px;
         width: 34px;
 
         &:disabled {
-          opacity: 1;
+          opacity: .6;
 
           .icon {
             fill: $datagrid-filter-disabled-color;

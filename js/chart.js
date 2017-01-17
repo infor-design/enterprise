@@ -655,6 +655,11 @@ window.Chart = function(container) {
       return d < 0 ? 'negative-value' : 'positive-value';
     });
 
+    if (charts.isRTL && charts.isIE) {
+      svg.selectAll('text').attr('transform', 'scale(-1, 1)');
+      svg.selectAll('.y.axis text').style('text-anchor', 'start');
+    }
+
     //Animate the Bars In
     svg.selectAll('.bar')
       .transition().duration(1000)
@@ -952,7 +957,6 @@ window.Chart = function(container) {
         return function(t) { d.endAngle = i(t); return pieArcs(d); };
       });
 
-
     // Now we'll draw our label lines, etc.
     var textLabels, textX=[], textY=[],
       perEvenRound = [], perRound = [], perRoundTotal = 0,
@@ -1167,6 +1171,11 @@ window.Chart = function(container) {
             var centroid = pieArcs.centroid(d),
              midAngle = Math.atan2(centroid[1], centroid[0]),
               x = Math.cos(midAngle) * dims.labelRadius;
+
+            if (isRTL && charts.isIE) {
+              return (x > 0 ? 'start' : 'end');
+            }
+
             return isRTL ? (x > 0 ? 'end' : 'start') : (x > 0 ? 'start' : 'end');
           }
         });
@@ -1670,12 +1679,13 @@ window.Chart = function(container) {
       dataset = chartData,
       self = this,
       parent = $(container).parent(),
+      isRTL = charts.isRTL,
       isPositiveNegative = (charts.settings.type === 'column-positive-negative'),
       isSingular = (dataset.length === 1),
       margin = {top: 40, right: 40, bottom: (isSingular && chartData[0].name === undefined ? (isStacked ? 20 : 50) : 35), left: 45},
       legendHeight = 40,
       width = parent.width() - margin.left - margin.right - 10,
-      height = parent.height() - margin.top - margin.bottom - (isSingular && chartData[0].name === undefined ? (isStacked || isPositiveNegative ? legendHeight : 0) : legendHeight),
+      height = parent.height() - margin.top - margin.bottom - (isSingular && chartData[0].name === undefined ? (isStacked || isPositiveNegative ? (legendHeight - 10) : 0) : legendHeight),
       yMin, yMax, yMinTarget, yMaxTarget, series, seriesStacked,
       pnColors, pnPatterns, pnLegends, pnSeries;
 
@@ -1807,7 +1817,7 @@ window.Chart = function(container) {
     var yAxis = d3.svg.axis()
         .scale(y)
         .tickSize(-width)
-        .tickPadding(12)
+        .tickPadding(isRTL ? -12 : 12)
         .tickFormat(d3.format(charts.format || 's'))
         .orient('left');
 
@@ -1882,13 +1892,30 @@ window.Chart = function(container) {
     if (!isSingular || (isSingular && !isStacked)) {
       svg.append('g')
         .attr('class', 'x axis')
-        .attr('transform', 'translate(0,' + height + ')')
+        .attr('transform', 'translate(0,' + (height + (isPositiveNegative ? 10 : 0)) + ')')
         .call(xAxis);
     }
 
     svg.append('g')
         .attr('class', 'y axis')
         .call(yAxis);
+
+    // Adjust extra(x) space for negative values for RTL
+    if (isRTL && yMin < 0) {
+      var yMaxLength = 0,
+        tempLength;
+
+      svg.selectAll('.axis.y text')
+        .attr('class', function(d) {
+          tempLength = d3.select(this).text().length;
+          yMaxLength = (tempLength > yMaxLength) ? tempLength : yMaxLength;
+          return d < 0 ? 'negative-value' : 'positive-value';
+        })
+        .attr('x', function(d) {
+          return d < 0 ? ((yMaxLength ) * 9) : ((yMaxLength ) * 5);
+        });
+
+    }
 
     //Make an Array of objects with name + array of all values
     var dataArray = [];
@@ -1977,7 +2004,7 @@ window.Chart = function(container) {
             })
             .attr('text-anchor', 'middle')
             .attr('x', function(d) {
-              return x1(d.name) + (x1.rangeBand())/2;
+              return (x1(d.name) + (x1.rangeBand())/2) * (isRTL ? -1 : 1);
             })
             .attr('y', function(d) {
               return isTargetBars ?
@@ -2097,8 +2124,7 @@ window.Chart = function(container) {
               (chartData[0].data[i].pattern ? 'url(#'+ chartData[0].data[i].pattern +')' : null) :
               (series[i].pattern ? 'url(#'+ series[i].pattern +')' : null);
           });
-      }
-      else if (isStacked && !isSingular) {
+      } else if (isStacked && !isSingular) {
         bars
           .style('fill', function() {
             var thisGroup = d3.select(this.parentNode).attr('data-group-id');
@@ -2108,8 +2134,7 @@ window.Chart = function(container) {
             var thisGroup = d3.select(this.parentNode).attr('data-group-id');
             return (dataset[thisGroup].pattern ? 'url(#'+ dataset[thisGroup].pattern +')' : null);
           });
-      }
-      else if (isStacked && isSingular) {
+      } else if (isStacked && isSingular) {
         bars
           .style('fill', function(d, i) {
             return charts.chartColor(i, 'bar', d[0]);
@@ -2226,8 +2251,7 @@ window.Chart = function(container) {
           }
           else if (dataset.length === 1) {
             content = '<p><b>'+ format(d.value) + '</b> '+ d.name +'</p>';
-          }
-          else {
+          } else {
             var data = d3.select(this.parentNode).datum().values;
 
             content = '<div class="chart-swatch">';
@@ -2264,6 +2288,7 @@ window.Chart = function(container) {
                 content = tooltipDataCache[i] = data;
               });
             }
+
             if (content !== '') {
               clearInterval(tooltipInterval);
               show();
@@ -2323,15 +2348,22 @@ window.Chart = function(container) {
     //Add Legend
     if (isSingular && chartData[0].name) {
       charts.addLegend([{name: chartData[0].name}]);
-    }
-    else if (isPositiveNegative) {
+    } else if (isPositiveNegative) {
       charts.addLegend(pnSeries);
-    }
-    else if (isStacked && isSingular) {
+    } else if (isStacked && isSingular) {
       charts.addLegend(series);
-    }
-    else if (!isSingular) {
+    } else if (!isSingular) {
       charts.addLegend(isStacked ? seriesStacked : series);
+    }
+
+    if (charts.isRTL && charts.isIE) {
+      svg.selectAll('text').attr('transform', 'scale(-1, 1)');
+      svg.selectAll('.y.axis text').style('text-anchor', 'start');
+
+      if (isPositiveNegative) {
+        svg.selectAll('.negative-value').style('text-anchor', 'end');
+      }
+
     }
 
     //Add Tooltips
@@ -2349,6 +2381,13 @@ window.Chart = function(container) {
 
     if (charts.labelsColide(svg)) {
       charts.applyAltLabels(svg, dataArray, null, null, true);
+
+      // Adjust extra(x) space with short name for RTL
+      if (isPositiveNegative) {
+        svg.selectAll('.target-bartext, .bartext').attr('x', function() {
+          return +d3.select(this).attr('x') - (isRTL ? -6 : 6);
+        });
+      }
     }
 
     // Set initial selected
@@ -2484,6 +2523,8 @@ window.Chart = function(container) {
 
     $(container).addClass('line-chart' + (isBubble ? ' bubble' : ''));
 
+    var isRTL = charts.isRTL;
+
     var tooltipInterval,
       tooltipDataCache = [],
       tooltipData = charts.options.tooltip;
@@ -2591,7 +2632,7 @@ window.Chart = function(container) {
     var yAxis = d3.svg.axis()
       .scale(yScale)
       .tickSize(-(width + 20))
-      .tickPadding(20)
+      .tickPadding(isRTL ? -18 : 20)
       .orient('left');
 
     //Append The Axis Labels
@@ -2603,14 +2644,24 @@ window.Chart = function(container) {
           bottom: 'translate('+ (width/2) +','+(height+40)+')',
           left: 'translate('+ (-40) +','+(height/2)+')rotate(-90)'
         },
+        placeStyle = {
+          top: 'rotate(0deg) scaleX(-1) translate(-'+(width/2)+'px, '+ (-10) +'px)',
+          right: 'rotate(90deg) scaleX(-1) translate(-'+(height/2)+'px, -'+ (width+28) +'px)',
+          bottom: 'rotate(0deg) scaleX(-1) translate(-'+(width/2)+'px, '+ (height+40) +'px)',
+          left: 'rotate(90deg) scaleX(-1) translate(-'+(height/2)+'px, '+ (55) +'px)'
+        },
         addAxis = function(pos) {
           if (isAxisLabels[pos]) {
             axisLabelsGroup.append('text')
               .attr({
+                'class': 'axis-label-'+ pos,
                 'text-anchor': 'middle',
-                'transform': place[pos]
+                'transform': isRTL ? '' : place[pos]
               })
-              .style('font-size', '1.3em')
+              .style({
+                'font-size': '1.3em',
+                'transform': isRTL ? placeStyle[pos] : ''
+              })
               .text(axisLabels[pos]);
           }
         };
@@ -2638,6 +2689,11 @@ window.Chart = function(container) {
       svg.selectAll('.x.axis .tick line, .y.axis .tick line').style('opacity', 0);
       svg.select('.x.axis .tick line').attr('x2', '-10').style('opacity', 1);
       svg.select('.y.axis .tick line').style('opacity', 1);
+    }
+
+    if (charts.isRTL) {
+      svg.selectAll('text').attr('transform', 'scale(-1, 1)');
+      svg.selectAll('.y.axis text').style('text-anchor', 'start');
     }
 
     // Create the line generator
@@ -3041,21 +3097,40 @@ window.Chart = function(container) {
           .attr('y2', barHeight * 5 / 6);
 
       //Difference
-      var dif = (markers[0] > measures[0] ? '-' : '+') + Math.abs(markers[0] - measures[0]);
+      var diff = (markers[0] > measures[0] ? '-' : '+') + Math.abs(markers[0] - measures[0]),
+        line;
 
       if (Math.abs(markers[0] - measures[0]) !== 0) {
-        marker.enter().append('text')
-            .attr('class', 'inverse dir-ltr')
+        line = marker.enter().append('text')
+            .attr('class', 'inverse')
             .attr('text-anchor', 'middle')
             .attr('y', barHeight /2 + 4)
-            .attr('dx', charts.isRTL ? '50px' : '-50px')
+            .attr('dx', charts.isRTL ? '-20px' : '20px')
             .attr('x', 0)
-            .text(dif);
-      }
+            .text(diff);
 
-      marker.transition()
-          .duration(duration)
-          .attr('x', charts.isRTL ? (width * -1) : width);  //x1
+          marker.transition()
+              .duration(duration)
+              .attr('x', function() {
+                var total = 0;
+
+                g.selectAll('.measure').each(function(d) {
+                  var w = w1(d),
+                    x = x1(d);
+
+                  if (w > total) {
+                    total = w;
+                  }
+
+                  if (x > total) {
+                    total = x;
+                  }
+                });
+
+                return charts.isRTL ? -total : total;
+              })
+              .style('opacity', 1);
+      }
 
       // Update the tick groups.
       var tick = g.selectAll('g.tick')
@@ -3089,6 +3164,11 @@ window.Chart = function(container) {
             return 'translate(' + x1(d) + ',0)';
           })
           .style('opacity', 1);
+
+      if (charts.isRTL && charts.isIE) {
+        svg.selectAll('text').attr('transform', 'scale(-1, 1)');
+      }
+
     }
 
     //Add Legends
@@ -3543,6 +3623,7 @@ window.Chart = function(container) {
     this.options = options;
     this.redrawOnResize = true;
     this.isRTL = Locale.isRTL();
+    this.isIE = $('html').hasClass('ie');
 
     if (options.redrawOnResize !== undefined) {
       this.redrawOnResize = options.redrawOnResize;

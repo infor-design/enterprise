@@ -3,9 +3,8 @@
 
 select.dropdown,
 select.multiselect {
+  display: none;
   font-size: 50px;
-  left: -9999px;
-  position: absolute;
 }
 
 .dropdown-wrapper {

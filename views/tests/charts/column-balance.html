@@ -27,6 +27,8 @@
 </div>
 
 <script>
+$('body').on('initialized', function () {
+
     var dataset = [{
           data: [{
               name: 'MA-1',
@@ -50,4 +52,5 @@
 
     $('#column-bar-example').chart({type: 'column', dataset: dataset});
 
+});
 </script>
