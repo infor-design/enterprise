@@ -1536,7 +1536,7 @@ $.fn.datagrid = function(options) {
               filterMarkup += '<select ' + (col.filterDisabled ? ' disabled' : '') + (col.filterType ==='select' ? ' class="dropdown"' : ' multiple class="multiselect"') + 'id="'+ filterId +'">';
               if (col.options) {
                 if (col.filterType ==='select') {
-                  filterMarkup += '<option>&nbsp;</option>';
+                  filterMarkup += '<option></option>';
                 }
 
                 for (var i = 0; i < col.options.length; i++) {
@@ -1765,7 +1765,8 @@ $.fn.datagrid = function(options) {
               isMatch = (rowValueStr.indexOf(conditionValue) === 0 && rowValueStr !== '');
               break;
             case 'does-not-end-with':
-              isMatch = !(rowValueStr.lastIndexOf(conditionValue) === (rowValueStr.length - conditionValue.toString().length)  && rowValueStr !== '');
+              isMatch = (rowValueStr.lastIndexOf(conditionValue) === (rowValueStr.length - conditionValue.toString().length)  && rowValueStr !== '' && (rowValueStr.length >= conditionValue.toString().length));
+              isMatch = !isMatch;
               break;
             case 'does-not-start-with':
               isMatch = !(rowValueStr.indexOf(conditionValue) === 0 && rowValueStr !== '');

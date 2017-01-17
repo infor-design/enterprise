@@ -66,8 +66,9 @@
             this.element.is('.dropdown-sm') ? 'dropdown input-sm' :
             this.element.is('.dropdown-lg') ? 'dropdown input-lg' : 'dropdown';
 
-        this.isHidden = this.element.css('display') === 'none';
-        this.element.hide();
+        //Detect Inline Styles
+        var style = this.element.attr('style');
+        this.isHidden = style && style.indexOf('display: none') > 0;
 
         // Build the wrapper if it doesn't exist
         var baseElement = this.isInlineLabel ? this.inlineLabel : this.element;
@@ -158,7 +159,6 @@
           filterMode: this.settings.filterMode
         });
 
-        this.updateList();
         this.setValue();
         this.setInitial();
         this.setWidth();
@@ -201,7 +201,7 @@
       updateList: function() {
         var self = this,
           isMobile = self.isMobile(),
-          listExists = self.list !== undefined && self.list.length > 0,
+          listExists = self.list !== undefined && self.list !== null && self.list.length > 0,
           listContents = '',
           ulContents = '',
           upTopOpts = 0,
@@ -248,9 +248,9 @@
 
           liMarkup += '<li role="presentation" class="dropdown-option'+ (isSelected ? ' is-selected' : '') +
                         (isDisabled ? ' is-disabled' : '') +
-                        (cssClasses ? ' ' + cssClasses.value : '' ) +
-                        '" data-val="' + trueValue + '"' +
-                        '" tabindex="' + (index && index === 0 ? 0 : -1) + '">' +
+                        (cssClasses ? ' ' + cssClasses.value : '' ) + '"' +
+                        ' data-val="' + trueValue + '"' +
+                        ' tabindex="' + (index && index === 0 ? 0 : -1) + '">' +
                         (title ? '" title="' + title.value + '"' : '') +
                         '<a role="option" href="#" id="list-option'+ index +'">' +
                           text +
@@ -1198,6 +1198,10 @@
         $('body').off('resize.dropdown');
         this.element.trigger('listclosed');
         this.activate();
+        this.list = null;
+        this.searchInput = null;
+        this.listUl = null;
+
       },
 
       //Set option into view
@@ -1234,7 +1238,7 @@
 
       // Return true/false if the list is open
       isOpen: function() {
-        return this.list.is(':visible');
+        return this.list && this.list.is(':visible');
       },
 
       // Hide or Show list

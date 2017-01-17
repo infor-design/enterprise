@@ -1,0 +1,172 @@
+<form id="maincontentform" autocomplete="off" data-validate-on="submit" style="display:none;">
+	<div class="row">
+		<div class="twelve columns">
+			<div>
+				<div>
+					<div id="datagrid-cnangrp"/>
+				</div>
+			</div>
+			<br/>
+
+			<div class="six columns">
+				<fieldset>
+					<legend>Group Note</legend>
+					<div class="summary-form">
+					</div>
+				</fieldset>
+
+				<div id="cnanntx-tfkcnanntp-field" class="field">
+					<label for="cnanntx-tfkcnanntp" class="label">Contact Note Type</label>
+					<input type="text" class="lookup" data-init="false" id="cnanntx-tfkcnanntp" name="cnanntx-tfkcnanntp" value=""/>
+				</div>
+
+				<div class="field">
+					<label for="cnanntx-note" class="label required">Note</label>
+					<textarea id="cnanntx-note" class="textarea input-lg" name ="cnanntx-note" aria-required="true" data-validate="required">Appointment: To Do 17-Feb-2014 17:00:00 Meduim
+
+User:	System Administrator
+Subject:	Ed</textarea>
+				</div>
+
+				<div class="compound-field">
+					<div class="field">
+						<label for="cnanntx-effectdate" class="label">Effective Date</label>
+						<input type="text" class="datepicker  " id="cnanntx-effectdate" data-init="false" name="cnanntx-effectdate" />
+					</div>
+
+					<div class="field">
+						<label for="cnanntx-lapsedate" class="label">Lapse Date</label>
+						<input type="text" class="datepicker  " id="cnanntx-lapsedate" data-init="false" name="cnanntx-lapsedate" />
+					</div>
+				</div>
+
+				<div class="field">
+					<label for="cnanntx-senddate_n" class="label">Date and Time of SMS</label>
+					<input type="text" class="datepicker datetime " id="cnanntx-senddate_n" data-init="false" name="cnanntx-senddate_n"  disabled/>
+				</div>
+
+				<div class="field">
+					<label for="cnanntx-emailsts_n" class="label">SMS Status</label>
+					<select  class="dropdown" id="cnanntx-emailsts_n" name="cnanntx-emailsts_n" disabled>
+						<option value="">(none)</option>
+						<option value="F">Failed</option>
+						<option value="N">Sending</option>
+						<option value="S" selected>Sent</option>
+						<option value="W">Waiting</option>
+					</select>
+				</div>
+
+				<div class="field">
+					<label for="cnanntx-smsmsgchar_n" class="label">SMS Characters</label>
+					<input type="text" id="cnanntx-smsmsgchar_n" class=" input-xs" name="cnanntx-smsmsgchar_n" readonly data-mask data-options="{ pattern: '##########' }"  value =""/>
+				</div>
+			</div>
+
+			<div class="six columns">
+				<fieldset>
+					<legend>Contacts</legend>
+					<div class="summary-form">
+
+					</div>
+				</fieldset>
+
+				<div class="swaplist" data-init="false" id="swaplist-cnanntx-cnanntes">
+					<div class="card available">
+						<div class="card-header">
+							<h2 class="card-title">Available Contacts</h2>
+							<div class="buttons">
+								<button class="btn btn-moveto-selected" type="button">
+									<span class="audible">Select</span>
+									<svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+										<use xlink:href="#icon-right-arrow"/>
+									</svg>
+								</button>
+							</div>
+						</div>
+						<div class="card-content">
+							<div class="listview" data-init="false"/>
+						</div>
+					</div>
+					<div class="card selected">
+						<div class="card-header">
+							<h2 class="card-title">Selected Contacts</h2>
+							<div class="buttons">
+								<button class="btn btn-moveto-left" type="button">
+									<span class="audible">Move to left</span>
+									<svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+										<use xlink:href="#icon-left-arrow"/>
+									</svg>
+								</button>
+							</div>
+						</div>
+						<div class="card-content">
+							<div class="listview" data-init="false"/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="twelve columns">
+			<div class="six columns">
+				<fieldset>
+					<legend>Security Options</legend>
+					<div class="summary-form">
+
+					</div>
+				</fieldset>
+
+				<div id="cnanntx-tfkcsyuser-field" class="field">
+					<label for="cnanntx-tfkcsyuser" class="label required">Responsible Officer</label>
+					<input type="text" class="lookup" data-init="false" id="cnanntx-tfkcsyuser" name="cnanntx-tfkcsyuser" data-validate="required" value="SCASYS - System Administrator"/>
+				</div>
+
+				<div class="field">
+					<label for="cnanntx-seclevel" class="label">Security Level</label>
+					<select  class="dropdown" id="cnanntx-seclevel" name="cnanntx-seclevel" data-validate="required">
+						<option value="G" selected>General</option>
+						<option value="L">Limited</option>
+						<option value="P">Private</option>
+					</select>
+				</div>
+
+				<div id="cnanntx-tfkcorstru-field" class="field">
+					<label for="cnanntx-tfkcorstru" class="label">Structure</label>
+					<input type="text" class="lookup" data-init="false" id="cnanntx-tfkcorstru" name="cnanntx-tfkcorstru" data-validate="cnanntx-tfkcorstru-responsible-structure-required-rule" data-validation-events="{  'cnanntx-tfkcorstru-responsible-structure-required-rule': 'blur change'  }" value=""/>
+				</div>
+
+				<div id="cnanntx-tfkcorrgrp-field" class="field">
+					<label for="cnanntx-tfkcorrgrp" class="label">Responsibility Group</label>
+					<input type="text" class="lookup" data-init="false" id="cnanntx-tfkcorrgrp" name="cnanntx-tfkcorrgrp" data-validate="cnanntx-tfkcorrgrp-responsible-group-required-rule" data-validation-events="{  'cnanntx-tfkcorrgrp-responsible-group-required-rule': 'blur change'  }" value=""/>
+				</div>
+
+				<button type="button" class="btn-primary hide-focus" id="btn-sms">
+					<svg xmlns="http://www.w3.org/2000/svg" class="icon" role="presenatation" aria-hidden="true" focusable="false">
+						<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-mail"/>
+					</svg>
+					<span>SMS</span>
+				</button>
+				<br/>
+				<br/>
+				<br/>
+			</div>
+			<div class="six columns">
+
+				<fieldset>
+					<legend>Created</legend>
+					<div class="summary-form">
+					</div>
+				</fieldset>
+
+				<div class="field">
+					<label for="cnanntx-userid" class="label">User Identifier</label>
+					<input type="text" id="cnanntx-userid" class=" uppercase" name="cnanntx-userid" readonly  value ="SCASYS"/>
+				</div>
+
+				<div class="field">
+					<label for="cnanntx-createdate" class="label">Creation Date</label>
+					<input type="text" class="datepicker datetime " id="cnanntx-createdate" data-init="false" name="cnanntx-createdate"  disabled/>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>

@@ -1,3 +1,23 @@
+## 4.2.5
+Release Date: TBD
+
+### Key New Features
+* Change jQuery from 3.1.0 to 3.1.1 (non breaking)
+
+### Breaking Changes
+* Listview will no longer initialize components in it. You can do this manually using the resize method.
+
+* 2016-12-28 - TBD
+
+### Ui Changes
+
+### Affects
+- TBD
+
+Jira Release Notes
+TBD
+
+
 ## 4.2.4 - Minor Release
 Release Date: 2017-01-10
 
