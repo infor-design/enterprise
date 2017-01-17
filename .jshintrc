@@ -72,7 +72,8 @@
   "globals": {
     "globals": true,
     "chai": true,
-    "should": true
+    "should": true,
+    "test" : true
   },
   "esversion":6
 }
