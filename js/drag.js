@@ -267,9 +267,15 @@
 
           // Caching this so drag is not jaggie
           if (!this.obstacle) {
+            var obstacleOffset = this.obstacle.offset();
             this.obstacle = $(settings.obstacle).not(this.element);
-            this.constraints = {top: this.obstacle.offset().top, left: this.obstacle.offset().left,
-              bottom: this.obstacle.offset().top + this.obstacle.outerHeight(), right: this.obstacle.offset().left + this.obstacle.outerWidth()};
+
+            this.constraints = {
+              top: obstacleOffset.top,
+              left: obstacleOffset.left,
+              bottom: obstacleOffset.top + this.obstacle.outerHeight(),
+              right: obstacleOffset.left + this.obstacle.outerWidth()
+            };
           }
 
           if (!movingRight && self.originalPos.left > this.constraints.left && css.left <= this.constraints.right) {
@@ -283,11 +289,14 @@
           //TODO: Moving Down
         }
 
-        if (this.clone) {
-          this.clone.css(css);
-        } else {
-          this.element.css(css);
-        }
+        var applyCssStyle = function(el, css, prop) {
+          if (typeof css[prop] !== 'undefined') {
+            el[0].style[prop] = css[prop] +'px';
+          }
+        };
+        applyCssStyle((this.clone || this.element), css, 'top');
+        applyCssStyle((this.clone || this.element), css, 'left');
+
         this.element.trigger('drag', css);
       },
 

@@ -52,56 +52,96 @@
       // Build the Control and Events
       build: function() {
         var self = this,
+          s = this.settings,
           splitter = this.element,
-          w = splitter.parent().width(),
-          parentHeight = splitter.parent().height();
+          parent = splitter.parent(),
+          w = parent.width(),
+          parentHeight = parent.height(),
+          direction = s.axis === 'x' ? 'left' : 'top',
+          thisSide = parent.is('.content') ? parent.parent() : parent;
+
+        this.docBody = $('body');
+        this.isSplitterRightSide = splitter.is('.splitter-right');
+        this.isSplitterHorizontal = splitter.is('.splitter-horizontal');
+        s.uniqueId = this.uniqueId();
+
+        if (this.isSplitterRightSide) {
+          this.leftSide = thisSide;
+
+          thisSide.addClass('is-right-side')
+            .next().addClass('flex-grow-shrink is-right-side')
+            .parent().addClass('splitter-container');
+        }
+        else if (this.isSplitterHorizontal) {
+          this.topPanel = splitter.prev();
+          w = this.topPanel.height();
+
+          parent.addClass('splitter-container is-horizontal');
+          splitter.next().addClass('flex-grow-shrink');
+        }
+        else {
+          this.rightSide = thisSide;
+          this.leftSide = thisSide.prev().parent();
+
+          thisSide.prev()
+            .addClass('flex-grow-shrink')
+            .parent().addClass('splitter-container');
+        }
 
         //Restore from local storage
-        if (localStorage && this.settings.save &&
-          !isNaN(parseInt(localStorage[this.uniqueId()]))) {
-          w = localStorage[this.uniqueId()];
+        if (localStorage && s.save &&
+          !isNaN(parseInt(localStorage[s.uniqueId]))) {
+          w = localStorage[s.uniqueId];
         }
-        this.splitTo(parseInt(w), parentHeight);
+
+        w = parseInt(w);
+
+        if (splitter.is('.splitter-horizontal')) {
+          splitter[0].style.top = w + 'px';
+        }
+
+        this.splitTo(w, parentHeight);
 
         //Add the Splitter Events
         this.documentWidth = 0;
 
-        this.element.drag({axis: this.settings.axis,
-          containment: this.settings.containment ? this.settings.containment :
-          this.settings.axis === 'x' ? 'document' : 'parent', containmentOffset: {left: 20, top: 0}})
-          .on('dragstart.splitter', function () {
-            var iframes = $('iframe');
-            self.documentWidth = $(document).width();
+        this.element.drag({
+          axis: s.axis,
+          containment: s.containment || s.axis === 'x' ? 'document' : 'parent',
+          containmentOffset: {left: 20, top: 0}
+        })
+        .on('dragstart.splitter', function () {
+          var iframes = $('iframe');
+          self.documentWidth = $(document).width();
 
-            if (iframes.length > 0) {
-              iframes.each(function() {
-                var frame = $(this),
-                  overlay = $('<div class="overlay"></div>');
-                frame.before(overlay);
-                overlay.css({height: '100%', width: (frame.parent().css('width')) - 40 + 'px', opacity: 0, visibility: 'visible'});
-              });
+          if (iframes.length > 0) {
+            for (var i = 0, l = iframes.length; i < l; i++) {
+              var frame = $(iframes[i]),
+                width = parseInt(getComputedStyle(frame.parent()[0]).width, 10) - 40 +'px';
+              frame.before('<div class="overlay" style="opacity: 0; visibility: visible; height: 100%; width: '+ width +'"></div>');
             }
-          })
-          .on('dragend.splitter', function (e, args) {
-            $('.overlay').remove();
+          }
+        })
+        .on('dragend.splitter', function (e, args) {
+          $('.overlay').remove();
 
-            if (self.settings.resize === 'end') {
-              self.splitTo(self.settings.axis === 'x' ? args.left : args.top, parentHeight);
-            }
+          if (s.resize === 'end') {
+            self.splitTo(args[direction], parentHeight);
+          }
 
-          })
-          .on('drag.splitter', function (e, args) {
-            if (args.left <= 0) {
-              return false;
-            }
+        })
+        .on('drag.splitter', function (e, args) {
+          if (args.left <= 0) {
+            return false;
+          }
 
-            if (self.settings.resize === 'immediate') {
-              self.splitTo(self.settings.axis === 'x' ? args.left : args.top, parentHeight);
-            }
-          });
+          if (s.resize === 'immediate') {
+            self.splitTo(args[direction], parentHeight);
+          }
+        });
 
         //Horizontal Splitter
-        if (this.settings.axis === 'y') {
+        if (s.axis === 'y') {
           this.element.addClass('splitter-horizontal');
         }
 
@@ -115,26 +155,25 @@
       handleEvents: function() {
         var self = this;
 
-        this.element.on('updated.' + pluginName, function() {
-          self.updated();
-        }).on('keydown.' + pluginName, function(e) {
+        this.element
+          .on('updated.' + pluginName, function() {
+            self.updated();
+          })
+          .on('keydown.' + pluginName, function(e) {
+            //Space will toggle selection
+            if (e.which === 32) {
+              self.toggleSelection();
+              e.preventDefault();
+            }
 
-          //Space will toggle selection
-          if (e.which === 32) {
-            self.toggleSelection();
-            e.preventDefault();
-          }
+            if (e.which === 37) {
+              self.splitTo(self.split - 15, self.parentHeight);
+            }
 
-          if (e.which === 37) {
-            self.splitTo(self.split - 15, self.parentHeight);
-          }
-
-          if (e.which === 39) {
-            self.splitTo(self.split + 15, self.parentHeight);
-          }
-
-        });
-
+            if (e.which === 39) {
+              self.splitTo(self.split + 15, self.parentHeight);
+            }
+          });
 
         return this;
       },
@@ -145,88 +184,59 @@
 
       //Resize the panel vertically
       resizeTop: function (splitter, top, parentHeight) {
-        //Find the top and bottom panels and set the height
-        var topPanel = splitter.prev(),
-          bottomPanel = splitter.next();
-
         if (top > parentHeight || top < 0) {
           top = parseInt(parentHeight) / 2;
         }
 
-        topPanel.css('height', top + 'px');
-        bottomPanel.css('height', (parentHeight - top) + 'px');
+        this.topPanel[0].style.height = top + 'px';
       },
 
       //Resize the panel to the Left
       resizeLeft: function (splitter, leftArg) {
-        //Find the right parents and left and right side
-        var rightSide = splitter.parent();
-
-        if (rightSide.is('.content')) {
-          rightSide = rightSide.parent();
-        }
-
-        var leftSide = rightSide.prev(),
-          left = leftSide.parent().outerWidth() - leftArg;
+        var left = this.leftSide.outerWidth() - leftArg;
 
         //Adjust Left and Right Side
-        rightSide.css('width', (left + 'px'));
-        leftSide.css('width', ('calc(100% - ' + left + 'px)'));
+        this.rightSide[0].style.width = left + 'px';
 
         //Reset the Width
-        splitter.css('left', '');
+        splitter[0].style.left = '';
       },
 
       //Resize the panel to the Right
-      resizeRight: function (splitter, leftArg) {
-        //Find the right parents and left and right side
-        var leftSide = splitter.parent();
-
-        if (leftSide.is('.content')) {
-          leftSide = leftSide.parent();
-        }
-
-        var rightSide = leftSide.next(),
-          w = leftArg;
-
+      resizeRight: function (splitter, w) {
         //Adjust Left and Right Side
-        rightSide.css({'width': ('calc(100% - ' + (w + 20) + 'px)')});
-        leftSide.css({'width': ((w) + 'px') , 'margin-right' : '20px', 'border-right': '0'});
-        splitter.css('left', leftArg-1);
+        this.leftSide[0].style.width = w + 'px';
+        splitter[0].style.left = (w-1) +'px';
       },
 
       //Preferably use the id, but if none that make one based on the url and count
       uniqueId: function () {
-
-        if (this.element.attr('id')) {
-          return this.element.attr('id');
-        }
-
-        return (window.location.pathname.split('/').pop()) + '-splitter-' + $('.splitter').length;
+        return this.element.attr('id') ||
+          (window.location.pathname.split('/').pop()) + '-splitter-' + $('.splitter').length;
       },
 
       splitTo: function (split, parentHeight) {
         var self = this,
           splitter = this.element;
 
-        if (splitter.is('.splitter-right')) {
+        if (this.isSplitterRightSide) {
           this.resizeRight(splitter, split);
-        } else if (splitter.is('.splitter-horizontal')) {
+        } else if (this.isSplitterHorizontal) {
           this.resizeTop(splitter, split, parentHeight);
         } else {
           this.resizeLeft(splitter, split);
         }
 
         this.element.trigger('split', [split]);
-        
+
         function triggerResize() {
-          $('body').triggerHandler('resize', [self]);
+          self.docBody.triggerHandler('resize', [self]);
         }
         Soho.utils.debounce(triggerResize);
 
         //Save to local storage
         if (localStorage) {
-          localStorage[this.uniqueId()] = split;
+          localStorage[this.settings.uniqueId] = split;
         }
 
         this.split = split;
