@@ -20,6 +20,7 @@
         defaults = {
           addTabButton: false, // If set to true, creates a button at the end of the tab list that can be used to add an empty tab and panel
           addTabButtonCallback: null, // if defined as a function, will be used in-place of the default Tab Adding method
+          ajaxOptions: null, // if defined, will be used by any internal Tabs AJAX calls as the desired request settings.
           containerElement: null, // Defines a separate element to be used for containing the tab panels.  Defaults to the Tab Container itself
           changeTabOnHashChange: false, // If true, will change the selected tab on invocation based on the URL that exists after the hash
           hashChangeCallback: null, // If defined as a function, provides an external method for adjusting the current page hash used by these tabs
@@ -570,6 +571,10 @@
         // Hide these states
         this.focusBar(li);
         this.positionFocusState(a);
+
+        if (this.isURL(href)) {
+          return false;
+        }
       },
 
       handleMoreButtonClick: function(e) {
@@ -1216,12 +1221,24 @@
         return target;
       },
 
+      isURL: function(href) {
+        if (href.indexOf('#') === 0) {
+          return false;
+        }
+
+        return true;
+      },
+
       activate: function(href) {
         var self = this,
-          a = self.getAnchor(href),
-          targetTab, targetPanel, oldTab, oldPanel,
+          a, targetTab, targetPanel, oldTab, oldPanel,
           selectedStateTarget;
 
+        if (self.isURL(href)) {
+          return this.callSource(href, true);
+        }
+
+        a = self.getAnchor(href);
         targetTab = a.parent();
         targetPanel = self.getPanel(href);
         oldTab = self.anchors.parents().filter('.is-selected');
@@ -1295,8 +1312,8 @@
        * @param {function} callback - method that fires after a successful source call.
        * @returns {boolean|$.Deferred} true if source call was successful, false for failure/ignore, or a promise object that will fire callbacks in either "success" or "failure" scenarios.
        */
-      callSource: function(href, callback) {
-        if (!this.settings.source) {
+      callSource: function(href, isURL) {
+        if ((isURL === undefined || isURL === null || isURL === false) && !this.settings.source) {
           return false;
         }
 
@@ -1309,33 +1326,73 @@
 
             htmlContent = $.sanitizeHTML(htmlContent);
 
+            // Get a new random tab ID for this tab if one can't be derived from the URL string
+            if (isURL) {
+              var anchor = self.tablist.find('[href="'+ href +'"]'),
+                containerId = self.container[0].id || '',
+                id = anchor.uniqueId('tab', containerId);
+
+              href = '#' + id;
+              // Replace the original URL on this anchor now that we've loaded content.
+              anchor.attr('href', href);
+            }
+
             self.createTabPanel(href, htmlContent, true);
             self.activate(href);
 
             self.container.triggerHandler('complete'); // For Busy Indicator
             self.container.trigger('requestend', [href, htmlContent]);
-
-            if (callback && typeof callback === 'function') {
-              callback();
-            }
           };
 
         this.container.triggerHandler('start'); // For Busy Indicator
         this.container.trigger('requeststart');
 
+        function handleStringSource(url, options) {
+          var opts = $.extend({ dataType: 'html' }, options, {
+            url: url
+          });
+
+          var request = $.ajax(opts);
+          request.done(response);
+          return request;
+        }
+
+        if (isURL) {
+          return handleStringSource(href, this.ajaxOptions);
+        }
+
         // return _true_ from this source function on if we're just loading straight content
-        // return a promise if you'd like to
+        // return a promise if you'd like to setup async handling.
         if (sourceType === 'function') {
           return this.settings.source(response, href, this.settings.sourceArguments);
         }
 
         if (sourceType === 'string') {
-          // Attempt to resolve source as a URL string.  Do an AJAX get with the URL
-          var sourceURL = this.settings.source.toString(),
-            request = $.getJSON(sourceURL);
+          // Attempt to resolve source as a URL string.  Make an $.ajax() call with the URL
+          var safeHref = href.replace(/#/g, ''),
+            sourceURL = this.settings.source.toString(),
+            hasHref = sourceURL.indexOf(safeHref) > -1;
 
-          request.done(response);
-          return request;
+          if (!hasHref) {
+            var param = 'tab=' + safeHref,
+              paramIndex = sourceURL.indexOf('?'),
+              hashIndex = sourceURL.indexOf('#'),
+              insertIndex = sourceURL.length;
+
+            if (paramIndex < 0) {
+              param = '?' + param;
+              if (hashIndex > -1) {
+                insertIndex = hashIndex + 1;
+              }
+            } else {
+              param = param + '&';
+              insertIndex = paramIndex + 1;
+            }
+
+            sourceURL = Soho.string.splice(sourceURL, insertIndex, 0, param);
+          }
+
+          return handleStringSource(sourceURL, this.ajaxOptions);
         }
 
         return false;
