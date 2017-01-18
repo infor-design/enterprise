@@ -2,6 +2,27 @@
 //========================================================
 
 .splitter-container {
+  @include flexbox();
+  @include flex-direction(row);
+  @include flex(1 1 auto);
+
+  &.is-horizontal {
+    @include flex-direction(column);
+  }
+
+  * {
+    @include flex(0 0 auto);
+  }
+
+  .flex-grow-shrink {
+    @include flex(1 1 auto);
+  }
+
+  .is-right-side {
+    border-right: 0;
+    margin-right: 20px;
+  }
+
   .content {
     height: 100%;
   }
