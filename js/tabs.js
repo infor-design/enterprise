@@ -20,9 +20,12 @@
         defaults = {
           addTabButton: false, // If set to true, creates a button at the end of the tab list that can be used to add an empty tab and panel
           addTabButtonCallback: null, // if defined as a function, will be used in-place of the default Tab Adding method
+          ajaxOptions: null, // if defined, will be used by any internal Tabs AJAX calls as the desired request settings.
           containerElement: null, // Defines a separate element to be used for containing the tab panels.  Defaults to the Tab Container itself
           changeTabOnHashChange: false, // If true, will change the selected tab on invocation based on the URL that exists after the hash
           hashChangeCallback: null, // If defined as a function, provides an external method for adjusting the current page hash used by these tabs
+          source: null, // If defined, will serve as a way of pulling in external content to fill tabs.
+          sourceArguments: {}, // If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
           tabCounts: false, // If true, Displays a modifiable count above each tab.
         },
         tabContainerTypes = ['horizontal', 'vertical', 'module-tabs', 'header-tabs'],
@@ -568,6 +571,10 @@
         // Hide these states
         this.focusBar(li);
         this.positionFocusState(a);
+
+        if (this.isURL(href)) {
+          return false;
+        }
       },
 
       handleMoreButtonClick: function(e) {
@@ -1031,7 +1038,7 @@
         this.setOverflow();
 
         var selected = this.tablist.find('.is-selected');
-        if (this.moreButton.is('.is-selected') || this.isTabOverflowed(selected)) {
+        if (!selected.length || this.moreButton.is('.is-selected') || this.isTabOverflowed(selected)) {
           selected = this.moreButton;
         }
 
@@ -1058,7 +1065,10 @@
           return;
         }
 
-        this.tablist.css('height', this.element.outerHeight(true));
+        var elemStyle = window.getComputedStyle(this.element[0]),
+          elemOuterHeight = elemStyle.getPropertyValue('height') + elemStyle.getPropertyValue('margin-top') + elemStyle.getPropertyValue('margin-bottom');
+
+        this.tablist[0].style.height = elemOuterHeight;
       },
 
       // Changes the location in the browser address bar to force outbound links.
@@ -1108,7 +1118,7 @@
         }
 
         var panel = this.getPanel(href);
-        return panel.css('display') !== 'none';
+        return panel[0].style.display !== 'none';
       },
 
       isNestedInLayoutTabs: function() {
@@ -1214,12 +1224,24 @@
         return target;
       },
 
+      isURL: function(href) {
+        if (href.indexOf('#') === 0) {
+          return false;
+        }
+
+        return true;
+      },
+
       activate: function(href) {
         var self = this,
-          a = self.getAnchor(href),
-          targetTab, targetPanel, oldTab, oldPanel,
+          a, targetTab, targetPanel, oldTab, oldPanel,
           selectedStateTarget;
 
+        if (self.isURL(href)) {
+          return this.callSource(href, true);
+        }
+
+        a = self.getAnchor(href);
         targetTab = a.parent();
         targetPanel = self.getPanel(href);
         oldTab = self.anchors.parents().filter('.is-selected');
@@ -1228,6 +1250,10 @@
         var isCancelled = self.element.trigger('beforeactivate', [a]);
         if (!isCancelled) {
           return;
+        }
+
+        if (this.settings.source && targetPanel.length < 1) {
+          return this.callSource(href);
         }
 
         oldPanel.closeChildren();
@@ -1281,6 +1307,98 @@
           $('#validation-tooltip').hide();
           $('#tooltip').hide();
         }, 100);
+      },
+
+      /**
+       * Calls an options-provided source method to fetch content that will be displayed inside a tab.
+       * @param {string} href - string representing the target tab to load content under.
+       * @param {function} callback - method that fires after a successful source call.
+       * @returns {boolean|$.Deferred} true if source call was successful, false for failure/ignore, or a promise object that will fire callbacks in either "success" or "failure" scenarios.
+       */
+      callSource: function(href, isURL) {
+        if ((isURL === undefined || isURL === null || isURL === false) && !this.settings.source) {
+          return false;
+        }
+
+        var self = this,
+          sourceType = typeof this.settings.source,
+          response = function(htmlContent) {
+            if (htmlContent === undefined || htmlContent === null) {
+              return;
+            }
+
+            htmlContent = $.sanitizeHTML(htmlContent);
+
+            // Get a new random tab ID for this tab if one can't be derived from the URL string
+            if (isURL) {
+              var anchor = self.tablist.find('[href="'+ href +'"]'),
+                containerId = self.container[0].id || '',
+                id = anchor.uniqueId('tab', containerId);
+
+              href = '#' + id;
+              // Replace the original URL on this anchor now that we've loaded content.
+              anchor.attr('href', href);
+            }
+
+            self.createTabPanel(href, htmlContent, true);
+            self.activate(href);
+
+            self.container.triggerHandler('complete'); // For Busy Indicator
+            self.container.trigger('requestend', [href, htmlContent]);
+          };
+
+        this.container.triggerHandler('start'); // For Busy Indicator
+        this.container.trigger('requeststart');
+
+        function handleStringSource(url, options) {
+          var opts = $.extend({ dataType: 'html' }, options, {
+            url: url
+          });
+
+          var request = $.ajax(opts);
+          request.done(response);
+          return request;
+        }
+
+        if (isURL) {
+          return handleStringSource(href, this.ajaxOptions);
+        }
+
+        // return _true_ from this source function on if we're just loading straight content
+        // return a promise if you'd like to setup async handling.
+        if (sourceType === 'function') {
+          return this.settings.source(response, href, this.settings.sourceArguments);
+        }
+
+        if (sourceType === 'string') {
+          // Attempt to resolve source as a URL string.  Make an $.ajax() call with the URL
+          var safeHref = href.replace(/#/g, ''),
+            sourceURL = this.settings.source.toString(),
+            hasHref = sourceURL.indexOf(safeHref) > -1;
+
+          if (!hasHref) {
+            var param = 'tab=' + safeHref,
+              paramIndex = sourceURL.indexOf('?'),
+              hashIndex = sourceURL.indexOf('#'),
+              insertIndex = sourceURL.length;
+
+            if (paramIndex < 0) {
+              param = '?' + param;
+              if (hashIndex > -1) {
+                insertIndex = hashIndex + 1;
+              }
+            } else {
+              param = param + '&';
+              insertIndex = paramIndex + 1;
+            }
+
+            sourceURL = Soho.string.splice(sourceURL, insertIndex, 0, param);
+          }
+
+          return handleStringSource(sourceURL, this.ajaxOptions);
+        }
+
+        return false;
       },
 
       renderVisiblePanel: function() {
@@ -1401,10 +1519,9 @@
         // Build
         var tabHeaderMarkup = $('<li role="presentation" class="tab"></li>'),
           anchorMarkup = $('<a href="#'+ tabId +'" role="tab" aria-expanded="false" aria-selected="false" tabindex="-1">'+ options.name +'</a>'),
-          tabContentMarkup = $('<div id="'+ tabId +'" class="tab-panel" role="tabpanel" style="display: none;"></div>');
+          tabContentMarkup = this.createTabPanel(tabId, options.content);
 
         tabHeaderMarkup.html(anchorMarkup);
-        tabContentMarkup.html(options.content);
 
         if (options.isDismissible) {
           tabHeaderMarkup.addClass('dismissible');
@@ -1625,6 +1742,21 @@
         this.element.trigger('afterclose', [targetLi]);
 
         return this;
+      },
+
+
+      createTabPanel: function(tabId, content, doInsert) {
+        tabId = tabId.replace(/#/g, '');
+
+        var markup = $('<div id="'+ tabId +'" class="tab-panel" role="tabpanel" style="display: none;">'+ content +'</div>');
+
+        if (doInsert === true) {
+          this.container.append(markup);
+        }
+
+        this.panels = this.panels.add(markup);
+
+        return markup;
       },
 
       checkPopupMenuItems: function(tab) {
@@ -1853,17 +1985,27 @@
       },
 
       setOverflow: function () {
-        var self = this;
+        var elem = this.element[0],
+          elemClass = elem.className,
+          tablist = this.tablist[0],
+          HAS_MORE = 'has-more-button',
+          hasMoreIndex = elemClass.indexOf(HAS_MORE),
+          tabListHeight = parseInt(window.getComputedStyle(tablist, null).getPropertyValue('height'));
 
         // Recalc tab width before detection of overflow
         if (this.isModuleTabs()) {
           this.adjustModuleTabs();
         }
 
-        if (self.tablist[0].scrollHeight > self.tablist.outerHeight() + 3.5) {
-          self.element.addClass('has-more-button');
+        // Add "has-more-button" class if we need it, remove it if we don't
+        if (tablist.scrollHeight > tabListHeight) {
+          if (hasMoreIndex < 0) {
+            elem.className += (elemClass.length > 0 ? ' ' : '') + HAS_MORE;
+          }
         } else {
-          self.element.removeClass('has-more-button');
+          if (hasMoreIndex > -1) {
+            elem.className = elem.className.replace((elemClass.length > 0 ? ' ' : '') + HAS_MORE, '');
+          }
         }
 
         this.adjustSpilloverNumber();
@@ -1969,7 +2111,7 @@
         $.each(tabs, function(i, item) {
           var popupLi;
 
-          if (self.isTabOverflowed(item) && $(item).is(':not(:hidden)')) {
+          if (self.isTabOverflowed($(item)) && $(item).is(':not(:hidden)')) {
             // Add a separator to the list
             if (menuHtml.find('li').length > 0 && $(item).prev().is('.separator')) {
               $(item).prev().clone().appendTo(menuHtml);
@@ -2184,14 +2326,7 @@
       // Used for checking if a particular tab (in the form of a jquery-wrapped list item) is spilled into
       // the overflow area of the tablist container <UL>.
       isTabOverflowed: function(li) {
-        if (!li || li.length === 0) {
-          return true;
-        }
-        if (this.tablist.scrollTop() > 0) {
-          this.tablist.scrollTop(0);
-        }
-        var offset = $(li).offset().top - this.tablist.offset().top;
-        return offset >= this.tablist.height();
+        return li[0].getBoundingClientRect().top > this.tablist[0].getBoundingClientRect().top;
       },
 
       findLastVisibleTab: function() {
@@ -2219,7 +2354,8 @@
 
         var self = this,
           target = li,
-          paddingLeft, paddingRight, width;
+          paddingLeft, paddingRight, width,
+          anchorStyle, targetStyle;
 
         this.animatedBar.removeClass('no-transition');
 
@@ -2227,13 +2363,16 @@
           this.animatedBar.removeClass('visible');
           return;
         }
-        paddingLeft = parseInt(target.css('padding-left'), 10) || 0;
-        paddingRight = parseInt(target.css('padding-right'), 10) || 0;
+
+        targetStyle = window.getComputedStyle(target[0], null);
+        paddingLeft = parseInt(targetStyle.getPropertyValue('padding-left'), 10) || 0;
+        paddingRight = parseInt(targetStyle.getPropertyValue('padding-right'), 10) || 0;
         width = target.innerWidth();
 
         if (target.is('.tab')) {
-          paddingLeft += parseInt(target.children('a').css('padding-left'), 10) || 0;
-          paddingRight += parseInt(target.children('a').css('padding-right'), 10) || 0;
+          anchorStyle = window.getComputedStyle(target.children('a')[0]);
+          paddingLeft += parseInt(anchorStyle.getPropertyValue('padding-left'), 10) || 0;
+          paddingRight += parseInt(anchorStyle.getPropertyValue('padding-right'), 10) || 0;
           width = target.width();
 
           // Dirty hack for first/last tab types, and Firefox.
@@ -2257,7 +2396,9 @@
 
 
         function animationTimeout(cb) {
-          self.animatedBar.css({'left': left + 'px', 'width': width + 'px'});
+          self.animatedBar[0].style.left = left + 'px';
+          self.animatedBar[0].style.width = width + 'px';
+
           if (cb && typeof cb === 'function') {
             cb();
           }
@@ -2274,7 +2415,9 @@
           left = Locale.isRTL() ? 0 : (self.animatedBar.position().left+(self.animatedBar.outerWidth()/2));
 
         clearTimeout(self.animationTimeout);
-        this.animatedBar.css({'left': left +'px', 'width': '0'});
+
+        this.animatedBar[0].style.left = left + 'px';
+        this.animatedBar[0].style.width = 0;
 
         this.animationTimeout = setTimeout(function() {
           if (self.animatedBar && self.animatedBar.length) {
@@ -2350,7 +2493,17 @@
         // Adjust the values one more time if we have tabs contained inside of a page-container, or some other scrollable container.
         targetPosObj = adjustForParentContainer(targetPosObj, parentContainer);
 
-        this.focusState.css(targetPosObj);
+        // build CSS string containing each prop and set it:
+        var targetPosString = '';
+        for (var property in targetPosObj) {
+          if (targetPosObj.hasOwnProperty(property)) {
+            if (targetPosString.length) {
+              targetPosString += ' ';
+            }
+            targetPosString += '' + property + ': ' + targetPosObj[property] + 'px;';
+          }
+        }
+        this.focusState[0].setAttribute('style', targetPosString);
 
         var method = 'addClass';
         if (unhide) {

@@ -307,7 +307,7 @@
         }
 
         // Store an internal copy of the processed content
-        this.content = $.santizeHtml(content);
+        this.content = $.sanitizeHTML(content);
 
         // Wrap tooltip content in <p> tags if there isn't already one present.
         // Only happens for non-jQuery markup.

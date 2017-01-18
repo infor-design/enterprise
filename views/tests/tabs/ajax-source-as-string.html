@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Tabs Test: AJAX Source as String</h2>
+    <p><a class="hyperlink" href="http://jira/browse/SOHO-5526" target="_blank">Related JIRA Ticket</a>.</p>
+    <p>This test demonstrates loading content from an external source by adding a "source" setting defined as a string, which will be translated to a URL.  Each tab's "href" will be passed as a parameter to the URL when the tab is activated.  No tab panels exist in the base markup, but the markup is generated the first time each tab is activated.  On subsequent activations, the existing tab markup is used instead of making a new AJAX call.</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div id="ajaxified-tabs" class="tab-container busy" data-init="false">
+      <ul class="tab-list">
+        <li class="tab"><a href="#tab-one">Tab One</a></li>
+        <li class="tab"><a href="#tab-two">Tab Two</a></li>
+        <li class="tab"><a href="#tab-three">Tab Three</a></li>
+        <li class="tab"><a href="#tab-four">Tab Four</a></li>
+        <li class="tab"><a href="#tab-five">Tab Five</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  var host = window.location.hostname,
+    port = window.location.port;
+
+  // Test Strings - Use one of these in place of "source" to test various scenarios:
+  // 'http://' + host + ':' + port + '/api/garbage?return=html&paragraphs=5&size=50'
+  // 'http://' + host + ':' + port + '/api/garbage#tab-four'
+  // 'http://' + host + ':' + port + '/api/garbage?return=html#tab-four'
+
+  $('body').on('initialized', function() {
+    $('#ajaxified-tabs').tabs({
+      source: 'http://' + host + ':' + port + '/api/garbage?return=html&paragraphs=5&size=50'
+    });
+  });
+</script>

@@ -1139,30 +1139,82 @@ var express = require('express'),
 
   router.get('/api/garbage', function(req, res, next) {
     var amount = 25,
+      paragraphs = 1,
       text = '',
-      garbageWords = ['garbage', 'junk', 'nonsense', 'trash', 'rubbish', 'debris', 'detritus', 'filth', 'waste', 'scrap', 'sewage', 'slop', 'sweepings', 'bits and pieces', 'odds and ends', 'rubble', 'clippings', 'muck'];
+      type = 'text',
+      types = ['text', 'html'],
+      garbageWords = ['garbage', 'junk', 'nonsense', 'trash', 'rubbish', 'debris', 'detritus', 'filth', 'waste', 'scrap', 'sewage', 'slop', 'sweepings', 'bits and pieces', 'odds and ends', 'rubble', 'clippings', 'muck', 'stuff'];
+
+    function randomSeed() {
+      return (Math.random() * (10 - 1) + 1) > 8;
+    }
 
     function done(content) {
+      if (type === 'html') {
+        res.send(content);
+        return next();
+      }
+
       res.setHeader('Content-Type', 'text/plain');
       res.end(JSON.stringify(content));
       next();
     }
 
-    if (req && req.query && req.query.size) {
-      amount = req.query.size;
+    if (req && req.query) {
+      if (req.query.size) {
+        amount = req.query.size;
+      }
+
+      if (req.query.return && types.indexOf(req.query.return) > -1) {
+        type = req.query.return;
+      }
+
+      if (req.query.paragraphs && !isNaN(req.query.paragraphs)) {
+        paragraphs = parseInt(req.query.paragraphs);
+      }
     }
 
     // Get a random word from the GarbageWords array
-    var word = '';
-    for (var i = 0; i < amount; i++) {
-      word = garbageWords[Math.floor(Math.random() * garbageWords.length)];
+    var word = '',
+      paragraph = '';
 
-      if (!text.length) {
-        word = word.charAt(0).toUpperCase() + word.substr(1);
-      } else {
-        text += ' ';
+    while (paragraphs > 0) {
+      if (type === 'html') {
+        paragraph += '<p>';
       }
-      text += word;
+
+      if (type === 'text' && text.length > 0) {
+        paragraph += ' ';
+      }
+
+      // if we serve html and the random seed is true, send a picture of garbage.
+      if (type === 'html' && randomSeed()) {
+        paragraph += '<img src="http://www.newmarket.ca/LivingHere/PublishingImages/Pages/Waste,%20Recycling%20and%20Organics/Garbage-collection-information/Open%20Top%20Garbage%20Can%20with%20Handles.jpg" alt="Picture of Garbage" width="499.5" height="375" />';
+      } else {
+      // in all other cases, generate the amount of words defined by the query for this paragraph.
+        for (var i = 0; i < amount; i++) {
+          word = garbageWords[Math.floor(Math.random() * garbageWords.length)];
+
+          if (!paragraph.length) {
+            word = word.charAt(0).toUpperCase() + word.substr(1);
+          } else {
+            paragraph += ' ';
+          }
+          paragraph += word;
+        }
+      }
+
+      paragraph += '.';
+
+      if (type === 'html') {
+        paragraph += '</p>';
+      }
+
+      // Add to text, reset
+      text += paragraph;
+      paragraph = '';
+
+      paragraphs = (paragraphs - 1);
     }
 
     done(text);
