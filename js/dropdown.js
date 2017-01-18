@@ -857,7 +857,9 @@
           current = current.eq(0);
         }
 
-        $('head').triggerHandler('disable-zoom');
+        if (Soho.env.os.name === 'ios') {
+          $('head').triggerHandler('disable-zoom');
+        }
 
         // Persist the "short" input field
         var isShort = (this.element.closest('.field-short').length === 1);
@@ -1077,7 +1079,9 @@
           });
         }
 
-        $('head').triggerHandler('enable-zoom');
+        if (Soho.env.os.name === 'ios') {
+          $('head').triggerHandler('enable-zoom');
+        }
       },
 
       // Set size and positioning of the list
