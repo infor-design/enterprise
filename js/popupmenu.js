@@ -1091,7 +1091,10 @@
           unwrapPopup($(this));
         });
 
-        $.removeData(this.menu[0], 'trigger');
+        if (this.menu[0]) {
+          $.removeData(this.menu[0], 'trigger');
+        }
+
         if (wrapper.data('place')) {
           wrapper.data('place').destroy();
         }
