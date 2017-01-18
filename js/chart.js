@@ -1201,6 +1201,27 @@ window.Chart = function(container) {
               .style('text-anchor', 'middle')
               .attr('class', 'chart-donut-text')
               .html(centerLabel);
+
+            // FIX: IE does not render .html
+            if (charts.isIE) {
+              if (charts.isHTML(centerLabel)) {
+                // http://stackoverflow.com/questions/13962294/dynamic-styling-of-svg-text
+                var text  = arcs.select('.chart-donut-text'),
+                  tmp = document.createElement('text');
+                tmp.innerHTML = centerLabel;
+                var nodes = Array.prototype.slice.call(tmp.childNodes);
+                nodes.forEach(function(node) {
+                  text.append('tspan')
+                    .attr('style', node.getAttribute && node.getAttribute('style'))
+                    .attr('x', node.getAttribute && node.getAttribute('x'))
+                    .attr('dy', node.getAttribute && node.getAttribute('dy'))
+                    .text(node.textContent);
+                });
+              }
+              else {
+                arcs.select('.chart-donut-text').text(centerLabel);
+              }
+            }
           }
         }
       };
@@ -3616,6 +3637,10 @@ window.Chart = function(container) {
     if (o.isTrigger) {
       $(o.container).triggerHandler((taskSelected ? 'selected' : 'unselected'), triggerData);
     }
+  };
+
+  this.isHTML = function (str) {
+    return /(<([^>]+)>)/i.test(str);
   };
 
   this.initChartType = function (options) {
