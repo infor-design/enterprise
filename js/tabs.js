@@ -1038,7 +1038,7 @@
         this.setOverflow();
 
         var selected = this.tablist.find('.is-selected');
-        if (this.moreButton.is('.is-selected') || this.isTabOverflowed(selected)) {
+        if (!selected.length || this.moreButton.is('.is-selected') || this.isTabOverflowed(selected)) {
           selected = this.moreButton;
         }
 
@@ -1065,7 +1065,10 @@
           return;
         }
 
-        this.tablist.css('height', this.element.outerHeight(true));
+        var elemStyle = window.getComputedStyle(this.element[0]),
+          elemOuterHeight = elemStyle.getPropertyValue('height') + elemStyle.getPropertyValue('margin-top') + elemStyle.getPropertyValue('margin-bottom');
+
+        this.tablist[0].style.height = elemOuterHeight;
       },
 
       // Changes the location in the browser address bar to force outbound links.
@@ -1115,7 +1118,7 @@
         }
 
         var panel = this.getPanel(href);
-        return panel.css('display') !== 'none';
+        return panel[0].style.display !== 'none';
       },
 
       isNestedInLayoutTabs: function() {
@@ -1982,17 +1985,27 @@
       },
 
       setOverflow: function () {
-        var self = this;
+        var elem = this.element[0],
+          elemClass = elem.className,
+          tablist = this.tablist[0],
+          HAS_MORE = 'has-more-button',
+          hasMoreIndex = elemClass.indexOf(HAS_MORE),
+          tabListHeight = parseInt(window.getComputedStyle(tablist, null).getPropertyValue('height'));
 
         // Recalc tab width before detection of overflow
         if (this.isModuleTabs()) {
           this.adjustModuleTabs();
         }
 
-        if (self.tablist[0].scrollHeight > self.tablist.outerHeight() + 3.5) {
-          self.element.addClass('has-more-button');
+        // Add "has-more-button" class if we need it, remove it if we don't
+        if (tablist.scrollHeight > tabListHeight) {
+          if (hasMoreIndex < 0) {
+            elem.className += (elemClass.length > 0 ? ' ' : '') + HAS_MORE;
+          }
         } else {
-          self.element.removeClass('has-more-button');
+          if (hasMoreIndex > -1) {
+            elem.className = elem.className.replace((elemClass.length > 0 ? ' ' : '') + HAS_MORE, '');
+          }
         }
 
         this.adjustSpilloverNumber();
@@ -2098,7 +2111,7 @@
         $.each(tabs, function(i, item) {
           var popupLi;
 
-          if (self.isTabOverflowed(item) && $(item).is(':not(:hidden)')) {
+          if (self.isTabOverflowed($(item)) && $(item).is(':not(:hidden)')) {
             // Add a separator to the list
             if (menuHtml.find('li').length > 0 && $(item).prev().is('.separator')) {
               $(item).prev().clone().appendTo(menuHtml);
@@ -2313,14 +2326,24 @@
       // Used for checking if a particular tab (in the form of a jquery-wrapped list item) is spilled into
       // the overflow area of the tablist container <UL>.
       isTabOverflowed: function(li) {
+        return li[0].getBoundingClientRect().top > this.tablist[0].getBoundingClientRect().top;
+        /*
         if (!li || li.length === 0) {
           return true;
         }
-        if (this.tablist.scrollTop() > 0) {
-          this.tablist.scrollTop(0);
+
+        var tab = li[0],
+          tablist = this.tablist[0],
+          tabOffset = tab.offsetTop,
+          tablistOffset = tablist.offsetTop,
+          tablistHeight = window.getComputedStyle(tablist, null).getPropertyValue('height');
+
+        if (tablist.scrollTop > 0) {
+          tablist.scrollTop = 0;
         }
-        var offset = $(li).offset().top - this.tablist.offset().top;
-        return offset >= this.tablist.height();
+
+        return tabOffset - tablistOffset >= tablistHeight;
+        */
       },
 
       findLastVisibleTab: function() {
@@ -2348,7 +2371,8 @@
 
         var self = this,
           target = li,
-          paddingLeft, paddingRight, width;
+          paddingLeft, paddingRight, width,
+          anchorStyle, targetStyle;
 
         this.animatedBar.removeClass('no-transition');
 
@@ -2356,13 +2380,16 @@
           this.animatedBar.removeClass('visible');
           return;
         }
-        paddingLeft = parseInt(target.css('padding-left'), 10) || 0;
-        paddingRight = parseInt(target.css('padding-right'), 10) || 0;
+
+        targetStyle = window.getComputedStyle(target[0], null);
+        paddingLeft = parseInt(targetStyle.getPropertyValue('padding-left'), 10) || 0;
+        paddingRight = parseInt(targetStyle.getPropertyValue('padding-right'), 10) || 0;
         width = target.innerWidth();
 
         if (target.is('.tab')) {
-          paddingLeft += parseInt(target.children('a').css('padding-left'), 10) || 0;
-          paddingRight += parseInt(target.children('a').css('padding-right'), 10) || 0;
+          anchorStyle = window.getComputedStyle(target.children('a')[0]);
+          paddingLeft += parseInt(anchorStyle.getPropertyValue('padding-left'), 10) || 0;
+          paddingRight += parseInt(anchorStyle.getPropertyValue('padding-right'), 10) || 0;
           width = target.width();
 
           // Dirty hack for first/last tab types, and Firefox.
@@ -2386,7 +2413,9 @@
 
 
         function animationTimeout(cb) {
-          self.animatedBar.css({'left': left + 'px', 'width': width + 'px'});
+          self.animatedBar[0].style.left = left + 'px';
+          self.animatedBar[0].style.width = width + 'px';
+
           if (cb && typeof cb === 'function') {
             cb();
           }
@@ -2403,7 +2432,9 @@
           left = Locale.isRTL() ? 0 : (self.animatedBar.position().left+(self.animatedBar.outerWidth()/2));
 
         clearTimeout(self.animationTimeout);
-        this.animatedBar.css({'left': left +'px', 'width': '0'});
+
+        this.animatedBar[0].style.left = left + 'px';
+        this.animatedBar[0].style.width = 0;
 
         this.animationTimeout = setTimeout(function() {
           if (self.animatedBar && self.animatedBar.length) {
@@ -2479,7 +2510,17 @@
         // Adjust the values one more time if we have tabs contained inside of a page-container, or some other scrollable container.
         targetPosObj = adjustForParentContainer(targetPosObj, parentContainer);
 
-        this.focusState.css(targetPosObj);
+        // build CSS string containing each prop and set it:
+        var targetPosString = '';
+        for (var property in targetPosObj) {
+          if (targetPosObj.hasOwnProperty(property)) {
+            if (targetPosString.length) {
+              targetPosString += ' ';
+            }
+            targetPosString += '' + property + ': ' + targetPosObj[property] + 'px;';
+          }
+        }
+        this.focusState[0].setAttribute('style', targetPosString);
 
         var method = 'addClass';
         if (unhide) {
