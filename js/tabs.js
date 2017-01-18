@@ -2327,23 +2327,6 @@
       // the overflow area of the tablist container <UL>.
       isTabOverflowed: function(li) {
         return li[0].getBoundingClientRect().top > this.tablist[0].getBoundingClientRect().top;
-        /*
-        if (!li || li.length === 0) {
-          return true;
-        }
-
-        var tab = li[0],
-          tablist = this.tablist[0],
-          tabOffset = tab.offsetTop,
-          tablistOffset = tablist.offsetTop,
-          tablistHeight = window.getComputedStyle(tablist, null).getPropertyValue('height');
-
-        if (tablist.scrollTop > 0) {
-          tablist.scrollTop = 0;
-        }
-
-        return tabOffset - tablistOffset >= tablistHeight;
-        */
       },
 
       findLastVisibleTab: function() {
