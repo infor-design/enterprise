@@ -1189,7 +1189,7 @@ var express = require('express'),
 
       // if we serve html and the random seed is true, send a picture of garbage.
       if (type === 'html' && randomSeed()) {
-        paragraph += '<img src="http://www.newmarket.ca/LivingHere/PublishingImages/Pages/Waste,%20Recycling%20and%20Organics/Garbage-collection-information/Open%20Top%20Garbage%20Can%20with%20Handles.jpg" alt="Picture of Garbage" width="499.5" height="375" />'
+        paragraph += '<img src="http://www.newmarket.ca/LivingHere/PublishingImages/Pages/Waste,%20Recycling%20and%20Organics/Garbage-collection-information/Open%20Top%20Garbage%20Can%20with%20Handles.jpg" alt="Picture of Garbage" width="499.5" height="375" />';
       } else {
       // in all other cases, generate the amount of words defined by the query for this paragraph.
         for (var i = 0; i < amount; i++) {
