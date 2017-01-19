@@ -1245,7 +1245,18 @@
         targetTab = a.parent();
         targetPanel = self.getPanel(href);
         oldTab = self.anchors.parents().filter('.is-selected');
-        oldPanel = self.panels.filter(':visible');
+
+
+        // Avoid filter(:visible)
+        for (var i = 0; i < self.panels.length; i++) {
+          if (self.panels[i].style.display !== 'none') {
+            oldPanel = $(self.panels[i]);
+          }
+        }
+
+        if (!oldPanel) {
+          oldPanel = self.panels;
+        }
 
         var isCancelled = self.element.trigger('beforeactivate', [a]);
         if (!isCancelled) {
