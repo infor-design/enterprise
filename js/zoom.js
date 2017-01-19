@@ -44,14 +44,6 @@
 
       // Add markup to the control
       build: function() {
-        // setup environment
-        this.env = {
-          'iOS': $('html').hasClass('ios'),
-          'iPhone': $('html').hasClass('iPhone'),
-          'iPad': $('html').hasClass('iPad'),
-          'iPod': $('html').hasClass('iPod')
-        };
-
         // get references to elements
         this.viewport = this.element.find('meta[name=viewport]');
         this.body = $('body');
@@ -74,7 +66,7 @@
         });
 
         // Don't continue setting this up on each element if
-        if (!this.env.iOS) {
+        if (Soho.env.os.name !== 'ios') {
           return this;
         }
 
@@ -101,18 +93,12 @@
 
       // TODO: Test to see if prepending this meta tag conflicts with Base Tag implementation
       enableZoom: function() {
-        this.viewport.remove();
-
-        this.viewport = $('<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1" />');
-        this.element.prepend(this.viewport);
+        this.viewport[0].setAttribute('content', 'width=device-width, initial-scale=1.0, user-scalable=1');
       },
 
       // TODO: Test to see if prepending this meta tag conflicts with Base Tag implementation
       disableZoom: function() {
-        this.viewport.remove();
-
-        this.viewport = $('<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0" />');
-        this.element.prepend(this.viewport);
+        this.viewport[0].setAttribute('content', 'width=device-width, initial-scale=1.0, user-scalable=0');
       },
 
       // Handle Updating Settings
