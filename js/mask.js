@@ -39,6 +39,7 @@
           negative: false,
           number: false,
           processOnInitialize: true, // If set to false, will not initialially mask the value of the input field.
+          processOnBlur: true, // If set to false, will not mask the value of the input field upon blur.
           thousandsSeparator: false,
           showSymbol: undefined, // can be 'currency', 'percent'
         },
@@ -181,22 +182,24 @@
           self.evaluateCurrentContents(undefined, e);
         });
 
-        function reprocess() {
+        function reprocess(isRemask) {
           var val = self.element.val();
 
           if (self.settings.mustComplete) {
             self.checkCompletion();
           }
           if (val && self.initValue !== val) {
-            self.element.val('');
-            self.processStringAgainstMask(val);
+            if (isRemask || self.settings.processOnBlur) {
+              self.element.val('');
+              self.processStringAgainstMask(val);
+            }
             self.element.trigger('change');
           }
         }
 
         // custom event that can be triggered for forcing a remasking of the input field
         self.element.on('remask.mask', function() {
-          reprocess();
+          reprocess(true);
         });
 
         // remove the value when blurred
