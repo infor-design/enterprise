@@ -828,15 +828,12 @@
       //Sync a node with its dataset 'record'
       syncNode: function (node) {
         var entry = {},
-          self = this;
+          self = this,
+          jsonData = node.data('jsonData');
 
         entry.node = node;
         entry.id = node.attr('id');
         entry.text = node.find('.tree-text').text();
-
-        if (node.data('jsonData')) {
-          entry.extra = node.data('jsonData').extra;
-        }
 
         if (node.hasClass('is-open')) {
           entry.open = true;
@@ -866,6 +863,11 @@
 
             entry.children.push(self.syncNode(tag));
           });
+        }
+
+        if (jsonData) {
+          delete jsonData.selected;
+          entry = $.extend({}, jsonData, entry);
         }
 
         node.data('jsonData', entry);

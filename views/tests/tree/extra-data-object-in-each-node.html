@@ -1,0 +1,59 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <ul role="tree" aria-label="Asset Types" class="tree" data-init="false" id="json-tree">
+    </ul>
+
+  </div>
+</div>
+
+<script>
+  var sampleData;
+
+  /* jshint ignore:start */
+  sampleData = [{
+    "id": "node1",
+    "text": "Node One",
+    "open": false,
+    "selected": false,
+    "href": '/somelink/',
+    "metadata": { "fileType": "doc"},
+    "data": {"key1": "value-1", "key2": "value-1a"}
+  }, {
+    "id": "node2",
+    "text": "Node Two",
+    "open": true,
+    "selected": true,
+    "focus": true,
+    "data": {"key1": "value-2", "key2": "value-2a"},
+    "children": [{
+        "id": "node3",
+        "text": "Node 2.1",
+        "metadata": { "fileType": "doc"},
+        "data": {"key1": "value-2.1", "key2": "value-2.1a"},
+      }, {
+        "id": "node4",
+        "text": "Node 2.2",
+        "data": {"key1": "value-2.2", "key2": "value-2.2a"},
+        "children": [{
+          "id": "node5",
+          "text": "Node 2.2.1",
+          "icon": "icon-tree-chart",
+          "data": {"key1": "value-2.2.1", "key2": "value-2.2.1a"},
+          "children": [{
+            "id": "node6",
+            "text": "Node 2.2.1.1",
+            "icon": "icon-tree-chart",
+            "metadata": { "fileType": "chart"},
+            "data": {"key1": "value-2.2.1.1", "key2": "value-2.2.1.1a"},
+          }]
+        }]
+      }]
+  }];
+  /* jshint ignore:end */
+
+  $('#json-tree').tree({dataset: sampleData})
+  .on('selected', function (e, args) {
+    console.log(args);
+  });
+</script>
