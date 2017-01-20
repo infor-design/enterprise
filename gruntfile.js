@@ -107,14 +107,14 @@ module.exports = function(grunt) {
   grunt.registerTask('js', [
     'copy:amd',
     'strip_code',
-    'concat:basic',
+    'concat:basic'
   ]);
 
   grunt.registerTask('js-uglify', [
     'copy:amd',
     'strip_code',
     'concat:basic',
-    'uglify',
+    'uglify'
   ]);
 
   // Don't do any uglify/minify/jshint while the Dev Watch is running.
