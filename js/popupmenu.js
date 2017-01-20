@@ -319,6 +319,7 @@
                 break;
             }
           })
+          .off('updated.popupmenu')
           .on('updated.popupmenu', function(e) {
             e.stopPropagation();
             self.updated();
