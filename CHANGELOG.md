@@ -3,19 +3,24 @@ Release Date: TBD
 
 ### Key New Features
 * Change jQuery from 3.1.0 to 3.1.1 (non breaking)
+* Splitter Speed Improved (using flex box)
+* Tabs Speed Improved
+* Tabs Can be lazy loaded and lazy loaded using Ajax calls.
 
 ### Breaking Changes
-* Listview will no longer initialize components in it. You can do this manually using the resize method.
-
-* 2016-12-28 - TBD
+* 2017-01-12 - Listview will no longer initialize components in it. You can do this manually using the render method.
 
 ### Ui Changes
-
-### Affects
 - TBD
 
+### Affects
+- Tabs
+- Splitter
+- Listview
+- Datagrid
+
 Jira Release Notes
-TBD
+http://jira.infor.com/secure/ReleaseNote.jspa?version=27962&styleName=Html&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX%7C7c9b3f18b5f46187205e0d24b1489b80c8b4e1a1%7Clin
 
 
 ## 4.2.4 - Minor Release
