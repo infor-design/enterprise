@@ -16,6 +16,10 @@
 
   .flex-grow-shrink {
     @include flex(1 1 auto);
+
+    &.is-right-side {
+      margin-left: 20px;
+    }
   }
 
   .is-right-side {
