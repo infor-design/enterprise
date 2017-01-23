@@ -3665,6 +3665,10 @@ window.Chart = function(container) {
     if (options.legendformatter) {
       this.legendformatter = options.legendformatter;
     }
+    // Prevent error from passed empty dataset
+    if (!options.dataset || !options.dataset.length) {
+      $.extend(true, options, {dataset: [{data: []}]});
+    }
     if (options.type === 'pie') {
       this.Pie(options.dataset, false, options);
     }
