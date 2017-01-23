@@ -256,11 +256,12 @@
         });
 
         //Refresh Text and Disabled
-        function refreshTextAndDisabled() {
-          self.moreMenu.find('a').each(function () {
+        function refreshTextAndDisabled(menu) {
+          menu.find('a').each(function () {
             var a = $(this),
-                item = $(this).data('originalButton'),
-                text = self.getItemText(item);
+                item = a.data('originalButton'),
+                text = self.getItemText(item),
+                submenu;
 
             if (item) {
               if (a.find('span').length) {
@@ -269,28 +270,35 @@
                 a.text(text.trim());
               }
 
-              if (item.is(':disabled')) {
+              if (item.parent().is('.is-disabled') || item.is(':disabled')) { // if it's disabled menu item, OR a disabled menu-button
                 a.closest('li').addClass('is-disabled');
-                a.attr('disabled', 'disabled');
+                a.attr('tabindex', '-1');
               } else {
                 a.closest('li').removeClass('is-disabled');
-                a.removeAttr('disabled');
               }
 
+              if (item.is('.btn-menu')) {
+                submenu = a.parent().find('.popupmenu').first();
+                refreshTextAndDisabled(submenu);
+              }
             }
           });
         }
 
         if (popupMenuInstance) {
           this.more.triggerHandler('updated');
-          popupMenuInstance.element.off('beforeopen').on('beforeopen', refreshTextAndDisabled);
+          popupMenuInstance.element.off('beforeopen').on('beforeopen', function() {
+            refreshTextAndDisabled(self.moreMenu);
+          });
         } else {
           var actionButtonOpts = $.fn.parseOptions(this.more[0]);
 
           this.more.popupmenu($.extend({}, actionButtonOpts, {
             trigger: 'click',
             menu: this.moreMenu
-          })).off('beforeopen').on('beforeopen', refreshTextAndDisabled);
+          })).off('beforeopen').on('beforeopen', function() {
+            refreshTextAndDisabled(self.moreMenu);
+          });
         }
 
 

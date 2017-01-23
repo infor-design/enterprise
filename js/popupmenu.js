@@ -209,47 +209,63 @@
       },
 
       markupItems: function () {
-        this.menu.find('li').attr('role', 'presentation');
-        this.menu.find('.popupmenu').parent().parent().addClass('submenu');
-        this.menu.find('.submenu').children('a').each(function(i, value) {
-          var item = $(value);
+        var self = this,
+          lis = this.menu.find('li:not(.heading):not(.separator)'),
+          menuClassName = this.menu[0].className,
+          isTranslatable = Soho.DOM.classNameHas(menuClassName, 'isTranslatable');
 
-          if (item.find('span').length === 0) {
-            var text = $(item).text();
-            item.html('<span>' + text + '</span>');
-          }
+        lis.each(function(i, li) {
+          var a = $(li).children('a')[0], // TODO: do this better when we have the infrastructure
+            span = $(a).children('span')[0],
+            submenuWrapper = $(li).children('.wrapper')[0];
 
-          if (item.find('svg.arrow').length === 0) {
-            item.append($.createIconElement({ classes: ['arrow', 'icon-dropdown'], icon: 'dropdown' }));
-          }
-          item.attr('aria-haspopup', 'true');
+          li.setAttribute('role', 'presentation');
 
-        });
+          a.setAttribute('tabindex', '-1');
+          a.setAttribute('role', (self.settings.ariaListbox ? 'option' : 'menuitem'));
 
-        var anchor = this.menu.find('a'),
-          isTranslatable = this.menu.hasClass('is-translatable');
-
-        anchor.attr('tabindex', '-1').attr('role', (this.settings.ariaListbox ? 'option' : 'menuitem'));
-
-        //Add Checked indication
-        anchor.each(function () {
-          var a = $(this);
-
+          // Should be translated
           if (isTranslatable) {
-            var span = $('span', a);
-            span.text(Locale.translate(span.text()) || span.text());
+            span.innerText = Locale.translate(span.innerText) || span.innerText;
           }
 
-          if (a.parent().hasClass('is-checked')) {
-            a.attr({'role': 'menuitemcheckbox', 'aria-checked': 'true'});
+          // disabled menu items, by prop and by className
+          if (Soho.DOM.classNameHas(li.className, 'is-disabled')) {
+            a.setAttribute('aria-disabled', 'true');
           }
-          if (a.parent().hasClass('is-not-checked')) {
-            a.attr({'role': 'menuitemcheckbox', 'aria-checked': 'false'});
+
+          // menu items that contain submenus
+          if (submenuWrapper instanceof HTMLElement) {
+            li.className += (Soho.DOM.classNameExists(li) ? ' ' : '') + 'submenu';
+          }
+          if (Soho.DOM.classNameHas(li.className, 'submenu')) {
+            var $a = $(a);
+
+            // Add a span
+            if (!span) {
+              a.innerHTML = '<span>' + a.innerHTML + '</span>';
+              span = $a.children('span')[0];
+            }
+
+            if ($a.find('svg.arrow').length === 0) {
+              $a.append($.createIconElement({ classes: ['arrow', 'icon-dropdown'], icon: 'dropdown' }));
+            }
+            a.setAttribute('aria-haspopup', 'true');
+          }
+
+          // is-checked
+          if (Soho.DOM.classNameHas(li.className, 'is-checked')) {
+            a.setAttribute('role', 'menuitemcheckbox');
+            a.setAttribute('aria-checked', true);
+          }
+
+          // is-not-checked
+          if (Soho.DOM.classNameHas(li.className, 'is-not-checked')) {
+            li.className = li.className.replace('is-not-checked', '');
+            a.setAttribute('role', 'menuitemcheckbox');
+            a.removeAttribute('aria-checked');
           }
         });
-
-        this.menu.find('li.is-disabled a, li.disabled a').attr('tabindex', '-1').attr('disabled', 'disabled');
-
       },
 
       handleEvents: function() {
@@ -349,7 +365,7 @@
             href = anchor.attr('href'),
             selectionResult = [anchor];
 
-          if (anchor.attr('disabled') || anchor.parent().is('.submenu') || anchor.parent().is('.is-disabled')) {
+          if (anchor.prop('disabled') === true || anchor.parent().is('.submenu') || anchor.parent().is('.is-disabled')) {
             //Do not close parent items of submenus on click
             e.preventDefault();
             return;
@@ -857,6 +873,10 @@
       },
 
       showSubmenu: function (li) {
+        if (Soho.DOM.classNameHas(li[0].className, 'is-disabled')) {
+          return;
+        }
+
         var wrapper = li.children('.wrapper').filter(':first');
 
         // Wrap if not wrapped (dynamic menu situation)
