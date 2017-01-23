@@ -112,3 +112,11 @@
     display: block;
   }
 }
+
+.ie {
+  .splitter-container {
+    .toolbar .buttonset > [class^="btn"] {
+      line-height: normal;
+    }
+  }
+}
