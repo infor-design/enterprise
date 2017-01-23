@@ -217,13 +217,13 @@
 
     // Add extra sample nodes/data
     stepFunctions.extendSampleData(sampleData);
-
     /* jshint ignore:end */
 
     // Init Tree Steps
     $('.step-process-container').stepprocess({
       'dataset': sampleData,
-      'afterFolderOpen': stepFunctions.afterFolderOpen
+      'afterFolderOpen': stepFunctions.afterFolderOpen,
+      'onStepSelect': stepFunctions.onStepSelect
     });
 
     // Example button save event
@@ -247,20 +247,6 @@
 
   // Step Functions
   var stepFunctions = {
-
-    extendSampleData: function(data) {
-      var $container = $('.step-container');
-      for (var i = 5; i < 20; i++) {
-        data.push({
-          "id": "node" + i,
-          "text": "Node " + i,
-          "selected": false,
-          "href": '#content' + i + '-1',
-          "alertIcon": 'empty-circle'
-        });
-        $container.append('<div id="content' + i + '-1" class="js-step-panel"><h2>Node ' + i + '</h2><p>This is step '+ i +'-1</p></div>')
-      }
-    },
 
     ajaxGetSubstepsForStep: function(stepId, callback) {
       var ajaxSampleData = {
@@ -328,6 +314,24 @@
         });
       }
     },
-  };
 
+    extendSampleData: function(data) {
+      var $container = $('.step-container');
+      for (var i = 5; i < 20; i++) {
+        data.push({
+          "id": "node" + i,
+          "text": "Node " + i,
+          "selected": false,
+          "href": '#content' + i + '-1',
+          "alertIcon": 'empty-circle'
+        });
+        $container.append('<div id="content' + i + '-1" class="js-step-panel"><h2>Node ' + i + '</h2><p>This is step '+ i +'-1</p></div>')
+      }
+    },
+
+    onStepSelect: function(args) {
+      console.log(args);
+      return false;
+    }
+  };
 </script>
