@@ -1759,7 +1759,14 @@
       createTabPanel: function(tabId, content, doInsert) {
         tabId = tabId.replace(/#/g, '');
 
-        var markup = $('<div id="'+ tabId +'" class="tab-panel" role="tabpanel" style="display: none;">'+ content +'</div>');
+        // If a jQuery-wrapped element is provided, actually append the element.
+        // If content is text/string, simply inline it.
+        var markup = $('<div id="'+ tabId +'" class="tab-panel" role="tabpanel" style="display: none;"></div>');
+        if (content instanceof $) {
+          markup.append(content);
+        } else {
+          markup[0].innerHTML = content;
+        }
 
         if (doInsert === true) {
           this.container.append(markup);
