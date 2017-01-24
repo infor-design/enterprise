@@ -1235,7 +1235,8 @@
       activate: function(href) {
         var self = this,
           a, targetTab, targetPanel, oldTab, oldPanel,
-          selectedStateTarget;
+          selectedStateTarget,
+          activeStateTarget;
 
         if (self.isURL(href)) {
           return this.callSource(href, true);
@@ -1294,18 +1295,21 @@
 
         if (targetTab.is('.tab')) {
           selectedStateTarget = targetTab;
+          activeStateTarget = targetTab;
         }
 
-        var ddMenu = targetTab.parents('.popupmenu');
+        var ddMenu = targetTab.parents('.popupmenu'),
+          ddTab;
+
         if (ddMenu.length) {
-          var tab = ddMenu.data('trigger');
-          if (tab.length) {
-            selectedStateTarget = tab;
+          ddTab = ddMenu.data('trigger');
+          if (ddTab.length) {
+            selectedStateTarget = ddTab;
+            activeStateTarget = ddTab;
           }
         }
 
-        var activeStateTarget = targetTab;
-        if (this.isTabOverflowed(targetTab)) {
+        if (this.isTabOverflowed(activeStateTarget)) {
           activeStateTarget = this.moreButton;
           selectedStateTarget = this.moreButton;
         }
@@ -2040,7 +2044,6 @@
         // Remove overflowed tabs
         sizeableTabs.removeAttr('style').each(function() {
           var t = $(this);
-
           if (self.isTabOverflowed(t)) {
             sizeableTabs = sizeableTabs.not(t);
           }
@@ -2050,7 +2053,7 @@
         // Math: +101 is the padding of the <ul class="tab-list"> element
         if (!sizeableTabs.length) {
           visibleTabSize = (tabContainerW - appTriggerSize + 101);
-          this.moreButton.width(visibleTabSize);
+          this.moreButton[0].style.width = visibleTabSize + 'px';
           return;
         }
 
@@ -2064,7 +2067,10 @@
           visibleTabSize = defaultTabSize;
         }
 
-        sizeableTabs.width(visibleTabSize);
+        for (var i = 0; i < sizeableTabs.length; i++) {
+          sizeableTabs[i].style.width = visibleTabSize + 'px';
+        }
+
         this.adjustSpilloverNumber();
       },
 
@@ -2387,28 +2393,33 @@
           return;
         }
 
+        var targetClassName = target[0].className,
+          isTab = Soho.DOM.classNameHas(targetClassName, 'tab'),
+          isDismissible = Soho.DOM.classNameHas(targetClassName, 'dismissible'),
+          isDropdown = Soho.DOM.classNameHas(targetClassName, 'has-popupmenu');
+
         targetStyle = window.getComputedStyle(target[0], null);
         paddingLeft = parseInt(targetStyle.getPropertyValue('padding-left'), 10) || 0;
         paddingRight = parseInt(targetStyle.getPropertyValue('padding-right'), 10) || 0;
-        width = target.innerWidth();
+        width = parseInt(targetStyle.getPropertyValue('width')) || 0;
 
-        if (target.is('.tab')) {
+        if (isTab) {
           anchorStyle = window.getComputedStyle(target.children('a')[0]);
           paddingLeft += parseInt(anchorStyle.getPropertyValue('padding-left'), 10) || 0;
           paddingRight += parseInt(anchorStyle.getPropertyValue('padding-right'), 10) || 0;
-          width = target.width();
 
-          // Dirty hack for first/last tab types, and Firefox.
-          if (target.is(':first-child, :last-child')) {
-            width = width - 1;
+          /*
+          if (isDropdown &&) {
+            width += 10;
           }
-          if ($('html').hasClass('is-firefox')) {
-            width = width - 1;
+          */
+
+          /*
+          if (isDismissible) {
+            paddingRight -= 10;
           }
-        }
-        if (target.is('.dismissible.tab') || target.is('.has-popupmenu.tab')) {
-          paddingRight -= target.is('.has-popupmenu.tab') ? 0 : 10;
-          width += 10;
+          */
+
         }
 
         var left = Locale.isRTL() ?
@@ -2416,7 +2427,6 @@
 
         clearTimeout(self.animationTimeout);
         this.animatedBar.addClass('visible');
-
 
         function animationTimeout(cb) {
           self.animatedBar[0].style.left = left + 'px';
