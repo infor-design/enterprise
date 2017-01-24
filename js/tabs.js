@@ -1759,7 +1759,14 @@
       createTabPanel: function(tabId, content, doInsert) {
         tabId = tabId.replace(/#/g, '');
 
-        var markup = $('<div id="'+ tabId +'" class="tab-panel" role="tabpanel" style="display: none;">'+ content +'</div>');
+        // If a jQuery-wrapped element is provided, actually append the element.
+        // If content is text/string, simply inline it.
+        var markup = $('<div id="'+ tabId +'" class="tab-panel" role="tabpanel" style="display: none;"></div>');
+        if (content instanceof $) {
+          markup.append(content);
+        } else {
+          markup[0].innerHTML = content;
+        }
 
         if (doInsert === true) {
           this.container.append(markup);
@@ -1997,10 +2004,9 @@
 
       setOverflow: function () {
         var elem = this.element[0],
-          elemClass = elem.className,
           tablist = this.tablist[0],
           HAS_MORE = 'has-more-button',
-          hasMoreIndex = elemClass.indexOf(HAS_MORE),
+          hasMoreIndex = elem.classList.contains(HAS_MORE),
           tabListHeight = parseInt(window.getComputedStyle(tablist, null).getPropertyValue('height'));
 
         // Recalc tab width before detection of overflow
@@ -2009,14 +2015,10 @@
         }
 
         // Add "has-more-button" class if we need it, remove it if we don't
-        if (tablist.scrollHeight > tabListHeight) {
-          if (hasMoreIndex < 0) {
-            elem.className += (elemClass.length > 0 ? ' ' : '') + HAS_MORE;
-          }
-        } else {
-          if (hasMoreIndex > -1) {
-            elem.className = elem.className.replace((elemClass.length > 0 ? ' ' : '') + HAS_MORE, '');
-          }
+        if (tablist.scrollHeight > tabListHeight && !hasMoreIndex) {
+          elem.classList.add(HAS_MORE);
+        } else if (hasMoreIndex) {
+          elem.classList.remove(HAS_MORE);
         }
 
         this.adjustSpilloverNumber();

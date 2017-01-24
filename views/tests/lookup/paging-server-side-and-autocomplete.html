@@ -1,0 +1,107 @@
+<div class="page-container top-padding scrollable" id="maincontent" role="main">
+
+   <div class="row">
+      <div class="twelve columns">
+         <h1>
+            Lookup Paging Server-Side w/ Autocomplete
+         </h1>
+      </div>
+   </div>
+
+   <div class="row">
+      <div class="twelve columns">
+         <div class="field">
+            <label for="product-lookup" class="label">Products</label>
+            <input id="product-lookup" data-init="false" class="lookup autocomplete" autocomplete="off" name="product-lookup" type="text" placeholder="Type to Search" />
+         </div>
+      </div>
+   </div>
+
+   <script>
+      var columns = [], $input = $('#product-lookup');
+
+      //Define Columns for the Grid.
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, filterType: 'integer'});
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 250, formatter: Formatters.Hyperlink, filterType: 'text'});
+      columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125, filterType: 'text'});
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125, filterType: 'decimal'});
+      columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal, filterType: 'decimal'});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy', filterType: 'date'});
+
+      //Init
+      $input.lookup({
+         field: function (row, field, grid) {
+            return row.productId + ' | ' + row.productName;
+         },
+         match: function (value, row, field, grid) {
+            return ((row.productId + ' | ' + row.productName) === value);
+         },
+         options: {
+            columns: columns,
+            filterable: true,
+            disableClientFilter: true,
+            disableClientSort: true,
+            columnReorder: true,
+            paging: true,
+            pagesize: 10,
+            pagesizes: [5, 10, 25, 50],
+            selectable: 'single',
+            toolbar: { title: 'Products', actions: true, results: true, keywordFilter: false, personalize: true, filterRow: true, rowHeight: true },
+            source: function (req, response) {
+               console.log('lookup source', req);
+               var url = '/api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
+
+               if (req.sortId) {
+                  url += '&sortId=' + req.sortId + '&sortAsc=' + req.sortAsc;
+               }
+
+               if (req.filterExpr && req.filterExpr[0]) {
+                  url += '&filterValue=' + req.filterExpr[0].value;
+                  url += '&filterOp=' + req.filterExpr[0].operator;
+                  url += '&filterColumn=' + req.filterExpr[0].columnId;
+               }
+
+               //Get Page Based on info in Req, return results into response;
+               $.getJSON(url, function(res) {
+                  req.total = res.total;
+                  response(res.data, req);
+               });
+            }
+         }
+      }).on('beforeopen', function () {
+         console.log('beforeopen');
+      }).on('open', function (e, modal) {
+         console.log('open', modal);
+      }).on('afteropen', function (e, modal, grid) {
+         console.log('afteropen', modal, grid);
+      }).on('change', function (e, args) {
+         console.log('change', args);
+      });
+
+      //Init autocomplete
+      $input.autocomplete({
+         filterMode: null, // filtering is done server-side
+         source: function (value, done) {
+            console.log('autocomplete source - ' + value);
+            var url = '/api/compressors?pageNum=1&pageSize=5';
+
+            url += '&filterValue=' + value + '&filterOp=contains' + '&filterColumn=productId';
+
+            // Get data
+            $.getJSON(url, function(res) {
+               var list = res.data;
+
+               // Set label and value
+               for (var i = 0; i < list.length; i++) {
+                  var item = list[i];
+                  item.label = item.productId + ' | ' + item.productName;
+                  item.value = item.productId;
+               }
+
+               done(value, list);
+            });
+         }
+      });
+   </script>
+
+</div>

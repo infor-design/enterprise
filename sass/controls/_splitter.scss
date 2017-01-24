@@ -16,6 +16,10 @@
 
   .flex-grow-shrink {
     @include flex(1 1 auto);
+
+    &.is-right-side {
+      margin-left: 20px;
+    }
   }
 
   .is-right-side {
@@ -106,5 +110,13 @@
 
   &.splitter-horizontal {
     display: block;
+  }
+}
+
+.ie {
+  .splitter-container {
+    .toolbar .buttonset > [class^="btn"] {
+      line-height: normal;
+    }
   }
 }

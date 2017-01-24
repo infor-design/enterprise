@@ -4864,7 +4864,12 @@ $.fn.datagrid = function(options) {
       if (coercedVal !== oldVal && !fromApiCall) {
         //Validate the cell
         this.validateCell(row, cell);
-        this.element.trigger('cellchange', {row: row, cell: cell, target: cellNode, value: coercedVal, oldValue: oldVal, column: col});
+
+        var args = {row: row, cell: cell, target: cellNode, value: coercedVal, oldValue: oldVal, column: col};
+        if (this.settings.treeDepth[row]) {
+          args.rowData = this.settings.treeDepth[row].node;
+        }
+        this.element.trigger('cellchange', args);
       }
 
     },

@@ -532,6 +532,15 @@
     return element.attributes;
   };
 
+  window.Soho.DOM.classNameExists = function classNameExists(element) {
+    var cn = element.className;
+    return cn && cn.length > 0;
+  };
+
+  window.Soho.DOM.classNameHas = function has(classNameString, targetContents) {
+    return classNameString.indexOf(targetContents) > -1;
+  };
+
   // Debounce method
   window.Soho.utils.debounce = function(func, threshold, execAsap) {
     var timeout;
