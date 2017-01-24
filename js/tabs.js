@@ -546,7 +546,6 @@
         // Don't activate a dropdown tab.  Clicking triggers the Popupmenu Control attached.
         if (li.is('.has-popupmenu')) {
           this.positionFocusState(a);
-          this.focusBar(li);
           return;
         }
 
@@ -2126,50 +2125,70 @@
           menuHtml.html('');
         }
 
-        // Build menu options from hidden tabs
-        var tabs = self.tablist.children('li:not(.separator)'),
+        // Build menu options from overflowed tabs
+        var tabs = self.tablist.children('li'),
           isRTL = Locale.isRTL();
 
-        $.each(tabs, function(i, item) {
-          var popupLi;
+        function buildMenuItem(item) {
+          var $item = $(item),
+            $itemA = $item.children('a');
 
-          if (self.isTabOverflowed($(item)) && $(item).is(':not(:hidden)')) {
-            // Add a separator to the list
-            if (menuHtml.find('li').length > 0 && $(item).prev().is('.separator')) {
-              $(item).prev().clone().appendTo(menuHtml);
-            }
-            if ($(item).is(':not(.separator)')) {
-              popupLi = $(item).clone().removeClass('tab is-selected').removeAttr('style');
-              popupLi.find('.icon').detach().appendTo(popupLi.children('a')).off();
-              popupLi
-                .appendTo(menuHtml);
-
-                // Remove onclick methods from the popup <li> because they are called
-                // on the "select" event in context of the original button
-              popupLi.children('a')
-                .data('original-tab', $(item).children('a'))
-                .removeAttr('onclick');
-
-              $(item).data('moremenu-link', popupLi.children('a'));
-            }
-            if ($(item).is('.has-popupmenu')) {
-              var submenu = $('#' + $(item).attr('aria-controls')),
-                clone = submenu.clone()
-                .removeClass('has-popupmenu')
-                .insertAfter(popupLi.children('a'));
-
-              clone.children('li').each(function(i) {
-                var li = $(this),
-                  a = li.children('a'),
-                  originalLi = submenu.children('li').eq(i),
-                  originalA = originalLi.children('a');
-
-                a.data('original-tab', originalA);
-                originalA.data('moremenu-link', a);
-              });
-            }
+          if (!self.isTabOverflowed($item) || $item.is(':hidden')) {
+            return;
           }
-        });
+
+          if ($item.is('.separator')) {
+            $item.clone().appendTo(menuHtml);
+            return;
+          }
+
+          var popupLi = $item.clone(),
+            popupA = popupLi.children('a');
+
+          popupLi[0].classList.remove('tab', 'is-selected');
+          popupLi[0].removeAttribute('style');
+
+          popupLi.children('.icon').off().appendTo(popupA);
+          popupLi.appendTo(menuHtml);
+
+          // Link tab to its corresponding "More Tabs" menu option
+          $item.data('moremenu-link', popupA);
+
+          // Link "More Tabs" menu option to its corresponding Tab.
+          // Remove onclick methods from the popup <li> because they are called
+          // on the "select" event in context of the original button
+          popupA.data('original-tab', $itemA);
+          popupA.onclick = undefined;
+
+          if (!$item.is('.has-popupmenu')) {
+            return;
+          }
+
+          // If this is a Dropdown Tab, clone its menu and add it to the "More Tabs" menu
+          // As a submenu of the "popupLi".
+          var submenu = $('#' + item.getAttribute('aria-controls')),
+            clone = submenu.clone(),
+            cloneLis = clone.children('li');
+
+          clone[0].classList.remove('has-popupmenu');
+
+          cloneLis.each(function(i) {
+            var li = $(this),
+              a = li.children('a'),
+              originalLi = submenu.children('li').eq(i),
+              originalA = originalLi.children('a');
+
+            a.data('original-tab', originalA);
+            originalA.data('moremenu-link', a);
+          });
+
+          clone.insertAfter(popupA);
+        }
+
+        // Build spillover menu options
+        for (var i = 0; i < tabs.length; i++) {
+          buildMenuItem(tabs[i]);
+        }
 
         self.tablist.children('li:not(.separator)').removeClass('is-focused');
 
@@ -2393,33 +2412,15 @@
           return;
         }
 
-        var targetClassName = target[0].className,
-          isTab = Soho.DOM.classNameHas(targetClassName, 'tab'),
-          isDismissible = Soho.DOM.classNameHas(targetClassName, 'dismissible'),
-          isDropdown = Soho.DOM.classNameHas(targetClassName, 'has-popupmenu');
-
         targetStyle = window.getComputedStyle(target[0], null);
         paddingLeft = parseInt(targetStyle.getPropertyValue('padding-left'), 10) || 0;
         paddingRight = parseInt(targetStyle.getPropertyValue('padding-right'), 10) || 0;
         width = parseInt(targetStyle.getPropertyValue('width')) || 0;
 
-        if (isTab) {
+        if (target.is('.tab')) {
           anchorStyle = window.getComputedStyle(target.children('a')[0]);
           paddingLeft += parseInt(anchorStyle.getPropertyValue('padding-left'), 10) || 0;
           paddingRight += parseInt(anchorStyle.getPropertyValue('padding-right'), 10) || 0;
-
-          /*
-          if (isDropdown &&) {
-            width += 10;
-          }
-          */
-
-          /*
-          if (isDismissible) {
-            paddingRight -= 10;
-          }
-          */
-
         }
 
         var left = Locale.isRTL() ?
@@ -2429,8 +2430,9 @@
         this.animatedBar.addClass('visible');
 
         function animationTimeout(cb) {
-          self.animatedBar[0].style.left = left + 'px';
-          self.animatedBar[0].style.width = width + 'px';
+          var style = self.animatedBar[0].style;
+          style.left = left + 'px';
+          style.width = width + 'px';
 
           if (cb && typeof cb === 'function') {
             cb();
