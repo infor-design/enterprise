@@ -70,7 +70,7 @@
 
             if (svg.attr('data-icon') === 'star-outlined') {
               svg.changeIcon('star-filled');
-            } else {
+            } else if (svg.attr('data-icon') === 'star-filled') {
               svg.changeIcon('star-outlined');
             }
 
