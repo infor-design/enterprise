@@ -68,10 +68,10 @@
           this.element.on('click.favorite', function() {
             var svg = $(this).find('svg:not(.ripple-effect)');
 
-            if (svg.attr('data-icon') === 'star-outlined') {
-              svg.changeIcon('star-filled');
-            } else if (svg.attr('data-icon') === 'star-filled') {
+            if (svg.find('use').attr('xlink:href') === '#icon-star-filled') {
               svg.changeIcon('star-outlined');
+            } else {
+              svg.changeIcon('star-filled');
             }
 
           });
