@@ -2015,8 +2015,10 @@
         }
 
         // Add "has-more-button" class if we need it, remove it if we don't
-        if (tablist.scrollHeight > tabListHeight && !hasMoreIndex) {
-          elem.classList.add(HAS_MORE);
+        if (tablist.scrollHeight > tabListHeight) {
+          if (!hasMoreIndex) {
+            elem.classList.add(HAS_MORE);
+          }
         } else if (hasMoreIndex) {
           elem.classList.remove(HAS_MORE);
         }
@@ -2343,7 +2345,7 @@
           return false;
         }
 
-        return li[0].getBoundingClientRect().top > this.tablist[0].getBoundingClientRect().top;
+        return Math.round(li[0].getBoundingClientRect().top) > this.tablist[0].getBoundingClientRect().top;
       },
 
       findLastVisibleTab: function() {
