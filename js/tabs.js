@@ -127,7 +127,7 @@
 
         // Add the markup for the "More" button if it doesn't exist.
         self.moreButton = self.tablist.next('.tab-more');
-        if (self.moreButton.length === 0) {
+        if (!self.isVerticalTabs() && self.moreButton.length === 0) {
           var button = $('<div>').attr({'class': 'tab-more'});
           button.append( $('<span class="more-text">').text(Locale.translate('More')));
           button.append($.createIconElement({ classes: 'icon-more', icon: 'dropdown' }));
@@ -2007,7 +2007,8 @@
           tablist = this.tablist[0],
           HAS_MORE = 'has-more-button',
           hasMoreIndex = elem.classList.contains(HAS_MORE),
-          tabListHeight = parseInt(window.getComputedStyle(tablist, null).getPropertyValue('height'));
+          tablistStyle = window.getComputedStyle(tablist, null),
+          tabListHeight = parseInt(tablistStyle.getPropertyValue('height')) + 1; // +1 to fix an IE bug
 
         // Recalc tab width before detection of overflow
         if (this.isModuleTabs()) {
@@ -2015,8 +2016,10 @@
         }
 
         // Add "has-more-button" class if we need it, remove it if we don't
-        if (tablist.scrollHeight > tabListHeight && !hasMoreIndex) {
-          elem.classList.add(HAS_MORE);
+        if (tablist.scrollHeight > tabListHeight) {
+          if (!hasMoreIndex) {
+            elem.classList.add(HAS_MORE);
+          }
         } else if (hasMoreIndex) {
           elem.classList.remove(HAS_MORE);
         }
@@ -2339,6 +2342,13 @@
       // Used for checking if a particular tab (in the form of a jquery-wrapped list item) is spilled into
       // the overflow area of the tablist container <UL>.
       isTabOverflowed: function(li) {
+        if (this.isVerticalTabs()) {
+          return false;
+        }
+        if (this.tablist.scrollTop() > 0) {
+          this.tablist.scrollTop(0);
+        }
+
         return li[0].getBoundingClientRect().top > this.tablist[0].getBoundingClientRect().top;
       },
 
