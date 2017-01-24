@@ -2339,6 +2339,10 @@
       // Used for checking if a particular tab (in the form of a jquery-wrapped list item) is spilled into
       // the overflow area of the tablist container <UL>.
       isTabOverflowed: function(li) {
+        if (this.isVerticalTabs()) {
+          return false;
+        }
+
         return li[0].getBoundingClientRect().top > this.tablist[0].getBoundingClientRect().top;
       },
 
