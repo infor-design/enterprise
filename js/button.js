@@ -50,8 +50,6 @@
 
           if (ddIcon.length > 0 && use.length === 1) {
             hasIcon = use.attr('xlink:href').indexOf('#icon-dropdown') > -1;
-          } else if (ddIcon.length > 0) {
-            hasIcon = ddIcon.attr('data-icon') === 'dropdown' || ddIcon.hasClass('icon-dropdown');
           }
 
           if (!hasIcon) {
@@ -68,10 +66,10 @@
           this.element.on('click.button', function() {
             var svg = $(this).find('svg:not(.ripple-effect)');
 
-            if (svg.attr('data-icon') === 'star-outlined') {
-              svg.changeIcon('star-filled');
-            } else {
+            if (svg.find('use').attr('xlink:href') === '#icon-star-filled') {
               svg.changeIcon('star-outlined');
+            } else {
+              svg.changeIcon('star-filled');
             }
 
           });
