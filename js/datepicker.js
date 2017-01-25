@@ -631,18 +631,19 @@
 
       // Set Color for the Legend settings
       setLegendColor: function (elem, year, month, date) {
-        if (!this.settings.showLegend) {
+        if (!this.settings.showLegend || !elem[0]) {
           return;
         }
 
         var hex = this.getLegendColor(year, month, date),
           self = this;
 
-        elem.css('background-color', '');
+        elem[0].style.backgroundColor = '';
 
         if (hex) {
           //set color on elem at .3 of provided color as per design
-          elem.css('background-color', this.hexToRgba(hex, 0.3)).addClass('is-colored');
+          elem.addClass('is-colored');
+          elem[0].style.backgroundColor = this.hexToRgba(hex, 0.3);
 
           var normalColor = self.hexToRgba(hex, 0.3),
             hoverColor = self.hexToRgba(hex, 0.7);
@@ -650,12 +651,12 @@
           //handle hover states
           elem.on('mouseenter', function () {
             var elem = $(this);
-            elem.css('background-color', hoverColor);
-            elem.find('span').css('background-color', 'transparent');
+            elem[0].style.backgroundColor = hoverColor;
+            elem.find('span')[0].style.backgroundColor = 'transparent';
           }).on('mouseleave', function () {
             var elem = $(this);
-            elem.css('background-color', normalColor);
-            elem.find('span').css('background-color', '');
+            elem[0].style.backgroundColor = normalColor;
+            elem.find('span')[0].style.backgroundColor = '';
           });
 
         }

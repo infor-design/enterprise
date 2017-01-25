@@ -88,11 +88,13 @@
           this.list = $('<ul id="autocomplete-list" aria-expanded="true"></ul>').appendTo('body');
         }
 
-        this.list.css({'height': 'auto', 'width': this.element.outerWidth()}).addClass('autocomplete');
+        this.list[0].style.height = 'auto';
+        this.list[0].style.width = this.element.outerWidth() + 'px';
+        this.list.addClass('autocomplete');
         this.list.empty();
 
         if (this.settings.width) {
-          this.list.css({'width': this.settings.width});
+          this.list[0].style.width = this.settings.width + (/(px|%)/i.test(this.settings.width + '') ? '' : 'px');
         }
 
         // Pre-compile template.
@@ -214,12 +216,15 @@
           self.highlight($(this), all);
         });
 
-        if (this.settings.offset && this.settings.offset.left) {
-          this.list.parent().css('left', parseInt(this.list.parent().css('left')) + this.settings.offset.left + 'px');
-        }
+        if (this.settings.offset) {
+          var domListParent = this.list.parent()[0];
 
-        if (this.settings.offset && this.settings.offset.top) {
-          this.list.parent().css('top', parseInt(this.list.parent().css('top')) + this.settings.offset.top + 'px');
+          if (this.settings.offset.left) {
+            domListParent.style.left = parseInt(domListParent.style.left, 10) + this.settings.offset.left + 'px';
+          }
+          if (this.settings.offset.top) {
+            domListParent.style.top = parseInt(domListParent.style.top, 10) + this.settings.offset.top + 'px';
+          }
         }
 
         // As chars are typed into the edit field, nothing was announced to indicate

@@ -105,7 +105,7 @@ window.Chart = function(container) {
 
   this.addLegend = function(series) {
     var i, s = charts.settings,
-      legend = $('<div class="chart-legend"></div>');
+      legend = '<div class="chart-legend"></div>';
 
     if (series.length === 0) {
       return;
@@ -137,10 +137,10 @@ window.Chart = function(container) {
         extraClass += ' '+ series[i].option;
       }
 
-      var seriesLine = $('<span class="chart-legend-item'+ extraClass +'" tabindex="0"></span>'),
+      var seriesLine = '<span class="chart-legend-item'+ extraClass +'" tabindex="0"></span>',
         hexColor = charts.chartColor(i, (series.length === 1 ? 'bar-single' : 'bar'), series[i]);
 
-      var color = $('<span class="chart-legend-color"></span>').css('background-color', (series[i].pattern ? 'transparent' : hexColor)),
+      var color = $('<span class="chart-legend-color" style="background-color: '+ (series[i].pattern ? 'transparent' : hexColor) +'"></span>'),
         textBlock = $('<span class="chart-legend-item-text">'+ series[i].name + '</span>');
 
       if (series[i].pattern) {
@@ -153,31 +153,35 @@ window.Chart = function(container) {
       }
 
       if (series[i].display && series[i].display==='block') {
-        seriesLine.css({'float':'none', 'display':'block', 'margin':'0 auto', 'width':width});
+        seriesLine = '<span class="chart-legend-item'+ extraClass +'" tabindex="0" style="float: none; display: block; margin: 0 auto; width: '+ width +'px;"></span>';
       }
 
       if (series[i].display && series[i].display==='twocolumn') {
-        legend.css({'margin':'2em auto auto', 'border-top':'1px solid #ccc', 'padding-top':'1em'});
+        legend = '<div class="chart-legend" style="margin: 2em auto auto; border-top: 1px solid #ccc; padding-top: 1em;"></div>';
         if(widthPercent > 45) {
-          seriesLine.css({'float':'none', 'display':'block', 'margin':'0 auto', 'width':width});
+          seriesLine = '<span class="chart-legend-item'+ extraClass +'" tabindex="0" style="float: none; display: block; margin: 0 auto; width: '+ width +'px;"></span>';
         } else {
-          seriesLine.css({'float':'none', 'display':'inline-block', 'width': '45%'});
+          seriesLine = '<span class="chart-legend-item'+ extraClass +'" tabindex="0" style="float: none; display: inline-block; width: 45%;"></span>';
         }
       }
+      seriesLine = $(seriesLine);
+      legend = $(legend);
 
-      seriesLine.append(color, textBlock);
+      $(seriesLine).append(color, textBlock);
       legend.append(seriesLine);
     }
 
-    legend.on('click.chart', '.chart-legend-item', function () {
-        charts.selectElem(this, series);
-      }).on('keypress.chart', '.chart-legend-item', function (e) {
-        if (e.which === 13 || e.which === 32) {
+    if (legend instanceof $) {
+      legend.on('click.chart', '.chart-legend-item', function () {
           charts.selectElem(this, series);
-        }
-      });
+        }).on('keypress.chart', '.chart-legend-item', function (e) {
+          if (e.which === 13 || e.which === 32) {
+            charts.selectElem(this, series);
+          }
+        });
 
-    $(container).append(legend);
+      $(container).append(legend);
+    }
   };
 
   this.renderLegend = function() {
@@ -205,7 +209,8 @@ window.Chart = function(container) {
     if (this.tooltip.length === 0) {
       this.tooltip = $('<div id="svg-tooltip" class="tooltip right is-hidden"><div class="arrow"></div><div class="tooltip-content"><p><b>32</b> Element</p></div></div>').appendTo('body');
       if (this.isTouch) {
-        this.tooltip.css({'pointer-events':'auto'}).on('touchend.svgtooltip', function () {
+        this.tooltip[0].style.pointerEvents = 'auto';
+        this.tooltip.on('touchend.svgtooltip', function () {
           charts.hideTooltip();
         });
       }
@@ -231,8 +236,9 @@ window.Chart = function(container) {
       x = 2;
     }
 
-    this.tooltip.css({'left': x + 'px', 'top': y + 'px'})
-      .find('.tooltip-content').html(content);
+    this.tooltip[0].style.left = x + 'px';
+    this.tooltip[0].style.top = y + 'px';
+    this.tooltip.find('.tooltip-content').html(content);
 
     this.tooltip.removeClass('bottom top left right').addClass(arrow);
     this.tooltip.removeClass('is-hidden');
@@ -3238,11 +3244,11 @@ window.Chart = function(container) {
       },
       updateWidth = function(elem, value) {
         var w = toPercent(value) > 100 ? 100 : (toPercent(value) < 0 ? 0 : toPercent(value));
-        elem.css({'width': w +'%'});
+        elem[0].style.width = w + '%';
       },
       updateTargetline = function(elem, value) {
         var w = value > 100 ? 100 : (value < 0 ? 0 : value);
-        elem.css({'left': w +'%'});
+        elem[0].style.left = w + '%';
       },
       setFormat = function(obj) {
         return (obj && !isUndefined(obj.value) && obj.format) ?
@@ -3304,14 +3310,13 @@ window.Chart = function(container) {
             }
             else {
               if (node.is('.name, .total')) {
-                node.css('color', dataset[type].color);
+                node[0].style.color = dataset[type].color;
               }
               else {
                 ((type === 'completed' && (!dataset.info || (dataset.info && isUndefined(dataset.info.value)))) ?
                   $('.'+ type +' .value, .'+ type +' .text, .info .value', container) :
-                  $('.'+ type +' .value, .'+ type +' .text', container))
-                    .css('color', dataset[type].color);
-                bar.css('background-color', dataset[type].color);
+                  $('.'+ type +' .value, .'+ type +' .text', container))[0].style.color = dataset[type].color;
+                bar[0].style.backgroundColor = dataset[type].color;
               }
             }
           }
@@ -3329,7 +3334,7 @@ window.Chart = function(container) {
 
               if (toPercent(fixPercent(dataset[type].value)) >= 100) {
                 remaining.hide();
-                completed.css({'margin-top': 'inherit'});
+                completed[0].style.marginTop = 'inherit';
               }
             }
             else {

@@ -130,9 +130,7 @@
         }
 
         if (top) {
-          this.element.css({
-            top: top
-          });
+          this.element[0].style.top = top;
         }
 
         return;

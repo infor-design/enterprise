@@ -223,7 +223,7 @@
           offset += this.scrollTarget.prev().outerHeight(true);
         }
 
-        this.menu.css('height', (offset > 0 ? 'calc(100% - ' + offset + 'px)' : '100%'));
+        this.menu[0].style.height = offset > 0 ? ('calc(100% - ' + offset + 'px)') : '100%';
       },
 
       isLargerThanBreakpoint: function() {
@@ -280,9 +280,8 @@
           }
         });
 
-        this.menu
-          .off(transitionEnd + '.applicationmenu')
-          .css('display', '');
+        this.menu.off(transitionEnd + '.applicationmenu');
+        this.menu[0].style.display = '';
         // next line forces a repaint
         this.menu[0].offsetHeight; //jshint ignore:line
         this.menu.addClass('is-open');
@@ -326,9 +325,8 @@
             self.timeout = null;
           }
 
-          self.menu
-            .off(transitionEnd + '.applicationmenu')
-            .css('display', 'none');
+          self.menu.off(transitionEnd + '.applicationmenu');
+          self.menu[0].style.display = 'none';
           self.isAnimating = false;
           self.element.trigger('applicationmenuclose');
         }

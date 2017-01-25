@@ -82,14 +82,14 @@
 
         this.pseudoElem = $('div#'+ orgId + '-shdo');
         if (!this.pseudoElem.length) {
-          this.pseudoElem = $('<div class="'+ cssClass +'">').attr({
-            'role': 'combobox',
-            'aria-autocomplete': 'list',
-            'aria-controls': 'dropdown-list',
-            'aria-readonly': 'true',
-            'aria-expanded': 'false',
-            'aria-label': this.label.text()
-          });
+          this.pseudoElem = $('<div class="'+ cssClass + '"' +
+            ' role="combobox"' +
+            ' aria-autocomplete="list"' +
+            ' aria-controls="dropdown-list"' +
+            ' aria-readonly="true"' +
+            ' aria-expanded="false"' +
+            ' aria-label="'+ this.label.text() + '"' +
+          '>');
         }
         this.pseudoElem.append($('<span></span>'));
 
@@ -124,20 +124,25 @@
         if (this.element.prop('multiple') && !this.settings.multiple) {
           this.settings.multiple = true;
         }
-        if (this.element.attr('data-source') && this.element.attr('data-source') !== 'source') {
-          this.settings.source = this.element.attr('data-source');
+        var dataSource = this.element.attr('data-source');
+        if (dataSource && dataSource !== 'source') {
+          this.settings.source = dataSource;
         }
-        if (this.element.attr('data-maxselected') && !isNaN(this.element.attr('data-maxselected'))) {
-          this.settings.maxSelected = parseInt(this.element.attr('data-maxselected'), 10);
+        var dataMaxselected = this.element.attr('data-maxselected');
+        if (dataMaxselected && !isNaN(dataMaxselected)) {
+          this.settings.maxSelected = parseInt(dataMaxselected, 10);
         }
-        if (this.element.attr('data-move-selected') && !this.settings.moveSelectedToTop) {
-          this.settings.moveSelectedToTop = this.element.attr('data-move-selected') === 'true';
+        var dataMoveSelected = this.element.attr('data-move-selected');
+        if (dataMoveSelected && !this.settings.moveSelectedToTop) {
+          this.settings.moveSelectedToTop = dataMoveSelected === 'true';
         }
-        if (this.element.attr('data-close-on-select') && !this.settings.closeOnSelect) {
-          this.settings.closeOnSelect = this.element.attr('data-close-on-select') === 'true';
+        var dataCloseOnSelect = this.element.attr('data-close-on-select');
+        if (dataCloseOnSelect && !this.settings.closeOnSelect) {
+          this.settings.closeOnSelect = dataCloseOnSelect === 'true';
         }
-        if (this.element.attr('data-no-search') && !this.settings.noSearch) {
-          this.settings.noSearch = this.element.attr('data-no-search') === 'true';
+        var dataNoSearch = this.element.attr('data-no-search');
+        if (dataNoSearch && !this.settings.noSearch) {
+          this.settings.noSearch = dataNoSearch === 'true';
         }
 
         // Persist sizing defintions
@@ -190,10 +195,14 @@
         var style = this.element[0].style;
 
         if (style.width) {
-          this.pseudoElem.css('width', style.width);
+          this.pseudoElem[0].style.width = style.width;
         }
         if (style.position === 'absolute') {
-          this.pseudoElem.css({position: 'absolute', left: style.left, top: style.top, bottom: style.bottom, right: style.right});
+          this.pseudoElem[0].style.position = 'absolute';
+          this.pseudoElem[0].style.left = style.left;
+          this.pseudoElem[0].style.top = style.top;
+          this.pseudoElem[0].style.bottom = style.bottom;
+          this.pseudoElem[0].style.right = style.right;
         }
       },
 
@@ -209,7 +218,7 @@
 
         if (!listExists) {
           listContents = '<div class="dropdown-list' +
-            (this.isMobile() ? ' mobile' : '') +
+            (isMobile ? ' mobile' : '') +
             (this.isFullScreen() ? ' full-screen' : '') +
             (this.settings.multiple ? ' multiple' : '') + '" id="dropdown-list" role="application" ' + (this.settings.multiple ? 'aria-multiselectable="true"' : '') + '>' +
             '<label for="dropdown-search" class="audible">' + Locale.translate('Search') + '</label>' +
@@ -526,14 +535,15 @@
 
         //Adjust height / top position
         if (self.list.hasClass('is-ontop')) {
-          self.list.css({'top': self.pseudoElem.offset().top - self.list.height() + self.pseudoElem.outerHeight() - 2});
+          self.list[0].style.top = (self.pseudoElem.offset().top - self.list.height() + self.pseudoElem.outerHeight() - 2) + 'px';
         }
       },
 
       // Removes filtering from an open Dropdown list and turns off "search mode"
       resetList: function() {
-        var cssClass = 'icon' + (this.isMobile() ? ' close' : ''),
-          icon = $.getBaseURL(this.isMobile() ? 'close' : 'dropdown');
+        var isMobile = this.isMobile(),
+          cssClass = 'icon' + (isMobile ? ' close' : ''),
+          icon = $.getBaseURL(isMobile ? 'close' : 'dropdown');
 
         this.list.removeClass('search-mode');
         this.list.find('.icon').attr('class', cssClass) // needs to be 'attr' here because .addClass() doesn't work with SVG
@@ -555,7 +565,7 @@
 
         //Adjust height / top position
         if (this.list.hasClass('is-ontop')) {
-          this.list.css({'top': this.pseudoElem.offset().top - this.list.height() + this.pseudoElem.outerHeight() - 2});
+          this.list[0].style.top = (this.pseudoElem.offset().top - this.list.height() + this.pseudoElem.outerHeight() - 2) +'px';
         }
 
         if (this.settings.multiple) {
@@ -1095,23 +1105,26 @@
           top = 0;
         }
 
-        this.list.css({'top': top, 'left': left});
+        this.list[0].style.top = top +'px';
+        this.list[0].style.left = left +'px';
 
         //Fixed and Absolute Positioning use cases
         this.pseudoElem.parentsUntil('body').each(function () {
-          if ($(this).css('position') === 'fixed' && !$(this).is('.modal')) {
+          if (this.style.position === 'fixed' && !$(this).is('.modal')) {
             isFixed = true;
             return;
           }
         });
 
         if (isFixed) {
-          this.list.css('position', 'fixed');
+          this.list[0].style.position = 'fixed';
         }
 
-        if (this.pseudoElem.parent('.field').css('position') === 'absolute') {
+        if (this.pseudoElem.parent('.field')[0] && this.pseudoElem.parent('.field')[0].style.position === 'absolute') {
           isAbs = true;
-          this.list.css({'top': this.pseudoElem.parent('.field').offset().top + this.pseudoElem.prev('label').height() , 'left': this.pseudoElem.parent('.field').offset().left});
+          var parentOffset = this.pseudoElem.parent('.field').offset();
+          this.list[0].style.top = (parentOffset.top + this.pseudoElem.prev('label').height()) +'px';
+          this.list[0].style.left = parentOffset.left +'px';
         }
 
         this.list.removeClass('is-ontop');
@@ -1121,7 +1134,7 @@
           roomBottom = $(window).height() - top - this.pseudoElem.outerHeight();
 
         if (roomTop > roomBottom && top - $(window).scrollTop() + this.list.outerHeight() > $(window).height()) {
-          this.list.css({'top': top - this.list.outerHeight() + this.pseudoElem.outerHeight()});
+          this.list[0].style.top = (top - this.list.outerHeight() + this.pseudoElem.outerHeight()) +'px';
           this.list.addClass('is-ontop');
           this.listUl.prependTo(this.list);
         }
@@ -1130,33 +1143,34 @@
         if (this.list.offset().top < 0 ) {
           var listHeight = this.list.outerHeight(),
             diff = this.list.offset().top * -1;
-          this.list.css('top', 0);
-          this.list.height(listHeight - diff - 5);
+          this.list[0].style.top = 0;
+          this.list[0].style.height = (listHeight - diff - 5) +'px';
         }
 
         // If the menu is off the bottom of the screen, cut up the size
         if (this.list.offset().top - $(window).scrollTop() + this.list.outerHeight() >  $(window).height()) {
           var newHeight = $(window).height() - this.list.offset().top - 5;
-          this.list.height(newHeight);
+          this.list[0].style.height = newHeight + 'px';
         }
 
         //let grow or to field size.
         this.list.find('input').outerWidth(this.pseudoElem.outerWidth()-2);
         if (this.list.width() > this.pseudoElem.outerWidth() && !this.isInGrid) {
-           this.list.css('width', '');
-           this.list.css({'width': this.list.outerWidth() + 35});
-           this.list.find('input').css({'width': this.list.outerWidth() + 35});
+          var listWidth = (this.list.outerWidth() + 35) + 'px';
+           this.list[0].style.width = listWidth;
+           this.list.find('input')[0].style.width = listWidth;
 
            //But not off the left side
-           var maxWidth = $(window).width() - parseInt(this.list.css('left'), 10);
+           var maxWidth = $(window).width() - parseInt(this.list[0].style.left, 10);
            if (this.list.width() > maxWidth) {
-            this.list.width(maxWidth - 20);
+             this.list[0].style.width = (maxWidth - 20) +'px';
            }
         } else {
-          this.list.width(this.pseudoElem.outerWidth()-2);
+          var pseudoElemOuterWidth = this.pseudoElem.outerWidth();
+          this.list[0].style.width = (pseudoElemOuterWidth - 2) + 'px';
 
           if (this.isInGrid) {
-            this.list.width(this.pseudoElem.outerWidth());
+            this.list[0].style.width = pseudoElemOuterWidth + 'px';
           }
         }
       },

@@ -632,7 +632,7 @@
 
         pane.one('animateclosedcomplete', function(e) {
           e.stopPropagation();
-          pane.css('display', 'none');
+          pane[0].style.display = 'none';
           self.element.trigger('aftercollapse', [a]);
         }).animateClosed();
       },

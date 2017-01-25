@@ -173,10 +173,10 @@
         });
 
         if (placementObj.height) {
-          this.element.height(placementObj.height);
+          this.element[0].style.height = placementObj.height + (/(px|%)/i.test(placementObj.height + '') ? '' : 'px');
         }
         if (placementObj.width) {
-          this.element.width(placementObj.width);
+          this.element[0].style.width = placementObj.width + (/(px|%)/i.test(placementObj.width + '') ? '' : 'px');
         }
       },
 
@@ -185,8 +185,8 @@
       // will use the pre-defined settings.
       place: function(placementObj) {
         var curr = [
-          this.element.css('left'),
-          this.element.css('top')
+          this.element[0].style.left,
+          this.element[0].style.top,
         ];
 
         // Cancel placement with return:false; from a "beforeplace" event
@@ -438,7 +438,7 @@
           var newWidth = rect.width - d;
           placementObj.width = newWidth;
 
-          this.element.css('width', newWidth);
+          this.element[0].style.width = newWidth + 'px';
           rect = this.element[0].getBoundingClientRect(); // reset the rect because the size changed
         }
 
@@ -449,7 +449,7 @@
           var newHeight = rect.height - d;
           placementObj.height = newHeight;
 
-          this.element.css('height', newHeight);
+          this.element[0].style.height = newHeight + 'px';
           rect = this.element[0].getBoundingClientRect(); // reset the rect because the size changed
         }
 
@@ -707,12 +707,10 @@
 
       // Clears the old styles that may be present
       clearOldStyles: function() {
-        this.element.css({
-          'left': '',
-          'top': '',
-          'width': '',
-          'height': ''
-        });
+        this.element[0].style.left = '';
+        this.element[0].style.top = '';
+        this.element[0].style.width = '';
+        this.element[0].style.height = '';
 
         var os = this.originalStyles;
         if (os) {

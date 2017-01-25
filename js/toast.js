@@ -88,7 +88,7 @@
           }
 
           if (settings.progressBar) {
-            progress.width(percentage + '%');
+            progress[0].style.width = percentage + '%';
           }
         });
 
