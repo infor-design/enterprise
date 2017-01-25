@@ -84,7 +84,7 @@
         }
 
         this.element.attr({'tabindex': '-1'});
-        this.element.parent('.card-content, .widget-content').css('overflow', 'hidden');
+        this.element.parent('.card-content, .widget-content')[0].style.overflow = 'hidden';
 
          // Add Aria Roles
         this.element.attr({ 'role' : 'listbox',
@@ -504,10 +504,12 @@
 
       // Handle Resize
       handleResize: function () {
-        var items = $('li .listview-heading, tr .listview-heading', this.element);
+        var items = $('li .listview-heading, tr .listview-heading', this.element),
+          item1 = items.eq(1),
+          item1W = item1.width();
 
-        if (items.eq(1).width()) {
-          items.eq(0).width(items.eq(1).width());
+        if (item1.length && item1W) {
+          items[0].style.width = item1W + 'px';
         }
 
         this.setChildIconsValign();
@@ -556,10 +558,10 @@
           var item = $(this),
           itemHeihgt = item.is('button') ? 42 : 22,
           row = item.closest('li'),
-          padding = parseInt(row.css('padding-top'), 10) + parseInt(row.css('padding-bottom'), 10),
+          padding = parseInt(row[0].style.paddingTop, 10) + parseInt(row[0].style.paddingBottom, 10),
           rowHeight = row.outerHeight() - padding;
 
-          item.css({top: ((rowHeight - itemHeihgt)/2) +'px'});
+          this.style.top = ((rowHeight - itemHeihgt)/2) +'px';
         });
       },
 
@@ -758,7 +760,10 @@
           toolbar.one('animateopencomplete', function() {
             self.element.addClass('is-toolbar-open');
             toolbar.trigger('recalculate-buttons').removeClass('is-hidden');
-          }).css('display', 'block');
+          });
+          if (toolbar[0]) {
+            toolbar[0].style.display = 'block';
+          }
           // toolbar.animateOpen({distance: 52});
           toolbar.animateOpen({distance: 40});
 
@@ -772,7 +777,7 @@
         } else {
           toolbar.addClass('is-hidden').one('animateclosedcomplete', function(e) {
             e.stopPropagation();
-            $(this).css('display', 'none');
+            this.style.display = 'none';
           }).animateClosed();
 
         }

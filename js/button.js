@@ -112,7 +112,8 @@
           yPos = (yPos < 0) ? self.element.outerHeight()/2 : yPos;
 
           $('svg.ripple-effect', element).remove();
-          ripple.css({'left':xPos, 'top':yPos});
+          ripple[0].style.left = xPos + 'px';
+          ripple[0].style.top = yPos + 'px';
           element.prepend(ripple);
 
           // Start the JS Animation Loop if IE9
@@ -135,11 +136,12 @@
       // Browsers that don't support CSS-based animation can still show the animation
       animateWithJS: function(el) {
         var scale = 200,
-        xPos = (parseFloat(el.css('left')) - (scale / 2)) + 'px',
-        yPos = (parseFloat(el.css('top'))  - (scale / 2)) + 'px';
+        elStyle = el[0].style,
+        xPos = (parseFloat(elStyle.left) - (scale / 2)) + 'px',
+        yPos = (parseFloat(elStyle.top)  - (scale / 2)) + 'px';
 
-        el.css({ opacity: 0.4 })
-        .animate({
+        el[0].style.opacity = '0.4';
+        el.animate({
           opacity: 0,
           left: xPos,
           top: yPos,

@@ -65,7 +65,8 @@
 
         //Adjust Width if Set as a Setting
         if (settings.width !== 'auto') {
-          this.content.closest('.modal').css({'max-width': 'none', 'width': settings.width});
+          this.content.closest('.modal')[0].style.maxWidth = 'none';
+          this.content.closest('.modal')[0].style.width = settings.width + (/(px|%)/i.test(settings.width + '') ? '' : 'px');
         }
 
         if (settings.cssClass) {

@@ -1208,7 +1208,9 @@
                 if (!clone) {
                   return;
                 }
-                clone.css({left: pos.left, top: pos.top, opacity: 1});
+                clone[0].style.left = pos.left + 'px';
+                clone[0].style.top = pos.top + 'px';
+                clone[0].style.opacity = '1';
                 self.setDragOver(clone, pos);
               })
 
@@ -1220,7 +1222,8 @@
                 if (!clone || !self.sortable.overDirection) {
                   return;
                 }
-                clone.css({left: pos.left, top: pos.top});
+                clone[0].style.left = pos.left + 'px';
+                clone[0].style.top = pos.top + 'px';
 
                 var start = self.sortable.startNode.parent(),
                   end = self.sortable.overNode.parent();
@@ -1321,7 +1324,7 @@
               li = a.parent();
               left = rec.left;
               ul = a.closest('ul');
-              exMargin = parseInt(li.css('margin-top'), 10) > 0 ? 2 : 0;
+              exMargin = parseInt(li[0].style.marginTop, 10) > 0 ? 2 : 0;
               isBeforeStart = ((i-1) === self.sortable.startIndex && ul.is(self.sortable.startUl));
               isAfterSttart = ((i+1) === self.sortable.startIndex && ul.is(self.sortable.startUl));
               links.removeClass('is-over');
@@ -1349,7 +1352,9 @@
                   top = (direction === 'up') ?
                     (rec.top - 1.5 - (li.is('.is-active') ? 3 : 0)) :
                     (rec.bottom + (li.next().is('.is-active') ? -1 : 1.5) + exMargin);
-                  self.targetArrow.css({ left: left, top: top }).show();
+                  self.targetArrow[0].style.left = left + 'px';
+                  self.targetArrow[0].style.top = top + 'px';
+                  self.targetArrow.show();
                 }
 
                 // Set changes

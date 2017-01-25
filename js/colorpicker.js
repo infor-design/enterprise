@@ -213,14 +213,14 @@
       // Toggle / Open the List
       toggleList: function () {
         var self = this,
-          isMenu =  !!($('#colorpicker-menu').length);
+          menu =  $('#colorpicker-menu');
 
-        if (isMenu || self.element.is(':disabled')) {
+        if (menu.length || self.element.is(':disabled')) {
           return;
         }
 
         //Append Color Menu
-        self.updateColorMenu();
+        menu =  self.updateColorMenu();
 
         var popupmenuOpts = {
           ariaListbox: true,
@@ -245,12 +245,14 @@
           self.element.parent().addClass('is-open');
         })
         .on('close.colorpicker', function () {
-          $('#colorpicker-menu').parent('.popupmenu-wrapper').remove();
+          menu.on('destroy.colorpicker', function () {
+            $(this).off('destroy.colorpicker').remove();
+          });
           self.element.parent().removeClass('is-open');
         })
         .on('selected.colorpicker', function (e, item) {
           self.element.val('#'+item.data('value'));
-          self.swatch.css('background-color', '#' + item.data('value'));
+          self.swatch[0].style.backgroundColor = '#' + item.data('value');
           self.element.focus();
         });
 
@@ -274,7 +276,7 @@
           return;
         }
 
-        this.swatch.css('background-color', hex);
+        this.swatch[0].style.backgroundColor = hex;
         this.element.attr('aria-describedby', text);
       },
 
@@ -318,10 +320,10 @@
             a.addClass('is-selected'+ checkmarkClass);
           }
 
-          a.find('.swatch')
-              .css('background-color', '#'+ value)
-              .addClass(isBorder ? 'is-border' : '').end()
-            .data('label', text)
+          var swatch = a.find('.swatch');
+          swatch[0].style.backgroundColor = '#'+ value;
+          swatch.addClass(isBorder ? 'is-border' : '');
+          a.data('label', text)
             .data('value', value)
             .attr('title', text +' #'+ value)
             .tooltip();
@@ -335,6 +337,8 @@
         if (!isMenu) {
           $('body').append(menu);
         }
+
+        return menu;
       },
 
       enable: function() {

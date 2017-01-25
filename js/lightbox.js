@@ -92,7 +92,10 @@
           frameHeight: 0
         })
         .on('open', function() {
-          $('.overlay').css('opacity', '.7');
+          var overlay = $('.overlay');
+          if (overlay.length) {
+            overlay[0].style.opacity = '.7';
+          }
         })
         .on('afterclose', function () {
           var modal = $(this);
@@ -137,8 +140,8 @@
         this.nextButton = $('<button class="btn-next" type="button">' + $.createIcon('right-arrow') + '<span class="audible">'+
             Locale.translate('Next') +'</span></button>');
 
+        this.lightBox[0].style.overflow = 'visible';
         this.lightBox
-          .css('overflow', 'visible')
           .find('.modal-content').before(closeButton, this.previousButton, this.nextButton);
 
         closeButton.onTouchClick(pluginName).on('click.' + pluginName, function () {
@@ -188,10 +191,10 @@
         }, 110);
 
         if (box.length) {
-          box.css('opacity', '0');
+          box[0].style.opacity = '0';
 
           setTimeout(function () {
-            box.attr('src', path).css('opacity', '1');
+            box.attr('src', path)[0].style.opacity = '1';
           }, 300);
 
         } else {
@@ -215,9 +218,13 @@
 
       // Resize
       resize: function() {
-        var bodyHeight = $('.modal-body').height(),
+        var wrapper = $('.modal-body-wrapper'),
+          bodyHeight = $('.modal-body').height(),
           calcHeight = this.getCalcHeight();
-        $('.modal-body-wrapper').css('max-height', bodyHeight > calcHeight ? calcHeight : '');
+
+        if (wrapper.length) {
+          wrapper[0].style.maxHeight = bodyHeight > calcHeight ? (calcHeight + 'px') : '';
+        }
       },
 
       // Show/Hide next/previous buttons

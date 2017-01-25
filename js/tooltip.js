@@ -553,7 +553,9 @@
           return;
         }
 
-        this.tooltip.addClass('is-hidden').css({'left': '', 'top': ''});
+        this.tooltip.addClass('is-hidden');
+        this.tooltip[0].style.left = '';
+        this.tooltip[0].style.top = '';
         this.tooltip.find('.arrow').removeAttr('style');
 
         this.tooltip.off('click.tooltip');

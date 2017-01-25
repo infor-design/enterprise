@@ -411,9 +411,9 @@
 
       adjustSourceLineNumbers: function() {
         var container = this.textarea.parent(),
-          lineHeight = parseInt(this.textarea.css('line-height')),
+          lineHeight = parseInt(this.textarea[0].style.lineHeight),
           YPadding = (this.textarea.innerHeight() - this.textarea.height() );
-        this.textarea.css('height','');
+        this.textarea[0].style.height = '';
         var scrollHeight = this.textarea[0].scrollHeight,
           lineNumberCount = Math.floor((scrollHeight - YPadding) / lineHeight),
           numberList = this.sourceView.find('.line-numbers'),
@@ -439,9 +439,9 @@
             numberList.find('li').slice(-(i)).remove();
           }
           this.lineNumbers = lineNumberCount;
-          container.css('width', 'calc(100% - ' + (numberList.outerWidth() + 1) + 'px)');
+          container[0].style.width = 'calc(100% - ' + (numberList.outerWidth() + 1) + 'px)';
         }
-        this.textarea.css('height', numberList[0].scrollHeight + 'px');
+        this.textarea[0].style.height = numberList[0].scrollHeight + 'px';
       },
 
       wrapTextInTags: function(insertedText, selectedText, action) {
@@ -1178,7 +1178,10 @@
 
         //Attach Label
         var label = this.element.prevAll('.label');
-        label.css('cursor', 'default').on('click.editor', function () {
+        for (var i = 0, l = label.length; i < l; i++) {
+          label[i].style.cursor = 'default';
+        }
+        label.on('click.editor', function () {
           currentElement.focus();
         });
         currentElement.attr('aria-label', label.text());

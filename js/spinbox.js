@@ -50,8 +50,8 @@
         var style = this.element[0].style;
 
         if (style.width) {
-          this.element.parent().css('width', style.width);
-          this.element.css('width', (parseInt(style.width) - (this.element.parent().find('.down').outerWidth() *2)) + 'px');
+          this.element.parent()[0].style.width = style.width;
+          this.element[0].style.width = (parseInt(style.width) - (this.element.parent().find('.down').outerWidth() * 2)) + 'px';
         }
 
         return this;

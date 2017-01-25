@@ -67,7 +67,7 @@
           this.element.attr('data-value', value);
         }
 
-        this.element.css('width', perc + '%');
+        this.element[0].style.width = perc + '%';
         this.updateAria(perc);
       },
 

@@ -50,7 +50,10 @@
 
       setup: function() {
         this.panel = this.element.next('.contextual-action-panel');
-        this.panel.css('display', 'none').addClass('is-animating');
+        if (this.panel[0]) {
+          this.panel[0].style.display = 'none';
+        }
+        this.panel.addClass('is-animating');
         return this;
       },
 

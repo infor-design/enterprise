@@ -228,7 +228,9 @@
               y: touch.pageY - ((posOwner.top + scrollable.top) + pos.top + target.outerHeight(true)*1.2)
             };
 
-            self.containers.css({'z-index': 1});
+            for (var i = 0, l = self.containers.length; i < l; i++) {
+              self.containers[i].style.zIndex = '1';
+            }
             selections.placeholderTouch = selections.dragged.clone(true);
 
             if (selections.items.length > 1 && !$('#sl-placeholder-touch2').length) {
@@ -244,7 +246,8 @@
             placeholderContainer.prepend('<ul id="sl-placeholder-container"></ul>');
 
             $('#sl-placeholder-container').append(selections.placeholderTouch);
-            $('#sl-placeholder-container, #sl-placeholder-touch').css({width: selections.owner.width() +'px'});
+            $('#sl-placeholder-container')[0].style.width = selections.owner.width() +'px';
+            $('#sl-placeholder-touch')[0].style.width = selections.owner.width() +'px';
 
             self.draggTouchElement(e, selections.placeholderTouch);
           }
@@ -353,7 +356,9 @@
           }
 
           if(self.isTouch) {
-            self.containers.css({'z-index': ''});
+            for (var i = 0, l = self.containers.length; i < l; i++) {
+              self.containers[i].style.zIndex = '';
+            }
           }
 
           selections.isHandle = null;
@@ -586,11 +591,9 @@
 
       // Dragg touch element
       draggTouchElement: function(e, elm) {
-        var orig = e.originalEvent;
-        elm.css({
-          top: orig.changedTouches[0].pageY - this.offset.y,
-          left: orig.changedTouches[0].pageX - this.offset.x
-        });
+        var orig = e.originalEvent.changedTouches[0];
+        elm[0].style.top = (orig.pageY - this.offset.y) + 'px';
+        elm[0].style.left = (orig.pageX - this.offset.x) + 'px';
       },
 
       // Shorctut for testing whether a modifier is pressed

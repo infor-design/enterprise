@@ -147,11 +147,11 @@
         // menu lives <body> tag and we have a <body> element that is tall enough to
         // scroll and is allowed to scroll.
         function scrollableFilter() {
-          var c = $(this).css('overflow');
+          var c = this ? this.style.overflow : null;
           return c !== 'auto' && c !== 'visible' && c !== 'scroll';
         }
         if (this.wrapper.parents().filter(scrollableFilter).length === 0) {
-          this.wrapper.css('position', 'absolute');
+          this.wrapper[0].style.position = 'absolute';
         }
 
         // Wrap submenu ULs in a 'wrapper' to help break it out of overflow.
@@ -705,12 +705,12 @@
         wrapper.data('place').setArrowPosition(e, placementObj, wrapper);
 
         if (placementObj.height) {
-          wrapper.css('height', '');
-          this.menu.height(placementObj.height);
+          wrapper[0].style.height = '';
+          this.menu[0].style.height = (placementObj.height) + (/(px|%)/i.test(placementObj.height + '') ? '' : 'px');
         }
         if (placementObj.width) {
-          wrapper.css('width', '');
-          this.menu.width(placementObj.width);
+          wrapper[0].style.width = '';
+          this.menu[0].style.width = (placementObj.width) + (/(px|%)/i.test(placementObj.width + '') ? '' : 'px');
         }
 
         wrapper.triggerHandler('popupmenuafterplace', [placementObj]);
@@ -759,7 +759,7 @@
         this.position(e);
 
         if (this.element.closest('.header').length > 0) {
-          this.menu.parent().css('z-index', '9001');
+          this.menu.parent()[0].style.zIndex =  '9001';
         }
 
         //Close on Document Click ect..
@@ -841,7 +841,7 @@
 
           menuToClose = $(this).find('ul');
 
-          var isLeft = parseInt(menuToClose.parent('.wrapper').css('left')) < 0,
+          var isLeft = parseInt(menuToClose.parent('.wrapper')[0].style.left) < 0,
             canClose = (tracker - startY) < 3.5;
 
           if (isLeft) {
@@ -890,21 +890,21 @@
           mainWrapperOffset = li.parents('.popupmenu-wrapper:first').offset().top;
         li.parent().find('.popupmenu').removeClass('is-open').removeAttr('style');
 
-        wrapper.css({
-          'left': li.position().left + li.outerWidth(),
-          'top': (parseInt(li.position().top) - 5) + 'px'
-        }).children('.popupmenu').addClass('is-open');
+        wrapper[0].style.left = (li.position().left + li.outerWidth()) + 'px';
+        wrapper[0].style.top = (parseInt(li.position().top) - 5) + 'px';
+
+        wrapper.children('.popupmenu').addClass('is-open');
 
         //Handle Case where the menu is off to the right
         var menuWidth = menu.outerWidth();
         if ((wrapper.offset().left + menuWidth) > ($(window).width() + $(document).scrollLeft())) {
-          wrapper.css('left', -9999);
+          wrapper[0].style.left = '-9999px';
           menuWidth = menu.outerWidth();
-          wrapper.css('left', li.position().left - menuWidth);
+          wrapper[0].style.left = (li.position().left - menuWidth) + 'px';
           //Did it fit?
           if (wrapper.offset().left < 0) {
             //No. Push the menu's left offset onto the screen.
-            wrapper.css('left', li.position().left - menuWidth + Math.abs(wrapper.offset().left) + 40);
+            wrapper[0].style.left = (li.position().left - menuWidth + Math.abs(wrapper.offset().left) + 40) + 'px';
             menuWidth = menu.outerWidth();
           }
           // Do one more check to see if the right edge bleeds off the screen.
@@ -912,7 +912,7 @@
           if ((wrapper.offset().left + menuWidth) > ($(window).width() + $(document).scrollLeft())) {
             var differenceY = (wrapper.offset().left + menuWidth) - ($(window).width() + $(document).scrollLeft());
             menuWidth = menuWidth - differenceY;
-            menu.width(menuWidth);
+            menu[0].style.width = menuWidth + 'px';
           }
         }
 
@@ -922,19 +922,20 @@
           // First try bumping up the menu to sit just above the bottom edge of the window.
           var bottomEdgeCoord = wrapper.offset().top + menuHeight,
             differenceFromBottomY = bottomEdgeCoord - ($(window).height() + $(document).scrollTop());
-          wrapper.css('top', wrapper.position().top - differenceFromBottomY);
+
+          wrapper[0].style.top = (wrapper.position().top - differenceFromBottomY) + 'px';
 
           // Does it fit?
           if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
             // No. Bump the menu up higher based on the menu's height and the extra space from the main wrapper.
-            wrapper.css('top', ($(window).height() + $(document).scrollTop()) - menuHeight - mainWrapperOffset);
+            wrapper[0].style.top = (($(window).height() + $(document).scrollTop()) - menuHeight - mainWrapperOffset) + 'px';
           }
 
           // Does it fit now?
           if ((wrapper.offset().top - $(document).scrollTop()) < 0) {
             // No. Push the menu down onto the screen from the top of the window edge.
-            wrapper.css('top', 0);
-            wrapper.css('top', (wrapper.offset().top * -1));
+            wrapper[0].style.top = 0;
+            wrapper[0].style.top = (wrapper.offset().top * -1) + 'px';
             menuHeight = menu.outerHeight();
           }
 
@@ -943,7 +944,7 @@
           if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
             var differenceX = (wrapper.offset().top + menuHeight) - ($(window).height() + $(document).scrollTop());
             menuHeight = menuHeight - differenceX - 32;
-            menu.height(menuHeight);
+            menu[0].style.height = menuHeight + 'px';
           }
         }
 
@@ -1046,12 +1047,25 @@
           isCancelled = false;
         }
 
-        var self = this;
+        var self = this,
+          wrapper = this.menu.parent('.popupmenu-wrapper'),
+          menu = this.menu.find('.popupmenu');
 
-        this.menu.removeClass('is-open').attr('aria-hidden', 'true').css({'height': '', 'width': ''});
-        this.menu.parent('.popupmenu-wrapper').css({'left': '-999px', 'height': '', 'width': ''});
+        this.menu.removeClass('is-open').attr('aria-hidden', 'true');
+        this.menu[0].style.height = '';
+        this.menu[0].style.width = '';
+
+        wrapper[0].style.left = '-999px';
+        wrapper[0].style.height = '';
+        wrapper[0].style.width = '';
+
         this.menu.find('.submenu').off('mouseenter mouseleave').removeClass('is-submenu-open');
-        this.menu.find('.popupmenu').css({'left': '', 'top': '', 'height': '', 'width': ''});
+        if (menu[0]) {
+          menu[0].style.left = '';
+          menu[0].style.top = '';
+          menu[0].style.height = '';
+          menu[0].style.width = '';          
+        }
 
         this.menu.find('.is-focused').removeClass('is-focused');
 

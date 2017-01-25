@@ -247,18 +247,18 @@
         var style = this.element.attr('style');
         if (style) {
           if (style.match(/min-height/)) {
-            this.wrapper.css('min-height', this.element.css('min-height'));
+            this.wrapper[0].style.minHeight = this.element[0].style.minHeight;
             style = style.replace('min-height', '');
           }
           if (style.match(/height/)) {
-            this.wrapper.css('height', this.element.css('height'));
+            this.wrapper[0].style.height = this.element[0].style.height;
           }
           if (style.match(/min-width/)) {
-            this.wrapper.css('min-width', this.element.css('min-width'));
+            this.wrapper[0].style.minWidth = this.element[0].style.minWidth;
             style = style.replace('min-width', '');
           }
           if (style.match(/width/)) {
-            this.wrapper.css('width', this.element.css('width'));
+            this.wrapper[0].style.width = this.element[0].style.width;
           }
         }
 
@@ -292,14 +292,14 @@
 
           tick.element = $('<div class="tick" data-value="'+ tick.value +'"></div>');
           tick.label = $('<span class="label">' + tick.description + '</span>');
-          tick.element.css((isVertical ? 'bottom' : 'left'), pos).append(tick.label);
+          tick.element[0].style[isVertical ? 'bottom' : 'left'] = pos;
+          tick.element.append(tick.label);
           self.wrapper.append(tick.element);
 
           if (isVertical) {
             return;
           }
-
-          tick.label.css('left', -(tick.label.outerWidth()/2 - tick.element.width()/2) + 'px');
+          tick.label[0].style.left = -(tick.label.outerWidth()/2 - tick.element.width()/2) + 'px';
         }
 
         // Ticks
@@ -668,31 +668,29 @@
           if (condition) {
             this.ticks[i].element.addClass('complete');
             if (color) {
-              this.ticks[i].element.css('background-color', color);
+              this.ticks[i].element[0].style.backgroundColor = color;
               this.ticks[i].element.addClass('inherit');
             }
           } else {
             this.ticks[i].element.removeClass('complete');
             if (color) {
-              this.ticks[i].element.css('background-color', '');
+              this.ticks[i].element[0].style.backgroundColor = '';
               this.ticks[i].element.removeClass('inherit');
             }
           }
         }
 
         if (color) {
-          this.range.css('background-color', color);
+          this.range[0].style.backgroundColor = color;
           $.each(this.handles, function(i, handle) {
-            handle.css({
-              'background-color' : color,
-              'border-color' : color
-            });
+            handle[0].style.backgroundColor = color;
+            handle[0].style.borderColor = color;
           });
         }
 
         // Remove any text colors that already existed.
         $.each(self.ticks, function(i) {
-          self.ticks[i].label.css('color', '');
+          self.ticks[i].label[0].style.color = '';
         });
 
         // Convert the stored values from ranged to percentage
