@@ -24,7 +24,8 @@
         useStepUI: false, // When using the UI as a stepped tree
         folderIconOpen: 'open-folder',
         folderIconClosed: 'closed-folder',
-        sortable: false // Allow nodes to be sortable
+        sortable: false, // Allow nodes to be sortable
+        onBeforeSelect: null
       },
       settings = $.extend({}, defaults, options);
 
@@ -304,13 +305,36 @@
 
       //Set a node as the selected one
       selectNode: function (node, focus) {
+        var self = this;
+
         if (node.length === 0) {
           return;
         }
 
-        var self = this,
-          aTags = $('a', this.element);
+        // Possibly Call the onBeforeSelect
+        var result;
+        if (typeof self.settings.onBeforeSelect === 'function') {
 
+          result = self.settings.onBeforeSelect(node);
+
+          if (result.done && typeof result.done === 'function') { // A promise is returned
+            result.done(function(continueSelectNode) {
+              if (continueSelectNode) {
+                self.selectNodeFinish(node, focus);
+              }
+            });
+          } else if (result) { // Boolean is returned
+            self.selectNodeFinish(node, focus);
+          }
+
+        } else { // No Callback specified
+          self.selectNodeFinish(node, focus);
+        }
+      },
+
+      selectNodeFinish: function(node, focus) {
+        var self = this;
+        var aTags = $('a', this.element);
         aTags.attr('tabindex', '-1');
         node.attr('tabindex', '0');
 

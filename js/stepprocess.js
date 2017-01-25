@@ -16,10 +16,11 @@
   $.fn.stepprocess = function(options) {
 
     var pluginName = 'stepprocess',
-        defaults = {
-          dataset: undefined,
-          afterFolderOpen: function() {}
-        };
+      defaults = {
+        dataset: undefined,
+        afterFolderOpen: function() {},
+        beforeSelectStep: null
+      };
 
     /**
      * A Stepped process UI/UX extending the tree control
@@ -28,6 +29,7 @@
      * @param {Object} options
      * @param {Object} [options.dataset] - Initial object to create the tree
      * @param {function(event)} [options.afterFolderOpen] - After folder open event callback
+     * @param {function(event)|Promise} [options.beforeSelectStep] - On step select callback
      */
     function StepProcess(element, options) {
       this.settings = $.extend({}, defaults, options);
@@ -40,12 +42,19 @@
       /** @private  */
       init: function() {
         var self = this;
-        var $theTree = $('#json-tree').tree({
+
+        var treeParams = {
           dataset: this.settings.dataset,
           useStepUI: true,
           folderIconOpen: 'caret-up',
           folderIconClosed: 'caret-down'
-        });
+        };
+
+        if (typeof self.settings.beforeSelectStep === 'function') {
+          treeParams.onBeforeSelect = self.settings.beforeSelectStep;
+        }
+
+        var $theTree = $('#json-tree').tree(treeParams);
 
         this.theTreeApi = $theTree.data('tree');
 
