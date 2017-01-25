@@ -63,7 +63,7 @@
         }
 
         if (this.element.hasClass('icon-favorite')) {
-          this.element.on('click.button', function() {
+          this.element.on('click.favorite', function() {
             var svg = $(this).find('svg:not(.ripple-effect)');
 
             if (svg.find('use').attr('xlink:href') === '#icon-star-filled') {
