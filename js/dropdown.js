@@ -632,6 +632,7 @@
             // into the SearchInput.  If search mode is on, Tab should 'select' the currently highlighted
             // option in the list, update the SearchInput and close the list.
             if (self.isOpen()) {
+              self.selectOption($(options[selectedIndex])); // store the current selection
               self.closeList(false);
               this.activate();
             }
