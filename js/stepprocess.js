@@ -19,7 +19,7 @@
       defaults = {
         dataset: undefined,
         afterFolderOpen: function() {},
-        onStepSelect: null
+        beforeSelectStep: null
       };
 
     /**
@@ -29,7 +29,7 @@
      * @param {Object} options
      * @param {Object} [options.dataset] - Initial object to create the tree
      * @param {function(event)} [options.afterFolderOpen] - After folder open event callback
-     * @param {function(event)} [options.onStepSelect] - On step select callback
+     * @param {function(event)|Promise} [options.beforeSelectStep] - On step select callback
      */
     function StepProcess(element, options) {
       this.settings = $.extend({}, defaults, options);
@@ -50,8 +50,8 @@
           folderIconClosed: 'caret-down'
         };
 
-        if (typeof self.settings.onStepSelect === 'function') {
-          treeParams.onSelect = self.settings.onStepSelect;
+        if (typeof self.settings.beforeSelectStep === 'function') {
+          treeParams.onBeforeSelect = self.settings.beforeSelectStep;
         }
 
         var $theTree = $('#json-tree').tree(treeParams);

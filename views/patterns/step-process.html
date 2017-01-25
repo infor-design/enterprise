@@ -116,12 +116,12 @@
             <input id="extra-field-nine" name="extra-field-nine" type="text">
           </div>
 
-           <div class="field">
+          <div class="field">
             <label for="extra-field-ten" class="label">Almost Last Field</label>
             <input id="extra-field-ten" name="extra-field-ten" type="text">
           </div>
 
-           <div class="field">
+          <div class="field">
             <label for="extra-field-eleven" class="label">Last Field</label>
             <input id="extra-field-eleven" name="extra-field-eleven" type="text">
           </div>
@@ -180,40 +180,40 @@
 
 <script type="text/javascript">
 
-  $(function() {
+  $(function () {
 
     var sampleData, ajaxSampleData;
 
     /* jshint ignore:start */
     sampleData = [
-    {
-      "id": "node1",
-      "text": "Node 1",
-      "selected": true,       // !! Default to first one !!
-      "href": '#content1-1',
-      "alertIcon": 'confirm'
-    }, {
-      "id": "node2",
-      "text": "Node 2",
-      "open": false,
-      "selected": false,
-      "focus": false,
-      "alertIcon": 'half-empty-circle',
-      "children": []
-    }, {
-      "id": "node3",
-      "text": "Node 3",
-      "open": false,
-      "selected": false,
-      "alertIcon": 'empty-circle',
-      "children": []
-    }, {
-      "id": "node4",
-      "text": "Node 4",
-      "selected": false,
-      "href": '#content4-1',
-      "alertIcon": 'empty-circle'
-    }];
+      {
+        "id": "node1",
+        "text": "Node 1",
+        "selected": true,       // !! Default to first one !!
+        "href": '#content1-1',
+        "alertIcon": 'confirm'
+      }, {
+        "id": "node2",
+        "text": "Node 2",
+        "open": false,
+        "selected": false,
+        "focus": false,
+        "alertIcon": 'half-empty-circle',
+        "children": []
+      }, {
+        "id": "node3",
+        "text": "Node 3",
+        "open": false,
+        "selected": false,
+        "alertIcon": 'empty-circle',
+        "children": []
+      }, {
+        "id": "node4",
+        "text": "Node 4",
+        "selected": false,
+        "href": '#content4-1',
+        "alertIcon": 'empty-circle'
+      }];
 
     // Add extra sample nodes/data
     stepFunctions.extendSampleData(sampleData);
@@ -223,11 +223,11 @@
     $('.step-process-container').stepprocess({
       'dataset': sampleData,
       'afterFolderOpen': stepFunctions.afterFolderOpen,
-      'onStepSelect': stepFunctions.onStepSelect
+      'beforeSelectStep': stepFunctions.beforeSelectStep
     });
 
     // Example button save event
-    $('.js-btn-save-changes').click(function(e) {
+    $('.js-btn-save-changes').click(function (e) {
       e.preventDefault();
       $('body').message({
         title: 'Step Saved',
@@ -236,7 +236,7 @@
         message: 'This has been saved.',
         buttons: [{
           text: 'Ok',
-          click: function() {
+          click: function () {
             $(this).modal('close');
           },
           isDefault: true
@@ -248,25 +248,25 @@
   // Step Functions
   var stepFunctions = {
 
-    ajaxGetSubstepsForStep: function(stepId, callback) {
+    ajaxGetSubstepsForStep: function (stepId, callback) {
       var ajaxSampleData = {
         "node2": [
-        {
-          "id": "node21",
-          "text": "Node 2-1",
-          "href": "#content2-1",
-          "alertIcon": 'error'
-        }, {
-          "id": "node22",
-          "text": "Node 2-2",
-          "href": "#content2-2",
-          "alertIcon": 'empty-circle'
-        }, {
-          "id": "node23",
-          "text": "Node 2-3",
-          "href": "#content2-3",
-          "alertIcon": 'empty-circle'
-        }],
+          {
+            "id": "node21",
+            "text": "Node 2-1",
+            "href": "#content2-1",
+            "alertIcon": 'error'
+          }, {
+            "id": "node22",
+            "text": "Node 2-2",
+            "href": "#content2-2",
+            "alertIcon": 'empty-circle'
+          }, {
+            "id": "node23",
+            "text": "Node 2-3",
+            "href": "#content2-3",
+            "alertIcon": 'empty-circle'
+          }],
         "node3": [{
           "id": "node31",
           "text": "Node 3-1",
@@ -279,7 +279,7 @@
           "alertIcon": 'empty-circle'
         }]
       };
-      setTimeout(function() {
+      setTimeout(function () {
         var substeps = ajaxSampleData[stepId];
         callback(substeps);
       }, 100);
@@ -287,7 +287,7 @@
 
 
     // When a folder opens
-    afterFolderOpen: function(e) {
+    afterFolderOpen: function (e) {
       var $folder = $(e.target);
       var step = $folder.prev('a')[0];
       var stepId = step.id;
@@ -295,7 +295,7 @@
       // Get subnodes for empty folders
       if ($folder.children().length === 0) {
 
-        stepFunctions.ajaxGetSubstepsForStep(stepId, function(subSteps) {
+        stepFunctions.ajaxGetSubstepsForStep(stepId, function (subSteps) {
 
           var $treeSteps = $('.step-process-container');
 
@@ -315,7 +315,7 @@
       }
     },
 
-    extendSampleData: function(data) {
+    extendSampleData: function (data) {
       var $container = $('.step-container');
       for (var i = 5; i < 20; i++) {
         data.push({
@@ -325,13 +325,23 @@
           "href": '#content' + i + '-1',
           "alertIcon": 'empty-circle'
         });
-        $container.append('<div id="content' + i + '-1" class="js-step-panel"><h2>Node ' + i + '</h2><p>This is step '+ i +'-1</p></div>')
+        $container.append('<div id="content' + i + '-1" class="js-step-panel"><h2>Node ' + i + '</h2><p>This is step ' + i + '-1</p></div>')
       }
     },
 
-    onStepSelect: function(args) {
-      console.log(args);
-      return false;
+    beforeSelectStep: function (step) {
+      console.log('Before Select Fired', step);
+      var deferred = $.Deferred();
+
+      // Simulate AJAX
+      setTimeout(function () {
+        var canAccessStep = true;
+        console.log('Ajax finished.')
+        deferred.resolve(canAccessStep);
+      }, 200);
+
+      // Return promise
+      return deferred.promise();
     }
   };
 </script>

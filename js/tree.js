@@ -311,17 +311,23 @@
           return;
         }
 
-        // Call the onBeforeSelect
-        var result = self.settings.onBeforeSelect(node);
+        // Possibly Call the onBeforeSelect
+        var result;
+        if (typeof self.settings.onBeforeSelect === 'function') {
 
-        // Handle the callback as a promise or function
-        if (result.done && typeof result.done === 'function') {
-          result.done(function(continueSelectNode) {
-            if (continueSelectNode) {
-              self.selectNodeFinish(node, focus);
-            }
-          });
-        } else if (result) {
+          result = self.settings.onBeforeSelect(node);
+
+          if (result.done && typeof result.done === 'function') { // A promise is returned
+            result.done(function(continueSelectNode) {
+              if (continueSelectNode) {
+                self.selectNodeFinish(node, focus);
+              }
+            });
+          } else if (result) { // Boolean is returned
+            self.selectNodeFinish(node, focus);
+          }
+
+        } else { // No Callback specified
           self.selectNodeFinish(node, focus);
         }
       },
