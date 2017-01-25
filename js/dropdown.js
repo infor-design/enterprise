@@ -493,8 +493,12 @@
       filterList: function(term) {
         var self = this,
           selected = false,
-          list = this.listUl.find('li'),
+          list = $('li', this.listUl),
           results;
+
+        if (!list.length || !this.list || this.list && !this.list.length) {
+          return;
+        }
 
         if (!term) {
           term = '';
@@ -730,6 +734,8 @@
           return false;
         }
 
+        var isSearchInput = self.searchInput && self.searchInput.length;
+
         self.initialFilter = false;
 
         if (!self.isOpen() && !self.isControl(key) && !this.settings.source) {
@@ -737,12 +743,16 @@
           self.initialFilter = true;
           self.isFiltering = true;
           self.filterTerm = $.actualChar(e);
-          self.searchInput.val($.actualChar(e));
+          if (isSearchInput) {
+            self.searchInput.val($.actualChar(e));
+          }
           self.toggleList();
         }
 
         this.searchKeyMode = true;
-        self.searchInput.attr('aria-activedescendant', '');
+        if (isSearchInput) {
+          self.searchInput.attr('aria-activedescendant', '');
+        }
         return true;
       },
 
