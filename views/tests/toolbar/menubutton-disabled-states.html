@@ -19,13 +19,25 @@
       <button type="button" id="enable-btn" class="btn-secondary" disabled>
         <span>Enable Entire MenuButton</span>
       </button>
+    </div>
 
+    <div class="field">
       <button type="button" id="disable-item" class="btn-secondary">
-        <span>Disable Submenu</span>
+        <span>Disable Menu Items</span>
       </button>
 
       <button type="button" id="enable-item" class="btn-secondary" disabled>
-        <span>Enable Submenu</span>
+        <span>Enable Menu Items</span>
+      </button>
+    </div>
+
+    <div class="field">
+      <button type="button" id="disable-submenu-item" class="btn-secondary">
+        <span>Disable Submenu Items</span>
+      </button>
+
+      <button type="button" id="enable-submenu-item" class="btn-secondary" disabled>
+        <span>Enable Submenu Items</span>
       </button>
     </div>
 
@@ -90,16 +102,30 @@
   });
 
   $('#disable-item').on('click', function () {
-    $('#test-item-three').addClass('is-disabled');
+    $('#test-item-one, #test-item-two, #test-item-three').addClass('is-disabled');
 
     $(this).prop('disabled', true);
     $('#enable-item').prop('disabled', false);
   });
 
   $('#enable-item').on('click', function () {
-    $('#test-item-three').removeClass('is-disabled');
+    $('#test-item-one, #test-item-two, #test-item-three').removeClass('is-disabled');
 
     $(this).prop('disabled', true);
     $('#disable-item').prop('disabled', false);
+  });
+
+  $('#disable-submenu-item').on('click', function () {
+    $('#test-subitem-one, #test-subitem-two, #test-subitem-three, #test-subitem-four, #test-subitem-five').addClass('is-disabled');
+
+    $(this).prop('disabled', true);
+    $('#enable-submenu-item').prop('disabled', false);
+  });
+
+  $('#enable-submenu-item').on('click', function () {
+    $('#test-subitem-one, #test-subitem-two, #test-subitem-three, #test-subitem-four, #test-subitem-five').removeClass('is-disabled');
+
+    $(this).prop('disabled', true);
+    $('#disable-submenu-item').prop('disabled', false);
   });
 </script>
