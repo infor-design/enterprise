@@ -201,9 +201,17 @@
               var dmi = $(diffMenuItem), // "Diffed" Menu Item
                 omi = children.eq(i), // Corresponding "Original" menu item
                 dmiA = dmi.children('a'), // Anchor inside of "Diffed" menu item
-                omiA = omi.children('a'); // Anchor inside of "Original" menu item
+                omiA = omi.children('a'), // Anchor inside of "Original" menu item
+                dmiID = dmi.attr('id'),
+                dmiAID = dmiA.attr('id');
 
-              dmiA.removeAttr('id');
+              // replace menu item ids with spillover-menu specific ids.
+              if (dmiID) {
+                dmi.removeAttr('id').attr('data-original-menu-item', dmiID);
+              }
+              if (dmiAID) {
+                dmiA.removeAttr('id').attr('data-original-menu-anchor', dmiAID);
+              }
 
               omiA.data('action-button-link', dmiA);
               dmiA.data('original-button', omiA);
@@ -211,9 +219,8 @@
               var omiSubMenu = omi.children('.wrapper').children('.popupmenu'),
                 dmiSubMenu = dmi.children('.wrapper').children('.popupmenu');
 
-              if (dmiSubMenu.length && dmiSubMenu.length) {
-                dmi.addClass('submenu');
-                addItemLinksRecursively(dmiSubMenu, omiSubMenu, dmi);
+              if (omiSubMenu.length && dmiSubMenu.length) {
+                addItemLinksRecursively(omiSubMenu, dmiSubMenu, dmi);
               }
             });
 
@@ -257,7 +264,7 @@
 
         //Refresh Text and Disabled
         function refreshTextAndDisabled(menu) {
-          menu.find('a').each(function () {
+          $('li > a', menu).each(function () {
             var a = $(this),
                 item = a.data('originalButton'),
                 text = self.getItemText(item),
@@ -268,6 +275,12 @@
                 a.find('span').text(text.trim());
               } else {
                 a.text(text.trim());
+              }
+
+              if (item.is('.hidden') || item.parent().is('.hidden')) {
+                a.closest('li').addClass('hidden');
+              } else {
+                a.closest('li').removeClass('hidden');
               }
 
               if (item.parent().is('.is-disabled') || item.is(':disabled')) { // if it's disabled menu item, OR a disabled menu-button
@@ -286,17 +299,18 @@
         }
 
         if (popupMenuInstance) {
-          this.more.triggerHandler('updated');
-          popupMenuInstance.element.off('beforeopen').on('beforeopen', function() {
-            refreshTextAndDisabled(self.moreMenu);
-          });
+          this.more
+            .triggerHandler('updated')
+            .on('beforeopen.toolbar', function() {
+              refreshTextAndDisabled(self.moreMenu);
+            });
         } else {
           var actionButtonOpts = $.fn.parseOptions(this.more[0]);
 
           this.more.popupmenu($.extend({}, actionButtonOpts, {
             trigger: 'click',
             menu: this.moreMenu
-          })).off('beforeopen').on('beforeopen', function() {
+          })).on('beforeopen.toolbar', function() {
             refreshTextAndDisabled(self.moreMenu);
           });
         }
