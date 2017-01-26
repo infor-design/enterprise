@@ -9,21 +9,57 @@
     </p>
     <br/><br/><br/>
 
-    <button type="button" id="disable-btn" class="btn-secondary">
+    <button type="button" class="btn-secondary btn-menu">
       <span>Disable</span>
     </button>
+    <ul class="popupmenu" id="disable-options">
+      <li><a href="#" data-target="#button-1">Button 1</a></li>
+      <li><a href="#" data-target="#button-2">Button 2</a></li>
+      <li><a href="#" data-target="#button-3">Button 3</a></li>
+      <li><a href="#" data-target="#test-menu #item-1">Item 1</a></li>
+      <li><a href="#" data-target="#test-menu #item-2">Item 2</a></li>
+      <li><a href="#" data-target="#test-menu #subitem-1">Sub Item 1</a></li>
+      <li><a href="#" data-target="#test-menu #subitem-2">Sub Item 2</a></li>
+    </ul>
 
-    <button type="button" id="enable-btn" class="btn-secondary">
+    <button type="button" class="btn-secondary btn-menu">
       <span>Enable</span>
     </button>
+    <ul class="popupmenu" id="enable-options">
+      <li><a href="#" data-target="#button-1">Button 1</a></li>
+      <li><a href="#" data-target="#button-2">Button 2</a></li>
+      <li><a href="#" data-target="#button-3">Button 3</a></li>
+      <li><a href="#" data-target="#test-menu #item-1">Item 1</a></li>
+      <li><a href="#" data-target="#test-menu #item-2">Item 2</a></li>
+      <li><a href="#" data-target="#test-menu #subitem-1">Sub Item 1</a></li>
+      <li><a href="#" data-target="#test-menu #subitem-2">Sub Item 2</a></li>
+    </ul>
 
-    <button type="button" id="hide-btn" class="btn-secondary">
+    <button type="button" class="btn-secondary btn-menu">
       <span>Hide</span>
     </button>
+    <ul class="popupmenu" id="hide-options">
+      <li><a href="#" data-target="#button-1">Button 1</a></li>
+      <li><a href="#" data-target="#button-2">Button 2</a></li>
+      <li><a href="#" data-target="#button-3">Button 3</a></li>
+      <li><a href="#" data-target="#test-menu #item-1">Item 1</a></li>
+      <li><a href="#" data-target="#test-menu #item-2">Item 2</a></li>
+      <li><a href="#" data-target="#test-menu #subitem-1">Sub Item 1</a></li>
+      <li><a href="#" data-target="#test-menu #subitem-2">Sub Item 2</a></li>
+    </ul>
 
-    <button type="button" id="show-btn" class="btn-secondary">
+    <button type="button" class="btn-secondary btn-menu">
       <span>Show</span>
     </button>
+    <ul class="popupmenu" id="show-options">
+      <li><a href="#" data-target="#button-1">Button 1</a></li>
+      <li><a href="#" data-target="#button-2">Button 2</a></li>
+      <li><a href="#" data-target="#button-3">Button 3</a></li>
+      <li><a href="#" data-target="#test-menu #item-1">Item 1</a></li>
+      <li><a href="#" data-target="#test-menu #item-2">Item 2</a></li>
+      <li><a href="#" data-target="#test-menu #subitem-1">Sub Item 1</a></li>
+      <li><a href="#" data-target="#test-menu #subitem-2">Sub Item 2</a></li>
+    </ul>
 
   </div>
 </div>
@@ -37,26 +73,24 @@
       </div>
 
       <div class="buttonset">
-         <button type="button" id="button1" class="btn">
+         <button type="button" id="button-1" class="btn">
             <span>Space Filler Button 1</span>
          </button>
 
-         <button type="button" id="button2" class="btn">
+         <button type="button" id="button-2" class="btn">
             <span>Simple Button 2</span>
          </button>
 
-         <button type="button" id="button3" class="btn-menu">
+         <button type="button" id="button-3" class="btn-menu">
           <span>Menu Button 3</span>
          </button>
          <ul class="popupmenu" id="test-menu">
-            <li id="test-item-one"><a class="level-one" href="#">Item 1</a></li>
-            <li id="test-item-two"><a class="level-one" href="#">Item 2</a></li>
-            <li id="test-item-three">
-              <a class="static" href="#">Sub Menu</a>
+            <li id="item-1"><a class="level-one" href="#">Item 1</a></li>
+            <li id="item-2">
+              <a href="#">Item 2</a>
               <ul id="test-submenu" class="popupmenu">
-                <li id="test-subitem-one"><a class="level-two" href="#">Sub Item 1</a></li>
-                <li id="test-subitem-two"><a class="level-two" href="#">Sub Item 2</a></li>
-                <li id="test-subitem-three"><a class="static" href="#">Sub Item Unchanging</a></li>
+                <li id="subitem-1"><a class="level-two" href="#">Sub Item 1</a></li>
+                <li id="subitem-2"><a class="level-two" href="#">Sub Item 2</a></li>
               </ul>
             </li>
           </ul>
@@ -67,25 +101,43 @@
 </div>
 
 <script>
-  var menu = $('#test-menu');
+  $('#disable-options').find('a').on('click', function () {
+    var selector = $(this).data('target');
+    var element = $(selector);
 
-  $('#disable-btn').on('click', function () {
-    $('#button2').prop('disabled', true);
-    $('#test-item-three').addClass('is-disabled');
+    // Disable button or item
+    if (element.is('button')) {
+      $(selector).prop('disabled', true);
+    } else {
+      element.addClass('is-disabled');
+    }
   });
 
-  $('#enable-btn').on('click', function () {
-    $('#button2').removeAttr('disabled');
-    $('#test-item-three').removeClass('is-disabled');
+  $('#enable-options').find('a').on('click', function () {
+    var selector = $(this).data('target');
+    var element = $(selector);
+
+    // Enable button or item
+    if (element.is('button')) {
+      $(selector).removeAttr('disabled');
+    } else {
+      element.removeClass('is-disabled');
+    }
   });
 
-  $('#hide-btn').on('click', function () {
-     $('#button2').hide();
-     menu.find('.level-one, .level-two').parent().hide();
+  $('#hide-options').find('a').on('click', function () {
+    var selector = $(this).data('target');
+    var element = $(selector);
+
+    // Hide button or item
+    element.hide();
   });
 
-  $('#show-btn').on('click', function () {
-     $('#button2').show();
-     menu.find('.level-one, .level-two').parent().show();
+  $('#show-options').find('a').on('click', function () {
+    var selector = $(this).data('target');
+    var element = $(selector);
+
+    // Show button or item
+    element.show();
   });
 </script>
