@@ -1,0 +1,56 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Mask Test: Write Event</h2>
+    <p><a class="hyperlink" href="http://jira/browse/SOHO-4781">Related JIRA Ticket</a>.</p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+
+    <div class="field">
+      <label for="masked-field">Masked Field</label>
+      <input id="masked-field" type="text" data-mask data-options='{ "pattern": "(###) ###-####" }' />
+    </div>
+
+  </div>
+  <div class="six columns">
+
+    <div class="card">
+      <div class="card-header">
+        <h2 class="widget-title">Output Console</h2>
+      </div>
+      <div id="output-console" class="card-content" style="padding: 13px 20px;"></div>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  var input = $('#masked-field'),
+    output = $('#output-console'),
+    MAX_MESSAGES = 20;
+
+  function getNewMessage(textContent) {
+    if (!textContent || textContent === '') {
+      textContent = '&nbsp;';
+    }
+
+    return '<span class="demo-line" style="display: block; font-size: 1.4rem; margin-bottom: 0.5rem;">'+ textContent +'</span>';
+  }
+
+  input.on('write.mask', function(e, value) {
+    var outputMessages = output.children(),
+      outputMsgLength = outputMessages.length;
+
+    while (outputMsgLength > (MAX_MESSAGES - 1)) {
+      outputMessages = outputMessages.not(outputMessages.first());
+      outputMsgLength = outputMsgLength - 1;
+    }
+
+    output.append(getNewMessage(value));
+    output.scrollTop(output[0].scrollHeight);
+  });
+</script>
