@@ -266,7 +266,7 @@
         // jQuery-wrapped elements don't get manipulated.
         // Simply store the reference, render, and return.
         if (content instanceof $ && content.length) {
-          this.content = content;
+          this.content = content.addClass('hidden');
           doRender();
           return true;
         }
