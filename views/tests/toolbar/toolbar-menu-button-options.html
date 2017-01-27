@@ -1,5 +1,5 @@
 ﻿<div class="row top-padding">
-  <div class="six columns">
+  <div class="twelve columns">
 
     <h2>Toolbar: Menu Buttons &amp; Updates</h2>
     <p>
@@ -130,7 +130,11 @@
     var element = $(selector);
 
     // Hide button or item
-    element.hide();
+    if (element.is('button')) {
+      element.hide();
+    } else {
+      element.addClass('hidden');
+    }
   });
 
   $('#show-options').find('a').on('click', function () {
@@ -138,6 +142,10 @@
     var element = $(selector);
 
     // Show button or item
-    element.show();
+    if (element.is('button')) {
+      element.show();
+    } else {
+      element.removeClass('hidden');
+    }
   });
 </script>
