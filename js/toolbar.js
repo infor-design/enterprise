@@ -300,10 +300,10 @@
 
         if (popupMenuInstance) {
           this.more
-            .triggerHandler('updated')
             .on('beforeopen.toolbar', function() {
               refreshTextAndDisabled(self.moreMenu);
-            });
+            })
+            .triggerHandler('updated');
         } else {
           var actionButtonOpts = $.fn.parseOptions(this.more[0]);
 
