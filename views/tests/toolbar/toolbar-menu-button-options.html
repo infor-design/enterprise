@@ -148,4 +148,10 @@
       element.removeClass('hidden');
     }
   });
+
+  // Add click event messages to test if disabled states are properly suppressing this click function
+  $('#button-1, #button-2, #button-3, #test-menu li > a').on('click', function () {
+    var label = $(this).text();
+    $('body').toast({ title: 'Click Event', message: 'Click function for ' + label });
+  });
 </script>
