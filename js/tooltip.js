@@ -329,23 +329,35 @@
       renderTooltip: function() {
         var titleArea = this.tooltip.find('.tooltip-title'),
           contentArea = this.tooltip.find('.tooltip-content'),
-          cssClass = 'tooltip' + (this.settings.extraClass ? ' ' + this.settings.extraClass : '') + ' is-hidden',
-          content = this.content;
+          extraClass = this.settings.extraClass,
+          content = this.content,
+          tooltip = this.tooltip[0].classList;
 
-        this.tooltip.attr('class', cssClass);
-        titleArea.hide();
+        for (var i = 0; i < tooltip.length; i++) {
+          if (tooltip[i] !== 'tooltip' && tooltip[i] !== 'is-hidden') {
+            this.tooltip[0].classList.remove(tooltip[i]);
+          }
+        }
+
+        if(extraClass) {
+          this.tooltip[0].classList.add(this.settings.extraClass);
+        }
+
+        if (titleArea.length) {
+          titleArea[0].style.display = 'none';
+        }
 
         // Generate an arrow if one doesn't already exist
         if (contentArea.prev('.arrow').length === 0) {
-          contentArea.before('<div class="arrow"></div>');
+          contentArea[0].insertAdjacentHTML('beforebegin', '<div class="arrow"></div>');
         }
 
         if (typeof content === 'string') {
           content = $(content);
         }
 
-        contentArea.html(content).removeClass('hidden');
-        content.removeClass('hidden');
+        contentArea.html(content)[0].classList.remove('hidden');
+        content[0].classList.remove('hidden');
       },
 
       renderPopover: function() {
@@ -428,11 +440,12 @@
           return;
         }
 
-        this.tooltip.removeAttr('style');
-        this.tooltip.addClass(this.settings.placement);
+        this.tooltip[0].setAttribute('style', '');
+        this.tooltip[0].classList.add(this.settings.placement);
+
 
         if (this.settings.isError || this.settings.isErrorColor) {
-          this.tooltip.addClass('is-error');
+          this.tooltip[0].classList.add('is-error');
         }
 
         this.position();
@@ -497,11 +510,12 @@
           targetContainer = this.settings.parentElement;
         }
 
-        this.tooltip.detach().appendTo(targetContainer);
+        //this.tooltip.detach().appendTo(targetContainer);
+        targetContainer[0].appendChild(this.tooltip[0]);
       },
 
       // Placement behavior's "afterplace" handler.
-      // DO NOT USE FOR ADDITONAL POSITIONING.
+      // DO NOT USE FOR ADDITIONAL POSITIONING.
       handleAfterPlace: function(e, placementObj) {
         this.tooltip.data('place').setArrowPosition(e, placementObj, this.tooltip);
         this.tooltip.triggerHandler('tooltipafterplace', [placementObj]);
@@ -509,7 +523,7 @@
 
       position: function () {
         this.setTargetContainer();
-        this.tooltip.removeClass('is-hidden');
+        this.tooltip[0].classList.remove('is-hidden');
 
         var self = this,
           distance = this.isPopover ? 20 : 10,
@@ -553,7 +567,7 @@
           return;
         }
 
-        this.tooltip.addClass('is-hidden');
+        this.tooltip[0].classList.add('is-hidden');
         this.tooltip[0].style.left = '';
         this.tooltip[0].style.top = '';
         this.tooltip.find('.arrow').removeAttr('style');

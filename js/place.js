@@ -408,7 +408,8 @@
         var containerBleed = this.settings.bleedFromContainer,
           container = this.getContainer(placementObj),
           containerIsBody = container.length && container[0] === document.body,
-          rect = this.element[0].getBoundingClientRect(),
+          BoundingRect = this.element[0].getBoundingClientRect(),
+          rect = {},
           containerRect = container ? container[0].getBoundingClientRect() : {},
           // NOTE: Usage of $(window) instead of $('body') is deliberate here - http://stackoverflow.com/a/17776759/4024149.
           // Firefox $('body').scrollTop() will always return zero.
@@ -417,6 +418,13 @@
           windowH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
           windowW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
           d;
+
+          rect.width = BoundingRect.width;
+          rect.height = BoundingRect.height;
+          rect.top = BoundingRect.top;
+          rect.right = BoundingRect.right;
+          rect.bottom = BoundingRect.bottom;
+          rect.left = BoundingRect.left;
 
         function getBoundary(edge) {
           switch(edge) {
@@ -439,7 +447,7 @@
           placementObj.width = newWidth;
 
           this.element[0].style.width = newWidth + 'px';
-          rect = this.element[0].getBoundingClientRect(); // reset the rect because the size changed
+          rect.width = newWidth// reset the rect because the size changed
         }
 
         // If element height is greater than window height, shrink to fit
@@ -450,7 +458,7 @@
           placementObj.height = newHeight;
 
           this.element[0].style.height = newHeight + 'px';
-          rect = this.element[0].getBoundingClientRect(); // reset the rect because the size changed
+          rect.height = newHeight; // reset the rect because the size changed
         }
 
         // build conditions
