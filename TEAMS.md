@@ -26,6 +26,7 @@
 | Healthcare Clinical  |   | Charlie Price | 3X
 | HMS  |   | David Parisi | 3x|
 | Home Pages  | Typescript, Angular 1.0 - 4.2.0 | Fredrik Eriksson | 4x |
+| IDM |   | Anna-Maj Jannsson, Angular 1.0 Moving to 2 | 4x |
 | IES |   | Timothy Kettering <Timothy.Kettering@infor.com> | 4x |
 | Infinium SHCM  |   | Joe Bockskopf | 3x |
 | ION Desk  | Silverlight Conversion / Hybrid / Maybe use Vaadin GWT | Massimo Capoccia| 4x || Infor ERP LN - Customer Specific Utilities  |   | Flavio Marcato | 3x |

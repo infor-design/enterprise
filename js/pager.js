@@ -319,7 +319,7 @@
 
         if (this.isTable && !this.settings.indeterminate && this.pagerBar.find('.pager-count').length === 0) {
           var text = Locale.translate('PageOf');
-          text = text = text.replace('{0}', '<input name="pager-pageno" value="' + this.activePage + '">');
+          text = text.replace('{0}', '<input name="pager-pageno" value="' + this.activePage + '">');
           text = text.replace('{1}', '<span class="pager-total-pages">' + (pages || 1) + '</span>');
           $('<li class="pager-count"><label>'+ text +' </label>').insertAfter(this.pagerBar.find('.pager-prev'));
 
