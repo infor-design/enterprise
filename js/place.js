@@ -447,7 +447,7 @@
           placementObj.width = newWidth;
 
           this.element[0].style.width = newWidth + 'px';
-          rect.width = newWidth// reset the rect because the size changed
+          rect.width = newWidth; // reset the rect because the size changed
         }
 
         // If element height is greater than window height, shrink to fit
