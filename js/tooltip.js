@@ -331,11 +331,12 @@
           contentArea = this.tooltip.find('.tooltip-content'),
           extraClass = this.settings.extraClass,
           content = this.content,
-          tooltip = this.tooltip[0].classList;
+          tooltip = this.tooltip[0].classList.value,
+          tooltipArr = tooltip.split(' ');
 
-        for (var i = 0; i < tooltip.length; i++) {
-          if (tooltip[i] !== 'tooltip' && tooltip[i] !== 'is-hidden') {
-            this.tooltip[0].classList.remove(tooltip[i]);
+        for (var i = 0; i < tooltipArr.length; i++) {
+          if (tooltipArr[i] !== 'tooltip' && tooltipArr[i] !== 'is-hidden') {
+            this.tooltip[0].classList.remove(tooltipArr[i]);
           }
         }
 
