@@ -1437,7 +1437,7 @@ $.fn.datagrid = function(options) {
       headerColGroup += '</colgroup>';
 
       if (self.headerRow === undefined) {
-        self.headerContainer = $('<div class="datagrid-header"><table role="grid"></table></div>');
+        self.headerContainer = $('<div class="datagrid-header"><table role="grid" '+ this.headerTableWidth() + '></table></div>');
         self.headerTable = self.headerContainer.find('table');
         self.headerColGroup = $(headerColGroup).appendTo(self.headerTable);
         self.headerRow = $('<thead>' + headerRow + '</thead>').appendTo(self.headerContainer.find('table'));
@@ -2522,6 +2522,22 @@ $.fn.datagrid = function(options) {
     },
 
     headerWidths: [], //Cache
+
+    headerTableWidth: function () {
+      var cacheWidths = this.headerWidths[this.settings.columns.length-1];
+
+      if (!cacheWidths) {
+        return '';
+      }
+
+      //TODO Test last column hidden
+      if (cacheWidths.widthPercent) {
+        return 'style = "width: 100%"';
+      } else {
+        return 'style = "width: '+ parseFloat(this.totalWidth) + 'px"';
+      }
+
+    },
 
     //Calculate the width for a column (upfront with no rendering)
     //https://www.w3.org/TR/CSS21/tables.html#width-layout
@@ -3608,7 +3624,11 @@ $.fn.datagrid = function(options) {
           more.append(menu);
         }
 
-        this.element.before(toolbar);
+        if (this.element.prev().is('.contextual-toolbar')) {
+          this.element.prev().before(toolbar);
+        } else {
+          this.element.before(toolbar);
+        }
       }
 
       toolbar.find('.btn-actions').popupmenu().on('selected', function(e, args) {

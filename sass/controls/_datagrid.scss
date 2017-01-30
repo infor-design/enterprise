@@ -174,6 +174,85 @@ $datagrid-short-row-height: 23px;
     }
   }
 
+  //Short and Medium Row height
+  &.short-rowheight {
+    .drag-target-arrows {
+      font-size: 1.5em;
+      height: $datagrid-short-header-height;
+      padding: 1px 0 0 5px;
+      width: 14px;
+    }
+
+    //Resize the headers too
+    .datagrid-column-wrapper,
+    th {
+      height: $datagrid-short-header-height;
+
+      .handle,
+      .is-draggable-target {
+        @include font-size(20);
+        height: $datagrid-short-header-height;
+        padding: 0 0 0 7px;
+      }
+    }
+
+    .datagrid-column-wrapper.l-right-text .datagrid-header-text {
+      margin-top: 6px;
+    }
+
+    .sort-indicator {
+      margin: 0 0 0 4px;
+
+      .icon {
+        height: 16px;
+        width: 16px;
+      }
+
+      .sort-desc {
+        margin-top: -1px;
+      }
+    }
+
+    .is-filterable .datagrid-filter-wrapper {
+      top: -4px;
+    }
+
+  }
+
+  &.medium-rowheight {
+    .drag-target-arrows {
+      font-size: 1.6em;
+      height: $datagrid-medium-header-height;
+      padding: 3px 0 0 7px;
+      width: 16px;
+    }
+
+    .datagrid-column-wrapper,
+    th {
+      height: $datagrid-medium-header-height;
+
+      .handle,
+      .is-draggable-target {
+        font-size: 2.3em;
+        height: $datagrid-medium-header-height;
+        padding: 3px 0 0 7px;
+        width: 16px;
+      }
+    }
+
+    .datagrid-column-wrapper.l-right-text .datagrid-header-text {
+      margin-top: 9px;
+    }
+
+    .sort-indicator {
+      margin: 1px 0 0 4px;
+    }
+
+    .is-filterable .datagrid-filter-wrapper {
+      top: -6px;
+    }
+  }
+
 }
 
 // Grid Body container
@@ -276,26 +355,8 @@ $datagrid-short-row-height: 23px;
       }
     }
 
-    //Resize the headers too
-    .datagrid-column-wrapper,
-    th {
-      height: $datagrid-medium-header-height;
-    }
-
     .datagrid-drilldown {
       top: -1px;
-    }
-
-    .datagrid-column-wrapper.l-right-text .datagrid-header-text {
-      margin-top: 9px;
-    }
-
-    .sort-indicator {
-      margin: 1px 0 0 4px;
-    }
-
-    .is-filterable .datagrid-filter-wrapper {
-      top: -6px;
     }
   }
 
@@ -303,7 +364,6 @@ $datagrid-short-row-height: 23px;
 
     tbody tr {
       line-height: $datagrid-short-row-height;
-      //min-height: $datagrid-short-row-height;
 
       td {
 
@@ -434,38 +494,6 @@ $datagrid-short-row-height: 23px;
         }
 
       }
-    }
-
-    //Resize the headers too
-    .datagrid-column-wrapper,
-    th {
-      height: 25px;
-
-      .handle {
-        @include font-size(23);
-        padding: 0 0 0 7px;
-      }
-    }
-
-    .datagrid-column-wrapper.l-right-text .datagrid-header-text {
-      margin-top: 6px;
-    }
-
-    .sort-indicator {
-      margin: 0 0 0 4px;
-
-      .icon {
-        height: 16px;
-        width: 16px;
-      }
-
-      .sort-desc {
-        margin-top: -1px;
-      }
-    }
-
-    .is-filterable .datagrid-filter-wrapper {
-      top: -4px;
     }
 
   }
@@ -1748,7 +1776,7 @@ html[dir='rtl'] {
     .handle,
     .is-draggable-target {
       display: none;
-      font-size: 2em;
+      font-size: 2.6em;
       height: $datagrid-header-height;
       left: 0;
       margin: 0;
@@ -1809,44 +1837,6 @@ html[dir='rtl'] {
     }
   }
 
-  &.short-rowheight {
-    .drag-target-arrows {
-      font-size: 1.5em;
-      height: $datagrid-short-header-height;
-      padding: 1px 0 0 5px;
-      width: 14px;
-    }
-
-    th {
-      .handle,
-      .is-draggable-target {
-        font-size: 1.5em;
-        height: $datagrid-short-header-height;
-        padding: 1px 0 0 5px;
-        width: 14px;
-      }
-    }
-  }
-
-  &.medium-rowheight {
-    .drag-target-arrows {
-      font-size: 1.6em;
-      height: $datagrid-medium-header-height;
-      padding: 3px 0 0 5px;
-      width: 16px;
-    }
-
-    th {
-      .handle,
-      .is-draggable-target {
-        font-size: 1.6em;
-        height: $datagrid-medium-header-height;
-        padding: 3px 0 0 5px;
-        width: 16px;
-      }
-    }
-  }
-
   &.has-filterable-columns {
     .is-draggable-target,
     .drag-target-arrows {
@@ -1862,22 +1852,22 @@ html[dir='rtl'] {
 
     th {
       .handle {
-        padding: 8px 0 0 5px;
+        padding: 8px 0 0 7px;
       }
     }
 
-    .short-rowheight {
+    &.short-rowheight {
       th {
         .handle {
-          padding: 3px 0 0 5px;
+          padding: 3px 0 0 7px;
         }
       }
     }
 
-    .medium-rowheight {
+    &.medium-rowheight {
       th {
         .handle {
-          padding: 5px 0 0 5px;
+          padding: 5px 0 0 7px;
         }
       }
     }
