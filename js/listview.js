@@ -84,7 +84,11 @@
         }
 
         this.element.attr({'tabindex': '-1'});
-        this.element.parent('.card-content, .widget-content')[0].style.overflow = 'hidden';
+
+        var cardWidgetContent =  this.element.parent('.card-content, .widget-content');
+        if (cardWidgetContent[0]) {
+          cardWidgetContent[0].style.overflow = 'hidden';
+        }
 
          // Add Aria Roles
         this.element.attr({ 'role' : 'listbox',
