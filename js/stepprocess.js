@@ -154,6 +154,7 @@
        * Go to the next step in the tree
        */
       goToNextStep: function() {
+
         var selectedNodes = this.theTreeApi.getSelectedNodes();
         if (selectedNodes.length > 0) {
           var curNode = selectedNodes[selectedNodes.length - 1].node,
@@ -168,11 +169,6 @@
             // Make sure we open the folder
             if (!$nextNodeFolder.hasClass('is-open')) {
               this.theTreeApi.toggleNode(nextNode);
-            }
-
-            // Make sure folder is populated before navigating down into it
-            if ($nextNodeFolder.children().length) {
-              this.goToNextStep();
             }
           }
         }
