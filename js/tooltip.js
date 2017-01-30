@@ -363,28 +363,44 @@
 
       renderPopover: function() {
         var self = this,
-          cssClass = 'popover' + (this.settings.extraClass ? ' ' + this.settings.extraClass : '') + ' is-hidden',
+          extraClass = this.settings.extraClass,
           contentArea = this.tooltip.find('.tooltip-content'),
-          content = this.content;
+          content = this.content,
+          tooltip = this.tooltip[0].classList.value,
+          tooltipArr = tooltip.split(' ');
+
+        for (var i = 0; i < tooltipArr.length; i++) {
+          if (tooltipArr[i] !== 'is-hidden') {
+            this.tooltip[0].classList.remove(tooltipArr[i]);
+          }
+        }
+
+        this.tooltip[0].classList.add('popover');
+
+        if(extraClass) {
+          this.tooltip[0].classList.add(this.settings.extraClass);
+        }
 
         if (typeof this.content === 'string') {
           content = $(content);
         }
 
         // Use currently-set content to render a popover
-        contentArea.html(content).removeClass('hidden');
-        content.removeClass('hidden');
-
-        this.tooltip.attr('class', cssClass);
+        contentArea.html(content)[0].classList.remove('hidden');
+        content[0].classList.remove('hidden');
 
         if (this.settings.title !== null) {
           var title = this.tooltip.find('.tooltip-title');
           if (title.length === 0) {
-            title = $('<div class="tooltip-title"></div>').prependTo(this.tooltip);
+            var title = document.createElement('div');
+            title.classList.add('tooltip-title');
+            this.tooltip[0].insertBefore(title, this.tooltip[0].firstChild);
+            title = $(title);
           }
-          title.html(this.settings.title).show();
+          title[0].innerHTML = this.settings.title;
+          title[0].style.display = 'block';
         } else {
-          this.tooltip.find('.tooltip-title').hide();
+          this.tooltip.find('.tooltip-title')[0].style.display = 'none';
         }
 
         if (this.settings.closebutton) {
