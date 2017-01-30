@@ -10,7 +10,7 @@ module.exports = {
       baseURL: 'https://chromedriver.storage.googleapis.com'
     },
     ie: {
-      version: '3.0',
+      version: '3.0.0',
       arch: ARCH,
       baseURL: 'https://selenium-release.storage.googleapis.com'
     }
