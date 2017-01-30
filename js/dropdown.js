@@ -1178,7 +1178,7 @@
            }
         } else {
           var pseudoElemOuterWidth = this.pseudoElem.outerWidth();
-          this.list[0].style.width = (pseudoElemOuterWidth - 2) + 'px';
+          this.list[0].style.width = pseudoElemOuterWidth + 'px';
 
           if (this.isInGrid) {
             this.list[0].style.width = pseudoElemOuterWidth + 'px';
