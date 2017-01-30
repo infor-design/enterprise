@@ -1,4 +1,4 @@
-var ARCH = process.arch;
+var ARCH = require('process').arch;
 
 module.exports = {
   version: '2.53.0',
