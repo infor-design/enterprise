@@ -17,7 +17,7 @@
     "eslint": "eslint src",
     "build": "grunt",
     "install-test-deps": "npm install selenium-standalone@latest && npm run install-drivers",
-    "install-drivers": "selenium-standalone install --version=2.53.0 --baseURL=http://selenium-release.storage.googleapis.com --drivers.chrome.version=2.21 --drivers.chrome.baseURL=http://chromedriver.storage.googleapis.com --drivers.ie.arch=x64 --drivers.ie.baseURL=http://selenium-release.storage.googleapis.com",
+    "install-drivers": "selenium-standalone install --config=./build/configs/selenium-standalone-install.js",
     "selenium": "selenium-standalone start",
     "watch": "grunt watch",
     "test": "./bin/test-build.sh",
@@ -77,7 +77,7 @@
     "mocha": "^1.21.5",
     "phantomjs": "^1.9.20",
     "requirejs": "^2.2.0",
-    "selenium-standalone": "^5.1.0",
+    "selenium-standalone": "^6.0.0",
     "spec-xunit-file": "0.0.1-3"
   }
 }
