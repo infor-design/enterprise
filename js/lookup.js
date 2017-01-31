@@ -335,8 +335,6 @@
           });
         }
 
-        lookupGrid.css('max-width', '');
-
       },
 
       //Given a field value, select the row

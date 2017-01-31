@@ -231,22 +231,20 @@ window.Formatters = {
 
   GroupFooterRow: function (row, cell, value, col, item, api) {
     var groupSettings = api.settings.groupable,
-      groups = '',
       isOpen = groupSettings.expanded === undefined ? true : groupSettings.expanded;
 
     if (groupSettings.expanded && typeof groupSettings.expanded === 'function') {
       isOpen = groupSettings.expanded(row, cell, value, col, item, api);
     }
 
-    //TODO: Add Test Case for this
+    var idx = api.columnIdxById(groupSettings.aggregate),
+        html = '<td role="gridcell" colspan=' + (idx) + '><div class="datagrid-cell-wrapper">&nbsp;</div></td><td role="gridcell"><div class="datagrid-cell-wrapper"> '+ item.sum +'</div></td>';
+
     if (groupSettings.groupFooterRowFormatter) {
-      groups = groupSettings.groupFooterRowFormatter(row, cell, value, col, item, api);
+      html = groupSettings.groupFooterRowFormatter(idx, row, cell, value, col, item, api);
     }
 
-    var idx = api.columnIdxById(groupSettings.aggregate),
-        button = '<td role="gridcell" colspan=' + (idx) + '><div class="datagrid-cell-wrapper">&nbsp;</div></td><td role="gridcell"><div class="datagrid-cell-wrapper"> '+ item.sum +'</div></td>';
-
-    return button;
+    return html;
   },
 
   SummaryRow: function (row, cell, value, col) {
@@ -1042,7 +1040,6 @@ $.fn.datagrid = function(options) {
       this.setTreeRootNodes();
       this.render();
       this.handlePaging();
-      this.initTableWidth();
       this.handleEvents();
       this.handleKeys();
 
@@ -1068,21 +1065,6 @@ $.fn.datagrid = function(options) {
       }
     },
 
-    //TODO Revist this
-    initTableWidth: function () {
-      if (this.element.parents().hasClass('modal')) {
-        var el = $('.modal .modal-content'),
-          w = this.table.width() +
-            parseInt(el.css('padding-left'), 10) +
-            parseInt(el.css('padding-right'), 10) +
-            parseInt(el.css('margin-left'), 10) +
-            parseInt(el.css('margin-right'), 10);
-
-        this.element.css('max-width', w);
-        $('.modal').find('.modal-body').css('overflow-x','hidden');
-      }
-    },
-
     //Render the Header and Rows
     render: function () {
       var self = this;
@@ -1104,7 +1086,6 @@ $.fn.datagrid = function(options) {
       }
 
       //initialize row height by a setting
-      //TODO: Test This
       if (settings.rowHeight !== 'normal') {
         self.table.addClass(settings.rowHeight + '-rowheight');
         this.element.addClass(settings.rowHeight + '-rowheight');
@@ -1270,7 +1251,6 @@ $.fn.datagrid = function(options) {
     },
 
     //Method to Reload the data set
-    //TODO: Load specific page
     updateDataset: function (dataset, pagerInfo) {
       this.loadData(dataset, pagerInfo);
     },
@@ -2565,17 +2545,9 @@ $.fn.datagrid = function(options) {
         colPercWidth = col.width.replace('%', '');
       }
 
-      // Otherwise, a cell in the first row with a value other than 'auto' for the 'width' property
-      //determines the width for that column.
-      // TODO: If the cell spans more than one column, the width is divided over the columns.
-
-      //Default the size of the selection column
-      if (!widthSpecified && visibleColumns.length < 8 &&
+      // Let the defaults work.
+      if (!widthSpecified && visibleColumns.length < 10 &&
         (['selectionCheckbox', 'drilldown', 'rowStatus', 'favorite'].indexOf(col.id) === -1)  && elemWidth > 0) {
-
-        colPercWidth = ((parseInt(elemWidth) / visibleColumns.length).toFixed(0)) - 1;
-        colPercWidth = Math.ceil(colPercWidth/parseInt(elemWidth) * 100);
-        this.widthPercent = true;
 
         return '';
       }

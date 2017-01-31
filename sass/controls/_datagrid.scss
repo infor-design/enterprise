@@ -192,7 +192,7 @@ $datagrid-short-row-height: 23px;
       .is-draggable-target {
         @include font-size(20);
         height: $datagrid-short-header-height;
-        padding: 0 0 0 7px;
+        padding: 1px 0 0 7px;
       }
     }
 
@@ -223,7 +223,7 @@ $datagrid-short-row-height: 23px;
     .drag-target-arrows {
       font-size: 1.6em;
       height: $datagrid-medium-header-height;
-      padding: 3px 0 0 7px;
+      padding: 2px 0 0 7px;
       width: 16px;
     }
 
@@ -235,7 +235,7 @@ $datagrid-short-row-height: 23px;
       .is-draggable-target {
         font-size: 2.3em;
         height: $datagrid-medium-header-height;
-        padding: 3px 0 0 7px;
+        padding: 2px 0 0 7px;
         width: 16px;
       }
     }
@@ -1965,6 +1965,11 @@ html[dir='rtl'] {
     color: font-color-lowcontrast;
     float: left;
   }
+}
+
+//Modal Lists
+.modal table {
+  width: auto;
 }
 
 //Ios Hacks
