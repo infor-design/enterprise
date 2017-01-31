@@ -392,7 +392,7 @@
         if (this.settings.title !== null) {
           var title = this.tooltip.find('.tooltip-title');
           if (title.length === 0) {
-            var title = document.createElement('div');
+            title = document.createElement('div');
             title.classList.add('tooltip-title');
             this.tooltip[0].insertBefore(title, this.tooltip[0].firstChild);
             title = $(title);
