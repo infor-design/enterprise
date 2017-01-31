@@ -27,7 +27,7 @@
       //Define Columns for the Grid.
 
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Expander, width: 140});
-      columns.push({ id: 'drilldown', name: '', field: '', width: 80, formatter: Formatters.Drilldown, click: function(a, b) {console.log(b[0].item, b[0].row);}, align: 'center'});
+      columns.push({ id: 'drilldown', name: '', field: '', formatter: Formatters.Drilldown, sortable: false, resizable: false, click: function(a, b) {console.log(b[0].item, b[0].row);}, align: 'center'});
       columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 165, formatter: Formatters.Hyperlink});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 160});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 100});

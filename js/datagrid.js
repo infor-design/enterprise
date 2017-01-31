@@ -1541,7 +1541,7 @@ $.fn.datagrid = function(options) {
     //Render one filter item as used in renderFilterButton
     renderFilterItem: function (icon, text, checked) {
       var iconMarkup = $.createIcon({ classes: 'icon icon-filter', icon: 'filter-' + icon });
-      return '<li '+ (checked ? 'class="is-checked"' : '') +'><a href="#">'+ iconMarkup +'<span>'+ text +'</span></a></li>';
+      return '<li '+ (checked ? 'class="is-checked"' : '') +'><a href="#">'+ iconMarkup +'<span>'+ Locale.translate(text) +'</span></a></li>';
     },
 
     //Render the Filter Button and Menu based on filterType - which determines the options
@@ -1597,9 +1597,9 @@ $.fn.datagrid = function(options) {
 
       if (filterType === 'text') {
         btnMarkup += ''+
-          render('end-with', 'EndWith') +
+          render('end-with', 'EndsWith') +
           render('does-not-end-with', 'DoesNotEndWith') +
-          render('start-with', 'StartWith') +
+          render('start-with', 'StartsWith') +
           render('does-not-start-with', 'DoesNotStartWith');
       }
 
@@ -3016,17 +3016,7 @@ $.fn.datagrid = function(options) {
       }
 
       this.headerWidths = [];
-    },
-
-    //size the first row
-    resyncColumnWidths: function () {
-
-      for (var j = 0; j < this.settings.columns.length; j++) {
-        var column = this.settings.columns[j],
-          node = this.tableBody.find('tr:visible:first td').eq(j);
-
-        node.attr('style', this.calculateColumnWidth(column, true, j).replace('style="', '').replace('"', ''));
-      }
+      this.totalWidth = 0;
     },
 
     // Get child offset
@@ -3746,7 +3736,6 @@ $.fn.datagrid = function(options) {
 
       });
 
-      this.resyncColumnWidths();
     },
 
     //Get or Set Selected Rows
@@ -4702,9 +4691,6 @@ $.fn.datagrid = function(options) {
         }
       }
     },
-
-    //Returns Column Settings from a cell
-    firstRow: null,
 
     columnSettings: function (cell, onlyVisible) {
       var column = settings.columns[cell];

@@ -9,19 +9,25 @@ Release Date: TBD
 
 ### Breaking Changes
 * 2017-01-12 - Listview will no longer initialize components in it. You can do this manually using the render method.
+* 2017-01-31 - The Duplicate Icon has visually changed. Make sure to update your SVG
+* 2017-01-31 - The Duplicate Icon has visually changed. Make sure to update your SVG
+  columns.push({ id: 'drilldown'
 
 ### Ui Changes
-- TBD
+* 2017-01-31 - The Duplicate Icon has visually changed. Make sure to update your SVG
+
 
 ### Affects
 - Tabs
 - Splitter
 - Listview
 - Datagrid
+- Tooltop
+- Popups
+- Dropdown
 
 Jira Release Notes
 http://jira.infor.com/secure/ReleaseNote.jspa?version=27962&styleName=Html&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX%7C7c9b3f18b5f46187205e0d24b1489b80c8b4e1a1%7Clin
-
 
 ## 4.2.4 - Minor Release
 Release Date: 2017-01-10
