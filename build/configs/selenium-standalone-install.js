@@ -1,11 +1,11 @@
 var ARCH = require('process').arch;
 
 module.exports = {
-  version: '2.53.0',
+  version: '3.0.1',
   baseURL: 'http://selenium-release.storage.googleapis.com',
   drivers: {
     chrome: {
-      version: '2.21',
+      version: '2.27',
       arch: ARCH,
       baseURL: 'https://chromedriver.storage.googleapis.com'
     },
