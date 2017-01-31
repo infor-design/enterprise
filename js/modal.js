@@ -169,7 +169,8 @@
               return;
             }
 
-            if (!field.val()) {
+            var isVisible = field[0].offsetParent !== null;
+            if (isVisible && !field.val()) {
               allValid = false;
             }
 

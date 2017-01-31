@@ -741,7 +741,7 @@
           //Check all required fields filled on modal
 
           var allFilled = true;
-          field.closest('.modal').find('input.required, textarea.required, select.required').each(function () {
+          field.closest('.modal').find('input.required, textarea.required, select.required').not(':hidden').each(function () {
             if (!self.isNotEmpty($(this).val())) {
               allFilled = false;
             }
