@@ -222,7 +222,6 @@
     // Init Tree Steps
     $('.step-process-container').stepprocess({
       'dataset': sampleData,
-      'afterFolderOpen': stepFunctions.afterFolderOpen,
       'beforeSelectStep': stepFunctions.beforeSelectStep
     });
 
@@ -249,6 +248,7 @@
   var stepFunctions = {
 
     ajaxGetSubstepsForStep: function (stepId, callback) {
+      var deferred = $.Deferred();
       var ajaxSampleData = {
         "node2": [
           {
@@ -281,38 +281,68 @@
       };
       setTimeout(function () {
         var substeps = ajaxSampleData[stepId];
-        callback(substeps);
+        deferred.resolve(substeps)
       }, 100);
+      return deferred.promise();
+    },
+
+    ajaxCanAccessStep: function () {
+      var deferred = $.Deferred();
+      setTimeout(function () {
+        var canAccess = true;
+        deferred.resolve(canAccess)
+      }, 100);
+      return deferred.promise();
     },
 
 
     // When a folder opens
-    afterFolderOpen: function (e) {
-      var $folder = $(e.target);
-      var step = $folder.prev('a')[0];
-      var stepId = step.id;
+    beforeSelectStep: function (step) {
+      console.log('Before Select Fired', step);
 
-      // Get subnodes for empty folders
-      if ($folder.children().length === 0) {
+      var deferred = $.Deferred();
+      var $step = $(step);
+      var $folder = $step.next('ul.folder');
+      var stepId = step.attr('id');
 
-        stepFunctions.ajaxGetSubstepsForStep(stepId, function (subSteps) {
+      if ($folder.length && $folder.children().length === 0) {
 
+        // Is a folder, get nodes (unless backend denies due to security)
+        stepFunctions.ajaxGetSubstepsForStep(stepId).done(function (subSteps) {
+          var canAccessStep = subSteps.length > 0;
           var $treeSteps = $('.step-process-container');
 
-          // Call stepprocess api to update the tree node list
-          $treeSteps.data('stepprocess').updateNode({
-            node: $(step),
-            children: subSteps
-          }, true);
+          if (canAccessStep) {
 
-          // Add content panels to coordinate with new sub-steps
-          var $container = $('.step-container');
-          for (var i = 0; i < subSteps.length; i++) {
-            var id = subSteps[i].href.replace('#', '');
-            $container.append('<div id="' + id + '" class="js-step-panel"><h2>' + subSteps[i].text + '</h2></div>');
+            // Call stepprocess api to update the tree node list
+            $treeSteps.data('stepprocess').updateNode({
+              node: $step,
+              children: subSteps
+            }, true);
+
+            // Add content panels to coordinate with new sub-steps
+            var $container = $('.step-container');
+            for (var i = 0; i < subSteps.length; i++) {
+              var id = subSteps[i].href.replace('#', '');
+              $container.append('<div id="' + id + '" class="js-step-panel"><h2>' + subSteps[i].text + '</h2></div>');
+            }
+          } else {
+            // Since folder tried to open, toggle it closed when permission denied.
+            $treeSteps.data('stepprocess').toggleFolder($step);
           }
+
+          deferred.resolve(canAccessStep);
+        });
+
+      } else {
+        // Not a folder, just check security
+        stepFunctions.ajaxCanAccessStep(step).done(function(canAccessStep) {
+          deferred.resolve(canAccessStep);
         });
       }
+
+      // Return promise
+      return deferred.promise();
     },
 
     extendSampleData: function (data) {
@@ -327,21 +357,6 @@
         });
         $container.append('<div id="content' + i + '-1" class="js-step-panel"><h2>Node ' + i + '</h2><p>This is step ' + i + '-1</p></div>')
       }
-    },
-
-    beforeSelectStep: function (step) {
-      console.log('Before Select Fired', step);
-      var deferred = $.Deferred();
-
-      // Simulate AJAX
-      setTimeout(function () {
-        var canAccessStep = true;
-        console.log('Ajax finished.')
-        deferred.resolve(canAccessStep);
-      }, 200);
-
-      // Return promise
-      return deferred.promise();
     }
   };
 </script>

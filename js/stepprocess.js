@@ -138,7 +138,7 @@
 
             // Make sure the folder opens
             if (!$nodeToSelectFolder.hasClass('is-open')) {
-              this.theTreeApi.toggleNode(nodeToSelect);
+              this.toggleFolder(nodeToSelect);
             }
 
             // Makse sure folder is populated before navigating up into it
@@ -154,24 +154,56 @@
        * Go to the next step in the tree
        */
       goToNextStep: function() {
-
         var selectedNodes = this.theTreeApi.getSelectedNodes();
-        if (selectedNodes.length > 0) {
-          var curNode = selectedNodes[selectedNodes.length - 1].node,
-              nextNode = this.theTreeApi.getNextNode(curNode),
-              $nextNodeFolder = nextNode.next('ul.folder');
 
-          this.theTreeApi.selectNode(nextNode);
-
-          // If the "next" node is associated to a folder
-          if ($nextNodeFolder) {
-
-            // Make sure we open the folder
-            if (!$nextNodeFolder.hasClass('is-open')) {
-              this.theTreeApi.toggleNode(nextNode);
-            }
-          }
+        if (selectedNodes.length === 0) {
+          return false;
         }
+
+        var curNode = selectedNodes[selectedNodes.length - 1].node,
+            curNodeFolder = curNode.next('ul.folder'),
+            nextNode = this.theTreeApi.getNextNode(curNode),
+            nextNodeFolder = nextNode.next('ul.folder'),
+            nodeToSelect = null,
+            theFolder = null;
+
+        if (curNodeFolder.length) {
+          // Select the first node of the current folder,
+          // unless its empty, which means nextNode will be the folder's "title"
+          theFolder = curNodeFolder;
+          nodeToSelect = theFolder.children().length ? theFolder.find('a[role="treeitem"]').first() : nextNode;
+
+        } else if (nextNodeFolder.length) {
+          // Select the first node of the next node's folder,
+          // unless its empty, which means nextNode will be the folder's "title"
+          theFolder = nextNodeFolder;
+          nodeToSelect = theFolder.children().length ? theFolder.find('a[role="treeitem"]').first() : nextNode;
+
+        } else {
+          // Neither folders options work so select the next node
+          nodeToSelect = nextNode;
+        }
+
+        this.theTreeApi.selectNode(nodeToSelect);
+
+        // Make sure the folder is open if there is one
+        if (theFolder && !theFolder.hasClass('is-open')) {
+          this.toggleFolder(nodeToSelect);
+        }
+
+        // Make sure the parent folder is open if there is one
+        var parentFolder = nodeToSelect.closest('ul.folder');
+        if (parentFolder && !parentFolder.hasClass('is-open')) {
+          this.toggleFolder(parentFolder.prev('a'));
+        }
+      },
+
+      /**
+       * Toggles whether a folder is open or closed
+       * @param  {Object} - step The html <a> that controls the folder
+       */
+      toggleFolder(step) {
+        this.theTreeApi.toggleNode(step);
       },
 
       /**
