@@ -328,8 +328,8 @@
 
             if (self.settings.options.selectable === 'single' && self.settings.autoApply) {
               setTimeout(function () {
-                self.insertRows();
                 self.modal.close();
+                self.insertRows();
               }, 100);
             }
           });
