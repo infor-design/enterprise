@@ -228,15 +228,14 @@
 
       if (field.is('input.dropdown') && field.prev().prev('select').attr('data-validate')) {
         validations = field.prev().prev('select').attr('data-validate').split(' ');
-      }
-      if (field.is('input.dropdown') && field.prev().prev('select').attr('data-validation')) {
+      } else if (field.is('input.dropdown') && field.prev().prev('select').attr('data-validation')) {
         validations = field.prev().prev('select').attr('data-validation').split(' ');
-      }
-      if (field.attr('data-validation')) {
+      } else if (field.attr('data-validation')) {
         validations = field.attr('data-validation').split(' ');
-      }
-      if (field.attr('data-validate')) {
+      } else if (field.attr('data-validate')) {
         validations = field.attr('data-validate').split(' ');
+      } else {
+        validations = [];
       }
 
       //Filter out not needed events
