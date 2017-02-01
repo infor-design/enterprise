@@ -775,6 +775,9 @@
         if (target.is('.searchfield-category-button')) {
           target = target.find('.icon.icon-dropdown');
         }
+        if (target.is('.colorpicker-editor-button')) {
+          target = target.find('.trigger .icon');
+        }
 
         // reset if we borked the target
         if (!target.length) {
