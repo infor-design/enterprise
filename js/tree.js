@@ -323,7 +323,7 @@
                 self.selectNodeFinish(node, focus);
               }
             });
-          } else if (result) { // Boolean is returned
+          } else if (result) { // Boolean is returned instead of a promise
             self.selectNodeFinish(node, focus);
           }
 
