@@ -20,8 +20,26 @@
     var pluginName = 'editor',
       defaults = {
         buttons: {
-          editor: ['header1', 'header2', 'separator', 'bold', 'italic', 'underline', 'strikethrough', 'separator', 'justifyLeft', 'justifyCenter', 'justifyRight', 'separator', 'quote', 'orderedlist', 'unorderedlist', 'separator', 'anchor', 'separator', 'image', 'separator', 'source'],
-          source: ['bold','italic','underline', 'separator', 'anchor', 'separator', 'quote', 'separator', 'visual']
+          editor: [
+            'header1', 'header2',
+            'separator', 'bold', 'italic', 'underline', 'strikethrough',
+            'separator', 'foreColor', 'backColor',
+            'separator', 'justifyLeft', 'justifyCenter', 'justifyRight',
+            'separator', 'quote', 'orderedlist', 'unorderedlist',
+            'separator', 'anchor',
+            'separator', 'image',
+            'separator', 'source'
+          ],
+          source: [
+            'bold','italic','underline',
+            'separator', 'anchor',
+            'separator', 'quote',
+            'separator', 'visual'
+          ]
+        },
+        excludeButtons: {
+          editor: ['backColor'],
+          source: []
         },
         delay: 200,
         firstHeader: 'h3',
@@ -42,8 +60,6 @@
       this.settings = $.extend({}, settings);
       this.element = $(element);
 
-      this.isMac = $('html').is('.is-mac');
-      this.isFirefox = $('html').is('.is-firefox');
       Soho.logTimeStart(pluginName);
       this.init();
       Soho.logTimeEnd(pluginName);
@@ -53,6 +69,9 @@
     Editor.prototype = {
 
       init: function() {
+        this.isIE = $('html').is('.ie');
+        this.isMac = $('html').is('.is-mac');
+        this.isIeEdge = $('html').is('.ie-edge');
         this.isFirefox = $('html').is('.is-firefox');
         this.parentElements = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre'];
         this.id = $('.editor-toolbar').length + 1;
@@ -223,6 +242,47 @@
         return this;
       },
 
+      // Set excluded buttons
+      setExcludedButtons: function() {
+        var self = this,
+          excludeButtons = function(elements, toExclude) {
+            var separatorIndex = -1,
+              numOfExcluded = 0;
+
+            return elements.filter(function(x, i) {
+              var r = true;
+              // Exclude matching buttons but keep separator/s
+              if (toExclude.indexOf(x) > -1 && x !== 'separator') {
+                numOfExcluded++;
+                r = false;
+              }
+              // Exclude extra separator/s
+              else if (x === 'separator' && ((i - numOfExcluded - 1) === separatorIndex)) {
+                numOfExcluded = 0;
+                r = false;
+              }
+              if (x === 'separator') {
+                separatorIndex = i;
+              }
+              return r;
+            });
+          },
+
+          // Run only if it needs (excludeButtons)
+          setButtons = function() {
+            var s = self.settings,
+              btns = s.buttons,
+              exBtns = s.excludeButtons;
+            return (self.sourceViewActive()) ?
+              (exBtns && exBtns.source && exBtns.source.length ?
+                excludeButtons(btns.source, exBtns.source) : btns.source) :
+              (exBtns && exBtns.editor && exBtns.editor.length ?
+                excludeButtons(btns.editor, exBtns.editor) : btns.editor);
+          };
+
+        return setButtons();
+      },
+
       createToolbar: function () {
         var toolbar = $('<div class="toolbar editor-toolbar formatter-toolbar"></div>').attr('id', 'editor-toolbar-' + this.id);
         this.toolbarButtons(toolbar);
@@ -232,7 +292,7 @@
       },
 
       toolbarButtons: function (toolbar) {
-        var btns = this.sourceViewActive() ? settings.buttons.source : settings.buttons.editor,
+        var btns = this.setExcludedButtons(),
             buttonset = toolbar.find('.buttonset'),
             i, btn;
 
@@ -247,6 +307,10 @@
             buttonset.append(btn);
           }
         }
+        // Invoke colorpicker
+        var cpElements = $('[data-action="foreColor"], [data-action="backColor"]', buttonset);
+        cpElements.colorpicker({placeIn: 'editor'});
+        $('.trigger', cpElements).off('click.colorpicker');
       },
 
       switchToolbars: function() {
@@ -525,6 +589,8 @@
             'italic': '<button type="button" class="btn" title="'+ Locale.translate('ToggleItalic') + '" data-action="italic" data-element="i">' + buttonLabels.italic + '</button>',
             'underline': '<button type="button" class="btn underline" title="'+ Locale.translate('ToggleUnderline') + '" data-action="underline" data-element="u">' + buttonLabels.underline + '</button>',
             'strikethrough': '<button type="button" class="btn" title="'+ Locale.translate('StrikeThrough') + '" data-action="strikethrough" data-element="strike">' + buttonLabels.strikethrough + '</button>',
+            'foreColor': '<button type="button" class="btn colorpicker-editor-button" title="'+ Locale.translate('TextColor') + '" data-action="foreColor" data-element="foreColor">' + buttonLabels.foreColor + '</button>',
+            'backColor': '<button type="button" class="btn colorpicker-editor-button" title="'+ Locale.translate('BackgroundColor') + '" data-action="backColor" data-element="backColor">' + buttonLabels.backColor + '</button>',
             'superscript': '<button type="button" class="btn" title="'+ Locale.translate('Superscript') + '" data-action="superscript" data-element="sup">' + buttonLabels.superscript + '</button>',
             'subscript': '<button type="button" class="btn" title="'+ Locale.translate('Subscript') + '" data-action="subscript" data-element="sub">' + buttonLabels.subscript + '</button>',
             'separator': '<div class="separator"></div>',
@@ -545,7 +611,7 @@
       },
 
       getIcon: function(textName, iconName, className) {
-        return '<span class="audible">'+ Locale.translate(textName) +'</span>' + $.createIcon({ classes: className ? className : '', icon: iconName });
+        return '<span class="audible">'+ Locale.translate(textName) +'</span>' + $.createIcon({ classes: (className || ''), icon: iconName });
       },
 
       getButtonLabels: function (buttonLabelType) {
@@ -558,6 +624,8 @@
             'superscript': '<span aria-hidden="true"><b>x<sup>1</sup></b></span>',
             'subscript': '<span aria-hidden="true"><b>x<sub>1</sub></b></span>',
             'strikethrough': this.getIcon('StrikeThrough', 'strike-through'),
+            'foreColor': this.getIcon('TextColor', 'fore-color'),
+            'backColor': this.getIcon('BackgroundColor', 'back-color'),
             'anchor': this.getIcon('InsertAnchor', 'link'),
             'image': this.getIcon('InsertImage', 'insert-image'),
             'header1': this.getIcon('ToggleH3', 'h3'),
@@ -1306,6 +1374,8 @@
             this.modals.url.data('modal').open();
           } else if (action === 'image') {
             this.modals.image.data('modal').open();
+          } else if (action === 'foreColor' || action === 'backColor') {
+            this.colorpickerActions(action);
           } else if (action === 'source' || action === 'visual') {
             this.toggleSource();
           } else {
@@ -1355,6 +1425,64 @@
         this.switchToolbars();
       },
 
+      // Colorpicker actions ['foreColor'|'backColor']
+      colorpickerActions: function(action) {
+        var self = this,
+          cpBtn = $('[data-action="'+ action +'"]', this.toolbar),
+          cpApi = cpBtn.data('colorpicker');
+
+        cpBtn.on('selected.editor', function (e, item) {
+          var value = ('#' + item.data('value')).toLowerCase();
+          // cpBtn.attr('data-value', value);
+
+          if (self.isIE || action === 'foreColor') {
+            document.execCommand(action, false, value);
+          }
+
+          // [action: backColor] - for Chrome/Firefox/Safari
+          else {
+            // Get selection parent element
+            var getSelectionParentElement = function() {
+              var parentEl = null, sel;
+              if (window.getSelection) {
+                sel = window.getSelection();
+                if (sel.rangeCount) {
+                  parentEl = sel.getRangeAt(0).commonAncestorContainer;
+                  if (parentEl.nodeType !== 1) {
+                    parentEl = parentEl.parentNode;
+                  }
+                }
+              } else if ( (sel = document.selection) && sel.type !== 'Control') {
+                  parentEl = sel.createRange().parentElement();
+              }
+              return parentEl;
+            };
+
+            // FIX: "backColor" - Chrome/Firefox/Safari
+            // some reason font/span node not get inserted with "backColor"
+            // so use "fontSize" command to add node, then remove size attribute
+            // this fix will conflict with combination of font size & background color
+            document.execCommand('fontSize', false, '2');
+            var parent = getSelectionParentElement().parentNode,
+              els = parent.getElementsByTagName('font');
+
+            // Using timeout, firefox not executes with current call stack
+            setTimeout(function() {
+              for (var i = 0, l = els.length; i < l; i++) {
+                if (els[i].hasAttribute('size')) {
+                  els[i].setAttribute('style', 'background-color: '+ value +';');
+                  els[i].removeAttribute('size');
+                }
+              }
+            }, 0);
+
+          }
+        });
+
+        // Toggle colorpicker
+        cpApi.toggleList();
+      },
+
       execFormatBlock: function (el) {
         var selectionData = this.getSelectionData(this.selection.anchorNode);
         // FF handles blockquote differently on formatBlock
@@ -1371,8 +1499,6 @@
         // blockquote needs to be called as indent
         // http://stackoverflow.com/questions/10741831/execcommand-formatblock-headings-in-ie
         // http://stackoverflow.com/questions/1816223/rich-text-editor-with-blockquote-function/1821777#1821777
-        this.isIE = ((navigator.appName === 'Microsoft Internet Explorer') || ((navigator.appName === 'Netscape') && (new RegExp('Trident/.*rv:([0-9]{1,}[.0-9]{0,})').exec(navigator.userAgent) !== null)));
-
         if (this.isIE) {
           if (el === 'blockquote') {
               return document.execCommand('indent', false, el);

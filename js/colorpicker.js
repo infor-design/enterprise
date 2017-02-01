@@ -110,6 +110,7 @@
             {label: 'Azure', number: '02', value: 'ADD8EB'},
             {label: 'Azure', number: '01', value: 'CBEBF4'}
           ],
+          placeIn: null // null|'editor'
         },
         settings = $.extend({}, defaults, options);
 
@@ -118,6 +119,7 @@
      * @param {Object} options
      */
     function ColorPicker(element) {
+      this.settings = $.extend({}, settings);
       this.element = $(element);
       Soho.logTimeStart(pluginName);
       this.init();
@@ -137,34 +139,39 @@
 
       // Add the extra markup
       build: function() {
+        this.isEditor = this.settings.placeIn === 'editor';
         var colorpicker = this.element,
-          initialValue = this.element.val();
+          initialValue = this.isEditor ? this.element.attr('data-value') :  this.element.val();
 
-        //Add Button
-        if (this.isInlineLabel) {
-          this.inlineLabel.addClass('colorpicker-container');
-        }
-        else {
-          this.container = $('<span class="colorpicker-container"></span>');
-          colorpicker.wrap(this.container);
+        if (!this.isEditor) {
+          //Add Button
+          if (this.isInlineLabel) {
+            this.inlineLabel.addClass('colorpicker-container');
+          }
+          else {
+            this.container = $('<span class="colorpicker-container"></span>');
+            colorpicker.wrap(this.container);
+          }
+
+          this.container = colorpicker.parent();
+          this.swatch = $('<span class="swatch"></span>').prependTo(this.container);
+
+          //Add Masking to show the #
+          colorpicker.attr('data-mask', '*******').mask();
         }
 
-        this.container = colorpicker.parent();
-        this.swatch = $('<span class="swatch"></span>').prependTo(this.container);
-        this.icon = $.createIconElement('dropdown').appendTo(this.container);
+        this.icon = $.createIconElement('dropdown')
+          .appendTo(this.isEditor ? this.element : this.container);
         this.icon.wrap('<span class="trigger"></span>');
 
-        //Add Masking to show the #
-        colorpicker.attr('data-mask', '*******').mask();
-
-        if (initialValue.substr(0,1) !== '#') {
+        if (initialValue && initialValue.substr(0,1) !== '#') {
           initialValue = '#' + initialValue;
-          this.element.val(initialValue);
+          this.element.attr(this.isEditor ? 'data-value' : 'value', initialValue);
         }
 
-        if (initialValue.length === 7) {
+        if (initialValue && initialValue.length === 7) {
           this.setColor(initialValue);
-          this.element.val(initialValue);
+          this.element.attr(this.isEditor ? 'data-value' : 'value', initialValue);
         }
 
          if (this.element.is(':disabled')) {
@@ -215,8 +222,17 @@
         var self = this,
           menu =  $('#colorpicker-menu');
 
-        if (menu.length || self.element.is(':disabled')) {
+        if (self.element.is(':disabled')) {
           return;
+        }
+
+        if (menu.length) {
+          var isPickerOpen = self.isPickerOpen;
+          $(document).trigger($.Event('keydown', {keyCode: 27, which: 27})); // escape
+
+          if (isPickerOpen) {
+            return;
+          }
         }
 
         //Append Color Menu
@@ -243,16 +259,20 @@
         .popupmenu(popupmenuOpts)
         .on('open.colorpicker', function () {
           self.element.parent().addClass('is-open');
+          self.isPickerOpen = true;
         })
         .on('close.colorpicker', function () {
           menu.on('destroy.colorpicker', function () {
             $(this).off('destroy.colorpicker').remove();
           });
           self.element.parent().removeClass('is-open');
+          self.isPickerOpen = false;
         })
         .on('selected.colorpicker', function (e, item) {
-          self.element.val('#'+item.data('value'));
-          self.swatch[0].style.backgroundColor = '#' + item.data('value');
+          if (!self.isEditor) {
+            self.element.val('#'+item.data('value'));
+            self.swatch[0].style.backgroundColor = '#' + item.data('value');
+          }
           self.element.focus();
         });
 
@@ -269,14 +289,16 @@
         // Make sure there is always a hash
         if (hex.substr(0,1) !== '#') {
           hex = '#' + hex;
-          this.element.val(hex);
+          this.element.attr(this.isEditor ? 'data-value' : 'value', hex);
         }
 
         if (hex.length !== 7) {
           return;
         }
 
-        this.swatch[0].style.backgroundColor = hex;
+        if (!this.isEditor) {
+          this.swatch[0].style.backgroundColor = hex;
+        }
         this.element.attr('aria-describedby', text);
       },
 
@@ -298,14 +320,15 @@
             text = (Locale.translate(settings.colors[i].label) || settings.colors[i].label) + (settings.colors[i].number || ''),
             value = settings.colors[i].value,
             isBorder = false,
-            regexp = new RegExp('\\b'+ currentTheme +'\\b');
+            regexp = new RegExp('\\b'+ currentTheme +'\\b'),
+            elemValue = this.isEditor ? this.element.attr('data-value') : this.element.val();
 
           // Set border to this swatch
           if (isBorderAll || regexp.test(settings.colors[i].border)) {
             isBorder = true;
           }
 
-          if (this.element.val().replace('#', '') === value) {
+          if (elemValue && elemValue.replace('#', '') === value) {
             // Set checkmark color class
             if (checkmark) {
               $.each(checkmark, function(k, v) {
@@ -321,7 +344,9 @@
           }
 
           var swatch = a.find('.swatch');
-          swatch[0].style.backgroundColor = '#'+ value;
+          if (swatch[0]) {
+            swatch[0].style.backgroundColor = '#'+ value;
+          }
           swatch.addClass(isBorder ? 'is-border' : '');
           a.data('label', text)
             .data('value', value)
