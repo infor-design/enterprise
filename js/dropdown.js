@@ -545,6 +545,9 @@
 
       // Removes filtering from an open Dropdown list and turns off "search mode"
       resetList: function() {
+        if (!this.list || this.list && !this.list.length) {
+          return;
+        }
         var isMobile = this.isMobile(),
           cssClass = 'icon' + (isMobile ? ' close' : ''),
           icon = $.getBaseURL(isMobile ? 'close' : 'dropdown');
