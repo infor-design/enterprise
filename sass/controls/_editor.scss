@@ -24,13 +24,9 @@
     border-color: $input-readonly-border-color;
     color: $input-readonly-color;
     cursor: text;
-    -webkit-text-fill-color: $input-readonly-color;
 
     .hyperlink {
       color: $hyperlink-color;
-      // scss-lint:disable ImportantRule
-      -webkit-text-fill-color: $hyperlink-color !important;
-      // scss-lint:enable ImportantRule
     }
   }
 
@@ -113,7 +109,6 @@
   outline: none;
   overflow: auto;
   padding: 15px 10px 10px;
-  -webkit-text-fill-color: $editor-color;
   width: 100%;
 
   &.is-disabled {
@@ -132,13 +127,9 @@
     @include rem(line-height, 2.2rem);
     color: $editor-color;
     margin-bottom: 15px;
-    -webkit-text-fill-color: $editor-color;
 
     .hyperlink {
       color: $hyperlink-color;
-      // scss-lint:disable ImportantRule
-      -webkit-text-fill-color: $hyperlink-color !important;
-      // scss-lint:enable ImportantRule
     }
   }
 
@@ -338,6 +329,43 @@
       svg {
         height: 22px;
         width: 15px;
+      }
+    }
+
+    &[data-element='foreColor'] {
+      .icon {
+        margin-top: 0;
+      }
+
+      .trigger {
+        padding-left: 0;
+        padding-right: 5px;
+
+        .icon {
+          height: 16px;
+          margin-left: -5px;
+          width: 16px;
+        }
+      }
+
+      + .separator {
+        margin-left: -3px;
+      }
+    }
+
+    &[data-element='backColor'] {
+      .icon {
+        margin-top: 0;
+      }
+
+      .trigger {
+        padding-left: 0;
+        padding-right: 0;
+
+        .icon {
+          height: 16px;
+          width: 16px;
+        }
       }
     }
 

@@ -82,6 +82,7 @@
       'Apply': {id: 'Apply', value: 'Apply', comment: 'Text in a button to apply an action'},
       'Attach': {id: 'Attach', value: 'Attach', comment: 'Attach'},
       'Azure': {id: 'Azure', value: 'Azure', comment: 'Color in our color pallette'},
+      'BackgroundColor': {id: 'BackgroundColor', value: 'Background color', comment: 'add or edit text background color in the editor'},
       'Between': {id: 'Between', value: 'Between', comment: 'Between in icons for filtering'},
       'Blockquote': {id: 'Blockquote', value: 'Block quote', comment: 'insert a block quote in the editor'},
       'Bold': {id: 'Bold', value: 'Bold', comment: 'Make text Bold'},
@@ -292,6 +293,8 @@
       'Tack': {id: 'Tack', value: 'Pin', comment: 'Pin an object'},
       'Tall': {id: 'Tall', value: 'Tall', comment: 'Describes a Taller Row Height in a grid/list'},
       'Target': {id: 'Target', value: 'Target', comment: 'Label for an input to enter a Target (Url Attribute)'},
+      'TextColor': {id: 'TextColor', value: 'Text color', comment: 'add or edit text color in the editor'},
+
       'Timer': {id: 'Timer', value: 'Timer', comment: 'Timer tooltip'},
       'Today': {id: 'Today', value: 'Today', comment: 'refering to today on a calendar'},
       'ToggleBold': {id: 'ToggleBold', value: 'Toggle Bold Text', comment: 'turn on and off bold in text editor (like word)'},
