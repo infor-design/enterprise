@@ -200,15 +200,15 @@
 
       /**
        * Toggles whether a folder is open or closed
-       * @param  {Object} - step The html <a> that controls the folder
+       * @param {Object} step - The html <a> that controls the folder
        */
-      toggleFolder(step) {
+      toggleFolder: function(step) {
         this.theTreeApi.toggleNode(step);
       },
 
       /**
        * Updates a node through the tree.js API
-       * @param  {Object} - node The JSON node to update
+       * @param  {Object} node - The JSON node to update
        * @param  {Bool} selectFirstChild - Whether or not to select the first child by default
        */
       updateNode: function(node, selectFirstChild) {
