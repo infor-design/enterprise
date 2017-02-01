@@ -364,43 +364,46 @@
       renderPopover: function() {
         var self = this,
           extraClass = this.settings.extraClass,
-          contentArea = this.tooltip.find('.tooltip-content'),
-          content = this.content,
-          tooltip = this.tooltip[0].classList.value,
-          tooltipArr = tooltip.split(' ');
+          content = this.content[0],
+          tooltip = this.tooltip[0],
+          contentArea = tooltip.querySelectorAll('.tooltip-content')[0],
+          tooltipVal= tooltip.classList.value,
+          tooltipArr = tooltipVal.split(' '),
+          title = tooltip.querySelectorAll('.tooltip-title')[0];
 
         for (var i = 0; i < tooltipArr.length; i++) {
           if (tooltipArr[i] !== 'is-hidden') {
-            this.tooltip[0].classList.remove(tooltipArr[i]);
+            tooltip.classList.remove(tooltipArr[i]);
           }
         }
 
-        this.tooltip[0].classList.add('popover');
+        tooltip.classList.add('popover');
 
         if(extraClass) {
-          this.tooltip[0].classList.add(this.settings.extraClass);
+          tooltip.classList.add(this.settings.extraClass);
         }
 
-        if (typeof this.content === 'string') {
-          content = $(content);
+        if (!contentArea.firstElementChild) {
+          contentArea.appendChild(content);
+        } else {
+          contentArea.childNodes[0].innerHTML = content.innerHTML;
         }
 
-        // Use currently-set content to render a popover
-        contentArea.html(content)[0].classList.remove('hidden');
-        content[0].classList.remove('hidden');
+        contentArea.childNodes[0].classList.remove('hidden');
 
         if (this.settings.title !== null) {
-          var title = this.tooltip.find('.tooltip-title');
-          if (title.length === 0) {
+          if (!title) {
+            var titleFrag = document.createDocumentFragment();
             title = document.createElement('div');
+            title.append(this.settings.title);
             title.classList.add('tooltip-title');
-            this.tooltip[0].insertBefore(title, this.tooltip[0].firstChild);
-            title = $(title);
+            titleFrag.append(title);
+            tooltip.insertBefore(titleFrag, tooltip.firstChild);
           }
-          title[0].innerHTML = this.settings.title;
-          title[0].style.display = 'block';
-        } else {
-          this.tooltip.find('.tooltip-title')[0].style.display = 'none';
+
+          if (title.childNodes[0].nodeValue !== this.settings.title) {
+            title.childNodes[0].nodeValue = this.settings.title;
+          }
         }
 
         if (this.settings.closebutton) {
@@ -412,10 +415,13 @@
           ).on('click', function() {
             self.hide();
           });
-          $('.tooltip-title', this.tooltip).append(closeBtnX);
+
+          if (title && !title.firstElementChild) {
+            title.appendChild(closeBtnX[0]);
+          }
         }
 
-        content.initialize();
+        $(content).initialize();
       },
 
       // Alias for _show()_.
