@@ -841,8 +841,6 @@ $datagrid-short-row-height: 23px;
       }
 
       .icon {
-        right: 10px;
-        top: 9px;
         visibility: visible;
       }
 
@@ -852,11 +850,9 @@ $datagrid-short-row-height: 23px;
         padding: 17px 20px 15px;
 
         + .icon {
-          height: 16px;
-          left: 4px;
+          left: 2px;
           position: relative;
           top: 4px;
-          width: 19px;
         }
 
         &:disabled .icon {
@@ -916,10 +912,6 @@ $datagrid-short-row-height: 23px;
     overflow: hidden;
     position: relative;
     text-align: left;
-
-    &:last-child {
-      border-right: 0;
-    }
 
     &.hide-border + th {
       border-left: 0;
@@ -1136,9 +1128,6 @@ $datagrid-short-row-height: 23px;
 
         .icon {
           height: 16px;
-          // scss-lint:disable ImportantRule
-          top: -1px !important;
-          // scss-lint:enable ImportantRule
           vertical-align: top;
           width: 16px;
         }
@@ -1156,10 +1145,10 @@ $datagrid-short-row-height: 23px;
       .dropdown {
         + .icon {
           fill: $datagrid-filter-icon-color;
-          height: 14px;
+          height: 13px;
           margin-left: -9px;
-          top: -4px;
-          width: 14px;
+          top: -3px;
+          width: 13px;
         }
 
         &:hover:not(:disabled) + .icon {
@@ -1574,7 +1563,7 @@ td .btn-actions {
   margin-top: -1px;
 
   &.is-editing {
-    margin-top: -2px;
+    margin-top: -2.5px;
   }
 
   input {

@@ -19,9 +19,9 @@ window.Chart = function(container) {
     return null;
   }
 
-  var colorRange = ['#1D5F8A', '#8ED1C6', '#8E72A4', '#5C5C5C', '#F2BC41', '#76B051', '#AD4242',
-   '#8DC9E6', '#DE7223', '#317C73', '#EB9D9D', '#999999', '#44831F', '#C7B4DB',
-   '#4EA0D1', '#6C4B81', '#AFDC91', '#69ADA3', '#DE7223', '#D8D8D8'];
+  var colorRange = ['#1D5F8A', '#8ED1C6', '#9279A6', '#5C5C5C', '#F2BC41', '#66A140', '#AD4242',
+   '#8DC9E6', '#EFA836', '#317C73', '#EB9D9D', '#999999', '#488421', '#C7B4DB',
+   '#54A1D3', '#6e5282', '#AFDC91', '#69ADA3', '#DB7726', '#D8D8D8'];
 
   this.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   this.pieColors = d3.scale.ordinal().range(colorRange);

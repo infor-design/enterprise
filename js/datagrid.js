@@ -2134,14 +2134,14 @@ $.fn.datagrid = function(options) {
 
           if (activePage === 1 && (i - this.filteredCount) >= pagesize){
             if (!dataset[i].isFiltered) {
-              // this.recordCount++;
+              this.recordCount++;
             }
             continue;
           }
 
           if (activePage > 1 && !((i - this.filteredCount) >= pagesize*(activePage-1) && (i - this.filteredCount) < pagesize*activePage)) {
             if (!dataset[i].isFiltered) {
-              // this.recordCount++;
+              this.recordCount++;
             } else {
               this.filteredCount++;
             }
@@ -2513,17 +2513,16 @@ $.fn.datagrid = function(options) {
       //TODO Test last column hidden
       if (cacheWidths.widthPercent) {
         return 'style = "width: 100%"';
-      } else {
+      } else if (this.totalWidth > this.elemWidth) {
         return 'style = "width: '+ parseFloat(this.totalWidth) + 'px"';
       }
-
     },
 
     //Calculate the width for a column (upfront with no rendering)
     //https://www.w3.org/TR/CSS21/tables.html#width-layout
     calculateColumnWidth: function (col, index) {
-      var widthSpecified = false, elemWidth, visibleColumns, colPercWidth;
-      elemWidth = this.element.outerWidth();
+      var widthSpecified = false, visibleColumns, colPercWidth;
+      this.elemWidth = this.element.outerWidth();
       visibleColumns = this.visibleColumns(true);
 
       // use cache
@@ -2547,7 +2546,7 @@ $.fn.datagrid = function(options) {
 
       // Let the defaults work.
       if (!widthSpecified && visibleColumns.length < 10 &&
-        (['selectionCheckbox', 'drilldown', 'rowStatus', 'favorite'].indexOf(col.id) === -1)  && elemWidth > 0) {
+        (['selectionCheckbox', 'drilldown', 'rowStatus', 'favorite'].indexOf(col.id) === -1)  && this.elemWidth > 0) {
 
         return '';
       }
@@ -2573,7 +2572,7 @@ $.fn.datagrid = function(options) {
       //For the last column stretch it TODO May want to check for hidden column as last
       if (index === this.settings.columns.length-1 && this.totalWidth !== colWidth) {
 
-        var diff = elemWidth - this.totalWidth;
+        var diff = this.elemWidth - this.totalWidth;
 
         if ((diff !== 0 || diff === 0)) {
         // TODO Remove this or use it
@@ -2583,7 +2582,7 @@ $.fn.datagrid = function(options) {
 
         if (this.widthPercent) {
           this.table.css('width', '100%');
-        } else {
+        } else if (this.totalWidth > this.elemWidth) {
           this.table.css('width', this.totalWidth);
         }
 
@@ -3017,6 +3016,7 @@ $.fn.datagrid = function(options) {
 
       this.headerWidths = [];
       this.totalWidth = 0;
+      this.elemWidth = 0;
     },
 
     // Get child offset
@@ -3091,10 +3091,10 @@ $.fn.datagrid = function(options) {
     //Show Summary and any other count info
     displayCounts: function(totals) {
       var self = this,
-        count = self.tableBody.find('tr:visible').length;
+        count = self.tableBody.find('tr:visible').length,
+        isClientSide = self.settings.paging && !(self.settings.source);
 
-      //Consitutues Client Side Paging
-      if (self.settings.source === null) {
+      if (isClientSide) {
         count = self.recordCount;
       }
 

@@ -7,11 +7,11 @@ Release Date: TBD
 * Tabs Speed Improved
 * Tabs Can be lazy loaded and lazy loaded using Ajax calls.
 
-### Breaking Changes
+### Breaking Changes / Notes
 * 2017-01-12 - Listview will no longer initialize components in it. You can do this manually using the render method.
 * 2017-01-31 - The Duplicate Icon has visually changed. Make sure to update your SVG
-* 2017-01-31 - The Duplicate Icon has visually changed. Make sure to update your SVG
-  columns.push({ id: 'drilldown'
+* 2017-01-31 - The Datagrid column with the id: 'drilldown' will have an auto size now
+* 2017-01-31 - The Datagrid columns are now more exact. If you have specified widths they will be exactly that width
 
 ### Ui Changes
 * 2017-01-31 - The Duplicate Icon has visually changed. Make sure to update your SVG

@@ -17,7 +17,7 @@
  - In the .. Menu, Select the three row sizes and check that the grid is rendered accordingly.
  - Drill down column should not be resizable
 
-[Editing](controls/datagrid-editable)
+[Editing](controls/datagrid-editable) TODO
 
  - Select one or Two Rows - The Contextual Panel Should appear
   - The Count should show the number selected
@@ -32,3 +32,49 @@
  - Click the Expand Icon and the content should show underneath
  - Click the drill down icon, and check the console (Dev tools). The console should show the right data for the row you click.
  - Toggling the row should omit a expandrow and collapserow event in the console
+
+[Filter Row](controls/datagrid-filter)
+
+ - Some Columns are disabled from filtering and cannot be interacted with.
+ - Try to Filter on each column and each combination in the columns
+ - Try to combine two columns and filter (AND) condition
+ - Toggle the row heights in the actions button and see that the filter row is still visible but the row heights change.
+ - Resize columns and the filter inputs should size according
+ - Type in the Product name and then hit enter to filter
+ - Clear the text in the Product name and then hit enter to filter
+ - Clear the text in the Product name and tab out to filter
+ - Type a filer in product name and active with the action button "Run Filter"
+ - When a filter is set select clear filter to reset in the actions menu
+
+[Grouped Headers](controls/datagrid-grouped-headers)
+- Visually 3 headers should be in the First group and 4 in the second, the top group is a darker color
+- Test the visual difference on all three themes
+- The bottom columns can be sorted
+- The bottom columns can be resized
+
+TODO
+- P4 The top column can be resized
+- P4 Smoother resize
+- P4 Can it be down with col groups
+
+[Grouped Headers](controls/datagrid-list)
+- Visually the header and the body look more integrated than the normal tables, so has a different styling
+- Test the visual difference on all three themes
+- Columns can be sorted and resized
+- Cells can be focus and arrow keys to move around
+
+TODO
+- P2 Resize to Reponsive
+
+[Grouped Headers](controls/datagrid-multiselect)
+- Clicking on the row itself or the checkbox will select the row visually and with the checkbox
+- Test the visual difference on all three themes
+- Test the visual appearance on all three row heights in the actions menu
+- Selecting a row will show the count and slide in the "contextual action" toolbar. The remove button has no functionality wired
+- The Count should so the right number of rows
+
+[Grouped Headers](controls/datagrid-nested-objects)
+- This example just shows data can be in nested form its working if the last columns says "test"
+
+[Grouped Headers](controls/datagrid-paging-client-side)
+- The count should show for all rows (1000 Results)
