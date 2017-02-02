@@ -9,6 +9,9 @@
       </h1>
     </div>
     <div class="buttonset">
+      <button class="btn js-btn-goto-5" type="button">
+        <span>Select step 5</span>
+      </button>
       <button class="btn js-btn-save-changes" type="button">
         <span>Save</span>
       </button>
@@ -225,6 +228,13 @@
       'beforeSelectStep': stepFunctions.beforeSelectStep
     });
 
+    // Example button to select a step
+    $('.js-btn-goto-5').click(function (e) {
+      e.preventDefault();
+      var $treeSteps = $('.step-process-container');
+      $treeSteps.data('stepprocess').selectStep($('#node5'));
+    });
+
     // Example button save event
     $('.js-btn-save-changes').click(function (e) {
       e.preventDefault();
@@ -298,8 +308,6 @@
 
     // When a folder opens
     beforeSelectStep: function (step) {
-      console.log('Before Select Fired', step);
-
       var deferred = $.Deferred();
       var $step = $(step);
       var $folder = $step.next('ul.folder');
@@ -314,11 +322,11 @@
 
           if (canAccessStep) {
 
-            // Call stepprocess api to update the tree node list
+          // Call stepprocess api to update the tree node list
             $treeSteps.data('stepprocess').updateNode({
               node: $step,
               children: subSteps
-            }, true);
+            });
 
             // Add content panels to coordinate with new sub-steps
             var $container = $('.step-container');
@@ -326,6 +334,9 @@
               var id = subSteps[i].href.replace('#', '');
               $container.append('<div id="' + id + '" class="js-step-panel"><h2>' + subSteps[i].text + '</h2></div>');
             }
+
+            // Example to automatically select first one after ajax loads steps
+            // $treeSteps.data('stepprocess').selectStep($('#' + subSteps[0].id));
           } else {
             // Since folder tried to open, toggle it closed when permission denied.
             $treeSteps.data('stepprocess').toggleFolder($step);
