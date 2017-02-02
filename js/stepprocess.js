@@ -129,7 +129,7 @@
             }
           }
 
-          this.theTreeApi.selectNode(nodeToSelect);
+          this.selectStep(nodeToSelect);
 
           // Get a possible folder for the selected node
           var $nodeToSelectFolder = nodeToSelect.next('ul.folder');
@@ -184,7 +184,7 @@
           nodeToSelect = nextNode;
         }
 
-        this.theTreeApi.selectNode(nodeToSelect);
+        this.selectStep(nodeToSelect);
 
         // Make sure the folder is open if there is one
         if (theFolder && !theFolder.hasClass('is-open')) {
@@ -199,6 +199,21 @@
       },
 
       /**
+       * Select a node
+       * @param {Object} step - The html <a> that controls the folder
+       */
+      selectStep: function(step) {
+        var parentFolder = $(step).closest('ul.folder', 'ul.tree');
+
+        if (parentFolder && !parentFolder.hasClass('is-open')) {
+          // If its in a folder, trigger the toggle on the folder title step
+          this.toggleFolder(parentFolder.prev());
+        }
+
+        this.theTreeApi.selectNode(step, true);
+      },
+
+      /**
        * Toggles whether a folder is open or closed
        * @param {Object} step - The html <a> that controls the folder
        */
@@ -209,14 +224,9 @@
       /**
        * Updates a node through the tree.js API
        * @param  {Object} node - The JSON node to update
-       * @param  {Bool} selectFirstChild - Whether or not to select the first child by default
        */
-      updateNode: function(node, selectFirstChild) {
+      updateNode: function(node) {
         this.theTreeApi.updateNode(node);
-
-        if (selectFirstChild) {
-          this.goToNextStep();
-        }
       }
     };
 
