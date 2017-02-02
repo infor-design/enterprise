@@ -2,7 +2,7 @@
   <div class="twelve columns">
 
     <h2 class="fieldset-title">Validation tests</h2>
-    <form id="test" autocomplete="off" data-validate-on="submit">
+    <form id="test-form" autocomplete="off" data-validate-on="submit">
 
        <div class="field">
         <label class="required" for="email-address-ok">Email Address <span class="audible">Required</span></label>
@@ -59,12 +59,12 @@
         </div>
       </div>
 
-      <button type="submit" id = 'test1' class="btn-primary">Submit</button>
+      <button type="submit" id="test-submit-button" class="btn-primary">Submit</button>
     </form>
 
     <script>
       $(function() {
-        $('#test').on('validated', function (e, isValid) {
+        $('#test-form').on('validated', function (e, isValid) {
           if (isValid) {
             // Do some stuff before it goes to postback/submit
 

@@ -145,15 +145,19 @@
         }).on('listopened.validate', function() {
           var field = $(this),
             tooltip = field.data('tooltip');
-            if (tooltip && document.activeElement === field.data('dropdown').searchInput[0]) {
-              tooltip.hide();
-            }
+
+          field.next('.dropdown-wrapper').next('.error-message').hide();
+          if (tooltip && document.activeElement === field.data('dropdown').searchInput[0]) {
+            tooltip.hide();
+          }
         }).on('listclosed.validate', function() {
           var field = $(this),
             tooltip = field.data('tooltip');
-            if (tooltip && document.activeElement !== field.data('dropdown').searchInput[0]) {
-              tooltip.show();
-            }
+
+          field.next('.dropdown-wrapper').next('.error-message').show();
+          if (tooltip && document.activeElement !== field.data('dropdown').searchInput[0]) {
+            tooltip.show();
+          }
         });
 
         selects.filter(function() {
@@ -192,7 +196,7 @@
         var field = $(this);
         if (field.attr('data-validate')) {
 
-          if (field.attr('data-disable-validation') === 'true' || field.hasClass('disable-validation') || field[0].style.visibility === 'is-hidden' || !field.is(':visible')) {
+          if (field.attr('data-disable-validation') === 'true' || field.hasClass('disable-validation') || (!field.is('select') && (field[0].style.visibility === 'is-hidden' || !field.is(':visible')))) {
             return true;
           }
 
