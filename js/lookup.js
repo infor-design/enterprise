@@ -257,7 +257,7 @@
 
         self.modal = $('body').data('modal');
         if (!this.settings.title) {
-          self.modal.element.find('.modal-title').append(' <span class="datagrid-result-count">(N Results)</span>');
+          self.modal.element.find('.modal-title').append(' <span class="datagrid-result-count"></span>');
         }
 
         // Wait until search field available
