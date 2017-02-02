@@ -9,6 +9,7 @@ $toolbar-buttonset-height: 40px;
   @include no-select();
   padding: 0 1rem;
   position: relative;
+  text-align: right;
   -webkit-touch-callout: none;
 
   // Acts as a spacer that causes the toolbar items to vertically align.
@@ -25,7 +26,6 @@ $toolbar-buttonset-height: 40px;
     height: $toolbar-buttonset-height;
     overflow: hidden;
     padding-left: 1px;  //for the focus state
-    width: 98%;
 
     > .separator {
       background-color: $formatter-toolbar-separator-color;
@@ -60,12 +60,24 @@ $toolbar-buttonset-height: 40px;
   }
 
   .title {
+    height: $toolbar-buttonset-height;
+    left: 0;
+    margin-left: 1rem;
     overflow: hidden;
+    position: absolute;
+    text-align: left;
     text-overflow: ellipsis;
+    top: 0;
     white-space: nowrap;
-    width: 45%;
+
+    // Acts as a spacer that causes the toolbar items to vertically align.
+    &::before {
+      @include vertical-alignment-spacer;
+    }
 
     > * {
+      display: inline-block;
+      margin: auto 0;
       vertical-align: middle;
     }
 
@@ -79,7 +91,7 @@ $toolbar-buttonset-height: 40px;
 
     + .buttonset {
       text-align: right;
-      width: calc(55% - 1px); // 1px is the width of the pseudo-element preceeding the title used for vertical alignment
+      //width: calc(55% - 1px); // 1px is the width of the pseudo-element preceeding the title used for vertical alignment
     }
   }
 
@@ -87,7 +99,7 @@ $toolbar-buttonset-height: 40px;
   .more {
     display: none;
     text-align: right;
-    width: 38px;
+    //width: 38px;
 
     > * {
       margin-right: 1px;
@@ -96,7 +108,7 @@ $toolbar-buttonset-height: 40px;
 
   &.has-more-button {
     .buttonset {
-      width: calc(100% - 39px); // 39px = width of the ".more" container + 1px for vertical spacing pseudo-element
+      //width: calc(100% - 39px); // 39px = width of the ".more" container + 1px for vertical spacing pseudo-element
 
       > *:last-child {
         margin-right: 5px; // Add back the 5px since we need to visually separate the More button from the others.
@@ -104,10 +116,10 @@ $toolbar-buttonset-height: 40px;
     }
 
     .title {
-      width: calc(45%); // 1px for the "vertical alignment" helper psuedo-element
+      //width: calc(45%); // 1px for the "vertical alignment" helper psuedo-element
 
       + .buttonset {
-        width: calc(55% - 39px); // 55% - (width of the possible 'more' button + weird, inexplicable spacing that's necessary)
+        //width: calc(55% - 39px); // 55% - (width of the possible 'more' button + weird, inexplicable spacing that's necessary)
       }
     }
 
