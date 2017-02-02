@@ -1,3 +1,5 @@
+//TODO Break this into 4 files...
+
 window.Formatters = {
 
   Text: function(row, cell, value) {
@@ -1356,6 +1358,7 @@ $.fn.datagrid = function(options) {
       var self = this,
         headerRow = '',
         headerColGroup = '<colgroup>',
+        cols= '',
         uniqueId;
 
       var colGroups = this.settings.columnGroups;
@@ -1396,7 +1399,7 @@ $.fn.datagrid = function(options) {
          (colGroups ? ' headers="' + self.getColumnGroup(j) + '"' : '') + '>';
 
         headerRow += '<div class="' + (isSelection ? 'datagrid-checkbox-wrapper ': 'datagrid-column-wrapper') + (column.align === undefined || column.filterType ? '' : ' l-'+ column.align +'-text') + '"><span class="datagrid-header-text'+ (column.required ? ' required': '') + '">' + self.headerText(settings.columns[j]) + '</span>';
-        headerColGroup += '<col' + this.calculateColumnWidth(column, j) + (column.hidden ? ' class="is-hidden"' : '') + '>';
+        cols += '<col' + this.calculateColumnWidth(column, j) + (column.hidden ? ' class="is-hidden"' : '') + '>';
 
         //Removed the center alignment - even if the column is right aligned data keep the header left aligned
         //+ (column.align === undefined ? false : ' l-'+ column.align +'-text')
@@ -1414,7 +1417,7 @@ $.fn.datagrid = function(options) {
         headerRow += '</div></th>';
       }
       headerRow += '</tr>';
-      headerColGroup += '</colgroup>';
+      headerColGroup += cols + '</colgroup>';
 
       if (self.headerRow === undefined) {
         self.headerContainer = $('<div class="datagrid-header"><table role="grid" '+ this.headerTableWidth() + '></table></div>');
@@ -1423,9 +1426,8 @@ $.fn.datagrid = function(options) {
         self.headerRow = $('<thead>' + headerRow + '</thead>').appendTo(self.headerContainer.find('table'));
         self.element.prepend(self.headerContainer);
       } else {
-        //TODO This wont work.
-        self.headerRow.empty();
-        self.headerRow.append(headerRow);
+        self.headerRow.html(headerRow);
+        self.headerColGroup.html(cols);
       }
 
       self.table.find('th[title]').tooltip();
@@ -2203,8 +2205,7 @@ $.fn.datagrid = function(options) {
 
       self.bodyColGroup += '</colgroup>';
       self.bodyColGroup = $(self.bodyColGroup);
-      self.tableBody.html(tableHtml);
-      self.tableBody.before(self.bodyColGroup);
+      self.tableBody.before(self.bodyColGroup).html(tableHtml);
       self.setupTooltips();
       self.tableBody.find('.dropdown').dropdown();
 
@@ -2399,7 +2400,7 @@ $.fn.datagrid = function(options) {
 
         //Set Width of table col / col group elements
         var colWidth = '';
-        if (this.recordCount === 0) {
+        if (this.recordCount === 0 || this.recordCount - ((activePage-1) * pagesize) === 0) {
           colWidth = this.calculateColumnWidth(col, j);
           self.bodyColGroup += '<col' + colWidth + (col.hidden ? ' class="is-hidden"' : '') + '></col>';
         }
@@ -4304,7 +4305,7 @@ $.fn.datagrid = function(options) {
         }
 
         //Up arrow key
-          if (key === 38 && !self.quickEditMode) {
+        if (key === 38 && !self.quickEditMode) {
           //Press [Control + Up] arrow to move to the first row on the first page.
           if (e.altKey || e.metaKey) {
             self.setActiveCell(getVisibleRows(0), cell);
@@ -4313,7 +4314,7 @@ $.fn.datagrid = function(options) {
 
             if (row === 0 && !prevRow.is('.datagrid-rowgroup-header')) {
               node.removeAttr('tabindex');
-              $('th:not(.is-hidden)', self.header).eq(cell).attr('tabindex', '0').focus();
+              self.headerRow.find('th').eq(cell).attr('tabindex', '0').focus();
               return;
             }
             self.setActiveCell(prevRow, cell);

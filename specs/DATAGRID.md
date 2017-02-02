@@ -78,3 +78,6 @@ TODO
 
 [Grouped Headers](controls/datagrid-paging-client-side)
 - The count should show for all rows (1000 Results)
+- Resize the columns, then go to next and previous page
+- Sort the number columns and then go through pages and confirm
+- Enter a page number in the input and tab or enter
