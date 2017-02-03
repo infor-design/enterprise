@@ -3,23 +3,23 @@
 window.Formatters = {
 
   Text: function(row, cell, value) {
-    var str = ((value === null || value === undefined || value === '') ? '&nbsp;' : value.toString());
+    var str = ((value === null || value === undefined || value === '') ? '' : value.toString());
     return str;
   },
 
   Ellipsis: function(row, cell, value, col) {
-    var str = ((value === null || value === undefined || value === '') ? '&nbsp;' : value.toString());
+    var str = ((value === null || value === undefined || value === '') ? '' : value.toString());
     col.textOverflow = 'ellipsis';
     return str;
   },
 
   Password: function(row, cell, value) {
-    var str = ((value === null || value === undefined || value === '') ? '&nbsp;' : value.toString());
+    var str = ((value === null || value === undefined || value === '') ? '' : value.toString());
     return str.replace(/./g, '*');
   },
 
   Readonly: function(row, cell, value) {
-    return '<span class="is-readonly">' + ((value === null || value === undefined) ? '&nbsp;' : value) + '</span>';
+    return '<span class="is-readonly">' + ((value === null || value === undefined) ? '' : value) + '</span>';
   },
 
   Date: function(row, cell, value, col) {
@@ -29,7 +29,7 @@ window.Formatters = {
     if (typeof value === 'string' && value) {
 
       if (value === '00000000') { //Means no date in some applications
-        return '&nbsp;';
+        return '';
       }
 
       if (!col.sourceFormat) {
@@ -53,18 +53,18 @@ window.Formatters = {
     }
 
     if (!col.editor) {
-      return formatted === '' ? '&nbsp;' : formatted;
+      return formatted === '' ? '' : formatted;
     }
     return '<span class="trigger">' + formatted + '</span>' + $.createIcon({ icon: 'calendar', classes: ['icon-calendar'] });
   },
 
   Autocomplete: function(row, cell, value) {
-    var formatted = ((value === null || value === undefined) ? '&nbsp;' : value);
+    var formatted = ((value === null || value === undefined) ? '' : value);
     return formatted;
   },
 
   Lookup: function(row, cell, value, col, item) {
-    var formatted = ((value === null || value === undefined) ? '&nbsp;' : value);
+    var formatted = ((value === null || value === undefined) ? '' : value);
 
     if (!col.editor) {
       return formatted;
@@ -86,7 +86,7 @@ window.Formatters = {
        formatted = Locale.formatNumber(value, (col.numberFormat ? col.numberFormat : null));
     }
 
-    formatted = ((formatted === null || formatted === undefined) ? '&nbsp;' : formatted);
+    formatted = ((formatted === null || formatted === undefined) ? '' : formatted);
     return formatted;
   },
 
@@ -99,7 +99,7 @@ window.Formatters = {
       formatted = Locale.formatNumber(value, (col.numberFormat ? col.numberFormat : {style: 'integer'}));
     }
 
-    formatted = ((formatted === null || formatted === undefined) ? '&nbsp;' : formatted);
+    formatted = ((formatted === null || formatted === undefined) ? '' : formatted);
     return formatted;
   },
 
@@ -120,7 +120,7 @@ window.Formatters = {
 
     textValue = col.text || value;
     if (!textValue && !col.icon) {
-      return '&nbsp;';
+      return '';
     }
 
     return col.icon ?
@@ -191,7 +191,7 @@ window.Formatters = {
 
   // Multi Line TextArea
   Textarea: function (row, cell, value) {
-    var formatted = ((value === null || value === undefined) ? '&nbsp;' : value);
+    var formatted = ((value === null || value === undefined) ? '' : value);
     return '<span class="datagrid-multiline-text">'+ formatted + '</span>';
   },
 
@@ -216,7 +216,7 @@ window.Formatters = {
     }
 
     for (var i = 0; i < groupSettings.fields.length ; i++) {
-      groups += item[groupSettings.fields[i]] + (i === 0 ? '&nbsp;' : ',');
+      groups += item[groupSettings.fields[i]] + (i === 0 ? '' : ',');
     }
 
     if (groupSettings.groupRowFormatter) {
@@ -240,7 +240,7 @@ window.Formatters = {
     }
 
     var idx = api.columnIdxById(groupSettings.aggregate),
-        html = '<td role="gridcell" colspan=' + (idx) + '><div class="datagrid-cell-wrapper">&nbsp;</div></td><td role="gridcell"><div class="datagrid-cell-wrapper"> '+ item.sum +'</div></td>';
+        html = '<td role="gridcell" colspan=' + (idx) + '><div class="datagrid-cell-wrapper"></div></td><td role="gridcell"><div class="datagrid-cell-wrapper"> '+ item.sum +'</div></td>';
 
     if (groupSettings.groupFooterRowFormatter) {
       html = groupSettings.groupFooterRowFormatter(idx, row, cell, value, col, item, api);
@@ -262,7 +262,7 @@ window.Formatters = {
        value = Locale.formatNumber(value, (col.numberFormat ? col.numberFormat : null));
     }
 
-    return (beforeText + ((value === null || value === undefined || value === '') ? '&nbsp;' : value.toString()) + afterText);
+    return (beforeText + ((value === null || value === undefined || value === '') ? '' : value.toString()) + afterText);
   },
 
   // Tree Expand / Collapse Button and Paddings
@@ -335,13 +335,13 @@ window.Formatters = {
 
   Color: function (row, cell, value, col) {
     var ranges = Formatters.ClassRange(row, cell, value, col),
-      text = ((value === null || value === undefined || value === '') ? '&nbsp;' : value.toString());
+      text = ((value === null || value === undefined || value === '') ? '' : value.toString());
 
     return '<span class="' + ranges.classes + '">' + text + '</span>';
   },
 
   Button: function (row, cell, value, col) {
-    var text = col.text ? col.text : ((value === null || value === undefined || value === '') ? '&nbsp;' : value.toString()),
+    var text = col.text ? col.text : ((value === null || value === undefined || value === '') ? '' : value.toString()),
       markup ='<button type="button" class="'+ ( col.icon ? 'btn-icon': 'btn') + ' row-btn ' + (col.cssClass ? col.cssClass : '') + '">';
 
       if (col.icon) {
@@ -382,13 +382,13 @@ window.Formatters = {
       isChecked = (value == undefined ? false : value == true); // jshint ignore:line
     }
 
-    return !isChecked ? '&nbsp;' : '<span class="audible">'+ Locale.translate('Favorite') + '</span><span class="icon-favorite">' + $.createIcon({ icon: 'star-filled' }) + '</span>';
+    return !isChecked ? '' : '<span class="audible">'+ Locale.translate('Favorite') + '</span><span class="icon-favorite">' + $.createIcon({ icon: 'star-filled' }) + '</span>';
   },
 
   Status: function (row, cell, value, col, item) {
 
     if (!item.rowStatus) {
-      return '<span>&nbsp;</span>';
+      return '<span></span>';
     }
 
     return $.createIcon({ icon: item.rowStatus.icon, classes: ['icon', 'icon-' + item.rowStatus.icon, 'datagrid-alert-icon'] }) + '<span class="audible">' + item.rowStatus.text + '</span>';
@@ -501,7 +501,7 @@ window.Editors = {
 
     this.init = function () {
       this.input = $('<input type="checkbox" class="checkboxn"/>').appendTo(container);
-      this.input.after('<label class="checkbox-label">&nbsp;</label>');
+      this.input.after('<label class="checkbox-label"></label>');
 
       if (column.align) {
         this.input.addClass('l-'+ column.align +'-text');
@@ -2417,7 +2417,7 @@ $.fn.datagrid = function(options) {
         if (col.contentVisible) {
           var canShow = col.contentVisible(dataRowIdx + 1, j, cellValue, col, rowData);
           if (!canShow) {
-            formatted = '&nbsp;';
+            formatted = '';
           }
         }
 
@@ -3195,7 +3195,6 @@ $.fn.datagrid = function(options) {
       }
 
       //Sync Header and Body During scrolling
-
       self.contentContainer
         .on('scroll.table', function () {
           var left = self.contentContainer[0].scrollLeft;
@@ -3286,8 +3285,8 @@ $.fn.datagrid = function(options) {
 
       });
 
-      var body = this.table.find('tbody');
-      body.off('click.datagrid').on('click.datagrid', 'td', function (e) {
+      var tbody = this.table.find('tbody');
+      tbody.off('click.datagrid').on('click.datagrid', 'td', function (e) {
         var target = $(e.target);
 
         if (target.closest('.datagrid-row-detail').length === 1) {
@@ -3321,12 +3320,12 @@ $.fn.datagrid = function(options) {
 
       });
 
-      body.off('dblclick.datagrid').on('dblclick.datagrid', 'tr', function (e) {
+      tbody.off('dblclick.datagrid').on('dblclick.datagrid', 'tr', function (e) {
         self.triggerRowEvent('dblclick', e, true);
       });
 
       //Handle Context Menu Option
-      body.off('contextmenu.datagrid').on('contextmenu.datagrid', 'tr', function (e) {
+      tbody.off('contextmenu.datagrid').on('contextmenu.datagrid', 'tr', function (e) {
 
         if (!self.isSubscribedTo(e, 'contextmenu')) {
           return;
@@ -3402,8 +3401,8 @@ $.fn.datagrid = function(options) {
           }
         });
 
-      // Implement Editing Commit Functionality
-      body.off('focusout.datagrid').on('focusout.datagrid', 'td input, td textarea, div.dropdown', function () {
+      // Implement Editing Auto Commit Functionality
+      tbody.off('focusout.datagrid').on('focusout.datagrid', 'td input, td textarea, div.dropdown', function () {
         //Popups are open
         if ($('#calendar-popup, #dropdown-list, .autocomplete.popupmenu.is-open').is(':visible') ||
           $('.lookup-modal.is-visible').length) {
@@ -5074,20 +5073,18 @@ $.fn.datagrid = function(options) {
         expandButton.removeClass('is-expanded')
           .find('.plus-minus').removeClass('active');
 
-        children.animateClosed({timing: 200}).on('animateclosedcomplete', function () {
-          children.addClass('is-hidden');
-          self.element.triggerHandler('collapserow', [{grid: self, row: rowElement.index(), detail: children, item: {}}]);
-        });
+        children.hide();
+        children.addClass('is-hidden');
+        self.element.triggerHandler('collapserow', [{grid: self, row: rowElement.index(), detail: children, item: {}}]);
 
         rowElement.removeClass('is-expanded');
       } else {
       expandButton.addClass('is-expanded')
         .find('.plus-minus').addClass('active');
 
-        children.on('animateopencomplete', function () {
-          children.removeClass('is-hidden');
-          self.element.triggerHandler('expandrow', [{grid: self, row: rowElement.index(), detail: children, item: {}}]);
-        }).animateOpen({timing: 200});
+        children.show();
+        children.removeClass('is-hidden');
+        self.element.triggerHandler('expandrow', [{grid: self, row: rowElement.index(), detail: children, item: {}}]);
 
         rowElement.addClass('is-expanded');
       }
@@ -5218,7 +5215,7 @@ $.fn.datagrid = function(options) {
 
     //Default formatter just plain text style
     defaultFormatter: function(row, cell, value) {
-      return ((value === null || value === undefined || value === '') ? '&nbsp;' : value.toString());
+      return ((value === null || value === undefined || value === '') ? '' : value.toString());
     },
 
     //Handle Adding Paging
@@ -5303,6 +5300,7 @@ $.fn.datagrid = function(options) {
 
       //TODO Test Memory Leaks in Chrome - null out fx this.table
       $(document).off('touchstart.datagrid touchend.datagrid touchcancel.datagrid click.datagrid touchmove.datagrid');
+      this.contentContainer.off().remove();
     }
 
   };

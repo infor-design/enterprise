@@ -283,7 +283,7 @@ $datagrid-short-row-height: 23px;
   &.medium-rowheight {
     tbody tr {
       line-height: $datagrid-medium-row-height;
-      //min-height: $datagrid-medium-row-height;
+      min-height: $datagrid-medium-row-height;
 
       td {
 
@@ -364,6 +364,7 @@ $datagrid-short-row-height: 23px;
 
     tbody tr {
       line-height: $datagrid-short-row-height;
+      min-height: $datagrid-short-row-height + 6;
 
       td {
 
@@ -501,6 +502,7 @@ $datagrid-short-row-height: 23px;
   // Table Rows
   tbody tr {
     line-height: $datagrid-row-height;
+    min-height: $datagrid-row-height + 6;
 
     &.is-active-row {
       outline: 1px solid $primary-color;

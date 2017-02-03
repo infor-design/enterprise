@@ -880,6 +880,7 @@
 
       // Set the Formatted value in the input
       setValue: function(date) {
+        //TODO Document this as the way to get the date
         this.currentDate = date;
         this.element.val(Locale.formatDate(date, {pattern: this.pattern}));
       },
