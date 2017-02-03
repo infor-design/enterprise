@@ -334,7 +334,9 @@
 
     &[data-element='foreColor'] {
       .icon {
-        margin-top: 0;
+        height: 17px;
+        margin-top: 1px;
+        width: 16px;
       }
 
       .trigger {
@@ -344,7 +346,7 @@
         .icon {
           height: 16px;
           margin-left: -5px;
-          width: 16px;
+          width: 12px;
         }
       }
 
@@ -355,7 +357,9 @@
 
     &[data-element='backColor'] {
       .icon {
-        margin-top: 0;
+        height: 17px;
+        margin-top: 1px;
+        width: 16px;
       }
 
       .trigger {
@@ -364,7 +368,7 @@
 
         .icon {
           height: 16px;
-          width: 16px;
+          width: 12px;
         }
       }
     }
