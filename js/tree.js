@@ -211,7 +211,8 @@
       },
 
       setTreeIcon: function(svg, icon) {
-        var iconStr = icon.replace('icon-','');
+        // Replace all "icon-", "hide-focus", "\s? - all spaces if any" with nothing
+        var iconStr = icon.replace(/icon-|hide-focus|\s?/gi, '');
         svg.changeIcon(iconStr);
       },
 
