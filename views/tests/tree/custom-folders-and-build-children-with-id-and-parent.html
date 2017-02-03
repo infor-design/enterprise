@@ -1,0 +1,63 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <ul role="tree" aria-label="Asset Types" class="tree" data-init="false" id="json-tree">
+    </ul>
+
+  </div>
+</div>
+
+<script>
+  var sampleData;
+
+  /* jshint ignore:start */
+  sampleData = [{
+    "@status":"est",
+    "@id":"VE1QOkU1NDRCM0NBLUMwMDUtNDUxQS1CNjcxLUY2MkQzNDQ4MjFCRg==",
+    "tpkcnaidty":18657,
+    "treetpk":1,
+    "treetfk":null,
+    "cnadent":"CNADSYS",
+    "cnadenttpk":2,
+    "id":"1",
+    "text":"Australia Post Digital Mailbox",
+    "open":true
+  }, {
+    "@status":"est",
+    "@id":"VE1QOjNDMEIxMEI3LTA1RjktNDUyOC1CREIyLUE5MkNBN0IyM0VBMg==",
+    "tpkcnaidty":18657,
+    "treetpk":2,
+    "treetfk":1,
+    "cnadent":"CNADAPP",
+    "cnadenttpk":1030,
+    "descr":"Animal Registration",
+    "active":true,
+    "icon":"icon-user-folder-open",
+    "summary":"Digital Delivery Application\n\tApplication\n\t\tLAN\n\tApplication Description\n\t\tAnimal Registration\n\tApplication Identifier\n\t\t0906FBD7-3B83-4DDB-8A3A-796215B0CD15\n\tActive\n\t\tYes\n",
+    "id":"2",
+    "parent":"1",
+    "text":"Animal Registration","open":true
+  }, {
+    "@status":"est",
+    "@id":"VE1QOkRGOTAzNzA2LUM5RkQtNDBDMy1CQTQ5LTAzNDM0OTUzMjAwMw==",
+    "tpkcnaidty":18657,
+    "treetpk":3,
+    "treetfk":2,
+    "cnadent":"CNADBOX",
+    "cnadenttpk":1570,
+    "descr":"Rejected - Mail Box",
+    "active":false,"icon":"",
+    "summary":"Digital Delivery Mailbox\n\tSubscription Number\n\t\t2025\n\tMailbox Status\n\t\tRejected\n\tMailbox Identifier\n\t\tvoLnG1BTQsS-7t20u_YPDw\n\tSubscribed\n\t\t17-Sep-2013 03:51:35\n\tAccepted\n\t\t17-Sep-2013 13:34:31\n\tRejected\n\t\t18-Sep-2013 13:22:21\n",
+    "id":"3",
+    "parent":"2",
+    "text":"Rejected - Mail Box",
+    "open":true
+  }];
+
+  /* jshint ignore:end */
+
+  $('#json-tree').tree({dataset: sampleData})
+  .on('selected', function (e, args) {
+    console.log(args);
+  });
+</script>
