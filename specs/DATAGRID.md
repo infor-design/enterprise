@@ -78,6 +78,31 @@ TODO
 
 [Grouped Headers](controls/datagrid-paging-client-side)
 - The count should show for all rows (1000 Results)
-- Resize the columns, then go to next and previous page
+- Resize the columns, then go to next and then previous page
 - Sort the number columns and then go through pages and confirm
 - Enter a page number in the input and tab or enter
+
+[Grouped Headers](controls/datagrid-indeterminate)
+- Idea behind this example is you cannot go to specific page (only next, prev, first, last)
+- Note that it is starting on page 2 by design
+- Resize the columns, then go to next and then previous page
+- Change the number of rows per page and use the paging
+- Try the search
+- Tab down to the pager and use left and right arrow
+- Tab to the number of rows per page
+- Change Local and see that the pager is translated (controls/datagrid-paging-indeterminate?locale=es-ES)
+- Test the three themes
+- Test RTL (controls/datagrid-paging-indeterminate?locale=ar-SA)
+
+[Grouped Headers](controls/datagrid-paging)
+- Idea behind this example is its the main paging defaults
+- Note that it is starting on page 2 by design
+- Resize the columns, then go to next and then previous page
+- Change the number of rows per page and use the paging
+- Try the search
+- Tab down to the pager and use left and right arrow
+- Tab to the number of rows per page
+- Change Local and see that the pager is translated (controls/datagrid-paging?locale=es-ES)
+- Test the three themes
+- Test RTL (controls/datagrid-paging?locale=ar-SA)
+- Go to page two and press the drill down arrow. Make sure the console shows the right row id / data

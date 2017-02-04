@@ -4159,7 +4159,7 @@ $.fn.datagrid = function(options) {
         checkbox = $('th .datagrid-checkbox', self.headerRow);
 
       // Handle header navigation
-      self.table.on('keydown.datagrid', 'th', function (e) {
+      self.headerTable.on('keydown.datagrid', 'th', function (e) {
         var key = e.which || e.keyCode || e.charCode || 0,
           th = $(this),
           index = th.siblings(':visible').addBack().index(th),

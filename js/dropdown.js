@@ -753,11 +753,7 @@
         }
 
         this.searchKeyMode = true;
-<<<<<<< 1b63db83950a29f27f24d7cb7ebb29162a14f81d
-        if (isSearchInput) {
-=======
         if (self.searchInput) {
->>>>>>> - Readme Clarifications
           self.searchInput.attr('aria-activedescendant', '');
         }
         return true;
@@ -1274,7 +1270,7 @@
 
       // Return true/false if the list is open
       isOpen: function() {
-        return (this.list && this.list.is(':visible') ? true : false);
+        return (this.list && this.list.is(':visible')) ? true : false;
       },
 
       // Hide or Show list
