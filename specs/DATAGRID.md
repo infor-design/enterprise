@@ -93,10 +93,11 @@ TODO
 - Change Local and see that the pager is translated (controls/datagrid-paging-indeterminate?locale=es-ES)
 - Test the three themes
 - Test RTL (controls/datagrid-paging-indeterminate?locale=ar-SA)
+- Test the row heights
 
 [Grouped Headers](controls/datagrid-paging)
 - Idea behind this example is its the main paging defaults
-- Note that it is starting on page 2 by design
+- Note that it is starting on page 1
 - Resize the columns, then go to next and then previous page
 - Change the number of rows per page and use the paging
 - Try the search
@@ -106,3 +107,18 @@ TODO
 - Test the three themes
 - Test RTL (controls/datagrid-paging?locale=ar-SA)
 - Go to page two and press the drill down arrow. Make sure the console shows the right row id / data
+- Test the 3 row heights
+- Test sorting with pager
+
+[Grouped Headers](controls/datagrid-reorder)
+- Idea behind this example is showing the functionality to drag/reorder the columns and the Personalize Columns Menu
+- Resize the columns, then try to drag and move a column from the header
+- Note that the filter button has no functionality
+- Open the ... menu and select personalize columns try to hide and show a few columns
+- Resize the columns, then try to drag and move a column from the header
+- Change Local and see that the personalize columns is translated (controls/datagrid-reorder?locale=es-ES)
+- Test the three themes
+- Test RTL (controls/datagrid-reorder?locale=ar-SA)
+- Test the 3 row heights
+- Reload the page and notice that all the columns you changed are saved
+- Rest to Default, Resize a column then hide and show a column

@@ -1860,12 +1860,12 @@ $.fn.datagrid = function(options) {
       $('.handle', headers).each(function() {
         var clone, headerPos, offPos,
           handle = $(this),
-          hader = handle.parent();
+          header = handle.parent();
 
         handle.on('mousedown.datagrid', function(e) {
           e.preventDefault();
 
-          hader.drag({clone: true, cloneAppentTo: headers.first().parent().parent(), clonePosIsFixed: true})
+          header.drag({clone: true, cloneAppentTo: headers.first().parent().parent(), clonePosIsFixed: true})
 
             .on('dragstart.datagrid', function (e, pos, thisClone) {
               var index;
@@ -1878,7 +1878,7 @@ $.fn.datagrid = function(options) {
 
               self.setDraggableColumnTargets();
 
-              headerPos = hader.position();
+              headerPos = header.position();
               offPos = {top: (pos.top - headerPos.top), left: (pos.left - headerPos.left)};
 
               index = self.targetColumn(headerPos);
@@ -1903,7 +1903,9 @@ $.fn.datagrid = function(options) {
                     if (target.index > self.draggableStatus.startIndex && (n < l)) {
                       target = self.draggableColumnTargets[n];
                     }
+
                     target.el.addClass('is-over');
+
                     if (!self.isHeaderOverflowed(target.el.closest('th'))) {
                       showTarget.addClass('is-over');
                       rect = target.el[0].getBoundingClientRect();
@@ -1920,7 +1922,7 @@ $.fn.datagrid = function(options) {
               headerPos = {top: (pos.top - offPos.top), left: (pos.left - offPos.left)};
 
               var index = self.targetColumn(headerPos),
-               dragApi = hader.data('drag'),
+               dragApi = header.data('drag'),
                tempArray = [],
                i, l, indexFrom, indexTo, target;
 
@@ -2517,6 +2519,8 @@ $.fn.datagrid = function(options) {
       } else if (this.totalWidth > this.elemWidth) {
         return 'style = "width: '+ parseFloat(this.totalWidth) + 'px"';
       }
+
+      return '';
     },
 
     //Calculate the width for a column (upfront with no rendering)
@@ -2762,6 +2766,8 @@ $.fn.datagrid = function(options) {
       this.settings.columns[idx].hidden = true;
       this.headerRow.find('th').eq(idx).addClass('is-hidden');
       this.tableBody.find('td:nth-child('+ (idx+1) +')').addClass('is-hidden');
+      this.headerColGroup.find('col').eq(idx).addClass('is-hidden');
+      this.bodyColGroup.find('col').eq(idx).addClass('is-hidden');
 
       this.element.trigger('columnchange', [{type: 'hidecolumn', index: idx, columns: this.settings.columns}]);
       this.saveColumns();
@@ -2773,6 +2779,8 @@ $.fn.datagrid = function(options) {
       this.settings.columns[idx].hidden = false;
       this.headerRow.find('th').eq(idx).removeClass('is-hidden');
       this.tableBody.find('td:nth-child('+ (idx+1) +')').removeClass('is-hidden');
+      this.headerColGroup.find('col').eq(idx).removeClass('is-hidden');
+      this.bodyColGroup.find('col').eq(idx).removeClass('is-hidden');
 
       this.element.trigger('columnchange', [{type: 'showcolumn', index: idx, columns: this.settings.columns}]);
       this.saveColumns();
@@ -2946,21 +2954,8 @@ $.fn.datagrid = function(options) {
               chk.prop('checked', false);
             }
           }).on('close.datagrid', function () {
-            if (self.isColumnsChanged) {
-              self.updateColumnsAndTableWidth();
-            }
             self.isColumnsChanged = false;
           });
-      });
-    },
-
-    updateColumnsAndTableWidth: function() {
-      var self = this;
-      self.table.css({'width': ''});
-
-      self.headerNodes().not('.is-hidden').each(function () {
-        var header = $(this);
-        self.setColumnWidth(header.attr('data-column-id'), header.width());
       });
     },
 
@@ -3064,7 +3059,6 @@ $.fn.datagrid = function(options) {
           startingLeft = self.currentHeader.position().left + self.table.scrollLeft() -10;
           self.tableWidth = self.table.css('width');
           columnStartWidth = self.currentHeader.width();
-
         })
         .on('drag.datagrid', function (e, ui) {
           if (!self.currentHeader) {
@@ -3081,7 +3075,6 @@ $.fn.datagrid = function(options) {
           }
 
           width = Math.round(width);
-
           self.setColumnWidth(self.currentHeader, width, width - columnStartWidth);
         })
         .on('dragend.datagrid', function () {
