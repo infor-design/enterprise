@@ -44,10 +44,12 @@
     color: $badge-good-color;
   }
 
+  // scss-lint:disable ImportantRule
   &.info {
     background-color: $badge-info-bg-color;
-    color: $badge-info-color;
+    color: $badge-info-color !important;
   }
+  // scss-lint:enable ImportantRule
 
   &.graphite03,
   &.graphite02 {

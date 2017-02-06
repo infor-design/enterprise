@@ -1072,17 +1072,22 @@ $.fn.datagrid = function(options) {
       var self = this;
 
       //TODO Re Test -> Init from Table
+      self.contentContainer = $('<div class="datagrid-body"></div>');
+
       if (this.settings.dataset === 'table') {
-        self.table = $(this.element).addClass('datagrid').attr('role', this.settings.treeGrid ? 'treegrid' : 'grid');
+        self.table = $(this.element).addClass('datagrid');
 
         var wrapper = $(this.element).closest('.datagrid-container');
-
         if (wrapper.length === 0) {
-          this.element.wrap('<div class="datagrid-container"></div>');
+          self.table.wrap('<div class="datagrid-container"></div>');
+          this.element = self.table.closest('.datagrid-container');
         }
+
         self.settings.dataset = self.htmlToDataset();
+        self.table.remove();
+        self.table = $('<table></table>').addClass('datagrid').attr('role', 'grid').appendTo(self.contentContainer);
+
       } else {
-        self.contentContainer = $('<div class="datagrid-body"></div>');
         self.table = $('<table></table>').addClass('datagrid').attr('role', this.settings.treeGrid ? 'treegrid' : 'grid').appendTo(self.contentContainer);
         this.element.addClass('datagrid-container');
       }
@@ -1105,6 +1110,7 @@ $.fn.datagrid = function(options) {
       self.table.empty();
       self.renderRows();
       self.element.append(self.contentContainer);
+
       self.renderHeader();
       self.container = self.element.closest('.datagrid-container');
 
@@ -1430,7 +1436,7 @@ $.fn.datagrid = function(options) {
         self.headerColGroup.html(cols);
       }
 
-      self.table.find('th[title]').tooltip();
+      self.headerRow.find('th[title]').tooltip();
 
       if (self.settings.columnReorder) {
         self.createDraggableColumns();
@@ -2638,9 +2644,9 @@ $.fn.datagrid = function(options) {
           text = cell.text(),
           inner = cell.children('.datagrid-cell-wrapper');
 
-        if (cell[0] && inner[0] && (inner[0].offsetWidth)< inner[0].scrollWidth) {
+        if (cell[0] && inner[0] && (inner[0].offsetWidth)< inner[0].scrollWidth && cell.data('tooltip')) {
           var w = inner.width();
-          $(this).data('tooltip').settings.maxWidth = w;
+          cell.data('tooltip').settings.maxWidth = w;
           return text;
         }
 
@@ -5118,7 +5124,7 @@ $.fn.datagrid = function(options) {
       this.setTreeDepth();
       this.setRowGrouping();
       this.setTreeRootNodes();
-      this.renderRows(true);
+      this.renderRows();
       // Update selected and Sync header checkbox
       this.updateSelected();
       this.syncSelectedUI();

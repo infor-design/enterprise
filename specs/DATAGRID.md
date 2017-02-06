@@ -123,10 +123,38 @@ TODO
 - Reload the page and notice that all the columns you changed are saved
 - Rest to Default, Resize a column then hide and show a column
 
+[Grouped Headers](controls/datagrid-singleselect)
+- This example tests shows single select mode.
+- Test the focus on all the cells is visual ok
+- Test the three themes
+- Resize the columns
+- Test the the row sizes
+- Hovering the whole row shows cursor
+- Clicking the whole row selects whole row
 
+[Grouped Headers](controls/datagrid-table-markup)
+- This example tests shows that you can initialize a grid with a table in the page.
+- The example is working if teh grid renders normally
+- User should be able to use the toolbar, resize and sort and other normal actions
+
+[Grouped Headers](controls/datagrid-tooltips)
+- This example tests shows various places you can see tooltips
+- Hover the first column (drill down arrow) and you should see a black tooltips
+- Hover the header "Product Id" and you should see a tooltips
+- Hover the last cell on the rows with ... A tooltip should appear
+- Sort the last column and hover the cell with ... A tooltip should appear
+
+[Grouped Headers](controls/datagrid-tree)
+- This example tests shows a hierarchical structure in the datagrid
+- When resizing the page (height) the grid should stay in view (fixed header)
+- Should be able to expand and collapse tree rows
+- Test 3 themes
+- Test Row heights
+- Test keyboard (space to open rows) while in that cell
+- Sort should work (only at the top level)
 
 TODO:
-- Editting (more)
+- Editing (more)
 - Last Column / Border Resize
 - Sticky header
 - TODOS

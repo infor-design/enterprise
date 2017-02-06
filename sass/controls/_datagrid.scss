@@ -10,6 +10,22 @@ $datagrid-medium-row-height: 33px;
 $datagrid-short-header-height: 25px;
 $datagrid-short-row-height: 23px;
 
+//Fixed Header Datagrid
+.datagrid-contained {
+  &.datagrid-container {
+    height: inherit;
+  }
+
+  .datagrid-body {
+    height: calc(100% - 40px);
+  }
+
+  tr:last-child td {
+    border-bottom: 1px solid $datagrid-cell-border-color;
+  }
+}
+
+//Main Datagrid Container
 .datagrid-container {
   background-color: transparent;
   border: 1px solid $datagrid-cell-border-color;
