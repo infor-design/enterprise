@@ -98,6 +98,9 @@
 
         if (this.isSplitterHorizontal) {
           splitter[0].style.top = w + 'px';
+        } else {
+          thisSide.closest('.splitter-container')[0].style.position = 'relative';
+          splitter[0].style.top = 0;
         }
 
         this.splitTo(w, parentHeight);
