@@ -677,13 +677,13 @@ body.no-scroll {
   .banner {
     background-color: $panel-bg-color;
     border-bottom: 1px solid $panel-border-color;
-    min-height: 320px;
+    height: auto;
     padding: 40px 0;
   }
 
   .detail {
     background-color: $body-bg-color;
-    height: calc(100% - 320px);
+    height: auto;
   }
 }
 

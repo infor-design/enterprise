@@ -19,6 +19,15 @@ $gutter-neg-size: -20px;
     margin-bottom: 30px;
   }
 
+  &.l-center {
+    max-width: 1060px;
+    padding-left: 20px;
+  }
+
+  &.align-to-title {
+    padding: 0 1rem;
+  }
+
   &.top-padding {
     padding-top: 30px;
   }
@@ -63,6 +72,13 @@ $gutter-neg-size: -20px;
         text-align: left;
       }
     }
+  }
+}
+
+@include respond-to(phabletdown) {
+  .one-half-mobile {
+    margin-left: $gutter-size;
+    width: calc(50% - 20px);
   }
 }
 
@@ -145,6 +161,11 @@ $gutter-neg-size: -20px;
     }
   }
 
+  .one-fifth.column {
+    margin-left: $gutter-size;
+    width: calc(20% - 20px);
+  }
+
   .one-third.column {
     margin-left: $gutter-size;
     width: calc(33.3333333% - 20px);
@@ -159,6 +180,7 @@ $gutter-neg-size: -20px;
     margin-left: $gutter-size;
     width: calc(50% - 20px);
   }
+
 }
 
 

@@ -131,6 +131,11 @@
     min-height: 318px;
     overflow: auto;
     width: 100%;
+
+    &.contained,
+    .contained {
+      height: inherit;
+    }
   }
 
   .card-footer,

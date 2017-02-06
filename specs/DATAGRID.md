@@ -122,3 +122,12 @@ TODO
 - Test the 3 row heights
 - Reload the page and notice that all the columns you changed are saved
 - Rest to Default, Resize a column then hide and show a column
+
+
+
+TODO:
+- Editting (more)
+- Last Column / Border Resize
+- Sticky header
+- TODOS
+- Merge Grid Logic

@@ -60,6 +60,16 @@
     }
   }
 
+  + .tab-panel.alternate {
+    position: relative;
+    top: -50px;
+  }
+
+  &.alternate {
+    position: relative;
+    top: -50px;
+  }
+
   > .busy-indicator-container {
     @include font-size(14);
   }
