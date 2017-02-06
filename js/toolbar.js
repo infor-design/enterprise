@@ -529,8 +529,8 @@
       },
 
       handleResize: function() {
-        this.sizeContainers();
         this.toggleMoreMenu(); // Added 9/16/2015 due to issue HFC-2876
+        this.sizeContainers();
       },
 
       sizeContainers: function() {
@@ -563,11 +563,16 @@
         var titleScrollWidth = titleElem.scrollWidth,
           titleSize = toolbarWidth - (padding + buttonsetWidth + moreWidth);
 
-        // If the title element's text would be cut off, attempt to size the buttonset down.
+        // If the title element's text would be cut off, attempt to fix the size of both elements.
         if (titleScrollWidth > titleSize) {
-          titleElem.style.width = titleScrollWidth + 'px';
-          buttonsetElem.style.width = (toolbarWidth - (padding + titleSize + moreWidth)) + 'px';
-          return this;
+          // Favor the title
+          if (!this.settings.favorButtonset) {
+            titleElem.style.width = titleScrollWidth + 'px';
+            buttonsetElem.style.width = (toolbarWidth - (padding + titleScrollWidth + moreWidth)) + 'px';
+            return this;
+          }
+
+          titleElem.style.width = (titleScrollWidth - titleSize) + 'px';
         }
 
         // Always size the title element

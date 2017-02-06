@@ -60,6 +60,7 @@ $toolbar-buttonset-height: 40px;
   }
 
   .title {
+    display: block;
     height: $toolbar-buttonset-height;
     left: 0;
     margin-left: 1rem;
@@ -79,6 +80,7 @@ $toolbar-buttonset-height: 40px;
       display: inline-block;
       margin: auto 0;
       vertical-align: middle;
+      white-space: nowrap;
     }
 
     > h1 {
