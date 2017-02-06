@@ -539,7 +539,7 @@
         var a = li.children('a');
         a.data('focused-by-click', true);
 
-        if (this.popupmenu) {
+        if (this.popupmenu && this.popupmenu.element.hasClass('is-open')) {
           this.popupmenu.close();
         }
 
