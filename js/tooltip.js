@@ -358,21 +358,23 @@
         var self = this,
           extraClass = this.settings.extraClass,
           content = this.content,
-          tooltip = this.tooltip[0],
-          contentArea = tooltip.querySelectorAll('.tooltip-content')[0],
-          title = tooltip.querySelectorAll('.tooltip-title')[0];
+          contentArea = this.tooltip.find('.tooltip-content'),
+          title = this.tooltip[0].querySelector('.tooltip-title');
 
-        tooltip.setAttribute('class', 'popover is-hidden');
+        content[0].classList.remove('hidden');
+        this.tooltip[0].setAttribute('class', 'popover is-hidden');
 
         if (extraClass) {
-          tooltip.classList.add(this.settings.extraClass);
+          this.tooltip[0].classList.add(this.settings.extraClass);
         }
 
-        if (typeof this.content === 'string') {
-          contentArea.innerHTML = content;
+        if (typeof content === 'string') {
+          content = $(content);
         } else {
-          contentArea.innerHTML = content[0].innerHTML;
+          contentArea.html(content);
         }
+
+        contentArea[0].firstElementChild.classList.remove('hidden');
 
         if (this.settings.title !== null) {
           if (!title) {
@@ -381,7 +383,9 @@
             title.innerHTML = this.settings.title;
             title.classList.add('tooltip-title');
             titleFrag.appendChild(title);
-            tooltip.insertBefore(titleFrag, tooltip.firstChild);
+            this.tooltip[0].insertBefore(titleFrag, this.tooltip[0].firstChild);
+          } else {
+            title.childNodes[0].nodeValue = this.settings.title;
           }
         }
 
@@ -398,7 +402,7 @@
           title.appendChild(closeBtnX[0]);
         }
 
-        $(content).initialize();
+        content.initialize();
       },
 
       // Alias for _show()_.
