@@ -1123,7 +1123,7 @@
             for (p = 0; p < paragraphs.length; p += 1) {
               if (paragraphs[p] !== '') {
                 if (navigator.userAgent.match(/firefox/i) && p === 0) {
-                  html += self.htmlEntities(paragraphs[p]);
+                  html += '<p>' + self.htmlEntities(paragraphs[p]) + '</p>';
                 } else {
                   if((/\.(gif|jpg|jpeg|tiff|png)$/i).test(paragraphs[p])) {
                     html += '<img src="' + self.htmlEntities(paragraphs[p]) + '" />';
@@ -1162,8 +1162,9 @@
               // some browsers (IE9, for one)
               var el = document.createElement('div');
 
-              //IE copy will append a p we should remove
-              html = html.replace('<p>', '').replace('</p>', '');
+              // //IE copy will append a p we should remove
+              // html = html.replace('<p>', '').replace('</p>', '');
+              // alert(html);
               el.innerHTML = html;
               var frag = document.createDocumentFragment(), node, lastNode;
               while ( (node = el.firstChild) ) {
