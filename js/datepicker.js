@@ -42,13 +42,25 @@
             'maxDate'   : '',
             'dayOfWeek' : [],
             'isEnable' : false
-          }
+          },
+          showLegend: false,
+          legend: [
+            //Legend Build up example
+            //Color in level 6 - http://usmvvwdev53:424/controls/colors
+            {name: 'Public Holiday', color: '#76B051', dates: []},
+            {name: 'Weekends', color: '#EFA836', dayOfWeek: []}
+          ]
         },
         settings = $.extend({}, defaults, options);
 
     /**
-     * @constructor
-     * @param {Object} element
+     * A component to support date entry.
+     * Users can either manually enter a date or select a date from a calendar.
+     * A secondary benefit is the ability to restrict the dates that are available for selection.
+     * @class
+     * @param {Object} [element=this] - The element to attach to (only when manually calling the constructor)
+     * @param {Object} [options]
+     * @param {string} [options.dateFormat='locale'] - The format in which to display the date. Defaults to the current locales format but can be set to a custom format like 'yyyy-MM-dd' (iso8601 format).
      */
     function DatePicker(element) {
       this.element = $(element);
@@ -592,6 +604,113 @@
         }
       },
 
+      //Add a Legend below the table
+      addLegend: function () {
+        if (!this.settings.showLegend) {
+          return;
+        }
+
+        //Remove Legend
+        if (this.legend && this.legend.length) {
+          this.legend.remove();
+        }
+
+        this.legend = $('<div class="calendar-legend"></div>');
+
+        for (var i = 0; i < this.settings.legend.length; i++) {
+          var series = this.settings.legend[i],
+            item = '<div class="calendar-legend-item">' +
+              '<span class="calendar-legend-swatch" style="background-color:' + this.hexToRgba(series.color, 0.3) + '"></span>' +
+              '<span class="calendar-legend-text">' + series.name + '</span></div>';
+
+          this.legend.append(item);
+        }
+
+        this.table.after(this.legend);
+      },
+
+      // Set Color for the Legend settings
+      setLegendColor: function (elem, year, month, date) {
+        if (!this.settings.showLegend || !elem[0]) {
+          return;
+        }
+
+        var hex = this.getLegendColor(year, month, date),
+          self = this;
+
+        elem[0].style.backgroundColor = '';
+
+        if (hex) {
+          //set color on elem at .3 of provided color as per design
+          elem.addClass('is-colored');
+          elem[0].style.backgroundColor = this.hexToRgba(hex, 0.3);
+
+          var normalColor = self.hexToRgba(hex, 0.3),
+            hoverColor = self.hexToRgba(hex, 0.7);
+
+          //handle hover states
+          elem.on('mouseenter', function () {
+            var elem = $(this);
+            elem[0].style.backgroundColor = hoverColor;
+            elem.find('span')[0].style.backgroundColor = 'transparent';
+          }).on('mouseleave', function () {
+            var elem = $(this);
+            elem[0].style.backgroundColor = normalColor;
+            elem.find('span')[0].style.backgroundColor = '';
+          });
+
+        }
+      },
+
+      //This maybe can be later moved into a colors file along with getLuminousColorShade
+      ///But convert the provided hex to an RGBA for states
+      hexToRgba: function(hex, opacity) {
+        var c;
+        if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
+            c = hex.substring(1).split('');
+
+            if (c.length === 3) {
+              c= [c[0], c[0], c[1], c[1], c[2], c[2]];
+            }
+
+            c = '0x' + c.join('');
+            return 'rgba(' + [(c>>16)&255, (c>>8)&255, c&255].join(',') + ',' + opacity.toString() +')';
+        }
+        return '';
+      },
+
+      // Process Color Options to get the date color
+      getLegendColor: function (year, month, date) {
+        if (!this.settings.showLegend) {
+          return;
+        }
+
+        var checkDate = new Date(year, month, date),
+          checkHours = checkDate.setHours(0,0,0,0);
+
+        for (var i = 0; i < this.settings.legend.length; i++) {
+          var series = this.settings.legend[i];
+
+          //Check Day of week
+          if (series.dayOfWeek && series.dayOfWeek.indexOf(checkDate.getDay()) !== -1) {
+            return series.color;
+          }
+
+          //Check for dates that match
+          if (series.dates) {
+            for (var j = 0; j < series.dates.length; j++) {
+              var d = new Date(series.dates[j]);
+              if (checkHours === d.setHours(0,0,0,0)) {
+                return series.color;
+              }
+            }
+          }
+
+        }
+
+        return '';
+      },
+
       // Set focus after opening the calendar
       setFocusAfterOpen: function () {
         if (!this.calendar) {
@@ -657,6 +776,7 @@
             exYear = (month === 0) ? year - 1 : year;
 
             self.setDisabled(th, exYear, exMonth, exDay);
+            self.setLegendColor(th, exYear, exMonth, exDay);
             th.addClass('alternate prev-month').html('<span aria-hidden="true">' + exDay + '</span>');
           }
 
@@ -678,6 +798,7 @@
             th.attr('aria-label', Locale.formatDate(new Date(self.currentYear, self.currentMonth, dayCnt), {date: 'full'}));
 
             self.setDisabled(th, year, month, dayCnt);
+            self.setLegendColor(th, year, month, dayCnt);
 
             th.attr('role', 'link');
             dayCnt++;
@@ -690,6 +811,8 @@
             exYear = (month === 11) ? year + 1 : year;
 
             self.setDisabled(th, exYear, exMonth, exDay);
+            self.setLegendColor(th, exYear, exMonth, exDay);
+
             th.addClass('alternate next-month').html('<span aria-hidden="true">' + nextMonthDayCnt + '</span>');
             nextMonthDayCnt++;
           }
@@ -703,6 +826,9 @@
         } else {
           row.show();
         }
+
+        //Add Legend
+        self.addLegend();
       },
 
       // Put the date in the field and select on the calendar

@@ -22,6 +22,16 @@ $gutter-neg-size: -20px;
   &.top-padding {
     padding-top: 30px;
   }
+
+  &.bottom-padding {
+    padding-bottom: 20px;
+  }
+
+  &.bottom-space {
+    // scss-lint:disable ImportantRule
+    padding-bottom: 10px !important;
+    // scss-lint:enable ImportantRule
+  }
 }
 
 .row::after {
@@ -129,9 +139,9 @@ $gutter-neg-size: -20px;
     width: calc(100% - 20px);
 
     &.center {
+      display: block;
       min-width: 300px;
       text-align: center;
-      display: block;
     }
   }
 

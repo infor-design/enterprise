@@ -125,6 +125,11 @@
         background-color: $tree-selected-bg-color;
         color: $tree-selected-color;
 
+        &.is-over {
+          background-color: $tree-isover-bg-color;
+          border: 1px dashed $tree-isover-border-color;
+        }
+
         svg {
           fill: $tree-selected-color;
         }
@@ -232,6 +237,76 @@
     }
   }
 
+// Sortable
+  .is-clone {
+    opacity: 0;
+    position: fixed;
+    z-index: 1;
+  }
+
+  .is-selected .is-dragging-clone,
+  .is-dragging-clone,
+  .is-selected .is-dragging-clone:hover,
+  .is-dragging-clone:hover {
+    background-color: $tree-placeholder-bg-color;
+    border: 1px solid $tree-placeholder-bg-color;
+    color: $tree-placeholder-color;
+    line-height: 25px;
+    padding: 0 5px;
+
+    svg {
+      fill: $tree-placeholder-color;
+    }
+
+    .tree-text {
+      border-color: transparent;
+      color: $tree-placeholder-color;
+    }
+  }
+
+  .is-dragging {
+    background-color: $tree-selected-bg-color;
+    border: 1px solid $tree-selected-bg-color;
+    color: $tree-selected-color;
+
+    &.is-dragging {
+      opacity: .5;
+    }
+
+    svg {
+      fill: $tree-selected-color;
+    }
+
+    .tree-text {
+      border-color: transparent;
+      color: $tree-selected-color;
+    }
+  }
+
+  .is-over {
+    background-color: $tree-isover-bg-color;
+    border: 1px dashed $tree-isover-border-color;
+  }
+
+}
+
+.tree-drag-target-arrow {
+  @include horizontal-gradient($tree-selected-color, transparent);
+  background-repeat: no-repeat;
+  display: none;
+  height: 1px;
+  margin: 0 0 0 6px;
+  position: fixed;
+  width: 50px;
+
+  &::before {
+    color: $tree-selected-color;
+    content: '\25BA'; // Right triangle
+    display: block;
+    font-size: 7px;
+    height: 0;
+    margin: -3px 0 0 -6px;
+  }
 }
 
 // Firefox only
@@ -259,6 +334,9 @@
     }
   }
 
+  .tree-drag-target-arrow::before {
+    margin-top: -3.5px;
+  }
 }
 
 //Tree Detail Pattern
@@ -273,6 +351,12 @@
   &:not(.ie-edge) {
     .tree a .tree-badge {
       line-height: 20px;
+    }
+  }
+
+  &.ie-edge {
+    .tree-drag-target-arrow::before {
+      margin-top: -3.5px;
     }
   }
 }

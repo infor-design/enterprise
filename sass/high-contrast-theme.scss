@@ -224,6 +224,7 @@ $listbuilder-border-color: $input-border-color;
 $listbuilder-border-color-focus: $azure07;
 $listbuilder-icon-color-hover: $font-color-highcontrast;
 $listbuilder-text-color: $black;
+$listbuilder-input-selection-bg-color: $azure10;
 
 // Toolbar
 $toolbar-standalone-bg-color: $graphite01;
@@ -396,7 +397,10 @@ $slider-bg-color: $graphite06;
 $slider-active-bg-color: $primary-color;
 $slider-labels-color: $graphite09;
 $slider-disabled-color: $graphite04;
+$slider-disabled-active-bg-color: $graphite06;
 $slider-disabled-labels-color: $graphite05;
+$slider-disabled-handle-color: $graphite06;
+$slider-disabled-range-color: $graphite06;
 $slider-hover-shadow: 0 2px 5px 0 rgba($black, .3);
 
 //Modal

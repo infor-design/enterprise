@@ -39,6 +39,7 @@
           negative: false,
           number: false,
           processOnInitialize: true, // If set to false, will not initialially mask the value of the input field.
+          processOnBlur: true, // If set to false, will not mask the value of the input field upon blur.
           thousandsSeparator: false,
           showSymbol: undefined, // can be 'currency', 'percent'
         },
@@ -158,7 +159,7 @@
 
         // Point all keyboard related events to the handleKeyEvents() method, which knows how to
         // deal with key syphoning and event propogation.
-        self.element.on('keypress.mask ' + self.getPasteEvent(), function(e) {
+        self.element.on('keypress.mask keydown.mask keyup.mask ' + self.getPasteEvent(), function(e) {
           if (self.element.prop('readonly')) {
             e.preventDefault();
             return false;
@@ -181,6 +182,26 @@
           self.evaluateCurrentContents(undefined, e);
         });
 
+        function reprocess(isRemask) {
+          var val = self.element.val();
+
+          if (self.settings.mustComplete) {
+            self.checkCompletion();
+          }
+          if (val && self.initValue !== val) {
+            if (isRemask || self.settings.processOnBlur) {
+              self.element.val('');
+              self.processStringAgainstMask(val);
+            }
+            self.element.trigger('change');
+          }
+        }
+
+        // custom event that can be triggered for forcing a remasking of the input field
+        self.element.on('remask.mask', function() {
+          reprocess(true);
+        });
+
         // remove the value when blurred
         self.element.on('blur.mask', function(e) {
           if (self.element.prop('readonly')) {
@@ -188,15 +209,7 @@
             return false;
           }
 
-          var val = self.element.val();
-
-          if (self.settings.mustComplete) {
-            self.checkCompletion();
-          }
-          if (val && self.initValue !== val) {
-            self.element.trigger('change');
-          }
-
+          reprocess();
           self.initValue = null;
         });
 
@@ -347,6 +360,16 @@
           self.initValue = self.element.val();
         }
 
+        // Remove modifiers on "keyup"
+        if (eventType === 'keyup') {
+          if (key === 8) {
+            return this.handleBackspace(e);
+          }
+
+          return;
+        }
+
+        // Handle most input on "keypress"
         if (eventType === 'keypress') {
           // Ignore all of these keys or combinations containing these keys
           if (evt.ctrlKey || evt.metaKey || key < 32) {
@@ -371,19 +394,10 @@
 
       // When using Backspace, correctly remove the intended text content and place the caret
       // in the correct place.
-      handleBackspace: function(e) {
+      handleBackspace: function() {
         var val = this.element.val();
-        if (0 < val.length) {
-          var pos = this.caret(),
-            dCaret = pos.end - pos.begin,
-            trueCaretPosBegin = dCaret > 0 ? pos.begin : pos.begin - 1,
-            selectedText = val.slice(trueCaretPosBegin, pos.end);
-
-          val = this.deleteAtIndex(val, selectedText, trueCaretPosBegin);
-          this.evaluateCurrentContents(val, e);
-          this.caret(trueCaretPosBegin);
-        }
-        return this.killEvent(e);
+        this.element.trigger('write.mask', [val]);
+        return;
       },
 
       // When escaping from a modified field, place the initial value of the field
@@ -504,7 +518,7 @@
           this.caret(pos.begin >= pattSize ? pattSize : pos.begin);
 
           // trigger the 'write' event
-          this.element.trigger('write.mask');
+          this.element.trigger('write.mask', [val]);
           return;
         }
 
@@ -641,7 +655,7 @@
         this.caret(pos.end >= pattSize ? pattSize : pos.end);
 
         // trigger the 'write' event
-        this.element.trigger('write.mask');
+        this.element.trigger('write.mask', [val]);
       },
 
       // Method for processing number masks

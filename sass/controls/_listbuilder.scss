@@ -99,6 +99,18 @@
 
         .edit-input {
           background: transparent;
+
+          &::selection {
+            background: $listbuilder-input-selection-bg-color;
+          }
+
+          &::-ms-selection {
+            background: $listbuilder-input-selection-bg-color;
+          }
+
+          &::-moz-selection {
+            background: $listbuilder-input-selection-bg-color;
+          }
         }
 
         p {
@@ -122,6 +134,7 @@
       }
 
       &.is-editing {
+        @include selectable;
         padding: 1px 10px;
 
         &:hover:not(.is-disabled),

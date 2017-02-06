@@ -15,6 +15,8 @@
 {{={{{ }}}=}}
 
 <script>
+$('body').on('initialized', function () {
+
 /*
 ** Type: 'column-positive-negative'
 ** Required: Value & Target
@@ -24,51 +26,51 @@ var dataset = [{
     data: [{
         name: 'JAN',
         value: 4000,
-        target: 28000
+        target: 13000
     }, {
         name: 'FEB',
-        value: 11000,
-        target: 26000
+        value: 9000,
+        target: 11000
     }, {
         name: 'MAR',
-        value: 6000,
-        target: 18000
+        value: 2000,
+        target: 7000
     }, {
         name: 'APR',
         value: 4000,
-        target: 22000
+        target: 8000
     }, {
         name: 'MAY',
         value: 2000,
-        target: 29000
+        target: 14000
     }, {
         name: 'JUN',
         value: 4000,
-        target: 23000
+        target: 9000
     }, {
         name: 'JUL',
-        value: -14000,
-        target: 27000
+        value: -8000,
+        target: 12000
     }, {
         name: 'AUG',
         value: -6000,
-        target: 17000
+        target: 5000
     }, {
         name: 'SEP',
         value: -1000,
-        target: 23000
+        target: 7000
     }, {
         name: 'OCT',
         value: -12000,
-        target: 28000
+        target: 13000
     }, {
         name: 'NOV',
-        value: -7500,
-        target: 17000
+        value: -7000,
+        target: 6000
     }, {
         name: 'DEC',
         value: -3000,
-        target: 17000
+        target: 7000
     }],
     legends: {
       target: 'Revenue',
@@ -91,4 +93,5 @@ var dataset = [{
       console.log(e, bar, d, i, selectedBars);
     });
 
+});
 </script>

@@ -202,8 +202,8 @@
       settings.propertyName = settings.propertyName.toString();
       settings.propertyValue = settings.propertyValue.toString();
 
-      for (var i = 0; i < prefixes.length; i++) {
-        $(this).css(prefixes[i] + settings.propertyName, settings.propertyValue);
+      for (var i = 0, l = prefixes.length; i < l; i++) {
+        this.style[prefixes[i] + settings.propertyName] = settings.propertyValue;
       }
     });
   };

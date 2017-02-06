@@ -179,7 +179,10 @@
 
         this.expander.find('span[data-translated="true"]').text(Locale.translate('ShowLess') ? Locale.translate('ShowLess') : 'Show Less');
 
-        this.content.css('display','block').one('animateopencomplete', function() {
+        if (this.content[0]) {
+          this.content[0].style.display = 'block';
+        }
+        this.content.one('animateopencomplete', function() {
           self.element.triggerHandler('afterexpand', [self.element]);
         }).animateOpen();
       },
@@ -200,7 +203,7 @@
           self.element.removeClass('is-expanded');
           self.header.attr('aria-expanded', 'false');
           self.element.triggerHandler('aftercollapse', [self.element]);
-          self.content.css('display', 'none');
+          self.content[0].style.display = 'none';
         }).animateClosed();
       },
 

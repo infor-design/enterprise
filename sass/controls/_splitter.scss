@@ -2,6 +2,30 @@
 //========================================================
 
 .splitter-container {
+  @include flexbox();
+  @include flex-direction(row);
+  @include flex(1 1 auto);
+
+  &.is-horizontal {
+    @include flex-direction(column);
+  }
+
+  * {
+    @include flex(0 0 auto);
+  }
+
+  .flex-grow-shrink {
+    @include flex(1 1 auto);
+
+    &.is-right-side {
+      margin-left: 20px;
+    }
+  }
+
+  .is-right-side {
+    border-right: 0;
+  }
+
   .content {
     height: 100%;
   }
@@ -86,5 +110,13 @@
 
   &.splitter-horizontal {
     display: block;
+  }
+}
+
+.ie {
+  .splitter-container {
+    .toolbar .buttonset > [class^="btn"] {
+      line-height: normal;
+    }
   }
 }

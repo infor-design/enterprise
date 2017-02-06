@@ -20,6 +20,10 @@
 }(function($) {
 /* end-amd-strip-block */
 
+  window.Soho = window.Soho || {};
+  window.Soho.utils = {};
+  window.Soho.DOM = {};
+
   // Used for changing the stacking order of jQuery events.  This is needed to override certain
   // Events invoked by other plugins http://stackoverflow.com/questions/2360655
   $.fn.bindFirst = function(name, fn) {
@@ -41,6 +45,7 @@
   }
 
   //Get a unique ID
+  window.Soho.uniqueIdCount = 0;
   $.fn.uniqueId = function(className, prefix, suffix) {
     var predefinedId = $(this).attr('id');
 
@@ -52,8 +57,9 @@
     suffix = (!suffix ? '' : '-' + suffix);
     className = (!className ? $(this).attr('class') : className);
 
-    var cnt = $('.' + className).length;
-    return prefix + className + cnt + suffix;
+    var str = prefix + className + Soho.uniqueIdCount + suffix;
+    Soho.uniqueIdCount = Soho.uniqueIdCount + 1;
+    return str;
   };
 
   // Check for CSS Property Support in a cross browser way
@@ -377,7 +383,7 @@
   };
 
   //Remove Script tags and all onXXX functions
-  $.santizeHtml = function(html) {
+  $.sanitizeHTML = function(html) {
     var santizedHtml = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/g, '');
      santizedHtml = santizedHtml.replace(/on\w+="[^"]*"/g, '');
      santizedHtml = santizedHtml.replace(/ on\w+='[^']*'/g, '');
@@ -513,10 +519,6 @@
       return character;
   };
 
-  window.Soho = window.Soho || {};
-  window.Soho.utils = {};
-  window.Soho.DOM = {};
-
   window.Soho.utils.equals = function equals(a, b) {
     return JSON.stringify(a) === JSON.stringify(b);
   };
@@ -528,6 +530,62 @@
     }
 
     return element.attributes;
+  };
+
+  window.Soho.DOM.classNameExists = function classNameExists(element) {
+    var cn = element.className;
+    return cn && cn.length > 0;
+  };
+
+  window.Soho.DOM.classNameHas = function has(classNameString, targetContents) {
+    return classNameString.indexOf(targetContents) > -1;
+  };
+
+  // Debounce method
+  window.Soho.utils.debounce = function(func, threshold, execAsap) {
+    var timeout;
+
+    return function debounced () {
+      var obj = this, args = arguments;
+      function delayed () {
+        if (!execAsap) {
+          func.apply(obj, args);
+        }
+        timeout = null;
+      }
+
+      if (timeout) {
+        clearTimeout(timeout);
+      } else if (execAsap) {
+        func.apply(obj, args);
+      }
+
+      timeout = setTimeout(delayed, threshold || 100);
+    };
+  };
+
+  // Debounced Resize method
+  // https://www.paulirish.com/2009/throttled-smartresize-jquery-event-handler/
+  (function($,sr){
+    // smartresize
+    $.fn[sr] = function(fn){  return fn ? this.bind('resize', Soho.utils.debounce(fn)) : this.trigger(sr); };
+  })($, 'debouncedResize');
+
+  // String parsing utils
+  window.Soho.string = {};
+
+  /**
+   * The splice() method changes the content of a string by removing a range of
+   * characters and/or adding new characters.
+   *
+   * @param {String} str The string that will be manipulated.
+   * @param {number} start Index at which to start changing the string.
+   * @param {number} delCount An integer indicating the number of old chars to remove.
+   * @param {string} newSubStr The String that is spliced in.
+   * @return {string} A new string with the spliced substring.
+   */
+  window.Soho.string.splice = function splice(str, start, delCount, newSubStr) {
+    return str.slice(0, start) + newSubStr + str.slice(start + Math.abs(delCount));
   };
 
 /* start-amd-strip-block */

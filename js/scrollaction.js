@@ -41,7 +41,7 @@
     };
 
     /**
-     * A control that applies a class based on scroll direction
+     * A component that applies a class based on scroll direction
      * @constructor
      * @param {Object} [element=this] - The element to attach to (only when manually calling the constructor)
      * @param {Object} [options]

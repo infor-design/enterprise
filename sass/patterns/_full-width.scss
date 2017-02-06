@@ -20,12 +20,15 @@
   overflow: hidden;
 
   &.full-width {
-    margin-left: 30px;
     padding: 0;
-    width: calc(100% - 30px);
+    width: calc(100% - 60px);
   }
 }
 
 .tab-panel > .full-width {
   margin-top: 0;
+}
+
+.toolbar + .full-width {
+  padding-top: 0;
 }

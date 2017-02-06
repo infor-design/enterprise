@@ -376,9 +376,3 @@ html[dir='rtl'] {
     }
   }
 }
-
-@include respond-to(phone) {
-  .modal-content {
-    max-width: 320px;
-  }
-}

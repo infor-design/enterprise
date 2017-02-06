@@ -214,15 +214,10 @@
       },
 
       attachEvents: function () {
-        var self = this,
-          timeout;
+        var self = this;
 
-        //Throttle the Resize Down
-        $(window).on('resize.homepage', function() {
-          clearTimeout(timeout);
-          timeout = setTimeout(function () {
-            self.resize(self, self.settings.animate);
-          }, 100);
+        $('body').on('resize.homepage', function() {
+          self.resize(self, self.settings.animate);
         });
 
         $('.application-menu').on('applicationmenuopen.homepage applicationmenuclose.homepage', function () {
@@ -271,7 +266,7 @@
           bp = bpPhone;
         }
 
-        self.element.find('> .content').css('margin-left', '-' + (bp/2) + 'px');
+        self.element.find('> .content')[0].style.marginLeft = '-' + (bp/2) + 'px';
 
         this.setBlocks(); //setup blocks
         this.initRowsAndCols(); //setup colums
@@ -319,7 +314,8 @@
             if (easing === 'blockslide') {
               if (self.isTransitionsSupports) {
                 self.applyCubicBezier(block.elem, blockslide);
-                block.elem.css(pos);
+                block.elem[0].style.left = pos.left + 'px';
+                block.elem[0].style.top = pos.top + 'px';
               }
               // IE-9
               else {
@@ -333,7 +329,8 @@
             }
           }
           else {
-            block.elem.css(pos);
+            block.elem[0].style.left = pos.left + 'px';
+            block.elem[0].style.top = pos.top + 'px';
           }
 
           // Mark all spots as unavailable for this block, as we just used this one
@@ -343,13 +340,11 @@
       },
 
       applyCubicBezier: function (el, cubicBezier) {
-        el.css({
-          '-webkit-transition': 'all .3s cubic-bezier('+ cubicBezier +')',
-          '-moz-transition': 'all .3s cubic-bezier('+ cubicBezier +')',
-          '-ms-transition': 'all .3s cubic-bezier('+ cubicBezier +')',
-          '-o-transition': 'all .3s cubic-bezier('+ cubicBezier +')',
-          'transition': 'all .3s cubic-bezier('+ cubicBezier +')'
-        });
+        el[0].style['-webkit-transition'] = 'all .3s cubic-bezier('+ cubicBezier +')';
+        el[0].style['-moz-transition'] = 'all .3s cubic-bezier('+ cubicBezier +')';
+        el[0].style['-ms-transition'] = 'all .3s cubic-bezier('+ cubicBezier +')';
+        el[0].style['-o-transition'] = 'all .3s cubic-bezier('+ cubicBezier +')';
+        el[0].style.transition = 'all .3s cubic-bezier('+ cubicBezier +')';
       },
 
       supportsTransitions: function () {
@@ -373,7 +368,7 @@
       },
 
       detachEvents: function () {
-        $(window).off('resize.homepage');
+        $('body').off('resize.homepage');
         $('.application-menu').off('applicationmenuopen.homepage applicationmenuclose.homepage');
       },
 

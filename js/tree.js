@@ -23,7 +23,9 @@
         menuId: null, //Context Menu to add to nodes
         useStepUI: false, // When using the UI as a stepped tree
         folderIconOpen: 'open-folder',
-        folderIconClosed: 'closed-folder'
+        folderIconClosed: 'closed-folder',
+        sortable: false, // Allow nodes to be sortable
+        onBeforeSelect: null
       },
       settings = $.extend({}, defaults, options);
 
@@ -50,6 +52,7 @@
         this.initSelected();
         this.focusFirst();
         this.attachMenu(this.settings.menuId);
+        this.createSortable();
       },
 
       //Init Tree from ul, li, a markup structure in DOM
@@ -80,8 +83,8 @@
       //Init selected notes
       initSelected: function () {
         var self = this;
-        this.element.find('li.is-selected').each(function() {
-          self.selectNode($('a:first', this), true);
+        this.element.find('li').each(function() {
+          self.setNodeStatus($('a:first', this));
         });
       },
 
@@ -208,7 +211,8 @@
       },
 
       setTreeIcon: function(svg, icon) {
-        var iconStr = icon.replace('icon-','');
+        // Replace all "icon-", "hide-focus", "\s? - all spaces if any" with nothing
+        var iconStr = icon.replace(/icon-|hide-focus|\s?/gi, '');
         svg.changeIcon(iconStr);
       },
 
@@ -302,13 +306,36 @@
 
       //Set a node as the selected one
       selectNode: function (node, focus) {
+        var self = this;
+
         if (node.length === 0) {
           return;
         }
 
-        var self = this,
-          aTags = $('a', this.element);
+        // Possibly Call the onBeforeSelect
+        var result;
+        if (typeof self.settings.onBeforeSelect === 'function') {
 
+          result = self.settings.onBeforeSelect(node);
+
+          if (result.done && typeof result.done === 'function') { // A promise is returned
+            result.done(function(continueSelectNode) {
+              if (continueSelectNode) {
+                self.selectNodeFinish(node, focus);
+              }
+            });
+          } else if (result) { // Boolean is returned instead of a promise
+            self.selectNodeFinish(node, focus);
+          }
+
+        } else { // No Callback specified
+          self.selectNodeFinish(node, focus);
+        }
+      },
+
+      selectNodeFinish: function(node, focus) {
+        var self = this;
+        var aTags = $('a', this.element);
         aTags.attr('tabindex', '-1');
         node.attr('tabindex', '0');
 
@@ -424,8 +451,11 @@
             }
 
             self.isAnimating = true;
-            self.unSelectedNode(node.parent().find('li.is-selected'), false);
-            node.find('.is-selected').removeClass('is-selected');
+
+            if (!self.isMultiselect) {
+              self.unSelectedNode(node.parent().find('li.is-selected'), false);
+              node.removeClass('is-selected');
+            }
 
             next.one('animateclosedcomplete', function() {
               next.removeClass('is-open');
@@ -504,7 +534,7 @@
         //Key Behavior as per: http://access.aol.com/dhtml-style-guide-working-group/#treeview
         var self = this;
         //on click give clicked element 0 tabindex and 'aria-selected=true', resets all other links
-        this.element.on('click.tree', 'a', function (e) {
+        this.element.on('click.tree', 'a:not(.is-clone)', function (e) {
           var target = $(this),
             parent = target.parent();
           if (!target.is('.is-disabled, .is-loading')) {
@@ -823,15 +853,12 @@
       //Sync a node with its dataset 'record'
       syncNode: function (node) {
         var entry = {},
-          self = this;
+          self = this,
+          jsonData = node.data('jsonData');
 
         entry.node = node;
         entry.id = node.attr('id');
         entry.text = node.find('.tree-text').text();
-
-        if (node.data('jsonData')) {
-          entry.extra = node.data('jsonData').extra;
-        }
 
         if (node.hasClass('is-open')) {
           entry.open = true;
@@ -861,6 +888,11 @@
 
             entry.children.push(self.syncNode(tag));
           });
+        }
+
+        if (jsonData) {
+          delete jsonData.selected;
+          entry = $.extend({}, jsonData, entry);
         }
 
         node.data('jsonData', entry);
@@ -1130,8 +1162,314 @@
 
       },
 
+      // Create sortable
+      createSortable: function() {
+        if (!this.settings.sortable) {
+          return;
+        }
+
+        var self = this,
+          clone, interval, doDrag;
+
+        self.targetArrow = self.element.prev('.tree-drag-target-arrow');
+        self.linkSelector = 'a:not(.is-dragging-clone, .is-disabled)';
+
+        if (!self.targetArrow.length) {
+          $('<div class="tree-drag-target-arrow"></div>').insertBefore(self.element);
+          self.targetArrow = self.element.prev('.tree-drag-target-arrow');
+        }
+
+        function isReady() {
+          // Make sure all dynamic nodes sync
+          if (!self.loading) {
+            clearInterval(interval);
+
+            $(self.linkSelector, self.element).each(function() {
+              var a = $(this);
+
+              // Don't drag with folder icon, save for toggle nodes
+              a.on('mousedown.tree', function(e) {
+                e.preventDefault();
+                doDrag = (e.which === 3) ? false : // 3 - Right mouse button clicked
+                  ($(e.target).is('.icon') ? !a.parent().is('.folder') : true);
+              })
+
+              // Invoke drag
+              .drag({
+                clone: true,
+                cloneAppentTo: a.closest('li'),
+                clonePosIsFixed: true
+              })
+
+              // Drag start =======================================
+              .on('dragstart.tree', function (e, pos, thisClone) {
+                if (!thisClone || !doDrag) {
+                  a.removeClass('is-dragging');
+                  if (thisClone) {
+                    thisClone.remove();
+                  }
+                  return;
+                }
+                clone = thisClone;
+                clone.removeAttr('id').addClass('is-dragging-clone');
+                clone.find('.tree-checkbox, .tree-badge').remove();
+
+                self.sortable = {
+                  // Do not use index from each loop, get updated index on drag start
+                  startIndex: $(self.linkSelector, self.element).index(a),
+                  startNode: a,
+                  startIcon: $('svg.icon-tree', a).getIconName(),
+                  startUl: a.closest('ul'),
+                  startFolderNode: a.closest('ul').prev('a'),
+                  startWidth: a.outerWidth()
+                };
+
+                e.preventDefault();
+                e.stopImmediatePropagation();
+              })
+
+              // While dragging ===================================
+              .on('drag.tree', function (e, pos) {
+                if (!clone) {
+                  return;
+                }
+                clone[0].style.left = pos.left + 'px';
+                clone[0].style.top = pos.top + 'px';
+                clone[0].style.opacity = '1';
+                self.setDragOver(clone, pos);
+              })
+
+              // Drag end =========================================
+              .on('dragend.tree', function (e, pos) {
+                self.targetArrow.hide();
+                $(self.linkSelector, self.element).removeClass('is-over');
+
+                if (!clone || !self.sortable.overDirection) {
+                  return;
+                }
+                clone[0].style.left = pos.left + 'px';
+                clone[0].style.top = pos.top + 'px';
+
+                var start = self.sortable.startNode.parent(),
+                  end = self.sortable.overNode.parent();
+
+                // Over
+                if (self.sortable.overDirection === 'over') {
+                  if (!end.is('.folder')) {
+                    self.convertFileToFolder(self.sortable.overNode);
+                  }
+                  $('ul:first', end).append(start);
+                  if (!end.is('.is-open')) {
+                    self.toggleNode(self.sortable.overNode);
+                  }
+                }
+
+                // Up
+                else if (self.sortable.overDirection === 'up') {
+                  start.insertBefore(end);
+                }
+                // Down
+                else if (self.sortable.overDirection === 'down') {
+                  if (end.is('.is-open')) {
+                    $('ul:first', end).prepend(start);
+                  }
+                  else {
+                    start.insertAfter(end);
+                  }
+                }
+
+                // Restore file type
+                if ($('li', self.sortable.startUl).length === 0 &&
+                  !!self.sortable.startFolderNode.data('oldData') &&
+                    self.sortable.startFolderNode.data('oldData').type === 'file') {
+                  self.convertFolderToFile(self.sortable.startFolderNode);
+                }
+
+                // Sync dataset and ui
+                self.syncDataset(self.element);
+                if (self.isMultiselect) {
+                  self.initSelected();
+                }
+
+              });
+            });
+
+          }
+        }
+        // Wait for make sure all dynamic nodes sync
+        interval = setInterval(isReady, 10);
+      },
+
+      // Set actions while drag over
+      setDragOver: function(clone, pos) {
+        var self = this,
+          treeRec = self.element[0].getBoundingClientRect(),
+          extra = 20,
+          exMargin, isParentsStartNode, isBeforeStart, isAfterSttart,
+          li, a, ul, links, rec, i, l, left, top, direction, doAction,
+
+          // Set as out of range
+          outOfRange = function() {
+            self.sortable.overNode = null;
+            self.sortable.overIndex = null;
+            self.sortable.overDirection = null;
+
+            self.targetArrow.hide();
+            self.setTreeIcon($('svg.icon-tree', clone), 'icon-cancel');
+          };
+
+        // Moving inside tree
+        if (pos.top > (treeRec.top - extra) &&
+            pos.top < (treeRec.bottom + extra) &&
+            pos.left > (treeRec.left - extra - self.sortable.startWidth) &&
+            pos.left < (treeRec.left + treeRec.height + extra)) {
+
+          links = $(self.linkSelector, self.element);
+          extra = 2;
+
+          for (i = 0, l = links.length; i < l; i++) {
+            direction = null;
+            rec = links[i].getBoundingClientRect();
+
+            // Moving on/around node range
+            if (pos.top > rec.top - extra && pos.top < rec.bottom + extra) {
+              a = $(links[i]);
+
+              // Moving on/around node has parents as same node need to rearrange
+              // Cannot rearrange parents to child
+              isParentsStartNode = !!a.parentsUntil(self.element, '.folder')
+                .filter(function() {
+                  return $('a:first', this).is(self.sortable.startNode);
+                }).length;
+              if (isParentsStartNode) {
+                outOfRange();
+                continue;
+              }
+
+              li = a.parent();
+              left = rec.left;
+              ul = a.closest('ul');
+              exMargin = parseInt(li[0].style.marginTop, 10) > 0 ? 2 : 0;
+              isBeforeStart = ((i-1) === self.sortable.startIndex && ul.is(self.sortable.startUl));
+              isAfterSttart = ((i+1) === self.sortable.startIndex && ul.is(self.sortable.startUl));
+              links.removeClass('is-over');
+
+              // Apply actions
+              doAction = function() {
+                if (!direction) {
+                  outOfRange();
+                  return;
+                }
+
+                // Reset icon
+                self.setTreeIcon($('svg.icon-tree', clone), self.sortable.startIcon);
+
+                // Over
+                if (direction === 'over') {
+                  self.targetArrow.hide();
+                  if (!a.is('.is-disabled')) {
+                    a.addClass('is-over');
+                  }
+                }
+                // Up -or- Down
+                else {
+                  links.removeClass('is-over');
+                  top = (direction === 'up') ?
+                    (rec.top - 1.5 - (li.is('.is-active') ? 3 : 0)) :
+                    (rec.bottom + (li.next().is('.is-active') ? -1 : 1.5) + exMargin);
+                  self.targetArrow[0].style.left = left + 'px';
+                  self.targetArrow[0].style.top = top + 'px';
+                  self.targetArrow.show();
+                }
+
+                // Set changes
+                self.sortable.overNode = a;
+                self.sortable.overIndex = i;
+                self.sortable.overDirection = direction;
+              };
+
+              // Set moveing directions
+              if (i !== self.sortable.startIndex) {
+                // If hover on link
+                if (pos.left > rec.left - extra - self.sortable.startWidth &&
+                  pos.left < rec.right + extra) {
+                  if (!isBeforeStart && pos.top < rec.top) {
+                    direction = 'up';
+                  }
+                  else if (!isAfterSttart && pos.top > rec.top + (extra * 2)) {
+                    direction = 'down';
+                  }
+                  else {
+                    direction = 'over';
+                  }
+                }
+                // Not hover on link
+                else {
+                  if (!isBeforeStart && pos.top < rec.top) {
+                    direction = 'up';
+                  }
+                  else if (!isAfterSttart) {
+                    direction = 'down';
+                  }
+                }
+              }
+              doAction(direction);
+            }
+          }
+
+        }
+        else {
+          // Out side from tree area
+          outOfRange();
+        }
+      },
+
+      // Convert file node to folder type
+      convertFileToFolder: function(node) {
+        var newFolder = $('<ul role="group"></ul>'),
+          oldData = {
+            icon: $('svg.icon-tree', node).getIconName(),
+            type: 'file'
+          };
+        if (node.is('[class^="icon"]')) {
+          var iconClass = node.attr('class').replace(' hide-focus', '').replace(' is-selected', '');
+          oldData.iconClass = iconClass;
+          node.removeClass(iconClass);
+        }
+        node.data('oldData', oldData);
+        node.parent('li').addClass('folder').append(newFolder);
+        this.setTreeIcon($('svg.icon-tree', node), this.settings.folderIconClosed);
+      },
+
+      // Convert folder node to file type
+      convertFolderToFile: function(node) {
+        var parent = node.parent('.folder');
+        parent.removeClass('folder is-open');
+        $('ul:first', parent).remove();
+        if (parent.length) {
+          this.setTreeIcon(
+            $('svg.icon-tree', node),
+            node.data('oldData') ? node.data('oldData').icon : 'tree-node'
+          );
+          if (node.data('oldData') && node.data('oldData').iconClass) {
+            node.addClass(node.data('oldData').iconClass);
+          }
+          node.data('oldData', null);
+        }
+      },
+
       // Tree Related Functions
       destroy: function() {
+        if (this.settings.sortable) {
+          this.element.find('a').each(function() {
+            var a = $(this), dragApi = a.data('drag');
+            a.off('mousedown.tree');
+            if (!!dragApi && !!dragApi.destroy) {
+              dragApi.destroy();
+            }
+          });
+          this.element.prev('.tree-drag-target-arrow').remove();
+        }
         this.element.removeData(pluginName);
         this.element.off('contextmenu.tree updated.tree click.tree focus.tree keydown.tree keypress.tree').empty();
       }

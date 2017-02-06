@@ -308,7 +308,9 @@
       },
 
       setOpenWidth: function() {
-        this.inputWrapper.css('width', this.openWidth);
+        if (this.inputWrapper[0]) {
+          this.inputWrapper[0].style.width = this.openWidth;
+        }
       },
 
       calculateOpenWidth: function() {
@@ -443,7 +445,7 @@
         if (this.inputWrapper.parent().is(this.containmentParent)) {
           if (!(this.elemBeforeWrapper instanceof $) || !this.elemBeforeWrapper.length) {
             this.inputWrapper.prependTo(this.toolbarParent.children('.buttonset'));
-          } else {          
+          } else {
             this.inputWrapper.detach().insertAfter(this.elemBeforeWrapper);
           }
 

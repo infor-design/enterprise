@@ -166,7 +166,7 @@
 
         var left = index > 0 ? ((Locale.isRTL() ? '' : '-') + (index * 100) +'%') : 0;
         this.controlButtons.removeClass('is-active').eq(index).addClass('is-active');
-        this.container.css('left', left);
+        this.container[0].style.left = left;
 
         // Set focus
         if (this.isFocus) {
@@ -221,16 +221,20 @@
       showCollapsedView: function() {
         this.isActive = true;
         this.element.addClass('is-active');
-        this.container.css('width', (100 * this.slides.length) +'%');
-        this.slidesJQ.css('width', (100 / this.slides.length) +'%');
+        this.container[0].style.width = (100 * this.slides.length) +'%';
+        for (var i = 0, l = this.slidesJQ.length; i < l; i++) {
+          this.slidesJQ[i].style.width = (100 / this.slides.length) +'%';
+        }
         this.show();
       },
 
       // Make un-active
       showExpandedView: function() {
         this.isActive = false;
-        this.element.removeClass('is-active').css('width', '');
-        this.container.css({'width': '', 'left': ''});
+        this.element.removeClass('is-active');
+        this.element[0].style.width = '';
+        this.container[0].style.width = '';
+        this.container[0].style.left = '';
       },
 
       // Initialize active slide

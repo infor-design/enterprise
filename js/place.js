@@ -173,10 +173,10 @@
         });
 
         if (placementObj.height) {
-          this.element.height(placementObj.height);
+          this.element[0].style.height = placementObj.height + (/(px|%)/i.test(placementObj.height + '') ? '' : 'px');
         }
         if (placementObj.width) {
-          this.element.width(placementObj.width);
+          this.element[0].style.width = placementObj.width + (/(px|%)/i.test(placementObj.width + '') ? '' : 'px');
         }
       },
 
@@ -185,8 +185,8 @@
       // will use the pre-defined settings.
       place: function(placementObj) {
         var curr = [
-          this.element.css('left'),
-          this.element.css('top')
+          this.element[0].style.left,
+          this.element[0].style.top,
         ];
 
         // Cancel placement with return:false; from a "beforeplace" event
@@ -408,7 +408,8 @@
         var containerBleed = this.settings.bleedFromContainer,
           container = this.getContainer(placementObj),
           containerIsBody = container.length && container[0] === document.body,
-          rect = this.element[0].getBoundingClientRect(),
+          BoundingRect = this.element[0].getBoundingClientRect(),
+          rect = {},
           containerRect = container ? container[0].getBoundingClientRect() : {},
           // NOTE: Usage of $(window) instead of $('body') is deliberate here - http://stackoverflow.com/a/17776759/4024149.
           // Firefox $('body').scrollTop() will always return zero.
@@ -417,6 +418,13 @@
           windowH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
           windowW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
           d;
+
+          rect.width = BoundingRect.width;
+          rect.height = BoundingRect.height;
+          rect.top = BoundingRect.top;
+          rect.right = BoundingRect.right;
+          rect.bottom = BoundingRect.bottom;
+          rect.left = BoundingRect.left;
 
         function getBoundary(edge) {
           switch(edge) {
@@ -438,8 +446,8 @@
           var newWidth = rect.width - d;
           placementObj.width = newWidth;
 
-          this.element.css('width', newWidth);
-          rect = this.element[0].getBoundingClientRect(); // reset the rect because the size changed
+          this.element[0].style.width = newWidth + 'px';
+          rect.width = newWidth; // reset the rect because the size changed
         }
 
         // If element height is greater than window height, shrink to fit
@@ -449,8 +457,8 @@
           var newHeight = rect.height - d;
           placementObj.height = newHeight;
 
-          this.element.css('height', newHeight);
-          rect = this.element[0].getBoundingClientRect(); // reset the rect because the size changed
+          this.element[0].style.height = newHeight + 'px';
+          rect.height = newHeight; // reset the rect because the size changed
         }
 
         // build conditions
@@ -707,12 +715,10 @@
 
       // Clears the old styles that may be present
       clearOldStyles: function() {
-        this.element.css({
-          'left': '',
-          'top': '',
-          'width': '',
-          'height': ''
-        });
+        this.element[0].style.left = '';
+        this.element[0].style.top = '';
+        this.element[0].style.width = '';
+        this.element[0].style.height = '';
 
         var os = this.originalStyles;
         if (os) {
@@ -768,6 +774,9 @@
         }
         if (target.is('.searchfield-category-button')) {
           target = target.find('.icon.icon-dropdown');
+        }
+        if (target.is('.colorpicker-editor-button')) {
+          target = target.find('.trigger .icon');
         }
 
         // reset if we borked the target

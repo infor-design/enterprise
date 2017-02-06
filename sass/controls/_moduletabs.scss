@@ -131,26 +131,7 @@
       color: $module-tabs-active-text-color;
     }
 
-    /*
-    // NOTE: Remove the comments in order to hide the X on anything but hover/focus.
-    // This creates weird visual padding on small tabs.
-    &.dismissible {
-      .icon {
-        @include transition(opacity .25s ease);
-        opacity: 0;
-      }
-
-      &:hover,
-      &.is-focused {
-        .icon {
-          opacity: 1;
-        }
-      }
-    }
-    */
-
-    &:hover/*,
-    &.is-focused*/ {
+    &:hover {
       background-color: $module-tabs-hover-bg-color;
       color: $module-tabs-hover-text-color;
     }
@@ -198,14 +179,12 @@
   }
 
   .add-tab-button {
-    min-width: 44px;
-
-    a {
-      @include font-size(24);
-      font-weight: normal;
-      padding-bottom: 5px;
-      padding-top: 1px;
-    }
+    @include font-size(24);
+    font-weight: normal;
+    height: 34px;
+    padding-bottom: 5px;
+    padding-top: 1px;
+    width: 44px;
   }
 
   .tab-focus-indicator {
@@ -218,13 +197,17 @@
   }
 
   .tab-more {
+    width: 120px;
+  }
+
+  .tab-more,
+  .add-tab-button {
     @include font-size(12);
     border-left: 1px solid $module-tabs-x-border-color;
     color: $module-tabs-inactive-text-color;
     font-weight: bold;
     padding: 8px 10px;
     text-align: center;
-    width: 120px;
 
     .icon {
       fill: $module-tabs-inactive-text-color;
@@ -244,7 +227,6 @@
     }
 
     &:hover,
-    //&.is-focused,
     &.is-open {
       background-color: $module-tabs-hover-bg-color;
       color: $module-tabs-hover-text-color;
@@ -378,10 +360,26 @@
     width: 100%;
   }
 
+  &.has-add-button {
+    .tab-list {
+      width: calc(100% - 45px);
+    }
+
+    .add-tab-button {
+      right: 0;
+      top: 0;
+    }
+  }
+
   // Change state when the spillover button is necessary
   &.has-more-button {
     .tab-list {
       width: calc(100% - 121px);
+    }
+
+    .tab-more {
+      right: 0;
+      top: 0;
     }
 
     &.has-toolbar {
@@ -390,8 +388,20 @@
       }
     }
 
-    .tab-more {
-      visibility: visible;
+    &.has-add-button {
+      .tab-list {
+        width: calc(100% - 166px);
+      }
+
+      .tab-more {
+        right: 45px;
+        top: 0;
+      }
+
+      .add-tab-button {
+        right: 0;
+        top: 0;
+      }
     }
   }
 
@@ -560,6 +570,55 @@
 
 .masthead + .tab-container.module-tabs {
   border-top: 1px solid transparent;
+}
+
+//RTL Styles
+html[dir='rtl'] {
+  .tab-container.module-tabs {
+    &.has-add-button {
+
+      .add-tab-button {
+        left: 0;
+        right: auto;
+      }
+    }
+
+    // Change state when the spillover button is necessary
+    &.has-more-button {
+      .tab-more {
+        left: 0;
+        right: auto;
+      }
+
+      &.has-add-button {
+        .tab-more {
+          left: 45px;
+          right: auto;
+        }
+
+        .add-tab-button {
+          left: 0;
+          right: auto;
+        }
+      }
+    }
+
+    .icon.app-header {
+      left: auto;
+      right: -6px;
+    }
+
+    .tab.dismissible {
+      a {
+        padding: 10px 0 10px 32px;
+      }
+
+      .icon {
+        left: 10px;
+        right: auto;
+      }
+    }
+  }
 }
 
 // Firefox has weird padding on the Add Tabs Button and Application Menu Triggers without this bit of code

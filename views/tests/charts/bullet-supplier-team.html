@@ -1,12 +1,13 @@
 
 <div class="row">
-    <div class="full column center" style="height: 110px">
+    <div class="full column center" style="height: 1110px">
       <div id="bullet-example3" class="chart-container">
       </div>
     </div>
 </div>
 
 <script>
+$('body').on('initialized', function () {
 
     //Example 3
      var dataset3 = [{
@@ -19,5 +20,5 @@
    //Note: Alert Colors: ['#80ce4d', '#ff9426', '#e84f4f']
    $('#bullet-example3').chart({type: 'bullet', dataset: dataset3});
 
+});
 </script>
-

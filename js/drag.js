@@ -23,6 +23,7 @@
       defaults = {
         axis: null, //Constrains dragging to either axis. Possible values: 'x', 'y'
         clone: false, //Clone the object - Useful so you dont have to abs position
+        cloneCssClass: 'is-clone', // Css class added to clone element
         clonePosIsFixed: false, //Clone object use as css style "position: fixed"
         cloneAppentTo: null, //AppentTo selector for clone ['body'|'parent'|'jquery object'] default:'body'
         containment: false, //Constrains dragging to within the bounds of the specified element or region. Possible values: "parent", "document", "window".
@@ -154,7 +155,9 @@
             if (settings.cloneAppentTo === 'parent') {
               settings.cloneAppentTo = self.element.parent();
             }
-            self.clone.appendTo(settings.cloneAppentTo || 'body');
+            self.clone
+              .addClass(settings.cloneCssClass)
+              .appendTo(settings.cloneAppentTo || 'body');
 
           }
 
@@ -233,7 +236,7 @@
           if (!this.upperXLimit) {
             this.upperXLimit = this.container.width() - this.element.outerWidth() + settings.containmentOffset.left;
           }
-          if (!this.upperXLimit) {
+          if (!this.upperYLimit) {
             this.upperYLimit = this.container.height() - this.element.outerHeight() + settings.containmentOffset.top;
           }
           if (css.top > this.upperYLimit) {
@@ -264,9 +267,15 @@
 
           // Caching this so drag is not jaggie
           if (!this.obstacle) {
+            var obstacleOffset = this.obstacle.offset();
             this.obstacle = $(settings.obstacle).not(this.element);
-            this.constraints = {top: this.obstacle.offset().top, left: this.obstacle.offset().left,
-              bottom: this.obstacle.offset().top + this.obstacle.outerHeight(), right: this.obstacle.offset().left + this.obstacle.outerWidth()};
+
+            this.constraints = {
+              top: obstacleOffset.top,
+              left: obstacleOffset.left,
+              bottom: obstacleOffset.top + this.obstacle.outerHeight(),
+              right: obstacleOffset.left + this.obstacle.outerWidth()
+            };
           }
 
           if (!movingRight && self.originalPos.left > this.constraints.left && css.left <= this.constraints.right) {
@@ -280,11 +289,14 @@
           //TODO: Moving Down
         }
 
-        if (this.clone) {
-          this.clone.css(css);
-        } else {
-          this.element.css(css);
-        }
+        var applyCssStyle = function(el, css, prop) {
+          if (typeof css[prop] !== 'undefined') {
+            el[0].style[prop] = css[prop] +'px';
+          }
+        };
+        applyCssStyle((this.clone || this.element), css, 'top');
+        applyCssStyle((this.clone || this.element), css, 'left');
+
         this.element.trigger('drag', css);
       },
 

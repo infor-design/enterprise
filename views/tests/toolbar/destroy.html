@@ -1,0 +1,79 @@
+<div class="row">
+  <div class="twelve columns">
+
+    <div id="test-toolbar" data-init="false" class="toolbar" role="toolbar">
+      <div class="title">
+        Common Toolbar
+      </div>
+      <div class="buttonset">
+        <label class="audible" for="common-toolbar-searchfield">Keyword Search</label>
+        <input id="common-toolbar-searchfield" name="common-toolbar-searchfield" class="searchfield" />
+
+        <button type="button" id="text-button-1" class="btn">
+          <span>Text Button #1</span>
+        </button>
+
+        <button type="button" id="text-button-2" class="btn">
+          <span>Text Button #2</span>
+        </button>
+
+        <button type="button" id="text-button-3" class="btn">
+          <span>Text Button #3</span>
+        </button>
+
+        <button type="button" id="category-button" class="btn">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-filter"></use>
+          </svg>
+          <span>Category</span>
+        </button>
+
+        <button type="button" id="settings-menu-button" class="btn-menu">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-settings"></use>
+          </svg>
+          <span>Settings</span>
+        </button>
+        <ul class="popupmenu is-selectable has-icons">
+          <li><a href="#" id="setting-1">Setting #1</a></li>
+          <li><a href="#" id="setting-2">Setting #2</a></li>
+          <li><a href="#" id="setting-3">Setting #3</a></li>
+        </ul>
+      </div>
+
+      <div class="more">
+        <button type="button" class="btn-actions">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+          <span class="audible">More Actions</span>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#" id="existing-option-1">Existing Option #1</a></li>
+          <li><a href="#" id="existing-option-2">Existing Option #2</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <button type="button" class="btn" type="button" id="destroy">Destroy</button>
+  </div>
+</div>
+
+<script>
+  var element = $('#test-toolbar').toolbar();
+
+  $('#destroy').on('click', function () {
+    if (element.data('toolbar')) {
+      element.data('toolbar').destroy();
+      $(this).text('Invoke');
+    } else {
+      element.toolbar();
+      $(this).text('Destroy');
+    }
+  });
+</script>

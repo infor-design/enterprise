@@ -1,0 +1,131 @@
+<div class="row top-padding">
+  <div class="six columns">
+
+    <h2>Toolbar: Menu Button Disabled States</h2>
+    <p><a class="hyperlink" href="http://jira/browse/SOHO-5410" target="_blank">Related JIRA Ticket</a>.  When a menubutton exists on a toolbar, its disabled state for itself, as well as its menu items, need to be propagated to the Toolbar's spillover menu.  When using the buttons below, enabling/disabling the menu button and its submenu should be properly duplicated by the Toolbar's spillover menu.</p>
+    <p>It may be necessary to resize this page to see the results of clicking the disabled/enabled buttons.</p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <button type="button" id="disable-btn" class="btn-secondary">
+        <span>Disable Entire MenuButton</span>
+      </button>
+
+      <button type="button" id="enable-btn" class="btn-secondary" disabled>
+        <span>Enable Entire MenuButton</span>
+      </button>
+    </div>
+
+    <div class="field">
+      <button type="button" id="disable-item" class="btn-secondary">
+        <span>Disable Menu Items</span>
+      </button>
+
+      <button type="button" id="enable-item" class="btn-secondary" disabled>
+        <span>Enable Menu Items</span>
+      </button>
+    </div>
+
+    <div class="field">
+      <button type="button" id="disable-submenu-item" class="btn-secondary">
+        <span>Disable Submenu Items</span>
+      </button>
+
+      <button type="button" id="enable-submenu-item" class="btn-secondary" disabled>
+        <span>Enable Submenu Items</span>
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <div class="toolbar">
+      <div class="title">
+        Toolbar
+      </div>
+
+      <div class="buttonset">
+        <button type="button" id="button1" class="btn">
+          <span>Space Filler Button 1</span>
+        </button>
+
+        <button type="button" id="button2" class="btn">
+          <span>Space Filler Button 2</span>
+        </button>
+
+        <button type="button" id="button3" class="btn-menu">
+          <span>Menu Button 3</span>
+        </button>
+        <ul class="popupmenu" id="test-menu">
+          <li id="test-item-one"><a class="level-one" href="#">Item 1</a></li>
+          <li id="test-item-two"><a class="level-one" href="#">Item 2</a></li>
+          <li id="test-item-three">
+            <a class="static" href="#">Sub Menu</a>
+            <ul id="test-submenu" class="popupmenu">
+              <li id="test-subitem-one"><a class="level-two" href="#">Sub Item 1</a></li>
+              <li id="test-subitem-two"><a class="level-two" href="#">Sub Item 2</a></li>
+              <li id="test-subitem-three"><a class="level-two" href="#">Sub Item 3</a></li>
+              <li id="test-subitem-four"><a class="level-two" href="#">Sub Item 4</a></li>
+              <li id="test-subitem-five"><a class="level-two" href="#">Sub Item 5</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  var menu = $('#test-menu');
+
+  $('#disable-btn').on('click', function () {
+    $('#button3').prop('disabled', true);
+
+    $(this).prop('disabled', true);
+    $('#enable-btn').prop('disabled', false);
+  });
+
+  $('#enable-btn').on('click', function () {
+    $('#button3').removeAttr('disabled');
+
+    $(this).prop('disabled', true);
+    $('#disable-btn').prop('disabled', false);
+  });
+
+  $('#disable-item').on('click', function () {
+    $('#test-item-one, #test-item-two, #test-item-three').addClass('is-disabled');
+
+    $(this).prop('disabled', true);
+    $('#enable-item').prop('disabled', false);
+  });
+
+  $('#enable-item').on('click', function () {
+    $('#test-item-one, #test-item-two, #test-item-three').removeClass('is-disabled');
+
+    $(this).prop('disabled', true);
+    $('#disable-item').prop('disabled', false);
+  });
+
+  $('#disable-submenu-item').on('click', function () {
+    $('#test-subitem-one, #test-subitem-two, #test-subitem-three, #test-subitem-four, #test-subitem-five').addClass('is-disabled');
+
+    $(this).prop('disabled', true);
+    $('#enable-submenu-item').prop('disabled', false);
+  });
+
+  $('#enable-submenu-item').on('click', function () {
+    $('#test-subitem-one, #test-subitem-two, #test-subitem-three, #test-subitem-four, #test-subitem-five').removeClass('is-disabled');
+
+    $(this).prop('disabled', true);
+    $('#disable-submenu-item').prop('disabled', false);
+  });
+</script>

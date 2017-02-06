@@ -16,10 +16,11 @@
   $.fn.stepprocess = function(options) {
 
     var pluginName = 'stepprocess',
-        defaults = {
-          dataset: undefined,
-          afterFolderOpen: function() {}
-        };
+      defaults = {
+        dataset: undefined,
+        afterFolderOpen: function() {},
+        beforeSelectStep: null
+      };
 
     /**
      * A Stepped process UI/UX extending the tree control
@@ -28,6 +29,7 @@
      * @param {Object} options
      * @param {Object} [options.dataset] - Initial object to create the tree
      * @param {function(event)} [options.afterFolderOpen] - After folder open event callback
+     * @param {function(event)|Promise} [options.beforeSelectStep] - On step select callback
      */
     function StepProcess(element, options) {
       this.settings = $.extend({}, defaults, options);
@@ -40,12 +42,19 @@
       /** @private  */
       init: function() {
         var self = this;
-        var $theTree = $('#json-tree').tree({
+
+        var treeParams = {
           dataset: this.settings.dataset,
           useStepUI: true,
           folderIconOpen: 'caret-up',
           folderIconClosed: 'caret-down'
-        });
+        };
+
+        if (typeof self.settings.beforeSelectStep === 'function') {
+          treeParams.onBeforeSelect = self.settings.beforeSelectStep;
+        }
+
+        var $theTree = $('#json-tree').tree(treeParams);
 
         this.theTreeApi = $theTree.data('tree');
 
@@ -120,7 +129,7 @@
             }
           }
 
-          this.theTreeApi.selectNode(nodeToSelect);
+          this.selectStep(nodeToSelect);
 
           // Get a possible folder for the selected node
           var $nodeToSelectFolder = nodeToSelect.next('ul.folder');
@@ -129,7 +138,7 @@
 
             // Make sure the folder opens
             if (!$nodeToSelectFolder.hasClass('is-open')) {
-              this.theTreeApi.toggleNode(nodeToSelect);
+              this.toggleFolder(nodeToSelect);
             }
 
             // Makse sure folder is populated before navigating up into it
@@ -146,40 +155,78 @@
        */
       goToNextStep: function() {
         var selectedNodes = this.theTreeApi.getSelectedNodes();
-        if (selectedNodes.length > 0) {
-          var curNode = selectedNodes[selectedNodes.length - 1].node,
-              nextNode = this.theTreeApi.getNextNode(curNode),
-              $nextNodeFolder = nextNode.next('ul.folder');
 
-          this.theTreeApi.selectNode(nextNode);
+        if (selectedNodes.length === 0) {
+          return false;
+        }
 
-          // If the "next" node is associated to a folder
-          if ($nextNodeFolder) {
+        var curNode = selectedNodes[selectedNodes.length - 1].node,
+            curNodeFolder = curNode.next('ul.folder'),
+            nextNode = this.theTreeApi.getNextNode(curNode),
+            nextNodeFolder = nextNode.next('ul.folder'),
+            nodeToSelect = null,
+            theFolder = null;
 
-            // Make sure we open the folder
-            if (!$nextNodeFolder.hasClass('is-open')) {
-              this.theTreeApi.toggleNode(nextNode);
-            }
+        if (curNodeFolder.length) {
+          // Select the first node of the current folder,
+          // unless its empty, which means nextNode will be the folder's "title"
+          theFolder = curNodeFolder;
+          nodeToSelect = theFolder.children().length ? theFolder.find('a[role="treeitem"]').first() : nextNode;
 
-            // Make sure folder is populated before navigating down into it
-            if ($nextNodeFolder.children().length) {
-              this.goToNextStep();
-            }
-          }
+        } else if (nextNodeFolder.length) {
+          // Select the first node of the next node's folder,
+          // unless its empty, which means nextNode will be the folder's "title"
+          theFolder = nextNodeFolder;
+          nodeToSelect = theFolder.children().length ? theFolder.find('a[role="treeitem"]').first() : nextNode;
+
+        } else {
+          // Neither folders options work so select the next node
+          nodeToSelect = nextNode;
+        }
+
+        this.selectStep(nodeToSelect);
+
+        // Make sure the folder is open if there is one
+        if (theFolder && !theFolder.hasClass('is-open')) {
+          this.toggleFolder(nodeToSelect);
+        }
+
+        // Make sure the parent folder is open if there is one
+        var parentFolder = nodeToSelect.closest('ul.folder');
+        if (parentFolder && !parentFolder.hasClass('is-open')) {
+          this.toggleFolder(parentFolder.prev('a'));
         }
       },
 
       /**
-       * Updates a node through the tree.js API
-       * @param  {Object} - node The JSON node to update
-       * @param  {Bool} selectFirstChild - Whether or not to select the first child by default
+       * Select a node
+       * @param {Object} step - The html <a> that controls the folder
        */
-      updateNode: function(node, selectFirstChild) {
-        this.theTreeApi.updateNode(node);
+      selectStep: function(step) {
+        var parentFolder = $(step).closest('ul.folder', 'ul.tree');
 
-        if (selectFirstChild) {
-          this.goToNextStep();
+        if (parentFolder && !parentFolder.hasClass('is-open')) {
+          // If its in a folder, trigger the toggle on the folder title step
+          this.toggleFolder(parentFolder.prev());
         }
+
+        this.theTreeApi.selectNode(step, true);
+      },
+
+      /**
+       * Toggles whether a folder is open or closed
+       * @param {Object} step - The html <a> that controls the folder
+       */
+      toggleFolder: function(step) {
+        this.theTreeApi.toggleNode(step);
+      },
+
+      /**
+       * Updates a node through the tree.js API
+       * @param  {Object} node - The JSON node to update
+       */
+      updateNode: function(node) {
+        this.theTreeApi.updateNode(node);
       }
     };
 

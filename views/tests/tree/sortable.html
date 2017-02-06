@@ -1,0 +1,71 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <ul role="tree" id="addnode-tree" aria-label="Asset Types" class="tree">
+      <li>
+          <a href="#" id="home">Home</a>
+      </li>
+      <li><a href="#" id="about">About Us</a></li>
+      <li class="is-open">
+        <a href="#" id="public">Public Folders</a>
+        <ul class="is-open root">
+          <li class="is-open">
+              <a href="#" id="leadership">Leadership</a>
+              <ul class="is-open">
+                <li>
+                  <a href="#" id="managers" class="icon-tree-image">Managers</a>
+                </li>
+                <li class="is-selected">
+                  <a href="#" id="history" class="my-class">History</a>
+                </li>
+                <li>
+                  <a href="#" id="careers">Careers</a>
+                </li>
+              </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  var elem = $('#addnode-tree').tree({
+    sortable: true
+  });
+
+  //Add at Root
+  var api = elem.data('tree');
+
+  api.addNode({text: 'New Item 1', id: 'new1'});
+  api.addNode({text: 'New Item 2', id: 'new2', "children": [{
+        "id": "node3",
+        "text": "Node 2.1"
+      }, {
+        "id": "node4",
+        "text": "Node 2.2",
+        "children": [{
+          "id": "node5",
+          "text": " Node 2.2.1",
+          "icon": "icon-tree-chart",
+          "children": [{
+            "id": "node6",
+            "text": "Node 2.2.1.1",
+            "icon": "icon-tree-chart"
+          }]
+        }]
+      }]});
+
+  //Add Children to parent ID
+  api.addNode({text: 'New Item 1.2', parent: 'new1', disabled: true});
+  api.addNode({text: 'New Item 1.2', parent: 'new1', id: 'new12'});
+  api.addNode({text: 'New Item 1.2.1', parent: 'new12', id: 'new121'});
+  api.addNode({text: 'New Item 1.2.2', icon: 'icon-tree-image', parent: 'new12'});
+  api.addNode({text: 'Node 2.3', parent: 'new2', id: 'nod23'});
+  api.addNode({text: 'Node 2.3.1', parent: 'nod23', id: 'nod231'});
+  api.addNode({text: 'Node 2.4', parent: 'new2', id: 'nod24'});
+  api.addNode({text: 'New Item 5', parent: 'leadership', id: 'new5'});
+  api.addNode({text: 'New Item 3   <span class="round info badge">5</span>', id: 'new3'});
+
+</script>

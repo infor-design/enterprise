@@ -9,6 +9,9 @@
       </h1>
     </div>
     <div class="buttonset">
+      <button class="btn js-btn-goto-5" type="button">
+        <span>Select step 5</span>
+      </button>
       <button class="btn js-btn-save-changes" type="button">
         <span>Save</span>
       </button>
@@ -116,12 +119,12 @@
             <input id="extra-field-nine" name="extra-field-nine" type="text">
           </div>
 
-           <div class="field">
+          <div class="field">
             <label for="extra-field-ten" class="label">Almost Last Field</label>
             <input id="extra-field-ten" name="extra-field-ten" type="text">
           </div>
 
-           <div class="field">
+          <div class="field">
             <label for="extra-field-eleven" class="label">Last Field</label>
             <input id="extra-field-eleven" name="extra-field-eleven" type="text">
           </div>
@@ -180,54 +183,60 @@
 
 <script type="text/javascript">
 
-  $(function() {
+  $(function () {
 
     var sampleData, ajaxSampleData;
 
     /* jshint ignore:start */
     sampleData = [
-    {
-      "id": "node1",
-      "text": "Node 1",
-      "selected": true,       // !! Default to first one !!
-      "href": '#content1-1',
-      "alertIcon": 'confirm'
-    }, {
-      "id": "node2",
-      "text": "Node 2",
-      "open": false,
-      "selected": false,
-      "focus": false,
-      "alertIcon": 'half-empty-circle',
-      "children": []
-    }, {
-      "id": "node3",
-      "text": "Node 3",
-      "open": false,
-      "selected": false,
-      "alertIcon": 'empty-circle',
-      "children": []
-    }, {
-      "id": "node4",
-      "text": "Node 4",
-      "selected": false,
-      "href": '#content4-1',
-      "alertIcon": 'empty-circle'
-    }];
+      {
+        "id": "node1",
+        "text": "Node 1",
+        "selected": true,       // !! Default to first one !!
+        "href": '#content1-1',
+        "alertIcon": 'confirm'
+      }, {
+        "id": "node2",
+        "text": "Node 2",
+        "open": false,
+        "selected": false,
+        "focus": false,
+        "alertIcon": 'half-empty-circle',
+        "children": []
+      }, {
+        "id": "node3",
+        "text": "Node 3",
+        "open": false,
+        "selected": false,
+        "alertIcon": 'empty-circle',
+        "children": []
+      }, {
+        "id": "node4",
+        "text": "Node 4",
+        "selected": false,
+        "href": '#content4-1',
+        "alertIcon": 'empty-circle'
+      }];
 
     // Add extra sample nodes/data
     stepFunctions.extendSampleData(sampleData);
-
     /* jshint ignore:end */
 
     // Init Tree Steps
     $('.step-process-container').stepprocess({
       'dataset': sampleData,
-      'afterFolderOpen': stepFunctions.afterFolderOpen
+      'beforeSelectStep': stepFunctions.beforeSelectStep
+    });
+
+    // Example button to select a step
+    $('.js-btn-goto-5').click(function (e) {
+      e.preventDefault();
+      var $treeSteps = $('.step-process-container');
+      $treeSteps.data('stepprocess').selectStep($('#node5'));
     });
 
     // Example button save event
-    $('.js-btn-save-changes').click(function(e) {
+    $('.js-btn-save-changes').click(function (e) {
       e.preventDefault();
       $('body').message({
         title: 'Step Saved',
@@ -236,7 +245,7 @@
         message: 'This has been saved.',
         buttons: [{
           text: 'Ok',
-          click: function() {
+          click: function () {
             $(this).modal('close');
           },
           isDefault: true
@@ -248,39 +257,26 @@
   // Step Functions
   var stepFunctions = {
 
-    extendSampleData: function(data) {
-      var $container = $('.step-container');
-      for (var i = 5; i < 20; i++) {
-        data.push({
-          "id": "node" + i,
-          "text": "Node " + i,
-          "selected": false,
-          "href": '#content' + i + '-1',
-          "alertIcon": 'empty-circle'
-        });
-        $container.append('<div id="content' + i + '-1" class="js-step-panel"><h2>Node ' + i + '</h2><p>This is step '+ i +'-1</p></div>')
-      }
-    },
-
-    ajaxGetSubstepsForStep: function(stepId, callback) {
+    ajaxGetSubstepsForStep: function (stepId, callback) {
+      var deferred = $.Deferred();
       var ajaxSampleData = {
         "node2": [
-        {
-          "id": "node21",
-          "text": "Node 2-1",
-          "href": "#content2-1",
-          "alertIcon": 'error'
-        }, {
-          "id": "node22",
-          "text": "Node 2-2",
-          "href": "#content2-2",
-          "alertIcon": 'empty-circle'
-        }, {
-          "id": "node23",
-          "text": "Node 2-3",
-          "href": "#content2-3",
-          "alertIcon": 'empty-circle'
-        }],
+          {
+            "id": "node21",
+            "text": "Node 2-1",
+            "href": "#content2-1",
+            "alertIcon": 'error'
+          }, {
+            "id": "node22",
+            "text": "Node 2-2",
+            "href": "#content2-2",
+            "alertIcon": 'empty-circle'
+          }, {
+            "id": "node23",
+            "text": "Node 2-3",
+            "href": "#content2-3",
+            "alertIcon": 'empty-circle'
+          }],
         "node3": [{
           "id": "node31",
           "text": "Node 3-1",
@@ -293,41 +289,85 @@
           "alertIcon": 'empty-circle'
         }]
       };
-      setTimeout(function() {
+      setTimeout(function () {
         var substeps = ajaxSampleData[stepId];
-        callback(substeps);
+        deferred.resolve(substeps)
       }, 100);
+      return deferred.promise();
+    },
+
+    ajaxCanAccessStep: function () {
+      var deferred = $.Deferred();
+      setTimeout(function () {
+        var canAccess = true;
+        deferred.resolve(canAccess)
+      }, 100);
+      return deferred.promise();
     },
 
 
     // When a folder opens
-    afterFolderOpen: function(e) {
-      var $folder = $(e.target);
-      var step = $folder.prev('a')[0];
-      var stepId = step.id;
+    beforeSelectStep: function (step) {
+      var deferred = $.Deferred();
+      var $step = $(step);
+      var $folder = $step.next('ul.folder');
+      var stepId = step.attr('id');
 
-      // Get subnodes for empty folders
-      if ($folder.children().length === 0) {
+      if ($folder.length && $folder.children().length === 0) {
 
-        stepFunctions.ajaxGetSubstepsForStep(stepId, function(subSteps) {
-
+        // Is a folder, get nodes (unless backend denies due to security)
+        stepFunctions.ajaxGetSubstepsForStep(stepId).done(function (subSteps) {
+          var canAccessStep = subSteps.length > 0;
           var $treeSteps = $('.step-process-container');
 
-          // Call stepprocess api to update the tree node list
-          $treeSteps.data('stepprocess').updateNode({
-            node: $(step),
-            children: subSteps
-          }, true);
+          if (canAccessStep) {
 
-          // Add content panels to coordinate with new sub-steps
-          var $container = $('.step-container');
-          for (var i = 0; i < subSteps.length; i++) {
-            var id = subSteps[i].href.replace('#', '');
-            $container.append('<div id="' + id + '" class="js-step-panel"><h2>' + subSteps[i].text + '</h2></div>');
+          // Call stepprocess api to update the tree node list
+            $treeSteps.data('stepprocess').updateNode({
+              node: $step,
+              children: subSteps
+            });
+
+            // Add content panels to coordinate with new sub-steps
+            var $container = $('.step-container');
+            for (var i = 0; i < subSteps.length; i++) {
+              var id = subSteps[i].href.replace('#', '');
+              $container.append('<div id="' + id + '" class="js-step-panel"><h2>' + subSteps[i].text + '</h2></div>');
+            }
+
+            // Example to automatically select first one after ajax loads steps
+            // $treeSteps.data('stepprocess').selectStep($('#' + subSteps[0].id));
+          } else {
+            // Since folder tried to open, toggle it closed when permission denied.
+            $treeSteps.data('stepprocess').toggleFolder($step);
           }
+
+          deferred.resolve(canAccessStep);
+        });
+
+      } else {
+        // Not a folder, just check security
+        stepFunctions.ajaxCanAccessStep(step).done(function(canAccessStep) {
+          deferred.resolve(canAccessStep);
         });
       }
-    },
-  };
 
+      // Return promise
+      return deferred.promise();
+    },
+
+    extendSampleData: function (data) {
+      var $container = $('.step-container');
+      for (var i = 5; i < 20; i++) {
+        data.push({
+          "id": "node" + i,
+          "text": "Node " + i,
+          "selected": false,
+          "href": '#content' + i + '-1',
+          "alertIcon": 'empty-circle'
+        });
+        $container.append('<div id="content' + i + '-1" class="js-step-panel"><h2>Node ' + i + '</h2><p>This is step ' + i + '-1</p></div>')
+      }
+    }
+  };
 </script>

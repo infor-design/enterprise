@@ -64,13 +64,6 @@
         {{/disabled}}
           <p class="listview-heading">{{name}}</p>
           <p class="listview-subheading">{{client}}</p>
-          {{#status}}
-          <span class="tag {{status.color}}" style="position: absolute; top: calc(50% - 13px); right: 25px; text-align: center; min-width: 80px;">
-            {{status.name}}
-          </span>
-          {{/status}}
-          {{^status}}
-          {{/status}}
         </li>
       {{/dataset}}
     </ul>

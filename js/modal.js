@@ -82,7 +82,7 @@
 
         self.addButtons(this.settings.buttons);
         this.element.appendTo('body');
-        this.element.css({'display':'none'});
+        this.element[0].style.display = 'none';
       },
 
       appendContent: function () {
@@ -169,7 +169,8 @@
               return;
             }
 
-            if (!field.val()) {
+            var isVisible = field[0].offsetParent !== null;
+            if (isVisible && !field.val()) {
               allValid = false;
             }
 
@@ -199,7 +200,10 @@
           var inlineBtns = this.element.find('.modal-buttonset button');
           // Buttons in markup
           btnWidth = 100/inlineBtns.length;
-          inlineBtns.css('width', btnWidth + '%').button();
+          for (var i = 0, l = inlineBtns.length; i < l; i++) {
+            inlineBtns[i].style.width = btnWidth + '%';
+          }
+          inlineBtns.button();
           inlineBtns.not('[data-ng-click], [ng-click], [onclick], :submit').on('click.modal', function (e) {
             if ($(e.target).is('.btn-cancel')) {
               self.isCancelled = true;
@@ -293,7 +297,7 @@
           });
 
           if (!isPanel) {
-            btn.css('width', btnWidth + '%');
+            btn[0].style.width = btnWidth + '%';
           }
 
           btn.button();
@@ -308,7 +312,9 @@
         messageArea = this.element.find('.detailed-message');
         //Set a max width
         var h = $(window).height() - messageArea.offset().top - 150;
-        messageArea.css({'max-height': h, 'overflow': 'auto', 'width': messageArea.width()});
+        messageArea[0].style.maxHeight = h + 'px';
+        messageArea[0].style.overflow = 'auto';
+        messageArea[0].style.width = messageArea.width() + 'px';
       },
 
       open: function () {
@@ -327,7 +333,7 @@
 
         messageArea = self.element.find('.detailed-message');
         if (messageArea.length === 1) {
-          $(window).on('resize.modal-' + this.id, function () {
+          $('body').on('resize.modal-' + this.id, function () {
             self.sizeInner();
           });
           self.sizeInner();
@@ -338,17 +344,17 @@
 
         if (elemCanOpen === false) {
           self.overlay.remove();
-          self.root.css({'display':'none'});
+          self.root[0].style.display = 'none';
           return false;
         }
 
         //Look for other nested dialogs and adjust the zindex.
         $('.modal').each(function (i) {
           var modal = $(this);
-          modal.css('z-index', (1020 + (i + 1)).toString());
+          this.style.zIndex = (1020 + (i + 1)).toString();
 
           if (modal.data('modal') && modal.data('modal').overlay) {
-            modal.data('modal').overlay.css('z-index', (1020 + i).toString());
+            modal.data('modal').overlay[0].style.zIndex = (1020 + i).toString();
           }
         });
 
@@ -391,13 +397,13 @@
         this.removeNoScroll = !this.mainContent.hasClass('no-scroll');
         this.mainContent.addClass('no-scroll');
 
-        $(window).on('resize.modal-' + this.id, function() {
+        $('body').on('resize.modal-' + this.id, function() {
           self.resize();
         });
 
         //Center
-        this.root.css({'display': ''});
-        this.element.css({'display': ''});
+        this.root[0].style.display = '';
+        this.element[0].style.display = '';
 
         setTimeout(function() {
           self.resize();
@@ -496,9 +502,14 @@
 
       resize: function() {
         var calcHeight = ($(window).height()* 0.9)-this.settings.frameHeight, //90% -(180 :extra elements-height)
-          calcWidth = ($(window).width()* 0.9)-this.settings.frameWidth;
+          calcWidth = ($(window).width()* 0.9)-this.settings.frameWidth,
+          wrapper = this.element.find('.modal-body-wrapper');
 
-        this.element.find('.modal-body-wrapper').css({'max-height': calcHeight, 'max-width': calcWidth});
+        if (wrapper.length) {
+          wrapper[0].style.maxHeight = calcHeight + 'px';
+          wrapper[0].style.maxWidth = calcWidth + 'px';
+
+        }
       },
 
       isOpen: function() {
@@ -510,12 +521,13 @@
           dialog = this.element;
 
         $('.modal.is-visible').each(function () {
-          if (max < $(this).css('z-index')) {
-            max = $(this).css('z-index');
+          var zIndex = this.style.zIndex;
+          if (max < zIndex) {
+            max = zIndex;
           }
         });
 
-        return max === dialog.css('z-index');
+        return max === dialog[0].style.zIndex;
       },
 
       getTabbableElements: function() {
@@ -578,7 +590,7 @@
         if (this.mainContent && this.removeNoScroll) {
           this.mainContent.removeClass('no-scroll');
         }
-        $(window).off('resize.modal-' + this.id);
+        $('body').off('resize.modal-' + this.id);
 
         this.element.off('keypress.modal keydown.modal');
         this.element.removeClass('is-visible');
@@ -612,7 +624,7 @@
 
         setTimeout( function() {
           self.overlay.remove();
-          self.root.css({'display':'none'});
+          self.root[0].style.display = 'none';
           self.element.trigger('afterclose');
 
           if (self.settings.trigger === 'immediate' || destroy) {
@@ -636,7 +648,7 @@
           }
 
           if (self.element.find('.detailed-message').length === 1) {
-            $(window).off('resize.modal-' + this.id);
+            $('body').off('resize.modal-' + this.id);
           }
 
           if (self.settings.trigger === 'click') {

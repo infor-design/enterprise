@@ -122,8 +122,8 @@
         this.label = $('<span>'+ this.loadingText +'</span>').appendTo(this.container);
 
         if (this.blockUI) {
-          this.originalPositionProp = this.element.css('position');
-          this.element.css('position', 'relative');
+          this.originalPositionProp = this.element[0].style.position;
+          this.element[0].style.position = 'relative';
           this.overlay = $('<div class="overlay busy is-hidden"></div>').appendTo(this.element);
           this.container.addClass('blocked-ui');
         }
@@ -158,16 +158,20 @@
 
           var rect = target.position(),
             h = target.outerHeight(),
-            w = target.outerWidth();
+            w = target.outerWidth(),
+            elements = this.container.add(this.overlay),
+            setCssStyle = function(el, key, value) {
+              el.style[key] = value + 'px';
+            };
 
-          this.container.add(this.overlay).css({
-            left: rect.left,
-            top: rect.top,
-            bottom: rect.bottom,
-            right: rect.right,
-            height: h,
-            width: w
-          });
+          for (var i = 0, l = elements.length; i < l; i++) {
+            setCssStyle(elements[i], 'left', rect.left);
+            setCssStyle(elements[i], 'top', rect.top);
+            setCssStyle(elements[i], 'bottom', rect.bottom);
+            setCssStyle(elements[i], 'right', rect.right);
+            setCssStyle(elements[i], 'height', h);
+            setCssStyle(elements[i], 'width', w);
+          }
         } else {
           // Normal Operations
           this.container.appendTo(this.element);
@@ -227,11 +231,13 @@
           }
           self.container = undefined;
           self.loader = undefined;
+          self.label = undefined;
           if (self.overlay) {
             self.overlay.remove();
-            self.element.css('position', self.originalPositionProp);
+            self.element[0].style.position = self.originalPositionProp;
             self.originalPositionProp = undefined;
           }
+          self.overlay = undefined;
           self.element.trigger('aftercomplete.busyindicator');
           self.element.off('complete.busyindicator');
         }, 500);

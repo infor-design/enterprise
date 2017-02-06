@@ -147,11 +147,11 @@
         // menu lives <body> tag and we have a <body> element that is tall enough to
         // scroll and is allowed to scroll.
         function scrollableFilter() {
-          var c = $(this).css('overflow');
+          var c = this ? this.style.overflow : null;
           return c !== 'auto' && c !== 'visible' && c !== 'scroll';
         }
         if (this.wrapper.parents().filter(scrollableFilter).length === 0) {
-          this.wrapper.css('position', 'absolute');
+          this.wrapper[0].style.position = 'absolute';
         }
 
         // Wrap submenu ULs in a 'wrapper' to help break it out of overflow.
@@ -209,47 +209,63 @@
       },
 
       markupItems: function () {
-        this.menu.find('li').attr('role', 'presentation');
-        this.menu.find('.popupmenu').parent().parent().addClass('submenu');
-        this.menu.find('.submenu').children('a').each(function(i, value) {
-          var item = $(value);
+        var self = this,
+          lis = this.menu.find('li:not(.heading):not(.separator)'),
+          menuClassName = this.menu[0].className,
+          isTranslatable = Soho.DOM.classNameHas(menuClassName, 'isTranslatable');
 
-          if (item.find('span').length === 0) {
-            var text = $(item).text();
-            item.html('<span>' + text + '</span>');
-          }
+        lis.each(function(i, li) {
+          var a = $(li).children('a')[0], // TODO: do this better when we have the infrastructure
+            span = $(a).children('span')[0],
+            submenuWrapper = $(li).children('.wrapper')[0];
 
-          if (item.find('svg.arrow').length === 0) {
-            item.append($.createIconElement({ classes: ['arrow', 'icon-dropdown'], icon: 'dropdown' }));
-          }
-          item.attr('aria-haspopup', 'true');
+          li.setAttribute('role', 'presentation');
 
-        });
+          a.setAttribute('tabindex', '-1');
+          a.setAttribute('role', (self.settings.ariaListbox ? 'option' : 'menuitem'));
 
-        var anchor = this.menu.find('a'),
-          isTranslatable = this.menu.hasClass('is-translatable');
-
-        anchor.attr('tabindex', '-1').attr('role', (this.settings.ariaListbox ? 'option' : 'menuitem'));
-
-        //Add Checked indication
-        anchor.each(function () {
-          var a = $(this);
-
+          // Should be translated
           if (isTranslatable) {
-            var span = $('span', a);
-            span.text(Locale.translate(span.text()) || span.text());
+            span.innerText = Locale.translate(span.innerText) || span.innerText;
           }
 
-          if (a.parent().hasClass('is-checked')) {
-            a.attr({'role': 'menuitemcheckbox', 'aria-checked': 'true'});
+          // disabled menu items, by prop and by className
+          if (Soho.DOM.classNameHas(li.className, 'is-disabled')) {
+            a.setAttribute('aria-disabled', 'true');
           }
-          if (a.parent().hasClass('is-not-checked')) {
-            a.attr({'role': 'menuitemcheckbox', 'aria-checked': 'false'});
+
+          // menu items that contain submenus
+          if (submenuWrapper instanceof HTMLElement) {
+            li.className += (Soho.DOM.classNameExists(li) ? ' ' : '') + 'submenu';
+          }
+          if (Soho.DOM.classNameHas(li.className, 'submenu')) {
+            var $a = $(a);
+
+            // Add a span
+            if (!span) {
+              a.innerHTML = '<span>' + a.innerHTML + '</span>';
+              span = $a.children('span')[0];
+            }
+
+            if ($a.find('svg.arrow').length === 0) {
+              $a.append($.createIconElement({ classes: ['arrow', 'icon-dropdown'], icon: 'dropdown' }));
+            }
+            a.setAttribute('aria-haspopup', 'true');
+          }
+
+          // is-checked
+          if (Soho.DOM.classNameHas(li.className, 'is-checked')) {
+            a.setAttribute('role', 'menuitemcheckbox');
+            a.setAttribute('aria-checked', true);
+          }
+
+          // is-not-checked
+          if (Soho.DOM.classNameHas(li.className, 'is-not-checked')) {
+            li.className = li.className.replace('is-not-checked', '');
+            a.setAttribute('role', 'menuitemcheckbox');
+            a.removeAttribute('aria-checked');
           }
         });
-
-        this.menu.find('li.is-disabled a, li.disabled a').attr('tabindex', '-1').attr('disabled', 'disabled');
-
       },
 
       handleEvents: function() {
@@ -319,6 +335,7 @@
                 break;
             }
           })
+          .off('updated.popupmenu')
           .on('updated.popupmenu', function(e) {
             e.stopPropagation();
             self.updated();
@@ -348,7 +365,7 @@
             href = anchor.attr('href'),
             selectionResult = [anchor];
 
-          if (anchor.attr('disabled') || anchor.parent().is('.submenu') || anchor.parent().is('.is-disabled')) {
+          if (anchor.prop('disabled') === true || anchor.parent().is('.submenu') || anchor.parent().is('.is-disabled')) {
             //Do not close parent items of submenus on click
             e.preventDefault();
             return;
@@ -629,6 +646,10 @@
           opts.parentXAlignment = (isRTL ? 'left' : 'right');
         }
 
+        function shiftDown() {
+          opts.y = opts.y + 15;
+        }
+
         // Change the alignment of the popupmenu based on certain conditions
         (function doAlignment() {
           if (menuIsSmallerThanTrigger) {
@@ -653,11 +674,19 @@
             return alignRight();
           }
 
+          if (target.is('.tab-more')) {
+            return alignRight();
+          }
+
           if ((target.is('.btn-split-menu, .tab, .searchfield-category-button') &&
             !target.parent('.pager-pagesize').length)) {
               return alignLeft();
             }
         })();
+
+        if (target.parents('.masthead').length > 0) {
+          shiftDown();
+        }
 
         //=======================================================
         // END Temporary stuff until we sort out passing these settings from the controls that utilize them
@@ -676,12 +705,12 @@
         wrapper.data('place').setArrowPosition(e, placementObj, wrapper);
 
         if (placementObj.height) {
-          wrapper.css('height', '');
-          this.menu.height(placementObj.height);
+          wrapper[0].style.height = '';
+          this.menu[0].style.height = (placementObj.height) + (/(px|%)/i.test(placementObj.height + '') ? '' : 'px');
         }
         if (placementObj.width) {
-          wrapper.css('width', '');
-          this.menu.width(placementObj.width);
+          wrapper[0].style.width = '';
+          this.menu[0].style.width = (placementObj.width) + (/(px|%)/i.test(placementObj.width + '') ? '' : 'px');
         }
 
         wrapper.triggerHandler('popupmenuafterplace', [placementObj]);
@@ -730,7 +759,7 @@
         this.position(e);
 
         if (this.element.closest('.header').length > 0) {
-          this.menu.parent().css('z-index', '9001');
+          this.menu.parent()[0].style.zIndex =  '9001';
         }
 
         //Close on Document Click ect..
@@ -751,7 +780,7 @@
           });
 
           if (window.orientation === undefined) {
-            $(window).on('resize.popupmenu', function() {
+            $('body').on('resize.popupmenu', function() {
               self.close();
             });
           }
@@ -812,7 +841,7 @@
 
           menuToClose = $(this).find('ul');
 
-          var isLeft = parseInt(menuToClose.parent('.wrapper').css('left')) < 0,
+          var isLeft = parseInt(menuToClose.parent('.wrapper')[0].style.left) < 0,
             canClose = (tracker - startY) < 3.5;
 
           if (isLeft) {
@@ -823,6 +852,7 @@
             menuToClose.removeClass('is-open').removeAttr('style');
             menuToClose.parent('.wrapper').removeAttr('style');
             menuToClose.parent().parent().removeClass('is-submenu-open');
+            menuToClose = null;
           }
           clearTimeout(timeout);
         });
@@ -843,6 +873,10 @@
       },
 
       showSubmenu: function (li) {
+        if (Soho.DOM.classNameHas(li[0].className, 'is-disabled')) {
+          return;
+        }
+
         var wrapper = li.children('.wrapper').filter(':first');
 
         // Wrap if not wrapped (dynamic menu situation)
@@ -856,21 +890,21 @@
           mainWrapperOffset = li.parents('.popupmenu-wrapper:first').offset().top;
         li.parent().find('.popupmenu').removeClass('is-open').removeAttr('style');
 
-        wrapper.css({
-          'left': li.position().left + li.outerWidth(),
-          'top': (parseInt(li.position().top) - 5) + 'px'
-        }).children('.popupmenu').addClass('is-open');
+        wrapper[0].style.left = (li.position().left + li.outerWidth()) + 'px';
+        wrapper[0].style.top = (parseInt(li.position().top) - 5) + 'px';
+
+        wrapper.children('.popupmenu').addClass('is-open');
 
         //Handle Case where the menu is off to the right
         var menuWidth = menu.outerWidth();
         if ((wrapper.offset().left + menuWidth) > ($(window).width() + $(document).scrollLeft())) {
-          wrapper.css('left', -9999);
+          wrapper[0].style.left = '-9999px';
           menuWidth = menu.outerWidth();
-          wrapper.css('left', li.position().left - menuWidth);
+          wrapper[0].style.left = (li.position().left - menuWidth) + 'px';
           //Did it fit?
           if (wrapper.offset().left < 0) {
             //No. Push the menu's left offset onto the screen.
-            wrapper.css('left', li.position().left - menuWidth + Math.abs(wrapper.offset().left) + 40);
+            wrapper[0].style.left = (li.position().left - menuWidth + Math.abs(wrapper.offset().left) + 40) + 'px';
             menuWidth = menu.outerWidth();
           }
           // Do one more check to see if the right edge bleeds off the screen.
@@ -878,7 +912,7 @@
           if ((wrapper.offset().left + menuWidth) > ($(window).width() + $(document).scrollLeft())) {
             var differenceY = (wrapper.offset().left + menuWidth) - ($(window).width() + $(document).scrollLeft());
             menuWidth = menuWidth - differenceY;
-            menu.width(menuWidth);
+            menu[0].style.width = menuWidth + 'px';
           }
         }
 
@@ -888,19 +922,20 @@
           // First try bumping up the menu to sit just above the bottom edge of the window.
           var bottomEdgeCoord = wrapper.offset().top + menuHeight,
             differenceFromBottomY = bottomEdgeCoord - ($(window).height() + $(document).scrollTop());
-          wrapper.css('top', wrapper.position().top - differenceFromBottomY);
+
+          wrapper[0].style.top = (wrapper.position().top - differenceFromBottomY) + 'px';
 
           // Does it fit?
           if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
             // No. Bump the menu up higher based on the menu's height and the extra space from the main wrapper.
-            wrapper.css('top', ($(window).height() + $(document).scrollTop()) - menuHeight - mainWrapperOffset);
+            wrapper[0].style.top = (($(window).height() + $(document).scrollTop()) - menuHeight - mainWrapperOffset) + 'px';
           }
 
           // Does it fit now?
           if ((wrapper.offset().top - $(document).scrollTop()) < 0) {
             // No. Push the menu down onto the screen from the top of the window edge.
-            wrapper.css('top', 0);
-            wrapper.css('top', (wrapper.offset().top * -1));
+            wrapper[0].style.top = 0;
+            wrapper[0].style.top = (wrapper.offset().top * -1) + 'px';
             menuHeight = menu.outerHeight();
           }
 
@@ -909,7 +944,7 @@
           if ((wrapper.offset().top + menuHeight) > ($(window).height() + $(document).scrollTop())) {
             var differenceX = (wrapper.offset().top + menuHeight) - ($(window).height() + $(document).scrollTop());
             menuHeight = menuHeight - differenceX - 32;
-            menu.height(menuHeight);
+            menu[0].style.height = menuHeight + 'px';
           }
         }
 
@@ -987,7 +1022,8 @@
 
       detach: function () {
         $(document).off('click.popupmenu touchend.popupmenu keydown.popupmenu');
-        $(window).off('scroll.popupmenu resize.popupmenu orientationchange.popupmenu');
+        $(window).off('scroll.popupmenu orientationchange.popupmenu');
+        $('body').off('resize.popupmenu');
         $('.scrollable').off('scroll.popupmenu');
 
         this.menu.off('click.popupmenu touchend.popupmenu touchcancel.popupmenu');
@@ -1011,12 +1047,25 @@
           isCancelled = false;
         }
 
-        var self = this;
+        var self = this,
+          wrapper = this.menu.parent('.popupmenu-wrapper'),
+          menu = this.menu.find('.popupmenu');
 
-        this.menu.removeClass('is-open').attr('aria-hidden', 'true').css({'height': '', 'width': ''});
-        this.menu.parent('.popupmenu-wrapper').css({'left': '-999px', 'height': '', 'width': ''});
+        this.menu.removeClass('is-open').attr('aria-hidden', 'true');
+        this.menu[0].style.height = '';
+        this.menu[0].style.width = '';
+
+        wrapper[0].style.left = '-999px';
+        wrapper[0].style.height = '';
+        wrapper[0].style.width = '';
+
         this.menu.find('.submenu').off('mouseenter mouseleave').removeClass('is-submenu-open');
-        this.menu.find('.popupmenu').css({'left': '', 'top': '', 'height': '', 'width': ''});
+        if (menu[0]) {
+          menu[0].style.left = '';
+          menu[0].style.top = '';
+          menu[0].style.height = '';
+          menu[0].style.width = '';          
+        }
 
         this.menu.find('.is-focused').removeClass('is-focused');
 
@@ -1049,9 +1098,13 @@
         if (this.element.hasClass('btn-actions')) {
           this.menu.parent().removeClass('bottom').find('.arrow').remove();
         }
+
         if (this.originalParent) {
-          this.menu.detach().appendTo(this.originalParent);
+          this.menu.appendTo(this.originalParent);
+        } else {
+          this.menu.insertAfter(this.element);
         }
+
         this.menu.find('.submenu').children('a').each(function(i, item) {
           var text = $(item).find('span').text();
           $(item).find('span, svg').remove();
@@ -1068,13 +1121,19 @@
           }
         }
 
-        unwrapPopup(this.menu);
+        //unwrapPopup(this.menu);
         this.menu.find('.popupmenu').each(function() {
           unwrapPopup($(this));
         });
 
-        $.removeData(this.menu[0], 'trigger');
-        wrapper.remove();
+        if (this.menu[0]) {
+          $.removeData(this.menu[0], 'trigger');
+        }
+
+        if (wrapper.data('place')) {
+          wrapper.data('place').destroy();
+        }
+        wrapper.off().remove();
 
         if (this.matchMedia) {
           this.matchMedia.removeListener(this.mediaQueryListener);

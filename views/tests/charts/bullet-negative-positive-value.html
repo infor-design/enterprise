@@ -1,34 +1,35 @@
 <div class="row">
-	<div class="full column">
-		<h1>Bullet Chart - with negative and positive values</h1>
-	</div>
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Bullet Chart - with negative and positive values</h2>
+        </div>
+        <div class="widget-content">
+					<br><br>
+          <div id="bullet-example1" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
 </div>
 
-<div class="container">
-	<div class="row">
-		<div class="six columns">
+<script>
+  $('body').on('initialized', function () {
 
-			<div>
-				<div class="chart-container" id="bullet-example1"></div>
-			</div>
+    var dataset1 = [{
+      data: [{
+        'title': 'Production Progress',
+        'subtitle': '(pcs)',
+        'ranges': [-100, 100],
+        'measures': [35, 50],
+        'markers': [35]
+      }],
+      barColors: ['#80CE4D', '#E84F4F'], //http://107.170.15.202:4000{{basepath}}controls/colors
+      lineColors: ['#80CE4D', '#000'],
+      markerColors: ['#000']
+    }];
 
-		</div>
-	</div>
-</div>
+    $('#bullet-example1').chart({type: 'bullet', dataset: dataset1});
 
-<script type="text/javascript">
-	var dataset1 = [{
-		data: [{
-			'title': 'Production Progress',
-			'subtitle': '(pcs)',
-			'ranges': [-100, 100],
-			'measures': [35, 50],
-			'markers': [35]
-		}],
-		barColors: ['#80CE4D', '#E84F4F'], //http://107.170.15.202:4000{{basepath}}controls/colors
-		lineColors: ['#80CE4D', '#000'],
-		markerColors: ['#000']
-	}];
-
-	$('#bullet-example1').chart({type: 'bullet', dataset: dataset1});
+  });
 </script>

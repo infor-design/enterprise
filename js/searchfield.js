@@ -442,14 +442,22 @@
         var list = $('#autocomplete-list'),
           val = this.element.val();
 
+        if ($('.more-results', list).length > 0) {
+          return;
+        }
+
         $('<li class="separator" role="presentation"></li>').appendTo(list);
         var more = $('<li role="presentation"></li>').appendTo(list);
         this.moreLink = $('<a href="#" class="more-results" tabindex="-1" role="menuitem"></a>').html('<span>' + Locale.translate('AllResults') + ' "' + val + '"</span>').appendTo(more);
       },
 
       addNoneLink: function() {
-        var list = $('#autocomplete-list'),
-          none = $('<li role="presentation"></li>').appendTo(list);
+        var list = $('#autocomplete-list');
+        if ($('.no-results', list).length > 0) {
+          return;
+        }
+
+        var none = $('<li role="presentation"></li>').appendTo(list);
 
         this.noneLink = $('<a href="#" class="no-results" tabindex="-1" role="menuitem"></a>').html('<span>' + Locale.translate('NoResults') + '</span>').appendTo(none);
       },

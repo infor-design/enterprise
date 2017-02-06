@@ -1,12 +1,40 @@
+## 4.2.5
+Release Date: TBD
+
+### Key New Features
+* Change jQuery from 3.1.0 to 3.1.1 (non breaking)
+* Splitter Speed Improved (using flex box)
+* Tabs Speed Improved
+* Tabs Can be lazy loaded and lazy loaded using Ajax calls.
+
+### Breaking Changes
+* 2017-01-12 - Listview will no longer initialize components in it. You can do this manually using the render method.
+
+### Ui Changes
+- TBD
+
+### Affects
+- Tabs
+- Splitter
+- Listview
+- Datagrid
+
+Jira Release Notes
+http://jira.infor.com/secure/ReleaseNote.jspa?version=27962&styleName=Html&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX%7C7c9b3f18b5f46187205e0d24b1489b80c8b4e1a1%7Clin
+
+
 ## 4.2.4 - Minor Release
-Release Date: 2017-01-04
+Release Date: 2017-01-10
 
 ### Key New Features
 * Datagrid - Reset to Default
 * List Builder
+* Tree Drag and Drop
+* Datepicker Color Coded Legend
 
 ### Breaking Changes
 
+* 2016-12-28 - Moved the "add tab button" in the Tabs component from being inside the tabset, to a floating button, similar to how the More button already works.  This is largely controlled by the component itself but it's possible to pre-define the markup for the entire Tabs component.  In these cases, this should be considered a breaking change and markup should be modified (SOHO-5436).
 * 2016-12-20 - Removed some code in the Mask control that attempted to automatically detect thousands separators in a number mask.  In some cases explicit disabling of thousands separators was being overridden by this setting, so we removed it (SOHO-5445).
 * 2016-12-14 - Moved all the list view examples into seperate files fx listview-status
 * 2016-12-06 - Changed the name of the `deactivate` event listener on Toolbar Searchfield to `collapse`, as well as the _deactivate()_ method to _collapse()_, to avoid conflicts with the native "deactivate" event propogated in IE.  This was causing some focus issues and visual glitches in the Toolbar Searchfield (SOHO-5297).  Additionally, the `activated` event trigger was renamed to `expanded`, as well as the _activate()_ method to _expand()_, for the purposes of keeping nomenclature consistent.
@@ -20,9 +48,12 @@ Release Date: 2017-01-04
 - Auto Complete / Editor (xss)
 - Datepicker (seconds / time)
 - Time Picker
+- Tree
+- List Builder (New)
+- Mask
 
 Jira Release Notes
-http://jira.infor.com/secure/ReleaseNote.jspa?version=27962&styleName=Html&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX%7Cdfaec3f836ea373670a7da5f351101b3cdec20fd%7Clin
+http://jira.infor.com/secure/ReleaseNote.jspa?version=27962&styleName=Html&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX%7C7c9b3f18b5f46187205e0d24b1489b80c8b4e1a1%7Clin
 
 ## 4.2.3 - Minor Release
 Release Date: 2016-12-06

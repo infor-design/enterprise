@@ -7,6 +7,7 @@
 </div>
 
 <script>
+$('body').on('initialized', function () {
 
      var dataset = [{
       data: [{title: 'Schedule Adherence By Quantity',subtitle: '',url: '/metrics/viewCategorySuppReportCard?categoryId=1&histPk=10033&supPk=11001&buySupPk=10002&selectedDate=10033',ranges: [2,4,6],measures: [2]},{title: 'Schedule Adherence By Date',subtitle: '',url: '/metrics/viewCategorySuppReportCard?categoryId=2&histPk=10033&supPk=11001&buySupPk=10002&selectedDate=10033',ranges: [2,4,6],measures: [2]},{title: 'Receiving Accuracy',subtitle: '',url: '/metrics/viewCategorySuppReportCard?categoryId=3&histPk=10033&supPk=11001&buySupPk=10002&selectedDate=10033',ranges: [2,4,6],measures: [2]},{title: 'Premium Freight Charges',subtitle: '',url: '/metrics/viewCategorySuppReportCard?categoryId=4&histPk=10033&supPk=11001&buySupPk=10002&selectedDate=10033',ranges: [2,4,6],measures: [2]},{title: 'Overall Rating',subtitle: '',url: '/metrics/viewSingleSupplierReportCard?histPk=10033&supPk=11001&buySupPk=10002&viewChart=false&selectedDate=10033',ranges: [2,4,6],measures: [2]}],
@@ -18,4 +19,5 @@
    //Note: Alert Colors: ['#80ce4d', '#ff9426', '#e84f4f']
    $('#bullet-example').chart({type: 'bullet', dataset: dataset});
 
+});
 </script>

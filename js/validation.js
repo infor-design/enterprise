@@ -116,7 +116,7 @@
 
           var field = $(this);
           setTimeout(function () {
-            if (field.attr('data-disable-validation') === 'true' || field.hasClass('disable-validation') || field.css('visibility') === 'is-hidden' || !field.is(':visible')) {
+            if (field.attr('data-disable-validation') === 'true' || field.hasClass('disable-validation') || field[0].style.visibility === 'is-hidden' || !field.is(':visible')) {
               return;
             }
 
@@ -145,15 +145,19 @@
         }).on('listopened.validate', function() {
           var field = $(this),
             tooltip = field.data('tooltip');
-            if (tooltip && document.activeElement === field.data('dropdown').searchInput[0]) {
-              tooltip.hide();
-            }
+
+          field.next('.dropdown-wrapper').next('.error-message').hide();
+          if (tooltip && document.activeElement === field.data('dropdown').searchInput[0]) {
+            tooltip.hide();
+          }
         }).on('listclosed.validate', function() {
           var field = $(this),
             tooltip = field.data('tooltip');
-            if (tooltip && document.activeElement !== field.data('dropdown').searchInput[0]) {
-              tooltip.show();
-            }
+
+          field.next('.dropdown-wrapper').next('.error-message').show();
+          if (tooltip && document.activeElement !== field.data('dropdown').searchInput[0]) {
+            tooltip.show();
+          }
         });
 
         selects.filter(function() {
@@ -192,7 +196,7 @@
         var field = $(this);
         if (field.attr('data-validate')) {
 
-          if (field.attr('data-disable-validation') === 'true' || field.hasClass('disable-validation') || field.css('visibility') === 'is-hidden' || !field.is(':visible')) {
+          if (field.attr('data-disable-validation') === 'true' || field.hasClass('disable-validation') || (!field.is('select') && (field[0].style.visibility === 'is-hidden' || !field.is(':visible')))) {
             return true;
           }
 
@@ -228,15 +232,14 @@
 
       if (field.is('input.dropdown') && field.prev().prev('select').attr('data-validate')) {
         validations = field.prev().prev('select').attr('data-validate').split(' ');
-      }
-      if (field.is('input.dropdown') && field.prev().prev('select').attr('data-validation')) {
+      } else if (field.is('input.dropdown') && field.prev().prev('select').attr('data-validation')) {
         validations = field.prev().prev('select').attr('data-validation').split(' ');
-      }
-      if (field.attr('data-validation')) {
+      } else if (field.attr('data-validation')) {
         validations = field.attr('data-validation').split(' ');
-      }
-      if (field.attr('data-validate')) {
+      } else if (field.attr('data-validate')) {
         validations = field.attr('data-validate').split(' ');
+      } else {
+        validations = [];
       }
 
       //Filter out not needed events
@@ -741,7 +744,7 @@
           //Check all required fields filled on modal
 
           var allFilled = true;
-          field.closest('.modal').find('input.required, textarea.required, select.required').each(function () {
+          field.closest('.modal').find('input.required, textarea.required, select.required').not(':hidden').each(function () {
             if (!self.isNotEmpty($(this).val())) {
               allFilled = false;
             }

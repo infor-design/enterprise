@@ -26,6 +26,10 @@ window.Formatters = {
 
     if (typeof value === 'string' && value) {
 
+      if (value === '00000000') { //Means no date in some applications
+        return '&nbsp;';
+      }
+
       if (!col.sourceFormat) {
         value2 = Locale.parseDate(value, (typeof col.dateFormat === 'string' ? {pattern: col.dateFormat}: col.dateFormat));
       } else {
@@ -33,13 +37,7 @@ window.Formatters = {
       }
 
       if (value2) {
-
-        if (!col.sourceFormat) {
-          formatted = Locale.formatDate(value2, (typeof col.dateFormat === 'string' ? {pattern: col.dateFormat}: col.dateFormat));
-        } else {
-          formatted = Locale.formatDate(value2, (typeof col.dateShowFormat === 'string' ? {pattern: col.dateShowFormat}: col.dateShowFormat));
-        }
-
+        formatted = Locale.formatDate(value2, (typeof col.dateFormat === 'string' ? {pattern: col.dateFormat}: col.dateFormat));
       } else {
         formatted = Locale.formatDate(value, (typeof col.dateFormat === 'string' ? {pattern: col.dateFormat}: col.dateFormat));
 
@@ -1538,7 +1536,7 @@ $.fn.datagrid = function(options) {
               filterMarkup += '<select ' + (col.filterDisabled ? ' disabled' : '') + (col.filterType ==='select' ? ' class="dropdown"' : ' multiple class="multiselect"') + 'id="'+ filterId +'">';
               if (col.options) {
                 if (col.filterType ==='select') {
-                  filterMarkup += '<option>&nbsp;</option>';
+                  filterMarkup += '<option></option>';
                 }
 
                 for (var i = 0; i < col.options.length; i++) {
@@ -1565,7 +1563,7 @@ $.fn.datagrid = function(options) {
       }
 
       //Attach Keyboard support
-      var popupOpts = {offset: {y: 15}, placementOpts: {strategies: ['flip', 'nudge']}};
+      var popupOpts = {attachToBody: $('html').hasClass('ios'), offset: {y: 15}, placementOpts: {strategies: ['flip', 'nudge']}};
 
       this.headerRow.addClass('is-filterable');
       this.headerRow.find('.btn-filter').popupmenu(popupOpts).on('selected.datagrid', function () {
@@ -1761,13 +1759,14 @@ $.fn.datagrid = function(options) {
               isMatch = (rowValueStr.indexOf(conditionValue) === -1 && rowValue.toString() !== '');
               break;
             case 'end-with':
-              isMatch = (rowValueStr.lastIndexOf(conditionValue) === (rowValueStr.length - conditionValue.toString().length)  && rowValueStr !== '');
+              isMatch = (rowValueStr.lastIndexOf(conditionValue) === (rowValueStr.length - conditionValue.toString().length)  && rowValueStr !== '' && (rowValueStr.length >= conditionValue.toString().length));
               break;
             case 'start-with':
               isMatch = (rowValueStr.indexOf(conditionValue) === 0 && rowValueStr !== '');
               break;
             case 'does-not-end-with':
-              isMatch = !(rowValueStr.lastIndexOf(conditionValue) === (rowValueStr.length - conditionValue.toString().length)  && rowValueStr !== '');
+              isMatch = (rowValueStr.lastIndexOf(conditionValue) === (rowValueStr.length - conditionValue.toString().length)  && rowValueStr !== '' && (rowValueStr.length >= conditionValue.toString().length));
+              isMatch = !isMatch;
               break;
             case 'does-not-start-with':
               isMatch = !(rowValueStr.indexOf(conditionValue) === 0 && rowValueStr !== '');
@@ -2634,6 +2633,10 @@ $.fn.datagrid = function(options) {
         colWidth = colMinWidth = 78;
       }
 
+      if (col.id === 'rowStatus') {
+        colWidth = colMinWidth = 78;
+      }
+
       // cache the header widths
       this.headerWidths[index] = {id: col.id, width: colWidth, minWidth: colMinWidth,
                                   widthPercent: this.columnWidthType === 'percent',
@@ -2821,7 +2824,7 @@ $.fn.datagrid = function(options) {
 
     resetColumns: function () {
       if (this.canUseLocalStorage()) {
-        localStorage.clear();
+        localStorage.removeItem(this.uniqueId('columns'));
         localStorage[this.uniqueId('columns')] = '';
       }
 
@@ -4861,7 +4864,12 @@ $.fn.datagrid = function(options) {
       if (coercedVal !== oldVal && !fromApiCall) {
         //Validate the cell
         this.validateCell(row, cell);
-        this.element.trigger('cellchange', {row: row, cell: cell, target: cellNode, value: coercedVal, oldValue: oldVal, column: col});
+
+        var args = {row: row, cell: cell, target: cellNode, value: coercedVal, oldValue: oldVal, column: col};
+        if (this.settings.treeDepth[row]) {
+          args.rowData = this.settings.treeDepth[row].node;
+        }
+        this.element.trigger('cellchange', args);
       }
 
     },
@@ -5024,6 +5032,10 @@ $.fn.datagrid = function(options) {
         restCollapsed = false,
         args = [{grid: self, row: dataRowIndex, item: rowElement, children: children}];
 
+      if (self.settings.treeDepth[dataRowIndex]) {
+        args[0].rowData = self.settings.treeDepth[dataRowIndex].node;
+      }
+
       if (!rowElement.hasClass('datagrid-tree-parent') ||
           (!$(e.target).is(expandButton) &&
             (self.settings.editable || self.settings.selectable))) {
@@ -5050,7 +5062,7 @@ $.fn.datagrid = function(options) {
           var node = $(this);
 
           if (node.hasClass('datagrid-tree-parent') &&
-            node.attr('aria-level') > level && !restCollapsed) {
+            node.attr('aria-level') > level) {
             restCollapsed = node.find('.datagrid-expand-btn.is-expanded').length === 0;
             node[isExpanded ? 'addClass' : 'removeClass']('is-hidden');
             return;

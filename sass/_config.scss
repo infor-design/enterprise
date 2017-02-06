@@ -44,10 +44,6 @@ $hyperlink-hover-color: $primary-color;
 $hr-top-color: $graphite03;
 $hr-bottom-color: $white;
 
-// Sticky Footer
-$sticky-footer-light-bg-color: $white;
-$sticky-footer-light-border-color: $graphite03;
-
 // Circle Pager
 $circlepager-bg-color: transparent;
 $circlepager-border-color: $graphite04;
@@ -120,11 +116,11 @@ $popupmenu-border-color: $graphite03;
 $popupmenu-box-shadow: 0 2px 5px $drop-shadow-depth;
 $popupmenu-checked-color: $primary-color;
 $popupmenu-hover-color: $graphite02;
-$popupmenu-alternate-bg-color: $graphite08;
-$popupmenu-alternate-border-color: $graphite08;
+$popupmenu-alternate-bg-color: $slate07;
+$popupmenu-alternate-border-color: $slate05;
 $popupmenu-alternate-color: $white;
 $popupmenu-alternate-filtered-text: $font-color-lowcontrast;
-$popupmenu-alternate-hover-color: $graphite09;
+$popupmenu-alternate-hover-color: $slate06;
 
 // Form Buttons
 $primary-btn-bg-color: $primary-color;
@@ -239,6 +235,7 @@ $listbuilder-border-color-focus: $primary-color;
 $listbuilder-icon-color-hover: $graphite10;
 $listbuilder-text-color: $graphite10;
 $listbuilder-text-color-selected: $white;
+$listbuilder-input-selection-bg-color: $azure08;
 
 // Toolbar
 $toolbar-standalone-bg-color: $graphite02;
@@ -432,8 +429,11 @@ $pager-disabled-color: $graphite02;
 $slider-bg-color: $graphite04;
 $slider-active-bg-color: $primary-color;
 $slider-labels-color: $graphite06;
-$slider-disabled-color: $graphite03;
+$slider-disabled-color: $graphite02;
+$slider-disabled-active-bg-color: $graphite03;
 $slider-disabled-labels-color: $graphite04;
+$slider-disabled-handle-color: $graphite03;
+$slider-disabled-range-color: $graphite03;
 $slider-hover-shadow: 0 2px 5px 0 rgba($black, .2);
 
 //Modal
@@ -601,6 +601,10 @@ $sr-masthead-item-color: $font-color-lowcontrast;
 // Tree
 $tree-selected-color: $graphite10;
 $tree-selected-bg-color: $graphite02;
+$tree-placeholder-color: $white;
+$tree-isover-bg-color: $azure01;
+$tree-isover-border-color: $azure04;
+$tree-placeholder-bg-color: $azure06;
 $tree-focus-border-color: $primary-color;
 $tree-active-bg-color: #d7e8f2;
 $tree-icon-color: $graphite06;

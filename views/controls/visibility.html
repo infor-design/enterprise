@@ -1,175 +1,232 @@
-<h1>Normal Visibility Classes <span>(Intended for use with Javascript)</span></h1>
-<table class="class-explanation" id="visibility-classes">
-  <thead>
-    <tr>
-      <th>Class Name</th>
-      <th>Description</th>
-      <th>Example (if visible)</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
-    <tr>
-      <td><span class="inline-code">.show</span></td>
-      <td align="center"><span>Should always be completely visible</span></td>
-      <td align="center">
-        <svg class="icon icon-logo show" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-logo"></use>
-        </svg>
-      </td>
-    </tr>
-    <tr>
-      <td><span class="inline-code">.hidden</span></td>
-      <td align="center"><span>Invisible to both browsers and SCR</span></td>
-      <td align="center">
-        <svg class="icon icon-logo hidden" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-logo"></use>
-        </svg>
-      </td>
-    </tr>
-    <tr>
-      <td><span class="inline-code">.invisible</span></td>
-      <td align="center"><span>Only seen by screen readers</span></td>
-      <td align="center">
-        <svg class="icon icon-logo invisible" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-logo"></use>
-        </svg>
-      </td>
-    </tr>
-</table>
-
-<h1>Form-Factor Visiblity Classes <span>(Badges below show in Emerald if the current form factor matches)</span></h1>
-<div class="field center">
-  <span>Current Form Factor: </span>
-  <span class="emerald badge visible-sm-inline">Phone</span>
-  <span class="graphite badge hidden-sm">Phone</span>
-  <span class="emerald badge visible-md-inline">Tablet</span>
-  <span class="graphite badge hidden-md">Tablet</span>
-  <span class="emerald badge visible-lg-inline">Desktop</span>
-  <span class="graphite badge hidden-lg">Desktop</span>
-  <span class="emerald badge visible-xl-inline">Extra Large</span>
-  <span class="graphite badge hidden-xl">Extra Large</span>
+<div class="row">
+  <div class="six columns">
+    <h2>Normal Visibility Classes</h2>
+  </div>
 </div>
-<table class="class-explanation" id="form-factor-classes">
-  <tbody>
-    <tr>
-      <td><span class="inline-code">.visible-sm-*</span></td>
-      <td><span>0px - 767px</span></td>
-      <td>
-        <span class="emerald badge visible-sm-inline">Only visible on Phone</span>
-        <span class="graphite badge hidden-sm">Only visible on Phone</span>
-      </td>
-    </tr>
-    <tr>
-      <td><span class="inline-code">.hidden-sm</span></td>
-      <td><span>0px - 767px</span></td>
-      <td>
-        <span class="emerald badge hidden-sm">Visible on anything BUT Phone</span>
-        <span class="graphite badge visible-sm-inline">Visible on anything BUT Phone</span>
-      </td>
-    </tr>
-    <tr>
-      <td><span class="inline-code">.visible-md-*</span></td>
-      <td><span>768px - 1023px</span></td>
-      <td>
-        <span class="emerald badge visible-md-inline">Only visible on Tablet</span>
-        <span class="graphite badge hidden-md">Only visible on Tablet</span>
-      </td>
-    </tr>
-    <tr>
-      <td><span class="inline-code">.hidden-md</span></td>
-      <td><span>768px - 1023px</span></td>
-      <td>
-        <span class="emerald badge hidden-md">Visible on anything BUT Tablet</span>
-        <span class="graphite badge visible-md-inline">Visible on anything BUT Tablet</span>
-      </td>
-    </tr>
-    <tr>
-      <td><span class="inline-code">.visible-lg-*</span></td>
-      <td><span>1024px - 1299px</span></td>
-      <td>
-        <span class="emerald badge visible-lg-inline">Only visible on Desktop</span>
-        <span class="graphite badge hidden-lg">Only visible on Desktop</span>
-      </td>
-    <tr>
-    <tr>
-      <td><span class="inline-code">.hidden-lg</span></td>
-      <td><span>1024px - 1299px</span></td>
-      <td>
-        <span class="emerald badge hidden-lg">Visible on anything BUT Desktop</span>
-        <span class="graphite badge visible-lg-inline">Visible on anything BUT Desktop</span>
-      </td>
-    </tr>
-    <tr>
-      <td><span class="inline-code">.visible-xl-*</span></td>
-      <td><span>1300px and up</span></td>
-      <td>
-        <span class="emerald badge visible-xl-inline">Only visible on Extra-Large Displays</span>
-        <span class="graphite badge hidden-xl">Only visible on Extra-Large Displays</span>
-      </td>
-    <tr>
-    <tr>
-      <td><span class="inline-code">.hidden-xl</span></td>
-      <td><span>1300px and up</span></td>
-      <td>
-        <span class="emerald badge hidden-xl">Visible on anything BUT Extra-Large Displays</span>
-        <span class="graphite badge visible-xl-inline">Visible on anything BUT Extra-Large Displays</span>
-      </td>
-    </tr>
-  </tbody>
-</table>
 
-<h2>How to use Form Factor Visibility</h2>
-<p>When using the <span class="inline-code">.visible-*-*</span> classes, replace the last star in the className with the target display property to use when the element becomes visible.  For example:</p>
-<table class="class-explanation" id="form-factor-usage">
-  <thead>
-    <tr>
-      <th>Visibility Class</th>
-      <th>Corresponding CSS Property</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><span class="inline-code">.visible-*-block</span></td>
-      <td><span class="inline-code">display: block;</span></td>
-    </tr>
-    <tr>
-      <td><span class="inline-code">.visible-*-inline</span></td>
-      <td><span class="inline-code">display: inline;</span></td>
-    </tr>
-    <tr>
-      <td><span class="inline-code">.visible-*-inline-block</span></td>
-      <td><span class="inline-code">display: inline-block;</span></td>
-    </tr>
-  </tbody>
-</table>
+<div class="row">
+  <div class="twelve columns">
+    <table class="listview-table show-headers class-explanation" id="visibility-classes" width="100%" role="grid">
+      <thead>
+        <tr>
+          <th scope="col" role="columnheader">Class Name</th>
+          <th scope="col" role="columnheader">Description</th>
+          <th scope="col" role="columnheader">Example (if visible)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="inline-code">.show</span></td>
+          <td><span>Should always be completely visible</span></td>
+          <td>
+            <svg class="icon icon-logo show" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-logo"></use>
+            </svg>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="inline-code">.hidden</span></td>
+          <td><span>Invisible to both browsers and SCR</span></td>
+          <td>
+            <svg class="icon icon-logo hidden" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-logo"></use>
+            </svg>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="inline-code">.invisible</span></td>
+          <td><span>Only seen by screen readers</span></td>
+          <td>
+            <svg class="icon icon-logo invisible" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-logo"></use>
+            </svg>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 
-<h1>Print Visibility Classes <span>(Emulate Print media-type in Firebug/Dev Tools to see the results)</span></h1>
-<table class="class-explanation" id="print-classes">
-  <thead>
-    <tr>
-      <th>Class Name</th>
-      <th>Description</th>
-      <th>Example (if visible)</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><span class="inline-code">.visible-print-*</span></td></td>
-      <td align="center"><span>Should only be visible on a printed page</span></td>
-      <td align="center">
-        <svg class="icon icon-logo visible-print-inline" viewBox="0 0 34 34" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-logo"></use>
-        </svg>
-      </td>
-    </tr>
-    <tr>
-      <td><span class="inline-code">.hidden-print</span></td></td>
-      <td align="center"><span>Should be hidden on a printed page</span></td>
-      <td align="center">
-        <svg class="icon icon-logo hidden-print" viewBox="0 0 34 34" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-logo"></use>
-        </svg>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="row top-padding">
+  <div class="six columns">
+    <h2>Form-Factor Visiblity Classes</h2>
+    <p>
+      When using the <span class="inline-code">.visible-*-*</span> classes, replace the first star in the className with the target breakpoint size in which the element's visibility should change.  For example, an element with the CSS class <span class="inline-code">.visible-sm-block</span> will be hidden at all times, except on the "phone" breakpoint, where it will be displayed as a block element.
+    </p>
+    <p>
+      When using the <span class="inline-code">.hidden-*</span> classes, the opposite rules apply.  The element will be display as normal, with the exception of the target breakpoint size.
+    </p>
+    <p>Badges below will display in <span class="badge info">Azure</span> if the browser window's current form factor matches.</span>
+    <p>
+      <b>Current Form Factor:</b>
+      <span class="info badge visible-sm-inline-block">Phone</span>
+      <span class="badge hidden-sm">Phone</span>
+      <span class="info badge visible-md-inline-block">Tablet</span>
+      <span class="badge hidden-md">Tablet</span>
+      <span class="info badge visible-lg-inline-block">Desktop</span>
+      <span class="badge hidden-lg">Desktop</span>
+      <span class="info badge visible-xl-inline-block">Extra Large</span>
+      <span class="badge hidden-xl">Extra Large</span>
+    </p>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <table class="listview-table show-headers class-explanation" id="form-factor-classes" width="100%" role="grid">
+      <thead>
+        <tr>
+          <th scope="col" role="columnheader">Class Name</th>
+          <th scope="col" role="columnheader">Breakpoint Sizes</th>
+          <th scope="col" role="columnheader">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="inline-code">.visible-sm-*</span></td>
+          <td><span>0px - 767px</span></td>
+          <td>
+            <span class="info badge visible-sm-inline-block">Only visible on Phone</span>
+            <span class="badge hidden-sm">Only visible on Phone</span>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="inline-code">.hidden-sm</span></td>
+          <td><span>0px - 767px</span></td>
+          <td>
+            <span class="info badge hidden-sm">Visible on anything BUT Phone</span>
+            <span class="badge visible-sm-inline-block">Visible on anything BUT Phone</span>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="inline-code">.visible-md-*</span></td>
+          <td><span>768px - 1023px</span></td>
+          <td>
+            <span class="info badge visible-md-inline-block">Only visible on Tablet</span>
+            <span class="badge hidden-md">Only visible on Tablet</span>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="inline-code">.hidden-md</span></td>
+          <td><span>768px - 1023px</span></td>
+          <td>
+            <span class="info badge hidden-md">Visible on anything BUT Tablet</span>
+            <span class="badge visible-md-inline-block">Visible on anything BUT Tablet</span>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="inline-code">.visible-lg-*</span></td>
+          <td><span>1024px - 1299px</span></td>
+          <td>
+            <span class="info badge visible-lg-inline-block">Only visible on Desktop</span>
+            <span class="badge hidden-lg">Only visible on Desktop</span>
+          </td>
+        <tr>
+        <tr>
+          <td><span class="inline-code">.hidden-lg</span></td>
+          <td><span>1024px - 1299px</span></td>
+          <td>
+            <span class="info badge hidden-lg">Visible on anything BUT Desktop</span>
+            <span class="badge visible-lg-inline-block">Visible on anything BUT Desktop</span>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="inline-code">.visible-xl-*</span></td>
+          <td><span>1300px and up</span></td>
+          <td>
+            <span class="info badge visible-xl-inline-block">Only visible on Extra-Large Displays</span>
+            <span class="badge hidden-xl">Only visible on Extra-Large Displays</span>
+          </td>
+        <tr>
+        <tr>
+          <td><span class="inline-code">.hidden-xl</span></td>
+          <td><span>1300px and up</span></td>
+          <td>
+            <span class="info badge hidden-xl">Visible on anything BUT Extra-Large Displays</span>
+            <span class="badge visible-xl-inline-block">Visible on anything BUT Extra-Large Displays</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="six columns">
+    <h2>How to use Form Factor Visibility</h2>
+    <p>When using the <span class="inline-code">.visible-*-*</span> classes, replace the last star in the className with the target display property to use when the element becomes visible.  For example:</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <table class="listview-table show-headers class-explanation" id="form-factor-usage" width="100%" role="grid">
+      <thead>
+        <tr>
+          <th>Visibility Class</th>
+          <th>Corresponding CSS Property</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="inline-code">.visible-*-block</span></td>
+          <td><span class="inline-code">display: block;</span></td>
+        </tr>
+        <tr>
+          <td><span class="inline-code">.visible-*-inline</span></td>
+          <td><span class="inline-code">display: inline;</span></td>
+        </tr>
+        <tr>
+          <td><span class="inline-code">.visible-*-inline-block</span></td>
+          <td><span class="inline-code">display: inline-block;</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="six columns">
+    <h2>Print Visibility Classes</h2>
+    <p>Emulate the <b>print media-type</b> in Firebug/Dev Tools to see the results</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <table class="listview-table show-headers class-explanation" id="print-classes" width="100%" role="grid">
+      <thead>
+        <tr>
+          <th>Class Name</th>
+          <th>Description</th>
+          <th>Example (if visible)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="inline-code">.visible-print-*</span></td></td>
+          <td><span>Should only be visible on a printed page</span></td>
+          <td>
+            <svg class="icon icon-logo visible-print-inline-block" viewBox="0 0 34 34" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-logo"></use>
+            </svg>
+          </td>
+        </tr>
+        <tr>
+          <td><span class="inline-code">.hidden-print</span></td></td>
+          <td><span>Should be hidden on a printed page</span></td>
+          <td>
+            <svg class="icon icon-logo hidden-print" viewBox="0 0 34 34" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-logo"></use>
+            </svg>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>

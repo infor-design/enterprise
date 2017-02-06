@@ -16,6 +16,8 @@
 {{={{{ }}}=}}
 
 <script>
+$('body').on('initialized', function () {
+
     var dataset = [{
             data: [{
                 name: 'Automotive',
@@ -62,4 +64,6 @@
       .on('selected', function (e, bar, d, i) {
         console.log(e, bar, d, i);
       });
+
+});
 </script>

@@ -49,7 +49,10 @@ $(".remove-popup").click(function(){
 $(".remove-popup-destroy").click(function(){
 	var firstCard = $($(".one-third")[0]);
 	var btn = firstCard.find(".btn-actions");
-	btn.data("popupmenu").destroy();
+	var menu = btn.data("popupmenu");
+	if (menu) {
+		menu.destroy();
+	}
 	firstCard.remove();
 });
 

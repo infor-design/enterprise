@@ -41,7 +41,7 @@
      * @constructor
      * @param {Object} element
      * @param {Object|Function} options
-     * @param {(string|Function)} [options.content] - Takes title attribute or feed content. Can be a function or jQuery markup
+     * @param {(string|Function)} [options.content] - Takes title attribute or feed content. Can be a string or jQuery markup
      * @param {Object} [options.offset={top: 10, left: 10}] - How much room to leave
      * @param {string} [options.placement=top|bottom|right|offset]
      * @param {string} [options.trigger=hover] - supports click and immediate and hover (and maybe in future focus)
@@ -266,7 +266,7 @@
         // jQuery-wrapped elements don't get manipulated.
         // Simply store the reference, render, and return.
         if (content instanceof $ && content.length) {
-          this.content = content;
+          this.content = content.addClass('hidden');
           doRender();
           return true;
         }
@@ -307,7 +307,7 @@
         }
 
         // Store an internal copy of the processed content
-        this.content = $.santizeHtml(content);
+        this.content = $.sanitizeHTML(content);
 
         // Wrap tooltip content in <p> tags if there isn't already one present.
         // Only happens for non-jQuery markup.
@@ -327,63 +327,79 @@
       },
 
       renderTooltip: function() {
-        var titleArea = this.tooltip.find('.tooltip-title'),
-          contentArea = this.tooltip.find('.tooltip-content'),
-          cssClass = 'tooltip' + (this.settings.extraClass ? ' ' + this.settings.extraClass : '') + ' is-hidden',
-          content = this.content;
+        var titleArea = this.tooltip[0].querySelectorAll('.tooltip-title')[0],
+          contentArea = this.tooltip[0].querySelectorAll('.tooltip-content')[0],
+          extraClass = this.settings.extraClass,
+          content = this.content,
+          tooltip = this.tooltip[0];
 
-        this.tooltip.attr('class', cssClass);
-        titleArea.hide();
+        tooltip.setAttribute('class', 'tooltip is-hidden');
 
-        // Generate an arrow if one doesn't already exist
-        if (contentArea.prev('.arrow').length === 0) {
-          contentArea.before('<div class="arrow"></div>');
+        if (extraClass) {
+          tooltip.classList.add(this.settings.extraClass);
         }
 
-        if (typeof content === 'string') {
-          content = $(content);
+        if (titleArea) {
+          titleArea.style.display = 'none';
         }
 
-        contentArea.html(content).removeClass('hidden');
-        content.removeClass('hidden');
+        if (!contentArea.previousElementSibling.classList.contains('arrow')) {
+          contentArea.insertAdjacentHTML('beforebegin', '<div class="arrow"></div>');
+        }
+
+        if (typeof this.content === 'string') {
+          contentArea.innerHTML = content;
+        } else {
+          contentArea.innerHTML = content[0].innerHTML;
+        }
       },
 
       renderPopover: function() {
         var self = this,
-          cssClass = 'popover' + (this.settings.extraClass ? ' ' + this.settings.extraClass : '') + ' is-hidden',
+          extraClass = this.settings.extraClass,
+          content = this.content,
           contentArea = this.tooltip.find('.tooltip-content'),
-          content = this.content;
+          title = this.tooltip[0].querySelector('.tooltip-title');
 
-        if (typeof this.content === 'string') {
-          content = $(content);
+        content[0].classList.remove('hidden');
+        this.tooltip[0].setAttribute('class', 'popover is-hidden');
+
+        if (extraClass) {
+          this.tooltip[0].classList.add(this.settings.extraClass);
         }
 
-        // Use currently-set content to render a popover
-        contentArea.html(content).removeClass('hidden');
-        content.removeClass('hidden');
+        if (typeof content === 'string') {
+          content = $(content);
+        } else {
+          contentArea.html(content);
+        }
 
-        this.tooltip.attr('class', cssClass);
+        contentArea[0].firstElementChild.classList.remove('hidden');
 
         if (this.settings.title !== null) {
-          var title = this.tooltip.find('.tooltip-title');
-          if (title.length === 0) {
-            title = $('<div class="tooltip-title"></div>').prependTo(this.tooltip);
+          if (!title) {
+            var titleFrag = document.createDocumentFragment();
+            title = document.createElement('div');
+            title.innerHTML = this.settings.title;
+            title.classList.add('tooltip-title');
+            titleFrag.appendChild(title);
+            this.tooltip[0].insertBefore(titleFrag, this.tooltip[0].firstChild);
+          } else {
+            title.childNodes[0].nodeValue = this.settings.title;
           }
-          title.html(this.settings.title).show();
-        } else {
-          this.tooltip.find('.tooltip-title').hide();
         }
 
-        if (this.settings.closebutton) {
+        if (this.settings.closebutton && title && !title.firstElementChild) {
           var closeBtnX = $(
-            '<button type="button" class="btn-icon l-pull-right" style="margin-top: -9px">'+
+            '<button type="button" class="btn-icon l-pull-right" style="margin-top: -9px">' +
               $.createIcon({ classes: ['icon-close'], icon: 'close' }) +
-              '<span>Close</span>'+
+              '<span>Close</span>' +
             '</button>'
           ).on('click', function() {
             self.hide();
           });
-          $('.tooltip-title', this.tooltip).append(closeBtnX);
+
+          title.appendChild(closeBtnX[0]);
         }
 
         content.initialize();
@@ -428,11 +444,12 @@
           return;
         }
 
-        this.tooltip.removeAttr('style');
-        this.tooltip.addClass(this.settings.placement);
+        this.tooltip[0].setAttribute('style', '');
+        this.tooltip[0].classList.add(this.settings.placement);
+
 
         if (this.settings.isError || this.settings.isErrorColor) {
-          this.tooltip.addClass('is-error');
+          this.tooltip[0].classList.add('is-error');
         }
 
         this.position();
@@ -497,11 +514,12 @@
           targetContainer = this.settings.parentElement;
         }
 
-        this.tooltip.detach().appendTo(targetContainer);
+        //this.tooltip.detach().appendTo(targetContainer);
+        targetContainer[0].appendChild(this.tooltip[0]);
       },
 
       // Placement behavior's "afterplace" handler.
-      // DO NOT USE FOR ADDITONAL POSITIONING.
+      // DO NOT USE FOR ADDITIONAL POSITIONING.
       handleAfterPlace: function(e, placementObj) {
         this.tooltip.data('place').setArrowPosition(e, placementObj, this.tooltip);
         this.tooltip.triggerHandler('tooltipafterplace', [placementObj]);
@@ -509,7 +527,7 @@
 
       position: function () {
         this.setTargetContainer();
-        this.tooltip.removeClass('is-hidden');
+        this.tooltip[0].classList.remove('is-hidden');
 
         var self = this,
           distance = this.isPopover ? 20 : 10,
@@ -553,14 +571,16 @@
           return;
         }
 
-        this.tooltip.addClass('is-hidden').css({'left': '', 'top': ''});
+        this.tooltip[0].classList.add('is-hidden');
+        this.tooltip[0].style.left = '';
+        this.tooltip[0].style.top = '';
         this.tooltip.find('.arrow').removeAttr('style');
 
         this.tooltip.off('click.tooltip');
 
         if ($('.popover').not('.is-hidden').length === 0) {
           $(document).off('mouseup.tooltip keydown.tooltip');
-          $(window).off('resize.tooltip');
+          $('body').off('resize.tooltip');
         }
 
         this.element.trigger('hide', [this.tooltip]);

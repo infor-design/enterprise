@@ -234,17 +234,18 @@
       //Block the ui from FOUC
       blockUi: function () {
 
-        this.pageOverlay = this.pageOverlay || $('<div />').css({
-          'background': Soho.theme === 'light' ? '#f0f0f0' :  Soho.theme === 'dark' ? '#313236' : '#bdbdbd',
-        	'display': 'block',
-          'height': '100%',
-        	'left': 0,
-        	'position': 'fixed',
-          'text-align': 'center',
-        	'top': 0,
-        	'width': '100%',
-          'z-index': '999'
-        });
+        this.pageOverlay = this.pageOverlay || $('<div style="' +
+        	'background: ' + (Soho.theme === 'light' ? '#f0f0f0' : (Soho.theme === 'dark' ? '#313236' : '#bdbdbd')) +
+        	'display: block' +
+          'height: 100%' +
+        	'left: 0' +
+        	'position: fixed' +
+          'text-align: center' +
+        	'top: 0' +
+        	'width: 100%' +
+          'z-index: 999' +
+          '"></div>'
+        );
 
         $('body').append(this.pageOverlay);
 

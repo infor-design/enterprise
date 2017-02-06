@@ -136,6 +136,7 @@
         // hide them initially.  They are revealed when overflow checking happens as the menu is opened.
         var popupMenuInstance = this.more.data('popupmenu'),
           moreAriaAttr = this.more.attr('aria-controls');
+
         if (!popupMenuInstance) {
           this.moreMenu = $('#' + moreAriaAttr);
           if (!this.moreMenu.length) {
@@ -147,6 +148,7 @@
         } else {
           this.moreMenu = popupMenuInstance.menu;
         }
+
         this.defaultMenuItems = this.moreMenu.children('li:not(.separator)').length > 0;
 
         function menuItemFilter() {
@@ -199,9 +201,17 @@
               var dmi = $(diffMenuItem), // "Diffed" Menu Item
                 omi = children.eq(i), // Corresponding "Original" menu item
                 dmiA = dmi.children('a'), // Anchor inside of "Diffed" menu item
-                omiA = omi.children('a'); // Anchor inside of "Original" menu item
+                omiA = omi.children('a'), // Anchor inside of "Original" menu item
+                dmiID = dmi.attr('id'),
+                dmiAID = dmiA.attr('id');
 
-              dmiA.removeAttr('id');
+              // replace menu item ids with spillover-menu specific ids.
+              if (dmiID) {
+                dmi.removeAttr('id').attr('data-original-menu-item', dmiID);
+              }
+              if (dmiAID) {
+                dmiA.removeAttr('id').attr('data-original-menu-anchor', dmiAID);
+              }
 
               omiA.data('action-button-link', dmiA);
               dmiA.data('original-button', omiA);
@@ -209,9 +219,8 @@
               var omiSubMenu = omi.children('.wrapper').children('.popupmenu'),
                 dmiSubMenu = dmi.children('.wrapper').children('.popupmenu');
 
-              if (dmiSubMenu.length && dmiSubMenu.length) {
-                dmi.addClass('submenu');
-                addItemLinksRecursively(dmiSubMenu, omiSubMenu, dmi);
+              if (omiSubMenu.length && dmiSubMenu.length) {
+                addItemLinksRecursively(omiSubMenu, dmiSubMenu, dmi);
               }
             });
 
@@ -254,11 +263,12 @@
         });
 
         //Refresh Text and Disabled
-        function refreshTextAndDisabled() {
-          self.moreMenu.find('a').each(function () {
+        function refreshTextAndDisabled(menu) {
+          $('li > a', menu).each(function () {
             var a = $(this),
-                item = $(this).data('originalButton'),
-                text = self.getItemText(item);
+                item = a.data('originalButton'),
+                text = self.getItemText(item),
+                submenu;
 
             if (item) {
               if (a.find('span').length) {
@@ -267,28 +277,42 @@
                 a.text(text.trim());
               }
 
-              if (item.is(':disabled')) {
-                a.closest('li').addClass('is-disabled');
-                a.attr('disabled', 'disabled');
+              if (item.is('.hidden') || item.parent().is('.hidden')) {
+                a.closest('li').addClass('hidden');
               } else {
-                a.closest('li').removeClass('is-disabled');
-                a.removeAttr('disabled');
+                a.closest('li').removeClass('hidden');
               }
 
+              if (item.parent().is('.is-disabled') || item.is(':disabled')) { // if it's disabled menu item, OR a disabled menu-button
+                a.closest('li').addClass('is-disabled');
+                a.attr('tabindex', '-1');
+              } else {
+                a.closest('li').removeClass('is-disabled');
+              }
+
+              if (item.is('.btn-menu')) {
+                submenu = a.parent().find('.popupmenu').first();
+                refreshTextAndDisabled(submenu);
+              }
             }
           });
         }
 
         if (popupMenuInstance) {
-          this.more.triggerHandler('updated');
-          popupMenuInstance.element.off('beforeopen').on('beforeopen', refreshTextAndDisabled);
+          this.more
+            .on('beforeopen.toolbar', function() {
+              refreshTextAndDisabled(self.moreMenu);
+            })
+            .triggerHandler('updated');
         } else {
           var actionButtonOpts = $.fn.parseOptions(this.more[0]);
 
           this.more.popupmenu($.extend({}, actionButtonOpts, {
             trigger: 'click',
             menu: this.moreMenu
-          })).off('beforeopen').on('beforeopen', refreshTextAndDisabled);
+          })).on('beforeopen.toolbar', function() {
+            refreshTextAndDisabled(self.moreMenu);
+          });
         }
 
 
@@ -370,11 +394,11 @@
           self.handleSelected(e, anchor);
         });
 
-        this.more.off('keydown.toolbar').on('keydown.toolbar', function(e) {
+        this.more.on('keydown.toolbar', function(e) {
           self.handleKeys(e);
-        }).off('beforeopen.toolbar').on('beforeopen.toolbar', function() {
+        }).on('beforeopen.toolbar', function() {
           self.checkOverflowItems();
-        }).off('selected.toolbar').on('selected.toolbar', function(e, anchor) {
+        }).on('selected.toolbar', function(e, anchor) {
           e.stopPropagation();
           self.handleSelected(e, anchor);
         });
@@ -386,7 +410,7 @@
           self.handleResize();
         });
 
-        $(window).off('resize.toolbar-' + this.id).on('resize.toolbar-' + this.id, function() {
+        $('body').off('resize.toolbar-' + this.id).on('resize.toolbar-' + this.id, function() {
           self.handleResize();
         });
 
@@ -740,7 +764,7 @@
           .init();
 
         setTimeout(function () {
-          $(window).triggerHandler('resize');
+          $('body').triggerHandler('resize');
         }, 0);
 
       },
@@ -762,8 +786,8 @@
           .offTouchClick('toolbar')
           .off('keydown.toolbar click.toolbar focus.toolbar blur.toolbar');
 
-        this.more.off('beforeOpen.toolbar selected.toolbar');
-        $(window).off('resize.toolbar-' + this.id);
+        this.more.off('keydown.toolbar beforeopen.toolbar selected.toolbar');
+        $('body').off('resize.toolbar-' + this.id);
         return this;
       },
 
@@ -775,28 +799,36 @@
 
           a.off('updated.toolbar mousedown.toolbar click.toolbar touchend.toolbar touchcancel.toolbar recalculate-buttons.toolbar');
 
+          var icons = li.find('.icon');
+          if (icons.length) {
+            icons.remove();
+          }
+
+          var submenuContainer;
+          if (li.is('.submenu')) {
+            submenuContainer = li.children('.wrapper').children('.popupmenu');
+            submenuContainer.children('li').each(deconstructMenuItem);
+          }
+
           if (itemLink && itemLink.length) {
             $.removeData(a[0], 'original-button');
             $.removeData(itemLink[0], 'action-button-link');
+            a.remove();
+
+            if (submenuContainer) {
+              submenuContainer
+                .off()
+              .parent('.wrapper')
+                .off()
+                .remove();
+            }
+
+            li.remove();
           }
 
-          if (li.is('submenu')) {
-            li.children('.wrapper').children('.popupmenu').children('li').each(deconstructMenuItem);
-          }
-
-          li.remove();
         }
 
         this.moreMenu.children('li').each(deconstructMenuItem);
-
-        if (this.more.length && this.more.data('popupmenu') !== undefined) {
-          this.more.data('popupmenu').destroy();
-        }
-
-        if (!this.defaultMenuItems) {
-          this.moreMenu.remove();
-        }
-
         return this;
       },
 
@@ -811,6 +843,10 @@
           if (searchFields.data('toolbarsearchfield')) {
             searchFields.data('toolbarsearchfield').destroy();
           }
+        }
+
+        if (this.more.length && this.more.data('popupmenu') !== undefined) {
+          this.more.data('popupmenu').destroy();
         }
 
         this.element.removeAttr('role').removeAttr('aria-label');

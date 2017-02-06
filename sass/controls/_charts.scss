@@ -11,6 +11,7 @@
 
 // SVG Chart Styles
 .chart-container {
+  overflow: hidden;
 
   // Center
   svg {
@@ -577,6 +578,7 @@
 }
 
 // Temporary fix for SVG Tooltips
+// scss-lint:disable IdSelector
 #svg-tooltip.tooltip {
   &.top,
   &.bottom {
@@ -592,13 +594,23 @@
     }
   }
 }
+// scss-lint:enable IdSelector
 
 //RTL Styles
 html[dir='rtl'] {
   .chart-legend {
+    margin-left: inherit;
+    margin-right: 55px;
+
     .chart-legend-color {
       margin-left: 10px;
       margin-right: inherit;
+    }
+
+    .chart-legend-item {
+      float: right;
+      margin-left: 10px;
+      margin-right: 0;
     }
   }
 
@@ -638,6 +650,43 @@ html[dir='rtl'] {
     .target-line {
       left: auto;
       right: 45px;
+    }
+  }
+
+  .sparkline,
+  .chart-container.line-chart,
+  .chart-container.bullet-chart,
+  .chart-container.column-chart,
+  .chart-container.chart-vertical-bar {
+    svg {
+      @include css3(transform, scale(-1, 1));
+
+      text {
+        @include css3(transform, scale(-1, 1));
+
+        &.dir-ltr,
+        &.negative,
+        &.negative-value {
+          direction: ltr;
+        }
+      }
+
+      tspan {
+        unicode-bidi: embed;
+      }
+
+      .axis.y {
+        text {
+          text-anchor: start;
+        }
+      }
+
+      .axis-labels {
+        text {
+          @include css3(transform, inherit);
+        }
+      }
+
     }
   }
 }

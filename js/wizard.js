@@ -111,7 +111,7 @@
           }
         });
 
-        this.element.find('.wizard-header').css('opacity', '1');
+        this.element.find('.wizard-header')[0].style.opacity = '1';
         return this;
       },
 
@@ -140,10 +140,10 @@
             label = tick.children('.label'),
             left = Locale.isRTL() ? (100-tickPos[i]) : tickPos[i];
 
-          tick.css('left', left + '%');
+          this.style.left = left + '%';
 
-          if (label.length) {
-            label.css('left', '-' + (label.outerWidth()/2 - tick.outerWidth()/2) + 'px');
+          for (var i2 = 0, l2 = label.length; i2 < l2; i2++) {
+            label[i2].style.left = '-' + (label.outerWidth()/2 - tick.outerWidth()/2) + 'px';
           }
 
           if (tick.is('.is-disabled')) {
@@ -154,10 +154,10 @@
 
       updateRange: function() {
         var currentTick = this.ticks.filter('.current').last(),
-          widthPercentage = (100 * parseFloat(currentTick.css('left')) / parseFloat(currentTick.parent().css('width')));
+          widthPercentage = (100 * parseFloat(currentTick[0].style.left) / parseFloat(currentTick.parent()[0].style.width));
         widthPercentage = Locale.isRTL() ? (100-widthPercentage) : widthPercentage;
 
-        this.completedRange.css('width', widthPercentage +'%');
+        this.completedRange[0].style.width = widthPercentage + '%';
         return this;
       },
 

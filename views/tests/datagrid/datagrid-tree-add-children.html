@@ -1,0 +1,84 @@
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    var grid,
+    columns = [],
+    data = [];
+    var someData = [
+                    {
+                        id: 215,
+                        escalated: 0,
+                        taskName: 'Follow up action with Residental Housing',
+                        desc: 'Contact sales representative with the updated purchase order.',
+                        comments: 2,
+                        time: '22:10 PM',
+                        children: [
+                      {
+                          id: 216,
+                          escalated: 0,
+                          taskName: 'Follow up action with Universal HMM Logistics',
+                          desc: 'Contact sales representative.',
+                          comments: 2,
+                          time: '22:10 PM',
+                          children: [
+                          {
+                              id: 210,
+                              escalated: 0,
+                              taskName: 'Follow up action with Residental Shipping Logistics ',
+                              desc: 'Contact sales representative.',
+                              comments: 2,
+                              time: '7:04 AM'
+                          },
+                          {
+                              id: 212,
+                              escalated: 0,
+                              taskName: 'Follow up action with Residental Shipping Logistics ',
+                              desc: 'Contact sales representative.',
+                              comments: 4,
+                              time: '7:04 AM'
+                          }
+                          ]
+                      },
+                      {
+                          id: 217,
+                          escalated: 0,
+                          expanded: true,
+                          taskName: 'Follow up action with Acme Shipping',
+                          desc: 'Contact sales representative.',
+                          comments: 2,
+                          time: '22:10 PM',
+                          children: [
+                          {
+                              id: 218,
+                              escalated: 0,
+                              taskName: 'Follow up action with Residental Shipping Logistics ',
+                              desc: 'Contact sales representative.',
+                              comments: 2,
+                              time: '7:04 AM'
+                          }
+                          ]
+                      }
+                        ]
+                    }];
+
+    columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree, width: 250 });
+    columns.push({ id: 'id', name: 'Id', field: 'id', width: 25 });
+    columns.push({ id: 'desc', name: 'Description', field: 'desc', width: 200 });
+    columns.push({ id: 'comments', name: 'Comments', field: 'comments', formatter: Formatters.Hyperlink, width: 60 });
+    columns.push({ id: 'time', name: 'Time', field: 'time', width: 60 });
+
+    $('#datagrid').datagrid({
+      columns: columns,
+      dataset: someData,
+      treeGrid: true,
+      toolbar: { title: 'Tasks (Hierarchical)', results: true, personalize: true }
+    });
+
+  });
+</script>

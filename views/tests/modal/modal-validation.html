@@ -14,7 +14,7 @@
 
           <div class="field">
             <label for="context-type">Type</label>
-            <select class="dropdown required" id="context-type" data-validate="required"  name="type">
+            <select class="dropdown" id="context-type" name="type">
               <option value="0"></option>
               <option value="1">Context 01</option>
               <option value="2">Context 02</option>
@@ -32,6 +32,11 @@
           <div class="field">
            <label for="context-desc" class="required">Description</label>
            <textarea id="context-desc" data-validate="required" name="context-desc" placeholder="Example: A description goes here"></textarea>
+          </div>
+
+          <div class="field hidden">
+           <label for="context-desc2" class="required">Description (Hidden)</label>
+           <textarea id="context-desc2" data-validate="required" name="context-desc2" placeholder="Example: A description goes here"></textarea>
           </div>
 
           <div>
