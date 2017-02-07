@@ -1055,16 +1055,18 @@
         this.menu[0].style.height = '';
         this.menu[0].style.width = '';
 
-        wrapper[0].style.left = '-999px';
-        wrapper[0].style.height = '';
-        wrapper[0].style.width = '';
+        if (wrapper[0]) {
+          wrapper[0].style.left = '-999px';
+          wrapper[0].style.height = '';
+          wrapper[0].style.width = '';
+        }
 
         this.menu.find('.submenu').off('mouseenter mouseleave').removeClass('is-submenu-open');
         if (menu[0]) {
           menu[0].style.left = '';
           menu[0].style.top = '';
           menu[0].style.height = '';
-          menu[0].style.width = '';          
+          menu[0].style.width = '';
         }
 
         this.menu.find('.is-focused').removeClass('is-focused');
