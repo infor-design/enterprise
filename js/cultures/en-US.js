@@ -131,7 +131,7 @@
       'Down': {id: 'Down', value: 'Down', comment: 'Down tooltip'},
       'Download': {id: 'Download', value: 'Download', comment: 'Download tooltip'},
       'Duplicate': {id: 'Duplicate', value: 'Duplicate', comment: 'Duplicate tooltip'},
-      'EitherSelectedOrNotSelected': {id: 'EitherSelectedOrNotSelected', value: 'Either Selected Or NotSelected', comment: 'Either Selected Or NotSelected in icons for filtering'},
+      'EitherSelectedOrNotSelected': {id: 'EitherSelectedOrNotSelected', value: 'Either Selected Or Not Selected', comment: 'Either Selected Or NotSelected in icons for filtering'},
       'EndsWith': {id: 'EndsWith', value: 'Ends With', comment: 'for condition filtering'},
       'EnterComments': {id: 'EnterComments', value: 'Enter comments here...', comment: 'Placeholder text for a text input (comments)'},
       'Error': {id: 'Error', value: 'Error', comment: 'Title, Spoken Text describing fact an error has occured'},

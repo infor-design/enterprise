@@ -69,7 +69,9 @@
         return el.error === isError();
       });
 
-      response(allowedOptions);
+      setTimeout(function () {
+        response(allowedOptions);
+      }, 1000);
     };
 
     columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, width: 50, formatter: Formatters.SelectionCheckbox, align: 'center'});

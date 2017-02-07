@@ -1,5 +1,3 @@
-//TODO Break this into 4 files...
-
 window.Formatters = {
 
   Text: function(row, cell, value) {
@@ -1071,7 +1069,6 @@ $.fn.datagrid = function(options) {
     render: function () {
       var self = this;
 
-      //TODO Re Test -> Init from Table
       self.contentContainer = $('<div class="datagrid-body"></div>');
 
       if (this.settings.dataset === 'table') {
@@ -2539,6 +2536,11 @@ $.fn.datagrid = function(options) {
       // use cache
       if (this.headerWidths[index]) {
         var cacheWidths = this.headerWidths[index];
+
+        if (cacheWidths.width === 'default') {
+          return '';
+        }
+
         return ' style="width: '+ cacheWidths.width + (cacheWidths.widthPercent ? '%' :'px') + '"';
       }
 
@@ -2559,6 +2561,7 @@ $.fn.datagrid = function(options) {
       if (!widthSpecified && visibleColumns.length < 10 &&
         (['selectionCheckbox', 'drilldown', 'rowStatus', 'favorite'].indexOf(col.id) === -1)  && this.elemWidth > 0) {
 
+        this.headerWidths[index] = {id: col.id, width: 'default'};
         return '';
       }
 
@@ -3414,65 +3417,6 @@ $.fn.datagrid = function(options) {
 
       });
 
-      //=== BEGIN: isScrolling setup for touch device ==========================
-      var touchPrevented = false,
-      threshold = 10,
-      pos;
-
-      // Is the jQuery Element a component of the current Datagrid?
-      function isDatagridElement(target) {
-        return !!target.closest('.datagrid, .datagrid-container').length;
-      }
-
-      // Triggered when the user clicks anywhere in the document
-      function clickDocument(e) {
-        var target = $(e.target);
-        self.isScrolling = false;
-
-        if (touchPrevented && isDatagridElement(target)) {
-          e.preventDefault();
-          touchPrevented = false;
-          self.isScrolling = true;
-        }
-      }
-
-      function touchStartCallback(e) {
-        touchPrevented = false;
-
-        pos = {
-          x: e.originalEvent.touches[0].pageX,
-          y: e.originalEvent.touches[0].pageY
-        };
-
-        $(document).on('touchmove.datagrid', function touchMoveCallback(e) {
-          var newPos = {
-            x: e.originalEvent.touches[0].pageX,
-            y: e.originalEvent.touches[0].pageY
-          };
-
-          if ((newPos.x >= pos.x + threshold) || (newPos.x <= pos.x - threshold) ||
-              (newPos.y >= pos.y + threshold) || (newPos.y <= pos.y - threshold)) {
-            touchPrevented = true;
-          }
-        });
-      }
-
-      function touchEndCallback(e) {
-        $(document).off('touchmove.datagrid');
-        if (touchPrevented) {
-          e.preventDefault();
-          return false;
-        }
-        clickDocument(e);
-      }
-
-      // TODO: I think this can be removed....
-      //Need to detect whether or not scrolling is happening on a touch-capable device
-      $(document)
-        .on('touchstart.datagrid', touchStartCallback)
-        .on('touchend.datagrid touchcancel.datagrid', touchEndCallback)
-        .on('click.datagrid', clickDocument);
-
     },
 
     //Check if the event is subscribed to
@@ -3640,6 +3584,7 @@ $.fn.datagrid = function(options) {
       });
 
       this.toolbar = toolbar;
+      this.element.addClass('has-toolbar');
     },
 
     //Get or Set the Row Height
@@ -4234,8 +4179,8 @@ $.fn.datagrid = function(options) {
         }
       });
 
-      //TODO: Press Alt+Up or Alt+Down to set focus to the first or last row on the current page.
       //Press PageUp or PageDown to open the previous or next page and set focus to the first row.
+      //Press Alt+Up or Alt+Down to set focus to the first or last row on the current page.
       //Press Alt+PageUp or Alt+PageDown to open the first or last page and set focus to the first row.
 
       //Handle rest of the keyboard
@@ -5225,7 +5170,8 @@ $.fn.datagrid = function(options) {
         return;
       }
 
-      var pagerElem = this.tableBody.addClass('paginated');
+      var pagerElem = this.tableBody;
+      this.element.addClass('paginated');
       pagerElem.pager({dataset: this.settings.dataset, source: this.settings.source, pagesize: this.settings.pagesize, indeterminate: this.settings.indeterminate, rowTemplate: this.settings.rowTemplate, pagesizes: this.settings.pagesizes});
       this.pager = pagerElem.data('pager');
 

@@ -149,13 +149,184 @@ TODO
 - When resizing the page (height) the grid should stay in view (fixed header)
 - Should be able to expand and collapse tree rows
 - Test 3 themes
-- Test Row heights
+- Test Row heights in the actions menu. Then test that the grid rows are the correct heights.
 - Test keyboard (space to open rows) while in that cell
 - Sort should work (only at the top level)
 
+## Test Cases
+
+[Only 2 Columns](tests/datagrid/2-columns)
+- Purpose of the example was to test resize with two Columns
+- Deprecate Maybe?
+
+[A bunch of columns](tests/datagrid/auto-column-width-many-columns)
+- Purpose of the example was to test left and right scrolling with a lot of columns
+- Test on multiple browsers (not speed scrolling)
+
+[A bunch of columns](tests/datagrid/cascading-dropdowns-short-row)
+- Purpose of the example was to show a drop down that is filtered based on the row types.
+  The example is working if there are different values in each row
+- This example is the same as cascading-dropdowns but with a short row, test the short row is visually correct
+
+[A bunch of columns](tests/datagrid/cascading-dropdowns.html)
+- Purpose of the example was to show a drop down that is filtered based on the row types.
+  The example is working if there are different values in each row
+TODO: Issues in Optiva with mismtached columns
+
+[Row Click Event](tests/datagrid/click-event-on-rows.html)
+- Purpose of the example was to show the column click event. When you click the drill down a message should display the 1 based row id.
+
+[Row Click Event](tests/datagrid/column-widths.html)
+- Purpose of the example was to show the column click event. When you click the drill down a message should display the 1 based row id.
+
+[Page Panes](/examples/landmark/pagepanes-grid.html)
+- This example shows an landmark form with a bunch of configurable panes. Tab through panes and see all is rendered normally.
+- Resize to mobile and retest
+
+[Page Panes](/tests/datagrid/column-widths.html)
+- This example shows an landmark form with a bunch of configurable panes. Tab through panes and see all is rendered normally.
+
+
+columns-class.html
+columns-colors.html
+contextualactionpanel.html
+counts-on-tab.html
+custom-number-format.html
+custom-results-text.html
+custom-toolbar-maxvisible-button.html
+custom-toolbar.html
+datagrid-columns-auto.html
+datagrid-columns-fixed.html
+datagrid-columns-mixed.html
+datagrid-columns-percent.html
+datagrid-comments.html
+datagrid-contextmenu.html
+datagrid-custom-editor.html
+datagrid-custom-formatter.html
+datagrid-editable-autocomplete.html
+datagrid-editable-datetime.html
+datagrid-editable-hidden.html
+datagrid-editable-lookup.html
+datagrid-editable-paging.html
+datagrid-editable-short-row.html
+datagrid-ellipsis-tooltips.html
+datagrid-expandable-drill-page.html
+datagrid-filter-activecell.html
+datagrid-filter-alternate-row-shading.html
+datagrid-filter-conditions.html
+datagrid-filter-disabled.html
+datagrid-filter-gridlist.html
+datagrid-filter-hidden.html
+datagrid-filter-localized.html
+datagrid-filter-multiselect.html
+datagrid-filter-paging-client-side.html
+datagrid-filter-paging-server-side.html
+datagrid-filter-server-side.html
+datagrid-filter-singleselect.html
+datagrid-filter-using.period.in.filename.html
+datagrid-fixed-header-list.html
+datagrid-fixed-header-short-row-filter.html
+datagrid-fixed-header-short-row.html
+datagrid-fixed-header.html
+datagrid-formatters.html
+datagrid-full-width.html
+datagrid-grouping-formatter.html
+datagrid-grouping-list-custom.html
+datagrid-grouping-list.html
+datagrid-grouping-tests.html
+datagrid-grouping-totals.html
+datagrid-grouping.html
+datagrid-image.html
+datagrid-modal-over.html
+datagrid-multiselect-nonchecks.html
+datagrid-on-card.html
+datagrid-pagesize.html
+datagrid-paging-deferred.html
+datagrid-paging-disable-lastpage.html
+datagrid-paging-empty-dataset.html
+datagrid-paging-indeterminate-nototal.html
+datagrid-paging-issues.html
+datagrid-paging-long-page.html
+datagrid-paging-multiple-calls.html
+datagrid-paging-specific-page.html
+datagrid-paging-trigger.html
+datagrid-programmatic-updates.html
+datagrid-rowheight.html
+datagrid-rowspan.html
+datagrid-scrolling-contained-defined.html
+datagrid-scrolling-contained-filter.html
+datagrid-scrolling-contained-less-rows.html
+datagrid-scrolling-contained-maxheight-list.html
+datagrid-scrolling-contained-pane.html
+datagrid-scrolling-contained-short-rows.html
+datagrid-scrolling-contained.html
+datagrid-scrolling-fixed.html
+datagrid-sort-override.html
+datagrid-source-format.html
+datagrid-summary-row.html
+datagrid-tree-add-children.html
+datagrid-tree-alternate-row-shading.html
+datagrid-tree-drilldown.html
+datagrid-tree-editable.html
+datagrid-tree-filter.html
+datagrid-tree-grouped-headers.html
+datagrid-tree-lazy-loading-rowdata.html
+datagrid-tree-lazy-loading.html
+datagrid-tree-list.html
+datagrid-tree-multiselect.html
+datagrid-tree-paging.html
+datagrid-tree-patch-status.html
+datagrid-tree-singleselect.html
+datagrid-tree-tooltip.html
+datagrid-w-lookup.html
+datalist-input.html
+destroy.html
+drag-column-reorder.html
+dynamic-links.html
+dynamic-mask.html
+editable-selection-issues.html
+editable-short-height.html
+expandable-row-checkboxes.html
+expandable-short-row.html
+export-custom-dataset.html
+export-from-button.html
+export-from-menu.html
+export-paging.html
+fifty-columns.html
+form-buttons.html
+hide-show-column.html
+icon-buttons.html
+large-dataset-performance.html
+loaddata-selected-rows.html
+localstorage-conflicts.html
+long-text.html
+lookup-and-grid-example.html
+manual-sort.html
+multiple-grids.html
+on-tab.html
+order-lines.html
+passwords.html
+readonly-links.html
+records-menu.html
+save-selections.html
+selected-event.html
+short-rows.html
+some-hidden-columns.html
+sort-field-vs-id.html
+toggle-editable.html
+toolbar-breadcrumb.html
+update-columns.html
+update-content-visible.html
+update-grouped-headers.html
+updaterow-expandable.html
+wide-grid-expandable-row-with-form-buttons.html
+xss-prevention.html
+
 TODO:
+- Refactor the mouse up and click code
 - Editing (more)
-- Last Column / Border Resize
-- Sticky header
+- Last Column / Border Resize (maybe)
 - TODOS
-- Merge Grid Logic
+- Mobile (percent col widths) or mobile min - width....
+- Test on Optiva
+- Test on Windows

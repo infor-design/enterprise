@@ -14,6 +14,14 @@ $datagrid-short-row-height: 23px;
 .datagrid-contained {
   &.datagrid-container {
     height: inherit;
+
+    &.paginated {
+      height: calc(100% - 40px);
+    }
+
+    &.has-toolbar.paginated {
+      height: calc(100% - 90px);
+    }
   }
 
   .datagrid-body {
@@ -24,17 +32,26 @@ $datagrid-short-row-height: 23px;
     .datagrid-body {
       height: calc(100% - 25px);
     }
-  }
 
-  &.meduim-rowheight {
-    .datagrid-body {
-      height: calc(100% - 30px);
+    &.paginated {
+      height: calc(100% - 45px);
+    }
+
+    tbody tr:last-child td {
+      height: $datagrid-short-row-height + 1;
     }
   }
 
-  tr:last-child td {
-    border-bottom: 1px solid $datagrid-cell-border-color;
+  &.medium-rowheight {
+    .datagrid-body {
+      height: calc(100% - 30px);
+    }
+
+    tbody tr:last-child td {
+      height: $datagrid-medium-row-height + 1;
+    }
   }
+
 }
 
 //Main Datagrid Container
@@ -597,7 +614,7 @@ $datagrid-short-row-height: 23px;
     }
 
     &:last-child td {
-      border-bottom-color: transparent;
+      height: $datagrid-row-height + 1;
     }
 
     .icon.plus-minus::before,
