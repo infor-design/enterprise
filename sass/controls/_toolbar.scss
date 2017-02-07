@@ -61,8 +61,7 @@ $toolbar-buttonset-height: 40px;
 
   .title {
     height: $toolbar-buttonset-height;
-    left: 0;
-    margin-left: 1rem;
+    left: 1rem;
     overflow: hidden;
     position: absolute;
     text-align: left;
@@ -426,7 +425,7 @@ html[dir='rtl'] {
 
     .title {
       left: auto;
-      right: 0;
+      right: 1rem;
       text-align: right;
 
       + .buttonset {

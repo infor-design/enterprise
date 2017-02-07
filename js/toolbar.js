@@ -529,7 +529,8 @@
           buttonsetElem = this.buttonset[0],
           moreElem = this.more[0],
           buttons = this._getButtonsetButtons(),
-          MIN_TITLE_SIZE = 33;
+          ADDED_SPACE = 30,
+          MIN_TITLE_SIZE = 44 + ADDED_SPACE;
 
         for (var i = 0; i < buttons.length; i++) {
           buttons[i][0].classList.remove('is-overflowed');
@@ -538,41 +539,47 @@
         buttonsetElem.removeAttribute('style');
         titleElem.removeAttribute('style');
 
-        this.adjustButtonVisibility(buttons);
+        //this.adjustButtonVisibility(buttons);
 
         var toolbarStyle = window.getComputedStyle(containerElem),
           toolbarWidth = parseInt(toolbarStyle.width),
-          //currentTitleWidth = parseInt(window.getComputedStyle(titleElem).width),
           padding = parseInt(toolbarStyle.paddingLeft) + parseInt(toolbarStyle.paddingRight),
-          buttonsetWidth = parseInt(window.getComputedStyle(buttonsetElem).width),
+          buttonsetWidth = parseInt(window.getComputedStyle(buttonsetElem).width) + ADDED_SPACE,
           moreWidth = parseInt(window.getComputedStyle(moreElem).width);
 
         // Get the target size of the title element
-        var titleScrollWidth = titleElem.scrollWidth,
+        var titleScrollWidth = titleElem.scrollWidth + ADDED_SPACE,
           estimatedTitleSize = toolbarWidth - (padding + buttonsetWidth + moreWidth);
+
+        if (estimatedTitleSize < MIN_TITLE_SIZE) {
+          estimatedTitleSize = MIN_TITLE_SIZE;
+        }
+
+        function addPx(val) {
+          return val + 'px';
+        }
 
         // If the title element's text would be cut off, attempt to fix the size of both elements.
         if (titleScrollWidth > estimatedTitleSize) {
-          this.cutoffTitle = true;
-          var adjustedTitleSize = estimatedTitleSize;
-
           if (!this.settings.favorButtonset) {
             // Favor the title
-            adjustedTitleSize = titleScrollWidth;
+
+            this.cutoffTitle = false;
+            titleElem.style.width = addPx(titleScrollWidth);
+            buttonsetElem.style.width = addPx(toolbarWidth - (padding + titleScrollWidth + moreWidth));
+            return this;
           }
 
-          if (adjustedTitleSize < MIN_TITLE_SIZE) {
-            adjustedTitleSize = MIN_TITLE_SIZE;
-          }
-
-          titleElem.style.width = adjustedTitleSize + 'px';
-          buttonsetElem.style.width = (toolbarWidth - (padding + adjustedTitleSize + moreWidth)) + 'px';
+          // Favor the buttonset
+          this.cutoffTitle = true;
+          titleElem.style.width = addPx(estimatedTitleSize);
+          buttonsetElem.style.width = addPx(toolbarWidth - (padding + estimatedTitleSize + moreWidth));
           return this;
         }
 
         // Always size the title element
         this.cutoffTitle = false;
-        titleElem.style.width = 'calc(100% - ' + (padding + buttonsetWidth + moreWidth) + 'px)';
+        titleElem.style.width = addPx(toolbarWidth - (padding + buttonsetWidth + moreWidth));
         return this;
       },
 
