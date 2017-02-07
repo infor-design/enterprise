@@ -539,8 +539,6 @@
         buttonsetElem.removeAttribute('style');
         titleElem.removeAttribute('style');
 
-        //this.adjustButtonVisibility(buttons);
-
         var toolbarStyle = window.getComputedStyle(containerElem),
           toolbarWidth = parseInt(toolbarStyle.width),
           padding = parseInt(toolbarStyle.paddingLeft) + parseInt(toolbarStyle.paddingRight),
@@ -735,31 +733,6 @@
           visible: visibleButtons,
           hidden: hiddenButtons
         };
-      },
-
-      adjustButtonVisibility: function(buttons) {
-        if (!buttons || !buttons.visible || !Array.isArray(buttons.visible)) {
-          buttons = this.getVisibleButtons();
-        }
-
-        function toggleClass($elem, doHide) {
-          var elem = $elem[0];
-          elem.classList.remove('is-overflowed');
-
-          if (!doHide) {
-            return;
-          }
-          elem.classList.add('is-overflowed');
-        }
-
-        var i = 0;
-        for (i = 0; i < buttons.visible.length; i++) {
-          toggleClass(buttons.visible[i], false);
-        }
-        for (i = 0; i < buttons.hidden.length; i++) {
-          toggleClass(buttons.hidden[i], true);
-        }
-
       },
 
       adjustMenuItemVisibility: function(items) {
