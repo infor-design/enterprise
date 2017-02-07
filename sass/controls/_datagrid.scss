@@ -37,18 +37,11 @@ $datagrid-short-row-height: 23px;
       height: calc(100% - 45px);
     }
 
-    tbody tr:last-child td {
-      height: $datagrid-short-row-height + 1;
-    }
   }
 
   &.medium-rowheight {
     .datagrid-body {
       height: calc(100% - 30px);
-    }
-
-    tbody tr:last-child td {
-      height: $datagrid-medium-row-height + 1;
     }
   }
 
@@ -411,6 +404,10 @@ $datagrid-short-row-height: 23px;
       line-height: $datagrid-short-row-height;
       min-height: $datagrid-short-row-height + 6;
 
+      &:last-child td {
+        height: $datagrid-short-row-height + 1;
+      }
+
       td {
 
         span {
@@ -611,10 +608,6 @@ $datagrid-short-row-height: 23px;
       td:focus .datagrid-cell-wrapper {
         border-color: transparent;
       }
-    }
-
-    &:last-child td {
-      height: $datagrid-row-height + 1;
     }
 
     .icon.plus-minus::before,

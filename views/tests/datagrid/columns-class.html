@@ -43,10 +43,10 @@
       };
 
       //Define Columns for the Grid.
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly});
-      columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', width: 125});
-      columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 160, cssClass: 'azure01'});
-      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 200, cssClass: Formatters.classFormatter});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly});
+      columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName'});
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity', cssClass: 'azure01'});
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', cssClass: Formatters.classFormatter});
 
       //Init and get the api for the grid
       $('#readonly-datagrid').datagrid({

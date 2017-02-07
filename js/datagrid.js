@@ -2521,17 +2521,22 @@ $.fn.datagrid = function(options) {
         return 'style = "width: 100%"';
       } else if (this.totalWidth > this.elemWidth) {
         return 'style = "width: '+ parseFloat(this.totalWidth) + 'px"';
+      } else if (this.widthSpecified) {
+        return 'style = "width: '+ parseFloat(this.totalWidth) + 'px"';
       }
-
       return '';
     },
 
     //Calculate the width for a column (upfront with no rendering)
     //https://www.w3.org/TR/CSS21/tables.html#width-layout
     calculateColumnWidth: function (col, index) {
-      var widthSpecified = false, visibleColumns, colPercWidth;
-      this.elemWidth = this.element.outerWidth();
+      var visibleColumns, colPercWidth;
       visibleColumns = this.visibleColumns(true);
+
+      if (!this.elemWidth) {
+        this.elemWidth = this.element.outerWidth();
+        this.widthSpecified = false;
+      }
 
       // use cache
       if (this.headerWidths[index]) {
@@ -2546,7 +2551,7 @@ $.fn.datagrid = function(options) {
 
       //A column element with a value other than 'auto' for the 'width' property sets the width for that column.
       if (col.width) {
-        widthSpecified = true;
+        this.widthSpecified = true;
         this.widthPercent = false;
       }
 
@@ -2557,16 +2562,25 @@ $.fn.datagrid = function(options) {
         colPercWidth = col.width.replace('%', '');
       }
 
-      // Let the defaults work.
-      if (!widthSpecified && visibleColumns.length < 10 &&
+      var textWidth = this.calculateTextWidth(col);  //reasonable default on error
+
+      // Simulate Auto Width Algorithm
+      if (!this.widthSpecified && visibleColumns.length < 10 &&
         (['selectionCheckbox', 'drilldown', 'rowStatus', 'favorite'].indexOf(col.id) === -1)  && this.elemWidth > 0) {
 
         this.headerWidths[index] = {id: col.id, width: 'default'};
+        var percentWidth = this.elemWidth / visibleColumns.length;
+
+        //Handle Columns where auto width is bigger than the percent width
+        if (percentWidth < textWidth) {
+          this.headerWidths[index] = {id: col.id, width: textWidth, widthPercent: false};
+          return ' style="width: '+ textWidth + 'px' + '"';
+        }
+
         return '';
       }
 
-      if (!widthSpecified) {
-        var textWidth = this.calculateTextWidth(col);  //reasonable default on error
+      if (!this.widthSpecified) {
         colWidth = Math.max(textWidth, colWidth || 0);
       }
 
@@ -2598,8 +2612,9 @@ $.fn.datagrid = function(options) {
           this.table.css('width', '100%');
         } else if (this.totalWidth > this.elemWidth) {
           this.table.css('width', this.totalWidth);
+        } else if (this.widthSpecified) {
+          this.table.css('width', this.totalWidth);
         }
-
       }
 
       return ' style="width: '+ (this.widthPercent ? colPercWidth + '%' : colWidth + 'px') + '"';

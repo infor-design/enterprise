@@ -183,14 +183,30 @@ TODO: Issues in Optiva with mismtached columns
 - This example shows an landmark form with a bunch of configurable panes. Tab through panes and see all is rendered normally.
 - Resize to mobile and retest
 
-[Page Panes](/tests/datagrid/column-widths.html)
-- This example shows an landmark form with a bunch of configurable panes. Tab through panes and see all is rendered normally.
+[Column Widths](/tests/datagrid/column-widths.html)
+- This example shows auto column width. The last column has a lot of data and should scroll until you see "end of data"
 
+[Column Css Class Option](/tests/datagrid/columns-class.html)
+- This example shows the config option of adding a column css class. The example is working of two columns with 1 are bold and have a purple style.
 
-columns-class.html
-columns-colors.html
-contextualactionpanel.html
-counts-on-tab.html
+[Columns Colors](/tests/datagrid/columns-colors.html)
+- This example shows the config option of adding a column css class. The example is working of two columns with 1 are bold and have a purple style.
+
+[Columns Colors](/tests/datagrid/columns-colors.html)
+- This example shows the config option of adding a column css class. The example is working of two columns with 1 are bold and have a purple style.
+
+[Columns Colors](/tests/datagrid/contextualactionpanel.html)
+- This example shows a grid in a contextual action panel
+- Click the button to see the contextual-action-panel (CAP)
+- Try the three themes
+- Test the row heights
+- Click the close button
+- Hit Escape to close
+
+[Columns Colors](/tests/datagrid/counts-on-tab.html)
+- This example was to fix a problem that when on a tab the results didnt show.
+The example is working of on the second and third tab the results shows. Or its a regression.
+
 custom-number-format.html
 custom-results-text.html
 custom-toolbar-maxvisible-button.html
