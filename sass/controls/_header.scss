@@ -409,16 +409,6 @@ html[dir='rtl'] {
     margin-left: 10px;
     margin-right: 20px;
   }
-
-  .toolbar .title + .buttonset {
-    text-align: left;
-  }
-
-  .toolbar.has-more-button .buttonset > *:last-child,
-  .formatter-toolbar.has-more-button .buttonset > *:last-child {
-    margin-left: 5px;
-    margin-right: 0;
-  }
 }
 
 // Print Style Sheet

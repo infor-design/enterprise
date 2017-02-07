@@ -416,3 +416,31 @@ $toolbar-buttonset-height: 40px;
     }
   }
 }
+
+//RTL Styles
+html[dir='rtl'] {
+
+  .toolbar,
+  .formatter-toolbar {
+    text-align: left;
+
+    .title {
+      left: auto;
+      right: 0;
+      text-align: right;
+
+      + .buttonset {
+        text-align: left;
+      }
+    }
+
+    &.has-more-button {
+      .buttonset > *:last-child {
+        margin-left: 5px;
+        margin-right: 0;
+      }
+    }
+
+  }
+
+}
