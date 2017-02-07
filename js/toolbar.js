@@ -23,8 +23,7 @@
         defaults = {
           rightAligned: false, // Will always attempt to right-align the contents of the toolbar.
           maxVisibleButtons: 3, // Total amount of buttons that can be present, not including the More button
-          sizeTitleToAvailableSpace: true,
-          favorButtonset: true
+          favorButtonset: true // When resizing elements inside the toolbar, setting this to "true" will try to display as many buttons as possible.  Setting to false attempts to show the entire title instead.
         },
         settings = $.extend({}, defaults, options);
 
@@ -73,23 +72,14 @@
 
         // Check for a "title" element.  This element is optional.
         this.title = this.element.children('.title');
-
-        // Wrap text nodes that are sitting alone inside the title element in <span> tags.
-        // This helps title element positioning.
-        this.title.contents().each(function() {
-          if (this.nodeType !== 3) {
-            return;
-          }
-          if (this.textContent.trim() === '') {
-            return;
-          }
-
-          var span = document.createElement('span');
-
-          $(this).after(span);
-
-          span.appendChild(this);
-        });
+        if (this.title.length) {
+          this.cutoffTitle = false;
+          this.title.on('beforeshow.toolbar', function() {
+            return self.cutoffTitle;
+          }).tooltip({
+            content: '' + this.title.text().trim()
+          });
+        }
 
         // Container for main group of buttons and input fields.  Only these spill into the More menu.
         this.buttonset = this.element.children('.buttonset');
@@ -534,15 +524,12 @@
       },
 
       sizeContainers: function() {
-        if (!this.settings.sizeTitleToAvailableSpace) {
-          return;
-        }
-
         var containerElem = this.element[0],
           titleElem = this.title[0],
           buttonsetElem = this.buttonset[0],
           moreElem = this.more[0],
-          buttons = this._getButtonsetButtons();
+          buttons = this._getButtonsetButtons(),
+          MIN_TITLE_SIZE = 33;
 
         for (var i = 0; i < buttons.length; i++) {
           buttons[i][0].classList.remove('is-overflowed');
@@ -551,31 +538,40 @@
         buttonsetElem.removeAttribute('style');
         titleElem.removeAttribute('style');
 
-        this.adjustButtonVisibility();
+        this.adjustButtonVisibility(buttons);
 
         var toolbarStyle = window.getComputedStyle(containerElem),
           toolbarWidth = parseInt(toolbarStyle.width),
+          //currentTitleWidth = parseInt(window.getComputedStyle(titleElem).width),
           padding = parseInt(toolbarStyle.paddingLeft) + parseInt(toolbarStyle.paddingRight),
           buttonsetWidth = parseInt(window.getComputedStyle(buttonsetElem).width),
           moreWidth = parseInt(window.getComputedStyle(moreElem).width);
 
         // Get the target size of the title element
         var titleScrollWidth = titleElem.scrollWidth,
-          titleSize = toolbarWidth - (padding + buttonsetWidth + moreWidth);
+          estimatedTitleSize = toolbarWidth - (padding + buttonsetWidth + moreWidth);
 
         // If the title element's text would be cut off, attempt to fix the size of both elements.
-        if (titleScrollWidth > titleSize) {
-          // Favor the title
+        if (titleScrollWidth > estimatedTitleSize) {
+          this.cutoffTitle = true;
+          var adjustedTitleSize = estimatedTitleSize;
+
           if (!this.settings.favorButtonset) {
-            titleElem.style.width = titleScrollWidth + 'px';
-            buttonsetElem.style.width = (toolbarWidth - (padding + titleScrollWidth + moreWidth)) + 'px';
-            return this;
+            // Favor the title
+            adjustedTitleSize = titleScrollWidth;
           }
 
-          titleElem.style.width = (titleScrollWidth - titleSize) + 'px';
+          if (adjustedTitleSize < MIN_TITLE_SIZE) {
+            adjustedTitleSize = MIN_TITLE_SIZE;
+          }
+
+          titleElem.style.width = adjustedTitleSize + 'px';
+          buttonsetElem.style.width = (toolbarWidth - (padding + adjustedTitleSize + moreWidth)) + 'px';
+          return this;
         }
 
         // Always size the title element
+        this.cutoffTitle = false;
         titleElem.style.width = 'calc(100% - ' + (padding + buttonsetWidth + moreWidth) + 'px)';
         return this;
       },
@@ -707,10 +703,14 @@
         return buttons;
       },
 
-      getVisibleButtons: function() {
+      getVisibleButtons: function(buttons) {
         var self = this,
           hiddenButtons = [],
           visibleButtons = [];
+
+        if (!buttons || !Array.isArray(buttons)) {
+          buttons = this._getButtonsetButtons();
+        }
 
         function getButtonVisibility(i, button) {
           if (!self.isItemOverflowed(button)) {
@@ -720,7 +720,6 @@
           }
         }
 
-        var buttons = this._getButtonsetButtons();
         for (var i = 0; i < buttons.length; i++) {
           getButtonVisibility(i, $(buttons[i]));
         }
@@ -732,7 +731,7 @@
       },
 
       adjustButtonVisibility: function(buttons) {
-        if (!buttons || !Array.isArray(buttons)) {
+        if (!buttons || !buttons.visible || !Array.isArray(buttons.visible)) {
           buttons = this.getVisibleButtons();
         }
 
@@ -815,21 +814,6 @@
           offset = ($item.offset().top + $item.outerHeight()) - this.buttonset.offset().top;
         return offset >= this.buttonset.outerHeight() + 1;
       },
-
-      /*
-      checkOverflowItems: function() {
-        var items =
-
-        // Focus the more menu if the current item is focused
-        if (!$.contains(this.buttonset[0], document.activeElement)) {
-          if (items.visible.length) {
-            items.visible[items.visible.length - 1].focus();
-          } else {
-            this.moreMenu.find('.hidden').last().next().focus();
-          }
-        }
-      },
-      */
 
       toggleMoreMenu: function() {
         if (this.element.hasClass('no-actions-button')) {
@@ -957,6 +941,10 @@
             li.remove();
           }
 
+        }
+
+        if (this.title && this.title.length) {
+          this.title.off('beforeshow.toolbar').data('tooltip').destroy();
         }
 
         this.moreMenu.children('li').each(deconstructMenuItem);
