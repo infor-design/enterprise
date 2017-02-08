@@ -705,8 +705,6 @@ $datagrid-short-row-height: 23px;
     .datagrid-cell-wrapper {
       border: 1px solid transparent;
       display: block;
-      height: inherit;
-      margin: 0;
       min-height: inherit;
       overflow: hidden;
       padding: 4px 20px 0;
@@ -1817,10 +1815,10 @@ html[dir='rtl'] {
     .is-draggable-target {
       display: none;
       font-size: 2.6em;
-      height: $datagrid-header-height;
+      height: $datagrid-header-height + 2;
       left: 0;
       margin: 0;
-      padding: 4px 0 0 7px;
+      padding: 5px 0 0 6px;
       position: absolute;
       top: 0;
 

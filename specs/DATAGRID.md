@@ -307,6 +307,8 @@ TODO
 - Test 3 row heights
 - Resize the column and retry
 
+TODO: Resize/Reordr not converting from % to pixel and failing
+
 [Expandable Area and Drill Down](/tests/datagrid-expandable-drill-page.html)
 - This tests the eventing along with the expand row feature
 - Open develop tools and watch the console
@@ -356,7 +358,10 @@ datagrid-fixed-header-list.html
 datagrid-fixed-header-short-row-filter.html
 datagrid-fixed-header-short-row.html
 datagrid-fixed-header.html
-datagrid-formatters.html
+
+[All Formatters](/tests/datagrid-formatters.html)
+  TODO: Resize + Sort is all messed up
+
 datagrid-full-width.html
 datagrid-grouping-formatter.html
 datagrid-grouping-list-custom.html
@@ -423,7 +428,11 @@ export-paging.html
 fifty-columns.html
 form-buttons.html
 hide-show-column.html
-icon-buttons.html
+
+TODO: Not rendering 100%
+[All Formatters](/tests/dicon-buttons.html)
+  TODO: Not rendering 100%
+
 large-dataset-performance.html
 loaddata-selected-rows.html
 localstorage-conflicts.html
@@ -463,3 +472,5 @@ TODO:
 - Re-Test Screen Reader - Not reading headers
 - IE Speed (Fifty Cols)
 - IE Scroll Bar (out of alignment for size of the scrollbar)
+- Charts Scroll Bar
+- Remove RTL .scrollable stuff http://localhost:4000/tests/tooltip/positions.html?locale=ar-EG

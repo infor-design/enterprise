@@ -2549,6 +2549,7 @@ $.fn.datagrid = function(options) {
         if (this.widthSpecified && !cacheWidths.width) {
           return '';
         }
+
         return ' style="width: '+ cacheWidths.width + (cacheWidths.widthPercent ? '%' :'px') + '"';
       }
 
@@ -3243,72 +3244,7 @@ $.fn.datagrid = function(options) {
         e.preventDefault();
       });
 
-      //Handle Clicking Buttons and links in formatters
-      this.table
-        .off('mouseup.datagrid touchstart.datagrid')
-        .on('mouseup.datagrid touchstart.datagrid', 'td', function (e) {
-
-        var elem = $(this).closest('td'),
-          btn = $(this).find('button'),
-          cell = elem.parent().children(':visible').index(elem),
-          rowNode = $(this).closest('tr'),
-          dataRowIdx = self.dataRowIndex(rowNode),
-          col = self.columnSettings(cell, true),
-          item = self.settings.treeGrid ?
-            self.settings.treeDepth[dataRowIdx].node :
-            self.settings.dataset[self.pager && self.settings.source ? rowNode.index() : dataRowIdx];
-
-        if (e.type === 'mouseup' && e.button === 2) {
-          return;
-        }
-
-        function handleClick() {
-
-          if (elem.hasClass('is-focusable')) {
-            var target = $(e.target);
-            if (!target.is(self.settings.buttonSelector)) {
-              if (!target.parent('button').is(self.settings.buttonSelector)) {
-                return;
-              }
-            }
-          }
-
-          if (!elem.hasClass('is-cell-readonly')) {
-            col.click(e, [{row: dataRowIdx, cell: cell, item: item, originalEvent: e}]);
-          }
-        }
-
-        if (col.click && typeof col.click === 'function') {
-          handleClick();
-        }
-
-        if (col.menuId) {
-          btn.popupmenu({menuId: col.menuId, trigger: 'immediate', offset: { y: 5 }});
-
-          if (col.selected) {
-            btn.on('selected.datagrid', col.selected);
-          }
-        }
-
-        if (btn.is('.datagrid-expand-btn')) {
-          e.stopPropagation();
-          e.stopImmediatePropagation();
-          self.toggleRowDetail(dataRowIdx);
-          self.toggleGroupChildren(rowNode);
-          self.toggleChildren(e, dataRowIdx);
-          return false;
-        }
-
-        if (self.isCellEditable(dataRowIdx, cell)) {
-          setTimeout(function() {
-            if (self.isContainTextfield(elem) && self.notContainTextfield(elem)) {
-              self.quickEditMode = true;
-            }
-          }, 0);
-        }
-
-      });
-
+      //Handle Row Clicking
       var tbody = this.table.find('tbody');
       tbody.off('click.datagrid').on('click.datagrid', 'td', function (e) {
         var target = $(e.target);
@@ -3322,7 +3258,13 @@ $.fn.datagrid = function(options) {
 
         //Dont Expand rows or make cell editable when clicking expand button
         if (target.is('.datagrid-expand-btn') || (target.is('.datagrid-cell-wrapper') && target.find('.datagrid-expand-btn').length)) {
-          return;
+          var rowNode = $(this).closest('tr'),
+            dataRowIdx = self.dataRowIndex(rowNode);
+
+          self.toggleRowDetail(dataRowIdx);
+          self.toggleGroupChildren(rowNode);
+          self.toggleChildren(e, dataRowIdx);
+          return false;
         }
 
         var canSelect = self.settings.clickToSelect ? true :
@@ -3341,6 +3283,44 @@ $.fn.datagrid = function(options) {
         }
 
         self.makeCellEditable(self.activeCell.row, self.activeCell.cell, e);
+
+        //Handle Cell Click Event
+        var elem = $(this).closest('td'),
+          cell = elem.parent().children(':visible').index(elem),
+          col = self.columnSettings(cell, true);
+
+        if (col.click && typeof col.click === 'function') {
+
+          var rowElem = $(this).closest('tr'),
+            rowIdx = self.dataRowIndex(rowElem),
+            item = self.settings.treeGrid ?
+              self.settings.treeDepth[rowIdx].node :
+              self.settings.dataset[self.pager && self.settings.source ? rowElem.index() : rowIdx];
+
+          if (elem.hasClass('is-focusable')) {
+            if (!target.is(self.settings.buttonSelector)) {
+              if (!target.parent('button').is(self.settings.buttonSelector)) {
+                return;
+              }
+            }
+          }
+
+          if (!elem.hasClass('is-cell-readonly')) {
+            col.click(e, [{row: rowIdx, cell: self.activeCell.cell, item: item, originalEvent: e}]);
+          }
+        }
+
+        //Handle Right Click on Some Menus
+        if (col.menuId) {
+          var btn = $(this).find('button');
+          btn.popupmenu({menuId: col.menuId, trigger: 'immediate', offset: { y: 5 }});
+
+          if (col.selected) {
+            btn.on('selected.datagrid', col.selected);
+          }
+          e.preventDefault();
+          return false;
+        }
 
       });
 
@@ -4352,7 +4332,7 @@ $.fn.datagrid = function(options) {
           // Toggle datagrid-expand with Space press
           var btn = $(e.target).find('.datagrid-expand-btn, .datagrid-drilldown');
           if (btn && btn.length) {
-            btn.trigger('mouseup.datagrid');
+            btn.trigger('click.datagrid');
             e.preventDefault();
             return;
           }
