@@ -1,0 +1,260 @@
+{{> includes/svg-inline-refs}}
+
+<header class="header is-personalizable top-header">
+  <div class="toolbar">
+    <div class="title">
+      <h1>
+        <span class="panel-title">Designer Application</span>
+        <span class="panel-subhead">Last saved at <i id="savedTime">8:02am</i></span>
+      </h1>
+    </div>
+    <div class="buttonset">
+      <button class="btn js-btn-save-changes" type="button">
+        <span>Save</span>
+      </button>
+    </div>
+    {{> includes/header-actionbutton}}
+  </div>
+</header>
+
+<div class="step-process-container two-column fixed page-container no-scroll show-main" role="main">
+
+  <div class="sidebar">
+    <div class="toolbar toolbar-custom toolbar-collapsible phone-visible">
+      <div class="title title-wide">Steps to complete</div>
+    </div>
+    <ul role="tree" aria-label="Asset Types" class="tree js-step-tree-scroll" data-init="false" id="json-tree">
+
+      <li>
+        <a href="#profile" data-alert-icon="empty-circle" class="is-selected is-open">Profile and Consent - step 1</a>
+      </li>
+      <li>
+        <a href="#resume" data-alert-icon="empty-circle">Resume / CV - steo2</a>
+      </li>
+      <li>
+        <a href="#preferences" data-alert-icon="empty-circle">Preferences - step 3</a>
+      </li>
+      <li>
+        <a href="#myhistory" data-alert-icon="empty-circle">My History- step 5</a>
+        <ul class="folder">
+          <li>
+            <a href="#myhistory-1" data-alert-icon="empty-circle">2016 - step 5-1</a>
+          </li>
+          <li>
+            <a href="#myhistory-2" data-alert-icon="empty-circle">2015 - step 5-2</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <a href="#talent" data-alert-icon="empty-circle">Talent Profile - step 6</a>
+      </li>
+      <li>
+        <a href="#information" data-alert-icon="empty-circle">Information - step 7</a>
+        <ul class="folder">
+        </ul>
+      </li>
+      <li>
+        <a href="#summary" data-alert-icon="empty-circle">Summary - step 8</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="main no-scroll" role="main">
+
+    <div class="toolbar toolbar-custom toolbar-collapsible">
+      <div class="title">
+        <button class="btn-icon btn-toggle-steps js-toggle-sidebar" type="button">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-bullet-steps"></use>
+          </svg>
+        </button>
+        <div class="dual-title">
+
+        </div>
+      </div>
+      <div class="buttonset phone-hidden">
+        <button class="btn-tertiary js-step-link-prev" type="button">
+          <span>Previous</span>
+        </button>
+        <button class="btn-tertiary js-step-link-next" type="button">
+          <span>Next</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="scrollable step-container js-step-container-scroll">
+
+      <div id="profile" class="js-step-panel step-panel-active is-selected">
+        <h2>Profile</h2>
+        <form>
+          <div class="field">
+            <input type="checkbox" class="checkbox" id="vetocheckbox1">
+            <label for="vetocheckbox1" class="checkbox-label">Veto Next Step</label>
+          </div>
+        </form>
+      </div>
+
+      <div id="resume" class="js-step-panel">
+        <h2>Resume / CV</h2>
+        <form>
+          <div class="field">
+            <label for="slider-competency">How competent do you think you are?</label>
+            <input id="slider-competency" name="slider-competency1" class="slider" type="range" min="0" max="4" value="0" step="1" data-ticks='[
+              {"value": 0, "description": "0%"},
+              {"value": 1, "description": "25%"},
+              {"value": 2, "description": "50%"},
+              {"value": 3, "description": "75%"},
+              {"value": 4, "description": "100%"}
+            ]' />
+          </div>
+        </form>
+      </div>
+
+      <div id="preferences" class="js-step-panel">
+        <h2>Preferences</h2>
+        <form>
+          <div class="field">
+            <input type="checkbox" class="checkbox" id="addstepcheckbox">
+            <label for="addstepcheckbox" class="checkbox-label">Add Another Step</label>
+          </div>
+        </form>
+      </div>
+
+      <div id="myhistory" class="js-step-panel">
+        <h2>My History</h2>
+        <p>This is History step</p>
+      </div>
+
+      <div id="myhistory-1" class="js-step-panel">
+        <h2>My History Substep 1</h2>
+        <p>This is History substep 1</p>
+        <form>
+          <div class="field">
+            <input type="checkbox" class="checkbox" id="vetocheckbox2">
+            <label for="vetocheckbox2" class="checkbox-label">Veto Next Sub Step</label>
+          </div>
+        </form>
+      </div>
+
+      <div id="myhistory-2" class="js-step-panel">
+        <h2>My History Substep 2</h2>
+        <p>This is History substep 2</p>
+      </div>
+
+      <div id="talent" class="js-step-panel">
+        <h2>Talent</h2>
+        <p>This is the Talent Step</p>
+      </div>
+
+      <div id="information" class="js-step-panel">
+        <h2>Information</h2>
+        <p>This is information Step</p>
+      </div>
+
+      <div id="summary" class="js-step-panel">
+        <h2>Summary</h2>
+        <p>This is final Summary Step</p>
+      </div>
+    </div>
+
+    <div class="phone-action-bar phone-visible">
+      <button class="btn js-btn-save-changes" type="button">Save &amp; Close</button>
+      <button class="btn-primary js-step-link-next" type="button">Next</button>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  var instertStep = true;
+  var instertSubStep = true;
+  $(function() {
+    // Init Tree Steps
+    $('.step-process-container').stepprocess({
+      'beforeSelectStep': stepFunctions.beforeSelectStep
+    });
+
+    // Example button save event
+    $('.js-btn-save-changes').click(function(e) {
+      e.preventDefault();
+      $('body').message({
+        title: 'Step Saved',
+        isError: false,
+        returnFocus: $(this),
+        message: 'This has been saved.',
+        buttons: [{
+          text: 'Ok',
+          click: function() {
+            $(this).modal('close');
+          },
+          isDefault: true
+        }]
+      });
+    });
+  });
+
+  // Step Functions
+  var stepFunctions = {
+    // When a folder opens
+    beforeSelectStep: function(e) {
+      var hashLoc = $(e)[0].href.indexOf("#") + 1;
+      var stepId = $(e)[0].href.substring(hashLoc);
+
+      var deferred = $.Deferred();
+
+      // simulate ajax call
+      setTimeout(function()
+      {
+        // check to see if first panel is vetoable
+        if ($('#vetocheckbox1').is(":checked"))
+        {
+          alert("cant go to that step");
+          deferred.resolve(false);
+        }   /// check to see if substep is vetoable
+        else
+        if ($('#vetocheckbox2').is(":checked"))
+        {
+          alert("cant go to that substep");
+          deferred.resolve(false);
+        }
+        else
+        if ($('#addstepcheckbox').is(":checked") && instertStep)
+        {
+          instertStep = false;
+          var panel = $('#addstepcheckbox').closest(".js-step-panel");
+          var panelId = panel.attr("id");
+          $('<div id="global" class="js-step-panel"><h2>Global</h2><p>This is Global Step</p></div>"').insertAfter(panel);
+          var step = $("[href='#" + panelId + "']").parent();
+          $('<li><a href="#global" data-alert-icon="empty-circle">Global - step 4</a></li>').insertAfter(step);
+        }
+        else
+        if (stepId == "information" && instertSubStep)
+        {
+          instertSubStep = false;
+          var step = $("[href='#information']");
+          var substeps = step.parent().find("ul");
+          var markup = '<li><a href="#information-1" data-alert-icon="empty-circle">Personal - step 7-1</a></li>';
+          markup += '<li><a href="#information-2" data-alert-icon="empty-circle">Family - step 7-2</a></li>';
+          $(markup).appendTo(substeps);  //.insertAfter(step);
+
+          var panel = $("#information");
+
+          $('<div id="information-2" class="js-step-panel"><h2>Global</h2><p>This is Information SubStep2</p></div>"').insertAfter(panel);
+          $('<div id="information-1" class="js-step-panel"><h2>Global</h2><p>This is Information SubStep1</p></div>"').insertAfter(panel);
+        }
+        else
+        {
+          deferred.resolve(true);
+          $(e).attr("visited", "true");
+
+          // **** Need to be able to change icon here *****
+          //    $(e).attr("data-alert-icon", "confirm");
+
+        }
+        deferred.resolve(true);
+      },1000);
+
+      return deferred.promise();
+    },
+  };
+
+</script>
