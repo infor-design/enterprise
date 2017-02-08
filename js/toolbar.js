@@ -486,17 +486,18 @@
       handleKeys: function(e) {
         var self = this,
           key = e.which,
-          target = $(e.target);
+          target = $(e.target),
+          isRTL = Locale.isRTL();
 
         if (target.is('.btn-actions')) {
           if (key === 37 || key === 38) { // Left/Up
             e.preventDefault();
-            self.setActiveButton(self.getLastVisibleButton());
+            self.setActiveButton( isRTL ? self.getFirstVisibleButton() : self.getLastVisibleButton() );
           }
 
           if (key === 39 || (key === 40 && target.attr('aria-expanded') !== 'true')) { // Right (or Down if the menu's closed)
             e.preventDefault();
-            self.setActiveButton(self.getFirstVisibleButton());
+            self.setActiveButton( isRTL ? self.getLastVisibleButton() : self.getFirstVisibleButton() );
           }
           return;
         }
@@ -505,14 +506,14 @@
           (key === 37 && target.is('input') && e.shiftKey) || // Shift + Left Arrow should be able to navigate away from Searchfields
           key === 38) {
           e.preventDefault();
-          self.navigate(-1);
+          self.navigate( Locale.isRTL() ? 1 : -1 );
         }
 
         if ((key === 39 && target.is(':not(input)')) ||
           (key === 39 && target.is('input') && e.shiftKey) || // Shift + Right Arrow should be able to navigate away from Searchfields
           key === 40) {
           e.preventDefault();
-          self.navigate(1);
+          self.navigate( Locale.isRTL() ? -1 : 1 );
         }
 
         return;
