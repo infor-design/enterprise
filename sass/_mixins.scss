@@ -119,12 +119,14 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
 
 // Util To Disable Select
 @mixin no-select {
+  @include css3(user-select, none);
   -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+}
+
+// Util to enable select (use in conjunction with the disable util)
+@mixin enable-select {
+  @include css3(user-select, auto);
+  -webkit-touch-callout: default;
 }
 
 // Handle Rems with pixel fallback
