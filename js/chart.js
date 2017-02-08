@@ -104,12 +104,13 @@ window.Chart = function(container) {
   };
 
   this.addLegend = function(series) {
-    var i, s = charts.settings,
-      legend = '<div class="chart-legend"></div>';
+    var i, s = charts.settings;
 
     if (series.length === 0) {
       return;
     }
+    var isTwoColumn = series[0].display && series[0].display === 'twocolumn',
+      legend = isTwoColumn ? $('<div class="chart-legend" style="margin: 2em auto auto; border-top: 1px solid #ccc; padding-top: 1em;"></div>') : $('<div class="chart-legend"></div>');
 
     // Legend width
     var width = 0,
@@ -130,7 +131,7 @@ window.Chart = function(container) {
       }
 
       var extraClass = '';
-      if (series[i].display && (series[i].display === 'block' || series[i].display === 'twocolumn')) {
+      if (isTwoColumn || (series[i].display && series[i].display === 'block')) {
         extraClass += ' lg';
       }
       if (s.type === 'column-positive-negative' && series[i].option) {
@@ -156,8 +157,7 @@ window.Chart = function(container) {
         seriesLine = '<span class="chart-legend-item'+ extraClass +'" tabindex="0" style="float: none; display: block; margin: 0 auto; width: '+ width +'px;"></span>';
       }
 
-      if (series[i].display && series[i].display==='twocolumn') {
-        legend = '<div class="chart-legend" style="margin: 2em auto auto; border-top: 1px solid #ccc; padding-top: 1em;"></div>';
+      if (isTwoColumn) {
         if(widthPercent > 45) {
           seriesLine = '<span class="chart-legend-item'+ extraClass +'" tabindex="0" style="float: none; display: block; margin: 0 auto; width: '+ width +'px;"></span>';
         } else {
@@ -165,9 +165,7 @@ window.Chart = function(container) {
         }
       }
       seriesLine = $(seriesLine);
-      legend = $(legend);
-
-      $(seriesLine).append(color, textBlock);
+      seriesLine.append(color, textBlock);
       legend.append(seriesLine);
     }
 
@@ -1056,7 +1054,7 @@ window.Chart = function(container) {
         perRoundTotal = perRound.reduce(function(a, b) { return a + b; });
       },
 
-      labelsContextFormatter = function (d, context, formatterString, isShortName, i) {
+      labelsContextFormatter = function (d, context, formatterString, isShortName, idx) {
         formatterString = /percentage/i.test(context) ? '0.0%' : formatterString;
         var r,
           format = d3.format(formatterString || ''),
@@ -1065,7 +1063,7 @@ window.Chart = function(container) {
           value = formatterString && formatterString !== '0.0%' ? format(d.value) : d.value;
 
         if (/percentage/i.test(context) && perRoundTotal !== 100) {
-          percentage = perEvenRound[i] +'%';
+          percentage = perEvenRound[idx] +'%';
         }
         // 'name'|'value'|'percentage'|'name, value'|'name (value)'|'name (percentage)'
         switch (context) {
@@ -1086,8 +1084,11 @@ window.Chart = function(container) {
 
       drawTextlabels = function (isShortName) {
         svg.selectAll('.lb-top').each(function(d, i) {
-          if ((dims.center.x + (+d3.select(this).attr('x')) - (d.data.name.length*5)) < 15) {// 15: extra padding
-            isShortName = {isShortName: true};
+          var parentX = +d3.select(this.parentNode).attr('x');
+
+          if (((dims.center.x + parentX) - (d.data.name.length*5)) < 25 ||
+          parentX > 0 && (dims.center.x - (d.data.name.length*5 + parentX)) < 25) {
+            isShortName =  true;
           }
 
           d3.select(this)
@@ -1105,8 +1106,11 @@ window.Chart = function(container) {
 
         if (lb.isTwoline) {
           svg.selectAll('.lb-bottom').each(function(d, i) {
-            if ((dims.center.x + (+d3.select(this).attr('x')) - (d.data.name.length*5)) < 15) {// 15: extra padding
-              isShortName = {isShortName: true};
+            var parentX = +d3.select(this.parentNode).attr('x');
+
+            if (((dims.center.x + parentX) - (d.data.name.length*5)) < 25 ||
+            parentX > 0 && (dims.center.x - (d.data.name.length*5 + parentX)) < 25) {
+              isShortName =  true;
             }
 
             d3.select(this)
