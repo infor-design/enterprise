@@ -6,7 +6,6 @@ $toolbar-buttonset-height: 40px;
 // See also Colors.scss
 .toolbar,
 .formatter-toolbar {
-  @include no-select();
   padding: 0 1rem;
   position: relative;
   text-align: right;
@@ -23,6 +22,7 @@ $toolbar-buttonset-height: 40px;
   }
 
   .buttonset {
+    @include no-select();
     height: $toolbar-buttonset-height;
     overflow: hidden;
     padding-left: 1px;  //for the focus state
@@ -92,15 +92,14 @@ $toolbar-buttonset-height: 40px;
 
     + .buttonset {
       text-align: right;
-      //width: calc(55% - 1px); // 1px is the width of the pseudo-element preceeding the title used for vertical alignment
     }
   }
 
   // Container for More Button
   .more {
+    @include no-select();
     display: none;
     text-align: right;
-    //width: 38px;
 
     > * {
       margin-right: 1px;
@@ -109,18 +108,9 @@ $toolbar-buttonset-height: 40px;
 
   &.has-more-button {
     .buttonset {
-      //width: calc(100% - 39px); // 39px = width of the ".more" container + 1px for vertical spacing pseudo-element
 
       > *:last-child {
         margin-right: 5px; // Add back the 5px since we need to visually separate the More button from the others.
-      }
-    }
-
-    .title {
-      //width: calc(45%); // 1px for the "vertical alignment" helper psuedo-element
-
-      + .buttonset {
-        //width: calc(55% - 39px); // 55% - (width of the possible 'more' button + weird, inexplicable spacing that's necessary)
       }
     }
 

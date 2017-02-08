@@ -524,6 +524,11 @@
       },
 
       sizeContainers: function() {
+        // Don't do this at all unless we have a title element (which is optional)
+        if (!this.title || !this.title.length) {
+          return;
+        }
+
         var containerElem = this.element[0],
           titleElem = this.title[0],
           buttonsetElem = this.buttonset[0],

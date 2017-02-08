@@ -751,6 +751,8 @@
           return;
         }
 
+        arrow[0].removeAttribute('style');
+
         if (placementObj.attemptedFlips) {
           element.removeClass('top right bottom left').addClass(dir);
         }
