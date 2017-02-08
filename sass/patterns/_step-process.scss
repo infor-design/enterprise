@@ -37,37 +37,7 @@
     overflow: auto;
     width: 100%;
 
-    li > a {
-      // Borrow some accordion styles
-      border-top: 1px solid transparent;
-      border-bottom: 1px solid $accordion-border-color;
-      border-radius: 0;
-      display: block;
-      cursor: pointer;
-      height: 45px;
-      line-height: 45px;
-      margin-left: 0;
-      padding: 0 15px;
-      position: relative;
-
-      .icon {
-        // Position new alert icon for step "status"
-        &.step-alert {
-          top: calc(50% - 8px);
-          position: relative;
-          margin-right: 11px;
-        }
-
-        // Hide normal tree icons
-        &.icon-tree {
-          display: none;
-        }
-      }
-
-      // Focus State
-      &:not(.hide-focus):focus {
-        border: 1px solid $tree-focus-border-color;
-      }
+    li {
 
       // Selected State (similar to accordion)
       &.is-selected,
@@ -77,15 +47,53 @@
         border-bottom-color: $accordion-selected-bg-color;
         color: $accordion-selected-text-color;
 
-        .tree-text {
-          color: $accordion-selected-text-color;
+        > a {
+          .tree-text {
+            color: $accordion-selected-text-color;
+          }
+
+          .icon,
+          .icon-confirm,
+          .icon-error {
+            fill: $accordion-selected-text-color !important;
+          }
+        }
+      }
+
+      > a {
+        // Borrow some accordion styles
+        background-color: transparent;
+        border-top: 1px solid transparent;
+        border-bottom: 1px solid $accordion-border-color;
+        border-radius: 0;
+        display: block;
+        cursor: pointer;
+        height: 45px;
+        line-height: 45px;
+        margin-left: 0;
+        padding: 0 15px;
+        position: relative;
+
+        .icon {
+          // Position new alert icon for step "status"
+          &.step-alert {
+            top: calc(50% - 8px);
+            position: relative;
+            margin-right: 11px;
+          }
+
+          // Hide normal tree icons
+          &.icon-tree {
+            display: none;
+          }
         }
 
-        .icon,
-        .icon-confirm,
-        .icon-error {
-          fill: $accordion-selected-text-color !important;
+        // Focus State
+        &:not(.hide-focus):focus {
+          border: 1px solid $tree-focus-border-color;
         }
+
+
       }
     }
 

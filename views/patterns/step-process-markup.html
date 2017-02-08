@@ -23,45 +23,125 @@
     <div class="toolbar toolbar-custom toolbar-collapsible phone-visible">
       <div class="title title-wide">Steps to complete</div>
     </div>
-    <ul role="tree" aria-label="Asset Types" class="tree js-step-tree-scroll" data-init="false" id="json-tree">
+    <ul class="tree js-step-list-scroll" data-init="false" id="step-list">
 
-      <li>
-        <a href="#profile" data-alert-icon="empty-circle" class="is-selected is-open">Profile and Consent - step 1</a>
+      <li class="js-step">
+        <a class="js-step-link" href="#profile">
+          <svg class="step-alert icon-empty-circle icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-empty-circle"></use>
+          </svg>
+          <span class='tree-text'>Profile and Consent - step 1</span>
+        </a>
       </li>
-      <li>
-        <a href="#resume" data-alert-icon="empty-circle">Resume / CV - steo2</a>
+      <li class="js-step">
+        <a class="js-step-link" href="#resume">
+          <svg class="step-alert icon-empty-circle icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-empty-circle"></use>
+          </svg>
+          <span class="tree-text">Resume / CV - steo2</span>
+        </a>
       </li>
-      <li>
-        <a href="#preferences" data-alert-icon="empty-circle">Preferences - step 3</a>
+      <li class="js-step">
+        <a class="js-step-link" href="#preferences">
+          <svg class="step-alert icon-empty-circle icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-empty-circle"></use>
+          </svg>
+          <span class="tree-text">Preferences - step 3</span>
+        </a>
       </li>
-      <li>
-        <a href="#myhistory" data-alert-icon="empty-circle">My History- step 5</a>
-        <ul class="folder">
-          <li>
-            <a href="#myhistory-1" data-alert-icon="empty-circle">2016 - step 5-1</a>
+      <li class="js-step">
+        <a href="#" class="js-step-link" id="myhistory">
+          <svg class="step-alert icon-empty-circle icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-empty-circle"></use>
+          </svg>
+          <svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-caret-down"></use>
+          </svg>
+          <span class="tree-text">My History- step 5</span>
+        </a>
+        <ul class="folder js-step-folder">
+          <li class="js-step">
+            <a class="js-step-link" href="#myhistory-1">
+              <svg class="step-alert icon-empty-circle icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-empty-circle"></use>
+              </svg>
+              <span class="tree-text">2016 - step 5-1</span>
+            </a>
           </li>
-          <li>
-            <a href="#myhistory-2" data-alert-icon="empty-circle">2015 - step 5-2</a>
+          <li class="js-step">
+            <a class="js-step-link" href="#myhistory-2">
+              <svg class="step-alert icon-empty-circle icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-empty-circle"></use>
+              </svg>
+              <span class="tree-text">2015 - step 5-2</span>
+            </a>
           </li>
         </ul>
       </li>
-      <li>
-        <a href="#talent" data-alert-icon="empty-circle">Talent Profile - step 6</a>
+      <li class="js-step">
+        <a class="js-step-link" href="#talent">
+          <svg class="step-alert icon-empty-circle icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-empty-circle"></use>
+          </svg>
+          <span class="tree-text">Talent Profile - step 6</span>
+        </a>
       </li>
-      <li>
-        <a href="#information" data-alert-icon="empty-circle">Information - step 7</a>
-        <ul class="folder">
+      <li class="js-step">
+        <a class="js-step-link" id="information" href="#">
+          <svg class="step-alert icon-empty-circle icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-empty-circle"></use>
+          </svg>
+          <svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-caret-down"></use>
+          </svg>
+          <span class="tree-text">Information - step 7</span>
+        </a>
+        <ul class="js-step-folder folder">
         </ul>
       </li>
-      <li>
-        <a href="#summary" data-alert-icon="empty-circle">Summary - step 8</a>
+      <li class="js-step is-selected">
+        <a class="js-step-link" href="#summary">
+          <svg class="step-alert icon-empty-circle icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-empty-circle"></use>
+          </svg>
+          <span class="tree-text">Summary - step 8</span>
+        </a>
+      </li>
+      <li class="js-step">
+        <a class="js-step-link is-disabled" href="#disabled">
+          <svg class="step-alert icon-empty-circle icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-empty-circle"></use>
+          </svg>
+          <svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-caret-down"></use>
+          </svg>
+          <span class="tree-text">Disabled- step 9</span>
+        </a>
+        <ul class="folder is-open js-step-folder">
+          <li class="js-step">
+            <a class="js-step-link" href="#disabled-1">
+              <svg class="step-alert icon-empty-circle icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-empty-circle"></use>
+              </svg>
+              <span class="tree-text">Old - step 9-1</span>
+            </a>
+          </li>
+          <li class="js-step">
+            <a class="js-step-link" href="#disabled-2">
+              <svg class="step-alert icon-empty-circle icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-empty-circle"></use>
+              </svg>
+              <span class="tree-text">Older - step 9-2</span>
+            </a>
+          </li>
+        </ul>
       </li>
     </ul>
   </div>
 
   <div class="main no-scroll" role="main">
 
-    <div class="toolbar toolbar-custom toolbar-collapsible">
+    <div class="toolbar toolbar-custom toolbar-collapsible" data-init="false">
       <div class="title">
         <button class="btn-icon btn-toggle-steps js-toggle-sidebar" type="button">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
@@ -69,7 +149,6 @@
           </svg>
         </button>
         <div class="dual-title">
-
         </div>
       </div>
       <div class="buttonset phone-hidden">
@@ -120,11 +199,6 @@
         </form>
       </div>
 
-      <div id="myhistory" class="js-step-panel">
-        <h2>My History</h2>
-        <p>This is History step</p>
-      </div>
-
       <div id="myhistory-1" class="js-step-panel">
         <h2>My History Substep 1</h2>
         <p>This is History substep 1</p>
@@ -155,6 +229,15 @@
         <h2>Summary</h2>
         <p>This is final Summary Step</p>
       </div>
+
+      <div id="disabled-1" class="js-step-panel">
+        <h2>1st disabled step</h2>
+        <p>This is a disabled step</p>
+      </div>
+      <div id="disabled-2" class="js-step-panel">
+        <h2>2nd disabled step</h2>
+        <p>This is a disabled step</p>
+      </div>
     </div>
 
     <div class="phone-action-bar phone-visible">
@@ -168,9 +251,19 @@
   var instertStep = true;
   var instertSubStep = true;
   $(function() {
-    // Init Tree Steps
-    $('.step-process-container').stepprocess({
-      'beforeSelectStep': stepFunctions.beforeSelectStep
+
+    // Init Step Process
+    var stepElem = $('.step-process-container').stepprocess({
+      'beforeSelectStep': stepFunctions.beforeSelectStep,
+      'linearProgression': false
+    })
+    .on('selected', function(e, elem) {
+      var href = $(elem).attr('href');
+      if (href.length > 1) {
+        $('.step-panel-active').removeClass('step-panel-active');
+        $(href).addClass('step-panel-active');
+        $(this).addClass('show-main');
+      }
     });
 
     // Example button save event
@@ -195,15 +288,26 @@
   // Step Functions
   var stepFunctions = {
     // When a folder opens
-    beforeSelectStep: function(e) {
-      var hashLoc = $(e)[0].href.indexOf("#") + 1;
-      var stepId = $(e)[0].href.substring(hashLoc);
+    beforeSelectStep: function(args) {
+
+      // We do this because folders don't have an associated content panel
+      // as they are just links to open the subfolders.
+      var hashLoc = $(args.stepLink).attr('href');
+
+      var stepId;
+
+      if (hashLoc !== '#') {
+        stepId = $(args.stepLink).attr('href').substring(1);
+      } else {
+        stepId = $(args.stepLink).attr('id');
+      }
 
       var deferred = $.Deferred();
 
       // simulate ajax call
       setTimeout(function()
       {
+
         // check to see if first panel is vetoable
         if ($('#vetocheckbox1').is(":checked"))
         {
@@ -224,19 +328,19 @@
           var panelId = panel.attr("id");
           $('<div id="global" class="js-step-panel"><h2>Global</h2><p>This is Global Step</p></div>"').insertAfter(panel);
           var step = $("[href='#" + panelId + "']").parent();
-          $('<li><a href="#global" data-alert-icon="empty-circle">Global - step 4</a></li>').insertAfter(step);
+          $('<li class="js-step"><a class="js-step-link" href="#global" role="stepitem"><svg class="step-alert icon-empty-circle icon" focusable="false" aria-hidden="true" role="presentation"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-empty-circle"></use></svg><span class="tree-text">Global - step 4</span></a></li>').insertAfter(step);
         }
         else
         if (stepId == "information" && instertSubStep)
         {
           instertSubStep = false;
-          var step = $("[href='#information']");
+          var step = $("#information");
           var substeps = step.parent().find("ul");
-          var markup = '<li><a href="#information-1" data-alert-icon="empty-circle">Personal - step 7-1</a></li>';
-          markup += '<li><a href="#information-2" data-alert-icon="empty-circle">Family - step 7-2</a></li>';
+          var markup = '<li class="js-step"><a class="js-step-link" href="#information-1" role="stepitem"><svg class="step-alert icon-empty-circle icon" focusable="false" aria-hidden="true" role="presentation"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-empty-circle"></use></svg><span class="tree-text">Personal - step 7-1</span/a></li>';
+          markup += '<li class="js-step"><a class="js-step-link" href="#information-2" role="stepitem"><svg class="step-alert icon-empty-circle icon" focusable="false" aria-hidden="true" role="presentation"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-empty-circle"></use></svg><span class="tree-text">Family - step 7-2</span/a></li>';
           $(markup).appendTo(substeps);  //.insertAfter(step);
 
-          var panel = $("#information");
+          var panel = $(".step-container");
 
           $('<div id="information-2" class="js-step-panel"><h2>Global</h2><p>This is Information SubStep2</p></div>"').insertAfter(panel);
           $('<div id="information-1" class="js-step-panel"><h2>Global</h2><p>This is Information SubStep1</p></div>"').insertAfter(panel);
@@ -244,14 +348,14 @@
         else
         {
           deferred.resolve(true);
-          $(e).attr("visited", "true");
+          $(args.stepElem).attr("visited", "true");
 
           // **** Need to be able to change icon here *****
           //    $(e).attr("data-alert-icon", "confirm");
 
         }
         deferred.resolve(true);
-      },1000);
+      },100);
 
       return deferred.promise();
     },
