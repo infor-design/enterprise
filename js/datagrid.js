@@ -807,7 +807,7 @@ window.Editors = {
         column.editorOptions = {};
       }
       column.editorOptions.width = container.parent().width();
-      column.editorOptions.offset = {left: 1, top: 9};
+      column.editorOptions.offset = {left: 0, top: 3};
 
       if (column.maxLength) {
         this.input.attr('maxlength', column.maxLength);
@@ -2521,7 +2521,7 @@ $.fn.datagrid = function(options) {
         return 'style = "width: 100%"';
       } else if (this.totalWidth > this.elemWidth) {
         return 'style = "width: '+ parseFloat(this.totalWidth) + 'px"';
-      } else if (this.widthSpecified) {
+      } else if (this.widthSpecified && !isNaN(this.totalWidth)) {
         return 'style = "width: '+ parseFloat(this.totalWidth) + 'px"';
       }
       return '';
@@ -2546,6 +2546,9 @@ $.fn.datagrid = function(options) {
           return '';
         }
 
+        if (this.widthSpecified && !cacheWidths.width) {
+          return '';
+        }
         return ' style="width: '+ cacheWidths.width + (cacheWidths.widthPercent ? '%' :'px') + '"';
       }
 
@@ -2612,9 +2615,13 @@ $.fn.datagrid = function(options) {
           this.table.css('width', '100%');
         } else if (this.totalWidth > this.elemWidth) {
           this.table.css('width', this.totalWidth);
-        } else if (this.widthSpecified) {
+        } else if (this.widthSpecified && this.totalWidth && !isNaN(this.totalWidth)) {
           this.table.css('width', this.totalWidth);
         }
+      }
+
+      if (!this.widthPercent && !colWidth) {
+        return '';
       }
 
       return ' style="width: '+ (this.widthPercent ? colPercWidth + '%' : colWidth + 'px') + '"';
@@ -3112,7 +3119,7 @@ $.fn.datagrid = function(options) {
         count = self.tableBody.find('tr:visible').length,
         isClientSide = self.settings.paging && !(self.settings.source);
 
-      if (isClientSide) {
+      if (isClientSide || (!totals && !self.settings.paging)) {
         count = self.recordCount;
       }
 

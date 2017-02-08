@@ -1,6 +1,6 @@
 # Datagrid
 
-## Test Cases
+## Main Test Cases
 
 [Alternate Row Shading](controls/datagrid-alternate-row-shading)
 
@@ -110,7 +110,7 @@ TODO
 - Test the 3 row heights
 - Test sorting with pager
 
-[Grouped Headers](controls/datagrid-reorder)
+[Reorder](controls/datagrid-reorder)
 - Idea behind this example is showing the functionality to drag/reorder the columns and the Personalize Columns Menu
 - Resize the columns, then try to drag and move a column from the header
 - Note that the filter button has no functionality
@@ -123,7 +123,9 @@ TODO
 - Reload the page and notice that all the columns you changed are saved
 - Rest to Default, Resize a column then hide and show a column
 
-[Grouped Headers](controls/datagrid-singleselect)
+TODO: Had broken layout needs more testing
+
+[Single Select](controls/datagrid-singleselect)
 - This example tests shows single select mode.
 - Test the focus on all the cells is visual ok
 - Test the three themes
@@ -132,19 +134,19 @@ TODO
 - Hovering the whole row shows cursor
 - Clicking the whole row selects whole row
 
-[Grouped Headers](controls/datagrid-table-markup)
+[Init Via Table Markup](controls/datagrid-table-markup)
 - This example tests shows that you can initialize a grid with a table in the page.
 - The example is working if teh grid renders normally
 - User should be able to use the toolbar, resize and sort and other normal actions
 
-[Grouped Headers](controls/datagrid-tooltips)
+[Tooltips](controls/datagrid-tooltips)
 - This example tests shows various places you can see tooltips
 - Hover the first column (drill down arrow) and you should see a black tooltips
 - Hover the header "Product Id" and you should see a tooltips
 - Hover the last cell on the rows with ... A tooltip should appear
 - Sort the last column and hover the cell with ... A tooltip should appear
 
-[Grouped Headers](controls/datagrid-tree)
+[Tree](controls/datagrid-tree)
 - This example tests shows a hierarchical structure in the datagrid
 - When resizing the page (height) the grid should stay in view (fixed header)
 - Should be able to expand and collapse tree rows
@@ -153,7 +155,7 @@ TODO
 - Test keyboard (space to open rows) while in that cell
 - Sort should work (only at the top level)
 
-## Test Cases
+## Additional Test Cases
 
 [Only 2 Columns](tests/datagrid/2-columns)
 - Purpose of the example was to test resize with two Columns
@@ -192,10 +194,7 @@ TODO: Issues in Optiva with mismtached columns
 [Columns Colors](/tests/datagrid/columns-colors.html)
 - This example shows the config option of adding a column css class. The example is working of two columns with 1 are bold and have a purple style.
 
-[Columns Colors](/tests/datagrid/columns-colors.html)
-- This example shows the config option of adding a column css class. The example is working of two columns with 1 are bold and have a purple style.
-
-[Columns Colors](/tests/datagrid/contextualactionpanel.html)
+[Contextual Action Panel](/tests/datagrid/contextualactionpanel.html)
 - This example shows a grid in a contextual action panel
 - Click the button to see the contextual-action-panel (CAP)
 - Try the three themes
@@ -203,34 +202,147 @@ TODO: Issues in Optiva with mismtached columns
 - Click the close button
 - Hit Escape to close
 
-[Columns Colors](/tests/datagrid/counts-on-tab.html)
+[Counts on Tabs](/tests/datagrid/counts-on-tab.html)
 - This example was to fix a problem that when on a tab the results didnt show.
 The example is working of on the second and third tab the results shows. Or its a regression.
 
-custom-number-format.html
-custom-results-text.html
-custom-toolbar-maxvisible-button.html
-custom-toolbar.html
-datagrid-columns-auto.html
-datagrid-columns-fixed.html
-datagrid-columns-mixed.html
-datagrid-columns-percent.html
-datagrid-comments.html
-datagrid-contextmenu.html
-datagrid-custom-editor.html
-datagrid-custom-formatter.html
-datagrid-editable-autocomplete.html
-datagrid-editable-datetime.html
-datagrid-editable-hidden.html
-datagrid-editable-lookup.html
-datagrid-editable-paging.html
-datagrid-editable-short-row.html
-datagrid-ellipsis-tooltips.html
-datagrid-expandable-drill-page.html
-datagrid-filter-activecell.html
-datagrid-filter-alternate-row-shading.html
-datagrid-filter-conditions.html
-datagrid-filter-disabled.html
+[Custom Number Format](/tests/datagrid/custom-number-format.html)
+- This example was to show developers how to customize the number format. The example is working if Price has 210,99 , Price ($) has $210.99 and Quantity has 100.00 %
+
+[Custom Results Text](/tests/datagrid/custom-results-text.html)
+- This example was to show developers how hook so they can customize the results text on the grid toolbar. Its working if 'Datagrid Header Title (Custom Count is 7
+| No Filter)' is shown
+
+[Custom Toolbar Max Visible](/tests/datagrid/custom-toolbar-maxvisible-button.html)
+- This example was to show developers how to make the toolbar go over the max 3 buttons.
+Its working if you see A Filter Button, Then Button 1 -> Button 4, Then Actions
+
+[Custom Toolbar](/tests/datagrid/custom-toolbar.html)
+- This example was to show developers how to make the toolbar custom and not use the grid settings. The example is working if the toolbar appears about the grid
+
+[Columns Auto](/tests/datagrid/datagrid-columns-fixed.html)
+- This example shows how columns work when not width is set. The first column (drilldown) should be the right size for the buttons. The other three columns should be equally spread.
+- Test Resize and Sort
+
+[Columns Fixed](/tests/datagrid/datagrid-columns-fixed.html)
+- This example shows how columns work when a fixed pixel size is set. The first column should be 80px and the rest 250px (approx is ok).
+- At responsive the grid maintains the same size and you can scroll left
+- Test Resize and Sort
+
+[Columns mixed](/tests/datagrid/datagrid-columns-mixed.html)
+- This example shows how columns work when a mix of percent and pixel size columns are used.
+- At responsive the percent columns stay at percent and will eventually go away because the percentage size of the total is too small. (We will introduce a mobile size)
+- Test Resize and Sort
+
+[Columns mixed](/tests/datagrid/datagrid-columns-percent.html)
+- This example shows how columns work with percent columns sizes. All columns but the first are 20%
+- On mobile they all stay at 20%
+- Test Resize and Sort
+TODO: Resize Quantity and Sort (BUG!)
+
+[Comments](/tests/datagrid/datagrid-comments.html)
+- This example shows how you can have a bigger, wrapping description column.
+- The columns are not resizable here as it doesnt make much sense
+- Test Resize the page
+- Sort the Comments folder
+
+[Context Menu](/tests/datagrid/datagrid-contextmenu.html)
+- This example shows how you can have a row context menu.
+- Try to right click each row
+- Each time you right click the menu should reopen in the same position
+
+[Custom Editor](/tests/datagrid-custom-editor.html)
+- This example is showing a custom editor API. TODO: It is currently broken due to a known issue. Skip
+
+[Custom Formatter](/tests/datagrid-custom-formatter.html)
+- This example is showing a custom cell formatter. The last column is customized as an example by adding bold text. It is working if there is bold in the last column
+
+[Editor With Auto Complete](/tests/datagrid-editable-autocomplete.html)
+- This example shows an editable cell with an auto complete.
+- Click in the auto complete column and start typing, the auto complete popup should appear.
+- Resize the column (should adapt to size)
+- Same with Keyboard
+
+[Editor With Date Time Picker](/tests/datagrid-editable-datetime.html)
+- This example shows an editable cell with a date + time field
+- Click in the order date column, then try to type
+- Click in the order date column, then try to open the calendar
+- Hover a non focus'd cell and click the datepicker to open (vs focus the cell)
+- Resize the column (should adapt to size)
+- Same with Keyboard
+
+TODO
+- Focus the cell
+- then click editor (this is an optiva issue)?
+
+[Editor With Lookup](/tests/datagrid-editable-lookup.html)
+- This example shows an editable cell with a lookup editor field
+- Click in the Product id column, then try to type
+- Click in the Product id column, then try to open the popup
+- Hover a non focus'd cell and click the icon to open (vs focus the cell)
+- Resize the column (should adapt to size)
+- Do Same with Keyboard
+
+TODO
+- Focus the cell
+- then click editor (this is an optiva issue)?
+
+[Editing and Paging](/tests/datagrid-editable-paging.html)
+- This example shows combining editing with Paging
+- Edit the first 3 columns and type a 1 in them
+- Go to page 2 and edit the first 3 columns and type a 2 in them
+- Click back and forth pages and the values should stick
+- Do Same with Keyboard
+- Change Pagesize and repeat
+
+[Editing and Short Row](/tests/datagrid-editable-short-row.html)
+- This example shows combining editing with shorter row
+- Retest like datagrid-editable
+- The Columns being shorter should all function correctly and look ok visually
+
+[Ellipsis Tooltips](/tests/datagrid-ellipsis-tooltips.html)
+- This test shows a use case used in Xtreme where if the description is very long you can hover it and get a tooltip to see the rest.
+- The lines with ... in the comment column, should show a tooltip when hovered
+- Test 3 themes
+- Test 3 row heights
+- Resize the column and retry
+
+[Expandable Area and Drill Down](/tests/datagrid-expandable-drill-page.html)
+- This tests the eventing along with the expand row feature
+- Open develop tools and watch the console
+- Click the drill down icons on the first page (should show id and row index in the console)
+- Go to page two - test from here
+- Expand the rows each time you expand a new "Thing" will be added
+
+[Filter Active Cell](/tests/datagrid-filter-activecell.html)
+- This tests the eventing along with the filter row feature
+- Open develop tools and watch the console
+- Click and select any row and it will show the cell and row in the console (zero based)
+- Create a filter and test that to still shows the right zero based info in the console
+
+[Filter Row Shading](/tests/datagrid-filter-alternate-row-shading.html)
+- This tests the alternate row shading along with the filter row feature
+- Visually the rows should alternate in shading for readability.
+- Darker row should start on the second row (even)
+- Test with themes
+- Filter some rows and ensure darker rows still start on the second row
+
+[Filter Row Shading](/tests/datagrid-filter-alternate-row-shading.html)
+- This tests the alternate row shading along with the filter row feature
+- Visually the rows should alternate in shading for readability.
+- Darker row should start on the second row (even)
+- Test with themes
+- Filter some rows and ensure darker rows still start on the second row
+
+[Filter Conditions](/tests/datagrid-filter-conditions.html)
+- This tests shows a feature to limit the filter conditions.
+- This is wokring if the product id column has only Equals and Contains
+
+[Filter Conditions](/tests/datagrid-filter-disabled.html)
+- This tests shows a feature to disable (readonly) filter conditions.
+TODO
+
+
 datagrid-filter-gridlist.html
 datagrid-filter-hidden.html
 datagrid-filter-localized.html
@@ -339,10 +451,15 @@ wide-grid-expandable-row-with-form-buttons.html
 xss-prevention.html
 
 TODO:
+
 - Refactor the mouse up and click code
 - Editing (more)
-- Last Column / Border Resize (maybe)
-- TODOS
+- Test Directly on Optiva
+- Test More on Windows
 - Mobile (percent col widths) or mobile min - width....
-- Test on Optiva
-- Test on Windows
+- Test Last Column is hidden.
+- Test Reorder Example More
+- Last Column / Border Resize (maybe)
+- Re-Test Screen Reader - Not reading headers
+- IE Speed (Fifty Cols)
+- IE Scroll Bar (out of alignment for size of the scrollbar)
