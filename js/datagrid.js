@@ -2521,7 +2521,7 @@ $.fn.datagrid = function(options) {
         return 'style = "width: 100%"';
       } else if (this.totalWidth > this.elemWidth) {
         return 'style = "width: '+ parseFloat(this.totalWidth) + 'px"';
-      } else if (this.widthSpecified && !isNaN(this.totalWidth)) {
+      } else if (this.widthSpecified && !isNaN(this.totalWidth) && this.totalWidth > this.elemWidth) {
         return 'style = "width: '+ parseFloat(this.totalWidth) + 'px"';
       }
       return '';
@@ -2616,7 +2616,7 @@ $.fn.datagrid = function(options) {
           this.table.css('width', '100%');
         } else if (this.totalWidth > this.elemWidth) {
           this.table.css('width', this.totalWidth);
-        } else if (this.widthSpecified && this.totalWidth && !isNaN(this.totalWidth)) {
+        } else if (this.widthSpecified && this.totalWidth && !isNaN(this.totalWidth) && this.totalWidth > this.elemWidth) {
           this.table.css('width', this.totalWidth);
         }
       }
@@ -3310,7 +3310,7 @@ $.fn.datagrid = function(options) {
           }
         }
 
-        //Handle Right Click on Some Menus
+        //Handle Context Menu on Some
         if (col.menuId) {
           var btn = $(this).find('button');
           btn.popupmenu({menuId: col.menuId, trigger: 'immediate', offset: { y: 5 }});
@@ -3321,6 +3321,16 @@ $.fn.datagrid = function(options) {
           e.preventDefault();
           return false;
         }
+
+        /* Test Quick Edit Mode without this. Especially Drop Down
+          if (self.isCellEditable(dataRowIdx, cell)) {
+            setTimeout(function() {
+              if (self.isContainTextfield(elem) && self.notContainTextfield(elem)) {
+                self.quickEditMode = true;
+              }
+            }, 0);
+          }
+         */
 
       });
 

@@ -17,7 +17,7 @@
  - In the .. Menu, Select the three row sizes and check that the grid is rendered accordingly.
  - Drill down column should not be resizable
 
-[Editing](controls/datagrid-editable) TODO
+[Editing](controls/datagrid-editable)
 
  - Select one or Two Rows - The Contextual Panel Should appear
   - The Count should show the number selected
@@ -52,19 +52,13 @@
 - The bottom columns can be sorted
 - The bottom columns can be resized
 
-TODO
-- P4 The top column can be resized
-- P4 Smoother resize
-- P4 Can it be down with col groups
-
 [Grouped Headers](controls/datagrid-list)
 - Visually the header and the body look more integrated than the normal tables, so has a different styling
 - Test the visual difference on all three themes
 - Columns can be sorted and resized
 - Cells can be focus and arrow keys to move around
 
-TODO
-- P2 Resize to Reponsive
+TODO - Resize to Reponsive
 
 [Grouped Headers](controls/datagrid-multiselect)
 - Clicking on the row itself or the checkbox will select the row visually and with the checkbox
@@ -307,7 +301,7 @@ TODO
 - Test 3 row heights
 - Resize the column and retry
 
-TODO: Resize/Reordr not converting from % to pixel and failing
+TODO: Resize/Reorder not converting from % to pixel and failing
 
 [Expandable Area and Drill Down](/tests/datagrid-expandable-drill-page.html)
 - This tests the eventing along with the expand row feature
@@ -340,21 +334,59 @@ TODO: Resize/Reordr not converting from % to pixel and failing
 - This tests shows a feature to limit the filter conditions.
 - This is wokring if the product id column has only Equals and Contains
 
-[Filter Conditions](/tests/datagrid-filter-disabled.html)
+[Filter Disabled](/tests/datagrid-filter-disabled.html)
 - This tests shows a feature to disable (readonly) filter conditions.
-TODO
+- All the filter columns of different types should be disabled and visually appear disabled.
+- Test in all three themes
+- Resize the columns
+BUG: When focusing a cell in Dark Mode the inputs are invisible
 
+[Grid List Style + Filter Row](/tests/datagrid-filter-gridlist.html)
+- This shows the alternate "list" style that grids can have. But with also a filter row.
+- Still has lighter impact and is lacking left and right borders
+- Test on all three themes
+BUG: High contrast theme has two different color icons. The icons are also very dim for high contrast theme.
 
-datagrid-filter-gridlist.html
-datagrid-filter-hidden.html
-datagrid-filter-localized.html
-datagrid-filter-multiselect.html
-datagrid-filter-paging-client-side.html
-datagrid-filter-paging-server-side.html
-datagrid-filter-server-side.html
-datagrid-filter-singleselect.html
-datagrid-filter-using.period.in.filename.html
-datagrid-fixed-header-list.html
+[Filter Disabled](/tests/datagrid-filter-localized.html)
+- This test shows data grid with filter functionality translated into french.
+- This can also now be done on any page with ?locale=fr-FR (but this page wont work since its fixed)
+- Click Actions - Show Filter Row and it will appear
+- Then make sure the filter row works as per filter row tests
+
+[Filter Multiselect](/tests/datagrid-filter-multiselect.html)
+- This test shows data grid with filter functionality combined with multi select
+- Filter Some Rows
+- Select Filtered Rows
+- Clear Filter
+- Select Some Rows
+- Filter out those Rows
+- Clear Filter and it should reshow the filtered rows
+BUG: Not working great here...
+
+[Filter Paging (Client Side)](/tests/datagrid-filter-paging-client-side.html)
+- The primary focus is filtering combined with paging.
+- Filter some rows and then run through the pager. The results cound and number of pages should be correct.
+- Augment the filter with a new condition and retry.
+
+[Filter Paging (Server Side)](/tests/datagrid-filter-paging-server-side.html)
+- The primary focus is filtering combined with paging (server side)
+- Filter some rows and then run through the pager. Note: Only the filter on product ID works due to server limits
+- The results count and number of pages should be correct.
+- Augment the filter with a different condition and retry.
+
+[Filter Paging (Server Side)](/tests/datagrid-filter-singleselect.html)
+- The primary focus is filtering combined with single select
+- Filter some rows
+- Select a row
+- Change Filter -> Not no rows selected
+- BUG: Test selectedRows API is correct on toggling filter vs selection
+
+[Fixed Header List](/tests/datagrid-fixed-header-list.html)
+- This example shows a fixed header in the list styling
+- Resize the page so that not all rows can be seen (vertical and horizontal)
+- Scroll
+- Resize Columns
+
 datagrid-fixed-header-short-row-filter.html
 datagrid-fixed-header-short-row.html
 datagrid-fixed-header.html
@@ -362,7 +394,6 @@ datagrid-fixed-header.html
 [All Formatters](/tests/datagrid-formatters.html)
   TODO: Resize + Sort is all messed up
 
-datagrid-full-width.html
 datagrid-grouping-formatter.html
 datagrid-grouping-list-custom.html
 datagrid-grouping-list.html
@@ -430,10 +461,15 @@ form-buttons.html
 hide-show-column.html
 
 TODO: Not rendering 100%
-[All Formatters](/tests/dicon-buttons.html)
-  TODO: Not rendering 100%
+[Icon Buttons](/tests/icon-buttons.html)
+  - This example shows how to create icon buttons, the last two columns show a button and link object with an icon on it.
+  - The only test case is that if you click the icons, then the relevent event info is shown in the console
 
+[Loading Data (Performance)](/tests/large-dataset-performance.html)
 large-dataset-performance.html
+  - This example shows a test case, where the header is shown and data is loaded in. This test case initially
+  was very slow in IE (11) and took over 30s. Now it should take.
+
 loaddata-selected-rows.html
 localstorage-conflicts.html
 long-text.html
@@ -461,16 +497,17 @@ xss-prevention.html
 
 TODO:
 
-- Refactor the mouse up and click code
-- Editing (more)
-- Test Directly on Optiva
+- Test Reorder Example More
 - Test More on Windows
+- Test Directly on Optiva
+- Editing (more)
 - Mobile (percent col widths) or mobile min - width....
 - Test Last Column is hidden.
-- Test Reorder Example More
 - Last Column / Border Resize (maybe)
-- Re-Test Screen Reader - Not reading headers
 - IE Speed (Fifty Cols)
 - IE Scroll Bar (out of alignment for size of the scrollbar)
+- Re-Test Screen Reader - Not reading headers
+
+ALSO TEST
 - Charts Scroll Bar
 - Remove RTL .scrollable stuff http://localhost:4000/tests/tooltip/positions.html?locale=ar-EG
