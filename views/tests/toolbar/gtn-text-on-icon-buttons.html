@@ -1,0 +1,51 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Toolbar Test: Text on Icon Buttons</h2>
+    <p><a class="hyperlink" href="http://jira/browse/SOHO-5353" target="_blank">Related JIRA Ticket</a></p>
+    <p><b>NOTE: </b>Toolbar is only four columns wide here.</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="four columns">
+    <div id="common-toolbar" class="toolbar has-more-button" role="toolbar" aria-label="Common Toolbar">
+      <div class="title">Common Toolbar</div>
+      <div class="buttonset">
+        <button type="button" id="category-button" class="btn hide-focus" tabindex="-1">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-filter"></use>
+          </svg>
+          <span>Category</span>
+        </button>
+        <button type="button" id="settings-menu-button" class="btn-menu is-selected" aria-haspopup="true">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-settings"></use>
+          </svg>
+          <span>Settings</span>
+        </button>
+        <ul class="popupmenu is-selectable has-icons" id="popupmenu-2" role="menu" aria-hidden="true">
+          <li role="presentation"><a href="#" id="setting-1" tabindex="-1" role="menuitem">Setting #1</a></li>
+          <li role="presentation"><a href="#" id="setting-2" tabindex="-1" role="menuitem">Setting #2</a></li>
+          <li role="presentation"><a href="#" id="setting-3" tabindex="-1" role="menuitem">Setting #3</a></li>
+        </ul>
+      </div>
+
+      <div class="more">
+        <button type="button" class="btn-actions hide-focus" aria-haspopup="true" tabindex="-1">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-more"></use>
+          </svg>
+          <span class="audible">More Actions</span>
+        </button>
+        <ul class="popupmenu" id="popupmenu-3" role="menu" aria-hidden="true">
+          <li role="presentation">
+            <a href="#" id="existing-option-1" tabindex="-1" role="menuitem">Existing Option #1</a>
+          </li>
+          <li role="presentation">
+            <a href="#" id="existing-option-2" tabindex="-1" role="menuitem">Existing Option #2</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,6 @@
 // Tooltips
 //================================================== /
+
 .popover,
 .tooltip {
   @include font-size(15);
@@ -34,20 +35,20 @@
     pointer-events: initial;
   }
 
-  &.top:not(.is-error) .arrow::after {
+  &.top .arrow::after {
     border-top-color: $tooltip-bg-color;
     top: -6px;
   }
 
-  &.bottom:not(.is-error) .arrow::after {
+  &.bottom .arrow::after {
     border-bottom-color: $tooltip-bg-color;
   }
 
-  &.right:not(.is-error) .arrow::after {
+  &.right .arrow::after {
     border-right-color: $tooltip-bg-color;
   }
 
-  &.left:not(.is-error) .arrow::after {
+  &.left .arrow::after {
     border-left-color: $tooltip-bg-color;
   }
 
@@ -61,25 +62,25 @@
     }
 
     &.top {
-      .arrow {
+      .arrow::after {
         border-top-color: $tooltip-error-bg-color;
       }
     }
 
     &.bottom {
-      .arrow {
+      .arrow::after {
         border-bottom-color: $tooltip-error-bg-color;
       }
     }
 
     &.left {
-      .arrow {
+      .arrow::after {
         border-left-color: $tooltip-error-bg-color;
       }
     }
 
     &.right {
-      .arrow {
+      .arrow::after {
         border-right-color: $tooltip-error-bg-color;
       }
     }
@@ -121,7 +122,6 @@
   border: 1px solid $popover-border-color;
   box-shadow: $popover-box-shadow;
   color: $popover-color;
-  //overflow: auto;
   pointer-events: auto;
   z-index: 3010;
 
@@ -142,6 +142,12 @@
       left: -12px;
       top: -14px;
     }
+
+    &.alternate {
+      .arrow::after {
+        border-top-color: $popover-alternate-arrow-color;
+      }
+    }
   }
 
   &.bottom {
@@ -156,6 +162,12 @@
       left: -12px;
       top: 1px;
     }
+
+    &.alternate {
+      .arrow::after {
+        border-bottom-color: $popover-alternate-arrow-color;
+      }
+    }
   }
 
   &.right {
@@ -168,6 +180,12 @@
     .arrow::after {
       border-right-color: $popover-bg-color;
       top: -12px;
+    }
+
+    &.alternate {
+      .arrow::after {
+        border-right-color: $popover-alternate-arrow-color;
+      }
     }
   }
 
@@ -182,6 +200,12 @@
       border-left-color: $popover-bg-color;
       left: -13px;
       top: -12px;
+    }
+
+    &.alternate {
+      .arrow::after {
+        border-left-color: $popover-alternate-arrow-color;
+      }
     }
   }
 
@@ -216,11 +240,6 @@
       margin: 20px 0 0 -20px;
       position: absolute;
       width: calc(100% - 2px);
-    }
-
-    &.popover .arrow::after {
-      border-left-color: $popover-alternate-arrow-color;
-      border-right-color: $popover-alternate-arrow-color;
     }
 
     th {
@@ -296,6 +315,7 @@
   > .arrow {
     border-bottom-width: 0;
     bottom: -7px;
+    left: calc(50% - 6px);
 
     &::after {
       border-bottom-width: 0;
@@ -308,6 +328,7 @@
 .bottom {
   > .arrow {
     border-top-width: 0;
+    left: calc(50% - 6px);
     top: -7px;
 
     &::after {
@@ -347,54 +368,16 @@
 }
 
 html[dir='rtl'] {
-
   .popover,
   .tooltip {
     text-align: right;
   }
 
   .tooltip {
-
-    &.right:not(.is-error) .arrow::after {
-      border-left-color: $tooltip-bg-color;
-      border-right-color: transparent;
-    }
-
-    &.left:not(.is-error) .arrow::after {
-      border-left-color: transparent;
-      border-right-color: $tooltip-bg-color;
-    }
-
     .icon {
       + p {
         margin-left: inherit;
         margin-right: 2px;
-      }
-    }
-  }
-
-  .popover {
-    &.right {
-      .arrow {
-        border-left-color: $popover-arrow-border-color;
-        border-right-color: transparent;
-      }
-
-      .arrow::after {
-        border-left-color: $popover-bg-color;
-        border-right-color: transparent;
-      }
-    }
-
-    &.left {
-      .arrow {
-        border-left-color: transparent;
-        border-right-color: $popover-arrow-border-color;
-      }
-
-      .arrow::after {
-        border-left-color: transparent;
-        border-right-color: $popover-bg-color;
       }
     }
   }
@@ -409,24 +392,6 @@ html[dir='rtl'] {
   .popover-content {
     margin-left: inherit;
     margin-right: 0;
-  }
-
-  .right {
-    .arrow {
-      border-left-width: 11px;
-      border-right-width: 0;
-      left: auto;
-      right: -11px;
-    }
-  }
-
-  .left {
-    .arrow {
-      border-left-width: 0;
-      border-right-width: 11px;
-      left: -10px;
-      right: auto;
-    }
   }
 
 }

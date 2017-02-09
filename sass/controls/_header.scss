@@ -78,10 +78,6 @@ $header-height: 60px;
     text-transform: capitalize;
   }
 
-  .hamburger-menu + h {
-    margin-left: 13px;
-  }
-
   .separator {
     @include font-size(22);
     color: $header-text-color;
@@ -109,6 +105,7 @@ $header-height: 60px;
 
     .title {
       color: $header-text-color;
+      height: $header-height;
       overflow: visible;
       text-overflow: clip;
 
@@ -398,35 +395,6 @@ $header-height: 60px;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-
-    .toolbar {
-      &.has-more-button {
-        .title {
-          width: calc(60%);
-
-          + .buttonset {
-            width: calc(40% - 39px);
-          }
-        }
-      }
-    }
-  }
-}
-
-@media(max-width: $breakpoint-phablet - 1) {
-  // On this breakpoint, the Headers show less buttons and more of the Page Title
-  .header {
-    .toolbar {
-      &.has-more-button {
-        .title {
-          width: calc(70%);
-
-          + .buttonset {
-            width: calc(30% - 39px);
-          }
-        }
-      }
-    }
   }
 }
 
@@ -440,16 +408,6 @@ html[dir='rtl'] {
   .header .toolbar .title > *:first-child {
     margin-left: 10px;
     margin-right: 20px;
-  }
-
-  .toolbar .title + .buttonset {
-    text-align: left;
-  }
-
-  .toolbar.has-more-button .buttonset > *:last-child,
-  .formatter-toolbar.has-more-button .buttonset > *:last-child {
-    margin-left: 5px;
-    margin-right: 0;
   }
 }
 

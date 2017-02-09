@@ -55,10 +55,6 @@ $toolbarsearchfield-category-empty-width: 54px;
       @include font-size(12);
       font-weight: 700;
     }
-
-    &:empty {
-      padding-right: 0;
-    }
   }
 
   .icon {
