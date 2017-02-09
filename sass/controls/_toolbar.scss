@@ -6,9 +6,9 @@ $toolbar-buttonset-height: 40px;
 // See also Colors.scss
 .toolbar,
 .formatter-toolbar {
-  @include no-select();
   padding: 0 1rem;
   position: relative;
+  text-align: right;
   -webkit-touch-callout: none;
 
   // Acts as a spacer that causes the toolbar items to vertically align.
@@ -22,10 +22,10 @@ $toolbar-buttonset-height: 40px;
   }
 
   .buttonset {
+    @include no-select();
     height: $toolbar-buttonset-height;
     overflow: hidden;
     padding-left: 1px;  //for the focus state
-    width: 98%;
 
     > .separator {
       background-color: $formatter-toolbar-separator-color;
@@ -46,7 +46,7 @@ $toolbar-buttonset-height: 40px;
       }
 
       &.is-overflowed {
-        display: block;
+        visibility: hidden;
       }
     }
 
@@ -60,13 +60,26 @@ $toolbar-buttonset-height: 40px;
   }
 
   .title {
+    @include enable-select();
+    height: $toolbar-buttonset-height;
+    left: 1rem;
     overflow: hidden;
+    position: absolute;
+    text-align: left;
     text-overflow: ellipsis;
+    top: 0;
     white-space: nowrap;
-    width: 45%;
+
+    // Acts as a spacer that causes the toolbar items to vertically align.
+    &::before {
+      @include vertical-alignment-spacer;
+    }
 
     > * {
+      display: inline-block;
+      margin: auto 0;
       vertical-align: middle;
+      white-space: nowrap;
     }
 
     > h1 {
@@ -79,15 +92,14 @@ $toolbar-buttonset-height: 40px;
 
     + .buttonset {
       text-align: right;
-      width: calc(55% - 1px); // 1px is the width of the pseudo-element preceeding the title used for vertical alignment
     }
   }
 
   // Container for More Button
   .more {
+    @include no-select();
     display: none;
     text-align: right;
-    width: 38px;
 
     > * {
       margin-right: 1px;
@@ -96,18 +108,10 @@ $toolbar-buttonset-height: 40px;
 
   &.has-more-button {
     .buttonset {
-      width: calc(100% - 39px); // 39px = width of the ".more" container + 1px for vertical spacing pseudo-element
+      max-width: calc(100% - 50px);
 
       > *:last-child {
         margin-right: 5px; // Add back the 5px since we need to visually separate the More button from the others.
-      }
-    }
-
-    .title {
-      width: calc(45%); // 1px for the "vertical alignment" helper psuedo-element
-
-      + .buttonset {
-        width: calc(55% - 39px); // 55% - (width of the possible 'more' button + weird, inexplicable spacing that's necessary)
       }
     }
 
@@ -402,4 +406,32 @@ $toolbar-buttonset-height: 40px;
       }
     }
   }
+}
+
+//RTL Styles
+html[dir='rtl'] {
+
+  .toolbar,
+  .formatter-toolbar {
+    text-align: left;
+
+    .title {
+      left: auto;
+      right: 1rem;
+      text-align: right;
+
+      + .buttonset {
+        text-align: left;
+      }
+    }
+
+    &.has-more-button {
+      .buttonset > *:last-child {
+        margin-left: 5px;
+        margin-right: 0;
+      }
+    }
+
+  }
+
 }
