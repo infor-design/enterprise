@@ -808,14 +808,6 @@ html[dir='rtl'] {
     }
   }
 
-  .scrollable {
-    direction: ltr;
-
-    > * {
-      direction: rtl;
-    }
-  }
-
   .l-pull-right {
     float: left;
   }
