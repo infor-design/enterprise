@@ -396,8 +396,18 @@ BUG: Not working great here...
 - Test Three Themes
 - Test Filter
 
-datagrid-fixed-header-short-row.html
-datagrid-fixed-header.html
+[Fixed Header Short Row Filter](/tests/datagrid-fixed-header-short-row.html)
+- Example shows a full page and resizable short row datagrid
+- Test Actions in ... Menu (Personalization Columns) and Changing Row height
+- Test Resize Columns and Column Reorder
+- Focus Cells - cell border should bewhole height
+
+[Fixed Header Short Row Filter](/tests/datagrid-fixed-header.html)
+- Example shows a fixed header full page grid
+- Test Column Resize
+- Test Themes
+- Test Pager
+TODO: ON IE Resize the Page Smaller -> need to jet the resize block
 
 [All Formatters](/tests/datagrid-formatters.html)
 - This page shows many of the popular formatters. The example is readonly.
@@ -522,8 +532,9 @@ TODO:
 - IE Scroll Bar (out of alignment for size of the scrollbar)
 - Re-Test Screen Reader - Not reading headers
 
-ALSO TEST
+ALSO TEST These bugs
 - Charts Scroll Bar
-- Remove RTL .scrollable stuff http://localhost:4000/tests/tooltip/positions.html?locale=ar-EG
 - http://localhost:4000/examples/saleshub/external-vendors.html
-- http://localhost:4000/patterns/module-tabs-add.html
+- http://localhost:4000/patterns/module-tabs-add.html (small button)
+- http://localhost:4000/examples/lawson/hotkeys (keyboard and layout)
+- http://localhost:4000/controls/tabs (keyboard)

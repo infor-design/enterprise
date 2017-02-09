@@ -684,6 +684,17 @@ body.no-scroll {
   .detail {
     background-color: $body-bg-color;
     height: auto;
+
+    .tab-container.alternate {
+      position: relative;
+      top: -50px;
+
+      + .tab-panel.alternate {
+        position: relative;
+        top: -50px;
+      }
+    }
+
   }
 }
 
