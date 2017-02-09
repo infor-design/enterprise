@@ -71,6 +71,8 @@
         }
 
         // Check for a "title" element.  This element is optional.
+        // If a title element exists, a tooltip will be created for when it's not
+        // possible to show the entire title text on screen.
         this.title = this.element.children('.title');
         if (this.title.length) {
           this.cutoffTitle = false;
@@ -355,12 +357,12 @@
         }
 
         setActiveToolbarItem();
+        //this.adjustMenuItemVisibility();
 
         // Toggles the More Menu based on overflow of toolbar items
         this.handleResize();
 
         this.element.triggerHandler('rendered');
-
         return this;
       },
 
@@ -506,22 +508,23 @@
           (key === 37 && target.is('input') && e.shiftKey) || // Shift + Left Arrow should be able to navigate away from Searchfields
           key === 38) {
           e.preventDefault();
-          self.navigate( Locale.isRTL() ? 1 : -1 );
+          self.navigate( isRTL ? 1 : -1 );
         }
 
         if ((key === 39 && target.is(':not(input)')) ||
           (key === 39 && target.is('input') && e.shiftKey) || // Shift + Right Arrow should be able to navigate away from Searchfields
           key === 40) {
           e.preventDefault();
-          self.navigate( Locale.isRTL() ? -1 : 1 );
+          self.navigate( isRTL ? -1 : 1 );
         }
 
         return;
       },
 
       handleResize: function() {
-        this.toggleMoreMenu(); // Added 9/16/2015 due to issue HFC-2876
         this.sizeContainers();
+        this.adjustMenuItemVisibility();
+        this.toggleMoreMenu(); // Added 9/16/2015 due to issue HFC-2876
       },
 
       sizeContainers: function() {
@@ -535,8 +538,9 @@
           buttonsetElem = this.buttonset[0],
           moreElem = this.more[0],
           buttons = this._getButtonsetButtons(),
-          ADDED_SPACE = 30,
-          MIN_TITLE_SIZE = 44 + ADDED_SPACE;
+          WHITE_SPACE = 30,
+          MIN_TITLE_SIZE = 44 + WHITE_SPACE,
+          MIN_BUTTONSET_SIZE = 50 + WHITE_SPACE;
 
         for (var i = 0; i < buttons.length; i++) {
           buttons[i][0].classList.remove('is-overflowed');
@@ -548,34 +552,42 @@
         var toolbarStyle = window.getComputedStyle(containerElem),
           toolbarWidth = parseInt(toolbarStyle.width),
           padding = parseInt(toolbarStyle.paddingLeft) + parseInt(toolbarStyle.paddingRight),
-          buttonsetWidth = parseInt(window.getComputedStyle(buttonsetElem).width) + ADDED_SPACE,
+          buttonsetWidth = parseInt(window.getComputedStyle(buttonsetElem).width) + WHITE_SPACE,
           moreWidth = parseInt(window.getComputedStyle(moreElem).width);
 
-        // Get the target size of the title element
-        var titleScrollWidth = titleElem.scrollWidth + ADDED_SPACE,
-          estimatedTitleSize = toolbarWidth - (padding + buttonsetWidth + moreWidth);
+        if (isNaN(moreWidth)) {
+          moreWidth = 50;
+        }
 
-        if (estimatedTitleSize < MIN_TITLE_SIZE) {
-          estimatedTitleSize = MIN_TITLE_SIZE;
+        if (buttonsetWidth < MIN_BUTTONSET_SIZE) {
+          buttonsetWidth = MIN_BUTTONSET_SIZE;
         }
 
         function addPx(val) {
           return val + 'px';
         }
 
+        // Get the target size of the title element
+        var titleScrollWidth = titleElem.scrollWidth + 1,
+          estimatedTitleSize = toolbarWidth - (padding + buttonsetWidth + moreWidth);
+
+        if (estimatedTitleSize < MIN_TITLE_SIZE) {
+          estimatedTitleSize = MIN_TITLE_SIZE;
+        }
+
         // If the title element's text would be cut off, attempt to fix the size of both elements.
         if (titleScrollWidth > estimatedTitleSize) {
+          //titleScrollWidth = estimatedTitleSize;
+          this.cutoffTitle = true;
+
           if (!this.settings.favorButtonset) {
             // Favor the title
-
-            this.cutoffTitle = false;
             titleElem.style.width = addPx(titleScrollWidth);
             buttonsetElem.style.width = addPx(toolbarWidth - (padding + titleScrollWidth + moreWidth));
             return this;
           }
 
           // Favor the buttonset
-          this.cutoffTitle = true;
           titleElem.style.width = addPx(estimatedTitleSize);
           buttonsetElem.style.width = addPx(toolbarWidth - (padding + estimatedTitleSize + moreWidth));
           return this;
@@ -696,7 +708,7 @@
           return;
         }
 
-        this.element.trigger('selected', [elem]);
+        this.element.triggerHandler('selected', [elem]);
       },
 
       _getButtonsetButtons: function() {
@@ -858,16 +870,10 @@
       },
 
       updated: function() {
-
         this
           .unbind()
           .teardown()
           .init();
-
-        setTimeout(function () {
-          $('body').triggerHandler('resize');
-        }, 0);
-
       },
 
       enable: function() {

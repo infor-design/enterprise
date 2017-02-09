@@ -108,6 +108,7 @@ $toolbar-buttonset-height: 40px;
 
   &.has-more-button {
     .buttonset {
+      max-width: calc(100% - 50px);
 
       > *:last-child {
         margin-right: 5px; // Add back the 5px since we need to visually separate the More button from the others.
