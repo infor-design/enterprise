@@ -22,7 +22,8 @@
     var pluginName = 'toolbar',
         defaults = {
           rightAligned: false, // Will always attempt to right-align the contents of the toolbar.
-          maxVisibleButtons: 3 // Total amount of buttons that can be present, not including the More button
+          maxVisibleButtons: 3, // Total amount of buttons that can be present, not including the More button
+          favorButtonset: true // When resizing elements inside the toolbar, setting this to "true" will try to display as many buttons as possible.  Setting to false attempts to show the entire title instead.
         },
         settings = $.extend({}, defaults, options);
 
@@ -70,7 +71,17 @@
         }
 
         // Check for a "title" element.  This element is optional.
+        // If a title element exists, a tooltip will be created for when it's not
+        // possible to show the entire title text on screen.
         this.title = this.element.children('.title');
+        if (this.title.length) {
+          this.cutoffTitle = false;
+          this.title.on('beforeshow.toolbar', function() {
+            return self.cutoffTitle;
+          }).tooltip({
+            content: '' + this.title.text().trim()
+          });
+        }
 
         // Container for main group of buttons and input fields.  Only these spill into the More menu.
         this.buttonset = this.element.children('.buttonset');
@@ -348,11 +359,9 @@
         setActiveToolbarItem();
 
         // Toggles the More Menu based on overflow of toolbar items
-        this.adjustButtonVisibility();
-        this.toggleMoreMenu();
+        this.handleResize();
 
         this.element.triggerHandler('rendered');
-
         return this;
       },
 
@@ -397,7 +406,7 @@
         this.more.on('keydown.toolbar', function(e) {
           self.handleKeys(e);
         }).on('beforeopen.toolbar', function() {
-          self.checkOverflowItems();
+          self.adjustMenuItemVisibility();
         }).on('selected.toolbar', function(e, anchor) {
           e.stopPropagation();
           self.handleSelected(e, anchor);
@@ -478,17 +487,18 @@
       handleKeys: function(e) {
         var self = this,
           key = e.which,
-          target = $(e.target);
+          target = $(e.target),
+          isRTL = Locale.isRTL();
 
         if (target.is('.btn-actions')) {
           if (key === 37 || key === 38) { // Left/Up
             e.preventDefault();
-            self.setActiveButton(self.getLastVisibleButton());
+            self.setActiveButton( isRTL ? self.getFirstVisibleButton() : self.getLastVisibleButton() );
           }
 
           if (key === 39 || (key === 40 && target.attr('aria-expanded') !== 'true')) { // Right (or Down if the menu's closed)
             e.preventDefault();
-            self.setActiveButton(self.getFirstVisibleButton());
+            self.setActiveButton( isRTL ? self.getLastVisibleButton() : self.getFirstVisibleButton() );
           }
           return;
         }
@@ -497,22 +507,103 @@
           (key === 37 && target.is('input') && e.shiftKey) || // Shift + Left Arrow should be able to navigate away from Searchfields
           key === 38) {
           e.preventDefault();
-          self.navigate(-1);
+          self.navigate( isRTL ? 1 : -1 );
         }
 
         if ((key === 39 && target.is(':not(input)')) ||
           (key === 39 && target.is('input') && e.shiftKey) || // Shift + Right Arrow should be able to navigate away from Searchfields
           key === 40) {
           e.preventDefault();
-          self.navigate(1);
+          self.navigate( isRTL ? -1 : 1 );
         }
 
         return;
       },
 
       handleResize: function() {
-        this.adjustButtonVisibility();
+        this.sizeContainers();
+        this.adjustMenuItemVisibility();
         this.toggleMoreMenu(); // Added 9/16/2015 due to issue HFC-2876
+      },
+
+      sizeContainers: function() {
+        // Don't do this at all unless we have a title element (which is optional)
+        if (!this.title || !this.title.length) {
+          return;
+        }
+
+        var containerElem = this.element[0],
+          titleElem = this.title[0],
+          buttonsetElem = this.buttonset[0],
+          moreElem = this.more[0],
+          WHITE_SPACE = 30,
+          MIN_TITLE_SIZE = 44 + WHITE_SPACE,
+          MIN_BUTTONSET_SIZE = 0;
+
+        buttonsetElem.removeAttribute('style');
+        titleElem.removeAttribute('style');
+
+        var toolbarStyle = window.getComputedStyle(containerElem),
+          toolbarWidth = parseInt(toolbarStyle.width),
+          padding = parseInt(toolbarStyle.paddingLeft) + parseInt(toolbarStyle.paddingRight),
+          buttonsetWidth = parseInt(window.getComputedStyle(buttonsetElem).width) + WHITE_SPACE,
+          moreWidth = parseInt(window.getComputedStyle(moreElem).width);
+
+        if (isNaN(moreWidth)) {
+          moreWidth = 50;
+        }
+
+        if (isNaN(buttonsetWidth) || buttonsetWidth < MIN_BUTTONSET_SIZE) {
+          buttonsetWidth = MIN_BUTTONSET_SIZE;
+        }
+
+        function addPx(val) {
+          return val + 'px';
+        }
+
+        // Get the target size of the title element
+        var titleScrollWidth = titleElem.scrollWidth + 1,
+          estimatedTitleSize = toolbarWidth - (padding + buttonsetWidth + moreWidth),
+          targetTitleWidth, targetButtonsetWidth, d;
+
+        if (estimatedTitleSize < MIN_TITLE_SIZE) {
+          estimatedTitleSize = MIN_TITLE_SIZE;
+        }
+
+        // If the title element's text would be cut off, attempt to fix the size of both elements.
+        if (titleScrollWidth > estimatedTitleSize) {
+
+          if (!this.settings.favorButtonset) {
+            // Favor the title
+            this.cutoffTitle = false;
+
+            targetTitleWidth = titleScrollWidth;
+            targetButtonsetWidth = toolbarWidth - (padding + titleScrollWidth + moreWidth);
+
+            // Cut off the title anyway if buttonset is completely hidden.  Something's gotta give!
+            if (targetButtonsetWidth < MIN_BUTTONSET_SIZE) {
+              this.cutoffTitle = true;
+              d = Math.abs(targetButtonsetWidth - MIN_BUTTONSET_SIZE);
+              targetButtonsetWidth = MIN_BUTTONSET_SIZE;
+              targetTitleWidth = targetTitleWidth - d;
+            }
+
+            titleElem.style.width = addPx(targetTitleWidth);
+            buttonsetElem.style.width = addPx(targetButtonsetWidth);
+            return this;
+          }
+
+          // Favor the buttonset
+          this.cutoffTitle = true;
+          titleElem.style.width = addPx(estimatedTitleSize);
+          buttonsetElem.style.width = addPx(toolbarWidth - (padding + estimatedTitleSize + moreWidth));
+          return this;
+        }
+
+        // Always size the title element
+        this.cutoffTitle = false;
+        titleElem.style.width = addPx(toolbarWidth - (padding + buttonsetWidth + moreWidth));
+        return this;
       },
 
       // Go To a button
@@ -615,54 +706,96 @@
         }
       },
 
-      // Triggers a "selected" event on the base Toolbar element using a common element as an argument.
-      // @param {Object} element - a jQuery Object containing an anchor tag, button, or input field.
+      /** Triggers a "selected" event on the base Toolbar element using a common element as an argument.
+       * @param {Object} element - a jQuery Object containing an anchor tag, button, or input field.
+       */
       triggerSelect: function(element) {
         var elem = $(element);
         if (elem.is(this.more) || (elem.is('.btn-menu, li.submenu'))) {
           return;
         }
 
-        this.element.trigger('selected', [elem]);
+        this.element.triggerHandler('selected', [elem]);
       },
 
-      adjustButtonVisibility: function() {
-        var self = this,
-          visibleLis = [];
+      _getButtonsetButtons: function() {
+        var buttons = [],
+          items = this.buttonsetItems,
+          item;
 
-        function menuItemFilter() {
-          // jshint validthis:true
-          var i = $(this);
-          return (i.data('action-button-link') && i.is(':not(.searchfield)'));
+        for (var i = 0; i < items.length; i++) {
+          item = items.eq(i);
+          if (item.data('action-button-link') !== undefined && item.is(':not(.searchfield)')) {
+            buttons.push(item);
+          }
         }
 
-        var addIconClassToMenu = 'removeClass';
+        return buttons;
+      },
 
-        this.buttonsetItems.filter(menuItemFilter).removeClass('is-overflowed').each(function() {
-          var i = $(this),
-            li = i.data('action-button-link').parent();
+      getVisibleButtons: function(buttons) {
+        var self = this,
+          hiddenButtons = [],
+          visibleButtons = [];
 
-          if (!self.isItemOverflowed(i) || i.hasClass('hidden')) {
-            li.addClass('hidden');
+        if (!buttons || !Array.isArray(buttons)) {
+          buttons = this._getButtonsetButtons();
+        }
+
+        function getButtonVisibility(i, button) {
+          if (!self.isItemOverflowed(button)) {
+            visibleButtons.push(button);
           } else {
-            li.removeClass('hidden');
-            i.addClass('is-overflowed');
-
-            if (i.find('.icon').length) {
-              addIconClassToMenu = 'addClass';
-            }
-
-            visibleLis.push(li);
+            hiddenButtons.push(button);
           }
-        });
+        }
 
-        if (this.moreMenu.find('.icon').length) {
-          this.moreMenu[addIconClassToMenu]('has-icons');
+        for (var i = 0; i < buttons.length; i++) {
+          getButtonVisibility(i, $(buttons[i]));
         }
 
         return {
-          visible: visibleLis
+          visible: visibleButtons,
+          hidden: hiddenButtons
         };
+      },
+
+      adjustMenuItemVisibility: function(items) {
+        var iconDisplay = 'removeClass';
+
+        if (!items) {
+          items = this.getVisibleButtons();
+        }
+
+        function toggleClass($elem, doHide) {
+          var li = $elem.data('action-button-link').parent()[0];
+
+          if (doHide) {
+            li.classList.add('hidden');
+            $elem.removeClass('is-overflowed');
+            return;
+          }
+          li.classList.remove('hidden');
+          $elem.addClass('is-overflowed');
+
+          if ($elem.find('.icon').length) {
+            iconDisplay = 'addClass';
+          }
+        }
+
+        var i = 0;
+        for (i; i < items.visible.length; i++) {
+          toggleClass(items.visible[i], true);
+        }
+        for (i = 0; i < items.hidden.length; i++) {
+          toggleClass(items.hidden[i], false);
+        }
+
+        if (this.moreMenu.find('.icon').length) {
+          iconDisplay = 'addClass';
+        }
+
+        this.moreMenu[iconDisplay]('has-icons');
       },
 
       // Item is considered overflow if it's right-most edge sits past the right-most edge of the border.
@@ -671,33 +804,34 @@
           return true;
         }
 
+
         // In cases where a Title is present and buttons are right-aligned, only show up to the maximum allowed.
-        if (this.title.length && (this.buttonsetItems.index(item) >= (this.settings.maxVisibleButtons - 1))) { // Subtract one to account for the More Button
-          // ONLY cause this to happen if there are at least two items that can be placed in the overflow menu.
-          // This prevents ONE item from being present in the menu by itself
-          if (!this.buttonsetItems.last().is(item) || item.prev().is('.is-overflowed')) {
-            return true;
+        if (this.title.length) { // Subtract one to account for the More Button
+          if (this.buttonsetItems.index(item) >= (this.settings.maxVisibleButtons - 1)) {
+            // ONLY cause this to happen if there are at least two items that can be placed in the overflow menu.
+            // This prevents ONE item from being present in the menu by itself
+            if (!this.buttonsetItems.last().is(item)) {
+              return true;
+            }
           }
         }
 
         if (this.buttonset.scrollTop() > 0) {
           this.buttonset.scrollTop(0);
         }
-        var offset = ($(item).offset().top + $(item).outerHeight()) - this.buttonset.offset().top;
-        return offset >= this.buttonset.outerHeight() + 1;
-      },
 
-      checkOverflowItems: function() {
-        var items = this.adjustButtonVisibility();
-
-        // Focus the more menu if the current item is focused
-        if (!$.contains(this.buttonset[0], document.activeElement)) {
-          if (items.visible.length) {
-            items.visible[items.visible.length - 1].focus();
-          } else {
-            this.moreMenu.find('.hidden').last().next().focus();
-          }
+        // unwrap from jQuery
+        if (item instanceof $ && item.length) {
+          item = item[0];
         }
+
+        var isRTL = Locale.isRTL(),
+          itemRect = item.getBoundingClientRect(),
+          buttonsetRect = this.buttonset[0].getBoundingClientRect(),
+          itemOutsideXEdge = isRTL ? (itemRect.left <= buttonsetRect.left) : (itemRect.right >= buttonsetRect.right),
+          itemBelowYEdge = itemRect.bottom >= buttonsetRect.bottom;
+
+        return (itemBelowYEdge === true || itemOutsideXEdge === true);
       },
 
       toggleMoreMenu: function() {
@@ -757,16 +891,10 @@
       },
 
       updated: function() {
-
         this
           .unbind()
           .teardown()
           .init();
-
-        setTimeout(function () {
-          $('body').triggerHandler('resize');
-        }, 0);
-
       },
 
       enable: function() {
@@ -826,6 +954,10 @@
             li.remove();
           }
 
+        }
+
+        if (this.title && this.title.length) {
+          this.title.off('beforeshow.toolbar').data('tooltip').destroy();
         }
 
         this.moreMenu.children('li').each(deconstructMenuItem);

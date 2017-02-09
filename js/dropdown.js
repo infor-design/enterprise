@@ -1561,7 +1561,7 @@
       },
 
       isMobile: function() {
-        return $('html').is('.ios, .android');
+        return ['ios', 'android'].indexOf(Soho.env.os.name) > -1;
       },
 
       // Used to determine whether or not we need to show the full-screen dropdown
