@@ -1029,6 +1029,7 @@ $.fn.datagrid = function(options) {
       this.isFirefoxMac = (navigator.platform.indexOf('Mac') !== -1 && navigator.userAgent.indexOf(') Gecko') !== -1);
       this.isIe = $('html').is('.ie');
       this.isIe9 = $('html').is('.ie9');
+      this.isWindows = (navigator.userAgent.indexOf('Windows') !== -1);
       this.settings = settings;
       this.initSettings();
       this.originalColumns = this.settings.columns;
@@ -1362,7 +1363,8 @@ $.fn.datagrid = function(options) {
         headerRow = '',
         headerColGroup = '<colgroup>',
         cols= '',
-        uniqueId;
+        uniqueId,
+        hasVScroll = this.isWindows && this.contentContainer[0].scrollHeight > this.contentContainer[0].clientHeight;
 
       var colGroups = this.settings.columnGroups;
 
@@ -1419,8 +1421,10 @@ $.fn.datagrid = function(options) {
 
         headerRow += '</div></th>';
       }
-      headerRow += '</tr>';
-      headerColGroup += cols + '</colgroup>';
+      headerRow += (hasVScroll ? '<th>Spacer</th>' : '') + '</tr>';
+
+      //Add Extra Spacer for IE scrollbar
+      headerColGroup += cols + (hasVScroll ? '<col style="width: 20px"></col>' : '') + '</colgroup>';
 
       if (self.headerRow === undefined) {
         self.headerContainer = $('<div class="datagrid-header"><table role="grid" '+ this.headerTableWidth() + '></table></div>');
@@ -2510,7 +2514,8 @@ $.fn.datagrid = function(options) {
     headerWidths: [], //Cache
 
     headerTableWidth: function () {
-      var cacheWidths = this.headerWidths[this.settings.columns.length-1];
+      var cacheWidths = this.headerWidths[this.settings.columns.length-1],
+        hasVScroll = this.isWindows && this.contentContainer[0].scrollHeight > this.contentContainer[0].clientHeight;
 
       if (!cacheWidths) {
         return '';
@@ -2520,9 +2525,9 @@ $.fn.datagrid = function(options) {
       if (cacheWidths.widthPercent) {
         return 'style = "width: 100%"';
       } else if (this.totalWidth > this.elemWidth) {
-        return 'style = "width: '+ parseFloat(this.totalWidth) + 'px"';
+        return 'style = "width: ' + (parseFloat(this.totalWidth) + (hasVScroll ? 20 : 0)) + 'px"';
       } else if (this.widthSpecified && !isNaN(this.totalWidth) && this.totalWidth > this.elemWidth) {
-        return 'style = "width: '+ parseFloat(this.totalWidth) + 'px"';
+        return 'style = "width: ' + (parseFloat(this.totalWidth)  + (hasVScroll ? 20 : 0)) + 'px"';
       }
       return '';
     },
@@ -2569,7 +2574,7 @@ $.fn.datagrid = function(options) {
       var textWidth = this.calculateTextWidth(col);  //reasonable default on error
 
       // Simulate Auto Width Algorithm
-      if (!this.widthSpecified && visibleColumns.length < 10 &&
+      if ((!this.widthSpecified || col.width === undefined) && visibleColumns.length < 10 &&
         (['selectionCheckbox', 'drilldown', 'rowStatus', 'favorite'].indexOf(col.id) === -1)  && this.elemWidth > 0) {
 
         this.headerWidths[index] = {id: col.id, width: 'default'};
@@ -3191,15 +3196,14 @@ $.fn.datagrid = function(options) {
     },
 
     scrollLeft: 0,
-    scrollLeftTo: function(left, both) {
+    scrollTop: 0,
+    handleScroll: function() {
+      var left = this.contentContainer[0].scrollLeft;
 
-      if (left !== this.scrollLeft &&  this.headerContainer) {
+      if (left !== this.scrollLeft && this.headerContainer) {
         this.scrollLeft = left;
         this.headerContainer[0].scrollLeft = this.scrollLeft;
-        if (both) {
-          this.contentContainer[0].scrollLeft = left;
-        }
-    }
+      }
 
     },
 
@@ -3222,8 +3226,7 @@ $.fn.datagrid = function(options) {
       //Sync Header and Body During scrolling
       self.contentContainer
         .on('scroll.table', function () {
-          var left = self.contentContainer[0].scrollLeft;
-          self.scrollLeftTo(left, false);
+          self.handleScroll();
         });
 
       //Handle Sorting

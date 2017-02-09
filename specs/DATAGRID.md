@@ -110,7 +110,8 @@ TODO - Resize to Reponsive
 - Note that the filter button has no functionality
 - Open the ... menu and select personalize columns try to hide and show a few columns
 - Resize the columns, then try to drag and move a column from the header
-- Change Local and see that the personalize columns is translated (controls/datagrid-reorder?locale=es-ES)
+- Change Local and see that the personalize columns is translated
+ (controls/datagrid-reorder?locale=es-ES)
 - Test the three themes
 - Test RTL (controls/datagrid-reorder?locale=ar-SA)
 - Test the 3 row heights
@@ -183,7 +184,7 @@ TODO: Issues in Optiva with mismtached columns
 - This example shows auto column width. The last column has a lot of data and should scroll until you see "end of data"
 
 [Column Css Class Option](/tests/datagrid/columns-class.html)
-- This example shows the config option of adding a column css class. The example is working of two columns with 1 are bold and have a purple style.
+- This example shows the config option of adding a column css class. The example is working if the two last columns have records that are bold and purple style.
 
 [Columns Colors](/tests/datagrid/columns-colors.html)
 - This example shows the config option of adding a column css class. The example is working of two columns with 1 are bold and have a purple style.
@@ -392,7 +393,9 @@ datagrid-fixed-header-short-row.html
 datagrid-fixed-header.html
 
 [All Formatters](/tests/datagrid-formatters.html)
-  TODO: Resize + Sort is all messed up
+TODO:
+- Resize + Sort is all messed up
+- actions scrolls down page
 
 datagrid-grouping-formatter.html
 datagrid-grouping-list-custom.html
@@ -511,3 +514,5 @@ TODO:
 ALSO TEST
 - Charts Scroll Bar
 - Remove RTL .scrollable stuff http://localhost:4000/tests/tooltip/positions.html?locale=ar-EG
+- http://localhost:4000/examples/saleshub/external-vendors.html
+- http://localhost:4000/patterns/module-tabs-add.html

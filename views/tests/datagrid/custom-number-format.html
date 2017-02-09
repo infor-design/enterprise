@@ -14,7 +14,7 @@
       //Define Columns for the Grid.
       columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
-      columns.push({ id: 'price1', name: 'Price', field: 'price', formatter: Formatters.Decimal, numberFormat: {decimal: ',', minimumFractionDigits: 0, maximumFractionDigits: 2}, editor: Editors.Input, mask: '####,00'});
+      columns.push({ id: 'price1', name: 'Price', field: 'price', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '####,00'});
       columns.push({ id: 'price2', name: 'Price ($)', field: 'price', formatter: Formatters.Decimal, numberFormat: {style: 'currency'}});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', formatter: Formatters.Decimal, numberFormat: {style: 'percent'}});
 

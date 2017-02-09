@@ -121,7 +121,7 @@
           pagesize: 5,
           pagesizes: [5, 10, 25, 50]
         }).on('cellchange', function (e, args) {
-        //  console.log(e, args);
+          console.log(args.oldValue, args.value);
         }).on('rowadd', function (e, args) {
           console.log(e, args);
         }).on('rowremove', function (e, args) {
