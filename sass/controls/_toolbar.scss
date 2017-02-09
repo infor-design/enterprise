@@ -46,7 +46,7 @@ $toolbar-buttonset-height: 40px;
       }
 
       &.is-overflowed {
-        display: block;
+        visibility: hidden;
       }
     }
 

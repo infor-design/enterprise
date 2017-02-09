@@ -357,7 +357,6 @@
         }
 
         setActiveToolbarItem();
-        //this.adjustMenuItemVisibility();
 
         // Toggles the More Menu based on overflow of toolbar items
         this.handleResize();
@@ -537,14 +536,9 @@
           titleElem = this.title[0],
           buttonsetElem = this.buttonset[0],
           moreElem = this.more[0],
-          buttons = this._getButtonsetButtons(),
           WHITE_SPACE = 30,
           MIN_TITLE_SIZE = 44 + WHITE_SPACE,
-          MIN_BUTTONSET_SIZE = 50 + WHITE_SPACE;
-
-        for (var i = 0; i < buttons.length; i++) {
-          buttons[i][0].classList.remove('is-overflowed');
-        }
+          MIN_BUTTONSET_SIZE = 0;
 
         buttonsetElem.removeAttribute('style');
         titleElem.removeAttribute('style');
@@ -559,7 +553,7 @@
           moreWidth = 50;
         }
 
-        if (buttonsetWidth < MIN_BUTTONSET_SIZE) {
+        if (isNaN(buttonsetWidth) || buttonsetWidth < MIN_BUTTONSET_SIZE) {
           buttonsetWidth = MIN_BUTTONSET_SIZE;
         }
 
@@ -569,7 +563,8 @@
 
         // Get the target size of the title element
         var titleScrollWidth = titleElem.scrollWidth + 1,
-          estimatedTitleSize = toolbarWidth - (padding + buttonsetWidth + moreWidth);
+          estimatedTitleSize = toolbarWidth - (padding + buttonsetWidth + moreWidth),
+          targetTitleWidth, targetButtonsetWidth, d;
 
         if (estimatedTitleSize < MIN_TITLE_SIZE) {
           estimatedTitleSize = MIN_TITLE_SIZE;
@@ -577,17 +572,29 @@
 
         // If the title element's text would be cut off, attempt to fix the size of both elements.
         if (titleScrollWidth > estimatedTitleSize) {
-          //titleScrollWidth = estimatedTitleSize;
-          this.cutoffTitle = true;
 
           if (!this.settings.favorButtonset) {
             // Favor the title
-            titleElem.style.width = addPx(titleScrollWidth);
-            buttonsetElem.style.width = addPx(toolbarWidth - (padding + titleScrollWidth + moreWidth));
+            this.cutoffTitle = false;
+
+            targetTitleWidth = titleScrollWidth;
+            targetButtonsetWidth = toolbarWidth - (padding + titleScrollWidth + moreWidth);
+
+            // Cut off the title anyway if buttonset is completely hidden.  Something's gotta give!
+            if (targetButtonsetWidth < MIN_BUTTONSET_SIZE) {
+              this.cutoffTitle = true;
+              d = Math.abs(targetButtonsetWidth - MIN_BUTTONSET_SIZE);
+              targetButtonsetWidth = MIN_BUTTONSET_SIZE;
+              targetTitleWidth = targetTitleWidth - d;
+            }
+
+            titleElem.style.width = addPx(targetTitleWidth);
+            buttonsetElem.style.width = addPx(targetButtonsetWidth);
             return this;
           }
 
           // Favor the buttonset
+          this.cutoffTitle = true;
           titleElem.style.width = addPx(estimatedTitleSize);
           buttonsetElem.style.width = addPx(toolbarWidth - (padding + estimatedTitleSize + moreWidth));
           return this;
@@ -765,9 +772,11 @@
 
           if (doHide) {
             li.classList.add('hidden');
+            $elem.removeClass('is-overflowed');
             return;
           }
           li.classList.remove('hidden');
+          $elem.addClass('is-overflowed');
 
           if ($elem.find('.icon').length) {
             iconDisplay = 'addClass';
@@ -795,12 +804,15 @@
           return true;
         }
 
+
         // In cases where a Title is present and buttons are right-aligned, only show up to the maximum allowed.
-        if (this.title.length && (this.buttonsetItems.index(item) >= (this.settings.maxVisibleButtons - 1))) { // Subtract one to account for the More Button
-          // ONLY cause this to happen if there are at least two items that can be placed in the overflow menu.
-          // This prevents ONE item from being present in the menu by itself
-          if (!this.buttonsetItems.last().is(item) || item.prev().is('.is-overflowed')) {
-            return true;
+        if (this.title.length) { // Subtract one to account for the More Button
+          if (this.buttonsetItems.index(item) >= (this.settings.maxVisibleButtons - 1)) {
+            // ONLY cause this to happen if there are at least two items that can be placed in the overflow menu.
+            // This prevents ONE item from being present in the menu by itself
+            if (!this.buttonsetItems.last().is(item)) {
+              return true;
+            }
           }
         }
 
@@ -808,9 +820,18 @@
           this.buttonset.scrollTop(0);
         }
 
-        var $item = $(item),
-          offset = ($item.offset().top + $item.outerHeight()) - this.buttonset.offset().top;
-        return offset >= this.buttonset.outerHeight() + 1;
+        // unwrap from jQuery
+        if (item instanceof $ && item.length) {
+          item = item[0];
+        }
+
+        var isRTL = Locale.isRTL(),
+          itemRect = item.getBoundingClientRect(),
+          buttonsetRect = this.buttonset[0].getBoundingClientRect(),
+          itemOutsideXEdge = isRTL ? (itemRect.left <= buttonsetRect.left) : (itemRect.right >= buttonsetRect.right),
+          itemBelowYEdge = itemRect.bottom >= buttonsetRect.bottom;
+
+        return (itemBelowYEdge === true || itemOutsideXEdge === true);
       },
 
       toggleMoreMenu: function() {
