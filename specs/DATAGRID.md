@@ -388,14 +388,25 @@ BUG: Not working great here...
 - Scroll
 - Resize Columns
 
-datagrid-fixed-header-short-row-filter.html
+[Fixed Header Short Row Filter](/tests/datagrid-fixed-header-short-row-filter.html)
+- This example shows a fixed header , filter and short row combined
+- Resize the page so that not all rows can be seen (vertical and horizontal)
+- Scroll
+- Resize Columns
+- Test Three Themes
+- Test Filter
+
 datagrid-fixed-header-short-row.html
 datagrid-fixed-header.html
 
 [All Formatters](/tests/datagrid-formatters.html)
-TODO:
-- Resize + Sort is all messed up
-- actions scrolls down page
+- This page shows many of the popular formatters. The example is readonly.
+- Try to right click the grid rows
+- Click the button in the actions column
+- Click a second actions column
+- Test Resize
+- Test Sort
+- Try three themes
 
 datagrid-grouping-formatter.html
 datagrid-grouping-list-custom.html

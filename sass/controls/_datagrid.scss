@@ -33,10 +33,13 @@ $datagrid-short-row-height: 23px;
       height: calc(100% - 25px);
     }
 
-    &.paginated {
+    &.has-toolbar {
       height: calc(100% - 45px);
     }
 
+    &.paginated {
+      height: calc(100% - 45px);
+    }
   }
 
   &.medium-rowheight {
@@ -230,7 +233,11 @@ $datagrid-short-row-height: 23px;
       .is-draggable-target {
         @include font-size(20);
         height: $datagrid-short-header-height;
-        padding: 1px 0 0 7px;
+        padding: 4px 0 0 7px;
+      }
+
+      .datagrid-checkbox {
+        top: -9px;
       }
     }
 

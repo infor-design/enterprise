@@ -1,18 +1,4 @@
-<!-- Setup -->
-<ul id="grid-actions-menu" class="popupmenu">
-  <li><a href="#">Action One</a></li>
-  <li><a href="#">Action Two</a></li>
-  <li><a href="#">Action Three</a></li>
-</ul>
-
 {{={{{ }}}=}}
-
-<!-- Readonly Grid -->
-<div class="row">
-  <div class="twelve columns">
-    <h2 class="fieldset-title">Datagrid - Kitchen sink</h2>
-  </div>
-</div>
 
 <div class="row">
   <div class="twelve columns">
@@ -20,6 +6,12 @@
     </div>
   </div>
 </div>
+
+<ul id="grid-actions-menu" class="popupmenu">
+  <li><a href="#">Action One</a></li>
+  <li><a href="#">Action Two</a></li>
+  <li><a href="#">Action Three</a></li>
+</ul>
 
 <script>
     $('body').on('initialized', function () {
@@ -43,18 +35,18 @@
       var cellTemplate = '<p class="datagrid-row-heading">{{productId}}</p>' +
                         '<p class="datagrid-row-subheading">{{productName}}</p>';
 
-      columns.push({ id: 'drilldown', name: 'Drill In', field: '', formatter: Formatters.Drilldown, click: function (e, args) {console.log('clicked', args);}});
-      columns.push({ id: 'productId', hidden: true, name: 'Product Id', field: 'productId', formatter: Formatters.Readonly });
-      columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, click: function (e, args) {console.log('link was clicked', args);}});
+      columns.push({ id: 'drilldown', name: 'Drill In', sortable: false, formatter: Formatters.Drilldown, click: function (e, args) {console.log('clicked', args);}});
+      columns.push({ id: 'productid', hidden: true, name: 'Product Id', field: 'productId', formatter: Formatters.Readonly });
+      columns.push({ id: 'productName', name: 'Product Desc', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, click: function (e, args) {console.log('link was clicked', args);}});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
-      columns.push({ id: 'activity', name: 'Password', field: 'activity', formatter: Formatters.Password, inputType: 'password'});
+      columns.push({ id: 'password', name: 'Password', field: 'activity', formatter: Formatters.Password, inputType: 'password'});
       columns.push({ id: 'price1', name: 'Actual long Price', field: 'price', formatter: Formatters.Decimal});
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'yyyy-MM-dd'});
       columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Text});
       columns.push({ id: 'alert', name: 'Alert', field: 'quantity', formatter: Formatters.Alert, ranges: [{'min': 0, 'max': 8, 'classes': 'info', 'text': ' '}, {'min': 9, 'max': 1000, 'classes': 'error', 'text': 'value'}]});
       columns.push({ id: 'ordered', name: 'Ordered', field: 'ordered', formatter: Formatters.Checkbox});
-      columns.push({ id: '', name: 'Actions', field: '', formatter: Formatters.Actions, menuId: 'grid-actions-menu', selected: function(e, a) { console.log(e, a); }});
+      columns.push({ id: 'actions', name: 'Actions', field: '', formatter: Formatters.Actions, menuId: 'grid-actions-menu', selected: function(e, a) { console.log(e, a); }});
       columns.push({ id: 'nested', name: 'Nested Prop', field: 'setting.optionOne', formatter: Formatters.Text});
 
       //Init and get the api for the grid

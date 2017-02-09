@@ -2573,9 +2573,14 @@ $.fn.datagrid = function(options) {
 
       var textWidth = this.calculateTextWidth(col);  //reasonable default on error
 
+      if (!this.widthSpecified || !colWidth) {
+        colWidth = Math.max(textWidth, colWidth || 0);
+      }
+
       // Simulate Auto Width Algorithm
-      if ((!this.widthSpecified || col.width === undefined) && visibleColumns.length < 10 &&
-        (['selectionCheckbox', 'drilldown', 'rowStatus', 'favorite'].indexOf(col.id) === -1)  && this.elemWidth > 0) {
+      if ((!this.widthSpecified || col.width === undefined) && visibleColumns.length < 8 &&
+        (['selectionCheckbox', 'drilldown', 'rowStatus', 'favorite'].indexOf(col.id) === -1)  &&
+        this.elemWidth > 0) {
 
         this.headerWidths[index] = {id: col.id, width: 'default'};
         var percentWidth = this.elemWidth / visibleColumns.length;
@@ -2587,10 +2592,6 @@ $.fn.datagrid = function(options) {
         }
 
         return '';
-      }
-
-      if (!this.widthSpecified) {
-        colWidth = Math.max(textWidth, colWidth || 0);
       }
 
       //Some Built in columns
@@ -3071,11 +3072,11 @@ $.fn.datagrid = function(options) {
 
       this.resizeHandle = $('<div class="resize-handle" aria-hidden="true"></div>');
       if (this.settings.columnGroups) {
-        this.resizeHandle.css('height', '80px');
+        this.resizeHandle[0].style.height = '80px';
       }
 
       if (this.settings.filterable) {
-        this.resizeHandle.css('height', '62px');
+        this.resizeHandle[0].style.height = '62px';
       }
 
       this.headerContainer.find('table').before(this.resizeHandle);
@@ -3316,13 +3317,11 @@ $.fn.datagrid = function(options) {
         //Handle Context Menu on Some
         if (col.menuId) {
           var btn = $(this).find('button');
-          btn.popupmenu({menuId: col.menuId, trigger: 'immediate', offset: { y: 5 }});
+          btn.popupmenu({attachToBody: true, autoFocus: false, mouseFocus: true,  menuId: col.menuId, trigger: 'immediate', offset: { y: 5 }});
 
           if (col.selected) {
             btn.on('selected.datagrid', col.selected);
           }
-          e.preventDefault();
-          return false;
         }
 
         /* Test Quick Edit Mode without this. Especially Drop Down
