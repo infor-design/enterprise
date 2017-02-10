@@ -122,6 +122,12 @@
             focused = $(':focus'),
             focusedlabel = focused.attr('aria-label');
 
+          // Focus did not auto move from readonly
+          if (key === 9 && self.element.is('[readonly]')) { //tab
+            self.setFocusOnFocusableElement(self.element, (e.shiftKey ? 'prev' : 'next'));
+            return;
+          }
+
           if (focusedlabel) {
             var focusedDate = new Date(focusedlabel);
             self.currentDate = new Date(focusedDate.getTime());
@@ -954,6 +960,18 @@
             handlers.splice(newIndex, 0, handlers.pop());
           });
         });
+      },
+
+      // Set focus on (opt: next|prev) focusable element
+      setFocusOnFocusableElement: function(element, opt) {
+        var canfocus = $(':focusable'),
+          index = canfocus.index(element);
+
+        index = (opt === 'next') ?
+          ((index+1) >= canfocus.length ? 0 : (index+1)) :
+          ((index-1) < 0 ? canfocus.length : (index-1));
+
+        canfocus.eq(index).focus();
       },
 
       updated: function() {
