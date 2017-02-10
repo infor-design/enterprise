@@ -1862,6 +1862,7 @@ html[dir='rtl'] {
       min-width: 100px !important;
       // scss-lint:enable ImportantRule
       position: fixed;
+      z-index: 2;
 
       .datagrid-header-text {
         @include ellipsis();

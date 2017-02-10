@@ -57,8 +57,7 @@
 - Test the visual difference on all three themes
 - Columns can be sorted and resized
 - Cells can be focus and arrow keys to move around
-
-TODO - Resize to Reponsive
+BUG - Add Reponsive behavior
 
 [Grouped Headers](controls/datagrid-multiselect)
 - Clicking on the row itself or the checkbox will select the row visually and with the checkbox
@@ -526,11 +525,10 @@ TODO:
 - Test Directly on Optiva
 - Editing (more)
 - Mobile (percent col widths) or mobile min - width....
-- Test Last Column is hidden.
-- Last Column / Border Resize (maybe)
-- IE Speed (Fifty Cols)
 - IE Scroll Bar (out of alignment for size of the scrollbar)
 - Re-Test Screen Reader - Not reading headers
+- Last Column / Border Resize (maybe)
+- Test Last Column is hidden  (maybe)
 
 ALSO TEST These bugs
 - Charts Scroll Bar

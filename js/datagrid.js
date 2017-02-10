@@ -1873,7 +1873,6 @@ $.fn.datagrid = function(options) {
           e.preventDefault();
 
           header.drag({clone: true, cloneAppentTo: headers.first().parent().parent(), clonePosIsFixed: true})
-
             .on('dragstart.datagrid', function (e, pos, thisClone) {
               var index;
 
@@ -1893,7 +1892,8 @@ $.fn.datagrid = function(options) {
               e.stopImmediatePropagation();
             })
             .on('drag.datagrid', function (e, pos) {
-              clone.css({left: pos.left, top: pos.top});
+              clone[0].style.left = parseInt(pos.left) + 'px';
+              clone[0].style.top =  parseInt(pos.top) + 'px';
               headerPos = {top: (pos.top - offPos.top), left: (pos.left - offPos.left)};
 
               var i, l, n, target, rect,
@@ -1912,12 +1912,11 @@ $.fn.datagrid = function(options) {
                     }
 
                     target.el.addClass('is-over');
+                    showTarget.addClass('is-over');
+                    rect = target.el[0].getBoundingClientRect();
+                    showTarget[0].style.left = parseInt(rect.left) + 'px';
+                    showTarget[0].style.top =  parseInt(rect.top) + 'px';
 
-                    if (!self.isHeaderOverflowed(target.el.closest('th'))) {
-                      showTarget.addClass('is-over');
-                      rect = target.el[0].getBoundingClientRect();
-                      showTarget.css({'left': rect.left, 'top': rect.top});
-                    }
                   }
                 }
               }
@@ -1925,7 +1924,9 @@ $.fn.datagrid = function(options) {
               e.stopImmediatePropagation();
             })
             .on('dragend.datagrid', function (e, pos) {
-              clone.css({left: pos.left, top: pos.top});
+              clone[0].style.left = parseInt(pos.left) + 'px';
+              clone[0].style.top =  parseInt(pos.top) + 'px';
+
               headerPos = {top: (pos.top - offPos.top), left: (pos.left - offPos.left)};
 
               var index = self.targetColumn(headerPos),
@@ -1944,10 +1945,10 @@ $.fn.datagrid = function(options) {
               if (self.draggableStatus.endIndex !== -1) {
                 if (self.draggableStatus.startIndex !== self.draggableStatus.endIndex) {
                   target = self.draggableColumnTargets[index];
-                  if (!self.isHeaderOverflowed(target.el.closest('th'))) {
-                    // Start to Swap columns
 
-                    for (i=0, l=self.settings.columns.length; i < l; i++) {
+
+                  //Swap columns
+                  for (i=0, l=self.settings.columns.length; i < l; i++) {
                       if (!self.settings.columns[i].hidden &&
                           self.settings.columns[i].id !== 'selectionCheckbox') {
                         tempArray.push(i);
@@ -1961,22 +1962,11 @@ $.fn.datagrid = function(options) {
                     self.updateColumns(self.settings.columns);
 
                   }
-                }
               }
 
             });
         });
       });
-    },
-
-    // Check if header overflowed
-    isHeaderOverflowed: function(header) {
-      if (!header || header.length === 0) {
-        return true;
-      }
-      var el = this.element,
-        offset = header.offset().left - el.offset().left;
-      return offset >= el.width();
     },
 
     // Set draggable columns target
@@ -2532,6 +2522,12 @@ $.fn.datagrid = function(options) {
       return '';
     },
 
+    clearHeaderCache: function () {
+      this.headerWidths = [];
+      this.totalWidth = 0;
+      this.elemWidth = 0;
+    },
+
     //Calculate the width for a column (upfront with no rendering)
     //https://www.w3.org/TR/CSS21/tables.html#width-layout
     calculateColumnWidth: function (col, index) {
@@ -2543,7 +2539,7 @@ $.fn.datagrid = function(options) {
         this.widthSpecified = false;
       }
 
-      // use cache
+        // use cache
       if (this.headerWidths[index]) {
         var cacheWidths = this.headerWidths[index];
 
@@ -2718,6 +2714,8 @@ $.fn.datagrid = function(options) {
       if (columnGroups) {
         this.settings.columnGroups = columnGroups;
       }
+
+      this.clearHeaderCache();
       this.renderRows();
       this.renderHeader();
       this.resetPager('updatecolumns');
@@ -2796,6 +2794,7 @@ $.fn.datagrid = function(options) {
       if (this.originalColumns) {
         this.updateColumns(this.originalColumns);
       }
+
     },
 
     //Hide a column
@@ -3048,9 +3047,7 @@ $.fn.datagrid = function(options) {
         self.table.css('width', parseInt(self.tableWidth) + diff);
       }
 
-      this.headerWidths = [];
-      this.totalWidth = 0;
-      this.elemWidth = 0;
+      this.clearHeaderCache()
     },
 
     // Get child offset
