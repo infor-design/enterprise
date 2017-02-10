@@ -115,18 +115,6 @@ span.checkbox > input:checked + label::after {
   top: 9px;
 }
 
-// Adjustments for ASP style checkboxes
-input.checkbox:checked + input[type="hidden"] + label::after,
-span.checkbox > input:checked + label::after {
-  left: 8px;
-  margin-top: -8px;
-}
-
-span.checkbox > input:checked + label::after {
-  left: 8px;
-  margin-top: -8px;
-}
-
 span.checkbox > input + label {
   line-height: 20px;
 }
@@ -232,12 +220,14 @@ label.inline .checkbox ~ .label-text,
 }
 
 label.inline .checkbox ~ .label-text::after,
-.checkbox + label::after {
+span.checkbox > input:checked + label::after,
+.checkbox ~ label::after {
   @include checkbox-transform-rules;
 }
 
 label.inline .checkbox:not(.partial):checked ~ .label-text::after,
-.checkbox:not(.partial):checked + label::after {
+span.checkbox > input:checked + label::after,
+.checkbox:not(.partial):checked ~ label::after {
   @include checkbox-animation;
 }
 
