@@ -1,6 +1,15 @@
 # Datagrid
 
-## Main Test Cases
+
+##General Tests
+
+- Key Board (details to come)
+- Themes
+  - High Contrast theme is WCAG AAA
+  - Grey Theme is WCAG AA
+- Code Sniffer
+
+## Test Case Main Pages
 
 [Alternate Row Shading](controls/datagrid-alternate-row-shading)
 
@@ -116,8 +125,6 @@ BUG - Add Reponsive behavior
 - Test the 3 row heights
 - Reload the page and notice that all the columns you changed are saved
 - Rest to Default, Resize a column then hide and show a column
-
-TODO: Had broken layout needs more testing
 
 [Single Select](controls/datagrid-singleselect)
 - This example tests shows single select mode.
@@ -417,12 +424,47 @@ TODO: ON IE Resize the Page Smaller -> need to jet the resize block
 - Test Sort
 - Try three themes
 
-datagrid-grouping-formatter.html
-datagrid-grouping-list-custom.html
-datagrid-grouping-list.html
-datagrid-grouping-tests.html
-datagrid-grouping-totals.html
-datagrid-grouping.html
+[Grouping Formatter](/tests/datagrid-formatters.html)
+- This is like the grouping example so all tests apply from there. The only difference is this
+example shows how to customize the group row with a "formatter".
+- This case the formatter shows a count of the purchases row but this is customizable
+
+[Grouping - Group By to List - Customized](/tests/datagrid-grouping-list-custom.html)
+- This example shows how to use the grouping to list feature.
+- The data is from Enroute and the group by groups list elements in the "Vehicals on Scene" column
+- The example is working if there is 10 "vehicals" and a group underneath
+- This example is very custom but could be resused if you want to list the groups
+- This Example is NOT ACCESSIBLE
+
+[Grouping - Group By to List](/tests/datagrid-grouping-list.html)
+- This example shows how to use the grouping to list feature.
+- The data is from Enroute and the group by groups list elements in the "Vehicals on Scene" column
+- The example is working if there is "vehicals" grouped in the last column
+- The colors are custom.
+- This Example is NOT ACCESSIBLE
+
+[Grouping - Group Tests](/tests/datagrid-grouping-tests.html)
+- This Test page is non visual. All the results are in the console.
+- Open in Firefox only
+- Then view the developer console and refresh the page
+- Should see no errors and a series of grouped data
+
+[Grouping - Group Totals](/tests/datagrid-grouping-totals.html)
+- This Page is like the grouping example except each section has a sub Totals
+- Expand and Collapse Rows
+- Resize Rows
+- Test Row heights
+- Test Themes
+- Ensure column adds up
+
+[Grouping - Main](/tests/datagrid-grouping.html)
+- This Page is the main data grouping example. All the rows should be grouped.
+- Expand and Collapse Rows
+- Test Keyboard
+- Test Themes
+- Row Hight
+- Column resize
+
 datagrid-image.html
 datagrid-modal-over.html
 datagrid-multiselect-nonchecks.html
@@ -440,17 +482,38 @@ datagrid-paging-trigger.html
 datagrid-programmatic-updates.html
 datagrid-rowheight.html
 datagrid-rowspan.html
-datagrid-scrolling-contained-defined.html
-datagrid-scrolling-contained-filter.html
-datagrid-scrolling-contained-less-rows.html
-datagrid-scrolling-contained-maxheight-list.html
+
+[Datagrid Fixed Header with Defined Height](/tests/datagrid-scrolling-contained-defined.htm)
+- This page shows a less important case where the grid is fixed to the bottom of the page.
+- In a real app the top section would have a form, but this example is unimaginative.
+- Test Resizing the page (vertically) and it should be fixed to the bottom.
+- Test Resizing columns
+- FUTURE: Replace example with a real one
+
+[Datagrid Fixed Header - Filter](/tests/datagrid-scrolling-contained-filter.html)
+- This example is Deprecated please use datagrid-fixed examples.
+
+[Datagrid Fixed Header - Less Rows than container](/tests/datagrid-scrolling-contained-less-rows.html)
+- This page shows the style when there is less rows than the container. The bottom section will appear with the same background color and the last row should have a border.
+- Try the Themes
+- Test Resize and left and right scroll
+
+[All Formatters](/tests/datagrid-scrolling-contained-maxheight-list.html)
+- This example shows configuring Max Height. This is a TODO at the moment.
+
 datagrid-scrolling-contained-pane.html
 datagrid-scrolling-contained-short-rows.html
 datagrid-scrolling-contained.html
 datagrid-scrolling-fixed.html
 datagrid-sort-override.html
 datagrid-source-format.html
-datagrid-summary-row.html
+
+[Datagrid Summary Row](/tests/datagrid-summary-row.html)
+- This example shows how to add a summary row at the bottom of the grid.
+- This summary row should total the two last columns
+- Test Themes
+- Test Resize columns (note: total is fixed)
+
 datagrid-tree-add-children.html
 datagrid-tree-alternate-row-shading.html
 datagrid-tree-drilldown.html
@@ -483,10 +546,9 @@ fifty-columns.html
 form-buttons.html
 hide-show-column.html
 
-TODO: Not rendering 100%
 [Icon Buttons](/tests/icon-buttons.html)
   - This example shows how to create icon buttons, the last two columns show a button and link object with an icon on it.
-  - The only test case is that if you click the icons, then the relevent event info is shown in the console
+  - The only test case is that if you click the icons, then the relevant event info is shown in the console
 
 [Loading Data (Performance)](/tests/large-dataset-performance.html)
 large-dataset-performance.html
@@ -518,21 +580,12 @@ updaterow-expandable.html
 wide-grid-expandable-row-with-form-buttons.html
 xss-prevention.html
 
-TODO:
+Known Issues:
 
-- Test Reorder Example More
 - Test More on Windows
 - Test Directly on Optiva
 - Editing (more)
 - Mobile (percent col widths) or mobile min - width....
-- IE Scroll Bar (out of alignment for size of the scrollbar)
 - Re-Test Screen Reader - Not reading headers
 - Last Column / Border Resize (maybe)
 - Test Last Column is hidden  (maybe)
-
-ALSO TEST These bugs
-- Charts Scroll Bar
-- http://localhost:4000/examples/saleshub/external-vendors.html
-- http://localhost:4000/patterns/module-tabs-add.html (small button)
-- http://localhost:4000/examples/lawson/hotkeys (keyboard and layout)
-- http://localhost:4000/controls/tabs (keyboard)

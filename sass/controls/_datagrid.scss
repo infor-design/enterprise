@@ -12,6 +12,16 @@ $datagrid-short-row-height: 23px;
 
 //Fixed Header Datagrid
 .datagrid-contained {
+
+  //Fix IE Scrollbar Offset Issue
+  &.is-windows .datagrid-header {
+    margin-right: 20px;
+  }
+
+  &.is-windows.datagrid-container {
+    background-color: $datagrid-header-bg-color;
+  }
+
   &.datagrid-container {
     height: inherit;
 
@@ -231,9 +241,9 @@ $datagrid-short-row-height: 23px;
 
       .handle,
       .is-draggable-target {
-        @include font-size(20);
+        @include font-size(22);
         height: $datagrid-short-header-height;
-        padding: 4px 0 0 7px;
+        padding: 0 0 0 7px;
       }
 
       .datagrid-checkbox {
@@ -723,8 +733,8 @@ $datagrid-short-row-height: 23px;
     }
 
     .datagrid-img {
+      display: block;
       height: 38px;
-      margin-top: 6px;
       width: 38px;
     }
   }

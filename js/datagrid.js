@@ -1090,6 +1090,10 @@ $.fn.datagrid = function(options) {
         this.element.addClass('datagrid-container');
       }
 
+      if (this.isWindows) {
+        this.element.addClass('is-windows'); //need since scrollbars are visible
+      }
+
       //initialize row height by a setting
       if (settings.rowHeight !== 'normal') {
         self.table.addClass(settings.rowHeight + '-rowheight');
@@ -1363,8 +1367,7 @@ $.fn.datagrid = function(options) {
         headerRow = '',
         headerColGroup = '<colgroup>',
         cols= '',
-        uniqueId,
-        hasVScroll = this.isWindows && this.contentContainer[0].scrollHeight > this.contentContainer[0].clientHeight;
+        uniqueId;
 
       var colGroups = this.settings.columnGroups;
 
@@ -1421,10 +1424,10 @@ $.fn.datagrid = function(options) {
 
         headerRow += '</div></th>';
       }
-      headerRow += (hasVScroll ? '<th>Spacer</th>' : '') + '</tr>';
+      headerRow += '</tr>';
 
       //Add Extra Spacer for IE scrollbar
-      headerColGroup += cols + (hasVScroll ? '<col style="width: 20px"></col>' : '') + '</colgroup>';
+      headerColGroup += cols + '</colgroup>';
 
       if (self.headerRow === undefined) {
         self.headerContainer = $('<div class="datagrid-header"><table role="grid" '+ this.headerTableWidth() + '></table></div>');
@@ -2504,8 +2507,7 @@ $.fn.datagrid = function(options) {
     headerWidths: [], //Cache
 
     headerTableWidth: function () {
-      var cacheWidths = this.headerWidths[this.settings.columns.length-1],
-        hasVScroll = this.isWindows && this.contentContainer[0].scrollHeight > this.contentContainer[0].clientHeight;
+      var cacheWidths = this.headerWidths[this.settings.columns.length-1];
 
       if (!cacheWidths) {
         return '';
@@ -2515,9 +2517,9 @@ $.fn.datagrid = function(options) {
       if (cacheWidths.widthPercent) {
         return 'style = "width: 100%"';
       } else if (this.totalWidth > this.elemWidth) {
-        return 'style = "width: ' + (parseFloat(this.totalWidth) + (hasVScroll ? 20 : 0)) + 'px"';
+        return 'style = "width: ' + parseFloat(this.totalWidth) + 'px"';
       } else if (this.widthSpecified && !isNaN(this.totalWidth) && this.totalWidth > this.elemWidth) {
-        return 'style = "width: ' + (parseFloat(this.totalWidth)  + (hasVScroll ? 20 : 0)) + 'px"';
+        return 'style = "width: ' + parseFloat(this.totalWidth) + 'px"';
       }
       return '';
     },
@@ -3047,7 +3049,7 @@ $.fn.datagrid = function(options) {
         self.table.css('width', parseInt(self.tableWidth) + diff);
       }
 
-      this.clearHeaderCache()
+      this.clearHeaderCache();
     },
 
     // Get child offset

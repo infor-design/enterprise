@@ -6,12 +6,16 @@ Release Date: TBD
 * Splitter Speed Improved (using flex box)
 * Tabs Speed Improved
 * Tabs Can be lazy loaded and lazy loaded using Ajax calls.
+* Datagrid Fixed Row Improved
+* Datagrid Resize Rows Improved
+* General Performance Improvements
 
 ### Breaking Changes / Notes
 * 2017-01-12 - Listview will no longer initialize components in it. You can do this manually using the render method.
 * 2017-01-31 - The Duplicate Icon has visually changed. Make sure to update your SVG
 * 2017-01-31 - The Datagrid column with the id: 'drilldown' will have an auto size now
 * 2017-01-31 - The Datagrid columns are now more exact. If you have specified widths they will be exactly that width
+* 2017-01-31 - The Datagrid fixed header is now default. You can control the grid by setting height on the parent container and datagrid-body element.
 
 ### Ui Changes
 * 2017-01-31 - The Duplicate Icon has visually changed. Make sure to update your SVG
@@ -20,7 +24,7 @@ Release Date: TBD
 - Tabs
 - Splitter
 - Listview
-- Datagrid
+- Datagrid (columns and scrolling mainly)
 - Tooltip
 - Popups
 - Dropdown
