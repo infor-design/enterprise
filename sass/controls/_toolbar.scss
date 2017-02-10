@@ -46,7 +46,7 @@ $toolbar-buttonset-height: 40px;
       }
 
       &.is-overflowed {
-        visibility: hidden;
+        display: none;
       }
     }
 
@@ -126,6 +126,7 @@ $toolbar-buttonset-height: 40px;
   &.standalone {
     background-color: $toolbar-standalone-bg-color;
     border-bottom: 1px solid $toolbar-standalone-border-color;
+    text-align: left;
 
     [class^="btn"] {
       &[disabled],

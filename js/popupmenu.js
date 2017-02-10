@@ -365,7 +365,7 @@
             href = anchor.attr('href'),
             selectionResult = [anchor];
 
-          if (anchor.prop('disabled') === true || anchor.parent().is('.submenu') || anchor.parent().is('.is-disabled')) {
+          if (anchor.parent().is('.submenu, .hidden, .is-disabled')) {
             //Do not close parent items of submenus on click
             e.preventDefault();
             return;

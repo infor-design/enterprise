@@ -3838,7 +3838,9 @@ $.fn.datagrid = function(options) {
       }
 
       if (this._selectedRows.length > 0 && this.contextualToolbar.height() === 0) {
-        this.contextualToolbar.css('display', 'block').animateOpen();
+        this.contextualToolbar.css('display', 'block').one('animateopencomplete.datagrid', function() {
+          $(this).triggerHandler('recalculate-buttons');
+        }).animateOpen();
       }
 
     },

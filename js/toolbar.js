@@ -428,8 +428,15 @@
 
       handleSelected: function(e, anchor) {
         var itemLink = anchor.data('original-button'),
+          li = anchor.parent(),
           itemEvts,
           toolbarEvts;
+
+        // Don't continue if hidden/readonly/disabled
+        if (li.is('.hidden, .is-disabled') || anchor.is('[readonly], [disabled]')) {
+          e.preventDefault();
+          return;
+        }
 
         if (itemLink && itemLink.length > 0) {
           itemEvts = itemLink.listEvents();
@@ -521,6 +528,12 @@
       },
 
       handleResize: function() {
+        var buttons = this.getVisibleButtons();
+
+        for (var i = 0; i < buttons.length; i++) {
+          buttons.visible[i][0].classList.remove('is-overflowed');
+        }
+
         this.sizeContainers();
         this.adjustMenuItemVisibility();
         this.toggleMoreMenu(); // Added 9/16/2015 due to issue HFC-2876
@@ -531,6 +544,8 @@
         if (!this.title || !this.title.length) {
           return;
         }
+
+        this.cutoffTitle = false;
 
         var containerElem = this.element[0],
           titleElem = this.title[0],
@@ -547,7 +562,8 @@
           toolbarWidth = parseInt(toolbarStyle.width),
           padding = parseInt(toolbarStyle.paddingLeft) + parseInt(toolbarStyle.paddingRight),
           buttonsetWidth = parseInt(window.getComputedStyle(buttonsetElem).width) + WHITE_SPACE,
-          moreWidth = parseInt(window.getComputedStyle(moreElem).width);
+          moreWidth = parseInt(window.getComputedStyle(moreElem).width),
+          titleScrollWidth = titleElem.scrollWidth + 1;
 
         if (isNaN(moreWidth)) {
           moreWidth = 50;
@@ -562,47 +578,43 @@
         }
 
         // Get the target size of the title element
-        var titleScrollWidth = titleElem.scrollWidth + 1,
-          estimatedTitleSize = toolbarWidth - (padding + buttonsetWidth + moreWidth),
-          targetTitleWidth, targetButtonsetWidth, d;
+        var targetTitleWidth, targetButtonsetWidth, d;
 
-        if (estimatedTitleSize < MIN_TITLE_SIZE) {
-          estimatedTitleSize = MIN_TITLE_SIZE;
-        }
+        if (this.settings.favorButtonset) {
+          // Favor the buttonset element
+          targetButtonsetWidth = buttonsetWidth;
+          targetTitleWidth = toolbarWidth - (padding + buttonsetWidth + moreWidth);
 
-        // If the title element's text would be cut off, attempt to fix the size of both elements.
-        if (titleScrollWidth > estimatedTitleSize) {
-
-          if (!this.settings.favorButtonset) {
-            // Favor the title
-            this.cutoffTitle = false;
-
-            targetTitleWidth = titleScrollWidth;
-            targetButtonsetWidth = toolbarWidth - (padding + titleScrollWidth + moreWidth);
-
-            // Cut off the title anyway if buttonset is completely hidden.  Something's gotta give!
-            if (targetButtonsetWidth < MIN_BUTTONSET_SIZE) {
-              this.cutoffTitle = true;
-              d = Math.abs(targetButtonsetWidth - MIN_BUTTONSET_SIZE);
-              targetButtonsetWidth = MIN_BUTTONSET_SIZE;
-              targetTitleWidth = targetTitleWidth - d;
-            }
-
-            titleElem.style.width = addPx(targetTitleWidth);
-            buttonsetElem.style.width = addPx(targetButtonsetWidth);
-            return this;
+          // Cut off the buttonset anyway if title is completely hidden.  Something's gotta give!
+          if (targetTitleWidth < MIN_TITLE_SIZE) {
+            this.cutoffTitle = true;
+            d = Math.abs(targetTitleWidth - MIN_TITLE_SIZE);
+            targetTitleWidth = MIN_TITLE_SIZE;
+            targetButtonsetWidth = targetButtonsetWidth - d;
           }
 
-          // Favor the buttonset
           this.cutoffTitle = true;
-          titleElem.style.width = addPx(estimatedTitleSize);
-          buttonsetElem.style.width = addPx(toolbarWidth - (padding + estimatedTitleSize + moreWidth));
+          buttonsetElem.style.width = addPx(targetButtonsetWidth);
+          titleElem.style.width = addPx(targetTitleWidth);
+
           return this;
         }
 
-        // Always size the title element
-        this.cutoffTitle = false;
-        titleElem.style.width = addPx(toolbarWidth - (padding + buttonsetWidth + moreWidth));
+        //==========================
+        // Favor the title element
+        targetTitleWidth = titleScrollWidth;
+        targetButtonsetWidth = toolbarWidth - (padding + titleScrollWidth + moreWidth);
+
+        // Cut off the title anyway if buttonset is completely hidden.  Something's gotta give!
+        if (targetButtonsetWidth < MIN_BUTTONSET_SIZE) {
+          this.cutoffTitle = true;
+          d = Math.abs(targetButtonsetWidth - MIN_BUTTONSET_SIZE);
+          targetButtonsetWidth = MIN_BUTTONSET_SIZE;
+          targetTitleWidth = targetTitleWidth - d;
+        }
+
+        titleElem.style.width = addPx(targetTitleWidth);
+        buttonsetElem.style.width = addPx(targetButtonsetWidth);
         return this;
       },
 
@@ -736,10 +748,15 @@
       getVisibleButtons: function(buttons) {
         var self = this,
           hiddenButtons = [],
-          visibleButtons = [];
+          visibleButtons = [],
+          i;
 
         if (!buttons || !Array.isArray(buttons)) {
           buttons = this._getButtonsetButtons();
+        }
+
+        for (i = 0; i < buttons.length; i++) {
+          buttons[i][0].classList.remove('is-overflowed');
         }
 
         function getButtonVisibility(i, button) {
@@ -750,8 +767,8 @@
           }
         }
 
-        for (var i = 0; i < buttons.length; i++) {
-          getButtonVisibility(i, $(buttons[i]));
+        for (i = 0; i < buttons.length; i++) {
+          getButtonVisibility(i, buttons[i]);
         }
 
         return {
@@ -804,16 +821,14 @@
           return true;
         }
 
-
         // In cases where a Title is present and buttons are right-aligned, only show up to the maximum allowed.
-        if (this.title.length) { // Subtract one to account for the More Button
-          if (this.buttonsetItems.index(item) >= (this.settings.maxVisibleButtons - 1)) {
-            // ONLY cause this to happen if there are at least two items that can be placed in the overflow menu.
-            // This prevents ONE item from being present in the menu by itself
-            if (!this.buttonsetItems.last().is(item)) {
-              return true;
-            }
-          }
+        if (this.title.length && this.buttonsetItems.index(item) >= (this.settings.maxVisibleButtons)) { // Subtract one to account for the More Button
+          // ONLY cause this to happen if there are at least two items that can be placed in the overflow menu.
+          // This prevents ONE item from being present in the menu by itself
+          //if (!this.buttonsetItems.last().is(item)) {
+            //return true;
+          //}
+          return true;
         }
 
         if (this.buttonset.scrollTop() > 0) {
