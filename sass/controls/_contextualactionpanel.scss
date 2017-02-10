@@ -35,10 +35,9 @@
 
     .separator {
       background-color: $contextual-panel-seperator-bg-color;
-      height: 28px;
       margin: 5px 1px 0;
       pointer-events: none; //fixes wierd IE10 over effect
-      top: 1px;
+      top: 5px;
     }
 
     .toolbar-searchfield-wrapper.active {
@@ -66,7 +65,7 @@
     }
 
     .full-width {
-      margin-top: 0;
+      padding-top: 0;
     }
 
   }

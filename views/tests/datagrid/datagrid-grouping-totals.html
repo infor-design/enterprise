@@ -36,6 +36,9 @@
             aggregator: 'sum', //sum, averge, max ect
             aggregate: 'purchases',
             groupFooterRow: true,
+            groupFooterRowFormatter: function (idx, row, cell, value, col, item, api) {
+              return '<td role="gridcell" colspan=' + (idx-1) + ' style="border-right: 0"><div class="datagrid-cell-wrapper">&nbsp;</div></td><td role="gridcell" style="border-right: 0"><div class="datagrid-cell-wrapper"> <b style="float: right;">Total</b> </div></td><td role="gridcell"><div class="datagrid-cell-wrapper"> '+ item.sum +'</div></td>';
+            },
             expanded: function (row, cell, value, col, item) {
               //Similate some logic to determin which rows should be Collapsed
               return item.type.indexOf('Customer') != -1;

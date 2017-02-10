@@ -1,53 +1,40 @@
-<div class="row">
-  <div class="twelve columns">
-    <br />
-    <h3>Grid Example: Core</h3>
-    <p>
-    Shows a "stress test" with 50 rows and 50 columns. Useful for debugging some performance issues.
-    </p>
-    <hr class="fieldset-hr">
+<div class="full-width full-height">
+  <div class="toolbar" role="toolbar">
+    <div class="title">
+      Compressors
+      <span class="datagrid-result-count">(10 Results)</span>
+    </div>
+    <div class="buttonset">
+      <button type="button" class="btn">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-filter"></use>
+        </svg>
+        <span>Filter</span>
+      </button>
+    </div>
+
+    <div class="more">
+      <button type="button" class="btn-actions">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-more"></use>
+        </svg>
+        <span class="audible">More Actions</span>
+      </button>
+      <ul class="popupmenu">
+        <li><a data-option="personalize-columns" href="#">Personalize Columns</a></li>
+        <li><a data-option="reset-layout" href="#">Reset to Default</a></li>
+        <li class="separator"></li>
+        <li><a data-option="export-to-excel" href="#">Export to Excel</a></li>
+        <li class="separator single-selectable-section"></li>
+        <li class="heading">Row Height</li>
+        <li class="is-selectable"><a data-option="row-short" href="#">Short</a></li>
+        <li class="is-selectable"><a data-option="row-medium" href="#">Medium</a></li>
+        <li class="is-selectable is-checked"><a data-option="row-normal" href="#">Normal</a></li>
+      </ul>
+    </div>
   </div>
-</div>
 
-<div class="row">
-  <div class="twelve columns">
-    <div class="toolbar" role="toolbar">
-      <div class="title">
-        Compressors
-        <span class="datagrid-result-count">(10 Results)</span>
-      </div>
-      <div class="buttonset">
-        <button type="button" class="btn">
-          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use xlink:href="#icon-filter"></use>
-          </svg>
-          <span>Filter</span>
-        </button>
-      </div>
-
-      <div class="more">
-        <button type="button" class="btn-actions">
-          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use xlink:href="#icon-more"></use>
-          </svg>
-          <span class="audible">More Actions</span>
-        </button>
-        <ul class="popupmenu">
-          <li><a data-option="personalize-columns" href="#">Personalize Columns</a></li>
-          <li><a data-option="reset-layout" href="#">Reset to Default</a></li>
-          <li class="separator"></li>
-          <li><a data-option="export-to-excel" href="#">Export to Excel</a></li>
-          <li class="separator single-selectable-section"></li>
-          <li class="heading">Row Height</li>
-          <li class="is-selectable"><a data-option="row-short" href="#">Short</a></li>
-          <li class="is-selectable"><a data-option="row-medium" href="#">Medium</a></li>
-          <li class="is-selectable is-checked"><a data-option="row-normal" href="#">Normal</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div id="datagrid">
-    </div>
+  <div id="datagrid" class="datagrid-contained">
   </div>
 </div>
 
@@ -68,7 +55,7 @@
         }
 
         data.push(columnObj);
-        columns.push({ id: colName, name: colName, field: colName, width: 40, formatter: Formatters.Input});
+        columns.push({ id: colName, name: colName, field: colName, width: 100, formatter: Formatters.Input});
       }
 
       //Init and get the api for the grid

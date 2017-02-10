@@ -18,6 +18,17 @@
     color: $hyperlink-hover-color;
   }
 
+  &.object-count {
+    display: inline-block;
+    margin: 60px 20px 40px;
+    text-align: center;
+  }
+
+  .xl-text {
+    @include font-size(50);
+    font-weight: lighter;
+  }
+
   &.show-visited:visited {
     color: $hyperlink-visited-color;
 

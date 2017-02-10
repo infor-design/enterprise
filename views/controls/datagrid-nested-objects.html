@@ -21,8 +21,8 @@
 
       //Define Columns for the Grid.
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: '50%', formatter: Formatters.Readonly});
-      columns.push({ id: 'productName', name: 'Nested Array', sortable: false, field: 'fields.field1.value', width: 175, formatter: Formatters.Hyperlink, editor: Editors.Input});
-      columns.push({ id: 'productName', name: 'Nested Prop', sortable: false, field: 'properties.value', width: 175, formatter: Formatters.Hyperlink, editor: Editors.Input});
+      columns.push({ id: 'productName', name: 'Nested Array', sortable: false, field: 'fields.field1.value', width: '25%', formatter: Formatters.Hyperlink, editor: Editors.Input});
+      columns.push({ id: 'productName', name: 'Nested Prop', sortable: false, field: 'properties.value', width: '25%', formatter: Formatters.Hyperlink, editor: Editors.Input});
 
       //Init and get the api for the grid
       grid = $('#datagrid').datagrid({
@@ -36,4 +36,3 @@
     });
  });
 </script>
-

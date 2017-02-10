@@ -73,7 +73,9 @@
         }
       ]
     }).on('close', function () {
-      $('#new-grid').closest('.contextual-action-panel').remove();
+      console.log('Close Fired')
+      //If you wanted to remove the dom element on close
+      //$('#new-grid').closest('.contextual-action-panel').remove();
     });
   };
 

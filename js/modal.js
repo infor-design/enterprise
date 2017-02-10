@@ -502,13 +502,19 @@
 
       resize: function() {
         var calcHeight = ($(window).height()* 0.9)-this.settings.frameHeight, //90% -(180 :extra elements-height)
-          calcWidth = ($(window).width()* 0.9)-this.settings.frameWidth,
-          wrapper = this.element.find('.modal-body-wrapper');
+          calcWidth = ($(window).width()* 0.9)-this.settings.frameWidth;
 
+        if (this.element.hasClass('lookup-modal')) {
+          var table = this.element.find('.datagrid-body');
+          table[0].style.maxHeight = calcHeight + 'px';
+          table[0].style.maxWidth = calcWidth + 'px';
+          return;
+        }
+
+        var wrapper = this.element.find('.modal-body-wrapper');
         if (wrapper.length) {
           wrapper[0].style.maxHeight = calcHeight + 'px';
           wrapper[0].style.maxWidth = calcWidth + 'px';
-
         }
       },
 

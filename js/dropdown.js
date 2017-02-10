@@ -753,7 +753,7 @@
         }
 
         this.searchKeyMode = true;
-        if (isSearchInput) {
+        if (self.searchInput) {
           self.searchInput.attr('aria-activedescendant', '');
         }
         return true;
@@ -1184,7 +1184,7 @@
           this.list[0].style.width = pseudoElemOuterWidth + 'px';
 
           if (this.isInGrid) {
-            this.list[0].style.width = pseudoElemOuterWidth + 'px';
+            this.list[0].style.width = pseudoElemOuterWidth + 3 + 'px';
           }
         }
       },
@@ -1270,7 +1270,7 @@
 
       // Return true/false if the list is open
       isOpen: function() {
-        return this.list && this.list.is(':visible');
+        return (this.list && this.list.is(':visible')) ? true : false;
       },
 
       // Hide or Show list

@@ -104,3 +104,22 @@ http://git.infor.com/projects/SOHO/repos/controls/browse/sass/controls/_hyperlin
 
 - Replace class="inforHyperlink" with "hyperlink"
 
+## Documentation Structure
+
+Structure....
+
+Dropdown
+  Documentation
+      Test Cases
+      Generated - Description, API, Methods, Overview
+      Other Docs
+      Code Snippets
+
+  Examples
+
+    Example 1
+    Example 2
+    Example 3
+    Use Case 1
+
+  Unit Tests

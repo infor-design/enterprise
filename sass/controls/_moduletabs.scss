@@ -214,7 +214,8 @@
     }
 
     span {
-      font-weight: bold;
+      font-size: 2.4rem;
+      font-weight: normal;
     }
 
     &.is-selected {
@@ -366,8 +367,9 @@
     }
 
     .add-tab-button {
+      height: 40px;
       right: 0;
-      top: 0;
+      top: -7px;
     }
   }
 
@@ -636,6 +638,8 @@ html[dir='rtl'] {
     }
 
     .add-tab-button {
+      top: -3px;
+
       a {
         padding-top: 3px;
       }

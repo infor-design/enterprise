@@ -29,7 +29,10 @@
         //Init and get the api for the grid
         $('#datagrid').datagrid({
           columns: columns,
-          dataset: data
+          dataset: data,
+          paging: true,
+          pagesize: 100,
+          toolbar: {title: 'Compressors', actions: true, rowHeight: true, results: true }
         });
 
       });

@@ -6,22 +6,33 @@ Release Date: TBD
 * Splitter Speed Improved (using flex box)
 * Tabs Speed Improved
 * Tabs Can be lazy loaded and lazy loaded using Ajax calls.
+* Datagrid Fixed Row Improved
+* Datagrid Resize Rows Improved
+* General Performance Improvements
 
-### Breaking Changes
+### Breaking Changes / Notes
 * 2017-01-12 - Listview will no longer initialize components in it. You can do this manually using the render method.
+* 2017-01-31 - The Duplicate Icon has visually changed. Make sure to update your SVG
+* 2017-01-31 - The Datagrid column with the id: 'drilldown' will have an auto size now
+* 2017-01-31 - The Datagrid columns are now more exact. If you have specified widths they will be exactly that width
+* 2017-01-31 - The Datagrid fixed header is now default. You can control the grid by setting height on the parent container and datagrid-body element.
 
 ### Ui Changes
-- TBD
+* 2017-01-31 - The Duplicate Icon has visually changed. Make sure to update your SVG
 
 ### Affects
 - Tabs
 - Splitter
 - Listview
-- Datagrid
+- Datagrid (columns and scrolling mainly)
+- Tooltip
+- Popups
+- Dropdown
+- Datepicker
+- TimePicker
 
 Jira Release Notes
 http://jira.infor.com/secure/ReleaseNote.jspa?version=27962&styleName=Html&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX%7C7c9b3f18b5f46187205e0d24b1489b80c8b4e1a1%7Clin
-
 
 ## 4.2.4 - Minor Release
 Release Date: 2017-01-10
