@@ -428,8 +428,15 @@
 
       handleSelected: function(e, anchor) {
         var itemLink = anchor.data('original-button'),
+          li = anchor.parent(),
           itemEvts,
           toolbarEvts;
+
+        // Don't continue if hidden/readonly/disabled
+        if (li.is('.hidden, .is-disabled') || anchor.is('[readonly], [disabled]')) {
+          e.preventDefault();
+          return;
+        }
 
         if (itemLink && itemLink.length > 0) {
           itemEvts = itemLink.listEvents();
