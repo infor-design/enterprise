@@ -2948,10 +2948,12 @@ $.fn.datagrid = function(options) {
         markup += '<div class="listview alternate-bg" id="search-listview"><ul>';
 
         for (var i = 0; i < this.settings.columns.length; i++) {
-          var col = this.settings.columns[i];
+          var col = this.settings.columns[i],
+            name = col.name;
 
-          if (col.name) {
-            markup += '<li><a href="#" target="_self" tabindex="-1"> <label class="inline"><input tabindex="-1" ' + (col.hideable ===false ? 'disabled' : '') + ' type="checkbox" class="checkbox" '+ (col.hidden ? '' : ' checked') +' data-column-id="'+ (col.id || i) +'"><span class="label-text">' + col.name + '</span></label></a></li>';
+          if (name) {
+            name = name.replace('<br>', '').replace('<br/>', '').replace('<br />', '');
+            markup += '<li><a href="#" target="_self" tabindex="-1"> <label class="inline"><input tabindex="-1" ' + (col.hideable ===false ? 'disabled' : '') + ' type="checkbox" class="checkbox" '+ (col.hidden ? '' : ' checked') +' data-column-id="'+ (col.id || i) +'"><span class="label-text">' + name + '</span></label></a></li>';
           }
         }
         markup += '</ul></div>';
