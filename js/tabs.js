@@ -1246,7 +1246,6 @@
         targetPanel = self.getPanel(href);
         oldTab = self.anchors.parents().filter('.is-selected');
 
-
         // Avoid filter(:visible)
         for (var i = 0; i < self.panels.length; i++) {
           if (self.panels[i].classList.contains('is-visible')) {
@@ -1307,6 +1306,20 @@
         this.focusBar(activeStateTarget);
 
         selectedStateTarget.addClass('is-selected');
+
+        // Fires a resize on any invoked child toolbars inside the tab panel.
+        // Needed to fix issues with Toolbar alignment, since we can't properly detect
+        // size on hidden elements.
+        var childToolbars = targetPanel.find('.toolbar');
+        if (childToolbars.length) {
+          childToolbars.each(function() {
+            var api = $(this).data('toolbar');
+            if (api && typeof api.handleResize === 'function') {
+              api.handleResize();
+            }
+          });
+        }
+
       },
 
       /**

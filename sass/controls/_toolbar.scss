@@ -15,6 +15,10 @@ $toolbar-buttonset-height: 40px;
     text-align: right;
   }
 
+  &.right-aligned {
+    text-align: right;
+  }
+
   // Acts as a spacer that causes the toolbar items to vertically align.
   &::before {
     @include vertical-alignment-spacer;
@@ -56,10 +60,6 @@ $toolbar-buttonset-height: 40px;
 
     > [class^="btn"] {
       min-width: 34px;
-    }
-
-    &.right-aligned {
-      text-align: right;
     }
   }
 
