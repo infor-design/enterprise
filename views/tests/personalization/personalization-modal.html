@@ -1,9 +1,7 @@
 <div class="row top-padding">
   <div class="twelve columns">
 
-    <h1>Personalization In a Modal Example</h1>
-
-    <button class="btn-secondary" type="button" id="show">Show Modal</button>
+    <button class="btn-secondary" type="button" id="show">Show Settings</button>
 
     <div id="modal" class="modal">
       <div class="modal-content">
@@ -15,6 +13,7 @@
         <div class="modal-body-wrapper">
           <div class="modal-body">
             <div class="soho-personalize">
+
               <div class="row">
                 <div class="twelve columns">
                   <button class="btn-menu"><span>Select Theme</span></button>
@@ -23,23 +22,8 @@
                     <li data-theme="dark-theme"><a>Dark</a></li>
                     <li data-theme="high-contrast-theme"><a>High Contrast</a></li>
                   </ul>
-                  <button class="btn-menu btn-secondary"><span>Select Theme</span></button>
-                  <ul class="popupmenu">
-                    <li data-theme="light-theme"><a>Light</a></li>
-                    <li data-theme="dark-theme"><a>Dark</a></li>
-                    <li data-theme="high-contrast-theme"><a>High Contrast</a></li>
-                  </ul>
-                  <button class="btn-menu"><span>Select Color</span></button>
-                  <ul class="popupmenu">
-                    <li data-rgbcolor=""><a>Default</a></li>
-                    <li data-rgbcolor="#368AC0"><a>Azure</a></li>
-                    <li data-rgbcolor="#EFA836"><a>Amber</a></li>
-                    <li data-rgbcolor="#9279A6"><a>Amethyst</a></li>
-                    <li data-rgbcolor="#579E95"><a>Turquoise</a></li>
-                    <li data-rgbcolor="#76B051"><a>Emerald</a></li>
-                    <li data-rgbcolor="#5C5C5C"><a>Graphite</a></li>
-                  </ul>
-                  <button class="btn-menu btn-secondary-border"><span>Select Color</span></button>
+
+                  <button class="btn-menu" id="color-select"><span>Select Color</span></button>
                   <ul class="popupmenu">
                     <li data-rgbcolor=""><a>Default</a></li>
                     <li data-rgbcolor="#368AC0"><a>Azure</a></li>
@@ -50,18 +34,11 @@
                     <li data-rgbcolor="#5C5C5C"><a>Graphite</a></li>
                   </ul>
                 </div>
-              </div>
-              <div class="row top-padding">
-                <div class="twelve columns">
-                  <div class="field">
-                    <label for="theme" class="label">Theme (dropdown doesn't work)</label>
-                    <select id="theme" name="theme" class="dropdown">
-                      <option value="light" data-theme="grey-theme">Light</option>
-                      <option value="dark" data-theme="dark-theme">Dark</option>
-                      <option value="highContrast" data-theme="high-contrast-theme">High Contrast</option>
-                    </select>
-                  </div>
-                </div>
+              </div><br>
+
+              <div class="field">
+                <label for="stylsheet-text">Generated Style Sheet</label>
+                <textarea id="stylsheet-text" name="stylsheet-text"></textarea>
               </div>
             </div>
             <div class="modal-buttonset">
@@ -92,11 +69,12 @@
     // Change Theme or Color
     if (element.data('theme')) {
       var theme = element.data('theme');
-      jQuery('body').trigger('changetheme', theme.replace('-theme',''));
+      $('body').trigger('changetheme', theme.replace('-theme',''));
     } else if (element.data('rgbcolor')) {
       var color = element.data('rgbcolor');
-      jQuery('body').trigger('changecolors', [color]);
+      $('body').trigger('changecolors', [color]);
+
+      $('#stylsheet-text').text(window.Soho.getColorStyleSheet(color));
     }
   });
 </script>
-

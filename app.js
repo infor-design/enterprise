@@ -73,6 +73,8 @@ var express = require('express'),
     if (req.query.theme && req.query.theme.length  > 0) {
       res.opts.theme = req.query.theme;
       console.log('Setting Theme to ' + res.opts.theme);
+    } else {
+      res.opts.theme = 'light';
     }
 
     if (req.query.colors && req.query.colors.length > 0) {

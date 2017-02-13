@@ -68,13 +68,16 @@
 }
 
 .tab-list-info {
-  @include antialiased();
-  @include font-size(14);
+  @include font-size(20);
   color: $vertical-tab-text-color;
   padding: 10px 30px;
 
   &:first-child {
     padding-top: 10px;
+  }
+
+  h2 {
+    @include font-size(20);
   }
 }
 
@@ -125,6 +128,11 @@
     margin: 30px;
     padding-top: 0;
     vertical-align: top;
+
+    h3 {
+      margin-bottom: 20px;
+    }
+
   }
 
   > .tab-panel,

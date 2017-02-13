@@ -432,10 +432,18 @@
           });
 
           this.element
-          .onTouchClick('listview', 'li, tr, input, select, label, button')
+          .off('listview', 'li, tr')
+          .on('click.listview', 'a', function (e) {
+            $(this).closest('li').click();
+            e.preventDefault();
+            return false;
+          });
+
+          this.element
+          .off('listview', 'li, tr')
           .on('click.listview', 'li, tr', function (e) {
             var item = $(this);
-
+            console.log(item);
             if (!isFocused && !item.hasClass('is-disabled')) {
               isSelect = true;
 

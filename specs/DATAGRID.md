@@ -171,6 +171,9 @@ BUG - Add Reponsive behavior
   The example is working if there are different values in each row
 - This example is the same as cascading-dropdowns but with a short row, test the short row is visually correct
 
+TODO: When editing the drop down, it focuses the drop down, and it can open off screen.
+Styling is off.
+
 [A bunch of columns](tests/datagrid/cascading-dropdowns.html)
 - Purpose of the example was to show a drop down that is filtered based on the row types.
   The example is working if there are different values in each row
