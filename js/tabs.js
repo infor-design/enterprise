@@ -1043,7 +1043,6 @@
 
         if (!selected.length) {
           this.defocusBar();
-          //this.positionFocusState();
           this.hideFocusState();
         } else {
           this.focusBar(selected);
@@ -1118,7 +1117,7 @@
         }
 
         var panel = this.getPanel(href);
-        return panel[0].className.indexOf('can-show') > -1;
+        return panel[0].classList.contains('can-show');
       },
 
       isNestedInLayoutTabs: function() {
@@ -1234,7 +1233,7 @@
 
       activate: function(href) {
         var self = this,
-          a, targetTab, targetPanel, oldTab, oldPanel,
+          a, targetTab, targetPanel, targetPanelElem, oldTab, oldPanel,
           selectedStateTarget,
           activeStateTarget;
 
@@ -1245,6 +1244,7 @@
         a = self.getAnchor(href);
         targetTab = a.parent();
         targetPanel = self.getPanel(href);
+        targetPanelElem = targetPanel[0];
         oldTab = self.anchors.parents().filter('.is-selected');
 
         // Avoid filter(:visible)
@@ -1270,21 +1270,21 @@
         oldPanel.removeClass('is-visible can-show').closeChildren();
         self.element.trigger('activated', [a]);
 
-        targetPanel.addClass('can-show');
+        targetPanelElem.classList.add('can-show');
         self.renderVisiblePanel();
-        targetPanel[0].offsetHeight; // jshint ignore:line
+        targetPanelElem.offsetHeight; // jshint ignore:line
         targetPanel.one($.fn.transitionEndName() + '.tabs', function() {
           self.element.trigger('afteractivated', [a]);
         });
 
         // Triggers the CSS Animation
-        targetPanel.addClass('is-visible');
+        targetPanelElem.classList.add('is-visible');
 
         // Update the currently-selected tab
         self.updateAria(a);
         oldTab.add(this.moreButton).removeClass('is-selected');
 
-        if (targetTab.is('.tab')) {
+        if (targetTab[0].classList.contains('tab')) {
           selectedStateTarget = targetTab;
           activeStateTarget = targetTab;
         }
