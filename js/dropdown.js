@@ -875,10 +875,11 @@
           self =  this,
           touchPrevented = false,
           threshold = 10,
+          isEmpty = true,
           pos;
 
         if (current.length > 0) {
-          current = current.eq(0);
+          isEmpty = true;
         }
 
         if (Soho.env.os.name === 'ios') {
@@ -944,7 +945,7 @@
           }, 0);
         }
 
-        if (!this.settings.multiple) {
+        if (!this.settings.multiple && !isEmpty) {
           this.searchInput.val(current.find('a').text());
         }
 
@@ -1352,10 +1353,6 @@
         }
 
         if (option.hasClass('is-disabled') || option.is(':disabled')) {
-          return;
-        }
-
-        if (!this.settings.multiple && option.index() === this.element[0].selectedIndex) {
           return;
         }
 
