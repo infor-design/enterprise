@@ -443,7 +443,7 @@
           .off('listview', 'li, tr')
           .on('click.listview', 'li, tr', function (e) {
             var item = $(this);
-            console.log(item);
+
             if (!isFocused && !item.hasClass('is-disabled')) {
               isSelect = true;
 
