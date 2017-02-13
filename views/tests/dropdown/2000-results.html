@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Dropdown Test: 2000 Results</h2>
+    <p>This is a performance test for the Dropdown Component which creates 2000 option nodes from an AJAX call.  This test checks for speed decreases during the opening of the dropdown list, as well as during filtering (keying a search term in the input box on the open list).</p>
+    <p></p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="big-dropdown">Show Me Potato Salad</label>
+      <select id="big-dropdown" class="dropdown no-init"></select>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+    var elem = $('#big-dropdown'),
+      cache;
+
+    function dropdownSource(response, term) {
+      if (cache !== undefined) {
+        return response(cache);
+      }
+
+      var request = $.getJSON('{{basepath}}api/garbage?size=2000&return=json');
+
+      request.done(function(data) {
+        cache = data;
+        response(data);
+      });
+    }
+
+    elem.dropdown({
+      source: dropdownSource
+    });
+  });
+</script>

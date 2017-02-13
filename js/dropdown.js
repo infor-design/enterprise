@@ -1467,15 +1467,44 @@
             var list = '',
               val = self.element.val();
 
-            function buildOption(option) {
-              var isString = typeof option === 'string';
+            function replaceDoubleQuotes(content) {
+              return content.replace('"', '\'');
+            }
 
-              if (option !== null && option !== undefined) {
-                list += '<option' + (option.id === undefined ? '' : ' id="' + option.id.replace('"', '\'') + '"') +
-                        (option.value !== undefined ? ' value="' + option.value.replace('"', '\'') + '"' : isString ? ' value="' + option.replace('"', '\'') + '"' : '') +
-                        (option.value === val || option.selected ? ' is-selected ' : '') +
-                        '>'+ (option.label !== undefined ? option.label : option.value !== undefined ? option.value : isString ? option : '') + '</option>';
+            function buildOption(option) {
+              if (option === null || option === undefined) {
+                return;
               }
+
+              var isString = typeof option === 'string',
+                stringContent = option;
+
+              if (isString) {
+                option = {
+                  value: stringContent
+                };
+              }
+              option.value = replaceDoubleQuotes(option.value);
+
+              if (option.id !== undefined) {
+                if (!isNaN(option.id)) {
+                  option.id = '' + option.id;
+                }
+                option.id = replaceDoubleQuotes(option.id);
+              }
+
+              if (option.label !== undefined) {
+                option.label = replaceDoubleQuotes(option.label);
+              }
+
+              if (!option.selected && option.value === val) {
+                option.selected = true;
+              }
+
+              list += '<option' + (option.id === undefined ? '' : ' id="' + option.id + '"') +
+                        ' value="' + option.value + '"' +
+                        (option.selected ? ' selected ' : '') +
+                      '>'+ (option.label !== undefined ? option.label : option.value !== undefined ? option.value : '') + '</option>';
             }
 
             // If the incoming dataset is different than the one we started with,

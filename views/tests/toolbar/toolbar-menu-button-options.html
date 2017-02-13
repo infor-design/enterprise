@@ -69,12 +69,12 @@
 
     <div class="toolbar">
       <div class="title">
-         Toolbar
+         Toolbar Title
       </div>
 
       <div class="buttonset">
          <button type="button" id="button-1" class="btn">
-            <span>Space Filler Button 1</span>
+            <span>Space Filler With Long Text Button 1</span>
          </button>
 
          <button type="button" id="button-2" class="btn">
@@ -107,9 +107,10 @@
 
     // Disable button or item
     if (element.is('button')) {
-      $(selector).prop('disabled', true);
+      element.prop('disabled', true);
     } else {
       element.addClass('is-disabled');
+      element.children('a').attr('disabled', 'disabled'); // needed to prevent click event
     }
   });
 
@@ -119,9 +120,10 @@
 
     // Enable button or item
     if (element.is('button')) {
-      $(selector).removeAttr('disabled');
+      element.removeAttr('disabled');
     } else {
       element.removeClass('is-disabled');
+      element.children('a').removeAttr('disabled');
     }
   });
 
