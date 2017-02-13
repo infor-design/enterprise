@@ -462,10 +462,14 @@ example shows how to customize the group row with a "formatter".
 - Expand and Collapse Rows
 - Test Keyboard
 - Test Themes
-- Row Hight
+- Row Height
 - Column resize
 
-datagrid-image.html
+[Grouping - Images](/tests/datagrid-image.html)
+- This Page shows the image formatter.
+- The example is working if images show in the last column.
+- Test the resize
+
 datagrid-modal-over.html
 datagrid-multiselect-nonchecks.html
 datagrid-on-card.html
@@ -584,8 +588,8 @@ Known Issues:
 
 - Test More on Windows
 - Test Directly on Optiva
-- Editing (more)
+- Editing (more issues)
 - Mobile (percent col widths) or mobile min - width....
-- Re-Test Screen Reader - Not reading headers
+- Re-Do Screen Reader - Not reading headers
 - Last Column / Border Resize (maybe)
 - Test Last Column is hidden  (maybe)
