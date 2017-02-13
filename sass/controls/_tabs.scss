@@ -140,7 +140,18 @@
 
 // Tab Body
 .tab-panel {
+  display: none;
+  opacity: 0;
   padding-top: 20px;
+  @include transition(opacity 500ms cubic-bezier(.17, .04, .03, .94));
+
+  &.can-show {
+    display: block;
+  }
+
+  &.is-visible {
+    opacity: 1;
+  }
 
   &.padding {
     // scss-lint:disable ImportantRule

@@ -264,7 +264,7 @@
         self.anchors.each(associateAnchorWithPanel);
         self.panels
           .addClass('tab-panel')
-          .attr({'role': 'tabpanel'}).hide()
+          .attr({'role': 'tabpanel'})
           .find('h3:first').attr('tabindex', '0');
 
         var excludes = ':not(.separator):not(.is-disabled):not(.is-hidden)',
@@ -502,7 +502,7 @@
             noPopupMenusOpen = self.tablist.children('.has-popupmenu.is-open').length === 0;
 
           if (noFocusedTabs && noPopupMenusOpen && !self.moreButton.is('.is-selected, .popup-is-open')) {
-            self.positionFocusState();
+            self.hideFocusState();
           }
         }).on('updated.tabs', function() {
           self.updated();
@@ -1043,7 +1043,7 @@
 
         if (!selected.length) {
           this.defocusBar();
-          this.positionFocusState();
+          this.hideFocusState();
         } else {
           this.focusBar(selected);
           this.positionFocusState(selected);
@@ -1117,7 +1117,7 @@
         }
 
         var panel = this.getPanel(href);
-        return panel[0].style.display !== 'none';
+        return panel[0].classList.contains('can-show');
       },
 
       isNestedInLayoutTabs: function() {
@@ -1207,7 +1207,7 @@
         }
 
         if (!target.length) {
-          this.positionFocusState();
+          this.hideFocusState();
           this.defocusBar();
           return target;
         }
@@ -1233,7 +1233,7 @@
 
       activate: function(href) {
         var self = this,
-          a, targetTab, targetPanel, oldTab, oldPanel,
+          a, targetTab, targetPanel, targetPanelElem, oldTab, oldPanel,
           selectedStateTarget,
           activeStateTarget;
 
@@ -1244,12 +1244,12 @@
         a = self.getAnchor(href);
         targetTab = a.parent();
         targetPanel = self.getPanel(href);
+        targetPanelElem = targetPanel[0];
         oldTab = self.anchors.parents().filter('.is-selected');
-
 
         // Avoid filter(:visible)
         for (var i = 0; i < self.panels.length; i++) {
-          if (self.panels[i].style.display !== 'none') {
+          if (self.panels[i].classList.contains('is-visible')) {
             oldPanel = $(self.panels[i]);
           }
         }
@@ -1267,32 +1267,24 @@
           return this.callSource(href);
         }
 
-        oldPanel.closeChildren();
-
-        self.panels.hide();
+        oldPanel.removeClass('is-visible can-show').closeChildren();
         self.element.trigger('activated', [a]);
 
-        function fadeStart() {
-          self.renderVisiblePanel();
-        }
-
-        function fadeComplete() {
-          $('#tooltip').addClass('is-hidden');
-          $('#dropdown-list, #multiselect-list').remove();
+        targetPanelElem.classList.add('can-show');
+        self.renderVisiblePanel();
+        targetPanelElem.offsetHeight; // jshint ignore:line
+        targetPanel.one($.fn.transitionEndName() + '.tabs', function() {
           self.element.trigger('afteractivated', [a]);
-        }
-
-        targetPanel.stop().fadeIn({
-          duration: 250,
-          start: fadeStart,
-          complete: fadeComplete
         });
+
+        // Triggers the CSS Animation
+        targetPanelElem.classList.add('is-visible');
 
         // Update the currently-selected tab
         self.updateAria(a);
         oldTab.add(this.moreButton).removeClass('is-selected');
 
-        if (targetTab.is('.tab')) {
+        if (targetTab[0].classList.contains('tab')) {
           selectedStateTarget = targetTab;
           activeStateTarget = targetTab;
         }
@@ -1316,11 +1308,19 @@
 
         selectedStateTarget.addClass('is-selected');
 
-        // Hide tooltips that may have been generated inside a tab.
-        setTimeout(function () {
-          $('#validation-tooltip').hide();
-          $('#tooltip').hide();
-        }, 100);
+        // Fires a resize on any invoked child toolbars inside the tab panel.
+        // Needed to fix issues with Toolbar alignment, since we can't properly detect
+        // size on hidden elements.
+        var childToolbars = targetPanel.find('.toolbar');
+        if (childToolbars.length) {
+          childToolbars.each(function() {
+            var api = $(this).data('toolbar');
+            if (api && typeof api.handleResize === 'function') {
+              api.handleResize();
+            }
+          });
+        }
+
       },
 
       /**
@@ -1736,7 +1736,7 @@
 
         // If there's really nothing, kick on out and defocus everything.
         if (!prevLi.length) {
-          this.positionFocusState();
+          this.hideFocusState();
           this.defocusBar();
 
           this.element.trigger('afterclose', [targetLi]);

@@ -75,12 +75,16 @@
         // possible to show the entire title text on screen.
         this.title = this.element.children('.title');
         if (this.title.length) {
+          this.element[0].classList.add('has-title');
+
           this.cutoffTitle = false;
           this.title.on('beforeshow.toolbar', function() {
             return self.cutoffTitle;
           }).tooltip({
             content: '' + this.title.text().trim()
           });
+        } else {
+          this.element[0].classList.remove('has-title');
         }
 
         // Container for main group of buttons and input fields.  Only these spill into the More menu.
@@ -545,8 +549,6 @@
           return;
         }
 
-        this.cutoffTitle = false;
-
         var containerElem = this.element[0],
           titleElem = this.title[0],
           buttonsetElem = this.buttonset[0],
@@ -562,7 +564,7 @@
           toolbarWidth = parseInt(toolbarStyle.width),
           padding = parseInt(toolbarStyle.paddingLeft) + parseInt(toolbarStyle.paddingRight),
           buttonsetWidth = parseInt(window.getComputedStyle(buttonsetElem).width) + WHITE_SPACE,
-          moreWidth = parseInt(window.getComputedStyle(moreElem).width),
+          moreWidth = moreElem !== undefined ? parseInt(window.getComputedStyle(moreElem).width) : 0,
           titleScrollWidth = titleElem.scrollWidth + 1;
 
         if (isNaN(moreWidth)) {
@@ -579,6 +581,7 @@
 
         // Get the target size of the title element
         var targetTitleWidth, targetButtonsetWidth, d;
+        this.cutoffTitle = false;
 
         if (this.settings.favorButtonset) {
           // Favor the buttonset element
@@ -593,7 +596,6 @@
             targetButtonsetWidth = targetButtonsetWidth - d;
           }
 
-          this.cutoffTitle = true;
           buttonsetElem.style.width = addPx(targetButtonsetWidth);
           titleElem.style.width = addPx(targetTitleWidth);
 
