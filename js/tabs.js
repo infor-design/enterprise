@@ -1249,7 +1249,7 @@
 
         // Avoid filter(:visible)
         for (var i = 0; i < self.panels.length; i++) {
-          if (self.panels[i].style.display !== 'none') {
+          if (self.panels[i].classList.contains('is-visible')) {
             oldPanel = $(self.panels[i]);
           }
         }
