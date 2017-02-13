@@ -1144,16 +1144,30 @@ var express = require('express'),
       paragraphs = 1,
       text = '',
       type = 'text',
-      types = ['text', 'html'],
+      types = ['text', 'html', 'json'],
       garbageWords = ['garbage', 'junk', 'nonsense', 'trash', 'rubbish', 'debris', 'detritus', 'filth', 'waste', 'scrap', 'sewage', 'slop', 'sweepings', 'bits and pieces', 'odds and ends', 'rubble', 'clippings', 'muck', 'stuff'];
 
     function randomSeed() {
       return (Math.random() * (10 - 1) + 1) > 8;
     }
 
+    function getWord() {
+      return garbageWords[Math.floor(Math.random() * garbageWords.length)];
+    }
+
+    function capitalize(text) {
+      return text.charAt(0).toUpperCase() + text.substr(1);
+    }
+
     function done(content) {
       if (type === 'html') {
         res.send(content);
+        return next();
+      }
+
+      if (type === 'json') {
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify(content));
         return next();
       }
 
@@ -1176,9 +1190,29 @@ var express = require('express'),
       }
     }
 
+    var word = '';
+
+    if (type === 'json') {
+      var data = [],
+        objCount = 0;
+
+      while (objCount < amount) {
+        word = getWord();
+
+        data.push({
+          id: objCount,
+          label: '' + capitalize(word),
+          value: '' + objCount + '-' + word.split(' ').join('-'),
+          selected: false
+        });
+        objCount = objCount + 1;
+      }
+
+      return done(data);
+    }
+
     // Get a random word from the GarbageWords array
-    var word = '',
-      paragraph = '';
+    var paragraph = '';
 
     while (paragraphs > 0) {
       if (type === 'html') {
@@ -1195,10 +1229,10 @@ var express = require('express'),
       } else {
       // in all other cases, generate the amount of words defined by the query for this paragraph.
         for (var i = 0; i < amount; i++) {
-          word = garbageWords[Math.floor(Math.random() * garbageWords.length)];
+          word = getWord();
 
           if (!paragraph.length) {
-            word = word.charAt(0).toUpperCase() + word.substr(1);
+            word = capitalize(word);
           } else {
             paragraph += ' ';
           }
