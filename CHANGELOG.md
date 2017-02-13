@@ -11,6 +11,7 @@ Release Date: TBD
 * General Performance Improvements
 
 ### Breaking Changes / Notes
+* 2017-01-13 - Revised the Tabs Component to have CSS-based transitions instead of Javascript-based.  This change includes a new method of hiding tab panels by default, instead of showing them by default.  This caused a breaking change that requires removing any `display: none;` inline-styles from `.tab-panel` elements that may have been pre-defined in older versions. (SOHO-5530)
 * 2017-02-13 - Personalization may cause a Flash of Unstyled Content (FOUC). To prevent this you now have two choices.
     1) Set the column after loading the soho stylesheet. But before loading the soho stylesheet in the page. The order should be: Set Color, Load Style Sheet (in correct theme), Load Dom, initialize locale and components.
     2) You can call window.Soho.getColorStyleSheet(color) and get the actually style sheet you would need to append. Then save this and add the stylesheet server side. Some colors are generated so you should use the function to get the right styles.

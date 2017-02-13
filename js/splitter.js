@@ -230,11 +230,7 @@
         }
 
         this.element.trigger('split', [split]);
-
-        function triggerResize() {
-          self.docBody.triggerHandler('resize', [self]);
-        }
-        Soho.utils.debounce(triggerResize);
+        this.docBody.triggerHandler('resize', [self]);
 
         //Save to local storage
         if (localStorage) {
