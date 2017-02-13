@@ -117,34 +117,6 @@
         }
 
         if (match) {
-
-          // TODO: Figure out if we want to do this in the filtering logic, or in each control
-          /*
-          // Highlight the search term in this result if the current settings allow for it
-          if (self.settings.highlightMatchedText) {
-            var cb = self.settings.highlightCallback;
-
-            if (cb && typeof cb === 'function') {
-              text = cb(text, term);
-            } else {
-              text = (function searchItemHighlighter(itemText, term) {
-                // Base iterator for highlighting valid, searched items.
-                // This won't run if a callback is present.
-                var exp = new RegExp('(' + term + ')', 'gi');
-                itemText = itemText.replace(exp, '<i>$1</i>');
-                return itemText;
-              })(text, term);
-            }
-
-            // Replace the content with
-            if (isString) {
-              item = text;
-            } else {
-              $(item).clone().html(text);
-            }
-          }
-          */
-
           items.push(item);
         }
 
@@ -156,12 +128,7 @@
 
       // If we originally took in a jQuery selector, rebuild that jQuery selector with the relevant results.
       if (isJQuery) {
-        var jqSelector = $();
-        items.forEach(function(item) {
-          jqSelector = jqSelector.add($(item));
-        });
-
-        items = jqSelector;
+        items = $(items);
       }
 
       return items;
