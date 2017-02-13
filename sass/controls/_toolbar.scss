@@ -8,8 +8,12 @@ $toolbar-buttonset-height: 40px;
 .formatter-toolbar {
   padding: 0 1rem;
   position: relative;
-  text-align: right;
+  text-align: left;
   -webkit-touch-callout: none;
+
+  &.has-title {
+    text-align: right;
+  }
 
   // Acts as a spacer that causes the toolbar items to vertically align.
   &::before {
