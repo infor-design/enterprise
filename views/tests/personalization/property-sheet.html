@@ -1,0 +1,69 @@
+<div class="vertical tab-container scrollable">
+
+  <div class="tab-list-container">
+
+    <div class="tab-list-info">
+      <h2>Application Settings</h2>
+    </div>
+    <ul class="tab-list">
+      <li class="tab is-selected"><a href="#personalization">Themes and Personalization</a></li>
+      <li class="tab"><a href="#other">Other Settings</a></li>
+      <li class="tab"><a href="#advanced">Advanced Settings</a></li>
+    </ul>
+    <div class="tab-list-info">
+      <button type="button" class="btn-primary">
+        <span>Apply</span>
+      </button>
+    </div>
+
+  </div>
+  <div class="tab-panel-container">
+    <div id="personalization" class="tab-panel">
+      <h3>Themes & Personalization</h3>
+      <br>
+      <div class="field">
+        <label for="theme">Theme</label>
+        <select id="theme" name="theme" class="dropdown">
+          <option selected value="light">Light</option>
+          <option value="dark">Dark</option>
+          <option value="high-contrast">High Contrast</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="color">Personalization Color</label>
+        <select id="color" name="color" class="dropdown">
+          <option selected value="#368AC0">Azure</option>
+          <option value="#EFA836">Amber</option>
+          <option value="#9279A6">Amethyst</option>
+          <option value="#579E95">Turquoise</option>
+          <option value="#76B051">Emerald</option>
+          <option value="#5C5C5C">Graphite</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="other" class="tab-panel" style="display: none;">
+      <h3>Other Settings</h3>
+
+    </div>
+
+    <div id="advanced" class="tab-panel" style="display: none;">
+      <h3>Advancded Settings</h3>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  $('.dropdown').on('change', function () {
+    var elem = $(this),
+      val = elem.val();
+
+    if (elem.attr('name') =='color') {
+      window.Soho.setColors(val);
+    } else {
+      window.Soho.setTheme(val);
+    }
+  });
+</script>
