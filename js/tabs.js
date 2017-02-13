@@ -502,7 +502,7 @@
             noPopupMenusOpen = self.tablist.children('.has-popupmenu.is-open').length === 0;
 
           if (noFocusedTabs && noPopupMenusOpen && !self.moreButton.is('.is-selected, .popup-is-open')) {
-            self.positionFocusState();
+            self.hideFocusState();
           }
         }).on('updated.tabs', function() {
           self.updated();
@@ -1043,7 +1043,8 @@
 
         if (!selected.length) {
           this.defocusBar();
-          this.positionFocusState();
+          //this.positionFocusState();
+          this.hideFocusState();
         } else {
           this.focusBar(selected);
           this.positionFocusState(selected);
@@ -1207,7 +1208,7 @@
         }
 
         if (!target.length) {
-          this.positionFocusState();
+          this.hideFocusState();
           this.defocusBar();
           return target;
         }
@@ -1735,7 +1736,7 @@
 
         // If there's really nothing, kick on out and defocus everything.
         if (!prevLi.length) {
-          this.positionFocusState();
+          this.hideFocusState();
           this.defocusBar();
 
           this.element.trigger('afterclose', [targetLi]);
