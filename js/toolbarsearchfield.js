@@ -396,7 +396,7 @@
           self.calculateOpenWidth();
           self.setOpenWidth();
           self.input.focus(); // for iOS
-          self.toolbarParent.trigger('recalculate-buttons');
+          self.toolbarParent.triggerHandler('recalculate-buttons');
           self.inputWrapper.triggerHandler('expanded');
         }
 
@@ -437,7 +437,7 @@
             self.button.data('popupmenu').close(false, true);
           }
 
-          self.toolbarParent.trigger('recalculate-buttons');
+          self.toolbarParent.triggerHandler('recalculate-buttons');
           self.inputWrapper.triggerHandler('collapsed');
         }
 
