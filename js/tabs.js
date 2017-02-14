@@ -2197,7 +2197,8 @@
           autoFocus: false,
           attachToBody: true,
           menu: 'tab-container-popupmenu',
-          trigger: 'immediate'
+          trigger: 'immediate',
+          offset: {x: 3}
         });
         self.moreButton.addClass('popup-is-open');
         self.popupmenu = self.moreButton.data('popupmenu');

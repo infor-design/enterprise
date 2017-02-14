@@ -184,7 +184,13 @@
     height: 34px;
     padding-bottom: 5px;
     padding-top: 1px;
-    width: 44px;
+    width: 41px;
+
+    span {
+      @include font-size(24);
+      font-weight: normal;
+    }
+
   }
 
   .tab-focus-indicator {
@@ -213,9 +219,9 @@
       fill: $module-tabs-inactive-text-color;
     }
 
-    span {
-      font-size: 2.4rem;
-      font-weight: normal;
+    .more-text {
+      @include font-size(12);
+      font-weight: bold;
     }
 
     &.is-selected {
@@ -367,9 +373,14 @@
     }
 
     .add-tab-button {
-      height: 40px;
+      height: 34px;
       right: 0;
-      top: -7px;
+      top: 0;
+
+      span:first-child {
+        position: relative;
+        top: -7px;
+      }
     }
   }
 
@@ -400,10 +411,6 @@
         top: 0;
       }
 
-      .add-tab-button {
-        right: 0;
-        top: 0;
-      }
     }
   }
 
@@ -638,10 +645,9 @@ html[dir='rtl'] {
     }
 
     .add-tab-button {
-      top: -3px;
-
-      a {
-        padding-top: 3px;
+      span:first-child {
+        position: relative;
+        top: -3px;
       }
     }
 
