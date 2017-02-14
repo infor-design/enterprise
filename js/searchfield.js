@@ -435,7 +435,7 @@
       },
 
       clear: function() {
-        this.element.val('').trigger('change').trigger('clear').focus();
+        this.element.val('').trigger('change').focus();
       },
 
       addMoreLink: function() {

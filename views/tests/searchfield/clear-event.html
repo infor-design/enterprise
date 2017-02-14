@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="twelve columns">
+
+    <h1 class="fieldset-title">Searchfield - Tests</h1>
+
+    <div class="field">
+      <label for="searchfield-clear">Clearable</label>
+      <input data-options="{clearable: true}" data-autocomplete="{{basepath}}api/states?term=" id="searchfield-clear" placeholder="Search" type="text" class="searchfield"/>
+    </div>
+
+
+    <script>
+        $('#searchfield-clear').on('cleared', function () {
+          console.log('Cleared Fired');
+        });
+    </script>
+
+  </div>
+</div>
