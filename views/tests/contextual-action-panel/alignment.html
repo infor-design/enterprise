@@ -87,11 +87,12 @@
       trigger: 'immediate',
       buttons: [
         {
-          type: 'input',
-          text: 'Keyword',
-          id: 'filter',
-          name: 'filter',
-          cssClass: 'searchfield'
+          text: 'Help Doc',
+          cssClass: 'btn invisible',
+          icon: '#icon-help',
+          click: function() {
+            alert('Help!');
+          }
         },  {
           cssClass: 'separator'
         },
