@@ -32,7 +32,7 @@
 }
 
 @mixin tab-after-selected-hover {
-  background-color: $white;
+  background-color: $tab-selected-color;
   width: 100%;
 }
 
