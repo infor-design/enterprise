@@ -137,8 +137,12 @@
 
   > .tab-panel,
   > .tab-panel-container {
-    display: inline-block;
+    display: none;
     width: calc(100% - 318px);
+
+    &.can-show {
+      display: inline-block;
+    }
   }
 
   &::after {
