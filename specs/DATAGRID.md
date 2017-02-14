@@ -546,7 +546,13 @@ editable-short-height.html
 expandable-row-checkboxes.html
 expandable-short-row.html
 export-custom-dataset.html
-export-from-button.html
+
+[Export via a Button](/tests/export-from-button.html)
+  - This example shows how to implement datagrid export using a button. The developer would pick this over the menu if Export is a prominent action.
+  - Click the export button and examine the Excel document
+  - Special characters in the "Extra" column should render.
+  - The =HYPERLINK() is an attempt at script injection. It should not go into the excel document as a hyperlink.
+
 export-from-menu.html
 export-paging.html
 fifty-columns.html
@@ -596,3 +602,6 @@ Known Issues:
 - Re-Do Screen Reader - Not reading headers
 - Last Column / Border Resize (maybe)
 - Test Last Column is hidden  (maybe)
+
+Other Bugs
+- Modal - Mobile Size
