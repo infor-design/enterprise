@@ -26,7 +26,7 @@ window.Formatters = {
 
     if (typeof value === 'string' && value) {
 
-      if (value === '00000000') { //Means no date in some applications
+      if (value === '0'.repeat(value.length)) { //Means no date in some applications
         return '';
       }
 
@@ -4675,12 +4675,12 @@ $.fn.datagrid = function(options) {
       return column || {};
     },
 
-    //Attempt to serialize the value back
-    coerceValue: function (value, oldVal, col) {
+    //Attempt to serialize the value back into the dataset
+    coerceValue: function (value, oldVal, col, row, cell) {
       var newVal;
 
       if (col.serialize) {
-        newVal = col.serialize(value);
+        newVal = col.serialize(value, oldVal, col, row, cell, this.settings.dataset[row]);
         return newVal;
       }
 
