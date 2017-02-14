@@ -20,6 +20,14 @@ $datagrid-short-row-height: 23px;
 
   &.is-windows.datagrid-container {
     background-color: $datagrid-header-bg-color;
+
+    &.is-gridlist {
+      background-color: $datagrid-list-header-bg-color;
+
+      .datagrid-body {
+        background-color: $body-bg-color;
+      }
+    }
   }
 
   &.datagrid-container {
@@ -64,6 +72,7 @@ $datagrid-short-row-height: 23px;
 .datagrid-container {
   background-color: transparent;
   border: 1px solid $datagrid-cell-border-color;
+  border-width: 1px 0 0 1px;
   clear: both;
   height: auto;
   min-width: 100%;
@@ -781,7 +790,7 @@ $datagrid-short-row-height: 23px;
 
       &.datagrid-trigger-cell .icon-error {
         left: 0;
-        margin-left: -40px;
+        margin-left: -35px;
         margin-top: 7px;
       }
 
@@ -1472,6 +1481,7 @@ td .btn-actions {
 
   .icon {
     fill: $trigger-icon-fill-color;
+    left: 4px;
     top: 5px;
     visibility: hidden;
   }

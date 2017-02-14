@@ -303,7 +303,7 @@
         }
 
         var hasKeywordSearch = this.settings.options && this.settings.options.toolbar && this.settings.options.toolbar.keywordFilter;
-        if (!hasKeywordSearch) {
+        if (!hasKeywordSearch && self.modal) {
           self.modal.element.find('.toolbar').appendTo(self.modal.element.find('.modal-header'));
         }
 

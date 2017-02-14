@@ -640,7 +640,7 @@
             // option in the list, update the SearchInput and close the list.
             if (self.isOpen()) {
               self.selectOption($(options[selectedIndex])); // store the current selection
-              self.closeList(false);
+              self.closeList('tab');
               this.activate();
             }
             // allow tab to propagate otherwise
@@ -649,7 +649,7 @@
           case 27: { //Esc - Close the Combo and Do not change value
             if (self.isOpen()) {
               // Close the option list
-              self.closeList(true);
+              self.closeList('cancel');
               self.activate();
               e.stopPropagation();
               return false;
@@ -668,7 +668,7 @@
               e.preventDefault();
               self.selectOption($(options[selectedIndex])); // store the current selection
               if (self.settings.closeOnSelect) {
-                self.closeList(false);  // Close the option list
+                self.closeList('select');  // Close the option list
                 self.activate();
               }
             }
@@ -896,11 +896,11 @@
         this.pseudoElem.attr('aria-label', this.label.text());
         this.searchInput.attr('aria-activedescendant', current.children('a').attr('id'));
 
-        //Close oother drop downs.
+        //Close any other drop downs.
         $('select').each(function () {
           var data = $(this).data();
           if (data.dropdown) {
-            data.dropdown.closeList();
+            data.dropdown.closeList('cancel');
           }
         });
 
@@ -957,7 +957,7 @@
         if (this.isMobile()) {
           self.searchInput.on('keypress.dropdown', function(e) {
             if (e.which === 13) {
-              self.closeList();
+              self.closeList('select');
             }
           });
         }
@@ -990,7 +990,7 @@
           self.selectOption(cur);
 
           if (self.settings.closeOnSelect) {
-            self.closeList();
+            self.closeList('select');
           }
 
           if (self.isMobile()) {
@@ -1034,7 +1034,7 @@
           if (touchPrevented || isDropdownElement($(e.target))) {
             return;
           }
-          self.closeList();
+          self.closeList('cancel');
         }
 
         // Triggered when the user clicks anywhere in the document
@@ -1049,7 +1049,7 @@
             return;
           }
 
-          self.closeList();
+          self.closeList('cancel');
         }
 
         function touchStartCallback(e) {
@@ -1100,7 +1100,7 @@
         // in desktop environments, bind against window.resize
         if (window.orientation === undefined) {
           $('body').on('resize.dropdown', function() {
-            self.closeList();
+            self.closeList('cancel');
           });
         }
 
@@ -1192,11 +1192,11 @@
 
       // Alias that works with the global "closeChildren" method.  See "js/lifecycle.js"
       close: function() {
-        return this.closeList();
+        return this.closeList('cancel');
       },
 
       //Close list and detach events
-      closeList: function() {
+      closeList: function(action) {
         if (!this.list || !this.list.is(':visible') || !this.isListClosable()) {
           return;
         }
@@ -1212,12 +1212,10 @@
         this.filterTerm = '';
         this.searchInput.off('keydown.dropdown keypress.dropdown keypress.dropdown');
 
-        //this.list.hide().remove();
         this.list
           .off('click.list touchmove.list touchend.list touchcancel.list mousewheel.list mouseenter.list')
           .remove();
 
-        //this.listUl.find('li').show();
         this.pseudoElem
           .removeClass('is-open')
           .attr('aria-expanded', 'false');
@@ -1229,7 +1227,7 @@
           .off('click.dropdown scroll.dropdown touchmove.dropdown touchend.dropdown touchcancel.dropdown');
 
         $('body').off('resize.dropdown');
-        this.element.trigger('listclosed');
+        this.element.trigger('listclosed', action);
         this.activate();
         this.list = null;
         this.searchInput = null;
@@ -1257,7 +1255,7 @@
 
         if (this.isOpen()) {
           this.timer = setTimeout(function() {
-            self.closeList();
+            self.closeList('cancel');
           }, 40);
         }
 
@@ -1277,7 +1275,7 @@
       // Hide or Show list
       toggleList: function() {
         if (this.isOpen() || this.isLoading()) {
-          this.closeList();
+          this.closeList('cancel');
           return;
         }
         this.open();
@@ -1614,7 +1612,7 @@
           .attr('tabindex', '-1')
           .prop('readonly', false)
           .prop('disabled', true);
-        this.closeList();
+        this.closeList('cancel');
       },
 
       enable: function() {
@@ -1639,12 +1637,12 @@
           .attr('tabindex', '0')
           .prop('disabled', false)
           .prop('readonly', true);
-        this.closeList();
+        this.closeList('cancel');
       },
 
       // Triggered whenever the plugin's settings are changed
       updated: function() {
-        this.closeList();
+        this.closeList('cancel');
 
         // Update the 'multiple' property
         if (this.settings.multiple && this.settings.multiple === true) {
@@ -1674,7 +1672,7 @@
 
       destroy: function() {
         $.removeData(this.element[0], pluginName);
-        this.closeList();
+        this.closeList('cancel');
         this.label.remove();
         this.pseudoElem.off().remove();
         this.icon.remove();

@@ -26,7 +26,7 @@ window.Formatters = {
 
     if (typeof value === 'string' && value) {
 
-      if (value === '00000000') { //Means no date in some applications
+      if (value === '0'.repeat(value.length)) { //Means no date in some applications
         return '';
       }
 
@@ -569,6 +569,7 @@ window.Editors = {
 
           if (opt.selected || compareValue === optionValue) {
             html.attr('selected', 'true');
+            this.originalValue = optionValue;
           }
 
           html.attr('value', opt.value).attr('id', opt.id).attr('data-type', typeof opt.value);
@@ -604,7 +605,6 @@ window.Editors = {
     };
 
     this.val = function (value) {
-      var self = this;
 
       if (value !== undefined) {
         var compareValue = column.caseInsensitive && typeof value === 'string' ? value.toLowerCase() : value;
@@ -625,7 +625,6 @@ window.Editors = {
 
           if (optionValue === compareValue) {
             opt.attr('selected', 'true');
-            self.input.val(opt.text());
           }
         });
       }
@@ -654,9 +653,19 @@ window.Editors = {
       this.select.trigger('openlist');
       this.input.parent().find('div.dropdown').focus();
 
-      this.input.on('listclosed', function () {
+      this.input.on('listclosed', function (e, type) {
         grid.commitCellEdit(self.input);
-        grid.setNextActiveCell(event);
+
+        if (type === 'select') {
+          container.parent('td').focus();
+          return;
+        }
+
+        if (type === 'tab') {
+          setTimeout(function () {
+            container.parent('td').focus();
+          }, 100);
+        }
       });
 
     };
@@ -3044,7 +3053,10 @@ $.fn.datagrid = function(options) {
 
       var idx = columnNode.index();
       self.headerColGroup.find('col').eq(idx)[0].style.width = (width + 'px');
-      self.bodyColGroup.find('col').eq(idx)[0].style.width = (width + 'px');
+
+      if (self.settings.dataset.length > 0) {
+        self.bodyColGroup.find('col').eq(idx)[0].style.width = (width + 'px');
+      }
 
       if (self.tableWidth && diff) {
         self.headerTable.css('width', parseInt(self.tableWidth) + diff);
@@ -4663,12 +4675,12 @@ $.fn.datagrid = function(options) {
       return column || {};
     },
 
-    //Attempt to serialize the value back
-    coerceValue: function (value, oldVal, col) {
+    //Attempt to serialize the value back into the dataset
+    coerceValue: function (value, oldVal, col, row, cell) {
       var newVal;
 
       if (col.serialize) {
-        newVal = col.serialize(value);
+        newVal = col.serialize(value, oldVal, col, row, cell, this.settings.dataset[row]);
         return newVal;
       }
 
