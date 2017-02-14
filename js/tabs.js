@@ -2487,7 +2487,9 @@
           target = target.parent();
         }
 
-        var targetPos = target[0].getBoundingClientRect(),
+        var focusStateElem = this.focusState[0],
+          targetPos = target[0].getBoundingClientRect(),
+          targetClassList = target[0].classList,
           isModuleTabs = this.isModuleTabs(),
           isRTL = Locale.isRTL(),
           parentContainer = this.element;
@@ -2538,13 +2540,13 @@
             targetPosString += '' + property + ': ' + targetPosObj[property] + 'px;';
           }
         }
-        this.focusState[0].setAttribute('style', targetPosString);
+        focusStateElem.setAttribute('style', targetPosString);
 
-        var method = 'addClass';
-        if (unhide) {
-          method = unhide === true ? 'addClass' : 'removeClass';
-          this.focusState[method]('is-visible');
-        }
+        var selected = targetClassList.contains('is-selected') ? 'add' : 'remove';
+        focusStateElem.classList[selected]('is-selected');
+
+        var doHide = unhide === true ? 'add' : 'remove';
+        focusStateElem.classList[doHide]('is-visible');
       },
 
       checkFocusedElements: function() {
