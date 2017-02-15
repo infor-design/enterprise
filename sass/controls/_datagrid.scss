@@ -2056,3 +2056,31 @@ html[dir='rtl'] {
     top: -4px;
   }
 }
+
+.ie {
+  .datagrid-body {
+    tbody tr.is-active-row {
+      outline: 0;
+
+      td {
+        .datagrid-cell-wrapper {
+          border-color: $primary-color;
+          border-style: solid;
+          border-width: 1px 0;
+        }
+
+        &:first-child {
+          .datagrid-cell-wrapper {
+            border-width: 1px 0 1px 1px;
+          }
+        }
+
+        &:last-child {
+          .datagrid-cell-wrapper {
+            border-width: 1px 1px 1px 0;
+          }
+        }
+      }
+    }
+  }
+}
