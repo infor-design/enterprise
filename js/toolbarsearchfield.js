@@ -14,6 +14,8 @@
 /* end-amd-strip-block */
 
   //NOTE: Just this part will show up in SoHo Xi Builds.
+  var TOOLBARSEARCHFIELD_EXPAND_SIZE = 230,
+    MAX_TOOLBARSEARCHFIELD_EXPAND_SIZE = 450;
 
   $.fn.toolbarsearchfield = function(options) {
     'use strict';
@@ -64,6 +66,11 @@
         var moduleTabs = this.containmentParent.closest('.module-tabs');
         if (moduleTabs.length) {
           this.containmentParent = moduleTabs;
+        }
+
+        this.buttonsetElem = this.toolbarParent.children('.buttonset')[0];
+        if (this.toolbarParent.children('.title').length) {
+          this.titleElem = this.toolbarParent.children('.title')[0];
         }
 
         // Setup ARIA
@@ -223,10 +230,8 @@
       // Retrieves the distance between a left and right boundary.
       // Used on controls like Lookup, Contextual Panel, etc. to fill the space remaining in a toolbar.
       getFillSize: function(leftBoundary, rightBoundary) {
-        var defaultWidth = 225,
-          leftBoundaryNum = 0,
-          rightBoundaryNum = 0,
-          maxFillSize = 450;
+        var leftBoundaryNum = 0,
+          rightBoundaryNum = 0;
 
         function sanitize(boundary) {
           if (!boundary) {
@@ -292,16 +297,16 @@
         rightBoundaryNum = getEdgeFromBoundary(rightBoundary, whichEdge());
 
         if (!leftBoundaryNum && !rightBoundaryNum) {
-          return defaultWidth;
+          return TOOLBARSEARCHFIELD_EXPAND_SIZE;
         }
 
         var distance = rightBoundaryNum - leftBoundaryNum;
-        if (distance <= defaultWidth) {
-          return defaultWidth;
+        if (distance <= TOOLBARSEARCHFIELD_EXPAND_SIZE) {
+          return TOOLBARSEARCHFIELD_EXPAND_SIZE;
         }
 
-        if (distance >= maxFillSize) {
-          return maxFillSize;
+        if (distance >= MAX_TOOLBARSEARCHFIELD_EXPAND_SIZE) {
+          return MAX_TOOLBARSEARCHFIELD_EXPAND_SIZE;
         }
 
         return distance;
@@ -376,7 +381,9 @@
         }
 
         var self = this,
-          notFullWidth = !this.shouldBeFullWidth();
+          notFullWidth = !this.shouldBeFullWidth(),
+          dontRecalculateButtons = false,
+          containerSizeSetters;
 
         if (this.animationTimer) {
           clearTimeout(this.animationTimer);
@@ -386,6 +393,25 @@
         if (!notFullWidth) {
           this.elemBeforeWrapper = this.inputWrapper.prev();
           this.inputWrapper.detach().prependTo(this.containmentParent);
+        } else {
+          // Re-adjust the size of the buttonset element if the expanded searchfield would be
+          // too large to fit.
+          var buttonsetWidth = parseInt(window.getComputedStyle(this.buttonsetElem).width),
+            d;
+
+          if (buttonsetWidth < TOOLBARSEARCHFIELD_EXPAND_SIZE) {
+            d = TOOLBARSEARCHFIELD_EXPAND_SIZE - buttonsetWidth;
+
+            containerSizeSetters = {
+              buttonset: TOOLBARSEARCHFIELD_EXPAND_SIZE
+            };
+
+            if (this.titleElem) {
+              var titleElemWidth = parseInt(window.getComputedStyle(this.titleElem).width);
+              containerSizeSetters.title = (titleElemWidth - d);
+            }
+            dontRecalculateButtons = true;
+          }
         }
 
         this.inputWrapper.addClass('active');
@@ -396,7 +422,13 @@
           self.calculateOpenWidth();
           self.setOpenWidth();
           self.input.focus(); // for iOS
-          self.toolbarParent.triggerHandler('recalculate-buttons');
+
+          var eventArgs = [];
+          if (containerSizeSetters) {
+            eventArgs.push(containerSizeSetters);
+          }
+
+          self.toolbarParent.triggerHandler('recalculate-buttons', eventArgs);
           self.inputWrapper.triggerHandler('expanded');
         }
 

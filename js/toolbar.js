@@ -419,8 +419,8 @@
         this.element.off('updated.toolbar').on('updated.toolbar', function(e) {
           e.stopPropagation();
           self.updated();
-        }).off('recalculate-buttons.toolbar').on('recalculate-buttons.toolbar', function() {
-          self.handleResize();
+        }).off('recalculate-buttons.toolbar').on('recalculate-buttons.toolbar', function(e, containerDims) {
+          self.handleResize(containerDims);
         });
 
         $('body').off('resize.toolbar-' + this.id).on('resize.toolbar-' + this.id, function() {
@@ -531,19 +531,22 @@
         return;
       },
 
-      handleResize: function() {
+      handleResize: function(containerDims) {
         var buttons = this.getVisibleButtons();
 
         for (var i = 0; i < buttons.length; i++) {
           buttons.visible[i][0].classList.remove('is-overflowed');
         }
 
-        this.sizeContainers();
+        var title = containerDims ? containerDims.title : undefined,
+          buttonset = containerDims ? containerDims.buttonset : undefined;
+
+        this.sizeContainers(title, buttonset);
         this.adjustMenuItemVisibility();
         this.toggleMoreMenu(); // Added 9/16/2015 due to issue HFC-2876
       },
 
-      sizeContainers: function() {
+      sizeContainers: function(titleSize, buttonsetSize) {
         // Don't do this at all unless we have a title element (which is optional)
         if (!this.title || !this.title.length) {
           return;
@@ -583,11 +586,21 @@
         var targetTitleWidth, targetButtonsetWidth, d;
         this.cutoffTitle = false;
 
-        if (this.settings.favorButtonset) {
-          // Favor the buttonset element
-          targetButtonsetWidth = buttonsetWidth;
-          targetTitleWidth = toolbarWidth - (padding + buttonsetWidth + moreWidth);
+        // Setter functionality
+        if (titleSize && buttonsetSize && !isNaN(titleSize) && !isNaN(buttonsetSize)) {
+          targetTitleWidth = parseInt(titleSize);
+          targetButtonsetWidth = parseInt(buttonsetSize);
+        } else {
+          if (this.settings.favorButtonset) {
+            targetButtonsetWidth = buttonsetWidth;
+            targetTitleWidth = toolbarWidth - (padding + buttonsetWidth + moreWidth);
+          } else {
+            targetTitleWidth = titleScrollWidth;
+            targetButtonsetWidth = toolbarWidth - (padding + titleScrollWidth + moreWidth);
+          }
+        }
 
+        if (this.settings.favorButtonset) {
           // Cut off the buttonset anyway if title is completely hidden.  Something's gotta give!
           if (targetTitleWidth < MIN_TITLE_SIZE) {
             this.cutoffTitle = true;
@@ -601,12 +614,8 @@
 
           return this;
         }
-
         //==========================
         // Favor the title element
-        targetTitleWidth = titleScrollWidth;
-        targetButtonsetWidth = toolbarWidth - (padding + titleScrollWidth + moreWidth);
-
         // Cut off the title anyway if buttonset is completely hidden.  Something's gotta give!
         if (targetButtonsetWidth < MIN_BUTTONSET_SIZE) {
           this.cutoffTitle = true;
@@ -650,30 +659,36 @@
       // Gets the last button that's above the overflow line
       getLastVisibleButton: function() {
         var self = this,
+          items = $(this.items.get().reverse()),
           target;
 
-        this.items.each(function(i) {
+        items.each(function(i) {
           if (self.isItemOverflowed($(this))) {
-            target = self.items.eq(i - 1);
+            target = items.eq(i + 1);
             return false;
           }
         });
 
         if (!target || target.length === 0) {
-          target = this.items.not(this.more).last();
+          target = items.not(this.more).first();
         }
 
         while(target.is('.separator, *:disabled, *:hidden')) {
-          target = target.prev();
+          target = target.next();
         }
         return target;
       },
 
       getFirstVisibleButton: function() {
-        var target = this.items.eq(0);
+        var i = 0,
+          items = this.items,
+          target = items.eq(i);
+
         while(target.is('.separator, *:disabled, *:hidden')) {
-          target = target.next();
+          i++;
+          target = items.eq(i);
         }
+
         return target;
       },
 
@@ -840,6 +855,14 @@
         // unwrap from jQuery
         if (item instanceof $ && item.length) {
           item = item[0];
+        }
+
+        var classList = item.classList;
+        if (classList.contains('btn-actions')) {
+          return true;
+        }
+        if (classList.contains('searchfield')) {
+          return false;
         }
 
         var isRTL = Locale.isRTL(),
