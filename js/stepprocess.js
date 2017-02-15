@@ -81,7 +81,7 @@
        */
 
       decorateNode: function(step) {
-        var self = this;
+        var self = this,
             $step = $(step),
             $stepLink = $step.children(this.settings.stepLink),
             $stepFolder = $step.children(this.settings.stepFolder),
@@ -199,7 +199,7 @@
           $step.addClass('is-open');
           $stepLink.attr('aria-expanded', 'true');
 
-          var svgElem = $stepLink.find('svg.icon-tree')
+          var svgElem = $stepLink.find('svg.icon-tree');
           self.setIcon(svgElem, self.settings.folderIconOpen);
 
           self.isAnimating = true;
@@ -335,7 +335,7 @@
 
         //skip disabled
         if(prev.hasClass('is-disabled')) {
-          prev = $prevStep.prev().find(self.settings.stepLink + ':first');
+          prev = $prevStep.prev().find(this.settings.stepLink + ':first');
         }
 
         //top of a group
@@ -354,8 +354,7 @@
       getPreviousStep: function() {
         // Get the currently select node
         var $curStep = this.getSelectedStep(),
-            $curStepLink = $curStep.children(this.settings.stepLink),
-            $curStepFolder = $curStep.children(this.settings.stepFolder);
+            $curStepLink = $curStep.children(this.settings.stepLink);
 
         // Get the previous step to switch to
         var $prevStepLink = this.getPreviousNode($curStepLink),
@@ -608,14 +607,14 @@
           var args = {
             stepLink: stepLink,
             isStepping: linearDirection.length
-          }
+          };
           result = self.settings.beforeSelectStep(args);
 
           if (result.done && typeof result.done === 'function') { // A promise is returned
             result.done(function(continueSelectNode, stepLinkToSelect) {
               if (continueSelectNode) {
                 if (stepLinkToSelect) {
-                  stepLink = stepLinkToSelect
+                  stepLink = stepLinkToSelect;
                 }
                 self.selectStepFinish(stepLink, linearDirection);
               }
@@ -637,14 +636,13 @@
        *
        */
       selectStepFinish: function(stepLink, linearDirection) {
-        var self = this;
+        var self = this,
             $allStepLinks = $(this.settings.stepLink, this.$stepList),
             $step = stepLink.closest(this.settings.stepLi);
 
         $allStepLinks
           .attr({
             'tabindex': '-1',
-            'aria-selected': 'false',
             'aria-selected': 'false'
           })
           .parent().removeClass('is-selected');
@@ -687,8 +685,7 @@
        * @param  {object} step - The step element to decorate
        */
       unSelectedNode: function (step) {
-        var self = this,
-            aTags = $(this.settings.stepLink, this.$stepList),
+        var aTags = $(this.settings.stepLink, this.$stepList),
             $step = $(step),
             $stepLink = $step.children(this.settings.stepLink);
 
@@ -715,8 +712,7 @@
             e.preventDefault();
 
             if (!self.settings.linearProgression) {
-              var $target = $(this),
-                  parent = $target.parent();
+              var $target = $(this);
 
               if (!$target.is('.is-disabled, .is-loading')) {
                 self.selectStep($target);
