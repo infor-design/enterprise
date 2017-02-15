@@ -9,9 +9,6 @@
       </h1>
     </div>
     <div class="buttonset">
-      <button class="btn js-btn-goto-5" type="button">
-        <span>Select step 5</span>
-      </button>
       <button class="btn js-btn-save-changes" type="button">
         <span>Save</span>
       </button>
@@ -26,13 +23,76 @@
     <div class="toolbar toolbar-custom toolbar-collapsible phone-visible">
       <div class="title title-wide">Steps to complete</div>
     </div>
-    <ul role="tree" aria-label="Asset Types" class="tree js-step-tree-scroll" data-init="false" id="json-tree">
+
+    <ul id="step-list" class="tree js-step-list-scroll" data-init="false">
+
+      <li class="js-step is-selected">
+        <a class="js-step-link" href="#content1">
+          <svg class="step-alert icon-empty-circle icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-empty-circle"></use>
+          </svg>
+          <span class='tree-text'>Step 1</span>
+        </a>
+      </li>
+
+      <li class="js-step folder">
+        <a class="js-step-link" href="#">
+          <svg class="step-alert icon-empty-circle icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-empty-circle"></use>
+          </svg>
+          <svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-caret-down"></use>
+          </svg>
+          <span class='tree-text'>Step 2 (Folder)</span>
+        </a>
+        <ul class="folder js-step-folder">
+          <li class="js-step">
+            <a class="js-step-link" href="#content2-1">
+              <svg class="step-alert icon-empty-circle icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-empty-circle"></use>
+              </svg>
+              <span class="tree-text">Step 2-1</span>
+            </a>
+          </li>
+          <li class="js-step">
+            <a class="js-step-link" href="#content2-2">
+              <svg class="step-alert icon-empty-circle icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-empty-circle"></use>
+              </svg>
+              <span class="tree-text">Step 2-2</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+      <li class="js-step folder">
+        <a class="js-step-link" href="#content3">
+          <svg class="step-alert icon-empty-circle icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-empty-circle"></use>
+          </svg>
+          <svg class="icon-tree icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-caret-down"></use>
+          </svg>
+          <span class='tree-text'>Step 3 (Ajax)</span>
+        </a>
+        <ul class="folder js-step-folder"></ul>
+      </li>
+
+      <li class="js-step">
+        <a class="js-step-link" href="#content4">
+          <svg class="step-alert icon-empty-circle icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-empty-circle"></use>
+          </svg>
+          <span class='tree-text'>Step 4</span>
+        </a>
+      </li>
+      <!-- ...More steps populated by function below -->
     </ul>
   </div>
 
   <div class="main no-scroll" role="main">
 
-    <div class="toolbar toolbar-custom toolbar-collapsible">
+    <div class="toolbar toolbar-custom toolbar-collapsible" data-init="false">
       <div class="title">
         <button class="btn-icon btn-toggle-steps js-toggle-sidebar" type="button">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
@@ -56,8 +116,8 @@
 
     <div class="scrollable step-container js-step-container-scroll">
 
-      <div id="content1-1" class="js-step-panel">
-        <h2>Node 1.1</h2>
+      <div id="content1" class="js-step-panel step-panel-active">
+        <h2>Step 1</h2>
         <form>
           <div class="field">
             <label for="employment-type" class="label">Employment Type</label>
@@ -133,7 +193,7 @@
       </div>
 
       <div id="content2-1" class="js-step-panel">
-        <h2>Node 2-1</h2>
+        <h2>Step 2-1</h2>
         <form>
           <div class="field">
             <label for="slider-competency1">How competent do you think you are?</label>
@@ -159,19 +219,20 @@
       </div>
 
       <div id="content2-2" class="js-step-panel">
-        <h2>Node 2-2</h2>
+        <h2>Step 2-2</h2>
         <p>This is step 2-2</p>
       </div>
 
-      <div id="content2-3" class="js-step-panel">
-        <h2>Node 2-3</h2>
-        <p>This is step 2-3</p>
+      <div id="content3" class="js-step-panel">
+        <h2>Step 3</h2>
+        <p>This is step 3</p>
       </div>
 
-      <div id="content4-1" class="js-step-panel">
-        <h2>Node 4-1</h2>
-        <p>This would be a final step.
+      <div id="content4" class="js-step-panel">
+        <h2>Step 4</h2>
+        <p>This is step 4</p>
       </div>
+
     </div>
 
     <div class="phone-action-bar phone-visible">
@@ -187,52 +248,27 @@
 
     var sampleData, ajaxSampleData;
 
-    /* jshint ignore:start */
-    sampleData = [
-      {
-        "id": "node1",
-        "text": "Node 1",
-        "selected": true,       // !! Default to first one !!
-        "href": '#content1-1',
-        "alertIcon": 'confirm'
-      }, {
-        "id": "node2",
-        "text": "Node 2",
-        "open": false,
-        "selected": false,
-        "focus": false,
-        "alertIcon": 'half-empty-circle',
-        "children": []
-      }, {
-        "id": "node3",
-        "text": "Node 3",
-        "open": false,
-        "selected": false,
-        "alertIcon": 'empty-circle',
-        "children": []
-      }, {
-        "id": "node4",
-        "text": "Node 4",
-        "selected": false,
-        "href": '#content4-1',
-        "alertIcon": 'empty-circle'
-      }];
-
     // Add extra sample nodes/data
-    stepFunctions.extendSampleData(sampleData);
-    /* jshint ignore:end */
+    for (var i = 5; i < 20; i++) {
+      stepFunctions.createHTML('#step-list', {
+        id: 'content' + i,
+        title: 'Step ' + i
+      });
+    }
 
-    // Init Tree Steps
+    // Init Step Process
     $('.step-process-container').stepprocess({
-      'dataset': sampleData,
+      'linearProgression': false,
       'beforeSelectStep': stepFunctions.beforeSelectStep
     });
 
-    // Example button to select a step
-    $('.js-btn-goto-5').click(function (e) {
-      e.preventDefault();
-      var $treeSteps = $('.step-process-container');
-      $treeSteps.data('stepprocess').selectStep($('#node5'));
+    // Attach scroll action features
+    $('.js-step-container-scroll').scrollaction({
+      scrollActionTarget: '.main'
+    });
+
+    $('.js-step-tree-scroll').scrollaction({
+      scrollActionTarget: '.sidebar'
     });
 
     // Example button save event
@@ -259,39 +295,17 @@
 
     ajaxGetSubstepsForStep: function (stepId, callback) {
       var deferred = $.Deferred();
-      var ajaxSampleData = {
-        "node2": [
-          {
-            "id": "node21",
-            "text": "Node 2-1",
-            "href": "#content2-1",
-            "alertIcon": 'error'
-          }, {
-            "id": "node22",
-            "text": "Node 2-2",
-            "href": "#content2-2",
-            "alertIcon": 'empty-circle'
-          }, {
-            "id": "node23",
-            "text": "Node 2-3",
-            "href": "#content2-3",
-            "alertIcon": 'empty-circle'
-          }],
-        "node3": [{
-          "id": "node31",
-          "text": "Node 3-1",
-          "href": "#content3-1",
-          "alertIcon": 'empty-circle'
-        }, {
-          "id": "node32",
-          "text": "Node 3-2",
-          "href": "#content3-2",
-          "alertIcon": 'empty-circle'
-        }]
-      };
+
       setTimeout(function () {
-        var substeps = ajaxSampleData[stepId];
-        deferred.resolve(substeps)
+        var subSteps = [
+          { id: 'content3-1', title: 'Step 3-1'},
+          { id: 'content3-2', title: 'Step 3-2' }
+        ];
+        var folder = $('.js-step-link[href="' + stepId + '"]').next('.js-step-folder');
+        for (var i = 0; i < subSteps.length; i++) {
+          stepFunctions.createHTML(folder, subSteps[i]);
+        }
+        deferred.resolve(subSteps)
       }, 100);
       return deferred.promise();
     },
@@ -305,49 +319,38 @@
       return deferred.promise();
     },
 
-
-    // When a folder opens
-    beforeSelectStep: function (step) {
+    beforeSelectStep: function (args) {
       var deferred = $.Deferred();
-      var $step = $(step);
-      var $folder = $step.next('ul.folder');
-      var stepId = step.attr('id');
+      var $stepLink = $(args.stepLink);
+      var $folder = $stepLink.next('.js-step-folder');
+      var stepId = $stepLink.attr('href');
 
       if ($folder.length && $folder.children().length === 0) {
 
         // Is a folder, get nodes (unless backend denies due to security)
         stepFunctions.ajaxGetSubstepsForStep(stepId).done(function (subSteps) {
           var canAccessStep = subSteps.length > 0;
-          var $treeSteps = $('.step-process-container');
+          var stepLinkToSelect;
+          var $stepProcessElem = $('.step-process-container');
 
           if (canAccessStep) {
-
-          // Call stepprocess api to update the tree node list
-            $treeSteps.data('stepprocess').updateNode({
-              node: $step,
-              children: subSteps
-            });
-
-            // Add content panels to coordinate with new sub-steps
-            var $container = $('.step-container');
-            for (var i = 0; i < subSteps.length; i++) {
-              var id = subSteps[i].href.replace('#', '');
-              $container.append('<div id="' + id + '" class="js-step-panel"><h2>' + subSteps[i].text + '</h2></div>');
-            }
-
             // Example to automatically select first one after ajax loads steps
-            // $treeSteps.data('stepprocess').selectStep($('#' + subSteps[0].id));
+            stepLinkToSelect = $('.js-step-link[href="#' + subSteps[0].id + '"]');
           } else {
             // Since folder tried to open, toggle it closed when permission denied.
-            $treeSteps.data('stepprocess').toggleFolder($step);
+            $stepProcessElem.data('stepprocess').toggleNode($stepLink);
           }
 
-          deferred.resolve(canAccessStep);
+          if (stepLinkToSelect) {
+            deferred.resolve(canAccessStep, stepLinkToSelect);
+          } else {
+            deferred.resolve(canAccessStep);
+          }
         });
 
       } else {
         // Not a folder, just check security
-        stepFunctions.ajaxCanAccessStep(step).done(function(canAccessStep) {
+        stepFunctions.ajaxCanAccessStep($stepLink).done(function(canAccessStep) {
           deferred.resolve(canAccessStep);
         });
       }
@@ -356,18 +359,26 @@
       return deferred.promise();
     },
 
-    extendSampleData: function (data) {
-      var $container = $('.step-container');
-      for (var i = 5; i < 20; i++) {
-        data.push({
-          "id": "node" + i,
-          "text": "Node " + i,
-          "selected": false,
-          "href": '#content' + i + '-1',
-          "alertIcon": 'empty-circle'
-        });
-        $container.append('<div id="content' + i + '-1" class="js-step-panel"><h2>Node ' + i + '</h2><p>This is step ' + i + '-1</p></div>')
-      }
+    createHTML: function(stepFolder, step) {
+      var $stepContainer = $(stepFolder);
+      var $contentContainer = $('.step-container');
+      $stepContainer.append(`
+        <li class="js-step">
+          <a class="js-step-link" href="#${step.id}">
+            <svg class="step-alert icon-empty-circle icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-empty-circle"></use>
+            </svg>
+            <span class='tree-text'>${step.title}</span>
+          </a>
+        </li>
+      `);
+      $contentContainer.append(`
+        <div id="${step.id}" class="js-step-panel">
+          <h2>${step.title}</h2>
+          <p>This is step ${step.id}</p>
+        </div>
+      `);
     }
+
   };
 </script>
