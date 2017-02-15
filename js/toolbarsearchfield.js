@@ -382,7 +382,8 @@
 
         var self = this,
           notFullWidth = !this.shouldBeFullWidth(),
-          dontRecalculateButtons = false;
+          dontRecalculateButtons = false,
+          containerSizeSetters;
 
         if (this.animationTimer) {
           clearTimeout(this.animationTimer);
@@ -400,13 +401,14 @@
 
           if (buttonsetWidth < TOOLBARSEARCHFIELD_EXPAND_SIZE) {
             d = TOOLBARSEARCHFIELD_EXPAND_SIZE - buttonsetWidth;
-            this.buttonsetElem.removeAttribute('style');
-            this.buttonsetElem.style.width = TOOLBARSEARCHFIELD_EXPAND_SIZE + 'px';
+
+            containerSizeSetters = {
+              buttonset: TOOLBARSEARCHFIELD_EXPAND_SIZE
+            };
 
             if (this.titleElem) {
               var titleElemWidth = parseInt(window.getComputedStyle(this.titleElem).width);
-              this.titleElem.removeAttribute('style');
-              this.titleElem.style.width = (titleElemWidth - d) + 'px';
+              containerSizeSetters.title = (titleElemWidth - d);
             }
             dontRecalculateButtons = true;
           }
@@ -421,7 +423,12 @@
           self.setOpenWidth();
           self.input.focus(); // for iOS
 
-          self.toolbarParent.triggerHandler('recalculate-buttons', [dontRecalculateButtons]);
+          var eventArgs = [];
+          if (containerSizeSetters) {
+            eventArgs.push(containerSizeSetters);
+          }
+
+          self.toolbarParent.triggerHandler('recalculate-buttons', eventArgs);
           self.inputWrapper.triggerHandler('expanded');
         }
 

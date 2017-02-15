@@ -419,8 +419,8 @@
         this.element.off('updated.toolbar').on('updated.toolbar', function(e) {
           e.stopPropagation();
           self.updated();
-        }).off('recalculate-buttons.toolbar').on('recalculate-buttons.toolbar', function(e, dontResizeContainers) {
-          self.handleResize(dontResizeContainers);
+        }).off('recalculate-buttons.toolbar').on('recalculate-buttons.toolbar', function(e, containerDims) {
+          self.handleResize(containerDims);
         });
 
         $('body').off('resize.toolbar-' + this.id).on('resize.toolbar-' + this.id, function() {
@@ -531,21 +531,22 @@
         return;
       },
 
-      handleResize: function(dontResizeContainers) {
+      handleResize: function(containerDims) {
         var buttons = this.getVisibleButtons();
 
         for (var i = 0; i < buttons.length; i++) {
           buttons.visible[i][0].classList.remove('is-overflowed');
         }
 
-        if (dontResizeContainers !== true) {
-          this.sizeContainers();
-        }
+        var title = containerDims ? containerDims.title : undefined,
+          buttonset = containerDims ? containerDims.buttonset : undefined;
+
+        this.sizeContainers(title, buttonset);
         this.adjustMenuItemVisibility();
         this.toggleMoreMenu(); // Added 9/16/2015 due to issue HFC-2876
       },
 
-      sizeContainers: function() {
+      sizeContainers: function(titleSize, buttonsetSize) {
         // Don't do this at all unless we have a title element (which is optional)
         if (!this.title || !this.title.length) {
           return;
@@ -585,11 +586,21 @@
         var targetTitleWidth, targetButtonsetWidth, d;
         this.cutoffTitle = false;
 
-        if (this.settings.favorButtonset) {
-          // Favor the buttonset element
-          targetButtonsetWidth = buttonsetWidth;
-          targetTitleWidth = toolbarWidth - (padding + buttonsetWidth + moreWidth);
+        // Setter functionality
+        if (titleSize && buttonsetSize && !isNaN(titleSize) && !isNaN(buttonsetSize)) {
+          targetTitleWidth = parseInt(titleSize);
+          targetButtonsetWidth = parseInt(buttonsetSize);
+        } else {
+          if (this.settings.favorButtonset) {
+            targetButtonsetWidth = buttonsetWidth;
+            targetTitleWidth = toolbarWidth - (padding + buttonsetWidth + moreWidth);
+          } else {
+            targetTitleWidth = titleScrollWidth;
+            targetButtonsetWidth = toolbarWidth - (padding + titleScrollWidth + moreWidth);
+          }
+        }
 
+        if (this.settings.favorButtonset) {
           // Cut off the buttonset anyway if title is completely hidden.  Something's gotta give!
           if (targetTitleWidth < MIN_TITLE_SIZE) {
             this.cutoffTitle = true;
@@ -603,12 +614,8 @@
 
           return this;
         }
-
         //==========================
         // Favor the title element
-        targetTitleWidth = titleScrollWidth;
-        targetButtonsetWidth = toolbarWidth - (padding + titleScrollWidth + moreWidth);
-
         // Cut off the title anyway if buttonset is completely hidden.  Something's gotta give!
         if (targetButtonsetWidth < MIN_BUTTONSET_SIZE) {
           this.cutoffTitle = true;
