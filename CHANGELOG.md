@@ -23,6 +23,7 @@ Release Date: TBD
 
 ### Ui Changes
 * 2017-01-31 - The Duplicate Icon has visually changed. Make sure to update your SVG
+ 2017-02-15 - The Single Color charts such as Column, Bar with one series now have azure08 as the default color. As per the BI version 4.0 guilde
 
 ### Affects
 - Tabs
