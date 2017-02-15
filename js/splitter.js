@@ -56,9 +56,13 @@
           splitter = this.element,
           parent = splitter.parent(),
           w = parent.width(),
-          parentHeight = parent.height(),
           direction = s.axis === 'x' ? 'left' : 'top',
-          thisSide = parent.is('.content') ? parent.parent() : parent;
+          thisSide = parent.is('.content') ? parent.parent() : parent,
+          parentHeight;
+
+        setTimeout(function() {
+          parentHeight = parent.height();
+        }, 0);
 
         this.docBody = $('body');
         this.isSplitterRightSide = splitter.is('.splitter-right');
