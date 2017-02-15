@@ -23,6 +23,7 @@ Release Date: TBD
 
 ### Ui Changes
 * 2017-01-31 - The Duplicate Icon has visually changed. Make sure to update your SVG
+* 2017-02-15 - The Single Color chart is now azure08 (column/bar)
 
 ### Affects
 - Tabs

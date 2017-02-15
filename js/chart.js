@@ -58,7 +58,7 @@ window.Chart = function(container) {
       return this.pieColors(i);
     }
     if (chartType === 'bar-single' || chartType === 'column-single') {
-      return '#368AC0';
+      return '#1D5F8A';
     }
     if (chartType === 'bar' || chartType === 'line') {
       return this.colors(i);
