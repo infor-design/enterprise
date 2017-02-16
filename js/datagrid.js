@@ -122,7 +122,7 @@ window.Formatters = {
     }
 
     return col.icon ?
-      ('<a href="'+ colHref +'" class="btn-icon row-btn '+ (col.cssClass || '') +'">'+
+      ('<a href="'+ colHref +'" class="btn-icon row-btn '+ (col.cssClass || '') +'" tabindex="-1">'+
           $.createIcon({ icon: col.icon, file: col.iconFile }) +
           '<span class="audible">'+ textValue +'</span>'+
         '</a>') :
@@ -149,7 +149,7 @@ window.Formatters = {
     }
 
     return (
-      '<button type="button" class="btn-icon small datagrid-drilldown">' +
+      '<button type="button" tabindex="-1" class="btn-icon small datagrid-drilldown">' +
          $.createIcon({icon: 'drilldown'}) +
         '<span>' + text + '</span>' +
       '</button>'
@@ -340,7 +340,7 @@ window.Formatters = {
 
   Button: function (row, cell, value, col) {
     var text = col.text ? col.text : ((value === null || value === undefined || value === '') ? '' : value.toString()),
-      markup ='<button type="button" class="'+ ( col.icon ? 'btn-icon': 'btn') + ' row-btn ' + (col.cssClass ? col.cssClass : '') + '">';
+      markup ='<button type="button" class="'+ ( col.icon ? 'btn-icon': 'btn') + ' row-btn ' + (col.cssClass ? col.cssClass : '') + '" tabindex="-1">';
 
       if (col.icon) {
         markup += $.createIcon({ icon: col.icon, file: col.iconFile });
@@ -4883,7 +4883,7 @@ $.fn.datagrid = function(options) {
         }
       }
 
-      if (!this.settings.isList) {
+      if (this.settings.cellNavigation) {
         var headers = self.headerNodes();
         headers.removeClass('is-active');
         headers.eq(cell).addClass('is-active');
