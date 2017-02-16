@@ -91,7 +91,7 @@
     },
     //Resx - Approved By Translation Team
     messages: {
-      'AboutText': {id: 'AboutText', value: 'حقوق النشر &copy; {0} Infor. جميع الحقوق محفوظة. تعتبر علامتيّ The word and design المنصوص عليهما بهذه الوثيقة علامات تجارية و/أو علامات تجارية مسجلة لشركة Infor و/أو للشركات التابعة لها والفرعية. جميع الحقوق محفوظة. تعتبر كافة العلامات التجارية المدرجة هنا هي ملكية خاصة بأصحابها.'},
+      'AboutText': {id: 'AboutText', value: 'حقوق النشر &copy; {0} Infor. جميع الحقوق محفوظة. تعتبر علامتا The word and design المنصوص عليهما بهذه الوثيقة علامات تجارية و/أو علامات تجارية مسجلة لشركة Infor و/أو للشركات التابعة لها والفرعية. جميع الحقوق محفوظة. تعتبر كافة العلامات التجارية المدرجة هنا هي ملكية خاصة بأصحابها.'},
       'Actions': {id: 'Actions', value: 'إجراءات', comment: 'Tooltip text for the action button with additional in context actions'},
       'Add': {id: 'Add', value: 'إضافة', comment: 'Add'},
       'AddNewTab': {id: 'AddNewTab', value: 'إضافة علامة تبويب جديدة', comment: 'Attached to a button that adds new tabs'},
