@@ -183,13 +183,30 @@
     }
 
   }
+
+  // These two rules fix an IE bug where contents of all tab panels are shown.
+  > .page-container {
+    position: static;
+  }
+  &.can-show {
+    > .page-container {
+      position: absolute;
+    }
+  }
+
 }
 
 // Page containers that directly house '.tab-panel' elements will allow them to fill the height of the container
 // Used in vertical/header/module tabs.
 .page-container > .tab-panel {
-  height: 100%;
+  height: 0;
   padding-top: 0;
+  width: 0;
+
+  &.can-show {
+    height: 100%;
+    width: 100%;
+  }
 
   > .busy-indicator-container {
     @include font-size(14);
