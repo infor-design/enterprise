@@ -77,8 +77,12 @@ $gutter-neg-size: -20px;
 
 @include respond-to(phabletdown) {
   .one-half-mobile {
-    margin-left: $gutter-size;
-    width: calc(50% - 20px);
+    margin-left: 0;
+    width: 50%;
+
+    &:nth-child(even) {
+      padding-left: 0;
+    }
   }
 }
 

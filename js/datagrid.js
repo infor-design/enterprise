@@ -4883,9 +4883,11 @@ $.fn.datagrid = function(options) {
         }
       }
 
-      var headers = self.headerNodes();
-      headers.removeClass('is-active');
-      headers.eq(cell).addClass('is-active');
+      if (!this.settings.isList) {
+        var headers = self.headerNodes();
+        headers.removeClass('is-active');
+        headers.eq(cell).addClass('is-active');
+      }
       this.activeCell.isFocused = true;
 
       self.element.trigger('activecellchange', [{node: this.activeCell.node, row: this.activeCell.row, cell: this.activeCell.cell}]);
