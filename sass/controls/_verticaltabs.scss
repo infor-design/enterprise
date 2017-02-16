@@ -135,14 +135,21 @@
 
   }
 
-  > .tab-panel,
-  > .tab-panel-container {
-    display: inline-block;
-    width: calc(100% - 318px);
+  > .tab-panel {
+    display: none;
 
     &.can-show {
       display: inline-block;
     }
+  }
+
+  > .tab-panel-container {
+    display: inline-block;
+  }
+
+  > .tab-panel,
+  > .tab-panel-container {
+    width: calc(100% - 318px);
   }
 
   &::after {
@@ -165,7 +172,8 @@
     }
   }
 
-  .tab-focus-indicator {
+  > .tab-focus-indicator,
+  > .tab-list-container > .tab-focus-indicator {
     border-radius: 0;
 
     &.is-selected {
