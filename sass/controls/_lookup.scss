@@ -83,6 +83,10 @@
     }
   }
 
+  .datagrid tr:last-child td {
+    border-bottom: 0;
+  }
+
   .buttonset {
     width: 100%;
   }
@@ -94,6 +98,7 @@
 
   .modal-buttonset {
     background-color: inherit;
+    margin-top: 0;
   }
 
   .modal-content {

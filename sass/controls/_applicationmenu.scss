@@ -2,18 +2,18 @@
 //================================================== //
 
 .application-menu {
-  background-color: $slate08;
+  @include css3(transform, translateZ(0));
+  @include transition(left 300ms cubic-bezier(.17, .04, .03, .94),
+    box-shadow 300ms cubic-bezier(.17, .04, .03, .94));  background-color: $slate08;
+
   border-right: 1px solid $application-menu-border-color;
   bottom: 0;
-  color: #fff;
+  color: $white;
   height: 100%;
   left: -$application-menu-width;
   overflow-x: hidden;
   overflow-y: auto;
   position: fixed;
-  @include css3(transform, translateZ(0));
-  @include transition(left 300ms cubic-bezier(.17, .04, .03, .94),
-    box-shadow 300ms cubic-bezier(.17, .04, .03, .94));
   width: $application-menu-width;
   z-index: 500;
 
@@ -156,9 +156,9 @@ html[dir='rtl'] {
       display: none !important;
 
       + .page-container {
+        @include css3(transform, translateZ(0));
         margin: 0 0 0 auto;
         width: 100% !important;
-        @include css3(transform, translateZ(0));
       }
     }
   }
