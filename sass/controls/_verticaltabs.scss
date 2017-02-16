@@ -172,7 +172,8 @@
     }
   }
 
-  .tab-focus-indicator {
+  > .tab-focus-indicator,
+  > .tab-list-container > .tab-focus-indicator {
     border-radius: 0;
 
     &.is-selected {
