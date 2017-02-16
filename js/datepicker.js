@@ -454,6 +454,7 @@
           setTimeout(function() {
             self.timepicker.initValues = self.timepicker.getTimeFromField(self.time);
             self.timepicker.afterShow(self.timepickerContainer);
+            self.timepickerContainer.find('div.dropdown').attr('tabindex', '-1');
             return;
           }, 1);
         }
