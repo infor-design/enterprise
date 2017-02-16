@@ -13,7 +13,6 @@
 }(function($) {
 /* end-amd-strip-block */
 
-
   /**
    * @constructor
    * @param {Object} element
@@ -394,7 +393,11 @@
           continue;
         }
 
-        if (rule.async) { //TODO: Document Breaking Change - swapped params
+        if ($('#calendar-popup').is(':visible')) {
+          continue; //dont show validation message while selecting
+        }
+
+        if (rule.async) {
           rule.check(value, field, manageResult);
         } else {
           manageResult(rule.check(value, field), showTooltip);
