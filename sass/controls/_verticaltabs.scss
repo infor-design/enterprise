@@ -136,10 +136,13 @@
   }
 
   > .tab-panel {
-    display: none;
+    display: inline-block;
+    margin: 0;
+    width: 0;
 
     &.can-show {
-      display: inline-block;
+      margin: 30px;
+      width: calc(100% - 318px);
     }
   }
 
@@ -149,7 +152,6 @@
     width: 0;
 
     &.can-show {
-      display: inline-block;
       margin: 30px;
       width: calc(100% - 318px);
     }
