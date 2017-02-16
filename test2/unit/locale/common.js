@@ -366,6 +366,15 @@ define([
       Locale.set('en-US');
       expect(Locale.formatNumber(123456.123456, {style: 'decimal', maximumFractionDigits: 5})).to.equal('123,456.12345');
       expect(Locale.formatNumber(123456.123456, {style: 'decimal', maximumFractionDigits: 4})).to.equal('123,456.1234');
+      expect(Locale.formatNumber(1.001, {style: 'decimal', minimumFractionDigits: 0, maximumFractionDigits: 3})).to.equal('1');
+      expect(Locale.formatNumber(1.001, {style: 'decimal', minimumFractionDigits: 3, maximumFractionDigits: 3})).to.equal('1.001');
+      expect(Locale.formatNumber(1.001, {style: 'decimal', minimumFractionDigits: 3, maximumFractionDigits: 3, round: true})).to.equal('1.001');
+      expect(Locale.formatNumber(1.0019, {style: 'decimal', minimumFractionDigits: 0, maximumFractionDigits: 3})).to.equal('1.001');
+      expect(Locale.formatNumber(1.0019, {style: 'decimal', minimumFractionDigits: 3, maximumFractionDigits: 3})).to.equal('1.001');
+      expect(Locale.formatNumber(1.0019, {style: 'decimal', minimumFractionDigits: 3, maximumFractionDigits: 3, round: true})).to.equal('1.002');
+      expect(Locale.formatNumber(12345.6789, {style: 'decimal', minimumFractionDigits: 0, maximumFractionDigits: 3})).to.equal('12,345.678');
+      expect(Locale.formatNumber(12345.6789, {style: 'decimal', minimumFractionDigits: 3, maximumFractionDigits: 3})).to.equal('12,345.678');
+      expect(Locale.formatNumber(12345.6789, {style: 'decimal', minimumFractionDigits: 3, maximumFractionDigits: 3, round: true})).to.equal('12,345.679');
     },
 
     'should format integers': function() {
