@@ -2376,7 +2376,10 @@
           this.tablist.scrollTop(0);
         }
 
-        return li[0].getBoundingClientRect().top > this.tablist[0].getBoundingClientRect().top;
+        var liTop = Math.round(li[0].getBoundingClientRect().top),
+          tablistTop = Math.round(this.tablist[0].getBoundingClientRect().top);
+
+        return liTop > tablistTop;
       },
 
       findLastVisibleTab: function() {
