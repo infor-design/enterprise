@@ -165,7 +165,7 @@
 
     <div class="scrollable step-container js-step-container-scroll">
 
-      <div id="profile" class="js-step-panel step-panel-active is-selected">
+      <div id="profile" class="js-step-panel">
         <h2>Profile</h2>
         <form>
           <div class="field">
@@ -258,14 +258,6 @@
     var stepElem = $('.step-process-container').stepprocess({
       'beforeSelectStep': stepFunctions.beforeSelectStep,
       'linearProgression': false
-    })
-    .on('selected', function(e, elem) {
-      var href = $(elem).attr('href');
-      if (href.length > 1) {
-        $('.step-panel-active').removeClass('step-panel-active');
-        $(href).addClass('step-panel-active');
-        $(this).addClass('show-main');
-      }
     });
 
     // Example button save event

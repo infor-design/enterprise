@@ -72,6 +72,10 @@
         steps.each(function() {
           self.decorateNode(this);
         });
+
+        var startingStep = $(this.settings.stepLi + '.is-selected');
+        var startingStepLink = startingStep.find(this.settings.stepLink);
+        this.selectStep(startingStepLink);
       },
 
        /**
