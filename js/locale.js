@@ -588,7 +588,8 @@
       var decimals = this.decimalPlaces(number);
 
       //Handle larger numbers
-      if (number.length - decimals - 1 >= 10) {
+      if (number.toString().length - decimals - 1 >= 10 ||
+        (decimals === minDigits && decimals === maxDigits)) {
         multiplier = Math.pow(100, maxDigits);
         adjustedNum = number * multiplier;
       }
