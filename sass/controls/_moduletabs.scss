@@ -76,6 +76,7 @@
 
       + .toolbar {
         border-left: 1px solid $module-tabs-x-border-color;
+        text-align: right;
         width: calc(30% - 1px); // 1px border
       }
     }
