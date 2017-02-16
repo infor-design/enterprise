@@ -1267,12 +1267,13 @@
           return this.callSource(href);
         }
 
-        oldPanel.removeClass('is-visible can-show').closeChildren();
+        oldPanel[0].classList.remove('can-show');
+        oldPanel[0].classList.remove('is-visible');
+        oldPanel.closeChildren();
         self.element.trigger('activated', [a]);
 
         targetPanelElem.classList.add('can-show');
         self.renderVisiblePanel();
-        targetPanelElem.offsetHeight; // jshint ignore:line
         targetPanel.one($.fn.transitionEndName() + '.tabs', function() {
           self.element.trigger('afteractivated', [a]);
         });
