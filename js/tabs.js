@@ -1764,11 +1764,11 @@
 
         // If a jQuery-wrapped element is provided, actually append the element.
         // If content is text/string, simply inline it.
-        var markup = $('<div id="'+ tabId +'" class="tab-panel" role="tabpanel" style="display: none;"></div>');
+        var markup = $('<div id="'+ tabId +'" class="tab-panel" role="tabpanel"></div>');
         if (content instanceof $) {
           markup.append(content);
         } else {
-          markup[0].innerHTML = content;
+          markup[0].innerHTML = content || '';
         }
 
         if (doInsert === true) {
