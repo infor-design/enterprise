@@ -74,6 +74,10 @@ body.no-scroll {
     &.scrollable-y {
       height: 100%;
     }
+
+    .fieldset {
+      margin: 20px;
+    }
   }
 
   // scss-lint:disable ImportantRule

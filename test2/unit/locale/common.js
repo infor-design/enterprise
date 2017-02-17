@@ -478,16 +478,22 @@ define([
     'can round optionally': function() {
       expect(Locale.formatNumber('3.01999', {maximumFractionDigits: 2, round: true})).to.equal('3.02');
       expect(Locale.formatNumber('4.1', {minimumFractionDigits: 0, maximumFractionDigits: 2})).to.equal('4.1');
-      expect(Locale.formatNumber('12.341', {minimumFractionDigits: 0, maximumFractionDigits: 2, round: true})).to.equal('12.34')
-      expect(Locale.formatNumber('12.340', {minimumFractionDigits: 0, maximumFractionDigits: 2, round: true})).to.equal('12.34')
-      expect(Locale.formatNumber('12.344', {minimumFractionDigits: 0, maximumFractionDigits: 2, round: true})).to.equal('12.34')
-      expect(Locale.formatNumber('12.349', {minimumFractionDigits: 0, maximumFractionDigits: 2, round: true})).to.equal('12.35')
+      expect(Locale.formatNumber('12.341', {minimumFractionDigits: 0, maximumFractionDigits: 2, round: true})).to.equal('12.34');
+      expect(Locale.formatNumber('12.340', {minimumFractionDigits: 0, maximumFractionDigits: 2, round: true})).to.equal('12.34');
+      expect(Locale.formatNumber('12.344', {minimumFractionDigits: 0, maximumFractionDigits: 2, round: true})).to.equal('12.34');
+      expect(Locale.formatNumber('12.349', {minimumFractionDigits: 0, maximumFractionDigits: 2, round: true})).to.equal('12.35');
       expect(Locale.formatNumber('12345.12345678', {minimumFractionDigits:2 , maximumFractionDigits: 4, round: true})).to.equal('12,345.1235');
     },
 
     'truncate decimals': function() {
       expect(Locale.truncateDecimals('1111111111.11', 2, 2)).to.equal('1111111111.11');
       expect(Locale.truncateDecimals('11111111111.11', 2, 2)).to.equal('11111111111.11');
+      expect(Locale.truncateDecimals('1.10', 2, 2)).to.equal('1.10');
+      expect(Locale.truncateDecimals('2.10', 2, 2)).to.equal('2.10');
+      expect(Locale.truncateDecimals('3.10', 2, 2)).to.equal('3.10');
+      expect(Locale.truncateDecimals('4.10', 2, 2)).to.equal('4.10');
+      expect(Locale.truncateDecimals('5.10', 2, 2)).to.equal('5.10');
+      expect(Locale.truncateDecimals('6.10', 2, 2)).to.equal('6.10');
     }
 
   });
