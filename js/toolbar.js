@@ -1042,6 +1042,11 @@
         }
 
         this.element[0].classList.remove('do-resize');
+        this.buttonset[0].style.width = '';
+        if (this.title && this.title.length) {
+          this.title[0].style.width = '';
+        }
+
         this.element.removeAttr('role').removeAttr('aria-label');
         $.removeData(this.element[0], pluginName);
       }
