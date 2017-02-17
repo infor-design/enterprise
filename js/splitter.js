@@ -22,6 +22,7 @@
     var pluginName = 'splitter',
         defaults = {
           axis: 'x',
+          side: 'left', // or right
           resize: 'immediate',
           containment: null, //document or parent
           save: true
@@ -65,8 +66,8 @@
         }, 0);
 
         this.docBody = $('body');
-        this.isSplitterRightSide = splitter.is('.splitter-right');
-        this.isSplitterHorizontal = splitter.is('.splitter-horizontal');
+        this.isSplitterRightSide = splitter.is('.splitter-right') || (s.axis === 'x' && s.side === 'right');
+        this.isSplitterHorizontal = splitter.is('.splitter-horizontal') || s.axis === 'y';
         s.uniqueId = this.uniqueId();
 
         if (this.isSplitterRightSide) {
@@ -75,6 +76,8 @@
           thisSide.addClass('is-right-side')
             .next().addClass('flex-grow-shrink is-right-side')
             .parent().addClass('splitter-container');
+
+          splitter.addClass('splitter-right');
         }
         else if (this.isSplitterHorizontal) {
           this.topPanel = splitter.prev();
@@ -82,8 +85,8 @@
 
           parent.addClass('splitter-container is-horizontal');
           splitter.next().addClass('flex-grow-shrink');
-        }
-        else {
+          splitter.addClass('splitter-horizontal');
+        } else {
           this.rightSide = thisSide;
           this.leftSide = thisSide.prev().parent();
 
