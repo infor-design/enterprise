@@ -11,8 +11,13 @@
     border-bottom: solid 2px $panel-border-color;
     height: 60px;
 
-    .title.title-wide {
-      width: 98%;
+
+    .title {
+      top: 7px;
+
+      &.title-wide {
+        width: 98%;
+      }
     }
 
     .dual-title {
