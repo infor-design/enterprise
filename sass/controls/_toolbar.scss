@@ -34,6 +34,7 @@ $toolbar-buttonset-height: 40px;
     height: $toolbar-buttonset-height;
     overflow: hidden;
     padding-left: 1px;  //for the focus state
+    width: 100%; // Overridden by sizing calculation.
 
     > .separator {
       background-color: $formatter-toolbar-separator-color;
@@ -68,11 +69,11 @@ $toolbar-buttonset-height: 40px;
     height: $toolbar-buttonset-height;
     left: 1rem;
     overflow: hidden;
-    position: absolute;
     text-align: left;
     text-overflow: ellipsis;
     top: 0;
     white-space: nowrap;
+    width: 45%; // Overridden by sizing calculation.
 
     // Acts as a spacer that causes the toolbar items to vertically align.
     &::before {
@@ -96,6 +97,7 @@ $toolbar-buttonset-height: 40px;
 
     + .buttonset {
       text-align: right;
+      width: calc(55% - 1px);
     }
   }
 
@@ -110,12 +112,39 @@ $toolbar-buttonset-height: 40px;
     }
   }
 
+  &.do-resize {
+    .buttonset {
+      width: auto;
+    }
+
+    .title {
+      position: absolute;
+      width: auto;
+    }
+
+    &.has-more-button {
+      .buttonset {
+        width: calc(100% - 50px);
+      }
+
+      .title + .buttonset {
+        width: auto;
+      }
+    }
+  }
+
   &.has-more-button {
     .buttonset {
-      max-width: calc(100% - 50px);
+      width: calc(100% - 50px);
 
       > *:last-child {
         margin-right: 5px; // Add back the 5px since we need to visually separate the More button from the others.
+      }
+    }
+
+    &.has-title {
+      .buttonset {
+        width: calc(55% - 50px);
       }
     }
 

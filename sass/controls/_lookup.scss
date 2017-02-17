@@ -87,8 +87,16 @@
     border-bottom: 0;
   }
 
-  .buttonset {
-    width: 100%;
+  .toolbar {
+    .buttonset {
+      width: 100%;
+    }
+
+    &.has-more-button {
+      .buttonset {
+        width: calc(100% - 50px);
+      }
+    }
   }
 
   .modal-body-wrapper {

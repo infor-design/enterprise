@@ -62,6 +62,10 @@
         var self = this;
 
         this.element.attr('role', 'toolbar');
+        if (this.element.is(':not(:hidden)')) {
+          this.element[0].classList.add('do-resize');
+        }
+
         this.buildAriaLabel();
 
         // keep track of how many popupmenus there are with an ID.
@@ -542,26 +546,42 @@
           buttonset = containerDims ? containerDims.buttonset : undefined;
 
         this.sizeContainers(title, buttonset);
-        this.adjustMenuItemVisibility();
-        this.toggleMoreMenu(); // Added 9/16/2015 due to issue HFC-2876
+
+        if (this.element.is(':not(:hidden)')) {
+          this.adjustMenuItemVisibility();
+          this.toggleMoreMenu(); // Added 9/16/2015 due to issue HFC-2876
+        }
       },
 
       sizeContainers: function(titleSize, buttonsetSize) {
+        var containerElem = this.element[0],
+          titleElem = this.title[0],
+          buttonsetElem = this.buttonset[0],
+          moreElem = this.more[0];
+
         // Don't do this at all unless we have a title element (which is optional)
         if (!this.title || !this.title.length) {
           return;
         }
 
-        var containerElem = this.element[0],
-          titleElem = this.title[0],
-          buttonsetElem = this.buttonset[0],
-          moreElem = this.more[0],
-          WHITE_SPACE = 30,
+        // If the element's hidden and has defined sizes, remove them so we can use the defaults.
+        if (this.element.is(':hidden')) {
+          buttonsetElem.style.width = '';
+          titleElem.style.width = '';
+          containerElem.classList.remove('do-resize');
+          return;
+        }
+
+        var WHITE_SPACE = 30,
           MIN_TITLE_SIZE = 44 + WHITE_SPACE,
           MIN_BUTTONSET_SIZE = 0;
 
-        buttonsetElem.removeAttribute('style');
-        titleElem.removeAttribute('style');
+        buttonsetElem.style.width = 'auto';
+        titleElem.style.width = 'auto';
+
+        if (!containerElem.classList.contains('do-resize')) {
+          containerElem.classList.add('do-resize');
+        }
 
         var toolbarStyle = window.getComputedStyle(containerElem),
           toolbarWidth = parseInt(toolbarStyle.width),
@@ -1021,6 +1041,7 @@
           this.more.data('popupmenu').destroy();
         }
 
+        this.element[0].classList.remove('do-resize');
         this.element.removeAttr('role').removeAttr('aria-label');
         $.removeData(this.element[0], pluginName);
       }
