@@ -397,21 +397,22 @@
           // Re-adjust the size of the buttonset element if the expanded searchfield would be
           // too large to fit.
           var buttonsetWidth = parseInt(window.getComputedStyle(this.buttonsetElem).width),
-            d;
+            d = TOOLBARSEARCHFIELD_EXPAND_SIZE;
 
           if (buttonsetWidth < TOOLBARSEARCHFIELD_EXPAND_SIZE) {
             d = TOOLBARSEARCHFIELD_EXPAND_SIZE - buttonsetWidth;
-
-            containerSizeSetters = {
-              buttonset: TOOLBARSEARCHFIELD_EXPAND_SIZE
-            };
-
-            if (this.titleElem) {
-              var titleElemWidth = parseInt(window.getComputedStyle(this.titleElem).width);
-              containerSizeSetters.title = (titleElemWidth - d);
-            }
-            dontRecalculateButtons = true;
           }
+
+          containerSizeSetters = {
+            buttonset: buttonsetWidth + TOOLBARSEARCHFIELD_EXPAND_SIZE
+          };
+
+          if (this.titleElem) {
+            var titleElemWidth = parseInt(window.getComputedStyle(this.titleElem).width);
+            containerSizeSetters.title = (titleElemWidth - d);
+          }
+
+          dontRecalculateButtons = true;
         }
 
         this.inputWrapper.addClass('active');
