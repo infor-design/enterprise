@@ -469,14 +469,13 @@ var express = require('express'),
   // Docs Pages
   // =========================================
 
-  var layoutOpts = {
-    subtitle: 'Docs',
-    layout: ''
+  var docLayoutOpts = {
+    subtitle: 'SoHo Xi Docs',
+    layout: 'includes/docs-layout'
   };
 
   function defaultDocsRouteHandler(req, res, next) {
-    var opts = extend({}, res.opts, layoutOpts);
-    res.render('docs/index', opts);
+    res.render('docs/index', docLayoutOpts);
     next();
   }
 
