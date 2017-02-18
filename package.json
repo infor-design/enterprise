@@ -41,7 +41,7 @@
     "chalk": "^1.1.3",
     "colors": "^1.1.2",
     "connect-multiparty": "^2.0.0",
-    "documentation": "^4.0.0-beta9",
+    "documentation": "^4.0.0-beta13",
     "eslint": "^3.14.1",
     "express": "^4.13.4",
     "express-slash": "^2.0.1",
