@@ -2615,7 +2615,7 @@ $.fn.datagrid = function(options) {
       this.totalWidth += col.hidden ? 0 : colWidth;
 
       //For the last column stretch it TODO May want to check for hidden column as last
-      if (index === this.settings.columns.length-1 && this.totalWidth !== colWidth) {
+      if (index === this.visibleColumns().length-1 && this.totalWidth !== colWidth) {
 
         var diff = this.elemWidth - this.totalWidth;
 

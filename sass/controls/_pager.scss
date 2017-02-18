@@ -69,8 +69,8 @@
       cursor: pointer;
       display: inline-block;
       height: 32px;
-      margin: 0 4px;
-      padding: 6px;
+      margin: 0 2px;
+      padding: 5px;
       position: relative;
       text-align: center;
       text-decoration: none;
@@ -197,7 +197,7 @@ li + .pager-count {
 
   .btn-menu {
     height: 30px;
-    margin: 1px;
+    margin: -1px;
 
     &:focus {
       border-color: $primary-color;
@@ -266,5 +266,11 @@ html[dir='rtl'] {
     input {
       text-align: center;
     }
+  }
+}
+
+@include respond-to(phone) {
+  .pager-pagesize {
+    display: none !important;
   }
 }
