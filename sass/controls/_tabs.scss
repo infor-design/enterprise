@@ -140,18 +140,17 @@
 
 // Tab Body
 .tab-panel {
-  height: 0;
+  display: none;
+  padding-top: 20px;
   opacity: 0;
-  overflow: hidden;
   @include transition(opacity 500ms cubic-bezier(.17, .04, .03, .94));
 
   &.can-show {
-    padding-top: 20px;
+    display: block;
   }
 
   &.is-visible {
     opacity: 1;
-    height: auto;
   }
 
   &.padding {
