@@ -1274,6 +1274,9 @@
 
         targetPanelElem.classList.add('can-show');
         self.renderVisiblePanel();
+        // trigger reflow as display property is none for animation
+        targetPanelElem.offsetHeight; // jshint ignore:line
+
         targetPanel.one($.fn.transitionEndName() + '.tabs', function() {
           self.element.trigger('afteractivated', [a]);
         });

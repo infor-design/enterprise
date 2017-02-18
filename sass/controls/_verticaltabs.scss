@@ -125,12 +125,14 @@
   // NOTE: It's possible for these tab panels not to be included within the .tab-container class.
   // If the panels are present inside the .tab-container, these styles will be necessary.
   .tab-panel {
-    margin: 0;
+    display: none;
+    margin: 30px;
     padding-top: 0;
     vertical-align: top;
 
     &.can-show {
-      margin: 30px;
+      display: inline-block;
+      width: calc(100% - 318px);
     }
 
     h3 {
@@ -138,27 +140,13 @@
     }
   }
 
-  > .tab-panel {
-    display: inline-block;
-    width: 0;
-
-    &.can-show {
-      width: calc(100% - 318px);
-    }
-  }
-
   > .tab-panel-container {
     display: inline-block;
     margin: 0;
     width: calc(100% - 318px);
-
-    > .tab-panel {
-      display: inline-block;
-      width: 0;
-
-      &.can-show {
-        width: 100%;
-      }
+    &.can-show {
+      margin: 0px;
+      width: calc(100% - 318px);
     }
   }
 
