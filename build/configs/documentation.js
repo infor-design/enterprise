@@ -7,7 +7,7 @@ module.exports = {
       }],
       options: {
         name: 'Soho XI Controls Docs',
-        destination: 'docs',
+        destination: 'views/docs',
         version: `v<%= pkg.version %>`,
         output: 'html',
         github: 'true'

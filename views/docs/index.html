@@ -1,239 +1,6117 @@
-<!DOCTYPE html>
-<html lang="en-US">
+<!doctype html>
+<html>
 <head>
-
-  <title>{{title}}</title>
-
-  <!-- Meta Info -->
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- Style Sheets -->
-  <link rel="stylesheet" id="stylesheet" href="{{basepath}}stylesheets/light-theme.css" type="text/css">
-  <link rel="stylesheet" href="{{basepath}}stylesheets/site.css" type="text/css">
-
-  <!-- jQuery and Plugin Code-->
-  <script src="{{basepath}}js/jquery-3.1.0.js"></script>
-  <script src="{{basepath}}js/sohoxi.js"></script>
-
-  <!--
-  <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-40840710-3', 'auto');
-    ga('send', 'pageview');
-
-  </script>
-  -->
+  <meta charset='utf-8' />
+  <title>Soho XI Controls Docs v4.2.5 | Documentation</title>
+  <meta name='viewport' content='width=device-width,initial-scale=1'>
+  <link href='assets/bass.css' type='text/css' rel='stylesheet' />
+  <link href='assets/style.css' type='text/css' rel='stylesheet' />
+  <link href='assets/github.css' type='text/css' rel='stylesheet' />
 </head>
-<body class="no-scroll">
-  {{> includes/svg-inline-refs}}
-  {{> docs/svg-frontpage}}
-  {{> docs/applicationmenu}}
-
-  <div class="page-container scrollable no-transform site-home">
-
-    <section class="top-frame">
-      {{> docs/header-home}}
-
-      <div class="row header-grid">
-        <div class="seven columns">
-          <h1>
-            <span>The Foundation of Infor Product Experience</span>
-            <span class="smaller">User Tested. User Driven.</span>
-          </h1>
-        </div>
-        <div class="five columns">
-          <button type="button" class="btn-primary">
-            <span>Get Started</span>
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use xlink:href="#icon-right-arrow"></use>
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      <div class="row links-grid">
-        <div class="four columns">
-          <a href="">
-            <img class="link-icon" src="{{basepath}}assets/site/hp_icon_components.svg"/>
-          </a>
-          <h2>Components</h2>
-          <p>Donec hendrerit libero eu ornare dictum. Aenean luctus risus quis ex ultrices, vitae convallis ante rutrum morbi cursus enim erat.</p>
-          <p>
-            <a href="#" class="hyperlink ">View Components<svg role="presentation" aria-hidden="true" focusable="false" class="icon chevron"><use xlink:href="#icon-caret-right"/></svg></a>
-          </p>
-        </div>
-
-        <div class="four columns">
-          <a href="">
-            <img class="link-icon" src="{{basepath}}assets/site/hp_icon_styling.svg"/>
-          </a>
-          <h2>Styling</h2>
-          <p>Donec hendrerit libero eu ornare dictum. Aenean luctus risus quis ex ultrices, vitae convallis ante rutrum morbi cursus enim erat.</p>
-          <p>
-            <a href="#" class="hyperlink ">View Styling Basics<svg role="presentation" aria-hidden="true" focusable="false" class="icon chevron"><use xlink:href="#icon-caret-right"/></svg></a>
-          </p>
-        </div>
-
-        <div class="four columns">
-          <a href="">
-            <img class="link-icon" src="{{basepath}}assets/site/hp_icon_layouts.svg"/>
-          </a>
-          <h2>Layouts</h2>
-          <p>Donec hendrerit libero eu ornare dictum. Aenean luctus risus quis ex ultrices, vitae convallis ante rutrum morbi cursus enim erat.</p>
-          <p>
-            <a href="#" class="hyperlink ">View Example Layouts<svg role="presentation" aria-hidden="true" focusable="false" class="icon chevron"><use xlink:href="#icon-caret-right"/></svg></a>
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="page-slice visualize">
-      <div class="background-image" aria-hidden="true" role="presentation">
-        <img src="{{basepath}}assets/site/hp_graphic_chart.png">
-      </div>
-
-      <div class="row">
-        <div class="six columns">&nbsp;</div>
-        <div class="six columns description">
-          <h1>Visualize Your Data</h1>
-          <p class="subheader">
-            Get all the guidelines you need to best visualize your data.  Chart types, colors, all in a single resource.
-          </p>
-          <button type="button" class="btn-primary">
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use xlink:href="#icon-download"></use>
-            </svg>
-            <span>Download PDF</span>
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <section class="page-slice mobile-tools">
-      <div class="background-image" aria-hidden="true" role="presentation">&nbsp;</div>
-
-      <div class="row">
-        <div class="six columns description">
-          <h1>Native Mobile Tools</h1>
-          <p class="subheader">
-            Duis at ligula tristique, pellentesque nibh eu, commodo lorem. Pellentesque quis sodales nunc, non iaculis nisi.
-          </p>
-          <button type="button" class="btn-primary">
-            <span>View Guidelines</span>
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use xlink:href="#icon-right-arrow"></use>
-            </svg>
-          </button>
-        </div>
-        <div class="six columns">&nbsp;</div>
-      </div>
-    </section>
-
-    <section class="page-slice articles">
-      <div class="background-image" aria-hidden="true" role="presentation">&nbsp;</div>
-
-      <div class="row">
-        <div class="six columns">&nbsp;</div>
-        <div class="six columns description">
-          <h1>Articles</h1>
-          <p class="subheader">
-            Duis at ligula tristique, pellentesque nibh eu, commodo lorem. Pellentesque quis sodales nunc, non iaculis nisi.
-          </p>
-          <button type="button" class="btn-primary">
-            <span>View Articles</span>
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use xlink:href="#icon-right-arrow"></use>
-            </svg>
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <section class="page-slice download">
-      <svg class="background-image">
-        <use xlink:href="#download-bg-graphic"></use>
-      </svg>
-
-      <div class="row">
-        <div class="five columns description">
-          <h1>Downloads</h1>
-          <p class="subheader">
-            Duis at ligula tristique, pellentesque nibh eu, commodo lorem. Pellentesque quis sodales nunc, non iaculis nisi.
-          </p>
-        </div>
-        <div class="seven columns">
-
-          <div class="download-link-row">
-            <a href="#" class="download-link">
-              <div class="overlay" aria-hidden="true" role="presentation">
-                <div class="overlay-container">
-                  <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                    <use xlink:href="#icon-download"></use>
-                  </svg>
-                  <br>
-                  <span>Download</span>
+<body class='documentation'>
+  <div class='max-width-4 mx-auto'>
+    <div class='clearfix md-mxn2'>
+      <div class='fixed xs-hide fix-3 overflow-auto max-height-100'>
+        <div class='py1 px2'>
+          <h3 class='mb0 no-anchor'>Soho XI Controls Docs</h3>
+          <div class='mb1'><code>v4.2.5</code></div>
+          <input
+            placeholder='Filter'
+            id='filter-input'
+            class='col12 block input'
+            type='text' />
+          <div id='toc'>
+            <ul class='list-reset h5 py1-ul'>
+              
+                
+                <li><a
+                  href='#about'
+                  class="">
+                  About
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#accordion'
+                  class="">
+                  Accordion
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#applicationmenu'
+                  class="">
+                  ApplicationMenu
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#arrange'
+                  class="">
+                  Arrange
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#autocomplete'
+                  class="">
+                  Autocomplete
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#busyindicator'
+                  class="">
+                  BusyIndicator
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#button'
+                  class="">
+                  Button
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#chart'
+                  class="">
+                  Chart
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#splice'
+                  class="">
+                  splice
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#circlepager'
+                  class="">
+                  CirclePager
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#colorpicker'
+                  class="">
+                  ColorPicker
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#contextualactionpanel'
+                  class="">
+                  ContextualActionPanel
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#datagrid'
+                  class="">
+                  Datagrid
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#datepicker'
+                  class="">
+                  DatePicker
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#drag'
+                  class="">
+                  Drag
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#dropdown'
+                  class="">
+                  Dropdown
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#editor'
+                  class="">
+                  Editor
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#expandablearea'
+                  class="">
+                  ExpandableArea
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#fileupload'
+                  class="">
+                  FileUpload
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#fileuploadadvanced'
+                  class="">
+                  FileUploadAdvanced
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#header'
+                  class="">
+                  Header
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#hierarchy'
+                  class="">
+                  Hierarchy
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#homepage'
+                  class="">
+                  Homepage
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#icon'
+                  class="">
+                  Icon
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#initialize'
+                  class="">
+                  Initialize
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#lightbox'
+                  class="">
+                  Lightbox
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#listbuilder'
+                  class="">
+                  ListBuilder
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#listfilter'
+                  class="">
+                  ListFilter
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#listview'
+                  class="">
+                  ListView
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#lookup'
+                  class="">
+                  Lookup
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#mask'
+                  class="">
+                  Mask
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#message'
+                  class="">
+                  Message
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#modal'
+                  class="">
+                  Modal
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#modalsearch'
+                  class="">
+                  ModalSearch
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#multiselect'
+                  class="">
+                  MultiSelect
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#pager'
+                  class="">
+                  Pager
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#personalize'
+                  class="">
+                  Personalize
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#placementobject'
+                  class="">
+                  PlacementObject
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#popdown'
+                  class="">
+                  Popdown
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#popupmenu'
+                  class="">
+                  PopupMenu
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#progress'
+                  class="">
+                  Progress
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#rating'
+                  class="">
+                  Rating
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#resize'
+                  class="">
+                  Resize
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#scrollaction'
+                  class="">
+                  ScrollAction
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#searchfield'
+                  class="">
+                  SearchField
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#sidebar'
+                  class="">
+                  Sidebar
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#signin'
+                  class="">
+                  SignIn
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#slider'
+                  class="">
+                  Slider
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#spinbox'
+                  class="">
+                  Spinbox
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#splitter'
+                  class="">
+                  Splitter
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#stepprocess'
+                  class=" toggle-sibling">
+                  Stepprocess
+                  <span class='icon'>▸</span>
+                </a>
+                
+                <div class='toggle-target display-none'>
+                  
+                  
+                    <ul class='list-reset py1-ul pl1'>
+                      <li class='h5'><span>Instance members</span></li>
+                      
+                      <li><a
+                        href='#Stepprocess#goToNextStep'
+                        class='regular pre-open'>
+                        #goToNextStep
+                      </a></li>
+                      
+                      <li><a
+                        href='#Stepprocess#goToPreviousStep'
+                        class='regular pre-open'>
+                        #goToPreviousStep
+                      </a></li>
+                      
+                      <li><a
+                        href='#Stepprocess#selectStep'
+                        class='regular pre-open'>
+                        #selectStep
+                      </a></li>
+                      
+                      <li><a
+                        href='#Stepprocess#selectStep'
+                        class='regular pre-open'>
+                        #selectStep
+                      </a></li>
+                      
+                    </ul>
+                  
+                  
                 </div>
-              </div>
-              <div class="content">
-                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                  <use xlink:href="#icon-reg-mark"></use>
-                </svg>
-                <span class="download-text-small">Design</span>
-                <span class="download-text-large">Specs</span>
-              </div>
-            </a>
-
-            <a href="#" class="download-link">
-              <div class="overlay" aria-hidden="true" role="presentation">
-                <div class="overlay-container">
-                  <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                    <use xlink:href="#icon-download"></use>
-                  </svg>
-                  <br>
-                  <span>Download</span>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#swaplist'
+                  class="">
+                  SwapList
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#tabs'
+                  class=" toggle-sibling">
+                  Tabs
+                  <span class='icon'>▸</span>
+                </a>
+                
+                <div class='toggle-target display-none'>
+                  
+                  
+                    <ul class='list-reset py1-ul pl1'>
+                      <li class='h5'><span>Instance members</span></li>
+                      
+                      <li><a
+                        href='#Tabs#callSource'
+                        class='regular pre-open'>
+                        #callSource
+                      </a></li>
+                      
+                    </ul>
+                  
+                  
                 </div>
-              </div>
-              <div class="content">
-                <svg class="icon icon-icons" focusable="false" aria-hidden="true" role="presentation">
-                  <use xlink:href="#icon-icons"></use>
-                </svg>
-                <span class="download-text-small">Entire</span>
-                <span class="download-text-large">Icons</span>
-              </div>
-            </a>
-
-            <a href="#" class="download-link">
-              <div class="overlay" aria-hidden="true" role="presentation">
-                <div class="overlay-container">
-                  <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                    <use xlink:href="#icon-download"></use>
-                  </svg>
-                  <br>
-                  <span>Download</span>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#tag'
+                  class="">
+                  Tag
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#template'
+                  class="">
+                  Template
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#textarea'
+                  class="">
+                  Textarea
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#timepicker'
+                  class="">
+                  TimePicker
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#toast'
+                  class="">
+                  Toast
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#toolbar'
+                  class=" toggle-sibling">
+                  Toolbar
+                  <span class='icon'>▸</span>
+                </a>
+                
+                <div class='toggle-target display-none'>
+                  
+                  
+                    <ul class='list-reset py1-ul pl1'>
+                      <li class='h5'><span>Instance members</span></li>
+                      
+                      <li><a
+                        href='#Toolbar#triggerSelect'
+                        class='regular pre-open'>
+                        #triggerSelect
+                      </a></li>
+                      
+                    </ul>
+                  
+                  
                 </div>
-              </div>
-              <div class="content">
-                <svg class="icon icon-code" focusable="false" aria-hidden="true" role="presentation">
-                  <use xlink:href="#icon-code"></use>
-                </svg>
-                <span class="download-text-small">Latest</span>
-                <span class="download-text-large">Code</span>
-              </div>
-            </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#toolbarsearchfield'
+                  class="">
+                  ToolbarSearchfield
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#tooltip'
+                  class="">
+                  Tooltip
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#tree'
+                  class="">
+                  Tree
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#validator'
+                  class="">
+                  Validator
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#wizard'
+                  class="">
+                  Wizard
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#zoom'
+                  class="">
+                  Zoom
+                  
+                </a>
+                
+                </li>
+              
+            </ul>
+          </div>
+          <div class='mt1 h6 quiet'>
+            <a href='http://documentation.js.org/reading-documentation.html'>Need help reading this?</a>
+          </div>
+        </div>
+      </div>
+      <div class='fix-margin-3'>
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='about'>
+      About
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/about.js#L64-L70'>
+      <span>js/about.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new About(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?, options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, appName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  <div>Since: 4.2.0
+
+The About Dialog Component displays information regarding the application.
+It should present the application name, version, copyright and any other
+information that would be useful for application users to present to
+support teams. Modal dialogs should not be used as a splash screen.</div>
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?
+            = <code>this</code>)</code>
+	    The element to attach to (if manually calling the constructor)
 
           </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.content</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+                  </td>
+                  <td class='break-word'><span>Additional Text content to display at the top.
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.copyrightYear</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+                  </td>
+                  <td class='break-word'><span>The year displayed in the copyright, defaults to current year.
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.deviceSpecs</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>
+                  </td>
+                  <td class='break-word'><span>Determines whether or not to display device information (Browser, Platform, Locale, Cookies Enabled)
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.productName</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+                  </td>
+                  <td class='break-word'><span>Additional product name information to display
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.useDefaultCopyright</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></code>
+                  </td>
+                  <td class='break-word'><span>Add the Legal Approved Infor Copy Right Txt
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.version</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></code>
+                  </td>
+                  <td class='break-word'><span>Semantic Version Number fx (4.0.0)
+</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>appName</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    The Main Application Name to display in the heading
 
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'>$(<span class="hljs-string">'body'</span>).about({
+  <span class="hljs-attr">appName</span>: <span class="hljs-string">'SoHo Xi '</span>,
+  <span class="hljs-attr">productName</span>: <span class="hljs-string">'Product Name'</span>,
+  <span class="hljs-attr">content</span>: <span class="hljs-string">'&lt;p&gt;Fashionable components for fashionable applications.&lt;/p&gt;'</span>
+});</pre>
+    
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Events</div>
+    <div class="clearfix">
+  
+    <div class='border-bottom' id='About.event:About#beforeopen'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>About#beforeopen</span>
         </div>
       </div>
-    </section>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
 
-    {{> docs/footer}}
-    {{> docs/search-results-modal}}
+  
+  <div class='clearfix'>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/about.js#L199-L223'>
+      <span>js/about.js</span>
+      </a>
+    
   </div>
+  
+
+  <p>Beforeopen event, fires before the about is opened.
+Opening can be cancelled with return false;</p>
+
+
+  <div class='pre p1 fill-light mt0'>About#beforeopen</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Properties</div>
+    <div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>node</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+          : The about dialog Dom element.
+
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='About.event:About#afteropen'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>About#afteropen</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/about.js#L199-L223'>
+      <span>js/about.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Open event, fires as the about dialog is opened.</p>
+
+
+  <div class='pre p1 fill-light mt0'>About#afteropen</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Properties</div>
+    <div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>node</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+          : The about dialog Dom element.
+
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='About.event:About#open'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>About#open</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/about.js#L199-L223'>
+      <span>js/about.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Open event, fires as the about dialog is opened.</p>
+
+
+  <div class='pre p1 fill-light mt0'>About#open</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Properties</div>
+    <div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>node</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+          : The about dialog Dom element.
+
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='About.event:About#open'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>About#open</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/about.js#L199-L223'>
+      <span>js/about.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Open event, fires as the about dialog is opened.</p>
+
+
+  <div class='pre p1 fill-light mt0'>About#open</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Properties</div>
+    <div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>node</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+          : The about dialog Dom element.
+
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='About.event:About#open'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>About#open</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/about.js#L199-L223'>
+      <span>js/about.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Open event, fires as the about dialog is opened.</p>
+
+
+  <div class='pre p1 fill-light mt0'>About#open</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Properties</div>
+    <div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>node</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+          : The about dialog Dom element.
+
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+</div>
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='accordion'>
+      Accordion
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/accordion.js#L37-L43'>
+      <span>js/accordion.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new Accordion(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='applicationmenu'>
+      ApplicationMenu
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/applicationmenu.js#L33-L39'>
+      <span>js/applicationmenu.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new ApplicationMenu(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='arrange'>
+      Arrange
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/arrange.js#L33-L38'>
+      <span>js/arrange.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new Arrange(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='autocomplete'>
+      Autocomplete
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/autocomplete.js#L35-L41'>
+      <span>js/autocomplete.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new Autocomplete(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='busyindicator'>
+      BusyIndicator
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/busyindicator.js#L33-L39'>
+      <span>js/busyindicator.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new BusyIndicator(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='button'>
+      Button
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/button.js#L27-L32'>
+      <span>js/button.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new Button(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='chart'>
+      Chart
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/chart.js#L11-L3748'>
+      <span>js/chart.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new Chart(container: any)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>container</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='splice'>
+      splice
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/utils.js#L587-L589'>
+      <span>js/utils.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>The splice() method changes the content of a string by removing a range of
+characters and/or adding new characters.</p>
+
+
+  <div class='pre p1 fill-light mt0'>splice(str: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>, start: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, delCount: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, newSubStr: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>str</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</code>
+	    The string that will be manipulated.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>start</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    Index at which to start changing the string.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>delCount</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    An integer indicating the number of old chars to remove.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>newSubStr</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    The String that is spliced in.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>:
+        A new string with the spliced substring.
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='circlepager'>
+      CirclePager
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/circlepager.js#L31-L37'>
+      <span>js/circlepager.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new CirclePager(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='colorpicker'>
+      ColorPicker
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/colorpicker.js#L121-L127'>
+      <span>js/colorpicker.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new ColorPicker(options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, element: any)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='contextualactionpanel'>
+      ContextualActionPanel
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/contextualactionpanel.js#L33-L39'>
+      <span>js/contextualactionpanel.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new ContextualActionPanel(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='datagrid'>
+      Datagrid
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/datagrid.js#L1025-L1030'>
+      <span>js/datagrid.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new Datagrid(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='datepicker'>
+      DatePicker
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/datepicker.js#L65-L71'>
+      <span>js/datepicker.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>A component to support date entry.
+Users can either manually enter a date or select a date from a calendar.
+A secondary benefit is the ability to restrict the dates that are available for selection.</p>
+
+
+  <div class='pre p1 fill-light mt0'>new DatePicker(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?, options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?
+            = <code>this</code>)</code>
+	    The element to attach to (only when manually calling the constructor)
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)</code>
+	    
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.dateFormat</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?</code>
+                  
+                    (default <code>&#39;locale&#39;</code>)
+                  </td>
+                  <td class='break-word'><span>The format in which to display the date. Defaults to the current locales format but can be set to a custom format like 'yyyy-MM-dd' (iso8601 format).
+</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='drag'>
+      Drag
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/drag.js#L40-L45'>
+      <span>js/drag.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Drag and Drop Functions with Touch Support</p>
+
+
+  <div class='pre p1 fill-light mt0'>new Drag(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='dropdown'>
+      Dropdown
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/dropdown.js#L42-L48'>
+      <span>js/dropdown.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new Dropdown(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='editor'>
+      Editor
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/editor.js#L59-L66'>
+      <span>js/editor.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Html Editor</p>
+
+
+  <div class='pre p1 fill-light mt0'>new Editor(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='expandablearea'>
+      ExpandableArea
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/expandablearea.js#L29-L35'>
+      <span>js/expandablearea.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new ExpandableArea(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='fileupload'>
+      FileUpload
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/fileupload.js#L27-L32'>
+      <span>js/fileupload.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new FileUpload(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='fileuploadadvanced'>
+      FileUploadAdvanced
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/fileuploadadvanced.js#L46-L52'>
+      <span>js/fileuploadadvanced.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new FileUploadAdvanced(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='header'>
+      Header
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/header.js#L39-L45'>
+      <span>js/header.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Special Toolbar at the top of the page used to faciliate SoHo Xi Nav Patterns</p>
+
+
+  <div class='pre p1 fill-light mt0'>new Header(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='hierarchy'>
+      Hierarchy
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/hierarchy.js#L75-L80'>
+      <span>js/hierarchy.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>For Org Charts and Trees ect...</p>
+
+
+  <div class='pre p1 fill-light mt0'>new Hierarchy(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='homepage'>
+      Homepage
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/homepage.js#L37-L42'>
+      <span>js/homepage.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new Homepage(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='icon'>
+      Icon
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/icon.js#L36-L42'>
+      <span>js/icon.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Icon Control
+Wraps SVG Icons with a Javascript control that can change the icon type, reference
+relative or absolute URLs, and clean up after itself.  Works with the Base tag.</p>
+
+
+  <div class='pre p1 fill-light mt0'>new Icon(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, settings: any)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>settings</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='initialize'>
+      Initialize
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/initialize.js#L38-L44'>
+      <span>js/initialize.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Page Bootstrapper</p>
+
+
+  <div class='pre p1 fill-light mt0'>new Initialize(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, settings: any)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>settings</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='lightbox'>
+      Lightbox
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/lightbox.js#L40-L46'>
+      <span>js/lightbox.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new Lightbox(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='listbuilder'>
+      ListBuilder
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/listbuilder.js#L64-L70'>
+      <span>js/listbuilder.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new ListBuilder(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='listfilter'>
+      ListFilter
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/listfilter.js#L28-L33'>
+      <span>js/listfilter.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Abstracted search/filter for use in other controls</p>
+
+
+  <div class='pre p1 fill-light mt0'>new ListFilter(settings: any)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>settings</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='listview'>
+      ListView
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/listview.js#L42-L48'>
+      <span>js/listview.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new ListView(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='lookup'>
+      Lookup
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/lookup.js#L40-L45'>
+      <span>js/lookup.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new Lookup(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='mask'>
+      Mask
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/mask.js#L57-L63'>
+      <span>js/mask.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Inline Field Formatter (Mask) Control
+Adds a text-based formatting "mask" to input fields that displays how data should be entered into the field.
+Does not allow text entry that does not match the provided mask.</p>
+
+
+  <div class='pre p1 fill-light mt0'>new Mask(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='message'>
+      Message
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/message.js#L36-L41'>
+      <span>js/message.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Responsive Messages</p>
+
+
+  <div class='pre p1 fill-light mt0'>new Message(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='modal'>
+      Modal
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/modal.js#L38-L45'>
+      <span>js/modal.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Responsive and Accessible Modal Control</p>
+
+
+  <div class='pre p1 fill-light mt0'>new Modal(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='modalsearch'>
+      ModalSearch
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/modalsearch.js#L29-L35'>
+      <span>js/modalsearch.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Used Mostly for the Site, but could be used elsewhere with some modifications</p>
+
+
+  <div class='pre p1 fill-light mt0'>new ModalSearch(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='multiselect'>
+      MultiSelect
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/multiselect.js#L33-L39'>
+      <span>js/multiselect.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new MultiSelect(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='pager'>
+      Pager
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/pager.js#L35-L41'>
+      <span>js/pager.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new Pager(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='personalize'>
+      Personalize
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/personalize.js#L34-L40'>
+      <span>js/personalize.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Personalize Control</p>
+
+
+  <div class='pre p1 fill-light mt0'>new Personalize(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='placementobject'>
+      PlacementObject
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/place.js#L46-L74'>
+      <span>js/place.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Object that contains coordinates along with temporary, changeable properties.
+This object gets passed around the Place Behavior and modified during each phase of positioning.
+This object is also passed to all callbacks and event listeners for further modification.</p>
+
+
+  <div class='pre p1 fill-light mt0'>new PlacementObject(placementOptions: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>placementOptions</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='popdown'>
+      Popdown
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/popdown.js#L31-L37'>
+      <span>js/popdown.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new Popdown(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='popupmenu'>
+      PopupMenu
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/popupmenu.js#L47-L54'>
+      <span>js/popupmenu.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Responsive Popup Menu Control (Context)</p>
+
+
+  <div class='pre p1 fill-light mt0'>new PopupMenu(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='progress'>
+      Progress
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/progress.js#L29-L35'>
+      <span>js/progress.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Progress Indicator Control</p>
+
+
+  <div class='pre p1 fill-light mt0'>new Progress(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='rating'>
+      Rating
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/rating.js#L27-L32'>
+      <span>js/rating.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new Rating(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='resize'>
+      Resize
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/resize.js#L30-L35'>
+      <span>js/resize.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new Resize(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='scrollaction'>
+      ScrollAction
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/scrollaction.js#L51-L55'>
+      <span>js/scrollaction.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>A component that applies a class based on scroll direction</p>
+
+
+  <div class='pre p1 fill-light mt0'>new ScrollAction(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?, options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?
+            = <code>this</code>)</code>
+	    The element to attach to (only when manually calling the constructor)
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)</code>
+	    
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.scrollActionTarget</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?</code>
+                  
+                    (default <code>&#39;.js-scroll-target&#39;</code>)
+                  </td>
+                  <td class='break-word'><span>The selector of the element to add the class to
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.classToAdd</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?</code>
+                  
+                    (default <code>&#39;scrolled-down&#39;</code>)
+                  </td>
+                  <td class='break-word'><span>The class name
+</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='searchfield'>
+      SearchField
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/searchfield.js#L38-L44'>
+      <span>js/searchfield.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Searchfield Control</p>
+
+
+  <div class='pre p1 fill-light mt0'>new SearchField(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='sidebar'>
+      Sidebar
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/sidebar.js#L31-L37'>
+      <span>js/sidebar.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Side Bar Menu Control</p>
+
+
+  <div class='pre p1 fill-light mt0'>new Sidebar(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='signin'>
+      SignIn
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/signin.js#L28-L33'>
+      <span>js/signin.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new SignIn(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='slider'>
+      Slider
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/slider.js#L37-L43'>
+      <span>js/slider.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Touch Enabled/Responsive and Accessible Slider Control</p>
+
+
+  <div class='pre p1 fill-light mt0'>new Slider(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='spinbox'>
+      Spinbox
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/spinbox.js#L28-L33'>
+      <span>js/spinbox.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new Spinbox(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='splitter'>
+      Splitter
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/splitter.js#L36-L42'>
+      <span>js/splitter.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new Splitter(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='stepprocess'>
+      Stepprocess
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/stepprocess.js#L51-L54'>
+      <span>js/stepprocess.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>A Stepprocess/wizard control</p>
+
+
+  <div class='pre p1 fill-light mt0'>new Stepprocess(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>, options: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>>?)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>options</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>>?)</code>
+	    
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.linearProgression</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>?</code>
+                  
+                    (default <code>false</code>)
+                  </td>
+                  <td class='break-word'><span>Whether to prevent clicking and allow only prev/next navigation of steps
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.folderIconOpen</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?</code>
+                  
+                    (default <code>&quot;caret-up&quot;</code>)
+                  </td>
+                  <td class='break-word'><span>A specific folder open icon
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.folderIconClosed</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?</code>
+                  
+                    (default <code>&quot;caret-down&quot;</code>)
+                  </td>
+                  <td class='break-word'><span>A specific folder close icon
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.stepList</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>?</code>
+                  
+                    (default <code>&quot;#step-list&quot;</code>)
+                  </td>
+                  <td class='break-word'><span>The ID of the stepList
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.stepLi</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>?</code>
+                  
+                    (default <code>&quot;.js-step&quot;</code>)
+                  </td>
+                  <td class='break-word'><span>jQuery selector for the step elements
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.stepLink</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>?</code>
+                  
+                    (default <code>&quot;.js-step-link&quot;</code>)
+                  </td>
+                  <td class='break-word'><span>jQuery selector for the step link elements
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.stepFolder</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>?</code>
+                  
+                    (default <code>&quot;.js-step-folder&quot;</code>)
+                  </td>
+                  <td class='break-word'><span>jQuery selector for the step folder elements
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.btnPrev</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>?</code>
+                  
+                    (default <code>&quot;.js-step-link-prev&quot;</code>)
+                  </td>
+                  <td class='break-word'><span>jQuery selector for the previous step button
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.btnNext</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>?</code>
+                  
+                    (default <code>&quot;.js-step-link-next&quot;</code>)
+                  </td>
+                  <td class='break-word'><span>jQuery selector for the next step button
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.btnNext</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>?</code>
+                  
+                    (default <code>&quot;.js-step-container-scroll&quot;</code>)
+                  </td>
+                  <td class='break-word'><span>jQuery selector for the sidebar scrolling
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.btnNext</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>?</code>
+                  
+                    (default <code>&quot;.js-step-list-scroll&quot;</code>)
+                  </td>
+                  <td class='break-word'><span>jQuery selector for the step panel scrolling
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.beforeSelectStep</span> <code class='quiet'>(function (<a href="https://developer.mozilla.org/en-US/docs/Web/API/Event">event</a>, args) | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>)?</code>
+                  
+                    (default <code>null</code>)
+                  </td>
+                  <td class='break-word'><span>A callback (function or promise) that gives
+args.stepLink (the step link element) and args.isStepping (whether we are prev/next'ing or not)
+</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Instance Members</div>
+    <div class="clearfix">
+  
+    <div class='border-bottom' id='Stepprocess#goToNextStep'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>goToNextStep()</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/stepprocess.js#L392-L397'>
+      <span>js/stepprocess.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Go to the next step element</p>
+
+
+  <div class='pre p1 fill-light mt0'>goToNextStep()</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='Stepprocess#goToPreviousStep'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>goToPreviousStep()</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/stepprocess.js#L402-L407'>
+      <span>js/stepprocess.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Go to the previous step element</p>
+
+
+  <div class='pre p1 fill-light mt0'>goToPreviousStep()</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='Stepprocess#selectStep'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>selectStep(stepLink, linearDirection)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/stepprocess.js#L601-L633'>
+      <span>js/stepprocess.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Select a step</p>
+
+
+  <div class='pre p1 fill-light mt0'>selectStep(stepLink: [type], linearDirection: [type])</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>stepLink</span> <code class='quiet'>([type])</code>
+	    The steplink element
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>linearDirection</span> <code class='quiet'>([type])</code>
+	    The direction if we are prev/next'ing
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='Stepprocess#selectStep'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>selectStep(stepLink, linearDirection = none|previous|next)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/stepprocess.js#L601-L633'>
+      <span>js/stepprocess.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Select a step</p>
+
+
+  <div class='pre p1 fill-light mt0'>selectStep(stepLink: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>, linearDirection: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>stepLink</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>)</code>
+	    The jquery object for the step link element
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>linearDirection</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?
+            = <code>none|previous|next</code>)</code>
+	    Which direction we are traveling
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+</div>
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='swaplist'>
+      SwapList
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/swaplist.js#L61-L67'>
+      <span>js/swaplist.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new SwapList(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='tabs'>
+      Tabs
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/tabs.js#L38-L44'>
+      <span>js/tabs.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new Tabs(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Instance Members</div>
+    <div class="clearfix">
+  
+    <div class='border-bottom' id='Tabs#callSource'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>callSource(href, callback)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/tabs.js#L1336-L1420'>
+      <span>js/tabs.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Calls an options-provided source method to fetch content that will be displayed inside a tab.</p>
+
+
+  <div class='pre p1 fill-light mt0'>callSource(href: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, callback: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a>): (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a> | $.Deferred)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>href</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    string representing the target tab to load content under.
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>callback</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a>)</code>
+	    method that fires after a successful source call.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a> | $.Deferred)</code>:
+        true if source call was successful, false for failure/ignore, or a promise object that will fire callbacks in either "success" or "failure" scenarios.
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+</div>
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='tag'>
+      Tag
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/tag.js#L29-L35'>
+      <span>js/tag.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new Tag(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='template'>
+      Template
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/template.js#L33-L39'>
+      <span>js/template.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>XYZ Control</p>
+
+
+  <div class='pre p1 fill-light mt0'>new Template(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, settings: any)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>settings</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='textarea'>
+      Textarea
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/textarea.js#L32-L37'>
+      <span>js/textarea.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new Textarea(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='timepicker'>
+      TimePicker
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/timepicker.js#L35-L41'>
+      <span>js/timepicker.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new TimePicker(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='toast'>
+      Toast
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/toast.js#L35-L40'>
+      <span>js/toast.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new Toast(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='toolbar'>
+      Toolbar
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/toolbar.js#L34-L40'>
+      <span>js/toolbar.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new Toolbar(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Instance Members</div>
+    <div class="clearfix">
+  
+    <div class='border-bottom' id='Toolbar#triggerSelect'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>triggerSelect(element)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/toolbar.js#L761-L768'>
+      <span>js/toolbar.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Triggers a "selected" event on the base Toolbar element using a common element as an argument.</p>
+
+
+  <div class='pre p1 fill-light mt0'>triggerSelect(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    a jQuery Object containing an anchor tag, button, or input field.
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+</div>
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='toolbarsearchfield'>
+      ToolbarSearchfield
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/toolbarsearchfield.js#L36-L42'>
+      <span>js/toolbarsearchfield.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Depends on both a Toolbar control and Searchfield control to be present</p>
+
+
+  <div class='pre p1 fill-light mt0'>new ToolbarSearchfield(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='tooltip'>
+      Tooltip
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/tooltip.js#L60-L66'>
+      <span>js/tooltip.js</span>
+      </a>
+    
+  </div>
+  
+
+  <p>Tooltip and Popover Control</p>
+
+
+  <div class='pre p1 fill-light mt0'>new Tooltip(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, options: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>))</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>options</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>))</code>
+	    
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.content</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a>)?</code>
+                  </td>
+                  <td class='break-word'><span>Takes title attribute or feed content. Can be a string or jQuery markup
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.offset</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?</code>
+                  
+                    (default <code>{top:10,left:10}</code>)
+                  </td>
+                  <td class='break-word'><span>How much room to leave
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.placement</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?</code>
+                  
+                    (default <code>top|bottom|right|offset</code>)
+                  </td>
+                  <td class='break-word'><span></span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.trigger</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?</code>
+                  
+                    (default <code>hover</code>)
+                  </td>
+                  <td class='break-word'><span>supports click and immediate and hover (and maybe in future focus)
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.title</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?</code>
+                  </td>
+                  <td class='break-word'><span>Title for Infor Tips
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.beforeShow</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?</code>
+                  </td>
+                  <td class='break-word'><span>Call back for ajax tooltip
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.popover</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?</code>
+                  </td>
+                  <td class='break-word'><span>force it to be a popover (no content)
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.closebutton</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?</code>
+                  </td>
+                  <td class='break-word'><span>Show X close button next to title in popover
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.isError</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a>?</code>
+                  
+                    (default <code>false</code>)
+                  </td>
+                  <td class='break-word'><span>Add error classes
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.isErrorColor</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a>?</code>
+                  
+                    (default <code>false</code>)
+                  </td>
+                  <td class='break-word'><span>Add error color only not description
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.tooltipElement</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?</code>
+                  </td>
+                  <td class='break-word'><span>ID selector for an alternate element to use to contain the tooltip classes
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.parentElement</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?</code>
+                  
+                    (default <code>this.element</code>)
+                  </td>
+                  <td class='break-word'><span>jQuery-wrapped element that gets passed to the 'place' behavior as the element to place the tooltip against.
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.keepOpen</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a>?</code>
+                  
+                    (default <code>false</code>)
+                  </td>
+                  <td class='break-word'><span>Forces the tooltip to stay open in situations where it would normally close.
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.extraClass</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?</code>
+                  </td>
+                  <td class='break-word'><span>Extra css class
+</span></td>
+                </tr>
+              
+                <tr>
+                  <td class='break-word'><span class='code bold'>options.maxWidth</span> <code class='quiet'><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?</code>
+                  </td>
+                  <td class='break-word'><span>Toolip max width
+</span></td>
+                </tr>
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='tree'>
+      Tree
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/tree.js#L36-L41'>
+      <span>js/tree.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new Tree(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='validator'>
+      Validator
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/validation.js#L20-L25'>
+      <span>js/validation.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new Validator(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='wizard'>
+      Wizard
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/wizard.js#L32-L38'>
+      <span>js/wizard.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new Wizard(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='zoom'>
+      Zoom
+    </h3>
+    
+    
+      <a class='fr fill-darken0 round round pad1x quiet h5' href='https://git.infor.com:7999/~tmcconechy/controls/blob/02cb70bf0cae0e428130d6b2d94ba9071d57190b/js/zoom.js#L30-L36'>
+      <span>js/zoom.js</span>
+      </a>
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new Zoom(element: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, settings: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>element</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>settings</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+      </div>
+    </div>
+  </div>
+  <script src='assets/anchor.js'></script>
+  <script src='assets/site.js'></script>
 </body>
+</html>

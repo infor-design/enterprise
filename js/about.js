@@ -29,8 +29,37 @@
         settings = $.extend({}, defaults, options);
 
     /**
-     * @constructor
-     * @param {Object} element
+     * @since 4.2.0
+     *
+     * The About Dialog Component displays information regarding the application.
+     * It should present the application name, version, copyright and any other
+     * information that would be useful for application users to present to
+     * support teams. Modal dialogs should not be used as a splash screen.
+     *
+     * @class About
+     * @param {Object} [element=this] - The element to attach to (if manually calling the constructor)
+     * @param {Object} options
+     * @param {String} appName The Main Application Name to display in the heading
+     * @param {String} options.content Additional Text content to display at the top.
+     * @param {String} options.copyrightYear The year displayed in the copyright, defaults to current year.
+     * @param {Boolean} options.deviceSpecs Determines whether or not to display device information (Browser, Platform, Locale, Cookies Enabled)
+     * @param {String} options.productName Additional product name information to display
+     * @param {Boolean} options.useDefaultCopyright Add the Legal Approved Infor Copy Right Txt
+     * @param {String} options.version Semantic Version Number fx (4.0.0)
+     *
+     * @fires beforeopen Fires before the dialog is displayed.
+     * @fires open Fires as the dialog is displayed
+     * @fires afteropen  Fires after the dialog is rendered
+     * @fires beforeclose Fires before the dialog is closed, you can return false to stop processing
+     * @fires close Fires at the time the dialog closes
+     * @fires afterclose Fires after the dialog is closed
+     *
+     * @example
+     * $('body').about({
+     *   appName: 'SoHo Xi ',
+     *   productName: 'Product Name',
+     *   content: '<p>Fashionable components for fashionable applications.</p>'
+     * });
      */
     function About(element) {
       this.settings = $.extend({}, settings);
@@ -137,6 +166,36 @@
         return this;
       },
 
+      /**
+      * Beforeopen event, fires before the about is opened.
+      * Opening can be cancelled with return false;
+      * @event About#beforeopen
+      * @property {Object} node - The about dialog Dom element.
+      */
+
+      /**
+      * Open event, fires as the about dialog is opened.
+      * @event About#open
+      * @property {Object} node - The about dialog Dom element.
+      */
+
+      /**
+      * Open event, fires as the about dialog is opened.
+      * @event About#afteropen
+      * @property {Object} node - The about dialog Dom element.
+      */
+
+      /**
+      * Open event, fires as the about dialog is opened.
+      * @event About#open
+      * @property {Object} node - The about dialog Dom element.
+      */
+
+      /**
+      * Open event, fires as the about dialog is opened.
+      * @event About#open
+      * @property {Object} node - The about dialog Dom element.
+      */
       handleEvents: function() {
         var self = this;
 
