@@ -43,7 +43,7 @@
         selectable: 'single',
         cellNavigation: false,
         toolbar: {title: 'Data Grid Header Title', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: true,  collapsibleFilter: true}
-      }).on('selected', function (e, args) {
+      }).on('activecellchange', function (e, args) {
         console.log(args);
       }).data('datagrid');
 

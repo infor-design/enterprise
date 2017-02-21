@@ -14,12 +14,11 @@
         };
         setTimeout(function () {
 
-          var value = Locale.formatNumber(20.1, {style: 'decimal', round: true, minimumFractionDigits: 2});
+          var value = Locale.truncateDecimals('5.1', 2, 2);
           append(value);
 
-          var value =  Locale.formatNumber(20.1, {style: 'decimal', round: true});
+          var value = Locale.formatNumber('5.1', {minimumFractionDigits: 2, maximumFractionDigits: 2});
           append(value);
-
 
         }, 300);
       }

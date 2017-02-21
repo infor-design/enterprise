@@ -25,7 +25,7 @@
     "test:unit": "./bin/test.sh client config=test2/intern.local.unit",
     "develop-tag": "./bin/add-npm-tag.js develop",
     "bump-version": "./bin/bump-version.js",
-    "documentation": "documentation build js/*.js -f  html -o views/docs -g false"
+    "documentation": "documentation build js/*.js -f html -o views/docs -g false"
   },
   "dependencies": {
     "d3": "^3.4.6",
