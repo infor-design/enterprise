@@ -901,12 +901,17 @@
           item = item[0];
         }
 
-        var classList = item.classList;
+        var classList = item.classList,
+          style = window.getComputedStyle(item);
+
         if (classList.contains('btn-actions')) {
           return true;
         }
         if (classList.contains('searchfield')) {
           return false;
+        }
+        if (style.display === 'none') {
+          return true;
         }
 
         var isRTL = Locale.isRTL(),
