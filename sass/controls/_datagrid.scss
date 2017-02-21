@@ -15,7 +15,7 @@ $datagrid-short-row-height: 23px;
 
   //Fix IE Scrollbar Offset Issue
   &.is-windows .datagrid-header {
-    margin-right: 20px;
+    margin-right: 18px;
   }
 
   &.is-windows.datagrid-container {
@@ -31,6 +31,7 @@ $datagrid-short-row-height: 23px;
   }
 
   &.datagrid-container {
+    border: 1px solid $datagrid-cell-border-color;
     height: inherit;
 
     &.paginated {
@@ -256,7 +257,7 @@ $datagrid-short-row-height: 23px;
       }
 
       .datagrid-checkbox {
-        top: -9px;
+        top: -11px;
       }
     }
 
