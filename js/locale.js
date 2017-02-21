@@ -589,7 +589,7 @@
 
       //Handle larger numbers
       if (number.toString().length - decimals - 1 >= 10 ||
-        (decimals === minDigits && decimals === maxDigits)) {
+        (decimals === minDigits && decimals === maxDigits) || (decimals < maxDigits)) {
         multiplier = Math.pow(100, maxDigits);
         adjustedNum = number * multiplier;
       }
