@@ -890,6 +890,15 @@ $datagrid-short-row-height: 23px;
         padding: 9px 0 8px;
         width: 100%;
 
+        &.lookup {
+          width: calc(100% - 17px);
+
+          ~.trigger .icon {
+            top: 12px;
+            width: inherit;
+          }
+        }
+
         &:focus {
           box-shadow: none;
           outline: none;
