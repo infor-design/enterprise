@@ -122,11 +122,11 @@ window.Formatters = {
     }
 
     return col.icon ?
-      ('<a href="'+ colHref +'" class="btn-icon row-btn '+ (col.cssClass || '') +'" tabindex="-1">'+
+      ('<a href="'+ colHref +'" class="btn-icon row-btn '+ (col.cssClass || '') +'" tabindex="-1"' + (col.hyperlinkTooltip ? ' title="'+ col.hyperlinkTooltip + '"': '') + '>'+
           $.createIcon({ icon: col.icon, file: col.iconFile }) +
           '<span class="audible">'+ textValue +'</span>'+
         '</a>') :
-      ('<a href="'+ colHref +'" tabindex="-1" role="presentation" class="hyperlink '+ (col.cssClass || '') + '"' + (col.target ? ' target="' + col.target + '"' : '') + '>'+ textValue +'</a>');
+      ('<a href="'+ colHref +'" tabindex="-1" role="presentation" class="hyperlink '+ (col.cssClass || '') + '"' + (col.target ? ' target="' + col.target + '"' : '') + (col.hyperlinkTooltip ? ' title="'+ col.hyperlinkTooltip + '"': '') + '>'+ textValue +'</a>');
   },
 
   Template: function(row, cell, value, col, item) {
@@ -2615,7 +2615,7 @@ $.fn.datagrid = function(options) {
       this.totalWidth += col.hidden ? 0 : colWidth;
 
       //For the last column stretch it TODO May want to check for hidden column as last
-      if (index === this.settings.columns.length-1 && this.totalWidth !== colWidth) {
+      if (index === this.visibleColumns().length-1 && this.totalWidth !== colWidth) {
 
         var diff = this.elemWidth - this.totalWidth;
 
@@ -2676,6 +2676,7 @@ $.fn.datagrid = function(options) {
 
       // Implement Tooltip on cells with title attribute
       this.tableBody.find('td[title]').tooltip({placement: 'left', offset: {left: -5, top: 0}});
+      this.tableBody.find('a[title]').tooltip();
 
       // Implement Tooltip on cells with ellipsis
       this.table.find('td.text-ellipsis').tooltip({content: function() {

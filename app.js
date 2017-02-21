@@ -446,7 +446,6 @@ var express = require('express'),
       opts.layout = 'tests/layout-noheader';
     }
 
-
     // No trailing slash.  Check for an index file.  If no index file, do directory listing
     if (is('directory', directory)) {
       if (is('file', directory + '/index')) {
@@ -470,33 +469,70 @@ var express = require('express'),
   // Docs Pages
   // =========================================
 
-  var layoutOpts = {
-    subtitle: 'Docs',
-    layout: 'docs/layout'
+  var docLayoutOpts = {
+    subtitle: 'SoHo Xi Docs',
+    layout: 'includes/docs-layout'
   };
 
   function defaultDocsRouteHandler(req, res, next) {
-    var opts = extend({}, res.opts, layoutOpts);
-    res.render('docs/index', opts);
+    res.render('docs/index', docLayoutOpts);
     next();
   }
 
-  function docsRouteHandler(req, res, next) {
-    var opts = extend({}, res.opts, layoutOpts),
-      docs = req.params.docs;
+  router.get('/docs/', defaultDocsRouteHandler);
+  router.get('/docs', defaultDocsRouteHandler);
+  router.get('docs', defaultDocsRouteHandler);
 
-    if (!docs || !docs.length) {
+  app.get('/docs/assets/bass.css', function(req, res){
+    res.sendFile(__dirname + '/views/docs/assets/bass.css');
+  });
+
+  app.get('/docs/assets/style.css', function(req, res){
+    res.sendFile(__dirname + '/views/docs/assets/style.css');
+  });
+
+  app.get('/docs/assets/github.css', function(req, res){
+    res.sendFile(__dirname + '/views/docs/assets/github.css');
+  });
+
+  app.get('/docs/assets/anchor.js', function(req, res){
+    res.sendFile(__dirname + '/views/docs/assets/anchor.js');
+  });
+
+  app.get('/docs/assets/site.js', function(req, res){
+    res.sendFile(__dirname + '/views/docs/assets/site.js');
+  });
+
+  // =========================================
+  // Old Soho Site Pages
+  // =========================================
+
+  var layoutOpts = {
+    subtitle: 'Soho Site',
+    layout: 'soho-site/layout'
+  };
+
+  function defaultSohoSiteRouteHandler(req, res, next) {
+    var opts = extend({}, res.opts, layoutOpts);
+    res.render('soho-site/index', opts);
+    next();
+  }
+
+  function sohoSiteRouteHandler(req, res, next) {
+    var opts = extend({}, res.opts, layoutOpts),
+      soho = req.params.soho;
+
+    if (!soho || !soho.length) {
       return defaultDocsRouteHandler(req, res, next);
     }
 
-    res.render('docs/' + docs, opts);
+    res.render('soho-site/' + soho, opts);
     next();
   }
 
-  router.get('/docs/:docs', docsRouteHandler);
-  router.get('/docs/', defaultDocsRouteHandler);
-  router.get('/docs', defaultDocsRouteHandler);
-
+  router.get('/soho-site/:soho', sohoSiteRouteHandler);
+  router.get('/soho-site/', defaultSohoSiteRouteHandler);
+  router.get('/soho-site', defaultSohoSiteRouteHandler);
 
   // =========================================
   // Layouts Pages

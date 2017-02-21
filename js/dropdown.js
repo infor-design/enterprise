@@ -1176,10 +1176,12 @@
            this.list.find('input')[0].style.width = listWidth;
 
            //But not off the left side
-           var maxWidth = $(window).width() - parseInt(this.list[0].style.left, 10);
-           if (this.list.width() > maxWidth) {
-             this.list[0].style.width = (maxWidth - 20) +'px';
-           }
+           var wWidth = $(window).width(),
+              intListWidth = parseInt(listWidth),
+              maxWidth = wWidth - parseInt(this.list[0].style.left, 10);
+           if (intListWidth > maxWidth) {
+             this.list[0].style.left = (wWidth - intListWidth - 5) +'px';
+            }
         } else {
           var pseudoElemOuterWidth = this.pseudoElem.outerWidth();
           this.list[0].style.width = pseudoElemOuterWidth + 'px';
