@@ -307,6 +307,7 @@
                 a.attr('tabindex', '-1');
               } else {
                 a.closest('li').removeClass('is-disabled');
+                a.removeAttr('disabled');
               }
 
               if (item.is('.btn-menu')) {
