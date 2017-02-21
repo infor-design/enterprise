@@ -610,7 +610,7 @@
 
           var args = {
             stepLink: stepLink,
-            isStepping: linearDirection.length
+            isStepping: linearDirection
           };
           result = self.settings.beforeSelectStep(args);
 
