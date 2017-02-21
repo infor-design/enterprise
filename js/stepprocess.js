@@ -592,12 +592,6 @@
        * @param  {object} stepLink - The jquery object for the step link element
        * @param  {string} [linearDirection=none|previous|next] - Which direction we are traveling
        */
-
-      /**
-       * Select a step
-       * @param  {[type]} stepLink        - The steplink element
-       * @param  {[type]} linearDirection - The direction if we are prev/next'ing
-       */
       selectStep: function (stepLink, linearDirection) {
         var self = this;
         if (linearDirection === undefined) {
