@@ -43,8 +43,6 @@
      * @param {object} [options.stepFolder=".js-step-folder"]                 - jQuery selector for the step folder elements
      * @param {object} [options.btnPrev=".js-step-link-prev"]                 - jQuery selector for the previous step button
      * @param {object} [options.btnNext=".js-step-link-next"]                 - jQuery selector for the next step button
-     * @param {object} [options.btnNext=".js-step-container-scroll"]          - jQuery selector for the sidebar scrolling
-     * @param {object} [options.btnNext=".js-step-list-scroll"]               - jQuery selector for the step panel scrolling
      * @param {function(event, args)|Promise} [options.beforeSelectStep=null] - A callback (function or promise) that gives
      *        args.stepLink (the step link element) and args.isStepping (whether we are prev/next'ing or not)
      */
