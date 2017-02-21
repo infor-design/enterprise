@@ -2036,7 +2036,7 @@
 
       adjustModuleTabs: function() {
         var self = this,
-          sizeableTabs = this.tablist.find('li:not(.separator):not(.application-menu-trigger)'),
+          sizeableTabs = this.tablist.find('li:not(.separator):not(.application-menu-trigger):not(:hidden)'),
           appTrigger = this.tablist.find('.application-menu-trigger'),
           hasAppTrigger = appTrigger.length > 0,
           tabContainerW = this.tablist.outerWidth(),

@@ -318,11 +318,11 @@ html[dir='rtl'] {
     > .icon {
       &:not(.close) {
         left: auto;
-        right: 0;
+        right: 8px;
       }
 
       &.close {
-        left: 0;
+        left: 5px;
         right: auto;
       }
     }

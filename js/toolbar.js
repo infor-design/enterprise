@@ -23,7 +23,8 @@
         defaults = {
           rightAligned: false, // Will always attempt to right-align the contents of the toolbar.
           maxVisibleButtons: 3, // Total amount of buttons that can be present, not including the More button
-          favorButtonset: true // When resizing elements inside the toolbar, setting this to "true" will try to display as many buttons as possible.  Setting to false attempts to show the entire title instead.
+          resizeContainers: false, // If true, uses Javascript to size the Title and Buttonset elements in a way that shows as much of the Title area as possible.
+          favorButtonset: true // If "resizeContainers" is true, setting this to true will try to display as many buttons as possible while resizing the toolbar.  Setting to false attempts to show the entire title instead.
         },
         settings = $.extend({}, defaults, options);
 
@@ -62,7 +63,7 @@
         var self = this;
 
         this.element.attr('role', 'toolbar');
-        if (this.element.is(':not(:hidden)')) {
+        if (this.settings.resizeContainers && this.element.is(':not(:hidden)')) {
           this.element[0].classList.add('do-resize');
         }
 
@@ -307,6 +308,7 @@
                 a.attr('tabindex', '-1');
               } else {
                 a.closest('li').removeClass('is-disabled');
+                a.removeAttr('disabled');
               }
 
               if (item.is('.btn-menu')) {
@@ -503,33 +505,48 @@
         var self = this,
           key = e.which,
           target = $(e.target),
+          isActionButton = target.is('.btn-actions'),
           isRTL = Locale.isRTL();
 
+        /*
         if (target.is('.btn-actions')) {
           if (key === 37 || key === 38) { // Left/Up
             e.preventDefault();
-            self.setActiveButton( isRTL ? self.getFirstVisibleButton() : self.getLastVisibleButton() );
+            target = isRTL ? self.getFirstVisibleButton() : self.getLastVisibleButton();
           }
 
           if (key === 39 || (key === 40 && target.attr('aria-expanded') !== 'true')) { // Right (or Down if the menu's closed)
             e.preventDefault();
-            self.setActiveButton( isRTL ? self.getLastVisibleButton() : self.getFirstVisibleButton() );
+            target = isRTL ? self.getLastVisibleButton() : self.getFirstVisibleButton();
           }
+
+          self.setActiveButton(target);
           return;
         }
+        */
 
         if ((key === 37 && target.is(':not(input)')) ||
           (key === 37 && target.is('input') && e.shiftKey) || // Shift + Left Arrow should be able to navigate away from Searchfields
           (key === 38 && target.is(':not(input.is-open)'))) { // Don't navigate away if Up Arrow in autocomplete field that is open
           e.preventDefault();
-          self.navigate( isRTL ? 1 : -1 );
+
+          if (isActionButton) {
+            self.setActiveButton( isRTL ? self.getFirstVisibleButton() : self.getLastVisibleButton() );
+          } else {
+            self.navigate( isRTL ? 1 : -1 );
+          }
         }
 
         if ((key === 39 && target.is(':not(input)')) ||
           (key === 39 && target.is('input') && e.shiftKey) || // Shift + Right Arrow should be able to navigate away from Searchfields
           (key === 40 && target.is(':not(input.is-open)'))) { // Don't navigate away if Down Arrow in autocomplete field that is open
           e.preventDefault();
-          self.navigate( isRTL ? -1 : 1 );
+
+          if (isActionButton) {
+            self.setActiveButton( isRTL ? self.getLastVisibleButton() : self.getFirstVisibleButton() );
+          } else {
+            self.navigate( isRTL ? -1 : 1 );
+          }
         }
 
         return;
@@ -542,10 +559,12 @@
           buttons.visible[i][0].classList.remove('is-overflowed');
         }
 
-        var title = containerDims ? containerDims.title : undefined,
-          buttonset = containerDims ? containerDims.buttonset : undefined;
+        if (this.settings.resizeContainers) {
+          var title = containerDims ? containerDims.title : undefined,
+            buttonset = containerDims ? containerDims.buttonset : undefined;
 
-        this.sizeContainers(title, buttonset);
+          this.sizeContainers(title, buttonset);
+        }
 
         if (this.element.is(':not(:hidden)')) {
           this.adjustMenuItemVisibility();
@@ -678,24 +697,29 @@
 
       // Gets the last button that's above the overflow line
       getLastVisibleButton: function() {
-        var self = this,
-          items = $(this.items.get().reverse()),
+        var items = $(this.items.get().reverse()).not(this.more),
           target;
 
-        items.each(function(i) {
-          if (self.isItemOverflowed($(this))) {
-            target = items.eq(i + 1);
-            return false;
+        var i = 0,
+          elem;
+
+        while(!target && i < items.length - 1) {
+          elem = $(items[i]);
+          if (!this.isItemOverflowed(elem)) {
+            target = elem;
+            break;
           }
-        });
+          i++;
+        }
 
         if (!target || target.length === 0) {
-          target = items.not(this.more).first();
+          target = items.first();
         }
 
         while(target.is('.separator, *:disabled, *:hidden')) {
           target = target.next();
         }
+
         return target;
       },
 

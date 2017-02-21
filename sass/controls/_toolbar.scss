@@ -55,7 +55,8 @@ $toolbar-buttonset-height: 40px;
       }
 
       &.is-overflowed {
-        display: none;
+        visibility: hidden;
+        //display: none;
       }
     }
 
@@ -97,7 +98,7 @@ $toolbar-buttonset-height: 40px;
 
     + .buttonset {
       text-align: right;
-      width: calc(55% - 1px);
+      width: calc(55% - 1px); // -1px for the spacer in the ::after pseudo on the toolbar elem.
     }
   }
 
@@ -124,7 +125,7 @@ $toolbar-buttonset-height: 40px;
 
     &.has-more-button {
       .buttonset {
-        width: calc(100% - 50px);
+        width: calc(100% - 44px);
       }
 
       .title + .buttonset {
@@ -135,7 +136,7 @@ $toolbar-buttonset-height: 40px;
 
   &.has-more-button {
     .buttonset {
-      width: calc(100% - 50px);
+      width: calc(100% - 44px);
 
       > *:last-child {
         margin-right: 5px; // Add back the 5px since we need to visually separate the More button from the others.
@@ -144,7 +145,7 @@ $toolbar-buttonset-height: 40px;
 
     &.has-title {
       .buttonset {
-        width: calc(55% - 50px);
+        width: calc(55% - 44px);
       }
     }
 
@@ -326,7 +327,7 @@ $toolbar-buttonset-height: 40px;
 
   + .listview {
     @include css3(transition, height 300ms cubic-bezier(.17, .04, .03, .94));
-    height: calc(100% - 50px);
+    height: calc(100% - 44px);
   }
 
   // Updated changes from listview button and font sizes
@@ -446,7 +447,15 @@ html[dir='rtl'] {
 
   .toolbar,
   .formatter-toolbar {
-    text-align: left;
+    text-align: right;
+
+    &.has-title {
+      text-align: left;
+    }
+
+    &.right-aligned {
+      text-align: left;
+    }
 
     .title {
       left: auto;
