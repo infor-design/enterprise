@@ -26,7 +26,7 @@ window.Formatters = {
 
     if (typeof value === 'string' && value) {
 
-      if (value === '0'.repeat(value.length)) { //Means no date in some applications
+      if (value === '0000' || value === '000000' || value === '00000000') { //Means no date in some applications
         return '';
       }
 
