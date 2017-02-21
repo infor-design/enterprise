@@ -3432,7 +3432,22 @@ $.fn.datagrid = function(options) {
         });
 
       // Implement Editing Auto Commit Functionality
-      tbody.off('focusout.datagrid').on('focusout.datagrid', 'td input, td textarea, div.dropdown', function () {
+      tbody.off('focusout.datagrid').on('focusout.datagrid', 'td input, td textarea, div.dropdown', function (e) {
+
+        // Keep lookup icon clickable in edit mode
+        var target = e.target;
+        if ($(target).is('input.lookup')) {
+          // Wait for modal popup, if did not found modal popup means
+          // icon was not clicked, then commit cell edit
+          setTimeout(function() {
+            if (!$('.lookup-modal.is-visible').length &&
+                !!self.editor && self.editor.input.is(target)) {
+              self.commitCellEdit(self.editor.input);
+            }
+          }, 400);
+          return;
+        }
+
         //Popups are open
         if ($('#calendar-popup, #dropdown-list, .autocomplete.popupmenu.is-open').is(':visible') ||
           $('.lookup-modal.is-visible').length) {
@@ -4487,6 +4502,9 @@ $.fn.datagrid = function(options) {
 
     // Invoked in three cases: 1) a row click, 2) keyboard and enter, 3) In actionable mode and tabbing
     makeCellEditable: function(row, cell, event) {
+      if (this.editor && this.editor.input.is('.lookup')) {
+        this.commitCellEdit(this.editor.input);
+      }
 
       //Locate the Editor
       var col = this.columnSettings(cell);
