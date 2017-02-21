@@ -4625,10 +4625,14 @@ $.fn.datagrid = function(options) {
       //Add icon and classes
       node.addClass('error').attr('data-errormessage', errorMessage);
       var icon = $($.createIcon({ classes: ['icon-error'], icon: 'error' }));
+
       //Add and show tooltip
-      node.find('.datagrid-cell-wrapper').append(icon);
-      icon.tooltip({placement: 'bottom', isErrorColor: true, content: errorMessage});
-      icon.data('tooltip').show();
+      if (node.find('.icon-error').length === 0) {
+        node.find('.datagrid-cell-wrapper').append(icon);
+        icon.tooltip({placement: 'bottom', isErrorColor: true, content: errorMessage});
+        icon.data('tooltip').show();
+      }
+
     },
 
     clearCellError: function (row, cell) {
