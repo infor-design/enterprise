@@ -482,9 +482,9 @@ body.no-scroll {
 
 //Header on Side Panels - fx: tests/tree/expand-collapse-splitter
 .panel-header {
-  background-color: $panel-header-bg-color;
-  height: 60px;
-  line-height: 60px;
+  background-color: $toolbar-standalone-bg-color;
+  border-bottom: 1px solid $toolbar-standalone-border-color;
+  height: 40px;
 
   .title {
     @include font-size(16);
