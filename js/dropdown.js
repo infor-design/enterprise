@@ -50,10 +50,11 @@
     // Actual DropDown Code
     Dropdown.prototype = {
       init: function() {
-        var orgId = this.element.attr('id');
+        var orgId = this.element.attr('id'),
+         html = $('html');
 
-        this.isIe10 = $('html').is('.ie10');
-        this.isIe11 = $('html').is('.ie11');
+        this.isIe10 = html.is('.ie10');
+        this.isIe11 = html.is('.ie11');
 
         this.inlineLabel = this.element.closest('label');
         this.inlineLabelText = this.inlineLabel.find('.label-text');
