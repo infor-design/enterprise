@@ -639,7 +639,7 @@
         // Get all current settings.
         self.setup();
 
-        if (this.element.is(':disabled')) {
+        if (this.element.is(':disabled') || this.element.attr('readonly')) {
           return;
         }
 
