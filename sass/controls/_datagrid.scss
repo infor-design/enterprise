@@ -559,6 +559,10 @@ $datagrid-short-row-height: 23px;
             padding: 2px 20px;
           }
 
+          .lookup-wrapper .trigger {
+            top: -7px;
+          }
+
         }
         // scss-lint:enable NestingDepth
 
