@@ -2547,6 +2547,10 @@ $.fn.datagrid = function(options) {
 
       if (!this.elemWidth) {
         this.elemWidth = this.element.outerWidth();
+
+        if (this.elemWidth === 0) { ///handle on invisible tab container
+          this.elemWidth = this.element.closest('.tab-container').outerWidth();
+        }
         this.widthSpecified = false;
       }
 
