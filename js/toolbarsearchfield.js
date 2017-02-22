@@ -68,10 +68,7 @@
           this.containmentParent = moduleTabs;
         }
 
-        this.buttonsetElem = this.toolbarParent.children('.buttonset')[0];
-        if (this.toolbarParent.children('.title').length) {
-          this.titleElem = this.toolbarParent.children('.title')[0];
-        }
+        this.getToolbarElements();
 
         // Setup ARIA
         var label = this.element.attr('placeholder') || this.element.prev('label, .label').text().trim();
@@ -375,6 +372,15 @@
         }
       },
 
+      // Angular may not be able to get these elements on demand so we need to be
+      // able to call this during the expand method.
+      getToolbarElements: function() {
+        this.buttonsetElem = this.toolbarParent.children('.buttonset')[0];
+        if (this.toolbarParent.children('.title').length) {
+          this.titleElem = this.toolbarParent.children('.title')[0];
+        }
+      },
+
       expand: function() {
         if (this.inputWrapper.hasClass('active')) {
           return;
@@ -387,6 +393,10 @@
 
         if (this.animationTimer) {
           clearTimeout(this.animationTimer);
+        }
+
+        if (this.buttonsetElem === undefined) {
+          this.getToolbarElements();
         }
 
         // Places the input wrapper into the toolbar on smaller breakpoints
