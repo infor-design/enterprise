@@ -93,6 +93,10 @@
         this.settings.range = this.element.attr('data-range') !== undefined ? (this.element.attr('data-range') === 'true') : this.settings.range;
         this.settings.step = !isNaN(this.element.attr('step')) ? Number(this.element.attr('step')) : this.settings.step;
 
+        if (this.settings.value === '') {
+          this.settings.value = this.settings.min;
+        }
+
         // build tick list
         var parsedTicks;
         if (this.element.attr('data-ticks') !== undefined) {
