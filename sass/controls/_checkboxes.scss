@@ -351,3 +351,10 @@ html[dir='rtl'] {
     left: auto;
   }
 }
+
+.ie10 {
+  input.checkbox,
+  span.checkbox > input {
+    left: -25px;
+  }
+}
