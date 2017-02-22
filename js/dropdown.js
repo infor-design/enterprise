@@ -50,7 +50,11 @@
     // Actual DropDown Code
     Dropdown.prototype = {
       init: function() {
-        var orgId = this.element.attr('id');
+        var orgId = this.element.attr('id'),
+         html = $('html');
+
+        this.isIe10 = html.is('.ie10');
+        this.isIe11 = html.is('.ie11');
 
         this.inlineLabel = this.element.closest('label');
         this.inlineLabelText = this.inlineLabel.find('.label-text');
@@ -827,6 +831,12 @@
         if (document.activeElement !== input[0] &&
           $(document.activeElement).is('body, .dropdown.is-open')) {
           input[0].focus();
+        }
+
+        if ((self.isIe10 || self.isIe11) && input.closest('.time-parts').length) {
+          setTimeout(function() {
+            input[0].focus();
+          }, 0);
         }
       },
 
