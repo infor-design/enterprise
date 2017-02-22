@@ -355,11 +355,6 @@
           key = e.which,
           typedChar = $.actualChar(e);
 
-        // set the original value if it doesn't exist.
-        if (!self.initValue) {
-          self.initValue = self.element.val();
-        }
-
         // Remove modifiers on "keyup"
         if (eventType === 'keyup') {
           if (key === 8) {
