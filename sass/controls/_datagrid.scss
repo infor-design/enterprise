@@ -896,7 +896,7 @@ $datagrid-short-row-height: 23px;
         width: 100%;
 
         &.lookup {
-          width: calc(100% - 17px);
+          width: calc(100% - 21px);
 
           ~.trigger .icon {
             top: 12px;
@@ -1498,6 +1498,10 @@ td .btn-actions {
     left: 4px;
     top: 5px;
     visibility: hidden;
+
+    &.icon-search-list {
+      left: 0;
+    }
   }
 
   .icon-calendar {
