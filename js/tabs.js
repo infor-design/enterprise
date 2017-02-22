@@ -344,14 +344,15 @@
             return;
           }
 
+          if (e.type === 'touchend') {
+            this.wasTapped = true;
+          }
+
           if (a.attr('href').substr(0, 1) !== '#') {
             //is an outbound Link
             return;
           }
-
-          if (e.type === 'touchend') {
-            this.wasTapped = true;
-          }
+          e.preventDefault();
         }
 
         // Some tabs have icons that can be clicked and manipulated
@@ -377,12 +378,11 @@
         // Any events bound to individual tabs (li) and their anchors (a) are bound to the tablist
         // element so that tabs can be added/removed/hidden/shown without needing to change event bindings.
         this.tablist
-          //.onTouchClick('tabs', '> li')
           .on('click.tabs', '> li', function(e) {
             return self.handleTabClick(e, $(this));
           })
-          .on('click.tabs touchend.tabs touchcancel.tabs', 'a', routeAnchorClick)
-          .on('click.tabs touchend.tabs touchcancel.tabs', '.icon', handleIconClick)
+          .on('click.tabs', 'a', routeAnchorClick)
+          .on('click.tabs', '.icon', handleIconClick)
           .on('focus.tabs', 'a', function(e) {
             return self.handleTabFocus(e, $(this));
           })
