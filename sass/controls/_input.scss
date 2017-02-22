@@ -415,6 +415,18 @@ input.error {
     resize: none;
     text-align: left;
     width: $field-sm;
+
+    &::-webkit-input-placeholder {
+      @include font-size(12);
+    }
+
+    &::-moz-placeholder {
+      @include font-size(12);
+    }
+
+    &:-ms-input-placeholder {
+      @include font-size(12);
+    }
   }
 
   label {

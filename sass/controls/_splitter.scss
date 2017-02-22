@@ -56,6 +56,10 @@
     box-shadow: -2px 0 3px 0 $splitter-box-shadow-color;
   }
 
+  .panel-header {
+    height: 41px;
+  }
+
   &::after {
     color: $splitter-grip-bg-color;
     content: '⁞';
@@ -72,6 +76,7 @@
     border-right: 1px solid $panel-border-color;
     left: 229px;
     position: absolute;
+    top: 0;
 
     &.is-dragging {
       box-shadow: 2px 0 3px 0 $splitter-box-shadow-color;
