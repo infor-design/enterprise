@@ -512,10 +512,11 @@
 
         if (this.element.hasClass('lookup-modal')) {
           var table = this.element.find('.datagrid-body'),
+            hasPager = this.element.find('.pager-toolbar'),
             container = table.closest('.datagrid-container');
 
           calcHeight = calcHeight - (container.prev().is('.toolbar') ? 130 : 60) - (container.next().is('.pager-toolbar') ? 35 : 0);
-          table[0].style.maxHeight = calcHeight + 'px';
+          table[0].style.maxHeight = calcHeight + (hasPager.length ? -15 : 0) + 'px';
           table[0].style.maxWidth = calcWidth + 'px';
         }
 
