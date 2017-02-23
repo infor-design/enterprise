@@ -1106,6 +1106,11 @@ $datagrid-short-row-height: 23px;
     &.l-right-text {
       direction: rtl;
       float: right;
+
+      .sort-indicator {
+        margin: 5px 5px 0;
+      }
+
     }
   }
 
@@ -1114,12 +1119,19 @@ $datagrid-short-row-height: 23px;
     th {
       height: 59px;
 
-      &.is-filterable {
-        .datagrid-column-wrapper {
-          position: relative;
-          top: -2px;
+      .datagrid-column-wrapper {
+        position: relative;
+        top: -2px;
+
+        &.l-right-text {
+          top: -13px;
+
+          + .datagrid-filter-wrapper {
+            top: -20px;
+          }
         }
       }
+
     }
 
     .datagrid-filter-wrapper {

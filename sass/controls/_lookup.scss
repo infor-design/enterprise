@@ -74,12 +74,12 @@
 
   &.lookup-no-search {
     .toolbar {
-      margin-top: -40px;
+      margin-bottom: 0;
+      margin-top: -30px;
     }
 
     .modal-header {
-      margin-bottom: -10px;
-      padding: 20px 20px 0;
+      padding: 15px 20px 5px;
     }
   }
 
@@ -88,6 +88,9 @@
   }
 
   .toolbar {
+    margin-bottom: 15px;
+    padding: 0;
+
     .buttonset {
       width: 100%;
     }
@@ -114,13 +117,8 @@
     margin: 0;
   }
 
-  .toolbar {
-    margin-bottom: 15px;
-    padding: 0;
-  }
-
   .modal-header {
-    padding: 20px 20px 0;
+    padding: 20px 20px 10px;
   }
 
   .title {

@@ -1,43 +1,88 @@
 ## 4.2.5
-Release Date: TBD
+Release Date: 2017-02-23
+
+### Download Build Assets:
+Build Server: http://bamboo.infor.com/browse/SOHO-DOC
+Npm: http://npm.infor.com
+
+### Demo Site
+http://usmvvwdev53:425/controls
 
 ### Key New Features
-* Change jQuery from 3.1.0 to 3.1.1 (non breaking)
-* Splitter Speed Improved (using flex box)
-* Tabs Speed Improved
-* Tabs Can be lazy loaded and lazy loaded using Ajax calls.
-* Datagrid Fixed Row Improved
-* Datagrid Resize Rows Improved
-* General Performance Improvements
+* Editor - Added color picker
+* jQuery - Updated from 3.1.0 to 3.1.1 (non breaking)
+* Tabs - Ability to lazy load tab content; Other performance improvements
 
-### Breaking Changes / Notes
-* 2017-01-13 - Revised the Tabs Component to have CSS-based transitions instead of Javascript-based.  This change includes a new method of hiding tab panels by default, instead of showing them by default.  This caused a breaking change that requires removing any `display: none;` inline-styles from `.tab-panel` elements that may have been pre-defined in older versions. (SOHO-5530)
-* 2017-02-13 - Personalization may cause a Flash of Unstyled Content (FOUC). To prevent this you now have two choices.
-    1) Set the column after loading the soho stylesheet. But before loading the soho stylesheet in the page. The order should be: Set Color, Load Style Sheet (in correct theme), Load Dom, initialize locale and components.
-    2) You can call window.Soho.getColorStyleSheet(color) and get the actually style sheet you would need to append. Then save this and add the stylesheet server side. Some colors are generated so you should use the function to get the right styles.
-* 2017-01-31 - The Duplicate Icon has visually changed. Make sure to update your SVG
-* 2017-01-31 - The Datagrid column with the id: 'drilldown' will have an auto size now
-* 2017-01-31 - The Datagrid columns are now more exact. If you have specified widths they will be exactly that width
-* 2017-01-31 - The Datagrid fixed header is now default. You can control the grid by setting height on the parent container and datagrid-body element.
-* 2017-01-12 - Listview will no longer initialize components in it. You can do this manually using the render method.
+### Improvements
+* Datagrid - Performance improvements
+* Datagrid - Column resize independently; Headers remain in sync
+* Datagrid - Scrolling improvements for fixed header and mobile
+* Datagrid - Added support for multi-line title
+* Datagrid - Fixed Header Row - fixed issues with scrolling and column misalignment
+* Datagrid - Built in columns, e.g. drilldown and selection, will now auto-size
+* Datagrid Dropdown Editor - Improved keyboard support
+* Dropdown - Improved search speed for large result sets
+* Dropdown List - Ability to submit your selection using the tab key
+* Lookup - Columns resize independently
+* Personalization Stylesheet - Option to cache this stylesheet server-side to eliminate the flashing of unstyled content the page loads (see Tips)
+* Popover/Tooltip - Performance improvements
+* Splitter - Improved dragging performance using CSS Flexbox
+* Splitter - Removed extra spacing at top and right (now aligns flush)
+* Themes - Switching no longer flashes unstyled content
+* Toolbar - Ability to copy title text
+* Toolbar - Better handling for long titles
+
+### Bug Fixes
+
+* About Dialog - Fixed the Russian and Ukrainian translation
+* Checkboxes - Fix for .asp alignment issue
+* Color Picker - Fix for bug causing color picker to not open again after initial use
+* Donut Chart - Fixed center label not showing in IE
+* Datagrid - Fixed logic for “does not end with”
+* Datagrid Tree - Fixed expanding logic for multiple child nodes
+* Datagrid Tree - Fixed syncing of underlying data set
+* Datagrid Tree - Fixed bug causing short row height not to work
+* Datagrid - Fix to allow for empty datasets
+* Datagrid - Fix to treat “0000/00000000” as an empty date
+* Datagrid - Fix to remove flashing of “(N Results)” while result is loading
+* Datagrid Filter Row - Fixed “Equals and Does Not Equal” Japanese translation
+* Datagrid Editor - Fix for deleted data returning space character
+* Datagrid Dropdown Editor - Fixed issue where open and closing the dropdown would clear the value
+* Date Picker - Fixed bug that prevented tabbing out of a read-only field
+* Global - Performance Fix to prevent mobile zoom logic from firing unnecessarily
+* List View Multi-Select - Fixed IE 11 bug that caused the scroll to jump to the top of the list after selecting a checkbox
+* Lookup - Fixed inconsistency between how single and multi-select fire the change event - in both cases the change event is now fired when the modal
+* Mask - Prevents NgMode updates, Mask now passes a parameter that contains the updated value of the Masked field every time it's updated
+* Module Tabs - Fixed IE layout bugs
+* Search Field - Fix for bug causing multiple “all results” option
+* Swaplist - Added method to refresh the swaplist when data changes
+* Tabs - Fix to treat “0 more” tabs appropriately (don’t show more menu)
+* Text Editor, IE - Fixed issue where only the first extra paragraph break is removed when pasting multiple paragraphs
+* Toolbar - Fixed issue for disabled property on menu button options, where disabled buttons on toolbar weren’t showing as disabled when they moved to the overflow
+* Tree - Fixed bug in tree reorder logic for dragging
+* Validation - Fix to handle empty data-validate attribute
+
+### Breaking Changes
+* Datagrid - No longer forces a minimum width (exact width set is respected); Affects column widths (related to improvements for column resizing)
+* List View - No longer initializes every type of component inside it for performance reasons. Instead, the developer can select which elements to initialize. You can do this manually using the render method.
+* Tabs - Revised to have CSS-based transitions instead of Javascript-based. This change includes a new method of hiding tab panels by default, instead of showing them by default. This caused a breaking change that requires removing any display: none; inline-styles from .tab-panel elements that may have been pre-defined in older versions.
 
 ### Ui Changes
-* 2017-01-31 - The Duplicate Icon has visually changed. Make sure to update your SVG
- 2017-02-15 - The Single Color charts such as Column, Bar with one series now have azure08 as the default color. As per the BI version 4.0 guilde
+* Icons - The Duplicate Icon has been updated. Make sure to update your SVG
+* Positive-Negative Chart - Added more padding to separate chart from legend; moved minus sign to left of number; added padding between squares and labels on chart legend
 
-### Affects
-- Tabs
-- Splitter
-- Listview
-- Datagrid (columns and scrolling mainly)
-- Tooltip
-- Popups
-- Dropdown
-- Datepicker
-- TimePicker
+### Tips
+* Global - Personalization may cause a Flash of Unstyled Content (FOUC). To prevent this you now have two choices.
+Set the column after loading the soho stylesheet. But before loading the soho stylesheet in the page. The order should be: Set Color, Load Style Sheet (in correct theme), Load Dom, initialize locale and components.
+You can call window.Soho.getColorStyleSheet(color) and get the actually style sheet you would need to append. Then save this and add the stylesheet server side. Some colors are generated so you should use the function to get the right styles.
+* Toolbar - To get longer titles to display, you may need to add some hints to what “algorithm” to use, like these:
+rightAligned: false, // Will always attempt to right-align the contents of the toolbar.
+maxVisibleButtons: 3, // Total amount of buttons that can be present, not including the More button
+favorButtonset: true // When resizing elements inside the toolbar, setting this to "true" will try to display as many buttons as possible.  Setting to false attempts to show the entire title instead.
 
-Jira Release Notes
-http://jira.infor.com/secure/ReleaseNote.jspa?version=27962&styleName=Html&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX%7C7c9b3f18b5f46187205e0d24b1489b80c8b4e1a1%7Clin
+### Other
+* Added section to view performance tests: http://usmvvwdev53:425/performance-tests
+* Full Jira Release Notes: http://bit.ly/2kQycl2
 
 ## 4.2.4 - Minor Release
 Release Date: 2017-01-10

@@ -1415,11 +1415,8 @@ $.fn.datagrid = function(options) {
          (column.headerTooltip ? 'title="' + column.headerTooltip + '"' : '') +
          (colGroups ? ' headers="' + self.getColumnGroup(j) + '"' : '') + '>';
 
-        headerRow += '<div class="' + (isSelection ? 'datagrid-checkbox-wrapper ': 'datagrid-column-wrapper') + (column.align === undefined || column.filterType ? '' : ' l-'+ column.align +'-text') + '"><span class="datagrid-header-text'+ (column.required ? ' required': '') + '">' + self.headerText(settings.columns[j]) + '</span>';
+        headerRow += '<div class="' + (isSelection ? 'datagrid-checkbox-wrapper ': 'datagrid-column-wrapper') + (column.align === undefined ? '' : ' l-'+ column.align +'-text') + '"><span class="datagrid-header-text'+ (column.required ? ' required': '') + '">' + self.headerText(settings.columns[j]) + '</span>';
         cols += '<col' + this.calculateColumnWidth(column, j) + (column.hidden ? ' class="is-hidden"' : '') + '>';
-
-        //Removed the center alignment - even if the column is right aligned data keep the header left aligned
-        //+ (column.align === undefined ? false : ' l-'+ column.align +'-text')
 
         if (isSelection) {
           headerRow += '<span aria-checked="false" class="datagrid-checkbox" aria-label="Selection" role="checkbox"></span>';
