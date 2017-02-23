@@ -247,6 +247,26 @@ li + .pager-count {
   .pager-next {
     right: 15px;
   }
+
+  &.card .card-footer .pager-toolbar {
+    height: 32px;
+
+    > li {
+      > a {
+        height: 27px;
+        margin: 2px 0 0;
+        padding: 5px 7px;
+      }
+
+      &.pager-prev,
+      &.pager-next {
+        > a {
+          height: 29px;
+          padding: 5px;
+        }
+      }
+    }
+  }
 }
 
 // Adjacent to Listview (list/detail & builder)
