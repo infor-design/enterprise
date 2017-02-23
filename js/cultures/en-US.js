@@ -74,6 +74,7 @@
       'AddNewTab': {id: 'AddNewTab', value: 'Add New Tab', comment: 'Attached to a button that adds new tabs'},
       'AdvancedFilter': {id: 'AdvancedFilter', value: 'Create Advanced Filter', comment: 'In a data grid active an advanced filtering feature'},
       'Alert': {id: 'Alert', value: 'Alert', comment: 'Alert'},
+      'All': {id: 'All', value: 'All', comment: 'All items in the context of a filter'},
       'AllResults': {id: 'AllResults', value: 'All Results For', comment: 'Search Results Text'},
       'AligntoBottom': {id: 'AligntoBottom', value: 'Align Bottom', comment: 'Align to Bottom tooltip'},
       'AlignCenterHorizontally': {id: 'AlignCenterHorizontally', value: 'Horizontal Align Center', comment: 'Align Center Horizontally tooltip'},

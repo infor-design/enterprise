@@ -1595,7 +1595,7 @@ $.fn.datagrid = function(options) {
 
       if (filterType === 'checkbox') {
         btnMarkup += ''+
-          render('selected-notselected', 'EitherSelectedOrNotSelected', true) +
+          render('selected-notselected', 'All', true) +
           render('selected', 'Selected') +
           render('not-selected', 'NotSelected');
       }
