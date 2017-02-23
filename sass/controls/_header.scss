@@ -105,7 +105,7 @@ $header-height: 60px;
 
     .title {
       color: $header-text-color;
-      height: $header-height;
+      height: $header-height - 10;
       overflow: visible;
       text-overflow: clip;
 
