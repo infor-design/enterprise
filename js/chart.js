@@ -962,7 +962,7 @@ window.Chart = function(container) {
       });
 
     // Now we'll draw our label lines, etc.
-    var textLabels, textX=[], textY=[],
+    var textLabels, textX=[], textY=[], textLabelsLength = 0,
       perEvenRound = [], perRound = [], perRoundTotal = 0,
 
       // http://stackoverflow.com/a/13484393
@@ -1167,6 +1167,8 @@ window.Chart = function(container) {
               sign = (x > 0) ? 1 : -1,
               labelX = x + (1 * sign);
 
+            textLabelsLength++;
+
             textX.push(labelX);
             return labelX;
           },
@@ -1239,7 +1241,8 @@ window.Chart = function(container) {
 
       if (lb.hideLabels) {
         var isRunning = true,
-          maxRunning = textLabels.length*15,
+          // maxRunning = textLabels.length * 15,
+          maxRunning = textLabelsLength * 15,
           orgLabelPos,
           spacing = Math.round(textLabels.node().getBBox().height) + 1;
 
@@ -1271,7 +1274,7 @@ window.Chart = function(container) {
                     deltaY = Math.round(Math.abs(y1 - y2));
                     if (deltaY < spacing) {
                       deltaY += 1;
-                      var newY = y2 > 0 ? y2-(deltaY/2) : y2+(deltaY/2);
+                      var newY = y2 > 0 ? y2-(deltaY/2) : y2+(deltaY/2)+1;
                       again = true;
                       db.attr('y', newY); //padding
 
