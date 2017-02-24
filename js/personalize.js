@@ -270,7 +270,7 @@
       unBlockUi: function (){
         var self = this;
 
-        self.pageOverlay.fadeOut(1200, function() {
+        self.pageOverlay.fadeOut(1750, function() {
           self.pageOverlay.remove();
           self.pageOverlay = undefined;
         });
