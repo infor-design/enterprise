@@ -262,7 +262,7 @@
           liMarkup += '<li role="presentation" class="dropdown-option'+ (isSelected ? ' is-selected' : '') +
                         (isDisabled ? ' is-disabled' : '') +
                         (cssClasses ? ' ' + cssClasses.value : '' ) + '"' +
-                        ' data-val="' + trueValue + '"' +
+                        ' data-val="' + trueValue.replace('"', '/quot/') + '"' +
                         ' tabindex="' + (index && index === 0 ? 0 : -1) + '">' +
                         (title ? '" title="' + title.value + '"' : '') +
                         '<a role="option" href="#" id="list-option'+ index +'">' +
@@ -881,7 +881,7 @@
 
       // Actually Show The List
       openList: function () {
-        var current = this.previousActiveDescendant ? this.list.find('.dropdown-option[data-val="'+ this.previousActiveDescendant +'"]') : this.list.find('.is-selected'),
+        var current = this.previousActiveDescendant ? this.list.find('.dropdown-option[data-val="'+ this.previousActiveDescendant.replace('"', '/quot/') +'"]') : this.list.find('.is-selected'),
           self =  this,
           touchPrevented = false,
           threshold = 10,
@@ -983,13 +983,16 @@
           e.preventDefault();
           e.stopPropagation();
 
-          var val = target.attr('data-val'),
+          var val = target.attr('data-val').replace('"','/quot/'),
             cur = self.element.find('option[value="'+ val +'"]');
           //Try matching the option's text if 'cur' comes back empty or overpopulated.
-          //Supports options that don't have a 'value' attribute.
+          //Supports options that don't have a 'value' attribute
+          //And also some special &quote handling
           if (cur.length === 0 || cur.length > 1) {
             cur = self.element.find('option').filter(function() {
-              return $(this).text() === val;
+              var elem = $(this),
+                attr = elem.attr('value');
+              return elem.text() === val || (attr && attr.replace('"','/quot/') === val);
             });
           }
 
@@ -1359,7 +1362,7 @@
           }
         }
         if (!li) {
-          li = this.listUl.find('li[data-val="'+ option.val() +'"]');
+          li = this.listUl.find('li[data-val="'+ option.val().replace('"', '/quot/') +'"]');
         }
 
         if (option.hasClass('is-disabled') || option.is(':disabled')) {
