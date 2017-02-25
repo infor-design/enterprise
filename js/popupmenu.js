@@ -234,6 +234,12 @@
             a.setAttribute('aria-disabled', 'true');
           }
 
+          if (a.hasAttribute('disabled')) {
+            Soho.DOM.addClass(li, 'is-disabled');
+            a.setAttribute('aria-disabled', 'true');
+            a.removeAttribute('disabled');
+          }
+
           // menu items that contain submenus
           if (submenuWrapper instanceof HTMLElement) {
             li.className += (Soho.DOM.classNameExists(li) ? ' ' : '') + 'submenu';
