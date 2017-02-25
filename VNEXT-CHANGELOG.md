@@ -14,6 +14,7 @@ http://usmvvwdev53:425/controls
 
 ### Bug Fixes
 - Popupmenu - Fixed keyboarding to skip disabled items
+- Popupmenu - Fixed issue causing keyboard to not work when used on contextual action panels
 - Modal - Fixed missing SVG's in IE11 when appended to modals
 
 ### Breaking Changes
