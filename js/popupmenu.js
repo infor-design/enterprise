@@ -441,6 +441,7 @@
             self.close(true);
           }
 
+          //Close on tab
           if (key === 9) {
             e.stopPropagation();
             self.close(true);
@@ -799,7 +800,7 @@
             self.close();
           });
 
-          self.element.trigger('open', [self.menu]);
+          self.element.triggerHandler('open', [self.menu]);
 
           if (self.settings.trigger === 'rightClick') {
             self.element.on('click.popupmenu touchend.popupmenu', function () {
@@ -873,7 +874,7 @@
             }
 
             self.highlight(selection);
-            self.element.trigger('afteropen', [self.menu]);
+            self.element.triggerHandler('afteropen', [self.menu]);
           }, 1);
         }
       },

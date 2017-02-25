@@ -13,6 +13,8 @@ http://usmvvwdev53:425/controls
 ### Improvements
 
 ### Bug Fixes
+- Popupmenu - Fixed keyboarding to skip disabled items
+- Modal - Fixed missing SVG's in IE11 when appended to modals
 
 ### Breaking Changes
 
