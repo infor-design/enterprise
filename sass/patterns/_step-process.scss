@@ -165,7 +165,7 @@
     height: 100%;
   }
 
-  // .btn-toggle-steps,
+  .btn-toggle-steps,
   .phone-visible {
     display: none;
   }
@@ -178,7 +178,7 @@
       @include transform(translateX(0));
     }
 
-    &.show-main {
+    &.tablet-hide-steps {
       .main {
         position: absolute;
         width: 100%;
@@ -214,7 +214,6 @@
     .js-step-container-scroll {
       height: 100%;
       padding-top: $header-height + 15px;
-
     }
 
     .scrolled-down .toolbar-collapsible {
@@ -261,7 +260,7 @@
       }
     }
 
-    &.show-main {
+    &.phone-hide-steps {
       .main {
         @include css3(transform, translateX(0));
         width: calc(100% - 250px);

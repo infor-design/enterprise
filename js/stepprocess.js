@@ -743,7 +743,9 @@
         // Button to toggle the tree in responsive view
         $('.js-toggle-sidebar').click(function(e) {
           e.preventDefault();
-          self.element.toggleClass('show-main');
+          self.element
+            .toggleClass('tablet-hide-steps')
+            .toggleClass('phone-hide-steps');
         });
       },
 
@@ -755,7 +757,7 @@
       showStepPanel: function(contentId) {
         $('.step-panel-active').removeClass('step-panel-active');
         $(contentId).addClass('step-panel-active');
-        this.element.addClass('show-main');
+        this.element.addClass('phone-hide-steps');
       },
 
       /** @private */
