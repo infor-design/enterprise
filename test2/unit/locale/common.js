@@ -30,6 +30,10 @@ define([
   require('../../../js/cultures/tr-TR.js');
   require('../../../js/cultures/it-IT.js');
   require('../../../js/cultures/sv-SE.js');
+  require('../../../js/cultures/cs-CZ.js');
+  require('../../../js/cultures/hu-HU.js');
+  require('../../../js/cultures/ja-JP.js');
+  require('../../../js/cultures/ru-RU.js');
 
   registerSuite({
 
@@ -90,9 +94,7 @@ define([
 
     'should format millis': function() {
       expect(Locale.formatDate(new Date(2016, 2, 15, 12, 30, 36, 142), {pattern: 'd/M/yyyy h:mm:ss.SSS a '})).to.equal('15/3/2016 12:30:36.142 PM');
-
       expect(Locale.formatDate(new Date(2016, 2, 15, 12, 30, 36, 142), {pattern: 'd/M/yyyy h:mm:ss.SSS '})).to.equal('15/3/2016 12:30:36.142');
-
     },
 
     //Format some random date type cases
@@ -117,6 +119,20 @@ define([
       Locale.set('de-DE');
       expect(Locale.formatDate(new Date(2000, 11, 1, 13, 40), {date: 'datetime'})).to.equal('01.12.2000 13:40');
       expect(Locale.formatDate(new Date(2000, 11, 1, 13, 05), {pattern: 'M.dd.yyyy HH:mm'})).to.equal('12.01.2000 13:05');
+
+      var date = new Date('2017-02-01T10:27:40.600Z'),
+        opts = {pattern: 'yyyy-MM-dd HH:mm' , date: 'datetime'};
+
+      Locale.set('fi-FI');
+      expect(Locale.formatDate(date, opts)).to.equal('1.2.2017 5:27');
+      Locale.set('cs-CZ');
+      expect(Locale.formatDate(date, opts)).to.equal('01.02.2017 5:27');
+      Locale.set('hu-HU');
+      expect(Locale.formatDate(date, opts)).to.equal('2017. 02. 01. 5:27');
+      Locale.set('ja-JP');
+      expect(Locale.formatDate(date, opts)).to.equal('2017/02/01 5:27');
+      Locale.set('ru-RU');
+      expect(Locale.formatDate(date, opts)).to.equal('2/1/2017 5:27');
     },
 
     //monthYear and yearMonth

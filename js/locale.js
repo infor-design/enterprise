@@ -203,6 +203,7 @@
       ret = ret.replace('hh', (hours > 12 ? hours - 12 : hours));
       ret = ret.replace('h', (hours > 12 ? hours - 12 : hours));
       ret = ret.replace('HH', hours);
+      ret = ret.replace('H', (hours > 12 ? hours - 12 : hours));
       ret = ret.replace('mm', this.pad(mins, 2));
       ret = ret.replace('ss', this.pad(seconds, 2));
       ret = ret.replace('SSS', this.pad(value.getMilliseconds(), 0));
