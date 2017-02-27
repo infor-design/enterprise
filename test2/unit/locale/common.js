@@ -29,6 +29,7 @@ define([
   require('../../../js/cultures/vi-VN.js');
   require('../../../js/cultures/tr-TR.js');
   require('../../../js/cultures/it-IT.js');
+  require('../../../js/cultures/sv-SE.js');
 
   registerSuite({
 
@@ -121,11 +122,16 @@ define([
     //monthYear and yearMonth
     'should format a year and month locale': function() {
       Locale.set('en-US');    //year, month, day, hours, mins , secs
-      expect(Locale.formatDate(new Date(2000, 10, 8, 13, 40), {date: 'month'})).to.equal('November 08');
-      expect(Locale.formatDate(new Date(2000, 10, 8, 13, 0), {date: 'year'})).to.equal('2000 November');
+      expect(Locale.formatDate(new Date(2000, 10, 8, 13, 40), {date: 'month'})).to.equal('November 8');
+      expect(Locale.formatDate(new Date(2000, 10, 8, 13, 0), {date: 'year'})).to.equal('November 2000');
+
       Locale.set('de-DE');
-      expect(Locale.formatDate(new Date(2000, 11, 1, 13, 40), {date: 'month'})).to.equal('01 Dezember');
+      expect(Locale.formatDate(new Date(2000, 11, 1, 13, 40), {date: 'month'})).to.equal('1. Dezember');
       expect(Locale.formatDate(new Date(2000, 11, 1, 13, 05), {date: 'year'})).to.equal('Dezember 2000');
+
+      Locale.set('sv-SE');
+      expect(Locale.formatDate(new Date(2000, 11, 1, 13, 40), {date: 'month'})).to.equal('den 1 december');
+      expect(Locale.formatDate(new Date(2000, 11, 1, 13, 05), {date: 'year'})).to.equal('december 2000');
     },
 
     //monthYear and yearMonth

@@ -181,6 +181,7 @@
       //Special
       pattern = pattern.replace('ngày','nnnn');
       pattern = pattern.replace('tháng','t1áng');
+      pattern = pattern.replace('den','nnn');
 
       //Day of Month
       ret = pattern.replace('dd', this.pad(day, 2));
@@ -226,6 +227,7 @@
       }
       ret = ret.replace('nnnn','ngày');
       ret = ret.replace('t1áng','tháng');
+      ret = ret.replace('nnn','den');
 
       return ret.trim();
     },

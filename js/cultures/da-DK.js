@@ -30,8 +30,8 @@
       //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
       dateFormat: {'separator': '/', //Infered
                    'timeSeparator': '.',
-                   'short': 'dd/MM/yyyy', //use four digit year
-                   'medium': 'dd/MM/yyyy',
+                   'short': 'dd-MM-yyyy', //use four digit year
+                   'medium': 'dd-MM-yyyy',
                    'long': 'd. MMM yyyy',
                    'full': 'EEEE den d. MMMM yyyy',
                    'month': 'd. MMMM',
@@ -52,7 +52,7 @@
       //ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
       timeFormat: 'HH.mm',
       //ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-      dayPeriods: ['AM', 'PM']
+      dayPeriods: ['', '']
     }],
     //numbers/currencyFormats-numberSystem-latn/standard (Replace Sign http://www.currencysymbols.in ?)
     currencySign: 'kr', //(Replace Sign http://www.currencysymbols.in ?)
