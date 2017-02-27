@@ -237,7 +237,6 @@
           if (a.hasAttribute('disabled')) {
             Soho.DOM.addClass(li, 'is-disabled');
             a.setAttribute('aria-disabled', 'true');
-            a.removeAttribute('disabled');
           }
 
           // menu items that contain submenus
