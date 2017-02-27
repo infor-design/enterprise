@@ -846,14 +846,20 @@
         }
 
         function toggleClass($elem, doHide) {
-          var li = $elem.data('action-button-link').parent()[0];
+          var li = $elem.data('action-button-link').parent()[0],
+            elemIsVisible = !$elem.is('.hidden');
 
           if (doHide) {
-            li.classList.add('hidden');
+            if (!elemIsVisible) {
+              li.classList.add('hidden');
+            }
             $elem.removeClass('is-overflowed');
             return;
           }
-          li.classList.remove('hidden');
+
+          if (elemIsVisible) {
+            li.classList.remove('hidden');
+          }
           $elem.addClass('is-overflowed');
 
           if ($elem.find('.icon').length) {

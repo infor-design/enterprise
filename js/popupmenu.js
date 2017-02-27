@@ -621,17 +621,26 @@
         // Reset the arrow
         wrapper.find('.arrow').removeAttr('style');
 
-        var opts = $.extend({}, this.settings.placementOpts);
+        var opts = $.extend({}, this.settings.placementOpts),
+          strategies = ['flip'];
+
+        if (!target.is('.autocomplete, .searchfield')) {
+          strategies.push('nudge');
+        }
+        strategies.push('shrink-y');
+
+        // If right-click or immediate (with an incoming event object), use coordinates from the event
         if ((this.settings.trigger === 'immediate' && this.settings.eventObj) || this.settings.trigger === 'rightClick') {
           opts.x = getCoordinates(e, 'x') - (isRTL ? menuDimensions.width : 0) + ((isRTL ? -1 : 1) * this.settings.offset.x);
           opts.y = getCoordinates(e, 'y') + this.settings.offset.y;
-          opts.strategies = ['flip', 'nudge', 'shrink-y'];
+
         } else {
           opts.x = this.settings.offset.x || 0;
           opts.y = this.settings.offset.y || 0;
           opts.parent = this.element;
           opts.placement = 'bottom';
         }
+        opts.strategies = strategies;
 
         //=======================================================
         // BEGIN Temporary stuff until we sort out passing these settings from the controls that utilize them
