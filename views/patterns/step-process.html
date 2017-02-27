@@ -17,7 +17,7 @@
   </div>
 </header>
 
-<div class="step-process-container two-column fixed page-container no-scroll show-main" role="main">
+<div class="step-process-container two-column fixed page-container no-scroll" role="main">
 
   <div class="sidebar">
     <div class="toolbar toolbar-custom toolbar-collapsible phone-visible">
@@ -92,19 +92,17 @@
 
   <div class="main no-scroll" role="main">
 
-    <div class="toolbar toolbar-custom toolbar-collapsible">
-      <div class="title">
-        <button class="btn-icon btn-toggle-steps js-toggle-sidebar" type="button">
-          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use xlink:href="#icon-bullet-steps"></use>
-          </svg>
-        </button>
-        <div class="dual-title">
-          Preferences
-          <small>Page X of XX</small>
-        </div>
+    <div class="toolbar-custom toolbar-collapsible">
+      <button class="btn-icon btn-toggle-steps js-toggle-sidebar" type="button">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-bullet-steps"></use>
+        </svg>
+      </button>
+      <div class="heading">
+        Preferences
+        <small>Page X of XX</small>
       </div>
-      <div class="buttonset phone-hidden right-aligned">
+      <div class="actions phone-hidden">
         <button class="btn-tertiary js-step-link-prev" type="button">
           <span>Previous</span>
         </button>

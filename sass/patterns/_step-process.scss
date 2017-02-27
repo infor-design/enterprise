@@ -10,21 +10,20 @@
     background-color: $white;
     border-bottom: solid 2px $panel-border-color;
     height: 60px;
+    position: relative;
 
 
     .title {
-      top: 7px;
-
       &.title-wide {
         width: 98%;
       }
     }
 
-    .dual-title {
+    .heading {
       @include font-size(18);
       color: $font-color-extrahighcontrast;
-      display: inline-block;
-      margin-top: 2px;
+      padding-left: 60px;
+      padding-top: 8px;
 
       > small {
         @include font-size(14);
@@ -33,6 +32,18 @@
         padding: 0;
         text-transform: capitalize;
       }
+    }
+
+    .actions {
+      position: absolute;
+      right: 0;
+      top: 13px;
+    }
+
+    .btn-toggle-steps {
+      position: absolute;
+      top: 13px;
+      left: 10px;
     }
   }
 
@@ -154,7 +165,7 @@
     height: 100%;
   }
 
-  .btn-toggle-steps,
+  // .btn-toggle-steps,
   .phone-visible {
     display: none;
   }
@@ -235,7 +246,6 @@
 
     .sidebar {
       @include css3(transform, translateX(0));
-      border: none;
       display: block !important;
 
       .tree {
@@ -261,7 +271,7 @@
       }
     }
 
-    .toolbar-custom .buttonset {
+    .toolbar-custom .actions {
       display: none;
     }
 
