@@ -234,6 +234,11 @@
             a.setAttribute('aria-disabled', 'true');
           }
 
+          if (a.hasAttribute('disabled')) {
+            Soho.DOM.addClass(li, 'is-disabled');
+            a.setAttribute('aria-disabled', 'true');
+          }
+
           // menu items that contain submenus
           if (submenuWrapper instanceof HTMLElement) {
             li.className += (Soho.DOM.classNameExists(li) ? ' ' : '') + 'submenu';
@@ -435,6 +440,7 @@
             self.close(true);
           }
 
+          //Close on tab
           if (key === 9) {
             e.stopPropagation();
             self.close(true);
@@ -802,7 +808,7 @@
             self.close();
           });
 
-          self.element.trigger('open', [self.menu]);
+          self.element.triggerHandler('open', [self.menu]);
 
           if (self.settings.trigger === 'rightClick') {
             self.element.on('click.popupmenu touchend.popupmenu', function () {
@@ -876,7 +882,7 @@
             }
 
             self.highlight(selection);
-            self.element.trigger('afteropen', [self.menu]);
+            self.element.triggerHandler('afteropen', [self.menu]);
           }, 1);
         }
       },
