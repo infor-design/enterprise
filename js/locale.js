@@ -514,7 +514,7 @@
         minimumFractionDigits = 0;
       }
 
-      if (options && options.style === 'percent') {
+      if (!minimumFractionDigits && options && options.style === 'percent') {
         minimumFractionDigits = 2;
       }
 
@@ -542,7 +542,7 @@
       }
 
       if (options && options.style === 'percent') {
-        number = number * 100;
+        number = (number * 100).toFixed(minimumFractionDigits);
       }
 
       var parts = this.truncateDecimals(number, minimumFractionDigits, maximumFractionDigits, options && options.round).split('.');

@@ -16,8 +16,10 @@
 
           var date = new Date('2017-02-01T10:27:40.600Z');
 				  var options = { pattern: "yyyy-MM-dd HH:mm", date: 'datetime' };
-          var value =  Locale.formatDate(date, options);
+          debugger;
+          var value =  Locale.formatNumber(0.57, {style: 'percent', minimumFractionDigits: 0, maximumFractionDigits: 0});
           append(value);
+
 
         }, 300);
       }

@@ -369,8 +369,8 @@ define([
       expect(Locale.formatNumber(0.0000004, {style: 'decimal', maximumFractionDigits:7})).to.equal('0.0000004');
       expect(Locale.formatNumber(20.1, {style: 'decimal', round: true, minimumFractionDigits: 2})).to.equal('20.10');
       expect(Locale.formatNumber(20.1, {style: 'decimal', round: true})).to.equal('20.10');
-	  expect(Locale.formatNumber('12,345.123')).to.equal('12,345.123');
-	  expect(Locale.formatNumber(12345.1234, {group: ''})).to.equal('12345.123');
+	    expect(Locale.formatNumber('12,345.123')).to.equal('12,345.123');
+	    expect(Locale.formatNumber(12345.1234, {group: ''})).to.equal('12345.123');
 
       Locale.set('de-DE');
       expect(Locale.formatNumber(12345.1)).to.equal('12.345,10');
@@ -426,7 +426,13 @@ define([
       Locale.set('en-US');
       expect(Locale.formatNumber(0.0500000, {style: 'percent'})).to.equal('5.00 %');
       expect(Locale.formatNumber(0.050000, {style: 'percent', maximumFractionDigits: 0})).to.equal('5 %');
-      expect(Locale.formatNumber(0.05234, {style: 'percent', minimumFractionDigits: 4, maximumFractionDigits: 4})).to.equal('5.234 %');
+      expect(Locale.formatNumber(0.05234, {style: 'percent', minimumFractionDigits: 4, maximumFractionDigits: 4})).to.equal('5.2340 %');
+
+      expect(Locale.formatNumber(0.57, {style: 'percent', minimumFractionDigits: 0, maximumFractionDigits: 0})).to.equal('57 %');
+      expect(Locale.formatNumber(0.57, {style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2})).to.equal('57.00 %');
+      expect(Locale.formatNumber(0.5700, {style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2})).to.equal('57.00 %');
+      expect(Locale.formatNumber(0.57010, {style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2})).to.equal('57.01 %');
+      expect(Locale.formatNumber(0.5755, {style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2})).to.equal('57.55 %');
 
       Locale.set('tr-TR');
       expect(Locale.formatNumber(0.0500000, {style: 'percent'})).to.equal('%5,00');
