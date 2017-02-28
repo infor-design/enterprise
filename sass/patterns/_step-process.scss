@@ -22,7 +22,7 @@
     .heading {
       @include font-size(18);
       color: $font-color-extrahighcontrast;
-      padding-left: 60px;
+      padding-left: 20px;
       padding-top: 8px;
 
       > small {
@@ -201,6 +201,10 @@
 
     .main .btn-toggle-steps {
       display: inline-block;
+    }
+
+    .toolbar-custom .heading {
+      padding-left: 60px;
     }
 
     .toolbar-collapsible {

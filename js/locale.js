@@ -160,7 +160,7 @@
 
       //Convert if a string..
       if (!(value instanceof Date)) {
-        value = new Date(value);
+        value = this.parseDate(value, attribs);
       }
 
       // TODO: Can we handle this if (this.dff.state()==='pending')
