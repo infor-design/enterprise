@@ -49,7 +49,8 @@
       //Init and get the api for the grid
       $('#readonly-datagrid').datagrid({
         columns: columns,
-        dataset: data
+        dataset: data,
+        toolbar: {title: 'Data Grid Header Title', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: true,  collapsibleFilter: true}
       });
     });
 
