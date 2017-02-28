@@ -374,7 +374,7 @@
 
         // Calendar Html in Popups
         this.table = $('<table class="calendar-table" aria-label="'+ Locale.translate('Calendar') +'" role="application"></table>');
-        this.header = $('<div class="calendar-header"><span class="month">november</span><span class="year"> 2015</span><button type="button" class="btn-icon prev" tabindex="-1">' + $.createIcon('caret-left') + '<span>'+ Locale.translate('PreviousMonth') +'</span></button><button type="button" class="btn-icon next" tabindex="-1">' + $.createIcon('caret-right') + '<span>'+ Locale.translate('NextMonth') +'</span></button></div>');
+        this.header = $('<div class="calendar-header"><span class="month">november</span><span class="year">2015</span><button type="button" class="btn-icon prev" tabindex="-1">' + $.createIcon('caret-left') + '<span>'+ Locale.translate('PreviousMonth') +'</span></button><button type="button" class="btn-icon next" tabindex="-1">' + $.createIcon('caret-right') + '<span>'+ Locale.translate('NextMonth') +'</span></button></div>');
         this.dayNames = $('<thead><tr><th>SU</th> <th>MO</th> <th>TU</th> <th>WE</th> <th>TH</th> <th>FR</th> <th>SA</th> </tr> </thead>').appendTo(this.table);
         this.days = $('<tbody> <tr> <td class="alternate">26</td> <td class="alternate">27</td> <td class="alternate">28</td> <td class="alternate">29</td> <td class="alternate" >30</td> <td class="alternate">31</td> <td>1</td> </tr> <tr> <td>2</td> <td>3</td> <td>4</td> <td>5</td> <td>6</td> <td>7</td> <td>8</td> </tr> <tr> <td>9</td> <td>10</td> <td>11</td> <td>12</td> <td>13</td> <td>14</td> <td>15</td> </tr> <tr> <td>16</td> <td>17</td> <td>18</td> <td>19</td> <td class="is-today">20</td> <td>21</td> <td>22</td> </tr> <tr> <td>23</td> <td>24</td> <td>25</td> <td>26</td> <td>27</td> <td>28</td> <td class="alternate">1</td> </tr> <tr> <td class="alternate">2</td> <td class="alternate">3</td> <td class="alternate">4</td> <td class="alternate">5</td> <td class="alternate">6</td> <td class="alternate">7</td> <td class="alternate">8</td> </tr> </tbody>').appendTo(this.table);
         this.timepickerContainer = $('<div class="datepicker-time-container"></div>');
@@ -763,8 +763,15 @@
         });
 
         //Localize Month Name
+        var yearFist = Locale.calendar().dateFormat.year && Locale.calendar().dateFormat.year.substr(1, 1) === 'y';
         this.header.find('.month').attr('data-month', month).text(monthName);
         this.header.find('.year').text(' ' + year);
+
+        if (yearFist) {
+          var translation = Locale.formatDate(elementDate, {date: 'year'});
+          this.header.find('.month').attr('data-month', month).text(translation);
+          this.header.find('.year').text('');
+        }
 
         //Adjust days of the week
         //lead days

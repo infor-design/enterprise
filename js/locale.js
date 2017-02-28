@@ -181,6 +181,7 @@
       //Special
       pattern = pattern.replace('ngày','nnnn');
       pattern = pattern.replace('tháng','t1áng');
+      pattern = pattern.replace('den','nnn');
 
       //Day of Month
       ret = pattern.replace('dd', this.pad(day, 2));
@@ -202,6 +203,7 @@
       ret = ret.replace('hh', (hours > 12 ? hours - 12 : hours));
       ret = ret.replace('h', (hours > 12 ? hours - 12 : hours));
       ret = ret.replace('HH', hours);
+      ret = ret.replace('H', (hours > 12 ? hours - 12 : hours));
       ret = ret.replace('mm', this.pad(mins, 2));
       ret = ret.replace('ss', this.pad(seconds, 2));
       ret = ret.replace('SSS', this.pad(value.getMilliseconds(), 0));
@@ -226,6 +228,7 @@
       }
       ret = ret.replace('nnnn','ngày');
       ret = ret.replace('t1áng','tháng');
+      ret = ret.replace('nnn','den');
 
       return ret.trim();
     },
@@ -511,7 +514,7 @@
         minimumFractionDigits = 0;
       }
 
-      if (options && options.style === 'percent') {
+      if (!minimumFractionDigits && options && options.style === 'percent') {
         minimumFractionDigits = 2;
       }
 
@@ -539,7 +542,7 @@
       }
 
       if (options && options.style === 'percent') {
-        number = number * 100;
+        number = (number * 100).toFixed(minimumFractionDigits);
       }
 
       var parts = this.truncateDecimals(number, minimumFractionDigits, maximumFractionDigits, options && options.round).split('.');

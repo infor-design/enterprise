@@ -29,11 +29,11 @@
       //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
       dateFormat: {'separator': '/', //Infered
                    'timeSeparator': ':',
-                   'short': 'M/d/yyyy', //use four digit year
-                   'medium': 'd MMM yyyy',
+                   'short': 'yyyy-MM-dd', //use four digit year
+                   'medium': 'yyyy-MM-dd',
                    'long': 'd MMMM yyyy',
                    'full': 'EEEE d MMMM yyyy',
-                   'month': 'd MMMM',
+                   'month': 'den d MMMM',
                    'year': 'MMMM yyyy',
                    'timestamp': 'HH:mm:ss',
                    'datetime': 'yyyy-MM-dd HH:mm'}, //Infered short + short gregorian/dateTimeFormats

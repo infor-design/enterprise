@@ -30,12 +30,12 @@
       //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
       dateFormat: {'separator': '/', //Infered
                    'timeSeparator': ':',
-                   'short': 'M/d/yyyy', //use four digit year
-                   'medium': 'MMM d, yyyy',
-                   'long': 'MMMM d, yyyy',
-                   'full': 'EEEE, MMMM d, y',
-                   'month': 'MMMM d',
-                   'year': 'yyyy MMMM',
+                   'short': 'yyyy/M/d', //use four digit year
+                   'medium': 'yyyy/M/d',
+                   'long': 'yyyy年M月d日',
+                   'full': 'yyyy年M月d日EEEE',
+                   'month': 'M月d日',
+                   'year': 'yyyy年M月',
                    'timestamp': 'hh:mm:ss',
                    'datetime': 'M/d/yyyy hh:mm'}, //Infered short + short gregorian/dateTimeFormats
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
