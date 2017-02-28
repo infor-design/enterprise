@@ -366,10 +366,6 @@ label,
   color: $error-color;
 }
 
-input.error {
-  padding-right: 30px;
-}
-
 .error::-webkit-input-placeholder {
   color: $error-color;
   opacity: 1;
