@@ -1124,10 +1124,9 @@ $datagrid-short-row-height: 23px;
         top: -2px;
 
         &.l-right-text {
-          top: -13px;
 
           + .datagrid-filter-wrapper {
-            top: -20px;
+            clear: both;
           }
         }
       }
