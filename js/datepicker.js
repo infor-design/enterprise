@@ -287,7 +287,7 @@
         if (this.settings.dateFormat === 'locale') {
           this.pattern = localeDateFormat.short + (this.settings.showTime ? ' ' + (this.settings.timeFormat || localeTimeFormat) : '');
         } else {
-          this.pattern = this.settings.dateFormat + (this.settings.showTime ? ' ' + this.settings.timeFormat : '');
+          this.pattern = this.settings.dateFormat + (this.settings.showTime && this.settings.timeFormat ? ' ' + this.settings.timeFormat : '');
         }
 
         this.show24Hours = (this.pattern.match('HH') || []).length > 0;
@@ -382,7 +382,11 @@
 
         // Timepicker options
         if (this.settings.showTime) {
-          if (this.settings.timeFormat !== undefined) {
+          if (this.settings.timeFormat === undefined) {
+            // Getting time-format from date-format (dateFormat: 'M/d/yyyy HH:mm:ss')
+            timeOptions.timeFormat = this.pattern.slice(this.pattern.indexOf(' '));
+          }
+          else {
             timeOptions.timeFormat = this.settings.timeFormat;
           }
           if (this.settings.minuteInterval !== undefined) {

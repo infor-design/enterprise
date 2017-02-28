@@ -1,0 +1,84 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <div role="toolbar" class="toolbar">
+
+      <div class="title">
+        Data Grid Header Title
+        <span class="datagrid-result-count">(N Results)</span>
+      </div>
+
+      <div class="buttonset">
+        <label class="audible" for="searchfield-01">Keyword Search</label>
+        <input id="searchfield-01" name="searchfield-01" class="searchfield" />
+
+        <button class="btn" type="button" id="add-btn">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-add"></use>
+          </svg>
+          <span>Add</span>
+        </button>
+
+      </div>
+    </div>
+
+    <div class="contextual-toolbar toolbar is-hidden">
+      <div class="title selection-count">1 Selected</div>
+      <div class="buttonset">
+        <button class="btn" type="button" id='remove-btn'>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-delete"></use>
+          </svg>
+          <span>Remove</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="datagrid">
+
+    </div>
+  </div>
+</div>
+
+<script>
+  var gridApi = null;
+
+  $('body').one('initialized', function () {
+
+    Locale.set('en-US').done(function () {
+        var grid,
+          data = [],
+          columns = [];
+
+        // Some Sample Data
+        data.push({ value: '1:30:45 AM' });
+        data.push({ value: '2:00 AM' });
+        data.push({ value: '1:40:00 AM' });
+        data.push({ value: '5:00:45 PM' });
+        data.push({ value: '5:30 PM' });
+        data.push({ value: '11:59:59 PM' });
+        data.push({ value: '12:00:01 AM' });
+        data.push({ value: '1:31 PM' });
+        data.push({ value: '4:30 PM' });
+        data.push({ value: '10:28 PM' });
+
+        //Define Columns for the Grid.
+        columns.push({ id: 'time1', name: 'Value', field: 'value', width: 150 });
+        columns.push({ id: 'time2', name: 'Default', field: 'value', formatter: Formatters.Time, editor: Editors.Time, width: 150 });
+        columns.push({ id: 'time3', name: 'Time 24', field: 'value', formatter: Formatters.Time, editor: Editors.Time, editorOptions: {'timeFormat': 'HH:mm'}, timeFormat: 'HH:mm', width: 150 });
+        columns.push({ id: 'time4', name: 'Seconds', field: 'value', formatter: Formatters.Time, editor: Editors.Time, editorOptions: {'timeFormat': 'hh:mm:ss a'}, timeFormat: 'hh:mm:ss a', width: 150 });
+        columns.push({ id: 'time5', name: 'Seconds 24', field: 'value', formatter: Formatters.Time, editor: Editors.Time, editorOptions: {'timeFormat': 'HH:mm:ss'}, timeFormat: 'HH:mm:ss', width: 150 });
+
+
+        //Init and get the api for the grid
+        $('#datagrid').datagrid({
+          columns: columns,
+          dataset: data,
+          editable: true,
+          toolbar: {keywordFilter: true, results: true}
+        });
+
+    });
+  });
+
+</script>
