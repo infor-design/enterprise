@@ -35,7 +35,7 @@
                    'long': 'd. MMMM yyyyy.',
                    'full': 'EEEE, d. MMMM yyyyy.',
                    'month': 'd. MMMM',
-                   'year': 'MMMM yyyy',
+                   'year': 'MMMM, yyyy',
                    'timestamp': 'HH:mm:ss',
                    'datetime': 'd.M.yyyy. HH:mm'}, //Infered short + short gregorian/dateTimeFormats
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)

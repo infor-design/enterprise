@@ -34,7 +34,7 @@
                    'medium': 'd MMM yyyyy',
                    'long': 'd MMMM yyyy',
                    'full': 'EEEE, d MMMM y',
-                   'month': 'dd MMMM',
+                   'month': 'd MMMM',
                    'year': 'MMMM yyyy',
                    'timestamp': 'h:mm:ss a',
                    'datetime': 'd/MM/yyyy h:mm a'}, //Infered short + short gregorian/dateTimeFormats
