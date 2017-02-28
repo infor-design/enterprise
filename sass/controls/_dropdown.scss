@@ -57,6 +57,7 @@ div.multiselect {
     overflow: hidden;
     text-overflow: ellipsis;
     vertical-align: middle;
+    width: 100%;
   }
 
   &:empty {
