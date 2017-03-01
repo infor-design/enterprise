@@ -732,6 +732,13 @@
             return true;
           }
 
+          if (typeof value === 'number') {
+            if (isNaN(value)) {
+              return false;
+            }
+            return true;
+          }
+
           return (value ? true : false);
         },
 
