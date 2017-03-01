@@ -57,7 +57,7 @@ div.multiselect {
     overflow: hidden;
     text-overflow: ellipsis;
     vertical-align: middle;
-    width: 100%;
+    width: inhert;
   }
 
   &:empty {
@@ -594,6 +594,9 @@ div.dropdown-xs,
 
 // Firefox needs a nudge on the list items
 .is-firefox {
+  div.dropdown {
+    padding: 8px 32px 7px 10px;
+  }
 
   .dropdown-list {
     &.multiple li {

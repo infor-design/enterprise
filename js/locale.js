@@ -263,6 +263,10 @@
         dateFormat = dateFormat.pattern;
       }
 
+      if (typeof dateFormat === 'object' && dateFormat.date)  {
+        dateFormat = this.calendar().dateFormat[dateFormat.date];
+      }
+
       var formatParts,
         dateStringParts,
         dateObj = {},
