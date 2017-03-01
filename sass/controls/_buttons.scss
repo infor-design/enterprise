@@ -140,6 +140,23 @@ button {
     opacity: .7;
     pointer-events: none;
   }
+
+  &.btn-menu {
+    color: $primary-btn-color;
+
+    .icon {
+      fill: $primary-btn-color;
+    }
+
+    &:hover,
+    &.is-open {
+      color: $primary-btn-color;
+
+      .icon {
+        fill: $primary-btn-color;
+      }
+    }
+  }
 }
 
 a.btn,
@@ -164,7 +181,6 @@ a.btn-menu {
     padding: 0 6px;
   }
 }
-
 
 //Split Button
 .btn-split-menu {
@@ -203,7 +219,6 @@ a.btn-menu {
     margin-bottom: -3px;
   }
 }
-
 
 // Normal / Secondary Button
 .btn,
@@ -249,6 +264,25 @@ a.btn-menu {
   .ripple-effect {
     background: $graphite02;
   }
+
+  // Menu Button Form
+  &.btn-menu {
+    color: $btn-color;
+
+    .icon {
+      fill: $btn-color;
+    }
+
+    &:hover,
+    &.is-open {
+      color: $btn-color;
+
+      .icon {
+        fill: $btn-color;
+      }
+    }
+  }
+
 }
 
 // Destructive Actions / Third Level Button
