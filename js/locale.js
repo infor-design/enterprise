@@ -160,7 +160,8 @@
 
       //Convert if a string..
       if (!(value instanceof Date)) {
-        value = this.parseDate(value, attribs);
+        var tDate = new Date(value);
+        value = new Date(tDate.getUTCFullYear(), tDate.getUTCMonth(), tDate.getUTCDate());
       }
 
       // TODO: Can we handle this if (this.dff.state()==='pending')
