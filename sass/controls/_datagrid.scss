@@ -382,16 +382,34 @@ $datagrid-short-row-height: 23px;
         &.is-editing {
 
           .datepicker {
-            padding: 12px 20px 10px;
-
-            + .icon {
-              margin-bottom: -4px;
-              top: -1px;
-            }
+            margin-top: 12px;
+            padding: 0 20px;
           }
 
           input {
             padding: 8px 0 7px;
+
+            &.lookup {
+              width: calc(100% - 21px);
+
+              ~.trigger .icon {
+                top: calc(50% - 6px);
+                width: inherit;
+              }
+            }
+
+            &.timepicker {
+              margin-top: 11px;
+              padding: 0 15px;
+              width: calc(100% - 26px);
+
+              ~.icon {
+                left: auto;
+                margin-left: 0;
+                top: calc(50% - 16px);
+              }
+            }
+
           }
 
           .dropdown {
@@ -553,7 +571,7 @@ $datagrid-short-row-height: 23px;
 
           .timepicker {
             margin-top: 6px;
-            padding: 0 20px;
+            padding: 0 15px;
 
             + .icon {
               top: -1px;
@@ -920,7 +938,7 @@ $datagrid-short-row-height: 23px;
 
         &.timepicker {
           margin-top: 16px;
-          padding: 0 19px;
+          padding: 0 15px;
           width: calc(100% - 26px);
 
           ~.icon {
@@ -1716,6 +1734,36 @@ td .btn-actions {
 
     }
 
+    &.medium-rowheight {
+      td.is-editing {
+        // scss-lint:disable NestingDepth
+        .lookup-wrapper {
+          margin-top: 4px;
+
+          .lookup ~ .trigger .icon {
+            top: calc(50% - 9px);
+          }
+        }
+        // scss-lint:enable NestingDepth
+
+        .datepicker {
+          margin-top: 13px;
+
+          ~ .icon {
+            top: calc(50% - 15px);
+          }
+        }
+
+        .timepicker {
+          margin-top: 12px;
+
+          ~ .icon {
+            top: calc(50% - 16px);
+          }
+        }
+      }
+    }
+
     &.short-rowheight {
       td.is-editing {
         // scss-lint:disable NestingDepth
@@ -1746,6 +1794,7 @@ td .btn-actions {
 
       }
     }
+
   }
 }
 
