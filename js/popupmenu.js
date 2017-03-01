@@ -437,7 +437,9 @@
           //Close on escape
           if (key === 27) {
             e.stopPropagation();
+            e.stopImmediatePropagation();
             self.close(true);
+            return false;
           }
 
           //Close on tab

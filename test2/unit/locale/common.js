@@ -73,7 +73,6 @@ define([
       //Other Edge Cases
       expect(Locale.formatDate('11/8/2000')).to.equal('11/8/2000');
       expect(Locale.formatDate()).to.equal(undefined);
-
     },
 
     'should format timestamp': function() {

@@ -3056,7 +3056,7 @@ $.fn.datagrid = function(options) {
             name = col.name;
 
           if (name) {
-            name = name.replace('<br>', '').replace('<br/>', '').replace('<br />', '');
+            name = name.replace('<br>', ' ').replace('<br/>', ' ').replace('<br />', ' ');
             markup += '<li><a href="#" target="_self" tabindex="-1"> <label class="inline"><input tabindex="-1" ' + (col.hideable ===false ? 'disabled' : '') + ' type="checkbox" class="checkbox" '+ (col.hidden ? '' : ' checked') +' data-column-id="'+ (col.id || i) +'"><span class="label-text">' + name + '</span></label></a></li>';
           }
         }
