@@ -3011,7 +3011,12 @@ $.fn.datagrid = function(options) {
         };
 
       var table = self.table.clone();
-      table = appendRows(customDs ? customDs : this.settings.dataset, table);
+      table = appendRows(customDs || this.settings.dataset, table);
+
+      if (!table.find('thead').length) {
+        self.headerRow.clone().insertBefore(table.find('tbody'));
+      }
+
       table = cleanExtra(table);
       var ctx = { worksheet: (worksheetName || 'Worksheet'), table: table.html() };
 
