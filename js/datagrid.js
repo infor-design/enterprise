@@ -2563,31 +2563,31 @@ $.fn.datagrid = function(options) {
         self = this,
         field = columnDef.field,
         maxText = '',
+        title = columnDef.name || '',
         chooseHeader = false;
 
+      //Get max cell value length for this column
       for (var i = 0; i < this.settings.dataset.length; i++) {
         var val = this.fieldValue(this.settings.dataset[i], field),
-           len = 0, title;
+           len = 0;
 
-        //Some types should be formatted
-        if (val instanceof Date || typeof val === 'number' || columnDef.dateFormat) {
-          val = self.formatValue(columnDef.formatter, i , null, this.fieldValue(this.settings.dataset[i], field), columnDef, this.settings.dataset[i], self);
-          val = val.replace(/<\/?[^>]+(>|$)/g, '');
-        }
+        //Get formatted value (without html) so we have accurate string that will display for this cell
+        val = self.formatValue(columnDef.formatter, i, null, val, columnDef, this.settings.dataset[i], self);
+        val = val.replace(/<\/?[^>]+(>|$)/g, '');
 
         len = val.toString().length;
-        title = columnDef.name || '';
-
-        if (title.length > len) {
-          chooseHeader = true;
-          len = title.length;
-          val = title;
-        }
 
         if (len > max) {
           max = len;
           maxText = val;
         }
+      }
+
+      //Use header text length as max if bigger than all data cells
+      if (title.length > max) {
+        max = title.length;
+        maxText = title;
+        chooseHeader = true;
       }
 
       if (maxText === '' || this.settings.dataset.length === 0) {
@@ -3011,7 +3011,12 @@ $.fn.datagrid = function(options) {
         };
 
       var table = self.table.clone();
-      table = appendRows(customDs ? customDs : this.settings.dataset, table);
+      table = appendRows(customDs || this.settings.dataset, table);
+
+      if (!table.find('thead').length) {
+        self.headerRow.clone().insertBefore(table.find('tbody'));
+      }
+
       table = cleanExtra(table);
       var ctx = { worksheet: (worksheetName || 'Worksheet'), table: table.html() };
 
