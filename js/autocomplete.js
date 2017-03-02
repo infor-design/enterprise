@@ -24,7 +24,8 @@
         filterMode: 'startsWith',  // startsWith and contains Supported - false will not client side filter
         delay: 300, // delay is the delay between key strokes on the keypad before it thinks you stopped typing
         width: null, //width of the auto complete menu
-        offset: null //left or top offset
+        offset: null, //left or top offset
+        autoSelectFirstItem: false // if true will cause the first item in the list to be selected
       },
       settings = $.extend({}, defaults, options);
 
@@ -198,9 +199,11 @@
             self.element.removeClass('is-open');
           });
 
-        // Select the first item in the list
-        self.list.children().filter(':not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)').first()
-          .addClass('is-selected');
+        // Optionally select the first item in the list
+        if (self.settings.autoSelectFirstItem) {
+          self.list.children().filter(':not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)').first()
+            .addClass('is-selected');
+        }
 
         this.noSelect = true;
         this.element.trigger('populated', [matchingOptions]).focus();
@@ -310,11 +313,19 @@
           }
         }
 
+        //Enter/Tab - apply selected item
         if ((e.keyCode === 9 || e.keyCode === 13) && this.listIsOpen()) {
           selected = getSelected();
-          e.stopPropagation();
-          e.preventDefault();
-          self.select(selected, this.currentDataSet);
+
+          //Apply selection if an item is selected, otherwise close list and allow default tab/enter behavior to happen
+          if (selected.length) {
+            e.stopPropagation();
+            e.preventDefault();
+            self.noSelect = true;
+            self.select(selected, this.currentDataSet);
+          } else {
+            self.closeList();
+          }
         }
 
         if (e.keyCode === 8 && this.listIsOpen()) {

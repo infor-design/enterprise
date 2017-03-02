@@ -20,7 +20,7 @@ window.Formatters = {
     return '<span class="is-readonly">' + ((value === null || value === undefined) ? '' : value) + '</span>';
   },
 
-  Date: function(row, cell, value, col) {
+  Date: function(row, cell, value, col, isReturnValue) {
     var formatted = ((value === null || value === undefined) ? '' : value),
       value2;
 
@@ -50,8 +50,8 @@ window.Formatters = {
       formatted = Locale.formatDate(value, (typeof col.dateFormat === 'string' ? {pattern: col.dateFormat}: col.dateFormat));
     }
 
-    if (!col.editor) {
-      return formatted === '' ? '' : formatted;
+    if (!col.editor || isReturnValue) {
+      return formatted;
     }
     return '<span class="trigger">' + formatted + '</span>' + $.createIcon({ icon: 'calendar', classes: ['icon-calendar'] });
   },
@@ -728,8 +728,7 @@ window.Editors = {
         //Note that the value should be formatted from the formatter.
         this.input.val(value);
       }
-
-      return this.input.val();
+      return window.Formatters.Date(row, cell, this.input.val(), column, true);
     };
 
     this.focus = function () {
@@ -821,7 +820,7 @@ window.Editors = {
 
     this.init();
 
-},
+  },
 
   Lookup: function(row, cell, value, container, column, event, grid) {
     this.name = 'lookup';
