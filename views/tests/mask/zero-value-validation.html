@@ -1,0 +1,19 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Mask Test: Zero Value &amp; Validation</h2>
+    <p><a class="hyperlink" href="http://jira/browse/SOHO-5634" target="_blank">Related JIRA Ticket</a>. When the value passed to the Validation Component's rule, it's 0 and not "0".  Then it will return false.  0 is a proper value and should pass validation.</p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+
+    <div class="field">
+      <label for="test" class="required">Number (1000.00)</label>
+      <input id="test" inputmode="numeric" data-mask data-options="{ pattern: '####.00', mode: 'number' }" placeholder="####.00" data-validate="required" value="0"/>
+    </div>
+
+  </div>
+</div>
