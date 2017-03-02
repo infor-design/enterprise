@@ -3867,7 +3867,7 @@ $.fn.datagrid = function(options) {
       this.selectedRows(rows, true, true);
       this.dontSyncUi = false;
       this.syncSelectedUI();
-      this.element.trigger('selected', [this._selectedRows]);
+      this.element.triggerHandler('selected', [this._selectedRows , 'selectall']);
     },
 
     unSelectAllRows: function () {
@@ -3875,7 +3875,7 @@ $.fn.datagrid = function(options) {
       this.selectedRows([], true, true);
       this.dontSyncUi = false;
       this.syncSelectedUI();
-      this.element.trigger('selected', [this._selectedRows]);
+      this.element.triggerHandler('selected', [this._selectedRows, 'deselectall']);
     },
 
     //Toggle selection on a single row
@@ -3950,7 +3950,7 @@ $.fn.datagrid = function(options) {
       this.syncSelectedUI();
 
       if (!selectAll) {
-        this.element.trigger('selected', [this._selectedRows]);
+        this.element.triggerHandler('selected', [this._selectedRows, 'select']);
       }
     },
 
@@ -4093,7 +4093,7 @@ $.fn.datagrid = function(options) {
       }
 
       if (!selectAll) {
-        self.element.trigger('selected', [self._selectedRows]);
+        self.element.triggerHandler('selected', [self._selectedRows, 'deselect']);
       }
     },
 
