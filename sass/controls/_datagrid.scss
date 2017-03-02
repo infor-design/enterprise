@@ -10,28 +10,35 @@ $datagrid-medium-row-height: 33px;
 $datagrid-short-header-height: 25px;
 $datagrid-short-row-height: 23px;
 
-//Fixed Header Datagrid
-.datagrid-contained {
+//Main Datagrid Container
+.datagrid-container {
+  background-color: transparent;
+  clear: both;
+  height: auto;
+  min-width: 100%;
+  overflow: hidden;
+  position: relative;
 
-  //Fix IE Scrollbar Offset Issue
-  &.is-windows .datagrid-header {
-    margin-right: 18px;
-  }
-
-  &.is-windows.datagrid-container {
+  // Empty Space Background Fill
+  &.is-windows {
     background-color: $datagrid-header-bg-color;
 
-    &.is-gridlist {
-      background-color: $datagrid-list-header-bg-color;
-
-      .datagrid-body {
-        background-color: $body-bg-color;
-      }
+    .datagrid-body {
+      background-color: $datagrid-empty-bg-color;
     }
   }
 
+  .datagrid-body {
+    background-color: $datagrid-empty-bg-color;
+    height: calc(100% - 40px);
+
+    &.paginated {
+      background-color: $datagrid-empty-bg-color;
+    }
+  }
+
+  //Heights for scrollbars
   &.datagrid-container {
-    border: 1px solid $datagrid-cell-border-color;
     height: inherit;
 
     &.paginated {
@@ -43,43 +50,19 @@ $datagrid-short-row-height: 23px;
     }
   }
 
-  .datagrid-body {
-    height: calc(100% - 40px);
+  //Adjust borders and IE adjustment for vertical scrollbars
+  &.has-vertical-scroll {
+    border-bottom: 1px solid $datagrid-cell-border-color;
+    border-right: 1px solid $datagrid-cell-border-color;
+
+    //Fix IE Scrollbar Offset Issue
+    &.is-windows .datagrid-header {
+      margin-right: 18px;
+    }
+
   }
 
-  &.short-rowheight {
-    .datagrid-body {
-      height: calc(100% - 25px);
-    }
-
-    &.has-toolbar {
-      height: calc(100% - 45px);
-    }
-
-    &.paginated {
-      height: calc(100% - 45px);
-    }
-  }
-
-  &.medium-rowheight {
-    .datagrid-body {
-      height: calc(100% - 30px);
-    }
-  }
-
-}
-
-//Main Datagrid Container
-.datagrid-container {
-  background-color: transparent;
-  border: 1px solid $datagrid-cell-border-color;
-  border-width: 1px 0 0 1px;
-  clear: both;
-  height: auto;
-  min-width: 100%;
-  overflow: hidden;
-  position: relative;
-
+  //State Change
   &.is-readonly {
     border: 0;
   }
@@ -172,6 +155,10 @@ $datagrid-short-row-height: 23px;
       border-right: 0;
     }
 
+    tr td:first-child {
+      border-left: 0;
+    }
+
     //Filter Row
     .datagrid-filter-wrapper {
       input,
@@ -237,6 +224,21 @@ $datagrid-short-row-height: 23px;
 
   //Short and Medium Row height
   &.short-rowheight {
+
+    //Set Container Heights for scrolling
+    .datagrid-body {
+      height: calc(100% - 25px);
+    }
+
+    &.has-toolbar {
+      height: calc(100% - 45px);
+    }
+
+    &.paginated {
+      height: calc(100% - 45px);
+    }
+
+    //Resize Drag Arrows
     .drag-target-arrows {
       font-size: 1.5em;
       height: $datagrid-short-header-height;
@@ -285,6 +287,11 @@ $datagrid-short-row-height: 23px;
   }
 
   &.medium-rowheight {
+    //Set Container Heights for scrolling
+    .datagrid-body {
+      height: calc(100% - 30px);
+    }
+
     .drag-target-arrows {
       font-size: 1.6em;
       height: $datagrid-medium-header-height;
@@ -322,9 +329,8 @@ $datagrid-short-row-height: 23px;
 
 // Grid Body container
 .datagrid-body {
-  background-color: $datagrid-cell-bg-color;
   overflow-x: auto;
-  overflow-y: auto; //scroll has issue in IE?
+  overflow-y: auto;
   position: relative;
   width: 100%;
 
@@ -632,6 +638,10 @@ $datagrid-short-row-height: 23px;
     &.error td {
       background-color: $alert-bg-color;
       //border-color: $alert-red; - Use for focus state
+    }
+
+    td:first-child {
+      border-left: 1px solid $datagrid-cell-border-color;
     }
 
     //Tree - Collapsed rows

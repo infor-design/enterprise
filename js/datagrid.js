@@ -1524,7 +1524,6 @@ $.fn.datagrid = function(options) {
       }
       headerRow += '</tr>';
 
-      //Add Extra Spacer for IE scrollbar
       headerColGroup += cols + '</colgroup>';
 
       if (self.headerRow === undefined) {
@@ -2306,10 +2305,12 @@ $.fn.datagrid = function(options) {
       self.bodyColGroup += '</colgroup>';
       self.bodyColGroup = $(self.bodyColGroup);
       self.tableBody.before(self.bodyColGroup).html(tableHtml);
+
+      self.setScrollClass();
       self.setupTooltips();
       self.tableBody.find('.dropdown').dropdown();
 
-      //Set Tab Index and active Cell
+      //Set IE elements after dataload
       setTimeout(function () {
 
         if (!s.source) {
@@ -2610,6 +2611,7 @@ $.fn.datagrid = function(options) {
       if (!cacheWidths) {
         return '';
       }
+      this.setScrollClass();
 
       //TODO Test last column hidden
       if (cacheWidths.widthPercent) {
@@ -2619,7 +2621,17 @@ $.fn.datagrid = function(options) {
       } else if (this.widthSpecified && !isNaN(this.totalWidth) && this.totalWidth > this.elemWidth) {
         return 'style = "width: ' + parseFloat(this.totalWidth) + 'px"';
       }
+
       return '';
+    },
+
+    setScrollClass: function () {
+      var hasScrollBar = parseInt(this.contentContainer[0].scrollHeight) > parseInt(this.contentContainer[0].offsetHeight) + 2;
+      if (hasScrollBar) {
+        this.element.addClass('has-vertical-scroll');
+      } else {
+        this.element.removeClass('has-vertical-scroll');
+      }
     },
 
     clearHeaderCache: function () {
