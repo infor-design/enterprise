@@ -29,7 +29,7 @@ $datagrid-short-row-height: 23px;
   }
 
   .datagrid-body {
-    background-color: transparent;
+    background-color: $datagrid-empty-bg-color;
     height: calc(100% - 40px);
 
     &.paginated {
