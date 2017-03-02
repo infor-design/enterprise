@@ -59,8 +59,8 @@
           dataset: data,
           selectable: 'multiple',
           toolbar: {title: 'Data Grid Header Title', personalize: true, results: true, actions: true, rowHeight: true, selectCount: true}
-        }).on('selected', function (e, args) {
-          console.log(args);
+        }).on('selected', function (e, args, action) {
+          console.log(args.length, action);
         }).data('datagrid');
 
         // Set Rows as Selected via the API
