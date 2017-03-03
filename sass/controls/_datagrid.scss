@@ -86,6 +86,7 @@ $datagrid-short-row-height: 23px;
 
   // States - List Style Datagrid
   &.is-gridlist {
+    background-color: transparent;
     border: 0;
 
     tr:hover:not(.datagrid-expandable-row) td:not(.is-editing) {
