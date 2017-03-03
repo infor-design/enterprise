@@ -648,12 +648,11 @@
         // BEGIN Temporary stuff until we sort out passing these settings from the controls that utilize them
         //=======================================================
 
-        var triggerWidth = this.element.outerWidth(true),
-          menuIsSmallerThanTrigger = menuDimensions.width < triggerWidth,
-          toolbarParent = target.parents('.toolbar'),
+        var toolbarParent = target.parents('.toolbar'),
           insideToolbar = toolbarParent.length > 0,
           insideToolbarTitle = target.parents('.title').length > 0,
-          isNotFullToolbar = insideToolbar && toolbarParent.children('.buttonset, .title').length > 1;
+          isNotFullToolbar = insideToolbar && toolbarParent.children('.buttonset, .title').length > 1,
+          isPagerMenu = target.parents('.pager-pagesize').length > 0;
 
         function alignLeft() {
           opts.parentXAlignment = (isRTL ? 'right': 'left');
@@ -669,11 +668,11 @@
 
         // Change the alignment of the popupmenu based on certain conditions
         (function doAlignment() {
-          if (menuIsSmallerThanTrigger) {
-            return alignLeft();
-          }
-
           if (target.is('.btn-menu')) {
+            if (isPagerMenu) {
+              return alignRight();
+            }
+
             if (insideToolbar) {
               if (!isNotFullToolbar) {
                 return alignLeft();
