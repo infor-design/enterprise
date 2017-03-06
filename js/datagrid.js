@@ -5354,7 +5354,15 @@ $.fn.datagrid = function(options) {
 
       var pagerElem = this.tableBody;
       this.element.addClass('paginated');
-      pagerElem.pager({dataset: this.settings.dataset, source: this.settings.source, pagesize: this.settings.pagesize, indeterminate: this.settings.indeterminate, rowTemplate: this.settings.rowTemplate, pagesizes: this.settings.pagesizes});
+      pagerElem.pager({
+        componentAPI: this,
+        dataset: this.settings.dataset,
+        source: this.settings.source,
+        pagesize: this.settings.pagesize,
+        indeterminate: this.settings.indeterminate,
+        rowTemplate: this.settings.rowTemplate,
+        pagesizes: this.settings.pagesizes
+      });
       this.pager = pagerElem.data('pager');
 
       pagerElem.on('afterpaging', function (e, args) {
