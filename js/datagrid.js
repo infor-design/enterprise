@@ -1106,7 +1106,9 @@ $.fn.datagrid = function(options) {
         filterable: false,
         disableClientFilter: false, //Disable Filter Logic client side and let your server do it
         disableClientSort: false, //Disable Sort Logic client side and let your server do it
-        resultsText: null  // Can provide a custom function to adjust results text
+        resultsText: null,  // Can provide a custom function to adjust results text
+        virtualized: false, // Prevent Un used rows from being added to the DOM
+        virtualRowBuffer: 10 //how many extra rows top and bottom to allow as a buffer
       },
       settings = $.extend({}, defaults, options);
 
@@ -2250,6 +2252,11 @@ $.fn.datagrid = function(options) {
           }
         }
 
+        if (s.virtualized && !this.isRowVisible(this.recordCount)) {
+          this.recordCount++;
+          continue;
+        }
+
         //Exclude Filtered Rows
         if ((s.treeGrid ? s.treeRootNodes[i].node : dataset[i]).isFiltered) {
           this.filteredCount++;
@@ -2305,7 +2312,7 @@ $.fn.datagrid = function(options) {
       self.bodyColGroup += '</colgroup>';
       self.bodyColGroup = $(self.bodyColGroup);
       self.tableBody.before(self.bodyColGroup).html(tableHtml);
-
+      self.setVirtualHeight();
       self.setScrollClass();
       self.setupTooltips();
       self.tableBody.find('.dropdown').dropdown();
@@ -2323,6 +2330,61 @@ $.fn.datagrid = function(options) {
           self.activeCell = {node: self.cellNode(0, 0, true).attr('tabindex', '0'), isFocused: false, cell: 0, row: 0};
         }
       }, 0);
+    },
+
+    virtualTableHeight: 0,
+    actualTableHeight: 0,
+
+    cacheVirtualStats: function () {
+      var containerHeight = this.element[0].offsetHeight,
+        scrollTop = this.contentContainer[0].scrollTop,
+        headerHeight = this.settings.rowHeight === 'normal' ? 40 : (this.settings.rowHeight === 'medium' ? 30 : 25),
+        bodyHeight = containerHeight-headerHeight,
+        rowHeight = this.settings.rowHeight === 'normal' ? 50 : (this.settings.rowHeight === 'medium' ? 40 : 30);
+
+      this.virtualRange = {rowHeight: rowHeight,
+                         top: Math.max(scrollTop - ((this.settings.virtualRowBuffer-1) * rowHeight), 0),
+                         bottom: scrollTop + bodyHeight + ((this.settings.virtualRowBuffer-1) * rowHeight),
+                         totalHeight: rowHeight * this.settings.dataset.length};
+    },
+
+    // Check if the row is in the visble scroll area + buffer
+    // Just call renderRows() on events that change
+    isRowVisible: function(rowIndex) {
+      if (!this.settings.virtualized) {
+        return true;
+      }
+
+      if (rowIndex === 0) {
+        this.cacheVirtualStats();
+      }
+
+      //determine if the row is in view
+      var pos = rowIndex * this.virtualRange.rowHeight;
+
+      if (pos >= this.virtualRange.top && pos < this.virtualRange.bottom) {
+        return true;
+      }
+
+      return false;
+    },
+
+    //Set the heights on top or bottom based on scroll position
+    setVirtualHeight: function () {
+      if (!this.settings.virtualized) {
+        return true;
+      }
+
+      var bottom = this.virtualRange.totalHeight - this.virtualRange.bottom,
+        top = this.virtualRange.top;
+
+      if (top > 0) {
+        this.tableBody.prepend('<tr class="datagrid-virtual-row-top" style="height: '+ top + 'px"></tr>');
+      }
+      if (bottom > 0) {
+        this.tableBody.append('<tr class="datagrid-virtual-row-bottom" style="height: '+ bottom + 'px"></tr>');
+      }
+      console.log(bottom, top)
     },
 
     setAlternateRowShading: function() {
@@ -3132,7 +3194,7 @@ $.fn.datagrid = function(options) {
       }
 
       if (typeof idOrNode === 'string') {
-        self.headerNodes().not('.is-hidden').each(function () {
+        self.headerNodes().each(function () {
           var col = $(this);
 
           if (col.attr('data-column-id') === idOrNode) {
@@ -3303,7 +3365,7 @@ $.fn.datagrid = function(options) {
 
     //Returns a cell node
     cellNode: function (row, cell, includeGroups) {
-      var rowNode = this.tableBody.find('tr[aria-rowindex]').eq(row);
+      var rowNode = this.tableBody.find('tr[aria-rowindex="'+ (row+1) +'"]');
 
       if (row instanceof jQuery) {
         rowNode = row;
@@ -3350,9 +3412,34 @@ $.fn.datagrid = function(options) {
 
       //Sync Header and Body During scrolling
       self.contentContainer
-        .on('scroll.table', function () {
+        .on('scroll.table',function () {
           self.handleScroll();
         });
+
+      if (this.settings.virtualized) {
+        var oldScroll = 0, oldHeight = 0;
+
+        self.contentContainer
+        .on('scroll.vtable', Soho.utils.debounce(function () {
+          var scrollTop = this.scrollTop;
+
+          if (scrollTop !== oldScroll && Math.abs(scrollTop - oldScroll) > 25) {
+            oldScroll = this.scrollTop;
+            self.renderRows();
+          }
+
+        }));  //not sure if this works better or not to debounce , 200, false
+
+        $('body').on('resize.vtable', function () {
+          var height = this.offsetHeight;
+
+          if (height !== oldHeight) {
+            oldHeight = this.scrollTop;
+            self.renderRows();
+          }
+
+        });
+      }
 
       //Handle Sorting
       this.element
@@ -5428,6 +5515,8 @@ $.fn.datagrid = function(options) {
       //TODO Test Memory Leaks in Chrome - null out fx this.table
       $(document).off('touchstart.datagrid touchend.datagrid touchcancel.datagrid click.datagrid touchmove.datagrid');
       this.contentContainer.off().remove();
+      $('body').off('resize.vtable');
+
     }
 
   };
