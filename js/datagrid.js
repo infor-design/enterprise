@@ -2384,7 +2384,6 @@ $.fn.datagrid = function(options) {
       if (bottom > 0) {
         this.tableBody.append('<tr class="datagrid-virtual-row-bottom" style="height: '+ bottom + 'px"></tr>');
       }
-      console.log(bottom, top)
     },
 
     setAlternateRowShading: function() {
