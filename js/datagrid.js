@@ -50,7 +50,7 @@ window.Formatters = {
       formatted = Locale.formatDate(value, (typeof col.dateFormat === 'string' ? {pattern: col.dateFormat}: col.dateFormat));
     }
 
-    if (!col.editor || isReturnValue) {
+    if (!col.editor || isReturnValue === true) {
       return formatted;
     }
     return '<span class="trigger">' + formatted + '</span>' + $.createIcon({ icon: 'calendar', classes: ['icon-calendar'] });
@@ -84,6 +84,9 @@ window.Formatters = {
         formatted = value2.slice(value2.indexOf(' '));
       }
     }
+
+    // Remove extra space in begining
+    formatted = formatted.replace(/^\s/, '');
 
     if (!col.editor) {
       return formatted;
@@ -811,6 +814,9 @@ window.Editors = {
 
     this.destroy = function () {
       var self = this;
+      if (self.api && self.api.trigger) {
+        self.api.trigger.off('hide.editortime');
+      }
 
       setTimeout(function() {
         grid.quickEditMode = false;
