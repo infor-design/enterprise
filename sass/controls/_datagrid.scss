@@ -2215,6 +2215,32 @@ html[dir='rtl'] {
   }
 }
 
+.card,
+.widget {
+
+  .datagrid-container.short-rowheight.paginated {
+    height: 100%;
+  }
+
+  &.has-datagrid {
+
+    .pager-prev,
+    .pager-next {
+      position: static;
+    }
+
+    .pager-count {
+      vertical-align: middle;
+    }
+
+    .card-footer {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+
+}
+
 //Modal Lists
 .modal table {
   width: auto;
