@@ -572,8 +572,22 @@
         }, 0);
       },
 
+      /**
+       * Updates this instance of pager with externally-provided settings.
+       * @param {Object} pagingInfo - contains settings that will change buttons on the pager.
+       * @param {number} pagingInfo.pagesize - the number of items visible per page
+       * @param {number} pagingInfo.total - the total number of pages
+       * @param {number} pagingInfo.activePage - the currently visible page
+       * @param {boolean} [pagingInfo.firstPage=false] - passed if the currently visible page is the first one
+       * @param {boolean} [pagingInfo.lastPage=false] - passed if the currently visible page is the last one
+       * @param {boolean} [pagingInfo.hideDisabledPagers=false] - causes the pager to become completely hidden if all buttons are disabled
+       */
       updatePagingInfo: function(pagingInfo) {
         this.settings.pagesize = pagingInfo.pagesize || this.settings.pagesize;
+
+        var prevButtons = this.pagerBar.find('.pager-first a, .pager-prev a'),
+          nextButtons = this.pagerBar.find('.pager-next a, .pager-last a'),
+          allButtons = prevButtons.add(nextButtons);
 
         if (this.isTable && this.settings.componentAPI) {
           this.settings.componentAPI.settings.pagesize = this.settings.pagesize;
@@ -596,18 +610,27 @@
           this.pagerBar.find('.pager-total-pages').text(this._pageCount);
         }
 
-        if (pagingInfo.firstPage || pagingInfo.activePage === 0) {
-          this.pagerBar
-          .find('.pager-first a, .pager-prev a, .pager-next a, .pager-last a').removeAttr('disabled tabindex').end()
-          .find('.pager-first a, .pager-prev a')
-            .attr({'disabled':'disabled', 'tabindex': -1});
-        }
+        this.pagerBar[0].classList.remove('hidden');
 
-        if (pagingInfo.lastPage) {
-          this.pagerBar
-            .find('.pager-first a, .pager-prev a, .pager-next a, .pager-last a').removeAttr('disabled tabindex').end()
-            .find('.pager-next a, .pager-last a')
-            .attr({'disabled':'disabled', 'tabindex': -1});
+        // Disable paging buttons that shouldn't be used.
+        var attrNames = 'tabindex disabled',
+          attrs = {
+            'disabled': 'disabled',
+            'tabindex': '-1'
+          };
+        if (pagingInfo.firstPage && pagingInfo.lastPage) {
+          allButtons.attr(attrs);
+
+          if (pagingInfo.hideDisabledPagers) {
+            this.pagerBar[0].classList.add('hidden');
+          }
+
+        } else if (pagingInfo.firstPage) {
+          prevButtons.attr(attrs);
+          nextButtons.removeAttr(attrNames);
+        } else if (pagingInfo.lastPage) {
+          prevButtons.removeAttr(attrNames);
+          nextButtons.attr(attrs);
         }
       },
 
