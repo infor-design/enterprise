@@ -1427,7 +1427,22 @@
       colorpickerActions: function(action) {
         var self = this,
           cpBtn = $('[data-action="'+ action +'"]', this.toolbar),
-          cpApi = cpBtn.data('colorpicker');
+          cpApi = cpBtn.data('colorpicker'),
+          colour = document.queryCommandValue(action);
+
+        // Set selection color checkmark in picker popup
+        // by adding/updating ['data-value'] attribute
+        if (cpApi) {
+          if (self.isFirefox && action === 'backColor') {
+            colour = $(window.getSelection().focusNode.parentNode).css('background-color');
+          }
+          // IE-11 queryCommandValue returns the as decimal
+          if (typeof colour === 'number') {
+            colour = cpApi.decimal2rgb(colour);
+          }
+          colour = cpApi.rgb2hex(colour);
+          cpBtn.attr('data-value', colour);
+        }
 
         cpBtn.on('selected.editor', function (e, item) {
           var value = ('#' + item.data('value')).toLowerCase();
