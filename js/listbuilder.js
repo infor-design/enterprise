@@ -450,6 +450,8 @@
 
       // Unbind all events
       unbind: function() {
+        $('.listview', this.element).off('selected.listbuilder');
+
         $('li '+ this.arrangeApi.handle, this.ul)
           .off('mousedown.listbuilder touchstart.listbuilder');
 
