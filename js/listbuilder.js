@@ -199,6 +199,11 @@
             }
           });
 
+        $('.listview', self.element).on('selected.listbuilder', function(e, args) {
+          var data = self.getDataByNode(args.elem[0]);
+          self.element.triggerHandler('selected', [data]);
+        });
+
         return this;
       }, // END: Handle Events ---------------------------------------------------------------------
 
