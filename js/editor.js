@@ -1428,25 +1428,25 @@
         var self = this,
           cpBtn = $('[data-action="'+ action +'"]', this.toolbar),
           cpApi = cpBtn.data('colorpicker'),
-          colour = document.queryCommandValue(action);
+          color = document.queryCommandValue(action);
 
         // Set selection color checkmark in picker popup
         // by adding/updating ['data-value'] attribute
         if (cpApi) {
           if (self.isFirefox && action === 'backColor') {
-            colour = $(window.getSelection().focusNode.parentNode).css('background-color');
+            color = $(window.getSelection().focusNode.parentNode).css('background-color');
           }
           // IE-11 queryCommandValue returns the as decimal
-          if (typeof colour === 'number') {
-            colour = cpApi.decimal2rgb(colour);
+          if (typeof color === 'number') {
+            color = cpApi.decimal2rgb(color);
           }
-          colour = cpApi.rgb2hex(colour);
-          cpBtn.attr('data-value', colour);
+          color = cpApi.rgb2hex(color);
+          cpBtn.attr('data-value', color).find('.icon').css('fill', color);
         }
 
         cpBtn.on('selected.editor', function (e, item) {
           var value = ('#' + item.data('value')).toLowerCase();
-          // cpBtn.attr('data-value', value);
+          cpBtn.attr('data-value', value).find('.icon').css('fill', value);
 
           if (self.isIE || action === 'foreColor') {
             document.execCommand(action, false, value);
