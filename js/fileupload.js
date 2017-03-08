@@ -50,7 +50,7 @@
           elemClass = elem.find('input').attr('class'),
           instructions = Locale.translate('FileUpload'),
           label = $('<label for="'+ id +'-filename">'+ elem.text() +' <span class="audible">'+ instructions +'</span></label>'),
-          shadowField = $('<input readonly id="'+ id +'-filename" class="fileupload '+ elemClass +'" type="text">'),
+          shadowField = $('<input readonly id="'+ id +'-filename" class="fileupload-background-transparent '+ elemClass +'" type="text">'),
           svg = '<span class="trigger" tabindex="-1">' + $.createIcon('folder') + '</span>';
 
         elem.before(label, shadowField);
@@ -69,7 +69,7 @@
 
         if (this.fileInput.attr('readonly')) {
           this.textInput.prop('disabled', false);
-          this.textInput[0].classList.remove('fileupload')
+          this.textInput[0].classList.remove('fileupload-background-transparent')
           this.fileInput.attr('disabled', 'disabled');
         }
 
