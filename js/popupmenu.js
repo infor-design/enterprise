@@ -1068,8 +1068,10 @@
           menu = this.menu.find('.popupmenu');
 
         this.menu.removeClass('is-open').attr('aria-hidden', 'true');
-        this.menu[0].style.height = '';
-        this.menu[0].style.width = '';
+        if (this.menu[0]) {
+          this.menu[0].style.height = '';
+          this.menu[0].style.width = '';
+        }
 
         if (wrapper[0]) {
           wrapper[0].style.left = '-999px';
