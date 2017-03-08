@@ -30,11 +30,11 @@
         //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
         dateFormat: {'separator': '/', //Infered
                      'timeSeparator': ':',
-                     'short': 'd/M/yyyy', //use four digit year
-                     'medium': 'd/M/yyy',
+                     'short': 'dd/MM/yyyy', //use four digit year
+                     'medium': 'dd/MM/yyyy',
                      'long': 'd de MMMM de y',
                      'full': 'EEEE, d de MMMM de y',
-                     'month': 'dd MMMM',
+                     'month': 'd MMMM',
                      'year': 'MMMM de yyyy',
                      'timestamp': 'HH:mm:ss',
                      'datetime': 'd/M/yyyy HH:mm'}, //Infered short + short gregorian/dateTimeFormats
@@ -129,7 +129,7 @@
       'Download': {id: 'Download', value: 'Descargar', comment: 'Download tooltip'},
       'Duplicate': {id: 'Duplicate', value: 'Duplicar', comment: 'Duplicate tooltip'},
       'EitherSelectedOrNotSelected': {id: 'EitherSelectedOrNotSelected', value: 'Tanto seleccionado como no seleccionado', comment: 'Either Selected Or NotSelected in icons for filtering'},
-      'EndWith': {id: 'EndWith', value: 'Termina en', comment: 'for condition filtering'},
+      'EndsWith': {id: 'EndsWith', value: 'Termina en', comment: 'for condition filtering'},
       'EnterComments': {id: 'EnterComments', value: 'Introduzca aquí sus comentarios...', comment: 'Placeholder text for a text input (comments)'},
       'Error': {id: 'Error', value: 'Error', comment: 'Title, Spoken Text describing fact an error has occured'},
       'ErrorAllowedTypes': {id: 'ErrorAllowedTypes', value: 'El tipo de archivo no está permitido', comment: 'Error string for file-upload'},
@@ -272,7 +272,7 @@
       'SliderMaximumHandle': {id: 'SliderMaximumHandle', value: 'Manipulador del intervalo máximo para', comment: 'Describes a maximum value handle in a Range (double slider), followed in code by the name of the control'},
       'SliderMinimumHandle': {id: 'SliderMinimumHandle', value: 'Manipulador del intervalo mínimo para', comment: 'Describes a minimum value handle in a Range (double slider), followed in code by the name of the control'},
       'SkipToMain': {id: 'SkipToMain', value: 'Saltar a contenido principal', comment: 'Skip link in header, jumps when clicked on to main area'},
-      'StartWith': {id: 'StartWith', value: 'Empezar por', comment: 'for condition filtering'},
+      'StartsWith': {id: 'StartsWith', value: 'Empezar por', comment: 'for condition filtering'},
       'StrikeThrough': {id: 'StrikeThrough', value: 'Tachado', comment: 'turn on and off strike through text in text editor (like word)'},
       'SortAtoZ': {id: 'SortAtoZ', value: 'Orden ascendente', comment: 'Sort A to Z in icons for filtering'},
       'SortZtoA': {id: 'SortZtoA', value: 'Orden descendente', comment: 'Sort Z to A in icons for filtering'},

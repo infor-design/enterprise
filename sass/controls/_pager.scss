@@ -6,7 +6,6 @@
   height: 38px;
   margin: 10px;
   max-height: 38px;
-  //overflow: hidden;
   text-align: center;
 
   > * {
@@ -69,8 +68,8 @@
       cursor: pointer;
       display: inline-block;
       height: 32px;
-      margin: 0 4px;
-      padding: 6px;
+      margin: 0 2px;
+      padding: 5px;
       position: relative;
       text-align: center;
       text-decoration: none;
@@ -197,7 +196,7 @@ li + .pager-count {
 
   .btn-menu {
     height: 30px;
-    margin: 1px;
+    margin: -1px;
 
     &:focus {
       border-color: $primary-color;
@@ -248,6 +247,26 @@ li + .pager-count {
   .pager-next {
     right: 15px;
   }
+
+  &.card .card-footer .pager-toolbar {
+    height: 32px;
+
+    > li {
+      > a {
+        height: 27px;
+        margin: 2px 0 0;
+        padding: 5px 7px;
+      }
+
+      &.pager-prev,
+      &.pager-next {
+        > a {
+          height: 29px;
+          padding: 5px;
+        }
+      }
+    }
+  }
 }
 
 // Adjacent to Listview (list/detail & builder)
@@ -266,5 +285,11 @@ html[dir='rtl'] {
     input {
       text-align: center;
     }
+  }
+}
+
+@include respond-to(phone) {
+  .pager-pagesize {
+    display: none !important;
   }
 }

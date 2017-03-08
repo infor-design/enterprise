@@ -561,13 +561,17 @@
           self.handle = ul.first().attr('data-swap-handle');
           self.handle = (!self.isTouch && !!$(self.handle, ul).length) ? self.handle : null;
           $(self.handle, ul).addClass('draggable')
+            .off('mousedown.swaplist touchstart.swaplist')
             .on('mousedown.swaplist touchstart.swaplist', function() { self.selections.isHandle = true; })
+            .off('mouseup.swaplist touchend.swaplist')
             .on('mouseup.swaplist touchend.swaplist', function() { self.selections.isHandle = false; });
 
           self.targets = ul.attr({'aria-dropeffect': 'none'});
 
           self.items = $('li:not(.is-disabled)', self.element)
-            .not('a[href], img').on('selectstart.swaplist', function() {
+            .not('a[href], img')
+              .off('selectstart.swaplist')
+              .on('selectstart.swaplist', function() {
               if(this.dragDrop) { this.dragDrop(); } //ie9
               return false;
             }).end()
@@ -803,6 +807,35 @@
             self.selections.isInSelection = true;
           }
         }
+      },
+
+      // Update dataset
+      updateDataset: function(ds) {
+        var i, l, lv, c, api,
+          self = this,
+          s = self.settings,
+          containers = [
+            { type: 'available', dataset: ds.available, class: s.availableClass },
+            { type: 'selected', dataset: ds.selected, class: s.selectedClass },
+            { type: 'additional', dataset: ds.additional, class: s.additionalClass }
+          ];
+
+        for (i = 0, l = containers.length; i < l; i++) {
+          c = containers[i];
+          lv = $(c.class +' .listview', self.element);
+          api = lv.data('listview');
+
+          if (api) {
+            api.unselectRowsBetweenIndexes([0, $('li', lv).length - 1]);
+            s[c.type] = c.dataset || [];
+            api.loadData(s[c.type]);
+          }
+        }
+
+        self.initDataset();
+        self.makeDraggable();
+        self.initSelected(s.availableClass);
+        self.initSelected(s.additionalClass);
       },
 
       unbind: function() {

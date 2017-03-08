@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Absolutely positioned tabs and contents</h2>
+    <p><a class="hyperlink" href="http://jira/browse/SOHO-5734" target="_blank">Related JIRA Ticket</a>.</p>
+
+  </div>
+</div>
+
+<style>
+  #tabs-common {
+    position: absolute;
+    height: 400px;
+    width: 400px;
+    top: 100px;
+    left: 100px;
+  }
+  .tab-panel {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+  }
+</style>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div id="tabs-common" class="tab-container">
+      <ul class="tab-list">
+        <li><a href="#tab1">Overview</a></li>
+        <li><a href="#tab2">Items</a></li>
+      </ul>
+      <div id="tab1">
+        <input style="position:absolute;top:5px;width:200px;" />
+      </div>
+      <div id="tab2">
+        <h3 style="position:absolute;top:5px;">Tab 2 Contents</h3>
+        <p style="position:absolute;top:40px;">Bricks-and-clicks? Evolve ubiquitous matrix B2B 24/365 vertical 24/365 platforms standards-compliant global leverage dynamic 24/365 intuitive ROI seamless rss-capable. Cutting-edge grow morph web services leverage; ROI, unleash reinvent innovative podcasts citizen-media networking.<p>
+      </div>
+    </div>
+  </div>
+</div>

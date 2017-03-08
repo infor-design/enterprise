@@ -160,7 +160,8 @@
 
       //Convert if a string..
       if (!(value instanceof Date)) {
-        value = new Date(value);
+        var tDate = new Date(value);
+        value = new Date(tDate.getUTCFullYear(), tDate.getUTCMonth(), tDate.getUTCDate());
       }
 
       // TODO: Can we handle this if (this.dff.state()==='pending')
@@ -181,6 +182,7 @@
       //Special
       pattern = pattern.replace('ngày','nnnn');
       pattern = pattern.replace('tháng','t1áng');
+      pattern = pattern.replace('den','nnn');
 
       //Day of Month
       ret = pattern.replace('dd', this.pad(day, 2));
@@ -202,6 +204,7 @@
       ret = ret.replace('hh', (hours > 12 ? hours - 12 : hours));
       ret = ret.replace('h', (hours > 12 ? hours - 12 : hours));
       ret = ret.replace('HH', hours);
+      ret = ret.replace('H', (hours > 12 ? hours - 12 : hours));
       ret = ret.replace('mm', this.pad(mins, 2));
       ret = ret.replace('ss', this.pad(seconds, 2));
       ret = ret.replace('SSS', this.pad(value.getMilliseconds(), 0));
@@ -226,6 +229,7 @@
       }
       ret = ret.replace('nnnn','ngày');
       ret = ret.replace('t1áng','tháng');
+      ret = ret.replace('nnn','den');
 
       return ret.trim();
     },
@@ -258,6 +262,10 @@
 
       if (dateFormat.pattern) {
         dateFormat = dateFormat.pattern;
+      }
+
+      if (typeof dateFormat === 'object' && dateFormat.date)  {
+        dateFormat = this.calendar().dateFormat[dateFormat.date];
       }
 
       var formatParts,
@@ -511,7 +519,7 @@
         minimumFractionDigits = 0;
       }
 
-      if (options && options.style === 'percent') {
+      if (!minimumFractionDigits && options && options.style === 'percent') {
         minimumFractionDigits = 2;
       }
 
@@ -539,7 +547,7 @@
       }
 
       if (options && options.style === 'percent') {
-        number = number * 100;
+        number = (number * 100).toFixed(minimumFractionDigits);
       }
 
       var parts = this.truncateDecimals(number, minimumFractionDigits, maximumFractionDigits, options && options.round).split('.');
@@ -588,7 +596,8 @@
       var decimals = this.decimalPlaces(number);
 
       //Handle larger numbers
-      if (number.length - decimals - 1 >= 10) {
+      if (number.toString().length - decimals - 1 >= 10 ||
+        (decimals === minDigits && decimals === maxDigits) || (decimals < maxDigits)) {
         multiplier = Math.pow(100, maxDigits);
         adjustedNum = number * multiplier;
       }

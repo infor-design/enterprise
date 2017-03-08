@@ -216,7 +216,7 @@
         }
 
         // Insert the "view more results" link on the Autocomplete control's "populated" event
-        this.element.on('populated.searchfield', function(e, items) {
+        this.element.off('populated.searchfield').on('populated.searchfield', function(e, items) {
           if (items.length > 0) {
             if (self.settings.showAllResults) {
               self.addMoreLink();

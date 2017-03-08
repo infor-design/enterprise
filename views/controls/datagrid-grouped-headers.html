@@ -37,7 +37,10 @@
       grid = $('#datagrid').datagrid({
         columns: columns,
         columnGroups: [{colspan: 3, id: 'group1', name: 'Column Group One'}, {colspan: 4, id: 'group2', name: 'Column Group Two'}], //Numeric Column Span Groups
-        dataset: data
+        dataset: data,
+        columnReorder: true,
+        saveColumns: false,
+        toolbar: {title: 'Groups', actions: true, personalize: true, results: true, resetLayout: true}
       }).data('datagrid');
 
       //grid.setSortColumn('productId');
@@ -46,4 +49,3 @@
  });
 
 </script>
-

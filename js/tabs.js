@@ -264,7 +264,7 @@
         self.anchors.each(associateAnchorWithPanel);
         self.panels
           .addClass('tab-panel')
-          .attr({'role': 'tabpanel'}).hide()
+          .attr({'role': 'tabpanel'})
           .find('h3:first').attr('tabindex', '0');
 
         var excludes = ':not(.separator):not(.is-disabled):not(.is-hidden)',
@@ -339,11 +339,19 @@
         function routeAnchorClick(e) {
           var a = $(e.currentTarget);
 
+          if (this.wasTapped === true) {
+            this.wasTapped = false;
+            return;
+          }
+
+          if (e.type === 'touchend') {
+            this.wasTapped = true;
+          }
+
           if (a.attr('href').substr(0, 1) !== '#') {
             //is an outbound Link
             return;
           }
-
           e.preventDefault();
         }
 
@@ -370,12 +378,11 @@
         // Any events bound to individual tabs (li) and their anchors (a) are bound to the tablist
         // element so that tabs can be added/removed/hidden/shown without needing to change event bindings.
         this.tablist
-          .onTouchClick('tabs', '> li')
           .on('click.tabs', '> li', function(e) {
             return self.handleTabClick(e, $(this));
           })
-          .on('click.tabs touchend.tabs touchcancel.tabs', 'a', routeAnchorClick)
-          .on('click.tabs touchend.tabs touchcancel.tabs', '.icon', handleIconClick)
+          .on('click.tabs', 'a', routeAnchorClick)
+          .on('click.tabs', '.icon', handleIconClick)
           .on('focus.tabs', 'a', function(e) {
             return self.handleTabFocus(e, $(this));
           })
@@ -502,7 +509,7 @@
             noPopupMenusOpen = self.tablist.children('.has-popupmenu.is-open').length === 0;
 
           if (noFocusedTabs && noPopupMenusOpen && !self.moreButton.is('.is-selected, .popup-is-open')) {
-            self.positionFocusState();
+            self.hideFocusState();
           }
         }).on('updated.tabs', function() {
           self.updated();
@@ -539,7 +546,7 @@
         var a = li.children('a');
         a.data('focused-by-click', true);
 
-        if (this.popupmenu) {
+        if (this.popupmenu && this.popupmenu.element.hasClass('is-open')) {
           this.popupmenu.close();
         }
 
@@ -1043,7 +1050,7 @@
 
         if (!selected.length) {
           this.defocusBar();
-          this.positionFocusState();
+          this.hideFocusState();
         } else {
           this.focusBar(selected);
           this.positionFocusState(selected);
@@ -1117,7 +1124,7 @@
         }
 
         var panel = this.getPanel(href);
-        return panel[0].style.display !== 'none';
+        return panel[0].classList.contains('can-show');
       },
 
       isNestedInLayoutTabs: function() {
@@ -1207,7 +1214,7 @@
         }
 
         if (!target.length) {
-          this.positionFocusState();
+          this.hideFocusState();
           this.defocusBar();
           return target;
         }
@@ -1233,7 +1240,7 @@
 
       activate: function(href) {
         var self = this,
-          a, targetTab, targetPanel, oldTab, oldPanel,
+          a, targetTab, targetPanel, targetPanelElem, oldTab, oldPanel,
           selectedStateTarget,
           activeStateTarget;
 
@@ -1244,12 +1251,12 @@
         a = self.getAnchor(href);
         targetTab = a.parent();
         targetPanel = self.getPanel(href);
+        targetPanelElem = targetPanel[0];
         oldTab = self.anchors.parents().filter('.is-selected');
-
 
         // Avoid filter(:visible)
         for (var i = 0; i < self.panels.length; i++) {
-          if (self.panels[i].style.display !== 'none') {
+          if (self.panels[i].classList.contains('is-visible')) {
             oldPanel = $(self.panels[i]);
           }
         }
@@ -1267,32 +1274,28 @@
           return this.callSource(href);
         }
 
+        oldPanel[0].classList.remove('can-show');
+        oldPanel[0].classList.remove('is-visible');
         oldPanel.closeChildren();
-
-        self.panels.hide();
         self.element.trigger('activated', [a]);
 
-        function fadeStart() {
-          self.renderVisiblePanel();
-        }
+        targetPanelElem.classList.add('can-show');
+        self.renderVisiblePanel();
+        // trigger reflow as display property is none for animation
+        targetPanelElem.offsetHeight; // jshint ignore:line
 
-        function fadeComplete() {
-          $('#tooltip').addClass('is-hidden');
-          $('#dropdown-list, #multiselect-list').remove();
+        targetPanel.one($.fn.transitionEndName() + '.tabs', function() {
           self.element.trigger('afteractivated', [a]);
-        }
-
-        targetPanel.stop().fadeIn({
-          duration: 250,
-          start: fadeStart,
-          complete: fadeComplete
         });
+
+        // Triggers the CSS Animation
+        targetPanelElem.classList.add('is-visible');
 
         // Update the currently-selected tab
         self.updateAria(a);
         oldTab.add(this.moreButton).removeClass('is-selected');
 
-        if (targetTab.is('.tab')) {
+        if (targetTab[0].classList.contains('tab')) {
           selectedStateTarget = targetTab;
           activeStateTarget = targetTab;
         }
@@ -1316,11 +1319,19 @@
 
         selectedStateTarget.addClass('is-selected');
 
-        // Hide tooltips that may have been generated inside a tab.
-        setTimeout(function () {
-          $('#validation-tooltip').hide();
-          $('#tooltip').hide();
-        }, 100);
+        // Fires a resize on any invoked child toolbars inside the tab panel.
+        // Needed to fix issues with Toolbar alignment, since we can't properly detect
+        // size on hidden elements.
+        var childToolbars = targetPanel.find('.toolbar');
+        if (childToolbars.length) {
+          childToolbars.each(function() {
+            var api = $(this).data('toolbar');
+            if (api && typeof api.handleResize === 'function') {
+              api.handleResize();
+            }
+          });
+        }
+
       },
 
       /**
@@ -1736,7 +1747,7 @@
 
         // If there's really nothing, kick on out and defocus everything.
         if (!prevLi.length) {
-          this.positionFocusState();
+          this.hideFocusState();
           this.defocusBar();
 
           this.element.trigger('afterclose', [targetLi]);
@@ -1764,11 +1775,11 @@
 
         // If a jQuery-wrapped element is provided, actually append the element.
         // If content is text/string, simply inline it.
-        var markup = $('<div id="'+ tabId +'" class="tab-panel" role="tabpanel" style="display: none;"></div>');
+        var markup = $('<div id="'+ tabId +'" class="tab-panel" role="tabpanel"></div>');
         if (content instanceof $) {
           markup.append(content);
         } else {
-          markup[0].innerHTML = content;
+          markup[0].innerHTML = content || '';
         }
 
         if (doInsert === true) {
@@ -2032,7 +2043,7 @@
 
       adjustModuleTabs: function() {
         var self = this,
-          sizeableTabs = this.tablist.find('li:not(.separator):not(.application-menu-trigger)'),
+          sizeableTabs = this.tablist.find('li:not(.separator):not(.application-menu-trigger):not(:hidden)'),
           appTrigger = this.tablist.find('.application-menu-trigger'),
           hasAppTrigger = appTrigger.length > 0,
           tabContainerW = this.tablist.outerWidth(),
@@ -2197,7 +2208,8 @@
           autoFocus: false,
           attachToBody: true,
           menu: 'tab-container-popupmenu',
-          trigger: 'immediate'
+          trigger: 'immediate',
+          offset: {x: 3}
         });
         self.moreButton.addClass('popup-is-open');
         self.popupmenu = self.moreButton.data('popupmenu');
@@ -2374,7 +2386,10 @@
           this.tablist.scrollTop(0);
         }
 
-        return li[0].getBoundingClientRect().top > this.tablist[0].getBoundingClientRect().top;
+        var liTop = Math.round(li[0].getBoundingClientRect().top),
+          tablistTop = Math.round(this.tablist[0].getBoundingClientRect().top);
+
+        return liTop > tablistTop;
       },
 
       findLastVisibleTab: function() {
@@ -2487,7 +2502,9 @@
           target = target.parent();
         }
 
-        var targetPos = target[0].getBoundingClientRect(),
+        var focusStateElem = this.focusState[0],
+          targetPos = target[0].getBoundingClientRect(),
+          targetClassList = target[0].classList,
           isModuleTabs = this.isModuleTabs(),
           isRTL = Locale.isRTL(),
           parentContainer = this.element;
@@ -2538,13 +2555,13 @@
             targetPosString += '' + property + ': ' + targetPosObj[property] + 'px;';
           }
         }
-        this.focusState[0].setAttribute('style', targetPosString);
+        focusStateElem.setAttribute('style', targetPosString);
 
-        var method = 'addClass';
-        if (unhide) {
-          method = unhide === true ? 'addClass' : 'removeClass';
-          this.focusState[method]('is-visible');
-        }
+        var selected = targetClassList.contains('is-selected') ? 'add' : 'remove';
+        focusStateElem.classList[selected]('is-selected');
+
+        var doHide = unhide === true ? 'add' : 'remove';
+        focusStateElem.classList[doHide]('is-visible');
       },
 
       checkFocusedElements: function() {

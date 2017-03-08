@@ -21,7 +21,8 @@
     // Settings and Options
     var pluginName = 'personalize',
         defaults = {
-          startingColor: ''
+          colors: '',
+          theme: ''
         },
         settings = $.extend({}, defaults, options);
 
@@ -41,26 +42,37 @@
     // Plugin Methods
     Personalize.prototype = {
       init: function() {
-
         this.makeSohoObject()
-        .setColors(this.settings.startingColor)
         .handleEvents();
 
+        if (this.settings.colors) {
+          this.setColors(this.settings.colors);
+        }
+
+        if (this.settings.theme) {
+          this.setTheme(this.settings.theme);
+        }
         return this;
       },
 
       makeSohoObject: function () {
+        var self = this;
+
         window.Soho = window.Soho || {};
 
         //Handle Personalization and theme
         window.Soho.theme = 'light';
 
         window.Soho.setTheme = function(theme) { // jshint ignore:line
-          $('body').trigger('changetheme', theme);
+          self.setTheme(theme);
         };
 
         window.Soho.setColors = function(colors) { // jshint ignore:line
-          $('body').trigger('changecolors', colors);
+          self.setColors(colors);
+        };
+
+        window.Soho.getColorStyleSheet = function(colors) { // jshint ignore:line
+          return self.getColorStyleSheet(colors);
         };
 
         return this;
@@ -94,7 +106,7 @@
         return '#' + hex;
       },
 
-      stylesheet: function(cssRules) {
+      appendStyleSheet: function(cssRules) {
         var sheet = document.getElementById('soho-personalization');
         if (sheet) {
           sheet.parentNode.removeChild(sheet);
@@ -109,10 +121,7 @@
       	document.head.appendChild(sheet);
       },
 
-      // Changes all personalizable elements inside this element to match the personalization scheme provided.
-      // The original hex color as a string or an object with all the Colors
-      setColors: function(colors) {
-
+      getColorStyleSheet: function(colors)  {
         Soho.colors = colors;
 
         if (typeof colors === 'string') {
@@ -123,8 +132,6 @@
         if (!colors || colors === '') {
           return this;
         }
-
-        this.blockUi();
 
         // Default Colors...
         // (Color)07 for the main color (fx headers)
@@ -161,6 +168,8 @@
         ' .module-tabs.is-personalizable .tab.is-selected { background-color: '+ Soho.colors.header +'}'  +
         ' .builder-header.is-personalizable{ background-color: '+ Soho.colors.subheader +'}'  +
         ' .header.is-personalizable { background-color: '+ Soho.colors.header +'}' +
+        ' .header.is-personalizable .title { color: '+ Soho.colors.text +'}' +
+        ' .header.is-personalizable h1 { color: '+ Soho.colors.text +'}' +
         ' .module-tabs.is-personalizable .tab-more { border-left: '+ Soho.colors.verticalBorder +' }' +
         ' .module-tabs.is-personalizable .tab-more:hover { background-color: '+ Soho.colors.hover +' }' +
         ' .module-tabs.is-personalizable .tab-more.is-open { background-color: '+ Soho.colors.hover +' }' +
@@ -178,9 +187,17 @@
         ' .hero-widget.is-personalizable .chart-container.line-chart .dot { stroke: '+ Soho.colors.subheader +' }' +
         '';
 
-        this.stylesheet(cssRules);
+        return cssRules;
+      },
 
-        this.unBlockUi();
+      // Changes all personalizable elements inside this element to match the personalization scheme provided.
+      // The original hex color as a string or an object with all the Colors
+      setColors: function(colors) {
+        if (!colors) {
+          return;
+        }
+
+        this.appendStyleSheet(this.getColorStyleSheet(colors));
         return this;
       },
 
@@ -224,37 +241,41 @@
 
         this.blockUi();
 
-        var css = $('#stylesheet, #sohoxi-stylesheet'),
-          path = css.attr('href');
-        css.attr('href', path.substring(0, path.lastIndexOf('/')) + '/' + theme + '-theme' + (path.indexOf('.min') > -1 ? '.min' : '') + '.css');
-
-        this.unBlockUi();
+        var self = this,
+          originalCss = $('#stylesheet, #sohoxi-stylesheet'),
+          newCss = originalCss.clone(),
+          path = originalCss.attr('href');
+        newCss.on('load', function() {
+          originalCss.remove();
+          self.unBlockUi();
+        });
+        newCss.attr('href', path.substring(0, path.lastIndexOf('/')) + '/' + theme + '-theme' + (path.indexOf('.min') > -1 ? '.min' : '') + '.css');
+        originalCss.after(newCss);
       },
 
       //Block the ui from FOUC
       blockUi: function () {
 
         this.pageOverlay = this.pageOverlay || $('<div style="' +
-        	'background: ' + (Soho.theme === 'light' ? '#f0f0f0' : (Soho.theme === 'dark' ? '#313236' : '#bdbdbd')) +
-        	'display: block' +
-          'height: 100%' +
-        	'left: 0' +
-        	'position: fixed' +
-          'text-align: center' +
-        	'top: 0' +
-        	'width: 100%' +
-          'z-index: 999' +
+        	'background: ' + (Soho.theme === 'light' ? '#f0f0f0;' : (Soho.theme === 'dark' ? '#313236;' : '#bdbdbd;')) +
+        	'display: block;' +
+          'height: 100%;' +
+        	'left: 0;' +
+        	'position: fixed;' +
+          'text-align: center;' +
+        	'top: 0;' +
+        	'width: 100%;' +
+          'z-index: 999;' +
           '"></div>'
         );
 
         $('body').append(this.pageOverlay);
-
       },
 
       unBlockUi: function (){
         var self = this;
 
-        self.pageOverlay.fadeOut('slow', function() {
+        self.pageOverlay.fadeOut(1750, function() {
           self.pageOverlay.remove();
           self.pageOverlay = undefined;
         });

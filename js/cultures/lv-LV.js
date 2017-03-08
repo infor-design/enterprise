@@ -35,7 +35,7 @@
                    'long': 'y. gada d. MMMM',
                    'full': 'EEEE, y. gada d. MMMM',
                    'month': 'd. MMMM',
-                   'year': 'yyyy. MMMM',
+                   'year': 'yyyy. g MMMM',
                    'timestamp': 'HH:mm:ss',
                    'datetime': 'dd.MM.yyyy HH:mm'}, //Infered short + short gregorian/dateTimeFormats
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
@@ -129,7 +129,7 @@
       'Download': {id: 'Download', value: 'Lejupielādēt', comment: 'Download tooltip'},
       'Duplicate': {id: 'Duplicate', value: 'Dublēt', comment: 'Duplicate tooltip'},
       'EitherSelectedOrNotSelected': {id: 'EitherSelectedOrNotSelected', value: 'Atlasīts vai nav atlasīts', comment: 'Either Selected Or NotSelected in icons for filtering'},
-      'EndWith': {id: 'EndWith', value: 'Beigt ar', comment: 'for condition filtering'},
+      'EndsWith': {id: 'EndsWith', value: 'Beigt ar', comment: 'for condition filtering'},
       'EnterComments': {id: 'EnterComments', value: 'Ievadiet komentārus šeit...', comment: 'Placeholder text for a text input (comments)'},
       'Error': {id: 'Error', value: 'Kļūda', comment: 'Title, Spoken Text describing fact an error has occured'},
       'ErrorAllowedTypes': {id: 'ErrorAllowedTypes', value: 'Faila tips nav atļauts', comment: 'Error string for file-upload'},
@@ -272,7 +272,7 @@
       'SliderMaximumHandle': {id: 'SliderMaximumHandle', value: '[name of the control] maksimālā diapazona turis', comment: 'Describes a maximum value handle in a Range (double slider), followed in code by the name of the control'},
       'SliderMinimumHandle': {id: 'SliderMinimumHandle', value: '[name of the control] minimālā diapazona turis', comment: 'Describes a minimum value handle in a Range (double slider), followed in code by the name of the control'},
       'SkipToMain': {id: 'SkipToMain', value: 'Pāriet uz galveno saturu', comment: 'Skip link in header, jumps when clicked on to main area'},
-      'StartWith': {id: 'StartWith', value: 'Sākt ar', comment: 'for condition filtering'},
+      'StartsWith': {id: 'StartsWith', value: 'Sākt ar', comment: 'for condition filtering'},
       'StrikeThrough': {id: 'StrikeThrough', value: 'Pārsvītrot', comment: 'turn on and off strike through text in text editor (like word)'},
       'SortAtoZ': {id: 'SortAtoZ', value: 'Kārtot augošā secībā', comment: 'Sort A to Z in icons for filtering'},
       'SortZtoA': {id: 'SortZtoA', value: 'Kārtot dilstošā secībā', comment: 'Sort Z to A in icons for filtering'},

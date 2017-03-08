@@ -30,10 +30,10 @@
 
       //Define Columns for the Grid.
       columns.push({ id: 'id', name: 'Id', field: 'id', width: 70, formatter: Formatters.Readonly, filterType: 'text', filterDisabled: true});
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 120, formatter: Formatters.Readonly, filterType: 'text'});
-      columns.push({ id: 'productId2', name: 'Product Id 2', field: 'productId', width: 120, formatter: Formatters.Readonly, filterType: 'text'});
-      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', width: 200, formatter: Formatters.Hyperlink, filterType: 'text'});
-      columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 140, filterType: 'contents', options: activities});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly, filterType: 'text'});
+      columns.push({ id: 'productId2', name: 'Product Id 2', field: 'productId', formatter: Formatters.Readonly, filterType: 'text'});
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, filterType: 'text'});
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity', filterType: 'contents', options: activities});
 
       //Supported Filter Types: text, integer, date, select, decimal, checkbox, contents (FUTURE: lookup, percent)
 

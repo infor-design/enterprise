@@ -15,6 +15,12 @@
     width: 100%;
   }
 
+  // scss-lint:disable ImportantRule
+  .datagrid-contained {
+    height: calc(100% - 90px) !important;
+  }
+  // scss-lint:enable ImportantRule
+  //
   //Directional Panes
   &.top-left {
     display: inline-block;

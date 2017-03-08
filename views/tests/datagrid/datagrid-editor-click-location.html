@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid"></div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    var $grid,
+      columns = [],
+      data = [];
+
+    // Some Sample Data
+    data.push({ id: 1, button: 'Test A', link: 'Test A', checkbox: true,  favorite: true  });
+    data.push({ id: 2, button: 'Test B', link: 'Test B', checkbox: false, favorite: false });
+    data.push({ id: 3, button: 'Test C', link: 'Test C', checkbox: true,  favorite: true  });
+    data.push({ id: 4, button: 'Test D', link: 'Test D', checkbox: false, favorite: false });
+
+    //Define Columns for the Grid.
+    columns.push({ id: 'button',   name: 'Button',   field: 'button',   align: 'center', formatter: Formatters.Button,    click: function () { alert('Button Clicked'); }});
+    columns.push({ id: 'link',     name: 'Link',     field: 'link',     align: 'center', formatter: Formatters.Hyperlink, click: function () { alert('Link Clicked'); }});
+    columns.push({ id: 'favorite', name: 'Favorite', field: 'favorite', align: 'center', formatter: Formatters.Favorite,  click: function () { alert('Favorite Icon Clicked'); }, width: 300 });
+    columns.push({ id: 'checkbox', name: 'CheckBox', field: 'checkbox', align: 'center', formatter: Formatters.Checkbox, editor: Editors.Checkbox});
+
+    //Init and get the api for the grid
+    $grid = $('#datagrid').datagrid({
+      columns: columns,
+      dataset: data,
+      editable: true,
+      selectable: 'single',
+      paging: true,
+      pagesize: 5,
+      pagesizes: [5, 10, 25, 50]
+    });
+
+    gridApi = $grid.data('datagrid');
+
+    // ISSUES:
+    // 1. For star, button, checkbox, and hyperlink, need event that only fires when the component itself is clicked and not when it's surrounding cell area is clicked.
+    // 2. Star column doesn't seem to respect width property -maybe something I'm doing.
+
+  });
+</script>

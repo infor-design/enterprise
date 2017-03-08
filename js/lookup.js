@@ -299,11 +299,11 @@
 
         self.grid = lookupGrid.data('datagrid');
         if (!this.settings.title && self.modal) {
-          self.modal.element.find('.title').html('&nbsp;');
+          self.modal.element.find('.title').remove();
         }
 
         var hasKeywordSearch = this.settings.options && this.settings.options.toolbar && this.settings.options.toolbar.keywordFilter;
-        if (!hasKeywordSearch) {
+        if (!hasKeywordSearch && self.modal) {
           self.modal.element.find('.toolbar').appendTo(self.modal.element.find('.modal-header'));
         }
 
@@ -334,8 +334,6 @@
             }
           });
         }
-
-        lookupGrid.css('max-width', '');
 
       },
 

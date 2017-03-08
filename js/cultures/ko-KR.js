@@ -30,14 +30,14 @@
       //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
       dateFormat: {'separator': '. ', //Infered
                    'timeSeparator': ':',
-                   'short': 'yyyy. M. d.', //use four digit year
-                   'medium': 'yyyy. M. d.',
+                   'short': 'yyyy-MM-dd', //use four digit year
+                   'medium': 'yyyy-MM-dd',
                    'long': 'yyyy년 M월 d일',
                    'full': 'yyyy년 M월 d일 EEEE',
                    'month': 'M월 d일',
                    'year': 'yyyy년 M월',
                    'timestamp': 'a h:mm:ss',
-                   'datetime': 'yyyy. M. d. a h:mm'}, //Infered short + short gregorian/dateTimeFormats
+                   'datetime': 'yyyy-MM-dd a h:mm'}, //Infered short + short gregorian/dateTimeFormats
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
          wide: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
@@ -129,7 +129,7 @@
       'Download': {id: 'Download', value: '다운로드', comment: 'Download tooltip'},
       'Duplicate': {id: 'Duplicate', value: '복제', comment: 'Duplicate tooltip'},
       'EitherSelectedOrNotSelected': {id: 'EitherSelectedOrNotSelected', value: '선택한 항목 또는 선택하지 않은 항목', comment: 'Either Selected Or NotSelected in icons for filtering'},
-      'EndWith': {id: 'EndWith', value: '끝 문자', comment: 'for condition filtering'},
+      'EndsWith': {id: 'EndsWith', value: '끝 문자', comment: 'for condition filtering'},
       'EnterComments': {id: 'EnterComments', value: '여기에 댓글 입력...', comment: 'Placeholder text for a text input (comments)'},
       'Error': {id: 'Error', value: '오류', comment: 'Title, Spoken Text describing fact an error has occured'},
       'ErrorAllowedTypes': {id: 'ErrorAllowedTypes', value: '파일 형식이 허용되지 않음', comment: 'Error string for file-upload'},
@@ -272,7 +272,7 @@
       'SliderMaximumHandle': {id: 'SliderMaximumHandle', value: '최대 범위 처리', comment: 'Describes a maximum value handle in a Range (double slider), followed in code by the name of the control'},
       'SliderMinimumHandle': {id: 'SliderMinimumHandle', value: '최소 범위 처리', comment: 'Describes a minimum value handle in a Range (double slider), followed in code by the name of the control'},
       'SkipToMain': {id: 'SkipToMain', value: '기본 콘텐츠로 건너뛰기', comment: 'Skip link in header, jumps when clicked on to main area'},
-      'StartWith': {id: 'StartWith', value: '시작 문자', comment: 'for condition filtering'},
+      'StartsWith': {id: 'StartsWith', value: '시작 문자', comment: 'for condition filtering'},
       'StrikeThrough': {id: 'StrikeThrough', value: '취소선', comment: 'turn on and off strike through text in text editor (like word)'},
       'SortAtoZ': {id: 'SortAtoZ', value: '오름차순 정렬', comment: 'Sort A to Z in icons for filtering'},
       'SortZtoA': {id: 'SortZtoA', value: '내림차순 정렬', comment: 'Sort Z to A in icons for filtering'},

@@ -30,12 +30,12 @@
       //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
       dateFormat: {'separator': '/', //Infered
                    'timeSeparator': ':',
-                   'short': 'M/d/yyyy', //use four digit year
-                   'medium': 'MMM d, yyyy',
-                   'long': 'MMMM d, yyyy',
-                   'full': 'EEEE, MMMM d, y',
-                   'month': 'MMMM d',
-                   'year': 'yyyy MMMM',
+                   'short': 'yyyy/M/d', //use four digit year
+                   'medium': 'yyyy/M/d',
+                   'long': 'yyyy年M月d日',
+                   'full': 'yyyy年M月d日EEEE',
+                   'month': 'M月d日',
+                   'year': 'yyyy年M月',
                    'timestamp': 'hh:mm:ss',
                    'datetime': 'M/d/yyyy hh:mm'}, //Infered short + short gregorian/dateTimeFormats
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
@@ -128,7 +128,7 @@
       'Download': {id: 'Download', value: '下載', comment: 'Download tooltip'},
       'Duplicate': {id: 'Duplicate', value: '複製', comment: 'Duplicate tooltip'},
       'EitherSelectedOrNotSelected': {id: 'EitherSelectedOrNotSelected', value: '已選取項或未選取項', comment: 'Either Selected Or NotSelected in icons for filtering'},
-      'EndWith': {id: 'EndWith', value: '結尾為', comment: 'for condition filtering'},
+      'EndsWith': {id: 'EndsWith', value: '結尾為', comment: 'for condition filtering'},
       'EnterComments': {id: 'EnterComments', value: '請在此處輸入評論...', comment: 'Placeholder text for a text input (comments)'},
       'Error': {id: 'Error', value: '錯誤', comment: 'Title, Spoken Text describing fact an error has occured'},
       'ErrorAllowedTypes': {id: 'ErrorAllowedTypes', value: '不允許的檔案類型', comment: 'Error string for file-upload'},
@@ -271,7 +271,7 @@
       'SliderMaximumHandle': {id: 'SliderMaximumHandle', value: '範圍上限控點用於', comment: 'Describes a maximum value handle in a Range (double slider), followed in code by the name of the control'},
       'SliderMinimumHandle': {id: 'SliderMinimumHandle', value: '範圍下限控點用於', comment: 'Describes a minimum value handle in a Range (double slider), followed in code by the name of the control'},
       'SkipToMain': {id: 'SkipToMain', value: '跳至主內容', comment: 'Skip link in header, jumps when clicked on to main area'},
-      'StartWith': {id: 'StartWith', value: '開頭為', comment: 'for condition filtering'},
+      'StartsWith': {id: 'StartsWith', value: '開頭為', comment: 'for condition filtering'},
       'StrikeThrough': {id: 'StrikeThrough', value: '刪除線', comment: 'turn on and off strike through text in text editor (like word)'},
       'SortAtoZ': {id: 'SortAtoZ', value: '遞增排序', comment: 'Sort A to Z in icons for filtering'},
       'SortZtoA': {id: 'SortZtoA', value: '遞減排序', comment: 'Sort Z to A in icons for filtering'},

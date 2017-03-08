@@ -1,0 +1,92 @@
+<div class="row">
+  <div class="twelve columns">
+
+    <h1>
+      Hidden Toolbar Sizing
+    </h1>
+    <h4>
+      Toolbar #1 and Toolbar #2 are the same, except that #1 is initialized while visible and #2 is initialized while hidden.
+      These toolbars should appear the same.
+    </h4>
+    <p>
+      <b>Note:</b> We can't rely on teams manually calling a resize trigger because with Angular the visibility
+      of controls on the screen can be very dynamic.
+    </p>
+
+    <br><br><br>
+
+    <div class="field">
+      <input type="checkbox" class="checkbox" id="checkbox-test" onchange="$('#toolbar2').toggle()">
+      <label for="checkbox-test" class="checkbox-label">Show Toolbar #2</label>
+    </div>
+
+    <br><br>
+
+    <div class="toolbar" id="toolbar1" role="toolbar">
+      <div class="title">
+        Toolbar #1 (initially visible)
+      </div>
+      <div class="buttonset">
+
+        <label class="audible" for="toolbar-example-searchfield1">Toolbar Searchfield</label>
+        <input class="searchfield" placeholder="keyword" id="toolbar-example-searchfield1" name="toolbar-example-searchfield" />
+
+        <button class="btn" type="button">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-filter"></use>
+          </svg>
+          <span>Category</span>
+        </button>
+
+        <button class="btn-tertiary" type="button">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-calendar"></use>
+          </svg>
+          <span>Date</span>
+        </button>
+
+        <button class="btn" type="button">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-mingle-share"></use>
+          </svg>
+          <span>Share</span>
+        </button>
+
+      </div>
+    </div>
+
+    <div class="toolbar" id="toolbar2" role="toolbar" style="display: none">
+      <div class="title">
+        Toolbar #2 (initially hidden)
+      </div>
+      <div class="buttonset">
+
+        <label class="audible" for="toolbar-example-searchfield2">Toolbar Searchfield</label>
+        <input class="searchfield" placeholder="keyword" id="toolbar-example-searchfield2" name="toolbar-example-searchfield" />
+
+        <button class="btn" type="button">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-filter"></use>
+          </svg>
+          <span>Category</span>
+        </button>
+
+        <button class="btn-tertiary" type="button">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-calendar"></use>
+          </svg>
+          <span>Date</span>
+        </button>
+
+        <button class="btn" type="button">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-mingle-share"></use>
+          </svg>
+          <span>Share</span>
+        </button>
+
+      </div>
+    </div>
+
+  </div>
+</div>

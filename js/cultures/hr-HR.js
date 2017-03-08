@@ -35,7 +35,7 @@
                    'long': 'd. MMMM yyyyy.',
                    'full': 'EEEE, d. MMMM yyyyy.',
                    'month': 'd. MMMM',
-                   'year': 'MMMM yyyy',
+                   'year': 'MMMM, yyyy',
                    'timestamp': 'HH:mm:ss',
                    'datetime': 'd.M.yyyy. HH:mm'}, //Infered short + short gregorian/dateTimeFormats
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
@@ -129,7 +129,7 @@
       'Download': {id: 'Download', value: 'Preuzmi', comment: 'Download tooltip'},
       'Duplicate': {id: 'Duplicate', value: 'Dupliciraj', comment: 'Duplicate tooltip'},
       'EitherSelectedOrNotSelected': {id: 'EitherSelectedOrNotSelected', value: 'Odabrano ili nije odabrano', comment: 'Either Selected Or NotSelected in icons for filtering'},
-      'EndWith': {id: 'EndWith', value: 'Završava sa', comment: 'for condition filtering'},
+      'EndsWith': {id: 'EndsWith', value: 'Završava sa', comment: 'for condition filtering'},
       'EnterComments': {id: 'EnterComments', value: 'Unesite komentare ovdje...', comment: 'Placeholder text for a text input (comments)'},
       'Error': {id: 'Error', value: 'Pogreška', comment: 'Title, Spoken Text describing fact an error has occured'},
       'ErrorAllowedTypes': {id: 'ErrorAllowedTypes', value: 'Vrsta datoteke nije dopuštena', comment: 'Error string for file-upload'},
@@ -272,7 +272,7 @@
       'SliderMaximumHandle': {id: 'SliderMaximumHandle', value: 'Maksimalan raspon ručice za', comment: 'Describes a maximum value handle in a Range (double slider), followed in code by the name of the control'},
       'SliderMinimumHandle': {id: 'SliderMinimumHandle', value: 'Minimalan raspon ručice za', comment: 'Describes a minimum value handle in a Range (double slider), followed in code by the name of the control'},
       'SkipToMain': {id: 'SkipToMain', value: 'Prijeđi na glavni sadržaj', comment: 'Skip link in header, jumps when clicked on to main area'},
-      'StartWith': {id: 'StartWith', value: 'Započinje sa', comment: 'for condition filtering'},
+      'StartsWith': {id: 'StartsWith', value: 'Započinje sa', comment: 'for condition filtering'},
       'StrikeThrough': {id: 'StrikeThrough', value: 'Precrtano', comment: 'turn on and off strike through text in text editor (like word)'},
       'SortAtoZ': {id: 'SortAtoZ', value: 'Sortiraj uzlazno', comment: 'Sort A to Z in icons for filtering'},
       'SortZtoA': {id: 'SortZtoA', value: 'Sortiraj silazno', comment: 'Sort Z to A in icons for filtering'},

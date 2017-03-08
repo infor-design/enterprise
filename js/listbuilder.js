@@ -163,7 +163,8 @@
 
         // TOP BUTTONS =============================================================================
         var topButtonsClick = function(btn, method) {
-          btn.onTouchClick('listbuilder').on('click.listbuilder', function() {
+          btn.offTouchClick('listbuilder').off('click.listbuilder')
+            .onTouchClick('listbuilder').on('click.listbuilder', function() {
             self[method]();
           });
         };
@@ -293,7 +294,7 @@
           data = self.getDataByNode(node),
           container = $('.item-content', node);
 
-        if (typeof data.index !== 'undefined' && data.index < self.dataset.length - 1) {
+        if (typeof data.index !== 'undefined' && data.index < self.dataset.length) {
           $.when(self.element.triggerHandler('beforeedit', [data])).done(function() {
             var origValue = container.text().trim(),
               editInput = $('<input name="edit-input" class="edit-input" type="text" value="'+ origValue +'" />');
@@ -402,6 +403,21 @@
         nodes.each(function(i) {
           $(this).attr({'aria-posinset': i + 1, 'aria-setsize': size});
         });
+      },
+
+      // Update dataset
+      updateDataset: function(ds) {
+        var nodes = $('li', this.ul),
+          lv = $('.listview', this.element).data('listview');
+
+        lv.unselectRowsBetweenIndexes([0, nodes.length-1]);
+        this.settings.dataset = ds;
+        lv.loadData(this.settings.dataset);
+
+        this
+          .initDataset()
+          .setElements()
+          .handleEvents();
       },
 
       // Make enable

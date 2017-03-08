@@ -8,7 +8,6 @@ module.exports = function(grunt) {
     copy = require('./build/configs/copy.js'),
     cssmin = require('./build/configs/cssmin.js'),
     usebanner = require('./build/configs/usebanner.js'),
-    documentation = require('./build/configs/documentation.js'),
     compress = require('./build/configs/compress.js'),
     meta = require('./build/configs/meta.js'),
     revision = require('./build/configs/revision.js'),
@@ -74,7 +73,6 @@ module.exports = function(grunt) {
     amdHeader,
     copy,
     cssmin,
-    documentation,
     revision,
     stripCode,
     uglify,
@@ -99,8 +97,8 @@ module.exports = function(grunt) {
     'uglify',
     'cssmin',
     'copy:main',
-    'usebanner',
     'compress',
+    'usebanner',
     'md2html'
   ]);
 

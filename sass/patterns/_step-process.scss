@@ -10,24 +10,42 @@
     background-color: $white;
     border-bottom: solid 2px $panel-border-color;
     height: 60px;
+    position: relative;
 
-    .title.title-wide {
-      width: 98%;
+
+    .title {
+      &.title-wide {
+        width: 98%;
+      }
     }
 
-    .dual-title {
+    .heading {
       @include font-size(18);
       color: $font-color-extrahighcontrast;
-      display: inline-block;
-      margin-top: 2px;
+      display: table-cell;
+      height: 60px;
+      padding-left: 20px;
+      vertical-align: middle;
 
-      > small {
+      small {
         @include font-size(14);
         display: block;
         margin: 2px 0 0 0;
         padding: 0;
         text-transform: capitalize;
       }
+    }
+
+    .actions {
+      position: absolute;
+      right: 0;
+      top: 13px;
+    }
+
+    .btn-toggle-steps {
+      position: absolute;
+      top: 13px;
+      left: 10px;
     }
   }
 
@@ -37,37 +55,7 @@
     overflow: auto;
     width: 100%;
 
-    li > a {
-      // Borrow some accordion styles
-      border-top: 1px solid transparent;
-      border-bottom: 1px solid $accordion-border-color;
-      border-radius: 0;
-      display: block;
-      cursor: pointer;
-      height: 45px;
-      line-height: 45px;
-      margin-left: 0;
-      padding: 0 15px;
-      position: relative;
-
-      .icon {
-        // Position new alert icon for step "status"
-        &.step-alert {
-          top: calc(50% - 8px);
-          position: relative;
-          margin-right: 11px;
-        }
-
-        // Hide normal tree icons
-        &.icon-tree {
-          display: none;
-        }
-      }
-
-      // Focus State
-      &:not(.hide-focus):focus {
-        border: 1px solid $tree-focus-border-color;
-      }
+    li {
 
       // Selected State (similar to accordion)
       &.is-selected,
@@ -77,15 +65,53 @@
         border-bottom-color: $accordion-selected-bg-color;
         color: $accordion-selected-text-color;
 
-        .tree-text {
-          color: $accordion-selected-text-color;
+        > a {
+          .tree-text {
+            color: $accordion-selected-text-color;
+          }
+
+          .icon,
+          .icon-confirm,
+          .icon-error {
+            fill: $accordion-selected-text-color !important;
+          }
+        }
+      }
+
+      > a {
+        // Borrow some accordion styles
+        background-color: transparent;
+        border-top: 1px solid transparent;
+        border-bottom: 1px solid $accordion-border-color;
+        border-radius: 0;
+        display: block;
+        cursor: pointer;
+        height: 45px;
+        line-height: 45px;
+        margin-left: 0;
+        padding: 0 15px;
+        position: relative;
+
+        .icon {
+          // Position new alert icon for step "status"
+          &.step-alert {
+            top: calc(50% - 8px);
+            position: relative;
+            margin-right: 11px;
+          }
+
+          // Hide normal tree icons
+          &.icon-tree {
+            display: none;
+          }
         }
 
-        .icon,
-        .icon-confirm,
-        .icon-error {
-          fill: $accordion-selected-text-color !important;
+        // Focus State
+        &:not(.hide-focus):focus {
+          border: 1px solid $tree-focus-border-color;
         }
+
+
       }
     }
 
@@ -154,7 +180,7 @@
       @include transform(translateX(0));
     }
 
-    &.show-main {
+    &.tablet-hide-steps {
       .main {
         position: absolute;
         width: 100%;
@@ -179,6 +205,10 @@
       display: inline-block;
     }
 
+    .toolbar-custom .heading {
+      padding-left: 60px;
+    }
+
     .toolbar-collapsible {
       @include transition(margin-top 300ms cubic-bezier(.17, .04, .03, .94));
       position: absolute;
@@ -190,7 +220,6 @@
     .js-step-container-scroll {
       height: 100%;
       padding-top: $header-height + 15px;
-
     }
 
     .scrolled-down .toolbar-collapsible {
@@ -222,7 +251,6 @@
 
     .sidebar {
       @include css3(transform, translateX(0));
-      border: none;
       display: block !important;
 
       .tree {
@@ -238,7 +266,7 @@
       }
     }
 
-    &.show-main {
+    &.phone-hide-steps {
       .main {
         @include css3(transform, translateX(0));
         width: calc(100% - 250px);
@@ -248,7 +276,7 @@
       }
     }
 
-    .toolbar-custom .buttonset {
+    .toolbar-custom .actions {
       display: none;
     }
 

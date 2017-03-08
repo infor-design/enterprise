@@ -14,17 +14,19 @@
     </div>
     <div class="toolbar">
       <div class="buttonset">
-        <input class="searchfield" />
+        <label class="audible" for="shortcut-search">Search</label>
+        <input class="searchfield" id="shortcut-search" />
 
         <button class="btn-menu">
           <span>Developer</span>
         </button>
-        <ul class="popupmenu">
-          <li><a href="#admin">Admin</a></li>
-          <li class="is-selected"><a href="#developer">Developer</a></li>
-          <li><a href="#project-manager">Project Manager</a></li>
+        <ul class="popupmenu has-icons">
+          <li><a href="#admin"><svg class="icon"><use xlink:href="#icon-user"></use></svg>Admin</a></li>
+          <li><a href="#developer"><svg class="icon"><use xlink:href="#icon-tools"></use></svg>Developer</a></li>
+          <li><a href="#project-manager"><svg class="icon"><use xlink:href="#icon-group-selection"></use></svg>Project Manager</a></li>
         </ul>
       </div>
+      {{> includes/header-actionbutton}}
     </div>
   </section>
 
@@ -41,7 +43,6 @@
             <h1>Module Tabs Controls</h1>
           </div>
           <div class="buttonset"></div>
-          {{> includes/header-actionbutton}}
         </div>
       </header>
       <div class="page-container scrollable">
@@ -88,7 +89,7 @@
       </div>
     </div>
 
-    <div id="order-entry" class="tab-panel no-scroll" style="display: none;">
+    <div id="order-entry" class="tab-panel no-scroll">
       <header class="header is-personalizable">
         <div class="toolbar">
           <div class="title">
@@ -131,7 +132,7 @@
       </div>
     </div>
 
-    <div id="order-123456" class="tab-panel" style="display: none;">
+    <div id="order-123456" class="tab-panel">
       <header class="header is-personalizable">
         <div class="toolbar">
           <div class="title">
@@ -154,7 +155,7 @@
   <script type="text/javascript">
     function makeId(name) {
       if (!name) {
-        console.warn('No name for a new tab was provided.')
+        console.warn('No name for a new tab was provided.');
         name = '';
       }
 
@@ -280,6 +281,12 @@
 
       // Run the field toggle method on start
       toggleFields($('#use-garbage').prop('checked'));
+
+      // Add autocomplete on search field
+      $('#shortcut-search').autocomplete({
+        filterMode: 'contains',
+        source: ['Account Setup', 'Customer Inquiry', 'Order Entry', 'Transaction History Portal - Debits & Credits']
+      });
     });
 
   </script>

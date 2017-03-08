@@ -1,0 +1,357 @@
+<h2 id="4-2-5">4.2.5</h2>
+<p>Release Date: TBD</p>
+<h3 id="key-new-features">Key New Features</h3>
+<ul>
+<li>Change jQuery from 3.1.0 to 3.1.1 (non breaking)</li>
+<li>Splitter Speed Improved (using flex box)</li>
+<li>Tabs Speed Improved</li>
+<li>Tabs Can be lazy loaded and lazy loaded using Ajax calls.</li>
+<li>Datagrid Fixed Row Improved</li>
+<li>Datagrid Resize Rows Improved</li>
+<li>General Performance Improvements</li>
+</ul>
+<h3 id="breaking-changes-notes">Breaking Changes / Notes</h3>
+<ul>
+<li>2017-01-13 - Revised the Tabs Component to have CSS-based transitions instead of Javascript-based.  This change includes a new method of hiding tab panels by default, instead of showing them by default.  This caused a breaking change that requires removing any <code>display: none;</code> inline-styles from <code>.tab-panel</code> elements that may have been pre-defined in older versions. (SOHO-5530)</li>
+<li>2017-02-13 - Personalization may cause a Flash of Unstyled Content (FOUC). To prevent this you now have two choices.
+  1) Set the column after loading the soho stylesheet. But before loading the soho stylesheet in the page. The order should be: Set Color, Load Style Sheet (in correct theme), Load Dom, initialize locale and components.
+  2) You can call window.Soho.getColorStyleSheet(color) and get the actually style sheet you would need to append. Then save this and add the stylesheet server side. Some colors are generated so you should use the function to get the right styles.</li>
+<li>2017-01-31 - The Duplicate Icon has visually changed. Make sure to update your SVG</li>
+<li>2017-01-31 - The Datagrid column with the id: &#39;drilldown&#39; will have an auto size now</li>
+<li>2017-01-31 - The Datagrid columns are now more exact. If you have specified widths they will be exactly that width</li>
+<li>2017-01-31 - The Datagrid fixed header is now default. You can control the grid by setting height on the parent container and datagrid-body element.</li>
+<li>2017-01-12 - Listview will no longer initialize components in it. You can do this manually using the render method.</li>
+</ul>
+<h3 id="ui-changes">Ui Changes</h3>
+<ul>
+<li>2017-01-31 - The Duplicate Icon has visually changed. Make sure to update your SVG</li>
+</ul>
+<h3 id="affects">Affects</h3>
+<ul>
+<li>Tabs</li>
+<li>Splitter</li>
+<li>Listview</li>
+<li>Datagrid (columns and scrolling mainly)</li>
+<li>Tooltip</li>
+<li>Popups</li>
+<li>Dropdown</li>
+<li>Datepicker</li>
+<li>TimePicker</li>
+</ul>
+<p>Jira Release Notes
+<a href="http://jira.infor.com/secure/ReleaseNote.jspa?version=27962&amp;styleName=Html&amp;projectId=10980&amp;Create=Create&amp;atl_token=ATP9-LKKS-XFKU-5RYX%7C7c9b3f18b5f46187205e0d24b1489b80c8b4e1a1%7Clin">http://jira.infor.com/secure/ReleaseNote.jspa?version=27962&amp;styleName=Html&amp;projectId=10980&amp;Create=Create&amp;atl_token=ATP9-LKKS-XFKU-5RYX%7C7c9b3f18b5f46187205e0d24b1489b80c8b4e1a1%7Clin</a></p>
+<h2 id="4-2-4-minor-release">4.2.4 - Minor Release</h2>
+<p>Release Date: 2017-01-10</p>
+<h3 id="key-new-features">Key New Features</h3>
+<ul>
+<li>Datagrid - Reset to Default</li>
+<li>List Builder</li>
+<li>Tree Drag and Drop</li>
+<li>Datepicker Color Coded Legend</li>
+</ul>
+<h3 id="breaking-changes">Breaking Changes</h3>
+<ul>
+<li>2016-12-28 - Moved the &quot;add tab button&quot; in the Tabs component from being inside the tabset, to a floating button, similar to how the More button already works.  This is largely controlled by the component itself but it&#39;s possible to pre-define the markup for the entire Tabs component.  In these cases, this should be considered a breaking change and markup should be modified (SOHO-5436).</li>
+<li>2016-12-20 - Removed some code in the Mask control that attempted to automatically detect thousands separators in a number mask.  In some cases explicit disabling of thousands separators was being overridden by this setting, so we removed it (SOHO-5445).</li>
+<li>2016-12-14 - Moved all the list view examples into seperate files fx listview-status</li>
+<li>2016-12-06 - Changed the name of the <code>deactivate</code> event listener on Toolbar Searchfield to <code>collapse</code>, as well as the <em>deactivate()</em> method to <em>collapse()</em>, to avoid conflicts with the native &quot;deactivate&quot; event propogated in IE.  This was causing some focus issues and visual glitches in the Toolbar Searchfield (SOHO-5297).  Additionally, the <code>activated</code> event trigger was renamed to <code>expanded</code>, as well as the <em>activate()</em> method to <em>expand()</em>, for the purposes of keeping nomenclature consistent.</li>
+</ul>
+<h3 id="ui-changes">Ui Changes</h3>
+<h3 id="affects">Affects</h3>
+<ul>
+<li>Datagrid (Columns)</li>
+<li>Toolbar Searchfield</li>
+<li>Toolbar (scroll bar)</li>
+<li>Auto Complete / Editor (xss)</li>
+<li>Datepicker (seconds / time)</li>
+<li>Time Picker</li>
+<li>Tree</li>
+<li>List Builder (New)</li>
+<li>Mask</li>
+</ul>
+<p>Jira Release Notes
+<a href="http://jira.infor.com/secure/ReleaseNote.jspa?version=27962&amp;styleName=Html&amp;projectId=10980&amp;Create=Create&amp;atl_token=ATP9-LKKS-XFKU-5RYX%7C7c9b3f18b5f46187205e0d24b1489b80c8b4e1a1%7Clin">http://jira.infor.com/secure/ReleaseNote.jspa?version=27962&amp;styleName=Html&amp;projectId=10980&amp;Create=Create&amp;atl_token=ATP9-LKKS-XFKU-5RYX%7C7c9b3f18b5f46187205e0d24b1489b80c8b4e1a1%7Clin</a></p>
+<h2 id="4-2-3-minor-release">4.2.3 - Minor Release</h2>
+<p>Release Date: 2016-12-06</p>
+<h3 id="key-new-features">Key New Features</h3>
+<ul>
+<li>Datagrid Grouping and Summary Row</li>
+<li>Swap List API Improvements</li>
+<li>Circle Pager</li>
+<li>Datagrid Validation</li>
+<li>Ajax Dropdowns in Datagrid</li>
+<li>Hero Widget on Home Pages</li>
+</ul>
+<h3 id="breaking-changes">Breaking Changes</h3>
+<ul>
+<li>2016-12-05 - builder-header / subheader should have class header added fx:
+class=&quot;builder-header header subheader is-personalizable&quot;</li>
+<li>2016-11-29 - Circlepager - Changed api method names <strong>active</strong> to <strong>showCollapsedView</strong> and <strong>unactive</strong> to <strong>showExpandedView</strong>.</li>
+<li>2016-11-11 - Swaplist (SOHO-4552) - now returns data arrays instead of jQuery object array, so datasets should be kept in sync with the UI. This will allow for additional data, like the key values, that is not displayed to the user to be used.</li>
+<li>2016-11-21 - The Button with id = &quot;masthead-icon&quot; on the mast head was changed to use a class. Use: <button type="button" class="masthead-icon" class="btn"></li>
+</ul>
+<h3 id="ui-changes">Ui Changes</h3>
+<ul>
+<li>2016-11-17 - Tree - Changed the selection state to only focus the element instead of the longer bar. This is more performant.</li>
+</ul>
+<h3 id="affects-">Affects:</h3>
+<ul>
+<li>Autocomplete</li>
+<li>Datagrid</li>
+<li>Popups</li>
+<li>Datepicker</li>
+<li>Tooltip</li>
+<li>Bullet Chart</li>
+<li>Popover</li>
+<li>Paging (list and Datagrid)</li>
+<li>Tabs</li>
+<li>Home pages</li>
+<li>Select/Dropdown</li>
+</ul>
+<p>Jira Release Notes
+<a href="http://bit.ly/2h1veF3">http://bit.ly/2h1veF3</a></p>
+<h2 id="4-2-2-minor-release">4.2.2 - Minor Release</h2>
+<p>Release Date: 2016-10-20</p>
+<h3 id="key-new-features">Key New Features</h3>
+<ul>
+<li>Personalization</li>
+<li>Improved Positioning logic</li>
+<li>Improved Filtering and Tree grid</li>
+</ul>
+<h3 id="breaking-changes">Breaking Changes</h3>
+<ul>
+<li>2016-11-01 - Datagrid Column widths. In 4.2.1 the column widths would not be exact for plain px with eg: width: 125 in the column definition. This should be noted as you may need to adjust this if columns appear to narrow</li>
+<li>2016-11-01 - Made Dropdown Component dependent on ListFilter Behavior (SOHO-4936)</li>
+<li>2016-10-18 - Tree renamed method setSelectedNode to selectNode for consistency</li>
+<li>2016-10-18 - Split place logic into new file place.js. This is a dependency for controls that position like datepicker, tooltip, popup.</li>
+<li>2016-10-18 - Split initialize logic into 3 files personalize.js for personalization, environment.js for setting up environmental changes like global browser css tags and initialize.js for initializing controls.</li>
+<li>2016-10-11 - Event personalizecolors now called change colors to match changetheme</li>
+<li>2016-10-11 - Css File is now called light.scss not grey.css to match Soho Naming standards</li>
+<li>2016-10-11 - tab-container module-tabs should have class is-personalizable appended for module tabs to handle personalization - SOHO-4162</li>
+</ul>
+<h3 id="ui-changes">Ui Changes</h3>
+<ul>
+<li>2016-08-30 -</li>
+</ul>
+<p>Jira Release Notes
+<a href="http://bit.ly/2cwBELt">http://bit.ly/2cwBELt</a></p>
+<h2 id="4-2-1-minor-release">4.2.1 - Minor Release</h2>
+<p>Release Date: 2016-10-06</p>
+<h3 id="key-new-features">Key New Features</h3>
+<ul>
+<li>Hello</li>
+</ul>
+<h3 id="breaking-changes">Breaking Changes</h3>
+<ul>
+<li><p>2016-10-05 - Pie and Donut Chart - Changed api option <strong>legendshow</strong> to <strong>showLegend</strong> for consistency.</p>
+</li>
+<li><p>2016-09-16 - Busy Indicator - Changed the <strong>delay</strong> setting to <strong>displayDelay</strong>.  When defining settings inside of the HTML markup using the <em>data-options</em> attribute, using &quot;delay&quot; in some cases would cause settings on different Soho Controls that were named &quot;delay&quot; to conflict, causing them both to be the same number.  Changing the name of property on the more transient Busy Indicator fixed the bug, but it does cause a breaking change.  This was completely changed and there was no deprecation, in order to prevent issues with &quot;delay&quot; from occuring. (see SOHO-2951)</p>
+</li>
+</ul>
+<h3 id="ui-changes">Ui Changes</h3>
+<ul>
+<li>2016-08-30 -</li>
+</ul>
+<p>Jira Release Notes
+<a href="http://bit.ly/2cwBELt">http://bit.ly/2cwBELt</a></p>
+<h2 id="4-2-1-rc1-patch-release">4.2.1.rc1 - Patch Release</h2>
+<p>Release Date: 2016-09-16</p>
+<h3 id="key-new-features">Key New Features</h3>
+<ul>
+<li>Datagrid Filter Row</li>
+<li>Datagrid Tree</li>
+<li>Bubble Chart</li>
+<li>Positive/Negative Chart</li>
+<li>Datagrid Export to XLS</li>
+<li>Datagrid Icon Buttons</li>
+<li>Datagrid Formatters for Class/ Content Visible</li>
+<li>Datagrid Rendering Performance Boost</li>
+<li>Property Sheet pattern</li>
+<li>Tree - Ability to add nodes with Ajax</li>
+<li>Splitter - Added keyboard/Aria</li>
+<li>Record ID styling - Options</li>
+</ul>
+<h3 id="breaking-changes">Breaking Changes</h3>
+<ul>
+<li>2016-09-21 - Reverted Changes for external SVG files. For reasons on SOHO-3932 external svg files cannot be supported. We reverted this change back. Please using inline svg&#39;s in the page.</li>
+<li>2016-09-16 - tabs afteractive renamed to afteractived for consistency</li>
+<li>2016-08-16 - Popupmenu classes were not mutually exclusive now both the is-selectable and has-icons class add extra left padding. It may be needed to remove has-icons if you have a selectable menu and no actual row icons or you might end up with extra space.</li>
+<li>2016-08-10 - Date and TimePicker - The forceHourMode option was not used in timepicker so was removed. In Datepicker it had a buggy effect. If used it can be removed from your markup. Use the timeFormat option to control 24h vs 12h format.</li>
+<li>2016-07-14 - Changed app menu so its less backwards compatible. Anyone that has written their app menu markup to sit next to the hamburger button in the header; will need to move that app menu markup to the body in their code manually. So the structure should be icons -&gt; app menu -&gt; page container.</li>
+<li>2016-07-01 - Changed css table-layout of datagrid. This means that the widths set in columns now work more accurately. In examples previously some of the widths set did not work. Now they do. So this may require update default column widths in grids you use. If you leave width out it will auto size to content as previously.</li>
+<li>2016-06-14 - Changed font weight of placeholder text to normal (from lighter)</li>
+<li>2016-06-01 - Wizard now longer has disabled style as this conflicts with &quot;not completed&quot; style. If a situation arises where a wizard tab cannot be clicked, use error messages to indicate.</li>
+<li>2016-06-01 - Updated to jQuery 3.0 (not really totally required/breaking)</li>
+<li>2016-06-01 - Renamed (not frequently used) .sort plugin to .arrange.</li>
+</ul>
+<h3 id="ui-changes">Ui Changes</h3>
+<ul>
+<li>2016-08-30 - <a href="http://usmvvwdev53:421/tests/header">http://usmvvwdev53:421/tests/header</a> - Shows a number of header options we added</li>
+<li>2016-08-24 - Changed border color from graphite02 to graphite03 (this was a mistake and not matching design comps)</li>
+<li>2016-07-13 - Datagrid alternate row colors Changed</li>
+<li>2016-06-20 - Changed background color of drop down to transparent (to match designs)</li>
+<li>2016-06-08 - Vertical Tabs - added 3 themes.</li>
+<li>2016-06-02 - Design of Datagrid Changed to add back the column next to the selection checkboxes.</li>
+<li>2016-06-02 - Design of radios/checkboxes changed to reduce size.</li>
+</ul>
+<p>Jira Release Notes
+<a href="http://bit.ly/2cLADk7">http://bit.ly/2cLADk7</a></p>
+<h2 id="4-2-0-minor-release">4.2.0 - Minor Release</h2>
+<p>Release Date: May 26th</p>
+<h3 id="key-new">Key New</h3>
+<ul>
+<li>Module Tabs</li>
+<li>Lightbox</li>
+<li>Datagrid Column Reorder</li>
+<li>Datagrid Personalization</li>
+<li>Expandable Area</li>
+<li>Error States</li>
+<li>Swap List</li>
+<li>Empty States</li>
+<li>Bullet Chart</li>
+</ul>
+<h3 id="breaking-changes">Breaking Changes</h3>
+<ul>
+<li>2016-05-25 - Datepicker<ul>
+<li>If a placeholder is provided it wont be overriden with the date format.</li>
+<li>isTimepicker changed to showTime - Option value</li>
+</ul>
+</li>
+<li>2016-05-11 - Checkboxes - Changed to display inline-block. This should not cause any issues unless you forgot to wrap your checkbox elements in a field element.</li>
+<li>2016-05-04 - Slider - changed the name of the <em>refresh()</em> method to <em>setValue()</em> so its clear that it sets the value.  <em>refresh()</em> still exists and is marked as &quot;deprecated&quot; - will be removed in future releases.  Please update your code to use <em>setValue()</em> instead of <em>refresh()</em>.</li>
+<li>2016-04-26 - Expandable Area - Event Renamed from open-expandablearea, close-expandablearea to expand, collapse</li>
+<li>2016-02-23 - Tree - Select Event node ommits {node: elem, data: json}</li>
+</ul>
+<h3 id="ui-changes">Ui Changes</h3>
+<ul>
+<li>2016-05-20 - Tree - Major UX changes</li>
+<li>2016-05-20 - Toolbar - has version with background fill/border</li>
+<li>2016-05-20 - New soho.infor.com pages - Added new pages: splitter, popover, pagination, swap list</li>
+<li>2016-05-11 - Validation Errors - The styling of the validation is now on the bottom of the fields without a tooltip.</li>
+<li>2016-04-11 - Lookup Area - Removed secondary header, added search.</li>
+<li>2016-04-11 - Datagrid  - Some colors fx selection state changed. Themes added.</li>
+<li>2016-04-26 - Expandable Area - Colors and font changed. Changed to not look like an accordion.</li>
+<li>2016-04-13 - Accordion - The Accordion&#39;s default style is now an &quot;in-page&quot; design with less borders and configuration.  The original style is now known as a &quot;panel&quot; accordion.  If you wish to keep your accordion looking how it was previously, you must append a &quot;panel&quot; CSS class to your top-level &quot;.accordion&quot; element.</li>
+<li>2016-04-13 - Application Menu - The changes for the Accordion in this release affect the internal accordion used by the Application Menu.  If you use this control, make sure it receives the same markup change required by other &quot;panel&quot;-style Accordions.</li>
+<li>2016-03-07 - Changed Cards - Font size to 1.6 and Icon Color</li>
+<li>2016-02-23 - Changed File Upload States. Refined all 3 themes.</li>
+<li>2016-03-30 - Minor changes to the progress indicator</li>
+<li>2016-03-31 - Hide Focus Support Added to Links. Note that many links will benefit from adding class hide-focus.</li>
+</ul>
+<h3 id="dev-server-changes">Dev Server Changes</h3>
+<ul>
+<li>2016-04-08 - The Xi Controls Dev Server has been upgraded to Express 4.x.  Some of its dependancies may have changed.  If you rely on our Dev Server for examples/testing, please stop the server, delete this project&#39;s _/node_modules/_ folder, and rerun npm install and  npm run install-test-deps.</li>
+</ul>
+<p>Jira Release Notes
+<a href="http://bit.ly/1OCRwLD">http://bit.ly/1OCRwLD</a></p>
+<h2 id="4-1-1-patch-release">4.1.1 - Patch Release</h2>
+<p>Release Date: March 18th, 2016</p>
+<h3 id="key-new">Key New</h3>
+<ul>
+<li>Splitter Control</li>
+<li>File Upload Control</li>
+<li>Empty States Widget Design</li>
+<li>Lightbox</li>
+</ul>
+<h3 id="breaking-changes">Breaking Changes</h3>
+<ul>
+<li>2016-03-01 - Input Fields - Changed event in datagrid from rowremove, to removerow to match other events.</li>
+<li>2016-03-01 - Datagrid Control - Changed event in datagrid from rowremove, to removerow to match other events.</li>
+<li>2016-02-09 - Mask Control - Due to the change in how the options are defined for the Mask Control, the &quot;pattern&quot; definiton no longer resides on the <code>data-mask</code> attribute.  However, the <code>data-mask</code> attribute is still necessary in order for <em>initialize.js</em> to properly invoke a mask on an input field.  This attribute has become a boolean as a result.  Providing <code>data-mask</code> on an input element creates a mask, and not providing it will do nothing.</li>
+<li>2016-02-09 - Mask Control - Making the move to normalize this Control against the others by setting things up with a <code>data-options</code> attribute instead of unqiue HTML5 <code>data-*</code> attributes.  In the next version these will no longer work.  Please update your code accordingly.</li>
+</ul>
+<h3 id="ui-changes">Ui Changes</h3>
+<ul>
+<li>2016-02-16 - Changed Hyperlink, Focus state and colors. Refined all 3 themes.</li>
+<li>2016-02-16 - Changed Breadcrumb, Focus state and colors. Refined all 3 themes.</li>
+<li>2016-02-16 - Action Button, changed some state colors. Refined all 3 themes.</li>
+<li>2016-02-19 - Changed Slate and Graphite 10</li>
+</ul>
+<p>Jira Release Notes
+<a href="http://bit.ly/1Upu6WS">http://bit.ly/1Upu6WS</a></p>
+<h2 id="4-1-0-minor-release">4.1.0 - Minor  Release</h2>
+<p>Release Date: 2016-01-26</p>
+<h3 id="key-new">Key New</h3>
+<ul>
+<li>Bullet Chart</li>
+<li>Datagrid Contextual Toolbar</li>
+<li>Design Changes for V1.2 of Design Specs</li>
+</ul>
+<h3 id="breaking-changes">Breaking Changes</h3>
+<ul>
+<li>2016-01-18 - Color Picker: the colors array should get colors in a 10xN grid.</li>
+<li>2016-01-18 - &quot;hyperlink back&quot; class now requires use of an SVG element.</li>
+<li>2016-01-18 - breadcrumb-arrow class removed use breadcrumb class for header breadcrumbs</li>
+<li>2016-01-14 - Tree - requires updates to SVG icons</li>
+<li>2016-01-11 - Listview - Changed the name of the listview-toolbar class to contextual-toolbar as it is shared with datagrid.</li>
+<li>2016-01-11 - Listview - Modified the &quot;dataset&quot; property that previously could contain both an array of data, or a string containing a URL.  This has now been separated into two properties:  &quot;dataset&quot;, which always represents the array of internal data, and &quot;source&quot;, which is the original set of data as an array, an object, or a URL.  This normalizes the API to be similar to other controls that implement &quot;source&quot;, and makes interfacing with the Pager control easier.</li>
+<li>2016-01-11 - Listview - Changed the &#39;loadApi()&#39; method to &#39;loadData()&#39;, to standardize against datagrid.  Did this to make the interfacing of both controls with the Pager control work better, and to be consistent.</li>
+<li>2016-01-05 - Dropdown - Changed the name of the openList event to openlist for consistency.</li>
+<li>2015-12-07 - Dropdown/Menu Button - Changed the size of the view box n the svg element. That needs to be updated when updating the css or dropdown arrows look too small.</li>
+<li>2015-12-07 - Dropdown/Multiselect, Tabs, Vertical Tabs, Wizard - changed the name of the &quot;activate&quot; event to &quot;activated&quot;, to prevent conflicts with the built-in &quot;activate&quot; event in Windows browsers (IE/Edge).  This issue is documented in HFC-3221.</li>
+<li>2015-12-04 - Contextual Action Panel - The order in which the close/destroy methods previously worked has been changed to flow a bit more nicely.  The order was changed to accomodate HFC-3212, where a bug was discovered that caused Contextual Action Panels to leave behind markup and events from a Modal control.</li>
+</ul>
+<h3 id="ui-changes">Ui Changes</h3>
+<ul>
+<li>2016-01-25 - Swap List - Changed fonts down a size, colors.</li>
+<li>2016-01-25 - Pager - Color Changes, Handle Changes, Pressed/Focus State</li>
+<li>2016-01-25 - Skip Link - Dropped Drop Shadow, reduced font size</li>
+<li>2016-01-25 - Modal/PopDown/Popover/Toast - Dropped Drop Shadow, since size reduction and border color increase</li>
+<li>2016-01-25 - Inputs/Text Area/Search Field/Spin Box - various styles</li>
+<li>2016-01-25 - Links - slight changes, font size to 12px in some situation</li>
+<li>2016-01-21 - Datagrid - changed row height options, border colors, toolbar height and darkened some states</li>
+<li>2016-01-21 - Pager - Updated Pager Style to match SoHo Xi Style Guide v1.2</li>
+<li>2016-01-21 - Tabs - Blue Bar no longer moves with the &quot;focus&quot; state, and only moves when the &quot;selected&quot; Tab changes.</li>
+<li>2016-01-21 - Dropdown/Multiselect - Reworked Style to match SoHo Xi Style Guide v1.2, can now focus items in the list after hovering or after keying with the keyboard.</li>
+<li>2016-01-20 - Color Picker - Has a different popup style and swatch is moved.</li>
+<li>2016-01-19 - Progress Bar - Is heigher and has darker colors.</li>
+<li>2016-01-19 - Switch Control - Reworked the style to match the SoHo Xi Style Guide v1.2</li>
+<li>2016-01-19 - Tabs Control - Reworked the style to match the SoHo Xi Style Guide v1.2</li>
+<li>2016-01-18 - Radios - Text colors and border colors and a few states changed</li>
+<li>2016-01-18 - Checkboxes - Text colors and border colors and a few states changed</li>
+<li>2016-01-15 - Breadcrumbs - Text colors changed</li>
+<li>2016-01-15 - Badges - Height Changed, text color changed.</li>
+<li>2016-01-15 - Action Buttons - Changed the colors and all states.</li>
+<li>2016-01-15 - About - Changed the text colors and added a border. Removed the redundent button.</li>
+<li>2016-01-14 - Tree - Changed (finalized finally) the styles for trees, added new SVG icons, changed colors and states.</li>
+<li>2015-12-09 - Datepicker - Style various styles and button positions on date picker</li>
+<li>2015-11-20 - We did some fine tuning to the color pallette. The following colors have changed: azure05, azure07, amber03, amber06, amber07, amber08, amber09, amber10, emerald09, turquoise04, amethyst01, amethyst04, amethyst05, amethyst06, amethyst07, amethyst08, amethyst09, slate10, alert-orange</li>
+</ul>
+<p>Jira Release Notes
+<a href="http://bit.ly/1reEaKk">http://bit.ly/1reEaKk</a></p>
+<h2 id="4-0-6-patch-release">4.0.6 - Patch Release</h2>
+<p>Release Date: 2015-11-16</p>
+<h3 id="breaking-changes">Breaking Changes</h3>
+<ul>
+<li>2015-11-16 - All events are now lower case for consistency. For example some events were called beforeOpen this is now beforeopen. Ect.. Try to search your project for any events fx .on(&#39;beforeOpen&#39;) and rename. Such beforeopen, animateopen , afterstart, animateclosedcomplete, afterreset, animateclosedcomplete, afteropen, afterpaste, beforeclose, animateopencomplete, beforeactivate</li>
+<li>2015-11-16 - bar-progress type chart was renamed to completion-chart</li>
+<li>2015-11-16 - List detail has new markup</li>
+</ul>
+<h3 id="ui-changes">Ui Changes</h3>
+<ul>
+<li>2015-11-16 - In the High Contrast themes all colors changed from slate to the graphite spectrum</li>
+<li>2015-11-16 - List detail has style changes</li>
+</ul>
+<p>Jira Release Notes
+<a href="http://bit.ly/24CCurl">http://bit.ly/24CCurl</a></p>
+<h2 id="4-0-5-patch-release">4.0.5 - Patch Release</h2>
+<h3 id="key-new">Key New</h3>
+<ul>
+<li>Accordion Refactoring (<a href="http://jira/browse/HFC-2886">HFC-2886</a>)</li>
+<li>Lookup</li>
+</ul>
+<h3 id="breaking-changes">Breaking Changes</h3>
+<ul>
+<li>2015-??-?? Accordion Refactoring - Some markup modifications are necessary to retain compatibility with all Accordion controls.  All current examples of Accordions in this repository have been updated to reflect the new Markup (and by proxy, all Application Menus as well).  Markup Changes include:
+<code>&lt;div class=&quot;.accordion-pane&quot;&gt;&lt;/div&gt;</code> elements are no longer nested inside of <code>&lt;div class=&quot;.accordion-header&quot;&gt;&lt;/div&gt;</code> elements.  Place the Panes immediately following the Headers.
+All Accordion Headers that can expand and show content or subheaders will now contain a trigger button that performs this action.  In cases where the trigger isn&#39;t present, it will be created and placed correctly.  If the Accordion Header is at the top-level, the trigger will look like a &quot;chevron&quot; be placed immediately after the <code>&lt;a&gt;</code>.  If it&#39;s a sub-header, the trigger will be a (+/-) depending on its current state, and will be placed before the <code>&lt;a&gt;</code>.
+SVG elements containing icons are no longer placed inside of <code>&lt;a&gt;</code> elements.  Icons sit adjacent to the <code>&lt;a&gt;</code> elements either by themselves, or inside of trigger buttons.  The Accordion Control will move these icons to their proper locations automatically if they are found inside of <code>&lt;a&gt;</code> links.
+In order to correctly space out content inside an accordion, a new element type, <code>&lt;div class=&quot;accordion-content&quot;&gt;&lt;/div&gt;</code> can be used inside accordion panes to separate the content from other accordion headers in a more semantic way.</li>
+<li>Datagrid sorting is now matched up via column id - where as before it was field. Should not cause any major issues as most of the time these values are the same , but this was done so that the same field can be used with different id&#39;s</li>
+</ul>
+<h3 id="ui-changes">Ui Changes</h3>
+<ul>
+<li>The Accordion Control has been redesigned per a new specification (<a href="http://jira/browse/HFC-2927">HFC-2927</a>).</li>
+</ul>
+<p>Jira Release Notes
+<a href="http://bit.ly/24CCyY9">http://bit.ly/24CCyY9</a></p>

@@ -44,6 +44,7 @@
     Tree.prototype = {
       init: function() {
         this.settings = $.extend({}, settings);
+        this.isIe11 = $('html').is('.ie11');
         this.initTree();
         this.handleKeys();
         this.setupEvents();
@@ -212,7 +213,7 @@
 
       setTreeIcon: function(svg, icon) {
         // Replace all "icon-", "hide-focus", "\s? - all spaces if any" with nothing
-        var iconStr = icon.replace(/icon-|hide-focus|\s?/gi, '');
+        var iconStr = icon.replace(/#?icon-|hide-focus|\s?/gi, '');
         svg.changeIcon(iconStr);
       },
 
@@ -1283,6 +1284,14 @@
                   !!self.sortable.startFolderNode.data('oldData') &&
                     self.sortable.startFolderNode.data('oldData').type === 'file') {
                   self.convertFolderToFile(self.sortable.startFolderNode);
+                }
+
+                // Fix: On windows 10 with IE-11 icons disappears
+                if (self.isIe11) {
+                  start.find('.icon-tree').each(function() {
+                    var svg = $(this);
+                    self.setTreeIcon(svg, svg.find('use').attr('xlink:href'));
+                  });
                 }
 
                 // Sync dataset and ui

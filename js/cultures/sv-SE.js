@@ -29,11 +29,11 @@
       //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
       dateFormat: {'separator': '/', //Infered
                    'timeSeparator': ':',
-                   'short': 'M/d/yyyy', //use four digit year
-                   'medium': 'd MMM yyyy',
+                   'short': 'yyyy-MM-dd', //use four digit year
+                   'medium': 'yyyy-MM-dd',
                    'long': 'd MMMM yyyy',
                    'full': 'EEEE d MMMM yyyy',
-                   'month': 'd MMMM',
+                   'month': 'den d MMMM',
                    'year': 'MMMM yyyy',
                    'timestamp': 'HH:mm:ss',
                    'datetime': 'yyyy-MM-dd HH:mm'}, //Infered short + short gregorian/dateTimeFormats
@@ -128,7 +128,7 @@
       'Download': {id: 'Download', value: 'Hämta', comment: 'Download tooltip'},
       'Duplicate': {id: 'Duplicate', value: 'Duplicera', comment: 'Duplicate tooltip'},
       'EitherSelectedOrNotSelected': {id: 'EitherSelectedOrNotSelected', value: 'Antingen markerad eller inte', comment: 'Either Selected Or NotSelected in icons for filtering'},
-      'EndWith': {id: 'EndWith', value: 'Slutar med', comment: 'for condition filtering'},
+      'EndsWith': {id: 'EndsWith', value: 'Slutar med', comment: 'for condition filtering'},
       'EnterComments': {id: 'EnterComments', value: 'Skriv din kommentar här ...', comment: 'Placeholder text for a text input (comments)'},
       'Error': {id: 'Error', value: 'Fel', comment: 'Title, Spoken Text describing fact an error has occured'},
       'ErrorAllowedTypes': {id: 'ErrorAllowedTypes', value: 'Filtypen tillåts inte', comment: 'Error string for file-upload'},
@@ -271,7 +271,7 @@
       'SliderMaximumHandle': {id: 'SliderMaximumHandle', value: 'Maximalt värde för handtag för', comment: 'Describes a maximum value handle in a Range (double slider), followed in code by the name of the control'},
       'SliderMinimumHandle': {id: 'SliderMinimumHandle', value: 'Minimalt värde för handtag för', comment: 'Describes a minimum value handle in a Range (double slider), followed in code by the name of the control'},
       'SkipToMain': {id: 'SkipToMain', value: 'Hoppa över till huvudinnehåll', comment: 'Skip link in header, jumps when clicked on to main area'},
-      'StartWith': {id: 'StartWith', value: 'Börja med', comment: 'for condition filtering'},
+      'StartsWith': {id: 'StartsWith', value: 'Börja med', comment: 'for condition filtering'},
       'StrikeThrough': {id: 'StrikeThrough', value: 'Genomstrykning', comment: 'turn on and off strike through text in text editor (like word)'},
       'SortAtoZ': {id: 'SortAtoZ', value: 'Sortera stigande', comment: 'Sort A to Z in icons for filtering'},
       'SortZtoA': {id: 'SortZtoA', value: 'Sortera fallande', comment: 'Sort Z to A in icons for filtering'},

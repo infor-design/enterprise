@@ -1123,7 +1123,7 @@
             for (p = 0; p < paragraphs.length; p += 1) {
               if (paragraphs[p] !== '') {
                 if (navigator.userAgent.match(/firefox/i) && p === 0) {
-                  html += self.htmlEntities(paragraphs[p]);
+                  html += '<p>' + self.htmlEntities(paragraphs[p]) + '</p>';
                 } else {
                   if((/\.(gif|jpg|jpeg|tiff|png)$/i).test(paragraphs[p])) {
                     html += '<img src="' + self.htmlEntities(paragraphs[p]) + '" />';
@@ -1162,8 +1162,6 @@
               // some browsers (IE9, for one)
               var el = document.createElement('div');
 
-              //IE copy will append a p we should remove
-              html = html.replace('<p>', '').replace('</p>', '');
               el.innerHTML = html;
               var frag = document.createDocumentFragment(), node, lastNode;
               while ( (node = el.firstChild) ) {
@@ -1429,11 +1427,26 @@
       colorpickerActions: function(action) {
         var self = this,
           cpBtn = $('[data-action="'+ action +'"]', this.toolbar),
-          cpApi = cpBtn.data('colorpicker');
+          cpApi = cpBtn.data('colorpicker'),
+          color = document.queryCommandValue(action);
+
+        // Set selection color checkmark in picker popup
+        // by adding/updating ['data-value'] attribute
+        if (cpApi) {
+          if (self.isFirefox && action === 'backColor') {
+            color = $(window.getSelection().focusNode.parentNode).css('background-color');
+          }
+          // IE-11 queryCommandValue returns the as decimal
+          if (typeof color === 'number') {
+            color = cpApi.decimal2rgb(color);
+          }
+          color = cpApi.rgb2hex(color);
+          cpBtn.attr('data-value', color).find('.icon').css('fill', color);
+        }
 
         cpBtn.on('selected.editor', function (e, item) {
           var value = ('#' + item.data('value')).toLowerCase();
-          // cpBtn.attr('data-value', value);
+          cpBtn.attr('data-value', value).find('.icon').css('fill', value);
 
           if (self.isIE || action === 'foreColor') {
             document.execCommand(action, false, value);

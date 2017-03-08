@@ -234,6 +234,11 @@
             a.setAttribute('aria-disabled', 'true');
           }
 
+          if (a.hasAttribute('disabled')) {
+            Soho.DOM.addClass(li, 'is-disabled');
+            a.setAttribute('aria-disabled', 'true');
+          }
+
           // menu items that contain submenus
           if (submenuWrapper instanceof HTMLElement) {
             li.className += (Soho.DOM.classNameExists(li) ? ' ' : '') + 'submenu';
@@ -365,7 +370,7 @@
             href = anchor.attr('href'),
             selectionResult = [anchor];
 
-          if (anchor.prop('disabled') === true || anchor.parent().is('.submenu') || anchor.parent().is('.is-disabled')) {
+          if (anchor.parent().is('.submenu, .hidden, .is-disabled')) {
             //Do not close parent items of submenus on click
             e.preventDefault();
             return;
@@ -432,9 +437,12 @@
           //Close on escape
           if (key === 27) {
             e.stopPropagation();
+            e.stopImmediatePropagation();
             self.close(true);
+            return false;
           }
 
+          //Close on tab
           if (key === 9) {
             e.stopPropagation();
             self.close(true);
@@ -615,28 +623,36 @@
         // Reset the arrow
         wrapper.find('.arrow').removeAttr('style');
 
-        var opts = $.extend({}, this.settings.placementOpts);
+        var opts = $.extend({}, this.settings.placementOpts),
+          strategies = ['flip'];
+
+        if (!target.is('.autocomplete, .searchfield')) {
+          strategies.push('nudge');
+        }
+        strategies.push('shrink-y');
+
+        // If right-click or immediate (with an incoming event object), use coordinates from the event
         if ((this.settings.trigger === 'immediate' && this.settings.eventObj) || this.settings.trigger === 'rightClick') {
           opts.x = getCoordinates(e, 'x') - (isRTL ? menuDimensions.width : 0) + ((isRTL ? -1 : 1) * this.settings.offset.x);
           opts.y = getCoordinates(e, 'y') + this.settings.offset.y;
-          opts.strategies = ['flip', 'nudge', 'shrink-y'];
+
         } else {
           opts.x = this.settings.offset.x || 0;
           opts.y = this.settings.offset.y || 0;
           opts.parent = this.element;
           opts.placement = 'bottom';
         }
+        opts.strategies = strategies;
 
         //=======================================================
         // BEGIN Temporary stuff until we sort out passing these settings from the controls that utilize them
         //=======================================================
 
-        var triggerWidth = this.element.outerWidth(true),
-          menuIsSmallerThanTrigger = menuDimensions.width < triggerWidth,
-          toolbarParent = target.parents('.toolbar'),
+        var toolbarParent = target.parents('.toolbar'),
           insideToolbar = toolbarParent.length > 0,
           insideToolbarTitle = target.parents('.title').length > 0,
-          isNotFullToolbar = insideToolbar && toolbarParent.children('.buttonset, .title').length > 1;
+          isNotFullToolbar = insideToolbar && toolbarParent.children('.buttonset, .title').length > 1,
+          isPagerMenu = target.parents('.pager-pagesize').length > 0;
 
         function alignLeft() {
           opts.parentXAlignment = (isRTL ? 'right': 'left');
@@ -652,11 +668,11 @@
 
         // Change the alignment of the popupmenu based on certain conditions
         (function doAlignment() {
-          if (menuIsSmallerThanTrigger) {
-            return alignLeft();
-          }
-
           if (target.is('.btn-menu')) {
+            if (isPagerMenu) {
+              return alignRight();
+            }
+
             if (insideToolbar) {
               if (!isNotFullToolbar) {
                 return alignLeft();
@@ -793,7 +809,7 @@
             self.close();
           });
 
-          self.element.trigger('open', [self.menu]);
+          self.element.triggerHandler('open', [self.menu]);
 
           if (self.settings.trigger === 'rightClick') {
             self.element.on('click.popupmenu touchend.popupmenu', function () {
@@ -867,7 +883,7 @@
             }
 
             self.highlight(selection);
-            self.element.trigger('afteropen', [self.menu]);
+            self.element.triggerHandler('afteropen', [self.menu]);
           }, 1);
         }
       },
@@ -1052,19 +1068,23 @@
           menu = this.menu.find('.popupmenu');
 
         this.menu.removeClass('is-open').attr('aria-hidden', 'true');
-        this.menu[0].style.height = '';
-        this.menu[0].style.width = '';
+        if (this.menu[0]) {
+          this.menu[0].style.height = '';
+          this.menu[0].style.width = '';
+        }
 
-        wrapper[0].style.left = '-999px';
-        wrapper[0].style.height = '';
-        wrapper[0].style.width = '';
+        if (wrapper[0]) {
+          wrapper[0].style.left = '-999px';
+          wrapper[0].style.height = '';
+          wrapper[0].style.width = '';
+        }
 
         this.menu.find('.submenu').off('mouseenter mouseleave').removeClass('is-submenu-open');
         if (menu[0]) {
           menu[0].style.left = '';
           menu[0].style.top = '';
           menu[0].style.height = '';
-          menu[0].style.width = '';          
+          menu[0].style.width = '';
         }
 
         this.menu.find('.is-focused').removeClass('is-focused');

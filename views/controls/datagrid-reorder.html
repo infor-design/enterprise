@@ -73,6 +73,7 @@
       columns: columns,
       columnReorder: true,
       dataset: data,
+      saveColumns: false,
       toolbar: {personalize: true, results: true, resetLayout: true}
     }).on('columnchange', function (e, args) {
       console.log('Changed', args.columns);

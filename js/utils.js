@@ -532,6 +532,7 @@
     return element.attributes;
   };
 
+  //Adding, removing, and testing for classes
   window.Soho.DOM.classNameExists = function classNameExists(element) {
     var cn = element.className;
     return cn && cn.length > 0;
@@ -539,6 +540,18 @@
 
   window.Soho.DOM.classNameHas = function has(classNameString, targetContents) {
     return classNameString.indexOf(targetContents) > -1;
+  };
+
+  window.Soho.DOM.hasClass = function hasClass (el, className) {
+    return el.classList ? el.classList.contains(className) : new RegExp('\\b'+ className+'\\b').test(el.className);
+	};
+
+  window.Soho.DOM.addClass = function addClass(el, className) {
+     if (el.classList) {
+      el.classList.add(className);
+    } else if (!window.Soho.DOM.hasClass(el, className)) {
+      el.className += ' ' + className;
+    }
   };
 
   // Debounce method

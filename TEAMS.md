@@ -17,6 +17,7 @@
 | CLM | Angular  | Eric Noble | 3x to 4x |
 | Cloud Suite |   | Adel, Rick Hansen  | 3x |
 | Cl Wizard | New Designs  | Shelwin Wu  | 4x |
+| Cloverleaf Global Monitor | Web App with additional ?Cordova? Mobile interface  | Carlos Prichardo | 4.x |
 | CRM | Shared Repo  | Jason Best  | 4x |
 | Docs Admin Console | docs.infor.com  admin tool | Xiwen Zhao <Xiwen.Zhao@infor.com> | 4x |
 | GFC  | Lawson App | Tiffany Kai King, Jon Cadag | 3x |
@@ -26,6 +27,7 @@
 | Healthcare Clinical  |   | Charlie Price | 3X
 | HMS  |   | David Parisi | 3x|
 | Home Pages  | Typescript, Angular 1.0 - 4.2.0 | Fredrik Eriksson | 4x |
+| IDM |   | Anna-Maj Jannsson, Angular 1.0 Moving to 2 | 4x |
 | IES |   | Timothy Kettering <Timothy.Kettering@infor.com> | 4x |
 | Infinium SHCM  |   | Joe Bockskopf | 3x |
 | ION Desk  | Silverlight Conversion / Hybrid / Maybe use Vaadin GWT | Massimo Capoccia| 4x || Infor ERP LN - Customer Specific Utilities  |   | Flavio Marcato | 3x |
@@ -81,6 +83,7 @@
 | SXE | Angular 1.0 - using XI directly - Huge app it will be another year. | Aaron Pikkarainen <aaron.pikkarainen@infor.com> | 4x |
 | S&OP | Vaadin and GWT | Duncan Simpson | 4x |
 | VR POC | (POS system) works on Windows Forms using the ProvideX language. Win Forms dynamically transformed to a Web Forms (DHTML), | Arnaud Pochon  | 3x to 4x |
-| WFM | complex tables and field sets. desktop with basic mobile only| Edgar Ogando | 4x|
+| Visual | Introduced to Cordova | Karl Ulickowski | 4x |
+| WFM | Html Clock Angular 2 App | Edgar Ogando | 4x|
 | Web UI for M3 foundation | Angular 2.0 | Mikael Stalhammar | 4x|
 | Xtreme Support | ASP| Julia Walker | 4x |

@@ -200,9 +200,6 @@
             //Circle Pager
             ['circlepager'],
 
-            //Pager
-            ['pager', '.paginated'],
-
             //Track Dirty
             ['trackdirty', '[data-trackdirty="true"]'],
 

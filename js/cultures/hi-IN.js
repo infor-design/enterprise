@@ -30,12 +30,12 @@
       //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
       dateFormat: {'separator': '-', //Infered
                    'timeSeparator': ':',
-                   'short': 'd-M-yyyy', //use four digit year
+                   'short': 'dd-MM-yyyy', //use four digit year
                    'medium': 'dd-MM-yyyy',
                    'long': 'd MMMM yyyy',
                    'full': 'EEEE, d MMMM yyyy',
-                   'month': 'dd MMMM',
-                   'year': 'MMMM yyyy',
+                   'month': 'd MMMM',
+                   'year': 'MMMM, yyyy',
                    'timestamp': 'h:mm:ss',
                    'datetime': 'd-M-yyyy h:mm a'}, //Infered short + short gregorian/dateTimeFormats
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
@@ -129,7 +129,7 @@
       'Download': {id: 'Download', value: 'डाउनलोड', comment: 'Download tooltip'},
       'Duplicate': {id: 'Duplicate', value: 'प्रतिलिपि करें', comment: 'Duplicate tooltip'},
       'EitherSelectedOrNotSelected': {id: 'EitherSelectedOrNotSelected', value: 'चयनित किया गया या चयनित नहीं किया गया', comment: 'Either Selected Or NotSelected in icons for filtering'},
-      'EndWith': {id: 'EndWith', value: 'के साथ अंत होता है', comment: 'for condition filtering'},
+      'EndsWith': {id: 'EndsWith', value: 'के साथ अंत होता है', comment: 'for condition filtering'},
       'EnterComments': {id: 'EnterComments', value: 'टिप्पणी यहाँ दर्ज करें...', comment: 'Placeholder text for a text input (comments)'},
       'Error': {id: 'Error', value: 'त्रुटि', comment: 'Title, Spoken Text describing fact an error has occured'},
       'ErrorAllowedTypes': {id: 'ErrorAllowedTypes', value: 'फ़ाइल प्रकार की अनुमति नहीं है', comment: 'Error string for file-upload'},
@@ -272,7 +272,7 @@
       'SliderMaximumHandle': {id: 'SliderMaximumHandle', value: 'के लिए अधिकतम श्रेणी हैंडल', comment: 'Describes a maximum value handle in a Range (double slider), followed in code by the name of the control'},
       'SliderMinimumHandle': {id: 'SliderMinimumHandle', value: 'के लिए न्यूनतम श्रेणी हैंडल', comment: 'Describes a minimum value handle in a Range (double slider), followed in code by the name of the control'},
       'SkipToMain': {id: 'SkipToMain', value: 'मुख्य अंतर्निहित वस्तु पर जाएं', comment: 'Skip link in header, jumps when clicked on to main area'},
-      'StartWith': {id: 'StartWith', value: 'के साथ प्रारंभ करें', comment: 'for condition filtering'},
+      'StartsWith': {id: 'StartsWith', value: 'के साथ प्रारंभ करें', comment: 'for condition filtering'},
       'StrikeThrough': {id: 'StrikeThrough', value: 'के माध्यम से स्ट्राइक करें', comment: 'turn on and off strike through text in text editor (like word)'},
       'SortAtoZ': {id: 'SortAtoZ', value: 'आरोही क्रम में सॉर्ट करें', comment: 'Sort A to Z in icons for filtering'},
       'SortZtoA': {id: 'SortZtoA', value: 'अवरोही क्रम में सॉर्ट करें', comment: 'Sort Z to A in icons for filtering'},

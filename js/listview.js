@@ -85,6 +85,15 @@
 
         this.element.attr({'tabindex': '-1'});
 
+        // Configure Paging
+        if (this.element.is('.paginated') || this.settings.paging === true) {
+          this.element.pager({
+            componentAPI: this,
+            pagesize: this.settings.pagesize,
+            source: this.settings.source
+          });
+        }
+
         var cardWidgetContent =  this.element.parent('.card-content, .widget-content');
         if (cardWidgetContent[0]) {
           cardWidgetContent[0].style.overflow = 'hidden';
@@ -156,13 +165,8 @@
           this.element.html(renderedTmpl);
         }
 
-        // Add Pager, if applicable
+        // Render Pager
         if (this.settings.paging) {
-          this.element.pager({
-            pagesize: self.settings.pagesize,
-            source: self.settings.source
-          });
-
           this.renderPager(pagerInfo);
         }
 
@@ -432,7 +436,15 @@
           });
 
           this.element
-          .onTouchClick('listview', 'li, tr, input, select, label, button')
+          .off('listview', 'li, tr')
+          .on('click.listview', 'a', function (e) {
+            $(this).closest('li').click();
+            e.preventDefault();
+            return false;
+          });
+
+          this.element
+          .off('listview', 'li, tr')
           .on('click.listview', 'li, tr', function (e) {
             var item = $(this);
 

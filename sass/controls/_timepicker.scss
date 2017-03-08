@@ -53,6 +53,13 @@
       fill: $timepicker-disabled-icon-color;
     }
   }
+
+  &[readonly] {
+    + .icon {
+      cursor: default;
+      fill: $trigger-icon-fill-color;
+    }
+  }
 }
 
 .ie9 .timepicker + .icon,
@@ -76,6 +83,7 @@
   .time-parts {
     padding: 15px;
     text-align: center;
+    white-space: nowrap;
 
     > label {
       width: 72px;

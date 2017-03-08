@@ -13,7 +13,6 @@
 }(function($) {
 /* end-amd-strip-block */
 
-
   /**
    * @constructor
    * @param {Object} element
@@ -196,7 +195,7 @@
         var field = $(this);
         if (field.attr('data-validate')) {
 
-          if (field.attr('data-disable-validation') === 'true' || field.hasClass('disable-validation') || (!field.is('select') && (field[0].style.visibility === 'is-hidden' || !field.is(':visible')))) {
+          if (field.attr('data-disable-validation') === 'true' || field.hasClass('disable-validation')) {
             return true;
           }
 
@@ -394,7 +393,11 @@
           continue;
         }
 
-        if (rule.async) { //TODO: Document Breaking Change - swapped params
+        if ($('#calendar-popup').is(':visible')) {
+          continue; //dont show validation message while selecting
+        }
+
+        if (rule.async) {
           rule.check(value, field, manageResult);
         } else {
           manageResult(rule.check(value, field), showTooltip);
@@ -724,6 +727,13 @@
             // strip out any HTML tags and focus only on text content.
             value = $.trim(value.replace(/<\/?[^>]*>/g, ''));
             if ($.trim(value).length === 0) {
+              return false;
+            }
+            return true;
+          }
+
+          if (typeof value === 'number') {
+            if (isNaN(value)) {
               return false;
             }
             return true;

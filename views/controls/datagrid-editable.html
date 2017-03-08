@@ -60,7 +60,7 @@
     <div class="contextual-toolbar toolbar is-hidden">
       <div class="title selection-count">1 Selected</div>
       <div class="buttonset">
-        <button class="btn" type="button" id='remove-btn'>
+        <button class="btn" type="button" id="remove-btn">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-delete"></use>
           </svg>
@@ -121,7 +121,7 @@
           pagesize: 5,
           pagesizes: [5, 10, 25, 50]
         }).on('cellchange', function (e, args) {
-        //  console.log(e, args);
+          console.log(args.oldValue, args.value);
         }).on('rowadd', function (e, args) {
           console.log(e, args);
         }).on('rowremove', function (e, args) {

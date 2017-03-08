@@ -35,7 +35,7 @@
                    'long': 'd MMMM yyyyy',
                    'full': 'EEEE d MMMM yyyy',
                    'month': 'd MMMM',
-                   'year': 'MMMM yyyy',
+                   'year': 'MMMM, yyyy',
                    'timestamp': 'HH:mm:ss',
                    'datetime': 'yyyy-MM-dd HH:mm'}, //Infered short + short gregorian/dateTimeFormats
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
@@ -129,7 +129,7 @@
       'Download': {id: 'Download', value: 'Télécharger', comment: 'Download tooltip'},
       'Duplicate': {id: 'Duplicate', value: 'Copier', comment: 'Duplicate tooltip'},
       'EitherSelectedOrNotSelected': {id: 'EitherSelectedOrNotSelected', value: 'Sélectionné ou Non sélectionné', comment: 'Either Selected Or NotSelected in icons for filtering'},
-      'EndWith': {id: 'EndWith', value: 'Finir par', comment: 'for condition filtering'},
+      'EndsWith': {id: 'EndsWith', value: 'Finir par', comment: 'for condition filtering'},
       'EnterComments': {id: 'EnterComments', value: 'Saisissez un commentaire ici...', comment: 'Placeholder text for a text input (comments)'},
       'Error': {id: 'Error', value: 'Erreur', comment: 'Title, Spoken Text describing fact an error has occured'},
       'ErrorAllowedTypes': {id: 'ErrorAllowedTypes', value: 'Type de fichier non autorisé', comment: 'Error string for file-upload'},
@@ -272,7 +272,7 @@
       'SliderMaximumHandle': {id: 'SliderMaximumHandle', value: 'Plage maximale du pointeur pour', comment: 'Describes a maximum value handle in a Range (double slider), followed in code by the name of the control'},
       'SliderMinimumHandle': {id: 'SliderMinimumHandle', value: 'Plage minimale du pointeur pour', comment: 'Describes a minimum value handle in a Range (double slider), followed in code by the name of the control'},
       'SkipToMain': {id: 'SkipToMain', value: 'Sauter à la zone de contenu principal', comment: 'Skip link in header, jumps when clicked on to main area'},
-      'StartWith': {id: 'StartWith', value: 'Commencer par', comment: 'for condition filtering'},
+      'StartsWith': {id: 'StartsWith', value: 'Commencer par', comment: 'for condition filtering'},
       'StrikeThrough': {id: 'StrikeThrough', value: 'Barre médiane', comment: 'turn on and off strike through text in text editor (like word)'},
       'SortAtoZ': {id: 'SortAtoZ', value: 'Tri ascendant', comment: 'Sort A to Z in icons for filtering'},
       'SortZtoA': {id: 'SortZtoA', value: 'Tri descendant', comment: 'Sort Z to A in icons for filtering'},

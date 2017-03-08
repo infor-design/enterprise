@@ -50,7 +50,11 @@
     // Actual DropDown Code
     Dropdown.prototype = {
       init: function() {
-        var orgId = this.element.attr('id');
+        var orgId = this.element.attr('id'),
+         html = $('html');
+
+        this.isIe10 = html.is('.ie10');
+        this.isIe11 = html.is('.ie11');
 
         this.inlineLabel = this.element.closest('label');
         this.inlineLabelText = this.inlineLabel.find('.label-text');
@@ -258,7 +262,7 @@
           liMarkup += '<li role="presentation" class="dropdown-option'+ (isSelected ? ' is-selected' : '') +
                         (isDisabled ? ' is-disabled' : '') +
                         (cssClasses ? ' ' + cssClasses.value : '' ) + '"' +
-                        ' data-val="' + trueValue + '"' +
+                        ' data-val="' + trueValue.replace('"', '/quot/') + '"' +
                         ' tabindex="' + (index && index === 0 ? 0 : -1) + '">' +
                         (title ? '" title="' + title.value + '"' : '') +
                         '<a role="option" href="#" id="list-option'+ index +'">' +
@@ -640,7 +644,7 @@
             // option in the list, update the SearchInput and close the list.
             if (self.isOpen()) {
               self.selectOption($(options[selectedIndex])); // store the current selection
-              self.closeList(false);
+              self.closeList('tab');
               this.activate();
             }
             // allow tab to propagate otherwise
@@ -649,7 +653,7 @@
           case 27: { //Esc - Close the Combo and Do not change value
             if (self.isOpen()) {
               // Close the option list
-              self.closeList(true);
+              self.closeList('cancel');
               self.activate();
               e.stopPropagation();
               return false;
@@ -668,7 +672,7 @@
               e.preventDefault();
               self.selectOption($(options[selectedIndex])); // store the current selection
               if (self.settings.closeOnSelect) {
-                self.closeList(false);  // Close the option list
+                self.closeList('select');  // Close the option list
                 self.activate();
               }
             }
@@ -753,7 +757,7 @@
         }
 
         this.searchKeyMode = true;
-        if (isSearchInput) {
+        if (self.searchInput) {
           self.searchInput.attr('aria-activedescendant', '');
         }
         return true;
@@ -828,6 +832,12 @@
           $(document.activeElement).is('body, .dropdown.is-open')) {
           input[0].focus();
         }
+
+        if ((self.isIe10 || self.isIe11) && input.closest('.time-parts').length) {
+          setTimeout(function() {
+            input[0].focus();
+          }, 0);
+        }
       },
 
       // Retrieves a string containing all text for currently selected options delimited by commas
@@ -871,14 +881,15 @@
 
       // Actually Show The List
       openList: function () {
-        var current = this.previousActiveDescendant ? this.list.find('.dropdown-option[data-val="'+ this.previousActiveDescendant +'"]') : this.list.find('.is-selected'),
+        var current = this.previousActiveDescendant ? this.list.find('.dropdown-option[data-val="'+ this.previousActiveDescendant.replace('"', '/quot/') +'"]') : this.list.find('.is-selected'),
           self =  this,
           touchPrevented = false,
           threshold = 10,
+          isEmpty = true,
           pos;
 
         if (current.length > 0) {
-          current = current.eq(0);
+          isEmpty = true;
         }
 
         if (Soho.env.os.name === 'ios') {
@@ -895,11 +906,11 @@
         this.pseudoElem.attr('aria-label', this.label.text());
         this.searchInput.attr('aria-activedescendant', current.children('a').attr('id'));
 
-        //Close oother drop downs.
+        //Close any other drop downs.
         $('select').each(function () {
           var data = $(this).data();
           if (data.dropdown) {
-            data.dropdown.closeList();
+            data.dropdown.closeList('cancel');
           }
         });
 
@@ -944,7 +955,7 @@
           }, 0);
         }
 
-        if (!this.settings.multiple) {
+        if (!this.settings.multiple && !isEmpty) {
           this.searchInput.val(current.find('a').text());
         }
 
@@ -956,7 +967,7 @@
         if (this.isMobile()) {
           self.searchInput.on('keypress.dropdown', function(e) {
             if (e.which === 13) {
-              self.closeList();
+              self.closeList('select');
             }
           });
         }
@@ -972,13 +983,16 @@
           e.preventDefault();
           e.stopPropagation();
 
-          var val = target.attr('data-val'),
+          var val = target.attr('data-val').replace('"','/quot/'),
             cur = self.element.find('option[value="'+ val +'"]');
           //Try matching the option's text if 'cur' comes back empty or overpopulated.
-          //Supports options that don't have a 'value' attribute.
+          //Supports options that don't have a 'value' attribute
+          //And also some special &quote handling
           if (cur.length === 0 || cur.length > 1) {
             cur = self.element.find('option').filter(function() {
-              return $(this).text() === val;
+              var elem = $(this),
+                attr = elem.attr('value');
+              return elem.text() === val || (attr && attr.replace('"','/quot/') === val);
             });
           }
 
@@ -989,7 +1003,7 @@
           self.selectOption(cur);
 
           if (self.settings.closeOnSelect) {
-            self.closeList();
+            self.closeList('select');
           }
 
           if (self.isMobile()) {
@@ -1033,7 +1047,7 @@
           if (touchPrevented || isDropdownElement($(e.target))) {
             return;
           }
-          self.closeList();
+          self.closeList('cancel');
         }
 
         // Triggered when the user clicks anywhere in the document
@@ -1048,7 +1062,7 @@
             return;
           }
 
-          self.closeList();
+          self.closeList('cancel');
         }
 
         function touchStartCallback(e) {
@@ -1099,7 +1113,7 @@
         // in desktop environments, bind against window.resize
         if (window.orientation === undefined) {
           $('body').on('resize.dropdown', function() {
-            self.closeList();
+            self.closeList('cancel');
           });
         }
 
@@ -1175,27 +1189,29 @@
            this.list.find('input')[0].style.width = listWidth;
 
            //But not off the left side
-           var maxWidth = $(window).width() - parseInt(this.list[0].style.left, 10);
-           if (this.list.width() > maxWidth) {
-             this.list[0].style.width = (maxWidth - 20) +'px';
-           }
+           var wWidth = $(window).width(),
+              intListWidth = parseInt(listWidth),
+              maxWidth = wWidth - parseInt(this.list[0].style.left, 10);
+           if (intListWidth > maxWidth) {
+             this.list[0].style.left = (wWidth - intListWidth - 5) +'px';
+            }
         } else {
           var pseudoElemOuterWidth = this.pseudoElem.outerWidth();
           this.list[0].style.width = pseudoElemOuterWidth + 'px';
 
           if (this.isInGrid) {
-            this.list[0].style.width = pseudoElemOuterWidth + 'px';
+            this.list[0].style.width = pseudoElemOuterWidth + 3 + 'px';
           }
         }
       },
 
       // Alias that works with the global "closeChildren" method.  See "js/lifecycle.js"
       close: function() {
-        return this.closeList();
+        return this.closeList('cancel');
       },
 
       //Close list and detach events
-      closeList: function() {
+      closeList: function(action) {
         if (!this.list || !this.list.is(':visible') || !this.isListClosable()) {
           return;
         }
@@ -1211,12 +1227,10 @@
         this.filterTerm = '';
         this.searchInput.off('keydown.dropdown keypress.dropdown keypress.dropdown');
 
-        //this.list.hide().remove();
         this.list
           .off('click.list touchmove.list touchend.list touchcancel.list mousewheel.list mouseenter.list')
           .remove();
 
-        //this.listUl.find('li').show();
         this.pseudoElem
           .removeClass('is-open')
           .attr('aria-expanded', 'false');
@@ -1228,7 +1242,7 @@
           .off('click.dropdown scroll.dropdown touchmove.dropdown touchend.dropdown touchcancel.dropdown');
 
         $('body').off('resize.dropdown');
-        this.element.trigger('listclosed');
+        this.element.trigger('listclosed', action);
         this.activate();
         this.list = null;
         this.searchInput = null;
@@ -1256,7 +1270,7 @@
 
         if (this.isOpen()) {
           this.timer = setTimeout(function() {
-            self.closeList();
+            self.closeList('cancel');
           }, 40);
         }
 
@@ -1270,13 +1284,13 @@
 
       // Return true/false if the list is open
       isOpen: function() {
-        return this.list && this.list.is(':visible');
+        return (this.list && this.list.is(':visible')) ? true : false;
       },
 
       // Hide or Show list
       toggleList: function() {
         if (this.isOpen() || this.isLoading()) {
-          this.closeList();
+          this.closeList('cancel');
           return;
         }
         this.open();
@@ -1348,14 +1362,10 @@
           }
         }
         if (!li) {
-          li = this.listUl.find('li[data-val="'+ option.val() +'"]');
+          li = this.listUl.find('li[data-val="'+ option.val().replace('"', '/quot/') +'"]');
         }
 
         if (option.hasClass('is-disabled') || option.is(':disabled')) {
-          return;
-        }
-
-        if (!this.settings.multiple && option.index() === this.element[0].selectedIndex) {
           return;
         }
 
@@ -1470,15 +1480,44 @@
             var list = '',
               val = self.element.val();
 
-            function buildOption(option) {
-              var isString = typeof option === 'string';
+            function replaceDoubleQuotes(content) {
+              return content.replace('"', '\'');
+            }
 
-              if (option !== null && option !== undefined) {
-                list += '<option' + (option.id === undefined ? '' : ' id="' + option.id.replace('"', '\'') + '"') +
-                        (option.value !== undefined ? ' value="' + option.value.replace('"', '\'') + '"' : isString ? ' value="' + option.replace('"', '\'') + '"' : '') +
-                        (option.value === val || option.selected ? ' is-selected ' : '') +
-                        '>'+ (option.label !== undefined ? option.label : option.value !== undefined ? option.value : isString ? option : '') + '</option>';
+            function buildOption(option) {
+              if (option === null || option === undefined) {
+                return;
               }
+
+              var isString = typeof option === 'string',
+                stringContent = option;
+
+              if (isString) {
+                option = {
+                  value: stringContent
+                };
+              }
+              option.value = replaceDoubleQuotes(option.value);
+
+              if (option.id !== undefined) {
+                if (!isNaN(option.id)) {
+                  option.id = '' + option.id;
+                }
+                option.id = replaceDoubleQuotes(option.id);
+              }
+
+              if (option.label !== undefined) {
+                option.label = replaceDoubleQuotes(option.label);
+              }
+
+              if (!option.selected && option.value === val) {
+                option.selected = true;
+              }
+
+              list += '<option' + (option.id === undefined ? '' : ' id="' + option.id + '"') +
+                        ' value="' + option.value + '"' +
+                        (option.selected ? ' selected ' : '') +
+                      '>'+ (option.label !== undefined ? option.label : option.value !== undefined ? option.value : '') + '</option>';
             }
 
             // If the incoming dataset is different than the one we started with,
@@ -1561,7 +1600,7 @@
       },
 
       isMobile: function() {
-        return $('html').is('.ios, .android');
+        return ['ios', 'android'].indexOf(Soho.env.os.name) > -1;
       },
 
       // Used to determine whether or not we need to show the full-screen dropdown
@@ -1588,7 +1627,7 @@
           .attr('tabindex', '-1')
           .prop('readonly', false)
           .prop('disabled', true);
-        this.closeList();
+        this.closeList('cancel');
       },
 
       enable: function() {
@@ -1613,12 +1652,12 @@
           .attr('tabindex', '0')
           .prop('disabled', false)
           .prop('readonly', true);
-        this.closeList();
+        this.closeList('cancel');
       },
 
       // Triggered whenever the plugin's settings are changed
       updated: function() {
-        this.closeList();
+        this.closeList('cancel');
 
         // Update the 'multiple' property
         if (this.settings.multiple && this.settings.multiple === true) {
@@ -1648,7 +1687,7 @@
 
       destroy: function() {
         $.removeData(this.element[0], pluginName);
-        this.closeList();
+        this.closeList('cancel');
         this.label.remove();
         this.pseudoElem.off().remove();
         this.icon.remove();

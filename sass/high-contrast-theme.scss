@@ -535,6 +535,7 @@ $datagrid-list-sort-icon-hover-color: $graphite06;
 $datagrid-header-focus-bg-color: $graphite08;
 $datagrid-header-focus-border-color: $slate02;
 $datagrid-list-header-checkbox-border-color: $slate05;
+$datagrid-list-header-active-color: $graphite05;
 
 $datagrid-filter-border-color: $slate06;
 $datagrid-filter-hover-border-color: $white;
@@ -556,6 +557,7 @@ $datagrid-list-filter-active-color: $azure09;
 
 $datagrid-rowgroup-header: $graphite02;
 $datagrid-rowgroup-color: $font-color;
+$datagrid-empty-bg-color: #f0f0f0; //$datagrid-cell-bg-color
 
 // Search Results
 $sr-masthead-text-color: $font-color;
