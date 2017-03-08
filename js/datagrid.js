@@ -51,7 +51,7 @@ window.Formatters = {
       formatted = Locale.formatDate(value, (typeof col.dateFormat === 'string' ? {pattern: col.dateFormat}: col.dateFormat));
     }
 
-    if (!col.editor || isReturnValue) {
+    if (!col.editor || isReturnValue === true) {
       return formatted;
     }
     return '<span class="trigger">' + formatted + '</span>' + $.createIcon({ icon: 'calendar', classes: ['icon-calendar'] });
@@ -85,6 +85,9 @@ window.Formatters = {
         formatted = value2.slice(value2.indexOf(' '));
       }
     }
+
+    // Remove extra space in begining
+    formatted = formatted.replace(/^\s/, '');
 
     if (!col.editor) {
       return formatted;
@@ -812,6 +815,9 @@ window.Editors = {
 
     this.destroy = function () {
       var self = this;
+      if (self.api && self.api.trigger) {
+        self.api.trigger.off('hide.editortime');
+      }
 
       setTimeout(function() {
         grid.quickEditMode = false;
@@ -4836,7 +4842,8 @@ $.fn.datagrid = function(options) {
 
       for (var i = 0; i < rules.length; i++) {
         var rule = validator.rules[rules[i]],
-          ruleValid = rule.check(cellValue, $('<input>').val(cellValue));
+          gridInfo = {row: row, cell: cell, item: this.settings.dataset[row], column: column, grid: self},
+          ruleValid = rule.check(cellValue, $('<input>').val(cellValue), gridInfo);
 
         if (!ruleValid) {
           messages += rule.message;
@@ -5464,7 +5471,15 @@ $.fn.datagrid = function(options) {
 
       var pagerElem = this.tableBody;
       this.element.addClass('paginated');
-      pagerElem.pager({dataset: this.settings.dataset, source: this.settings.source, pagesize: this.settings.pagesize, indeterminate: this.settings.indeterminate, rowTemplate: this.settings.rowTemplate, pagesizes: this.settings.pagesizes});
+      pagerElem.pager({
+        componentAPI: this,
+        dataset: this.settings.dataset,
+        source: this.settings.source,
+        pagesize: this.settings.pagesize,
+        indeterminate: this.settings.indeterminate,
+        rowTemplate: this.settings.rowTemplate,
+        pagesizes: this.settings.pagesizes
+      });
       this.pager = pagerElem.data('pager');
 
       pagerElem.on('afterpaging', function (e, args) {

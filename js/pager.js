@@ -18,7 +18,8 @@
     // Settings and Options
     var pluginName = 'pager',
         defaults = {
-          type: 'list', //Differet types of pagers: list, table and more
+          componentAPI: undefined, // If defined, becomes the definitive way to call methods on parent component.
+          type: 'list', //Different types of pagers: list, table and more
           position: 'bottom',  //Can be on top as well.
           activePage: 1, //Start on this page
           source: null,  //Call Back Function for Pager Data Source
@@ -43,6 +44,8 @@
     // Actual Plugin Code
     Pager.prototype = {
 
+      pagerInfo: {},
+
       init: function() {
         this.setup();
         this.buttonExpr = 'li:not(.pager-prev):not(.pager-next):not(.pager-first):not(.pager-last)';
@@ -64,19 +67,33 @@
           this.settings.pagesizes = this.settings.pagesizes.sort(sortNumber);
         }
 
+        var widgetContainer = this.element.parents('.card, .widget');
+
         // Adjust for the possibility of the pager being attached to a Table instead of normal grid markup
         if (this.element.is('tbody')) {
           this.isTable = true;
           this.settings.type = 'table';
           this.mainContainer = this.element.closest('.datagrid-container');
+
+          if (!this.settings.componentAPI) {
+            this.settings.componentAPI = this.mainContainer.data('datagrid');
+          }
+
+          if (widgetContainer.length) {
+            widgetContainer[0].classList.add('has-datagrid');
+          }
         }
 
         // If contained by a widget/card container, build some settings for that
-        var widgetContainer = this.element.closest('.card, .widget');
-        if (widgetContainer.length) {
-          this.isList = true;
+        var listviewContainer = this.element.is('.listview');
+        if (listviewContainer.length) {
+          this.isTable = false;
           this.settings.type = 'list';
-          this.mainContainer = widgetContainer;
+          this.mainContainer = listviewContainer;
+
+          if (!this.settings.componentAPI) {
+            this.settings.componentAPI = this.element.data('listview');
+          }
         }
 
         this.isRTL = Locale.isRTL();
@@ -130,7 +147,8 @@
         }
 
         // Inside of Listviews, place the pager bar inside of the card/widget footer
-        if (this.settings.type === 'list') {
+        var widgetContainer = this.element.closest('.card, .widget');
+        if (widgetContainer.length) {
           var self = this,
             widgetTypes = ['widget', 'card'];
 
@@ -469,14 +487,9 @@
         }
       },
 
-      pagerInfo: {},
-      setDatagrid: function() {
-        this.datagrid = this.mainContainer ? this.mainContainer.data('datagrid') : null;
-      },
-
       // Render Paged Items
       renderPages: function(op) {
-      var expr,
+        var expr,
           self = this,
           request = {
             activePage: self.activePage,
@@ -496,17 +509,10 @@
           if (self.settings.source) {
             var response;
 
-            // Distinguish between datagrid and listview
-            if (self.isTable) {
-              self.setDatagrid();
-            } else {
-              self.datagrid = self.element.data('listview');
-            }
-
             response = function(data, pagingInfo) {
               //Render Data
               pagingInfo.preserveSelected = true;
-              self.datagrid.loadData(data, pagingInfo, true);
+              self.settings.componentAPI.loadData(data, pagingInfo, true);
 
               //Update Paging Info
               self.updatePagingInfo(pagingInfo);
@@ -517,14 +523,14 @@
               return;
             };
 
-            if (self.datagrid.sortColumn && self.datagrid.sortColumn.sortId) {
-              request.sortAsc = self.datagrid.sortColumn.sortAsc;
-              request.sortField = self.datagrid.sortColumn.sortField;
-              request.sortId = self.datagrid.sortColumn.sortId;
+            if (self.settings.componentAPI.sortColumn && self.settings.componentAPI.sortColumn.sortId) {
+              request.sortAsc = self.settings.componentAPI.sortColumn.sortAsc;
+              request.sortField = self.settings.componentAPI.sortColumn.sortField;
+              request.sortId = self.settings.componentAPI.sortColumn.sortId;
             }
 
-            if (self.datagrid.filterExpr) {
-               request.filterExpr = self.datagrid.filterExpr;
+            if (self.settings.componentAPI.filterExpr) {
+               request.filterExpr = self.settings.componentAPI.filterExpr;
             }
             self.settings.source(request, response);
           }
@@ -539,10 +545,10 @@
 
             self.updatePagingInfo(request);
 
-            self.setDatagrid();
-            if (self.datagrid) {
-              self.datagrid.renderRows();
+            if (self.settings.componentAPI && typeof self.settings.componentAPI.renderRows === 'function') {
+              self.settings.componentAPI.renderRows();
             }
+
             elements.hide();
 
             //collapse expanded rows
@@ -566,11 +572,25 @@
         }, 0);
       },
 
+      /**
+       * Updates this instance of pager with externally-provided settings.
+       * @param {Object} pagingInfo - contains settings that will change buttons on the pager.
+       * @param {number} pagingInfo.pagesize - the number of items visible per page
+       * @param {number} pagingInfo.total - the total number of pages
+       * @param {number} pagingInfo.activePage - the currently visible page
+       * @param {boolean} [pagingInfo.firstPage=false] - passed if the currently visible page is the first one
+       * @param {boolean} [pagingInfo.lastPage=false] - passed if the currently visible page is the last one
+       * @param {boolean} [pagingInfo.hideDisabledPagers=false] - causes the pager to become completely hidden if all buttons are disabled
+       */
       updatePagingInfo: function(pagingInfo) {
         this.settings.pagesize = pagingInfo.pagesize || this.settings.pagesize;
 
-        if (this.isTable && this.datagrid) {
-          this.datagrid.settings.pagesize = this.settings.pagesize;
+        var prevButtons = this.pagerBar.find('.pager-first a, .pager-prev a'),
+          nextButtons = this.pagerBar.find('.pager-next a, .pager-last a'),
+          allButtons = prevButtons.add(nextButtons);
+
+        if (this.isTable && this.settings.componentAPI) {
+          this.settings.componentAPI.settings.pagesize = this.settings.pagesize;
         }
         this.pagerBar.find('.btn-menu span').text(Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize));
 
@@ -590,18 +610,27 @@
           this.pagerBar.find('.pager-total-pages').text(this._pageCount);
         }
 
-        if (pagingInfo.firstPage || pagingInfo.activePage === 0) {
-          this.pagerBar
-          .find('.pager-first a, .pager-prev a, .pager-next a, .pager-last a').removeAttr('disabled tabindex').end()
-          .find('.pager-first a, .pager-prev a')
-            .attr({'disabled':'disabled', 'tabindex': -1});
-        }
+        this.pagerBar[0].classList.remove('hidden');
 
-        if (pagingInfo.lastPage) {
-          this.pagerBar
-            .find('.pager-first a, .pager-prev a, .pager-next a, .pager-last a').removeAttr('disabled tabindex').end()
-            .find('.pager-next a, .pager-last a')
-            .attr({'disabled':'disabled', 'tabindex': -1});
+        // Disable paging buttons that shouldn't be used.
+        var attrNames = 'tabindex disabled',
+          attrs = {
+            'disabled': 'disabled',
+            'tabindex': '-1'
+          };
+        if (pagingInfo.firstPage && pagingInfo.lastPage) {
+          allButtons.attr(attrs);
+
+          if (pagingInfo.hideDisabledPagers) {
+            this.pagerBar[0].classList.add('hidden');
+          }
+
+        } else if (pagingInfo.firstPage) {
+          prevButtons.attr(attrs);
+          nextButtons.removeAttr(attrNames);
+        } else if (pagingInfo.lastPage) {
+          prevButtons.removeAttr(attrNames);
+          nextButtons.attr(attrs);
         }
       },
 

@@ -449,7 +449,7 @@ $datagrid-short-row-height: 23px;
           }
 
           .datagrid-cell-wrapper .icon-error {
-            top: 6px;
+            top: 11px;
           }
         }
 
@@ -623,7 +623,7 @@ $datagrid-short-row-height: 23px;
 
           .datagrid-cell-wrapper .icon-error {
             height: 16px;
-            top: 2px;
+            top: 6px;
           }
         }
 
@@ -832,12 +832,13 @@ $datagrid-short-row-height: 23px;
       background-color: $alert-bg-color;
 
       .datagrid-cell-wrapper {
-        //border-color: $alert-red;
+        position: relative;
 
         .icon-error {
           left: 100%;
-          margin-left: -15px;
-          position: relative;
+          margin-left: -30px;
+          position: absolute;
+          top: 15px;
           visibility: visible;
         }
       }
@@ -956,7 +957,7 @@ $datagrid-short-row-height: 23px;
 
         &.timepicker {
           margin-top: 16px;
-          padding: 0 15px;
+          padding: 0 19px;
           width: calc(100% - 26px);
 
           ~.icon {
@@ -2220,6 +2221,32 @@ html[dir='rtl'] {
     color: font-color-lowcontrast;
     float: left;
   }
+}
+
+.card,
+.widget {
+
+  .datagrid-container.short-rowheight.paginated {
+    height: 100%;
+  }
+
+  &.has-datagrid {
+
+    .pager-prev,
+    .pager-next {
+      position: static;
+    }
+
+    .pager-count {
+      vertical-align: middle;
+    }
+
+    .card-footer {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+
 }
 
 //Modal Lists
