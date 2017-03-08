@@ -438,7 +438,7 @@ $datagrid-short-row-height: 23px;
           }
 
           .datagrid-cell-wrapper .icon-error {
-            top: 6px;
+            top: 11px;
           }
         }
 
@@ -612,7 +612,7 @@ $datagrid-short-row-height: 23px;
 
           .datagrid-cell-wrapper .icon-error {
             height: 16px;
-            top: 2px;
+            top: 6px;
           }
         }
 
@@ -825,12 +825,13 @@ $datagrid-short-row-height: 23px;
       background-color: $alert-bg-color;
 
       .datagrid-cell-wrapper {
-        //border-color: $alert-red;
+        position: relative;
 
         .icon-error {
           left: 100%;
-          margin-left: -15px;
-          position: relative;
+          margin-left: -30px;
+          position: absolute;
+          top: 15px;
           visibility: visible;
         }
       }

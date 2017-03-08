@@ -4732,7 +4732,8 @@ $.fn.datagrid = function(options) {
 
       for (var i = 0; i < rules.length; i++) {
         var rule = validator.rules[rules[i]],
-          ruleValid = rule.check(cellValue, $('<input>').val(cellValue));
+          gridInfo = {row: row, cell: cell, item: this.settings.dataset[row], column: column, grid: self},
+          ruleValid = rule.check(cellValue, $('<input>').val(cellValue), gridInfo);
 
         if (!ruleValid) {
           messages += rule.message;
