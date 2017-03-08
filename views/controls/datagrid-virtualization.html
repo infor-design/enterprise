@@ -1,82 +1,46 @@
 <div class="full-width full-height">
-  <div class="toolbar" role="toolbar">
-    <div class="title">
-      Compressors
-      <span class="datagrid-result-count">(10 Results)</span>
-    </div>
-    <div class="buttonset">
-      <button type="button" class="btn">
-        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-filter"></use>
-        </svg>
-        <span>Filter</span>
-      </button>
-    </div>
-
-    <div class="more">
-      <button type="button" class="btn-actions">
-        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-          <use xlink:href="#icon-more"></use>
-        </svg>
-        <span class="audible">More Actions</span>
-      </button>
-      <ul class="popupmenu">
-        <li><a data-option="personalize-columns" href="#">Personalize Columns</a></li>
-        <li><a data-option="reset-layout" href="#">Reset to Default</a></li>
-        <li class="separator"></li>
-        <li><a data-option="export-to-excel" href="#">Export to Excel</a></li>
-        <li class="separator single-selectable-section"></li>
-        <li class="heading">Row Height</li>
-        <li class="is-selectable"><a data-option="row-short" href="#">Short</a></li>
-        <li class="is-selectable"><a data-option="row-medium" href="#">Medium</a></li>
-        <li class="is-selectable is-checked"><a data-option="row-normal" href="#">Normal</a></li>
-      </ul>
-    </div>
-  </div>
-
   <div id="datagrid" class="datagrid-contained">
   </div>
 </div>
 
 <script>
-  $('body').on('initialized', function () {
-    var grid,
-      columns = [],
-      data = [];
 
-      console.time('Array Generation');
-      // Generare Some Sample Data
-      var columnCount = 10,
-        rowCount = 1000;
+$('body').on('initialized', function () {
+  var grid,
+    columns = [],
+    data = [];
 
-      for (var j = 0; j < columnCount; j++) {
-        var colName = 'column'+j;
-        columns.push({ id: colName, name: colName, field: colName, width: 100, formatter: Formatters.Input});
-      }
+  // Generare Some Sample Data
+  console.time('Array Generation');
+  var columnCount = 10,
+    rowCount = 10000;
 
-      for (var i = 0; i < rowCount; i++) {
-        var dataObj = {};
+  for (var j = 0; j < columnCount; j++) {
+    var colName = 'column'+j;
+    columns.push({ id: colName, name: colName, field: colName, width: 100, formatter: Formatters.Input});
+  }
 
-        for (var j = 0; j < columnCount; j++) {
-          dataObj['column'+j] = 'Data ' + j + '-'+ i;
-        }
+  for (var i = 0; i < rowCount; i++) {
+    var dataObj = {};
 
-        data.push(dataObj);
-      }
-      console.timeEnd('Array Generation');
+    for (var j = 0; j < columnCount; j++) {
+      dataObj['column'+j] = 'Data ' + j + '-'+ i;
+    }
 
-      //Init and get the api for the grid
-      console.time('Grid Render');
-      $('#datagrid').datagrid({
-        columns: columns,
-        columnReorder: true,
-        dataset: data,
-        virtualized: true,
-        toolbar: {personalize: true, results: true}
-      });
+    data.push(dataObj);
+  }
+  console.timeEnd('Array Generation');
 
-      console.timeEnd('Grid Render');
+  // Render the Datagrid
+  console.time('Grid Render');
+  $('#datagrid').datagrid({
+    columns: columns,
+    columnReorder: true,
+    dataset: data,
+    virtualized: true,
+    toolbar: {personalize: true, results: true, rowHeight: true, actions: true, title: 'Compressors'}
+  });
+  console.timeEnd('Grid Render');
 
-    });
-
+});
 </script>

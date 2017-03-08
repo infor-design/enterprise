@@ -50,6 +50,20 @@ $datagrid-short-row-height: 23px;
     }
   }
 
+  //Virtual Rows Loading
+  .datagrid-virtual-row-bottom {
+    vertical-align: top;
+
+    td {
+      background-color: transparent;
+      border: 0;
+    }
+
+    .busy-sm {
+      margin-left: calc(50% - 25px);
+    }
+  }
+
   //Adjust borders and IE adjustment for vertical scrollbars
   &.has-vertical-scroll {
     border-bottom: 1px solid $datagrid-cell-border-color;
