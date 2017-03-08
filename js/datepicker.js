@@ -767,14 +767,16 @@
         });
 
         //Localize Month Name
-        var yearFist = Locale.calendar().dateFormat.year && Locale.calendar().dateFormat.year.substr(1, 1) === 'y';
-        this.header.find('.month').attr('data-month', month).text(monthName);
+        this.yearFist = Locale.calendar().dateFormat.year && Locale.calendar().dateFormat.year.substr(1, 1) === 'y';
+        this.header.find('.month').attr('data-month', month).text(monthName + ' ');
         this.header.find('.year').text(' ' + year);
 
-        if (yearFist) {
-          var translation = Locale.formatDate(elementDate, {date: 'year'});
-          this.header.find('.month').attr('data-month', month).text(translation);
-          this.header.find('.year').text('');
+        if (this.yearFist) {
+          var translation = Locale.formatDate(elementDate, {date: 'year'}),
+            justYear = translation.split(' ')[0];
+
+          this.header.find('.year').text(justYear + ' ');
+          this.header.find('.year').insertBefore(this.header.find('.month'));
         }
 
         //Adjust days of the week
