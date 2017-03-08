@@ -111,22 +111,10 @@
             this.element = this.settings.content.closest('.modal');
           } else {
             var self = this,
-              isIE11 = /Trident.*rv[ :]*11\./i.test(navigator.userAgent),
               body = self.element.find('.modal-body');
 
             body.append(self.settings.content);
-
-            //HACK force a paint for missing or icons are missing
-            if (isIE11) {
-              setTimeout(function () {
-                var uses = body[0].getElementsByTagName('use');
-                for (var i = 0; i < uses.length; i++) {
-                  var attr = uses[i].getAttribute('xlink:href');
-                  uses[i].setAttribute('xlink:href', 'x');
-                  uses[i].setAttribute('xlink:href', attr);
-                }
-              }, 1);
-            }
+            Soho.utils.fixSVGIcons(body);
           }
 
           if (this.settings.content instanceof jQuery){

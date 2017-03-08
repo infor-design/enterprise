@@ -601,6 +601,38 @@
     return str.slice(0, start) + newSubStr + str.slice(start + Math.abs(delCount));
   };
 
+  /**
+   * Hack for IE11 and SVGs that get moved around/appended at inconvenient times.
+   * The action of changing the xlink:href attribute to something else and back will fix the problem.
+   * @return {undefined}
+   */
+  window.Soho.utils.fixSVGIcons = function fixSVGIcons(rootElement) {
+    if (Soho.env.browser.name !== 'ie' && Soho.env.browser.version !== '11') {
+      return;
+    }
+
+    if (rootElement === undefined) {
+      return;
+    }
+
+    if (rootElement instanceof $) {
+      if (!rootElement.length) {
+        return;
+      }
+
+      rootElement = rootElement[0];
+    }
+
+    setTimeout(function () {
+      var uses = rootElement.getElementsByTagName('use');
+      for (var i = 0; i < uses.length; i++) {
+        var attr = uses[i].getAttribute('xlink:href');
+        uses[i].setAttribute('xlink:href', 'x');
+        uses[i].setAttribute('xlink:href', attr);
+      }
+    }, 1);
+  };
+
 /* start-amd-strip-block */
 }));
 /* end-amd-strip-block */

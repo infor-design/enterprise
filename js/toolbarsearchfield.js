@@ -403,6 +403,7 @@
         if (!notFullWidth) {
           this.elemBeforeWrapper = this.inputWrapper.prev();
           this.inputWrapper.detach().prependTo(this.containmentParent);
+          Soho.utils.fixSVGIcons(this.inputWrapper);
         } else {
           // Re-adjust the size of the buttonset element if the expanded searchfield would be
           // too large to fit.
@@ -491,6 +492,7 @@
           } else {
             this.inputWrapper.detach().insertAfter(this.elemBeforeWrapper);
           }
+          Soho.utils.fixSVGIcons(this.inputWrapper);
 
           this.elemBeforeWrapper = null;
         }
