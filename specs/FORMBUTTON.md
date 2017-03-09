@@ -26,7 +26,6 @@ Live Example - In all Themes
 
 [Spec PSD Doc Here]
 
-
 ## Markup
 
     <button class="btn-primary" type="button">Action</button>

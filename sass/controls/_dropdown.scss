@@ -2,7 +2,11 @@
 //================================================== //
 
 select.dropdown,
-select.multiselect {
+select.multiselect,
+select.dropdown-lg,
+select.dropdown-md,
+select.dropdown-sm,
+select.dropdown-xs {
   display: none;
   font-size: 50px;
 }

@@ -1,0 +1,63 @@
+
+<div class="row top-padding">
+  <div class="two-thirds column">
+
+      <div class="widget auto-height">
+        <div class="widget-header">
+          <h2 class="widget-title">Taxes and Deductions</h2>
+        </div>
+        <div class="widget-content">
+          <div id="pie-chart-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+
+  </div>
+</div>
+
+{{={{{ }}}=}}
+
+<script>
+$('body').on('initialized', function () {
+
+  var pieData = [{
+    data: [{
+        name: 'Company Deductions',
+        shortName: 'CD',
+        value: 0,
+        tooltip: 'Company Deductions {{value}}',
+        color: '#000000'
+      }, {
+        name: 'After-tax Deductions',
+        shortName: 'After-tax',
+        value: 11,
+        tooltip: 'After-tax Deductions {{value}}'
+      }, {
+        name: 'Pre-tax Deductions',
+        shortName: 'Pre-tax',
+        value: 12,
+        tooltip: 'Pre-tax Deductions {{value}}'
+      }, {
+        name: 'Taxes',
+        shortName: 'Af-tax',
+        value: 17,
+        tooltip: 'Taxes %value%'
+      }, {
+        name: 'Wages',
+        shortName: 'Wages',
+        value: 52,
+        tooltip: 'Wages %value%'
+      }]
+    }];
+
+  $('#pie-chart-example').chart({
+    type: 'donut',
+    dataset: pieData,
+    labels: {
+      isTwoline: false,
+      contentsTop: 'name (percentage)'
+    }
+  });
+
+});
+</script>

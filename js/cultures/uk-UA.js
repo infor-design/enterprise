@@ -66,7 +66,7 @@
     },
     //Resx - Approved By Translation Team
     messages: {
-      'AboutText': {id: 'AboutText', value: 'Авторські права &copy; Infor, {0}. Усі права збережено. Усі зазначені у цьому документі назви та дизайн елементів є товарними знаками або захищеними товарними знаками Infor та/або афілійованих організацій і філіалів Infor. Усі права збережено. Усі інші товарні знаки, перелічені тут, є власністю відповідних власників. www.infor.com.'},
+      'AboutText': {id: 'AboutText', value: 'Авторські права &copy; Infor, {0}. Усі права збережено. Усі зазначені у цьому документі назви та дизайн елементів є товарними знаками або захищеними товарними знаками Infor та/або афілійованих організацій і філіалів Infor. Усі права збережено. Усі інші товарні знаки, перелічені тут, є власністю відповідних власників.'},
       'Actions': {id: 'Actions', value: 'Дії', comment: 'Tooltip text for the action button with additional in context actions'},
       'Add': {id: 'Add', value: 'Додати', comment: 'Add'},
       'AddNewTab': {id: 'AddNewTab', value: 'Додати нову вкладку', comment: 'Attached to a button that adds new tabs'},
@@ -128,7 +128,7 @@
       'Download': {id: 'Download', value: 'Завантажити', comment: 'Download tooltip'},
       'Duplicate': {id: 'Duplicate', value: 'Дублювати', comment: 'Duplicate tooltip'},
       'EitherSelectedOrNotSelected': {id: 'EitherSelectedOrNotSelected', value: 'Вибрано або не вибрано', comment: 'Either Selected Or NotSelected in icons for filtering'},
-      'EndWith': {id: 'EndWith', value: 'Не закінчується на', comment: 'for condition filtering'},
+      'EndsWith': {id: 'EndsWith', value: 'Не закінчується на', comment: 'for condition filtering'},
       'EnterComments': {id: 'EnterComments', value: 'Введіть коментарі тут...', comment: 'Placeholder text for a text input (comments)'},
       'Error': {id: 'Error', value: 'Помилка', comment: 'Title, Spoken Text describing fact an error has occured'},
       'ErrorAllowedTypes': {id: 'ErrorAllowedTypes', value: 'Тип файлу заборонено', comment: 'Error string for file-upload'},
@@ -271,7 +271,7 @@
       'SliderMaximumHandle': {id: 'SliderMaximumHandle', value: 'Маркер максимального діапазону для', comment: 'Describes a maximum value handle in a Range (double slider), followed in code by the name of the control'},
       'SliderMinimumHandle': {id: 'SliderMinimumHandle', value: 'Маркер мінімального діапазону для', comment: 'Describes a minimum value handle in a Range (double slider), followed in code by the name of the control'},
       'SkipToMain': {id: 'SkipToMain', value: 'Перейти до основного вмісту', comment: 'Skip link in header, jumps when clicked on to main area'},
-      'StartWith': {id: 'StartWith', value: 'Починається з', comment: 'for condition filtering'},
+      'StartsWith': {id: 'StartsWith', value: 'Починається з', comment: 'for condition filtering'},
       'StrikeThrough': {id: 'StrikeThrough', value: 'Закреслення', comment: 'turn on and off strike through text in text editor (like word)'},
       'SortAtoZ': {id: 'SortAtoZ', value: 'Сортувати за зростанням', comment: 'Sort A to Z in icons for filtering'},
       'SortZtoA': {id: 'SortZtoA', value: 'Сортувати за спаданням', comment: 'Sort Z to A in icons for filtering'},

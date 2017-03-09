@@ -74,6 +74,10 @@ body.no-scroll {
     &.scrollable-y {
       height: 100%;
     }
+
+    .fieldset {
+      margin: 20px;
+    }
   }
 
   // scss-lint:disable ImportantRule
@@ -478,9 +482,9 @@ body.no-scroll {
 
 //Header on Side Panels - fx: tests/tree/expand-collapse-splitter
 .panel-header {
-  background-color: $panel-header-bg-color;
-  height: 60px;
-  line-height: 60px;
+  background-color: $toolbar-standalone-bg-color;
+  border-bottom: 1px solid $toolbar-standalone-border-color;
+  height: 40px;
 
   .title {
     @include font-size(16);
@@ -677,13 +681,24 @@ body.no-scroll {
   .banner {
     background-color: $panel-bg-color;
     border-bottom: 1px solid $panel-border-color;
-    min-height: 320px;
+    height: auto;
     padding: 40px 0;
   }
 
   .detail {
     background-color: $body-bg-color;
-    height: calc(100% - 320px);
+    height: auto;
+
+    .tab-container.alternate {
+      position: relative;
+      top: -50px;
+
+      + .tab-panel.alternate {
+        position: relative;
+        top: -50px;
+      }
+    }
+
   }
 }
 
@@ -805,14 +820,6 @@ html[dir='rtl'] {
     .sidebar {
       border-left: 1px solid $panel-border-color;
       border-right: 0 solid $panel-border-color;
-    }
-  }
-
-  .scrollable {
-    direction: ltr;
-
-    > * {
-      direction: rtl;
     }
   }
 

@@ -365,7 +365,7 @@
             href = anchor.attr('href'),
             selectionResult = [anchor];
 
-          if (anchor.prop('disabled') === true || anchor.parent().is('.submenu') || anchor.parent().is('.is-disabled')) {
+          if (anchor.parent().is('.submenu, .hidden, .is-disabled')) {
             //Do not close parent items of submenus on click
             e.preventDefault();
             return;
@@ -1055,16 +1055,18 @@
         this.menu[0].style.height = '';
         this.menu[0].style.width = '';
 
-        wrapper[0].style.left = '-999px';
-        wrapper[0].style.height = '';
-        wrapper[0].style.width = '';
+        if (wrapper[0]) {
+          wrapper[0].style.left = '-999px';
+          wrapper[0].style.height = '';
+          wrapper[0].style.width = '';
+        }
 
         this.menu.find('.submenu').off('mouseenter mouseleave').removeClass('is-submenu-open');
         if (menu[0]) {
           menu[0].style.left = '';
           menu[0].style.top = '';
           menu[0].style.height = '';
-          menu[0].style.width = '';          
+          menu[0].style.width = '';
         }
 
         this.menu.find('.is-focused').removeClass('is-focused');

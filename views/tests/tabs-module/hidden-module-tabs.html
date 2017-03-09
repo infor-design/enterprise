@@ -1,0 +1,205 @@
+<body class="no-scroll">
+
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+  {{> includes/svg-inline-refs}}
+
+  <!-- Module Tabs -->
+  <section id="module-tabs-example" class="tab-container module-tabs is-personalizable" data-options="{ containerElement: '#module-tabs-container', 'changeTabOnHashChange': true, 'addTabButton': true }">
+    <div class="tab-list-container">
+      <ul class="tab-list">
+        <li class="tab is-selected"><a href="#first-tab">First Tab</a></li>
+        <li class="tab hidden"><a href="#hidden-tab-one">Hidden Tab #1</a></li>
+        <li class="tab hidden"><a href="#hidden-tab-two">Hidden Tab #2</a></li>
+        <li class="tab hidden"><a href="#hidden-tab-three">Hidden Tab #3</a></li>
+        <li class="tab"><a href="#visible-tab-one">Visible Tab #1</a></li>
+        <li class="tab"><a href="#visible-tab-two">Visible Tab #2</a></li>
+        <li class="tab"><a href="#visible-tab-three">Visible Tab #3</a></li>
+      </ul>
+    </div>
+  </section>
+
+  {{> includes/applicationmenu}}
+
+  <!-- Page Container -->
+  <div id="module-tabs-container" class="page-container no-scroll">
+
+    <!-- Tab Panels -->
+    <div id="first-tab" class="tab-panel no-scroll">
+      <header class="header is-personalizable">
+        <div class="toolbar">
+          <div class="title">
+            <h1>Module Tabs Test: Hidden Tabs</h1>
+          </div>
+          <div class="buttonset"></div>
+          {{> includes/header-actionbutton}}
+        </div>
+      </header>
+      <div class="page-container scrollable">
+
+        <div class="row">
+          <div class="six columns">
+
+            <p><a class="hyperlink" href="http://jira/browse/SOHO-5284" target="_blank">Related JIRA Ticket</a>.  There are three hidden tabs that sit between this one, and the ones labeled "Visible Tab #X" inside the tab list element.  These tabs should NOT be included in the <em>adjustModuleTabs()</em> method's resizing algorithm while they are hidden.</p>
+
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="six columns">
+
+            <button id="show-hidden-tabs" class="btn-secondary">
+              <span>Show Hidden Tabs</span>
+            </button>
+
+            <button id="hide-hidden-tabs" class="btn-secondary" disabled>
+              <span>Hide Hidden Tabs</span>
+            </button>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="hidden-tab-one" class="tab-panel">
+      <header class="header is-personalizable">
+        <div class="toolbar">
+          <div class="title">
+            <h1>Hidden Tab #1</h1>
+          </div>
+          <div class="buttonset"></div>
+        </div>
+      </header>
+      <div class="page-container scrollable">
+        <div class="row">
+          <div class="six columns">
+            <p>This tab should be hidden, and not resized by the Module Tabs algorithm.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="hidden-tab-two" class="tab-panel">
+      <header class="header is-personalizable">
+        <div class="toolbar">
+          <div class="title">
+            <h1>Hidden Tab #2</h1>
+          </div>
+          <div class="buttonset"></div>
+        </div>
+      </header>
+      <div class="page-container scrollable">
+        <div class="row">
+          <div class="six columns">
+            <p>This tab should be hidden, and not resized by the Module Tabs algorithm.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="hidden-tab-three" class="tab-panel">
+      <header class="header is-personalizable">
+        <div class="toolbar">
+          <div class="title">
+            <h1>Hidden Tab #3</h1>
+          </div>
+          <div class="buttonset"></div>
+        </div>
+      </header>
+      <div class="page-container scrollable">
+        <div class="row">
+          <div class="six columns">
+            <p>This tab should be hidden, and not resized by the Module Tabs algorithm.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="visible-tab-one" class="tab-panel">
+      <header class="header is-personalizable">
+        <div class="toolbar">
+          <div class="title">
+            <h1>Visible Tab #1</h1>
+          </div>
+          <div class="buttonset"></div>
+        </div>
+      </header>
+      <div class="page-container scrollable">
+        <div class="row">
+          <div class="six columns">
+            <p>This tab is not hidden, and will be resized by the Module Tabs algorithm.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="visible-tab-two" class="tab-panel">
+      <header class="header is-personalizable">
+        <div class="toolbar">
+          <div class="title">
+            <h1>Visible Tab #2</h1>
+          </div>
+          <div class="buttonset"></div>
+        </div>
+      </header>
+      <div class="page-container scrollable">
+        <div class="row">
+          <div class="six columns">
+            <p>This tab is not hidden, and will be resized by the Module Tabs algorithm.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="visible-tab-three" class="tab-panel">
+      <header class="header is-personalizable">
+        <div class="toolbar">
+          <div class="title">
+            <h1>Visible Tab #3</h1>
+          </div>
+          <div class="buttonset"></div>
+        </div>
+      </header>
+      <div class="page-container scrollable">
+        <div class="row">
+          <div class="six columns">
+            <p>This tab is not hidden, and will be resized by the Module Tabs algorithm.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script type="text/javascript">
+    var api,
+      hideButton = $('#hide-hidden-tabs'),
+      showButton = $('#show-hidden-tabs');
+
+    $('body').on('initialized', function() {
+      api = $('#module-tabs-example').data('tabs');
+
+      hideButton.on('click.test', function() {
+        hideButton.disable();
+        showButton.enable();
+
+        api.hide(null, '#hidden-tab-one');
+        api.hide(null, '#hidden-tab-two');
+        api.hide(null, '#hidden-tab-three');
+
+        api.handleResize();
+      });
+
+      showButton.on('click.test', function() {
+        showButton.disable();
+        hideButton.enable();
+
+        api.show(null, '#hidden-tab-one');
+        api.show(null, '#hidden-tab-two');
+        api.show(null, '#hidden-tab-three');
+
+        api.handleResize();
+      });
+
+    });
+  </script>

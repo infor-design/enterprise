@@ -29,15 +29,13 @@
 
       //Define Columns for the Grid.
 
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Expander});
-      columns.push({ id: 'drilldown', name: '', field: '', width: 75, formatter: Formatters.Drilldown, click: function(a, b) {console.log(b[0].item, b[0].row);}, hidden: false, align: 'center'});
-      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 125, formatter: Formatters.Hyperlink});
-      columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 160});
-      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 100, editor: Editors.Input});
-      columns.push({ id: 'price', name: 'Price', field: 'price', width: 100, formatter: Formatters.Decimal});
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, width: 125, dateFormat: 'M/d/yyyy'});
-      columns.push({ id: 'status', name: 'Status', field: 'status', width: 200, formatter: Formatters.Text});
-      columns.push({ id: 'action', name: 'Action Item', field: 'action', width: 200});
+      columns.push({ id: 'drilldown', name: '', field: '', formatter: Formatters.Drilldown, click: function(a, b) {console.log(b[0].item, b[0].row);}, hidden: false, align: 'center'});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Expander});
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink});
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', editor: Editors.Input});
+      columns.push({ id: 'price', name: 'Price', field: 'price',  formatter: Formatters.Decimal});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
 
       var rowTemplate = '<div class="datagrid-cell-layout"><div class="img-placeholder"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-camera"></use></svg></div></div>'+
                         '<div class="datagrid-cell-layout"><p class="datagrid-row-heading">Expandable Content Area</p>' +

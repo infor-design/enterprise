@@ -45,10 +45,10 @@
     }
 
     .masthead-appname {
-      @include font-size(14);
+      @include font-size(24);
       color: $sr-masthead-text-color;
       line-height: 34px;
-      margin-left: -28px;
+      margin-left: -5px;
     }
 
     .icon {

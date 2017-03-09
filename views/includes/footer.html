@@ -19,31 +19,7 @@
   initialLocale = '{{locale}}';
   {{/locale}}
 
-  var theme = 'light';
-  {{#theme}}
-  theme = '{{theme}}';
-  {{/theme}}
-
-  var colors;
-  {{#colors}}
-  colors = '{{colors}}'.split(',');
-  console.log(colors);
-
-  colors = {header: colors[0],
-           subheader: colors[1],
-           text: colors[2],
-           verticalBorder: colors[3],
-           horizontalBorder: colors[4],
-           inactive: colors[5],
-           hover: colors[6]};
-
-  {{/colors}}
-
   $('body').initialize({locale: initialLocale});
-
-  //If Initialize isnt called need to defer this
-  $('body').trigger('changetheme', theme)
-      .trigger('changecolors', colors);
 
 </script>
 

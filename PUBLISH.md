@@ -53,7 +53,7 @@ git checkout master
 # How To Publish with New Process
 
 - Update date and version and release notes link in PUBLISH.MD
-- Push Make release in Jira
+- Push Make release of current version in Jira
 - Run this process: http://wiki.infor.com:8080/confluence/display/HaL/SoHo+XI+Release+Builds
 
 Note: This part is not working
@@ -61,7 +61,6 @@ http://bamboo.infor.com/browse/SOHO-NGV-16
 
 - Bump Change Log
 - Make sure new version in Jira
-- Make change log and copy to production site
 
 # How To Make Release
 

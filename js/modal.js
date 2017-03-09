@@ -502,14 +502,24 @@
 
       resize: function() {
         var calcHeight = ($(window).height()* 0.9)-this.settings.frameHeight, //90% -(180 :extra elements-height)
-          calcWidth = ($(window).width()* 0.9)-this.settings.frameWidth,
-          wrapper = this.element.find('.modal-body-wrapper');
+          calcWidth = ($(window).width()* 1)-this.settings.frameWidth;
 
+        var wrapper = this.element.find('.modal-body-wrapper');
         if (wrapper.length) {
           wrapper[0].style.maxHeight = calcHeight + 'px';
           wrapper[0].style.maxWidth = calcWidth + 'px';
-
         }
+
+        if (this.element.hasClass('lookup-modal')) {
+          var table = this.element.find('.datagrid-body'),
+            hasPager = this.element.find('.pager-toolbar'),
+            container = table.closest('.datagrid-container');
+
+          calcHeight = calcHeight - (container.prev().is('.toolbar') ? 130 : 60) - (container.next().is('.pager-toolbar') ? 35 : 0);
+          table[0].style.maxHeight = calcHeight + (hasPager.length ? -15 : 0) + 'px';
+          table[0].style.maxWidth = calcWidth + 'px';
+        }
+
       },
 
       isOpen: function() {

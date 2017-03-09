@@ -131,12 +131,24 @@
     min-height: 318px;
     overflow: auto;
     width: 100%;
+
+    &.contained,
+    .contained {
+      height: inherit;
+    }
   }
 
   .card-footer,
   .widget-footer {
     border-top: 1px solid $cardlist-border-color;
     min-height: 50px;
+
+    .pager-toolbar {
+      a {
+        margin: 2px 4px 0px 4px;
+      }
+
+    }
   }
 
   // Empty State Containers can have variable height
@@ -233,7 +245,7 @@
 
 .header + .homepage,
 .header + nav + .homepage {
-  height: calc(100% - 80px);
+  height: calc(100% - 60px);
   margin-top: 0 !important;
   overflow: scroll;
 }

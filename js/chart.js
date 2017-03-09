@@ -19,9 +19,9 @@ window.Chart = function(container) {
     return null;
   }
 
-  var colorRange = ['#1D5F8A', '#8ED1C6', '#8E72A4', '#5C5C5C', '#F2BC41', '#76B051', '#AD4242',
-   '#8DC9E6', '#DE7223', '#317C73', '#EB9D9D', '#999999', '#44831F', '#C7B4DB',
-   '#4EA0D1', '#6C4B81', '#AFDC91', '#69ADA3', '#DE7223', '#D8D8D8'];
+  var colorRange = ['#1D5F8A', '#8ED1C6', '#9279A6', '#5C5C5C', '#F2BC41', '#66A140', '#AD4242',
+   '#8DC9E6', '#EFA836', '#317C73', '#EB9D9D', '#999999', '#488421', '#C7B4DB',
+   '#54A1D3', '#6e5282', '#AFDC91', '#69ADA3', '#DB7726', '#D8D8D8'];
 
   this.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   this.pieColors = d3.scale.ordinal().range(colorRange);
@@ -58,7 +58,7 @@ window.Chart = function(container) {
       return this.pieColors(i);
     }
     if (chartType === 'bar-single' || chartType === 'column-single') {
-      return '#368AC0';
+      return '#1D5F8A';
     }
     if (chartType === 'bar' || chartType === 'line') {
       return this.colors(i);
@@ -104,12 +104,13 @@ window.Chart = function(container) {
   };
 
   this.addLegend = function(series) {
-    var i, s = charts.settings,
-      legend = '<div class="chart-legend"></div>';
+    var i, s = charts.settings;
 
     if (series.length === 0) {
       return;
     }
+    var isTwoColumn = series[0].display && series[0].display === 'twocolumn',
+      legend = isTwoColumn ? $('<div class="chart-legend" style="margin: 2em auto auto; border-top: 1px solid #ccc; padding-top: 1em;"></div>') : $('<div class="chart-legend"></div>');
 
     // Legend width
     var width = 0,
@@ -130,7 +131,7 @@ window.Chart = function(container) {
       }
 
       var extraClass = '';
-      if (series[i].display && (series[i].display === 'block' || series[i].display === 'twocolumn')) {
+      if (isTwoColumn || (series[i].display && series[i].display === 'block')) {
         extraClass += ' lg';
       }
       if (s.type === 'column-positive-negative' && series[i].option) {
@@ -156,8 +157,7 @@ window.Chart = function(container) {
         seriesLine = '<span class="chart-legend-item'+ extraClass +'" tabindex="0" style="float: none; display: block; margin: 0 auto; width: '+ width +'px;"></span>';
       }
 
-      if (series[i].display && series[i].display==='twocolumn') {
-        legend = '<div class="chart-legend" style="margin: 2em auto auto; border-top: 1px solid #ccc; padding-top: 1em;"></div>';
+      if (isTwoColumn) {
         if(widthPercent > 45) {
           seriesLine = '<span class="chart-legend-item'+ extraClass +'" tabindex="0" style="float: none; display: block; margin: 0 auto; width: '+ width +'px;"></span>';
         } else {
@@ -165,9 +165,7 @@ window.Chart = function(container) {
         }
       }
       seriesLine = $(seriesLine);
-      legend = $(legend);
-
-      $(seriesLine).append(color, textBlock);
+      seriesLine.append(color, textBlock);
       legend.append(seriesLine);
     }
 
@@ -964,7 +962,7 @@ window.Chart = function(container) {
       });
 
     // Now we'll draw our label lines, etc.
-    var textLabels, textX=[], textY=[],
+    var textLabels, textX=[], textY=[], textLabelsLength = 0,
       perEvenRound = [], perRound = [], perRoundTotal = 0,
 
       // http://stackoverflow.com/a/13484393
@@ -1056,7 +1054,7 @@ window.Chart = function(container) {
         perRoundTotal = perRound.reduce(function(a, b) { return a + b; });
       },
 
-      labelsContextFormatter = function (d, context, formatterString, isShortName, i) {
+      labelsContextFormatter = function (d, context, formatterString, isShortName, idx) {
         formatterString = /percentage/i.test(context) ? '0.0%' : formatterString;
         var r,
           format = d3.format(formatterString || ''),
@@ -1065,7 +1063,7 @@ window.Chart = function(container) {
           value = formatterString && formatterString !== '0.0%' ? format(d.value) : d.value;
 
         if (/percentage/i.test(context) && perRoundTotal !== 100) {
-          percentage = perEvenRound[i] +'%';
+          percentage = perEvenRound[idx] +'%';
         }
         // 'name'|'value'|'percentage'|'name, value'|'name (value)'|'name (percentage)'
         switch (context) {
@@ -1086,8 +1084,11 @@ window.Chart = function(container) {
 
       drawTextlabels = function (isShortName) {
         svg.selectAll('.lb-top').each(function(d, i) {
-          if ((dims.center.x + (+d3.select(this).attr('x')) - (d.data.name.length*5)) < 15) {// 15: extra padding
-            isShortName = {isShortName: true};
+          var parentX = +d3.select(this.parentNode).attr('x');
+
+          if (((dims.center.x + parentX) - (d.data.name.length*5)) < 25 ||
+          parentX > 0 && (dims.center.x - (d.data.name.length*5 + parentX)) < 25) {
+            isShortName =  true;
           }
 
           d3.select(this)
@@ -1105,8 +1106,11 @@ window.Chart = function(container) {
 
         if (lb.isTwoline) {
           svg.selectAll('.lb-bottom').each(function(d, i) {
-            if ((dims.center.x + (+d3.select(this).attr('x')) - (d.data.name.length*5)) < 15) {// 15: extra padding
-              isShortName = {isShortName: true};
+            var parentX = +d3.select(this.parentNode).attr('x');
+
+            if (((dims.center.x + parentX) - (d.data.name.length*5)) < 25 ||
+            parentX > 0 && (dims.center.x - (d.data.name.length*5 + parentX)) < 25) {
+              isShortName =  true;
             }
 
             d3.select(this)
@@ -1162,6 +1166,8 @@ window.Chart = function(container) {
               x = Math.cos(midAngle) * dims.labelRadius,
               sign = (x > 0) ? 1 : -1,
               labelX = x + (1 * sign);
+
+            textLabelsLength++;
 
             textX.push(labelX);
             return labelX;
@@ -1235,7 +1241,8 @@ window.Chart = function(container) {
 
       if (lb.hideLabels) {
         var isRunning = true,
-          maxRunning = textLabels.length*15,
+          // maxRunning = textLabels.length * 15,
+          maxRunning = textLabelsLength * 15,
           orgLabelPos,
           spacing = Math.round(textLabels.node().getBBox().height) + 1;
 
@@ -1267,7 +1274,7 @@ window.Chart = function(container) {
                     deltaY = Math.round(Math.abs(y1 - y2));
                     if (deltaY < spacing) {
                       deltaY += 1;
-                      var newY = y2 > 0 ? y2-(deltaY/2) : y2+(deltaY/2);
+                      var newY = y2 > 0 ? y2-(deltaY/2) : y2+(deltaY/2)+1;
                       again = true;
                       db.attr('y', newY); //padding
 

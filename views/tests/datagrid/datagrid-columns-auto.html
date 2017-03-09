@@ -23,7 +23,7 @@
 
       //Define Columns for the Grid.
 
-      columns.push({ id: 'drilldown', name: '', field: '', formatter: Formatters.Drilldown, align: 'center'});
+      columns.push({ id: 'drilldown', name: '', field: '', formatter: Formatters.Drilldown, align: 'center', resizable: false, sortable: false});
       columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
@@ -33,7 +33,7 @@
       grid = $('#datagrid').datagrid({
         columns: columns,
         dataset: data
-    });
+      });
 
 });
 

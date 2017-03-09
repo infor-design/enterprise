@@ -66,7 +66,7 @@
     },
     //Resx - Approved By Translation Team
     messages: {
-      'AboutText': {id: 'AboutText', value: 'Авторские права &copy; Infor, {0}. Все права сохранены. Настоящим представленные названия и дизайн элементов являются товарными знаками либо охраняемыми товарными знаками Infor и/или аффилированных организаций и филиалов Infor. Все права сохранены. Все другие товарные знаки, перечисленные здесь, являются собственностью соответствующих владельцев. www.infor.com.'},
+      'AboutText': {id: 'AboutText', value: 'Авторские права &copy; Infor, {0}. Все права сохранены. Настоящим представленные названия и дизайн элементов являются товарными знаками либо охраняемыми товарными знаками Infor и/или аффилированных организаций и филиалов Infor. Все права сохранены. Все другие товарные знаки, перечисленные здесь, являются собственностью соответствующих владельцев.'},
       'Actions': {id: 'Actions', value: 'Действия', comment: 'Tooltip text for the action button with additional in context actions'},
       'Add': {id: 'Add', value: 'Добавить', comment: 'Add'},
       'AddNewTab': {id: 'AddNewTab', value: 'Добавить новую вкладку', comment: 'Attached to a button that adds new tabs'},
@@ -128,7 +128,7 @@
       'Download': {id: 'Download', value: 'Загрузить', comment: 'Download tooltip'},
       'Duplicate': {id: 'Duplicate', value: 'Дублировать', comment: 'Duplicate tooltip'},
       'EitherSelectedOrNotSelected': {id: 'EitherSelectedOrNotSelected', value: 'Выбрано или не выбрано', comment: 'Either Selected Or NotSelected in icons for filtering'},
-      'EndWith': {id: 'EndWith', value: 'Не заканчивается на', comment: 'for condition filtering'},
+      'EndsWith': {id: 'EndsWith', value: 'Не заканчивается на', comment: 'for condition filtering'},
       'EnterComments': {id: 'EnterComments', value: 'Введите комментарии здесь...', comment: 'Placeholder text for a text input (comments)'},
       'Error': {id: 'Error', value: 'Ошибка', comment: 'Title, Spoken Text describing fact an error has occured'},
       'ErrorAllowedTypes': {id: 'ErrorAllowedTypes', value: 'Тип файла запрещен', comment: 'Error string for file-upload'},
@@ -271,7 +271,7 @@
       'SliderMaximumHandle': {id: 'SliderMaximumHandle', value: 'Маркер максимального диапазона для', comment: 'Describes a maximum value handle in a Range (double slider), followed in code by the name of the control'},
       'SliderMinimumHandle': {id: 'SliderMinimumHandle', value: 'Маркер минимального диапазона для', comment: 'Describes a minimum value handle in a Range (double slider), followed in code by the name of the control'},
       'SkipToMain': {id: 'SkipToMain', value: 'Перейти к основному содержимому', comment: 'Skip link in header, jumps when clicked on to main area'},
-      'StartWith': {id: 'StartWith', value: 'Начинается с', comment: 'for condition filtering'},
+      'StartsWith': {id: 'StartsWith', value: 'Начинается с', comment: 'for condition filtering'},
       'StrikeThrough': {id: 'StrikeThrough', value: 'Зачеркивание', comment: 'turn on and off strike through text in text editor (like word)'},
       'SortAtoZ': {id: 'SortAtoZ', value: 'Сортировать по возрастанию', comment: 'Sort A to Z in icons for filtering'},
       'SortZtoA': {id: 'SortZtoA', value: 'Сортировать по убыванию', comment: 'Sort Z to A in icons for filtering'},

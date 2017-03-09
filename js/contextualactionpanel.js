@@ -22,6 +22,7 @@
           buttons: null, // List of buttons that will sit in the toolbar's Buttonset area
           title: 'Contextual Action Panel', // string that fits into the toolbar's Title field
           content: null, //Pass content through to modal
+          initializeContent: true, // initialize content before opening
           trigger: 'click'
         },
         settings = $.extend({}, defaults, options);
@@ -187,7 +188,9 @@
         }).on('close.contextualactionpanel', function(e) {
           passEvent(e);
         }).on('beforeopen.contextualactionpanel', function(e) {
-          $(this).initialize();
+          if (self.settings.initializeContent) {
+            $(this).initialize();
+          }
           passEvent(e);
         }).on('afteropen.contextualactionpanel', function() {
           if (self.toolbar) {

@@ -23,15 +23,13 @@
         </button>
         <ul class="popupmenu">
           <li><a data-option="personalize-columns" href="#">Personalize Columns</a></li>
-          <li><a data-option="personalize-columns" href="#">Personalize Columns</a></li>
-<li><a data-option="reset-layout" href="#">Reset to Default</a></li>
-
+          <li><a data-option="reset-layout" href="#">Reset to Default</a></li>
           <li><a data-option="export-to-excel" href="#">Export to Excel</a></li>
           <li class="separator single-selectable-section"></li>
           <li class="heading">Row Height</li>
-          <li class="is-selectable"><a data-option="row-short" href="#">Short</a></li>
+          <li class="is-selectable  is-checked"><a data-option="row-short" href="#">Short</a></li>
           <li class="is-selectable"><a data-option="row-medium" href="#">Medium</a></li>
-          <li class="is-selectable is-checked"><a data-option="row-normal" href="#">Normal</a></li>
+          <li class="is-selectable"><a data-option="row-normal" href="#">Normal</a></li>
         </ul>
       </div>
     </div>
@@ -53,7 +51,7 @@
         data = res.data;
 
         //Define Columns for the Grid.
-        columns.push({ id: 'rowStatus', resizable: false, formatter: Formatters.Status, align: 'center'});
+        columns.push({ id: 'rowStatus', name: 'Status', formatter: Formatters.Status, align: 'center'});
         columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Text});
         columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink});
         columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});

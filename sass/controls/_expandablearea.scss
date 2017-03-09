@@ -49,20 +49,16 @@
     overflow: hidden;
 
     > .content {
-      padding: 25px 0 15px;
+      padding: 25px 0 0;
 
       .column {
         margin-left: 0;
         padding-left: 0;
       }
 
-    }
-
-    .field:last-child .dropdown-wrapper:last-child,
-    .field:last-child input:last-child,
-    .compound-field:last-child .dropdown-wrapper:last-child,
-    .compound-field:last-child input:last-child {
-      margin-bottom: 0;
+      p {
+        margin-bottom: 15px;
+      }
     }
 
     .row:last-child {

@@ -6,10 +6,18 @@ $toolbar-buttonset-height: 40px;
 // See also Colors.scss
 .toolbar,
 .formatter-toolbar {
-  @include no-select();
   padding: 0 1rem;
   position: relative;
+  text-align: left;
   -webkit-touch-callout: none;
+
+  &.has-title {
+    text-align: right;
+  }
+
+  &.right-aligned {
+    text-align: right;
+  }
 
   // Acts as a spacer that causes the toolbar items to vertically align.
   &::before {
@@ -22,10 +30,11 @@ $toolbar-buttonset-height: 40px;
   }
 
   .buttonset {
+    @include no-select();
     height: $toolbar-buttonset-height;
     overflow: hidden;
     padding-left: 1px;  //for the focus state
-    width: 98%;
+    width: 100%; // Overridden by sizing calculation.
 
     > .separator {
       background-color: $formatter-toolbar-separator-color;
@@ -46,27 +55,36 @@ $toolbar-buttonset-height: 40px;
       }
 
       &.is-overflowed {
-        display: block;
+        display: none;
       }
     }
 
     > [class^="btn"] {
       min-width: 34px;
     }
-
-    &.right-aligned {
-      text-align: right;
-    }
   }
 
   .title {
+    @include enable-select();
+    height: $toolbar-buttonset-height;
+    left: 1rem;
     overflow: hidden;
+    text-align: left;
     text-overflow: ellipsis;
+    top: 0;
     white-space: nowrap;
-    width: 45%;
+    width: 45%; // Overridden by sizing calculation.
+
+    // Acts as a spacer that causes the toolbar items to vertically align.
+    &::before {
+      @include vertical-alignment-spacer;
+    }
 
     > * {
+      display: inline-block;
+      margin: auto 0;
       vertical-align: middle;
+      white-space: nowrap;
     }
 
     > h1 {
@@ -79,35 +97,54 @@ $toolbar-buttonset-height: 40px;
 
     + .buttonset {
       text-align: right;
-      width: calc(55% - 1px); // 1px is the width of the pseudo-element preceeding the title used for vertical alignment
+      width: calc(55% - 1px); // -1px for the spacer in the ::after pseudo on the toolbar elem.
     }
   }
 
   // Container for More Button
   .more {
+    @include no-select();
     display: none;
     text-align: right;
-    width: 38px;
 
     > * {
       margin-right: 1px;
     }
   }
 
+  &.do-resize {
+    .buttonset {
+      width: auto;
+    }
+
+    .title {
+      position: absolute;
+      width: auto;
+    }
+
+    &.has-more-button {
+      .buttonset {
+        width: calc(100% - 44px);
+      }
+
+      .title + .buttonset {
+        width: auto;
+      }
+    }
+  }
+
   &.has-more-button {
     .buttonset {
-      width: calc(100% - 39px); // 39px = width of the ".more" container + 1px for vertical spacing pseudo-element
+      width: calc(100% - 44px);
 
       > *:last-child {
         margin-right: 5px; // Add back the 5px since we need to visually separate the More button from the others.
       }
     }
 
-    .title {
-      width: calc(45%); // 1px for the "vertical alignment" helper psuedo-element
-
-      + .buttonset {
-        width: calc(55% - 39px); // 55% - (width of the possible 'more' button + weird, inexplicable spacing that's necessary)
+    &.has-title {
+      .buttonset {
+        width: calc(55% - 44px);
       }
     }
 
@@ -289,7 +326,7 @@ $toolbar-buttonset-height: 40px;
 
   + .listview {
     @include css3(transition, height 300ms cubic-bezier(.17, .04, .03, .94));
-    height: calc(100% - 50px);
+    height: calc(100% - 44px);
   }
 
   // Updated changes from listview button and font sizes
@@ -402,4 +439,40 @@ $toolbar-buttonset-height: 40px;
       }
     }
   }
+}
+
+//RTL Styles
+html[dir='rtl'] {
+
+  .toolbar,
+  .formatter-toolbar {
+    text-align: right;
+
+    &.has-title {
+      text-align: left;
+    }
+
+    &.right-aligned {
+      text-align: left;
+    }
+
+    .title {
+      left: auto;
+      right: 1rem;
+      text-align: right;
+
+      + .buttonset {
+        text-align: left;
+      }
+    }
+
+    &.has-more-button {
+      .buttonset > *:last-child {
+        margin-left: 5px;
+        margin-right: 0;
+      }
+    }
+
+  }
+
 }

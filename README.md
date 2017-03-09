@@ -65,7 +65,8 @@ IE 9+ ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
 ### Running The Unit Tests
 * `make unit-test` To run the unit tests
 
-## Manually Install
+## Manual Install
+* (Windows) Install Python >= v2.5.0 & < 3.0.0 : https://www.python.org/downloads/
 * Install nodejs as paying attention to your OS directions: http://nodejs.org/
 * Install gruntjs: http://gruntjs.com/ by running the command (`npm install -g grunt-cli`)
 
