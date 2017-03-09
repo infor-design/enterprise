@@ -59,6 +59,7 @@
         this.textInput = elem.parent().find('[type="text"]');
         this.textInput.on('keypress.fileupload', function (e) {
           if (e.which === 13 || e.which === 32) {
+            e.stopPropagation();
             elem.find('input').trigger('click');
           }
         });
@@ -69,7 +70,7 @@
 
         if (this.fileInput.attr('readonly')) {
           this.textInput.prop('disabled', false);
-          this.textInput[0].classList.remove('fileupload-background-transparent')
+          this.textInput[0].classList.remove('fileupload-background-transparent');
           this.fileInput.attr('disabled', 'disabled');
         }
 
