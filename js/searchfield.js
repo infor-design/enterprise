@@ -159,7 +159,7 @@
 
             var value = '',
               valueTypes = ['string', 'number'];
-            if (valueTypes.indexOf(val.value) > -1) {
+            if (valueTypes.indexOf(typeof val.value) > -1) {
               value = ' data-value="'+ val.value +'"';
             }
 
@@ -182,6 +182,8 @@
               y: 10
             }
           });
+
+          this.setCategoryButtonText();
         }
 
         // Swap icon position to in-front if we have an "alternate" class.
@@ -239,8 +241,8 @@
         });
 
         if (this.hasCategories()) {
-          this.button.on('selected.searchfield deselected.searchfield', function(e, anchor, toggleMethod) {
-            self.handleCategorySelection(e, anchor, toggleMethod);
+          this.button.on('selected.searchfield', function(e, anchor) {
+            self.setCategoryButtonText(e, anchor.text().trim());
           }).on('focus.searchfield', function(e) {
             self.handleCategoryFocus(e);
           }).on('blur.searchfield', function(e) {
@@ -413,19 +415,18 @@
         return true;
       },
 
-      handleCategorySelection: function(e, anchor) {
-        if (!this.settings.showCategoryText) {
+      /**
+       * Sets the text content on the category button.  Will either display a single category name, or a translated "[x] Selected." string.
+       * @returns {undefined}
+       */
+      setCategoryButtonText: function(textContent) {
+        if (!this.settings.showCategoryText || !this.hasCategoryButton()) {
           return;
         }
 
-        var
-          text = '' + anchor.text().trim(),
+        var text = '',
           button = this.wrapper.find('.btn'),
           span = button.find('span');
-
-        if (!button || !button.length) {
-          return;
-        }
 
         if (!span || !span.length) {
           span = $('<span class="category"></span>').insertAfter(button.find('.icon').first());
@@ -433,7 +434,15 @@
 
         span.empty();
 
-        var item = this.list.find('.is-checked');
+        // incoming text takes precedent
+        if (typeof textContent === 'string' && textContent.length) {
+          span.text(textContent.trim());
+          return;
+        }
+
+        // Otherwise, grab currently selected categories and set text
+        // (or clear, if no options are selected).
+        var item = this.getSelectedCategories();
         if (!item.length) {
           return;
         }
@@ -465,8 +474,69 @@
         this.wrapper.removeClass('has-focus');
       },
 
-      getSelectedCategories: function() {
+      /**
+       * Gets a complete list of categories in jQuery-collection form.
+       * @return {jQuery} categories
+       */
+      getCategories: function() {
+        return this.list.children('li:not(.separator)');
+      },
 
+      /**
+       * Gets the currently selected list of categories in jQuery-collection form.
+       * @return {jQuery} selectedCategories
+       */
+      getSelectedCategories: function() {
+        return this.getCategories().filter('.is-checked');
+      },
+
+      /**
+       * Gets the currently selected categories as data.
+       * @param {boolean} [onlyReturnSelected=false] - If set to true, will only return checked list items.
+       * @returns {Object[]} data -
+       * @returns {string} data[].name - Category name
+       * @returns {string|number} data[].id - Category element's ID (if applicable)
+       * @returns {string|number} data[].value - Category element's value (if applicable)
+       * @returns {boolean} [data[].checked=true] - Category's selection status
+       */
+      getCategoryData: function(onlyReturnSelected) {
+        var categories = this.getCategories(),
+          data = [];
+
+        categories.each(function() {
+          var classList = this.classList,
+            checked = classList.contains('is-checked');
+
+          if (onlyReturnSelected === true && checked === false) {
+            return;
+          }
+
+          var category = {
+            name: this.innerText,
+            checked: checked
+          };
+
+          if (this.id) {
+            category.id = this.id;
+          }
+
+          var value = this.getAttribute('data-value');
+          if (value !== undefined) {
+            category.value = value;
+          }
+
+          data.push(category);
+        });
+
+        return data;
+      },
+
+      /**
+       * Determines whether or not a Category Trigger exists.
+       * @returns {boolean}
+       */
+      hasCategoryButton: function() {
+        return this.wrapper.find('.btn').length > 0;
       },
 
       handlePopupClose: function() {
