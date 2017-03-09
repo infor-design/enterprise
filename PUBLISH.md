@@ -61,6 +61,8 @@ http://bamboo.infor.com/browse/SOHO-NGV-16
 
 - Bump Change Log
 - Make sure new version in Jira
+- Update dev53
+- add label to successful build
 
 # How To Make Release
 

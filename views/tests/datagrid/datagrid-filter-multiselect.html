@@ -17,7 +17,7 @@
     <div class="contextual-toolbar toolbar is-hidden">
       <div class="title selection-count">1 Selected</div>
       <div class="buttonset">
-        <button class="btn" type="button" id='remove-btn'>
+        <button class="btn" type="button">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-delete"></use>
           </svg>
@@ -60,7 +60,7 @@
       columns.push({ id: 'productId2', name: 'Product Id 2', field: 'productId', width: 120, formatter: Formatters.Readonly, filterType: 'text'});
       columns.push({ id: 'productName', name: 'Product Name', field: 'productName', width: 200, formatter: Formatters.Hyperlink, filterType: 'text'});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 140, filterType: 'contents', options: activities});
-      columns.push({ id: 'quantity', name: 'Accuml. Quantity', field: 'quantity', align: 'right', width: 150, filterType: 'integer'});
+      columns.push({ id: 'quantity', name: 'Accuml. Quantity', field: 'quantity', align: 'right', mask: '999', width: 150, filterType: 'integer'});
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', width: 130, formatter: Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date'});
       columns.push({ id: 'inStock', name: 'In Stock', field: 'inStock', width: 90, formatter: Formatters.Checkbox, align: 'center', filterType: 'checkbox'});
       columns.push({ id: 'status', name: 'Status', field: 'status', width: 150, formatter: Formatters.Alert, filterType: 'select', options: statuses, ranges: [{'value':'Confirmed', 'classes': 'confirm', text: 'Confirmed'}, {'value':'Error', 'classes': 'error', text: 'Error'}]});

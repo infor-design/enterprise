@@ -846,15 +846,20 @@
         }
 
         function toggleClass($elem, doHide) {
-          var li = $elem.data('action-button-link').parent()[0];
+          var elem = $elem[0],
+            li = $elem.data('action-button-link').parent()[0],
+            elemIsHidden = elem.classList.contains('hidden');
 
           if (doHide) {
             li.classList.add('hidden');
-            $elem.removeClass('is-overflowed');
+            elem.classList.remove('is-overflowed');
             return;
           }
-          li.classList.remove('hidden');
-          $elem.addClass('is-overflowed');
+
+          if (!elemIsHidden) {
+            li.classList.remove('hidden');
+          }
+          elem.classList.add('is-overflowed');
 
           if ($elem.find('.icon').length) {
             iconDisplay = 'addClass';
@@ -883,7 +888,7 @@
         }
 
         // In cases where a Title is present and buttons are right-aligned, only show up to the maximum allowed.
-        if (this.title.length && this.buttonsetItems.index(item) >= (this.settings.maxVisibleButtons)) { // Subtract one to account for the More Button
+        if (this.title.length && this.buttonsetItems.filter(':not(.hidden)').index(item) >= this.settings.maxVisibleButtons) { // Subtract one to account for the More Button
           // ONLY cause this to happen if there are at least two items that can be placed in the overflow menu.
           // This prevents ONE item from being present in the menu by itself
           //if (!this.buttonsetItems.last().is(item)) {

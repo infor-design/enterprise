@@ -190,8 +190,7 @@
           }
           if (val && self.initValue !== val) {
             if (isRemask || self.settings.processOnBlur) {
-              self.element.val('');
-              self.processStringAgainstMask(val);
+              self.remask();
             }
             self.element.trigger('change');
           }
@@ -468,10 +467,12 @@
 
       // Writes the current value of the internal text buffer out to the Input Field.
       // Additionally, resets the Caret to the right position.
-      writeInput: function() {
-        var val = this.element.val(),
+      writeInput: function(reprocess) {
+        var self = this,
+          val = this.element.val(),
           pos = this.originalPos,
-          buffSize = this.buffer.length,
+          buffer = reprocess === true ? '' : this.buffer,
+          buffSize = reprocess === true ? 0 : buffer.length,
           workingPattern = '' + this.settings.pattern, // copy the pattern, don't reference it
           pattSize = workingPattern.length,
           isNumberMask = (this.settings.mode === 'number'),
@@ -490,9 +491,28 @@
         }
 
         function stripSelection() {
+          if (reprocess === true) {
+            return;
+          }
+
           var selection = val.substring(pos.begin, pos.end);
           val = replaceAtIndex(val, '', pos.begin, pos.end);
           pos.end = pos.end - selection.length;
+        }
+
+        function insertBuffer() {
+          if (reprocess === true) {
+            return;
+          }
+
+          val = self.insertAtIndex(val, buffer, pos.begin);
+          moveCaret(buffSize);
+        }
+
+        // Remove the thousands separator from the working pattern if its setting is disabled
+        if (!this.settings.thousandsSeparator) {
+          workingPattern = workingPattern.replace(THOUSANDS_SEP_REGEX, '');
+          pattSize = workingPattern.length;
         }
 
         if (!isNumberMask) {
@@ -500,8 +520,7 @@
           stripSelection();
 
           // insert the buffer's contents
-          val = this.insertAtIndex(val, this.buffer, pos.begin);
-          moveCaret(buffSize);
+          insertBuffer();
 
           // cut down the total length of the string to make it no larger than the pattern mask
           val = val.substring(0, pattSize);
@@ -525,7 +544,7 @@
         var originalVal = val,
           patternHasDecimal = workingPattern.indexOf(DECIMAL_SYMBOL) > -1,
           currentDecimalIndex = val.indexOf(DECIMAL_SYMBOL),
-          decimalInBuffer = this.buffer.indexOf(DECIMAL_SYMBOL) > -1,
+          decimalInBuffer = buffer.indexOf(DECIMAL_SYMBOL) > -1,
           insertBufferBeforeDecimal = true,
           decimalAlreadyExists = false;
 
@@ -535,8 +554,8 @@
         // Does it already exist?
         decimalAlreadyExists = currentDecimalIndex !== -1;
 
-        val = this.insertAtIndex(val, this.buffer, pos.begin);
-        moveCaret(buffSize);
+        // insert the buffer's contents
+        insertBuffer();
 
         // If the mask supports negative numbers, but a positive number is present,
         // don't calculate the negative symbol as part of the current pattern.
@@ -600,7 +619,7 @@
             }
 
             val = this.insertAtIndex(val, DECIMAL_SYMBOL, targetDecimalIndex);
-            if (pos.begin === targetDecimalIndex) {
+            if (pos.begin === targetDecimalIndex || pos.begin === targetDecimalIndex + 1) {
               moveCaret(1);
             }
 
@@ -638,7 +657,7 @@
 
           // Manual adjustment for situations where the cursor won't move if you type a number while the
           // cursor sits in the position immediately after a thousands separator.
-          if (val.substring(pos.begin - 1, pos.begin) === THOUSANDS_SEPARATOR && val.substr(pos.begin, buffSize) === this.buffer) {
+          if (val.substring(pos.begin - 1, pos.begin) === THOUSANDS_SEPARATOR && val.substr(pos.begin, buffSize) === buffer) {
             moveCaret(buffSize);
           }
         }
@@ -647,7 +666,9 @@
         this.element.val(val);
 
         // reposition the caret to be in the correct spot (after the content we just added).
-        this.caret(pos.end >= pattSize ? pattSize : pos.end);
+        if (reprocess !== true) {
+          this.caret(pos.end >= pattSize ? pattSize : pos.end);
+        }
 
         // trigger the 'write' event
         this.element.trigger('write.mask', [val]);
@@ -1198,11 +1219,6 @@
 
         switch(this.settings.mode) {
           case 'number':
-            var regex = /[^0-9.-]/g;
-            if (!this.settings.negative) {
-              regex = /[^0-9.]/g;
-            }
-            string = string.replace(regex,'');
             if (!this.originalPos) {
               this.originalPos = this.caret();
             }
@@ -1218,6 +1234,20 @@
             }
             break;
         }
+
+        return this;
+      },
+
+      /**
+       * Re-masks the current contents of the field.
+       * @returns { this }
+       **/
+      remask: function() {
+        if (!this.originalPos) {
+          this.originalPos = this.caret();
+        }
+        this.writeInput(true);
+        this.resetStorage();
 
         return this;
       },

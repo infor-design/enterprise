@@ -328,7 +328,7 @@
             isBorder = true;
           }
 
-          if (elemValue && elemValue.replace('#', '') === value) {
+          if (elemValue && (elemValue + '').toLowerCase().replace('#', '') === (value + '').toLowerCase()) {
             // Set checkmark color class
             if (checkmark) {
               $.each(checkmark, function(k, v) {
@@ -378,6 +378,17 @@
 
       isDisabled: function() {
         return this.element.prop('disabled');
+      },
+
+      decimal2rgb: function(n) {
+        if (typeof n !== 'number') {
+          return n;
+        }
+        return 'rgb('+
+          (n & 0xFF) +', '+
+          ((n & 0xFF00) >> 8) +', '+
+          ((n & 0xFF0000) >> 16 ) +
+        ')';
       },
 
       rgb2hex: function (rgb) {

@@ -20,7 +20,7 @@ window.Formatters = {
     return '<span class="is-readonly">' + ((value === null || value === undefined) ? '' : value) + '</span>';
   },
 
-  Date: function(row, cell, value, col) {
+  Date: function(row, cell, value, col, isReturnValue) {
     var formatted = ((value === null || value === undefined) ? '' : value),
       value2;
 
@@ -50,10 +50,49 @@ window.Formatters = {
       formatted = Locale.formatDate(value, (typeof col.dateFormat === 'string' ? {pattern: col.dateFormat}: col.dateFormat));
     }
 
-    if (!col.editor) {
-      return formatted === '' ? '' : formatted;
+    if (!col.editor || isReturnValue === true) {
+      return formatted;
     }
     return '<span class="trigger">' + formatted + '</span>' + $.createIcon({ icon: 'calendar', classes: ['icon-calendar'] });
+  },
+
+  Time: function(row, cell, value, col) {
+    var formatted = ((value === null || value === undefined) ? '' : value),
+      localeDateFormat = ((typeof Locale === 'object' && Locale.calendar().dateFormat) ? Locale.calendar().dateFormat.short : null),
+      localeTimeFormat = ((typeof Locale === 'object' && Locale.calendar().timeFormat) ? Locale.calendar().timeFormat : null),
+      value2;
+
+    var parseTime = function (timeString) {
+      if (timeString === '') {
+        return null;
+      }
+      var time = timeString.match(/(\d+)(?::(\d\d))(?::(\d\d))?\s*([pP]?)/i);
+      if (time === null) {
+        return null;
+      }
+      var d = new Date();
+      d.setHours(parseInt(time[1]) + (time[4] ? 12 : 0));
+      d.setMinutes(parseInt(time[2]) || 0);
+      d.setSeconds(parseInt(time[3]) || 0);
+      return d;
+    };
+
+    if (typeof value === 'string' && value) {
+      value2 = Locale.formatDate(parseTime(value), { pattern: (localeDateFormat +' '+ (col.sourceFormat || col.timeFormat || localeTimeFormat)) });
+
+      if (value2) {
+        formatted = value2.slice(value2.indexOf(' '));
+      }
+    }
+
+    // Remove extra space in begining
+    formatted = formatted.replace(/^\s/, '');
+
+    if (!col.editor) {
+      return formatted;
+    }
+    return '<span class="trigger">' + formatted + '</span>' + $.createIcon({ icon: 'clock', classes: ['icon-clock'] });
+
   },
 
   Autocomplete: function(row, cell, value) {
@@ -684,7 +723,7 @@ window.Editors = {
 
     this.init = function () {
       this.input = $('<input class="datepicker"/>').appendTo(container);
-      this.input.datepicker(column.editorOptions ? column.editorOptions : {dateFormat: column.dateFormat});
+      this.input.datepicker(column.editorOptions || { dateFormat: column.dateFormat });
     };
 
     this.val = function (value) {
@@ -692,8 +731,7 @@ window.Editors = {
         //Note that the value should be formatted from the formatter.
         this.input.val(value);
       }
-
-      return this.input.val();
+      return window.Formatters.Date(row, cell, this.input.val(), column, true);
     };
 
     this.focus = function () {
@@ -723,6 +761,65 @@ window.Editors = {
     this.destroy = function () {
       var self = this;
       setTimeout(function() {
+        grid.quickEditMode = false;
+        self.input.remove();
+      }, 0);
+    };
+
+    this.init();
+
+  },
+
+  Time: function(row, cell, value, container, column, event, grid) {
+    this.name = 'time';
+    this.originalValue = value;
+
+    this.init = function () {
+      this.input = $('<input class="timepicker"/>').appendTo(container);
+      this.api = this.input.timepicker(column.editorOptions || '').data('timepicker');
+    };
+
+    this.val = function (value) {
+      if (value) {
+        //Note that the value should be formatted from the formatter.
+        this.input.val(value);
+      }
+
+      return this.input.val();
+    };
+
+    this.focus = function () {
+      var self = this;
+
+      this.input.select().focus();
+
+      //Check if isClick or cell touch and just open the list
+      if (event.type === 'click' && $(event.target).is('.icon')) {
+        this.input.parent().find('.icon').trigger('click');
+        this.input.closest('td').addClass('is-focused');
+      }
+
+      this.api.trigger.on('hide.editortime', function () {
+        self.input.closest('td').removeClass('is-focused');
+
+        setTimeout(function () {
+          self.input.trigger('focusout');
+          container.parent().focus();
+          grid.setNextActiveCell(event);
+        }, 1);
+
+      });
+
+    };
+
+    this.destroy = function () {
+      var self = this;
+      if (self.api && self.api.trigger) {
+        self.api.trigger.off('hide.editortime');
+      }
+
+      setTimeout(function() {
+        grid.quickEditMode = false;
         self.input.remove();
       }, 0);
     };
@@ -796,6 +893,7 @@ window.Editors = {
       var self = this,
         td = this.input.closest('td');
       setTimeout(function() {
+        grid.quickEditMode = false;
         td.off('keydown.editorlookup')
           .find('.trigger').off('touchcancel.editorlookup touchend.editorlookup');
         self.input.remove();
@@ -1432,7 +1530,6 @@ $.fn.datagrid = function(options) {
       }
       headerRow += '</tr>';
 
-      //Add Extra Spacer for IE scrollbar
       headerColGroup += cols + '</colgroup>';
 
       if (self.headerRow === undefined) {
@@ -2214,10 +2311,12 @@ $.fn.datagrid = function(options) {
       self.bodyColGroup += '</colgroup>';
       self.bodyColGroup = $(self.bodyColGroup);
       self.tableBody.before(self.bodyColGroup).html(tableHtml);
+
+      self.setScrollClass();
       self.setupTooltips();
       self.tableBody.find('.dropdown').dropdown();
 
-      //Set Tab Index and active Cell
+      //Set IE elements after dataload
       setTimeout(function () {
 
         if (!s.source) {
@@ -2470,31 +2569,31 @@ $.fn.datagrid = function(options) {
         self = this,
         field = columnDef.field,
         maxText = '',
+        title = columnDef.name || '',
         chooseHeader = false;
 
+      //Get max cell value length for this column
       for (var i = 0; i < this.settings.dataset.length; i++) {
         var val = this.fieldValue(this.settings.dataset[i], field),
-           len = 0, title;
+           len = 0;
 
-        //Some types should be formatted
-        if (val instanceof Date || typeof val === 'number' || columnDef.dateFormat) {
-          val = self.formatValue(columnDef.formatter, i , null, this.fieldValue(this.settings.dataset[i], field), columnDef, this.settings.dataset[i], self);
-          val = val.replace(/<\/?[^>]+(>|$)/g, '');
-        }
+        //Get formatted value (without html) so we have accurate string that will display for this cell
+        val = self.formatValue(columnDef.formatter, i, null, val, columnDef, this.settings.dataset[i], self);
+        val = val.replace(/<\/?[^>]+(>|$)/g, '');
 
         len = val.toString().length;
-        title = columnDef.name || '';
-
-        if (title.length > len) {
-          chooseHeader = true;
-          len = title.length;
-          val = title;
-        }
 
         if (len > max) {
           max = len;
           maxText = val;
         }
+      }
+
+      //Use header text length as max if bigger than all data cells
+      if (title.length > max) {
+        max = title.length;
+        maxText = title;
+        chooseHeader = true;
       }
 
       if (maxText === '' || this.settings.dataset.length === 0) {
@@ -2518,6 +2617,7 @@ $.fn.datagrid = function(options) {
       if (!cacheWidths) {
         return '';
       }
+      this.setScrollClass();
 
       //TODO Test last column hidden
       if (cacheWidths.widthPercent) {
@@ -2527,7 +2627,17 @@ $.fn.datagrid = function(options) {
       } else if (this.widthSpecified && !isNaN(this.totalWidth) && this.totalWidth > this.elemWidth) {
         return 'style = "width: ' + parseFloat(this.totalWidth) + 'px"';
       }
+
       return '';
+    },
+
+    setScrollClass: function () {
+      var hasScrollBar = parseInt(this.contentContainer[0].scrollHeight) > parseInt(this.contentContainer[0].offsetHeight) + 2;
+      if (hasScrollBar) {
+        this.element.addClass('has-vertical-scroll');
+      } else {
+        this.element.removeClass('has-vertical-scroll');
+      }
     },
 
     clearHeaderCache: function () {
@@ -2918,7 +3028,12 @@ $.fn.datagrid = function(options) {
         };
 
       var table = self.table.clone();
-      table = appendRows(customDs ? customDs : this.settings.dataset, table);
+      table = appendRows(customDs || this.settings.dataset, table);
+
+      if (!table.find('thead').length) {
+        self.headerRow.clone().insertBefore(table.find('tbody'));
+      }
+
       table = cleanExtra(table);
       var ctx = { worksheet: (worksheetName || 'Worksheet'), table: table.html() };
 
@@ -2963,7 +3078,7 @@ $.fn.datagrid = function(options) {
             name = col.name;
 
           if (name) {
-            name = name.replace('<br>', '').replace('<br/>', '').replace('<br />', '');
+            name = name.replace('<br>', ' ').replace('<br/>', ' ').replace('<br />', ' ');
             markup += '<li><a href="#" target="_self" tabindex="-1"> <label class="inline"><input tabindex="-1" ' + (col.hideable ===false ? 'disabled' : '') + ' type="checkbox" class="checkbox" '+ (col.hidden ? '' : ' checked') +' data-column-id="'+ (col.id || i) +'"><span class="label-text">' + name + '</span></label></a></li>';
           }
         }
@@ -3266,7 +3381,8 @@ $.fn.datagrid = function(options) {
       //Handle Row Clicking
       var tbody = this.table.find('tbody');
       tbody.off('click.datagrid').on('click.datagrid', 'td', function (e) {
-        var target = $(e.target);
+        var rowNode, dataRowIdx,
+          target = $(e.target);
 
         if (target.closest('.datagrid-row-detail').length === 1) {
           return;
@@ -3277,8 +3393,8 @@ $.fn.datagrid = function(options) {
 
         //Dont Expand rows or make cell editable when clicking expand button
         if (target.is('.datagrid-expand-btn') || (target.is('.datagrid-cell-wrapper') && target.find('.datagrid-expand-btn').length)) {
-          var rowNode = $(this).closest('tr'),
-            dataRowIdx = self.dataRowIndex(rowNode);
+          rowNode = $(this).closest('tr');
+          dataRowIdx = self.dataRowIndex(rowNode);
 
           self.toggleRowDetail(dataRowIdx);
           self.toggleGroupChildren(rowNode);
@@ -3338,6 +3454,22 @@ $.fn.datagrid = function(options) {
             btn.on('selected.datagrid', col.selected);
           }
         }
+
+        // Apply Quick Edit Mode
+          if (self.isCellEditable(dataRowIdx, cell)) {
+            setTimeout(function() {
+              if ($('textarea, input', elem).length &&
+                  (!$('.dropdown,' +
+                  '[type=image],' +
+                  '[type=button],' +
+                  '[type=submit],' +
+                  '[type=reset],' +
+                  '[type=checkbox],' +
+                  '[type=radio]', elem).length)) {
+                self.quickEditMode = true;
+              }
+            }, 0);
+          }
 
         /* Test Quick Edit Mode without this. Especially Drop Down
           if (self.isCellEditable(dataRowIdx, cell)) {
@@ -3435,13 +3567,13 @@ $.fn.datagrid = function(options) {
       // Implement Editing Auto Commit Functionality
       tbody.off('focusout.datagrid').on('focusout.datagrid', 'td input, td textarea, div.dropdown', function (e) {
 
-        // Keep lookup icon clickable in edit mode
+        // Keep icon clickable in edit mode
         var target = e.target;
-        if ($(target).is('input.lookup')) {
+        if ($(target).is('input.lookup, input.timepicker, input.datepicker')) {
           // Wait for modal popup, if did not found modal popup means
           // icon was not clicked, then commit cell edit
           setTimeout(function() {
-            if (!$('.lookup-modal.is-visible').length &&
+            if (!$('.lookup-modal.is-visible, #timepicker-popup, #calendar-popup').length &&
                 !!self.editor && self.editor.input.is(target)) {
               self.commitCellEdit(self.editor.input);
             }
@@ -3450,8 +3582,7 @@ $.fn.datagrid = function(options) {
         }
 
         //Popups are open
-        if ($('#calendar-popup, #dropdown-list, .autocomplete.popupmenu.is-open').is(':visible') ||
-          $('.lookup-modal.is-visible').length) {
+        if ($('#dropdown-list, .autocomplete.popupmenu.is-open, #timepicker-popup').is(':visible')) {
           return;
         }
 
@@ -3742,7 +3873,7 @@ $.fn.datagrid = function(options) {
       this.selectedRows(rows, true, true);
       this.dontSyncUi = false;
       this.syncSelectedUI();
-      this.element.trigger('selected', [this._selectedRows]);
+      this.element.triggerHandler('selected', [this._selectedRows , 'selectall']);
     },
 
     unSelectAllRows: function () {
@@ -3750,7 +3881,7 @@ $.fn.datagrid = function(options) {
       this.selectedRows([], true, true);
       this.dontSyncUi = false;
       this.syncSelectedUI();
-      this.element.trigger('selected', [this._selectedRows]);
+      this.element.triggerHandler('selected', [this._selectedRows, 'deselectall']);
     },
 
     //Toggle selection on a single row
@@ -3825,7 +3956,7 @@ $.fn.datagrid = function(options) {
       this.syncSelectedUI();
 
       if (!selectAll) {
-        this.element.trigger('selected', [this._selectedRows]);
+        this.element.triggerHandler('selected', [this._selectedRows, 'select']);
       }
     },
 
@@ -3968,7 +4099,7 @@ $.fn.datagrid = function(options) {
       }
 
       if (!selectAll) {
-        self.element.trigger('selected', [self._selectedRows]);
+        self.element.triggerHandler('selected', [self._selectedRows, 'deselect']);
       }
     },
 
@@ -4503,8 +4634,10 @@ $.fn.datagrid = function(options) {
 
     // Invoked in three cases: 1) a row click, 2) keyboard and enter, 3) In actionable mode and tabbing
     makeCellEditable: function(row, cell, event) {
-      if (this.editor && this.editor.input.is('.lookup')) {
-        this.commitCellEdit(this.editor.input);
+      if (this.editor && this.editor.input) {
+        if (this.editor.input.is('.timepicker, .datepicker, .lookup') && !$(event.target).prev().is(this.editor.input)) {
+          this.commitCellEdit(this.editor.input);
+        }
       }
 
       //Locate the Editor
@@ -4599,7 +4732,8 @@ $.fn.datagrid = function(options) {
 
       for (var i = 0; i < rules.length; i++) {
         var rule = validator.rules[rules[i]],
-          ruleValid = rule.check(cellValue, $('<input>').val(cellValue));
+          gridInfo = {row: row, cell: cell, item: this.settings.dataset[row], column: column, grid: self},
+          ruleValid = rule.check(cellValue, $('<input>').val(cellValue), gridInfo);
 
         if (!ruleValid) {
           messages += rule.message;
@@ -5227,7 +5361,15 @@ $.fn.datagrid = function(options) {
 
       var pagerElem = this.tableBody;
       this.element.addClass('paginated');
-      pagerElem.pager({dataset: this.settings.dataset, source: this.settings.source, pagesize: this.settings.pagesize, indeterminate: this.settings.indeterminate, rowTemplate: this.settings.rowTemplate, pagesizes: this.settings.pagesizes});
+      pagerElem.pager({
+        componentAPI: this,
+        dataset: this.settings.dataset,
+        source: this.settings.source,
+        pagesize: this.settings.pagesize,
+        indeterminate: this.settings.indeterminate,
+        rowTemplate: this.settings.rowTemplate,
+        pagesizes: this.settings.pagesizes
+      });
       this.pager = pagerElem.data('pager');
 
       pagerElem.on('afterpaging', function (e, args) {

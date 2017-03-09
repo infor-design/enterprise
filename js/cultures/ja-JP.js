@@ -34,7 +34,7 @@
                    'medium': 'yyyy/MM/dd',
                    'long': 'yyyy年M月d日',
                    'full': 'yyyy年M月d日EEEE',
-                   'month': 'M月d日EEEE',
+                   'month': 'M月d日',
                    'year': 'yyyy年M月',
                    'timestamp': 'H:mm:ss',
                    'datetime': 'yyyy/MM/dd H:mm'}, //Infered short + short gregorian/dateTimeFormats

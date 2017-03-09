@@ -1,0 +1,34 @@
+
+<div class="row">
+  <div class="twelve columns">
+
+    <button class="btn-secondary" type="button" id="add-comment">Show Color Picker</button><br><br>
+
+    <!-- "Comment" Example -->
+    <div id="modal-add-comment" style="display: none;">
+
+      <div class="field">
+        <label for="color1">Choose Fore Color</label>
+        <input class="colorpicker" id="color1" type="text" />
+      </div>
+
+      <div class="field">
+        <label for="color1">Choose Back Color</label>
+        <input class="colorpicker" id="color2" type="text" />
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<script>
+
+  $('#add-comment').on('click', function () {
+    $('body').modal({
+      'title': 'Add a Comment',
+      'content': $('#modal-add-comment')
+    });
+  });
+
+</script>

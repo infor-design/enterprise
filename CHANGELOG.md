@@ -2,7 +2,7 @@
 Release Date: 2017-02-23
 
 ### Download Build Assets:
-Build Server: http://bamboo.infor.com/browse/SOHO-DOC
+Build Server: http://bamboo.infor.com/browse/SOHO
 Npm: http://npm.infor.com
 
 ### Demo Site

@@ -241,11 +241,16 @@
 
         this.blockUi();
 
-        var css = $('#stylesheet, #sohoxi-stylesheet'),
-          path = css.attr('href');
-        css.attr('href', path.substring(0, path.lastIndexOf('/')) + '/' + theme + '-theme' + (path.indexOf('.min') > -1 ? '.min' : '') + '.css');
-
-        this.unBlockUi();
+        var self = this,
+          originalCss = $('#stylesheet, #sohoxi-stylesheet'),
+          newCss = originalCss.clone(),
+          path = originalCss.attr('href');
+        newCss.on('load', function() {
+          originalCss.remove();
+          self.unBlockUi();
+        });
+        newCss.attr('href', path.substring(0, path.lastIndexOf('/')) + '/' + theme + '-theme' + (path.indexOf('.min') > -1 ? '.min' : '') + '.css');
+        originalCss.after(newCss);
       },
 
       //Block the ui from FOUC
@@ -270,7 +275,7 @@
       unBlockUi: function (){
         var self = this;
 
-        self.pageOverlay.fadeOut(1200, function() {
+        self.pageOverlay.fadeOut(1750, function() {
           self.pageOverlay.remove();
           self.pageOverlay = undefined;
         });
