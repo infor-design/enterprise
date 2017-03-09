@@ -43,9 +43,11 @@
       Soho.logTimeEnd(pluginName);
     }
 
-    // Plugin Methods
     SearchField.prototype = {
-
+      /**
+       * Initialization Kickoff
+       * @returns {this}
+       */
       init: function() {
         this.inlineLabel = this.element.closest('label');
         this.inlineLabelText = this.inlineLabel.find('.label-text');
@@ -53,9 +55,12 @@
         this.build().setupEvents();
       },
 
+      /**
+       * Builds the markup for this component.
+       * @private
+       * @returns {this}
+       */
       build: function() {
-        var self = this;
-
         this.optionsParseBoolean();
         this.label = this.element.prev('label, .label');
 
@@ -134,49 +139,10 @@
           }
           this.list.removeClass(removeListType);
 
-          this.list.empty();
+          this.setCategories(this.settings.categories);
 
-          var previouslySelected = false;
-
-          this.settings.categories.forEach(function(val) {
-            // if passed a string, typecast to an object.
-            if (typeof val === 'string') {
-              val = {
-                name: val
-              };
-            }
-
-            // Object types get a bit more customization.
-            // Don't continue if there's no name present.
-            if (!val.name) {
-              return;
-            }
-
-            var id = '';
-            if (typeof val.id === 'string' && val.id.length) {
-              id = ' id="'+ val.id +'"';
-            }
-
-            var value = '',
-              valueTypes = ['string', 'number'];
-            if (valueTypes.indexOf(typeof val.value) > -1) {
-              value = ' data-value="'+ val.value +'"';
-            }
-
-            var selected = '';
-            if (val.checked === true && previouslySelected !== true) {
-              selected = ' class="is-checked"';
-
-              if (!self.settings.categoryMultiselect) {
-                previouslySelected = true;
-              }
-            }
-
-            self.list.append('<li'+ selected + id + value + '><a href="#">' + val.name + '</a></li>');
-          });
-          this.list.insertAfter(icon);
-
-          icon.popupmenu({
+          this.list.insertAfter(this.button);
+          this.button.popupmenu({
             menu: this.list,
             offset: {
               y: 10
@@ -198,7 +164,11 @@
         return this;
       },
 
-      // Set boolean value if strings
+      /**
+       * Set boolean value if strings
+       * @private
+       * @returns {undefined}
+       */
       optionsParseBoolean: function() {
         var i, l,
           arr = [
@@ -212,10 +182,19 @@
         }
       },
 
+      /**
+       * Reveals whether or not categories are active on this searchfield
+       * @returns {boolean}
+       */
       hasCategories: function() {
         return this.settings.categories && $.isArray(this.settings.categories) && this.settings.categories.length > 0;
       },
 
+      /**
+       * Sets up the event-listening structure for this component instance.
+       * @private
+       * @returns {this}
+       */
       setupEvents: function() {
         var self = this;
 
@@ -315,11 +294,15 @@
         return this;
       },
 
+      /**
+       * If located inside a toolbar element, setup a timed event that will send a signal to the parent toolbar,
+       * telling it to recalculate which buttons are visible. Needs to be done after a CSS animation on the searchfield finishes.
+       * @private
+       * @returns {undefined}
+       */
       recalculateParent: function() {
         var toolbar = this.element.closest('.toolbar');
         if (toolbar.length) {
-          // Setup a timed event that will send a signal to a parent toolbar, telling it to recalculate which buttons are visible.
-          // Needs to be done after a CSS animation on the searchfield finishes.
           // TODO: Bolster this to work with CSS TransitonEnd
           setTimeout(function() {
             toolbar.triggerHandler('recalculate-buttons');
@@ -327,8 +310,12 @@
         }
       },
 
-      // Activates a toolbar-based searchfield and keeps it "open".  Instead of closing it on blur, sets up
-      // an explicit, out-of-bounds click/tap that will serve to close it when the user acts.
+      /**
+       * Activates a toolbar-based searchfield and keeps it "open".  Instead of closing it on blur, sets up
+       * an explicit, out-of-bounds click/tap that will serve to close it when the user acts.
+       * @private
+       * @returns {undefined}
+       */
       setAsActive: function() {
         if (this.element.hasClass('active')) {
           return;
@@ -372,10 +359,20 @@
         this.recalculateParent();
       },
 
+      /**
+       * Focus event handler
+       * @private
+       * @returns {undefined}
+       */
       handleFocus: function() {
         this.setAsActive();
       },
 
+      /**
+       * Blur event handler
+       * @private
+       * @returns {undefined}
+       */
       handleBlur: function() {
         var self = this;
         this.recalculateParent();
@@ -385,13 +382,22 @@
             self.wrapper.removeClass('has-focus');
           }, 10);
         }
-
       },
 
+      /**
+       * Click event handler
+       * @private
+       * @returns {undefined}
+       */
       handleClick: function() {
         this.setAsActive();
       },
 
+      /**
+       * Keydown event handler
+       * @private
+       * @returns {undefined}
+       */
       handleKeydown: function(e) {
         var key = e.which;
 
@@ -400,7 +406,11 @@
         }
       },
 
-      // Modifies the menu at $('#autocomplete-list') to propagate/remove style classes on the Searchfield element.
+      /**
+       * Modifies the menu at $('#autocomplete-list') to propagate/remove style classes on the Searchfield element.
+       * @private
+       * @returns {boolean}
+       */
       handlePopupBeforeOpen: function(e, menu) {
         if (!menu) {
           return;
@@ -417,6 +427,7 @@
 
       /**
        * Sets the text content on the category button.  Will either display a single category name, or a translated "[x] Selected." string.
+       * @param {string} [textContent] - Optional incoming text that will be subtituted for the selected element count.
        * @returns {undefined}
        */
       setCategoryButtonText: function(textContent) {
@@ -456,6 +467,11 @@
         span.text(text);
       },
 
+      /**
+       * Category Button Focus event handler
+       * @private
+       * @returns {undefined}
+       */
       handleCategoryFocus: function() {
         // if Toolbar Searchfield, allow that control to handle adding this class
         if (this.wrapper.is('.toolbar-searchfield-wrapper')) {
@@ -465,6 +481,11 @@
         this.wrapper.addClass('has-focus');
       },
 
+      /**
+       * Category Button Blur event handler
+       * @private
+       * @returns {undefined}
+       */
       handleCategoryBlur: function() {
         // if Toolbar Searchfield, allow that control to handle adding this class
         if (this.wrapper.is('.toolbar-searchfield-wrapper')) {
@@ -532,6 +553,78 @@
       },
 
       /**
+       * Updates just the categories setting and rerenders the category list.
+       * @param {Object[]} categories - Array of category object definitions.
+       * @param {string} categories[].name - Category name.
+       * @param {string|number} [data[].id] - Category element's ID (if applicable).
+       * @param {string|number} [data[].value] - Category element's value (if applicable).
+       * @param {boolean} [data[].checked=true] - Category's selection status
+       * @return {undefined}
+       */
+      updateCategories: function(categories) {
+        this.settings.categories = categories;
+        this.setCategories(this.settings.categories);
+      },
+
+      /**
+       * Creates a new set of categories on the Searchfield and rerenders it.
+       * @param {Object[]} categories - Array of category object definitions.
+       * @param {string} categories[].name - Category name.
+       * @param {string|number} [data[].id] - Category element's ID (if applicable).
+       * @param {string|number} [data[].value] - Category element's value (if applicable).
+       * @param {boolean} [data[].checked=true] - Category's selection status
+       * @return {undefined}
+       */
+      setCategories: function(categories) {
+        this.list.empty();
+
+        var self = this,
+          previouslySelected = false;
+
+        categories.forEach(function(val) {
+          // if passed a string, typecast to an object.
+          if (typeof val === 'string') {
+            val = {
+              name: val
+            };
+          }
+
+          // Object types get a bit more customization.
+          // Don't continue if there's no name present.
+          if (!val.name) {
+            return;
+          }
+
+          var id = '';
+          if (typeof val.id === 'string' && val.id.length) {
+            id = ' id="'+ val.id +'"';
+          }
+
+          var value = '',
+            valueTypes = ['string', 'number'];
+          if (valueTypes.indexOf(typeof val.value) > -1) {
+            value = ' data-value="'+ val.value +'"';
+          }
+
+          var selected = '';
+          if (val.checked === true && previouslySelected !== true) {
+            selected = ' class="is-checked"';
+
+            if (!self.settings.categoryMultiselect) {
+              previouslySelected = true;
+            }
+          }
+
+          self.list.append('<li'+ selected + id + value + '><a href="#">' + val.name + '</a></li>');
+        });
+
+        var api = this.button.data('popupmenu');
+        if (api && typeof api.updated === 'function') {
+          api.updated();
+        }
+      },
+
+      /**
        * Determines whether or not a Category Trigger exists.
        * @returns {boolean}
        */
@@ -539,14 +632,28 @@
         return this.wrapper.find('.btn').length > 0;
       },
 
+      /**
+       * Category Button Close event handler
+       * @private
+       * @returns {function}
+       */
       handlePopupClose: function() {
         return this.setAsActive();
       },
 
+      /**
+       * Clears the contents of the searchfield
+       * @returns {undefined}
+       */
       clear: function() {
         this.element.val('').trigger('change').focus();
       },
 
+      /**
+       * Adds a link at the bottom of a searchfield with more than (0) results that can be used to link out to a larger display of search results.
+       * @private
+       * @returns {undefined}
+       */
       addMoreLink: function() {
         var list = $('#autocomplete-list'),
           val = this.element.val();
@@ -560,6 +667,11 @@
         this.moreLink = $('<a href="#" class="more-results" tabindex="-1" role="menuitem"></a>').html('<span>' + Locale.translate('AllResults') + ' "' + val + '"</span>').appendTo(more);
       },
 
+      /**
+       * Adds a link at the bottom of a searchfield with no results that announces no search results.
+       * @private
+       * @returns {undefined}
+       */
       addNoneLink: function() {
         var list = $('#autocomplete-list');
         if ($('.no-results', list).length > 0) {
@@ -571,25 +683,45 @@
         this.noneLink = $('<a href="#" class="no-results" tabindex="-1" role="menuitem"></a>').html('<span>' + Locale.translate('NoResults') + '</span>').appendTo(none);
       },
 
-      // Triggered by the "updated.searchfield" event
+      /**
+       * Tears down and rebuilds the Searchfield.
+       * Can be called directly, but is also triggered by calling the "updated.searchfield" event on the searchfield element.
+       * @returns {undefined}
+       */
       updated: function() {
         this.teardown().init();
       },
 
+      /**
+       * Enables the Searchfield
+       * @returns {undefined}
+       */
       enable: function() {
         this.element.prop('disabled', false);
       },
 
+      /**
+       * Disables the Searchfield
+       * @returns {undefined}
+       */
       disable: function() {
         this.element.prop('disabled', true);
       },
 
-      // Performs the usual Boolean coercion with the exception of
-      // the strings "false" (case insensitive) and "0"
+      /**
+       * Performs the usual Boolean coercion with the exception of the strings "false" (case insensitive) and "0"
+       * @private
+       * @returns {boolean}
+       */
       parseBoolean: function(b) {
         return !(/^(false|0)$/i).test(b) && !!b;
       },
 
+      /**
+       * Unbinds events and removes unnecessary markup.
+       * @private
+       * @returns {this}
+       */
       teardown: function() {
         this.element.off('updated.searchfield focus.searchfield blur.searchfield click.searchfield keydown.searchfield beforeopen.searchfield listopen.searchfield');
 
@@ -609,7 +741,10 @@
         return this;
       },
 
-      // Teardown - Remove added markup and events
+      /**
+       * Destroys the Searchfield and removes all jQuery component instancing.
+       * @returns {undefined}
+       */
       destroy: function() {
         this.teardown();
         $.removeData(this.element[0], pluginName);
