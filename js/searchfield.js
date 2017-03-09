@@ -136,8 +136,43 @@
 
           this.list.empty();
 
+          var previouslySelected = false;
+
           this.settings.categories.forEach(function(val) {
-            self.list.append('<li><a href="#">' + val + '</a></li>');
+            // if passed a string, typecast to an object.
+            if (typeof val === 'string') {
+              val = {
+                name: val
+              };
+            }
+
+            // Object types get a bit more customization.
+            // Don't continue if there's no name present.
+            if (!val.name) {
+              return;
+            }
+
+            var id = '';
+            if (typeof val.id === 'string' && val.id.length) {
+              id = ' id="'+ val.id +'"';
+            }
+
+            var value = '',
+              valueTypes = ['string', 'number'];
+            if (valueTypes.indexOf(val.value) > -1) {
+              value = ' data-value="'+ val.value +'"';
+            }
+
+            var selected = '';
+            if (val.checked === true && previouslySelected !== true) {
+              selected = ' class="is-checked"';
+
+              if (!self.settings.categoryMultiselect) {
+                previouslySelected = true;
+              }
+            }
+
+            self.list.append('<li'+ selected + id + value + '><a href="#">' + val.name + '</a></li>');
           });
           this.list.insertAfter(icon);
 
@@ -428,6 +463,10 @@
         }
 
         this.wrapper.removeClass('has-focus');
+      },
+
+      getSelectedCategories: function() {
+
       },
 
       handlePopupClose: function() {
