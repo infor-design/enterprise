@@ -435,6 +435,10 @@
         return;
       }
 
+      // Disable primary button in modal
+      field.closest('.modal').find('.btn-modal-primary').not('.no-validation')
+        .attr('disabled', 'disabled');
+
       this.showInlineError(loc, message);
     },
 
@@ -653,6 +657,9 @@
       if (field.parent().is('.editor-container')) {
         field.parent().removeClass('is-error');
       }
+
+      // Enable primary button in modal
+      field.closest('.modal').find('.btn-modal-primary').not('.no-validation').removeAttr('disabled');
 
       //Stuff for the inline error
       field.closest('.field, .field-short').find('.error-message').remove();
@@ -973,6 +980,22 @@
 
   $.fn.isValid = function() {
     return ($(this).data('isValid') ? true : false);
+  };
+
+ //Check validation manually
+  $.fn.checkValidation = function() {
+    var field = $(this),
+      api = field.data('validate'),
+      doAction = function(isValid) {
+        field.data('isValid', isValid);
+      };
+    if (api) {
+      $.when.apply($, [api.validate(field, false, 0)]).then(function () {
+        doAction(true);
+      }, function () {
+        doAction(false);
+      });
+    }
   };
 
   //Clear out the stuff on the Form
