@@ -13,6 +13,7 @@ $datagrid-short-row-height: 23px;
 //Main Datagrid Container
 .datagrid-container {
   background-color: transparent;
+  border-left: 1px solid $datagrid-cell-border-color;
   clear: both;
   height: auto;
   min-width: 100%;
@@ -50,20 +51,6 @@ $datagrid-short-row-height: 23px;
     }
   }
 
-  //Virtual Rows Loading
-  .datagrid-virtual-row-bottom {
-    vertical-align: top;
-
-    td {
-      background-color: transparent;
-      border: 0;
-    }
-
-    .busy-sm {
-      margin-left: calc(50% - 25px);
-    }
-  }
-
   //Adjust borders and IE adjustment for vertical scrollbars
   &.has-vertical-scroll {
     border-bottom: 1px solid $datagrid-cell-border-color;
@@ -74,7 +61,6 @@ $datagrid-short-row-height: 23px;
     &.is-windows .datagrid-header {
       margin-right: 18px;
     }
-
   }
 
   //State Change
@@ -1716,6 +1702,12 @@ td .btn-actions {
   // scss-lint:disable ImportantRule
   vertical-align: middle !important;
   // scss-lint:enable ImportantRule
+}
+
+.ie-edge {
+  .datagrid-container.has-vertical-scroll.is-windows .datagrid-header {
+    margin-right: 12px;
+  }
 }
 
 .is-firefox {

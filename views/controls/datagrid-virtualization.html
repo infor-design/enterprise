@@ -17,7 +17,7 @@ $('body').on('initialized', function () {
 
   for (var j = 0; j < columnCount; j++) {
     var colName = 'column'+j;
-    columns.push({ id: colName, name: colName, field: colName, width: 100, formatter: Formatters.Input});
+    columns.push({ id: colName, name: colName, field: colName, width: 100, filterType: 'text', editor: Editors.Input, formatter: Formatters.Input});
   }
 
   for (var i = 0; i < rowCount; i++) {
@@ -37,8 +37,11 @@ $('body').on('initialized', function () {
     columns: columns,
     columnReorder: true,
     dataset: data,
+    editable: true,
+    filterable: false,
     virtualized: true,
-    toolbar: {personalize: true, results: true, rowHeight: true, actions: true, title: 'Compressors'}
+    virtualRowBuffer: 20,
+    toolbar: {filterRow: true, personalize: true, results: true, rowHeight: true, actions: true, title: 'Compressors'}
   });
   console.timeEnd('Grid Render');
 

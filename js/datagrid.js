@@ -1918,7 +1918,6 @@ $.fn.datagrid = function(options) {
           svg = btn.find('.icon-dropdown:first'),
           op;
 
-
         if (!btn.length && !isDropdown) {
           return;
         }
@@ -2210,7 +2209,7 @@ $.fn.datagrid = function(options) {
     },
 
     //Render the Rows
-    renderRows: function(skipColGroup) {
+    renderRows: function() {
       var tableHtml = '',
         self = this, i,
         s = self.settings,
@@ -2218,15 +2217,8 @@ $.fn.datagrid = function(options) {
         pagesize = s.pagesize,
         dataset = s.dataset;
 
-      console.log('start', this.activeCell);
       var body = self.table.find('tbody');
-
-      if (!skipColGroup) {
-        if (self.bodyColGroup) {
-          self.bodyColGroup.remove();
-        }
-        self.bodyColGroup = '<colgroup>';
-      }
+      self.bodyColGroupHtml = '<colgroup>';
 
       if (body.length === 0) {
         self.tableBody = $('<tbody></tbody>');
@@ -2263,9 +2255,11 @@ $.fn.datagrid = function(options) {
           }
         }
 
-        if (s.virtualized && !this.isRowVisible(this.recordCount)) {
-          this.recordCount++;
-          continue;
+        if (s.virtualized) {
+          if (!this.isRowVisible(this.recordCount)) {
+            this.recordCount++;
+            continue;
+          }
         }
 
         //Exclude Filtered Rows
@@ -2319,12 +2313,18 @@ $.fn.datagrid = function(options) {
         tableHtml += self.rowHtml(self.calculateTotals(), this.recordCount, false, true);
       }
 
-      if (!skipColGroup) {
-        self.bodyColGroup += '</colgroup>';
-        self.bodyColGroup = $(self.bodyColGroup);
+      if (self.bodyColGroupHtml !== '<colgroup>') {
+        self.bodyColGroupHtml += '</colgroup>';
+
+        if (self.bodyColGroup) {
+          self.bodyColGroup.remove();
+        }
+
+        self.bodyColGroup = $(self.bodyColGroupHtml);
+        self.tableBody.before(self.bodyColGroup);
       }
 
-      self.tableBody.before(self.bodyColGroup).html(tableHtml);
+      self.tableBody.html(tableHtml);
       self.setVirtualHeight();
       self.setScrollClass();
       self.setupTooltips();
@@ -2385,38 +2385,41 @@ $.fn.datagrid = function(options) {
     },
 
     // Set the heights on top or bottom based on scroll position
-    setVirtualHeight: function (providedBottom, providedTop) {
+    setVirtualHeight: function () {
       if (!this.settings.virtualized) {
         return true;
       }
 
       var bottom = this.virtualRange.totalHeight - this.virtualRange.bottom,
-        top = this.virtualRange.top,
-        topSpacer = this.tableBody.find('.datagrid-virtual-row-top'),
-        bottomSpacer = this.tableBody.find('.datagrid-virtual-row-bottom');
+        top = this.virtualRange.top;
 
-      if (top > 0 && !topSpacer.length) {
-        this.tableBody.prepend('<tr class="datagrid-virtual-row-top" style="height: '+ (providedTop ? providedTop : top) + 'px"></tr>');
+      this.topSpacer = this.tableBody.find('.datagrid-virtual-row-top');
+      this.bottomSpacer = this.tableBody.find('.datagrid-virtual-row-bottom');
+
+      if (top > 0 && !this.topSpacer.length) {
+        this.topSpacer = $('<tr class="datagrid-virtual-row-top" style="height: '+ top + 'px"><td colspan="'+ this.visibleColumns().length +'"></td></tr>');
+        this.tableBody.prepend(this.topSpacer);
       }
 
-      if (top > 0 && topSpacer.length) {
-        topSpacer.css('height',  (providedTop ? providedTop : top) + 'px');
+      if (top > 0 && this.topSpacer.length) {
+        this.topSpacer.css('height', top + 'px');
       }
 
-      if (top ===0 && topSpacer.length) {
-        topSpacer.remove();
+      if (top ===0 && this.topSpacer.length || this.virtualRange.topRow <= 1) {
+        this.topSpacer.remove();
       }
 
-      if (bottom > 0 && !bottomSpacer.length) {
-        this.tableBody.append('<tr class="datagrid-virtual-row-bottom" style="height: '+ (providedBottom ? providedBottom : bottom) + 'px"><td colspan="' + this.visibleColumns().length + '"><div class="busy-sm"><div class="busy-indicator"><div class="bar one"></div><div class="bar two"></div><div class="bar three"></div><div class="bar four"></div><div class="bar five"></div></div></div></td></tr>');
+      if (bottom > 0 && !this.bottomSpacer.length) {
+        this.bottomSpacer = $('<tr class="datagrid-virtual-row-bottom" style="height: '+ bottom + 'px"><td colspan="'+ this.visibleColumns().length +'"></td></tr>');
+        this.tableBody.append(this.bottomSpacer);
       }
 
-      if (bottom > 0 && bottomSpacer.length) {
-        bottomSpacer.css('height',  (providedBottom ? providedBottom : bottom) + 'px');
+      if (bottom > 0 && this.bottomSpacer.length) {
+        this.bottomSpacer.css('height', bottom + 'px');
       }
 
-      if (bottom === 0 && bottomSpacer.length) {
-        bottomSpacer.remove();
+      if (bottom <= 0 && this.bottomSpacer.length || (this.virtualRange.bottomRow >= this.settings.dataset.length)) {
+        this.bottomSpacer.remove();
       }
     },
 
@@ -2456,6 +2459,10 @@ $.fn.datagrid = function(options) {
         rowHtml = '',
         d = self.settings.treeDepth[dataRowIdx],
         depth, d2, i, l, isHidden;
+
+      if (!rowData) {
+        return '';
+      }
 
       // Default
       d = d ? d.depth : 0;
@@ -2599,7 +2606,7 @@ $.fn.datagrid = function(options) {
         var colWidth = '';
         if (this.recordCount === 0 || this.recordCount - ((activePage-1) * pagesize) === 0) {
           colWidth = this.calculateColumnWidth(col, j);
-          self.bodyColGroup += '<col' + colWidth + (col.hidden ? ' class="is-hidden"' : '') + '></col>';
+          self.bodyColGroupHtml += '<col' + colWidth + (col.hidden ? ' class="is-hidden"' : '') + '></col>';
         }
 
         rowHtml += '<td role="gridcell" ' + ariaReadonly + ' aria-colindex="' + (j+1) + '" '+
@@ -3443,24 +3450,20 @@ $.fn.datagrid = function(options) {
       if (this.settings.virtualized) {
         var oldScroll = 0, oldHeight = 0;
 
-        self.contentContainer
+      self.contentContainer
         .on('scroll.vtable', Soho.utils.debounce(function () {
-          if (self.isScrolling) {
-            return;
-          }
 
           var scrollTop = this.scrollTop,
             buffer = 25,
-            hitBottom = scrollTop > (self.virtualRange.bottom - self.virtualRange.bodyHeight + buffer),
-            hitTop = scrollTop < (self.virtualRange.top - buffer);
+            hitBottom = scrollTop > (self.virtualRange.bottom - self.virtualRange.bodyHeight - buffer),
+            hitTop = scrollTop < (self.virtualRange.top + buffer);
 
           if (scrollTop !== oldScroll && (hitTop || hitBottom)) {
             oldScroll = this.scrollTop;
-            self.renderRows(true);
+            self.renderRows();
             return;
           }
-
-        }, 150));  //not sure if this works better or not to debounce , 200, false
+        }, 0));
 
         $('body').on('resize.vtable', function () {
           var height = this.offsetHeight;
@@ -3886,6 +3889,9 @@ $.fn.datagrid = function(options) {
         .removeClass('short-rowheight medium-rowheight normal-rowheight')
         .addClass(settings.rowHeight + '-rowheight');
 
+      if (this.virtualRange && this.virtualRange.rowHeight) {
+        this.virtualRange.rowHeight = (height === 'normal' ? 40 : (height === 'medium' ? 30 : 25));
+      }
       return settings.rowHeight;
     },
 
@@ -4020,7 +4026,7 @@ $.fn.datagrid = function(options) {
       }
 
       // if scrolling NOT click on touch device
-      if (this.isTouch && this.isScrolling) {
+      if (this.isTouch) {
         rowNode.removeClass('is-active-row')
           .find('td:not(.is-editing)').css({'background-color': 'transparent'});
         return;
