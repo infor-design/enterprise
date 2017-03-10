@@ -383,8 +383,7 @@
           placementObj = cb(placementObj);
         }
 
-        //placementObj.setCoordinate('x', coords[0]);
-        //placementObj.setCoordinate('y', coords[1]);
+        this.render(placementObj);
         return placementObj;
       },
 

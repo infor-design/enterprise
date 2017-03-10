@@ -1,0 +1,113 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Searchfield Test: Rich Categories</h2>
+    <p><a class="hyperlink" href="" target="_blank">Related JIRA Ticket</a>.  This test demonstrates a newer implementation of Searchfield categories where it's possible to pass data that includes previously-set checkmarks, locale-translated strings, etc. as part of the category definition.</p>
+    <p>This test also demonstrates the new <em>getSelectedCategories()</em> api method.  Whenever a selection is made on either searchfield's category list, the console area is updated with the currently selected values in that list.</p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+
+    <div class="field">
+      <label for="category-searchfield">Category-Driven Single-Selectable Searchfield</label>
+      <input data-init="false" id="category-searchfield" class="searchfield" />
+    </div>
+
+    <div class="field">
+      <label for="multi-category-searchfield">Category-Driven Multi-Selectable Searchfield</label>
+      <input data-init="false" id="multi-category-searchfield" class="searchfield" />
+    </div>
+
+  </div>
+  <div class="six columns">
+
+    <div class="card">
+      <div class="card-header has-toolbar">
+        <div id="output-toolbar" class="toolbar">
+          <div class="title">Output Console</div>
+          <div class="buttonset">
+            <button id="clear" class="btn">Clear</button>
+          </div>
+        </div>
+      </div>
+      <div id="output-area" class="card-content"></div>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  var singlesearchfield = $('#category-searchfield'),
+    multisearchfield = $('#multi-category-searchfield'),
+    buttonClear = $('#clear'),
+    consoleOutputArea = $('#output-area'),
+    categoryData = [
+      {name: 'Animals', id: 'animals', value: 'an', checked: true},
+      {name: 'Baby', id: 'baby', value: 'ba', checked: false},
+      {name: 'Clothing', id: 'clothing', value: 'cl', checked: true},
+      {name: 'Images', id: 'images', value: 'im', checked: true},
+      {name: 'People', id: 'people', value: 'pe', checked: false},
+      {name: 'Places', id: 'places', value: 'pl', checked: false}
+    ],
+    singleCategoriesButton,
+    multiCategoriesButton,
+    singleAPI,
+    multiAPI;
+
+  function clear() {
+    consoleOutputArea[0].innerHTML = '';
+  }
+
+  $('body').on('initialized', function() {
+    singlesearchfield.searchfield({
+      categories: categoryData,
+      showCategoryText: true
+    })
+
+    multisearchfield.searchfield({
+      categories: categoryData,
+      categoryMultiselect: true,
+      showCategoryText: true
+    });
+
+    singleAPI = singlesearchfield.data('searchfield');
+    multiAPI = multisearchfield.data('searchfield');
+
+    // Fill the console with information about currently selected categories.
+    function getSelectionData(type, api) {
+      var data = api.getCategoryData(true),
+        outputHTML = '<h3>'+ type +' Selected Elements</h3>';
+
+      for (var i = 0; i < data.length; i++) {
+        outputHTML += '<b>' + data[i].name + '</b><br />';
+        if (data[i].id) {
+          outputHTML += '<em>id:</em> #' + data[i].id + '<br />';
+        }
+        if (data[i].value) {
+          outputHTML += '<em>value:</em>' + data[i].value + '<br />';
+        }
+        outputHTML += '<br />';
+      }
+
+      consoleOutputArea[0].innerHTML = outputHTML;
+      console.dir(data);
+    }
+
+    buttonClear.on('click.test', clear);
+
+    // Get pseudo markup for categories button
+    singleCategoriesButton = singleAPI.button;
+    multiCategoriesButton = multiAPI.button;
+
+    // Clear the console whenever category selection on the searchfield changes.
+    singleCategoriesButton.on('selected.test', function() {
+      getSelectionData('Single', singleAPI);
+    });
+    multiCategoriesButton.on('selected.test', function() {
+      getSelectionData('Multi', multiAPI);
+    })
+  });
+</script>

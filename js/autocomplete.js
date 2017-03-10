@@ -181,6 +181,14 @@
           }
         }
 
+        function autocompletePlaceCallback(placementObj) {
+          // Nudge the autocomplete to the right by 1px in Chrome
+          if (Soho.env.browser.name === 'chrome') {
+            placementObj.setCoordinate('x', placementObj.x + 1);
+          }
+          return placementObj;
+        }
+
         var popupOpts = {
           menuId: 'autocomplete-list',
           ariaListbox: true,
@@ -188,6 +196,7 @@
           trigger: 'immediate',
           autoFocus: false,
           placementOpts: {
+            callback: autocompletePlaceCallback,
             parent: this.element
           }
         };
