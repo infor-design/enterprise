@@ -174,16 +174,25 @@
             }
 
             var isVisible = field[0].offsetParent !== null;
-            if (isVisible && !field.val()) {
-              allValid = false;
+
+            if (field.is('.required')) {
+              if (isVisible && !field.val()) {
+                allValid = false;
+              }
+            } else {
+              field.checkValidation();
+              if (isVisible && !field.isValid()) {
+                allValid = false;
+              }
+
             }
 
             if (allValid) {
-              inlineBtns.filter('.btn-modal-primary').not('.no-validation').removeAttr('disabled');
+              primaryButton.removeAttr('disabled');
             }
           });
 
-          if (!allValid && !inlineBtns.filter('.btn-modal-primary').is(':disabled')) {
+          if (!allValid && !primaryButton.is(':disabled')) {
              primaryButton.attr('disabled', 'true');
           }
         }
