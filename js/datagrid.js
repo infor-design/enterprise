@@ -2386,8 +2386,8 @@ $.fn.datagrid = function(options) {
 
     // Set the heights on top or bottom based on scroll position
     setVirtualHeight: function () {
-      if (!this.settings.virtualized) {
-        return true;
+      if (!this.settings.virtualized || !this.virtualRange) {
+        return;
       }
 
       var bottom = this.virtualRange.totalHeight - this.virtualRange.bottom,
