@@ -29,7 +29,7 @@
     fill: $trigger-icon-fill-color;
     height: 14px;
     position: absolute;
-    top: 8px;
+    top: 10px;
 
     &:not(.close):not(.icon-error) {
       left: 8px;
@@ -56,7 +56,7 @@
   }
 
   .icon-dropdown {
-    margin-left: 2px;
+    margin-left: 5px;
   }
 
   .searchfield {
@@ -133,6 +133,10 @@
         .icon {
           fill: $input-hover-border-color;
         }
+      }
+
+      .searchfield {
+        border-color: $searchfield-context-border-color;
       }
     }
 
@@ -280,8 +284,13 @@
 // Context Searchfield's Popupmenu has alternate styles
 .popupmenu.autocomplete.context {
   @include context-searchfield-boxshadow();
+  background-color: $searchfield-context-bg;
   border: 0;
-  border-top: 1px solid $searchfield-context-border-color !important;
+  border-top: 1px solid $azure07;
+
+  &.alternate {
+    background-color: $searchfield-context-alt-bg;
+  }
 }
 
 @include respond-to(phablet) {

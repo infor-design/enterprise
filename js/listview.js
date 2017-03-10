@@ -755,7 +755,7 @@
         });
 
         li.attr('aria-selected', !isChecked);
-        this.element.trigger('selected', {selectedItems: this.selectedItems, elem: li});
+        this.element.triggerHandler('selected', {selectedItems: this.selectedItems, elem: li});
 
         var toolbar, toolbarControl,
           parent = this.element.closest('.card, .widget');

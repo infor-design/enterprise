@@ -218,57 +218,57 @@
           var a = $(li).children('a')[0], // TODO: do this better when we have the infrastructure
             span = $(a).children('span')[0],
             submenuWrapper = $(li).children('.wrapper')[0];
-
           li.setAttribute('role', 'presentation');
+          if (a) {
+            a.setAttribute('tabindex', '-1');
+            a.setAttribute('role', (self.settings.ariaListbox ? 'option' : 'menuitem'));
 
-          a.setAttribute('tabindex', '-1');
-          a.setAttribute('role', (self.settings.ariaListbox ? 'option' : 'menuitem'));
-
-          // Should be translated
-          if (isTranslatable) {
-            span.innerText = Locale.translate(span.innerText) || span.innerText;
-          }
-
-          // disabled menu items, by prop and by className
-          if (Soho.DOM.classNameHas(li.className, 'is-disabled')) {
-            a.setAttribute('aria-disabled', 'true');
-          }
-
-          if (a.hasAttribute('disabled')) {
-            Soho.DOM.addClass(li, 'is-disabled');
-            a.setAttribute('aria-disabled', 'true');
-          }
-
-          // menu items that contain submenus
-          if (submenuWrapper instanceof HTMLElement) {
-            li.className += (Soho.DOM.classNameExists(li) ? ' ' : '') + 'submenu';
-          }
-          if (Soho.DOM.classNameHas(li.className, 'submenu')) {
-            var $a = $(a);
-
-            // Add a span
-            if (!span) {
-              a.innerHTML = '<span>' + a.innerHTML + '</span>';
-              span = $a.children('span')[0];
+            // Should be translated
+            if (isTranslatable) {
+              span.innerText = Locale.translate(span.innerText) || span.innerText;
             }
 
-            if ($a.find('svg.arrow').length === 0) {
-              $a.append($.createIconElement({ classes: ['arrow', 'icon-dropdown'], icon: 'dropdown' }));
+            // disabled menu items, by prop and by className
+            if (Soho.DOM.classNameHas(li.className, 'is-disabled')) {
+              a.setAttribute('aria-disabled', 'true');
             }
-            a.setAttribute('aria-haspopup', 'true');
-          }
 
-          // is-checked
-          if (Soho.DOM.classNameHas(li.className, 'is-checked')) {
-            a.setAttribute('role', 'menuitemcheckbox');
-            a.setAttribute('aria-checked', true);
-          }
+            if (a.hasAttribute('disabled')) {
+              Soho.DOM.addClass(li, 'is-disabled');
+              a.setAttribute('aria-disabled', 'true');
+            }
 
-          // is-not-checked
-          if (Soho.DOM.classNameHas(li.className, 'is-not-checked')) {
-            li.className = li.className.replace('is-not-checked', '');
-            a.setAttribute('role', 'menuitemcheckbox');
-            a.removeAttribute('aria-checked');
+            // menu items that contain submenus
+            if (submenuWrapper instanceof HTMLElement) {
+              li.className += (Soho.DOM.classNameExists(li) ? ' ' : '') + 'submenu';
+            }
+            if (Soho.DOM.classNameHas(li.className, 'submenu')) {
+              var $a = $(a);
+
+              // Add a span
+              if (!span) {
+                a.innerHTML = '<span>' + a.innerHTML + '</span>';
+                span = $a.children('span')[0];
+              }
+
+              if ($a.find('svg.arrow').length === 0) {
+                $a.append($.createIconElement({ classes: ['arrow', 'icon-dropdown'], icon: 'dropdown' }));
+              }
+              a.setAttribute('aria-haspopup', 'true');
+            }
+
+            // is-checked
+            if (Soho.DOM.classNameHas(li.className, 'is-checked')) {
+              a.setAttribute('role', 'menuitemcheckbox');
+              a.setAttribute('aria-checked', true);
+            }
+
+            // is-not-checked
+            if (Soho.DOM.classNameHas(li.className, 'is-not-checked')) {
+              li.className = li.className.replace('is-not-checked', '');
+              a.setAttribute('role', 'menuitemcheckbox');
+              a.removeAttribute('aria-checked');
+            }
           }
         });
       },

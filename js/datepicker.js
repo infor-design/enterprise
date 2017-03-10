@@ -409,11 +409,20 @@
             this.footer
           );
 
+        var placementParent = this.element,
+          placementParentXAlignment = (Locale.isRTL() ? 'right' : 'left'),
+          parent = this.element.parent();
+
+        if (parent.is('.datagrid-cell-wrapper')) {
+          placementParentXAlignment = 'center';
+          placementParent = this.element.next('.icon');
+        }
+
         var popoverOpts = {
           content: this.calendar,
           placementOpts: {
-            parent: this.element,
-            parentXAlignment: (Locale.isRTL() ? 'right' : 'left'),
+            parent: placementParent,
+            parentXAlignment: placementParentXAlignment,
             strategies: ['flip', 'nudge', 'shrink']
           },
           placement : 'bottom',

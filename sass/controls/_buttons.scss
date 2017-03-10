@@ -44,7 +44,7 @@ button {
     position: static;
     width: 16px;
 
-    + span:not(.audible) {
+    + span:not(.audible):not(:empty) {
       padding-left: 5px;
     }
 
@@ -66,11 +66,8 @@ button {
     font-size: inherit;
     font-weight: inherit;
 
-    + .icon {
-      margin-left: 5px;
-    }
-
-    &.audible {
+    &.audible,
+    &:empty {
       + .icon {
         margin-left: 0;
       }
