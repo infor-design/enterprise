@@ -393,16 +393,24 @@
 
           popupContent.append('<div class="modal-buttonset"><button type="button" class="btn-modal-primary set-time">' + Locale.translate('SetTime') + '</button></div>');
 
+          var placementParent = this.element,
+            placementParentXAlignment = (Locale.isRTL() ? 'right' : 'left'),
+            parent = this.element.parent();
+
+          if (parent.is('.datagrid-cell-wrapper')) {
+            placementParentXAlignment = 'center';
+            placementParent = this.element.next('.icon');
+          }
+
           this.trigger.popover({
             content: popupContent,
             trigger: 'immediate',
             placement: 'bottom',
             placementOpts: {
-              parent: this.element,
-              parentXAlignment: (Locale.isRTL() ? 'right' : 'left'),
+              parent: placementParent,
+              parentXAlignment: placementParentXAlignment,
               strategies: ['flip', 'nudge', 'shrink']
             },
-            width: '200',
             tooltipElement: '#timepicker-popup'})
           .on('show.timepicker', function(e, ui) {
             self.afterShow(ui);
