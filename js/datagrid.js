@@ -407,7 +407,7 @@ window.Formatters = {
       }
     }
 
-    return '<span class="trigger">' + formattedValue + '</span>' + $.createIcon({ icon: 'dropdown' });
+    return '<span class="trigger dropdown-trigger">' + formattedValue + '</span>' + $.createIcon({ icon: 'dropdown' });
   },
 
   Favorite: function (row, cell, value, col) {
@@ -915,7 +915,7 @@ window.Editors = {
         column.editorOptions = {};
       }
       column.editorOptions.width = container.parent().width();
-      column.editorOptions.offset = {left: 0, top: 3};
+      column.editorOptions.offset = {left: -1, top: (grid.settings.rowHeight ==='medium' ? 1 : 5)};
 
       if (column.maxLength) {
         this.input.attr('maxlength', column.maxLength);
@@ -2023,7 +2023,7 @@ $.fn.datagrid = function(options) {
                     showTarget.addClass('is-over');
                     rect = target.el[0].getBoundingClientRect();
                     showTarget[0].style.left = parseInt(rect.left) + 'px';
-                    showTarget[0].style.top =  parseInt(rect.top) + 'px';
+                    showTarget[0].style.top =  (parseInt(rect.top) + 1) + 'px';
 
                   }
                 }
@@ -3693,7 +3693,7 @@ $.fn.datagrid = function(options) {
                 !!self.editor && self.editor.input.is(target)) {
               self.commitCellEdit(self.editor.input);
             }
-          }, 400);
+          }, 200);
           return;
         }
 

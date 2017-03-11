@@ -1182,7 +1182,7 @@
         }
 
         //let grow or to field size.
-        this.list.find('input').outerWidth(this.pseudoElem.outerWidth()-2);
+        this.list.find('input').outerWidth(this.pseudoElem.outerWidth()-3);
         if (this.list.width() > this.pseudoElem.outerWidth() && !this.isInGrid) {
           var listWidth = (this.list.outerWidth() + 35) + 'px';
            this.list[0].style.width = listWidth;
