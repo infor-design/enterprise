@@ -556,7 +556,14 @@ export-custom-dataset.html
 export-from-menu.html
 export-paging.html
 fifty-columns.html
-form-buttons.html
+
+[Icon Buttons](/tests/form-buttons.html)
+  - This example shows how to create form buttons on the grid.
+  - The only test case is that if you click the button, then the relevant event info is shown in the console
+  - Check themes
+  - check row height/alignment
+  - Second and Third
+
 hide-show-column.html
 
 [Icon Buttons](/tests/icon-buttons.html)

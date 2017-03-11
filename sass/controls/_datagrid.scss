@@ -472,6 +472,12 @@ $datagrid-short-row-height: 23px;
           }
         }
 
+        // scss-lint:disable ImportantRule
+        .btn {
+          top: -3px !important;
+        }
+        // scss-lint:disable ImportantRule
+
         .datagrid-expand-btn {
           height: 24px;
           margin-top: -4px;
@@ -753,6 +759,8 @@ $datagrid-short-row-height: 23px;
 
     .row-btn {
       line-height: normal;
+      position: relative;
+      top: -3px;
     }
 
     a.row-btn {
