@@ -1199,8 +1199,14 @@
           var pseudoElemOuterWidth = this.pseudoElem.outerWidth();
           this.list[0].style.width = pseudoElemOuterWidth + 'px';
 
+          // Fix: text was hard to view,
+          // when cell width smaller then text with editable Datagrid
           if (this.isInGrid) {
-            this.list[0].style.width = pseudoElemOuterWidth + 3 + 'px';
+            this.list[0].style.width = '';
+            var glistWidth = this.list.outerWidth(),
+              gCellWidth = this.element.closest('.datagrid-cell-wrapper').outerWidth(),
+              gWidth = glistWidth > gCellWidth ? (glistWidth + 20) : gCellWidth;
+            this.list[0].style.width = gWidth +'px';
           }
         }
       },
