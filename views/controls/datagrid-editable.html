@@ -98,7 +98,8 @@
         columns.push({ id: 'id', name: 'Row Id', field: 'id', formatter: Formatters.Readonly});
         columns.push({ id: 'productName', hidden: true, name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input});
         columns.push({ id: 'activity', name: 'Activity', field: 'activity', required: true, editor: Editors.Input, validate: 'required'});  //maxLength: 2
-        columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', align: 'right', editor: Editors.Input, mask: '###', isEditable: function (row) {
+        columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', align: 'right', editor: Editors.Input, mask: '###', isEditable: function (row, cell, value, col, item) {
+            console.log(row, cell, value, col, item);
             //For this fake logic just disable odd rows
             return (row % 2 === 0);
           }});

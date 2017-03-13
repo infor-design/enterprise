@@ -1,3 +1,4 @@
+
 window.Formatters = {
 
   Text: function(row, cell, value) {
@@ -406,7 +407,7 @@ window.Formatters = {
       }
     }
 
-    return '<span class="trigger">' + formattedValue + '</span>' + $.createIcon({ icon: 'dropdown' });
+    return '<span class="trigger dropdown-trigger">' + formattedValue + '</span>' + $.createIcon({ icon: 'dropdown' });
   },
 
   Favorite: function (row, cell, value, col) {
@@ -914,7 +915,7 @@ window.Editors = {
         column.editorOptions = {};
       }
       column.editorOptions.width = container.parent().width();
-      column.editorOptions.offset = {left: 0, top: 3};
+      column.editorOptions.offset = {left: -1, top: (grid.settings.rowHeight ==='medium' ? 1 : 5)};
 
       if (column.maxLength) {
         this.input.attr('maxlength', column.maxLength);
@@ -1112,7 +1113,9 @@ $.fn.datagrid = function(options) {
         filterable: false,
         disableClientFilter: false, //Disable Filter Logic client side and let your server do it
         disableClientSort: false, //Disable Sort Logic client side and let your server do it
-        resultsText: null  // Can provide a custom function to adjust results text
+        resultsText: null,  // Can provide a custom function to adjust results text
+        virtualized: false, // Prevent Un used rows from being added to the DOM
+        virtualRowBuffer: 10 //how many extra rows top and bottom to allow as a buffer
       },
       settings = $.extend({}, defaults, options);
 
@@ -1566,8 +1569,8 @@ $.fn.datagrid = function(options) {
       this.element.addClass('has-filterable-columns');
       this.headerRow.find('.datagrid-filter-wrapper').remove();
 
-    //Loop the columns looking at the filter types and generate the markup for the various Types
-    //Supported Filter Types: text, integer, date, select, decimal, lookup, percent, checkbox, contents
+      //Loop the columns looking at the filter types and generate the markup for the various Types
+      //Supported Filter Types: text, integer, date, select, decimal, lookup, percent, checkbox, contents
       for (var j = 0; j < this.settings.columns.length; j++) {
         if (this.settings.columns[j].filterType) {
           var col = this.settings.columns[j],
@@ -1915,7 +1918,6 @@ $.fn.datagrid = function(options) {
           svg = btn.find('.icon-dropdown:first'),
           op;
 
-
         if (!btn.length && !isDropdown) {
           return;
         }
@@ -2021,7 +2023,7 @@ $.fn.datagrid = function(options) {
                     showTarget.addClass('is-over');
                     rect = target.el[0].getBoundingClientRect();
                     showTarget[0].style.left = parseInt(rect.left) + 'px';
-                    showTarget[0].style.top =  parseInt(rect.top) + 'px';
+                    showTarget[0].style.top =  (parseInt(rect.top) + 1) + 'px';
 
                   }
                 }
@@ -2216,10 +2218,7 @@ $.fn.datagrid = function(options) {
         dataset = s.dataset;
 
       var body = self.table.find('tbody');
-      if (self.bodyColGroup) {
-        self.bodyColGroup.remove();
-      }
-      self.bodyColGroup = '<colgroup>';
+      self.bodyColGroupHtml = '<colgroup>';
 
       if (body.length === 0) {
         self.tableBody = $('<tbody></tbody>');
@@ -2252,6 +2251,13 @@ $.fn.datagrid = function(options) {
             } else {
               this.filteredCount++;
             }
+            continue;
+          }
+        }
+
+        if (s.virtualized) {
+          if (!this.isRowVisible(this.recordCount)) {
+            this.recordCount++;
             continue;
           }
         }
@@ -2302,16 +2308,24 @@ $.fn.datagrid = function(options) {
         this.recordCount++;
       }
 
-
       //Append a Summary Row
       if (this.settings.summaryRow) {
         tableHtml += self.rowHtml(self.calculateTotals(), this.recordCount, false, true);
       }
 
-      self.bodyColGroup += '</colgroup>';
-      self.bodyColGroup = $(self.bodyColGroup);
-      self.tableBody.before(self.bodyColGroup).html(tableHtml);
+      if (self.bodyColGroupHtml !== '<colgroup>') {
+        self.bodyColGroupHtml += '</colgroup>';
 
+        if (self.bodyColGroup) {
+          self.bodyColGroup.remove();
+        }
+
+        self.bodyColGroup = $(self.bodyColGroupHtml);
+        self.tableBody.before(self.bodyColGroup);
+      }
+
+      self.tableBody.html(tableHtml);
+      self.setVirtualHeight();
       self.setScrollClass();
       self.setupTooltips();
       self.tableBody.find('.dropdown').dropdown();
@@ -2328,9 +2342,88 @@ $.fn.datagrid = function(options) {
         if (!self.activeCell || !self.activeCell.node) {
           self.activeCell = {node: self.cellNode(0, 0, true).attr('tabindex', '0'), isFocused: false, cell: 0, row: 0};
         }
+
+        if (self.activeCell.isFocused) {
+          self.setActiveCell(self.activeCell.row, self.activeCell.cell);
+        }
       }, 0);
     },
 
+    cacheVirtualStats: function () {
+      var containerHeight = this.element[0].offsetHeight,
+        scrollTop = this.contentContainer[0].scrollTop,
+        headerHeight = this.settings.rowHeight === 'normal' ? 40 : (this.settings.rowHeight === 'medium' ? 30 : 25),
+        bodyHeight = containerHeight-headerHeight,
+        rowHeight = this.settings.rowHeight === 'normal' ? 50 : (this.settings.rowHeight === 'medium' ? 40 : 30);
+
+      this.virtualRange = {rowHeight: rowHeight,
+                         top: Math.max(scrollTop - ((this.settings.virtualRowBuffer-1) * rowHeight), 0),
+                         bottom: scrollTop + bodyHeight + ((this.settings.virtualRowBuffer-1) * rowHeight),
+                         totalHeight: rowHeight * this.settings.dataset.length,
+                         bodyHeight: bodyHeight};
+    },
+
+    // Check if the row is in the visble scroll area + buffer
+    // Just call renderRows() on events that change
+    isRowVisible: function(rowIndex) {
+      if (!this.settings.virtualized) {
+        return true;
+      }
+
+      if (rowIndex === 0) {
+        this.cacheVirtualStats();
+      }
+
+      //determine if the row is in view
+      var pos = rowIndex * this.virtualRange.rowHeight;
+
+      if (pos >= this.virtualRange.top && pos < this.virtualRange.bottom) {
+        return true;
+      }
+
+      return false;
+    },
+
+    // Set the heights on top or bottom based on scroll position
+    setVirtualHeight: function () {
+      if (!this.settings.virtualized || !this.virtualRange) {
+        return;
+      }
+
+      var bottom = this.virtualRange.totalHeight - this.virtualRange.bottom,
+        top = this.virtualRange.top;
+
+      this.topSpacer = this.tableBody.find('.datagrid-virtual-row-top');
+      this.bottomSpacer = this.tableBody.find('.datagrid-virtual-row-bottom');
+
+      if (top > 0 && !this.topSpacer.length) {
+        this.topSpacer = $('<tr class="datagrid-virtual-row-top" style="height: '+ top + 'px"><td colspan="'+ this.visibleColumns().length +'"></td></tr>');
+        this.tableBody.prepend(this.topSpacer);
+      }
+
+      if (top > 0 && this.topSpacer.length) {
+        this.topSpacer.css('height', top + 'px');
+      }
+
+      if (top ===0 && this.topSpacer.length || this.virtualRange.topRow <= 1) {
+        this.topSpacer.remove();
+      }
+
+      if (bottom > 0 && !this.bottomSpacer.length) {
+        this.bottomSpacer = $('<tr class="datagrid-virtual-row-bottom" style="height: '+ bottom + 'px"><td colspan="'+ this.visibleColumns().length +'"></td></tr>');
+        this.tableBody.append(this.bottomSpacer);
+      }
+
+      if (bottom > 0 && this.bottomSpacer.length) {
+        this.bottomSpacer.css('height', bottom + 'px');
+      }
+
+      if (bottom <= 0 && this.bottomSpacer.length || (this.virtualRange.bottomRow >= this.settings.dataset.length)) {
+        this.bottomSpacer.remove();
+      }
+    },
+
+    // Set the alternate shading for tree
     setAlternateRowShading: function() {
       if (this.settings.alternateRowShading && this.settings.treeGrid) {
         $('tr[role="row"]:visible', this.tableBody)
@@ -2366,6 +2459,10 @@ $.fn.datagrid = function(options) {
         rowHtml = '',
         d = self.settings.treeDepth[dataRowIdx],
         depth, d2, i, l, isHidden;
+
+      if (!rowData) {
+        return '';
+      }
 
       // Default
       d = d ? d.depth : 0;
@@ -2509,7 +2606,7 @@ $.fn.datagrid = function(options) {
         var colWidth = '';
         if (this.recordCount === 0 || this.recordCount - ((activePage-1) * pagesize) === 0) {
           colWidth = this.calculateColumnWidth(col, j);
-          self.bodyColGroup += '<col' + colWidth + (col.hidden ? ' class="is-hidden"' : '') + '></col>';
+          self.bodyColGroupHtml += '<col' + colWidth + (col.hidden ? ' class="is-hidden"' : '') + '></col>';
         }
 
         rowHtml += '<td role="gridcell" ' + ariaReadonly + ' aria-colindex="' + (j+1) + '" '+
@@ -3138,7 +3235,7 @@ $.fn.datagrid = function(options) {
       }
 
       if (typeof idOrNode === 'string') {
-        self.headerNodes().not('.is-hidden').each(function () {
+        self.headerNodes().each(function () {
           var col = $(this);
 
           if (col.attr('data-column-id') === idOrNode) {
@@ -3181,16 +3278,6 @@ $.fn.datagrid = function(options) {
       }
 
       this.clearHeaderCache();
-    },
-
-    // Get child offset
-    getChildOffset: function(obj) {
-      var childPos = obj.offset(),
-        parentPos = obj.parent().offset();
-      return {
-        top: childPos.top - parentPos.top,
-        left: childPos.left - parentPos.left
-      };
     },
 
     //Generate Resize Handles
@@ -3309,7 +3396,7 @@ $.fn.datagrid = function(options) {
 
     //Returns a cell node
     cellNode: function (row, cell, includeGroups) {
-      var rowNode = this.tableBody.find('tr[aria-rowindex]').eq(row);
+      var rowNode = this.tableBody.find('tr[aria-rowindex="'+ (row+1) +'"]');
 
       if (row instanceof jQuery) {
         rowNode = row;
@@ -3356,9 +3443,38 @@ $.fn.datagrid = function(options) {
 
       //Sync Header and Body During scrolling
       self.contentContainer
-        .on('scroll.table', function () {
+        .on('scroll.table',function () {
           self.handleScroll();
         });
+
+      if (this.settings.virtualized) {
+        var oldScroll = 0, oldHeight = 0;
+
+      self.contentContainer
+        .on('scroll.vtable', Soho.utils.debounce(function () {
+
+          var scrollTop = this.scrollTop,
+            buffer = 25,
+            hitBottom = scrollTop > (self.virtualRange.bottom - self.virtualRange.bodyHeight - buffer),
+            hitTop = scrollTop < (self.virtualRange.top + buffer);
+
+          if (scrollTop !== oldScroll && (hitTop || hitBottom)) {
+            oldScroll = this.scrollTop;
+            self.renderRows();
+            return;
+          }
+        }, 0));
+
+        $('body').on('resize.vtable', function () {
+          var height = this.offsetHeight;
+
+          if (height !== oldHeight) {
+            oldHeight = this.scrollTop;
+            self.renderRows();
+          }
+
+        });
+      }
 
       //Handle Sorting
       this.element
@@ -3577,7 +3693,7 @@ $.fn.datagrid = function(options) {
                 !!self.editor && self.editor.input.is(target)) {
               self.commitCellEdit(self.editor.input);
             }
-          }, 400);
+          }, 200);
           return;
         }
 
@@ -3773,6 +3889,9 @@ $.fn.datagrid = function(options) {
         .removeClass('short-rowheight medium-rowheight normal-rowheight')
         .addClass(settings.rowHeight + '-rowheight');
 
+      if (this.virtualRange && this.virtualRange.rowHeight) {
+        this.virtualRange.rowHeight = (height === 'normal' ? 40 : (height === 'medium' ? 30 : 25));
+      }
       return settings.rowHeight;
     },
 
@@ -3907,7 +4026,7 @@ $.fn.datagrid = function(options) {
       }
 
       // if scrolling NOT click on touch device
-      if (this.isTouch && this.isScrolling) {
+      if (this.isTouch) {
         rowNode.removeClass('is-active-row')
           .find('td:not(.is-editing)').css({'background-color': 'transparent'});
         return;
@@ -3996,7 +4115,6 @@ $.fn.datagrid = function(options) {
 
       if (this._selectedRows.length === 0) {
         this.contextualToolbar.animateClosed();
-
       }
 
       if (this._selectedRows.length > 0 && this.contextualToolbar.height() === 0) {
@@ -4172,7 +4290,6 @@ $.fn.datagrid = function(options) {
       status = ((total === selected) ? true : ((total === unselected) ? false : 'mixed'));
       return status;
     },
-
 
     //Set the selected rows by passing the row index or an array of row indexes
     selectedRows: function (row, nosync, selectAll) {
@@ -4713,7 +4830,6 @@ $.fn.datagrid = function(options) {
       this.element.triggerHandler('exiteditmode');
     },
 
-    //Validation
     //Validate a particular cell if it has validation on the column and its visible
     validateCell: function (row, cell) {
       var self = this,
@@ -5443,6 +5559,8 @@ $.fn.datagrid = function(options) {
       //TODO Test Memory Leaks in Chrome - null out fx this.table
       $(document).off('touchstart.datagrid touchend.datagrid touchcancel.datagrid click.datagrid touchmove.datagrid');
       this.contentContainer.off().remove();
+      $('body').off('resize.vtable');
+
     }
 
   };
