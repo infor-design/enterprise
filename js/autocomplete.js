@@ -270,14 +270,13 @@
         //similar code as dropdown but close enough to be dry
         var self = this;
 
-        this.element.on('updated.autocomplete', function() {
+        this.element.off('updated.autocomplete').on('updated.autocomplete', function() {
           self.updated();
-        }).on('keydown.autocomplete', function(e) {
+        }).off('keydown.autocomplete').on('keydown.autocomplete', function(e) {
           self.handleAutocompleteKeydown(e);
-        })
-        .on('input.autocomplete', function (e) {
+        }).off('input.autocomplete').on('input.autocomplete', function (e) {
           self.handleAutocompleteInput(e);
-        }).on('focus.autocomplete', function () {
+        }).off('focus.autocomplete').on('focus.autocomplete', function () {
           self.handleAutocompleteFocus();
         });
       },
