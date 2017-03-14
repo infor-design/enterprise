@@ -1114,7 +1114,7 @@ $.fn.datagrid = function(options) {
         disableClientFilter: false, //Disable Filter Logic client side and let your server do it
         disableClientSort: false, //Disable Sort Logic client side and let your server do it
         resultsText: null,  // Can provide a custom function to adjust results text
-        virtualized: false, // Prevent Un used rows from being added to the DOM
+        virtualized: false, // Prevent Unused rows from being added to the DOM
         virtualRowBuffer: 10 //how many extra rows top and bottom to allow as a buffer
       },
       settings = $.extend({}, defaults, options);
@@ -2719,9 +2719,7 @@ $.fn.datagrid = function(options) {
       //TODO Test last column hidden
       if (cacheWidths.widthPercent) {
         return 'style = "width: 100%"';
-      } else if (this.totalWidth > this.elemWidth) {
-        return 'style = "width: ' + parseFloat(this.totalWidth) + 'px"';
-      } else if (this.widthSpecified && !isNaN(this.totalWidth) && this.totalWidth > this.elemWidth) {
+      } else if (!isNaN(this.totalWidth)) {
         return 'style = "width: ' + parseFloat(this.totalWidth) + 'px"';
       }
 
@@ -2752,10 +2750,15 @@ $.fn.datagrid = function(options) {
       if (!this.elemWidth) {
         this.elemWidth = this.element.outerWidth();
 
-        if (this.elemWidth === 0) { ///handle on invisible tab container
+        if (this.elemWidth === 0) { // handle on invisible tab container
           this.elemWidth = this.element.closest('.tab-container').outerWidth();
         }
+        if (!this.elemWidth || this.elemWidth === 0) { // handle on invisible modal
+          this.elemWidth = this.element.closest('.modal-contents').outerWidth();
+        }
+
         this.widthSpecified = false;
+        this.widthPixel = false;
       }
 
         // use cache
@@ -2779,6 +2782,10 @@ $.fn.datagrid = function(options) {
         this.widthPercent = false;
       }
 
+      if (!this.widthPixel && col.width) {
+        this.widthPixel = typeof col.width !== 'string';
+      }
+
       var colWidth = col.width;
 
       if (typeof col.width === 'string' && col.width.indexOf('px') === -1) {
@@ -2794,50 +2801,49 @@ $.fn.datagrid = function(options) {
 
       // Simulate Auto Width Algorithm
       if ((!this.widthSpecified || col.width === undefined) && visibleColumns.length < 8 &&
-        (['selectionCheckbox', 'drilldown', 'rowStatus', 'favorite'].indexOf(col.id) === -1)  &&
-        this.elemWidth > 0) {
+        (['selectionCheckbox', 'drilldown', 'rowStatus', 'favorite'].indexOf(col.id) === -1)) {
 
-        this.headerWidths[index] = {id: col.id, width: 'default'};
         var percentWidth = this.elemWidth / visibleColumns.length;
+        colWidth = percentWidth;
 
         //Handle Columns where auto width is bigger than the percent width
         if (percentWidth < textWidth) {
-          this.headerWidths[index] = {id: col.id, width: textWidth, widthPercent: false};
-          return ' style="width: '+ textWidth + 'px' + '"';
+          colWidth = textWidth;
         }
 
-        return '';
       }
 
       //Some Built in columns
       if (col.id === 'selectionCheckbox' || col.id === 'favorite') {
         colWidth = 43;
+        col.width = colWidth;
       }
 
       if (col.id === 'drilldown' || col.id === 'rowStatus') {
         colWidth = 78;
+        col.width = colWidth;
       }
 
       // cache the header widths
       this.headerWidths[index] = {id: col.id, width: (this.widthPercent ? colPercWidth : colWidth), widthPercent: this.widthPercent};
-      this.totalWidth += col.hidden ? 0 : colWidth;
+      var lastColumn = index === this.settings.columns.length-1 && this.totalWidth !== colWidth;
+      this.totalWidth += col.hidden || lastColumn ? 0 : colWidth;
 
-      //For the last column stretch it TODO May want to check for hidden column as last
-      if (index === this.visibleColumns().length-1 && this.totalWidth !== colWidth) {
+      //For the last column stretch it if it doesnt fit the area
+      if (lastColumn) {
 
         var diff = this.elemWidth - this.totalWidth;
 
-        if ((diff !== 0 || diff === 0)) {
-        // TODO Remove this or use it
-        //  this.headerWidths[index].width = colWidth = 100;
-        //  this.headerWidths[index].minWidth = colMinWidth = 100;
+        if ((diff > 0) && diff  > colWidth && !col.width && !this.widthPercent) {
+          colWidth = diff - 1;
+          this.headerWidths[index] = {id: col.id, width: colWidth, widthPercent: this.widthPercent};
+          col.width = colWidth;
+          this.totalWidth =  this.elemWidth -1;
         }
 
-        if (this.widthPercent) {
+        if (this.widthPercent && !this.widthPixel) {
           this.table.css('width', '100%');
-        } else if (this.totalWidth > this.elemWidth) {
-          this.table.css('width', this.totalWidth);
-        } else if (this.widthSpecified && this.totalWidth && !isNaN(this.totalWidth) && this.totalWidth > this.elemWidth) {
+        } else if (!isNaN(this.totalWidth)) {
           this.table.css('width', this.totalWidth);
         }
       }
@@ -3196,30 +3202,32 @@ $.fn.datagrid = function(options) {
           self.isColumnsChanged = false;
         }).on('open.datagrid', function (e, modal) {
           modal.element.find('.searchfield').searchfield({clearable: true});
-          modal.element.find('.listview').listview({searchable: true, selectOnFocus: false});
+          modal.element.find('.listview').listview({searchable: true, selectOnFocus: false})
+            .on('selected', function (e, args) {
+              var chk = args.elem.find('.checkbox'),
+                  id = chk.attr('data-column-id'),
+                  isChecked = chk.prop('checked');
 
-          modal.element.on('selected', function (e, args) {
-            var chk = args.elem.find('.checkbox'),
-                id = chk.attr('data-column-id'),
-                isChecked = chk.prop('checked');
+              args.elem.removeClass('is-selected');
 
-            args.elem.removeClass('is-selected');
+              if (chk.is(':disabled')) {
+                return;
+              }
+              self.isColumnsChanged = true;
 
-            if (chk.is(':disabled')) {
-              return;
-            }
-            self.isColumnsChanged = true;
+              if (!isChecked) {
+                self.showColumn(id);
+                chk.prop('checked', true);
+              } else {
+                self.hideColumn(id);
+                chk.prop('checked', false);
+              }
+            });
 
-            if (!isChecked) {
-              self.showColumn(id);
-              chk.prop('checked', true);
-            } else {
-              self.hideColumn(id);
-              chk.prop('checked', false);
-            }
-          }).on('close.datagrid', function () {
+          modal.element.on('close.datagrid', function () {
             self.isColumnsChanged = false;
           });
+
       });
     },
 
@@ -3311,16 +3319,16 @@ $.fn.datagrid = function(options) {
           columnId = self.currentHeader.attr('data-column-id');
           columnDef = self.columnById(columnId)[0];
 
-          startingLeft = self.currentHeader.position().left + self.table.scrollLeft() -10;
-          self.tableWidth = self.table.css('width');
-          columnStartWidth = self.currentHeader.width();
+          startingLeft = self.currentHeader.position().left + self.table.scrollLeft() - 10;
+          self.tableWidth = self.table[0].offsetWidth;
+          columnStartWidth = self.currentHeader[0].offsetWidth;
         })
         .on('drag.datagrid', function (e, ui) {
           if (!self.currentHeader) {
             return;
           }
 
-          var width = ui.left - startingLeft,
+          var width = (ui.left - startingLeft -1),
             minWidth = columnDef.minWidth || 12,
             maxWidth = columnDef.maxWidth || 1000;
 
