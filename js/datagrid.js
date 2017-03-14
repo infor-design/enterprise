@@ -3202,30 +3202,32 @@ $.fn.datagrid = function(options) {
           self.isColumnsChanged = false;
         }).on('open.datagrid', function (e, modal) {
           modal.element.find('.searchfield').searchfield({clearable: true});
-          modal.element.find('.listview').listview({searchable: true, selectOnFocus: false});
+          modal.element.find('.listview').listview({searchable: true, selectOnFocus: false})
+            .on('selected', function (e, args) {
+              var chk = args.elem.find('.checkbox'),
+                  id = chk.attr('data-column-id'),
+                  isChecked = chk.prop('checked');
 
-          modal.element.on('selected', function (e, args) {
-            var chk = args.elem.find('.checkbox'),
-                id = chk.attr('data-column-id'),
-                isChecked = chk.prop('checked');
+              args.elem.removeClass('is-selected');
 
-            args.elem.removeClass('is-selected');
+              if (chk.is(':disabled')) {
+                return;
+              }
+              self.isColumnsChanged = true;
 
-            if (chk.is(':disabled')) {
-              return;
-            }
-            self.isColumnsChanged = true;
+              if (!isChecked) {
+                self.showColumn(id);
+                chk.prop('checked', true);
+              } else {
+                self.hideColumn(id);
+                chk.prop('checked', false);
+              }
+            });
 
-            if (!isChecked) {
-              self.showColumn(id);
-              chk.prop('checked', true);
-            } else {
-              self.hideColumn(id);
-              chk.prop('checked', false);
-            }
-          }).on('close.datagrid', function () {
+          modal.element.on('close.datagrid', function () {
             self.isColumnsChanged = false;
           });
+
       });
     },
 
