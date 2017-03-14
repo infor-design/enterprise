@@ -245,7 +245,8 @@
           tablet  = (elemWidth >= bpTablet && elemWidth <= bpDesktop),
           phone   = (elemWidth <= bpTablet);
 
-        var maxAttr = this.element.attr('data-columns');
+        var maxAttr = this.element.attr('data-columns'),
+          content = self.element.find('> .content');
         this.settings.columns = parseInt((maxAttr || this.settings.columns));
 
         // Assign columns as breakpoint sizes
@@ -266,7 +267,9 @@
           bp = bpPhone;
         }
 
-        self.element.find('> .content')[0].style.marginLeft = '-' + (bp/2) + 'px';
+        if (content.length) {
+          content[0].style.marginLeft = '-' + (bp/2) + 'px';
+        }
 
         this.setBlocks(); //setup blocks
         this.initRowsAndCols(); //setup colums
