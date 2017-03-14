@@ -21,6 +21,7 @@
           addTabButton: false, // If set to true, creates a button at the end of the tab list that can be used to add an empty tab and panel
           addTabButtonCallback: null, // if defined as a function, will be used in-place of the default Tab Adding method
           ajaxOptions: null, // if defined, will be used by any internal Tabs AJAX calls as the desired request settings.
+          lazyLoad: true, // if true, when using full URLs in tab HREFs, or when using Ajax calls, tabs will be loaded as needed instead of the markup all being established at once.
           containerElement: null, // Defines a separate element to be used for containing the tab panels.  Defaults to the Tab Container itself
           changeTabOnHashChange: false, // If true, will change the selected tab on invocation based on the URL that exists after the hash
           hashChangeCallback: null, // If defined as a function, provides an external method for adjusting the current page hash used by these tabs
@@ -578,7 +579,7 @@
         this.focusBar(li);
         this.positionFocusState(a);
 
-        if (this.isURL(href)) {
+        if (this.settings.lazyLoad === true && this.isURL(href)) {
           return false;
         }
       },
@@ -1342,6 +1343,9 @@
        */
       callSource: function(href, isURL) {
         if ((isURL === undefined || isURL === null || isURL === false) && !this.settings.source) {
+          return false;
+        }
+        if (this.settings.lazyLoad !== true) {
           return false;
         }
 
