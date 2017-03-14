@@ -2387,7 +2387,12 @@
         }
 
         var liTop = Math.round(li[0].getBoundingClientRect().top),
-          tablistTop = Math.round(this.tablist[0].getBoundingClientRect().top);
+          tablistTop = Math.round(this.tablist[0].getBoundingClientRect().top + 1);
+
+        // +1 to compensate for top border on Module Tabs
+        if (this.isModuleTabs()) {
+          tablistTop = tablistTop + 1;
+        }
 
         return liTop > tablistTop;
       },
