@@ -3263,7 +3263,7 @@ $.fn.datagrid = function(options) {
 
       //Prevent Sub Pixel Thrashing
       if (Math.abs(width - columnSettings[0].width) < 2) {
-      //  return;
+        return;
       }
 
       // Save the column back in settings for later
