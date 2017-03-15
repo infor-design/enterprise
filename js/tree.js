@@ -1198,7 +1198,7 @@
               // Invoke drag
               .drag({
                 clone: true,
-                cloneAppentTo: a.closest('li'),
+                cloneAppendTo: a.closest('li'),
                 clonePosIsFixed: true
               })
 

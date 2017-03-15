@@ -292,6 +292,9 @@ $datagrid-short-row-height: 23px;
       top: -4px;
     }
 
+    .arrange-placeholder {
+      height: $datagrid-short-row-height + 7;
+    }
   }
 
   &.medium-rowheight {
@@ -341,6 +344,11 @@ $datagrid-short-row-height: 23px;
     .is-filterable .datagrid-filter-wrapper {
       top: -6px;
     }
+
+    .arrange-placeholder {
+      height: $datagrid-medium-row-height + 10;
+    }
+
   }
 
 }
@@ -723,6 +731,46 @@ $datagrid-short-row-height: 23px;
     &.error td {
       background-color: $alert-bg-color;
       //border-color: $alert-red; - Use for focus state
+    }
+
+    // Datagrid Reorder
+    .datagrid-reorder-icon {
+      cursor: move;
+
+      .icon {
+        fill: $tertiary-btn-color;
+        vertical-align: middle;
+
+        &:hover {
+          fill: $tertiary-btn-hover-color;
+        }
+
+        &:active {
+          fill: $tertiary-btn-active-color;
+        }
+      }
+    }
+
+    &.arrange-dragging {
+      td {
+        // scss-lint:disable ImportantRule
+        background-color: $datagrid-cell-bg-color !important;
+        border-bottom: 1px solid $datagrid-cell-border-color;
+        border-top: 1px solid $datagrid-cell-border-color;
+        // scss-lint:enable ImportantRule
+
+        &:first-child {
+          border-left: 1px solid $datagrid-cell-border-color;
+        }
+      }
+    }
+
+    &.arrange-placeholder {
+      height: $datagrid-row-height + 7;
+
+      td {
+        background-color: $body-bg-color;
+      }
     }
 
     //Tree - Collapsed rows

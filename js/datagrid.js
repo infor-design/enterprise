@@ -196,6 +196,21 @@ window.Formatters = {
     );
   },
 
+  RowReorder: function () {
+    var text = Locale.translate('ReorderRows');
+
+    if (text === undefined) {
+      text = 'Reorder Rows';
+    }
+
+    return (
+      '<div class="datagrid-reorder-icon">' +
+         $.createIcon({icon: 'drag'}) +
+        '<span class="audible">' + text + '</span>' +
+      '</div>'
+    );
+  },
+
   Checkbox: function (row, cell, value, col) {
     var isChecked;
 
@@ -1115,7 +1130,8 @@ $.fn.datagrid = function(options) {
         disableClientSort: false, //Disable Sort Logic client side and let your server do it
         resultsText: null,  // Can provide a custom function to adjust results text
         virtualized: false, // Prevent Unused rows from being added to the DOM
-        virtualRowBuffer: 10 //how many extra rows top and bottom to allow as a buffer
+        virtualRowBuffer: 10, //how many extra rows top and bottom to allow as a buffer
+        rowReorder: false //Allows you to reorder rows. Requires rowReorder formatter
       },
       settings = $.extend({}, defaults, options);
 
@@ -1980,7 +1996,7 @@ $.fn.datagrid = function(options) {
         handle.on('mousedown.datagrid', function(e) {
           e.preventDefault();
 
-          header.drag({clone: true, cloneAppentTo: headers.first().parent().parent(), clonePosIsFixed: true})
+          header.drag({clone: true, cloneAppendTo: headers.first().parent().parent(), clonePosIsFixed: true})
             .on('dragstart.datagrid', function (e, pos, thisClone) {
               var index;
 
@@ -2132,6 +2148,31 @@ $.fn.datagrid = function(options) {
     // Move an array element position
     arrayIndexMove: function(arr, from, to) {
       arr.splice(to, 0, arr.splice(from, 1)[0]);
+    },
+
+    // Attach Drag Events to Rows
+    createDraggableRows: function () {
+      var self = this;
+
+      if (!this.settings.rowReorder) {
+        return;
+      }
+
+      // Attach the Drag API
+      //var rowHeight = this.settings.rowHeight === 'normal' ? 50 : (this.settings.rowHeight === 'medium' ? 40 : 30);
+
+      this.tableBody.arrange({
+          placeholder: '<tr class="datagrid-reorder-placeholder"><td colspan="'+ this.visibleColumns().length +'"></td></tr>',
+          handle: '.datagrid-reorder-icon'
+        })
+        .on('arrangeupdate.datagrid', function(e, status) {
+          // Move the elem in the data set
+          self.settings.dataset.splice(status.endIndex, 0, self.settings.dataset.splice(status.startIndex, 1)[0]);
+
+          // Fire an event
+          self.element.trigger('rowreorder', [status]);
+        });
+
     },
 
     //Return Value from the Object handling dotted notation
@@ -2338,6 +2379,7 @@ $.fn.datagrid = function(options) {
         }
 
         self.setAlternateRowShading();
+        self.createDraggableRows();
 
         if (!self.activeCell || !self.activeCell.node) {
           self.activeCell = {node: self.cellNode(0, 0, true).attr('tabindex', '0'), isFocused: false, cell: 0, row: 0};
@@ -2801,9 +2843,9 @@ $.fn.datagrid = function(options) {
 
       // Simulate Auto Width Algorithm
       if ((!this.widthSpecified || col.width === undefined) && visibleColumns.length < 8 &&
-        (['selectionCheckbox', 'drilldown', 'rowStatus', 'favorite'].indexOf(col.id) === -1)) {
+        (['selectionCheckbox', 'expander', 'drilldown', 'rowStatus', 'favorite'].indexOf(col.id) === -1)) {
 
-        var percentWidth = this.elemWidth / visibleColumns.length;
+        var percentWidth = Math.round(this.elemWidth / visibleColumns.length);
         colWidth = percentWidth;
 
         //Handle Columns where auto width is bigger than the percent width
@@ -2816,6 +2858,11 @@ $.fn.datagrid = function(options) {
       //Some Built in columns
       if (col.id === 'selectionCheckbox' || col.id === 'favorite') {
         colWidth = 43;
+        col.width = colWidth;
+      }
+
+      if (col.id === 'expander') {
+        colWidth = 55;
         col.width = colWidth;
       }
 
@@ -2834,14 +2881,14 @@ $.fn.datagrid = function(options) {
 
         var diff = this.elemWidth - this.totalWidth;
 
-        if ((diff > 0) && diff  > colWidth && !col.width && !this.widthPercent) {
+        if ((diff > 0) && diff  > colWidth && !this.widthPercent) {
           colWidth = diff - 1;
           this.headerWidths[index] = {id: col.id, width: colWidth, widthPercent: this.widthPercent};
           col.width = colWidth;
           this.totalWidth =  this.elemWidth -1;
         }
 
-        if (this.widthPercent && !this.widthPixel) {
+        if (this.widthPercent) {
           this.table.css('width', '100%');
         } else if (!isNaN(this.totalWidth)) {
           this.table.css('width', this.totalWidth);
