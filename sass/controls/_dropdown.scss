@@ -162,18 +162,6 @@ div.multiselect {
     background-color: $body-bg-color;
   }
 
-  // Enables a full-screen dropdown control that works well with small form-factors
-  &.full-screen {
-    height: calc(100% - 20px);
-    max-height: none;
-    width: calc(100% - 20px);
-
-    ul {
-      height: 100%;
-      max-height: calc(100% - 34px);
-    }
-  }
-
   &.is-ontop {
     box-shadow: $dropdown-box-shadow-top;
   }
