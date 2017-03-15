@@ -2841,7 +2841,7 @@ $.fn.datagrid = function(options) {
 
       // Simulate Auto Width Algorithm
       if ((!this.widthSpecified || col.width === undefined) && visibleColumns.length < 8 &&
-        (['selectionCheckbox', 'drilldown', 'rowStatus', 'favorite'].indexOf(col.id) === -1)) {
+        (['selectionCheckbox', 'expander', 'drilldown', 'rowStatus', 'favorite'].indexOf(col.id) === -1)) {
 
         var percentWidth = this.elemWidth / visibleColumns.length;
         colWidth = percentWidth;
@@ -2856,6 +2856,11 @@ $.fn.datagrid = function(options) {
       //Some Built in columns
       if (col.id === 'selectionCheckbox' || col.id === 'favorite') {
         colWidth = 43;
+        col.width = colWidth;
+      }
+
+      if (col.id === 'expander') {
+        colWidth = 55;
         col.width = colWidth;
       }
 
@@ -2874,7 +2879,7 @@ $.fn.datagrid = function(options) {
 
         var diff = this.elemWidth - this.totalWidth;
 
-        if ((diff > 0) && diff  > colWidth && !col.width && !this.widthPercent) {
+        if ((diff > 0) && diff  > colWidth && !this.widthPercent) {
           colWidth = diff - 1;
           this.headerWidths[index] = {id: col.id, width: colWidth, widthPercent: this.widthPercent};
           col.width = colWidth;
