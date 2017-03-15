@@ -12,13 +12,12 @@
 
       //Define Columns for the Grid.
 
-      columns.push({ id: 'rowReorder', name: 'Re-Order', field: 'id', align: 'center', formatter: Formatters.RowReorder, width: 85});
-      columns.push({ id: 'id', name: 'Id', field: 'id', width: 50});
-      columns.push({ id: 'taskName', name: 'Task Name', field: 'taskName', formatter: Formatters.Hyperlink});
-      columns.push({ id: 'desc', name: 'Description', field: 'desc'});
-      columns.push({ id: 'comments', name: 'Comments', field: 'comments', width: 100});
-      columns.push({ id: 'time', name: 'Time', field: 'time', width: 120});
-      columns.push({ id: 'escalated', name: 'Status', field: 'escalated', width: 100});
+      columns.push({ id: 'rowReorder', name: 'Re-Order', field: 'id', align: 'center', sortable: false, formatter: Formatters.RowReorder, width: 85});
+      columns.push({ id: 'id', name: 'Id', field: 'id', sortable: false,  width: 50});
+      columns.push({ id: 'taskName', name: 'Task Name', sortable: false, field: 'taskName', sortable: false,  formatter: Formatters.Hyperlink});
+      columns.push({ id: 'desc', name: 'Description', sortable: false, field: 'desc'});
+      columns.push({ id: 'comments', name: 'Comments', sortable: false, field: 'comments', width: 100});
+      columns.push({ id: 'escalated', name: 'Status', sortable: false, field: 'escalated', width: 100});
 
        var url = '{{basepath}}api/tasks';
 
@@ -30,6 +29,8 @@
           dataset: res,
           rowReorder: true,
           toolbar: {results: true, actions: true, rowHeight: true, title: 'My Tasks'}
+        }).on('rowreorder', function (e, args) {
+          console.log(args);
         });
       });
 

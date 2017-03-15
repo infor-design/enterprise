@@ -2152,23 +2152,25 @@ $.fn.datagrid = function(options) {
 
     // Attach Drag Events to Rows
     createDraggableRows: function () {
+      var self = this;
 
       if (!this.settings.rowReorder) {
         return;
       }
 
       // Attach the Drag API
-      var rowHeight = this.settings.rowHeight === 'normal' ? 50 : (this.settings.rowHeight === 'medium' ? 40 : 30);
+      //var rowHeight = this.settings.rowHeight === 'normal' ? 50 : (this.settings.rowHeight === 'medium' ? 40 : 30);
 
       this.tableBody.arrange({
-          placeholder: '<tr style="height: '+ rowHeight + 'px"><td colspan="'+ this.visibleColumns().length +'"></td></tr>',
+          placeholder: '<tr class="datagrid-reorder-placeholder"><td colspan="'+ this.visibleColumns().length +'"></td></tr>',
           handle: '.datagrid-reorder-icon'
         })
-        .on('beforearrange.datagrid', function(e, status) {
-          console.log(e, status);
-        })
         .on('arrangeupdate.datagrid', function(e, status) {
-          console.log(e, status);
+          // Move the elem in the data set
+          self.settings.dataset.splice(status.endIndex, 0, self.settings.dataset.splice(status.startIndex, 1)[0]);
+
+          // Fire an event
+          self.element.trigger('rowreorder', [status]);
         });
 
     },
@@ -2843,7 +2845,7 @@ $.fn.datagrid = function(options) {
       if ((!this.widthSpecified || col.width === undefined) && visibleColumns.length < 8 &&
         (['selectionCheckbox', 'expander', 'drilldown', 'rowStatus', 'favorite'].indexOf(col.id) === -1)) {
 
-        var percentWidth = this.elemWidth / visibleColumns.length;
+        var percentWidth = Math.round(this.elemWidth / visibleColumns.length);
         colWidth = percentWidth;
 
         //Handle Columns where auto width is bigger than the percent width
