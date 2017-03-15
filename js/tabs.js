@@ -21,10 +21,11 @@
           addTabButton: false, // If set to true, creates a button at the end of the tab list that can be used to add an empty tab and panel
           addTabButtonCallback: null, // if defined as a function, will be used in-place of the default Tab Adding method
           ajaxOptions: null, // if defined, will be used by any internal Tabs AJAX calls as the desired request settings.
-          lazyLoad: true, // if true, when using full URLs in tab HREFs, or when using Ajax calls, tabs will be loaded as needed instead of the markup all being established at once.
           containerElement: null, // Defines a separate element to be used for containing the tab panels.  Defaults to the Tab Container itself
           changeTabOnHashChange: false, // If true, will change the selected tab on invocation based on the URL that exists after the hash
           hashChangeCallback: null, // If defined as a function, provides an external method for adjusting the current page hash used by these tabs
+          lazyLoad: true, // if true, when using full URLs in tab HREFs, or when using Ajax calls, tabs will be loaded as needed instead of the markup all being established at once.
+          moduleTabsTooltips: false, // if true, will display a tooltip on Module Tabs with cut-off text content.
           source: null, // If defined, will serve as a way of pulling in external content to fill tabs.
           sourceArguments: {}, // If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
           tabCounts: false, // If true, Displays a modifiable count above each tab.
@@ -194,6 +195,16 @@
 
           if (self.settings.tabCounts && $(this).find('.count').length === 0) {
             $(this).prepend('<span class="count">0 </span>');
+          }
+
+          // Make it possible for Module Tabs to display a tooltip containing their contents
+          // if the contents are cut off by ellipsis.
+          if (self.settings.moduleTabsTooltips) {
+            a.on('beforeshow.toolbar', function() {
+              return a.data('cutoffTitle') === 'yes';
+            }).tooltip({
+              content: '' + a.text().trim()
+            });
           }
         });
 
@@ -1628,6 +1639,16 @@
         tabContentMarkup.data('tab-link', anchorMarkup);
         // TODO: When Dropdown Tabs can be added/removed, add that here
 
+        // Make it possible for Module Tabs to display a tooltip containing their contents
+        // if the contents are cut off by ellipsis.
+        if (this.settings.moduleTabsTooltips) {
+          anchorMarkup.on('beforeshow.toolbar', function() {
+            return anchorMarkup.data('cutoffTitle') === 'yes';
+          }).tooltip({
+            content: '' + anchorMarkup.text().trim()
+          });
+        }
+
         // Adjust tablist height
         this.setOverflow();
 
@@ -1677,6 +1698,11 @@
           this.panels = this.panels.not(targetPanel);
         }
         this.anchors = this.anchors.not(targetAnchor);
+
+        // Destroy Anchor tooltips, if applicable
+        if (this.settings.moduleTabsTooltips) {
+          targetAnchor.off('beforeshow.toolbar').data('tooltip').destroy();
+        }
 
         // Close Dropdown Tabs in a clean fashion
         var popupAPI = targetLi.data('popupmenu');
@@ -2053,9 +2079,12 @@
           tabContainerW = this.tablist.outerWidth(),
           defaultTabSize = 120,
           visibleTabSize = 120,
-          appTriggerSize = (hasAppTrigger ? appTrigger.outerWidth() : 0);
+          appTriggerSize = (hasAppTrigger ? appTrigger.outerWidth() : 0),
+          anchorStyle,
+          anchorPadding;
 
         // Remove overflowed tabs
+        sizeableTabs.children('a').removeAttr('style');
         sizeableTabs.removeAttr('style').each(function() {
           var t = $(this);
           if (self.isTabOverflowed(t)) {
@@ -2069,6 +2098,13 @@
           visibleTabSize = (tabContainerW - appTriggerSize + 101);
           this.moreButton[0].style.width = visibleTabSize + 'px';
           return;
+        } else {
+          anchorStyle = window.getComputedStyle(sizeableTabs.eq(0).children()[0]);
+          anchorPadding = parseInt(anchorStyle.paddingLeft) + parseInt(anchorStyle.paddingRight);
+
+          if (this.moreButton[0].hasAttribute('style')) {
+            this.moreButton[0].removeAttribute('style');
+          }
         }
 
         // Math explanation:
@@ -2081,8 +2117,27 @@
           visibleTabSize = defaultTabSize;
         }
 
+        var a,
+          prevWidth,
+          cutoff = 'no';
+
         for (var i = 0; i < sizeableTabs.length; i++) {
+          a = sizeableTabs.eq(i).children('a');
+          a[0].style.width = '';
+
+          if (this.settings.moduleTabsTooltips === true) {
+            cutoff = 'no';
+
+            prevWidth = parseInt(window.getComputedStyle(sizeableTabs[i]).width);
+
+            if (prevWidth > (visibleTabSize - anchorPadding)) {
+              cutoff = 'yes';
+            }
+            a.data('cutoffTitle', cutoff);
+          }
+
           sizeableTabs[i].style.width = visibleTabSize + 'px';
+          a[0].style.width = visibleTabSize + 'px';
         }
 
         this.adjustSpilloverNumber();
@@ -2770,6 +2825,15 @@
           .removeAttr('aria-expanded')
           .removeAttr('aria-selected')
           .removeAttr('tabindex');
+
+        if (this.settings.moduleTabsTooltips) {
+          this.anchors.each(function() {
+            var api = $(this).data('tooltip');
+            if (api && typeof api.destroy === 'function') {
+              api.destroy();
+            }
+          });
+        }
 
         this.element.off('focusout.tabs updated.tabs activated.tabs');
         $('body').off('resize.tabs' + this.tabsIndex);
