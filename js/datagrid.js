@@ -196,6 +196,21 @@ window.Formatters = {
     );
   },
 
+  RowReorder: function () {
+    var text = Locale.translate('ReorderRows');
+
+    if (text === undefined) {
+      text = 'Reorder Rows';
+    }
+
+    return (
+      '<div class="datagrid-reorder-icon">' +
+         $.createIcon({icon: 'drag'}) +
+        '<span class="audible">' + text + '</span>' +
+      '</div>'
+    );
+  },
+
   Checkbox: function (row, cell, value, col) {
     var isChecked;
 
@@ -1115,7 +1130,8 @@ $.fn.datagrid = function(options) {
         disableClientSort: false, //Disable Sort Logic client side and let your server do it
         resultsText: null,  // Can provide a custom function to adjust results text
         virtualized: false, // Prevent Unused rows from being added to the DOM
-        virtualRowBuffer: 10 //how many extra rows top and bottom to allow as a buffer
+        virtualRowBuffer: 10, //how many extra rows top and bottom to allow as a buffer
+        rowReorder: false //Allows you to reorder rows. Requires rowReorder formatter
       },
       settings = $.extend({}, defaults, options);
 
@@ -1980,7 +1996,7 @@ $.fn.datagrid = function(options) {
         handle.on('mousedown.datagrid', function(e) {
           e.preventDefault();
 
-          header.drag({clone: true, cloneAppentTo: headers.first().parent().parent(), clonePosIsFixed: true})
+          header.drag({clone: true, cloneAppendTo: headers.first().parent().parent(), clonePosIsFixed: true})
             .on('dragstart.datagrid', function (e, pos, thisClone) {
               var index;
 
@@ -2132,6 +2148,29 @@ $.fn.datagrid = function(options) {
     // Move an array element position
     arrayIndexMove: function(arr, from, to) {
       arr.splice(to, 0, arr.splice(from, 1)[0]);
+    },
+
+    // Attach Drag Events to Rows
+    createDraggableRows: function () {
+
+      if (!this.settings.rowReorder) {
+        return;
+      }
+
+      // Attach the Drag API
+      var rowHeight = this.settings.rowHeight === 'normal' ? 50 : (this.settings.rowHeight === 'medium' ? 40 : 30);
+
+      this.tableBody.arrange({
+          placeholder: '<tr style="height: '+ rowHeight + 'px"><td colspan="'+ this.visibleColumns().length +'"></td></tr>',
+          handle: '.datagrid-reorder-icon'
+        })
+        .on('beforearrange.datagrid', function(e, status) {
+          console.log(e, status);
+        })
+        .on('arrangeupdate.datagrid', function(e, status) {
+          console.log(e, status);
+        });
+
     },
 
     //Return Value from the Object handling dotted notation
@@ -2338,6 +2377,7 @@ $.fn.datagrid = function(options) {
         }
 
         self.setAlternateRowShading();
+        self.createDraggableRows();
 
         if (!self.activeCell || !self.activeCell.node) {
           self.activeCell = {node: self.cellNode(0, 0, true).attr('tabindex', '0'), isFocused: false, cell: 0, row: 0};
@@ -2841,7 +2881,7 @@ $.fn.datagrid = function(options) {
           this.totalWidth =  this.elemWidth -1;
         }
 
-        if (this.widthPercent && !this.widthPixel) {
+        if (this.widthPercent) {
           this.table.css('width', '100%');
         } else if (!isNaN(this.totalWidth)) {
           this.table.css('width', this.totalWidth);

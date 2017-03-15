@@ -75,7 +75,7 @@
   &.lookup-no-search {
     .toolbar {
       margin-bottom: 0;
-      margin-top: -30px;
+      margin-top: -40px;
     }
 
     .modal-header {
@@ -93,12 +93,6 @@
 
     .buttonset {
       width: 100%;
-    }
-
-    &.has-more-button {
-      .buttonset {
-        width: calc(100% - 50px);
-      }
     }
   }
 

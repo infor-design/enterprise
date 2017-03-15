@@ -1,91 +1,35 @@
-
 <div class="row">
-  <div class="twelve columns">
+	<div class="twelve columns">
 
-    <button class="btn-secondary" type="button" id="add-comment">Add a Comment</button><br><br>
-    <button class="btn-secondary" type="button" id="add-context">Add Context</button><br><br>
-    <button class="btn-secondary" type="button" id="search-project">Search for a Project</button>
+		<button class="btn-secondary" type="button" id="mask">Mask</button><br><br>
 
-    <!-- "Comment" Example -->
-    <div id="modal-add-comment" style="display: none;">
+		<!-- "Context" Example -->
+		<div id="modal-mask" style="display: none;">
+			<div class="field">
+				<label for="upper">Upper Case</label>
+				<input id="upper" name="upper" style="text-transform: uppercase" />
+			</div>
 
-        <small class="alert-text">Escalated (2X)</small>
-        <h2>Follow up action with HMM Global</h2>
-        <p>Contact sales representative with the updated purchase order <br>before submission to corporate.</p>
+			<div class="field">
+				<label for="first-name">First Name</label>
+				<input type="text" id="first-name" name="first-name" placeholder="Normal text Field">
+			</div>
 
-        <div class="field">
-         <label for="txt-comment" class="audible">Comments</label>
-         <textarea id="txt-comment" name="txt-comment" class="textarea-lg">This task needs to be escalated to maximum priority and delivered be the end of this week</textarea>
-        </div>
+			<div class="field">
+				<label for="description-max">Notes (maxlength)</label>
+				<textarea id="description-max" class="textarea" maxlength="90" name="description-max">Line One</textarea>
+			</div>
+		</div>
 
-    </div>
-
-    <!-- "Context" Example -->
-    <div id="modal-add-context" style="display: none;">
-     <div class="field">
-        <label for="context-type">Type</label>
-        <select class="dropdown-lg" id="context-type" name="context-type">
-          <option value="1">Context 01</option>
-          <option value="2">Context 02</option>
-          <option value="3">Context 03</option>
-          <option value="4">Context 04</option>
-          <option value="5">Context 05</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label for="context-name">Name</label>
-        <input id="context-name" name="context-name" class="input-lg" type="text" placeholder="Example: Name01">
-      </div>
-
-      <div class="field">
-       <label for="context-desc">Description</label>
-       <textarea id="context-desc" name="context-desc" class="textarea-lg" placeholder="Example: A description goes here."></textarea>
-      </div>
-    </div>
-
-    <!-- "Search" Example -->
-    <div id="modal-search-project" style="display: none;">
-      <div class="listview-search alternate-bg">
-        <label class="audible" for="gridfilter">Search</label>
-        <input class="searchfield" placeholder="Search My Alerts" name="searchfield" id="gridfilter" data-options="{clearable: true}">
-      </div>
-
-      <div class="listview alternate-bg" id="search-listview" data-options="{searchable: true}">
-        <ul>
-          <li><a href="#">Cloverleaf Demo Environment</a></li>
-          <li><a href="#">NICU Lab Results</a></li>
-          <li><a href="#">ICU Labs</a></li>
-          <li><a href="#">Oncology Test Results</a></li>
-          <li><a href="#">Testing Environment</a></li>
-          <li><a href="#">Cloverleaf Demo Environment</a></li>
-          <li><a href="#">NICU Lab Results</a></li>
-          <li><a href="#">ICU Labs</a></li>
-          <li><a href="#">Oncology Test Results</a></li>
-          <li><a href="#">Testing Environment</a></li>
-        </ul>
-      </div>
-    </div>
-
-  </div>
+	</div>
 </div>
 
 
 <script>
 var modals = {
-    'add-comment': {
-      'title': 'Add a Comment',
-      'content': $('#modal-add-comment')
-    },
-    'add-context': {
+    'mask': {
       'title': 'Add Context',
-      'content': $('#modal-add-context')
-    },
-    'search-project': {
-      'title': 'Search for a Project',
-      'content': $('#modal-search-project'),
-      'cssClass': 'full-width',
-      searchable: true
+      'content': $('#modal-mask')
     }
   },
 
@@ -109,8 +53,12 @@ var modals = {
     $('body').modal(opt);
   };
 
-  $('#add-comment, #add-context, #search-project').on('click', function () {
+  $('#mask').on('click', function () {
     setModal(modals[this.id]);
   });
+
+  $('#upper').mask({definitions: {
+    'U': /[A-Z]/
+  }, pattern: 'UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU'});
 
 </script>

@@ -725,6 +725,25 @@ $datagrid-short-row-height: 23px;
       //border-color: $alert-red; - Use for focus state
     }
 
+    //Datagrid Reorder
+    .datagrid-reorder-icon {
+      cursor: move;
+
+      .icon {
+        fill: $tertiary-btn-color;
+        vertical-align: middle;
+
+        &:hover {
+          fill: $tertiary-btn-hover-color;
+        }
+
+        &:active {
+          fill: $tertiary-btn-active-color;
+        }
+      }
+
+    }
+
     //Tree - Collapsed rows
     &.is-hidden {
       display: none;
@@ -2339,6 +2358,15 @@ html[dir='rtl'] {
 //Modal Lists
 .modal table {
   width: auto;
+}
+
+//Drag and Drop rows
+.datagrid-reorder-icon.is-clone {
+  background-color: $datagrid-cell-bg-color;
+  border-radius: 0;
+  display: table;
+  position: fixed;
+  width: 100%;
 }
 
 //Ios Hacks

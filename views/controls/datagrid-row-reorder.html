@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+      var grid,
+        columns = [];
+
+      //Define Columns for the Grid.
+
+      columns.push({ id: 'rowReorder', name: 'Re-Order', field: 'id', align: 'center', formatter: Formatters.RowReorder, width: 85});
+      columns.push({ id: 'id', name: 'Id', field: 'id', width: 50});
+      columns.push({ id: 'taskName', name: 'Task Name', field: 'taskName', formatter: Formatters.Hyperlink});
+      columns.push({ id: 'desc', name: 'Description', field: 'desc'});
+      columns.push({ id: 'comments', name: 'Comments', field: 'comments', width: 100});
+      columns.push({ id: 'time', name: 'Time', field: 'time', width: 120});
+      columns.push({ id: 'escalated', name: 'Status', field: 'escalated', width: 100});
+
+       var url = '{{basepath}}api/tasks';
+
+      $.getJSON(url, function(res) {
+         //Init and get the api for the grid
+        grid = $('#datagrid').datagrid({
+          columns: columns,
+          editable: false,
+          dataset: res,
+          rowReorder: true,
+          toolbar: {results: true, actions: true, rowHeight: true, title: 'My Tasks'}
+        });
+      });
+
+    });
+</script>

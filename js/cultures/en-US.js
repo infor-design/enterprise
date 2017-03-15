@@ -248,6 +248,7 @@
       'Range': {id: 'Range', value: 'Range', comment: 'Range for tooltip'},
       'RecordsPerPage': {id: 'RecordsPerPage', value: '{0} Records per page', comment: 'Dropd own allows the user to select how many visible records {} shows select value.'},
       'Redo': {id: 'Redo', value: 'Redo', comment: 'Redo tooltip'},
+      'ReorderRows': {id: 'ReorderRows', value: 'Reorder Rows', comment: 'Drag and Reorder Grid Rows'},
       'Refresh': {id: 'Refresh', value: 'Refresh', comment: 'Refresh tooltip'},
       'Required': {id: 'Required', value: 'Required', comment: 'indicates a form field is manditory'},
       'Reset': {id: 'Reset', value: 'Reset', comment: 'Reset tooltip'},
