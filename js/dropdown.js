@@ -223,7 +223,6 @@
         if (!listExists) {
           listContents = '<div class="dropdown-list' +
             (isMobile ? ' mobile' : '') +
-            (this.isFullScreen() ? ' full-screen' : '') +
             (this.settings.multiple ? ' multiple' : '') + '" id="dropdown-list" role="application" ' + (this.settings.multiple ? 'aria-multiselectable="true"' : '') + '>' +
             '<label for="dropdown-search" class="audible">' + Locale.translate('Search') + '</label>' +
             '<input type="text" class="dropdown-search" role="combobox" aria-expanded="true" id="dropdown-search" aria-autocomplete="list">' +
@@ -1127,11 +1126,6 @@
         var isFixed = false, isAbs = false,
           top = (this.pseudoElem.offset().top),
           left = this.pseudoElem.offset().left - $(window).scrollLeft();
-
-        // If we're lower than the Phone Breakpoint, reset everything for full-screen
-        if (this.isFullScreen()) {
-          top = 0;
-        }
 
         this.list[0].style.top = top +'px';
         this.list[0].style.left = left +'px';
