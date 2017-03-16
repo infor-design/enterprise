@@ -1131,7 +1131,8 @@ $.fn.datagrid = function(options) {
         resultsText: null,  // Can provide a custom function to adjust results text
         virtualized: false, // Prevent Unused rows from being added to the DOM
         virtualRowBuffer: 10, //how many extra rows top and bottom to allow as a buffer
-        rowReorder: false //Allows you to reorder rows. Requires rowReorder formatter
+        rowReorder: false, //Allows you to reorder rows. Requires rowReorder formatter
+        showDirty: false
       },
       settings = $.extend({}, defaults, options);
 
@@ -2861,12 +2862,12 @@ $.fn.datagrid = function(options) {
         col.width = colWidth;
       }
 
-      if (col.id === 'expander') {
+      if (col.id === 'expander' || col.id === 'rowStatus') {
         colWidth = 55;
         col.width = colWidth;
       }
 
-      if (col.id === 'drilldown' || col.id === 'rowStatus') {
+      if (col.id === 'drilldown') {
         colWidth = 78;
         col.width = colWidth;
       }
@@ -4967,6 +4968,24 @@ $.fn.datagrid = function(options) {
       });
     },
 
+    resetRowStatus: function () {
+      for (var i = 0; i < this.settings.dataset.length; i++) {
+        this.rowStatus(i, '');
+      }
+    },
+
+    dirtyRows: function () {
+      var rows = [],
+        data = this.settings.dataset;
+
+      for (var i = 0; i < data.length; i++) {
+        if (data[i].rowStatus && data[i].rowStatus.icon === 'dirty') {
+          rows.push(data[i]);
+        }
+      }
+      return rows;
+    },
+
     //Validate all visible cells in a row if they have validation on the column
     //Row Id, Error Text and 'error' or 'alert' (default alert)
     showRowError: function (row, message, type) {
@@ -5105,6 +5124,10 @@ $.fn.datagrid = function(options) {
           args.rowData = this.settings.treeDepth[row].node;
         }
         this.element.trigger('cellchange', args);
+
+        if (this.settings.showDirty) {
+          this.rowStatus(row, 'dirty');
+        }
       }
 
     },

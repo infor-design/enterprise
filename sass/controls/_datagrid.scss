@@ -257,7 +257,8 @@ $datagrid-short-row-height: 23px;
       }
 
       .datagrid-checkbox {
-        top: -8px;
+        top: -1px;
+        vertical-align: top;
       }
     }
 
@@ -392,7 +393,7 @@ $datagrid-short-row-height: 23px;
           top: 13px;
         }
 
-        .datagrid-alert-icon {
+        .datagrid-alert-icon:not(.icon-dirty) {
           top: 5px;
         }
 
@@ -560,7 +561,7 @@ $datagrid-short-row-height: 23px;
           width: 22px;
         }
 
-        .datagrid-alert-icon {
+        .datagrid-alert-icon:not(.icon-dirty) {
           // scss-lint:disable ImportantRule
           height: 19px;
           margin-left: 0 !important;
@@ -847,7 +848,8 @@ $datagrid-short-row-height: 23px;
 
       &.icon-dirty {
         height: 16px;
-        top: 15px;
+        top: initial;
+        vertical-align: middle;
         width: 16px;
       }
     }
@@ -1851,6 +1853,10 @@ td .btn-actions {
 .is-firefox {
   .datagrid-result-count {
     margin-top: 0;
+  }
+
+  .short-rowheight th .datagrid-checkbox {
+    top: -2px;
   }
 
   .datagrid {
