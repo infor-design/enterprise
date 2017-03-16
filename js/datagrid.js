@@ -2862,8 +2862,13 @@ $.fn.datagrid = function(options) {
         col.width = colWidth;
       }
 
-      if (col.id === 'expander' || col.id === 'rowStatus') {
+      if (col.id === 'expander') {
         colWidth = 55;
+        col.width = colWidth;
+      }
+
+      if (col.id === 'rowStatus') {
+        colWidth = 62;
         col.width = colWidth;
       }
 
@@ -3452,14 +3457,14 @@ $.fn.datagrid = function(options) {
 
     //Returns a cell node
     cellNode: function (row, cell, includeGroups) {
-      var rowNode = this.tableBody.find('tr[aria-rowindex="'+ (row+1) +'"]');
+      var rowNode = this.tableBody.find('tr').eq(row);
 
       if (row instanceof jQuery) {
         rowNode = row;
       }
 
       if (includeGroups) {
-        rowNode = this.tableBody.find('tr:visible').eq(row);
+        rowNode = this.tableBody.prevAll('.datagrid-rowgroup-header').eq(row);
       }
 
       if (cell === -1) {
@@ -4881,8 +4886,15 @@ $.fn.datagrid = function(options) {
       this.editor.destroy();
       this.editor = null;
 
+      var rowIndex;
+      if (this.settings.source != null) {
+        rowIndex= this.activeCell.row;
+      } else {
+        rowIndex= this.dataRowIndex(cellNode.parent());
+      }
+
       //Save the Cell Edit back to the data set
-      this.updateCellNode(this.dataRowIndex(cellNode.parent()) , cellNode.index(), newValue);
+      this.updateCellNode(rowIndex, cellNode.index(), newValue);
       this.element.triggerHandler('exiteditmode');
     },
 
@@ -5113,7 +5125,14 @@ $.fn.datagrid = function(options) {
         }
       }
 
-      cellNode.find('.datagrid-cell-wrapper').html(formatted);
+      var correctCellNode;
+      if (this.settings.source != null) {
+       correctCellNode = this.activeCell.node;
+      } else {
+       correctCellNode = cellNode;
+      }
+
+      correctCellNode.find('.datagrid-cell-wrapper').html(formatted);
 
       if (coercedVal !== oldVal && !fromApiCall) {
         //Validate the cell
@@ -5137,6 +5156,10 @@ $.fn.datagrid = function(options) {
       var rowIdx = (row.attr('aria-rowindex')-1);
       if (this.pager) {
         rowIdx = rowIdx - ((this.pager.activePage -1) * this.settings.pagesize);
+      }
+
+      if (this.settings.groupable) {
+        rowIdx = rowIdx + row.prevAll('.datagrid-rowgroup-header').length;
       }
 
       if (isNaN(rowIdx)) {  //Grouped Rows

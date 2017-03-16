@@ -175,9 +175,13 @@
               badge.elem.addClass('round');
             }
           }
+
           if (/info|good|error|alert|pending/i.test(badgeData.type)) {
             badge.elem.addClass(badgeData.type);
+          } else if (badgeData.type.charAt(0) === '#' && badgeData.type.length === 7) {
+            badge.elem.css('background-color', badgeData.type);
           }
+
           if (badge.elem.text() !== '') {
             a.append(badge.elem);
           }
@@ -1062,7 +1066,10 @@
               badge.removeClass('info good error alert pending');
               if (/info|good|error|alert|pending/i.test(nodeData.badge.type)) {
                 badge.addClass(nodeData.badge.type);
+              } else if (nodeData.badge.type.charAt(0) === '#' && nodeData.badge.type.length === 7) {
+                badge.elem.css('background-color', nodeData.badge.type.type);
               }
+
               if (nodeData.badge.type.indexOf('pending') !== -1) {
                 badge.text('');
               }

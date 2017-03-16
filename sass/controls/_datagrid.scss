@@ -1525,6 +1525,7 @@ $datagrid-short-row-height: 23px;
     background-color: $datagrid-rowgroup-header;
     border: 1px solid transparent;
     border-bottom: 1px solid $datagrid-cell-border-color;
+    border-right: 1px solid $datagrid-cell-border-color;
     padding: 0 20px;
 
     &:focus ,
