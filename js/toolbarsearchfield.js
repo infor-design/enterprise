@@ -541,6 +541,10 @@
           this.button.off('beforeopen.toolbarsearchfield');
         }
 
+        if (this.xButton && this.xButton.length) {
+          this.xButton.remove();
+        }
+
         // Used to determine if the "Tab" key was involved in switching focus to the searchfield.
         $(document).off('keydown.' + this.id);
         $('body').off('resize.' + this.id);
