@@ -2848,7 +2848,6 @@ $.fn.datagrid = function(options) {
 
         var percentWidth = Math.round(this.elemWidth / visibleColumns.length);
         colWidth = percentWidth;
-
         //Handle Columns where auto width is bigger than the percent width
         if (percentWidth < textWidth) {
           colWidth = textWidth;
@@ -2887,7 +2886,7 @@ $.fn.datagrid = function(options) {
 
         var diff = this.elemWidth - this.totalWidth;
 
-        if ((diff > 0) && diff  > colWidth && !this.widthPercent) {
+        if ((diff > 0) && diff  > colWidth && !this.widthPercent && !this.headerRow) {
           colWidth = diff - 1;
           this.headerWidths[index] = {id: col.id, width: colWidth, widthPercent: this.widthPercent};
           col.width = colWidth;
