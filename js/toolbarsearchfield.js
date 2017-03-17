@@ -536,9 +536,10 @@
       // Tears down events, properties, etc. and resets the control to "factory" state
       teardown: function() {
         this.inputWrapper.off('mousedown.toolbarsearchfield focusin.toolbarsearchfield collapse.toolbarsearchfield');
+        this.inputWrapper.find('.icon').remove();
 
         if (this.button && this.button.length) {
-          this.button.off('beforeopen.toolbarsearchfield');
+          this.button.remove();
         }
 
         if (this.xButton && this.xButton.length) {
