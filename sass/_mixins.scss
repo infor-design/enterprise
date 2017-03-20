@@ -189,9 +189,6 @@ $prefixes: -webkit-, -moz-, -o-, -ms-, '';
 @mixin antialiased {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
-
-  text-rendering: optimizeLegibility !important;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, .004);
 }
 
 // Truncate to Ellipsis....
