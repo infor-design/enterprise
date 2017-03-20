@@ -3214,11 +3214,13 @@ window.Chart = function(container) {
 
   //Completion chart
   this.Completion = function(chartData) {
-    $(container).addClass('completion-chart');
 
     // Set dataset
     var dataset = chartData[0].data[0],
-      isTarget = charts.settings.type === 'completion-target';
+      isTarget = charts.settings.type === 'completion-target',
+      isAchievment = charts.settings.type === 'targeted-achievement';
+
+    $(container).addClass('completion-chart' + (charts.settings.type === 'targeted-achievement' ? ' chart-targeted-achievement': ''));
 
     // Set total defaults
     dataset.total = $.extend({}, {value: 100}, dataset.total);
@@ -3262,7 +3264,7 @@ window.Chart = function(container) {
           format(fixPercent(obj.value), obj.format) : (obj ? fixPercent(obj.value) : 0);
       },
       setOverlap = function() {
-        if (isTarget) {
+        if (isTarget && !isAchievment) {
           setTimeout(function() {
             var remaining = $('.remaining', container),
               total = $('.total', container),
@@ -3294,7 +3296,9 @@ window.Chart = function(container) {
               $('.total.value', container) :
                 $('.'+ type +' .value, .'+ type +' .text', container));
         }
+
         jsonData = (nodes.length === 1 ? nodes : nodes.first()).data('jsonData');
+
         type = jsonData ? Object.keys(jsonData)[0] : 'name';
         bar = $('.'+ type +'.bar', container);
         $.extend(true, dataset[type], o.data);
@@ -3371,12 +3375,18 @@ window.Chart = function(container) {
 
     // Render
     var html = {body: $('<div class="total bar" />')};
-    if (isTarget) {
-      html.body.addClass('chart-completion-target');
+    if (isTarget || isAchievment) {
+      html.body.addClass('chart-completion-target' + (isAchievment ? ' chart-targeted-achievement' : ''));
+
+      var totalText = setFormat(dataset.total) + (dataset.total.text ? dataset.total.text : '');
+      totalText = isAchievment && dataset.remaining ? setFormat(dataset.remaining) + (dataset.remaining.text ? dataset.remaining.text : ''): totalText;
+
       html.label = ''+
       '<span class="label">'+
-        '<span class="name">'+ fixUndefined(dataset.name.text) +'</span>'+
-        '<span class="l-pull-right total value">'+ setFormat(dataset.total) +'</span>'+
+        '<span class="name">'+
+        (dataset.completed.color && dataset.completed.color === 'error' ? '<svg class="icon icon-error" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-error"></use></svg>' : '' ) +
+        fixUndefined(dataset.name.text) + '</span>'+
+        '<span class="l-pull-right total value">'+ totalText +'</span>'+
       '</span>';
     }
     else {
@@ -3397,33 +3407,44 @@ window.Chart = function(container) {
     if (dataset.remaining) {
       html.remaining = ''+
       '<div class="target remaining bar '+ fixUndefined(dataset.remaining.color) +'">'+
-        '<span aria-hidden="true"'+ (!isTarget ? ' class="audible"' : '') +'>'+
+      (isAchievment ? '' : '<span aria-hidden="true"'+ (!isTarget && !isAchievment ? ' class="audible"' : '') +'>'+
           '<span class="value">'+
             setFormat(dataset.remaining) +
           '</span><br />'+
           '<span class="text">'+
             fixUndefined(dataset.remaining.text) +
           '</span>'+
-        '</span>'+
+        '</span>') +
       '</div>';
+    } else {
+      html.remaining = '<div class="target remaining bar" style="opacity: 0"></div>';
     }
-    if (dataset.completed) {
+
+    if (dataset.completed && isAchievment) {
       html.completed = ''+
-      '<div class="completed bar '+ fixUndefined(dataset.completed.color) +'">'+
-        '<span aria-hidden="true"'+ (!isTarget ? ' class="audible"' : '') +'>'+
-          '<span class="value">'+
-            setFormat(dataset.completed) +
-          '</span><br />'+
+      '<div class="completed bar '+ fixUndefined(dataset.completed.color) +'"></div>'+
+        '<span class="completed-label" aria-hidden="true"'+ (!isTarget && !isAchievment ? ' class="audible"' : '') +'>'+
           '<span class="text">'+
             fixUndefined(dataset.completed.text) +
           '</span>'+
-        '</span>'+
-      '</div>';
+        '</span>';
     }
+
+    if (dataset.completed && !isAchievment) {
+      html.completed = ''+
+      '<div class="completed bar '+ fixUndefined(dataset.completed.color) +'">'+
+        '<span aria-hidden="true"'+ (!isTarget && !isAchievment ? ' class="audible"' : '') +'>'+
+          '<span class="value">'+ setFormat(dataset.completed) + '</span><br />'+
+          '<span class="text">'+
+            fixUndefined(dataset.completed.text) +
+          '</span>'+
+        '</span></div>';
+    }
+
     if (dataset.targetline) {
       html.targetline = ''+
       '<div class="target-line targetline bar">'+
-        '<span aria-hidden="true"'+ (!isTarget ? ' class="audible"' : '') +'>'+
+        '<span aria-hidden="true"'+ (!isTarget && !isAchievment ? ' class="audible"' : '') +'>'+
           '<span class="value">'+
             setFormat(dataset.targetline) +
             '</span><br />'+
@@ -3742,7 +3763,7 @@ window.Chart = function(container) {
       this.Bullet(options.dataset);
     }
     if (options.type === 'completion' ||
-        options.type === 'completion-target') {
+        options.type === 'completion-target' || options.type === 'targeted-achievement') {
       this.redrawOnResize = false;
       this.Completion(options.dataset);
     }
