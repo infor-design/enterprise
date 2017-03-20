@@ -1159,7 +1159,7 @@ $.fn.datagrid = function(options) {
       this.isWindows = (navigator.userAgent.indexOf('Windows') !== -1);
       this.settings = settings;
       this.initSettings();
-      this.originalColumns = this.settings.columns;
+      this.originalColumns = this.settings.columns.slice(0);
 
       this.appendToolbar();
       this.restoreColumns();
