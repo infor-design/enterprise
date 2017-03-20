@@ -132,6 +132,10 @@
     stroke-width: 1px;
   }
 
+  &.completion-chart {
+    margin: 30px;
+  }
+
 }
 
 // Tooltip Swatch
@@ -302,7 +306,6 @@
 
     .completed {
       background-color: $turquoise06;
-      margin-top: 15px;
 
       &.error {
         background-color: $alert-red;
@@ -316,11 +319,17 @@
 
   span:not(.audible) {
     @include font-size(12);
-    background-color: $body-bg-color;
     position: absolute;
     right: 2px;
     text-align: right;
     top: 34px;
+
+    &.completed-label,
+    &.completed-label span {
+      position: static;
+      text-align: left;
+      width: 100%;
+    }
   }
 
   .completed {
@@ -502,6 +511,74 @@
     .primary {
       color: $chart-progressbar-primary-fill;
     }
+  }
+
+}
+
+.chart-targeted-achievement {
+  // scss-lint:disable ImportantRule
+  margin-bottom: 22px !important;
+  // scss-lint:enable ImportantRule
+
+  .label {
+    @include font-size(14);
+  }
+
+  .bar {
+    background-color: $chart-targeted-achievement-bg-color;
+    cursor: default;
+    height: 25px;
+
+    &.completed {
+      margin-bottom: 5px;
+      margin-top: -25px;
+    }
+  }
+
+  .target::after,
+  .completed::after {
+    content: none;
+  }
+
+  .remaining {
+    background: repeating-linear-gradient(
+      150deg,
+      $azure04,
+      $azure04 1px,
+      $azure02 1px,
+      $azure02 10px
+    );
+  }
+
+  //Labels
+  .completed {
+    .value {
+      display: none;
+    }
+
+    span {
+      @include font-size(14);
+      // scss-lint:disable ImportantRule
+      color: $font-color !important;
+      // scss-lint:enable ImportantRule
+      font-weight: normal;
+      right: unset;
+      top: 20px;
+    }
+  }
+
+  .target .value {
+    display: none;
+  }
+
+  .icon-error {
+    display: inline-block;
+    height: 16px;
+    margin-right: 6px;
+    position: relative;
+    top: -1px;
+    vertical-align: middle;
+    width: 16px;
   }
 
 }
