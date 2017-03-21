@@ -4085,13 +4085,6 @@ $.fn.datagrid = function(options) {
         return;
       }
 
-      // if scrolling NOT click on touch device
-      if (this.isTouch) {
-        rowNode.removeClass('is-active-row')
-          .find('td:not(.is-editing)').css({'background-color': 'transparent'});
-        return;
-      }
-
       if (s.selectable === 'single' && this._selectedRows.length > 0) {
         this.unselectRow(this._selectedRows[0].idx);
       }
