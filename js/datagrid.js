@@ -1425,7 +1425,16 @@ $.fn.datagrid = function(options) {
       this.setTreeDepth();
       this.setRowGrouping();
       this.setTreeRootNodes();
-      this.renderRows();
+
+      //Resize and re-render if have a new dataset (since automatic column sizing depends on the dataset)
+      if (pagerInfo.type === 'initial') {
+        this.clearHeaderCache();
+        this.renderRows();
+        this.renderHeader();
+      } else {
+        this.renderRows();
+      }
+
       this.renderPager(pagerInfo, isResponse);
 
       if (pagerInfo && pagerInfo.preserveSelected) {
