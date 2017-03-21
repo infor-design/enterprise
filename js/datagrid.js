@@ -5182,7 +5182,7 @@ $.fn.datagrid = function(options) {
     setActiveCell: function (row, cell) {
       var self = this,
         prevCell = self.activeCell,
-        rowElem = row, rowNum,
+        rowElem = row, rowNum, dataRowNum,
         isGroupRow = row instanceof jQuery && row.is('.datagrid-rowgroup-header, .datagrid-rowgroup-footer');
 
       if (row instanceof jQuery && row.length === 0) {
@@ -5201,10 +5201,14 @@ $.fn.datagrid = function(options) {
         }
         cell = isGroupRow ? 0 : row.index();
         rowNum = isGroupRow ? 0 : this.visualRowIndex(row.parent());
+		dataRowNum = isGroupRow ? 0 : this.dataRowIndex(row.parent());
+        rowElem = row.parent();
       }
 
       if (row instanceof jQuery && row.is('tr')) {
         rowNum = this.visualRowIndex(row);
+		dataRowNum = this.dataRowIndex(row);
+        rowElem = row;
       }
 
       if (rowNum < 0 || cell < 0) {
@@ -5227,6 +5231,7 @@ $.fn.datagrid = function(options) {
       if (self.activeCell.node && prevCell.node.length === 1) {
         self.activeCell.row = rowNum;
         self.activeCell.cell = cell;
+		dataRowNum = this.dataRowIndex(self.activeCell.node.parent());
       } else {
         self.activeCell = prevCell;
       }
@@ -5238,6 +5243,9 @@ $.fn.datagrid = function(options) {
         self.activeCell.node.find('button').focus();
       }
 
+	  if (dataRowNum != undefined)
+        self.activeCell.dataRow = dataRowNum;
+	
       if (isGroupRow) {
         self.activeCell.node.find('td:visible:first').attr('tabindex', '0').focus();
       }
