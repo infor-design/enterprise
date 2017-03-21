@@ -219,6 +219,7 @@
             span = $(a).children('span')[0],
             submenuWrapper = $(li).children('.wrapper')[0];
           li.setAttribute('role', 'presentation');
+
           if (a) {
             a.setAttribute('tabindex', '-1');
             a.setAttribute('role', (self.settings.ariaListbox ? 'option' : 'menuitem'));
@@ -231,11 +232,12 @@
             // disabled menu items, by prop and by className
             if (Soho.DOM.classNameHas(li.className, 'is-disabled')) {
               a.setAttribute('aria-disabled', 'true');
+              a.disabled = true;
             }
 
             if (a.hasAttribute('disabled')) {
-              Soho.DOM.addClass(li, 'is-disabled');
               a.setAttribute('aria-disabled', 'true');
+              a.disabled = true;
             }
 
             // menu items that contain submenus
@@ -370,7 +372,7 @@
             href = anchor.attr('href'),
             selectionResult = [anchor];
 
-          if (anchor.parent().is('.submenu, .hidden, .is-disabled')) {
+          if (anchor.parent().is('.submenu, .hidden, .is-disabled') || anchor[0].disabled) {
             //Do not close parent items of submenus on click
             e.preventDefault();
             return;
@@ -772,6 +774,9 @@
         this.element.addClass('is-open');
         this.menu.addClass('is-open').attr('aria-hidden', 'false');
 
+        this.menu.find('a').attr('aria-disabled', 'false').parent().removeClass('is-disabled');
+        this.menu.find('a[disabled]').attr('aria-disabled', 'false').parent().addClass('is-disabled');
+
         this.position(e);
 
         if (this.element.closest('.header').length > 0) {
@@ -889,7 +894,7 @@
       },
 
       showSubmenu: function (li) {
-        if (Soho.DOM.classNameHas(li[0].className, 'is-disabled')) {
+        if (Soho.DOM.classNameHas(li[0].className, 'is-disabled') || li[0].disabled) {
           return;
         }
 
