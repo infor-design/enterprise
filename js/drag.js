@@ -25,7 +25,7 @@
         clone: false, //Clone the object - Useful so you dont have to abs position
         cloneCssClass: 'is-clone', // Css class added to clone element
         clonePosIsFixed: false, //Clone object use as css style "position: fixed"
-        cloneAppentTo: null, //AppentTo selector for clone ['body'|'parent'|'jquery object'] default:'body'
+        cloneAppendTo: null, //AppentTo selector for clone ['body'|'parent'|'jquery object'] default:'body'
         containment: false, //Constrains dragging to within the bounds of the specified element or region. Possible values: "parent", "document", "window".
         obstacle: false, //Selector of object(s) that you cannot drag into,
         containmentOffset: {left: 0, top: 0}
@@ -152,12 +152,12 @@
           //Clone
           if (!self.clone && settings.clone) {
             self.clone = self.element.clone(true);
-            if (settings.cloneAppentTo === 'parent') {
-              settings.cloneAppentTo = self.element.parent();
+            if (settings.cloneAppendTo === 'parent') {
+              settings.cloneAppendTo = self.element.parent();
             }
             self.clone
               .addClass(settings.cloneCssClass)
-              .appendTo(settings.cloneAppentTo || 'body');
+              .appendTo(settings.cloneAppendTo || 'body');
 
           }
 

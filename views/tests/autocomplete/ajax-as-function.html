@@ -1,0 +1,39 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Autocomplete Test: AJAX</h2>
+
+    <p>The autocomplete control on this page has its options created by loading from an external source with an AJAX request.  In the console, this page generates a log containing sourceArguments provided to the source callback by the control.</p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="autocomplete-default">States</label>
+      <input id="autocomplete-default" data-init="false" autocomplete="off" class='autocomplete' placeholder="Type to Search">
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+    $('#autocomplete-default').autocomplete({
+      source: function autocompleteAjaxSource(term, response, args) {
+        $.getJSON('{{basepath}}api/states?term=', function(data) {
+          console.log(args);
+          response(term, data);
+        });
+      },
+      sourceArguments: {
+        'cheese': 'cheddar',
+        'strength': 'sharp'
+      }
+    })
+  });
+
+
+</script>

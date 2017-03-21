@@ -22,17 +22,23 @@
   <script type="text/javascript">
     $('body').on('initialized', function() {
 
-      var options = {containerElement: '#module-tabs-container'},
-        $tabs = $('#module-tabs-example').tabs(options),
+      const $tabs = $('#module-tabs-example').tabs({
+          containerElement: '#module-tabs-container',
+          addTabButton: true,
+          moduleTabsTooltips: true
+        }),
         control = $tabs.data('tabs');
 
-      control.add('tab1', {name: 'tab 1', content: '<p style="font-size:40em;">hello world</p>'});
-      control.select('tab1');
-      $tabs.tabs($.extend({
-        addTabButton: true,
-        addTabCallback: function(){}
-      }, options));
+      control.add('tab1', {
+        name: 'This is a really really really really really really long title',
+        content: '<button class="btn" style="margin:2em;">Rename</button>'
+      });
 
+      control.select('tab1');
+
+      control.getPanel('tab1').find('.btn').click(function() {
+        control.rename('tab1', 'Now this text is even longer longer longer longer longer longer longer longer longer longer longer');
+      });
     });
   </script>
 

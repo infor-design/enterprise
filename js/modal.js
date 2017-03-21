@@ -521,6 +521,10 @@
           calcWidth = ($(window).width()* 1)-this.settings.frameWidth;
 
         var wrapper = this.element.find('.modal-body-wrapper');
+
+        //Remove width for backwards compat
+        this.element.find('.modal-contents').css('width', '');
+
         if (wrapper.length) {
           wrapper[0].style.maxHeight = calcHeight + 'px';
           wrapper[0].style.maxWidth = calcWidth + 'px';

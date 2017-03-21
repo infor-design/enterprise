@@ -6,9 +6,10 @@ Build Server: http://bamboo.infor.com/browse/SOHO-DOC
 Npm: http://npm.infor.com
 
 ### Demo Site
-http://usmvvwdev53:425/controls
+usalvlhlpool1.infor.com/4.2.6/controls
 
 ### Key New Features
+- Datagrid Virtualization
 
 ### Improvements
 
@@ -20,6 +21,7 @@ http://usmvvwdev53:425/controls
 ### Breaking Changes
 
 ### Ui Changes
+- Row Heights in the datagrid changed and added less left and right padding
 
 ### Tips
 

@@ -20,6 +20,7 @@
     var pluginName = 'autocomplete',
       defaults = {
         source: [], //Defines the data to use, must be specified.
+        sourceArguments: {}, // If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
         template: undefined, // If defined, use this to draw the contents of each search result instead of the default draw routine.
         filterMode: 'startsWith',  // startsWith and contains Supported - false will not client side filter
         delay: 300, // delay is the delay between key strokes on the keypad before it thinks you stopped typing
@@ -270,14 +271,13 @@
         //similar code as dropdown but close enough to be dry
         var self = this;
 
-        this.element.on('updated.autocomplete', function() {
+        this.element.off('updated.autocomplete').on('updated.autocomplete', function() {
           self.updated();
-        }).on('keydown.autocomplete', function(e) {
+        }).off('keydown.autocomplete').on('keydown.autocomplete', function(e) {
           self.handleAutocompleteKeydown(e);
-        })
-        .on('input.autocomplete', function (e) {
+        }).off('input.autocomplete').on('input.autocomplete', function (e) {
           self.handleAutocompleteInput(e);
-        }).on('focus.autocomplete', function () {
+        }).off('focus.autocomplete').on('focus.autocomplete', function () {
           self.handleAutocompleteFocus();
         });
       },
@@ -403,7 +403,7 @@
 
           if (sourceType === 'function') {
             // Call the 'source' setting as a function with the done callback.
-            self.settings.source(buffer, done);
+            self.settings.source(buffer, done, self.settings.sourceArguments);
           } else if (sourceType === 'object') {
             // Use the 'source' setting as pre-existing data.
             // Sanitize accordingly.

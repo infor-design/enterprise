@@ -1,6 +1,5 @@
 # Datagrid
 
-
 ##General Tests
 
 - Key Board (details to come)
@@ -275,10 +274,6 @@ TODO: Resize Quantity and Sort (BUG!)
 - Resize the column (should adapt to size)
 - Same with Keyboard
 
-TODO
-- Focus the cell
-- then click editor (this is an optiva issue)?
-
 [Editor With Lookup](/tests/datagrid-editable-lookup.html)
 - This example shows an editable cell with a lookup editor field
 - Click in the Product id column, then try to type
@@ -286,10 +281,6 @@ TODO
 - Hover a non focus'd cell and click the icon to open (vs focus the cell)
 - Resize the column (should adapt to size)
 - Do Same with Keyboard
-
-TODO
-- Focus the cell
-- then click editor (this is an optiva issue)?
 
 [Editing and Paging](/tests/datagrid-editable-paging.html)
 - This example shows combining editing with Paging
@@ -556,7 +547,14 @@ export-custom-dataset.html
 export-from-menu.html
 export-paging.html
 fifty-columns.html
-form-buttons.html
+
+[Icon Buttons](/tests/form-buttons.html)
+  - This example shows how to create form buttons on the grid.
+  - The only test case is that if you click the button, then the relevant event info is shown in the console
+  - Check themes
+  - check row height/alignment
+  - Second and Third
+
 hide-show-column.html
 
 [Icon Buttons](/tests/icon-buttons.html)
@@ -567,7 +565,13 @@ hide-show-column.html
   - This example shows a test case, where the header is shown and data is loaded in. This test case initially
   was very slow in IE (11) and took over 30s. Now it should take.
 
-loaddata-selected-rows.html
+
+[Reloading/Selected Rows](/tests/loaddata-selected-rows.html)
+  - This example shows test cases are saving selected rows when reloading data.
+  - Select some rows and reload with the buttons, one will save selecte and one will not.
+  - Show selected flushes selections to the console to test
+  - Update row updates one row value
+
 localstorage-conflicts.html
 long-text.html
 lookup-and-grid-example.html
@@ -604,9 +608,6 @@ xss-prevention.html
 
 Known Issues:
 
-- Test More on Windows
-- Test Directly on Optiva
-- Editing (more issues)
 - Mobile (percent col widths) or mobile min - width....
 - Re-Do Screen Reader - Not reading headers
 - Last Column / Border Resize (maybe)

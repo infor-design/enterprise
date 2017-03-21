@@ -19,6 +19,7 @@
     // Settings and Options
     var pluginName = 'arrange',
         defaults = {
+          handle: null, // The Class of the handle element
           itemsSelector: null,
           connectWith: false,
           placeholder: null,
@@ -55,7 +56,6 @@
           items = self.element.children().not('[data-arrange-exclude="true"]'),
           placeholder = $('<' + (/^(ul|ol)$/i.test(self.element[0].tagName) ? 'li' : 'div') +'>');
 
-
         if (settings.itemsSelector) {
           items = $(settings.itemsSelector, self.element).not('[data-arrange-exclude="true"]');
           placeholder = $('<'+ items.first()[0].tagName +' />');
@@ -69,7 +69,7 @@
         self.dragEnd = 'dragend.arrange touchend.arrange touchcancel.arrange gestureend.arrange';
         self.dragWhileDragging = 'dragover.arrange dragenter.arrange drop.arrange touchmove.arrange gesturechange.arrange';
 
-        self.handle = self.element.attr('data-arrange-handle');
+        self.handle = settings.handle || self.element.attr('data-arrange-handle');
         self.connectWith = self.element.attr('data-arrange-connectWith');
         self.placeholders = placeholder.addClass(settings.placeholderCssClass +' draggable');
 
@@ -123,6 +123,7 @@
             if (!self.dragging) {
               return;
             }
+
             self.placeholders.filter(':visible').after(self.dragging);
             self.dragging.removeClass('arrange-dragging').show();
             self.placeholders.detach();

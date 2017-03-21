@@ -91,6 +91,7 @@
     @include font-size(12);
     color: $module-tabs-inactive-text-color;
     min-width: 120px;
+    overflow: hidden;
     text-align: center;
 
     &:not(:first-child) {
@@ -107,10 +108,8 @@
 
     a {
       @include font-size(12);
-      display: block;
       font-weight: bold;
       margin: 0 auto;
-      max-width: 80%;
       overflow: hidden;
       padding: 10px;
       text-overflow: ellipsis;
@@ -168,7 +167,7 @@
       }
 
       a {
-        padding: 10px 32px 10px 0;
+        padding: 10px 32px 10px 10px;
       }
     }
 
@@ -370,7 +369,7 @@
 
   &.has-add-button {
     .tab-list {
-      width: calc(100% - 45px);
+      width: calc(100% - 39px);
     }
 
     .add-tab-button {
@@ -388,7 +387,7 @@
   // Change state when the spillover button is necessary
   &.has-more-button {
     .tab-list {
-      width: calc(100% - 121px);
+      width: calc(100% - 119px);
     }
 
     .tab-more {
@@ -666,7 +665,9 @@ html[dir='rtl'] {
     .tab.application-menu-trigger {
       min-width: 0;
 
-      a > span:not(.icon):not(.audible) {
+      a > span:not(.icon) {
+        margin-left: 0;
+        visibility: hidden;
         width: 0;
       }
     }

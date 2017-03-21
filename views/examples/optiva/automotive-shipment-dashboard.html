@@ -8,6 +8,7 @@
     </div>
   </div>
 
+  {{> includes/applicationmenu}}
   <div class="page-container scrollable">
     <div id="auto-ship-dash" class="tab-panel">
       <div id="auto-ship-dash-toolbar" class="toolbar standalone right-aligned">
@@ -22,13 +23,13 @@
         </div>
       </div>
 
-      <div id="maincontent" class="homepage" data-columns="3" role="main">
-        <div class="content">
+      <div class="row">
+        <div class="eight columns">
 
           <!-- BEGIN Column Chart -->
-          <div class="widget double-width">
+          <div class="widget">
             <div class="widget-header">
-              <h2 class="widget-title">Column Chart Example</h2>
+              <h2 class="widget-title">Workload</h2>
             </div>
             <div class="widget-content">
               <div id="column-bar-example" class="chart-container"></div>
@@ -36,10 +37,13 @@
           </div>
           <!-- END Column Chart -->
 
+        </div>
+        <div class="four columns">
+
           <!-- BEGIN Pie Chart -->
           <div class="widget">
             <div class="widget-header">
-              <h2 class="widget-title">Taxes and Deductions</h2>
+              <h2 class="widget-title">Today In Detail</h2>
             </div>
             <div class="widget-content">
               <div id="pie-chart-example" class="chart-container"></div>
@@ -47,27 +51,54 @@
           </div>
           <!-- END Pie Chart -->
 
-          <!-- BEGIN Datagrid -->
-          <div class="card triple-width auto-height">
-            <div class="card-header">
-                <h2 class="card-title">Chart Title</h2>
-                <button type="button" class="btn-actions" type="button">
-                  <span class="audible">Actions</span>
-                  <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                    <use xlink:href="#icon-more"></use>
-                  </svg>
-                </button>
-                <ul class="popupmenu actions top">
-                  <li><a href="#">Action One</a></li>
-                  <li><a href="#">Action Two</a></li>
-                </ul>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="twelve columns">
+
+          <div class="toolbar">
+            <div class="title">
+              <span>Shipments</span>
+              <span class="datagrid-result-count">(148)</span>
             </div>
-            <div class="card-content">
-              <div id="datagrid"></div>
+            <div class="buttonset">
+
+              <label class="audible" for="datagrid-search">Keyword Search</label>
+              <input id="datagrid-search" name="common-toolbar-searchfield" class="searchfield" />
+
+              <button class="btn" type="button">
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use xlink:href="#icon-filter"></use>
+                </svg>
+                <span>Filter By (0)</span>
+              </button>
+
+              <button class="btn-menu" type="button">
+                <span>Sort By: Due Time</span>
+              </button>
+              <ul class="popupmenu is-selectable">
+                <li class="is-checked"><a href="#">Due Time</a></li>
+              </ul>
+
+              <div class="separator"></div>
+
+              <button class="btn" type="button">
+                <span>Day View</span>
+              </button>
+
+              <div class="separator"></div>
+
+              <button class="btn" type="button">
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use xlink:href="#icon-settings"></use>
+                </svg>
+                <span>Grid Settings</span>
+              </button>
+
             </div>
           </div>
-          <!-- END Datagrid -->
-
+          <div id="datagrid"></div>
 
         </div>
       </div>
@@ -76,78 +107,182 @@
   </div>
 
   <script type="text/javascript">
-    // Data for charts and grid
+    // Constants
+    var COLOR_PROJECTED = '#d8d8d8',
+      COLOR_CONFIRMED = '#89BF65',
+      COLOR_ISSUE = '#C65F5F',
+      COLOR_IN_PROGRESS = '#2578A9',
+      TODAY = {
+        projected: 92,
+        confirmed: 39,
+        issue: 12,
+        inProgress: 5
+      };
 
+    // Data for charts and grid
     var columnChartDataset = [{
       data: [{
-          name: 'Automotive',
-          shortName: 'Auto',
-          abbrName: 'A',
-          value: 7,
-          color: '#1D5F8A'
+        name: 'Today',
+        value: TODAY.confirmed
       }, {
-          name: 'Distribution',
-          shortName: 'Dist',
-          abbrName: 'D',
-          value: 10,
-          color: '#8ED1C6'
+        name: 'Tuesday',
+        value: 9
       }, {
-          name: 'Equipment',
-          shortName: 'Equip',
-          abbrName: 'E',
-          value: 14,
-          color: 'error'
+        name: 'Wednesday',
+        value: 0
       }, {
-          name: 'Fashion',
-          shortName: 'Fash',
-          abbrName: 'F',
-          value: 10,
-          color: '#9279A6'
+        name: 'Thursday',
+        value: 0
       }, {
-          name: 'Food & Beverage',
-          shortName: 'Food',
-          abbrName: 'F&B',
-          value: 14
+        name: 'Friday',
+        value: 0
       }, {
-          name: 'Healthcare',
-          shortName: 'Health',
-          abbrName: 'H',
-          value: 8
+        name: 'Saturday',
+        value: 0
       }, {
-          name: 'Other',
-          shortName: 'Other',
-          abbrName: 'O',
-          value: 7
-      }]
+        name: 'Sunday',
+        value: 0
+      }, {
+        name: 'Monday',
+        value: 0
+      }, {
+        name: 'Tuesday',
+        value: 0
+      }, {
+        name: 'Wednesday',
+        value: 0
+      }],
+      name: 'Confirmed',
+      color: COLOR_CONFIRMED
+    }, {
+      data: [{
+        name: 'Today',
+        value: TODAY.inProgress
+      }, {
+        name: 'Tuesday',
+        value: 0
+      }, {
+        name: 'Wednesday',
+        value: 0
+      }, {
+        name: 'Thursday',
+        value: 0
+      }, {
+        name: 'Friday',
+        value: 0
+      }, {
+        name: 'Saturday',
+        value: 0
+      }, {
+        name: 'Sunday',
+        value: 0
+      }, {
+        name: 'Monday',
+        value: 0
+      }, {
+        name: 'Tuesday',
+        value: 0
+      }, {
+        name: 'Wednesday',
+        value: 0
+      }],
+      name: 'In Progress',
+      color: COLOR_IN_PROGRESS
+    }, {
+      data: [{
+        name: 'Today',
+        value: TODAY.issue
+      }, {
+        name: 'Tuesday',
+        value: 0
+      }, {
+        name: 'Wednesday',
+        value: 0
+      }, {
+        name: 'Thursday',
+        value: 10
+      }, {
+        name: 'Friday',
+        value: 0
+      }, {
+        name: 'Saturday',
+        value: 0
+      }, {
+        name: 'Sunday',
+        value: 0
+      }, {
+        name: 'Monday',
+        value: 0
+      }, {
+        name: 'Tuesday',
+        value: 0
+      }, {
+        name: 'Wednesday',
+        value: 0
+      }],
+      name: 'Issue',
+      color: COLOR_ISSUE
+    }, {
+      data: [{
+        name: 'Today',
+        value: TODAY.projected
+      }, {
+        name: 'Tuesday',
+        value: 100
+      }, {
+        name: 'Wednesday',
+        value: 120
+      }, {
+        name: 'Thursday',
+        value: 40
+      }, {
+        name: 'Friday',
+        value: 138
+      }, {
+        name: 'Saturday',
+        value: 142
+      }, {
+        name: 'Sunday',
+        value: 75
+      }, {
+        name: 'Monday',
+        value: 115
+      }, {
+        name: 'Tuesday',
+        value: 90
+      }, {
+        name: 'Wednesday',
+        value: 148
+      }],
+      name: 'Projected',
+      color: COLOR_PROJECTED
     }];
 
     var pieChartDataset = [{
       data: [{
-          name: 'Company Deductions',
-          shortName: 'CD',
-          value: 0,
-          tooltip: 'Company Deductions {{value}}',
-          color: '#000000'
+          name: 'Projected',
+          shortName: 'pg',
+          value: TODAY.projected,
+          tooltip: 'Projected: %value%',
+          color: COLOR_PROJECTED
         }, {
-          name: 'After-tax Deductions',
-          shortName: 'After-tax',
-          value: 11,
-          tooltip: 'After-tax Deductions {{value}}'
+          name: 'Confirmed',
+          shortName: 'cn',
+          value: TODAY.confirmed,
+          tooltip: 'Confirmed: %value%',
+          color: COLOR_CONFIRMED
         }, {
-          name: 'Pre-tax Deductions',
-          shortName: 'Pre-tax',
-          value: 12,
-          tooltip: 'Pre-tax Deductions {{value}}'
+          name: 'Issue',
+          shortName: 'is',
+          value: TODAY.issue,
+          tooltip: 'Issue: %value%',
+          color: COLOR_ISSUE
         }, {
-          name: 'Taxes',
-          shortName: 'Af-tax',
-          value: 17,
-          tooltip: 'Taxes %value%'
-        }, {
-          name: 'Wages',
-          shortName: 'Wages',
-          value: 52,
-          tooltip: 'Wages %value%'
+          name: 'In Progress',
+          shortName: 'ip',
+          value: TODAY.inProgress,
+          tooltip: 'In Progress: %value%',
+          color: COLOR_IN_PROGRESS
         }]
       }];
 
@@ -200,13 +335,16 @@
     $('body').one('initialized', function () {
       Locale.set('en-US').done(function () {
 
-        $('#column-bar-example').chart({type: 'column', dataset: columnChartDataset});
+        $('#column-bar-example').chart({type: 'column-stacked', dataset: columnChartDataset});
         $('#pie-chart-example').chart({
-          type: 'donut',
+          type: 'pie',
           dataset: pieChartDataset,
+          showLegend: true,
           labels: {
-            isTwoline: false,
-            contentsTop: 'name (percentage)'
+            contentsTop: 'value',
+            contentsBottom: 'name',
+            isTwoline: true,
+            lineWidth: 2
           }
         });
 
@@ -216,9 +354,10 @@
           dataset: datagridDataset,
           rowHeight: 'short',
           isList: true,
-          selectable: 'single',
           paging: true,
-          pagesize: 10
+          pagesize: 10,
+          toolbar: { keyword: true, results: false },
+          selectable: 'single'
         }).data('datagrid');
 
         datagrid.setColumnWidth('productId', '15%', true);

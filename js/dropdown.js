@@ -223,7 +223,6 @@
         if (!listExists) {
           listContents = '<div class="dropdown-list' +
             (isMobile ? ' mobile' : '') +
-            (this.isFullScreen() ? ' full-screen' : '') +
             (this.settings.multiple ? ' multiple' : '') + '" id="dropdown-list" role="application" ' + (this.settings.multiple ? 'aria-multiselectable="true"' : '') + '>' +
             '<label for="dropdown-search" class="audible">' + Locale.translate('Search') + '</label>' +
             '<input type="text" class="dropdown-search" role="combobox" aria-expanded="true" id="dropdown-search" aria-autocomplete="list">' +
@@ -1128,11 +1127,6 @@
           top = (this.pseudoElem.offset().top),
           left = this.pseudoElem.offset().left - $(window).scrollLeft();
 
-        // If we're lower than the Phone Breakpoint, reset everything for full-screen
-        if (this.isFullScreen()) {
-          top = 0;
-        }
-
         this.list[0].style.top = top +'px';
         this.list[0].style.left = left +'px';
 
@@ -1182,7 +1176,7 @@
         }
 
         //let grow or to field size.
-        this.list.find('input').outerWidth(this.pseudoElem.outerWidth()-2);
+        this.list.find('input').outerWidth(this.pseudoElem.outerWidth()-3);
         if (this.list.width() > this.pseudoElem.outerWidth() && !this.isInGrid) {
           var listWidth = (this.list.outerWidth() + 35) + 'px';
            this.list[0].style.width = listWidth;
@@ -1199,8 +1193,14 @@
           var pseudoElemOuterWidth = this.pseudoElem.outerWidth();
           this.list[0].style.width = pseudoElemOuterWidth + 'px';
 
+          // Fix: text was hard to view,
+          // when cell width smaller then text with editable Datagrid
           if (this.isInGrid) {
-            this.list[0].style.width = pseudoElemOuterWidth + 3 + 'px';
+            this.list[0].style.width = '';
+            var glistWidth = this.list.outerWidth(),
+              gCellWidth = this.element.closest('.datagrid-cell-wrapper').outerWidth(),
+              gWidth = glistWidth > gCellWidth ? (glistWidth + 20) : gCellWidth;
+            this.list[0].style.width = gWidth +'px';
           }
         }
       },

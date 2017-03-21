@@ -1,31 +1,11 @@
 
 <div class="row">
   <div class="twelve columns">
-    <div role="toolbar" class="toolbar">
-
-      <div class="title">
-        Data Grid Header Title
-        <span class="datagrid-result-count">(N Results)</span>
-      </div>
-
-      <div class="buttonset">
-        <label class="audible" for="searchfield-01">Keyword Search</label>
-        <input id="searchfield-01" name="searchfield-01" class="searchfield" />
-
-        <button class="btn" type="button" id="add-btn">
-          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-            <use xlink:href="#icon-add"></use>
-          </svg>
-          <span>Add</span>
-        </button>
-
-      </div>
-    </div>
 
     <div class="contextual-toolbar toolbar is-hidden">
       <div class="title selection-count">1 Selected</div>
       <div class="buttonset">
-        <button class="btn" type="button" id='remove-btn'>
+        <button class="btn" type="button">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-delete"></use>
           </svg>
@@ -74,7 +54,7 @@
           editable: true,
           clickToSelect: false,
           selectable: 'multiple',
-          toolbar: {keywordFilter: true, results: true}
+          toolbar: {title: 'Compressors', results: true, actions: true, rowHeight: true}
         }).on('cellchange', function (e, args) {
           console.log(e, args);
         });
