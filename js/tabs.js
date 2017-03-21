@@ -391,7 +391,10 @@
         // element so that tabs can be added/removed/hidden/shown without needing to change event bindings.
         this.tablist
           .on('mousedown.tabs', '> li', function(e) {
-            return self.handleTabClick(e, $(this));
+            // let right click pass through
+            if (e.which !== 3) {
+              return self.handleTabClick(e, $(this));
+            }
           })
           .on('click.tabs', 'a', routeAnchorClick)
           .on('click.tabs', '.icon', handleIconClick)
