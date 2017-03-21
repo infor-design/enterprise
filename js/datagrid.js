@@ -5252,8 +5252,9 @@ $.fn.datagrid = function(options) {
         self.activeCell.node.find('button').focus();
       }
 
-	  if (dataRowNum != undefined)
+      if (dataRowNum !== undefined) {
         self.activeCell.dataRow = dataRowNum;
+      }
 
       if (isGroupRow) {
         self.activeCell.node.find('td:visible:first').attr('tabindex', '0').focus();
