@@ -1159,7 +1159,7 @@ $.fn.datagrid = function(options) {
       this.isWindows = (navigator.userAgent.indexOf('Windows') !== -1);
       this.settings = settings;
       this.initSettings();
-      this.originalColumns = this.settings.columns;
+      this.originalColumns = this.settings.columns.slice(0);
 
       this.appendToolbar();
       this.restoreColumns();
@@ -1425,7 +1425,16 @@ $.fn.datagrid = function(options) {
       this.setTreeDepth();
       this.setRowGrouping();
       this.setTreeRootNodes();
-      this.renderRows();
+
+      //Resize and re-render if have a new dataset (since automatic column sizing depends on the dataset)
+      if (pagerInfo.type === 'initial') {
+        this.clearHeaderCache();
+        this.renderRows();
+        this.renderHeader();
+      } else {
+        this.renderRows();
+      }
+
       this.renderPager(pagerInfo, isResponse);
 
       if (pagerInfo && pagerInfo.preserveSelected) {
@@ -4085,13 +4094,6 @@ $.fn.datagrid = function(options) {
         return;
       }
 
-      // if scrolling NOT click on touch device
-      if (this.isTouch) {
-        rowNode.removeClass('is-active-row')
-          .find('td:not(.is-editing)').css({'background-color': 'transparent'});
-        return;
-      }
-
       if (s.selectable === 'single' && this._selectedRows.length > 0) {
         this.unselectRow(this._selectedRows[0].idx);
       }
@@ -5189,7 +5191,7 @@ $.fn.datagrid = function(options) {
     setActiveCell: function (row, cell) {
       var self = this,
         prevCell = self.activeCell,
-        rowElem = row, rowNum,
+        rowElem = row, rowNum, dataRowNum,
         isGroupRow = row instanceof jQuery && row.is('.datagrid-rowgroup-header, .datagrid-rowgroup-footer');
 
       if (row instanceof jQuery && row.length === 0) {
@@ -5208,10 +5210,14 @@ $.fn.datagrid = function(options) {
         }
         cell = isGroupRow ? 0 : row.index();
         rowNum = isGroupRow ? 0 : this.visualRowIndex(row.parent());
+		dataRowNum = isGroupRow ? 0 : this.dataRowIndex(row.parent());
+        rowElem = row.parent();
       }
 
       if (row instanceof jQuery && row.is('tr')) {
         rowNum = this.visualRowIndex(row);
+		dataRowNum = this.dataRowIndex(row);
+        rowElem = row;
       }
 
       if (rowNum < 0 || cell < 0) {
@@ -5234,6 +5240,7 @@ $.fn.datagrid = function(options) {
       if (self.activeCell.node && prevCell.node.length === 1) {
         self.activeCell.row = rowNum;
         self.activeCell.cell = cell;
+		dataRowNum = this.dataRowIndex(self.activeCell.node.parent());
       } else {
         self.activeCell = prevCell;
       }
@@ -5243,6 +5250,10 @@ $.fn.datagrid = function(options) {
       }
       if (self.activeCell.node.hasClass('is-focusable')) {
         self.activeCell.node.find('button').focus();
+      }
+
+      if (dataRowNum !== undefined) {
+        self.activeCell.dataRow = dataRowNum;
       }
 
       if (isGroupRow) {
