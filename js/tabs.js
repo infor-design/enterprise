@@ -390,7 +390,7 @@
         // Any events bound to individual tabs (li) and their anchors (a) are bound to the tablist
         // element so that tabs can be added/removed/hidden/shown without needing to change event bindings.
         this.tablist
-          .on('click.tabs', '> li', function(e) {
+          .on('mousedown.tabs', '> li', function(e) {
             return self.handleTabClick(e, $(this));
           })
           .on('click.tabs', 'a', routeAnchorClick)
@@ -575,6 +575,13 @@
           li = a.parent();
           href = a.attr('href');
           this.element.trigger('tab-added', [a]);
+        }
+
+        // close tab on middle click
+        if (e.which === 2) {
+          e.preventDefault();
+          this.closeDismissibleTab(href);
+          return;
         }
 
         this.activate(href);
