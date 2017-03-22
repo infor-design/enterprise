@@ -2779,12 +2779,19 @@ $.fn.datagrid = function(options) {
     },
 
     setScrollClass: function () {
-      var hasScrollBar = parseInt(this.contentContainer[0].scrollHeight) > parseInt(this.contentContainer[0].offsetHeight) + 2;
+      var height = parseInt(this.contentContainer[0].offsetHeight),
+          hasScrollBar = parseInt(this.contentContainer[0].scrollHeight) > height + 2;
+
+      this.element.removeClass('has-vertical-scroll has-less-rows');
+
       if (hasScrollBar) {
         this.element.addClass('has-vertical-scroll');
-      } else {
-        this.element.removeClass('has-vertical-scroll');
       }
+
+      if (!hasScrollBar && this.tableBody[0].offsetHeight <  height) {
+        this.element.addClass('has-less-rows');
+      }
+
     },
 
     clearHeaderCache: function () {
@@ -2896,10 +2903,10 @@ $.fn.datagrid = function(options) {
         var diff = this.elemWidth - this.totalWidth;
 
         if ((diff > 0) && diff  > colWidth && !this.widthPercent && !this.headerRow) {
-          colWidth = diff - 1;
+          colWidth = diff - 2;
           this.headerWidths[index] = {id: col.id, width: colWidth, widthPercent: this.widthPercent};
           col.width = colWidth;
-          this.totalWidth =  this.elemWidth -1;
+          this.totalWidth =  this.elemWidth -2;
         }
 
         if (this.widthPercent) {
@@ -5240,7 +5247,7 @@ $.fn.datagrid = function(options) {
       if (self.activeCell.node && prevCell.node.length === 1) {
         self.activeCell.row = rowNum;
         self.activeCell.cell = cell;
-		dataRowNum = this.dataRowIndex(self.activeCell.node.parent());
+		    dataRowNum = this.dataRowIndex(self.activeCell.node.parent());
       } else {
         self.activeCell = prevCell;
       }
