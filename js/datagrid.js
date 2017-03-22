@@ -1450,7 +1450,9 @@ $.fn.datagrid = function(options) {
         this.settings.uniqueId + '-' + suffix :
         (window.location.pathname.split('/').pop()
           .replace(/\.xhtml|\.shtml|\.html|\.htm|\.aspx|\.asp|\.jspx|\.jsp|\.php/g, '')
-          .replace(/\./g, '-') +'-'+
+          .replace(/\./g, '-')
+          .replace(/ /g, '-')
+          .replace(/%20/g, '-') +'-'+
             (this.element.attr('id') || 'datagrid') +'-'+ this.gridCount + suffix);
 
       return uniqueid.replace(/--/g, '-');
