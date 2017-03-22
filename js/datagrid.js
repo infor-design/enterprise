@@ -1151,11 +1151,13 @@ $.fn.datagrid = function(options) {
   Datagrid.prototype = {
 
     init: function() {
-      var self = this;
+      var self = this, html = $('html');
+
       this.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
       this.isFirefoxMac = (navigator.platform.indexOf('Mac') !== -1 && navigator.userAgent.indexOf(') Gecko') !== -1);
-      this.isIe = $('html').is('.ie');
-      this.isIe9 = $('html').is('.ie9');
+      this.isIe = html.is('.ie');
+      this.isIe9 = html.is('.ie9');
+      this.isSafari = html.is('.is-safari');
       this.isWindows = (navigator.userAgent.indexOf('Windows') !== -1);
       this.settings = settings;
       this.initSettings();
@@ -2177,10 +2179,17 @@ $.fn.datagrid = function(options) {
           placeholder: '<tr class="datagrid-reorder-placeholder"><td colspan="'+ this.visibleColumns().length +'"></td></tr>',
           handle: '.datagrid-reorder-icon'
         })
+        .on('beforearrange.datagrid', function(e, status) {
+          if (self.isSafari) {
+            status.start.css({'display': 'inline-block'});
+          }
+        })
         .on('arrangeupdate.datagrid', function(e, status) {
+          if (self.isSafari) {
+            status.end.css({'display': ''});
+          }
           // Move the elem in the data set
           self.settings.dataset.splice(status.endIndex, 0, self.settings.dataset.splice(status.startIndex, 1)[0]);
-
           // Fire an event
           self.element.trigger('rowreorder', [status]);
         });
