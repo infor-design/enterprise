@@ -13,9 +13,9 @@ $datagrid-short-row-height: 23px;
 //Main Datagrid Container
 .datagrid-container {
   background-color: transparent;
-  border-left: 1px solid $datagrid-cell-border-color;
+  border: 1px solid $datagrid-cell-border-color;
   clear: both;
-  height: auto;
+  height: inherit;
   min-width: 100%;
   overflow: hidden;
   position: relative;
@@ -30,7 +30,6 @@ $datagrid-short-row-height: 23px;
   }
 
   .datagrid-body {
-    background-color: $datagrid-empty-bg-color;
     height: calc(100% - 40px);
 
     &.paginated {
@@ -39,28 +38,40 @@ $datagrid-short-row-height: 23px;
   }
 
   //Heights for scrollbars
-  &.datagrid-container {
-    height: inherit;
+  &.paginated {
+    height: calc(100% - 40px);
+  }
 
-    &.paginated {
-      height: calc(100% - 40px);
-    }
-
-    &.has-toolbar.paginated {
-      height: calc(100% - 103px);
-    }
+  &.has-toolbar.paginated {
+    height: calc(100% - 103px);
   }
 
   //Adjust borders and IE adjustment for vertical scrollbars
   &.has-vertical-scroll {
-    border-bottom: 1px solid $datagrid-cell-border-color;
-    border-left: 1px solid $datagrid-cell-border-color;
-    border-right: 1px solid $datagrid-cell-border-color;
-
     //Fix IE Scrollbar Offset Issue
     &.is-windows .datagrid-header {
       margin-right: 18px;
+
+      &:after {
+        background-color: black;
+        content: '';
+        position: absolute;
+        height: 30px;
+        width: 30px;
+      }
     }
+  }
+
+  td:last-child {
+    border-right-color: transparent;
+  }
+
+  tr:last-child td {
+    border-bottom-color: transparent;
+  }
+
+  &.has-less-rows tr:last-child td {
+    border-bottom-color: $datagrid-cell-border-color;
   }
 
   //State Change
@@ -149,7 +160,6 @@ $datagrid-short-row-height: 23px;
 
     .datagrid-header {
       background-color: $datagrid-list-header-bg-color;
-      border-bottom: 1px solid $datagrid-list-header-border-color;
     }
 
     tr td {
@@ -941,10 +951,6 @@ $datagrid-short-row-height: 23px;
     text-overflow: ellipsis;
     white-space: nowrap;
 
-    &.hide-border {
-      border-right: 0;
-    }
-
     &:focus ,
     &.is-focused {
       .datagrid-cell-wrapper {
@@ -1189,15 +1195,10 @@ $datagrid-short-row-height: 23px;
     position: relative;
     text-align: left;
 
-    &.hide-border + th {
-      border-left: 0;
-    }
-
     &.l-center-text {
       text-align: center;
 
       .datagrid-header-text {
-        //padding: 0 21px;
         text-align: center;
         width: auto;
       }
@@ -1209,6 +1210,10 @@ $datagrid-short-row-height: 23px;
 
     &.is-hidden {
       display: none;
+    }
+
+    &:last-child {
+      border-right: 0;
     }
 
     .datagrid-header-text {

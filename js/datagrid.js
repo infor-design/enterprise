@@ -1151,15 +1151,17 @@ $.fn.datagrid = function(options) {
   Datagrid.prototype = {
 
     init: function() {
-      var self = this;
+      var self = this, html = $('html');
+
       this.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
       this.isFirefoxMac = (navigator.platform.indexOf('Mac') !== -1 && navigator.userAgent.indexOf(') Gecko') !== -1);
-      this.isIe = $('html').is('.ie');
-      this.isIe9 = $('html').is('.ie9');
+      this.isIe = html.is('.ie');
+      this.isIe9 = html.is('.ie9');
+      this.isSafari = html.is('.is-safari');
       this.isWindows = (navigator.userAgent.indexOf('Windows') !== -1);
       this.settings = settings;
       this.initSettings();
-      this.originalColumns = this.settings.columns.slice(0);
+      this.originalColumns = self.columnsFromString(JSON.stringify(this.settings.columns));
 
       this.appendToolbar();
       this.restoreColumns();
@@ -1450,7 +1452,9 @@ $.fn.datagrid = function(options) {
         this.settings.uniqueId + '-' + suffix :
         (window.location.pathname.split('/').pop()
           .replace(/\.xhtml|\.shtml|\.html|\.htm|\.aspx|\.asp|\.jspx|\.jsp|\.php/g, '')
-          .replace(/\./g, '-') +'-'+
+          .replace(/\./g, '-')
+          .replace(/ /g, '-')
+          .replace(/%20/g, '-') +'-'+
             (this.element.attr('id') || 'datagrid') +'-'+ this.gridCount + suffix);
 
       return uniqueid.replace(/--/g, '-');
@@ -2175,10 +2179,17 @@ $.fn.datagrid = function(options) {
           placeholder: '<tr class="datagrid-reorder-placeholder"><td colspan="'+ this.visibleColumns().length +'"></td></tr>',
           handle: '.datagrid-reorder-icon'
         })
+        .on('beforearrange.datagrid', function(e, status) {
+          if (self.isSafari) {
+            status.start.css({'display': 'inline-block'});
+          }
+        })
         .on('arrangeupdate.datagrid', function(e, status) {
+          if (self.isSafari) {
+            status.end.css({'display': ''});
+          }
           // Move the elem in the data set
           self.settings.dataset.splice(status.endIndex, 0, self.settings.dataset.splice(status.startIndex, 1)[0]);
-
           // Fire an event
           self.element.trigger('rowreorder', [status]);
         });
@@ -2779,12 +2790,19 @@ $.fn.datagrid = function(options) {
     },
 
     setScrollClass: function () {
-      var hasScrollBar = parseInt(this.contentContainer[0].scrollHeight) > parseInt(this.contentContainer[0].offsetHeight) + 2;
+      var height = parseInt(this.contentContainer[0].offsetHeight),
+          hasScrollBar = parseInt(this.contentContainer[0].scrollHeight) > height + 2;
+
+      this.element.removeClass('has-vertical-scroll has-less-rows');
+
       if (hasScrollBar) {
         this.element.addClass('has-vertical-scroll');
-      } else {
-        this.element.removeClass('has-vertical-scroll');
       }
+
+      if (!hasScrollBar && this.tableBody[0].offsetHeight <  height) {
+        this.element.addClass('has-less-rows');
+      }
+
     },
 
     clearHeaderCache: function () {
@@ -2896,10 +2914,10 @@ $.fn.datagrid = function(options) {
         var diff = this.elemWidth - this.totalWidth;
 
         if ((diff > 0) && diff  > colWidth && !this.widthPercent && !this.headerRow) {
-          colWidth = diff - 1;
+          colWidth = diff - 2;
           this.headerWidths[index] = {id: col.id, width: colWidth, widthPercent: this.widthPercent};
           col.width = colWidth;
-          this.totalWidth =  this.elemWidth -1;
+          this.totalWidth =  this.elemWidth -2;
         }
 
         if (this.widthPercent) {
@@ -3031,6 +3049,34 @@ $.fn.datagrid = function(options) {
       }
     },
 
+    columnsFromString: function(columnStr) {
+      var self = this,
+        columns = JSON.parse(columnStr);
+
+      if (!columns) {
+        return [];
+      }
+
+      //Map back the missing functions/objects
+      for (var i = 0; i < columns.length; i++) {
+        var isHidden,
+          orgCol = self.columnById(columns[i].id);
+
+        if (orgCol) {
+          orgCol = orgCol[0];
+          isHidden = columns[i].hidden;
+
+          $.extend(columns[i], orgCol);
+
+          if (isHidden !== undefined) {
+            columns[i].hidden = isHidden;
+          }
+        }
+      }
+
+      return columns;
+    },
+
     //Restore the columns from a saved list or local storage
     restoreColumns: function (cols) {
       if (!this.settings.saveColumns || !this.canUseLocalStorage()) {
@@ -3046,27 +3092,8 @@ $.fn.datagrid = function(options) {
       var lsCols = localStorage[this.uniqueId('columns')];
 
       if (!cols && lsCols) {
-        lsCols = JSON.parse(lsCols);
         this.originalColumns = this.settings.columns;
-
-        //Map back the missing functions/objects
-        for (var i = 0; i < lsCols.length; i++) {
-          var isHidden,
-            orgCol = this.columnById(lsCols[i].id);
-
-          if (orgCol) {
-            orgCol = orgCol[0];
-            isHidden = lsCols[i].hidden;
-
-            $.extend(lsCols[i], orgCol);
-
-            if (isHidden !== undefined) {
-              lsCols[i].hidden = isHidden;
-            }
-          }
-        }
-
-        this.settings.columns = lsCols;
+        this.settings.columns = this.columnsFromString(lsCols);
         return;
       }
 
@@ -5240,7 +5267,7 @@ $.fn.datagrid = function(options) {
       if (self.activeCell.node && prevCell.node.length === 1) {
         self.activeCell.row = rowNum;
         self.activeCell.cell = cell;
-		dataRowNum = this.dataRowIndex(self.activeCell.node.parent());
+		    dataRowNum = this.dataRowIndex(self.activeCell.node.parent());
       } else {
         self.activeCell = prevCell;
       }
