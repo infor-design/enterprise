@@ -1161,7 +1161,7 @@ $.fn.datagrid = function(options) {
       this.isWindows = (navigator.userAgent.indexOf('Windows') !== -1);
       this.settings = settings;
       this.initSettings();
-      this.originalColumns = this.settings.columns.slice(0);
+      this.originalColumns = self.columnsFromString(JSON.stringify(this.settings.columns));
 
       this.appendToolbar();
       this.restoreColumns();
@@ -3049,6 +3049,34 @@ $.fn.datagrid = function(options) {
       }
     },
 
+    columnsFromString: function(columnStr) {
+      var self = this,
+        columns = JSON.parse(columnStr);
+
+      if (!columns) {
+        return [];
+      }
+
+      //Map back the missing functions/objects
+      for (var i = 0; i < columns.length; i++) {
+        var isHidden,
+          orgCol = self.columnById(columns[i].id);
+
+        if (orgCol) {
+          orgCol = orgCol[0];
+          isHidden = columns[i].hidden;
+
+          $.extend(columns[i], orgCol);
+
+          if (isHidden !== undefined) {
+            columns[i].hidden = isHidden;
+          }
+        }
+      }
+
+      return columns;
+    },
+
     //Restore the columns from a saved list or local storage
     restoreColumns: function (cols) {
       if (!this.settings.saveColumns || !this.canUseLocalStorage()) {
@@ -3064,27 +3092,8 @@ $.fn.datagrid = function(options) {
       var lsCols = localStorage[this.uniqueId('columns')];
 
       if (!cols && lsCols) {
-        lsCols = JSON.parse(lsCols);
         this.originalColumns = this.settings.columns;
-
-        //Map back the missing functions/objects
-        for (var i = 0; i < lsCols.length; i++) {
-          var isHidden,
-            orgCol = this.columnById(lsCols[i].id);
-
-          if (orgCol) {
-            orgCol = orgCol[0];
-            isHidden = lsCols[i].hidden;
-
-            $.extend(lsCols[i], orgCol);
-
-            if (isHidden !== undefined) {
-              lsCols[i].hidden = isHidden;
-            }
-          }
-        }
-
-        this.settings.columns = lsCols;
+        this.settings.columns = this.columnsFromString(lsCols);
         return;
       }
 
