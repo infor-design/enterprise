@@ -284,6 +284,10 @@ $datagrid-short-row-height: 23px;
           margin: 0 2px;
         }
       }
+
+      .datagrid-checkbox {
+        top: -13px;
+      }
     }
 
     .sort-indicator {
@@ -1235,6 +1239,7 @@ $datagrid-short-row-height: 23px;
 
     //Checkboxes
     .datagrid-checkbox {
+      top: -12px;
 
       &::before {
         border: 1px solid $datagrid-header-checkbox-border-color;
@@ -1242,6 +1247,16 @@ $datagrid-short-row-height: 23px;
 
       &.is-checked::before {
         border: 1px solid $checkbox-color;
+      }
+    }
+
+
+    // Centering Text
+    .datagrid-column-wrapper.l-center-text {
+      width: 100%;
+
+      .sort-indicator {
+        display: none;
       }
     }
 
@@ -1650,7 +1665,7 @@ td .btn-actions {
   display: inline-block;
   left: -7px;
   position: relative;
-  top: -12px;
+  top: -14px;
 
   &::before {
     @include checkbox-unchecked-before-style;
