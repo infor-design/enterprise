@@ -248,6 +248,15 @@ window.Formatters = {
     return '<span class="datagrid-multiline-text">'+ formatted + '</span>';
   },
 
+  // Rich Text Editor
+  Editor: function (row, cell, value, col) {
+    var formatted = ((value === null || value === undefined) ? '' : value),
+      classes = 'is-editor';
+    classes += col.singleline ? '' : ' datagrid-multiline-text';
+    classes += col.contentTooltip ? ' content-tooltip' : '';
+    return '<div class="'+ classes +'">'+ $.unescapeHTML(formatted) +'</div>';
+  },
+
   // Expand / Collapse Button
   Expander: function (row, cell, value) {
     var button = '<button type="button" class="btn-icon datagrid-expand-btn" tabindex="-1">'+
@@ -541,6 +550,88 @@ window.Editors = {
       var self = this;
       setTimeout(function() {
         self.input.remove();
+      }, 0);
+    };
+
+    this.init();
+  },
+
+  // Rich Text Editor
+  Editor: function(row, cell, value, container, column, e, api) {
+    this.name = 'editor';
+    this.originalValue = value;
+
+    this.init = function () {
+      var self = this,
+        // Editor options
+        editorOptions = $.extend({}, {
+          buttons: { editor: ['bold','italic','underline','strikethrough','separator', 'foreColor'], source: [] },
+          excludeButtons: { editor: [] }
+        }, column.editorOptions);
+
+      // Editor width
+      this.editorWidth = api.setUnit(editorOptions.width || container.outerWidth());
+      delete editorOptions.width;
+
+      container.append(
+        '<div class="editor-wrapper" style="width:'+ this.editorWidth +';">'+
+          '<div class="editor" data-init="false">'+ $.unescapeHTML(value) +'</div>'+
+        '</div>');
+      this.td = container.closest('td');
+      this.input = $('.editor', container);
+
+      this.input
+        .popover({
+          content: $('.editor-wrapper', container),
+          placementOpts: {
+            x: 0,
+            y: '-84',
+            parent: this.td,
+            parentXAlignment: Locale.isRTL() ? 'right' : 'left',
+            strategies: ['flip', 'nudge', 'shrink'],
+          },
+          placement : 'bottom',
+          popover: true,
+          trigger: 'immediate',
+          tooltipElement: '#editor-popup'
+        })
+        .editor(editorOptions)
+        .on('hide.editor', function () {
+          api.commitCellEdit(self.input);
+        })
+        .on('keydown.editor', function (e) {
+          var key = e.which || e.keyCode || e.charCode || 0;
+          // Ctrl + Enter (Some browser return keyCode: 10, not 13)
+          if ((e.ctrlKey || e.metaKey) && (key === 13 || key === 10)) {
+            var apiPopover = self.input.data('tooltip');
+            if (apiPopover) {
+              apiPopover.hide();
+              api.setNextActiveCell(e);
+            }
+          }
+        });
+    };
+
+    this.val = function () {
+      return this.input.html();
+    };
+
+    this.focus = function () {
+      var self = this;
+      setTimeout(function() {
+        self.input.focus();
+      }, 0);
+    };
+
+    this.destroy = function () {
+      var self = this;
+      api.quickEditMode = false;
+      self.input.off('hide.editor keydown.editor');
+      setTimeout(function() {
+        self.input.remove();
+        // Reset tooltip
+        var elem = self.td.find('.is-editor.content-tooltip');
+        api.setupContentTooltip(elem, self.editorWidth);
       }, 0);
     };
 
@@ -2965,8 +3056,40 @@ $.fn.datagrid = function(options) {
       return this.settings.totals;
     },
 
-    setupTooltips: function () {
+    // Set unit type (pixel or percent)
+    setUnit: function(v) {
+      return v + (/(px|%)/i.test(v + '') ? '' : 'px');
+    },
 
+    // Content tooltip for rich text editor
+    setupContentTooltip: function (elem, width, td) {
+      if (elem.text().length > 0) {
+        var content = elem.clone();
+
+        elem.tooltip({
+          content: content,
+          extraClass: 'alternate',
+          tooltipElement: '#content-tooltip',
+          placementOpts: {
+            parent: elem,
+            parentXAlignment: 'center',
+            strategies: ['flip', 'nudge', 'shrink']
+          }
+        });
+
+        if (width) {
+          content[0].style.width = width;
+        } else {
+          elem.on('beforeshow.datagrid', function () {
+            elem.off('beforeshow.datagrid');
+            content[0].style.width = td[0].offsetWidth + 'px';
+          });
+        }
+      }
+    },
+
+    setupTooltips: function () {
+      var self = this;
       // Implement Tooltip on cells with title attribute
       this.tableBody.find('td[title]').tooltip({placement: 'left', offset: {left: -5, top: 0}});
       this.tableBody.find('a[title]').tooltip();
@@ -2985,6 +3108,17 @@ $.fn.datagrid = function(options) {
 
         return '';
       }});
+
+      // Rich text editor content tooltip
+      this.table.find('td .is-editor.content-tooltip').each(function() {
+        var elem = $(this),
+          td = elem.closest('td'),
+          cell = td.attr('aria-colindex') - 1,
+          col = self.columnSettings(cell),
+          width = col.editorOptions && col.editorOptions.width ? self.setUnit(col.editorOptions.width) : false;
+
+        self.setupContentTooltip(elem, width, td);
+      });
     },
 
     //Returns all header nodes (not the groups)
@@ -4867,8 +5001,13 @@ $.fn.datagrid = function(options) {
         cellNode = this.activeCell.node.find('.datagrid-cell-wrapper'),
         cellParent = cellNode.parent('td'),
         cellWidth = cellParent.outerWidth(),
+        isEditor = $('.is-editor', cellParent).length > 0,
         cellValue = (cellNode.text() ?
           cellNode.text() : this.fieldValue(rowData, col.field));
+
+      if (isEditor) {
+        cellValue = this.fieldValue(rowData, col.field);
+      }
 
       if (!this.isCellEditable(dataRowIndex, cell)) {
         return;
@@ -4897,7 +5036,8 @@ $.fn.datagrid = function(options) {
     },
 
     commitCellEdit: function(input) {
-      var newValue, cellNode;
+      var newValue, cellNode,
+        isEditor = input.is('.editor');
 
       if (!this.editor) {
         return;
@@ -4905,10 +5045,16 @@ $.fn.datagrid = function(options) {
 
       //Editor.getValue
       newValue = this.editor.val();
-      newValue = $.escapeHTML(newValue);
+
+      if (isEditor) {
+        cellNode = this.editor.td;
+      } else {
+        cellNode = input.closest('td');
+        newValue = $.escapeHTML(newValue);
+      }
 
       //Format Cell again
-      cellNode = input.closest('td').removeClass('is-editing');
+      cellNode.removeClass('is-editing');
 
       //Editor.destroy
       this.editor.destroy();
@@ -5089,9 +5235,10 @@ $.fn.datagrid = function(options) {
       var coercedVal, escapedVal,
         rowNode = this.visualRowNode(row),
         cellNode = rowNode.find('td').eq(cell),
-        col = this.settings.columns[cell],
+        col = this.settings.columns[cell] || {},
         formatted = '',
         formatter = (col.formatter ? col.formatter : this.defaultFormatter),
+        isEditor = $('.editor', cellNode).length > 0,
         isTreeGrid = this.settings.treeGrid,
         rowData = isTreeGrid ?
           this.settings.treeDepth[row].node :
@@ -5144,7 +5291,7 @@ $.fn.datagrid = function(options) {
 
       //update cell value
       escapedVal = $.escapeHTML(coercedVal);
-      formatted = this.formatValue(formatter, (isTreeGrid ? row+1 : row), cell, escapedVal, col, rowData);
+      formatted = this.formatValue(formatter, (isTreeGrid ? row+1 : row), cell, (isEditor ? coercedVal : escapedVal), col, rowData);
 
       if (col.contentVisible) {
         var canShow = col.contentVisible(row, cell, escapedVal, col, rowData);

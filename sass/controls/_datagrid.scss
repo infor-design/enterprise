@@ -744,6 +744,18 @@ $datagrid-short-row-height: 23px;
       //border-color: $alert-red; - Use for focus state
     }
 
+    .is-editor {
+      ul,
+      ol {
+        list-style: inherit;
+        margin: 5px auto 5px 15px;
+      }
+
+      ol {
+        list-style: decimal;
+      }
+    }
+
     // Datagrid Reorder
     .datagrid-reorder-icon {
       cursor: move;
@@ -2399,6 +2411,49 @@ html[dir='rtl'] {
 //Modal Lists
 .modal table {
   width: auto;
+}
+
+// Popup Adjustments
+#editor-popup {
+  border-radius: 2px;
+  max-width: inherit;
+  padding: 0;
+  z-index: 1020;
+
+  .arrow {
+    display: none;
+  }
+
+  .tooltip-content {
+    padding: 0;
+
+    .editor-toolbar {
+      border-width: 0 0 1px;
+      margin: 0;
+    }
+
+    .editor {
+      border: 0;
+      height: inherit;
+      margin: 0;
+      min-height: inherit;
+
+      ul,
+      ol {
+        margin: 5px auto 5px 15px;
+      }
+
+      li {
+        list-style: inherit;
+      }
+    }
+  }
+}
+
+#content-tooltip {
+  &.popover.alternate {
+    padding-bottom: inherit;
+  }
 }
 
 //Ios Hacks
