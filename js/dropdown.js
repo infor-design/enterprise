@@ -394,10 +394,11 @@
         this.pseudoElem.on('keydown.dropdown', function(e) {
           self.ignoreKeys($(this), e);
           self.handleKeyDown($(this), e);
-        })/*.on('keypress.dropdown', function(e) {
+        }).on('keypress.dropdown', function(e) {
           self.ignoreKeys($(this), e);
+          self.toggleList();
           self.handleAutoComplete(e);
-        })*/.on('click.dropdown', function(e) {
+        }).on('click.dropdown', function(e) {
           e.stopPropagation();
         }).on('mouseup.dropdown', function(e) {
           if (e.button === 2) {
@@ -544,10 +545,13 @@
 
         term = '';
 
+        /*
         //Adjust height / top position
         if (self.list.hasClass('is-ontop')) {
           self.list[0].style.top = (self.pseudoElem.offset().top - self.list.height() + self.pseudoElem.outerHeight() - 2) + 'px';
         }
+        */
+        this.position();
       },
 
       // Removes filtering from an open Dropdown list and turns off "search mode"
@@ -1136,7 +1140,10 @@
         }
       },
 
-      // Set size and positioning of the list
+      /**
+       * Set size and positioning of the list
+       * @returns {undefined}
+       */
       position: function() {
         var self = this,
           positionOpts = {
@@ -1162,6 +1169,10 @@
 
           return placementObj;
         }
+
+        // Reset styles that may have been appended to the list
+        this.list[0].removeAttribute('style');
+        this.listUl[0].removeAttribute('style');
 
         var parentElement = this.pseudoElem;
         if (this.isInGrid) {
