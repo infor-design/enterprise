@@ -43,7 +43,7 @@
     }
 
     // Default Autocomplete Result Item Template
-    var resultTemplate = '<li id="{{listItemId}}" {{#hasValue}}data-value="{{value}}"{{/hasValue}} role="listitem">' + '\n\n' +
+    var resultTemplate = '<li id="{{listItemId}}" data-index="{{index}}" {{#hasValue}}data-value="{{value}}"{{/hasValue}} role="listitem">' + '\n\n' +
       '<a href="#" tabindex="-1">' + '\n\n' +
         '<span>{{{label}}}</span>' + '\n\n' +
       '</a>' + '\n\n' +
@@ -149,6 +149,7 @@
 
             // Build the dataset that will be submitted to the template
             dataset.listItemId = 'ac-list-option' + i;
+            dataset.index = i;
 
             if (this.settings.filterMode === 'contains') {
               dataset.label = dataset.label.replace(new RegExp('(' + term + ')', 'ig'), '<i>$1</i>');
@@ -175,6 +176,7 @@
             } else {
               var listItem = $('<li role="listitem"></li>');
               listItem.attr('id', dataset.listItemId);
+              listItem.attr('data-index', dataset.index);
               listItem.attr('data-value', dataset.value);
               listItem.append('<a href="#" tabindex="-1"><span>' + dataset.label + '</span></a>');
               self.list.append($.sanitizeHTML(listItem));
@@ -461,7 +463,7 @@
       },
 
       select: function(anchorOrEvent, items) {
-        var a, li, ret, dataValue,
+        var a, li, ret, dataIndex, dataValue,
           isEvent = false;
 
         // Initial Values
@@ -479,15 +481,22 @@
 
         li = a.parent('li');
         ret = a.text().trim();
+        dataIndex = li.attr('data-index');
         dataValue = li.attr('data-value');
 
         this.element.attr('aria-activedescendant', li.attr('id'));
 
-        if (items && items.length && dataValue) {
-          for (var i = 0, value; i < items.length; i++) {
-            value = items[i].value.toString();
-            if (value === dataValue) {
-              ret = items[i];
+        if (items && items.length) {
+          // If the data-index attr is supplied, use it to get the item (since two items could have same value)
+          if (dataIndex) {
+            ret = items[parseInt(dataIndex, 10)];
+          } else if (dataValue) {
+            // Otherwise use data-value to get the item (a custom template may not supply data-index)
+            for (var i = 0, value; i < items.length; i++) {
+              value = items[i].value.toString();
+              if (value === dataValue) {
+                ret = items[i];
+              }
             }
           }
         }
