@@ -331,13 +331,13 @@
           contentArea = this.tooltip[0].querySelectorAll('.tooltip-content')[0],
           extraClass = this.settings.extraClass,
           content = this.content,
-          tooltip = this.tooltip[0];
-
-        tooltip.setAttribute('class', 'tooltip is-hidden');
+          tooltip = this.tooltip[0],
+          classes = 'tooltip is-hidden';
 
         if (extraClass) {
-          tooltip.classList.add(this.settings.extraClass);
+          classes += ' ' + extraClass;
         }
+        tooltip.setAttribute('class', classes);
 
         if (titleArea) {
           titleArea.style.display = 'none';
@@ -359,14 +359,14 @@
           extraClass = this.settings.extraClass,
           content = this.content,
           contentArea = this.tooltip.find('.tooltip-content'),
-          title = this.tooltip[0].querySelector('.tooltip-title');
-
-        content[0].classList.remove('hidden');
-        this.tooltip[0].setAttribute('class', 'popover is-hidden');
+          title = this.tooltip[0].querySelector('.tooltip-title'),
+          classes = 'popover is-hidden';
 
         if (extraClass) {
-          this.tooltip[0].classList.add(this.settings.extraClass);
+          classes += ' ' + extraClass;
         }
+        content[0].classList.remove('hidden');
+        this.tooltip[0].setAttribute('class', classes);
 
         if (typeof content === 'string') {
           content = $(content);

@@ -593,7 +593,8 @@ window.Editors = {
           placement : 'bottom',
           popover: true,
           trigger: 'immediate',
-          tooltipElement: '#editor-popup'
+          tooltipElement: '#editor-popup',
+          extraClass: 'editor-popup'
         })
         .editor(editorOptions)
         .on('hide.editor', function () {
@@ -3068,8 +3069,7 @@ $.fn.datagrid = function(options) {
 
         elem.tooltip({
           content: content,
-          extraClass: 'alternate',
-          tooltipElement: '#content-tooltip',
+          extraClass: 'alternate content-tooltip',
           placementOpts: {
             parent: elem,
             parentXAlignment: 'center',

@@ -2414,7 +2414,7 @@ html[dir='rtl'] {
 }
 
 // Popup Adjustments
-#editor-popup {
+.editor-popup {
   border-radius: 2px;
   max-width: inherit;
   padding: 0;
@@ -2450,7 +2450,7 @@ html[dir='rtl'] {
   }
 }
 
-#content-tooltip {
+.content-tooltip {
   &.popover.alternate {
     padding-bottom: inherit;
   }
