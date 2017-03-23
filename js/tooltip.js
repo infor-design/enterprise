@@ -331,13 +331,13 @@
           contentArea = this.tooltip[0].querySelectorAll('.tooltip-content')[0],
           extraClass = this.settings.extraClass,
           content = this.content,
-          tooltip = this.tooltip[0];
-
-        tooltip.setAttribute('class', 'tooltip is-hidden');
+          tooltip = this.tooltip[0],
+          classes = 'tooltip is-hidden';
 
         if (extraClass) {
-          tooltip.classList.add(this.settings.extraClass);
+          classes += ' ' + extraClass;
         }
+        tooltip.setAttribute('class', classes);
 
         if (titleArea) {
           titleArea.style.display = 'none';
@@ -359,14 +359,14 @@
           extraClass = this.settings.extraClass,
           content = this.content,
           contentArea = this.tooltip.find('.tooltip-content'),
-          title = this.tooltip[0].querySelector('.tooltip-title');
-
-        content[0].classList.remove('hidden');
-        this.tooltip[0].setAttribute('class', 'popover is-hidden');
+          title = this.tooltip[0].querySelector('.tooltip-title'),
+          classes = 'popover is-hidden';
 
         if (extraClass) {
-          this.tooltip[0].classList.add(this.settings.extraClass);
+          classes += ' ' + extraClass;
         }
+        content[0].classList.remove('hidden');
+        this.tooltip[0].setAttribute('class', classes);
 
         if (typeof content === 'string') {
           content = $(content);
@@ -457,17 +457,22 @@
 
         setTimeout(function () {
           $(document).on('mouseup.tooltip', function (e) {
+            var target = $(e.target);
 
             if (self.settings.isError || self.settings.trigger === 'focus') {
              return;
             }
 
-            if ($(e.target).is(self.element) && $(e.target).is('svg.icon')) {
+            if (target.is(self.element) && target.is('svg.icon')) {
               return;
             }
 
-            if ($(e.target).closest('.popover').length === 0 &&
-                $(e.target).closest('.dropdown-list').length === 0) {
+            if ($('#editor-popup').length && $('#colorpicker-menu').length) {
+              return;
+            }
+
+            if (target.closest('.popover').length === 0 &&
+                target.closest('.dropdown-list').length === 0) {
               self.hide(e);
             }
           })
@@ -532,7 +537,7 @@
         var self = this,
           distance = this.isPopover ? 20 : 10,
           tooltipPlacementOpts = this.settings.placementOpts || {},
-          opts = $.extend({}, tooltipPlacementOpts, {
+          opts = $.extend({}, {
             x: 0,
             y: distance,
             container: this.scrollparent,
@@ -541,7 +546,7 @@
             parent: tooltipPlacementOpts.parent || this.activeElement,
             placement: tooltipPlacementOpts.placement || this.settings.placement,
             strategies: ['flip', 'nudge']
-          });
+          }, tooltipPlacementOpts);
 
         if (opts.placement === 'left' || opts.placement === 'right') {
           opts.x = distance;
