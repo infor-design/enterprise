@@ -24,8 +24,7 @@
 
       //Define Columns for the Grid.
       columns.push({ id: 'productDesc', resizable: false, name: 'Product Desc', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, width: 200});
-      columns.push({ id: 'comment', name: 'Comment', field: 'comment', formatter: Formatters.Editor, editor: Editors.Editor, width: '60%', contentTooltip: '{content}'});
-      // columns.push({ id: 'comment', name: 'Comment', field: 'comment', formatter: Formatters.Editor, editor: Editors.Editor, width: '60%', singleline: true, tooltip: '{{value}}'});
+      columns.push({ id: 'comment', name: 'Comment', field: 'comment', formatter: Formatters.Editor, editor: Editors.Editor, width: '60%', contentTooltip: true });
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 160 });
 
       //Init and get the api for the grid
