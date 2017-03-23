@@ -31,6 +31,14 @@
   }
 }
 
+.splitter-button {
+  position: absolute;
+  height: 30px;
+  width: 30px;
+  left: -8px;
+  z-index: 101;
+}
+
 .splitter {
   @include transition(background-color 300ms cubic-bezier(.17, .04, .03, .94));
   background-color: inherit;
