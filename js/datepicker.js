@@ -432,9 +432,9 @@
         };
 
         this.trigger.popover(popoverOpts)
-        .on('hide.datepicker', function () {
+        .off('hide.datepicker').on('hide.datepicker', function () {
           self.closeCalendar();
-        }).on('open.datepicker', function () {
+        }).off('open.datepicker').on('open.datepicker', function () {
           self.days.find('.is-selected').attr('tabindex', 0).focus();
         });
 
@@ -573,8 +573,10 @@
           popoverAPI.destroy();
         }
 
-        this.element.removeClass('is-active');
-        this.element.trigger('listclosed');
+        if (this.element.hasClass('is-active')) {
+          this.element.trigger('listclosed');
+          this.element.removeClass('is-active');
+        }
       },
 
       // Check through the options to see if the date is disabled

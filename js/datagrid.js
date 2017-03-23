@@ -1188,13 +1188,6 @@ $.fn.datagrid = function(options) {
       this.contextualToolbar.addClass('datagrid-contextual-toolbar');
     },
 
-    //Initialize as a Table
-    initFromTable: function () {
-      if (this.settings.dataset === 'table') {
-        this.element.remove();
-      }
-    },
-
     //Render the Header and Rows
     render: function () {
       var self = this;
@@ -1452,6 +1445,7 @@ $.fn.datagrid = function(options) {
         this.settings.uniqueId + '-' + suffix :
         (window.location.pathname.split('/').pop()
           .replace(/\.xhtml|\.shtml|\.html|\.htm|\.aspx|\.asp|\.jspx|\.jsp|\.php/g, '')
+          .replace(/[^-\w]+/g, '')
           .replace(/\./g, '-')
           .replace(/ /g, '-')
           .replace(/%20/g, '-') +'-'+
