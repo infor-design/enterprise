@@ -554,6 +554,38 @@
     }
   };
 
+  /**
+   * Runs the generic _getBoundingClientRect()_ method on an element, but returns its results
+   * as a plain object instead of a ClientRect
+   * @param {HTMLElement|SVGElement|jQuery[]} el - The element being manipulated
+   * @returns {object} - represents all values normally contained by a DOMRect or ClientRect
+   */
+  window.Soho.DOM.getDimensions = function getDimensions(el) {
+    if (!(el instanceof HTMLElement) && !(el instanceof SVGElement) && !(el instanceof $)) {
+      return {};
+    }
+
+    if (el instanceof $) {
+      if (!el.length) {
+        return {};
+      }
+
+      el = el[0];
+    }
+
+    var rect = el.getBoundingClientRect();
+    return {
+      top: rect.top,
+      bottom: rect.bottom,
+      left: rect.left,
+      right: rect.right,
+      width: rect.width,
+      height: rect.height,
+      x: rect.x,
+      y: rect.y
+    };
+  };
+
   // Debounce method
   window.Soho.utils.debounce = function(func, threshold, execAsap) {
     var timeout;
@@ -631,6 +663,55 @@
         uses[i].setAttribute('xlink:href', attr);
       }
     }, 1);
+  };
+
+  /**
+   * Gets the current size of the viewport
+   * @returns {object}
+   */
+  window.Soho.utils.getViewportSize = function getViewportSize() {
+    return {
+      width: Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
+      height: Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
+    };
+  };
+
+  /**
+   * Gets the various scrollable containers that an element is nested inside of, and returns their scrollHeight and scrollLeft values.
+   * @returns {object[]}
+   */
+  window.Soho.utils.getContainerScrollDistance = function getContainerScrollDistance(element) {
+    if (!element || (!(element instanceof HTMLElement) && !(element instanceof SVGElement) && !(element instanceof $))) {
+      return [];
+    }
+
+    var containers = [],
+      scrollableElements = [
+        '.scrollable', '.scrollable-x', '.scrollable-y', '.modal',
+        '.card-content', '.widget-content', '.tab-panel',
+        '.datagrid-content'
+      ];
+
+    $(element).parents(scrollableElements.join(', ')).each(function() {
+      var el = this;
+
+      containers.push({
+        element: el,
+        left: el.scrollLeft,
+        top: el.scrollTop
+      });
+    });
+
+    // Push the body's scroll area if it's not a "no-scroll" area
+    if (!document.body.classList.contains('no-scroll')) {
+      containers.push({
+        element: document.body,
+        left: document.body.scrollLeft,
+        top: document.body.scrollTop
+      });
+    }
+
+    return containers;
   };
 
 /* start-amd-strip-block */
