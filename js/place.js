@@ -50,6 +50,7 @@
           'container', 'containerOffsetX', 'containerOffsetY',
           'callback',
           'parent', 'parentXAlignment', 'parentYAlignment',
+          'useParentWidth', 'useParentHeight',
           'placement',
           'strategies'
         ];
@@ -90,6 +91,8 @@
         this.parentXAlignment = this.isReasonableDefault(this.parentXAlignment, xAlignments) ? this.parentXAlignment : settings.parentXAlignment;
         this.parentYAlignment = this.isReasonableDefault(this.parentYAlignment, yAlignments) ? this.parentYAlignment : settings.parentYAlignment;
         this.placement = this.isReasonableDefault(this.placement, placements) ? this.placement : settings.placement;
+        this.useParentHeight = this.useParentHeight === true;
+        this.useParentWidth = this.useParentWidth === true;
 
         if (!$.isArray(this.strategies) || !this.strategies.length) {
           this.strategies = ['nudge'];
@@ -167,16 +170,18 @@
 
       // Actually renders an element with coordinates inside the DOM
       render: function(placementObj) {
+        var unitRegex = /(px|%)/i;
+
         this.element.offset({
           'left': placementObj.x,
           'top': placementObj.y
         });
 
         if (placementObj.height) {
-          this.element[0].style.height = placementObj.height + (/(px|%)/i.test(placementObj.height + '') ? '' : 'px');
+          this.element[0].style.height = placementObj.height + (unitRegex.test(placementObj.height + '') ? '' : 'px');
         }
         if (placementObj.width) {
-          this.element[0].style.width = placementObj.width + (/(px|%)/i.test(placementObj.width + '') ? '' : 'px');
+          this.element[0].style.width = placementObj.width + (unitRegex.test(placementObj.width + '') ? '' : 'px');
         }
       },
 
@@ -225,14 +230,21 @@
         }
 
         var self = this,
-          parentRect = placementObj.parent[0].getBoundingClientRect(),
-          elRect = this.element[0].getBoundingClientRect(),
+          parentRect = Soho.DOM.getDimensions(placementObj.parent[0]),
+          elRect = Soho.DOM.getDimensions(this.element[0]),
           container = this.getContainer(placementObj),
           containerIsBody = container.length && container[0] === document.body,
           // NOTE: Usage of $(window) instead of $('body') is deliberate here - http://stackoverflow.com/a/17776759/4024149.
           // Firefox $('body').scrollTop() will always return zero.
           scrollX = containerIsBody ? $(window).scrollLeft() : container.scrollLeft(),
           scrollY = containerIsBody ? $(window).scrollTop() : container.scrollTop();
+
+        if (placementObj.useParentWidth) {
+          placementObj.width = parentRect.width;
+        }
+        if (placementObj.useParentHeight) {
+          placementObj.height = parentRect.height;
+        }
 
         function getCoordsFromPlacement(placementObj) {
           var cX, cY,
@@ -596,6 +608,8 @@
             if (originalDistance >= targetDistance) {
               return originalDir;
             }
+
+            placementObj.wasFlipped = true;
             return newDir;
           }
 
