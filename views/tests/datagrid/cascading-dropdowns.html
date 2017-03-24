@@ -71,15 +71,15 @@
       setTimeout(function ()  {
         response(allowedOptions);
       }, 1000);
-      alert();
+
     };
 
-    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, width: 50, formatter: Formatters.SelectionCheckbox, align: 'center'});
-    columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 125, formatter: Formatters.Hyperlink, editor: Editors.Input});
-    columns.push({ id: 'status', name: 'Status', field: 'price', width: 125, formatter: Formatters.Alert, readonly: true, ranges: [{'min': LOW_RANGE_LOW_NUMBER, 'max': LOW_RANGE_HIGH_NUMBER, 'classes': 'confirm', text: 'Confirmed'}, {'min': HIGH_RANGE_LOW_NUMBER, 'max': HIGH_RANGE_HIGH_NUMBER, 'classes': 'error', text: 'Error'}]});
-    columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, align: 'right', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '###.000'});
-    columns.push({ id: 'action', name: 'Action', field: 'action', width: 125, formatter: Formatters.Dropdown, editor: Editors.Dropdown, options: actionRowOptions, editorOptions: {source: dropDownFilter} });
-    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date, width: 125});
+    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
+    columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input});
+    columns.push({ id: 'status', name: 'Status', field: 'price', formatter: Formatters.Alert, readonly: true, ranges: [{'min': LOW_RANGE_LOW_NUMBER, 'max': LOW_RANGE_HIGH_NUMBER, 'classes': 'confirm', text: 'Confirmed'}, {'min': HIGH_RANGE_LOW_NUMBER, 'max': HIGH_RANGE_HIGH_NUMBER, 'classes': 'error', text: 'Error'}]});
+    columns.push({ id: 'price', name: 'Price', field: 'price', align: 'right', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '###.000'});
+    columns.push({ id: 'action', name: 'Action', field: 'action', formatter: Formatters.Dropdown, editor: Editors.Dropdown, options: actionRowOptions, editorOptions: {source: dropDownFilter} });
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date});
 
     //Init and get the api for the grid
     grid = $('#datagrid').datagrid({

@@ -102,6 +102,7 @@ $header-height: 60px;
 
   .toolbar {
     height: $header-height; // Needs to not be 100% because it's possible for headers to have other controls beneath the toolbar
+    padding: 0 1rem;
 
     .title {
       color: $header-text-color;

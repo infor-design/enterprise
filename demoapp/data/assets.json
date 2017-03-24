@@ -1,0 +1,170 @@
+[
+	{
+		"id": 52106,
+		"type": "Monitor",
+		"description": "Dell 22\" Monitor E2216HVM Widescreen",
+		"manufacturer": "Dell",
+		"serial": "A38TQ809",
+		"status": "Available",
+		"detail": [
+			{
+				"action": "Repair",
+				"ticket": "R877647",
+				"date": "09/09/2017",
+				"description": "USD Port Malfunction",
+        "technician": "Sophie Colon",
+				"assignee": "Julia Glover",
+				"status": "Resolved"
+			}
+		]
+	},
+	{
+		"id": 52295,
+		"type": "Laptop",
+		"description": "15 22\"MacBook Pro 2.6GHx LED 2880 x 1800",
+		"manufacturer": "Apple",
+		"serial": "87J5P54LL/A",
+		"status": "Assigned",
+    "detail": [
+      {
+        "action": "Assignment",
+        "ticket": "A67639",
+        "date": "07/01/2017",
+        "description": "Assigned to Julia",
+        "technician": "Daisy Rivera",
+        "assignee": "Julia Glover",
+        "status": "Resolved"
+      },
+      {
+        "action": "Repair",
+        "ticket": "R877647",
+        "date": "09/09/2017",
+        "description": "USD Port Malfunction",
+        "technician": "Sophie Colon",
+        "assignee": "Julia Glover",
+        "status": "Resolved"
+      },
+      {
+        "action": "Repair",
+        "ticket": "R69326",
+        "date": "03/27/2016",
+        "description": "Dead Pixel",
+        "technician": "Martha Burton",
+        "assignee": "Matthew Schmidt",
+        "status": "Resolved"
+      }
+    ]
+	},
+	{
+		"id": 52384,
+		"type": "Laptop",
+		"description": "15 22\"MacBook Pro 2.6GHx LED 2880 x 1800",
+		"manufacturer": "Apple",
+		"serial": "3383683-08",
+		"status": "Available",
+    "detail": [
+      {
+        "action": "Repair",
+        "ticket": "R33918",
+        "date": "05/14/2016",
+        "description": "USB Port Malfunction",
+        "technician": "Cody Waters",
+        "assignee": "Mathew Schmidt",
+        "status": "Resolved"
+      },
+      {
+        "action": "Repair",
+        "ticket": "R69326",
+        "date": "03/27/2016",
+        "description": "Dead Pixel",
+        "technician": "Martha Burton",
+        "assignee": "Matthew Schmidt",
+        "status": "Resolved"
+      }
+    ]
+	},
+	{
+		"id": 52431,
+		"type": "Laptop",
+		"description": "15 Latitude 3000 Dual Core 1.9GHz",
+		"manufacturer": "Dell",
+		"serial": "A6BP472",
+		"status": "Assigned",
+    "detail": [
+      {
+        "action": "Repair",
+        "ticket": "R69326",
+        "date": "03/27/2016",
+        "description": "Dead Pixel",
+        "technician": "Martha Burton",
+        "assignee": "Matthew Schmidt",
+        "status": "Resolved"
+      }
+    ]
+	},
+	{
+		"id": 52431,
+		"type": "Laptop",
+		"description": "15 Latitude 3000 Dual Core 1.9GHz",
+		"manufacturer": "Dell",
+		"serial": "A23CG95",
+		"status": "Available",
+    "detail": [
+      {
+        "action": "Purchase",
+        "ticket": "T1927",
+        "date": "11/14/2016",
+        "description": "Recieved - NYC",
+        "technician": "Stanley Simon",
+        "assignee": "Matthew Schmidt",
+        "status": "Resolved"
+      },
+      {
+        "action": "Repair",
+        "ticket": "R69326",
+        "date": "03/27/2016",
+        "description": "Dead Pixel",
+        "technician": "Martha Burton",
+        "assignee": "Matthew Schmidt",
+        "status": "Resolved"
+      }
+    ]
+	},
+	{
+		"id": 52623,
+		"type": "Monitor",
+		"description": "Dell 22\" Monitor E2216HVM Widescreen",
+		"manufacturer": "Dell",
+		"serial": "A59TQ267",
+		"status": "Assigned",
+    "detail": [
+      {
+        "action": "Repair",
+        "ticket": "R69326",
+        "date": "03/27/2016",
+        "description": "Dead Pixel",
+        "technician": "Martha Burton",
+        "assignee": "Matthew Schmidt",
+        "status": "Resolved"
+      },
+      {
+        "action": "Repair",
+        "ticket": "R877647",
+        "date": "09/09/2017",
+        "description": "USD Port Malfunction",
+        "technician": "Sophie Colon",
+        "assignee": "Julia Glover",
+        "status": "Resolved"
+      },
+      {
+        "action": "Repair",
+        "ticket": "R69326",
+        "date": "03/27/2016",
+        "description": "Dead Pixel",
+        "technician": "Martha Burton",
+        "assignee": "Matthew Schmidt",
+        "status": "Resolved"
+      }
+    ]
+	}
+]
