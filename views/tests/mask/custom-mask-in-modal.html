@@ -1,0 +1,64 @@
+<div class="row">
+	<div class="twelve columns">
+
+		<button class="btn-secondary" type="button" id="mask">Mask</button><br><br>
+
+		<!-- "Context" Example -->
+		<div id="modal-mask" style="display: none;">
+			<div class="field">
+				<label for="upper">Upper Case</label>
+				<input id="upper" name="upper" style="text-transform: uppercase" />
+			</div>
+
+			<div class="field">
+				<label for="first-name">First Name</label>
+				<input type="text" id="first-name" name="first-name" placeholder="Normal text Field">
+			</div>
+
+			<div class="field">
+				<label for="description-max">Notes (maxlength)</label>
+				<textarea id="description-max" class="textarea" maxlength="90" name="description-max">Line One</textarea>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+
+<script>
+var modals = {
+    'mask': {
+      'title': 'Add Context',
+      'content': $('#modal-mask')
+    }
+  },
+
+  setModal = function (opt) {
+    opt = $.extend({
+      buttons: [{
+        text: 'Cancel',
+        click: function(e, modal) {
+          modal.close();
+        }
+      }, {
+        text: 'Save',
+        click: function(e, modal) {
+          modal.close();
+        },
+        validate: false,
+        isDefault: true
+      }]
+    }, opt);
+
+    $('body').modal(opt);
+  };
+
+  $('#mask').on('click', function () {
+    setModal(modals[this.id]);
+  });
+
+  $('#upper').mask({definitions: {
+    'U': /[A-Z]/
+  }, pattern: 'UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU'});
+
+</script>
