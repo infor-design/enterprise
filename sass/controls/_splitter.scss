@@ -52,6 +52,14 @@
     }
   }
 
+  .splitter-btn {
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    left: -6px;
+    z-index: 101;
+  }
+
   &.is-dragging {
     box-shadow: -2px 0 3px 0 $splitter-box-shadow-color;
   }
