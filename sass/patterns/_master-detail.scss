@@ -1,0 +1,18 @@
+// Master Detail - Fix Header, List or List List
+//================================================== //
+.master-detail {
+  height: 100%;
+
+  .master {
+    background-color: $panel-bg-color;
+    height: auto;
+    padding: 20px 30px 30px;
+  }
+
+  .detail {
+    background-color: $body-bg-color;
+    border-top: 1px solid $panel-border-color;
+    height: auto;
+    padding: 30px;
+  }
+}

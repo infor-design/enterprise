@@ -3424,7 +3424,7 @@ $.fn.datagrid = function(options) {
                   id = chk.attr('data-column-id'),
                   isChecked = chk.prop('checked');
 
-              args.elem.removeClass('is-selected');
+              args.elem.removeClass('is-selected hide-selected-color');
 
               if (chk.is(':disabled')) {
                 return;
@@ -3585,8 +3585,12 @@ $.fn.datagrid = function(options) {
       }
 
       var countText = '(' + count + ' ' + Locale.translate('Results') + ')';
-      if (self.settings.resultsText && typeof self.settings.resultsText === 'function') {
-        countText = self.settings.resultsText(self, count);
+      if (self.settings.resultsText) {
+        if (typeof self.settings.resultsText === 'function') {
+          countText = self.settings.resultsText(self, count);
+        } else {
+          countText = self.settings.resultsText;
+        }
       }
 
       if (self.toolbar) {
@@ -3652,7 +3656,8 @@ $.fn.datagrid = function(options) {
     // Attach All relevant events
     handleEvents: function() {
       var self = this,
-        isMultiple = this.settings.selectable === 'multiple';
+        isMultiple = this.settings.selectable === 'multiple',
+        isMixed = this.settings.selectable === 'mixed';
 
       // Set Focus on rows
       if (!self.settings.cellNavigation && self.settings.rowNavigation) {
@@ -3742,12 +3747,21 @@ $.fn.datagrid = function(options) {
           return false;
         }
 
-        var canSelect = self.settings.clickToSelect ? true :
-          target.is('.datagrid-selection-checkbox') ||
-          target.find('.datagrid-selection-checkbox').length === 1;
+        var isSelectionCheckbox = target.is('.datagrid-selection-checkbox') ||
+                                  target.find('.datagrid-selection-checkbox').length === 1,
+          canSelect = self.settings.clickToSelect ? true : isSelectionCheckbox;
 
         if (target.is('.datagrid-drilldown')) {
           canSelect = false;
+        }
+
+        if (isMixed) {
+          canSelect = isSelectionCheckbox;
+
+          //Then Activate
+          if (!canSelect) {
+            self.toggleRowActivation(target.closest('tr'));
+          }
         }
 
         if (canSelect && isMultiple && e.shiftKey) {
@@ -4258,7 +4272,7 @@ $.fn.datagrid = function(options) {
           // Select it
           selectNode = function(elem, index, data) {
             checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox'));
-            elem.addClass('is-selected').attr('aria-selected', 'true')
+            elem.addClass('is-selected' + (self.settings.selectable === 'mixed' ? ' hide-selected-color' : '')).attr('aria-selected', 'true')
               .find('td').attr('aria-selected', 'true');
             checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
               .addClass('is-checked').attr('aria-checked', 'true');
@@ -4342,6 +4356,30 @@ $.fn.datagrid = function(options) {
 
     },
 
+    toggleRowActivation: function (idx) {
+      var row = (typeof idx === 'number' ? this.tableBody.find('tr[role="row"]').eq(idx) : idx),
+        rowIndex = (typeof idx === 'number' ? idx : this.dataRowIndex(row)),
+        isActivated = row.hasClass('is-rowactivated');
+
+      //Deselect old row
+      var oldActivated = this.tableBody.find('tr.is-rowactivated');
+      if (oldActivated.length) {
+        oldActivated.removeClass('is-rowactivated');
+
+        var oldIdx = this.dataRowIndex(oldActivated);
+        this.element.triggerHandler('rowdeactivated', [{row: oldIdx, item: this.settings.dataset[oldIdx]}]);
+      }
+
+      if (isActivated) {
+        row.removeClass('is-rowactivated');
+        this.element.triggerHandler('rowdeactivated', [{row: rowIndex, item: this.settings.dataset[rowIndex]}]);
+      } else {
+        row.addClass('is-rowactivated');
+        this.element.triggerHandler('rowactivated', [{row: rowIndex, item: this.settings.dataset[rowIndex]}]);
+      }
+
+    },
+
     toggleRowSelection: function (idx) {
       var row = (typeof idx === 'number' ? this.tableBody.find('tr[role="row"]').eq(idx) : idx),
         isSingle = this.settings.selectable === 'single',
@@ -4394,7 +4432,7 @@ $.fn.datagrid = function(options) {
       // Unselect it
       var unselectNode = function(elem, index) {
         checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox'));
-        elem.removeClass('is-selected').removeAttr('aria-selected')
+        elem.removeClass('is-selected hide-selected-color').removeAttr('aria-selected')
           .find('td').removeAttr('aria-selected');
         checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
           .removeClass('is-checked').attr('aria-checked', 'false');
@@ -5726,7 +5764,7 @@ $.fn.datagrid = function(options) {
             val.idx = newIdx;
             val.elem = row;
             checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox').addClass('is-checked').attr('aria-checked', 'true');
-            row.addClass('is-selected').attr('aria-selected', 'true').find('td').attr('aria-selected', 'true');
+            row.addClass('is-selected' + (self.settings.selectable === 'mixed' ? ' hide-selected-color' : '')).attr('aria-selected', 'true').find('td').attr('aria-selected', 'true');
             return false;
           }
         });
