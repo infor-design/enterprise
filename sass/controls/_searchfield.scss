@@ -98,6 +98,12 @@
       }
     }
 
+    &.popup-is-open {
+      > .icon:not(.close) {
+        fill: $searchfield-active-icon-color;
+      }
+    }
+
     .btn {
       background-color: $searchfield-context-bg;
       border: 0;

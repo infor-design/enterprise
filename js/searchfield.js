@@ -211,6 +211,8 @@
           self.handleKeydown(e);
         }).on('beforeopen.searchfield', function(e, menu) { // propagates from Autocomplete's Popupmenu
           self.handlePopupBeforeOpen(e, menu);
+        }).on('safe-blur.searchfield listclose.searchfield', function() {
+          self.wrapper.removeClass('popup-is-open');
         });
 
         this.wrapper.on('mouseenter.searchfield', function() {
@@ -246,6 +248,9 @@
         // to act differntly when the More Results link is activated.
         this.element.on('listopen.searchfield', function(e, items) {
           var list = $('#autocomplete-list');
+
+          // Visual indicator class
+          self.wrapper.addClass('popup-is-open');
 
           list.off('click').on('click.autocomplete', 'a', function (e) {
             var a = $(e.currentTarget),
@@ -723,7 +728,7 @@
        * @returns {this}
        */
       teardown: function() {
-        this.element.off('updated.searchfield focus.searchfield blur.searchfield click.searchfield keydown.searchfield beforeopen.searchfield listopen.searchfield');
+        this.element.off('updated.searchfield focus.searchfield blur.searchfield click.searchfield keydown.searchfield beforeopen.searchfield listopen.searchfield listclose.searchfield safe-blur.searchfield');
 
         if (this.autocomplete) {
           this.autocomplete.destroy();
