@@ -4356,6 +4356,30 @@ $.fn.datagrid = function(options) {
 
     },
 
+    // activate a row when in mixed selection mode
+    activateRow: function(idx) {
+      if (this.activatedRow().row !== idx) {
+        this.toggleRowActivation(idx);
+      }
+    },
+
+    // deactivate the currently activated row
+    deactivateRow: function() {
+      this.toggleRowActivation(this.activatedRow()[0].row);
+    },
+
+    // Gets the currently activated row
+    activatedRow: function() {
+      var activatedRow = this.tableBody.find('tr.is-rowactivated');
+
+      if (activatedRow.length) {
+        var rowIndex = this.dataRowIndex(activatedRow);
+        return [{ row: rowIndex, item: this.settings.dataset[ rowIndex ] }];
+      } else {
+        return [{ row: -1, item: undefined }];
+      }
+    },
+
     toggleRowActivation: function (idx) {
       var row = (typeof idx === 'number' ? this.tableBody.find('tr[role="row"]').eq(idx) : idx),
         rowIndex = (typeof idx === 'number' ? idx : this.dataRowIndex(row)),

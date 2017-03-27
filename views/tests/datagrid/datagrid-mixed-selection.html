@@ -1,6 +1,36 @@
 
 <div class="master-detail">
   <div class="master">
+    <div class="toolbar" role="toolbar">
+      <div class="title">My Assets</div>
+      <div class="buttonset">
+        <button id='activate-selected-row' type="button" class="btn">
+          <span>Activate Selected Row</span>
+        </button>
+        <button id='deactivate-activated-row' type="button" class="btn">
+          <span>Deactivate Activated Row</span>
+        </button>
+      </div>
+      <div class="more">
+        <button class="btn-actions" type="button">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+          <span class="audible">More Actions</span>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Option One</a></li>
+          <li><a href="#">Option Two</a></li>
+          <li><a href="#">Option Three</a></li>
+          <li class="separator single-selectable-section"></li>
+          <li class="heading">Row Height</li>
+          <li class="is-selectable"><a data-option="row-short" href="#">Short</a></li>
+          <li class="is-selectable"><a data-option="row-medium" href="#">Medium</a></li>
+          <li class="is-selectable is-checked"><a data-option="row-normal" href="#">Normal</a></li>
+        </ul>
+      </div>
+    </div>
+
     <div class="contextual-toolbar toolbar is-hidden">
       <div class="title selection-count">0 Selected</div>
       <div class="buttonset">
@@ -55,12 +85,12 @@
       }
 
       //Init The Header Grid
-      $('#datagrid-header').datagrid({
+      var headerGrid = $('#datagrid-header').datagrid({
         dataset: res,
         columns: columnsHeader,
         editable: false,
         selectable: 'mixed',
-        toolbar: {results: true, actions: true, rowHeight: true, title: 'My Assets'}
+//        toolbar: {results: true, actions: true, rowHeight: true, title: 'My Assets'}
       }).on('rowactivated', function (e, args) {
         console.log('Row ' + args.row + ' Was Activated');
         syncDetail(args.row);
@@ -69,6 +99,15 @@
         syncDetail(args.row);
       }).on('selected', function (e, args) {
         console.log(args);
+      }).data('datagrid');
+
+      $('#activate-selected-row').on('click', function(e) {
+        headerGrid.activateRow(headerGrid.selectedRows()[0].idx);
+      });
+
+      $('#deactivate-activated-row').on('click', function(e) {
+        console.log('activated row to be deactivated is ' + headerGrid.activatedRow());
+        headerGrid.deactivateRow();
       });
 
       //Init The Detail Grid
@@ -79,7 +118,6 @@
         resultsText: res[selectedId].id,
         toolbar: {results: true, actions: true, rowHeight: true, title: 'Detail for '}
       }).data('datagrid');
-
     });
 
   });
