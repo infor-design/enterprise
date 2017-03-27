@@ -46,9 +46,9 @@
   }
 
   .handle {
+    @include font-size(25);
     color: $listbuilder-icon-color-hover;
     display: none;
-    font-size: 2.5em;
     left: 6px;
     position: absolute;
     top: 3px;
