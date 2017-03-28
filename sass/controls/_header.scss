@@ -3,6 +3,7 @@
 
 // Variables for this file
 $header-height: 60px;
+$subheader-height: 60px;
 
 // Top Header
 .header {
@@ -154,6 +155,28 @@ $header-height: 60px;
     background-color: $subhead-bg-color;
   }
 
+}
+
+// Application Subheaders
+.subheader {
+  @include transition(background-color 500ms cubic-bezier(.17, .04, .03, .94));
+  background-color: $subhead-bg-color;
+  display: block;
+  height: $subheader-height;
+  overflow: hidden;
+  width: 100%;
+
+  .searchfield-wrapper {
+    height: inherit;
+    margin-bottom: 0;
+  }
+
+  .full-searchfield-container {
+    margin: 0 auto;
+    max-width: $breakpoint-tablet-to-desktop;
+    padding: 1.4rem 4rem 0;
+    vertical-align: middle;
+  }
 }
 
 .header,

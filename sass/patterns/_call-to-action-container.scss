@@ -10,8 +10,9 @@
   .call-to-action-container {
     display: inline-block;
     height: inherit;
+    text-align: right;
     vertical-align: middle;
-    width: 240px;
+    width: 220px;
 
     button {
       display: block;
@@ -23,7 +24,7 @@
   .tab-container {
     display: inline-block;
     vertical-align: middle;
-    width: calc(100% - 240px);
+    width: calc(100% - 220px);
 
     &.header-tabs {
       height: inherit;
