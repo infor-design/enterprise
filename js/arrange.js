@@ -43,7 +43,7 @@
 
       init: function() {
         this.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        this.isIE11 = /Trident.*rv[ :]*11\./i.test(navigator.userAgent);
+        this.isIe11 = (Soho.env.browser.name === 'ie' && Soho.env.browser.version === '11');
         this.handleEvents();
       },
 
@@ -71,7 +71,11 @@
 
         self.handle = settings.handle || self.element.attr('data-arrange-handle');
         self.connectWith = self.element.attr('data-arrange-connectWith');
-        self.placeholders = placeholder.addClass(settings.placeholderCssClass +' draggable');
+        self.placeholders = placeholder;
+
+        if (!self.isTouch) {
+          self.placeholders.addClass(settings.placeholderCssClass +' draggable');
+        }
 
         // Use Handle if available
         $(self.handle, items).addClass('draggable')
@@ -103,7 +107,11 @@
           // Drag start --------------------------------------------------------------------------
           .on(self.dragStart, function(e) {
             if (self.handle && !isHandle) {
-              return false;
+              if (self.isTouch) {
+                return;
+              } else {
+                return false;
+              }
             }
             isHandle = false;
             self.dragging = $(this);
@@ -113,15 +121,37 @@
             $.extend(status, {start: self.dragging, startIndex: index});
             self.element.triggerHandler('beforearrange', status);
 
-            var dt = e.originalEvent.dataTransfer;
-            dt.effectAllowed = 'move';
-            dt.setData('Text', 'dummy');
+            if (self.isTouch) {
+              var rect = self.dragging[0].getBoundingClientRect(),
+                touch = e.originalEvent.changedTouches[0];
+
+              //Save offset
+              self.offset = {
+                x: touch.pageX - rect.left,
+                y: touch.pageY - rect.top
+              };
+              self.placeholderTouch = self.dragging
+                .clone().addClass('is-touch').attr('id', 'arrange-placeholder-touch')
+                .insertBefore(self.dragging);
+
+              self.draggTouchElement(e, self.placeholderTouch);
+            } else {
+              var dt = e.originalEvent.dataTransfer;
+              dt.effectAllowed = 'move';
+              dt.setData('Text', 'dummy');
+            }
+
           })
 
-          // Drag end ----------------------------------------------------------------------------
+          // Drag end ----------------------------------------------------------
           .on(self.dragEnd, function() {
             if (!self.dragging) {
               return;
+            }
+
+            if (self.isTouch) {
+              self.dragging.css('opacity', 1);
+              self.placeholderTouch.remove();
             }
 
             self.placeholders.filter(':visible').after(self.dragging);
@@ -133,21 +163,25 @@
               self.element.triggerHandler('arrangeupdate', status);
             }
             self.dragging = null;
+            self.placeholderTouch = null;
           })
 
-          // While dragging -----------------------------------------------------------------------
+          // While dragging ----------------------------------------------------
           .on(self.dragWhileDragging, function(e) {
+            if (!self.dragging) {
+              return;
+            }
             var overItem = this,
               overIndex;
             e.preventDefault();
 
-            if(e.type==='drop') {
+            if (e.type==='drop') {
               e.stopPropagation();
               self.dragging.trigger('dragend.arrange');
               return false;
             }
 
-            if(self.isTouch) {
+            if (self.isTouch) {
               var touch = e.originalEvent.touches[0];
               overItem = self.getElementByTouchInList(items, touch.pageX, touch.pageY) || overItem;
             }
@@ -158,7 +192,11 @@
             }
 
             if (items.is(overItem) && placeholder.index() !== overItem.index()) {
-              self.dragging.hide();
+              if (self.isTouch) {
+                self.dragging.css('opacity', 0);
+              } else {
+                self.dragging.hide();
+              }
 
               if (placeholder.index() < (overItem.index())) {
                 placeholder.insertAfter(overItem);
@@ -174,7 +212,7 @@
 
               // Fix: IE-11 on windows-10 svg was disappering
               var svg = $('svg', overItem);
-              if(self.isIE11 && svg.length) {
+              if(self.isIe11 && svg.length) {
                 overItem.html(overItem.html());
               }
 
@@ -184,8 +222,14 @@
               self.placeholders.detach();
               self.element.append(placeholder);
             }
-            return false;
-          });//-------------------------------------------------------------------------------------
+
+            if (self.isTouch) {
+              self.draggTouchElement(e, self.placeholderTouch);
+              return;
+            } else {
+              return false;
+            }
+          });//-----------------------------------------------------------------
         });//end each items
       },
 
@@ -200,6 +244,13 @@
           }
         });
         return returns;
+      },
+
+      // Dragg touch element
+      draggTouchElement: function(e, elm) {
+        var orig = e.originalEvent.changedTouches[0];
+        elm[0].style.top = (orig.pageY - this.offset.y) + 'px';
+        elm[0].style.left = (orig.pageX - this.offset.x) + 'px';
       },
 
       unbind: function() {

@@ -148,7 +148,6 @@ div.multiselect {
   overflow: hidden;
   -webkit-overflow-scrolling: touch;
   position: absolute;
-  transition: height .3s ease 0s;
   white-space: nowrap;
   width: auto;
   z-index: 4501;
@@ -172,8 +171,6 @@ div.multiselect {
     color: $popupmenu-color;
     height: auto;
     line-height: 32px;
-    max-height: 260px;
-    min-height: inherit;
     overflow-x: hidden;
     overflow-y: auto;
     padding: 5px 0;

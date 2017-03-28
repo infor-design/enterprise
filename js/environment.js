@@ -145,6 +145,7 @@
       })();
 
       window.Soho.theme = 'light';
+
       return this;
     }
 

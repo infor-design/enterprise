@@ -190,7 +190,7 @@
           }
           if (val && self.initValue !== val) {
             if (isRemask || self.settings.processOnBlur) {
-              self.remask();
+              self.remask( !isRemask );
             }
             self.element.trigger('change');
           }
@@ -210,6 +210,7 @@
 
           reprocess();
           self.initValue = null;
+          return true;
         });
 
         // Don't continue if the field is hidden -OR- we disallow the masking of contents during initialization.
@@ -529,7 +530,9 @@
           this.element.val(val);
 
           // reposition the caret to be in the correct spot (after the content we just added).
-          this.caret(pos.begin >= pattSize ? pattSize : pos.begin);
+          if (reprocess !== true) {
+            this.caret(pos.begin >= pattSize ? pattSize : pos.begin);
+          }
 
           // trigger the 'write' event
           this.element.trigger('write.mask', [val]);
@@ -1242,9 +1245,13 @@
        * Re-masks the current contents of the field.
        * @returns { this }
        **/
-      remask: function() {
+      remask: function(remaskingOnBlur) {
         if (!this.originalPos) {
-          this.originalPos = this.caret();
+          if (remaskingOnBlur) {
+            this.originalPos = { begin: 0, end: this.element.val().length };
+          } else {
+            this.originalPos = this.caret();
+          }
         }
         this.writeInput(true);
         this.resetStorage();

@@ -66,6 +66,10 @@
       padding: 9px 20px;
       position: relative;
 
+      &.arrange-dragging.is-touch {
+        position: fixed;
+      }
+
       &::after,
       &::before,
       &.is-selected::after {

@@ -51,14 +51,6 @@ $datagrid-short-row-height: 23px;
     //Fix IE Scrollbar Offset Issue
     &.is-windows .datagrid-header {
       margin-right: 18px;
-
-      &:after {
-        background-color: black;
-        content: '';
-        position: absolute;
-        height: 30px;
-        width: 30px;
-      }
     }
   }
 
@@ -814,12 +806,17 @@ $datagrid-short-row-height: 23px;
       }
     }
 
-    &.is-selected td:not(.is-editing),
-    &.is-selected td:not(.is-editing) .datagrid-cell-wrapper {
+    &.is-selected:not(.hide-selected-color) td:not(.is-editing),
+    &.is-selected:not(.hide-selected-color) td:not(.is-editing) .datagrid-cell-wrapper {
       background-color: $datagrid-row-selected-color;
     }
 
-    &.is-selected .is-readonly:not(.is-editing) .datagrid-cell-wrapper {
+    &.is-rowactivated td:not(.is-editing),
+    &.is-rowactivated td:not(.is-editing) .datagrid-cell-wrapper {
+      background-color: $datagrid-row-selected-color;
+    }
+
+    &.is-selected:not(.hide-selected-color) .is-readonly:not(.is-editing) .datagrid-cell-wrapper {
       background-color: $datagrid-row-selected-color-dark;
 
       span {
@@ -2311,8 +2308,7 @@ html[dir='rtl'] {
 .datagrid-contextual-toolbar.contextual-toolbar {
   margin-left: 1px;
   margin-right: 1px;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding: 0 20px;
 
   .buttonset {
     height: 40px;

@@ -1326,6 +1326,10 @@ var express = require('express'),
     sendJSONFile('accounts', req, res, next);
   });
 
+  router.get('/api/assets', function(req, res, next) {
+    sendJSONFile('assets', req, res, next);
+  });
+
   router.get('/api/accounts-sm', function(req, res, next) {
     sendJSONFile('accounts-sm', req, res, next);
   });

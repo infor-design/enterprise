@@ -50,11 +50,10 @@
     // Actual DropDown Code
     Dropdown.prototype = {
       init: function() {
-        var orgId = this.element.attr('id'),
-         html = $('html');
+        var orgId = this.element.attr('id');
 
-        this.isIe10 = html.is('.ie10');
-        this.isIe11 = html.is('.ie11');
+        this.isIe10 = (Soho.env.browser.name === 'ie' && Soho.env.browser.version === '10');
+        this.isIe11 = (Soho.env.browser.name === 'ie' && Soho.env.browser.version === '11');
 
         this.inlineLabel = this.element.closest('label');
         this.inlineLabelText = this.inlineLabel.find('.label-text');
@@ -66,9 +65,11 @@
           this.element.parent().find('label').first().attr('for', orgId);
         }
 
-        var cssClass = this.element.is('.dropdown-xs') ? 'dropdown input-xs' :
-            this.element.is('.dropdown-sm') ? 'dropdown input-sm' :
-            this.element.is('.dropdown-lg') ? 'dropdown input-lg' : 'dropdown';
+        // convert <select> tag's size css classes for the pseudo element
+        var elemClassList = this.element[0].classList;
+        var pseudoClassString = elemClassList.contains('dropdown-xs') ? 'dropdown input-xs' :
+            elemClassList.contains('dropdown-sm') ? 'dropdown input-sm' :
+            elemClassList.contains('dropdown-lg') ? 'dropdown input-lg' : 'dropdown';
 
         //Detect Inline Styles
         var style = this.element.attr('style');
@@ -86,7 +87,7 @@
 
         this.pseudoElem = $('div#'+ orgId + '-shdo');
         if (!this.pseudoElem.length) {
-          this.pseudoElem = $('<div class="'+ cssClass + '"' +
+          this.pseudoElem = $('<div class="'+ pseudoClassString + '"' +
             ' role="combobox"' +
             ' aria-autocomplete="list"' +
             ' aria-controls="dropdown-list"' +
@@ -94,7 +95,10 @@
             ' aria-expanded="false"' +
             ' aria-label="'+ this.label.text() + '"' +
           '>');
+        } else {
+          this.pseudoElem[0].setAttribute('class', pseudoClassString);
         }
+
         this.pseudoElem.append($('<span></span>'));
 
         // Pass disabled/readonly from the original element, if applicable
@@ -392,6 +396,7 @@
           self.handleKeyDown($(this), e);
         }).on('keypress.dropdown', function(e) {
           self.ignoreKeys($(this), e);
+          self.toggleList();
           self.handleAutoComplete(e);
         }).on('click.dropdown', function(e) {
           e.stopPropagation();
@@ -540,10 +545,13 @@
 
         term = '';
 
+        /*
         //Adjust height / top position
         if (self.list.hasClass('is-ontop')) {
           self.list[0].style.top = (self.pseudoElem.offset().top - self.list.height() + self.pseudoElem.outerHeight() - 2) + 'px';
         }
+        */
+        this.position();
       },
 
       // Removes filtering from an open Dropdown list and turns off "search mode"
@@ -803,7 +811,8 @@
       activate: function (useSearchInput) {
         var self = this,
           input = this.pseudoElem;
-        if (useSearchInput) {
+
+        if (useSearchInput || self.isMobile()) {
           input = this.searchInput;
         }
 
@@ -962,8 +971,8 @@
         this.activate(true); // Focus the Search Input
         this.element.trigger('listopened');
 
-        // iOS-specific keypress event that listens for when you click the "done" button
         if (this.isMobile()) {
+          // iOS-specific keypress event that listens for when you click the "done" button
           self.searchInput.on('keypress.dropdown', function(e) {
             if (e.which === 13) {
               self.closeList('select');
@@ -1108,10 +1117,20 @@
         parentScroll = self.element.closest('.scrollable-y').length ? self.element.closest('.scrollable-y') : parentScroll;
         parentScroll.on('scroll.dropdown', scrollDocument);
 
-        // In mobile environments, bind against an orientation change.
-        // in desktop environments, bind against window.resize
-        if (window.orientation === undefined) {
-          $('body').on('resize.dropdown', function() {
+        $('body').on('resize.dropdown', function() {
+          self.position();
+
+          // in desktop environments, close the list on viewport resize
+          if (window.orientation === undefined) {
+            self.closeList('cancel');
+          }
+        });
+
+        // In mobile environments, close the list on an orientation change.
+        // Don't do this on mobile against a resize because of the software keyboard's potential
+        // to cause a "resize" event to fire.
+        if (window.orientation !== undefined) {
+          $(window).on('orientationchange.dropdown', function() {
             self.closeList('cancel');
           });
         }
@@ -1121,90 +1140,61 @@
         }
       },
 
-      // Set size and positioning of the list
+      /**
+       * Set size and positioning of the list
+       * @returns {undefined}
+       */
       position: function() {
-        var isFixed = false, isAbs = false,
-          top = (this.pseudoElem.offset().top),
-          left = this.pseudoElem.offset().left - $(window).scrollLeft();
+        var self = this,
+          positionOpts = {
+            parentXAlignment: 'left',
+            placement: 'bottom',
+            strategies: ['flip', 'shrink-y']
+          };
 
-        this.list[0].style.top = top +'px';
-        this.list[0].style.left = left +'px';
-
-        //Fixed and Absolute Positioning use cases
-        this.pseudoElem.parentsUntil('body').each(function () {
-          if (this.style.position === 'fixed' && !$(this).is('.modal')) {
-            isFixed = true;
-            return;
+        function dropdownAfterPlaceCallback(e, placementObj) {
+          // Turn upside-down if flipped to the top of the pseudoElem
+          if (placementObj.wasFlipped === true) {
+            self.list.addClass('is-ontop');
+            self.listUl.prependTo(self.list);
           }
-        });
 
-        if (isFixed) {
-          this.list[0].style.position = 'fixed';
-        }
-
-        if (this.pseudoElem.parent('.field')[0] && this.pseudoElem.parent('.field')[0].style.position === 'absolute') {
-          isAbs = true;
-          var parentOffset = this.pseudoElem.parent('.field').offset();
-          this.list[0].style.top = (parentOffset.top + this.pseudoElem.prev('label').height()) +'px';
-          this.list[0].style.left = parentOffset.left +'px';
-        }
-
-        this.list.removeClass('is-ontop');
-
-        //Flow up if not enough room on bottom
-        var roomTop = top,
-          roomBottom = $(window).height() - top - this.pseudoElem.outerHeight();
-
-        if (roomTop > roomBottom && top - $(window).scrollTop() + this.list.outerHeight() > $(window).height()) {
-          this.list[0].style.top = (top - this.list.outerHeight() + this.pseudoElem.outerHeight()) +'px';
-          this.list.addClass('is-ontop');
-          this.listUl.prependTo(this.list);
-        }
-
-        // If the menu is off the top of the screen, cut down the size of the menu to make it fit.
-        if (this.list.offset().top < 0 ) {
-          var listHeight = this.list.outerHeight(),
-            diff = this.list.offset().top * -1;
-          this.list[0].style.top = 0;
-          this.list[0].style.height = (listHeight - diff - 5) +'px';
-        }
-
-        // If the menu is off the bottom of the screen, cut up the size
-        if (this.list.offset().top - $(window).scrollTop() + this.list.outerHeight() >  $(window).height()) {
-          var newHeight = $(window).height() - this.list.offset().top - 5;
-          this.list[0].style.height = newHeight + 'px';
-        }
-
-        //let grow or to field size.
-        this.list.find('input').outerWidth(this.pseudoElem.outerWidth()-3);
-        if (this.list.width() > this.pseudoElem.outerWidth() && !this.isInGrid) {
-          var listWidth = (this.list.outerWidth() + 35) + 'px';
-           this.list[0].style.width = listWidth;
-           this.list.find('input')[0].style.width = listWidth;
-
-           //But not off the left side
-           var wWidth = $(window).width(),
-              intListWidth = parseInt(listWidth),
-              maxWidth = wWidth - parseInt(this.list[0].style.left, 10);
-           if (intListWidth > maxWidth) {
-             this.list[0].style.left = (wWidth - intListWidth - 5) +'px';
-            }
-        } else {
-          var pseudoElemOuterWidth = this.pseudoElem.outerWidth();
-          this.list[0].style.width = pseudoElemOuterWidth + 'px';
-
-          // Fix: text was hard to view,
-          // when cell width smaller then text with editable Datagrid
-          if (this.isInGrid) {
-            this.searchInput[0].style.cssText = 'width:'+ pseudoElemOuterWidth +'px !important';
-            this.list[0].style.width = '';
-            var glistWidth = this.list.outerWidth(),
-              gCellWidth = this.element.closest('.datagrid-cell-wrapper').outerWidth(),
-              gWidth = glistWidth > gCellWidth ? (glistWidth + 20) : gCellWidth;
-            this.list[0].style.width = gWidth +'px';
-            this.searchInput[0].style.width = '';
+          // Set the <UL> height to 100% of the `.dropdown-list` minus the size of the search input
+          var ulHeight = parseInt(window.getComputedStyle(self.listUl[0]).height),
+            listHeight = parseInt(window.getComputedStyle(self.list[0]).height),
+            searchInputHeight = 34;
+          if (ulHeight + searchInputHeight > listHeight) {
+            self.listUl[0].style.height = (listHeight - searchInputHeight) + 'px';
           }
+
+          return placementObj;
         }
+
+        // Reset styles that may have been appended to the list
+        this.list[0].removeAttribute('style');
+        this.listUl[0].removeAttribute('style');
+
+        var parentElement = this.pseudoElem;
+        if (this.isInGrid) {
+          parentElement = this.element.closest('.datagrid-cell-wrapper');
+        }
+
+        // If the list would end up being wider parent,
+        // use the list's width instead of the parent's width
+        var parentElementStyle = window.getComputedStyle(parentElement[0]),
+          parentElementWidth = parseInt(parentElementStyle.width + parentElementStyle.borderLeftWidth + parentElementStyle.borderRightWidth),
+          listDefaultWidth = this.list.outerWidth(),
+          useParentWidth = listDefaultWidth <= parentElementWidth;
+
+        // Add parent info to positionOpts
+        positionOpts.parent = parentElement;
+        positionOpts.useParentWidth = useParentWidth;
+
+        // use negative height of the pseudoElem to get the Dropdown list to overlap the input.
+        positionOpts.y = parseInt(parentElementStyle.height + parentElementStyle.borderTopWidth + parentElementStyle.borderBottomWidth) * -1;
+
+        this.list.one('afterplace.dropdown', dropdownAfterPlaceCallback).place(positionOpts);
+        this.list.data('place').place(positionOpts);
       },
 
       // Alias that works with the global "closeChildren" method.  See "js/lifecycle.js"
@@ -1244,12 +1234,12 @@
           .off('click.dropdown scroll.dropdown touchmove.dropdown touchend.dropdown touchcancel.dropdown');
 
         $('body').off('resize.dropdown');
+        $(window).off('orientationchange.dropdown');
         this.element.trigger('listclosed', action);
         this.activate();
         this.list = null;
         this.searchInput = null;
         this.listUl = null;
-
       },
 
       //Set option into view
@@ -1603,11 +1593,6 @@
 
       isMobile: function() {
         return ['ios', 'android'].indexOf(Soho.env.os.name) > -1;
-      },
-
-      // Used to determine whether or not we need to show the full-screen dropdown
-      isFullScreen: function() {
-        return this.isMobile() && $(window).width() < 767;
       },
 
       isListClosable: function() {
