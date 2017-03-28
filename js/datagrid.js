@@ -4358,7 +4358,7 @@ $.fn.datagrid = function(options) {
 
     // activate a row when in mixed selection mode
     activateRow: function(idx) {
-      if (this.activatedRow().row !== idx) {
+      if (this.activatedRow().length === 0 || this.activatedRow()[0].row !== idx) {
         this.toggleRowActivation(idx);
       }
     },
