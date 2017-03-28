@@ -1,0 +1,47 @@
+<body>
+  {{> includes/masthead}}
+  {{> includes/applicationmenu}}
+  <div class="page-container no-scroll">
+
+    <header class="header has-tabs-only">
+      <div class="call-to-action-header">
+        <div class="tab-container header-tabs">
+          <ul class="tab-list">
+            <li class="tab is-selected"><a href="#recent-activity">Recent Activity</a></li>
+            <li class="tab"><a href="#customers">Customers</a></li>
+            <li class="tab"><a href="#products">Products</a></li>
+            <li class="tab"><a href="#orders">Orders</a></li>
+          </ul>
+        </div>
+        <div class="call-to-action-container">
+          <button id="create-new-order" class="btn-primary">
+            <span>Create New Order</span>
+          </button>
+        </div>
+      </div>
+    </header>
+    <div class="page-container scrollable">
+      <div id="recent-activity" class="tab-panel">
+        <header class="sub-header">
+          <div class="full-searchfield-container">
+            <label class="audible" for="full-searchfield">Search for a customer...</label>
+            <input id="full-searchfield" class="searchfield context" />
+          </div>
+        </header>
+        <div class="row">
+          <div class="twelve columns">
+            <!-- card with grid goes here-->
+          </div>
+        </div>
+      </div>
+      <div id="customers" class="tab-panel">
+        <!-- todo -->
+      </div>
+      <div id="products" class="tab-panel">
+        <!-- todo -->
+      </div>
+      <div id="orders" class="tab-panel">
+        <!-- todo -->
+      </div>
+    </div>
+  </div>
