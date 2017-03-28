@@ -153,7 +153,7 @@
             }
             overItem = $(overItem);
 
-            if(!self.isTouch) {
+            if (!self.isTouch) {
               e.originalEvent.dataTransfer.dropEffect = 'move';
             }
 

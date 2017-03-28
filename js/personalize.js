@@ -243,13 +243,19 @@
 
         var self = this,
           originalCss = $('#stylesheet, #sohoxi-stylesheet'),
-          newCss = originalCss.clone(),
+          newCss = $('<link rel="stylesheet">'),
           path = originalCss.attr('href');
+
         newCss.on('load', function() {
           originalCss.remove();
           self.unBlockUi();
         });
-        newCss.attr('href', path.substring(0, path.lastIndexOf('/')) + '/' + theme + '-theme' + (path.indexOf('.min') > -1 ? '.min' : '') + '.css');
+
+        newCss.attr({
+          id: originalCss.attr('id'),
+          href: path.substring(0, path.lastIndexOf('/')) + '/' + theme + '-theme' + (path.indexOf('.min') > -1 ? '.min' : '') + '.css'
+        });
+        originalCss.removeAttr('id');
         originalCss.after(newCss);
       },
 
@@ -265,7 +271,7 @@
           'text-align: center;' +
         	'top: 0;' +
         	'width: 100%;' +
-          'z-index: 999;' +
+          'z-index: 10000;' +
           '"></div>'
         );
 
@@ -275,7 +281,7 @@
       unBlockUi: function (){
         var self = this;
 
-        self.pageOverlay.fadeOut(1750, function() {
+        self.pageOverlay.fadeOut(300, function() {
           self.pageOverlay.remove();
           self.pageOverlay = undefined;
         });
