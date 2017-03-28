@@ -224,6 +224,9 @@
         self.list.off('click touchend')
           .on('touchend.autocomplete click.autocomplete', 'a', function(e) {
             self.select(e, items);
+          })
+          .off('focusout.autocomplete').on('focusout.autocomplete', function() {
+            self.checkActiveElement();
           });
 
         // Highlight anchors on focus
@@ -263,6 +266,7 @@
         }
 
         popup.close();
+        this.element.trigger('listclose');
       },
 
       listIsOpen: function() {
@@ -281,32 +285,42 @@
           self.handleAutocompleteInput(e);
         }).off('focus.autocomplete').on('focus.autocomplete', function () {
           self.handleAutocompleteFocus();
+        }).off('focusout.autocomplete').on('focusout.autocomplete', function () {
+          self.checkActiveElement();
         });
       },
 
       // Handles the Autocomplete's "keydown" event
       handleAutocompleteKeydown: function(e) {
-        var self = this,
-          selected;
-
-        function getSelected() {
-          return self.list.find('.is-selected');
-        }
+        var self = this;
 
         if (self.isLoading()) {
           e.preventDefault();
           return false;
         }
 
-        var excludes = 'li:not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)';
+        function getHighlighted(items) {
+          return items.filter('.is-selected');
+        }
+
+        function unhighlight(item) {
+          item.removeClass('is-selected is-focused');
+        }
+
+        function highlight(item) {
+          item.addClass('is-selected').find('a').focus();
+        }
+
+        var excludes = 'li:not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)',
+          items = this.list.find(excludes),
+          highlighted = getHighlighted(items);
 
         //Down - select next
         if (e.keyCode === 40 && this.listIsOpen()) {
-          selected = getSelected();
-          if (selected.length) {
+          if (highlighted.length) {
             self.noSelect = true;
-            selected.removeClass('is-selected is-focused');
-            selected.next(excludes).addClass('is-selected').find('a').focus();
+            unhighlight(highlighted);
+            highlight( items.eq(items.index(highlighted) + 1) );
             e.preventDefault();
             e.stopPropagation();
           }
@@ -314,11 +328,10 @@
 
         //Up select prev
         if (e.keyCode === 38 && this.listIsOpen()) {
-          selected = getSelected();
-          if (selected.length) {
+          if (highlighted.length) {
             self.noSelect = true;
-            selected.removeClass('is-selected is-focused');
-            selected.prev(excludes).addClass('is-selected').find('a').focus();
+            unhighlight(highlighted);
+            highlight( items.eq(items.index(highlighted) - 1) );
             e.preventDefault();
             e.stopPropagation();
           }
@@ -326,14 +339,12 @@
 
         //Enter/Tab - apply selected item
         if ((e.keyCode === 9 || e.keyCode === 13) && this.listIsOpen()) {
-          selected = getSelected();
-
           //Apply selection if an item is selected, otherwise close list and allow default tab/enter behavior to happen
-          if (selected.length) {
+          if (highlighted.length) {
             e.stopPropagation();
             e.preventDefault();
             self.noSelect = true;
-            self.select(selected, this.currentDataSet);
+            self.select(highlighted, this.currentDataSet);
           } else {
             self.closeList();
           }
@@ -359,6 +370,25 @@
           self.currentDataSet = response;
           self.openList(term, response);
         });
+      },
+
+      /**
+       * Check to see whether or not the currently-focused element resides within the Autocomplete's field
+       * or list, and if not, fires a "safe-blur" event on the element.
+       * @param {$.Event} e - The event object passed in from the jQuery `.on()` listener.
+       * @returns {undefined}
+       */
+      checkActiveElement: function() {
+        var self = this;
+        setTimeout( function() {
+          var activeElem = document.activeElement;
+
+          if ($.contains(self.list[0], activeElem) || self.element.is(activeElem)) {
+            return;
+          }
+
+          self.element.trigger('safe-blur');
+        }, 0);
       },
 
       getDataFromSource: function() {
