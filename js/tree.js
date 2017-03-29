@@ -44,7 +44,7 @@
     Tree.prototype = {
       init: function() {
         this.settings = $.extend({}, settings);
-        this.isIe11 = $('html').is('.ie11');
+        this.isIe11 = (Soho.env.browser.name === 'ie' && Soho.env.browser.version === '11');
         this.initTree();
         this.handleKeys();
         this.setupEvents();
@@ -105,7 +105,9 @@
         parentCount = 0,
         badgeData = a.attr('data-badge'),
         alertIcon = a.attr('data-alert-icon'),
-        badge = {elem: $('<span class="tree-badge badge"></span>')};
+        badge = {elem: $('<span class="tree-badge badge"></span>')},
+        isParentsDisabled = a.parentsUntil(this.element, 'ul[role=group].is-disabled').length > 0,
+        isDisabled = a.hasClass('is-disabled') || isParentsDisabled;
 
         if (typeof badgeData !== 'undefined') {
           badgeData = $.fn.parseOptions(a, 'data-badge');
@@ -115,8 +117,8 @@
         a.attr({'role': 'treeitem', 'tabindex': '-1', 'aria-selected': 'false'});
 
         // Add Aria disabled
-        if (a.hasClass('is-disabled')) {
-          a.attr('aria-disabled','true');
+        if (isDisabled) {
+          a.addClass('is-disabled').attr('aria-disabled','true');
           var childSection = a.next();
 
           if (childSection.is('ul.is-open')) {
@@ -201,7 +203,7 @@
           this.setTreeIcon(a.find('svg.icon-tree'), subNode.hasClass('is-open') ? this.settings.folderIconOpen : this.settings.folderIconClosed);
 
           if (a.attr('class') && a.attr('class').indexOf('open') === -1 && a.attr('class').indexOf('closed') === -1) {
-            a.attr('class', '');
+            a.attr('class', isDisabled ? 'is-disabled' : '');
             this.setTreeIcon(a.find('svg.icon-tree'), subNode.hasClass('is-open') ? this.settings.folderIconOpen : this.settings.folderIconClosed);
           }
 
@@ -572,7 +574,7 @@
             // First element if disabled
             if (target.hasClass('is-disabled')) {
               var e = $.Event('keydown.tree');
-              e.keyCode= 40; // move down
+              e.keyCode = 40; // move down
               target.trigger(e);
               return;
             }
@@ -788,21 +790,22 @@
       },
 
       getNextNode: function(target) {
-        var next = target.parent().next().find('a:first');
+        var next = target.parent().next().find('a:first'),
+          subTarget = target.next();
 
         //Move Into Children
-        if (target.next().is('ul') && target.next().hasClass('is-open')) {
-          next = target.next().find('a:first');
+        if (subTarget.is('ul.is-open')) {
+          next = subTarget.find('a:first');
         }
 
         //skip disabled
-        if(next.hasClass('is-disabled')) {
+        if (next.hasClass('is-disabled')) {
           next = next.parent().next().find('a:first');
         }
 
         //bottom of a group..{l=1000: max folders to be deep }
         if (next.length === 0) {
-          for (var i=0, l=1000, closest=target; i<l; i++) {
+          for (var i = 0, l = 1000, closest = target; i < l; i++) {
             closest = closest.parent().closest('.folder');
             next = closest.next().find('a:first');
             if (next.length) {
@@ -810,28 +813,49 @@
             }
           }
         }
+
+        //another check for disabled
+        if (next.hasClass('is-disabled')) {
+          next = this.getNextNode(next);
+        }
+
         return next;
       },
 
       getPreviousNode: function(target) {
-        var prev = target.parent().prev().find('a:first');
+        var prev = target.parent().prev().find('a:first'),
+          subTarget = prev.parent();
 
         //move into children at bottom
-        if (prev.parent().is('.folder.is-open') &&
-            prev.parent().find('ul.is-open a').length &&
-            !prev.parent().find('ul.is-disabled').length) {
-          prev = prev.parent().find('ul.is-open a:last');
+        if (subTarget.is('.folder.is-open') &&
+            subTarget.find('ul.is-open a').length &&
+            !subTarget.find('ul.is-disabled').length) {
+          prev = subTarget.find('ul.is-open a:last');
         }
 
         //skip disabled
-        if(prev.hasClass('is-disabled')) {
+        if (prev.hasClass('is-disabled')) {
           prev = prev.parent().prev().find('a:first');
+
+          //another check if get to prev open folder
+          subTarget = prev.parent();
+          if (subTarget.is('.folder.is-open') &&
+              subTarget.find('ul.is-open a').length &&
+              !subTarget.find('ul.is-disabled').length) {
+            prev = subTarget.find('ul.is-open a:last');
+          }
         }
 
         //top of a group
         if (prev.length === 0) {
           prev = target.closest('ul').prev('a');
         }
+
+        //another check for disabled
+        if (prev.hasClass('is-disabled')) {
+          prev = this.getPreviousNode(prev);
+        }
+
         return prev;
       },
 
@@ -1098,6 +1122,11 @@
         if (nodeData.disabled) {
           elem.node.addClass('is-disabled');
           elem.node.attr('aria-disabled','true');
+
+          var parent = elem.node.parent();
+          if (parent.is('.folder.is-open')) {
+            $('a', parent).addClass('is-disabled').attr('aria-disabled','true');
+          }
         }
 
         if (nodeData.node) {
