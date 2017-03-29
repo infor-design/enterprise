@@ -56,6 +56,25 @@ $subheader-height: 60px;
     }
   }
 
+  .btn-primary {
+    background-color: $header-primary-btn-background-color;
+    border: 1px solid $header-primary-btn-background-color;
+
+    &:hover,
+    &:focus {
+      background-color: $header-primary-btn-background-hover-color;
+      border: 1px solid $header-primary-btn-background-hover-color;
+    }
+
+    &:focus:not(.hide-focus) {
+      box-shadow: 0 0 0 2px $azure07, 0 0 0 3px $white;
+
+      &:active {
+        box-shadow: none;
+      }
+    }
+  }
+
   .page-title {
     @include font-size(18);
     color: $header-text-color;

@@ -12,12 +12,12 @@
     height: inherit;
     text-align: right;
     vertical-align: middle;
-    width: 220px;
+    width: 240px;
 
     button {
       display: block;
       margin: 1.3rem auto 0;
-      max-width: 100%;
+      max-width: calc(100% - 1.3rem);
       overflow: hidden;
       text-overflow: ellipsis;
     }
@@ -37,7 +37,7 @@
   .tab-container {
     display: inline-block;
     vertical-align: middle;
-    width: calc(100% - 220px);
+    width: calc(100% - 240px);
 
     &.header-tabs {
       height: inherit;
