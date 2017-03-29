@@ -17,6 +17,19 @@
     button {
       display: block;
       margin: 1.3rem auto 0;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &:only-child {
+      width: 100%;
+
+      button {
+        display: inline-block;
+        margin: 1.3rem 1.3rem 0;
+        max-width: calc(100% - 2.6rem);
+      }
     }
   }
 

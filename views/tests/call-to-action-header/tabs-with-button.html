@@ -1,4 +1,5 @@
 <body>
+  {{> includes/svg-inline-refs}}
   {{> includes/masthead}}
   {{> includes/applicationmenu}}
   <div class="page-container no-scroll">
@@ -15,7 +16,7 @@
         </div>
         <div class="call-to-action-container">
           <button id="create-new-order" class="btn-primary">
-            <span>Create New Order</span>
+            <span>WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW</span>
           </button>
         </div>
       </div>
@@ -28,7 +29,15 @@
             <input id="full-searchfield" class="searchfield context" placeholder="Search for a customer..."/>
           </div>
         </header>
+
         <div class="row top-padding">
+          <div class="six columns">
+            <h2>Call To Action Header Test: Tabs With Button</h2>
+            <p><a class="hyperlink" href="http://jira/browse/SOHO-5721" target="_blank">Related JIRA Ticket</a>.</p>
+          </div>
+        </div>
+
+        <div class="row">
           <div class="twelve columns">
 
             <div class="card auto-height">
@@ -85,10 +94,6 @@
     console.log('Resume Order!', args);
   }
 
-  function cardToolbarMenuButtonSelectCallback(e, anchor, text) {
-    $(this).find('span').text('Location: ' + anchor.text().trim());
-  }
-
   columns.push({ id: 'orderId', name: 'Order #', field: 'productId', formatter: Formatters.Readonly, width: 80 });
   columns.push({ id: 'lastEdited', name: 'lastEdited', field: 'lastEdited', formatter: Formatters.Date, dateFormat: 'M/d/yyyy', width: 125 });
   columns.push({ id: 'company', name: 'Company', field: 'company', formatter: Formatters.Text, width: 175 });
@@ -109,7 +114,9 @@
   }
 
   $('body').one('initialized', function () {
-    $('#location-button').on('selected.test', cardToolbarMenuButtonSelectCallback);
+    $('#location-button').on('selected.test', function(e, anchor, text) {
+      $(this).find('span').text('Location: ' + anchor.text().trim());
+    });
 
     Locale.set('en-US').done(function () {
       //Init and get the api for the grid
