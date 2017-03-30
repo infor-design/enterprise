@@ -121,13 +121,12 @@
         }
 
         // Reference all interactive items in the toolbar
-        this.items = this.buttonset.children('button')
-          .add(this.buttonset.find('input')) // Searchfield Wrappers
+        this.buttonsetItems = this.buttonset.children('button')
+          .add(this.buttonset.find('input')); // Searchfield Wrappers
+        
+        this.items = this.buttonsetItems
           .add(this.title.children('button'))
           .add(this.more);
-
-        this.buttonsetItems = this.buttonset.children('button, input')
-          .add(this.buttonset.find('.searchfield-wrapper, .toolbar-searchfield-wrapper').children('input'));
 
         // Invoke buttons
         var buttons = this.items.filter('button, input[type="button"], [class^="btn"]');
