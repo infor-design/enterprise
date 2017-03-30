@@ -534,6 +534,13 @@ html[dir='rtl'] {
   }
 }
 
+//Do not allow upper case in french
+html[lang^='fr-'] {
+  [class^="btn"] {
+    text-transform: none;
+  }
+}
+
 //Special "Ghost" Secondary Border button-font-size
 .btn-secondary-border {
   @include transition(all 300ms cubic-bezier(.17, .04, .03, .94));
