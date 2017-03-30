@@ -33,6 +33,7 @@
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly, filterType: 'text'});
       columns.push({ id: 'productId2', name: 'Product Id 2', field: 'productId', formatter: Formatters.Readonly, filterType: 'text'});
       columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, filterType: 'text', editor: Editors.Input});
+      columns.push({ id: 'inStock', name: 'In Stock', field: 'inStock', width: 90, formatter: Formatters.Checkbox, align: 'center', filterType: 'checkbox', editor: Editors.Checkbox});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity', filterType: 'contents', options: activities, editor: Editors.Dropdown});
 
       //Supported Filter Types: text, integer, date, select, decimal, checkbox, contents (FUTURE: lookup, percent)

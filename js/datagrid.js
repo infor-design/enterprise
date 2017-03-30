@@ -1426,7 +1426,7 @@ $.fn.datagrid = function(options) {
         row = isTop ? row : self.settings.dataset.length - 1;
         self.setActiveCell(row, cell);
 
-        rowNode = self.tableBody.find('tr').eq(row);
+        rowNode = self.tableBody.find('tr[aria-rowindex="'+ (row + 1) +'"]');
         args = {row: row, cell: cell, target: rowNode, value: data, oldValue: []};
 
         self.pagerRefresh(location);
@@ -1451,7 +1451,7 @@ $.fn.datagrid = function(options) {
 
     //Delete a Specific Row
     removeRow: function (row, nosync) {
-      var rowNode = this.tableBody.find('tr').eq(row),
+      var rowNode = this.tableBody.find('tr[aria-rowindex="'+ (row + 1) +'"]'),
         rowData = this.settings.dataset[row];
 
       this.unselectRow(row, nosync);
@@ -3624,7 +3624,7 @@ $.fn.datagrid = function(options) {
 
     //Returns a cell node
     cellNode: function (row, cell, includeGroups) {
-      var rowNode = this.tableBody.find('tr').eq(row);
+      var rowNode = this.tableBody.find('tr[aria-rowindex="'+ (row + 1) +'"]');
 
       if (row instanceof jQuery) {
         rowNode = row;
@@ -4381,7 +4381,7 @@ $.fn.datagrid = function(options) {
     },
 
     toggleRowActivation: function (idx) {
-      var row = (typeof idx === 'number' ? this.tableBody.find('tr[role="row"]').eq(idx) : idx),
+      var row = (typeof idx === 'number' ? this.tableBody.find('tr[aria-rowindex="'+ (idx + 1) +'"]') : idx),
         rowIndex = (typeof idx === 'number' ? idx : this.dataRowIndex(row)),
         isActivated = row.hasClass('is-rowactivated');
 
@@ -4405,7 +4405,7 @@ $.fn.datagrid = function(options) {
     },
 
     toggleRowSelection: function (idx) {
-      var row = (typeof idx === 'number' ? this.tableBody.find('tr[role="row"]').eq(idx) : idx),
+      var row = (typeof idx === 'number' ? this.tableBody.find('tr[aria-rowindex="'+ (idx + 1) +'"]') : idx),
         isSingle = this.settings.selectable === 'single',
         rowIndex = (typeof idx === 'number' ? idx : this.dataRowIndex(row));
 
@@ -4771,7 +4771,7 @@ $.fn.datagrid = function(options) {
           item = self.settings.dataset[self.dataRowIndex(node)],
           visibleRows = self.tableBody.find('tr:visible'),
           getVisibleRows = function(index) {
-            var row = visibleRows.eq(index);
+            var row = visibleRows.filter('[aria-rowindex="'+ (index + 1) +'"]');
             if (row.is('.datagrid-rowgroup-header')) {
               return row.index();
             }
@@ -5400,21 +5400,15 @@ $.fn.datagrid = function(options) {
     },
 
     visualRowNode: function (idx) {
-      var node = this.tableBody.find('tr[aria-rowindex="'+ (idx + 1) +'"]');
-
-      return node;
+      return this.tableBody.find('tr[aria-rowindex="'+ (idx + 1) +'"]');
     },
 
     dataRowNode: function (idx) {
-      var node = this.tableBody.find('tr[aria-rowindex]').eq(idx);
-
-      return node;
+      return this.tableBody.find('tr[aria-rowindex="'+ (idx + 1) +'"]');
     },
 
     dataRowIndex: function (row) {
-     var rowIdx = (row.attr('aria-rowindex')-1);
-
-     return rowIdx;
+     return row.attr('aria-rowindex') - 1;
     },
 
     // Update a specific Cell
