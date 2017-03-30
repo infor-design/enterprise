@@ -1,0 +1,132 @@
+<body>
+  {{> includes/svg-inline-refs}}
+  {{> includes/masthead}}
+  {{> includes/applicationmenu}}
+  <div class="page-container no-scroll">
+
+    <header class="header has-tabs-only">
+      <div class="call-to-action-header">
+        <div class="tab-container header-tabs">
+          <ul class="tab-list">
+            <li class="tab is-selected"><a href="#recent-activity">Recent Activity</a></li>
+            <li class="tab"><a href="#customers">Customers</a></li>
+            <li class="tab"><a href="#products">Products</a></li>
+            <li class="tab"><a href="#orders">Orders</a></li>
+          </ul>
+        </div>
+        <div class="call-to-action-container">
+          <button id="create-new-order" class="btn-primary">
+            <span>WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW</span>
+          </button>
+        </div>
+      </div>
+    </header>
+    <div class="page-container scrollable">
+      <div id="recent-activity" class="tab-panel">
+        <header class="subheader">
+          <div class="full-searchfield-container">
+            <label class="audible" for="full-searchfield">Search for a customer...</label>
+            <input id="full-searchfield" class="searchfield context" placeholder="Search for a customer..."/>
+          </div>
+        </header>
+
+        <div class="row top-padding">
+          <div class="six columns">
+            <h2>Call To Action Header Test: Tabs With Button</h2>
+            <p><a class="hyperlink" href="http://jira/browse/SOHO-5721" target="_blank">Related JIRA Ticket</a>.</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="twelve columns">
+
+            <div class="card auto-height">
+              <div class="card-header has-toolbar">
+                <div class="toolbar">
+                  <div class="title card-title">
+                    <span>Open Orders </span>
+                    <span class="datagrid-result-count">(50 Results)</span>
+                  </div>
+                  <div class="buttonset">
+                    <button id="location-button" class="btn-menu">
+                      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                        <use xlink:href="#icon-filter"></use>
+                      </svg>
+                      <span>Location: Northampton</span>
+                    </button>
+                    <ul class="popupmenu is-selectable">
+                      <li class="is-checked"><a href="#">Northampton</a></li>
+                      <li><a href="#">Southampton</a></li>
+                      <li><a href="#">Eastampton</a></li>
+                      <li><a href="#">Westampton</a></li>
+                      <li><a href="#">Hampton</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="card-content">
+                <div id="open-orders-datagrid"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div id="customers" class="tab-panel">
+        <!-- todo -->
+      </div>
+      <div id="products" class="tab-panel">
+        <!-- todo -->
+      </div>
+      <div id="orders" class="tab-panel">
+        <!-- todo -->
+      </div>
+    </div>
+  </div>
+
+<script type="text/javascript">
+  var grid,
+    columns = [],
+    data = [],
+    dataCount = 0;
+
+  function gridButtonOnClickCallback(e, args) {
+    console.log('Resume Order!', args);
+  }
+
+  columns.push({ id: 'orderId', name: 'Order #', field: 'productId', formatter: Formatters.Readonly, width: 80 });
+  columns.push({ id: 'lastEdited', name: 'lastEdited', field: 'lastEdited', formatter: Formatters.Date, dateFormat: 'M/d/yyyy', width: 125 });
+  columns.push({ id: 'company', name: 'Company', field: 'company', formatter: Formatters.Text, width: 175 });
+  columns.push({ id: 'customer', name: 'Customer', field: 'customer', formatter: Formatters.Text, width: 175 });
+  columns.push({ id: 'siteAddress', name: 'Site Address', field: 'siteAddress', formatter: Formatters.Text });
+  columns.push({ id: 'resume-order', name: '', field: 'resume-order', text: 'Resume Order', sortable: false, align: 'center', formatter: Formatters.Button, click: gridButtonOnClickCallback });
+
+  while(dataCount < 100) {
+    data.push({
+      id: dataCount,
+      productId: (dataCount + 1),
+      lastEdited: new Date(2017, 1, 31),
+      company: 'Company Name',
+      customer: 'Customer Name',
+      siteAddress: '1234 6th Avenue, Address Details, New York, NY 11010 USA',
+      action: 'Resume Order' });
+    dataCount++;
+  }
+
+  $('body').one('initialized', function () {
+    $('#location-button').on('selected.test', function(e, anchor, text) {
+      $(this).find('span').text('Location: ' + anchor.text().trim());
+    });
+
+    Locale.set('en-US').done(function () {
+      //Init and get the api for the grid
+      grid = $('#open-orders-datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        paging: true,
+        pagesize: 5
+      }).data('datagrid');
+
+    });
+  });
+</script>
