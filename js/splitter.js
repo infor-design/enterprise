@@ -85,26 +85,26 @@
             var $splitterButton = $('<button type="button" class="splitter-btn" id="splitter-collapse-btn" title="Collapse"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-double-chevron"></use></svg></button>');
             $splitterButton.appendTo(splitter);
             if (splitter[0].offsetLeft > 10) {
-              $('#splitter-collapse-btn').css('transform','rotate(180deg)');
+              $('#splitter-collapse-btn').addClass('rotate');
             }
             $('#splitter-collapse-btn').click(function() {
               if (savedOffset <= 0) {
                 if (splitter[0].offsetLeft <= 10){
                   self.splitTo(defaultOffset, parentHeight);
-                  $(this).css('transform','rotate(180deg)' );
+                  $(this).addClass('rotate');
                 } else {
                   savedOffset = splitter[0].offsetLeft;
                   self.splitTo(0, parentHeight);
-                  $(this).css('transform','' );
+                  $(this).removeClass('rotate');
                 }
               } else {
                 if (splitter[0].offsetLeft > 10){
                   savedOffset = splitter[0].offsetLeft;
                   self.splitTo(0, parentHeight);
-                  $(this).css('transform','' );
+                  $(this).removeClass('rotate');
                 } else {
                   self.splitTo(savedOffset, parentHeight);
-                  $(this).css('transform','rotate(180deg)' );
+                  $(this).addClass('rotate');
                   savedOffset = 0;
                 }
               }
@@ -168,9 +168,9 @@
 
           if (s.collapseButton) {
             if (args[direction] <= 10) {
-              $('#splitter-collapse-btn').css('transform','');
+              $('#splitter-collapse-btn').removeClass('rotate');
             } else {
-              $('#splitter-collapse-btn').css('transform','rotate(180deg)');
+              $('#splitter-collapse-btn').addClass('rotate');
             }
           }
 

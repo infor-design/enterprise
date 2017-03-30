@@ -53,11 +53,17 @@
   }
 
   .splitter-btn {
-    position: absolute;
     height: 30px;
+    left: -2px;
+    position: absolute;
+    transform: none;
     width: 30px;
-    left: -6px;
     z-index: 101;
+  }
+
+  .splitter-btn.rotate {
+    left: -14px;
+    transform: rotate(180deg);
   }
 
   &.is-dragging {
