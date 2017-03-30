@@ -214,6 +214,33 @@
       });
     },
 
+    // Set disable/enable primary button in modal
+    setModalPrimaryBtn: function(field, modalBtn, isValid) {
+      var modal = field.closest('.modal'),
+        modalFields = modal.find('[data-validate]'),
+        allValid = true;
+
+      if (modalFields.length > 0) {
+        field.data('isValid', isValid);
+        modalFields.each(function () {
+          var modalField = $(this);
+          if (modalField.closest('.datagrid-filter-wrapper').length > 0) {
+            return;
+          }
+          var isVisible = modalField[0].offsetParent !== null;
+          if (isVisible && !modalField.isValid()) {
+            allValid = false;
+          }
+        });
+      }
+
+      if (allValid) {
+        modalBtn.removeAttr('disabled');
+      } else {
+        modalBtn.attr('disabled', 'disabled');
+      }
+    },
+
     value: function(field) {
       if (field.is('input[type=checkbox]')) {
         return field.prop('checked');
@@ -436,8 +463,10 @@
       }
 
       // Disable primary button in modal
-      field.closest('.modal').find('.btn-modal-primary').not('.no-validation')
-        .attr('disabled', 'disabled');
+      var modalBtn = field.closest('.modal').find('.btn-modal-primary').not('.no-validation');
+      if (modalBtn.length) {
+        this.setModalPrimaryBtn(field, modalBtn, false);
+      }
 
       this.showInlineError(loc, message);
     },
@@ -659,7 +688,10 @@
       }
 
       // Enable primary button in modal
-      field.closest('.modal').find('.btn-modal-primary').not('.no-validation').removeAttr('disabled');
+      var modalBtn = field.closest('.modal').find('.btn-modal-primary').not('.no-validation');
+      if (modalBtn.length) {
+        this.setModalPrimaryBtn(field, modalBtn, true);
+      }
 
       //Stuff for the inline error
       field.closest('.field, .field-short').find('.error-message').remove();
@@ -989,11 +1021,18 @@
       doAction = function(isValid) {
         field.data('isValid', isValid);
       };
-    if (api) {
-      $.when.apply($, [api.validate(field, false, 0)]).then(function () {
-        doAction(true);
-      }, function () {
-        doAction(false);
+
+    if (api && api.validate) {
+      var fx = api.validate(field, false, 0);
+      $.when.apply($, fx).always(function() {
+        // [fail] returns the first fail, so we have to loop deferred objects
+        $.each(fx, function() {
+          this.done(function() {
+            doAction(true);
+          }).fail(function() {
+            doAction(false);
+          });
+        });
       });
     }
   };
