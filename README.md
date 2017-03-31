@@ -3,46 +3,44 @@
 
 SoHo XI provides comprehensive tools for product development teams to create use experiences that are: Intuitive, Engaging, Purposeful, Relevant Functional and Beautiful.
 
-The SoHo XI Control library is a framework independent UI (js and css) library that is pattern focused, template driven, touch enabled, responsive, accessible and themable.
+The SoHo XI Component library is a framework independent UI (js and css) library that is pattern focused, template driven, touch enabled, responsive, accessible and themable.
 
 For guidelines on when and where to use the controls see the [Soho Style Guide](http://soho.infor.com).
 
 This project is an open source project. If you have a contribution please [submit a pull request](#pull-requests). However, your code must follow our coding guidelines as mentioned in this page and use designs and behavior approved by Hook and Loop.
 
-The project is a simple node project using SASS and Grunt with Grunt Watch and Live Reload to stage a serious of control examples shown on example and documentation pages.
+The project is a node project using SASS and Grunt with Grunt Watch and Live Reload to stage a series of examples shown on example and documentation pages.
 
-## New Features
-* Supports AMD (fx.. Require JS)
-* Smaller Footprint
+## Contacting Us and Updates
+
+Please use the [Jira tracker | http://jira/browse/SOHO] to report all SoHo design questions, icon requests, component bugs, questions and feature requests.
+
+For release updates see our upcoming and past version in our [Releases road map | http://jira/projects/SOHO?selectedItem=com.atlassian.jira.jira-projects-plugin:release-page].
+
+For updates please joining our [mailing list| http://infor.us14.list-manage.com/subscribe?u=c3ab99ba63e59d84b056cc3c1&id=a638318afb].
+
+## Features
+* Supports AMD
 * Source Maps
-* More Template Friendly
+* Template Friendly
 * Sass Friendly
 * Themes
 * Responsive
 * Touch Friendly
-* Retina Ready with SVG images and icons
-* IE8 is not supported
-* Rewrites: Grid / DateField
+* Retina Ready with SVG icons
+* IE11 is not supported
 * Globalization
 * Input Formatting
 * Validation
-* Analytics - Future
 
 ## Upgrade Guide (from 3.x)
-
-### Checkboxes
-* New Markup
-
-### Rewrites
-* Grid
-* DateField
-* Tabs
+https://soho.infor.com/upgrade-guide
 
 ## Browser Support
 
 ![IE](https://cloud.githubusercontent.com/assets/398893/3528325/20373e76-078e-11e4-8e3a-1cb86cf506f0.png) | ![Chrome](https://cloud.githubusercontent.com/assets/398893/3528328/23bc7bc4-078e-11e4-8752-ba2809bf5cce.png) | ![Firefox](https://cloud.githubusercontent.com/assets/398893/3528329/26283ab0-078e-11e4-84d4-db2cf1009953.png) | ![Opera](https://cloud.githubusercontent.com/assets/398893/3528330/27ec9fa8-078e-11e4-95cb-709fd11dac16.png) | ![Safari](https://cloud.githubusercontent.com/assets/398893/3528331/29df8618-078e-11e4-8e3e-ed8ac738693f.png)
 --- | --- | --- | --- | --- |
-IE 9+ ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
+IE R-1 ✔ | R-1 ✔ | R-1 ✔ | R-1 ✔ | R-1 ✔ |
 
 
 # Running the Development Project
@@ -124,13 +122,13 @@ npm install --save @infor/sohoxi@latest
 
 Run the following to get a specific version.
 ```bash
-npm install --save @infor/sohoxi@4.2.0
+npm install --save @infor/sohoxi@4.X.X
 ```
 
-Run the following to get the last develop build
+Run the following to get the bleeding edge development build with no warranty.
 
 ```bash
-npm install --save @infor/sohoxi@develop
+npm install --save @infor/sohoxi@4.X.X
 ```
 
 Run the following to see the versions
@@ -166,13 +164,11 @@ There are several to get involved, this document covers:
 
 If you're about to raise an issue because think you've found a problem, or you'd like to make a request for a new feature in the codebase, or any other reason… please read this first.
 
-The [Jira issue tracker](http://jira.infor.com/browse/HFC) is the preferred channel for [bug reports](#bugs), [feature requests](#features), [change requests](#changes).
+The [Jira issue tracker](http://jira.infor.com/browse/SOHO) is the preferred channel for [bug reports](#bugs), [feature requests](#features), [change requests](#changes).
 
 Use Git for [submitting pull requests](#pull-requests), but please respect the following:
 
 * Please **search for existing issues** in JIRA before submitting a pull request. Help us keep duplicate issues to a minimum by checking to see if someone has already reported your problem or requested your idea.
-
-* Please **do not** derail or troll issues. Keep the discussion on topic and respect the opinions of others.
 
 <a name="bugs"></a>
 ### Bug Reports
@@ -185,13 +181,13 @@ Guidelines for bug reports:
    reported.
 
 2. **Check if the issue has been fixed** &mdash; try to reproduce it using the
-   latest `master` or look for [closed issues in the current milestone](http://jira.infor.com/secure/IssueNavigator.jspa?reset=true&jqlQuery=project+%3D+HFC+AND+status+%3D+Resolved+ORDER+BY+priority+DESC&mode=hide).
+   latest `master` or look for [closed issues in the current milestone](http://jira.infor.com/secure/IssueNavigator.jspa?reset=true&jqlQuery=project+%3D+SOHO+AND+status+%3D+Resolved+ORDER+BY+priority+DESC&mode=hide).
 
 3. **Isolate the problem** &mdash; and create a [reduced test case](http://css-tricks.com/6263-reduced-test-cases/) and a live example.
 
 Examples of reduced test cases are:
 
- - Take an existing example and modify it to resemble the issue, this is iudeal as we can include this in our init tests to avoid future breakages.
+ - Take an existing example and modify it to resemble the issue, this is ideal as we can include this in our init tests to avoid future breakages.
  - Create an example using a tool like https://jsfiddle.net/ - the soho
    xi scripts can be upload on this site
  - Any Other runnable code.
@@ -300,7 +296,8 @@ Essentially though, [check out the latest master](http://git.infor.com/projects/
 
 Soho XI's current documentation can be found at [soho.infor.com](http://soho.infor.com).
 
-The documentation will be generated created inline in the pages (soon but not yet). You can fork the repo and submit pull requests following the [pull-request](#pull-requests) guidelines.
+Documentation will be gradually generated as inline pages. See http://usalvlhlpool1.infor.com/4.2.6-rc/docs/
+for work in progress.
 
 <a name="coding-standards"></a>
 ## Coding Standards and Conventions
@@ -321,7 +318,7 @@ The documentation will be generated created inline in the pages (soon but not ye
  - modify the gruntfie.js to add the new script
  - add initializer code to initialize.js (should be able to boot strap the page)
  - code control
- - right unit tests by adding a js file to tests/spec like existing tests, make it run the tests/controlname page and test out various things as spec'd
+ - write unit tests
  - make sure all tests pass
  - run grunt to test jshint for the new control
  - verify html is valid: https://addons.mozilla.org/en-US/firefox/addon/html-validator/
@@ -336,12 +333,12 @@ The documentation will be generated created inline in the pages (soon but not ye
 ## QA Documentation
 
 Test Page:
-http://usmvvwdev53:421/
-(Note that each control can be accessed on its own url `http://usmvvwdev53:421/controls/<name>` for example:
-http://usmvvwdev53:421/controls/slider)
+http://usmvvwdev53:426/
+(Note that each control can be accessed on its own url `http://usmvvwdev53:426/controls/<name>` for example:
+http://usmvvwdev53:426/controls/slider)
 
 Jira: For Reporting Issues..
-http://jira.infor.com/browse/HFC
+http://jira.infor.com/browse/SOHO
 
 RoadMap:
 https://docs.google.com/spreadsheets/d/1nxSEfNoKtQ9i3R7hgokj8VTdAJ95J8SXfhJ7IrtrOf0/edit?pli=1#gid=345637423
@@ -349,7 +346,7 @@ https://docs.google.com/spreadsheets/d/1nxSEfNoKtQ9i3R7hgokj8VTdAJ95J8SXfhJ7Irtr
 Requirements:
 https://docs.google.com/spreadsheets/d/1Z9mmUZJlAqkCLy8vyie3AjRKUR4SVKuHGyFiQiGm98A/edit?pli=1#gid=989468169
 
-Usefull Links:
+Useful Links:
 http://accessibility.psu.edu/protocol
 http://www.paciellogroup.com/blog/2010/04/html5-and-the-myth-of-wai-aria-redundance/
 
@@ -357,16 +354,16 @@ http://www.paciellogroup.com/blog/2010/04/html5-and-the-myth-of-wai-aria-redunda
 
 The controls should be tested in several ways:
 
- - Browser Testing - IE9, IE10, IE11, Firefox, Safari, Chrome, IOS  (Phone and Tablet), Android (Phone and Tablet), Windows Touch (Surface)
+ - Browser Testing - IE11, Edge, Firefox, Safari, Chrome, IOS  (Phone and Tablet), Android (Phone and Tablet), Windows Touch (Surface)
  - Touch Device Support Testing
  - Accessibility Testing according to [WCAG Accessibility Standards](http://www.w3.org/TR/WCAG20/)
  - Developer Testing - Can the Controls be easily coded from the documentation, developer Web Driver.IO tests ect.
- -  Testing against requirements
+ - Testing against requirements
 
 ### Related Testing Tools
 
-- Tester can grab latest code from http://git.infor.com/projects/SOHO/repos/controls/browse  (Generally Two Month Cycles for versions/QA). Current Jira version is 4.0 for reporting
-- tester would go through every Html page example opening it in:  IE9, IE10, IE11, Firefox, Safari, Chrome, IOS  (Phone and Tablet), Android (Phone and Tablet), Windows Touch (Surface)
+- Tester can grab latest code from http://git.infor.com/projects/SOHO/repos/controls/browse  (Generally One Month Cycles for versions/QA).
+- tester would go through every Html page example opening it in:  IE11, Edge Firefox, Safari, Chrome, IOS  (Phone and Tablet), Android (Phone and Tablet), Windows Touch (Surface)
 - Cross check designs with https://docs.google.com/spreadsheets/d/1Z9mmUZJlAqkCLy8vyie3AjRKUR4SVKuHGyFiQiGm98A/edit?pli=1#gid=989468169
 or eventually the SoHo XI site pages
 - Tests for Accessibility
@@ -380,7 +377,6 @@ or eventually the SoHo XI site pages
 - Any issues or inconsistencies would be reported to http://jira.infor.com/browse/HFC
 - Create Selenium (Javascript based) scripts or similar tests (see tests folder in git project)
 - Help contribute to questions on Jira and make test examples to test different scenarios like the current test examples.
-
 
 ### Custom Soho Builder Tool
 
