@@ -261,6 +261,12 @@ $toolbarsearchfield-category-empty-width: 54px;
       border: 1px solid transparent;
       height: 34px;
     }
+
+    &.searchfield-wrapper.show-category {
+      .searchfield {
+        border-left-color: transparent;
+      }
+    }
   }
 
 }

@@ -168,7 +168,6 @@
 
         function searchfieldCollapseTimer() {
           if (!$.contains(self.inputWrapper[0], document.activeElement) && self.inputWrapper.hasClass('active')) {
-            //self.inputWrapper.removeClass('has-focus');
             self.collapse();
           }
         }
@@ -309,9 +308,36 @@
         return distance;
       },
 
+      setClosedWidth: function() {
+        // If the searchfield category button exists, change the width of the
+        // input field on the inside to provide space for the (variable) size of the currently-selected
+        // category (or categories)
+        if ((this.button instanceof $) && this.button.length) {
+          var buttonStyle = window.getComputedStyle(this.button[0]),
+            buttonWidth = parseInt(buttonStyle.width),
+            buttonPadding = parseInt(buttonStyle.paddingLeft) + parseInt(buttonStyle.paddingRight);
+
+          if (this.inputWrapper[0]) {
+            this.inputWrapper[0].style.width = (buttonWidth + buttonPadding) + 'px';
+          }
+        }
+      },
+
       setOpenWidth: function() {
         if (this.inputWrapper[0]) {
           this.inputWrapper[0].style.width = this.openWidth;
+        }
+
+        // If the searchfield category button exists, change the width of the
+        // input field on the inside to provide space for the (variable) size of the currently-selected
+        // category (or categories)
+        if ((this.button instanceof $) && this.button.length) {
+          var buttonStyle = window.getComputedStyle(this.button[0]),
+            buttonWidth = parseInt(buttonStyle.width),
+            buttonPadding = parseInt(buttonStyle.paddingLeft) + parseInt(buttonStyle.paddingRight),
+            inputWidth = 'calc(100% - ' + (buttonWidth + buttonPadding) + 'px)';
+
+          this.input[0].style.width = inputWidth;
         }
       },
 
@@ -367,11 +393,9 @@
           this.collapse();
         }
 
-        /*
         if (!isFullWidth && !hasStyleAttr) {
           this.calculateOpenWidth();
         }
-        */
       },
 
       // Angular may not be able to get these elements on demand so we need to be
@@ -460,7 +484,11 @@
 
         function closeWidth() {
           if (self.settings.collapsible || self.shouldBeFullWidth()) {
-            self.inputWrapper.removeAttr('style');
+            if (self.button instanceof $ && self.button.length) {
+              self.setClosedWidth();
+            } else {
+              self.inputWrapper.removeAttr('style');
+            }
           }
         }
 
@@ -479,7 +507,7 @@
 
           closeWidth();
 
-          if (self.button && self.button.length && self.button.is('.is-open')) {
+          if (self.button && self.button.length) {
             self.button.data('popupmenu').close(false, true);
           }
 

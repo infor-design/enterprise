@@ -223,7 +223,7 @@
 
         if (this.hasCategories()) {
           this.button.on('selected.searchfield', function(e, anchor) {
-            self.setCategoryButtonText(e, anchor.text().trim());
+            self.handleCategorySelected(e, anchor);
           }).on('focus.searchfield', function(e) {
             self.handleCategoryFocus(e);
           }).on('blur.searchfield', function(e) {
@@ -470,6 +470,20 @@
         }
 
         span.text(text);
+      },
+
+      /**
+       */
+      handleCategorySelected: function(e, anchor) {
+        this.setCategoryButtonText(e, anchor.text().trim());
+
+        // If this is a toolbar searchfield, run the size check that fixes the
+        // trigger button and input field size.
+        var tsAPI = this.element.data('toolbarsearchfield');
+        if (tsAPI && typeof tsAPI.setOpenWidth === 'function') {
+          tsAPI.calculateOpenWidth();
+          tsAPI.setOpenWidth();
+        }
       },
 
       /**

@@ -209,12 +209,12 @@ $listview-header-bg-color: $graphite04;
 $listview-header-color: $font-color-extrahighcontrast;
 $listview-subhead-color: $graphite06;
 
-$listview-toolbar-button-text-color: $graphite03;
-$listview-toolbar-button-icon-color: $graphite03;
-$listview-toolbar-button-text-hover-color: $white;
-$listview-toolbar-button-icon-hover-color: $white;
-$listview-toolbar-button-text-selected-color: $white;
-$listview-toolbar-button-icon-selected-color: $white;
+$listview-toolbar-button-text-color: $tertiary-btn-color;
+$listview-toolbar-button-icon-color: $tertiary-btn-color;
+$listview-toolbar-button-text-hover-color: $primary-color;
+$listview-toolbar-button-icon-hover-color: $primary-color;
+$listview-toolbar-button-text-selected-color: $primary-color;
+$listview-toolbar-button-icon-selected-color: $primary-color;
 
 // Listbuilder
 $listbuilder-bg-color: $input-bg-color;
@@ -624,8 +624,8 @@ $searchfield-context-boxshadow-color: $graphite03;
 $searchfield-context-icon-color: $graphite04;
 $searchfield-context-text-color: $font-color;
 
-$searchfield-card-bg-color: $graphite01;
-$searchfield-card-border-color: $graphite02;
+$searchfield-card-bg-color: $white;
+$searchfield-card-border-color: $graphite03;
 $searchfield-card-icon-color: $graphite03;
 $searchfield-card-text-color: $font-color;
 
