@@ -57,6 +57,10 @@ $toolbarsearchfield-category-empty-width: 54px;
     }
   }
 
+  label {
+    display: none;
+  }
+
   .icon {
     fill: $searchfield-text-color;
 

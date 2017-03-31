@@ -367,9 +367,11 @@
           this.collapse();
         }
 
+        /*
         if (!isFullWidth && !hasStyleAttr) {
           this.calculateOpenWidth();
         }
+        */
       },
 
       // Angular may not be able to get these elements on demand so we need to be
