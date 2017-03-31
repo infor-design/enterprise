@@ -101,6 +101,10 @@
             $(this).removeClass('no-transition');
           });
           this.expand();
+        } else {
+          if (this.button instanceof $ && this.button.length) {
+            this.setClosedWidth();
+          }
         }
 
         return this;

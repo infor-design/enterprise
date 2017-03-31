@@ -473,6 +473,9 @@
       },
 
       /**
+       * Category Selection event handler
+       * @private
+       * @returns {undefined}
        */
       handleCategorySelected: function(e, anchor) {
         this.setCategoryButtonText(e, anchor.text().trim());
