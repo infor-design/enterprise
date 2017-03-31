@@ -4574,7 +4574,7 @@ $.fn.datagrid = function(options) {
     selectedRows: function (row, nosync, selectAll) {
       var idx = -1,
           isSingle = this.settings.selectable === 'single',
-          isMultiple = this.settings.selectable === 'multiple',
+          isMultiple = this.settings.selectable === 'multiple' || this.settings.selectable === 'mixed',
           dataset = this.settings.treeGrid ?
             this.settings.treeDepth : this.settings.dataset;
 
