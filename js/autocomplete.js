@@ -270,7 +270,7 @@
       },
 
       listIsOpen: function() {
-        return this.list && this.list.is(':visible');
+        return this.list instanceof $ && this.list.length && this.list.is(':visible');
       },
 
       handleEvents: function () {
@@ -294,9 +294,13 @@
       handleAutocompleteKeydown: function(e) {
         var self = this;
 
-        if (self.isLoading()) {
+        if (this.isLoading()) {
           e.preventDefault();
           return false;
+        }
+
+        if (!this.listIsOpen()) {
+          return;
         }
 
         function getHighlighted(items) {
@@ -383,7 +387,7 @@
         setTimeout( function() {
           var activeElem = document.activeElement;
 
-          if ($.contains(self.list[0], activeElem) || self.element.is(activeElem)) {
+          if ((self.listIsOpen() && $.contains(self.list[0], activeElem)) || self.element.is(activeElem)) {
             return;
           }
 
