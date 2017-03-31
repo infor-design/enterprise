@@ -4,10 +4,10 @@
     <div class="toolbar" role="toolbar">
       <div class="title">My Assets</div>
       <div class="buttonset">
-        <button id='activate-selected-row' type="button" class="btn">
+        <button id="activate-selected-row" type="button" class="btn">
           <span>Activate Selected Row</span>
         </button>
-        <button id='deactivate-activated-row' type="button" class="btn">
+        <button id="deactivate-activated-row" type="button" class="btn">
           <span>Deactivate Activated Row</span>
         </button>
       </div>
@@ -90,7 +90,6 @@
         columns: columnsHeader,
         editable: false,
         selectable: 'mixed',
-//        toolbar: {results: true, actions: true, rowHeight: true, title: 'My Assets'}
       }).on('rowactivated', function (e, args) {
         console.log('Row ' + args.row + ' Was Activated');
         syncDetail(args.row);
@@ -102,6 +101,10 @@
       }).data('datagrid');
 
       $('#activate-selected-row').on('click', function(e) {
+        if (!headerGrid.selectedRows()[0]) {
+          return;
+        }
+
         headerGrid.activateRow(headerGrid.selectedRows()[0].idx);
       });
 
