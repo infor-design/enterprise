@@ -270,7 +270,7 @@
       },
 
       listIsOpen: function() {
-        return this.list && this.list.is(':visible');
+        return this.list instanceof $ && this.list.length && this.list.is(':visible');
       },
 
       handleEvents: function () {
@@ -294,9 +294,13 @@
       handleAutocompleteKeydown: function(e) {
         var self = this;
 
-        if (self.isLoading()) {
+        if (this.isLoading()) {
           e.preventDefault();
           return false;
+        }
+
+        if (!this.listIsOpen()) {
+          return;
         }
 
         function getHighlighted(items) {
