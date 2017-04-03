@@ -514,8 +514,8 @@ $pageslice-download-link-border-color: #3dcd65;
     }
 
     .btn-primary {
-      color: $graphite08;
       border-color: $graphite08;
+      color: $graphite08;
 
       .icon {
         fill: $graphite08;
@@ -525,6 +525,10 @@ $pageslice-download-link-border-color: #3dcd65;
     .btn-primary:focus {
       border-color: $graphite08;
       box-shadow: 0 0 0 2px transparent, 0 0 0 3px $graphite08;
+    }
+
+    .columns.description {
+      margin-top: 15rem;
     }
 
   }
