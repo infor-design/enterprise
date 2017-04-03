@@ -625,15 +625,8 @@ window.Editors = {
     };
 
     this.destroy = function () {
-      var self = this,
-        orgStyle = container.attr('data-org-style');
-
-      if (orgStyle !== 'false') {
-        container.attr('style', orgStyle).removeAttr('data-org-style');
-      } else {
-        container.removeAttr('style data-org-style');
-      }
-
+      var self = this;
+      container.removeAttr('style');
       api.quickEditMode = false;
       self.input.off('hide.editor keydown.editor');
       setTimeout(function() {
@@ -5085,11 +5078,7 @@ $.fn.datagrid = function(options) {
       }
 
       if (isEditor) {
-        var orgStyle = cellNode.attr('style') || false;
-        cellNode.attr('data-org-style', orgStyle).css({
-          'position': 'static',
-          'height': cellNode.outerHeight()
-        });
+        cellNode.css({'position': 'static', 'height': cellNode.outerHeight()});
       }
 
       //Editor.init
