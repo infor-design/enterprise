@@ -1,0 +1,24 @@
+{
+  "name": "@infor/sohoxi",
+  "version": "4.2.6",
+  "shortName": "sohoxi",
+  "description": "Hook & Loop - SoHo XI Controls",
+  "author": "Hook & Loop",
+  "license": "UNLICENSED",
+  "publishConfig": {
+    "scope": "@infor",
+    "registry": "http://npm.infor.com:4873/"
+  },
+  "scripts": {
+  },
+  "dependencies": {
+    "d3": "^3.4.6",
+    "jquery": "^3.1.1"
+  },
+  "main": "sohoxi/js/sohoxi.min.js",
+  "jspm": {
+    "main": "sohoxi/js/sohoxi.min.js"
+  },
+  "devDependencies": {
+  }
+}
