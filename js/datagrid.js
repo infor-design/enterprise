@@ -3630,7 +3630,7 @@ $.fn.datagrid = function(options) {
         rowNode = row;
       }
 
-      if (includeGroups) {
+      if (includeGroups && this.settings.groupable) {
         rowNode = this.tableBody.prevAll('.datagrid-rowgroup-header').eq(row);
       }
 
