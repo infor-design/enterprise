@@ -3235,6 +3235,7 @@ $.fn.datagrid = function(options) {
 
       if (this.originalColumns) {
         this.updateColumns(this.originalColumns);
+        this.originalColumns = this.columnsFromString(JSON.stringify(this.settings.columns));
       }
 
     },
