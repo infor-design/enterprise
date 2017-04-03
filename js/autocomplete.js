@@ -387,7 +387,7 @@
         setTimeout( function() {
           var activeElem = document.activeElement;
 
-          if ($.contains(self.list[0], activeElem) || self.element.is(activeElem)) {
+          if ((self.listIsOpen() && $.contains(self.list[0], activeElem)) || self.element.is(activeElem)) {
             return;
           }
 

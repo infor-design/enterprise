@@ -59,12 +59,19 @@
     transform: none;
     width: 30px;
     z-index: 101;
+
+    .icon {
+      height: 16px;
+      width: 16px;
+    }
+
+    &.rotate {
+      left: -7px;
+      margin-top: -5px;
+      transform: rotate(180deg);
+    }
   }
 
-  .splitter-btn.rotate {
-    left: -14px;
-    transform: rotate(180deg);
-  }
 
   &.is-dragging {
     box-shadow: -2px 0 3px 0 $splitter-box-shadow-color;
