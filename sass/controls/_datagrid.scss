@@ -2463,7 +2463,29 @@ html[dir='rtl'] {
 
 .content-tooltip {
   &.popover.alternate {
+    @include font-size(12);
+    background-color: $datagrid-cell-bg-color;
     padding-bottom: inherit;
+
+    &.top .arrow::after {
+      border-top-color: $datagrid-cell-bg-color;
+    }
+
+    &.bottom .arrow::after {
+      border-bottom-color: $datagrid-cell-bg-color;
+    }
+
+    &.right .arrow::after {
+      border-right-color: $datagrid-cell-bg-color;
+    }
+
+    &.left .arrow::after {
+      border-left-color: $datagrid-cell-bg-color;
+    }
+
+    .tooltip-content {
+      padding: 15px;
+    }
   }
 }
 

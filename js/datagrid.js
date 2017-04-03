@@ -585,7 +585,7 @@ window.Editors = {
           content: $('.editor-wrapper', container),
           placementOpts: {
             x: 0,
-            y: '-84',
+            y: '-'+ (parseInt(container[0].style.height, 10) + 35),
             parent: this.td,
             parentXAlignment: Locale.isRTL() ? 'right' : 'left',
             strategies: ['flip', 'nudge', 'shrink'],
@@ -625,7 +625,15 @@ window.Editors = {
     };
 
     this.destroy = function () {
-      var self = this;
+      var self = this,
+        orgStyle = container.attr('data-org-style');
+
+      if (orgStyle !== 'false') {
+        container.attr('style', orgStyle).removeAttr('data-org-style');
+      } else {
+        container.removeAttr('style data-org-style');
+      }
+
       api.quickEditMode = false;
       self.input.off('hide.editor keydown.editor');
       setTimeout(function() {
@@ -5074,6 +5082,14 @@ $.fn.datagrid = function(options) {
         //Editor.focus
         cellNode.find('input').focus();
         return false;
+      }
+
+      if (isEditor) {
+        var orgStyle = cellNode.attr('style') || false;
+        cellNode.attr('data-org-style', orgStyle).css({
+          'position': 'static',
+          'height': cellNode.outerHeight()
+        });
       }
 
       //Editor.init
