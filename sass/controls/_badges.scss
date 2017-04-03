@@ -72,7 +72,7 @@
       background-color: $badge-neutral-hover-bg-color;
     }
 
-    &:focus {
+    &:focus:not(.hide-focus) {
       border-color: $primary-color;
       box-shadow: $badge-focus-transparent-shadow;
       outline: none;
@@ -80,21 +80,24 @@
     }
   }
 
-  &.is-dismissable {
+  // EPC: Deprecating "dismissable" in favor of "dismissible" as of 4.3.0
+  &.is-dismissable,
+  &.is-dismissible {
     background-color: $badge-neutral-bg-color;
     border: 1px solid transparent;
     cursor: default;
     line-height: 21px;
-    padding: 0 20px 0 10px;
+    padding: 0 24px 0 10px;
 
-    &:focus {
+    &:focus:not(.hide-focus) {
       border-color: $primary-color;
       box-shadow: $badge-focus-transparent-shadow;
       outline: none;
       -moz-outline-style: none;
     }
 
-    .dismissable-btn {
+    .dismissable-btn,
+    .dismissible-btn {
       cursor: pointer;
       margin-top: 5px;
       padding-left: 5px;
@@ -103,6 +106,7 @@
       .icon {
         fill: $badge-neutral-icon-color;
         height: 10px;
+        top: -1px;
         width: 10px;
       }
 
@@ -212,5 +216,21 @@ html[dir='rtl'] {
   .hyperlink + .tag {
     margin-left: inherit;
     margin-right: 10px;
+  }
+}
+
+// Fix for Dismissible Buttons in firefox
+.is-firefox {
+  .tag,
+  .badge {
+    &.is-dismissable,
+    &.is-dismissible {
+      .dismissable-btn,
+      .dismissible-btn {
+        .icon {
+          top: 0;
+        }
+      }
+    }
   }
 }
