@@ -1891,15 +1891,6 @@ td .btn-actions {
 
   .datagrid {
     td.is-editing {
-      // scss-lint:disable NestingDepth
-      .lookup-wrapper {
-        margin-top: 8px;
-
-        .lookup ~ .trigger .icon {
-          top: calc(50% - 9px);
-        }
-      }
-      // scss-lint:enable NestingDepth
 
       .datepicker {
         ~ .icon {

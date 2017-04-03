@@ -3235,6 +3235,7 @@ $.fn.datagrid = function(options) {
 
       if (this.originalColumns) {
         this.updateColumns(this.originalColumns);
+        this.originalColumns = this.columnsFromString(JSON.stringify(this.settings.columns));
       }
 
     },
@@ -3630,7 +3631,7 @@ $.fn.datagrid = function(options) {
         rowNode = row;
       }
 
-      if (includeGroups) {
+      if (includeGroups && this.settings.groupable) {
         rowNode = this.tableBody.prevAll('.datagrid-rowgroup-header').eq(row);
       }
 
