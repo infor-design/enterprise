@@ -77,6 +77,10 @@ $busy-indicator-check-color: $inverse-color;
   background-color: $body-bg-color;
   position: absolute;
   visibility: visible;
+
+  &.transparent {
+    background-color: transparent;
+  }
 }
 
 // Animation Keyframes
