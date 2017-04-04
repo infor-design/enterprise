@@ -51,7 +51,7 @@ $busy-indicator-check-color: $inverse-color;
     display: inline-block;
     height: 5em;
     margin-right: .5em;
-    width: .6em;
+    width: 5px;
 
     &:last-child {
       margin-right: 0;
@@ -81,7 +81,7 @@ $busy-indicator-check-color: $inverse-color;
 
 // Animation Keyframes
 @include keyframes(stretchdelay) {
-  0%, 70%, 100% { @include css3(transform, scaleY(.6)); }
+  0%, 70%, 100% { @include css3(transform, scaleY(.5)); }
   35% { @include css3(transform, scaleY(1)); }
 }
 
@@ -101,13 +101,13 @@ input + .busy-indicator-container,
   .busy-indicator {
     background-color: $body-bg-color;
     height: 22px;
-    margin: 8px 5px 1px;
+    margin: 6px 1px 1px;
     position: absolute;
     right: 0;
     width: 40px;
 
     .bar {
-      height: 1.8em;
+      height: 2.2em;
       margin-right: .3em;
       width: .3em;
 
@@ -199,7 +199,7 @@ input + .busy-indicator-container,
 }
 
 .busy-sm {
-  min-height: 40px;
+  min-height: 28px;
   min-width: 40px;
 
   .busy-indicator-container.blocked-ui {
@@ -212,7 +212,7 @@ input + .busy-indicator-container,
     width: inherit;
 
     .bar {
-      height: 2.8em;
+      height: 2.2em;
       margin-right: .3em;
       width: .3em;
 

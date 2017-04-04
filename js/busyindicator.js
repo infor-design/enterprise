@@ -200,7 +200,7 @@
         // Triggers complete if the "timeToComplete" option is set.
         if (this.completionTime > 0) {
           setTimeout(function() {
-            self.element.trigger('close');
+            self.element.trigger('complete');
           }, self.completionTime);
         }
       },

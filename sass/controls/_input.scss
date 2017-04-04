@@ -78,7 +78,7 @@
   @each $control in $controls {
     &.inline-#{$control} {
       .label-text {
-        margin-bottom: 5px;
+        margin-bottom: 8px;
       }
     }
   }
