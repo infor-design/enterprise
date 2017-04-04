@@ -41,13 +41,18 @@
 - Figure what tickets are next to work on for this release `4.3.0`
 
 ### DEVELOPMENT (start working on next tickets):
-- Developer chose a SOHO-102 jira ticket
-- Create new branch `soho-102` from branch `4.3.X`. This can be done on the Jira by pressing the "Create Branch" button.
-- Write and commit code
+- Use the JIRA functionality to create a branch off of the main repo, not a fork
+- Clone into the main repo, not your local copy of your fork
+- `$ git pull` to grab all the new branch info
+- `$ git checkout [new bugfix branch]`
+- do work, commit
+- `$ git push`, which is already configured to push to the branch
 - Once done:
   - If `4.3.0-rc` does not exist, ask for it to be created (or create it from `4.3.X`)
   - Else, leave `soho-102` as an open branch for future merging
-- PR `soho-102` into `4.3.0-rc`
+- make a PR into the `4.2.6-rc` or `4.3.0-rc` ect branch by virtue of doing step 6, it’s already possible for other people to check out the feature branch with all the current work against that ticket
+so if people wanna see “does this PR even work?” they should grab the branch and check
+better than “accept the PR first and check later” IMO
 - Delete branch `soho-101` once merged
 - Move onto next ticket and repeat
 

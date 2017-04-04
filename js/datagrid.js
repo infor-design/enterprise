@@ -3627,7 +3627,7 @@ $.fn.datagrid = function(options) {
 
     //Returns a cell node
     cellNode: function (row, cell, includeGroups) {
-      var rowNode = this.tableBody.find('tr').eq(row);
+      var rowNode = this.tableBody.find('tr').not('.datagrid-expandable-row').eq(row);
 
       if (row instanceof jQuery) {
         rowNode = row;
