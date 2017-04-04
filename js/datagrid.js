@@ -611,6 +611,7 @@ window.Editors = {
             }
           }
         });
+      Soho.utils.fixSVGIcons($('#editor-popup'));
     };
 
     this.val = function () {
