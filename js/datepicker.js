@@ -116,167 +116,183 @@
       handleKeys: function (elem) {
         var self = this;
 
-        elem.off('keydown.datepicker').on('keydown.datepicker', function (e) {
-          var handled = false,
-            key = e.keyCode || e.charCode || 0,
-            focused = $(':focus'),
-            focusedlabel = focused.attr('aria-label');
+        if (elem.is('#calendar-popup')) {
+          elem.off('keydown.datepicker').on('keydown.datepicker', '.calendar-table', function (e) {
+            var handled = false,
+              key = e.keyCode || e.charCode || 0;
 
-          // Focus did not auto move from readonly
-          if (key === 9 && self.element.is('[readonly]')) { //tab
-            self.setFocusOnFocusableElement(self.element, (e.shiftKey ? 'prev' : 'next'));
-            return;
-          }
-
-          if (focusedlabel) {
-            var focusedDate = new Date(focusedlabel);
-            self.currentDate = new Date(focusedDate.getTime());
-          } else if (focused.hasClass('alternate')) {
-              var year = parseInt(self.header.find('.year').text()),
-              month = parseInt(self.header.find('.month').attr('data-month')),
-              day = parseInt(focused.text());
-
-            if (focused.hasClass('prev-month')) {
-              if(month === 0) {
-                month = 11;
-                year--;
-              }
-              else {
-                month--;
-              }
-            } else if (focused.hasClass('next-month')) {
-              if(month === 11) {
-                month = 0;
-                year++;
-              }
-              else {
-                month++;
-              }
+            //Arrow Down: select same day of the week in the next week
+            if (key === 40) {
+                handled = true;
+                self.currentDate.setDate(self.currentDate.getDate() + 7);
+                self.insertDate(self.currentDate);
             }
-            self.currentDate = new Date(year, month, day);
-          }
 
-         //Arrow Down or Alt first opens the dialog
-          if (key === 40 && !self.isOpen()) {
-            handled = true;
-            self.openCalendar();
-
-            setTimeout(function() {
-              self.setFocusAfterOpen();
-            }, 200);
-          }
-
-          //Arrow Down: select same day of the week in the next week
-          if (key === 40 && self.isOpen()) {
+            //Arrow Up: select same day of the week in the previous week
+            if (key === 38) {
               handled = true;
-              self.currentDate.setDate(self.currentDate.getDate() + 7);
+              self.currentDate.setDate(self.currentDate.getDate() - 7);
               self.insertDate(self.currentDate);
-          }
-
-          //Arrow Up: select same day of the week in the previous week
-          if (key === 38 && self.isOpen()) {
-            handled = true;
-            self.currentDate.setDate(self.currentDate.getDate() - 7);
-            self.insertDate(self.currentDate);
-          }
-
-          //Arrow Left
-          if (key === 37 && self.isOpen()) {
-            handled = true;
-            self.currentDate.setDate(self.currentDate.getDate() - 1);
-            self.insertDate(self.currentDate);
-          }
-
-          //Arrow Right
-          if (key === 39 && self.isOpen()) {
-            handled = true;
-            self.currentDate.setDate(self.currentDate.getDate() + 1);
-            self.insertDate(self.currentDate);
-          }
-
-          //Page Up Selects Same Day Next Month
-          if (key === 33 && !e.altKey && self.isOpen()) {
-            handled = true;
-            self.currentDate.setMonth(self.currentDate.getMonth() + 1);
-            self.insertDate(self.currentDate);
-          }
-
-          //Page Down Selects Same Day Prev Month
-          if (key === 34 && !e.altKey && self.isOpen()) {
-            handled = true;
-            self.currentDate.setMonth(self.currentDate.getMonth() - 1);
-            self.insertDate(self.currentDate);
-          }
-
-          //ctrl + Page Up Selects Same Day Next Year
-          if (key === 33 && e.ctrlKey && self.isOpen()) {
-            handled = true;
-            self.currentDate.setFullYear(self.currentDate.getFullYear() + 1);
-            self.insertDate(self.currentDate);
-          }
-
-          //ctrl + Page Down Selects Same Day Prev Year
-          if (key === 34 && e.ctrlKey && self.isOpen()) {
-            handled = true;
-            self.currentDate.setFullYear(self.currentDate.getFullYear() - 1);
-            self.insertDate(self.currentDate);
-          }
-
-          //Home Moves to End of the month
-          if (key === 35 && self.isOpen()) {
-            handled = true;
-            var lastDay =  new Date(self.currentDate.getFullYear(), self.currentDate.getMonth()+1, 0);
-            self.currentDate = lastDay;
-            self.insertDate(self.currentDate);
-          }
-
-          //End Moves to Start of the month
-          if (key === 36 && self.isOpen()) {
-            var firstDay =  new Date(self.currentDate.getFullYear(), self.currentDate.getMonth(), 1);
-            self.currentDate = firstDay;
-            self.insertDate(self.currentDate);
-          }
-
-          // 't' selects today
-          if (key === 84) {
-            handled = true;
-            self.currentDate = new Date();
-
-            if (self.isOpen()) {
-              self.insertDate(self.currentDate, true);
-            } else {
-              self.element.val(Locale.formatDate(self.currentDate, {pattern: self.pattern})).trigger('change');
             }
-          }
 
-          // Space or Enter closes Date Picker, selecting the Date
-          if (key === 32 && self.isOpen() || key === 13 && self.isOpen()) {
-            self.closeCalendar();
-            self.element.focus();
-            handled = true;
-          }
+            //Arrow Left
+            if (key === 37) {
+              handled = true;
+              self.currentDate.setDate(self.currentDate.getDate() - 1);
+              self.insertDate(self.currentDate);
+            }
 
-          // Tab closes Date Picker and goes to next field
-          if (key === 9 && self.isOpen()) {
-            if (!self.settings.showTime) {
-              self.element.focus();
+            //Arrow Right
+            if (key === 39) {
+              handled = true;
+              self.currentDate.setDate(self.currentDate.getDate() + 1);
+              self.insertDate(self.currentDate);
+            }
+
+            //Page Up Selects Same Day Next Month
+            if (key === 33 && !e.altKey) {
+              handled = true;
+              self.currentDate.setMonth(self.currentDate.getMonth() + 1);
+              self.insertDate(self.currentDate);
+            }
+
+            //Page Down Selects Same Day Prev Month
+            if (key === 34 && !e.altKey) {
+              handled = true;
+              self.currentDate.setMonth(self.currentDate.getMonth() - 1);
+              self.insertDate(self.currentDate);
+            }
+
+            //ctrl + Page Up Selects Same Day Next Year
+            if (key === 33 && e.ctrlKey) {
+              handled = true;
+              self.currentDate.setFullYear(self.currentDate.getFullYear() + 1);
+              self.insertDate(self.currentDate);
+            }
+
+            //ctrl + Page Down Selects Same Day Prev Year
+            if (key === 34 && e.ctrlKey) {
+              handled = true;
+              self.currentDate.setFullYear(self.currentDate.getFullYear() - 1);
+              self.insertDate(self.currentDate);
+            }
+
+            //Home Moves to End of the month
+            if (key === 35) {
+              handled = true;
+              var lastDay =  new Date(self.currentDate.getFullYear(), self.currentDate.getMonth()+1, 0);
+              self.currentDate = lastDay;
+              self.insertDate(self.currentDate);
+            }
+
+            //End Moves to Start of the month
+            if (key === 36) {
+              var firstDay =  new Date(self.currentDate.getFullYear(), self.currentDate.getMonth(), 1);
+              self.currentDate = firstDay;
+              self.insertDate(self.currentDate);
+            }
+
+            // 't' selects today
+            if (key === 84) {
+              handled = true;
+              self.setToday();
+            }
+
+            // Space or Enter closes Date Picker, selecting the Date
+            if (key === 32 || key === 13) {
               self.closeCalendar();
+              self.element.focus();
+              handled = true;
             }
-          }
 
-          // Esc closes Date Picker and goes back to field
-          if (key === 27 && self.isOpen()) {
-            self.closeCalendar();
-            self.element.focus();
-          }
+            // Tab closes Date Picker and goes to next field
+            if (key === 9) {
+              if (!self.settings.showTime) {
+                self.element.focus();
+                self.closeCalendar();
+              }
+            }
 
-          if (handled) {
-            e.stopPropagation();
-            e.preventDefault();
-            return false;
-          }
+            // Esc closes Date Picker and goes back to field
+            if (key === 27) {
+              self.closeCalendar();
+              self.element.focus();
+            }
 
-        });
+            if (handled) {
+              e.stopPropagation();
+              e.preventDefault();
+              return false;
+            }
+
+          });
+        }
+        else {
+          elem.off('keydown.datepicker').on('keydown.datepicker', function (e) {
+            var handled = false,
+              key = e.keyCode || e.charCode || 0,
+              focused = $(':focus'),
+              focusedlabel = focused.attr('aria-label');
+
+            // Focus did not auto move from readonly
+            if (key === 9 && self.element.is('[readonly]')) { //tab
+              self.setFocusOnFocusableElement(self.element, (e.shiftKey ? 'prev' : 'next'));
+              return;
+            }
+
+            if (focusedlabel) {
+              var focusedDate = new Date(focusedlabel);
+              self.currentDate = new Date(focusedDate.getTime());
+            } else if (focused.hasClass('alternate')) {
+                var year = parseInt(self.header.find('.year').text()),
+                month = parseInt(self.header.find('.month').attr('data-month')),
+                day = parseInt(focused.text());
+
+              if (focused.hasClass('prev-month')) {
+                if(month === 0) {
+                  month = 11;
+                  year--;
+                }
+                else {
+                  month--;
+                }
+              } else if (focused.hasClass('next-month')) {
+                if(month === 11) {
+                  month = 0;
+                  year++;
+                }
+                else {
+                  month++;
+                }
+              }
+              self.currentDate = new Date(year, month, day);
+            }
+
+           //Arrow Down or Alt first opens the dialog
+            if (key === 40 && !self.isOpen()) {
+              handled = true;
+              self.openCalendar();
+
+              setTimeout(function() {
+                self.setFocusAfterOpen();
+              }, 200);
+            }
+
+            // 't' selects today
+            if (key === 84) {
+              handled = true;
+              self.setToday();
+            }
+
+            if (handled) {
+              e.stopPropagation();
+              e.preventDefault();
+              return false;
+            }
+
+          });
+        }
+
       },
 
       //Parse the Date Format Options
@@ -357,6 +373,16 @@
         return this.openCalendar();
       },
 
+      activeTabindex: function(elem, isFocus) {
+        $('td', this.days).removeAttr('tabindex');
+        elem.attr('tabindex', 0);
+
+        if (isFocus) {
+          elem.focus();
+        }
+        return elem;
+      },
+
       // Open the calendar in a popup
       openCalendar: function () {
         var self = this,
@@ -374,11 +400,11 @@
 
         // Calendar Html in Popups
         this.table = $('<table class="calendar-table" aria-label="'+ Locale.translate('Calendar') +'" role="application"></table>');
-        this.header = $('<div class="calendar-header"><span class="month">november</span><span class="year">2015</span><button type="button" class="btn-icon prev" tabindex="-1">' + $.createIcon('caret-left') + '<span>'+ Locale.translate('PreviousMonth') +'</span></button><button type="button" class="btn-icon next" tabindex="-1">' + $.createIcon('caret-right') + '<span>'+ Locale.translate('NextMonth') +'</span></button></div>');
+        this.header = $('<div class="calendar-header"><span class="month">november</span><span class="year">2015</span><button type="button" class="btn-icon prev">' + $.createIcon('caret-left') + '<span>'+ Locale.translate('PreviousMonth') +'</span></button><button type="button" class="btn-icon next">' + $.createIcon('caret-right') + '<span>'+ Locale.translate('NextMonth') +'</span></button></div>');
         this.dayNames = $('<thead><tr><th>SU</th> <th>MO</th> <th>TU</th> <th>WE</th> <th>TH</th> <th>FR</th> <th>SA</th> </tr> </thead>').appendTo(this.table);
         this.days = $('<tbody> <tr> <td class="alternate">26</td> <td class="alternate">27</td> <td class="alternate">28</td> <td class="alternate">29</td> <td class="alternate" >30</td> <td class="alternate">31</td> <td>1</td> </tr> <tr> <td>2</td> <td>3</td> <td>4</td> <td>5</td> <td>6</td> <td>7</td> <td>8</td> </tr> <tr> <td>9</td> <td>10</td> <td>11</td> <td>12</td> <td>13</td> <td>14</td> <td>15</td> </tr> <tr> <td>16</td> <td>17</td> <td>18</td> <td>19</td> <td class="is-today">20</td> <td>21</td> <td>22</td> </tr> <tr> <td>23</td> <td>24</td> <td>25</td> <td>26</td> <td>27</td> <td>28</td> <td class="alternate">1</td> </tr> <tr> <td class="alternate">2</td> <td class="alternate">3</td> <td class="alternate">4</td> <td class="alternate">5</td> <td class="alternate">6</td> <td class="alternate">7</td> <td class="alternate">8</td> </tr> </tbody>').appendTo(this.table);
         this.timepickerContainer = $('<div class="datepicker-time-container"></div>');
-        this.footer = $('<div class="popup-footer"> <button type="button" class="cancel btn-tertiary" tabindex="-1">'+ Locale.translate('Clear') +'</button> <button type="button" tabindex="-1" class="is-today btn-tertiary">'+Locale.translate('Today')+'</button> </div>');
+        this.footer = $('<div class="popup-footer"> <button type="button" class="cancel btn-tertiary">'+ Locale.translate('Clear') +'</button> <button type="button" class="is-today btn-tertiary">'+Locale.translate('Today')+'</button> </div>');
 
         // Timepicker options
         if (this.settings.showTime) {
@@ -435,7 +461,7 @@
         .off('hide.datepicker').on('hide.datepicker', function () {
           self.closeCalendar();
         }).off('open.datepicker').on('open.datepicker', function () {
-          self.days.find('.is-selected').attr('tabindex', 0).focus();
+          self.activeTabindex(self.days.find('.is-selected'), true);
         });
 
         // ICONS: Right to Left Direction
@@ -467,7 +493,6 @@
           setTimeout(function() {
             self.timepicker.initValues = self.timepicker.getTimeFromField(self.time);
             self.timepicker.afterShow(self.timepickerContainer);
-            self.timepickerContainer.find('div.dropdown').attr('tabindex', '-1');
             return;
           }, 1);
         }
@@ -486,7 +511,7 @@
         this.days.off('click.datepicker').on('click.datepicker', 'td', function () {
           var td = $(this);
           if (td.hasClass('is-disabled')) {
-            td.attr('tabindex', 0).focus();
+            self.activeTabindex(td, true);
           }
           else {
             self.days.find('.is-selected').removeClass('is-selected').removeAttr('aria-selected');
@@ -533,8 +558,7 @@
           }
 
           if (btn.hasClass('is-today')) {
-            self.currentDate = new Date();
-            self.insertDate(self.currentDate);
+            self.setToday();
             self.closeCalendar();
           }
           self.element.focus();
@@ -738,7 +762,7 @@
         if (!this.calendar) {
           return;
         }
-        this.calendar.find('.is-selected').attr('tabindex', 0).focus();
+        this.activeTabindex(this.calendar.find('.is-selected'), true);
       },
 
       // Update the calendar to show the month (month is zero based)
@@ -881,7 +905,7 @@
         });
 
         if (dateTd.hasClass('is-disabled')) {
-          dateTd.attr({'tabindex': 0}).focus();
+          this.activeTabindex(dateTd, true);
         } else {
           if (this.settings.showTime) {
             if (isReset) {
@@ -899,7 +923,8 @@
 
           input.val(Locale.formatDate(date, {pattern: this.pattern})).trigger('change');
           this.days.find('.is-selected').removeClass('is-selected').removeAttr('aria-selected').removeAttr('tabindex');
-          dateTd.addClass('is-selected').attr({'aria-selected': true, 'tabindex': 0}).focus();
+          dateTd.addClass('is-selected').attr({'aria-selected': true});
+          this.activeTabindex(dateTd, true);
         }
       },
 
@@ -931,6 +956,17 @@
       readonly: function() {
         this.enable();
         this.element.attr('readonly', 'readonly');
+      },
+
+      // Set today
+      setToday: function() {
+        this.currentDate = new Date();
+
+        if (this.isOpen()) {
+          this.insertDate(this.currentDate, true);
+        } else {
+          this.element.val(Locale.formatDate(this.currentDate, {pattern: this.pattern})).trigger('change');
+        }
       },
 
       // Set time
