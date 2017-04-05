@@ -3503,7 +3503,6 @@ $.fn.datagrid = function(options) {
         self.headerTable.css('width', parseInt(self.tableWidth) + diff);
         self.table.css('width', parseInt(self.tableWidth) + diff);
       }
-
       this.clearHeaderCache();
     },
 
@@ -3541,6 +3540,7 @@ $.fn.datagrid = function(options) {
           startingLeft = self.currentHeader.position().left + self.table.scrollLeft() - 10;
           self.tableWidth = self.table[0].offsetWidth;
           columnStartWidth = self.currentHeader[0].offsetWidth;
+
         })
         .on('drag.datagrid', function (e, ui) {
           if (!self.currentHeader) {
@@ -3891,7 +3891,7 @@ $.fn.datagrid = function(options) {
           }
 
           if (!alignToLeft) {
-             self.currentHeader = self.currentHeader.prev();
+            self.currentHeader = self.currentHeader.prevAll().not('.is-hidden').first();
           }
 
           if (!self.currentHeader.hasClass('is-resizable')) {
