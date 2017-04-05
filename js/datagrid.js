@@ -585,7 +585,7 @@ window.Editors = {
           content: $('.editor-wrapper', container),
           placementOpts: {
             x: 0,
-            y: '-84',
+            y: '-'+ (parseInt(container[0].style.height, 10) + 35),
             parent: this.td,
             parentXAlignment: Locale.isRTL() ? 'right' : 'left',
             strategies: ['flip', 'nudge', 'shrink'],
@@ -611,6 +611,7 @@ window.Editors = {
             }
           }
         });
+      Soho.utils.fixSVGIcons($('#editor-popup'));
     };
 
     this.val = function () {
@@ -626,6 +627,7 @@ window.Editors = {
 
     this.destroy = function () {
       var self = this;
+      container.removeAttr('style');
       api.quickEditMode = false;
       self.input.off('hide.editor keydown.editor');
       setTimeout(function() {
@@ -3235,6 +3237,7 @@ $.fn.datagrid = function(options) {
 
       if (this.originalColumns) {
         this.updateColumns(this.originalColumns);
+        this.originalColumns = this.columnsFromString(JSON.stringify(this.settings.columns));
       }
 
     },
@@ -3624,13 +3627,13 @@ $.fn.datagrid = function(options) {
 
     //Returns a cell node
     cellNode: function (row, cell, includeGroups) {
-      var rowNode = this.tableBody.find('tr').eq(row);
+      var rowNode = this.tableBody.find('tr').not('.datagrid-expandable-row').eq(row);
 
       if (row instanceof jQuery) {
         rowNode = row;
       }
 
-      if (includeGroups) {
+      if (includeGroups && this.settings.groupable) {
         rowNode = this.tableBody.prevAll('.datagrid-rowgroup-header').eq(row);
       }
 
@@ -5074,6 +5077,10 @@ $.fn.datagrid = function(options) {
         //Editor.focus
         cellNode.find('input').focus();
         return false;
+      }
+
+      if (isEditor) {
+        cellNode.css({'position': 'static', 'height': cellNode.outerHeight()});
       }
 
       //Editor.init
