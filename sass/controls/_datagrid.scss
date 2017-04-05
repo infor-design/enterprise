@@ -1774,6 +1774,7 @@ td .btn-actions {
 }
 
 .datagrid-checkbox-wrapper {
+  min-height: 12px;
   position: relative;
 }
 
@@ -1891,15 +1892,6 @@ td .btn-actions {
 
   .datagrid {
     td.is-editing {
-      // scss-lint:disable NestingDepth
-      .lookup-wrapper {
-        margin-top: 8px;
-
-        .lookup ~ .trigger .icon {
-          top: calc(50% - 9px);
-        }
-      }
-      // scss-lint:enable NestingDepth
 
       .datepicker {
         ~ .icon {
@@ -2463,7 +2455,29 @@ html[dir='rtl'] {
 
 .content-tooltip {
   &.popover.alternate {
+    @include font-size(12);
+    background-color: $datagrid-cell-bg-color;
     padding-bottom: inherit;
+
+    &.top .arrow::after {
+      border-top-color: $datagrid-cell-bg-color;
+    }
+
+    &.bottom .arrow::after {
+      border-bottom-color: $datagrid-cell-bg-color;
+    }
+
+    &.right .arrow::after {
+      border-right-color: $datagrid-cell-bg-color;
+    }
+
+    &.left .arrow::after {
+      border-left-color: $datagrid-cell-bg-color;
+    }
+
+    .tooltip-content {
+      padding: 15px;
+    }
   }
 }
 
