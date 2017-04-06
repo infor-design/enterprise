@@ -667,6 +667,17 @@
   }
 }
 
+// Remove padding on card/widget listviews
+.card,
+.widget {
+  .listview {
+    li {
+      padding: 0;
+    }
+  }
+}
+
+
 //RTL Styles
 html[dir='rtl'] {
 

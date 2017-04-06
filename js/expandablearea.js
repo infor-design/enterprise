@@ -19,7 +19,9 @@
 
     // Settings and Options
     var pluginName = 'expandablearea',
-        defaults = {},
+        defaults = {
+
+        },
         settings = $.extend({}, defaults, options);
 
     /**
@@ -53,6 +55,8 @@
         this.header = this.element.children('.expandable-header');
         this.footer = this.element.children('.expandable-footer');
         this.content = this.element.children('.expandable-pane');
+
+        this.isCard = this.element.is('.card, .widget');
         return this;
       },
 
@@ -69,15 +73,41 @@
           'id': this.id + '-content'
         });
 
-        //Add the link and footer if not there.
-        if (!this.footer.length) {
+        // Add the link and footer if not there.
+        // If we're using an expandable card,
+        if (!this.isCard && !this.footer.length) {
           this.footer =  $('<div class="expandable-footer"></div>').appendTo(this.element);
         }
 
-        this.expander = this.footer.find('.expandable-expander');
-        if (!this.expander.length) {
-          this.expander = $('<a href="#" target="_self" class="expandable-expander hyperlink"><span data-translated="true">'+ Locale.translate('ShowMore') +'</span></a>').prependTo(this.footer);
+        function getExpander(instance, useHeaderExpander) {
+          var expander;
+
+          if (useHeaderExpander === true) {
+            // Use icon-based expander in the header
+            expander = instance.header.find('expandable-expander');
+            if (!expander.length) {
+              expander = $('<a href="#" target="_self" class="btn-toggle">' +
+                '<svg class="chevron icon" focusable="false" aria-hidden="true" role="presenation">' +
+                  '<use xlink:href="' + '#icon-caret-down' + '"></use>' +
+                '</svg>' +
+                '<span class="audible">'+ Locale.translate('ShowMore') +'</span>' +
+              '</a>').appendTo(instance.header);
+            }
+
+            return expander;
+          }
+
+          // Use the text-based expander button in the footer
+          expander = instance.footer.find('.expandable-expander');
+          if (!expander.length) {
+            expander = $('<a href="#" target="_self" class="expandable-expander hyperlink">' +
+              '<span data-translated="true">'+ Locale.translate('ShowMore') +'</span>' +
+            '</a>').prependTo(instance.footer);
+          }
+          return expander;
         }
+
+        this.expander = getExpander(self, this.isCard);
 
         this.expander.attr('href', '#').hideFocus();
 
@@ -179,6 +209,10 @@
 
         this.expander.find('span[data-translated="true"]').text(Locale.translate('ShowLess') ? Locale.translate('ShowLess') : 'Show Less');
 
+        if (this.isCard) {
+          this.expander.find('.icon').addClass('active');
+        }
+
         if (this.content[0]) {
           this.content[0].style.display = 'block';
         }
@@ -198,6 +232,10 @@
         this.expander.removeClass('active');
         this.element.triggerHandler('collapse', [this.element]);
         this.expander.find('span[data-translated="true"]').text(Locale.translate('ShowMore') ? Locale.translate('ShowMore') : 'Show More');
+
+        if (this.isCard) {
+          this.expander.find('.icon').removeClass('active');
+        }
 
         this.content.one('animateclosedcomplete', function() {
           self.element.removeClass('is-expanded');

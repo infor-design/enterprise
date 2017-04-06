@@ -181,6 +181,11 @@ small,
   text-transform: uppercase;
 }
 
+.small-thin-text {
+  @include font-size(10);
+  color: $font-color;
+}
+
 .uppercase {
   text-transform: uppercase;
 }
@@ -213,6 +218,16 @@ small,
     &.left {
       @include transform(rotate(90deg));
     }
+  }
+
+  + .stamp-text {
+    margin-top: 0;
+  }
+}
+
+.small-thin-text {
+  + .small-thin-text {
+    margin-top: 0;
   }
 }
 

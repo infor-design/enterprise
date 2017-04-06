@@ -1,0 +1,105 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Card Example: Expandable</h2>
+    <p><a class="hyperlink" href="http://jira/browse/SOHO-" target="_blank">Related JIRA Ticket</a>.</p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="four columns">
+
+    <div id="expandable-card-example" class="card expandable-area">
+      <div class="card-header expandable-header">
+        <h2 class="widget-title">View Order Summary</h2>
+      </div>
+      <div class="expandable-pane">
+        <div id="product-list" data-init="false" class="listview tableview"></div>
+      </div>
+      <div class="card-content">
+        <div class="" style="padding: 13px 20px;">
+          <p>This part is always visible</p>
+        </div>
+      </div>
+      <div class="card-footer">
+        <button id="continue" class="btn-primary stackable">
+          <span>Continue</span>
+        </button>
+
+        <button id="generate-quote" class="btn-secondary stackable">
+          <span>Generate Quote</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+var LISTVIEW_DATASET = [{
+  'code' : '00000501',
+  'detailsURL' : 'http://www.google.com',
+  'name' : 'Awesome Drill',
+  'pictureURL' : '{{basepath}}images/drill.jpg',
+  'price' : 'Trade $00.00',
+  'quantity': 1,
+  'unit': '/ Each',
+},
+{
+  'code' : '00000502',
+  'detailsURL' : 'http://www.google.com',
+  'name' : 'Incredible Drill',
+  'pictureURL' : '{{basepath}}images/drill.jpg',
+  'price' : 'Trade $00.00',
+  'quantity': 1,
+  'unit': '/ Each',
+},
+{
+  'code' : '00000503',
+  'detailsURL' : 'http://www.google.com',
+  'name' : 'Fantastic Drill',
+  'pictureURL' : '{{basepath}}images/drill.jpg',
+  'price' : 'Trade $00.00',
+  'quantity': 3,
+  'unit': '/ Each',
+},
+{
+  'code' : '00000504',
+  'detailsURL' : 'http://www.google.com',
+  'name' : 'King\'s Drill',
+  'pictureURL' : '{{basepath}}images/drill.jpg',
+  'price' : 'Trade $00.00',
+  'quantity': 2,
+  'unit': '/ Each',
+}];
+</script>
+
+{{={{{ }}}=}}
+<script id="product-list-tmpl" type="text/html">
+  <ul class="card-content-list">
+    {{#dataset}}
+      <li class="card-list-item alternate">
+        <div class="card-list-item-thumbnail image-sm">
+          <img src="{{pictureURL}}" alt="Picture of {{productName}}"/>
+        </div>
+        <div class="card-list-item-summary">
+          <p class="micro-text">{{name}}</p>
+          <p class="small-thin-text">#{{code}}</p>
+          <p class="small-thin-text">Quantity: {{quantity}}</p>
+        </div>
+        <div class="card-list-item-price-container">
+          <p class="micro-text">${{price}}</p>
+        </div>
+      </li>
+    {{/dataset}}
+  </ul>
+</script>
+
+<script type="text/javascript">
+  $('#product-list').listview({
+    dataset: LISTVIEW_DATASET,
+    selectable: false,
+    template: $('#product-list-tmpl')
+  });
+</script>
