@@ -59,7 +59,8 @@
           w = parent.width(),
           direction = s.axis === 'x' ? 'left' : 'top',
           thisSide = parent.is('.content') ? parent.parent() : parent,
-          parentHeight;
+          parentHeight,
+          defaultOffset = 299;
 
         setTimeout(function() {
           parentHeight = parent.height();
@@ -78,6 +79,37 @@
             .parent().addClass('splitter-container');
 
           splitter.addClass('splitter-right');
+
+          if (s.collapseButton) {
+            var savedOffset = 0;
+            var $splitterButton = $('<button type="button" class="splitter-btn" id="splitter-collapse-btn" title="Collapse"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-double-chevron"></use></svg></button>');
+            $splitterButton.appendTo(splitter);
+            if (splitter[0].offsetLeft > 10) {
+              $('#splitter-collapse-btn').addClass('rotate');
+            }
+            $('#splitter-collapse-btn').click(function() {
+              if (savedOffset <= 0) {
+                if (splitter[0].offsetLeft <= 10){
+                  self.splitTo(defaultOffset, parentHeight);
+                  $(this).addClass('rotate');
+                } else {
+                  savedOffset = splitter[0].offsetLeft;
+                  self.splitTo(0, parentHeight);
+                  $(this).removeClass('rotate');
+                }
+              } else {
+                if (splitter[0].offsetLeft > 10){
+                  savedOffset = splitter[0].offsetLeft;
+                  self.splitTo(0, parentHeight);
+                  $(this).removeClass('rotate');
+                } else {
+                  self.splitTo(savedOffset, parentHeight);
+                  $(this).addClass('rotate');
+                  savedOffset = 0;
+                }
+              }
+            });
+          }
         }
         else if (this.isSplitterHorizontal) {
           this.topPanel = splitter.prev();
@@ -134,6 +166,14 @@
         .on('dragend.splitter', function (e, args) {
           $('.overlay').remove();
 
+          if (s.collapseButton) {
+            if (args[direction] <= 10) {
+              $('#splitter-collapse-btn').removeClass('rotate');
+            } else {
+              $('#splitter-collapse-btn').addClass('rotate');
+            }
+          }
+
           if (s.resize === 'end') {
             self.splitTo(args[direction], parentHeight);
           }
@@ -143,7 +183,6 @@
           if (args.left <= 0) {
             return false;
           }
-
           if (s.resize === 'immediate') {
             self.splitTo(args[direction], parentHeight);
           }

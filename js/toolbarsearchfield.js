@@ -403,6 +403,7 @@
         if (!notFullWidth) {
           this.elemBeforeWrapper = this.inputWrapper.prev();
           this.inputWrapper.detach().prependTo(this.containmentParent);
+          Soho.utils.fixSVGIcons(this.inputWrapper);
         } else {
           // Re-adjust the size of the buttonset element if the expanded searchfield would be
           // too large to fit.
@@ -491,6 +492,7 @@
           } else {
             this.inputWrapper.detach().insertAfter(this.elemBeforeWrapper);
           }
+          Soho.utils.fixSVGIcons(this.inputWrapper);
 
           this.elemBeforeWrapper = null;
         }
@@ -534,9 +536,14 @@
       // Tears down events, properties, etc. and resets the control to "factory" state
       teardown: function() {
         this.inputWrapper.off('mousedown.toolbarsearchfield focusin.toolbarsearchfield collapse.toolbarsearchfield');
+        this.inputWrapper.find('.icon').remove();
 
         if (this.button && this.button.length) {
-          this.button.off('beforeopen.toolbarsearchfield');
+          this.button.remove();
+        }
+
+        if (this.xButton && this.xButton.length) {
+          this.xButton.remove();
         }
 
         // Used to determine if the "Tab" key was involved in switching focus to the searchfield.

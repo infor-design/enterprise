@@ -1,0 +1,54 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Searchfield Test: No Initialize</h2>
+    <p>This searchfield does not get initialized during page load.  Click the trigger below to manually initialize with common settings.</p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="searchfield-manual">searchfield non init</label>
+      <input data-init="false" id="searchfield-manual" placeholder="Type to Search" type="text" class="searchfield"/>
+    </div>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <button id="init-searchfield" class="btn-primary">
+      <span>Initialize the Searchfield</span>
+    </button>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  var trigger = $('#init-searchfield'),
+    searchfield = $('#searchfield-manual'),
+    items = [
+      {value: '1', label: 'Item One'},
+      {value: '2', label: 'Item Two'},
+      {value: '3', label: 'Item Three'},
+      {value: '4', label: 'Item Four'},
+      {value: '4', label: 'Item Five'}
+    ];
+
+  function customSource(e, response) {
+    response( searchfield.val(), items );
+  }
+
+  $('body').on('initialized', function() {
+    trigger.on('click.test', function() {
+      trigger.disable();
+      searchfield.searchfield({
+        source: customSource
+      });
+    });
+  });
+</script>

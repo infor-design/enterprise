@@ -1,0 +1,96 @@
+<div class="row">
+  <div class="twelve columns">
+    <div role="toolbar" class="toolbar">
+
+      <div class="title">
+        Data Grid Header Title
+        <span class="datagrid-result-count">(N Results)</span>
+      </div>
+
+      <div class="buttonset">
+        <label class="audible" for="searchfield-01">Keyword Search</label>
+        <input id="searchfield-01" name="searchfield-01" class="searchfield" />
+
+        <button class="btn" type="button" id="add-btn">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-add"></use>
+          </svg>
+          <span>Add</span>
+        </button>
+
+      </div>
+      <div class="more">
+        <button class="btn-actions" type="button">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+          <span class="audible">More Actions</span>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Option One</a></li>
+          <li><a href="#">Option Two</a></li>
+          <li><a href="#">Option Three</a></li>
+          <li class="separator single-selectable-section"></li>
+          <li class="heading">Row Height</li>
+          <li class="is-selectable"><a data-option="row-short" href="#">Short</a></li>
+          <li class="is-selectable"><a data-option="row-medium" href="#">Medium</a></li>
+          <li class="is-selectable is-checked"><a data-option="row-normal" href="#">Normal</a></li>
+        </ul>
+
+      </div>
+    </div>
+
+    <div class="contextual-toolbar toolbar is-hidden">
+      <div class="title selection-count">1 Selected</div>
+      <div class="buttonset">
+        <button class="btn" type="button" id='remove-btn'>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-delete"></use>
+          </svg>
+          <span>Remove</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="datagrid">
+
+    </div>
+  </div>
+</div>
+
+<script>
+  var gridApi = null;
+
+  $('body').one('initialized', function () {
+         var data = [],
+           columns = [],
+           dropdowndOptions = [
+             {id: 'opt1', value: 'val1', label: 'gallon, Imperial'},
+             {id: 'opt2', value: 'val2', label: 'International Units and some longer text'},
+             {id: 'opt3', value: 'val3', label: 'gallon, U.S. Liquid'},
+             {id: 'opt4', value: 'val4', label: 'hectare'},
+             {id: 'opt5', value: 'val5', label: 'inch squared'},
+             {id: 'opt6', value: 'val6', label: 'inch cubed'},
+           ];
+
+        // Some Sample Data
+        data.push({ action: 'val3' });
+        data.push({ action: 'val4' });
+        data.push({ action: 'val1' });
+        data.push({ action: 'val5' });
+
+        //Define Columns for the Grid.
+        columns.push({ id: 'c1', name: 'Action 1', field: 'action', formatter: Formatters.Dropdown, editor: Editors.Dropdown, validate: 'required', options: dropdowndOptions, width: 170 });
+        columns.push({ id: 'c2', name: 'Action 1', field: 'action', formatter: Formatters.Dropdown, editor: Editors.Dropdown, validate: 'required', options: dropdowndOptions });
+        columns.push({ id: 'c3', name: 'Action 1', field: 'action', formatter: Formatters.Dropdown, editor: Editors.Dropdown, validate: 'required', options: dropdowndOptions });
+
+        $('#datagrid').datagrid({
+          columns: columns,
+          dataset: data,
+          editable: true,
+          toolbar: {keywordFilter: true, results: true}
+        });
+
+  });
+
+</script>

@@ -1,0 +1,77 @@
+<div class="row">
+  <div class="two-thirds column">
+    <div class="card">
+      <div class="card-header">
+          <h2 class="widget-title">Target to Achievement</h2>
+          <button class="btn-actions" type="button" id="menu-button">
+            <span class="audible">Actions</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-more"></use>
+            </svg>
+          </button>
+          <ul class="popupmenu actions top">
+            <li><a href="#">Update One</a></li>
+            <li><a href="#">Update Two</a></li>
+          </ul>
+      </div>
+      <div class="card-content">
+        <div id="example-1" class="chart-container"></div>
+        <div id="example-2" class="chart-container"></div>
+        <div id="example-3" class="chart-container"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+  var dataset1 = [{
+    data: [{
+      name: {text: 'Label A'},
+      completed: {text: '50K of 250K', value: 50000, format: '.2s', color: 'primary'},
+      remaining: {value: 20000, format: '.2s', text: ' To Target'},
+      total: {value: 250000, format: '.2s'},
+    }]
+  }];
+
+  var api1 = $('#example-1').chart({dataset: dataset1, type: 'targeted-achievement'}).data('chart');
+
+  var dataset2 = [{
+    data: [{
+      name: {text: 'Label B'},
+      completed: {text: '300K of 250K', value: 300000, format: '.2s', color: 'primary'},
+      remaining: {value: 50000, format: '.2s', text: ' Excess'},
+      total: {value: 250000, format: '.2s'},
+    }]
+  }];
+
+  var api2 = $('#example-2').chart({dataset: dataset2, type: 'targeted-achievement'}).data('chart');
+
+  var dataset3 = [{
+    data: [{
+      name: {text: 'Label C'},
+      completed: {text: '230K of 250K', value: 230000, format: '.2s', color: 'error'},
+      total: {value: 250000, text: ' Remaining', format: '.2s'},
+    }]
+  }];
+
+  var api3 = $('#example-3').chart({dataset: dataset3, type: 'targeted-achievement'}).data('chart');
+
+  // Example updating a value
+  $('#menu-button').on('selected', function (e, args) {
+    var upd = args.parent().index();
+
+    var dataset1 = [{
+      data: [{
+        name: {text: 'Label A'},
+        completed: {text: '250K of 250K', value: 250000, format: '.2s', color: 'primary'},
+        remaining: {value: 250000, format: '.2s', text: ' Completed'},
+        total: {value: 250000, format: '.2s'},
+      }]
+    }];
+
+    $('#example-1').chart({dataset: dataset1, type: 'targeted-achievement'}).data('chart');
+
+  });
+
+</script>

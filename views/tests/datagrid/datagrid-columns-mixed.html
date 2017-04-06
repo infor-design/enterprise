@@ -26,7 +26,7 @@
       columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 220});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
-      columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal, width: 80});
+      columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal, width: '20%'});
 
       //Init and get the api for the grid
       grid = $('#datagrid').datagrid({

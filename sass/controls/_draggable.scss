@@ -37,3 +37,7 @@
 .arrange-placeholder {
   border: 1px dashed $input-border-color;
 }
+
+.arrange-dragging.is-touch {
+  position: fixed;
+}

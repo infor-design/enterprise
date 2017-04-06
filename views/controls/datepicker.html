@@ -23,9 +23,15 @@
 
     <div class="field">
        <label for="start-time" class="label required" >Start Time</label>
-       <input id="start-time" name="start-time" type="text" class="datepicker input-md" data-validate="required" data-options="{'showTime': 'true', 'timeFormat': 'h:mm a'}" />
+       <input id="start-time" name="start-time" type="text" class="datepicker input-md" data-validate="required" data-options="{'showTime': 'true'}" />
     </div>
 
   </div>
 
 </div>
+
+<script>
+    $('#date-field-normal').on('listclosed', function () {
+      console.log('listclosed');
+    });
+</script>

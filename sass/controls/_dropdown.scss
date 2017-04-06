@@ -45,7 +45,7 @@ div.multiselect {
   color: $dropdown-color;
   cursor: pointer;
   overflow: hidden;
-  padding: 8px 32px 7px 10px;
+  padding: 7px 32px 8px 10px;
   -webkit-text-fill-color: $dropdown-color;
   text-overflow: ellipsis;
   vertical-align: middle;
@@ -57,6 +57,7 @@ div.multiselect {
     overflow: hidden;
     text-overflow: ellipsis;
     vertical-align: middle;
+    width: inhert;
   }
 
   &:empty {
@@ -129,7 +130,9 @@ div.multiselect {
   }
 
   &:focus {
+    // scss-lint:disable ImportantRule
     border-color: $input-focus-border-color !important;
+    // scss-lint:enable ImportantRule
   }
 }
 
@@ -145,7 +148,6 @@ div.multiselect {
   overflow: hidden;
   -webkit-overflow-scrolling: touch;
   position: absolute;
-  transition: height .3s ease 0s;
   white-space: nowrap;
   width: auto;
   z-index: 4501;
@@ -159,18 +161,6 @@ div.multiselect {
     background-color: $body-bg-color;
   }
 
-  // Enables a full-screen dropdown control that works well with small form-factors
-  &.full-screen {
-    height: calc(100% - 20px);
-    max-height: none;
-    width: calc(100% - 20px);
-
-    ul {
-      height: 100%;
-      max-height: calc(100% - 34px);
-    }
-  }
-
   &.is-ontop {
     box-shadow: $dropdown-box-shadow-top;
   }
@@ -181,8 +171,6 @@ div.multiselect {
     color: $popupmenu-color;
     height: auto;
     line-height: 32px;
-    max-height: 260px;
-    min-height: inherit;
     overflow-x: hidden;
     overflow-y: auto;
     padding: 5px 0;
@@ -417,7 +405,7 @@ div.multiselect {
   border-bottom: 1px solid $dropdown-menu-separator-border-color;
   border-radius: 0;
   color: $dropdown-color;
-  padding: 9px 32px 7px 10px;
+  padding: 8px 32px 8px 10px;
   text-overflow: ellipsis;
   width: 100%;
 
@@ -591,6 +579,9 @@ div.dropdown-xs,
 
 // Firefox needs a nudge on the list items
 .is-firefox {
+  div.dropdown {
+    padding: 8px 32px 7px 10px;
+  }
 
   .dropdown-list {
     &.multiple li {
@@ -645,7 +636,9 @@ html[dir='rtl'] {
       left: 6px;
       margin-left: inherit;
       margin-right: -33px;
+      // scss-lint:disable ImportantRule
       right: auto !important;
+      // scss-lint:enable ImportantRule
     }
   }
 
@@ -711,7 +704,9 @@ html[dir='rtl'] {
 
       ~ .icon-error {
         margin-left: inherit;
+        // scss-lint:disable ImportantRule
         margin-right: -38px !important;
+        // scss-lint:enable ImportantRule
       }
     }
   }

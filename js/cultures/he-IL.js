@@ -34,7 +34,7 @@
                    'medium': 'd בMMM yyyy',
                    'long': 'd בMMMM yyyy',
                    'full': 'EEEE, d בMMMM yyyy',
-                   'month': 'dd MMMM',
+                   'month': 'd MMMM',
                    'year': 'MMMM yyyy',
                    'timestamp': 'HH:mm:ss',
                    'datetime': 'dd/MM/yyyy HH:mm'}, //Infered short + short gregorian/dateTimeFormats

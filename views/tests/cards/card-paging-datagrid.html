@@ -1,0 +1,105 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Card Test: Paging Datagrid</h2>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="full-width column">
+    <div class="card">
+      <div class="card-header">
+          <h2 class="widget-title">Chart Title</h2>
+          <button type="button" class="btn-actions" type="button">
+            <span class="audible">Actions</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-more"></use>
+            </svg>
+          </button>
+          <ul class="popupmenu actions top">
+            <li><a href="#">Action One</a></li>
+            <li><a href="#">Action Two</a></li>
+          </ul>
+      </div>
+      <div class="card-content">
+        <div id="datagrid"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+
+
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+    Locale.set('en-US').done(function () {
+      var grid,
+        columns = [],
+        data = [];
+
+      // Some Sample Data
+      data.push({ id: 1, productId: 2142201, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1, price: '500', status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action'});
+      data.push({ id: 2, productId: 2241202, productName: 'Different Compressor', activity:  'Inspect and Repair', quantity: '2', price: 210.99, status: '', orderDate: new Date(2015, 7, 3), action: 'On Hold'});
+      data.push({ id: 3, productId: 2342203, productName: 'Compressor', activity:  'Inspect and Repair', quantity: 1, price: '120.99', status: null, orderDate: new Date(2014, 6, 3), action: 'Action'});
+      data.push({ id: 4, productId: 2445204, productName: 'Another Compressor', activity:  'Assemble Paint', quantity: 3, price: '2345', status: 'OK', orderDate: new Date(2015, 3, 3), action: 'Action'});
+      data.push({ id: 5, productId: 2542205, productName: 'I Love Compressors', activity:  'Inspect and Repair', quantity: 4, price: '210.99', status: 'OK', orderDate: new Date(2015, 5, 5), action: 'On Hold'});
+      data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '123.99', status: 'OK', orderDate: null, action: 'On Hold'});
+      data.push({ id: 7, productId: 2142207, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1, price: '500', status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action'});
+      data.push({ id: 8, productId: 2241208, productName: 'Different Compressor', activity:  'Inspect and Repair', quantity: '2', price: 210.99, status: '', orderDate: new Date(2015, 7, 3), action: 'On Hold'});
+      data.push({ id: 9, productId: 2342209, productName: 'Compressor', activity:  'Inspect and Repair', quantity: 1, price: '120.99', status: null, orderDate: new Date(2014, 6, 3), action: 'Action'});
+      data.push({ id: 10, productId: 2445210, productName: 'Another Compressor', activity:  'Assemble Paint', quantity: 3, price: '2345', status: 'OK', orderDate: new Date(2015, 3, 3), action: 'Action'});
+      data.push({ id: 11, productId: 2542211, productName: 'I Love Compressors', activity:  'Inspect and Repair', quantity: 4, price: '210.99', status: 'OK', orderDate: new Date(2015, 5, 5), action: 'On Hold'});
+      data.push({ id: 12, productId: 2642212, productName: 'Air Compressors', activity:  'Inspect and Repair', quantity: 41, price: '120.99', status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+      data.push({ id: 13, productId: 2642213, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '123.99', status: 'OK', orderDate: null, action: 'On Hold'});
+      data.push({ id: 14, productId: 2142214, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1, price: '500', status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action'});
+      data.push({ id: 15, productId: 2241215, productName: 'Different Compressor', activity:  'Inspect and Repair', quantity: '2', price: 210.99, status: '', orderDate: new Date(2015, 7, 3), action: 'On Hold'});
+      data.push({ id: 16, productId: 2342216, productName: 'Compressor', activity:  'Inspect and Repair', quantity: 1, price: '120.99', status: null, orderDate: new Date(2014, 6, 3), action: 'Action'});
+      data.push({ id: 17, productId: 2445217, productName: 'Another Compressor', activity:  'Assemble Paint', quantity: 3, price: '2345', status: 'OK', orderDate: new Date(2015, 3, 3), action: 'Action'});
+      data.push({ id: 18, productId: 2542218, productName: 'I Love Compressors', activity:  'Inspect and Repair', quantity: 4, price: '210.99', status: 'OK', orderDate: new Date(2015, 5, 5), action: 'On Hold'});
+      data.push({ id: 19, productId: 2642219, productName: 'Air Compressors', activity:  'Inspect and Repair', quantity: 41, price: '120.99', status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+      data.push({ id: 20, productId: 2642220, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '123.99', status: 'OK', orderDate: null, action: 'On Hold'});
+      data.push({ id: 21, productId: 2142221, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1, price: '500', status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action'});
+      data.push({ id: 22, productId: 2241222, productName: 'Different Compressor', activity:  'Inspect and Repair', quantity: '2', price: 210.99, status: '', orderDate: new Date(2015, 7, 3), action: 'On Hold'});
+      data.push({ id: 23, productId: 2342223, productName: 'Compressor', activity:  'Inspect and Repair', quantity: 1, price: '120.99', status: null, orderDate: new Date(2014, 6, 3), action: 'Action'});
+      data.push({ id: 24, productId: 2445224, productName: 'Another Compressor', activity:  'Assemble Paint', quantity: 3, price: '2345', status: 'OK', orderDate: new Date(2015, 3, 3), action: 'Action'});
+      data.push({ id: 25, productId: 2542225, productName: 'I Love Compressors', activity:  'Inspect and Repair', quantity: 4, price: '210.99', status: 'OK', orderDate: new Date(2015, 5, 5), action: 'On Hold'});
+      data.push({ id: 26, productId: 2642226, productName: 'Air Compressors', activity:  'Inspect and Repair', quantity: 41, price: '120.99', status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+      data.push({ id: 27, productId: 2642227, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '123.99', status: 'OK', orderDate: null, action: 'On Hold'});
+      data.push({ id: 28, productId: 2542228, productName: 'I Love Compressors', activity:  'Inspect and Repair', quantity: 4, price: '210.99', status: 'OK', orderDate: new Date(2015, 5, 5), action: 'On Hold'});
+      data.push({ id: 29, productId: 2642229, productName: 'Air Compressors', activity:  'Inspect and Repair', quantity: 41, price: '120.99', status: 'OK', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+      data.push({ id: 30, productId: 2642230, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '123.99', status: 'OK', orderDate: null, action: 'On Hold'});
+
+      //Define Columns for the Grid.
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: '50%', formatter: Formatters.Readonly});
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 175, formatter: Formatters.Hyperlink});
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 125});
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
+      columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+      columns.push({ id: 'status', name: 'Status', field: 'status', width: 200, formatter: Formatters.Text});
+      columns.push({ id: 'action', name: 'Action Item', field: 'action', width: 200});
+
+      //Init and get the api for the grid
+      grid = $('#datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        rowHeight: 'short',
+        selectable: 'single',
+        paging: true,
+        pagesize: 10
+      }).data('datagrid');
+
+      grid.setColumnWidth('productId', '15%', true);
+      grid.setColumnWidth('status', 150, true);
+      grid.setColumnWidth('productName', '20%', true);
+      grid.setColumnWidth('activity', '15%', true);
+    });
+ });
+</script>

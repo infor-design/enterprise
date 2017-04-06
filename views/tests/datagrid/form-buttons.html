@@ -38,8 +38,8 @@
       columns.push({ id: 'productDesc', name: 'Product Desc', field: 'productName', formatter: Formatters.Hyperlink});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity'});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
-      columns.push({ id: 'actionLink', name: 'As Link', field: 'action', sortable: false, align: 'center', width: 70,  formatter: Formatters.Hyperlink, icon: 'reset'});
-      columns.push({ id: 'action', name: 'Active', field: 'action', text: 'Action', sortable: false, align: 'center', width: 70, formatter: Formatters.Button, click: function (e, args) {console.log('Button was clicked', args);}
+      columns.push({ id: 'actionLink', name: 'As Link', field: 'action', sortable: false, align: 'center', formatter: Formatters.Hyperlink, icon: 'reset'});
+      columns.push({ id: 'action', name: 'Active', field: 'action', text: 'Action', sortable: false, align: 'center',formatter: Formatters.Button, click: function (e, args) {console.log('Button was clicked', args);}
       , contentVisible: function (row, cell, data, col, item) { return (item.status === 'OK');} });
 
       //Init and get the api for the grid

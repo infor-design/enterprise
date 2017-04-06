@@ -45,6 +45,7 @@
         firstHeader: 'h3',
         secondHeader: 'h4',
         placeholder: null,
+        pasteAsPlainText: false,
         // anchor > target: 'Same window'|'New window'| any string value
         anchor: {url: 'http://www.example.com', class: 'hyperlink', target: 'New window'},
         image: {url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}
@@ -474,13 +475,18 @@
       },
 
       adjustSourceLineNumbers: function() {
+
         var container = this.textarea.parent(),
-          lineHeight = parseInt(this.textarea[0].style.lineHeight),
-          YPadding = (this.textarea.innerHeight() - this.textarea.height() );
+          lineHeight = parseInt(getComputedStyle(this.textarea[0]).lineHeight),
+          YPadding = (this.textarea.innerHeight() - this.textarea.height());
+
         this.textarea[0].style.height = '';
+
         var scrollHeight = this.textarea[0].scrollHeight,
           lineNumberCount = Math.floor((scrollHeight - YPadding) / lineHeight),
           numberList = this.sourceView.find('.line-numbers'),
+          lastIdx = numberList.find('li').length,
+          list = '',
           i = 0;
 
         if (!this.lineNumbers || lineNumberCount !== this.lineNumbers) {
@@ -488,15 +494,17 @@
             // Build the list of line numbers from scratch
             this.lineNumbers = lineNumberCount;
             while (i < this.lineNumbers) {
-              numberList.append('<li role="presentation"><span>' + (i + 1) + '</span></li>');
+              list += '<li role="presentation"><span>'+ (i + 1) +'</span></li>';
               i++;
             }
+            numberList.append(list);
           } else if (this.lineNumbers < lineNumberCount) {
             // Add extra line numbers to the bottom
             while (i < (lineNumberCount - this.lineNumbers)) {
-              numberList.append('<li role="presentation"><span>' + (numberList.find('li').length + i + 1) + '</span></li>');
+              list += '<li role="presentation"><span>'+ (lastIdx + i + 1) +'</span></li>';
               i++;
             }
+            numberList.append(list);
           } else if (this.lineNumbers > lineNumberCount) {
             // Remove extra line numbers from the bottom
             i = this.lineNumbers - lineNumberCount;
@@ -505,6 +513,11 @@
           this.lineNumbers = lineNumberCount;
           container[0].style.width = 'calc(100% - ' + (numberList.outerWidth() + 1) + 'px)';
         }
+        if (scrollHeight !== this.textarea[0].scrollHeight) {
+          this.adjustSourceLineNumbers();
+          return;
+        }
+
         this.textarea[0].style.height = numberList[0].scrollHeight + 'px';
       },
 
@@ -1096,7 +1109,9 @@
 
       //Handle Pasted In Text
       bindPaste: function () {
-        var self = this;
+        var self = this,
+          currentElement = self.getCurrentElement();
+
         if (!self.pasteEvent) {
           self.pasteEvent = self.getPasteEvent();
         }
@@ -1143,8 +1158,58 @@
           }
         };
 
-        var currentElement = self.getCurrentElement();
-        currentElement.on(self.pasteEvent, self.pasteWrapper);
+        this.pasteWrapperHtml = function (e) {
+          if (self.sourceViewActive()) {
+            return this;
+          }
+          var types, clipboardData, pastedData,
+            getCleanedHtml = function(pastedData) {
+              var s = pastedData || '';
+              if (self.isWordFormat(s)) {
+                s = self.cleanWordHtml(s);
+              }
+              s = s.replace(/<\/?(html|body)>/gi, '');
+              s = s.replace(/<head\b[^>]*>(.*?)<\/head>/gi, '');
+              return s;
+            };
+
+          if (e.clipboardData || e.originalEvent) {
+            if (e.clipboardData && e.clipboardData.types) {
+              clipboardData = e.clipboardData;
+            }
+            else if (e.originalEvent && e.originalEvent.clipboardData && e.originalEvent.clipboardData.getData) {
+              clipboardData = e.originalEvent.clipboardData;
+            }
+          }
+          types = clipboardData.types;
+
+          // jshint undef:false
+          if (types && ((types instanceof DOMStringList && types.contains('text/html')) || (types.indexOf && types.indexOf('text/html') !== -1))) {
+          // jshint undef:true
+            pastedData =  e.originalEvent.clipboardData.getData('text/html');
+          }
+
+          self.pastedData = getCleanedHtml(pastedData);
+
+          $.when(self.element.triggerHandler('beforepaste', [{pastedData: self.pastedData}])).done(function() {
+            if (self.pastedData && !e.defaultPrevented) {
+              e.preventDefault();
+
+              if (document.queryCommandSupported('insertText')) {
+                  document.execCommand('insertHTML', false, self.pastedData);
+                  return false;
+              } else { // IE > 7
+                self.pasteHtmlAtCaret(self.pastedData);
+              }
+            }
+            self.element.triggerHandler('afterpaste', [{pastedData: self.pastedData}]);
+            self.pastedData = null;
+          });
+          return false;
+        };
+
+        currentElement.on(self.pasteEvent, (self.settings.pasteAsPlainText ? self.pasteWrapper : self.pasteWrapperHtml));
+
         return this;
       },
 
@@ -1154,29 +1219,29 @@
           // IE9 and non-IE
           sel = window.getSelection();
           if (sel.getRangeAt && sel.rangeCount) {
-              range = sel.getRangeAt(0);
-              range.deleteContents();
+            range = sel.getRangeAt(0);
+            range.deleteContents();
 
-              // Range.createContextualFragment() would be useful here but is
-              // only relatively recently standardized and is not supported in
-              // some browsers (IE9, for one)
-              var el = document.createElement('div');
+            // Range.createContextualFragment() would be useful here but is
+            // only relatively recently standardized and is not supported in
+            // some browsers (IE9, for one)
+            var el = document.createElement('div');
 
-              el.innerHTML = html;
-              var frag = document.createDocumentFragment(), node, lastNode;
-              while ( (node = el.firstChild) ) {
-                lastNode = frag.appendChild(node);
-              }
-              range.insertNode(frag);
+            el.innerHTML = html;
+            var frag = document.createDocumentFragment(), node, lastNode;
+            while ( (node = el.firstChild) ) {
+              lastNode = frag.appendChild(node);
+            }
+            range.insertNode(frag);
 
-              // Preserve the selection
-              if (lastNode) {
-                range = range.cloneRange();
-                range.setStartAfter(lastNode);
-                range.collapse(true);
-                sel.removeAllRanges();
-                sel.addRange(range);
-              }
+            // Preserve the selection
+            if (lastNode) {
+              range = range.cloneRange();
+              range.setStartAfter(lastNode);
+              range.collapse(true);
+              sel.removeAllRanges();
+              sel.addRange(range);
+            }
           }
         } else if (document.selection && document.selection.type !== 'Control') {
           // IE < 9
@@ -1415,6 +1480,10 @@
             .replace(/<\/blockquote>( )?/g, '</blockquote>\n\n');
 
           this.textarea.val(val).focus();
+
+          // var val = this.element.html().toString();
+          // this.textarea.val(this.formatHtml(val)).focus();
+
           this.element.addClass('source-view-active hidden');
           this.sourceView.removeClass('hidden');
           this.adjustSourceLineNumbers();
@@ -1427,11 +1496,26 @@
       colorpickerActions: function(action) {
         var self = this,
           cpBtn = $('[data-action="'+ action +'"]', this.toolbar),
-          cpApi = cpBtn.data('colorpicker');
+          cpApi = cpBtn.data('colorpicker'),
+          color = document.queryCommandValue(action);
+
+        // Set selection color checkmark in picker popup
+        // by adding/updating ['data-value'] attribute
+        if (cpApi) {
+          if (self.isFirefox && action === 'backColor') {
+            color = $(window.getSelection().focusNode.parentNode).css('background-color');
+          }
+          // IE-11 queryCommandValue returns the as decimal
+          if (typeof color === 'number') {
+            color = cpApi.decimal2rgb(color);
+          }
+          color = cpApi.rgb2hex(color);
+          cpBtn.attr('data-value', color).find('.icon').css('fill', color);
+        }
 
         cpBtn.on('selected.editor', function (e, item) {
           var value = ('#' + item.data('value')).toLowerCase();
-          // cpBtn.attr('data-value', value);
+          cpBtn.attr('data-value', value).find('.icon').css('fill', value);
 
           if (self.isIE || action === 'foreColor') {
             document.execCommand(action, false, value);
@@ -1649,6 +1733,103 @@
             }
           }, false);
         }
+      },
+
+      isWordFormat: function(content) {
+        return (
+          (/<font face="Times New Roman"|class="?Mso|style="[^"]*\bmso-|style='[^'']*\bmso-|w:WordDocument/i).test(content) ||
+          (/class="OutlineElement/).test(content) ||
+          (/id="?docs\-internal\-guid\-/.test(content))
+        );
+      },
+
+      cleanWordHtml: function(content) {
+        var s = content;
+
+        // Word comments like conditional comments etc
+        s = s.replace(/<!--[\s\S]+?-->/gi, '');
+
+        // Remove comments, scripts (e.g., msoShowComment), XML tag, VML content,
+        // MS Office namespaced tags, and a few other tags
+        s = s.replace(/<(!|script[^>]*>.*?<\/script(?=[>\s])|\/?(\?xml(:\w+)?|img|meta|link|style|\w:\w+)(?=[\s\/>]))[^>]*>/gi, '');
+
+        // Convert <s> into <strike> for line-though
+        s = s.replace(/<(\/?)s>/gi, '<$1strike>');
+
+        // Replace nsbp entites to char since it's easier to handle
+        s = s.replace(/&nbsp;/gi, '\u00a0');
+
+        // Convert <span style="mso-spacerun:yes"></span> to string of alternating
+        // breaking/non-breaking spaces of same length
+        s = s.replace(/<span\s+style\s*=\s*"\s*mso-spacerun\s*:\s*yes\s*;?\s*"\s*>([\s\u00a0]*)<\/span>/gi, function(str, spaces) {
+          return (spaces.length > 0) ?
+          spaces.replace(/./, ' ').slice(Math.floor(spaces.length / 2)).split('').join('\u00a0') : '';
+        });
+
+        // Remove line breaks / Mso classes
+        s = s.replace(/(\n|\r| class=(")?Mso[a-zA-Z]+(")?)/g, ' ');
+
+        var i, l, re,
+          badTags = ['style', 'script','applet','embed','noframes','noscript'],
+          badAttributes = ['style', 'start'];
+
+        // Remove everything in between and including "badTags"
+        for (i = 0, l = badTags.length; i < l; i++) {
+          re = new RegExp('<'+badTags[i]+'.*?'+badTags[i]+'(.*?)>', 'gi');
+          s = s.replace(re, '');
+        }
+
+        // Remove attributes
+        for (i = 0, l = badAttributes.length; i < l; i++) {
+          var attributeStripper = new RegExp(' ' + badAttributes[i] + '="(.*?)"','gi');
+          s = s.replace(attributeStripper, '');
+        }
+
+        return s;
+      },
+
+      getIndent: function(level) {
+        var result = '',
+          i = level * 2;
+        if (level > -1) {
+          while (i--) {
+            result += ' ';
+          }
+        }
+        return result;
+      },
+
+      formatHtml: function(html) {
+        html = html.trim();
+        var result = '',
+          indentLevel = 0,
+          tokens = html.split(/</);
+
+        for (var i = 0, l = tokens.length; i < l; i++) {
+          var parts = tokens[i].split(/>/);
+          if (parts.length === 2) {
+            if (tokens[i][0] === '/') {
+              indentLevel--;
+            }
+            result += this.getIndent(indentLevel);
+            if (tokens[i][0] !== '/') {
+              indentLevel++;
+            }
+            if (i > 0) {
+              result += '<';
+            }
+            result += parts[0].trim() + '>\n';
+            if (parts[1].trim() !== '') {
+              result += this.getIndent(indentLevel) + parts[1].trim().replace(/\s+/g, ' ') + '\n';
+            }
+            if (parts[0].match(/^(area|base|br|col|command|embed|hr|img|input|link|meta|param|source)/)) {
+              indentLevel--;
+            }
+          } else {
+            result += this.getIndent(indentLevel) + parts[0] + '\n';
+          }
+        }
+        return result.trim();
       },
 
       destroy: function () {

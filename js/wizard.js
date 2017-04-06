@@ -154,8 +154,12 @@
 
       updateRange: function() {
         var currentTick = this.ticks.filter('.current').last(),
-          widthPercentage = (100 * parseFloat(currentTick[0].style.left) / parseFloat(currentTick.parent()[0].style.width));
-        widthPercentage = Locale.isRTL() ? (100-widthPercentage) : widthPercentage;
+          widthPercentage = 0;
+
+        if (currentTick.length) {
+          widthPercentage = (100 * parseFloat(window.getComputedStyle(currentTick[0]).left) / parseFloat(window.getComputedStyle(currentTick.parent()[0]).width));
+          widthPercentage = Locale.isRTL() ? (100-widthPercentage) : widthPercentage;
+        }
 
         this.completedRange[0].style.width = widthPercentage + '%';
         return this;

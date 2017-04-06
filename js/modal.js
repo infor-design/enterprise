@@ -110,7 +110,11 @@
             isAppended = true;
             this.element = this.settings.content.closest('.modal');
           } else {
-            this.element.find('.modal-body').append(this.settings.content);
+            var self = this,
+              body = self.element.find('.modal-body');
+
+            body.append(self.settings.content);
+            Soho.utils.fixSVGIcons(body);
           }
 
           if (this.settings.content instanceof jQuery){
@@ -170,16 +174,25 @@
             }
 
             var isVisible = field[0].offsetParent !== null;
-            if (isVisible && !field.val()) {
-              allValid = false;
+
+            if (field.is('.required')) {
+              if (isVisible && !field.val()) {
+                allValid = false;
+              }
+            } else {
+              field.checkValidation();
+              if (isVisible && !field.isValid()) {
+                allValid = false;
+              }
+
             }
 
             if (allValid) {
-              inlineBtns.filter('.btn-modal-primary').not('.no-validation').removeAttr('disabled');
+              primaryButton.removeAttr('disabled');
             }
           });
 
-          if (!allValid && !inlineBtns.filter('.btn-modal-primary').is(':disabled')) {
+          if (!allValid && !primaryButton.is(':disabled')) {
              primaryButton.attr('disabled', 'true');
           }
         }
@@ -426,7 +439,10 @@
             return;
           }
 
-          if (e.which === 13 && self.isOnTop() && !target.closest('form').find(':submit').length) {
+          if (e.which === 13 && self.isOnTop() &&
+              !target.closest('form').find(':submit').length &&
+              self.element.find('.btn-modal-primary:enabled').length) {
+
             e.stopPropagation();
             e.preventDefault();
             self.element.find('.btn-modal-primary:enabled').trigger('click');
@@ -505,6 +521,10 @@
           calcWidth = ($(window).width()* 1)-this.settings.frameWidth;
 
         var wrapper = this.element.find('.modal-body-wrapper');
+
+        //Remove width for backwards compat
+        this.element.find('.modal-contents').css('width', '');
+
         if (wrapper.length) {
           wrapper[0].style.maxHeight = calcHeight + 'px';
           wrapper[0].style.maxWidth = calcWidth + 'px';

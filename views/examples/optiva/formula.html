@@ -85,7 +85,7 @@
         </ul>
       </div>
 
-    <div class="splitter splitter-right">
+    <div class="splitter splitter-right" data-options="{'collapseButton': true}">
       <div class="panel-header"></div>
     </div>
   </div>
@@ -527,7 +527,7 @@
                           </div>
                         </div>
                         <div class="contained" style="height: 180px;">
-                          <div id="datagrid-main-parameters" class="datagrid-contained">
+                          <div id="datagrid-main-parameters" >
                           </div>
                         </div>
                       </div>
@@ -561,7 +561,7 @@
                           </div>
                         </div>
                         <div class="contained" style="height: 180px;">
-                          <div id="datagrid-main-instructions" class="datagrid-contained">
+                          <div id="datagrid-main-instructions" >
                           </div>
                         </div>
                       </div>
@@ -613,7 +613,7 @@
                           </div>
                         </div>
                         <div class="contained" style="height: 400px;">
-                          <div id="datagrid-main-byproducts" class="datagrid-contained">
+                          <div id="datagrid-main-byproducts" >
                           </div>
                         </div>
 
@@ -695,7 +695,7 @@
                           </div>
                         </div>
                         <div class="contained" style="height: 180px;">
-                          <div id="datagrid-main-context" class="datagrid-contained">
+                          <div id="datagrid-main-context" >
                           </div>
                         </div>
                       </div>
@@ -741,7 +741,7 @@
                           </div>
                         </div>
                         <div class="contained" style="height: 180px;">
-                          <div id="datagrid-main-classification" class="datagrid-contained">
+                          <div id="datagrid-main-classification" >
                           </div>
                         </div>
                       </div>
@@ -776,7 +776,7 @@
                         </div>
 
                         <div class="contained" style="height: 180px;">
-                          <div id="datagrid-main-notes" class="datagrid-contained">
+                          <div id="datagrid-main-notes" >
                           </div>
                         </div>
                       </div>
@@ -877,7 +877,7 @@
                 </div>
               </div>
               <div class="contained" style="height: 400px;">
-                <div id="datagrid-item-lines" class="datagrid-contained">
+                <div id="datagrid-item-lines" >
                 </div>
               </div>
             </div>
@@ -953,7 +953,7 @@
                 </div>
               </div>
               <div class="contained" style="height: 400px;">
-                <div id="datagrid-references" class="datagrid-contained">
+                <div id="datagrid-references" >
                 </div>
               </div>
             </div>
@@ -1260,16 +1260,64 @@
   // Main tab
   var dataParameters = {
     data: [
-      {id: 1, parameter: 'DENSITY', view: '#', value: 1.001, level: 'Calculated', uom: 'kg/L', description: 'Density'},
-      {id: 2, parameter: 'ETHANOL', view: '#', value: '', level: 'Pending', uom: '%', description: 'Ethanol'},
-      {id: 3, parameter: 'ASH', view: '#', value: 1.79108159392789, level: 'Calculated', uom: '%', description: 'Ash'},
-      {id: 4, parameter: 'CAFFEINE', view: '#', value: '', level: 'Pending', uom: 'mg/100 g', description: 'Caffeine'},
-      {id: 5, parameter: 'CA', view: '#', value: 163.869070208729, level: 'Calculated', uom: 'mg/100 g', description: 'Calcium (Ca)'},
-      {id: 6, parameter: 'CARBOHYDRATES', view: '#', value: 16.5140417457306, level: 'Calculated', uom: 'g/100 g', description: 'Carbohydrates, total'},
-      {id: 7, parameter: 'CHOLESTEROL', view: '#', value: 32.685009487666, level: 'Calculated', uom: 'mg/100 g', description: 'Cholesterol'},
-      {id: 8, parameter: 'CU', view: '#', value: 0.0524800759013283, level: 'Calculated', uom: 'mg/100 g', description: 'Copper (Cu)'},
-      {id: 9, parameter: 'ENERGY', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal), total'}
+      {id: 1, parameter: 'DENSITY', view: '#', value: 1.001, level: 'Calculated', uom: 'kg/L', description: 'Density', attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 2, parameter: 'ETHANOL', view: '#', value: '', level: 'Pending', uom: '%', description: 'Ethanol', attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 3, parameter: 'ASH', view: '#', value: 1.79108159392789, level: 'Calculated', uom: '%', description: 'Ash', attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 4, parameter: 'CAFFEINE', view: '#', value: '', level: 'Pending', uom: 'mg/100 g', description: 'Caffeine', attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 5, parameter: 'CA', view: '#', value: 163.869070208729, level: 'Calculated', uom: 'mg/100 g', description: 'Calcium (Ca)', attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 6, parameter: 'CARBOHYDRATES', view: '#', value: 16.5140417457306, level: 'Calculated', uom: 'g/100 g', description: 'Carbohydrates', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 7, parameter: 'CHOLESTEROL', view: '#', value: 32.685009487666, level: 'Calculated', uom: 'mg/100 g', description: 'Cholesterol', attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 8, parameter: 'CU', view: '#', value: 0.0524800759013283, level: 'Calculated', uom: 'mg/100 g', description: 'Copper (Cu)', attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 9, parameter: 'ENERGY', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 10, parameter: 'FATS', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 11, parameter: 'FOLIC_ACID', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 12, parameter: 'GMO CONTENT', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 13, parameter: 'GMO', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 14, parameter: 'HALAL', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 15, parameter: 'FE', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 16, parameter: 'KOSHER', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 17, parameter: 'MG', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 18, parameter: 'MN', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 19, parameter: 'MOISTER', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 20, parameter: 'FATS_MONOUNSAT', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 21, parameter: 'NIACIN', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 22, parameter: 'ORGANIC', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 23, parameter: 'PANTOTHENIC_ACID', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 24, parameter: 'P', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 25, parameter: 'FATS_POLYUNSAT', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 26, parameter: 'K', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 27, parameter: 'PROTEIN', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 28, parameter: 'ROBOFLAVIN', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 29, parameter: 'FATS_SAT', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 30, parameter: 'SE', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 31, parameter: 'NA', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 32, parameter: 'SOLID', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 33, parameter: 'STARCHES', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 34, parameter: 'SUGARS', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 35, parameter: 'THEOBROMINE', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 36, parameter: 'FATS_TRANS', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 37, parameter: 'VEGAN', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 38, parameter: 'VIT_A', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 39, parameter: 'VIT_B12', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 40, parameter: 'VIT_B6', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 41, parameter: 'VIT_C', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 42, parameter: 'VIT_D', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 43, parameter: 'VIT_E', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 44, parameter: 'ZN', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 45, parameter: 'F16D0', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 46, parameter: 'F16D1', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 47, parameter: 'F16D2', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 48, parameter: 'F16D3', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 49, parameter: 'DAIRY_ALLERGEN', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total:10 ,attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 50, parameter: 'EGG_ALLERGEN', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 51, parameter: 'FISH_ALLERGEN', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 52, parameter: 'PEANUT_ALLERGEN', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 53, parameter: 'SHELLFISH_ALLERGEN', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 54, parameter: 'SOY_ALLERGEN', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 55, parameter: 'TREENUT_ALLERGEN', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
+      {id: 56, parameter: 'WHEAT_ALLERGEN', view: '#', value: 164.284629981025, level: 'Calculated', uom: 'cal/100 g', description: 'Energy (Cal)', total: 10, attr1: null, attr3: null, attr3: null, attr4: null, attr5: null, attr6: null, attr7: null, attr8: null, attr9: null, attr10: null, attr111: null},
     ],
+
     columns: [
       {id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'},
       {id: 'parameter', name: 'Parameter', field: 'parameter', width: 160, formatter: Formatters.Readonly},
@@ -1280,7 +1328,18 @@
         options: [{id: 'calculated', label: 'Calculated', value: 'calculated'}, {id: 'pending', label: 'Pending', value: 'pending'}]},
       {id: 'uom', name: 'UOM', field: 'uom', width: 150, formatter: Formatters.Dropdown, editor: Editors.Dropdown,
         options: [{id: 'kg', label: 'kg/L', value: 'kg'}, {id: 'per', label: '%', value: 'per'}, {id: 'mg', label: 'mg/100 g', value: 'mg'}, {id: 'g', label: 'g/100 g', value: 'g'}, {id: 'cal', label: 'cal/100 g', value: 'cal'}]},
-      {id: 'description', name: 'Description', field: 'description'}
+      {id: 'description', name: 'Description', field: 'description'},
+      {id: 'att1', name: 'Attribute 1', field: 'att1'},
+      {id: 'att2', name: 'Attribute 2', field: 'att2'},
+      {id: 'att3', name: 'Attribute 3', field: 'att3'},
+      {id: 'att4', name: 'Attribute 4', field: 'att4'},
+      {id: 'att5', name: 'Attribute 5', field: 'att5'},
+      {id: 'att6', name: 'Attribute 6', field: 'att6'},
+      {id: 'att7', name: 'Attribute 7', field: 'att7'},
+      {id: 'att8', name: 'Attribute 8', field: 'att8'},
+      {id: 'att9', name: 'Attribute 9', field: 'att9'},
+      {id: 'att10', name: 'Attribute 10', field: 'att10'},
+      {id: 'att11', name: 'Attribute 11', field: 'att11'}
     ]
   };
 
@@ -1410,6 +1469,7 @@
     selectable: 'multiple',
     rowHeight: 'short',
     saveColumns: false,
+    virtualized: true
   });
 
   $('#datagrid-main-instructions').datagrid({
@@ -1418,6 +1478,7 @@
     clickToSelect: false,
     rowHeight: 'short',
     saveColumns: false,
+    virtualized: true
   });
 
   $('#datagrid-main-byproducts').datagrid({
@@ -1428,6 +1489,7 @@
     selectable: 'multiple',
     rowHeight: 'short',
     saveColumns: false,
+    virtualized: true
   });
 
   $('#datagrid-main-context').datagrid({
@@ -1438,6 +1500,7 @@
     selectable: 'multiple',
     rowHeight: 'short',
     saveColumns: false,
+    virtualized: true
   });
 
   $('#datagrid-main-classification').datagrid({

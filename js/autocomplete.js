@@ -20,11 +20,13 @@
     var pluginName = 'autocomplete',
       defaults = {
         source: [], //Defines the data to use, must be specified.
+        sourceArguments: {}, // If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
         template: undefined, // If defined, use this to draw the contents of each search result instead of the default draw routine.
         filterMode: 'startsWith',  // startsWith and contains Supported - false will not client side filter
         delay: 300, // delay is the delay between key strokes on the keypad before it thinks you stopped typing
         width: null, //width of the auto complete menu
-        offset: null //left or top offset
+        offset: null, //left or top offset
+        autoSelectFirstItem: false // if true will cause the first item in the list to be selected
       },
       settings = $.extend({}, defaults, options);
 
@@ -41,7 +43,7 @@
     }
 
     // Default Autocomplete Result Item Template
-    var resultTemplate = '<li id="{{listItemId}}" {{#hasValue}}data-value="{{value}}"{{/hasValue}} role="listitem">' + '\n\n' +
+    var resultTemplate = '<li id="{{listItemId}}" data-index="{{index}}" {{#hasValue}}data-value="{{value}}"{{/hasValue}} role="listitem">' + '\n\n' +
       '<a href="#" tabindex="-1">' + '\n\n' +
         '<span>{{{label}}}</span>' + '\n\n' +
       '</a>' + '\n\n' +
@@ -147,6 +149,7 @@
 
             // Build the dataset that will be submitted to the template
             dataset.listItemId = 'ac-list-option' + i;
+            dataset.index = i;
 
             if (this.settings.filterMode === 'contains') {
               dataset.label = dataset.label.replace(new RegExp('(' + term + ')', 'ig'), '<i>$1</i>');
@@ -173,11 +176,20 @@
             } else {
               var listItem = $('<li role="listitem"></li>');
               listItem.attr('id', dataset.listItemId);
+              listItem.attr('data-index', dataset.index);
               listItem.attr('data-value', dataset.value);
               listItem.append('<a href="#" tabindex="-1"><span>' + dataset.label + '</span></a>');
               self.list.append($.sanitizeHTML(listItem));
             }
           }
+        }
+
+        function autocompletePlaceCallback(placementObj) {
+          // Nudge the autocomplete to the right by 1px in Chrome
+          if (Soho.env.browser.name === 'chrome') {
+            placementObj.setCoordinate('x', placementObj.x + 1);
+          }
+          return placementObj;
         }
 
         var popupOpts = {
@@ -187,6 +199,7 @@
           trigger: 'immediate',
           autoFocus: false,
           placementOpts: {
+            callback: autocompletePlaceCallback,
             parent: this.element
           }
         };
@@ -198,9 +211,11 @@
             self.element.removeClass('is-open');
           });
 
-        // Select the first item in the list
-        self.list.children().filter(':not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)').first()
-          .addClass('is-selected');
+        // Optionally select the first item in the list
+        if (self.settings.autoSelectFirstItem) {
+          self.list.children().filter(':not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)').first()
+            .addClass('is-selected');
+        }
 
         this.noSelect = true;
         this.element.trigger('populated', [matchingOptions]).focus();
@@ -209,6 +224,9 @@
         self.list.off('click touchend')
           .on('touchend.autocomplete click.autocomplete', 'a', function(e) {
             self.select(e, items);
+          })
+          .off('focusout.autocomplete').on('focusout.autocomplete', function() {
+            self.checkActiveElement();
           });
 
         // Highlight anchors on focus
@@ -248,51 +266,65 @@
         }
 
         popup.close();
+        this.element.trigger('listclose');
       },
 
       listIsOpen: function() {
-        return this.list && this.list.is(':visible');
+        return this.list instanceof $ && this.list.length && this.list.is(':visible');
       },
 
       handleEvents: function () {
         //similar code as dropdown but close enough to be dry
         var self = this;
 
-        this.element.on('updated.autocomplete', function() {
+        this.element.off('updated.autocomplete').on('updated.autocomplete', function() {
           self.updated();
-        }).on('keydown.autocomplete', function(e) {
+        }).off('keydown.autocomplete').on('keydown.autocomplete', function(e) {
           self.handleAutocompleteKeydown(e);
-        })
-        .on('input.autocomplete', function (e) {
+        }).off('input.autocomplete').on('input.autocomplete', function (e) {
           self.handleAutocompleteInput(e);
-        }).on('focus.autocomplete', function () {
+        }).off('focus.autocomplete').on('focus.autocomplete', function () {
           self.handleAutocompleteFocus();
+        }).off('focusout.autocomplete').on('focusout.autocomplete', function () {
+          self.checkActiveElement();
         });
       },
 
       // Handles the Autocomplete's "keydown" event
       handleAutocompleteKeydown: function(e) {
-        var self = this,
-          selected;
+        var self = this;
 
-        function getSelected() {
-          return self.list.find('.is-selected');
-        }
-
-        if (self.isLoading()) {
+        if (this.isLoading()) {
           e.preventDefault();
           return false;
         }
 
-        var excludes = 'li:not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)';
+        if (!this.listIsOpen()) {
+          return;
+        }
+
+        function getHighlighted(items) {
+          return items.filter('.is-selected');
+        }
+
+        function unhighlight(item) {
+          item.removeClass('is-selected is-focused');
+        }
+
+        function highlight(item) {
+          item.addClass('is-selected').find('a').focus();
+        }
+
+        var excludes = 'li:not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)',
+          items = this.list.find(excludes),
+          highlighted = getHighlighted(items);
 
         //Down - select next
         if (e.keyCode === 40 && this.listIsOpen()) {
-          selected = getSelected();
-          if (selected.length) {
+          if (highlighted.length) {
             self.noSelect = true;
-            selected.removeClass('is-selected is-focused');
-            selected.next(excludes).addClass('is-selected').find('a').focus();
+            unhighlight(highlighted);
+            highlight( items.eq(items.index(highlighted) + 1) );
             e.preventDefault();
             e.stopPropagation();
           }
@@ -300,21 +332,26 @@
 
         //Up select prev
         if (e.keyCode === 38 && this.listIsOpen()) {
-          selected = getSelected();
-          if (selected.length) {
+          if (highlighted.length) {
             self.noSelect = true;
-            selected.removeClass('is-selected is-focused');
-            selected.prev(excludes).addClass('is-selected').find('a').focus();
+            unhighlight(highlighted);
+            highlight( items.eq(items.index(highlighted) - 1) );
             e.preventDefault();
             e.stopPropagation();
           }
         }
 
+        //Enter/Tab - apply selected item
         if ((e.keyCode === 9 || e.keyCode === 13) && this.listIsOpen()) {
-          selected = getSelected();
-          e.stopPropagation();
-          e.preventDefault();
-          self.select(selected, this.currentDataSet);
+          //Apply selection if an item is selected, otherwise close list and allow default tab/enter behavior to happen
+          if (highlighted.length) {
+            e.stopPropagation();
+            e.preventDefault();
+            self.noSelect = true;
+            self.select(highlighted, this.currentDataSet);
+          } else {
+            self.closeList();
+          }
         }
 
         if (e.keyCode === 8 && this.listIsOpen()) {
@@ -337,6 +374,25 @@
           self.currentDataSet = response;
           self.openList(term, response);
         });
+      },
+
+      /**
+       * Check to see whether or not the currently-focused element resides within the Autocomplete's field
+       * or list, and if not, fires a "safe-blur" event on the element.
+       * @param {$.Event} e - The event object passed in from the jQuery `.on()` listener.
+       * @returns {undefined}
+       */
+      checkActiveElement: function() {
+        var self = this;
+        setTimeout( function() {
+          var activeElem = document.activeElement;
+
+          if ((self.listIsOpen() && $.contains(self.list[0], activeElem)) || self.element.is(activeElem)) {
+            return;
+          }
+
+          self.element.trigger('safe-blur');
+        }, 0);
       },
 
       getDataFromSource: function() {
@@ -383,7 +439,7 @@
 
           if (sourceType === 'function') {
             // Call the 'source' setting as a function with the done callback.
-            self.settings.source(buffer, done);
+            self.settings.source(buffer, done, self.settings.sourceArguments);
           } else if (sourceType === 'object') {
             // Use the 'source' setting as pre-existing data.
             // Sanitize accordingly.
@@ -441,7 +497,7 @@
       },
 
       select: function(anchorOrEvent, items) {
-        var a, li, ret, dataValue,
+        var a, li, ret, dataIndex, dataValue,
           isEvent = false;
 
         // Initial Values
@@ -459,15 +515,22 @@
 
         li = a.parent('li');
         ret = a.text().trim();
+        dataIndex = li.attr('data-index');
         dataValue = li.attr('data-value');
 
         this.element.attr('aria-activedescendant', li.attr('id'));
 
-        if (items && items.length && dataValue) {
-          for (var i = 0, value; i < items.length; i++) {
-            value = items[i].value.toString();
-            if (value === dataValue) {
-              ret = items[i];
+        if (items && items.length) {
+          // If the data-index attr is supplied, use it to get the item (since two items could have same value)
+          if (dataIndex) {
+            ret = items[parseInt(dataIndex, 10)];
+          } else if (dataValue) {
+            // Otherwise use data-value to get the item (a custom template may not supply data-index)
+            for (var i = 0, value; i < items.length; i++) {
+              value = items[i].value.toString();
+              if (value === dataValue) {
+                ret = items[i];
+              }
             }
           }
         }

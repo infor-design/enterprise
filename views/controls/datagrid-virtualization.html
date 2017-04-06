@@ -1,0 +1,49 @@
+<div class="full-width full-height">
+  <div id="datagrid" >
+  </div>
+</div>
+
+<script>
+
+$('body').on('initialized', function () {
+  var grid,
+    columns = [],
+    data = [];
+
+  // Generare Some Sample Data
+  console.time('Array Generation');
+  var columnCount = 15,
+    rowCount = 10000;
+
+  for (var j = 0; j < columnCount; j++) {
+    var colName = 'column'+j;
+    columns.push({ id: colName, name: colName, field: colName, width: 150, filterType: 'text', editor: Editors.Input, formatter: Formatters.Input});
+  }
+
+  for (var i = 0; i < rowCount; i++) {
+    var dataObj = {};
+
+    for (var j = 0; j < columnCount; j++) {
+      dataObj['column'+j] = 'Data ' + j + '-'+ i;
+    }
+
+    data.push(dataObj);
+  }
+  console.timeEnd('Array Generation');
+
+  // Render the Datagrid
+  console.time('Grid Render');
+  $('#datagrid').datagrid({
+    columns: columns,
+    columnReorder: true,
+    dataset: data,
+    editable: true,
+    filterable: false,
+    virtualized: true,
+    virtualRowBuffer: 10,
+    toolbar: {filterRow: true, personalize: true, results: true, rowHeight: true, actions: true, title: 'Compressors'}
+  });
+  console.timeEnd('Grid Render');
+
+});
+</script>

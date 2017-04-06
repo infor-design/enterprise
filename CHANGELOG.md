@@ -1,8 +1,139 @@
+## 4.2.6
+Release Date: 2017-04-02
+
+### Download Build Assets:
+Build Server: http://bamboo.infor.com/browse/SOHO-426
+Npm: http://npm.infor.com
+Full Jira Release Notes: http://bit.ly/2mWAmjY
+
+### Demo Site
+http://usalvlhlpool1.infor.com/4.2.6/controls
+
+### Key New Features
+- Datagrid - Added RichText Editor
+- Datagrid - Added Time Editor
+- Datagrid - Added ability to reorder rows
+- Datagrid - Added "mixed" section mode and activate event
+- More Performance Improvements
+- Targeted Achievement - (Form Only) New Chart
+- Swaplist - Angular 2.0 Component wrapper added
+
+### Improvements
+- Autocomplete - Improved Mobile Support
+- Datagrid - Improved Column Resize Logic
+- Datagrid - Added ability to have two line column header
+- Datagrid - Added dirty indicator and api for indicating dirty rows
+- Datagrid - Changed selection event to pass more info about the action that occurred (select, deselect, selectall, deselectall)
+- Dropdown - Mobile Support Improved Greatly
+- Fileupload - Prevent Typing, Space key will now open dialog, prevent browser autocomplete from occurring.
+- Locale - Changed French Language Translations to be in lower case
+- Listbuilder - Added selected event
+- Listbuilder - Added updateDataset method to refresh the UI
+- Module Tabs - UI Improvements when page is zoomed in the browser
+- Module Tabs - Added a tooltip if longer text is cut off
+- Pager - Added option hideDisabledPager to hide the pager if only one page
+- Rich Text Editor - Better ability to paste into the editor from external documents
+- Rich Text Editor - Added font color picker button to set text color
+- SearchField - Added api to get / set categories
+- Splitter - Added option to show a expand collapse button
+- Swaplist - Added updateDataset method to refresh the UI
+- Tabs - Added setting to skip lazy loading for "UI only tabs"
+- Tree - Allow Badges to accept a Hex Value for color
+
+### Bug Fixes
+- Autocomplete - Fixed runtime exception when filtering dynamically loaded lists
+- Autocomplete - Fixed bug when list had two items with the same ID
+- Autocomplete - Fixed bug when using mask that prevented tabbing
+- Autocomplete - Fixed bug when used on OSX on a modal dialog
+- Autocomplete - Fixed UI placement issue of popup on Modal.
+- Colorpicker - Fix issue that caused it to not work when on a modal dialog
+- Contextual Action Panel - Fixed bug that prevented datepicker from working when on a Contextual Action Panel
+- Datagrid - Fixed issue in lookup that prevented the value updating back in the dataset
+- Datagrid - Export to excel was missing header information in exported file
+- Datagrid - Fixed UI bug on filtering when column is right aligned
+- Datagrid - Fixed error when the page URL contains a space
+- Datagrid - Fixes to the column width algorithm
+- Datagrid - Fixed some cases where "Reset to Default" was not working correctly
+- Datagrid - Fixed issue that prevented editing to work with paging
+- Datagrid - Fixed issue that caused scrolling when clicking items in the personalization menu
+- Datagrid - When adding a validation rule to the cells you can now get additional information from the grid for validating. check: function (value, field, grid) {
+- Datagrid - Fixed dropdown editor to expand to width on narrower cells.
+- Datagrid - Editors (Lookup and Datepicker), fixed issue clicking trigger icon when cell is focused.
+- Datagrid - Autocomplete Editors added additional arguments to pass data to the source function
+- Datagrid - Fixed issue with pager when on a card
+- Datagrid - Datepicker Editor, Fixed editing issue that caused date to be one day off
+- Datagrid - Fixed bug that prevented selecting rows from working while filtered
+- Datagrid - Fixed bug in pager when first page equals the last page
+- Datepicker - Fixed Korean and Japanese Translation Issue
+- Datepicker - Fixed issue where NaNaNa is shown when selecting with some locales
+- Dropdown - Fixed IE11 issue that cut off text when element is all Caps
+- Dropdown - Fixed bug if &quot is part of one of the data element
+- General - Fixed IE Edge bug that caused text to get cut off
+- General - Fixed missing Icons on IE11
+- Homepage - Fixed error message in some layouts
+- Locale - Fixed Thai Translations
+- Locale - Fixed hours conversion in some languages
+- Locale - Fixed issues in date formatting settings in various languages
+- Locale - Fixed bug in formatNumber for percent formatting
+- Mask - Fixed tabbing issue in Safari (OSX)
+- Mask - Fixed bug when typing numbers with a minus sign
+- Modal - Fixed missing SVG's in IE11 when appended to modals
+- Modal - Fixed issue in validation that stopped OK button from being enabled with datepicker on the dialog
+- Multiselect - Fixed Mobile issues when selecting / checking items
+- Pie Chart - Fixed overlapping issue with smaller data points
+- Popupmenu - Fixed keyboarding to skip disabled items
+- Popupmenu - Fixed issue causing keyboard to not work when used on contextual action panels
+- Popupmenu - Fixed broken extraClass option to provide an extra css class
+- Popupmenu - Fixed backwards compatibility issue with disabled items
+- Popupmenu - Fixed error shown when scrolling page while open
+- Popupmenu - Fixed error that occurred occasionally on Contextual Action Panels
+- Popupmenu - Fixed keyboard trap on disabled items
+- Tabs - Fixed a bug in activated event that caused focus to change
+- Toolbar - Fix that caused hidden buttons to appear in the overflow menu
+- Searchfield - Fixed destroy method to fully remove all elements
+- Searchfield - Improved popup to not cover search field on full page search
+- Validation - Fixed backwards compatibility issue when on accordion
+- Validation - Fixed issue that caused 0 to appear as "required"
+- Themes - Improved Theme Switching Flashing
+
+### Ui Changes
+- Datagrid - Reduced left and right padding on Small and Medium Row Height so more data can be shown.
+- Datagrid - Fixed missing right border
+- Form Buttons - Improved themes to work when icons are added
+- Popover - Fixed Dark themes
+- Searchfield - Added option to work on white background and sync UI designs
+- Wizard - Fixed azure color issue on first wizard tick
+
+### Whats Next
+* Minor (vs patch release) 4.3 up next in approx a month.
+* Design QA - Design updates to fully align to latest soho standards
+* Datagrid Bug Fixes and Enhancements
+* Listbuilder API improvements
+* Multiselect Improvements
+* Adding new Section on Widget Guidelines to soho.infor.com
+* Ability to save Datagrid configuration and restore it (Filters, Columns ect)
+* Improvements to circle pager to show more than one item at a time
+* Collapsible Cards
+* New Pattern - Composite Form
+* Dropdown - Clear Selection
+* Datagrid - Additional formatters and editors
+* Datagrid - Expand Row, Only one at a time
+* Layouts - Full width Search on the header
+* Layouts - Header with call to action button
+* New Component - Toggle - Toggles Stars, Hearts, Icons
+* Datagrid - New Deselect Event
+* Targeted Achievement - Datagrid Formatter
+* Reduce size of npm deployment packages
+* New Pattern - Search Form
+* Datepicker - Hirji Calendar Support
+* Locale - Numeric Improvements
+* Tree - Have Disabled Tree nodes
+
 ## 4.2.5
 Release Date: 2017-02-23
 
 ### Download Build Assets:
-Build Server: http://bamboo.infor.com/browse/SOHO-DOC
+Build Server: http://bamboo.infor.com/browse/SOHO
 Npm: http://npm.infor.com
 
 ### Demo Site

@@ -199,6 +199,13 @@
             }
           });
 
+        $('.listview', self.element)
+          .off('selected.listbuilder')
+          .on('selected.listbuilder', function(e, args) {
+            var data = self.getDataByNode(args.elem[0]);
+            self.element.triggerHandler('selected', [data]);
+          });
+
         return this;
       }, // END: Handle Events ---------------------------------------------------------------------
 
@@ -445,6 +452,8 @@
 
       // Unbind all events
       unbind: function() {
+        $('.listview', this.element).off('selected.listbuilder');
+
         $('li '+ this.arrangeApi.handle, this.ul)
           .off('mousedown.listbuilder touchstart.listbuilder');
 

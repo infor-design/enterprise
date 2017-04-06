@@ -30,7 +30,7 @@
       //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
       dateFormat: {'separator': '/', //Infered
                    'timeSeparator': ':',
-                   'short': 'M/d/yyyy', //use four digit year
+                   'short': 'd/M/yyyy', //use four digit year
                    'medium': 'dd/MM/yyyy',
                    'long': 'd MMMM، yyyy',
                    'full': 'EEEE، d MMMM، yyyy',

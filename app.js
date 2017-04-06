@@ -197,7 +197,8 @@ var express = require('express'),
   }
 
   // Returns a directory listing as page content with working links
-  function getDirectoryListing(directory, req, res, next) {
+  // @param Array excludes - List of files names to exclude
+  function getDirectoryListing(directory, req, res, next, excludes) {
     fs.readdir('./views/' + directory, function(err, paths) {
       if (err) {
         console.log(err);
@@ -210,12 +211,14 @@ var express = require('express'),
 
       // Strip out paths that aren't going to ever work
       paths.forEach(function pathIterator(val) {
-        var excludes = [
-          /^(layout)(\s)?(\.html)?/gm, // matches any filename that begins with "layout" (fx: "layout***.html")
-          /footer\.html/,
-          /\.DS_Store/
-        ],
-        match = false;
+        if (excludes === undefined) {
+          excludes = [];
+        }
+        excludes.push(/^(layout)(\s)?(\.html)?/gm); // matches any filename that begins with "layout" (fx: "layout***.html")
+        excludes.push(/footer\.html/);
+        excludes.push(/\.DS_Store/);
+
+        var match = false;
 
         excludes.forEach(function(exclude) {
           if (val.match(exclude)) {
@@ -343,7 +346,11 @@ var express = require('express'),
     end = end.replace(/\?(.*)/, '');
 
     if (!end || !end.length || end === '/') {
-      getDirectoryListing('patterns/', req, res, next);
+      var exclude = [
+        'step-process.html',
+        'step-process-markup.html'
+      ];
+      getDirectoryListing('patterns/', req, res, next, exclude);
       return;
     }
 
@@ -1317,6 +1324,10 @@ var express = require('express'),
 
   router.get('/api/accounts', function(req, res, next) {
     sendJSONFile('accounts', req, res, next);
+  });
+
+  router.get('/api/assets', function(req, res, next) {
+    sendJSONFile('assets', req, res, next);
   });
 
   router.get('/api/accounts-sm', function(req, res, next) {

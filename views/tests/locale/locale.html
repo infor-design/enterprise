@@ -14,11 +14,12 @@
         };
         setTimeout(function () {
 
-          var value = Locale.truncateDecimals('5.1', 2, 2);
+          var date = new Date('2017-02-01T10:27:40.600Z');
+				  var options = { pattern: "yyyy-MM-dd HH:mm", date: 'datetime' };
+          debugger;
+          var value =  Locale.formatNumber(0.57, {style: 'percent', minimumFractionDigits: 0, maximumFractionDigits: 0});
           append(value);
 
-          var value = Locale.formatNumber('5.1', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-          append(value);
 
         }, 300);
       }

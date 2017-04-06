@@ -557,6 +557,7 @@ $datagrid-list-filter-active-color: $azure09;
 
 $datagrid-rowgroup-header: $graphite02;
 $datagrid-rowgroup-color: $font-color;
+$datagrid-empty-bg-color: #f0f0f0; //$datagrid-cell-bg-color
 
 // Search Results
 $sr-masthead-text-color: $font-color;
@@ -585,6 +586,7 @@ $chart-progressbar-completed-fill: #2f6b0a;
 $chart-progressbar-target-fill: $graphite05;
 $chart-progressbar-primary-fill: $primary-color;
 $chart-progressbar-dark-fill: $graphite08;
+$chart-targeted-achievement-bg-color: $graphite03;
 
 //Timeline
 $timeline-indicator-color: $graphite05;
@@ -613,6 +615,7 @@ $searchfield-icon-color: $tertiary-btn-color;
 $searchfield-text-color: $tertiary-btn-color;
 $searchfield-lighter-bg-color: $graphite02;
 $searchfield-lighter-text-color: $graphite05;
+$searchfield-active-icon-color: $azure09;
 
 $searchfield-context-bg: $graphite01;
 $searchfield-context-alt-bg: $white;

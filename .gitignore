@@ -1,7 +1,10 @@
 # Compiled #
 ############
 designs/
-dist/
+dist/css
+dist/js
+dist/svg
+dist/all.zip
 documentation/
 public/svg/
 public/js/

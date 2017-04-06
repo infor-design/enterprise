@@ -29,6 +29,11 @@ define([
   require('../../../js/cultures/vi-VN.js');
   require('../../../js/cultures/tr-TR.js');
   require('../../../js/cultures/it-IT.js');
+  require('../../../js/cultures/sv-SE.js');
+  require('../../../js/cultures/cs-CZ.js');
+  require('../../../js/cultures/hu-HU.js');
+  require('../../../js/cultures/ja-JP.js');
+  require('../../../js/cultures/ru-RU.js');
 
   registerSuite({
 
@@ -68,7 +73,6 @@ define([
       //Other Edge Cases
       expect(Locale.formatDate('11/8/2000')).to.equal('11/8/2000');
       expect(Locale.formatDate()).to.equal(undefined);
-
     },
 
     'should format timestamp': function() {
@@ -89,9 +93,7 @@ define([
 
     'should format millis': function() {
       expect(Locale.formatDate(new Date(2016, 2, 15, 12, 30, 36, 142), {pattern: 'd/M/yyyy h:mm:ss.SSS a '})).to.equal('15/3/2016 12:30:36.142 PM');
-
       expect(Locale.formatDate(new Date(2016, 2, 15, 12, 30, 36, 142), {pattern: 'd/M/yyyy h:mm:ss.SSS '})).to.equal('15/3/2016 12:30:36.142');
-
     },
 
     //Format some random date type cases
@@ -116,16 +118,35 @@ define([
       Locale.set('de-DE');
       expect(Locale.formatDate(new Date(2000, 11, 1, 13, 40), {date: 'datetime'})).to.equal('01.12.2000 13:40');
       expect(Locale.formatDate(new Date(2000, 11, 1, 13, 05), {pattern: 'M.dd.yyyy HH:mm'})).to.equal('12.01.2000 13:05');
+
+      var date = new Date(2017, 01, 01, 17, 27, 40),
+        opts = {pattern: 'yyyy-MM-dd HH:mm' , date: 'datetime'};
+
+      Locale.set('fi-FI');
+      expect(Locale.formatDate(date, opts)).to.equal('1.2.2017 5:27');
+      Locale.set('cs-CZ');
+      expect(Locale.formatDate(date, opts)).to.equal('01.02.2017 5:27');
+      Locale.set('hu-HU');
+      expect(Locale.formatDate(date, opts)).to.equal('2017. 02. 01. 5:27');
+      Locale.set('ja-JP');
+      expect(Locale.formatDate(date, opts)).to.equal('2017/02/01 5:27');
+      Locale.set('ru-RU');
+      expect(Locale.formatDate(date, opts)).to.equal('2/1/2017 5:27');
     },
 
     //monthYear and yearMonth
     'should format a year and month locale': function() {
       Locale.set('en-US');    //year, month, day, hours, mins , secs
-      expect(Locale.formatDate(new Date(2000, 10, 8, 13, 40), {date: 'month'})).to.equal('November 08');
-      expect(Locale.formatDate(new Date(2000, 10, 8, 13, 0), {date: 'year'})).to.equal('2000 November');
+      expect(Locale.formatDate(new Date(2000, 10, 8, 13, 40), {date: 'month'})).to.equal('November 8');
+      expect(Locale.formatDate(new Date(2000, 10, 8, 13, 0), {date: 'year'})).to.equal('November 2000');
+
       Locale.set('de-DE');
-      expect(Locale.formatDate(new Date(2000, 11, 1, 13, 40), {date: 'month'})).to.equal('01 Dezember');
+      expect(Locale.formatDate(new Date(2000, 11, 1, 13, 40), {date: 'month'})).to.equal('1. Dezember');
       expect(Locale.formatDate(new Date(2000, 11, 1, 13, 05), {date: 'year'})).to.equal('Dezember 2000');
+
+      Locale.set('sv-SE');
+      expect(Locale.formatDate(new Date(2000, 11, 1, 13, 40), {date: 'month'})).to.equal('den 1 december');
+      expect(Locale.formatDate(new Date(2000, 11, 1, 13, 05), {date: 'year'})).to.equal('december 2000');
     },
 
     //monthYear and yearMonth
@@ -347,8 +368,8 @@ define([
       expect(Locale.formatNumber(0.0000004, {style: 'decimal', maximumFractionDigits:7})).to.equal('0.0000004');
       expect(Locale.formatNumber(20.1, {style: 'decimal', round: true, minimumFractionDigits: 2})).to.equal('20.10');
       expect(Locale.formatNumber(20.1, {style: 'decimal', round: true})).to.equal('20.10');
-	  expect(Locale.formatNumber('12,345.123')).to.equal('12,345.123');
-	  expect(Locale.formatNumber(12345.1234, {group: ''})).to.equal('12345.123');
+	    expect(Locale.formatNumber('12,345.123')).to.equal('12,345.123');
+	    expect(Locale.formatNumber(12345.1234, {group: ''})).to.equal('12345.123');
 
       Locale.set('de-DE');
       expect(Locale.formatNumber(12345.1)).to.equal('12.345,10');
@@ -404,7 +425,13 @@ define([
       Locale.set('en-US');
       expect(Locale.formatNumber(0.0500000, {style: 'percent'})).to.equal('5.00 %');
       expect(Locale.formatNumber(0.050000, {style: 'percent', maximumFractionDigits: 0})).to.equal('5 %');
-      expect(Locale.formatNumber(0.05234, {style: 'percent', minimumFractionDigits: 4, maximumFractionDigits: 4})).to.equal('5.234 %');
+      expect(Locale.formatNumber(0.05234, {style: 'percent', minimumFractionDigits: 4, maximumFractionDigits: 4})).to.equal('5.2340 %');
+
+      expect(Locale.formatNumber(0.57, {style: 'percent', minimumFractionDigits: 0, maximumFractionDigits: 0})).to.equal('57 %');
+      expect(Locale.formatNumber(0.57, {style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2})).to.equal('57.00 %');
+      expect(Locale.formatNumber(0.5700, {style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2})).to.equal('57.00 %');
+      expect(Locale.formatNumber(0.57010, {style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2})).to.equal('57.01 %');
+      expect(Locale.formatNumber(0.5755, {style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2})).to.equal('57.55 %');
 
       Locale.set('tr-TR');
       expect(Locale.formatNumber(0.0500000, {style: 'percent'})).to.equal('%5,00');

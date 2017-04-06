@@ -33,7 +33,7 @@
                    'medium': 'd MMM yyyy',
                    'long': 'd MMMM yyyy',
                    'full': 'EEEEที่ d MMMM G yyyy',
-                   'month': 'dd MMMM',
+                   'month': 'd MMMM',
                    'year': 'MMMM yyyy',
                    'timestamp': 'HH:mm:ss',
                    'datetime': 'd/M/yyyy HH:mm'}, //Infered short + short gregorian/dateTimeFormats

@@ -532,6 +532,7 @@
     return element.attributes;
   };
 
+  //Adding, removing, and testing for classes
   window.Soho.DOM.classNameExists = function classNameExists(element) {
     var cn = element.className;
     return cn && cn.length > 0;
@@ -539,6 +540,50 @@
 
   window.Soho.DOM.classNameHas = function has(classNameString, targetContents) {
     return classNameString.indexOf(targetContents) > -1;
+  };
+
+  window.Soho.DOM.hasClass = function hasClass (el, className) {
+    return el.classList ? el.classList.contains(className) : new RegExp('\\b'+ className+'\\b').test(el.className);
+	};
+
+  window.Soho.DOM.addClass = function addClass(el, className) {
+     if (el.classList) {
+      el.classList.add(className);
+    } else if (!window.Soho.DOM.hasClass(el, className)) {
+      el.className += ' ' + className;
+    }
+  };
+
+  /**
+   * Runs the generic _getBoundingClientRect()_ method on an element, but returns its results
+   * as a plain object instead of a ClientRect
+   * @param {HTMLElement|SVGElement|jQuery[]} el - The element being manipulated
+   * @returns {object} - represents all values normally contained by a DOMRect or ClientRect
+   */
+  window.Soho.DOM.getDimensions = function getDimensions(el) {
+    if (!(el instanceof HTMLElement) && !(el instanceof SVGElement) && !(el instanceof $)) {
+      return {};
+    }
+
+    if (el instanceof $) {
+      if (!el.length) {
+        return {};
+      }
+
+      el = el[0];
+    }
+
+    var rect = el.getBoundingClientRect();
+    return {
+      top: rect.top,
+      bottom: rect.bottom,
+      left: rect.left,
+      right: rect.right,
+      width: rect.width,
+      height: rect.height,
+      x: rect.x,
+      y: rect.y
+    };
   };
 
   // Debounce method
@@ -586,6 +631,87 @@
    */
   window.Soho.string.splice = function splice(str, start, delCount, newSubStr) {
     return str.slice(0, start) + newSubStr + str.slice(start + Math.abs(delCount));
+  };
+
+  /**
+   * Hack for IE11 and SVGs that get moved around/appended at inconvenient times.
+   * The action of changing the xlink:href attribute to something else and back will fix the problem.
+   * @return {undefined}
+   */
+  window.Soho.utils.fixSVGIcons = function fixSVGIcons(rootElement) {
+    if (Soho.env.browser.name !== 'ie' && Soho.env.browser.version !== '11') {
+      return;
+    }
+
+    if (rootElement === undefined) {
+      return;
+    }
+
+    if (rootElement instanceof $) {
+      if (!rootElement.length) {
+        return;
+      }
+
+      rootElement = rootElement[0];
+    }
+
+    setTimeout(function () {
+      var uses = rootElement.getElementsByTagName('use');
+      for (var i = 0; i < uses.length; i++) {
+        var attr = uses[i].getAttribute('xlink:href');
+        uses[i].setAttribute('xlink:href', 'x');
+        uses[i].setAttribute('xlink:href', attr);
+      }
+    }, 1);
+  };
+
+  /**
+   * Gets the current size of the viewport
+   * @returns {object}
+   */
+  window.Soho.utils.getViewportSize = function getViewportSize() {
+    return {
+      width: Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
+      height: Math.max(document.documentElement.clientHeight, window.innerHeight || 0)
+    };
+  };
+
+  /**
+   * Gets the various scrollable containers that an element is nested inside of, and returns their scrollHeight and scrollLeft values.
+   * @returns {object[]}
+   */
+  window.Soho.utils.getContainerScrollDistance = function getContainerScrollDistance(element) {
+    if (!element || (!(element instanceof HTMLElement) && !(element instanceof SVGElement) && !(element instanceof $))) {
+      return [];
+    }
+
+    var containers = [],
+      scrollableElements = [
+        '.scrollable', '.scrollable-x', '.scrollable-y', '.modal',
+        '.card-content', '.widget-content', '.tab-panel',
+        '.datagrid-content'
+      ];
+
+    $(element).parents(scrollableElements.join(', ')).each(function() {
+      var el = this;
+
+      containers.push({
+        element: el,
+        left: el.scrollLeft,
+        top: el.scrollTop
+      });
+    });
+
+    // Push the body's scroll area if it's not a "no-scroll" area
+    if (!document.body.classList.contains('no-scroll')) {
+      containers.push({
+        element: document.body,
+        left: document.body.scrollLeft,
+        top: document.body.scrollTop
+      });
+    }
+
+    return containers;
   };
 
 /* start-amd-strip-block */

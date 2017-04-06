@@ -37,11 +37,23 @@ npm publish
 npm publish ./ --tag=develop
 
 ```
+
+* Publish Just the Dist folder
+
+Update the info in dist/package.json
+
+```bash
+npm publish dist --tag rc
+npm publish dist --tag release/4.2.6
+npm publish dist
+```
+
 * Check Published Tags
 
 ```bash
 npm info @infor/sohoxi dist-tags
 ```
+
 * Merge a fix to a branch
 
 ```bash
@@ -61,13 +73,16 @@ http://bamboo.infor.com/browse/SOHO-NGV-16
 
 - Bump Change Log
 - Make sure new version in Jira
+- Update dev53
+- add label to successful build
 
-# How To Make Release
+# How To Make Release (4.2.6)
 
+* Check Change Log is updated
+* Create Release Email Template
 * Full grunt
 * Update package.json
 * npm publish --force
-* Update CHANGELOG.MD for breaking changes, and add a new section.
 * Git Tag
 ```bash
  git tag 4.2.1.rc.1
@@ -76,13 +91,7 @@ http://bamboo.infor.com/browse/SOHO-NGV-16
 * Create new version in Jira
 * Generate Release Notes
 * Make sure all new examples on the index page are updated
-* Deploy to to http://usmvvwdev53:421 <version>
-* Make new Deploy to to http://usmvvwdev53:<version next>
-* Dync db and files from usmvvwdev53
-* Comment in the analytics in footer.html (soho.infor.com)
-* Deploy to to http://soho.infor.com
-* Updated changelog-contents.html
-* Create branch for major versions inside stash
+* Update Staging (Below)
 
 ### Update version in @infor/sohoxi-angular
 * Clone repo
@@ -96,43 +105,42 @@ $ git clone ssh://git@git.infor.com:7999/soho/angular-components.git
 Later
 * Send Email to team
 * Announce to Slack
+* Release Email
 
-# How To Update SoHo Staging Site
+# How To Sync SoHo Staging Site to prod
 
-On your mac:
+http://craftcms.stackexchange.com/questions/1079/migrating-a-whole-website-between-craft-instances
 
-* Pull the latest branch you want to deploy
-* Build the dist files:
+## Sites
+http://usmvvwdev53
+smb://usmvvwdev53/c$
 
-```bash
-$ npm install
-$ grunt
-```
+http://soho.infor.com
+smb://usalvwsoho2/c$
 
-* Connect to usmvvwdev53 C drive:
-  * cmd-k
-  * Server Address: smb://usmvvwdev53/c$
-  * Click Connect
-  * Login with Infor user/pass
-    * User is INFOR\<username>
-    * Talk to Chris or Tim if you don't have access
-* Copy and replace contents of dist/js/ to /inetpub/wwwroot/public/js/
-* Copy and replace contents of dist/css/ to /inetpub/wwwroot/public/stylesheets/
-* Copy and replace views/docs/changelog-contents.html to /inetpub/wwwroot/craft/templates/
+Remote desktop usalvwsoho2 or usmvvwdev53
+Login with Infor user/pass, contact Tim if no access
 
-On usmvvwdev53:
-
-* Remote Desktop to usmvvwdev53
-  * Talk to Chris or Tim if you don't have access
+* On local mac pull down branch and run grunt to get the dist folder assets
+* On destination server (remote desktop) open http://soho.infor.com/admin and download backup
+* On source server (remote desktop) copy the following to zip
+  * craft folder except app storage and config/license
+* put file on dropbox
+* On destination server (remote desktop) restore mysql backup
+* Optionally update dest with new js/css to public
+* restore the mysql back with
+  * mysql -u root -p
+  * show databases;
+  * drop database soho2;
+  * create database soho2;
+  * use soho2;
+  * run a
 * Open wwwroot/craft/templates/footer.html with notepad and bump the version to the latest
-* If jquery version changes, then open /inetpub/wwwroot/craft/templates/_layout.html with notepad and bump jquery version
-* Open /inetpub/wwwroot/craft/templates/_layout.html with notepad and update all query string version numbers. example: `/stylesheets/site.css?v4.2.1`
+* If jquery version changes, then open /inetpub/wwwroot/craft/templates/_layout*.html with notepad and bump jquery version
+* Open /inetpub/wwwroot/craft/templates/_layout*.html with notepad and update all query string version numbers. example: `/stylesheets/site.css?v4.2.1`
 
-# How To Update SoHo Production Site
 
-```
-Update notes to come...
-```
+# Tricky Permissions Notes
 
 **NOTE** If you copy in a new version of CraftCMS or of the craft dir, then make sure to check that Users group has Full Control access to /inetpub/wwwroot/craft/storage.
 

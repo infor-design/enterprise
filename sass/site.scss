@@ -497,6 +497,42 @@ $pageslice-download-link-border-color: #3dcd65;
     }
   }
 
+  &.widgets {
+    background-color: $turquoise03;
+    color: $graphite08;
+
+    .background-image {
+      height: 100%;
+      left: 50%;
+      text-align: right;
+      top: 0;
+      width: 85%;
+    }
+
+    p {
+      @include font-size(16);
+    }
+
+    .btn-primary {
+      border-color: $graphite08;
+      color: $graphite08;
+
+      .icon {
+        fill: $graphite08;
+      }
+    }
+
+    .btn-primary:focus {
+      border-color: $graphite08;
+      box-shadow: 0 0 0 2px transparent, 0 0 0 3px $graphite08;
+    }
+
+    .columns.description {
+      margin-top: 15rem;
+    }
+
+  }
+
   &.mobile-tools {
 
     &.page-slice {
@@ -817,6 +853,22 @@ $pageslice-download-link-border-color: #3dcd65;
         background-position: 70% 43%;
         height: 130px;
         width: 100%;
+      }
+
+      .btn-primary {
+        margin-bottom: 40px;
+      }
+    }
+
+    &.widgets {
+      .background-image {
+        background-position: center center;
+        background-size: 702px 494px;
+        background-position: 70% 43%;
+        height: 130px;
+        width: 100%;
+        left: 0;
+        overflow: hidden;
       }
 
       .btn-primary {

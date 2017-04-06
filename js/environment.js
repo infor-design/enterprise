@@ -46,6 +46,11 @@
         Soho.env.browser.name = 'safari';
       }
 
+      if (ua.indexOf('Chrome') !== -1) {
+        cssClasses += 'is-chrome ';
+        Soho.env.browser.name = 'chrome';
+      }
+
       if (ua.indexOf('Mac OS X') !== -1) {
         cssClasses += 'is-mac ';
         Soho.env.os.name = 'Mac OS X';
@@ -140,6 +145,7 @@
       })();
 
       window.Soho.theme = 'light';
+
       return this;
     }
 
