@@ -88,6 +88,11 @@ button {
       margin-bottom: 0;
     }
   }
+
+  &.no-padding {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 .btn,

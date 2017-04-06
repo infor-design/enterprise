@@ -66,6 +66,10 @@
     @include font-size(11);
     color: $cardlist-stamp-text-color;
   }
+
+  .full-table {
+    width: 100%;
+  }
 }
 
 .card-header,
@@ -219,7 +223,7 @@
 
   .pager-toolbar {
     a {
-      margin: 2px 4px 0px 4px;
+      margin: 2px 4px 0;
     }
 
   }
@@ -245,25 +249,33 @@
 }
 
 .card-list-item-thumbnail {
-  margin: 1rem;
   width: 64px;
 
   img {
-    border-radius : .5rem;
+    border-radius: .5rem;
   }
 }
 
 .card-list-item-summary {
-  margin: 1rem;
-  width: calc(100% - 64px - 6rem - 125px);
+  margin: 0 1rem;
+  width: calc(100% - 64px - 2rem - 125px); // 100% - thumbnail size - this element's padding - price container's size
 }
 
 .card-list-item-price-container {
-  margin: 1rem;
   text-align: right;
   width: 125px;
 }
 
+.card-detail-table {
+  td,
+  th {
+    padding-top: 5px;
+
+    &:first-child {
+      padding-top: 0;
+    }
+  }
+}
 
 // Empty-State Widgets/Cards
 .widget-empty-icon,

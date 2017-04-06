@@ -186,8 +186,26 @@ small,
   color: $font-color;
 }
 
+.larger-heavy-text {
+  @include font-size(14);
+  color: $font-color-highcontrast;
+  font-weight: bold;
+}
+
 .uppercase {
   text-transform: uppercase;
+}
+
+.align-text-left {
+  text-align: left;
+}
+
+.align-text-right {
+  text-align: right;
+}
+
+.center-text {
+  text-align: center;
 }
 
 .alert-text {
