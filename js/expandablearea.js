@@ -19,9 +19,7 @@
 
     // Settings and Options
     var pluginName = 'expandablearea',
-        defaults = {
-
-        },
+        defaults = {},
         settings = $.extend({}, defaults, options);
 
     /**
