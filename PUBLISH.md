@@ -76,12 +76,13 @@ http://bamboo.infor.com/browse/SOHO-NGV-16
 - Update dev53
 - add label to successful build
 
-# How To Make Release
+# How To Make Release (4.2.6)
 
+* Check Change Log is updated
+* Create Release Email Template
 * Full grunt
 * Update package.json
 * npm publish --force
-* Update CHANGELOG.MD for breaking changes, and add a new section.
 * Git Tag
 ```bash
  git tag 4.2.1.rc.1
@@ -90,13 +91,7 @@ http://bamboo.infor.com/browse/SOHO-NGV-16
 * Create new version in Jira
 * Generate Release Notes
 * Make sure all new examples on the index page are updated
-* Deploy to to http://usmvvwdev53:421 <version>
-* Make new Deploy to to http://usmvvwdev53:<version next>
-* Dync db and files from usmvvwdev53
-* Comment in the analytics in footer.html (soho.infor.com)
-* Deploy to to http://soho.infor.com
-* Updated changelog-contents.html
-* Create branch for major versions inside stash
+* Update Staging (Below)
 
 ### Update version in @infor/sohoxi-angular
 * Clone repo
