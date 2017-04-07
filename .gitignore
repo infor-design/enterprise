@@ -12,6 +12,7 @@ public/stylesheets/
 temp/
 docs/
 views/docs
+publish/dist
 
 # Packages #
 ############
