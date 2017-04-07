@@ -34,6 +34,16 @@ module.exports = {
       files: [
         {expand: true, flatten: true, src: ['js/*.*'], dest: 'temp/amd/', filter: 'isFile'}
       ]
+    },
+
+    publish: {
+      files: [
+        {expand: true, flatten: true, src: ['dist/svg/*.*'], dest: 'publish/dist/svg/', filter: 'isFile'},
+        {expand: true, flatten: true, src: ['dist/css/*theme*.*'], dest: 'publish/dist/css/', filter: 'isFile'},
+        {expand: true, flatten: true, src: ['dist/js/*.*'], dest: 'publish/dist/js/', filter: 'isFile'},
+        {expand: true, flatten: true, src: ['dist/js/all/*.*'], dest: 'publish/dist/js/all', filter: 'isFile'},
+        {expand: true, flatten: true, src: ['dist/js/cultures/*.*'], dest: 'publish/dist/js/cultures', filter: 'isFile'}
+      ]
     }
   }
 

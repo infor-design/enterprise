@@ -1,9 +1,4 @@
-# Publish instructions
-
-# TODO
-* SOHO-4420	Build docker container to build, run and test SoHo
-* SOHO-4787 Add release build to bamboo server
-* SOHO-4827 Dockerize soho.infor.com for staging and production
+# Publish Notes
 
 ## Prerequisites
 To be able to publish to [npm.infor.com](http://npm.infor.com:4873) you need to add an authorized npm user on your system...
@@ -52,6 +47,14 @@ npm publish dist
 
 ```bash
 npm info @infor/sohoxi dist-tags
+npm view @infor/sohoxi versions
+```
+
+* Delete a Tag
+
+```bash
+npm adduser --registry http://npm.infor.com:4873 --scope=@infor
+npm dist-tag rm @infor/sohoxi develop
 ```
 
 * Merge a fix to a branch
@@ -80,19 +83,33 @@ http://bamboo.infor.com/browse/SOHO-NGV-16
 
 * Check Change Log is updated
 * Create Release Email Template
-* Full grunt
-* Update package.json
-* npm publish --force
+* Merge 4.2.6-rc (the rc branch) back onto the 4.2.x (masterish branch) - PR or Git Merge
+* Enable the npm publish task on
+* Label the build Release/426
+* Delete the 4.2.6-rc branch
+* Check there is a build (Plan name , Plan key make same fx CUR  === SOHO-CUR)
+* Enable the publish task for one build.
+* Make sure there is branches for 4.3.X and 4.3.0-rc
+* Make 4.3.0-rc default branch
+* Test Npm packages
 * Git Tag
 ```bash
- git tag 4.2.1.rc.1
+ git tag 4.2.6
  git push origin --tags
 ```
 * Create new version in Jira
 * Generate Release Notes
 * Make sure all new examples on the index page are updated
 * Update Staging (Below)
+* Delete the rs from pool server usalvlhlpool1
+```bash
+curl -u hookandloop:hookandloop http://usalvlhlpool1/swarm/get_endpoints
+curl -X DELETE -H "Content-Type: application/json"     -u hookandloop:n98Y-uhPb-llGa-LdUl     http://usalvlhlpool1.infor.com/swarmproxy/rm_service     -d '{"name":"sohoxi-4-2-6-rc"}'
 
+sudo docker ps -a
+docker stop 6410bbcfd5e2
+docker rm 6410bbcfd5e2
+```
 ### Update version in @infor/sohoxi-angular
 * Clone repo
 ```bash
