@@ -262,7 +262,9 @@
 
           var trueValue = value && value.value ? value.value : text;
           if (trueValue === 'clear_selection') {
-            text = Locale.translate('ClearSelection');
+            if (text === '') {
+              text = Locale.translate('ClearSelection');
+            }
           }
           liMarkup += '<li role="presentation" class="dropdown-option'+ (isSelected ? ' is-selected' : '') +
                         (isDisabled ? ' is-disabled' : '') +
