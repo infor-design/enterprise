@@ -35,16 +35,6 @@ $toolbar-buttonset-height: 40px;
     padding-left: 1px;  //for the focus state
     width: 100%; // Overridden by sizing calculation.
 
-    > .separator {
-      background-color: $formatter-toolbar-separator-color;
-      display: inline-block;
-      height: 20px;
-      margin: 3px 16px 0;
-      position: relative;
-      top: 6px;
-      width: 1px;
-    }
-
     > * {
       margin: 3px 5px 3px 0;
       vertical-align: top;
@@ -60,6 +50,25 @@ $toolbar-buttonset-height: 40px;
 
     > [class^="btn"] {
       min-width: 34px;
+    }
+
+    > .separator {
+      background-color: $formatter-toolbar-separator-color;
+      display: inline-block;
+      height: 20px;
+      margin: 3px 16px 0;
+      position: relative;
+      top: 6px;
+      width: 1px;
+    }
+
+    // Hide separators that come after "overflowed" elements
+    .is-overflowed {
+      + .separator,
+      + .popupmenu,
+      + .popupmenu-wrapper + .separator {
+        display: none;
+      }
     }
   }
 
