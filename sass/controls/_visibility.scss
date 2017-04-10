@@ -60,7 +60,11 @@
 
 // Visibility classes for different form factors
 // scss-lint:disable ImportantRule
-[class*="visible-sm-"] {
+[class*="visible-sm-"],
+[class*="visible-md-"],
+[class*="visible-lg-"],
+[class*="visible-xl-"],
+[class*="visible-print-"] {
   display: none !important;
 }
 
@@ -82,10 +86,6 @@
   }
 }
 
-[class*="visible-md-"] {
-  display: none !important;
-}
-
 @include respond-to(tablet) {
   .visible-md-block {
     display: block !important;
@@ -102,10 +102,6 @@
   .hidden-md {
     display: none !important;
   }
-}
-
-[class*="visible-lg-"] {
-  display: none !important;
 }
 
 @include respond-to(desktop) {
@@ -126,10 +122,6 @@
   }
 }
 
-[class*="visible-xl-"] {
-  display: none !important;
-}
-
 @include respond-to(extralarge) {
   .visible-xl-block {
     display: block !important;
@@ -146,11 +138,6 @@
   .hidden-xl {
     display: none !important;
   }
-}
-
-// Print Visibility Clases
-[class*="visible-print-"] {
-  display: none !important;
 }
 
 @media print {
