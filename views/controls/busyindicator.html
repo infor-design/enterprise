@@ -3,7 +3,7 @@
   <div class="one-half column">
 
     <span class="label">Regular Example (UI Blocking)</span>
-    <form id="busy-form" class="busy" action="#" method="POST" data-options="{'text' : 'test'}">
+    <form id="busy-form" class="busy" action="#" method="POST" data-options='{ "displayDelay": 100, "timeToComplete": 4000 }'>
       <div class="field">
         <label for="busy-field-name">Name</label>
         <input type="text" id="busy-field-name" name="busy-field-name" value="" />
@@ -26,28 +26,30 @@
 
 <div class="row">
   <div class="twelve columns">
-      <hr class="fieldset-hr">
-      <h2 class="fieldset-title">Busy Indicator - Standalone Example (Non-UI-Blocking)</h2>
+    <hr class="fieldset-hr">
+    <h2 class="fieldset-title">Busy Indicator - Standalone Example (Non-UI-Blocking)</h2>
   </div>
 </div>
 
 <div class="row">
   <div class="one-half column">
 
-    <button class="btn" id="busy-start-trigger" type="button">Fire "start" Event</button>
-    <button class="btn" id="busy-complete-trigger" type="button">Fire "complete" Event</button>
-    <br>
-    <br>
-    <br>
-    <div id="standalone-busy" class="busy card"></div>
+    <div class="field">
+      <button class="btn" id="busy-start-trigger" type="button">Fire "start" Event</button>
+      <button class="btn" id="busy-complete-trigger" type="button">Fire "complete" Event</button>
+    </div>
+
+    <br />
+    <br />
+    <div id="standalone-busy" class="busy card top-padding"></div>
 
   </div>
 </div>
 
 <div class="row">
   <div class="twelve columns">
-      <hr class="fieldset-hr">
-      <h2 class="fieldset-title">On Input Fields</h2>
+    <hr class="fieldset-hr">
+    <h2 class="fieldset-title">On Input Fields</h2>
   </div>
 </div>
 
@@ -55,7 +57,7 @@
   <div class="one-half column">
     <div class="field">
       <label class="label" for="busy-input">Busy Input Field</label>
-      <input class="busy" type="text" id="busy-input" data-block-ui="false"/>
+      <input class="busy" type="text" id="busy-input" data-options='{ "blockUI": false, "displayDelay": 100, "timeToComplete": 4000 }'/>
       <br><button class="btn" id="trigger-busy-input" type="button">Load</button><br><br>
     </div>
   </div>
@@ -63,7 +65,7 @@
   <div class="one-half column">
     <div class="field">
       <label class="label" for="busy-dropdown">Busy Dropdown</label>
-      <select class="dropdown busy" id="busy-dropdown" data-block-ui="false" data-display-delay="0" data-completion-time="5000" data-close-time="6000">
+      <select class="dropdown busy" id="busy-dropdown" data-options='{ "blockUI": false, "displayDelay": 100, "timeToComplete": 4000 }'>
         <option selected>Busy</option>
         <option>Preoccupied</option>
         <option>Distracted</option>
@@ -88,13 +90,10 @@
   <div class="one-half column">
 
     <div style="display: table;">
-      <button class="btn" id="trigger-busy-sm" type="button"
-        style="display: inline-block; vertical-align: middle;">Load</button>
-
-      <div style="display: inline-block; vertical-align: middle; font-size: 14px;">Some Text</div>
-
-      <div class="busy-sm" id="busy-sm" data-display-delay="0" data-completion-time="5000" data-close-time="6000"
-        style="display: inline-block; vertical-align: middle;"></div>
+      <button class="btn" id="trigger-busy-sm" type="button" style="display: inline-block; vertical-align: middle;">Load</button>
+      <div style="display: inline-block; vertical-align: middle; font-size: 14px; margin-left: 1rem;">Some Text</div>
+      <div class="busy-sm" id="busy-sm" data-options='{ "blockUI": false, "displayDelay": 100, "timeToComplete": 4000 }'
+        style="display: inline-block; vertical-align: middle; margin-left: 1rem;"></div>
     </div>
 
   </div>
