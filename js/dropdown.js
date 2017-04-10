@@ -342,7 +342,9 @@
       setValue: function () {
         var opts = this.element.find('option:selected'),
           text = this.getOptionText(opts);
-
+          if (opts.attr('value') === 'clear_selection') {
+            text = '';
+          }
         if (this.settings.empty && opts.length === 0) {
           this.pseudoElem.find('span').text('');
           return;
