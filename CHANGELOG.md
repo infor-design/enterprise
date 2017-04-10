@@ -14,7 +14,7 @@ http://usalvlhlpool1.infor.com/4.3.0-rc/controls
 
 ### Improvements
 - Added a datagrid option (allowOneExpanded) to only show one expandable row at a time. It is now the default.
-- Added an optionaly light background color on Datagrid list by adding class datagrid-alternate-bg-color to the datagrid div. See tests/datagrid/datagrid-expandable-row-one-only.html
+- Added an optionally light background color on Datagrid list by adding class datagrid-alternate-bg-color to the datagrid div. See tests/datagrid/datagrid-expandable-row-one-only.html
 
 ### Bug Fixes
 -
