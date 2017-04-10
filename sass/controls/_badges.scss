@@ -24,27 +24,27 @@
     line-height: 21px;
   }
 
+  // scss-lint:disable ImportantRule
   &.error {
     background-color: $error-color;
-    color: $badge-error-color;
+    color: $badge-error-color !important;
   }
 
   &.alert {
     background-color: $alert-yellow;
-    color: $badge-alert-color;
+    color: $badge-alert-color !important;
   }
 
   &.neutral {
     background-color: $badge-neutral-bg-color;
-    color: $badge-neutral-color;
+    color: $badge-neutral-color !important;
   }
 
   &.good {
     background-color: $alert-green;
-    color: $badge-good-color;
+    color: $badge-good-color !important;
   }
 
-  // scss-lint:disable ImportantRule
   &.info {
     background-color: $badge-info-bg-color;
     color: $badge-info-color !important;

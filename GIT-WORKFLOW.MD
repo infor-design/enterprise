@@ -42,7 +42,7 @@
 
 ### DEVELOPMENT (start working on next tickets):
 - Use the JIRA functionality for (example `soho-101`) to create a branch off of the main repo, not a fork
-- Clone into the main repo, not your local copy of your fork
+- Clone the main repo, not your local copy of your fork
 - `$ git pull` to grab all the new branch info
 - `$ git checkout [new bugfix branch]`
 - do work, commit

@@ -1,0 +1,56 @@
+<div class="row top-padding">
+  <div class="twelve columns">
+    <div id="datagrid" class="datagrid-alternate-bg-color">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+      var grid,
+        columns = [],
+        data = [];
+
+    var url = '{{basepath}}api/companies';
+
+    $.getJSON(url, function(res) {
+
+    //Define Columns for the Grid.
+    columns.push({ id: 'companyName', name: 'Company Name', field: 'companyName', formatter: Formatters.Expander});
+    columns.push({ id: 'phone', name: 'Telephone Number', field: 'phone', formatter: Formatters.Hyperlink});
+    columns.push({ id: 'location', name: 'Location', field: 'location'});
+    columns.push({ id: 'contact', name: 'Contact', field: 'contact'});
+    columns.push({ id: 'newOrder', name: '', field: '', sortable: false, formatter: Formatters.Button, text: 'New Order'});
+
+    {{={{{ }}}=}}
+    var rowTemplate = '<div class="datagrid-cell-layout"><div class="img-placeholder"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-camera"></use></svg></div></div>'+
+                        '<div class="datagrid-cell-layout"><p class="datagrid-row-heading">Expandable Content Area</p>' +
+                        '<p class="datagrid-row-micro-text">{{sku}}</p>'+
+                        '<span class="datagrid-wrapped-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only...</span>';
+
+      //Init and get the api for the grid
+      grid = $('#datagrid').datagrid({
+        columns: columns,
+        idProperty: 'officeId',
+        dataset: res,
+        rowTemplate: rowTemplate,
+        clickToSelect: false,
+        isList: true,
+        resultsText: function (api, count) {return '(' + count + ' results for <b>"Smiths Builders"</b>)'},
+        toolbar: {title: 'Customers', results: true, actions: true, rowHeight: true}
+      });
+
+      grid.on('collapserow', function (e, args) {
+        console.log('collapserow ' + args.row);
+      });
+
+      grid.on('expandrow', function (e, args) {
+        console.log('expandrow ' + args.row);
+      });
+
+    });
+
+});
+
+</script>

@@ -93,6 +93,10 @@ $datagrid-short-row-height: 23px;
     background-color: transparent;
     border: 0;
 
+    &.datagrid-alternate-bg-color {
+      background-color: $panel-bg-color;
+    }
+
     tr:hover:not(.datagrid-expandable-row) td:not(.is-editing) {
       background-color: $datagrid-list-row-hover-color;
 
@@ -814,6 +818,20 @@ $datagrid-short-row-height: 23px;
     &.is-rowactivated td:not(.is-editing),
     &.is-rowactivated td:not(.is-editing) .datagrid-cell-wrapper {
       background-color: $datagrid-row-selected-color;
+
+      .btn.row-btn {
+        background-color: $primary-btn-bg-color;
+        border: 1px solid  $primary-btn-bg-color;
+        color: $primary-btn-color;
+
+        &:hover {
+          background-color: $primary-btn-hover-bg-color;
+        }
+
+        &:active {
+          background-color: $primary-btn-active-bg-color;
+        }
+      }
     }
 
     &.is-selected:not(.hide-selected-color) .is-readonly:not(.is-editing) .datagrid-cell-wrapper {
@@ -913,6 +931,7 @@ $datagrid-short-row-height: 23px;
 
     .row-btn {
       line-height: normal;
+      padding: 0 30px;
       position: relative;
       top: -3px;
     }
