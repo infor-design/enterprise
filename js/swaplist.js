@@ -123,8 +123,8 @@
         self.containers.on('keydown.swaplist', function(e) {
           var container = $(this);
           e = e || window.event;
-          if(e.keyCode === 77 && self.hasModifier(e)) { // Modifier + M
-            if(!container.is(settings.selectedClass) ||
+          if (e.keyCode === 77 && self.hasModifier(e)) { // Modifier + M
+            if (!container.is(settings.selectedClass) ||
               (container.is(settings.selectedClass) && self.selectedButtons.length === 1)) {
               container.find(self.actionButtons).trigger('click.swaplist');
             } else {
@@ -138,12 +138,12 @@
         self.selectedButtons.on('keydown.swaplist', function(e) {
           var btn = $(this), index, move;
           e = e || window.event;
-          if(e.keyCode === 13 || e.keyCode === 32) { // Enter or Space
+          if (e.keyCode === 13 || e.keyCode === 32) { // Enter or Space
             btn.trigger('click.swaplist');
             e.preventDefault();
           }
           // Left or Right arrow
-          if((e.keyCode === 37 || e.keyCode === 39) && self.selectedButtons.length > 1) {
+          if ((e.keyCode === 37 || e.keyCode === 39) && self.selectedButtons.length > 1) {
             index = self.selectedButtons.index(this);
             move = e.keyCode === 37 ?
               (index > 0 ? index-1 : self.selectedButtons.length-1) :
@@ -156,7 +156,7 @@
           var btn = $(this),
             keyCode = e.keyCode || e.which;
 
-          if(keyCode === 9 && !e.shiftKey) { // Tab key
+          if (keyCode === 9 && !e.shiftKey) { // Tab key
             $('li:first-child', btn.closest('.card')).focus();
             e.preventDefault();
           }
@@ -176,16 +176,20 @@
 
         // Dragstart - initiate dragging
         .on(self.dragStart, self.dragElements, function(e) {
-          var touch, pos, posOwner, placeholderContainer,
-            scrollable = $('.scrollable'),
+          if (self.handle && !selections.isHandle) {
+            e.stopPropagation();
+            return;
+          }
+          var rect, touch, placeholderContainer,
             target = $(e.target).closest('li'),
             list = $('.listview', target.closest('.card')).data('listview');
 
-          if (!!self.handle && !selections.isHandle) {
+          // Not in draging area
+          if (!list) {
             return;
           }
 
-          if(!self.isTouch) {
+          if (!self.isTouch) {
             self.draggedMakeSelected(list, target);
           }
 
@@ -205,7 +209,7 @@
           $('.'+ settings.numOfSelectionsClass, settings.itemContentTempl).html(selections.items.length);
           self.addDropeffects();
 
-          if(!self.isTouch) {
+          if (!self.isTouch) {
             selections.dragged.addClass('is-dragging');
             e.originalEvent.dataTransfer.setData('text', '');
 
@@ -214,18 +218,13 @@
             }
           }
           else {
+            rect = target[0].getBoundingClientRect();
             touch = e.originalEvent.changedTouches[0];
-            pos = target.position();
-            posOwner = selections.owner.position();
 
-            scrollable = {
-              left: (scrollable.scrollLeft() || 0),
-              top: (scrollable.scrollTop() || 0)
-            };
-
+            //Save offset
             self.offset = {
-              x: touch.pageX - ((posOwner.left + scrollable.left) + pos.left),
-              y: touch.pageY - ((posOwner.top + scrollable.top) + pos.top + target.outerHeight(true)*1.2)
+              x: touch.pageX - rect.left,
+              y: touch.pageY - rect.top
             };
 
             for (var i = 0, l = self.containers.length; i < l; i++) {
@@ -277,7 +276,7 @@
             overItem = $(this),
             list = $('.listview', selections.dragged.closest('.card')).data('listview');
 
-          if(self.isTouch) {
+          if (self.isTouch) {
             if (!!self.handle && !selections.isHandle) {
               return;
             }
@@ -322,6 +321,9 @@
 
         // Dragend - implement items being validly dropped into targets
         .on(self.dragEnd, self.dragElements, function(e) {
+          if (!selections.dragged) {
+            return;
+          }
           var related = $(selections.related).closest('li'),
           ul = $('ul', selections.droptarget),
           currentSize = $('li', ul).length,
@@ -350,12 +352,12 @@
             $('.'+ settings.itemContentClass, selections.dragged).html(
               $('.'+ settings.itemContentClass, selections.placeholder).html()
             );
-            if(self.isTouch) {
+            if (self.isTouch) {
               selections.dragged.show();
             }
           }
 
-          if(self.isTouch) {
+          if (self.isTouch) {
             for (var i = 0, l = self.containers.length; i < l; i++) {
               self.containers[i].style.zIndex = '';
             }
@@ -489,7 +491,7 @@
         self.selections.owner = from;
         self.selections.droptarget = to;
 
-        if(self.isTouch) {
+        if (self.isTouch) {
           $.each(list.selectedItems, function(index, val) {
             self.selections.items[index] = val.closest('li');
           });
@@ -559,7 +561,8 @@
         if (self.isDragAndDropSupports) {
           // Use Handle if available
           self.handle = ul.first().attr('data-swap-handle');
-          self.handle = (!self.isTouch && !!$(self.handle, ul).length) ? self.handle : null;
+          self.handle = $(self.handle, ul).length > 0 ? self.handle : null;
+          // self.handle = (!self.isTouch && $(self.handle, ul).length > 0) ? self.handle : null;
           $(self.handle, ul).addClass('draggable')
             .off('mousedown.swaplist touchstart.swaplist')
             .on('mousedown.swaplist touchstart.swaplist', function() { self.selections.isHandle = true; })
@@ -572,7 +575,7 @@
             .not('a[href], img')
               .off('selectstart.swaplist')
               .on('selectstart.swaplist', function() {
-              if(this.dragDrop) { this.dragDrop(); } //ie9
+              if (this.dragDrop) { this.dragDrop(); } //ie9
               return false;
             }).end()
             .attr({'draggable': true})
