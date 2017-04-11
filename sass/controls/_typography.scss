@@ -181,8 +181,31 @@ small,
   text-transform: uppercase;
 }
 
+.small-thin-text {
+  @include font-size(10);
+  color: $font-color;
+}
+
+.larger-heavy-text {
+  @include font-size(14);
+  color: $font-color-highcontrast;
+  font-weight: bold;
+}
+
 .uppercase {
   text-transform: uppercase;
+}
+
+.align-text-left {
+  text-align: left;
+}
+
+.align-text-right {
+  text-align: right;
+}
+
+.center-text {
+  text-align: center;
 }
 
 .alert-text {
@@ -213,6 +236,16 @@ small,
     &.left {
       @include transform(rotate(90deg));
     }
+  }
+
+  + .stamp-text {
+    margin-top: 0;
+  }
+}
+
+.small-thin-text {
+  + .small-thin-text {
+    margin-top: 0;
   }
 }
 

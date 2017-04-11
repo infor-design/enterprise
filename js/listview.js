@@ -155,6 +155,11 @@
         // Render "mustache" Template
         if (typeof Tmpl === 'object' && dataset && this.settings.template) {
 
+          // create a copy of an inlined template
+          if (this.settings.template instanceof $) {
+            this.settings.template = '' + this.settings.template.html();
+          }
+
           if (this.settings.template.indexOf('{{#totals}}') > -1) {
             totals = this.getTotals(dataset);
           }
