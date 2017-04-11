@@ -188,6 +188,10 @@ div.multiselect {
       text-decoration: none;
     }
 
+    & .clear-selection {
+      color: $label-disabled-color;
+    }
+
     &:hover,
     &.hover {
       background-color: $popupmenu-hover-color;

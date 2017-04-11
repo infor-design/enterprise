@@ -261,14 +261,20 @@
             cssClasses = option.className;
 
           var trueValue = value && value.value ? value.value : text;
-
+          if (trueValue === 'clear_selection') {
+            if (text === '') {
+              text = Locale.translate('ClearSelection');
+            }
+          }
           liMarkup += '<li role="presentation" class="dropdown-option'+ (isSelected ? ' is-selected' : '') +
                         (isDisabled ? ' is-disabled' : '') +
                         (cssClasses ? ' ' + cssClasses.value : '' ) + '"' +
                         ' data-val="' + trueValue.replace('"', '/quot/') + '"' +
                         ' tabindex="' + (index && index === 0 ? 0 : -1) + '">' +
                         (title ? '" title="' + title.value + '"' : '') +
-                        '<a role="option" href="#" id="list-option'+ index +'">' +
+                        '<a role="option" href="#" class="' +
+                        (trueValue === 'clear_selection' ? ' clear-selection' : '' ) + '"' +
+                        'id="list-option'+ index +'">' +
                           text +
                         '</a>' +
                         (badge ? '<span class="badge "' + (badgeColor ? badgeColor.value : 'azure07') + '"> '+ badge.value + '</span>' : '') +
@@ -336,7 +342,9 @@
       setValue: function () {
         var opts = this.element.find('option:selected'),
           text = this.getOptionText(opts);
-
+          if (opts.attr('value') === 'clear_selection') {
+            text = '';
+          }
         if (this.settings.empty && opts.length === 0) {
           this.pseudoElem.find('span').text('');
           return;
@@ -396,6 +404,7 @@
           self.handleKeyDown($(this), e);
         }).on('keypress.dropdown', function(e) {
           self.ignoreKeys($(this), e);
+          self.toggleList();
           self.handleAutoComplete(e);
         }).on('click.dropdown', function(e) {
           e.stopPropagation();
@@ -653,7 +662,6 @@
               self.closeList('tab');
               this.activate();
             }
-
             // allow tab to propagate otherwise
             return true;
           }
@@ -697,7 +705,8 @@
               this.highlightOption(next);
               // NOTE: Do not also remove the ".is-selected" class here!  It's not the same as ".is-focused"!
               // Talk to ed.coyle@infor.com if you need to know why.
-              next.parent().find('.is-focused').removeClass('is-focused');
+              next.parent().find
+              ('.is-focused').removeClass('is-focused');
               next.addClass('is-focused');
             }
 
@@ -1008,6 +1017,7 @@
           if (cur.is(':disabled')) {
             return false;
           }
+
           self.selectOption(cur);
 
           if (self.settings.closeOnSelect) {
@@ -1306,7 +1316,9 @@
 
         if (this.isOpen()) {
           this.list.find('.is-focused').removeClass('is-focused').attr({'tabindex':'-1'});
-          listOption.addClass('is-focused').attr({'tabindex': '0'});
+          if (option.val() !== 'clear_selection') {
+            listOption.addClass('is-focused').attr({'tabindex': '0'});
+          }          
 
           // Set activedescendent for new option
           //this.pseudoElem.attr('aria-activedescendant', listOption.attr('id'));
@@ -1339,7 +1351,6 @@
         if (!option) {
           return option;
         }
-
         var li;
         if (option.is('li')) {
           li = option;
@@ -1353,27 +1364,24 @@
             });
           }
         }
-
-        var value = option.val();
-        if (!value) {
-          return value;
-        }
-
-        if (!li && value) {
-          li = this.listUl.find('li[data-val="'+ value.replace('"', '/quot/') +'"]');
+        if (!li) {
+          li = this.listUl.find('li[data-val="'+ option.val().replace('"', '/quot/') +'"]');
         }
 
         if (option.hasClass('is-disabled') || option.is(':disabled')) {
           return;
         }
 
-        var code = value,
+        var code = option.val(),
           val = this.element.val(),
           oldText = this.pseudoElem.text(),
           text = '',
           trimmed = '',
+          clearSelection = false,
           isAdded = true; // Sets to false if the option is being removed from a multi-select instead of added
-
+        if (option.val() === 'clear_selection') {
+          clearSelection = true;
+        }
 
         if (this.settings.multiple) {
           // Working with a select multiple allows for the "de-selection" of items in the list
@@ -1406,18 +1414,20 @@
           // Working with a single select
           val = code;
           this.listUl.find('li.is-selected').removeClass('is-selected');
-          li.addClass('is-selected');
+          if (!clearSelection) {
+            li.addClass('is-selected');
+          }
           this.previousActiveDescendant = option.val();
           text = option.text();
         }
-
-        this.element.find('option').each(function () {
-          if (this.value === code) {
-            this.selected = true;
-            return false;
-          }
-        });
-
+        if (!clearSelection) {
+          this.element.find('option').each(function () {
+            if (this.value === code) {
+              this.selected = true;
+              return false;
+            }
+          });
+        }
         // If we're working with a single select and the value hasn't changed, just return without
         // firing a change event
         if (text === oldText) {
@@ -1425,8 +1435,13 @@
         }
 
         // Change the values of both inputs and swap out the active descendant
-        this.pseudoElem.find('span').text(text);
-        this.searchInput.val(text);
+        if (!clearSelection) {
+          this.pseudoElem.find('span').text(text);
+          this.searchInput.val(text);
+        } else {
+          this.pseudoElem.find('span').text('');
+          this.searchInput.val('');
+        }
 
         if (this.element.attr('maxlength')) {
           trimmed = text.substr(0, this.element.attr('maxlength'));
