@@ -1565,7 +1565,7 @@ $.fn.datagrid = function(options) {
       return visible;
     },
 
-    lastColumnIdx: function (skipBuiltIn) {
+    lastColumnIdx: function () {
       var last = 0;
       for (var j = 0; j < this.settings.columns.length; j++) {
         var column = settings.columns[j];
