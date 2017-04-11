@@ -82,7 +82,7 @@
         var self = this,
           matchingOptions = [];
 
-        term = term.toLocaleLowerCase();
+        term = Locale.toLowerCase(term);
 
         //append the list
         this.list = $('#autocomplete-list');
@@ -121,17 +121,17 @@
 
           if (this.settings.filterMode === 'startsWith') {
               for (var a = 0; a < parts.length; a++) {
-                if (parts[a].toLocaleLowerCase().indexOf(term) === 0) {
+                if (Locale.toLowerCase(parts[a]).indexOf(term) === 0) {
                   containsTerm = true;
                 }
               }
 
               //Direct Match
-              if (option.toLocaleLowerCase().indexOf(term) === 0) {
+              if (Locale.toLowerCase(option).indexOf(term) === 0) {
                 containsTerm = true;
               }
 
-              if (term.indexOf(' ') > 0 && option.toLocaleLowerCase().indexOf(term) > 0) {
+              if (term.indexOf(' ') > 0 && Locale.toLowerCase(option).indexOf(term) > 0) {
                 //Partial dual word match
                 containsTerm = true;
               }
@@ -139,7 +139,7 @@
           }
 
           if (this.settings.filterMode === 'contains') {
-            if (option.toLocaleLowerCase().indexOf(term) >= 0) {
+            if (Locale.toLowerCase(option).indexOf(term) >= 0) {
               containsTerm = true;
             }
           }
@@ -154,9 +154,9 @@
             if (this.settings.filterMode === 'contains') {
               dataset.label = dataset.label.replace(new RegExp('(' + term + ')', 'ig'), '<i>$1</i>');
             } else {
-              dataset.label = option.toLocaleLowerCase().indexOf(term)===0 ? '<i>' + option.substr(0,term.length) + '</i>' + option.substr(term.length) : option;
+              dataset.label = Locale.toLowerCase(option).indexOf(term)===0 ? '<i>' + option.substr(0,term.length) + '</i>' + option.substr(term.length) : option;
 
-              var pos = option.toLocaleLowerCase().indexOf(term);
+              var pos = Locale.toLowerCase(option).indexOf(term);
               if (pos > 0) {
                 dataset.label = option.substr(0, pos) + '<i>' + option.substr(pos, term.length) + '</i>' + option.substr(term.length + pos);
               }

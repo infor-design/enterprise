@@ -702,6 +702,60 @@
       return this.currentLocale.data.direction === 'right-to-left';
     },
 
+    /**
+     * Takes a string and converts its contents to upper case, taking into account Locale-specific character conversions.
+     * In most cases this method will simply pipe the string to `String.prototype.toUpperCase()`
+     * @param {string} str - the incoming string
+     * @returns {string}
+     */
+    toUpperCase: function(str) {
+      if (typeof this.currentLocale.data.toUpperCase === 'function') {
+        return this.currentLocale.data.toUpperCase(str);
+      }
+
+      return str.toLocaleUpperCase();
+    },
+
+    /**
+     * Takes a string and converts its contents to lower case, taking into account Locale-specific character conversions.
+     * In most cases this method will simply pipe the string to `String.prototype.toLowerCase()`
+     * @param {string} str - the incoming string
+     * @returns {string}
+     */
+    toLowerCase: function(str) {
+      if (typeof this.currentLocale.data.toLowerCase === 'function') {
+        return this.currentLocale.data.toLowerCase(str);
+      }
+
+      return str.toLocaleLowerCase();
+    },
+
+    /**
+     * Takes a string and capitalizes the first letter, taking into account Locale-specific character conversions.
+     * In most cases this method will simply use a simple algorithm for captializing the first letter of the string.
+     * @param {string} str - the incoming string
+     * @returns {string}
+     */
+    capitalize: function(str) {
+      return this.toUpperCase(str.charAt(0)) + str.slice(1);
+    },
+
+    /**
+     * Takes a string and capitalizes the first letter of each word in a string, taking into account Locale-specific character conversions.
+     * In most cases this method will simply use a simple algorithm for captializing the first letter of the string.
+     * @param {string} str - the incoming string
+     * @returns {string}
+     */
+    capitalizeWords: function(str) {
+      var words = str.split(' ');
+
+      for(var i = 0; i < words.length; i++) {
+        words[i] = this.capitalize(words[i]);
+      }
+
+      return words.join(' ');
+    },
+
     flipIconsHorizontally: function() {
       var icons = [
         'attach',
