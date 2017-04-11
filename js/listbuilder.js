@@ -73,11 +73,16 @@
     ListBuilder.prototype = {
 
       init: function() {
+        var self = this;
         this
           .loadListview()
           .initDataset()
           .setElements()
           .handleEvents();
+
+        setTimeout(function() {
+          self.setSelected();
+        }, 0);
       },
 
       // Load listview
@@ -414,7 +419,8 @@
 
       // Update dataset
       updateDataset: function(ds) {
-        var nodes = $('li', this.ul),
+        var self = this,
+          nodes = $('li', this.ul),
           lv = $('.listview', this.element).data('listview');
 
         lv.unselectRowsBetweenIndexes([0, nodes.length-1]);
@@ -425,6 +431,70 @@
           .initDataset()
           .setElements()
           .handleEvents();
+
+        setTimeout(function() {
+          self.setSelected();
+        }, 0);
+      },
+
+      // Set pre selected items
+      setSelected: function() {
+        $('li[selected]', this.ul).each(function() {
+          var li = $(this);
+          li.removeAttr('selected');
+          if (!li.is('.is-selected')) {
+            li.trigger('click');
+          }
+        });
+        return this;
+      },
+
+      // Make selected
+      select: function(selector) {
+        var li = this.getListItem(selector);
+
+        if (li) {
+          if (!li.is('.is-selected')) {
+            li.trigger('click');
+          }
+        }
+      },
+
+      // Make unselected
+      unselect: function(selector) {
+        var li = this.getListItem(selector);
+
+        if (li) {
+          if (li.is('.is-selected')) {
+            li.trigger('click');
+          }
+        }
+      },
+
+      // Get an item from list, selector: can be
+      // jQuery, DOM element, zero based index or 'first'|'last' as string
+      getListItem: function(selector) {
+        var li = $();
+        if (this.isElement(selector) && $.contains(this.ul, selector)) {
+          li = this.isjQuery(selector) ? selector : $(selector);
+        } else {
+          var idx = parseInt(selector),
+            items = $('li', this.ul);
+          if (!isNaN(idx) && (idx > -1 && idx < items.length)) {
+            li = items.eq(idx); // zero based index
+          } else if ((selector + '').toLowerCase() === 'first') {
+            li = items.first(); // first
+          } else if ((selector + '').toLowerCase() === 'last') {
+            li = items.last(); // last
+          }
+        }
+        // Make sure to return only one item -or- null
+        return (li.length < 1) ? null : ((li.length > 1) ? li.eq(0) : li);
+      },
+
+      // Check if given object is a DOM object
+      isElement: function(obj) {
+        return (this.isjQuery(obj) && obj.get(0) instanceof Element) || obj instanceof Element;
       },
 
       // Make enable
