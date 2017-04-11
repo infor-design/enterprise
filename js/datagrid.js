@@ -259,9 +259,8 @@ window.Formatters = {
 
   // Expand / Collapse Button
   Expander: function (row, cell, value) {
-    var button = '<button type="button" class="btn-icon datagrid-expand-btn" tabindex="-1">'+
+    var button = '<button type="button" aria-label="' + Locale.translate('ExpandCollapse') + '" class="btn-icon datagrid-expand-btn" tabindex="-1">'+
       '<span class="icon plus-minus"></span>' +
-      '<span class="audible">' + Locale.translate('ExpandCollapse') + '</span>' +
       '</button>' + ( value ? '<span> ' + value + '</span>' : '');
 
     return button;
@@ -1226,7 +1225,8 @@ $.fn.datagrid = function(options) {
         virtualized: false, // Prevent Unused rows from being added to the DOM
         virtualRowBuffer: 10, //how many extra rows top and bottom to allow as a buffer
         rowReorder: false, //Allows you to reorder rows. Requires rowReorder formatter
-        showDirty: false
+        showDirty: false,
+        allowOneExpandedRow: true //Only allows one expandable row at a time
       },
       settings = $.extend({}, defaults, options);
 
@@ -5447,13 +5447,13 @@ $.fn.datagrid = function(options) {
         }
         cell = isGroupRow ? 0 : row.index();
         rowNum = isGroupRow ? 0 : this.visualRowIndex(row.parent());
-		dataRowNum = isGroupRow ? 0 : this.dataRowIndex(row.parent());
+		    dataRowNum = isGroupRow ? 0 : this.dataRowIndex(row.parent());
         rowElem = row.parent();
       }
 
       if (row instanceof jQuery && row.is('tr')) {
         rowNum = this.visualRowIndex(row);
-		dataRowNum = this.dataRowIndex(row);
+		    dataRowNum = this.dataRowIndex(row);
         rowElem = row;
       }
 
@@ -5632,10 +5632,33 @@ $.fn.datagrid = function(options) {
         return;
       }
 
+      if (self.settings.allowOneExpandedRow) {
+        //collapse any other expandable rows
+        var prevExpandRow = self.tableBody.find('tr.is-expanded');
+        if (prevExpandRow.length && expandRow.index() !== prevExpandRow.index()) {
+          var parentRow = prevExpandRow.prev(),
+            parentRowIdx = parentRow.attr('aria-rowindex'),
+            prevDetail = prevExpandRow.find('.datagrid-row-detail');
+
+          prevExpandRow.removeClass('is-expanded');
+          parentRow.removeClass('is-rowactivated');
+          parentRow.find('.plus-minus').removeClass('active');
+
+          prevDetail.animateClosed().on('animateclosedcomplete', function () {
+            prevExpandRow.css('display', 'none').removeClass('is-expanded');
+            self.element.triggerHandler('collapserow', [{grid: self, row: parentRowIdx, detail: prevDetail, item: self.settings.dataset[parentRowIdx] }]);
+          });
+        }
+      }
+
       if (expandRow.hasClass('is-expanded')) {
         expandRow.removeClass('is-expanded');
         expandButton.removeClass('is-expanded')
           .find('.plus-minus').removeClass('active');
+
+        if (self.settings.allowOneExpandedRow) {
+          rowElement.removeClass('is-rowactivated');
+        }
 
         detail.animateClosed().on('animateclosedcomplete', function () {
           expandRow.css('display', 'none');
@@ -5651,6 +5674,10 @@ $.fn.datagrid = function(options) {
 
         //Optionally Contstrain the width
         expandRow.find('.constrained-width').css('max-width', this.element.outerWidth());
+
+        if (self.settings.allowOneExpandedRow) {
+          rowElement.addClass('is-rowactivated');
+        }
 
         detail.animateOpen();
         self.element.triggerHandler('expandrow', [{grid: self, row: dataRowIndex, detail: detail, item: item}]);
