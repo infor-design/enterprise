@@ -1565,6 +1565,20 @@ $.fn.datagrid = function(options) {
       return visible;
     },
 
+    lastColumnIdx: function (skipBuiltIn) {
+      var last = 0;
+      for (var j = 0; j < this.settings.columns.length; j++) {
+        var column = settings.columns[j];
+
+        if (column.hidden) {
+          continue;
+        }
+
+        last = j;
+      }
+      return last;
+    },
+
     getColumnGroup: function(idx) {
       var total = 0,
         colGroups = this.settings.columnGroups;
@@ -2867,7 +2881,6 @@ $.fn.datagrid = function(options) {
       }
       this.setScrollClass();
 
-      //TODO Test last column hidden
       if (cacheWidths.widthPercent) {
         return 'style = "width: 100%"';
       } else if (!isNaN(this.totalWidth)) {
@@ -2993,12 +3006,11 @@ $.fn.datagrid = function(options) {
 
       // cache the header widths
       this.headerWidths[index] = {id: col.id, width: (this.widthPercent ? colPercWidth : colWidth), widthPercent: this.widthPercent};
-      var lastColumn = index === this.settings.columns.length-1 && this.totalWidth !== colWidth;
+      var lastColumn = index === this.lastColumnIdx() && this.totalWidth !== colWidth;
       this.totalWidth += col.hidden || lastColumn ? 0 : colWidth;
 
       //For the last column stretch it if it doesnt fit the area
       if (lastColumn) {
-
         var diff = this.elemWidth - this.totalWidth;
 
         if ((diff > 0) && diff  > colWidth && !this.widthPercent && !this.headerRow) {
