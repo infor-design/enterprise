@@ -22,7 +22,7 @@ http://usalvlhlpool1.infor.com/4.3.0-rc/controls
 
 
 ### Ui Changes
--
+- Added heart and heart-filled icons
 
 ### Whats Next
 -
