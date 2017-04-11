@@ -155,7 +155,7 @@ Login with Infor user/pass, contact Tim if no access
 * Open wwwroot/craft/templates/footer.html with notepad and bump the version to the latest
 * If jquery version changes, then open /inetpub/wwwroot/craft/templates/_layout*.html with notepad and bump jquery version
 * Open /inetpub/wwwroot/craft/templates/_layout*.html with notepad and update all query string version numbers. example: `/stylesheets/site.css?v4.2.1`
-
+* Change site locale from http://usmvvwdev53 and https://soho.infor.com
 
 # Tricky Permissions Notes
 
