@@ -1191,10 +1191,14 @@
 
         // If the list would end up being wider parent,
         // use the list's width instead of the parent's width
-        var parentElementStyle = window.getComputedStyle(parentElement[0]),
-          parentElementWidth = parseInt(parentElementStyle.width + parentElementStyle.borderLeftWidth + parentElementStyle.borderRightWidth),
-          listDefaultWidth = this.list.outerWidth(),
-          useParentWidth = listDefaultWidth <= parentElementWidth;
+        var listDefaultWidth, useParentWidth,
+          parentElementStyle = window.getComputedStyle(parentElement[0]),
+          parentElementWidth = parseInt(parentElementStyle.width + parentElementStyle.borderLeftWidth + parentElementStyle.borderRightWidth);
+
+        this.searchInput[0].style.cssText = 'width:'+ parentElementWidth +'px !important';
+        listDefaultWidth = this.list.width();
+        useParentWidth = listDefaultWidth <= parentElementWidth;
+        this.searchInput[0].style.width = '';
 
         // Add parent info to positionOpts
         positionOpts.parent = parentElement;
