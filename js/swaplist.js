@@ -74,6 +74,10 @@
           s = self.settings;
         self.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         self.isAdditional = $(s.additionalClass +' .listview', self.element).length > 0;
+
+        if (self.isTouch) {
+          self.element.addClass('is-touch');
+        }
         self.loadListview();
         self.initDataset();
         self.setElements();
