@@ -13,11 +13,13 @@ http://usalvlhlpool1.infor.com/4.3.0-rc/controls
 -
 
 ### Improvements
-- Added a datagrid option (allowOneExpanded) to only show one expandable row at a time. It is now the default.
-- Added an optionally light background color on Datagrid list by adding class datagrid-alternate-bg-color to the datagrid div. See tests/datagrid/datagrid-expandable-row-one-only.html
+- Datagrid - Added am option (allowOneExpanded) to only show one expandable row at a time. It is now the default.
+- Datagrid - Added an optional light background color on the list version by adding class datagrid-alternate-bg-color to the datagrid div. See tests/datagrid/datagrid-expandable-row-one-only.html
+- Dropdown - Added ability to set text on blank items on (Clear Selection)
 
 ### Bug Fixes
--
+- Datagrid - Fixed column alignment issue on reload with hidden columns
+
 
 ### Ui Changes
 -
