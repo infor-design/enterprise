@@ -1,0 +1,65 @@
+<style id="test-styles">
+  /* TEST STYLES */
+  .search-result-value {
+    display: inline-block;
+    width: 80px;
+  }
+  .search-result-label {
+    display: inline-block;
+  }
+</style>
+
+<div class="row top-padding">
+  <div class="six columns">
+
+    <h2>Autocomplete Test: Turkish Search Results</h2>
+    <p><a class="hyperlink" href="http://jira/browse/SOHO-5408" target="_href">Related JIRA Ticket</a>.</p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="toolbar">
+      <div class="title">
+        Use The Search
+      </div>
+      <div class="buttonset">
+        <input id="turkish-searchfield" class="searchfield" data-init="false" aria-label="Searchfield" placeholder="Type to Search"/>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  var TEST_CACHE = [];
+
+  $('body').on('initialized', function() {
+    $('#turkish-searchfield').toolbarsearchfield({
+      source: function(searchTerm, response, args) {
+        if (TEST_CACHE.length) {
+          return response(searchTerm, TEST_CACHE);
+        }
+
+        $.getJSON('{{basepath}}api/autocomplete/turkish', function(data, term) {
+          TEST_CACHE = data;
+          response(searchTerm, data);
+        });
+      },
+      template: '#autocomplete-template'
+    });
+  });
+</script>
+
+<!--This is only needed because it renders first on the server-->
+{{={{{ }}}=}}
+<script id="autocomplete-template" type="text/html">
+  <li id="{{listItemId}}" {{#hasValue}}data-value="{{value}}" {{/hasValue}}role="listitem">
+    <a href="#" tabindex="-1">
+      <span class="search-result-value">{{value}}</span>
+      <span class="search-result-label">{{shortLabel}}</span>
+    </a>
+  </li>
+</script>
