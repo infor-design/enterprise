@@ -66,7 +66,7 @@
       group: ' '
     },
     //Resx - Approved By Translation Team
-  messages: {
+    messages: {
       'AboutText': {id: 'AboutText', value: 'Kopiereg &copy; {0} Infor. Alle regte voorbehou. Die woord- en ontwerpmerke wat hierin uiteengesit word, is handelsmerke en/of geregistreerde handelsmerke van Infor en/of sy geaffilieerdes en filiale. Alle regte voorbehou. Alle ander handelsmerke wat hierin gelys word, is die eiendom van hul onderskeie eienaars.'},
       'Actions': {id: 'Actions', value: 'Aksies', comment: 'Tooltip text for the action button with additional in context actions'},
       'Add': {id: 'Add', value: 'Voeg by', comment: 'Add'},
