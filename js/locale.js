@@ -437,6 +437,12 @@
             if((value.toLowerCase() === thisLocaleCalendar.dayPeriods[0]) ||
              (value.toUpperCase() === thisLocaleCalendar.dayPeriods[0])) {
               dateObj.a = 'AM';
+
+              if (dateObj.h) {
+                if (dateObj.h === 12) {
+                  dateObj.h = 0;
+                }
+              }
             }
 
             if((value.toLowerCase() === thisLocaleCalendar.dayPeriods[1]) ||
@@ -444,7 +450,9 @@
               dateObj.a = 'PM';
 
               if (dateObj.h) {
-                dateObj.h = parseInt(dateObj.h) + 12;
+                if (dateObj.h < 12) {
+                  dateObj.h = parseInt(dateObj.h) + 12;
+                }
               }
             }
             break;
