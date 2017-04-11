@@ -523,6 +523,15 @@ define([
       expect(Locale.truncateDecimals('5.10', 2, 2)).to.equal('5.10');
       expect(Locale.truncateDecimals('5.1', 2, 2)).to.equal('5.10');
       expect(Locale.truncateDecimals('6.10', 2, 2)).to.equal('6.10');
+    },
+
+    // Related JIRA Ticket: SOHO-5408
+    'should properly convert character cases in some specific Locales': function() {
+      Locale.set('tr-TR');
+      expect(Locale.toUpperCase('kodları')).to.equal('KODLARI');
+      expect(Locale.toLowerCase('İSTANBUL')).to.equal('istanbul');
+      expect(Locale.capitalize('istanbul')).to.equal('İstanbul');
+      expect(Locale.capitalizeWords('kodları istanbul')).to.equal('Kodları İstanbul');
     }
 
   });

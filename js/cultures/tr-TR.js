@@ -312,6 +312,39 @@
       'ViewSource': {id: 'ViewSource', value: 'Kaynağı Görüntüle', comment: 'Toggle the source view in the editor'},
       'ViewVisual': {id: 'ViewVisual', value: 'Görseli Görüntüle', comment: 'Toggle the visual view in the editor'},
       'Yes': {id: 'Yes', value: 'Evet', comment: 'On a dialog button'}
+    },
+
+    /**
+     * Turkish-specific rules for changing a string to uppercase
+     * @param {string} str - starting text string
+     * @returns {string}
+     */
+    toUpperCase: function(str) {
+      return str.replace(/ğ/g, 'Ğ')
+        .replace(/ü/g, 'Ü')
+        .replace(/ş/g, 'Ş')
+        .replace(/ı/g, 'I')
+        .replace(/i/g, 'İ')
+        .replace(/ö/g, 'Ö')
+        .replace(/ç/g, 'Ç')
+        .toUpperCase();
+    },
+
+    /**
+     * Turkish-specific rules for changing a string to lowercase
+     * @param {string} str - starting text string
+     * @returns {string}
+     */
+    toLowerCase: function(str) {
+      return str.replace(/Ğ/g, 'ğ')
+        .replace(/Ü/g, 'ü')
+        .replace(/Ş/g, 'ş')
+        .replace(/I/g, 'ı')
+        .replace(/İ/g, 'i')
+        .replace(/Ö/g, 'ö')
+        .replace(/Ç/g, 'ç')
+        .toLowerCase();
     }
+
   });
 }));
