@@ -1342,6 +1342,10 @@ var express = require('express'),
     sendJSONFile('fires', req, res, next);
   });
 
+  router.get('/api/autocomplete/turkish', function(req, res, next) {
+    sendJSONFile('autocomplete-turkish', req, res, next);
+  });
+
   router.get('/api/dummy-dropdown-data', function(req, res, next) {
     var data = require(path.resolve('demoapp', 'js', 'getJunkDropdownData'));
     res.setHeader('Content-Type', 'application/json');
