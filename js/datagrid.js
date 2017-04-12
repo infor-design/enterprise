@@ -1262,7 +1262,7 @@ $.fn.datagrid = function(options) {
       this.setTreeDepth();
       this.setRowGrouping();
       this.setTreeRootNodes();
-      this.render();
+      this.firstRender();
       this.handlePaging();
       this.handleEvents();
       this.handleKeys();
@@ -1282,8 +1282,13 @@ $.fn.datagrid = function(options) {
       this.contextualToolbar.addClass('datagrid-contextual-toolbar');
     },
 
-    //Render the Header and Rows
+    //Re render both header and rows
     render: function () {
+      this.loadData(this.settings.dataset);
+    },
+
+    //Run First Render the Header and Rows
+    firstRender: function () {
       var self = this;
 
       self.contentContainer = $('<div class="datagrid-body"></div>');
@@ -1329,6 +1334,7 @@ $.fn.datagrid = function(options) {
       self.renderRows();
       self.element.append(self.contentContainer);
 
+      self.clearHeaderCache();
       self.renderHeader();
       self.container = self.element.closest('.datagrid-container');
 
