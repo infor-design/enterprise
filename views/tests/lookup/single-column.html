@@ -1,0 +1,64 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Lookup Test: Single Column Lookup</h2>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="iso-code-lookup" class="label">Products</label>
+      <input id="iso-code-lookup" data-init="false" data-validate="required" class="lookup" type="text">
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  var grid,
+    columns = [],
+    data = [];
+
+  columns.push({ id: 'isoCode', name: 'ISO Code', field: 'isoCode' });
+
+  data.push({ id: 0, isoCode: 'AED' });
+  data.push({ id: 1, isoCode: 'AFN' });
+  data.push({ id: 2, isoCode: 'ALL' });
+  data.push({ id: 3, isoCode: 'AMD' });
+  data.push({ id: 4, isoCode: 'ANG' });
+  data.push({ id: 5, isoCode: 'AOA' });
+  data.push({ id: 6, isoCode: 'ARS' });
+  data.push({ id: 7, isoCode: 'AUD' });
+  data.push({ id: 8, isoCode: 'AWG' });
+  data.push({ id: 9, isoCode: 'AZN' });
+  data.push({ id: 10, isoCode: 'BWN' });
+
+  //Init and get the api for the grid
+  grid = $('#iso-code-lookup').lookup({
+    field: 'isoCode',
+    autoApply: true,
+    options: {
+      columns: columns,
+      dataset: data,
+      selectable: 'single', //multiselect or single
+      toolbar: {
+        results: true,
+        keywordFilter: true,
+        advancedFilter: true,
+        actions: true,
+        selectable: 'single',
+        filterable: true,
+        views: true,
+        rowHeight: false,
+        collapsibleFilter: false,
+        fullWidth: true
+      }
+    }
+  }).on('change', function (e, args) {
+    console.log(args);
+  });
+
+</script>

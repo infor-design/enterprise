@@ -1,0 +1,159 @@
+<div id="maincontent" class="two-column page-container scrollable" role="main">
+
+  <nav class="sidebar scrollable-y" role="complementary">
+    <div class="content darker">
+
+      <ul role="tree" aria-label="Asset Types" class="tree">
+        <li>
+            <a href="#">Home</a>
+        </li>
+        <li><a href="#">About Us</a></li>
+        <li class="is-open">
+            <a href="#">Public Folders</a>
+            <ul class="is-open root">
+              <li class="is-open">
+                  <a href="#" id="leadership">Leadership</a>
+                  <ul class="is-open">
+                    <li>
+                      <a href="#">Leadership</a>
+                    </li>
+                    <li>
+                      <a href="#">History</a>
+                    </li>
+                    <li>
+                      <a href="#">Careers last</a>
+                    </li>
+                  </ul>
+              </li>
+              <li><a href="#">History</a></li>
+              <li><a href="#" class="is-disabled">Careers</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#">Icons</a>
+            <ul class="root">
+              <li>
+                <a href="#" class="icon-tree-audio">Audio</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-avi">Avi</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-bmp">Bmp</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-chart">Chart</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-code">Code</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-csv">Csv</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-doc">Doc</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-excel">Excel</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-expenses">Expenses</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-gif">Gif</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-image">Image</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-jpg">Jpg</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-link">Link</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-mail">Mail</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-mp3">Mp3</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-msg">Msg</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-pdf">Pdf</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-png">Png</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-ppt">Ppt</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-prj">Prj</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-psd">Psd</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-pub">Pub</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-rar">Rar</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-text">Text</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-tif">Tif</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-video">Video</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-vis">Vis</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-word">Word</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-xls">Xls</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-xml">Xml</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-zip">Zip</a>
+              </li>
+              <li>
+                <a href="#" class="icon-screen">Zip</a>
+              </li>
+            </ul>
+        </li>
+
+        <li>
+          <a href="#">Blog</a>
+        </li>
+
+        <li>
+          <a href="#">Contact</a>
+        </li>
+      </ul>
+
+    </div>
+  </nav>
+
+  <section class="main scrollable-y" role="main">
+    <div class="content">
+    </div>
+  </section>
+
+</div>
+
+<script type="text/javascript">
+  $('body').one('initialized', function () {
+    var api = $('.tree').data('tree');
+
+    api.updateNode({node: $('#leadership'), disabled: true});
+  });
+</script>

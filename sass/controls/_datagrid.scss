@@ -93,6 +93,10 @@ $datagrid-short-row-height: 23px;
     background-color: transparent;
     border: 0;
 
+    &.datagrid-alternate-bg-color {
+      background-color: $panel-bg-color;
+    }
+
     tr:hover:not(.datagrid-expandable-row) td:not(.is-editing) {
       background-color: $datagrid-list-row-hover-color;
 
@@ -814,6 +818,20 @@ $datagrid-short-row-height: 23px;
     &.is-rowactivated td:not(.is-editing),
     &.is-rowactivated td:not(.is-editing) .datagrid-cell-wrapper {
       background-color: $datagrid-row-selected-color;
+
+      .btn.row-btn {
+        background-color: $primary-btn-bg-color;
+        border: 1px solid  $primary-btn-bg-color;
+        color: $primary-btn-color;
+
+        &:hover {
+          background-color: $primary-btn-hover-bg-color;
+        }
+
+        &:active {
+          background-color: $primary-btn-active-bg-color;
+        }
+      }
     }
 
     &.is-selected:not(.hide-selected-color) .is-readonly:not(.is-editing) .datagrid-cell-wrapper {
@@ -913,6 +931,7 @@ $datagrid-short-row-height: 23px;
 
     .row-btn {
       line-height: normal;
+      padding: 0 30px;
       position: relative;
       top: -3px;
     }
@@ -1774,6 +1793,7 @@ td .btn-actions {
 }
 
 .datagrid-checkbox-wrapper {
+  min-height: 12px;
   position: relative;
 }
 
@@ -1891,15 +1911,6 @@ td .btn-actions {
 
   .datagrid {
     td.is-editing {
-      // scss-lint:disable NestingDepth
-      .lookup-wrapper {
-        margin-top: 8px;
-
-        .lookup ~ .trigger .icon {
-          top: calc(50% - 9px);
-        }
-      }
-      // scss-lint:enable NestingDepth
 
       .datepicker {
         ~ .icon {
@@ -2463,7 +2474,29 @@ html[dir='rtl'] {
 
 .content-tooltip {
   &.popover.alternate {
+    @include font-size(12);
+    background-color: $datagrid-cell-bg-color;
     padding-bottom: inherit;
+
+    &.top .arrow::after {
+      border-top-color: $datagrid-cell-bg-color;
+    }
+
+    &.bottom .arrow::after {
+      border-bottom-color: $datagrid-cell-bg-color;
+    }
+
+    &.right .arrow::after {
+      border-right-color: $datagrid-cell-bg-color;
+    }
+
+    &.left .arrow::after {
+      border-left-color: $datagrid-cell-bg-color;
+    }
+
+    .tooltip-content {
+      padding: 15px;
+    }
   }
 }
 

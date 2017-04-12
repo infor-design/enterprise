@@ -415,6 +415,9 @@ var express = require('express'),
     if (directory.match(/tests\/base-tag/)) {
       opts.usebasehref = true;
     }
+    if (directory.match(/tests\/call-to-action-header/)) {
+      opts.layout = 'tests/call-to-action-header/layout';
+    }
     if (directory.match(/tests\/distribution/)) {
       opts.amd = true;
       opts.layout = null; // No layout for this one on purpose.
@@ -1340,6 +1343,10 @@ var express = require('express'),
 
   router.get('/api/fires', function(req, res, next) {
     sendJSONFile('fires', req, res, next);
+  });
+
+  router.get('/api/autocomplete/turkish', function(req, res, next) {
+    sendJSONFile('autocomplete-turkish', req, res, next);
   });
 
   router.get('/api/dummy-dropdown-data', function(req, res, next) {

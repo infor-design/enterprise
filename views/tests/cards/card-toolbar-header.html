@@ -1,0 +1,64 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Card Test: Toolbar in Header</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="card">
+      <div class="card-header has-toolbar">
+        <div class="toolbar">
+          <div class="title card-title">
+            Card With Toolbar
+          </div>
+          <div class="buttonset">
+            <div class="searchfield-wrapper">
+              <label for="card-searchfield">Find something...</label>
+              <input data-init="false" id="card-searchfield" class="searchfield context" />
+            </div>
+
+            <button id="card-button-1" class="btn">
+              <span>Button #1</span>
+            </button>
+
+            <button id="card-button-2" class="btn">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-settings"></use>
+              </svg>
+              <span>Button #2</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="card-content">
+        <div style="padding: 1rem;">
+          <p>
+            Check out the toolbar above.
+          </p>
+        </div>
+      </div>
+      <div class="card-footer"></div>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  var searchfield = $('#card-searchfield');
+
+  searchfield.toolbarsearchfield({
+    source: '{{basepath}}api/states?term=',
+    categories: [
+      {name: 'Animals', id: 'animals', value: 'an', checked: true},
+      {name: 'Baby', id: 'baby', value: 'ba', checked: false},
+      {name: 'Clothing', id: 'clothing', value: 'cl', checked: true},
+      {name: 'Images', id: 'images', value: 'im', checked: true},
+      {name: 'People', id: 'people', value: 'pe', checked: false},
+      {name: 'Places', id: 'places', value: 'pl', checked: false}
+    ],
+    categoryMultiselect: true,
+    showCategoryText: true
+  });
+</script>

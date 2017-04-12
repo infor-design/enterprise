@@ -1,0 +1,155 @@
+
+<div class="page-container scrollable" role="main">
+  <div class="row">
+    <div class="columns four">
+
+      <div id="tabs-common" class="tab-container">
+        <ul class="tab-list">
+          <li><a href="#tab1">Overview</a></li>
+          <li><a href="#tab2">Items</a></li>
+          <li><a href="#tab3">Notes</a></li>
+          <li><a href="#tab4">Exceptions</a></li>
+          <li><a href="#tab5">Jokes</a></li>
+        </ul>
+        <div id="tab1">
+          <h3>Tab 1 Contents</h3>
+          <div class="listbuilder" id="example-listbuilder" data-init="false">
+            <div class="toolbar formatter-toolbar">
+              <div class="buttonset">
+
+                <button type="button" class="btn" title="Add New" data-action="add">
+                  <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                    <use xlink:href="#icon-add"></use>
+                  </svg>
+                  <span class="audible">Add New</span>
+                </button>
+
+                <div class="separator"></div>
+
+                <button type="button" class="btn" title="Go Up" data-action="goup">
+                  <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                    <use xlink:href="#icon-up-arrow"></use>
+                  </svg>
+                  <span class="audible">Go Up</span>
+                </button>
+                <button type="button" class="btn" title="Go Down" data-action="godown">
+                  <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                    <use xlink:href="#icon-down-arrow"></use>
+                  </svg>
+                  <span class="audible">Go Down</span>
+                </button>
+
+                <div class="separator"></div>
+
+                <button type="button" class="btn" title="Edit" data-action="edit">
+                  <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                    <use xlink:href="#icon-edit"></use>
+                  </svg>
+                  <span class="audible">Edit</span>
+                </button>
+                <button type="button" class="btn" title="Delete" data-action="delete">
+                  <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                    <use xlink:href="#icon-delete"></use>
+                  </svg>
+                  <span class="audible">Delete</span>
+                </button>
+
+              </div>
+            </div>
+            <div class="listbuilder-content">
+              <div class="listview"></div>
+            </div>
+          </div>
+
+          <br>
+          <button class="btn" type="button" id="btn1">Update dataset</button>
+        </div>
+        <div id="tab2">
+          <h3>Tab 2 Contents</h3>
+          <p>Bricks-and-clicks? Evolve ubiquitous matrix B2B 24/365 vertical 24/365 platforms standards-compliant global leverage dynamic 24/365 intuitive ROI seamless rss-capable. Cutting-edge grow morph web services leverage; ROI, unleash reinvent innovative podcasts citizen-media networking.<p>
+        </div>
+        <div id="tab3">
+          <h3>Tab 3 Contents</h3>
+          <p>Frictionless webservices, killer open-source innovate, best-of-breed, whiteboard interactive back-end optimize capture dynamic front-end. Initiatives ubiquitous 24/7 enhance channels B2B drive frictionless web-readiness generate recontextualize widgets applications. Sexy sticky matrix, user-centred, rich user-centric: peer-to-peer podcasting networking addelivery optimize streamline integrated proactive: granular morph.<p>
+        </div>
+        <div id="tab4">
+          <h3>Tab 4 Contents</h3>
+          <p>Exploit niches; enable A-list web-enabled holistic end-to-end. Exploit experiences value-added tagclouds, open-source cross-platform e-tailers, user-contributed, implement! Convergence, solutions front-end, "synergize markets initiatives integrateAJAX-enabled platforms; wireless, supply-chains reinvent, mindshare, synergies implement, drive evolve!" Post incentivize; rich-clientAPIs customized revolutionize 24/365 killer incentivize integrate intuitive utilize!<p>
+        </div>
+        <div id="tab5">
+          <h3>Tab 5 Contents</h3>
+          <p>Extend, "dynamic global infrastructures, drive communities bandwidth wikis implement synergies interactive viral intuitive interactive extend networkeffects; portals 24/7 seamless visualize seamless reinvent; interactive leading-edge embrace." Relationships, best-of-breed channels redefine podcasts convergence 24/7 reinvent platforms user-contributed dynamic semantic robust citizen-media, tagclouds revolutionary. Transition viral long-tail, markets, addelivery, "engage distributed 24/365, bleeding-edge e-business aggregate sticky, tagclouds morph, visionary portals." Proactive, grow peer-to-peer killer platforms, matrix; target markets embrace extend viral; user-centric, folksonomies vertical, weblogs recontextualize mission-critical authentic harness magnetic metrics? Morph platforms networkeffects integrate next-generation open-source beta-test. Deliverables webservices out-of-the-box drive envisioneer cross-platform proactive. Integrate real-time platforms, interactive transparent, enable ecologies brand solutions proactive synergies user-centred rss-capable integrateAJAX-enabled supply-chains bricks-and-clicks. Sticky semantic widgets one-to-one; initiatives killer podcasting impactful aggregate, citizen-media integrateAJAX-enabled drive rich-clientAPIs matrix strategic niches e-commerce, recontextualize.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<!--This is only needed because it renders first on the server on the first one-->
+{{={{{ }}}=}}
+
+<script id="listbuilder-tmpl" type="text/html">
+  <ul data-arrange-handle=".handle">
+    {{#dataset}}
+    {{#text}}
+      <li
+      {{#value}}
+        data-value="{{value}}"
+      {{/value}}
+      {{#selected}}
+        selected="selected"
+      {{/selected}}
+      {{#disabled}}
+        class="is-disabled"
+      {{/disabled}}
+      >
+        <span class="handle" focusable="false" aria-hidden="true" role="presentation">&#8286;</span>
+        <div class="item-content">
+          <p>{{text}}</p>
+        </div>
+      </li>
+    {{/text}}
+    {{/dataset}}
+  </ul>
+</script>
+
+
+<script>
+$('body').one('initialized', function () {
+  $(function () {
+    var ds = [];
+
+    ds.push({id: 1, value: 'opt-1', text: 'Argentina'});
+    ds.push({id: 2, value: 'opt-2', text: 'Belize'});
+    ds.push({id: 3, value: 'opt-3', text: 'Colombia'});
+    ds.push({id: 4, value: 'opt-4', text: 'Dominican Republic'});
+    ds.push({id: 5, value: 'opt-5', text: 'Ecuador', disabled: true});
+    ds.push({id: 6, value: 'opt-6', text: 'France'});
+    ds.push({id: 7, value: 'opt-7', text: 'Germany'});
+    ds.push({id: 8, value: 'opt-8', text: 'Hong Kong'});
+    ds.push({id: 9, value: 'opt-9', text: 'India'});
+    ds.push({id: 10, value: 'opt-10', text: 'Japan'});
+    ds.push({id: 11, value: 'opt-11', text: 'Kuwait'});
+    ds.push({id: 12, value: 'opt-12', text: 'Libya'});
+
+    var elem = $('#example-listbuilder');
+    elem.listbuilder({ dataset: ds, template: $('#listbuilder-tmpl').html()});
+
+    var api = elem.data('listbuilder');
+
+    // Update dataset ==========================================================
+    $('#btn1').on('click', function () {
+      var ds2 = [];
+      ds2.push({value: 'opt-updated-1', text: 'Updated item 1'});
+      ds2.push({value: 'opt-updated-2', text: 'Updated item 2'});
+      ds2.push({value: 'opt-updated-3', text: 'Updated item 3'});
+
+      api.updateDataset(ds2);
+    });
+
+  });
+
+});
+</script>

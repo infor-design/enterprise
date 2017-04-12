@@ -12,7 +12,7 @@
   background-color: $swaplist-bg-color-selected;
   color: $white;
   opacity: .7;
-  position: absolute;
+  position: fixed;
   z-index: 2;
 
   p {
@@ -261,6 +261,16 @@
 
   .is-dragging-touch {
     @include is-dragging-touch();
+  }
+
+  &.is-touch {
+    .is-muliselect li:hover:not(.is-disabled):not(.is-selected) {
+      background-color: transparent;
+
+      .handle {
+        display: none;
+      }
+    }
   }
 }
 

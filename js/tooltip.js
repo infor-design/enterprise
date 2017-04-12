@@ -33,6 +33,7 @@
         parentElement: null,
         keepOpen: false,
         extraClass: null,
+        placementOpts: undefined,
         maxWidth: null
       };
 

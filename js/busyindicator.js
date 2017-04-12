@@ -23,6 +23,7 @@
           text: null, //Custom Text To Show or Will Show Localized Loading....
           displayDelay: 1000, // number in miliseconds to pass before the markup is displayed.  If 0, displays immediately.
           timeToComplete: 0, // fires the 'complete' trigger at a certain timing interval.  If 0, goes indefinitely.
+          transparentOverlay: false, // If true, allows the "blockUI" setting to display an overlay that prevents interaction, but appears transparent instead of gray.
         },
         settings = $.extend({}, defaults, options);
 
@@ -121,10 +122,16 @@
 
         this.label = $('<span>'+ this.loadingText +'</span>').appendTo(this.container);
 
+        var transparency = '';
+
         if (this.blockUI) {
+          if (this.settings.transparentOverlay) {
+            transparency = ' transparent';
+          }
+
           this.originalPositionProp = this.element[0].style.position;
           this.element[0].style.position = 'relative';
-          this.overlay = $('<div class="overlay busy is-hidden"></div>').appendTo(this.element);
+          this.overlay = $('<div class="overlay busy is-hidden'+ transparency +'"></div>').appendTo(this.element);
           this.container.addClass('blocked-ui');
         }
 
@@ -200,7 +207,7 @@
         // Triggers complete if the "timeToComplete" option is set.
         if (this.completionTime > 0) {
           setTimeout(function() {
-            self.element.trigger('close');
+            self.element.trigger('complete');
           }, self.completionTime);
         }
       },

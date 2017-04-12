@@ -1,3 +1,32 @@
+## 4.3.0
+Release Date: 2017-05-09
+
+### Download Build Assets:
+Build Server: http://bamboo.infor.com/browse/SOHO-NEXT
+Npm: http://npm.infor.com
+Full Jira Release Notes: http://bit.ly/2mWAmjY
+
+### Demo Site
+http://usalvlhlpool1.infor.com/4.3.0-rc/controls
+
+### Key New Features
+-
+
+### Improvements
+- Datagrid - Added am option (allowOneExpanded) to only show one expandable row at a time. It is now the default.
+- Datagrid - Added an optional light background color on the list version by adding class datagrid-alternate-bg-color to the datagrid div. See tests/datagrid/datagrid-expandable-row-one-only.html
+- Dropdown - Added ability to set text on blank items on (Clear Selection)
+
+### Bug Fixes
+- Datagrid - Fixed column alignment issue on reload with hidden columns
+
+
+### Ui Changes
+- Added heart and heart-filled icons
+
+### Whats Next
+-
+
 ## 4.2.6
 Release Date: 2017-04-02
 

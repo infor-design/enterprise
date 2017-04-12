@@ -1,9 +1,4 @@
-# Publish instructions
-
-# TODO
-* SOHO-4420	Build docker container to build, run and test SoHo
-* SOHO-4787 Add release build to bamboo server
-* SOHO-4827 Dockerize soho.infor.com for staging and production
+# Publish Notes
 
 ## Prerequisites
 To be able to publish to [npm.infor.com](http://npm.infor.com:4873) you need to add an authorized npm user on your system...
@@ -52,6 +47,14 @@ npm publish dist
 
 ```bash
 npm info @infor/sohoxi dist-tags
+npm view @infor/sohoxi versions
+```
+
+* Delete a Tag
+
+```bash
+npm adduser --registry http://npm.infor.com:4873 --scope=@infor
+npm dist-tag rm @infor/sohoxi develop
 ```
 
 * Merge a fix to a branch
@@ -76,28 +79,37 @@ http://bamboo.infor.com/browse/SOHO-NGV-16
 - Update dev53
 - add label to successful build
 
-# How To Make Release
+# How To Make Release (4.2.6)
 
-* Full grunt
-* Update package.json
-* npm publish --force
-* Update CHANGELOG.MD for breaking changes, and add a new section.
+* Check Change Log is updated
+* Create Release Email Template
+* Merge 4.2.6-rc (the rc branch) back onto the 4.2.x (masterish branch) - PR or Git Merge
+* Enable the npm publish task on
+* Label the build Release/426
+* Delete the 4.2.6-rc branch
+* Check there is a build (Plan name , Plan key make same fx CUR  === SOHO-CUR)
+* Enable the publish task for one build.
+* Make sure there is branches for 4.3.X and 4.3.0-rc
+* Make 4.3.0-rc default branch
+* Test Npm packages
 * Git Tag
 ```bash
- git tag 4.2.1.rc.1
+ git tag 4.2.6
  git push origin --tags
 ```
 * Create new version in Jira
 * Generate Release Notes
 * Make sure all new examples on the index page are updated
-* Deploy to to http://usmvvwdev53:421 <version>
-* Make new Deploy to to http://usmvvwdev53:<version next>
-* Dync db and files from usmvvwdev53
-* Comment in the analytics in footer.html (soho.infor.com)
-* Deploy to to http://soho.infor.com
-* Updated changelog-contents.html
-* Create branch for major versions inside stash
+* Update Staging (Below)
+* Delete the rs from pool server usalvlhlpool1
+```bash
+curl -u hookandloop:hookandloop http://usalvlhlpool1/swarm/get_endpoints
+curl -X DELETE -H "Content-Type: application/json"     -u hookandloop:n98Y-uhPb-llGa-LdUl     http://usalvlhlpool1.infor.com/swarmproxy/rm_service     -d '{"name":"sohoxi-4-2-6-rc"}'
 
+sudo docker ps -a
+docker stop 6410bbcfd5e2
+docker rm 6410bbcfd5e2
+```
 ### Update version in @infor/sohoxi-angular
 * Clone repo
 ```bash
@@ -143,7 +155,7 @@ Login with Infor user/pass, contact Tim if no access
 * Open wwwroot/craft/templates/footer.html with notepad and bump the version to the latest
 * If jquery version changes, then open /inetpub/wwwroot/craft/templates/_layout*.html with notepad and bump jquery version
 * Open /inetpub/wwwroot/craft/templates/_layout*.html with notepad and update all query string version numbers. example: `/stylesheets/site.css?v4.2.1`
-
+* Change site locale from http://usmvvwdev53 and https://soho.infor.com
 
 # Tricky Permissions Notes
 

@@ -25,6 +25,11 @@
     }
   }
 
+  // Disable arrows
+  + .arrow {
+    display: none;
+  }
+
   a {
     color: inherit;
     padding: 0 10px;

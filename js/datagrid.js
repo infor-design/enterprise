@@ -259,9 +259,8 @@ window.Formatters = {
 
   // Expand / Collapse Button
   Expander: function (row, cell, value) {
-    var button = '<button type="button" class="btn-icon datagrid-expand-btn" tabindex="-1">'+
+    var button = '<button type="button" aria-label="' + Locale.translate('ExpandCollapse') + '" class="btn-icon datagrid-expand-btn" tabindex="-1">'+
       '<span class="icon plus-minus"></span>' +
-      '<span class="audible">' + Locale.translate('ExpandCollapse') + '</span>' +
       '</button>' + ( value ? '<span> ' + value + '</span>' : '');
 
     return button;
@@ -585,7 +584,7 @@ window.Editors = {
           content: $('.editor-wrapper', container),
           placementOpts: {
             x: 0,
-            y: '-84',
+            y: '-'+ (parseInt(container[0].style.height, 10) + 35),
             parent: this.td,
             parentXAlignment: Locale.isRTL() ? 'right' : 'left',
             strategies: ['flip', 'nudge', 'shrink'],
@@ -611,6 +610,7 @@ window.Editors = {
             }
           }
         });
+      Soho.utils.fixSVGIcons($('#editor-popup'));
     };
 
     this.val = function () {
@@ -626,6 +626,7 @@ window.Editors = {
 
     this.destroy = function () {
       var self = this;
+      container.removeAttr('style');
       api.quickEditMode = false;
       self.input.off('hide.editor keydown.editor');
       setTimeout(function() {
@@ -1224,7 +1225,8 @@ $.fn.datagrid = function(options) {
         virtualized: false, // Prevent Unused rows from being added to the DOM
         virtualRowBuffer: 10, //how many extra rows top and bottom to allow as a buffer
         rowReorder: false, //Allows you to reorder rows. Requires rowReorder formatter
-        showDirty: false
+        showDirty: false,
+        allowOneExpandedRow: true //Only allows one expandable row at a time
       },
       settings = $.extend({}, defaults, options);
 
@@ -1426,7 +1428,7 @@ $.fn.datagrid = function(options) {
         row = isTop ? row : self.settings.dataset.length - 1;
         self.setActiveCell(row, cell);
 
-        rowNode = self.tableBody.find('tr').eq(row);
+        rowNode = self.tableBody.find('tr[aria-rowindex="'+ (row + 1) +'"]');
         args = {row: row, cell: cell, target: rowNode, value: data, oldValue: []};
 
         self.pagerRefresh(location);
@@ -1451,7 +1453,7 @@ $.fn.datagrid = function(options) {
 
     //Delete a Specific Row
     removeRow: function (row, nosync) {
-      var rowNode = this.tableBody.find('tr').eq(row),
+      var rowNode = this.tableBody.find('tr[aria-rowindex="'+ (row + 1) +'"]'),
         rowData = this.settings.dataset[row];
 
       this.unselectRow(row, nosync);
@@ -1561,6 +1563,20 @@ $.fn.datagrid = function(options) {
         visible.push(column);
       }
       return visible;
+    },
+
+    lastColumnIdx: function () {
+      var last = 0;
+      for (var j = 0; j < this.settings.columns.length; j++) {
+        var column = settings.columns[j];
+
+        if (column.hidden) {
+          continue;
+        }
+
+        last = j;
+      }
+      return last;
     },
 
     getColumnGroup: function(idx) {
@@ -2865,7 +2881,6 @@ $.fn.datagrid = function(options) {
       }
       this.setScrollClass();
 
-      //TODO Test last column hidden
       if (cacheWidths.widthPercent) {
         return 'style = "width: 100%"';
       } else if (!isNaN(this.totalWidth)) {
@@ -2991,12 +3006,11 @@ $.fn.datagrid = function(options) {
 
       // cache the header widths
       this.headerWidths[index] = {id: col.id, width: (this.widthPercent ? colPercWidth : colWidth), widthPercent: this.widthPercent};
-      var lastColumn = index === this.settings.columns.length-1 && this.totalWidth !== colWidth;
+      var lastColumn = index === this.lastColumnIdx() && this.totalWidth !== colWidth;
       this.totalWidth += col.hidden || lastColumn ? 0 : colWidth;
 
       //For the last column stretch it if it doesnt fit the area
       if (lastColumn) {
-
         var diff = this.elemWidth - this.totalWidth;
 
         if ((diff > 0) && diff  > colWidth && !this.widthPercent && !this.headerRow) {
@@ -3235,6 +3249,7 @@ $.fn.datagrid = function(options) {
 
       if (this.originalColumns) {
         this.updateColumns(this.originalColumns);
+        this.originalColumns = this.columnsFromString(JSON.stringify(this.settings.columns));
       }
 
     },
@@ -3500,7 +3515,6 @@ $.fn.datagrid = function(options) {
         self.headerTable.css('width', parseInt(self.tableWidth) + diff);
         self.table.css('width', parseInt(self.tableWidth) + diff);
       }
-
       this.clearHeaderCache();
     },
 
@@ -3538,6 +3552,7 @@ $.fn.datagrid = function(options) {
           startingLeft = self.currentHeader.position().left + self.table.scrollLeft() - 10;
           self.tableWidth = self.table[0].offsetWidth;
           columnStartWidth = self.currentHeader[0].offsetWidth;
+
         })
         .on('drag.datagrid', function (e, ui) {
           if (!self.currentHeader) {
@@ -3624,13 +3639,13 @@ $.fn.datagrid = function(options) {
 
     //Returns a cell node
     cellNode: function (row, cell, includeGroups) {
-      var rowNode = this.tableBody.find('tr').eq(row);
+      var rowNode = this.tableBody.find('tr:not(.datagrid-expandable-row)[aria-rowindex="'+ (row + 1) +'"]');
 
       if (row instanceof jQuery) {
         rowNode = row;
       }
 
-      if (includeGroups) {
+      if (includeGroups && this.settings.groupable) {
         rowNode = this.tableBody.prevAll('.datagrid-rowgroup-header').eq(row);
       }
 
@@ -3888,7 +3903,7 @@ $.fn.datagrid = function(options) {
           }
 
           if (!alignToLeft) {
-             self.currentHeader = self.currentHeader.prev();
+            self.currentHeader = self.currentHeader.prevAll().not('.is-hidden').first();
           }
 
           if (!self.currentHeader.hasClass('is-resizable')) {
@@ -4381,7 +4396,7 @@ $.fn.datagrid = function(options) {
     },
 
     toggleRowActivation: function (idx) {
-      var row = (typeof idx === 'number' ? this.tableBody.find('tr[role="row"]').eq(idx) : idx),
+      var row = (typeof idx === 'number' ? this.tableBody.find('tr[aria-rowindex="'+ (idx + 1) +'"]') : idx),
         rowIndex = (typeof idx === 'number' ? idx : this.dataRowIndex(row)),
         isActivated = row.hasClass('is-rowactivated');
 
@@ -4405,7 +4420,7 @@ $.fn.datagrid = function(options) {
     },
 
     toggleRowSelection: function (idx) {
-      var row = (typeof idx === 'number' ? this.tableBody.find('tr[role="row"]').eq(idx) : idx),
+      var row = (typeof idx === 'number' ? this.tableBody.find('tr[aria-rowindex="'+ (idx + 1) +'"]') : idx),
         isSingle = this.settings.selectable === 'single',
         rowIndex = (typeof idx === 'number' ? idx : this.dataRowIndex(row));
 
@@ -4771,7 +4786,7 @@ $.fn.datagrid = function(options) {
           item = self.settings.dataset[self.dataRowIndex(node)],
           visibleRows = self.tableBody.find('tr:visible'),
           getVisibleRows = function(index) {
-            var row = visibleRows.eq(index);
+            var row = visibleRows.filter('[aria-rowindex="'+ (index + 1) +'"]');
             if (row.is('.datagrid-rowgroup-header')) {
               return row.index();
             }
@@ -5074,6 +5089,10 @@ $.fn.datagrid = function(options) {
         //Editor.focus
         cellNode.find('input').focus();
         return false;
+      }
+
+      if (isEditor) {
+        cellNode.css({'position': 'static', 'height': cellNode.outerHeight()});
       }
 
       //Editor.init
@@ -5400,21 +5419,15 @@ $.fn.datagrid = function(options) {
     },
 
     visualRowNode: function (idx) {
-      var node = this.tableBody.find('tr[aria-rowindex="'+ (idx + 1) +'"]');
-
-      return node;
+      return this.tableBody.find('tr[aria-rowindex="'+ (idx + 1) +'"]');
     },
 
     dataRowNode: function (idx) {
-      var node = this.tableBody.find('tr[aria-rowindex]').eq(idx);
-
-      return node;
+      return this.tableBody.find('tr[aria-rowindex="'+ (idx + 1) +'"]');
     },
 
     dataRowIndex: function (row) {
-     var rowIdx = (row.attr('aria-rowindex')-1);
-
-     return rowIdx;
+     return row.attr('aria-rowindex') - 1;
     },
 
     // Update a specific Cell
@@ -5440,13 +5453,13 @@ $.fn.datagrid = function(options) {
         }
         cell = isGroupRow ? 0 : row.index();
         rowNum = isGroupRow ? 0 : this.visualRowIndex(row.parent());
-		dataRowNum = isGroupRow ? 0 : this.dataRowIndex(row.parent());
+		    dataRowNum = isGroupRow ? 0 : this.dataRowIndex(row.parent());
         rowElem = row.parent();
       }
 
       if (row instanceof jQuery && row.is('tr')) {
         rowNum = this.visualRowIndex(row);
-		dataRowNum = this.dataRowIndex(row);
+		    dataRowNum = this.dataRowIndex(row);
         rowElem = row;
       }
 
@@ -5625,10 +5638,33 @@ $.fn.datagrid = function(options) {
         return;
       }
 
+      if (self.settings.allowOneExpandedRow) {
+        //collapse any other expandable rows
+        var prevExpandRow = self.tableBody.find('tr.is-expanded');
+        if (prevExpandRow.length && expandRow.index() !== prevExpandRow.index()) {
+          var parentRow = prevExpandRow.prev(),
+            parentRowIdx = parentRow.attr('aria-rowindex'),
+            prevDetail = prevExpandRow.find('.datagrid-row-detail');
+
+          prevExpandRow.removeClass('is-expanded');
+          parentRow.removeClass('is-rowactivated');
+          parentRow.find('.plus-minus').removeClass('active');
+
+          prevDetail.animateClosed().on('animateclosedcomplete', function () {
+            prevExpandRow.css('display', 'none').removeClass('is-expanded');
+            self.element.triggerHandler('collapserow', [{grid: self, row: parentRowIdx, detail: prevDetail, item: self.settings.dataset[parentRowIdx] }]);
+          });
+        }
+      }
+
       if (expandRow.hasClass('is-expanded')) {
         expandRow.removeClass('is-expanded');
         expandButton.removeClass('is-expanded')
           .find('.plus-minus').removeClass('active');
+
+        if (self.settings.allowOneExpandedRow) {
+          rowElement.removeClass('is-rowactivated');
+        }
 
         detail.animateClosed().on('animateclosedcomplete', function () {
           expandRow.css('display', 'none');
@@ -5644,6 +5680,10 @@ $.fn.datagrid = function(options) {
 
         //Optionally Contstrain the width
         expandRow.find('.constrained-width').css('max-width', this.element.outerWidth());
+
+        if (self.settings.allowOneExpandedRow) {
+          rowElement.addClass('is-rowactivated');
+        }
 
         detail.animateOpen();
         self.element.triggerHandler('expandrow', [{grid: self, row: dataRowIndex, detail: detail, item: item}]);

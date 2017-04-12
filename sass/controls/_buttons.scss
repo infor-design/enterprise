@@ -78,6 +78,21 @@ button {
       display: none;
     }
   }
+
+  // Stackable buttons take up 100% of their container width and stack
+  &.stackable {
+    margin-bottom: 10px;
+    width: 100%;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &.no-padding {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 .btn,
@@ -110,7 +125,10 @@ button {
 
   &:focus {
     border: 1px solid $primary-btn-bg-color;
-    box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $primary-btn-bg-color;
+
+    &:not(.hide-focus) {
+      box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $primary-btn-bg-color;
+    }
 
     &:active {
       background-color: $primary-btn-active-bg-color;
@@ -428,6 +446,93 @@ a.btn-menu {
   }
 }
 
+// Chevron Toggle Buttons (Expand/Collapse)
+@mixin btn-chevron-style {
+  background-color: transparent;
+  border-color: transparent;
+  color: $font-color-highcontrast;
+  height: 38px;
+  margin: 0 3px;
+  min-width: 0;
+  padding: 0 10px;
+  width: 40px;
+
+  > * {
+    pointer-events: none;
+  }
+
+  + a {
+    width: calc(100% - 57px);
+  }
+
+  .icon {
+    padding-left: 0;
+    padding-right: 1px;
+    position: relative;
+
+    &:not(.plus-minus) {
+      top: -1px;
+    }
+
+    &.plus-minus {
+      position: static;
+
+      &::before,
+      &::after {
+        background-color: $accordion-icon-color;
+        left: 13px;
+        top: 17px;
+        width: 12px;
+      }
+    }
+
+    &.chevron {
+      height: 28px;
+      padding-right: 0;
+      top: 0;
+      @include css3(transform, rotateX(0deg));
+      @include transition(transform 300ms cubic-bezier(.17, .04, .03, .94));
+      width: 28px;
+
+      &.active {
+        @include css3(transform, rotateX(180deg));
+      }
+
+    }
+  }
+
+  &:focus {
+    box-shadow: none;
+
+    &:not(.hide-focus) {
+      border-color: $accordion-selected-bg-color;
+    }
+
+    &:active {
+      background-color: $accordion-selected-bg-color;
+    }
+  }
+
+  &:active {
+    .icon {
+      fill: $accordion-selected-text-color;
+    }
+
+    .plus-minus {
+      &::before,
+      &::after {
+        background-color: $accordion-selected-text-color;
+      }
+    }
+  }
+}
+
+.btn-toggle {
+  @include btn-chevron-style;
+}
+
+
+
 @include keyframes(ripple-animation) {
   0% {
     opacity: .5;
@@ -455,6 +560,8 @@ a.btn-menu {
     }
  	}
 }
+
+
 
 // Short field buttons
 .field-short {
