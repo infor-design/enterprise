@@ -3,6 +3,7 @@
 
 // Variables for this file
 $header-height: 60px;
+$subheader-height: 60px;
 
 // Top Header
 .header {
@@ -52,6 +53,25 @@ $header-height: 60px;
 
     .icon.icon-dropdown {
       margin-left: 5px;
+    }
+  }
+
+  .btn-primary {
+    background-color: $header-primary-btn-background-color;
+    border: 1px solid $header-primary-btn-background-color;
+
+    &:hover,
+    &:focus {
+      background-color: $header-primary-btn-background-hover-color;
+      border: 1px solid $header-primary-btn-background-hover-color;
+    }
+
+    &:focus:not(.hide-focus) {
+      box-shadow: 0 0 0 2px $azure07, 0 0 0 3px $white;
+
+      &:active {
+        box-shadow: none;
+      }
     }
   }
 
@@ -154,6 +174,28 @@ $header-height: 60px;
     background-color: $subhead-bg-color;
   }
 
+}
+
+// Application Subheaders
+.subheader {
+  @include transition(background-color 500ms cubic-bezier(.17, .04, .03, .94));
+  background-color: $subhead-bg-color;
+  display: block;
+  height: $subheader-height;
+  overflow: hidden;
+  width: 100%;
+
+  .searchfield-wrapper {
+    height: inherit;
+    margin-bottom: 0;
+  }
+
+  .full-searchfield-container {
+    margin: 0 auto;
+    max-width: $breakpoint-tablet-to-desktop;
+    padding: 1.4rem 4rem 0;
+    vertical-align: middle;
+  }
 }
 
 .header,
@@ -386,7 +428,6 @@ $header-height: 60px;
     }
   }
 }
-
 
 //Hide text behind an ellipsis when on smaller breaks
 @media (max-width: $breakpoint-phone-to-tablet - 1) {
