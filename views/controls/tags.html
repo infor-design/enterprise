@@ -37,7 +37,7 @@
 
 <div class="row bottom-space">
   <div class="six columns">
-     <a href="#" id="example-dismissable" class="tag is-dismissable">#Dismissable</a>
+     <a href="#" id="example-dismissible" class="tag is-dismissible">#Dismissible</a>
   </div>
 </div>
 
@@ -48,7 +48,7 @@
       return '<span style="display: block; font-size: 1.4rem; margin-bottom: 0.5rem;">'+ str +'</span>';
     };
 
-  $('.is-dismissable')
+  $('.is-dismissible')
     // Before Remove
     .on('beforetagremove', function(e, arg) {
       tempID = arg.element.attr('id');

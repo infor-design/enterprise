@@ -20,6 +20,8 @@ http://usalvlhlpool1.infor.com/4.3.0-rc/controls
 ### Bug Fixes
 - Datagrid - Fixed column alignment issue on reload with hidden columns
 
+### Breaking Changes
+- Tag - Revised the spelling of the CSS class for "X" buttons on tags from "is-dismissable" to "is-dismissible".  The original class still works, but is deprecated and will be removed in a future version.
 
 ### Ui Changes
 - Added heart and heart-filled icons

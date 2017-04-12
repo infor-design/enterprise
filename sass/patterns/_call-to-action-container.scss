@@ -1,0 +1,65 @@
+// Call-to-action containers inside of headers
+//====================================================
+
+.call-to-action-header {
+  font-size: 0;
+  height: inherit;
+  overflow: hidden;
+
+  // Contains the single-purpose button that is designated as the "Call to Action".
+  .call-to-action-container {
+    display: inline-block;
+    height: inherit;
+    text-align: right;
+    vertical-align: middle;
+    width: 240px;
+
+    button {
+      display: block;
+      margin: 1.3rem auto 0;
+      max-width: calc(100% - 1.3rem);
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &:only-child {
+      width: 100%;
+
+      button {
+        display: inline-block;
+        margin: 1.3rem 1.3rem 0;
+        max-width: calc(100% - 2.6rem);
+      }
+    }
+  }
+
+  // Some headers also have a tab container that sits on the left
+  .tab-container {
+    display: inline-block;
+    vertical-align: middle;
+    width: calc(100% - 240px);
+
+    &.header-tabs {
+      height: inherit;
+      margin-top: 0;
+      padding-top: 0;
+
+      .tab-list {
+        height: inherit;
+      }
+
+      .tab {
+        height: inherit;
+
+        a {
+          height: inherit;
+          padding-top: 23px;
+        }
+      }
+
+      .tab-more {
+        padding: 21px 0 22px 14px;
+      }
+    }
+  }
+}
