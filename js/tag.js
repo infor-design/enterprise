@@ -38,6 +38,7 @@
     Tag.prototype = {
 
       init: function() {
+        this.element.hideFocus();
         this.handleEvents();
       },
 
@@ -45,12 +46,14 @@
       handleEvents: function() {
         var self = this,
           btnDismissable = $(
-            '<span class="dismissable-btn">' +
+            '<span class="dismissible-btn">' +
               $.createIcon('close') +
               '<span class="audible"> '+ Locale.translate('Close') +'</span>' +
-            '</span>');
+            '</span>'),
+          dismissibleClass = '.is-dismissable, .is-dismissible';
 
-        if (self.element.is('.is-dismissable')) {
+        // EPC: Deprecating "dismissable" in favor of "dismissible" as of 4.3.0
+        if (self.element.is(dismissibleClass)) {
           self.element.append(btnDismissable);
 
           // Handle Click
@@ -82,7 +85,7 @@
       // Teardown
       destroy: function() {
         this.element.off('keydown.tag');
-        $('.dismissable-btn', this.element).off('click.tag').remove();
+        $('.dismissable-btn, .dismissible-btn', this.element).off('click.tag').remove();
 
         $.removeData(this.element[0], pluginName);
       }
