@@ -374,7 +374,6 @@ $datagrid-short-row-height: 23px;
   table {
     empty-cells: show;
   }
-
 }
 
 // Grid Styling
@@ -990,6 +989,19 @@ $datagrid-short-row-height: 23px;
       }
     }
 
+    .word-wrap {
+      word-wrap: break-word;
+
+      .hyperlink {
+        margin-top: 2px;
+        white-space: pre-line;
+      }
+
+      .micro-text {
+        vertical-align: top;
+      }
+    }
+
     // Validation Cell Styles
     &.error {
       background-color: $alert-bg-color;
@@ -1027,7 +1039,7 @@ $datagrid-short-row-height: 23px;
       @include font-size(14);
       color: $hyperlink-color;
       display: inline-block;
-      margin-top: -4px;
+      margin-top: 2px;
       overflow: hidden;
       //text-overflow: ellipsis;
       vertical-align: middle;

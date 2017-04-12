@@ -41,6 +41,12 @@ $gutter-neg-size: -20px;
     padding-bottom: 10px !important;
     // scss-lint:enable ImportantRule
   }
+
+  &.full-height {
+    height: 100%;
+    margin: 0 auto;
+  }
+
 }
 
 .row::after {
@@ -73,6 +79,16 @@ $gutter-neg-size: -20px;
       }
     }
   }
+
+  &.full-height {
+    height: 100%;
+    margin: 0;
+
+    .datagrid-body {
+      height: calc(100% - 85px);
+    }
+  }
+
 }
 
 @include respond-to(phabletdown) {

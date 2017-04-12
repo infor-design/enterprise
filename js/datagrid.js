@@ -2517,6 +2517,8 @@ $.fn.datagrid = function(options) {
         if (self.activeCell.isFocused) {
           self.setActiveCell(self.activeCell.row, self.activeCell.cell);
         }
+
+        self.element.trigger('afterrender', {body: self.tableBody, header: self.headerRow, pager: self.pagerBar});
       }, 0);
     },
 

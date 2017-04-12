@@ -23,6 +23,10 @@
     padding: 0;
     width: calc(100% - 60px);
   }
+
+  &.no-padding {
+    margin: 0;
+  }
 }
 
 .tab-panel > .full-width {

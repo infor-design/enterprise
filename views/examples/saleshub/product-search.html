@@ -1,0 +1,182 @@
+
+<header class="header">
+  <div class="toolbar">
+    <div class="title">
+      <button class="btn-icon application-menu-trigger" type="button">
+        <span class="audible">Application Menu</span>
+        <span class="icon app-header go-back">
+          <span class="one"></span>
+          <span class="two"></span>
+          <span class="three"></span>
+        </span>
+      </button>
+
+      <h1>Search Results &quot;gravel&quot;</h1>
+    </div>
+
+    <div class="buttonset">
+      <label for="searchfield-header" class="audible">Header Search Field</label>
+      <input placeholder="Type to Search" type="text" class="searchfield" data-options="{clearable: true}">
+
+      <button class="btn-tertiary product-nav-btn" type="button">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-add"></use>
+        </svg>
+        <span>New Order</span>
+      </button>
+    </div>
+
+    {{> includes/header-actionbutton}}
+  </div>
+</header>
+
+<div id="maincontent" class="page-container" role="main">
+  <div class="row full-height">
+
+    <div class="one-third column hidden-sm">
+
+      <div class="toolbar" role="toolbar" data-options="{ 'resizeContainers': true, 'favorButtonset': false }">
+        <div class="title">
+          Refine Search Results
+        </div>
+      </div>
+
+      <div class="accordion" data-options="{'allowOnePane': false}">
+        <div class="accordion-header">
+          <a href="#"><span>Filter Option</span></a>
+        </div>
+        <div class="accordion-pane">
+          <div class="accordion-content">
+            <p>Filter Stuff</p>
+          </div>
+        </div>
+
+        <div class="accordion-header">
+          <a href="#"><span>Filter Option</span></a>
+        </div>
+        <div class="accordion-pane">
+          <div class="accordion-content">
+            <p>Filter Stuff</p>
+          </div>
+        </div>
+
+        <div class="accordion-header">
+          <a href="#"><span>Filter Option</span></a>
+        </div>
+        <div class="accordion-pane">
+          <div class="accordion-content">
+            <p>Filter Stuff</p>
+          </div>
+        </div>
+
+        <div class="accordion-header">
+          <a href="#"><span>Filter Option</span></a>
+        </div>
+        <div class="accordion-pane">
+          <div class="accordion-content">
+            <p>Filter Stuff</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="two-thirds column full-height">
+
+      <div class="toolbar" role="toolbar" data-options="{ 'resizeContainers': true, 'favorButtonset': true }">
+        <div class="title">
+          Products
+          <span class="datagrid-result-count">(N Results)</span>
+        </div>
+
+        <div class="buttonset">
+
+          <!--<div class="field">
+            <label for="searchfield" class="audible">Keyword</label>
+            <input id="searchfield" name="searchfield" class="searchfield" />
+          </div> -->
+
+          <button type="button" class="btn-menu">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-filter"></use>
+            </svg>
+            <span>Sort By</span>
+          </button>
+          <ul class="popupmenu">
+            <li><a href="#">Recently Added</a></li>
+            <li><a href="#">Favorites</a></li>
+          </ul>
+
+        </div>
+        <div class="more">
+          <button class="btn-actions" type="button">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-more"></use>
+            </svg>
+            <span class="audible">More Actions</span>
+          </button>
+          <ul class="popupmenu">
+            <li><a href="#">Some Action</a></li>
+            <li class="separator single-selectable-section"></li>
+            <li class="heading">Row Height</li>
+            <li class="is-selectable"><a data-option="row-short" href="#">Short</a></li>
+            <li class="is-selectable"><a data-option="row-medium" href="#">Medium</a></li>
+            <li class="is-selectable is-checked"><a data-option="row-normal" href="#">Normal</a></li>
+          </ul>
+
+        </div>
+      </div>
+
+      <div id="datagrid"  class="datagrid-alternate-bg-color">
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<script>
+    $('body').one('initialized', function () {
+
+      var data = [], columns = [],
+        row = { id: 1, productId: 879247, productName: 'Dewalt 18V XR', productDesc: 'Brushless Hammer Drill', img: '{{basepath}}images/drill.jpg', stock: 3, quantity: 1, uom: 'each', price: 79};
+
+      for (var i = 0; i < 30; i++) {
+        row.id = i;
+        data.push(row)
+      }
+
+      //Custom Formatters
+      Formatters.LinkText = function (row, cell, value, col, item) {
+        var link = Formatters.Hyperlink(row, cell, item[col.fields[0]] + ' ' + item[col.fields[1]], col, item);
+        return '<p class="word-wrap">' + link + '<br><small class="micro-text">'+ item[col.fields[2]] +'</small></p>';
+      };
+
+      Formatters.Spinner = function (row, cell, value, col, item) {
+        var spinner = '<div class="field">' +
+              '<label for="spinbox-' + cell + '" class="audible">Quantity</label>' +
+              '<input id="spinbox-' + cell + '" name="spinbox-' + cell + '" type="text" class="spinbox" value="'+ value +'">'+
+            '</div>';
+        return spinner;
+      };
+
+      //Define Columns for the Grid.
+      columns.push({ id: 'img', name: '', field: 'img', formatter: Formatters.Image, width: 80, align: 'center'});
+      columns.push({ id: 'productInfo', name: 'Name / Product Code', formatter: Formatters.LinkText, fields: ['productName', 'productDesc', 'productId'], width: 150});
+      columns.push({ id: 'stock', name: 'Stock', field: 'stock', align: 'center', formatter: Formatters.Badge, ranges: [{'min': 0, 'max': 200, 'classes': 'good'}], width: 70});
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 120, formatter: Formatters.Spinner, editor: Editors.Spinner});
+
+      //Init and get the api for the grid
+      $('#datagrid').datagrid({
+        columns: columns,
+        isList: true,
+        dataset: data,
+        selectable: false,
+        cellNavigation: false,
+        toolbar: {keyword: true, results: true}
+      }).on('afterrender', function(e, args) {
+        args.body.find('.spinbox').spinbox();
+      });
+
+    });
+</script>
