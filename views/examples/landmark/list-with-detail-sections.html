@@ -29,35 +29,6 @@
       <div class="page-container">
 
         <section class="pane top no-scroll">
-          <div class="toolbar" role="toolbar">
-            <div class="title">My Assets</div>
-            <div class="buttonset">
-              <button id="activate-selected-row" type="button" class="btn">
-                <span>Activate Selected Row</span>
-              </button>
-              <button id="deactivate-activated-row" type="button" class="btn">
-                <span>Deactivate Activated Row</span>
-              </button>
-            </div>
-            <div class="more">
-              <button class="btn-actions" type="button">
-                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                  <use xlink:href="#icon-more"></use>
-                </svg>
-                <span class="audible">More Actions</span>
-              </button>
-              <ul class="popupmenu">
-                <li><a href="#">Option One</a></li>
-                <li><a href="#">Option Two</a></li>
-                <li><a href="#">Option Three</a></li>
-                <li class="separator single-selectable-section"></li>
-                <li class="heading">Row Height</li>
-                <li class="is-selectable"><a data-option="row-short" href="#">Short</a></li>
-                <li class="is-selectable"><a data-option="row-medium" href="#">Medium</a></li>
-                <li class="is-selectable is-checked"><a data-option="row-normal" href="#">Normal</a></li>
-              </ul>
-            </div>
-          </div>
 
           <div class="contextual-toolbar toolbar is-hidden">
             <div class="title selection-count">0 Selected</div>
@@ -163,6 +134,8 @@
           columns: columnsDetail,
           editable: false,
           resultsText: res[selectedId].id,
+          paging: true,
+          pagesize: 10,
           toolbar: {results: true, actions: true, rowHeight: true, title: 'Detail for '}
         }).data('datagrid');
       });
