@@ -15,6 +15,11 @@
     width: 100%;
   }
 
+  // used for panes that have a datagrid with a pager
+  .datagrid-container.paginated {
+    height: calc(100% - 103px);
+  }
+
   // scss-lint:enable ImportantRule
   //
   //Directional Panes
