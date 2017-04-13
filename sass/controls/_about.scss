@@ -2,23 +2,24 @@
 //================================================== //
 
 .modal.about {
+  max-width: 560px;
+  min-width: 300px;
+  width: calc(100% - 40px);
 
-  .close-container {
-    margin-bottom: -27px;
+  .modal-content {
+    margin: 0;
     position: relative;
-    right: -12px;
-    text-align: right;
-    top: -27px;
   }
 
-  &.modal {
-    max-width: 576px;
-    min-width: 300px;
-    width: calc(100% - 40px);
+  .close-container {
+    position: absolute;
+    right: 8px;
+    text-align: right;
+    top: 8px;
   }
 
   .modal-header {
-    margin: 2em 0;
+    padding-top: 40px;
     text-align: center;
 
     h1 {

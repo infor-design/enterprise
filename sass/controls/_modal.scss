@@ -24,7 +24,7 @@
   height: auto;
   max-height: 90%;
   max-width: 90%;
-  min-width: 200px;
+  min-width: 420px;
   opacity: 0;
   position: relative;
   vertical-align: middle;
@@ -158,7 +158,7 @@
 }
 
 .modal-header {
-  padding: 15px 20px 2px;
+  padding: 15px 20px 8px;
 }
 
 .modal-content {
@@ -227,7 +227,7 @@
     color: $modal-color;
     font-size: 1.4rem;
     line-height: 20px;
-    max-width: 369px;
+    max-width: 420px;
     padding: 15px 0 25px;
     text-align: left;
   }

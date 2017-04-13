@@ -10,7 +10,8 @@ var express = require('express'),
   http = require('http'),
   git = require('git-rev-sync'),
   basepath = process.env.BASEPATH || '/',
-  getJSONFile = require(path.resolve(__dirname, 'demoapp', 'js', 'getJSONFile')); // jshint ignore:line
+  getJSONFile = require(path.resolve(__dirname, 'demoapp', 'js', 'getJSONFile')),
+  packageJSON = getJSONFile(path.resolve('package.json'));
 
   app.set('view engine', 'html');
   app.set('views', path.join(__dirname, 'views'));
@@ -34,11 +35,11 @@ var express = require('express'),
   var defaults = {
     enableLiveReload: true,
     layout: 'layout',
-    locale: 'en-US',
+    locale: 'tr-TR',
     title: 'SoHo XI',
     basepath: basepath,
     // Ignore this because its not in our control
-    version: process.env.npm_package_version, // jshint ignore:line
+    version: packageJSON.version,
     commit: git.long(),
   };
 
