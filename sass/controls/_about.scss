@@ -48,6 +48,10 @@
     }
   }
 
+  .modal-body-wrapper {
+    margin-bottom: 20px;
+  }
+
   .additional-content {
     @include font-size(14);
     @include antialiased();

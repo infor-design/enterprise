@@ -35,10 +35,9 @@ var express = require('express'),
   var defaults = {
     enableLiveReload: true,
     layout: 'layout',
-    locale: 'tr-TR',
+    locale: 'en-US',
     title: 'SoHo XI',
     basepath: basepath,
-    // Ignore this because its not in our control
     version: packageJSON.version,
     commit: git.long(),
   };
