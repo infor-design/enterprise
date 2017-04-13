@@ -87,6 +87,11 @@ $gutter-neg-size: -20px;
     .datagrid-body {
       height: calc(100% - 85px);
     }
+
+    .has-toolbar .datagrid-body {
+      height: calc(100% - 40px);
+    }
+
   }
 
 }

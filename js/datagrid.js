@@ -141,7 +141,7 @@ window.Formatters = {
     return formatted;
   },
 
-  Hyperlink: function(row, cell, value, col, item) {
+  Hyperlink: function(row, cell, value, col, item, api) {
     var textValue,
       colHref = col.href || '#';
 
@@ -162,11 +162,11 @@ window.Formatters = {
     }
 
     return col.icon ?
-      ('<a href="'+ colHref +'" class="btn-icon row-btn '+ (col.cssClass || '') +'" tabindex="-1"' + (col.hyperlinkTooltip ? ' title="'+ col.hyperlinkTooltip + '"': '') + '>'+
+      ('<a href="'+ colHref +'" class="btn-icon row-btn '+ (col.cssClass || '') +'" ' + (!api.settings.rowNavigation ? '' : 'tabindex="-1"') + (col.hyperlinkTooltip ? ' title="'+ col.hyperlinkTooltip + '"': '') + '>'+
           $.createIcon({ icon: col.icon, file: col.iconFile }) +
           '<span class="audible">'+ textValue +'</span>'+
         '</a>') :
-      ('<a href="'+ colHref +'" tabindex="-1" role="presentation" class="hyperlink '+ (col.cssClass || '') + '"' + (col.target ? ' target="' + col.target + '"' : '') + (col.hyperlinkTooltip ? ' title="'+ col.hyperlinkTooltip + '"': '') + '>'+ textValue +'</a>');
+      ('<a href="'+ colHref +'" ' + (!api.settings.rowNavigation ? '' : 'tabindex="-1"') + ' role="presentation" class="hyperlink '+ (col.cssClass || '') + '"' + (col.target ? ' target="' + col.target + '"' : '') + (col.hyperlinkTooltip ? ' title="'+ col.hyperlinkTooltip + '"': '') + '>'+ textValue +'</a>');
   },
 
   Template: function(row, cell, value, col, item) {
@@ -431,6 +431,19 @@ window.Formatters = {
     }
 
     return '<span class="trigger dropdown-trigger">' + formattedValue + '</span>' + $.createIcon({ icon: 'dropdown' });
+  },
+
+  Spinbox: function (row, cell, value, col) {
+    var html = ((value === null || value === undefined || value === '') ? '' : value.toString());
+
+    if (col.showEditor) {
+      html = '<label for="spinbox-' + cell + '" class="audible">Quantity</label>' +
+        '<span class="spinbox-wrapper"><span class="spinbox-control down">-</span>' +
+        '<input id="spinbox-' + cell + '" name="spinbox-' + cell + '" type="text" class="spinbox" value="'+ value +'">'+
+        '<span class="spinbox-control up">+</span></span>';
+    }
+
+    return html;
   },
 
   Favorite: function (row, cell, value, col) {
@@ -1030,6 +1043,46 @@ window.Editors = {
       }
 
       this.input.autocomplete(column.editorOptions);
+    };
+
+    this.val = function (value) {
+      return value ? this.input.val(value) : this.input.val();
+    };
+
+    this.focus = function () {
+      grid.quickEditMode = true;
+      this.input.select().focus();
+    };
+
+    this.destroy = function () {
+      var self = this;
+      setTimeout(function() {
+        grid.quickEditMode = false;
+        self.input.remove();
+      }, 0);
+    };
+
+    this.init();
+  },
+
+  Spinbox: function(ow, cell, value, container, column, event, grid) {
+    this.name = 'spinbox';
+    this.originalValue = value;
+
+    this.init = function () {
+      var markup = '<label for="spinbox-' + cell + '" class="audible">Quantity</label>' +
+        '<span class="spinbox-wrapper"><span class="spinbox-control down">-</span>' +
+        '<input id="spinbox-' + cell + '" name="spinbox-' + cell + '" type="text" class="spinbox" value="'+ value +'">'+
+        '<span class="spinbox-control up">+</span></span>';
+
+      container.append(markup);
+      this.input = container.find('input');
+
+      if (!column.editorOptions) {
+        column.editorOptions = {};
+      }
+
+      this.input.spinbox(column.editorOptions);
     };
 
     this.val = function (value) {
@@ -2499,6 +2552,7 @@ $.fn.datagrid = function(options) {
       self.setScrollClass();
       self.setupTooltips();
       self.tableBody.find('.dropdown').dropdown();
+      self.tableBody.find('.spinbox').spinbox();
 
       //Set IE elements after dataload
       setTimeout(function () {
@@ -2519,6 +2573,7 @@ $.fn.datagrid = function(options) {
         }
 
         self.element.trigger('afterrender', {body: self.tableBody, header: self.headerRow, pager: self.pagerBar});
+
       }, 0);
     },
 
@@ -2978,12 +3033,15 @@ $.fn.datagrid = function(options) {
         colWidth = Math.max(textWidth, colWidth || 0);
       }
 
+      var lastColumn = index === this.lastColumnIdx() && this.totalWidth !== colWidth;
+
       // Simulate Auto Width Algorithm
       if ((!this.widthSpecified || col.width === undefined) && visibleColumns.length < 8 &&
         (['selectionCheckbox', 'expander', 'drilldown', 'rowStatus', 'favorite'].indexOf(col.id) === -1)) {
 
         var percentWidth = Math.round(this.elemWidth / visibleColumns.length);
-        colWidth = percentWidth;
+        colWidth = percentWidth - (lastColumn ? 2 : 0); //borders causing scroll
+
         //Handle Columns where auto width is bigger than the percent width
         if (percentWidth < textWidth) {
           colWidth = textWidth;
@@ -3014,7 +3072,6 @@ $.fn.datagrid = function(options) {
 
       // cache the header widths
       this.headerWidths[index] = {id: col.id, width: (this.widthPercent ? colPercWidth : colWidth), widthPercent: this.widthPercent};
-      var lastColumn = index === this.lastColumnIdx() && this.totalWidth !== colWidth;
       this.totalWidth += col.hidden || lastColumn ? 0 : colWidth;
 
       //For the last column stretch it if it doesnt fit the area
@@ -3794,6 +3851,7 @@ $.fn.datagrid = function(options) {
           self.toggleRowSelection(target.closest('tr'));
         }
 
+        self.lastClicked = target;
         self.makeCellEditable(self.activeCell.row, self.activeCell.cell, e);
 
         //Handle Cell Click Event
@@ -3946,15 +4004,22 @@ $.fn.datagrid = function(options) {
 
         // Keep icon clickable in edit mode
         var target = e.target;
-        if ($(target).is('input.lookup, input.timepicker, input.datepicker')) {
+
+        if ($(target).is('input.lookup, input.timepicker, input.datepicker , input.spinbox')) {
           // Wait for modal popup, if did not found modal popup means
           // icon was not clicked, then commit cell edit
           setTimeout(function() {
             if (!$('.lookup-modal.is-visible, #timepicker-popup, #calendar-popup').length &&
                 !!self.editor && self.editor.input.is(target)) {
+
+              if (self.lastClicked.is('.spinbox-control') || self.lastClicked.find('.spinbox-control').length > 1) {
+                return;
+              }
               self.commitCellEdit(self.editor.input);
             }
+
           }, 200);
+
           return;
         }
 
@@ -5054,7 +5119,7 @@ $.fn.datagrid = function(options) {
     // Invoked in three cases: 1) a row click, 2) keyboard and enter, 3) In actionable mode and tabbing
     makeCellEditable: function(row, cell, event) {
       if (this.editor && this.editor.input) {
-        if (this.editor.input.is('.timepicker, .datepicker, .lookup') && !$(event.target).prev().is(this.editor.input)) {
+        if (this.editor.input.is('.timepicker, .datepicker, .lookup, .spinbox') && !$(event.target).prev().is(this.editor.input)) {
           this.commitCellEdit(this.editor.input);
         }
       }

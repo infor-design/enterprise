@@ -455,6 +455,29 @@ $datagrid-short-row-height: 23px;
 
           }
 
+          .spinbox-wrapper {
+            margin-left: -16px;
+            margin-top: -5px;
+            width: 100%;
+
+            input {
+              padding: 12px 0 0;
+              width: calc(100% - 38px);
+            }
+
+            .spinbox-control {
+              border: 0;
+              border-right: 1px solid  $input-focus-border-color;
+              padding: 11px 10px;
+              width: 35px;
+
+              &.up {
+                border-left: 1px solid  $input-focus-border-color;
+              }
+            }
+
+          }
+
           .dropdown {
             padding: 2px 15px;
           }
@@ -684,6 +707,29 @@ $datagrid-short-row-height: 23px;
             .trigger {
               margin-left: -18px;
               top: -7px;
+            }
+          }
+
+          .spinbox-wrapper {
+            margin-left: -16px;
+            margin-top: -5px;
+            width: 100%;
+
+            input {
+              padding: 6px 0 0;
+              width: calc(100% - 34px);
+            }
+
+            .spinbox-control {
+              border: 0;
+              border-right: 1px solid  $input-focus-border-color;
+              padding: 3px 15px;
+              width: 30px;
+
+              &.up {
+                border-left: 1px solid  $input-focus-border-color;
+                padding: 2px 10px;
+              }
             }
           }
 
@@ -998,8 +1044,17 @@ $datagrid-short-row-height: 23px;
       }
 
       .micro-text {
-        vertical-align: top;
+        display: block;
+        margin-bottom: 6px;
+        margin-top: 5px;
+        vertical-align: middle;
       }
+    }
+
+    .spinbox-wrapper {
+      margin-bottom: 0;
+      margin-top: 5px;
+      vertical-align: top;
     }
 
     // Validation Cell Styles
@@ -1040,8 +1095,6 @@ $datagrid-short-row-height: 23px;
       color: $hyperlink-color;
       display: inline-block;
       margin-top: 2px;
-      overflow: hidden;
-      //text-overflow: ellipsis;
       vertical-align: middle;
 
       &:focus {
@@ -1183,6 +1236,28 @@ $datagrid-short-row-height: 23px;
 
         &:disabled .icon {
           fill: $slate05;
+        }
+      }
+
+      .spinbox-wrapper {
+        margin-left: -21px;
+        margin-top: -5px;
+        width: 100%;
+
+        input {
+          padding: 17px 0 8px;
+          width: calc(100% - 38px);
+        }
+
+        .spinbox-control {
+          border: 0;
+          border-right: 1px solid  $input-focus-border-color;
+          padding: 18px 10px 15px;
+          width: 40px;
+
+          &.up {
+            border-left: 1px solid  $input-focus-border-color;
+          }
         }
       }
     }
