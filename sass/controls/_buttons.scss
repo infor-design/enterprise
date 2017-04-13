@@ -515,13 +515,13 @@ a.btn-menu {
 
   &:active {
     .icon {
-      fill: $accordion-selected-text-color;
+      fill: $tertiary-btn-active-color;
     }
 
     .plus-minus {
       &::before,
       &::after {
-        background-color: $accordion-selected-text-color;
+        background-color: $tertiary-btn-active-color;
       }
     }
   }
