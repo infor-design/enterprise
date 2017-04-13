@@ -434,6 +434,21 @@ body.no-scroll {
     }
   }
 
+  &.has-tabs-only {
+    height: 60px;
+
+    > .toolbar {
+      height: 0;
+      margin-bottom: 0;
+    }
+
+    + .page-container,
+    + .application-menu + .page-container {
+      height: calc(100% - 60px);
+      margin-top: 60px;
+    }
+  }
+
   &.has-breadcrumb,
   &.has-alternate-tabs {
     height: 105px;

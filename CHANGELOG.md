@@ -16,10 +16,13 @@ http://usalvlhlpool1.infor.com/4.3.0-rc/controls
 - Datagrid - Added am option (allowOneExpanded) to only show one expandable row at a time. It is now the default.
 - Datagrid - Added an optional light background color on the list version by adding class datagrid-alternate-bg-color to the datagrid div. See tests/datagrid/datagrid-expandable-row-one-only.html
 - Dropdown - Added ability to set text on blank items on (Clear Selection)
+- Locale - Added new set of translated strings for 37 languages / 49 locales
 
 ### Bug Fixes
 - Datagrid - Fixed column alignment issue on reload with hidden columns
 
+### Breaking Changes
+- Tag - Revised the spelling of the CSS class for "X" buttons on tags from "is-dismissable" to "is-dismissible".  The original class still works, but is deprecated and will be removed in a future version.
 
 ### Ui Changes
 - Added heart and heart-filled icons
