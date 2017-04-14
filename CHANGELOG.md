@@ -23,6 +23,7 @@ http://usalvlhlpool1.infor.com/4.3.0-rc/controls
 
 ### Breaking Changes
 - Tag - Revised the spelling of the CSS class for "X" buttons on tags from "is-dismissable" to "is-dismissible".  The original class still works, but is deprecated and will be removed in a future version.
+- Button - Changed the standard `.btn` style on forms to reflect Tertiary button style instead of Secondary button style (SOHO-6083).
 
 ### Ui Changes
 - Added heart and heart-filled icons

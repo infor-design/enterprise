@@ -35,8 +35,8 @@
   <div class="one-half column">
 
     <div class="field">
-      <button class="btn" id="busy-start-trigger" type="button">Fire "start" Event</button>
-      <button class="btn" id="busy-complete-trigger" type="button">Fire "complete" Event</button>
+      <button class="btn-secondary" id="busy-start-trigger" type="button">Fire "start" Event</button>
+      <button class="btn-secondary" id="busy-complete-trigger" type="button">Fire "complete" Event</button>
     </div>
 
     <br />
@@ -58,7 +58,9 @@
     <div class="field">
       <label class="label" for="busy-input">Busy Input Field</label>
       <input class="busy" type="text" id="busy-input" data-options='{ "blockUI": false, "displayDelay": 100, "timeToComplete": 4000 }'/>
-      <br><button class="btn" id="trigger-busy-input" type="button">Load</button><br><br>
+    </div>
+    <div class="field">
+      <button class="btn-secondary" id="trigger-busy-input" type="button">Load</button>
     </div>
   </div>
 
@@ -71,8 +73,9 @@
         <option>Distracted</option>
         <option>Engaged</option>
       </select>
-
-      <br><button class="btn" id="trigger-busy-dropdown" type="button">Load</button><br><br>
+    </div>
+    <div class="field">
+      <button class="btn-secondary" id="trigger-busy-dropdown" type="button">Load</button>
     </div>
   </div>
 </div>
@@ -90,7 +93,7 @@
   <div class="one-half column">
 
     <div style="display: table;">
-      <button class="btn" id="trigger-busy-sm" type="button" style="display: inline-block; vertical-align: middle;">Load</button>
+      <button class="btn-secondary" id="trigger-busy-sm" type="button" style="display: inline-block; vertical-align: middle;">Load</button>
       <div style="display: inline-block; vertical-align: middle; font-size: 14px; margin-left: 1rem;">Some Text</div>
       <div class="busy-sm" id="busy-sm" data-options='{ "blockUI": false, "displayDelay": 100, "timeToComplete": 4000 }'
         style="display: inline-block; vertical-align: middle; margin-left: 1rem;"></div>
