@@ -567,7 +567,7 @@ a.btn-menu {
 .field-short {
   [class*="btn"] {
     height: 25px;
-    margin-bottom: 10px;
+    margin-bottom: 0;
     min-width: 0;
 
     > .icon:not(.icon-dropdown) {
