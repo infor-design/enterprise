@@ -280,6 +280,8 @@
       'ShowLess': {id: 'ShowLess', value: 'Show Less', comment: 'Show less form content'},
       'ShowMore': {id: 'ShowMore', value: 'Show More', comment: 'Show more form content'},
       'Slate': {id: 'Slate', value: 'Slate', comment: 'Color in our color pallette'},
+      'SlideOf': {id: 'SlideOf', value: 'Slide {0} of {1}', comment: 'Slide Text Showing current and total number of slides'},
+      'SlidesOf': {id: 'SlidesOf', value: 'Slides {0} and {1} of {2}', comment: 'Slides Text Showing current slides and total number of slides'},
       'SliderHandle': {id: 'SliderHandle', value: 'Handle for', comment: 'Description of the portion of a Slider control that is focusable and changes its value, followed in code by the name of the control'},
       'SliderMaximumHandle': {id: 'SliderMaximumHandle', value: 'Maximum range handle for', comment: 'Describes a maximum value handle in a Range (double slider), followed in code by the name of the control'},
       'SliderMinimumHandle': {id: 'SliderMinimumHandle', value: 'Minimum range handle for', comment: 'Describes a minimum value handle in a Range (double slider), followed in code by the name of the control'},
