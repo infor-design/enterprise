@@ -24,6 +24,47 @@
 
 
   &.is-active {
+
+    //Next and Previous Buttons
+    .btn-next,
+    .btn-previous {
+      background-color: $graphite10;
+      border: 1px solid $graphite04;
+      border-radius: 50%;
+      display: none;
+      height: 32px;
+      left: 5px;
+      margin: -30px 0 0;
+      min-width: 32px;
+      position: absolute;
+      top: 50%;
+      width: 32px;
+      z-index: 1001;
+
+      .icon {
+        fill: $graphite04;
+        height: 18px;
+        width: 18px;
+      }
+
+      &:hover {
+        border: 1px solid $white;
+
+        .icon {
+          fill: $white;
+        }
+      }
+    }
+
+    .btn-next {
+      left: auto;
+      right: 10px;
+
+      .icon {
+        margin-left: 2px;
+      }
+    }
+
     .controls {
       bottom: 20px;
       display: block;
@@ -87,6 +128,41 @@
           &:focus {
             background-color: $circlepager-disable-focus-bg-color;
             border-color: $circlepager-disable-focus-border-color;
+          }
+        }
+      }
+    }
+  }
+
+  &.is-bullets-nav-hidden {
+    .btn-next,
+    .btn-previous {
+      display: inherit;
+    }
+
+    .controls {
+      .control-button {
+        display: none;
+
+        &.is-active {
+          background-color: $graphite10;
+          border: 1px solid $graphite04;
+          border-radius: 2px;
+          color: $graphite04;
+          cursor: default;
+          display: inline-block;
+          height: auto;
+          padding: 5px 10px;
+          width: auto;
+
+          &:hover {
+            background-color: $graphite10;
+            border-color: $graphite04;
+          }
+
+          &:focus {
+            background-color: $graphite10;
+            border-color: $graphite04;
           }
         }
       }
