@@ -403,7 +403,7 @@ window.Formatters = {
 
   Button: function (row, cell, value, col) {
     var text = col.text ? col.text : ((value === null || value === undefined || value === '') ? '' : value.toString()),
-      markup ='<button type="button" class="'+ ( col.icon ? 'btn-icon': 'btn') + ' row-btn ' + (col.cssClass ? col.cssClass : '') + '" tabindex="-1">';
+      markup ='<button type="button" class="'+ ( col.icon ? 'btn-icon': 'btn-secondary') + ' row-btn ' + (col.cssClass ? col.cssClass : '') + '" tabindex="-1">';
 
       if (col.icon) {
         markup += $.createIcon({ icon: col.icon, file: col.iconFile });
