@@ -19,7 +19,7 @@
     // Settings and Options
     var pluginName = 'circlepager',
         defaults = {
-          groupBy: 1, // Max number of slides to show in one view
+          slidesToShow: 1, // Max number of slides to show in one view
           startingSlide: null, // First showing slide/group, an 0-based integer
           loop: false // Setting loop: true will loop back after next/previous reached to end
         },
@@ -58,7 +58,7 @@
 
         this.container = $('.slides', this.element);
         this.slidesJQ = $('.slide', this.element);
-        this.groupBy = s.groupBy;
+        this.slidesToShow = s.slidesToShow;
         this.slides = [];
         this.slidesJQ.each(function() {
           self.slides.push({ node: $(this) });
@@ -84,16 +84,16 @@
           last, lastIndex, isSingle, isDisabled,
           previousButton, nextButton;
 
-        for (i = 0, l = len; i < l; i += this.groupBy) {
+        for (i = 0, l = len; i < l; i += this.slidesToShow) {
           temp = '';
           numOfButtons++;
-          isSingle = (this.groupBy === 1) || (len - i === 1);
+          isSingle = (this.slidesToShow === 1) || (len - i === 1);
           text = Locale.translate(isSingle ? 'SlideOf' : 'SlidesOf') + '';
           // Keep href in english language only
           href = isSingle ? '#slide {0} of {1}' : '#slides {0} and {1} of {2}';
 
           // Collect as much bullets need to present
-          for (var g = 0; g < this.groupBy && (i + g) < len; g++) {
+          for (var g = 0; g < this.slidesToShow && (i + g) < len; g++) {
             temp += (i + g + 1) + ', ';
           }
           text = text.replace(isSingle ? '{1}' : '{2}', len);
@@ -292,7 +292,7 @@
 
         // Set max number of slides can view on resize
         $('body').on('resize.circlepager', function() {
-          self.responsiveGroupBy();
+          self.responsiveSlidesToShow();
         });
 
       }, // END: Handle Events ---------------------------------------------------------------------
@@ -308,22 +308,22 @@
       },
 
       // Update number of slides to show in view
-      updateGroupBy: function(numOfSlides) {
+      updateSlidesToShow: function(numOfSlides) {
         if (!this.isActive) {
           return;
         }
-        this.settings.groupBy = numOfSlides || 1;
+        this.settings.slidesToShow = numOfSlides || 1;
         this.updated();
         return this;
       },
 
       // Make sure max number of slides to show in view
-      responsiveGroupBy: function(numOfSlides) {
+      responsiveSlidesToShow: function(numOfSlides) {
         if (!this.isActive) {
           return;
         }
         var self = this;
-        this.groupBy = numOfSlides || this.settings.groupBy;
+        this.slidesToShow = numOfSlides || this.settings.slidesToShow;
         this.unbind().slidesJQ.css('width', '');
         if (this.slides.length) {
           setTimeout(function() {
@@ -372,14 +372,14 @@
 
       // Last slide
       last: function() {
-        this.show(Math.round(this.slides.length/this.groupBy)-1);
+        this.show(Math.round(this.slides.length/this.slidesToShow)-1);
       },
 
       // Previous slide
       prev: function() {
         var self = this,
           prev = this.activeIndex > 0 ?
-            this.activeIndex - 1 : (this.settings.loop ? Math.round(this.slides.length/this.groupBy)-1 : 0);
+            this.activeIndex - 1 : (this.settings.loop ? Math.round(this.slides.length/this.slidesToShow)-1 : 0);
 
         if (this.slides[prev].isDisabled) {
           setTimeout(function() {
@@ -394,7 +394,7 @@
       // Next slide
       next: function() {
         var self = this,
-          next = this.activeIndex >= Math.round(this.slides.length/this.groupBy)-1 ?
+          next = this.activeIndex >= Math.round(this.slides.length/this.slidesToShow)-1 ?
             (this.settings.loop ? 0 : this.activeIndex) : this.activeIndex + 1;
 
         if (this.slides[next].isDisabled) {
@@ -412,13 +412,13 @@
         this.isActive = true;
         this.element.addClass('is-active');
         this.container[0].style.width = (100 * this.slides.length) +'%';
-        if (this.settings.groupBy > 1 &&
-           (this.slidesJQ.eq(0).width() * this.groupBy > this.element.width())) {
-          this.responsiveGroupBy(this.groupBy - 1);
+        if (this.settings.slidesToShow > 1 &&
+           (this.slidesJQ.eq(0).width() * this.slidesToShow > this.element.width())) {
+          this.responsiveSlidesToShow(this.slidesToShow - 1);
           return;
         }
         for (var i = 0, l = this.slidesJQ.length; i < l; i++) {
-          this.slidesJQ[i].style.width = ((100/this.groupBy) / this.slides.length) +'%';
+          this.slidesJQ[i].style.width = ((100/this.slidesToShow) / this.slides.length) +'%';
         }
         this.show();
       },
