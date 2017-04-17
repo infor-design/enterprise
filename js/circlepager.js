@@ -349,7 +349,6 @@
         this.container[0].style.left = left;
 
         // Make sure bullets navigation do not overflow
-        // if (!isBulletsNav) {
         if (!this.isBulletsNav) {
           this.element.addClass('is-bullets-nav-hidden');
           this.controlButtons.find('span').addClass('audible').end()
@@ -361,7 +360,6 @@
 
         // Set focus
         if (this.isFocus && this.isBulletsNav) {
-        // if (this.isFocus && isBulletsNav) {
           this.isFocus = false;
           this.controlButtons.eq(index).focus();
         }
