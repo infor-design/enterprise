@@ -215,10 +215,6 @@ $toolbar-buttonset-height: 40px;
     &.is-selected {
       background-color: $popupmenu-hover-color;
       color: $font-color-highcontrast;
-
-      > .icon {
-        fill: $font-color-highcontrast;
-      }
     }
   }
 
@@ -268,16 +264,13 @@ $toolbar-buttonset-height: 40px;
 
     [class^="btn"] {
       color: $contextual-toolbar-button-color;
+      // scss-lint:disable ImportantRule
+      fill: $contextual-toolbar-button-color !important;
+      // scss-lint:enable ImportantRule
       height: 30px;
       margin-top: 5px;
       min-width: 0;
       padding: 0 10px;
-
-      > .icon {
-        // scss-lint:disable ImportantRule
-        fill: $contextual-toolbar-button-color !important;
-        // scss-lint:enable ImportantRule
-      }
 
       &.btn-actions {
         margin-top: 0;
@@ -288,19 +281,11 @@ $toolbar-buttonset-height: 40px;
 
         &:not(.hide-focus) {
           color: $contextual-toolbar-color;
-
-          > .icon {
-            fill: $contextual-toolbar-color;
-          }
         }
       }
 
       &:hover {
         color: $contextual-toolbar-button-hover-color;
-
-        > .icon {
-          fill: $contextual-toolbar-button-hover-color;
-        }
       }
 
       &.is-selected {
@@ -308,10 +293,6 @@ $toolbar-buttonset-height: 40px;
 
         &:focus:not(.hide-focus) {
           color: $contextual-toolbar-color;
-
-          > .icon {
-            fill: $contextual-toolbar-color;
-          }
         }
       }
 
