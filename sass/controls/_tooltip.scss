@@ -89,7 +89,6 @@
   p {
     @include font-size(12);
     color: $tooltip-color;
-    text-align: center;
     word-break: normal;
     word-wrap: break-word;
   }
