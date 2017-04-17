@@ -201,9 +201,9 @@
         ret = ret.replace('h', 12);
       }
 
-      ret = ret.replace('hh', (hours > 12 ? hours - 12 : hours));
+      ret = ret.replace('hh', (hours > 12 ? this.pad(hours - 12, 2) : this.pad(hours, 2)));
       ret = ret.replace('h', (hours > 12 ? hours - 12 : hours));
-      ret = ret.replace('HH', hours);
+      ret = ret.replace('HH', this.pad(hours, 2));
       ret = ret.replace('H', (hours > 12 ? hours - 12 : hours));
       ret = ret.replace('mm', this.pad(mins, 2));
       ret = ret.replace('ss', this.pad(seconds, 2));
