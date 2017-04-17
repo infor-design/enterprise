@@ -436,7 +436,7 @@ window.Formatters = {
   Spinbox: function (row, cell, value, col) {
     var html = ((value === null || value === undefined || value === '') ? '' : value.toString());
 
-    if (col.showEditor) {
+    if (col.inlineEditor) {
       html = '<label for="spinbox-' + cell + '" class="audible">Quantity</label>' +
         '<span class="spinbox-wrapper"><span class="spinbox-control down">-</span>' +
         '<input id="spinbox-' + cell + '" name="spinbox-' + cell + '" type="text" class="spinbox" value="'+ value +'">'+
@@ -1068,8 +1068,14 @@ window.Editors = {
   Spinbox: function(ow, cell, value, container, column, event, grid) {
     this.name = 'spinbox';
     this.originalValue = value;
+    this.useValue = true; //use the data set value not cell value
 
     this.init = function () {
+      if (column.inlineEditor) {
+        this.input = container.find('input');
+        return;
+      }
+
       var markup = '<label for="spinbox-' + cell + '" class="audible">Quantity</label>' +
         '<span class="spinbox-wrapper"><span class="spinbox-control down">-</span>' +
         '<input id="spinbox-' + cell + '" name="spinbox-' + cell + '" type="text" class="spinbox" value="'+ value +'">'+
@@ -1086,7 +1092,7 @@ window.Editors = {
     };
 
     this.val = function (value) {
-      return value ? this.input.val(value) : this.input.val();
+      return value ? parseInt(this.input.val(value)) : parseInt(this.input.val());
     };
 
     this.focus = function () {
@@ -1095,6 +1101,11 @@ window.Editors = {
     };
 
     this.destroy = function () {
+      console.log('destroy');
+      if (column.inlineEditor) {
+        return;
+      }
+
       var self = this;
       setTimeout(function() {
         grid.quickEditMode = false;
@@ -5157,22 +5168,28 @@ $.fn.datagrid = function(options) {
         return;
       }
 
-      if (cellParent.hasClass('is-editing')) {
+      if (cellParent.hasClass('is-editing') || cellParent.hasClass('is-editing-inline')) {
         //Already in edit mode
-        //Editor.focus
         cellNode.find('input').focus();
         return false;
       }
 
-      if (isEditor) {
-        cellNode.css({'position': 'static', 'height': cellNode.outerHeight()});
+      // In Show Ediitor mode the editor is on form already
+      if (!col.inlineEditor) {
+
+        if (isEditor) {
+          cellNode.css({'position': 'static', 'height': cellNode.outerHeight()});
+        }
+        //Editor.init
+        cellParent
+          .addClass('is-editing')
+          .css({'max-width': cellWidth, 'min-width': cellWidth, 'width': cellWidth});
+
+        cellNode.empty();
+      } else {
+        cellParent.addClass('is-editing-inline');
       }
 
-      //Editor.init
-      cellParent
-        .addClass('is-editing')
-        .css({'max-width': cellWidth, 'min-width': cellWidth, 'width': cellWidth});
-      cellNode.empty();
       this.editor = new col.editor(dataRowIndex, cell, cellValue, cellNode, col, event, this, rowData);
 
       if (this.editor.useValue) {
@@ -5202,7 +5219,8 @@ $.fn.datagrid = function(options) {
       }
 
       //Format Cell again
-      cellNode.removeClass('is-editing');
+      var isInline = cellNode.hasClass('is-editing-inline');
+      cellNode.removeClass('is-editing is-editing-inline');
 
       //Editor.destroy
       this.editor.destroy();
@@ -5216,7 +5234,7 @@ $.fn.datagrid = function(options) {
       }
 
       //Save the Cell Edit back to the data set
-      this.updateCellNode(rowIndex, cellNode.index(), newValue);
+      this.updateCellNode(rowIndex, cellNode.index(), newValue, false, isInline);
       this.element.triggerHandler('exiteditmode');
     },
 
@@ -5379,7 +5397,7 @@ $.fn.datagrid = function(options) {
       this.updateCellNode(row, cell, value, true);
     },
 
-    updateCellNode: function (row, cell, value, fromApiCall) {
+    updateCellNode: function (row, cell, value, fromApiCall, isInline) {
       var coercedVal, escapedVal,
         rowNode = this.visualRowNode(row),
         cellNode = rowNode.find('td').eq(cell),
@@ -5455,7 +5473,9 @@ $.fn.datagrid = function(options) {
        correctCellNode = cellNode;
       }
 
-      correctCellNode.find('.datagrid-cell-wrapper').html(formatted);
+      if (!isInline) {
+        correctCellNode.find('.datagrid-cell-wrapper').html(formatted);
+      }
 
       if (coercedVal !== oldVal && !fromApiCall) {
         //Validate the cell

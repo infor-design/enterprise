@@ -154,7 +154,7 @@
       columns.push({ id: 'img', name: '', field: 'img', formatter: Formatters.Image, width: 80, align: 'center'});
       columns.push({ id: 'productInfo', name: 'Name / Product Code', formatter: Formatters.LinkText, fields: ['productName', 'productDesc', 'productId'], width: 150});
       columns.push({ id: 'stock', name: 'Stock', field: 'stock', align: 'center', formatter: Formatters.Badge, ranges: [{'min': 0, 'max': 200, 'classes': 'good'}], width: 70});
-      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 120, formatter: Formatters.Spinbox, showEditor: true, editor: Editors.Spinner});
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 120, formatter: Formatters.Spinbox, inlineEditor: true, editor: Editors.Spinbox});
 
       //Init and get the api for the grid
       $('#datagrid').datagrid({
@@ -164,9 +164,12 @@
         selectable: false,
         cellNavigation: false,
         rowNavigation: false,
+        editable: true,
         toolbar: {keyword: true, results: true},
         paging: true,
         pagesize: 10
+      }).on('cellchange', function (e, args) {
+        console.log(args);
       });
 
     });
