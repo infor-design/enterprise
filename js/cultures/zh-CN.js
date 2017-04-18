@@ -31,10 +31,10 @@
                    'timeSeparator': ':',
                    'short': 'yyyy/M/d', //use four digit year
                    'medium': 'MMM d, yyyy',
-                   'long': 'yyyy年M月d日',
-                   'full': 'yyyy年M月d日EEEE',
+                   'long': 'yyyy年 M月 d日',
+                   'full': 'yyyy年 M月 d日 EEEE',
                    'month': 'MMMM d',
-                   'year': 'yyyy年M',
+                   'year': 'yyyy年 M月',
                    'timestamp': 'HH:mm:ss',
                    'datetime': 'M/d/yyyy HH:mm'}, //Infered short + short gregorian/dateTimeFormats
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
