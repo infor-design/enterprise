@@ -976,7 +976,6 @@ $datagrid-short-row-height: 23px;
 
     .row-btn {
       line-height: normal;
-      padding: 0 30px;
       position: relative;
       top: -3px;
     }
@@ -1099,6 +1098,10 @@ $datagrid-short-row-height: 23px;
 
       &:focus {
         outline: none;
+      }
+
+      &.micro-text {
+        @include font-size(12);
       }
     }
 

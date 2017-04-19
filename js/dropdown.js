@@ -78,28 +78,38 @@
         // Build the wrapper if it doesn't exist
         var baseElement = this.isInlineLabel ? this.inlineLabel : this.element;
         this.wrapper = baseElement.next('.dropdown-wrapper');
-        if (!this.wrapper.length) {
+        this.isWrapped = this.wrapper.length > 0;
+
+        if (!this.isWrapped) {
           this.wrapper = $('<div class="dropdown-wrapper"></div>').insertAfter(baseElement);
+        }
+
+        if (this.isWrapped) {
+          this.pseudoElem = this.wrapper.find('.' + pseudoClassString);
+          this.trigger = this.wrapper.find('.trigger');
+        } else {
+          this.pseudoElem = $('div#'+ orgId + '-shdo');
         }
 
         // Build sub-elements if they don't exist
         this.label = $('label[for="'+ orgId +'"]');
 
-        this.pseudoElem = $('div#'+ orgId + '-shdo');
         if (!this.pseudoElem.length) {
-          this.pseudoElem = $('<div class="'+ pseudoClassString + '"' +
-            ' role="combobox"' +
-            ' aria-autocomplete="list"' +
-            ' aria-controls="dropdown-list"' +
-            ' aria-readonly="true"' +
-            ' aria-expanded="false"' +
-            ' aria-label="'+ this.label.text() + '"' +
-          '>');
+          this.pseudoElem = $('<div class="'+ pseudoClassString + '">');
         } else {
           this.pseudoElem[0].setAttribute('class', pseudoClassString);
         }
 
-        this.pseudoElem.append($('<span></span>'));
+        if (!this.isWrapped) {
+          this.pseudoElem.append($('<span></span>'));
+        }
+
+        this.pseudoElem.attr({'role': 'combobox',
+          'aria-autocomplete': 'list',
+          'aria-controls': 'dropdown-list',
+          'aria-readonly': 'true',
+          'aria-expanded': 'false',
+          'aria-label': this.label.text()});
 
         // Pass disabled/readonly from the original element, if applicable
         // "disabled" is a stronger setting than "readonly" - should take precedent.
@@ -119,7 +129,9 @@
         }
         handleStates(this);
 
-        this.wrapper.append(this.pseudoElem, this.trigger);
+        if (!this.isWrapped) {
+          this.wrapper.append(this.pseudoElem, this.trigger);
+        }
 
         // Check for and add the icon
         this.icon = this.wrapper.find('.icon');
@@ -261,7 +273,7 @@
             cssClasses = option.className;
 
           var trueValue = value && value.value ? value.value : text;
-          if (trueValue === 'clear_selection') {
+          if (trueValue === 'clear') {
             if (text === '') {
               text = Locale.translate('ClearSelection');
             }
@@ -273,7 +285,7 @@
                         ' tabindex="' + (index && index === 0 ? 0 : -1) + '">' +
                         (title ? '" title="' + title.value + '"' : '') +
                         '<a role="option" href="#" class="' +
-                        (trueValue === 'clear_selection' ? ' clear-selection' : '' ) + '"' +
+                        (trueValue === 'clear' ? ' clear-selection' : '' ) + '"' +
                         'id="list-option'+ index +'">' +
                           text +
                         '</a>' +
@@ -342,7 +354,7 @@
       setValue: function () {
         var opts = this.element.find('option:selected'),
           text = this.getOptionText(opts);
-          if (opts.attr('value') === 'clear_selection') {
+          if (opts.attr('value') === 'clear') {
             text = '';
           }
         if (this.settings.empty && opts.length === 0) {
@@ -388,7 +400,6 @@
           this.pseudoElem.next('svg').hide();
         }
 
-        //TODO: Empty Selection
         if (this.element.attr('placeholder')) {
           this.pseudoElem.attr('placeholder', this.element.attr('placeholder'));
           this.element.removeAttr('placeholder');
@@ -412,7 +423,6 @@
           if (e.button === 2) {
             return;
           }
-
           self.toggleList();
         }).on('touchend.dropdown touchcancel.dropdown', function(e) {
           e.stopPropagation();
@@ -960,7 +970,7 @@
           this.initialFilter = false;
         } else {
           // Change the values of both inputs and swap out the active descendant
-          this.searchInput.val(this.pseudoElem.text());
+          this.searchInput.val(this.pseudoElem.find('span').text());
         }
 
         var noScroll = this.settings.multiple;
@@ -1320,9 +1330,9 @@
 
         if (this.isOpen()) {
           this.list.find('.is-focused').removeClass('is-focused').attr({'tabindex':'-1'});
-          if (option.val() !== 'clear_selection') {
+          if (option.val() !== 'clear') {
             listOption.addClass('is-focused').attr({'tabindex': '0'});
-          }          
+          }
 
           // Set activedescendent for new option
           //this.pseudoElem.attr('aria-activedescendant', listOption.attr('id'));
@@ -1383,7 +1393,7 @@
           trimmed = '',
           clearSelection = false,
           isAdded = true; // Sets to false if the option is being removed from a multi-select instead of added
-        if (option.val() === 'clear_selection') {
+        if (option.val() === 'clear') {
           clearSelection = true;
         }
 

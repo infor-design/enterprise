@@ -401,9 +401,9 @@ window.Formatters = {
     return '<span class="' + ranges.classes + '">' + text + '</span>';
   },
 
-  Button: function (row, cell, value, col) {
+  Button: function (row, cell, value, col, item, api) {
     var text = col.text ? col.text : ((value === null || value === undefined || value === '') ? '' : value.toString()),
-      markup ='<button type="button" class="'+ ( col.icon ? 'btn-icon': 'btn') + ' row-btn ' + (col.cssClass ? col.cssClass : '') + '" tabindex="-1">';
+      markup ='<button type="button" class="'+ ( col.icon ? 'btn-icon': 'btn') + ' row-btn ' + (col.cssClass ? col.cssClass : '') + '"' + (!api.settings.rowNavigation ? '' : ' tabindex="-1"') +' >';
 
       if (col.icon) {
         markup += $.createIcon({ icon: col.icon, file: col.iconFile });
@@ -430,7 +430,27 @@ window.Formatters = {
       }
     }
 
-    return '<span class="trigger dropdown-trigger">' + formattedValue + '</span>' + $.createIcon({ icon: 'dropdown' });
+    var html = '<span class="trigger dropdown-trigger">' + formattedValue + '</span>' + $.createIcon({ icon: 'dropdown' });
+
+    if (col.inlineEditor) {
+      html = '<label for="full-dropdown" class="audible">'+ col.name +'</label>'+
+        '<select id="'+ 'datagrid-dropdown' + row +'" class="dropdown">'+
+          '<option value="1">One</option>'+
+          '<option value="2">Two</option>'+
+          '<option value="3">Three</option>'+
+        '</select>'+
+        '<div class="dropdown-wrapper">'+
+          '<div class="dropdown">'+
+            '<span>'+ formattedValue +'</span>'+
+          '</div>'+
+          '<svg class="icon" focusable="false" aria-hidden="true" role="presentation">'+
+            '<use xlink:href="#icon-dropdown"></use>'+
+          '</svg>'+
+        '</div>';
+    }
+
+    console.log(html);
+    return html;
   },
 
   Spinbox: function (row, cell, value, col) {
@@ -1101,8 +1121,7 @@ window.Editors = {
     };
 
     this.destroy = function () {
-      console.log('destroy');
-      if (column.inlineEditor) {
+    if (column.inlineEditor) {
         return;
       }
 
@@ -3333,11 +3352,18 @@ $.fn.datagrid = function(options) {
     //Hide a column
     hideColumn: function(id) {
       var idx = this.columnIdxById(id);
+
+      if (idx === -1) {
+        return;
+      }
+
       this.settings.columns[idx].hidden = true;
       this.headerRow.find('th').eq(idx).addClass('is-hidden');
       this.tableBody.find('td:nth-child('+ (idx+1) +')').addClass('is-hidden');
       this.headerColGroup.find('col').eq(idx).addClass('is-hidden');
-      this.bodyColGroup.find('col').eq(idx).addClass('is-hidden');
+      if (this.bodyColGroup) {
+        this.bodyColGroup.find('col').eq(idx).addClass('is-hidden');
+      }
 
       this.element.trigger('columnchange', [{type: 'hidecolumn', index: idx, columns: this.settings.columns}]);
       this.saveColumns();
@@ -3346,11 +3372,18 @@ $.fn.datagrid = function(options) {
     //Show a hidden column
     showColumn: function(id) {
       var idx = this.columnIdxById(id);
+
+      if (idx === -1) {
+        return;
+      }
+
       this.settings.columns[idx].hidden = false;
       this.headerRow.find('th').eq(idx).removeClass('is-hidden');
       this.tableBody.find('td:nth-child('+ (idx+1) +')').removeClass('is-hidden');
       this.headerColGroup.find('col').eq(idx).removeClass('is-hidden');
-      this.bodyColGroup.find('col').eq(idx).removeClass('is-hidden');
+      if (this.bodyColGroup) {
+        this.bodyColGroup.find('col').eq(idx).removeClass('is-hidden');
+      }
 
       this.element.trigger('columnchange', [{type: 'showcolumn', index: idx, columns: this.settings.columns}]);
       this.saveColumns();
@@ -4023,9 +4056,10 @@ $.fn.datagrid = function(options) {
             if (!$('.lookup-modal.is-visible, #timepicker-popup, #calendar-popup').length &&
                 !!self.editor && self.editor.input.is(target)) {
 
-              if (self.lastClicked.is('.spinbox-control') || self.lastClicked.find('.spinbox-control').length > 1) {
+              if (self.lastClicked.is('.spinbox') || self.lastClicked.is('.spinbox-control') || self.lastClicked.find('.spinbox-control').length > 1) {
                 return;
               }
+
               self.commitCellEdit(self.editor.input);
             }
 
