@@ -536,7 +536,7 @@ label,
   color: $error-color;
   display: block;
   line-height: 1.2rem;
-  margin-top: -15px;
+  margin-top: 7px;
   max-width: 300px;
   position: relative;
 
@@ -553,8 +553,6 @@ label,
   .message-text {
     font-size: inherit;
     line-height: 15px;
-    margin-bottom: 15px;
-    margin-top: 1px;
     max-width: 280px;
     padding-left: $icon-width + 5;
   }
