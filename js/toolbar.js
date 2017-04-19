@@ -827,7 +827,7 @@
         var i = 0,
           elem;
 
-        while(!target && i < items.length - 1) {
+        while(!target && i < items.length) {
           elem = $(items[i]);
           if (!this.isItemOverflowed(elem)) {
             target = elem;
@@ -840,8 +840,8 @@
           target = items.first();
         }
 
-        while(target.is('.separator, *:disabled, *:hidden')) {
-          target = target.next();
+        while(target.length && target.is('.separator, *:disabled, *:hidden')) {
+          target = target.prev();
         }
 
         return target;
