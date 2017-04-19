@@ -1,7 +1,8 @@
 <div class="row">
   <div class="six columns">
-    <h2>Menu Button Test</h2>
-    <p><a class="hyperlink" href="http://jira/browse/SOHO-5922" target="_blank">Related JIRA Ticket</a>. Split buttons are not officially supported. This is a non-official way you could implement them.</p>
+    <h2>Menu Button Example: Split Button</h2>
+    <p><a class="hyperlink" href="http://jira/browse/SOHO-5922" target="_blank">Related JIRA Ticket</a>.</p>
+    <p>Split buttons are not officially supported. This is a non-official way you could implement them.</p>
   </div>
 </div>
 
@@ -59,8 +60,7 @@
 </div>
 
 <script>
-  var EXAMPLE_TOOLBAR = $('#example-toolbar'),
-    SPLIT_BUTTON_ACTION = $('#split-button-action'),
+  var SPLIT_BUTTON_ACTION = $('#split-button-action'),
     SPLIT_BUTTON_MENU_TRIGGER = $('#split-button-menu-trigger');
 
     // Action Button fires the action
@@ -79,8 +79,8 @@
       ul.find('.is-checked').removeClass('is-checked');
       args.parent().addClass('is-checked');
 
-      var otherMenu = $('.popupmenu[data-original-menu="'+ ul.attr('id') +'"]');
-      ul.find('.is-checked').removeClass('is-checked');
-      ul.find('li:contains('+ args.text() +')').addClass('is-checked');
+      //var otherMenu = $('.popupmenu[data-original-menu="'+ ul.attr('id') +'"]');
+      //ul.find('.is-checked').removeClass('is-checked');
+      //ul.find('li:contains('+ args.text() +')').addClass('is-checked');
     });
 </script>

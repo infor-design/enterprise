@@ -123,7 +123,58 @@
         // Reference all interactive items in the toolbar
         this.buttonsetItems = this.buttonset.children('button')
           .add(this.buttonset.find('input')); // Searchfield Wrappers
-        
+
+        // Define and wrap Split Buttons
+        /*
+        var splitBtns = this.buttonset.find('.btn-split-menu.btn'),
+          splitButtonWrappers = [];
+
+        splitBtns.each(function() {
+          var el = $(this),
+            splitButton = el.parent();
+
+          // Re-use splitButton wrappers if they exist
+          if (splitButton.is('.btn-split-wrapper')) {
+            splitButtonWrappers.push(splitButton);
+            return;
+          }
+
+          var sep = el.next('.separator'),
+            menu = el.next('.btn-menu');
+
+          // Account for menu after a separator
+          menu = menu.add(sep.next('.btn-menu'));
+
+          // If the menu doesn't exist, treat this as a regular button.
+          if (!menu.length) {
+            // Remove stray separators
+            if (sep.length) {
+              sep.remove();
+            }
+
+            self.buttonsetItems = self.buttonsetItems.add($(this));
+            return;
+          }
+
+          if (!sep.length) {
+            sep = $('<div class="separator"></div>');
+          }
+
+          splitButton = $('<span class="btn-split-wrapper"></span>');
+          splitButton.insertAfter(el);
+
+          splitButton
+            .append(el)
+            .append(sep)
+            .append(menu);
+
+          splitButtonWrappers.push(splitButton);
+        });
+        this.splitButtonWrappers = splitButtonWrappers;
+        this.buttonsetItems = this.buttonsetItems
+          .add(splitButtonWrappers);
+        */
+
         this.items = this.buttonsetItems
           .add(this.title.children('button'))
           .add(this.more);
@@ -179,7 +230,15 @@
         function buildMenuItem() {
           /*jshint validthis:true */
           var item = $(this),
-            popupLi = $('<li></li>'),
+            isSplitButton = false;
+
+          // If this item should be skipped, just return out
+          if (item.data('skipit') === true) {
+            item.data('skipit', undefined);
+            return;
+          }
+
+          var popupLi = $('<li></li>'),
             a = $('<a href="#"></a>').appendTo(popupLi);
 
           if (item.is(':hidden')) {
@@ -193,11 +252,34 @@
 
           a.text(self.getItemText(item));
 
+          // Determines which elements need to be skipped in a Split Button scenario
+          function setSplitButtonSkipping() {
+            var sep = item.next('.separator');
+            var menu = sep.next('.btn-split-menu.btn-menu');
+
+            // If there's no separator or menu button, continue and treat this as a normal spillover item.
+            if (!sep.length || !menu.length) {
+              return;
+            }
+
+            // Skip creating extra menu items for these elements.
+            // Split Button renders as a single item in the spillover menu
+            sep.data('skipit', true);
+            menu.data('skipit', true);
+            isSplitButton = true;
+
+            // Set the text of the menu item to be the "audible" contents of the
+            // Split Button's Menu Trigger
+            a.text(self.getItemText(menu));
+          }
+          if (item.is('.btn-split-menu.btn')) {
+            setSplitButtonSkipping();
+          }
+
           // Pass along any icons except for the dropdown (which is added as part of the submenu design)
           var submenuDesignIcon = $.getBaseURL('#icon-dropdown');
           var icon = item.children('.icon').filter(function() {
             var iconName = $(this).getIconName();
-
             return iconName && iconName !== submenuDesignIcon && iconName.indexOf('dropdown') === -1;
           });
 
@@ -241,6 +323,10 @@
               if (omiSubMenu.length && dmiSubMenu.length) {
                 addItemLinksRecursively(omiSubMenu, dmiSubMenu, dmi);
               }
+
+              if (isSplitButton) {
+                dmi.removeClass('is-checked');
+              }
             });
 
             diffMenu.removeAttr('id').attr('data-original-menu', id);
@@ -252,6 +338,42 @@
             }
           }
 
+          // Figure out if this item or a related item has a submenu that needs to be
+          // created and linked.
+          var submenuTopper,
+            splitMenuTrigger,
+            splitMenu;
+
+          // Handle straight-up submenus
+          if (item.is('.btn-menu')) {
+            submenuTopper = item;
+            if (!item.data('popupmenu')) {
+              item.popupmenu();
+            }
+          }
+
+          // Handle split buttons
+          if (isSplitButton) {
+            splitMenuTrigger = item.next().next();
+            splitMenu = splitMenuTrigger.next();
+            if (!splitMenuTrigger.data('popupmenu')) {
+              splitMenuTrigger.popupmenu();
+            }
+            submenuTopper = splitMenuTrigger;
+          }
+
+          if (submenuTopper) {
+            var menu = submenuTopper.data('popupmenu').menu,
+              diffMenu = menu.clone();
+
+            if (isSplitButton) {
+              diffMenu.removeClass('is-selectable').removeClass('is-multiselectable');
+            }
+
+            addItemLinksRecursively(menu, diffMenu, popupLi);
+          }
+
+          /*
           if (item.is('.btn-menu')) {
             if (!item.data('popupmenu')) {
               item.popupmenu();
@@ -262,6 +384,7 @@
 
             addItemLinksRecursively(menu, diffMenu, popupLi);
           }
+          */
 
           if (item.is('[data-popdown]')) {
             item.popdown();
@@ -290,6 +413,10 @@
                 submenu;
 
             if (item) {
+              if (item.is('.btn-split-menu')) {
+                text = self.getItemText(item.next().next());
+              }
+
               if (a.find('span').length) {
                 a.find('span').text(text.trim());
               } else {
@@ -404,7 +531,13 @@
 
         this.items.filter('.btn-menu, .btn-actions')
           .off('close.toolbar').on('close.toolbar', function onClosePopup() {
-            $(this).focus();
+            var el = $(this);
+            if (el.is('.is-overflowed')) {
+              self.getLastVisibleButton()[0].focus();
+              return;
+            }
+            el.focus();
+            self.buttonset.scrollTop(0);
           });
 
         this.items.not(this.more).off('selected.toolbar').on('selected.toolbar', function(e, anchor) {
@@ -439,7 +572,8 @@
         var itemLink = anchor.data('original-button'),
           li = anchor.parent(),
           itemEvts,
-          toolbarEvts;
+          toolbarEvts,
+          popup, popupTrigger;
 
         // Don't continue if hidden/readonly/disabled
         if (li.is('.hidden, .is-disabled') || anchor.is('[readonly], [disabled]')) {
@@ -483,7 +617,15 @@
             }
           }
 
-          // Trigger Select on the linked item, since it won't be done by another event
+          // If the linked element is a child of a menu button, trigger its 'selected' event.
+          popup = itemLink.parents('.popupmenu');
+          popupTrigger = popup.data('trigger');
+          if (popup.length && popupTrigger instanceof $ && popupTrigger.length) {
+            popupTrigger.triggerHandler('selected', [itemLink]);
+            return;
+          }
+
+          // Manually Trigger Select on the linked item, since it won't be done by another event
           this.triggerSelect(itemLink);
           return;
         }
@@ -506,23 +648,6 @@
           target = $(e.target),
           isActionButton = target.is('.btn-actions'),
           isRTL = Locale.isRTL();
-
-        /*
-        if (target.is('.btn-actions')) {
-          if (key === 37 || key === 38) { // Left/Up
-            e.preventDefault();
-            target = isRTL ? self.getFirstVisibleButton() : self.getLastVisibleButton();
-          }
-
-          if (key === 39 || (key === 40 && target.attr('aria-expanded') !== 'true')) { // Right (or Down if the menu's closed)
-            e.preventDefault();
-            target = isRTL ? self.getLastVisibleButton() : self.getFirstVisibleButton();
-          }
-
-          self.setActiveButton(target);
-          return;
-        }
-        */
 
         if ((key === 37 && target.is(':not(input)')) ||
           (key === 37 && target.is('input') && e.shiftKey) || // Shift + Left Arrow should be able to navigate away from Searchfields
@@ -908,6 +1033,12 @@
         var classList = item.classList,
           style = window.getComputedStyle(item);
 
+        if (classList.contains('btn-split-menu') && classList.contains('btn-menu')) {
+          if ($(item).prev().prev().is('.btn-split-menu.btn.is-overflowed')) {
+            return true;
+          }
+          return false;
+        }
         if (classList.contains('btn-actions')) {
           return true;
         }
@@ -1069,6 +1200,17 @@
             searchFields.data('toolbarsearchfield').destroy();
           }
         }
+
+        /*
+        // Remove split button wrappers
+        if (this.splitButtonWrappers.length) {
+          $.each(this.splitButtonWrappers, function(wrapper) {
+            var els = wrapper.children().detach();
+            els.insertAfter(wrapper);
+            wrapper.remove();
+          });
+        }
+        */
 
         if (this.more.length && this.more.data('popupmenu') !== undefined) {
           this.more.data('popupmenu').destroy();

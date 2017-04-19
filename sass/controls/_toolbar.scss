@@ -52,7 +52,7 @@ $toolbar-buttonset-height: 40px;
       min-width: 34px;
     }
 
-    > .separator {
+    .separator {
       background-color: $formatter-toolbar-separator-color;
       display: inline-block;
       height: 20px;
@@ -62,9 +62,16 @@ $toolbar-buttonset-height: 40px;
       width: 1px;
     }
 
+    .btn-split-wrapper {
+      .separator {
+        top: auto;
+      }
+    }
+
     // Hide separators that come after "overflowed" elements
     .is-overflowed {
       + .separator,
+      + .btn-split-wrapper > .separator,
       + .popupmenu,
       + .popupmenu-wrapper + .separator {
         display: none;
@@ -337,6 +344,12 @@ $toolbar-buttonset-height: 40px;
         + .icon {
           margin-left: 0;
         }
+      }
+    }
+
+    .btn-split-menu {
+      &.btn {
+        margin-right: 10px;
       }
     }
   }
