@@ -977,6 +977,10 @@
           if (doHide) {
             li.classList.add('hidden');
             elem.classList.remove('is-overflowed');
+
+            if (elem.classList.contains('btn-split-menu') && elem.classList.contains('btn')) {
+              $elem.next().next().removeClass('is-overflowed');
+            }            
             return;
           }
 
@@ -984,6 +988,10 @@
             li.classList.remove('hidden');
           }
           elem.classList.add('is-overflowed');
+
+          if (elem.classList.contains('btn-split-menu') && elem.classList.contains('btn')) {
+            $elem.next().next().addClass('is-overflowed');
+          }
 
           if ($elem.find('.icon').length) {
             iconDisplay = 'addClass';
@@ -1033,11 +1041,13 @@
         var classList = item.classList,
           style = window.getComputedStyle(item);
 
-        if (classList.contains('btn-split-menu') && classList.contains('btn-menu')) {
-          if ($(item).prev().prev().is('.btn-split-menu.btn.is-overflowed')) {
-            return true;
+        if (classList.contains('btn-split-menu')) {
+          if (classList.contains('btn-menu')) {
+            if ($(item).prev().prev().is('.btn-split-menu.btn.is-overflowed')) {
+              return true;
+            }
+            return false;
           }
-          return false;
         }
         if (classList.contains('btn-actions')) {
           return true;
