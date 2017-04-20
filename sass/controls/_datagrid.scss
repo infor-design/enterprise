@@ -1131,7 +1131,7 @@ $datagrid-short-row-height: 23px;
       }
     }
 
-    //Inline Editting
+    //Cell Editting
     &.is-editing {
       background-color: $panel-bg-color;
       position: relative;
@@ -1261,6 +1261,27 @@ $datagrid-short-row-height: 23px;
           &.up {
             border-left: 1px solid  $input-focus-border-color;
           }
+        }
+      }
+    }
+
+    //Editing Inline - Dropdown
+    .is-inline {
+      &.dropdown-wrapper {
+        margin-bottom: 0;
+
+        .dropdown {
+          margin-top: -2px;
+          max-height: 36px;
+        }
+
+        span {
+          padding-top: 2px;
+          vertical-align: top;
+        }
+
+        .icon {
+          top: 6px;
         }
       }
     }
@@ -1993,6 +2014,14 @@ td .btn-actions {
 .is-firefox {
   .datagrid-result-count {
     margin-top: 0;
+  }
+
+  .is-inline.dropdown-wrapper {
+    .icon {
+      // scss-lint:disable ImportantRule
+      top: 5px !important;
+      // scss-lint:enable ImportantRule
+    }
   }
 
   .short-rowheight th .datagrid-checkbox {

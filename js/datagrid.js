@@ -6,6 +6,18 @@ window.Formatters = {
     return str;
   },
 
+  Input: function(row, cell, value, col) {
+    if (col.inlineEditor) {
+      var html = '<label for="datagrid-inline-input-' + row + '-' + cell +'" class="audible">'+ col.name +'</label>'+
+          '<input id="datagrid-inline-input-' + row + '-' + cell +'" class="'+ (col.align === 'right' ? 'is-number-mask': '') + '" value="'+ value +'">';
+
+      return html;
+    }
+
+    var str = ((value === null || value === undefined || value === '') ? '' : value.toString());
+    return str;
+  },
+
   Ellipsis: function(row, cell, value, col) {
     var str = ((value === null || value === undefined || value === '') ? '' : value.toString());
     col.textOverflow = 'ellipsis';
@@ -117,7 +129,6 @@ window.Formatters = {
 
   Decimal:  function(row, cell, value, col) {
     var formatted;
-
     formatted = value;
 
     if (typeof Locale !== undefined) {
@@ -434,22 +445,25 @@ window.Formatters = {
 
     if (col.inlineEditor) {
       html = '<label for="full-dropdown" class="audible">'+ col.name +'</label>'+
-        '<select id="'+ 'datagrid-dropdown' + row +'" class="dropdown">'+
-          '<option value="1">One</option>'+
-          '<option value="2">Two</option>'+
-          '<option value="3">Three</option>'+
-        '</select>'+
-        '<div class="dropdown-wrapper">'+
-          '<div class="dropdown">'+
-            '<span>'+ formattedValue +'</span>'+
-          '</div>'+
-          '<svg class="icon" focusable="false" aria-hidden="true" role="presentation">'+
-            '<use xlink:href="#icon-dropdown"></use>'+
-          '</svg>'+
-        '</div>';
+        '<select id="'+ 'datagrid-dropdown' + row +'" class="dropdown">';
+
+      for (i = 0; i < col.options.length; i++) {
+        var opt = col.options[i];
+        html += '<option' + (opt.id === undefined ? '' : ' id="' + opt.id + '"') +
+                  ' value="' + opt.value + '"' +
+                  (opt.selected || opt.value === compareValue ? ' selected ' : '') +
+                '>'+ (opt.label !== undefined ? opt.label : opt.value !== undefined ? opt.value : '') + '</option>';
+      }
+
+      html += '</select>'+
+      '<div class="dropdown-wrapper is-inline">'+
+        '<div class="dropdown"><span>'+ formattedValue +'</span></div>'+
+        '<svg class="icon" focusable="false" aria-hidden="true" role="presentation">'+
+          '<use xlink:href="#icon-dropdown"></use>'+
+        '</svg>'+
+      '</div>';
     }
 
-    console.log(html);
     return html;
   },
 
@@ -488,18 +502,16 @@ window.Formatters = {
     return $.createIcon({ icon: item.rowStatus.icon, classes: ['icon', 'icon-' + item.rowStatus.icon, 'datagrid-alert-icon'] }) + '<span class="audible">' + item.rowStatus.text + '</span>';
   },
 
-  // Possible future Formatters
+  // TODO Possible future Formatters
   // Percent
   // Image?
   // Multi Select
-  // Re Order - Drag Indicator
   // Sparkline
   // Progress Indicator (n of 100%)
   // Process Indicator
   // Currency
   // File Upload (Simple)
   // Menu Button
-  // Toggle Button (No)
   // Color Picker (Low)
 };
 
@@ -510,10 +522,15 @@ window.Editors = {
 
     this.name = 'input';
     this.originalValue = value;
+    this.useValue = column.inlineEditor ? true : false;
 
     this.init = function () {
-      this.input = $('<input type="'+ (column.inputType ? column.inputType : 'text') +'"/>')
-        .appendTo(container);
+      if (column.inlineEditor) {
+        this.input = container.find('input');
+      } else {
+        this.input = $('<input type="'+ (column.inputType ? column.inputType : 'text') +'"/>')
+          .appendTo(container);
+      }
 
       if (column.align) {
         this.input.addClass('l-'+ column.align +'-text');
@@ -543,6 +560,10 @@ window.Editors = {
     };
 
     this.destroy = function () {
+      if (column.inlineEditor) {
+        return;
+      }
+
       var self = this;
       setTimeout(function() {
         self.input.remove();
@@ -733,9 +754,12 @@ window.Editors = {
     this.cell = grid.activeCell;
 
     this.init = function () {
-      //Uses formatter
+      if (column.inlineEditor) {
+        this.input = container.find('select');
+        return;
+      }
+
       this.input = $('<select class="dropdown"></select>').appendTo(container);
-      this.select = this.input;
 
       if (column.options) {
         var html, opt, optionValue;
@@ -791,7 +815,7 @@ window.Editors = {
         var compareValue = column.caseInsensitive && typeof value === 'string' ? value.toLowerCase() : value;
         this.input.val(value);
 
-        this.select.find('option').each(function () {
+        this.input.find('option').each(function () {
           var opt = $(this), valueAttr = opt.attr('value'), type = opt.attr('data-type');
           var optionValue = valueAttr;
 
@@ -810,7 +834,7 @@ window.Editors = {
         });
       }
 
-      var selected = this.select.find(':selected'),
+      var selected = this.input.find(':selected'),
         val = selected.attr('value'), dataType = selected.attr('data-type');
 
       // For non-string option values (number, boolean, etc.), convert string attr value to proper type
@@ -831,10 +855,10 @@ window.Editors = {
       var self = this;
 
       //Check if isClick or cell touch and just open the list
-      this.select.trigger('openlist');
+      this.input.trigger('openlist');
       this.input.parent().find('div.dropdown').focus();
 
-      this.input.on('listclosed', function (e, type) {
+      this.input.off('listclosed').on('listclosed', function (e, type) {
         grid.commitCellEdit(self.input);
 
         if (type === 'select') {
@@ -1121,7 +1145,7 @@ window.Editors = {
     };
 
     this.destroy = function () {
-    if (column.inlineEditor) {
+      if (column.inlineEditor) {
         return;
       }
 
@@ -1836,7 +1860,7 @@ $.fn.datagrid = function(options) {
           filterMarkup += '</div>';
           header.find('.datagrid-column-wrapper').after(filterMarkup);
           header.find('.datepicker').datepicker(col.editorOptions ? col.editoroptions : {dateFormat: col.dateFormat});
-          header.find('.dropdown').dropdown(col.editorOptions);
+          header.find('select.dropdown').dropdown(col.editorOptions);
           header.find('.multiselect').multiselect(col.editorOptions);
           header.find('[data-mask]').mask();
         }
@@ -2581,13 +2605,32 @@ $.fn.datagrid = function(options) {
       self.setVirtualHeight();
       self.setScrollClass();
       self.setupTooltips();
-      self.tableBody.find('.dropdown').dropdown();
+      self.afterRender();
+
+    },
+
+    afterRender() {
+      var self = this;
+
+      //Init Inline Elements
+      self.tableBody.find('select.dropdown').dropdown();
+
+      //Commit Edits for inline editing
+      self.tableBody.find('.dropdown-wrapper.is-inline').prev('select')
+        .on('listclosed', function () {
+           var elem = $(this),
+            newValue = elem.val(),
+            row = elem.closest('tr');
+
+            self.updateCellNode(row.attr('aria-rowindex'), elem.closest('td').index(), newValue, false, true);
+         });
+
       self.tableBody.find('.spinbox').spinbox();
 
-      //Set IE elements after dataload
+      //Set UI elements after dataload
       setTimeout(function () {
 
-        if (!s.source) {
+        if (!self.settings.source) {
           self.displayCounts();
         }
 

@@ -945,6 +945,9 @@
 
         //In a grid cell
         this.isInGrid = this.pseudoElem.closest('.datagrid-row').length === 1;
+        if (this.pseudoElem.parent().hasClass('is-inline')) {
+          this.isInGrid = false;
+        }
 
         if (this.isInGrid) {
           var rowHeight = this.pseudoElem.closest('.datagrid').attr('class').replace('datagrid', '');
