@@ -447,6 +447,13 @@ input.dropdown.error:focus {
   color: $input-color;
 }
 
+.field,
+.field-short {
+  .dropdown-wrapper {
+    margin-bottom: 0;
+  }
+}
+
 //Shorter Field Size
 .field-short {
 
@@ -473,10 +480,6 @@ input.dropdown.error:focus {
     > span {
       min-height: 14px;
     }
-  }
-
-  .dropdown-wrapper {
-    margin-bottom: 10px;
   }
 
 }

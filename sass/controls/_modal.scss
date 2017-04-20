@@ -24,7 +24,7 @@
   height: auto;
   max-height: 90%;
   max-width: 90%;
-  min-width: 200px;
+  min-width: 420px;
   opacity: 0;
   position: relative;
   vertical-align: middle;
@@ -53,7 +53,6 @@
   }
 
   .textarea-wordcount {
-    margin-top: -9px;
     width: auto;
   }
 
@@ -137,6 +136,14 @@
       border-right-color: transparent;
     }
   }
+
+  // Messages
+  &.message {
+    .modal-buttonset {
+      margin-top: 30px;
+    }
+  }
+
 }
 
 .overlay {
@@ -158,7 +165,7 @@
 }
 
 .modal-header {
-  padding: 15px 20px 2px;
+  padding: 15px 20px 30px;
 }
 
 .modal-content {
@@ -213,7 +220,7 @@
   .modal-body-wrapper {
     overflow: auto;
     -webkit-overflow-scrolling: auto;
-    padding: 20px;
+    padding: 0 20px;
   }
 
   // Modal Buttons
@@ -227,7 +234,7 @@
     color: $modal-color;
     font-size: 1.4rem;
     line-height: 20px;
-    max-width: 369px;
+    max-width: 420px;
     padding: 15px 0 25px;
     text-align: left;
   }
@@ -265,7 +272,7 @@
 .modal-buttonset {
   border-top: 1px solid $modal-btn-border-color;
   height: 50px;
-  margin-top: 5px;
+  margin-top: 10px;
 
   button {
     @include font-size(12);

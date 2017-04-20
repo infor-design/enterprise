@@ -619,7 +619,7 @@ $datagrid-short-row-height: 23px;
         .row-btn {
           height: 26px;
           min-width: 80px;
-          top: -10px;
+          top: -2px;
           vertical-align: middle;
 
           span {
@@ -1904,7 +1904,6 @@ td .btn-actions {
 }
 
 .datagrid-checkbox-wrapper {
-  min-height: 12px;
   position: relative;
 }
 
@@ -2615,6 +2614,21 @@ html[dir='rtl'] {
 
     .tooltip-content {
       padding: 15px;
+    }
+  }
+}
+
+// Under tabs
+.tab-container {
+  .datagrid-container {
+    .datagrid-header th {
+      .datagrid-checkbox-wrapper {
+        font-size: 0;
+      }
+
+      .datagrid-checkbox {
+        top: -8px;
+      }
     }
   }
 }

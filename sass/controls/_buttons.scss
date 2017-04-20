@@ -95,7 +95,6 @@ button {
   }
 }
 
-.btn,
 .btn-primary,
 .btn-secondary {
   border-radius: 2px;
@@ -235,8 +234,7 @@ a.btn-menu {
   }
 }
 
-// Normal / Secondary Button
-.btn,
+// Secondary Button
 .btn-secondary {
   background-color: $btn-bg-color;
   border: 1px solid $btn-bg-color;
@@ -301,6 +299,7 @@ a.btn-menu {
 }
 
 // Destructive Actions / Third Level Button
+.btn,
 .btn-tertiary,
 .btn-icon,
 .btn-actions,
@@ -366,6 +365,10 @@ a.btn-menu {
       fill: $tertiary-btn-open-color;
     }
   }
+}
+
+.btn {
+  padding: 0 15px;
 }
 
 .btn-tertiary,
@@ -515,13 +518,13 @@ a.btn-menu {
 
   &:active {
     .icon {
-      fill: $accordion-selected-text-color;
+      fill: $tertiary-btn-active-color;
     }
 
     .plus-minus {
       &::before,
       &::after {
-        background-color: $accordion-selected-text-color;
+        background-color: $tertiary-btn-active-color;
       }
     }
   }

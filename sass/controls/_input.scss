@@ -112,11 +112,12 @@
   color: $checkbox-label-color;
   display: inline-block;
   margin-top: 1px;
+  margin-bottom: 0;
 }
 
 .field > input,
 .field > textarea {
-  margin-bottom: 20px;
+  margin-bottom: 0;
 }
 
 // Two Connected Fields
@@ -138,6 +139,7 @@
 }
 
 .field {
+  margin-bottom: 20px;
   position: relative;
 
   textarea + .btn-actions {
@@ -249,6 +251,17 @@ textarea {
   &.error {
     padding: 10px 25px 10px 10px;
   }
+
+  + .textarea-wordcount {
+    margin-top: 5px;
+  }
+
+  &[readonly],
+  &[disabled] {
+    + .textarea-wordcount {
+      display: none;
+    }
+  }
 }
 
 .textarea-wordcount {
@@ -256,7 +269,6 @@ textarea {
   @include rem(line-height, 2rem);
 
   display: block;
-  margin-top: -20px;
   min-height: auto;
   text-transform: uppercase;
   width: 362px;
@@ -268,11 +280,6 @@ textarea {
   &.almost-empty {
     color: $error-color;
   }
-}
-
-textarea[readonly] + .textarea-wordcount,
-textarea[disabled] + .textarea-wordcount {
-  display: none;
 }
 
 .textarea-print {
@@ -402,11 +409,12 @@ label,
 // Shorter/Legacy Inputs
 .field-short {
   font-size: 0;
+  margin-bottom: 10px;
   position: relative;
 
   input {
     @include font-size(12);
-    margin-bottom: 10px;
+    margin-bottom: 0;
     padding: 5px;
     resize: none;
     text-align: left;
@@ -528,7 +536,7 @@ label,
   color: $error-color;
   display: block;
   line-height: 1.2rem;
-  margin-top: -15px;
+  margin-top: 7px;
   max-width: 300px;
   position: relative;
 
@@ -545,8 +553,6 @@ label,
   .message-text {
     font-size: inherit;
     line-height: 15px;
-    margin-bottom: 15px;
-    margin-top: 1px;
     max-width: 280px;
     padding-left: $icon-width + 5;
   }

@@ -13,6 +13,18 @@
   }
 }
 
+@mixin auto-width {
+  width: auto;
+  min-width: 0;
+
+  .widget-content,
+  .card-content {
+    min-width: 0;
+    overflow: none;
+    width: auto;
+  }
+}
+
 .card,
 .widget {
   background-color: $cardlist-bg-color;
@@ -70,6 +82,11 @@
   .full-table {
     width: 100%;
   }
+
+  &.auto-size {
+    @include auto-height;
+    @include auto-width;
+  }
 }
 
 .card-header,
@@ -101,7 +118,9 @@
       font-weight: 100;
       margin: 0;
       padding-top: 3px;
+      // scss-lint:disable ImportantRule
       text-rendering: optimizeLegibility !important;
+      // scss-lint:enable ImportantRule
     }
 
     //Prevent FOUC

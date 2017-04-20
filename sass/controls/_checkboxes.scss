@@ -87,7 +87,6 @@ span.checkbox > label {
   @include font-size(14);
   cursor: pointer;
   display: inline-block;
-  margin-bottom: 9px;
   padding-left: 26px;
   position: relative;
 }
@@ -235,6 +234,14 @@ span.checkbox > input:checked + label::after,
   @include font-size(12);
   display: block;
   margin-bottom: 9px;
+
+  ~ .field {
+    margin-bottom: 8px;
+  }
+
+  ~ .field-short {
+    margin-bottom: 0;
+  }
 }
 
 // Print Support
@@ -342,7 +349,6 @@ html[dir='rtl'] {
   input.checkbox + label,
   input.checkbox + input[type="hidden"] + label,
   span.checkbox > label {
-    margin-left: -5px;
     padding-top: 0;
     width: auto;
   }

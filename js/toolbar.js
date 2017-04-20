@@ -123,7 +123,7 @@
         // Reference all interactive items in the toolbar
         this.buttonsetItems = this.buttonset.children('button')
           .add(this.buttonset.find('input')); // Searchfield Wrappers
-        
+
         this.items = this.buttonsetItems
           .add(this.title.children('button'))
           .add(this.more);
@@ -304,10 +304,12 @@
 
               if (item.parent().is('.is-disabled') || item.is(':disabled')) { // if it's disabled menu item, OR a disabled menu-button
                 a.closest('li').addClass('is-disabled');
-                a.attr('tabindex', '-1');
+                a.attr('tabindex', '-1')
+                  .attr('aria-disabled', 'true');
               } else {
                 a.closest('li').removeClass('is-disabled');
-                a.removeAttr('disabled');
+                a.removeAttr('disabled')
+                  .attr('aria-disabled', 'false');
               }
 
               if (item.is('.btn-menu')) {

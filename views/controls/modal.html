@@ -1,10 +1,10 @@
 <div class="row">
 	<div class="twelve columns">
 
-		<button class="btn-secondary" type="button" id="mask">Mask</button><br><br>
+		<button class="btn-secondary" type="button" id="add-context">Add Context</button><br><br>
 
 		<!-- "Context" Example -->
-		<div id="modal-mask" style="display: none;">
+		<div id="modal-add-context" style="display: none;">
 			<div class="field">
 				<label for="title">Title</label>
 				<input type="text" id="title" name="title" />
@@ -26,9 +26,9 @@
 
 <script>
 var modals = {
-    'mask': {
+    'add-context': {
       'title': 'Add Context',
-      'content': $('#modal-mask')
+      'content': $('#modal-add-context')
     }
   },
 
@@ -52,12 +52,8 @@ var modals = {
     $('body').modal(opt);
   };
 
-  $('#mask').on('click', function () {
+  $('#add-context').on('click', function () {
     setModal(modals[this.id]);
   });
-
-  $('#upper').mask({definitions: {
-    'U': /[A-Z]/
-  }, pattern: 'UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU'});
 
 </script>
