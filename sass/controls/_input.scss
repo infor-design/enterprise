@@ -457,15 +457,6 @@ label,
     top: auto;
     width: 18px;
   }
-
-  .error-message {
-    margin-top: -10px;
-
-    .message-text {
-      margin-top: 3px;
-      position: relative;
-    }
-  }
 }
 
 // Field Sizes
@@ -555,10 +546,6 @@ label,
     line-height: 15px;
     max-width: 280px;
     padding-left: $icon-width + 5;
-  }
-
-  + .error-message {
-    margin-top: -10px;
   }
 }
 

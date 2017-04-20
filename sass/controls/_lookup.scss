@@ -65,6 +65,13 @@
 
 }
 
+.field,
+.field-short {
+  .lookup-wrapper {
+    margin-bottom: 0;
+  }
+}
+
 .ie9 .lookup-wrapper .trigger,
 .ie10 .lookup-wrapper .trigger {
   background-color: rgba($white, 0);
