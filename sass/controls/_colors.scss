@@ -15,26 +15,6 @@
   }
 }
 
-.color-error {
-  color: $alert01;
-}
-
-.color-warning {
-  color: $alert02;
-}
-
-.color-alert {
-  color: $alert03;
-}
-
-.color-good {
-  color: $alert04;
-}
-
-.color-info {
-  color: $azure07;
-}
-
 // Palette Shapes
 .palette-column {
   @include font-size(14);
