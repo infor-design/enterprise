@@ -1613,15 +1613,8 @@
       setCode: function(code) {
         var self = this,
           doSetting = function ()  {
-            var option = null;
-
-            self.element.find('option').each(function () {
-              if (this.value === code) {
-                option = $(this);
-              }
-            });
-
-            self.selectOption(option, true);
+            self.element.val(code);
+            self.updated();
           };
 
         if (!self.callSource(doSetting)) {
