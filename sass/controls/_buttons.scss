@@ -42,7 +42,7 @@ button {
   > .icon {
     fill: inherit;
     position: static;
-    width: 16px;
+    width: 18px;
 
     + span:not(.audible):not(:empty) {
       padding-left: 5px;
@@ -54,6 +54,14 @@ button {
 
     + .icon {
       margin-left: 0;
+    }
+  }
+
+  &.btn-tertiary {
+    > .icon {
+      + span:not(.audible):not(:empty) {
+        padding-left: 0;
+      }
     }
   }
 
@@ -123,7 +131,7 @@ button {
   }
 
   &:focus {
-    border: 1px solid $primary-btn-bg-color;
+    border: 1px solid transparent;
 
     &:not(.hide-focus) {
       box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $primary-btn-bg-color;
@@ -255,8 +263,11 @@ a.btn-menu {
  }
 
   &:focus {
-    border: 1px solid $btn-focus-bg-color;
-    box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $btn-focus-border-color;
+    border: 1px solid transparent;
+
+    &:not(.hide-focus) {
+      box-shadow: 0 0 0 2px $body-bg-color, 0 0 0 3px $btn-focus-border-color;
+    }
 
     &:active {
       background-color: $btn-active-bg-color;
@@ -490,11 +501,11 @@ a.btn-menu {
     }
 
     &.chevron {
+      @include css3(transform, rotateX(0deg));
+      @include transition(transform 300ms cubic-bezier(.17, .04, .03, .94));
       height: 28px;
       padding-right: 0;
       top: 0;
-      @include css3(transform, rotateX(0deg));
-      @include transition(transform 300ms cubic-bezier(.17, .04, .03, .94));
       width: 28px;
 
       &.active {
