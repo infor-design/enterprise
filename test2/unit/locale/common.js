@@ -85,7 +85,7 @@ define([
         m = Locale.pad(dt.getMinutes(), 2).toString(),
         s = Locale.pad(dt.getSeconds(), 2).toString();
 
-      expect(Locale.formatDate(dt, {pattern: 'hhmmss'})).to.equal(h+m+s);
+      expect(Locale.formatDate(dt, {pattern: 'hmmss'})).to.equal(h+m+s);
       expect(Locale.formatDate(dt, {pattern: 'HHmmss'})).to.equal(h24+m+s);
       //expect(Locale.formatDate(dt, {date: 'timestamp'})).to.equal(h+m+s);
 
