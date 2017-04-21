@@ -170,6 +170,20 @@
     margin-bottom: 14px;
   }
 
+  &.field-radio {
+    margin-bottom: 10px;
+  }
+
+  &.field-checkbox {
+    margin-bottom: 12px;
+
+    .inline-checkbox .label-text {
+      // scss-lint:disable ImportantRule
+      margin-bottom: 1px !important;
+      // scss-lint:enable ImportantRule
+    }
+  }
+
   &.l-pull-left {
     margin-right: 20px;
   }
@@ -305,7 +319,7 @@ textarea {
 }
 
 .inline {
-  $controls: ('busy', 'colorpicker', 'datepicker', 'switch', 'lookup', 'searchfield', 'timepicker');
+  $controls: ('busy', 'colorpicker', 'datepicker', 'switch', 'lookup', 'searchfield', 'timepicker, radio');
   @include inline-control-label($controls);
   @include inline-control($controls);
 
