@@ -2609,7 +2609,7 @@ $.fn.datagrid = function(options) {
 
     },
 
-    afterRender() {
+    afterRender: function() {
       var self = this;
 
       //Init Inline Elements
