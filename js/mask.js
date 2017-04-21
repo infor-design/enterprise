@@ -604,7 +604,7 @@
         // if the original value had a decimal point, place it back in the right spot
         if (patternHasDecimal) {
           if (decimalAlreadyExists) {
-            var inputParts = originalVal.split(DECIMAL_SYMBOL),
+            var inputParts = originalVal.replace(THOUSANDS_SEP_REGEX, '').split(DECIMAL_SYMBOL),
               targetDecimalIndex;
 
             // reposition the decimal in the correct spot based on total number of characters
@@ -613,7 +613,7 @@
               if (inputParts[0].length >= maskParts[0].length) {
                 targetDecimalIndex = maskParts[0].length;
               } else {
-                targetDecimalIndex = currentDecimalIndex;
+                targetDecimalIndex = inputParts[0].length;
               }
             } else if (inputParts[1].length === maskParts[1].length) {
               targetDecimalIndex = (val.length - maskParts[1].length);
