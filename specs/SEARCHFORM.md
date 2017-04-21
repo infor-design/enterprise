@@ -3,14 +3,19 @@
 http://jira.infor.com/browse/SOHO-5382
 
 ## Functional Requirements
+- What developer needs.
+
+## Nice To Have (Future)
+- More from PM / Design
 
 ## Acceptance Criteria
-
-## Nice To Have
+- Dev Phase
 
 ## QA Test Cases
+- Dev Phase
 
 ## Test Case Pages
+- Dev Phase
 
 [Search Form Pattern](patterns/search-form)
 

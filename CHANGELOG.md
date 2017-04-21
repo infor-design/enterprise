@@ -23,6 +23,7 @@ http://usalvlhlpool1.infor.com/4.3.0-rc/controls
 
 ### Breaking Changes
 - Tag - Revised the spelling of the CSS class for "X" buttons on tags from "is-dismissable" to "is-dismissible".  The original class still works, but is deprecated and will be removed in a future version.
+- Pie - The Chart now sorts slices in the order of the dataset (was on size from biggest to smallest before).
 - Button - Changed the standard `.btn` style on forms to reflect Tertiary button style instead of Secondary button style (SOHO-6083).
 
 ### Ui Changes
