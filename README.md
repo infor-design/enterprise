@@ -114,6 +114,21 @@ Also your project should be initialized with a package.json. This can be done vi
 npm config set @infor:registry=http://npm.infor.com:4873
 ```
 
+## Npm Via Git
+
+Add the following to your package json.
+
+Latest:
+```bash
+"@infor/sohoxi": "git+http://git.infor.com/projects/scm/soho/controls.git",
+```
+
+Tag:
+```bash
+"@infor/sohoxi": "git+http://git.infor.com/projects/scm/soho/controls.git#ea3b30b1bbc3857b2a26571f3806a38bbde83cb0",
+```
+
+
 ### Installation
 Run the following
 
