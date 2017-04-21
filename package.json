@@ -28,7 +28,7 @@
     "documentation": "documentation build js/*.js -f html -o views/docs -g false",
     "documentation:build": "documentation build js/*.js -f html -o docs -g false",
     "publish": "grunt publish && npm publish publish --force",
-    "postinstall": "node_modules/.bin/gruntgrunt --base node_modules/@infor/sohoxi --gruntfile node_modules/@infor/sohoxi/GruntFile.js default"
+    "postinstall": "node_modules/.bin/grunt --base node_modules/@infor/sohoxi --gruntfile node_modules/@infor/sohoxi/GruntFile.js default"
   },
   "dependencies": {
     "d3": "^3.4.6",
