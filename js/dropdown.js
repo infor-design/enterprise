@@ -240,6 +240,7 @@
         // Get a current list of <option> elements
         // If none are available, simply return out
         var opts = this.element.find('option');
+        var groups = this.element.find('optgroup');
         var selectedOpts = opts.filter(':selected');
 
         function buildLiHeader(textContent) {
@@ -283,6 +284,8 @@
           return liMarkup;
         }
 
+
+
         // Move all selected options to the top of the list if the setting is true.
         // Also adds a group heading if other option groups are found in the <select> element.
         if (self.settings.moveSelectedToTop) {
@@ -306,11 +309,14 @@
 
         opts.each(function(i) {
           var count = i + upTopOpts,
-            option = $(this);
+            option = $(this),
+            parent = option.parent();
 
           // Add Group Header if this is an <optgroup>
-          if (option.is(':first-child') && option.parent().is('optgroup')) {
-            ulContents += buildLiHeader('' + option.parent().attr('label'));
+          // Remove the group header from the queue.
+          if (parent.is('optgroup') && groups.index(parent) > -1) {
+            groups = groups.not(parent);
+            ulContents += buildLiHeader('' + parent.attr('label'));
           }
 
           if (self.settings.moveSelectedToTop && option.is(':selected')) {
