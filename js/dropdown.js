@@ -81,7 +81,9 @@
         if (!this.wrapper.length) {
           this.wrapper = $('<div class="dropdown-wrapper"></div>').insertAfter(baseElement);
         }
-
+        if(elemClassList.contains('text-align-reverse')) {
+          pseudoClassString += ' text-align-reverse';
+        }
         // Build sub-elements if they don't exist
         this.label = $('label[for="'+ orgId +'"]');
 
@@ -222,14 +224,20 @@
           listContents = '',
           ulContents = '',
           upTopOpts = 0,
-          hasOptGroups = this.element.find('optgroup').length;
+          hasOptGroups = this.element.find('optgroup').length,
+          reverseText = '';
+
+        if(this.element[0].classList.contains('text-align-reverse')){
+          reverseText = ' text-align-reverse';
+        }
 
         if (!listExists) {
-          listContents = '<div class="dropdown-list' +
+          listContents = '<div class="dropdown-list' + reverseText +
             (isMobile ? ' mobile' : '') +
             (this.settings.multiple ? ' multiple' : '') + '" id="dropdown-list" role="application" ' + (this.settings.multiple ? 'aria-multiselectable="true"' : '') + '>' +
             '<label for="dropdown-search" class="audible">' + Locale.translate('Search') + '</label>' +
-            '<input type="text" class="dropdown-search" role="combobox" aria-expanded="true" id="dropdown-search" aria-autocomplete="list">' +
+            '<input type="text" class="dropdown-search' + reverseText +
+            '" role="combobox" aria-expanded="true" id="dropdown-search" aria-autocomplete="list">' +
             '<span class="trigger">' +
               (isMobile ? $.createIcon({ icon: 'close', classes: ['close'] }) : $.createIcon('dropdown')) +
               '<span class="audible">' + (isMobile ? Locale.translate('Close') : Locale.translate('Collapse')) + '</span>' +

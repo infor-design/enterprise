@@ -50,7 +50,9 @@ div.multiselect {
   text-overflow: ellipsis;
   vertical-align: middle;
   white-space: nowrap;
-
+  &.text-align-reverse {
+    text-align: right;
+  }
   > span {
     display: inline-block;
     max-width: 100%;
@@ -151,7 +153,9 @@ div.multiselect {
   white-space: nowrap;
   width: auto;
   z-index: 4501;
-
+  &.text-align-reverse {
+    text-align: right;
+  }
   &:active {
     outline: 0;
   }
@@ -413,6 +417,10 @@ div.multiselect {
   text-overflow: ellipsis;
   width: 100%;
 
+  &.text-align-reverse {
+    text-align: right;
+  }
+
   &::-ms-clear {
     display: none;
   }
@@ -638,6 +646,9 @@ html[dir='rtl'] {
     padding: 9px 10px 8px 32px;
     text-align: right;
 
+    &.text-align-reverse {
+      text-align: left;
+    }
     // Icon States
     + .icon {
       left: 6px;
@@ -689,6 +700,9 @@ html[dir='rtl'] {
 
   .dropdown-search {
     padding: 9px 10px 8px 32px;
+    &.text-align-reverse {
+      text-align: left;
+    }
   }
 
   .dropdown-wrapper {
