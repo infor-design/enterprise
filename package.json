@@ -27,8 +27,7 @@
     "bump-version": "./bin/bump-version.js",
     "documentation": "documentation build js/*.js -f html -o views/docs -g false",
     "documentation:build": "documentation build js/*.js -f html -o docs -g false",
-    "publish": "grunt publish && npm publish publish --force",
-    "postinstall": "node_modules/.bin/grunt"
+    "publish": "grunt publish && npm publish publish --force"
   },
   "dependencies": {
     "d3": "^3.4.6",
