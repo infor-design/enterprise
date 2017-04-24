@@ -552,13 +552,6 @@
         });
 
         term = '';
-
-        /*
-        //Adjust height / top position
-        if (self.list.hasClass('is-ontop')) {
-          self.list[0].style.top = (self.pseudoElem.offset().top - self.list.height() + self.pseudoElem.outerHeight() - 2) + 'px';
-        }
-        */
         this.position();
       },
 
@@ -1322,7 +1315,7 @@
           this.list.find('.is-focused').removeClass('is-focused').attr({'tabindex':'-1'});
           if (option.val() !== 'clear_selection') {
             listOption.addClass('is-focused').attr({'tabindex': '0'});
-          }          
+          }
 
           // Set activedescendent for new option
           //this.pseudoElem.attr('aria-activedescendant', listOption.attr('id'));
