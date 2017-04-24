@@ -250,7 +250,6 @@
           cssClass: 'lookup-modal' + (!hasKeywordSearch ? ' lookup-no-search' : '')
         }).off('open').on('open', function () {
           self.createGrid();
-          self.element.trigger('afteropen', [self.modal, self.grid]);
         }).off('close').on('close', function () {
           self.element.focus();
         });
