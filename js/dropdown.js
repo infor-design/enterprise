@@ -996,7 +996,6 @@
             if (ddOption.is('.separator, .group-label')) {
               return;
             }
-
             target = ddOption;
           }
 
