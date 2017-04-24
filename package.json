@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "d3": "^3.4.6",
-    "jquery": "^3.1.1",
+    "jquery": "^3.1.1"
   },
   "main": "dist/js/sohoxi",
   "jspm": {
