@@ -346,12 +346,6 @@
           .on('updated.popupmenu', function(e) {
             e.stopPropagation();
             self.updated();
-          })
-          .on('selected.popupmenu', function(e, anchor, selectedState, doNothing) {
-            if (doNothing) {
-              return false;
-            }
-            self.handleItemClick(undefined, anchor);
           });
 
           // Media Query Listener to detect a menu closing on mobile devices that change orientation.
@@ -562,7 +556,11 @@
         // If an event object is not passed to `handleItemClick()`, assume it was due to this
         // event being triggered already, making it not necessary to re-trigger it.
         if (e) {
-          selectionResult.push(false);
+          if (selectionResult.length === 1) {
+            selectionResult.push(undefined);
+          }
+
+          selectionResult.push(true);
           this.element.triggerHandler('selected', selectionResult);
         }
 

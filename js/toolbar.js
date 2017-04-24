@@ -124,57 +124,7 @@
         this.buttonsetItems = this.buttonset.children('button')
           .add(this.buttonset.find('input')); // Searchfield Wrappers
 
-        // Define and wrap Split Buttons
-        /*
-        var splitBtns = this.buttonset.find('.btn-split-menu.btn'),
-          splitButtonWrappers = [];
-
-        splitBtns.each(function() {
-          var el = $(this),
-            splitButton = el.parent();
-
-          // Re-use splitButton wrappers if they exist
-          if (splitButton.is('.btn-split-wrapper')) {
-            splitButtonWrappers.push(splitButton);
-            return;
-          }
-
-          var sep = el.next('.separator'),
-            menu = el.next('.btn-menu');
-
-          // Account for menu after a separator
-          menu = menu.add(sep.next('.btn-menu'));
-
-          // If the menu doesn't exist, treat this as a regular button.
-          if (!menu.length) {
-            // Remove stray separators
-            if (sep.length) {
-              sep.remove();
-            }
-
-            self.buttonsetItems = self.buttonsetItems.add($(this));
-            return;
-          }
-
-          if (!sep.length) {
-            sep = $('<div class="separator"></div>');
-          }
-
-          splitButton = $('<span class="btn-split-wrapper"></span>');
-          splitButton.insertAfter(el);
-
-          splitButton
-            .append(el)
-            .append(sep)
-            .append(menu);
-
-          splitButtonWrappers.push(splitButton);
-        });
-        this.splitButtonWrappers = splitButtonWrappers;
-        this.buttonsetItems = this.buttonsetItems
-          .add(splitButtonWrappers);
-        */
-
+        // Items contains all actionable items in the toolbar, including the ones in the title, and the more button
         this.items = this.buttonsetItems
           .add(this.title.children('button'))
           .add(this.more);
@@ -252,30 +202,6 @@
 
           a.text(self.getItemText(item));
 
-          // Determines which elements need to be skipped in a Split Button scenario
-          function setSplitButtonSkipping() {
-            var sep = item.next('.separator');
-            var menu = sep.next('.btn-split-menu.btn-menu');
-
-            // If there's no separator or menu button, continue and treat this as a normal spillover item.
-            if (!sep.length || !menu.length) {
-              return;
-            }
-
-            // Skip creating extra menu items for these elements.
-            // Split Button renders as a single item in the spillover menu
-            sep.data('skipit', true);
-            menu.data('skipit', true);
-            isSplitButton = true;
-
-            // Set the text of the menu item to be the "audible" contents of the
-            // Split Button's Menu Trigger
-            a.text(self.getItemText(menu));
-          }
-          if (item.is('.btn-split-menu.btn')) {
-            setSplitButtonSkipping();
-          }
-
           // Pass along any icons except for the dropdown (which is added as part of the submenu design)
           var submenuDesignIcon = $.getBaseURL('#icon-dropdown');
           var icon = item.children('.icon').filter(function() {
@@ -338,42 +264,6 @@
             }
           }
 
-          // Figure out if this item or a related item has a submenu that needs to be
-          // created and linked.
-          var submenuTopper,
-            splitMenuTrigger,
-            splitMenu;
-
-          // Handle straight-up submenus
-          if (item.is('.btn-menu')) {
-            submenuTopper = item;
-            if (!item.data('popupmenu')) {
-              item.popupmenu();
-            }
-          }
-
-          // Handle split buttons
-          if (isSplitButton) {
-            splitMenuTrigger = item.next().next();
-            splitMenu = splitMenuTrigger.next();
-            if (!splitMenuTrigger.data('popupmenu')) {
-              splitMenuTrigger.popupmenu();
-            }
-            submenuTopper = splitMenuTrigger;
-          }
-
-          if (submenuTopper) {
-            var menu = submenuTopper.data('popupmenu').menu,
-              diffMenu = menu.clone();
-
-            if (isSplitButton) {
-              diffMenu.removeClass('is-selectable').removeClass('is-multiselectable');
-            }
-
-            addItemLinksRecursively(menu, diffMenu, popupLi);
-          }
-
-          /*
           if (item.is('.btn-menu')) {
             if (!item.data('popupmenu')) {
               item.popupmenu();
@@ -384,7 +274,6 @@
 
             addItemLinksRecursively(menu, diffMenu, popupLi);
           }
-          */
 
           if (item.is('[data-popdown]')) {
             item.popdown();
@@ -408,15 +297,13 @@
         function refreshTextAndDisabled(menu) {
           $('li > a', menu).each(function () {
             var a = $(this),
+                li = a.parent(),
                 item = a.data('originalButton'),
+                itemParent,
                 text = self.getItemText(item),
                 submenu;
 
             if (item) {
-              if (item.is('.btn-split-menu')) {
-                text = self.getItemText(item.next().next());
-              }
-
               if (a.find('span').length) {
                 a.find('span').text(text.trim());
               } else {
@@ -424,17 +311,27 @@
               }
 
               if (item.is('.hidden') || item.parent().is('.hidden')) {
-                a.closest('li').addClass('hidden');
+                li.addClass('hidden');
               } else {
-                a.closest('li').removeClass('hidden');
+                li.removeClass('hidden');
               }
 
               if (item.parent().is('.is-disabled') || item.is(':disabled')) { // if it's disabled menu item, OR a disabled menu-button
-                a.closest('li').addClass('is-disabled');
+                li.addClass('is-disabled');
                 a.attr('tabindex', '-1');
               } else {
-                a.closest('li').removeClass('is-disabled');
+                li.removeClass('is-disabled');
                 a.removeAttr('disabled');
+              }
+
+              if (item.is('a')) {
+                itemParent = item.parent('li');
+
+                if (itemParent.is('.is-checked')) {
+                  li.addClass('is-checked');
+                } else {
+                  li.removeClass('is-checked');
+                }
               }
 
               if (item.is('.btn-menu')) {
@@ -978,9 +875,11 @@
             li.classList.add('hidden');
             elem.classList.remove('is-overflowed');
 
-            if (elem.classList.contains('btn-split-menu') && elem.classList.contains('btn')) {
-              $elem.next().next().removeClass('is-overflowed');
-            }            
+            /*
+            if (elem.classList.contains('btn-split-menu') && elem.classList.contains('btn-menu')) {
+              $elem.last().last().removeClass('is-overflowed');
+            }
+            */
             return;
           }
 
@@ -989,9 +888,11 @@
           }
           elem.classList.add('is-overflowed');
 
-          if (elem.classList.contains('btn-split-menu') && elem.classList.contains('btn')) {
-            $elem.next().next().addClass('is-overflowed');
+          /*
+          if (elem.classList.contains('btn-split-menu') && elem.classList.contains('btn-menu')) {
+            $elem.last().last().addClass('is-overflowed');
           }
+          */
 
           if ($elem.find('.icon').length) {
             iconDisplay = 'addClass';
@@ -1041,14 +942,17 @@
         var classList = item.classList,
           style = window.getComputedStyle(item);
 
+        /*
         if (classList.contains('btn-split-menu')) {
-          if (classList.contains('btn-menu')) {
-            if ($(item).prev().prev().is('.btn-split-menu.btn.is-overflowed')) {
+          if (classList.contains('btn')) {
+            if ($(item).next().next().is('.btn-split-menu.btn-menu.is-overflowed')) {
               return true;
             }
             return false;
           }
         }
+        */
+
         if (classList.contains('btn-actions')) {
           return true;
         }

@@ -79,8 +79,8 @@
       ul.find('.is-checked').removeClass('is-checked');
       args.parent().addClass('is-checked');
 
-      //var otherMenu = $('.popupmenu[data-original-menu="'+ ul.attr('id') +'"]');
-      //ul.find('.is-checked').removeClass('is-checked');
-      //ul.find('li:contains('+ args.text() +')').addClass('is-checked');
+      var otherMenu = $('.popupmenu[data-original-menu="'+ ul.attr('id') +'"]');
+      ul.find('.is-checked').removeClass('is-checked');
+      ul.find('li:contains('+ args.text() +')').addClass('is-checked');
     });
 </script>
