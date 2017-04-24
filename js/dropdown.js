@@ -73,7 +73,7 @@
 
         //Detect Inline Styles
         var style = this.element.attr('style');
-        this.isHidden = style && style.indexOf('display: none') > 0;
+        this.isHidden = style && style.indexOf('display: none') >= 0;
 
         // Build the wrapper if it doesn't exist
         var baseElement = this.isInlineLabel ? this.inlineLabel : this.element;
