@@ -515,7 +515,7 @@
       filterList: function(term) {
         var self = this,
           selected = false,
-          list = $('li', this.listUl),
+          list = $('li.dropdown-option', this.listUl),
           results;
 
         if (!list.length || !this.list || this.list && !this.list.length) {
@@ -990,9 +990,13 @@
 
         function listItemClickHandler(e) {
           var target = $(e.target),
-            ddOption = target.closest('li.dropdown-option');
+            ddOption = target.closest('li');
 
           if (ddOption.length) {
+            if (ddOption.is('.group-label')) {
+              return;
+            }
+            
             target = ddOption;
           }
 
