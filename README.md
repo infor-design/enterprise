@@ -116,17 +116,25 @@ npm config set @infor:registry=http://npm.infor.com:4873
 
 ## Npm Via Git
 
-Add the following to your package json.
+Add the following to your package json. Possibly use sudo on mac for all the commands.
 
 Latest:
 ```bash
-"@infor/sohoxi": "git+http://git.infor.com/projects/scm/soho/controls.git",
+npm install git+http://git.infor.com/scm/soho/controls.git#4.3.0-rc --save
+cd node_modules/@infor/sohoxi
+npm install
+grunt
+cd ../../../
 ```
 
-Tag:
+node_modules/@infor/sohoxi/dist now has the files. #4.3.0-rc can be a branch or a commit hash.
+Path for the angular 2.0 components is:
+
 ```bash
-"@infor/sohoxi": "git+http://git.infor.com/projects/scm/soho/controls.git#ea3b30b1bbc3857b2a26571f3806a38bbde83cb0",
+"@infor/sohoxi-angular": "git+http://git.infor.com/scm/soho/angular-components.git",
 ```
+
+Note: paths in node_modules/@infor/sohoxi-angular/src/soho/icon may need to be updated
 
 
 ### Installation
