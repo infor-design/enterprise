@@ -83,7 +83,7 @@ module.exports = function(grunt) {
 
   // load all grunt tasks from 'node_modules' matching the `grunt-*` pattern
   require('load-grunt-tasks')(grunt);
-  require('load-grunt-parent-tasks')(grunt);
+  //require('load-grunt-parent-tasks')(grunt);
 
   grunt.registerTask('default', [
     'clean:dist',
