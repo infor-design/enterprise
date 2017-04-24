@@ -7,30 +7,20 @@
     </div>
 
     <script>
-      function loadDone() {
-        var output = $('#output');
-        var append = function (value) {
-          output.append('<span>' + value + '</span><br>');
-        };
-        setTimeout(function () {
+      var output = $('#output');
+      var append = function (value) {
+        output.append('<span>' + value + '</span><br>');
+      };
 
-          var date = new Date('2017-02-01T10:27:40.600Z');
-				  var options = { pattern: "yyyy-MM-dd HH:mm", date: 'datetime' };
-          debugger;
-          var value =  Locale.formatNumber(0.57, {style: 'percent', minimumFractionDigits: 0, maximumFractionDigits: 0});
-          append(value);
+      setTimeout(function () {
 
+        debugger;
+        var dt = Locale.parseDate('000100', 'HHmmss', false);
+        var ft = Locale.formatDate(dt, {pattern: 'HHmmss'});
+			  append(ft);
 
-        }, 300);
-      }
+      }, 300);
     </script>
 
-    {{^amd}}
-    <script>
-      $(function() {
-        loadDone();
-      });
-    </script>
-    {{/amd}}
   </div>
 </div>

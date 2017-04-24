@@ -13,6 +13,7 @@ temp/
 docs/
 views/docs
 publish/dist
+publish/sass
 
 # Packages #
 ############

@@ -796,9 +796,6 @@
         this.element.addClass('is-open');
         this.menu.addClass('is-open').attr('aria-hidden', 'false');
 
-        this.menu.find('a').attr('aria-disabled', 'false').parent().removeClass('is-disabled');
-        this.menu.find('a[disabled]').attr('aria-disabled', 'false').parent().addClass('is-disabled');
-
         this.position(e);
 
         if (this.element.closest('.header').length > 0) {

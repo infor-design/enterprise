@@ -591,7 +591,7 @@
           return;
         }
 
-        item.removeAttr('tabindex');
+        item.siblings().removeAttr('tabindex');
         item.attr('tabindex', 0).focus();
 
         if (this.settings.selectOnFocus && (this.settings.selectable !== 'multiple')) {
@@ -731,8 +731,10 @@
         isChecked = li.hasClass('is-selected');
 
         //focus
-        li.parent().children().removeAttr('tabindex');
-        li.attr('tabindex', 0);
+        if (!li.is('[tabindex="0"]')) {
+          li.siblings().removeAttr('tabindex');
+          li.attr('tabindex', 0);
+        }
 
         if (this.settings.selectable === false || this.settings.selectable === 'false') {
           return;

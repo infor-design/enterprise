@@ -216,9 +216,10 @@
   .tooltip-content {
     padding: 20px;
 
-    > div {
-      overflow: hidden;
-    }
+    // SOHO-6032
+    //> div {
+    //  overflow: hidden;
+    //}
   }
 
   &.alternate {

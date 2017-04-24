@@ -81,11 +81,11 @@ define([
 
       var dt = new Date(),
         h = (dt.getHours() > 12 ? dt.getHours()-12 : dt.getHours()).toString(),
-        h24 = dt.getHours().toString(),
+        h24 = Locale.pad(dt.getHours().toString(), 2),
         m = Locale.pad(dt.getMinutes(), 2).toString(),
         s = Locale.pad(dt.getSeconds(), 2).toString();
 
-      expect(Locale.formatDate(dt, {pattern: 'hhmmss'})).to.equal(h+m+s);
+      expect(Locale.formatDate(dt, {pattern: 'hmmss'})).to.equal(h+m+s);
       expect(Locale.formatDate(dt, {pattern: 'HHmmss'})).to.equal(h24+m+s);
       //expect(Locale.formatDate(dt, {date: 'timestamp'})).to.equal(h+m+s);
 
@@ -155,6 +155,16 @@ define([
       expect(Locale.isRTL()).to.equal(false);
       Locale.set('ar-SA');
       expect(Locale.isRTL()).to.equal(true);
+    },
+
+    //Formating Hours
+    'should be able to format and parse hours': function() {
+      Locale.set('en-US');
+      var dt = Locale.parseDate('000100', 'HHmmss', false);
+      expect(dt.getTime()).to.equal(new Date((new Date()).getFullYear(), (new Date()).getMonth(), 1,'00', '01', '00').getTime());
+      expect(Locale.formatDate(dt, {pattern: 'h:mm a'})).to.equal('12:01 AM');
+      expect(Locale.formatDate(dt, {pattern: 'HHmmss'})).to.equal('000100');
+
     },
 
     //Test Long Formatting
@@ -370,6 +380,7 @@ define([
       expect(Locale.formatNumber(20.1, {style: 'decimal', round: true})).to.equal('20.10');
 	    expect(Locale.formatNumber('12,345.123')).to.equal('12,345.123');
 	    expect(Locale.formatNumber(12345.1234, {group: ''})).to.equal('12345.123');
+      expect(Locale.formatNumber(5.1, { minimumFractionDigits: 2 , maximumFractionDigits: 2 })).to.equal('5.10');
 
       Locale.set('de-DE');
       expect(Locale.formatNumber(12345.1)).to.equal('12.345,10');
@@ -475,7 +486,7 @@ define([
       expect(Locale.formatDate(new Date(2016, 2, 15, 12, 30, 36), {pattern: 'd/M/yyyy h:mm:ss a'})).to.equal('15/3/2016 12:30:36 PM');
       expect(Locale.formatDate(new Date(2016, 2, 15, 0, 30, 36), {pattern: 'd/M/yyyy h:mm:ss a'})).to.equal('15/3/2016 12:30:36 AM');
       expect(Locale.formatDate(new Date(2016, 2, 15, 12, 30, 36), {pattern: 'd/M/yyyy HH:mm:ss'})).to.equal('15/3/2016 12:30:36');
-      expect(Locale.formatDate(new Date(2016, 2, 15, 0, 30, 36), {pattern: 'd/M/yyyy HH:mm:ss'})).to.equal('15/3/2016 0:30:36');
+      expect(Locale.formatDate(new Date(2016, 2, 15, 0, 30, 36), {pattern: 'd/M/yyyy HH:mm:ss'})).to.equal('15/3/2016 00:30:36');
     },
 
     'should handle minimumFractionDigits': function() {
