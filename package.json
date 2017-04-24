@@ -1,6 +1,6 @@
 {
   "name": "@infor/sohoxi",
-  "version": "4.2.6",
+  "version": "4.3.0-rc",
   "shortName": "sohoxi",
   "description": "Hook & Loop - SoHo XI Controls",
   "author": "Hook & Loop",
@@ -58,7 +58,8 @@
     "jquery": "^3.1.1",
     "jsdom": "^9.9.1",
     "jshint": "^2.9.2",
-    "load-grunt-parent-tasks": "^0.1.1"
+    "load-grunt-parent-tasks": "^0.1.1",
+    "load-grunt-tasks": "^3.5.2"
   },
   "main": "dist/js/sohoxi",
   "jspm": {
