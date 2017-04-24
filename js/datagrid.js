@@ -5543,15 +5543,8 @@ $.fn.datagrid = function(options) {
         }
       }
 
-      var correctCellNode;
-      if (this.settings.source != null) {
-       correctCellNode = this.activeCell.node;
-      } else {
-       correctCellNode = cellNode;
-      }
-
       if (!isInline) {
-        correctCellNode.find('.datagrid-cell-wrapper').html(formatted);
+        cellNode.find('.datagrid-cell-wrapper').html(formatted);
       }
 
       if (coercedVal !== oldVal && !fromApiCall) {
