@@ -942,17 +942,6 @@
         var classList = item.classList,
           style = window.getComputedStyle(item);
 
-        /*
-        if (classList.contains('btn-split-menu')) {
-          if (classList.contains('btn')) {
-            if ($(item).next().next().is('.btn-split-menu.btn-menu.is-overflowed')) {
-              return true;
-            }
-            return false;
-          }
-        }
-        */
-
         if (classList.contains('btn-actions')) {
           return true;
         }
