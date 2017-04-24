@@ -120,7 +120,8 @@
           toolbar: {title: 'Data Grid Header Title', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: true,  collapsibleFilter: true},
           paging: true,
           pagesize: 5,
-          pagesizes: [5, 10, 25, 50]
+          pagesizes: [5, 10, 25, 50],
+          source: function () {}
         }).on('cellchange', function (e, args) {
           console.log(args.oldValue, args.value);
         }).on('rowadd', function (e, args) {
@@ -132,6 +133,7 @@
         gridApi = $('#datagrid').data('datagrid');
 
         //Example row status
+        gridApi.setActiveCell(1,2, 0)
         gridApi.rowStatus(0, 'error', 'Error');
         gridApi.rowStatus(0, 'error', 'Error 2');
         gridApi.rowStatus(0, 'error', 'Error 3');
