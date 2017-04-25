@@ -22,7 +22,7 @@
         defaults = {
           filterMode: 'contains',
           maxSelected: undefined,
-          moveSelectedToTop: true,
+          moveSelected: 'all',
           source: undefined
         },
         settings = $.extend({}, defaults, options);
@@ -50,6 +50,7 @@
         var ddOpts = {
             closeOnSelect: false,
             empty: true,
+            moveSelected: 'all',
             multiple: true
           };
 
@@ -65,8 +66,8 @@
           ddOpts.maxSelected = this.settings.maxSelected;
         }
 
-        if (this.settings.moveSelectedToTop) {
-          ddOpts.moveSelectedToTop = this.settings.moveSelectedToTop;
+        if (this.settings.moveSelected) {
+          ddOpts.moveSelected = this.settings.moveSelected;
         }
 
         this.element.dropdown(ddOpts);
