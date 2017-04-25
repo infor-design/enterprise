@@ -23,6 +23,7 @@
           filterMode: 'contains',
           maxSelected: undefined,
           moveSelected: 'all',
+          showEmptyGroupHeaders: false,
           source: undefined
         },
         settings = $.extend({}, defaults, options);
@@ -68,6 +69,10 @@
 
         if (this.settings.moveSelected) {
           ddOpts.moveSelected = this.settings.moveSelected;
+        }
+
+        if (this.settings.showEmptyGroupHeaders) {
+          ddOpts.showEmptyGroupHeaders = this.settings.showEmptyGroupHeaders;
         }
 
         this.element.dropdown(ddOpts);

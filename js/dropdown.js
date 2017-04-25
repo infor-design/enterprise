@@ -28,6 +28,7 @@
           moveSelectedToTop: undefined, //(Deprecated - see the 'moveSelected' setting)
           multiple: false, //Turns the dropdown into a multiple selection box
           noSearch: false, //If true, disables the ability of the user to enter text in the Search Input field in the open combo box
+          showEmptyGroupHeaders: false, // If true, displays <optgroup> headers in the list even if no selectable options are present underneath.
           source: undefined, //A function that can do an ajax call.
           sourceArguments: {}, // If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
           reloadSourceOnOpen: false, // If set to true, will always perform an ajax call whenever the list is opened.  If false, the first AJAX call's results are cached.
@@ -368,16 +369,16 @@
           var count = i + upTopOpts,
             option = $(this),
             parent = option.parent(),
-            optgroupIsDrawn,
+            optgroupIsNotDrawn,
             optgroupIndex;
 
           // Add Group Header if this is an <optgroup>
           // Remove the group header from the queue.
           if (parent.is('optgroup') && groups.length) {
             optgroupIndex = parent.index();
-            optgroupIsDrawn = groups.index(parent) > -1;
+            optgroupIsNotDrawn = groups.index(parent) > -1;
 
-            if (optgroupIsDrawn) {
+            if (optgroupIsNotDrawn) {
               groups = groups.not(parent);
               ulContents += buildLiHeader('' + parent.attr('label'));
 
@@ -585,7 +586,8 @@
       filterList: function(term) {
         var self = this,
           selected = false,
-          list = $('li.dropdown-option', this.listUl),
+          list = $('.dropdown-option', this.listUl),
+          headers = $('.group-label', this.listUl),
           results;
 
         if (!list.length || !this.list || this.list && !this.list.length) {
@@ -611,7 +613,7 @@
           return;
         }
 
-        list.not(results).addClass('hidden');
+        list.not(results).add(headers).addClass('hidden');
         list.filter(results).each(function(i) {
           var li = $(this);
           li.attr('tabindex', i === 0 ? '0' : '-1');
@@ -625,6 +627,13 @@
           var exp = new RegExp('(' + term + ')', 'i');
           var text = li.text().replace(exp, '<i>$1</i>');
           li.removeClass('hidden').children('a').html(text);
+        });
+
+        headers.each(function() {
+          var children = $(this).nextUntil('.group-label, .selector').not('.hidden');
+          if (self.settings.showEmptyGroupHeaders || children.length) {
+            $(this).removeClass('hidden');
+          }
         });
 
         term = '';
