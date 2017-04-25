@@ -252,6 +252,7 @@
         // Get a current list of <option> elements
         // If none are available, simply return out
         var opts = this.element.find('option');
+        var groups = this.element.find('optgroup');
         var selectedOpts = opts.filter(':selected');
 
         function buildLiHeader(textContent) {
@@ -295,6 +296,8 @@
           return liMarkup;
         }
 
+
+
         // Move all selected options to the top of the list if the setting is true.
         // Also adds a group heading if other option groups are found in the <select> element.
         if (self.settings.moveSelectedToTop) {
@@ -318,11 +321,14 @@
 
         opts.each(function(i) {
           var count = i + upTopOpts,
-            option = $(this);
+            option = $(this),
+            parent = option.parent();
 
           // Add Group Header if this is an <optgroup>
-          if (option.is(':first-child') && option.parent().is('optgroup')) {
-            ulContents += buildLiHeader('' + option.parent().attr('label'));
+          // Remove the group header from the queue.
+          if (parent.is('optgroup') && groups.index(parent) > -1) {
+            groups = groups.not(parent);
+            ulContents += buildLiHeader('' + parent.attr('label'));
           }
 
           if (self.settings.moveSelectedToTop && option.is(':selected')) {
@@ -519,7 +525,7 @@
       filterList: function(term) {
         var self = this,
           selected = false,
-          list = $('li', this.listUl),
+          list = $('li.dropdown-option', this.listUl),
           results;
 
         if (!list.length || !this.list || this.list && !this.list.length) {
@@ -562,13 +568,6 @@
         });
 
         term = '';
-
-        /*
-        //Adjust height / top position
-        if (self.list.hasClass('is-ontop')) {
-          self.list[0].style.top = (self.pseudoElem.offset().top - self.list.height() + self.pseudoElem.outerHeight() - 2) + 'px';
-        }
-        */
         this.position();
       },
 
@@ -1004,9 +1003,12 @@
 
         function listItemClickHandler(e) {
           var target = $(e.target),
-            ddOption = target.closest('li.dropdown-option');
+            ddOption = target.closest('li');
 
           if (ddOption.length) {
+            if (ddOption.is('.separator, .group-label')) {
+              return;
+            }
             target = ddOption;
           }
 

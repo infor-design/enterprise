@@ -1,0 +1,57 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Multiselect Test: Rendering Style Types</h2>
+    <p>
+      <a class="hyperlink" href="http://jira/browse/SOHO-5911" target="_blank">Related JIRA Ticket</a>.
+    </p>
+    <p>
+      The multiselect on the left/top shows rendering<br />
+      The multiselect on the right/bottom shows <em>startsWith</em>-style filtering.
+    </p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+
+    <div class="field">
+      <label for="move-to-top">Move To The Top</label>
+      <select id="move-to-top" name="move-to-top" class="multiselect" data-init="false" multiple></select>
+    </div>
+
+  </div>
+  <div class="six columns">
+
+    <div class="field">
+      <label for="stay-where-they-are">Stay Where They Are</label>
+      <select id="stay-where-they-are" name="stay-where-they-are" class="multiselect" data-init="false" multiple></select>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+
+    function statesSource(response, term) {
+      //$.getJSON('{{basepath}}api/states?term='+term, function(data) {
+      $.getJSON('{{basepath}}api/towns', function(data, term) {
+        console.log(data, term);
+        response(data);
+      });
+    }
+
+    $('#move-to-top').multiselect({
+      moveSelectedToTop: true,
+      source: statesSource
+    });
+
+    $('#stay-where-they-are').multiselect({
+      moveSelectedToTop: false,
+      source: statesSource
+    });
+
+  });
+</script>
