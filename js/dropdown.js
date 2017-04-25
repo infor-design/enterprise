@@ -83,6 +83,8 @@
         }
         if(elemClassList.contains('text-align-reverse')) {
           pseudoClassString += ' text-align-reverse';
+        } else if (elemClassList.contains('text-align-center')){
+          pseudoClassString += ' text-align-center';
         }
         // Build sub-elements if they don't exist
         this.label = $('label[for="'+ orgId +'"]');
@@ -229,6 +231,8 @@
 
         if(this.element[0].classList.contains('text-align-reverse')){
           reverseText = ' text-align-reverse';
+        } else if (this.element[0].classList.contains('text-align-center')){
+          reverseText = ' text-align-center';
         }
 
         if (!listExists) {
