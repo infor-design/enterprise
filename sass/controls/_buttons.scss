@@ -204,8 +204,9 @@ a.btn-menu {
   }
 }
 
-//Split Button
 .btn-split-menu {
+  min-width: auto;
+
   + .separator {
     // scss-lint:disable ImportantRule
     margin: 3px 3px 0 -10px !important;

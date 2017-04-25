@@ -1,37 +1,41 @@
 <div class="row">
   <div class="six columns">
-    <h2>Menu Button Test</h2>
-    <p>Split buttons are not officially supported. This is a non-official way you could implement them.
-    </p><br />
+    <h2>Menu Button Example: Split Button</h2>
+    <p><a class="hyperlink" href="http://jira/browse/SOHO-5922" target="_blank">Related JIRA Ticket</a>.</p>
+    <p>Split buttons are not officially supported. This is a non-official way you could implement them.</p>
   </div>
 </div>
 
 <div class="row">
   <div class="twelve columns">
 
-    <div class="toolbar" role="toolbar" data-options="{maxVisibleButtons: 4}">
+    <div id="example-toolbar" class="toolbar" role="toolbar" data-options="{maxVisibleButtons: 4}">
       <div class="title">
         Toolbar Title
       </div>
 
       <div class="buttonset">
 
-        <button type="button" class="btn">
+        <button id="unhelpful" class="btn">
+          <span>Unhelpful Button</span>
+        </button>
+
+        <button id="add-row-button" type="button" class="btn">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-add"></use>
           </svg>
           <span>Add Row</span>
         </button>
 
-        <button type="button" class="btn-split-menu btn">
+        <button id="split-button-action" type="button" class="btn-split-menu btn">
           <span>Add</span>
         </button>
         <div class="separator"></div>
-        <button type="button" class="btn-split-menu btn-menu">
-            <span class="audible">Change Default</span>
-            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              <use xlink:href="#icon-dropdown"></use>
-            </svg>
+        <button id="split-button-menu-trigger" type="button" class="btn-split-menu btn-menu">
+          <span class="audible">Change Default</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-dropdown"></use>
+          </svg>
         </button>
         <ul class="popupmenu is-selectable">
           <li class="is-checked"><a href="#">Add</a></li>
@@ -56,12 +60,18 @@
 </div>
 
 <script>
-    $('.btn-split-menu.btn').on('click', function (e) {
+  var SPLIT_BUTTON_ACTION = $('#split-button-action'),
+    SPLIT_BUTTON_MENU_TRIGGER = $('#split-button-menu-trigger');
+
+    // Action Button fires the action
+    SPLIT_BUTTON_ACTION.on('click', function (e) {
       alert('Do ' + $(this).find('span').text() + ' Action');
     });
 
-    $('.toolbar').on('selected', function (e, args) {
-      $('.btn-split-menu.btn').find('span').text(args.text());
+    // MenuButton selection changes the default action
+    SPLIT_BUTTON_MENU_TRIGGER.on('selected', function (e, args) {
+
+      SPLIT_BUTTON_ACTION.find('span').text(args.text());
       $(this).trigger('updated');
 
       //Sync the selected items in the two menus...
