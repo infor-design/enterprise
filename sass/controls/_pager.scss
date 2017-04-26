@@ -193,6 +193,7 @@ li + .pager-count {
 
 .pager-pagesize {
   float: right;
+  padding: 2px;// Keep 2px padding around for border to show around on focus
 
   .btn-menu {
     height: 30px;

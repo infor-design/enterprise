@@ -273,6 +273,7 @@
   border-top: 1px solid $modal-btn-border-color;
   height: 50px;
   margin-top: 10px;
+  padding: 2px;// Keep 2px padding around for border to show around on focus
 
   button {
     @include font-size(12);
@@ -284,7 +285,7 @@
     cursor: pointer;
     float: left;
     font-weight: bold;
-    height: 50px;
+    height: 46px;// [50px-4px] Keep smaller 4px for border to show around on focus
     margin-right: 0;
     overflow: hidden;
     position: relative;
