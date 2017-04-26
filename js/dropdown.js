@@ -29,6 +29,7 @@
           multiple: false, //Turns the dropdown into a multiple selection box
           noSearch: false, //If true, disables the ability of the user to enter text in the Search Input field in the open combo box
           showEmptyGroupHeaders: false, // If true, displays <optgroup> headers in the list even if no selectable options are present underneath.
+          showSelectAll: false, // If true, on Multiselect dropdowns, will show an additional option at the top of the list labeled "select all".
           source: undefined, //A function that can do an ajax call.
           sourceArguments: {}, // If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
           reloadSourceOnOpen: false, // If set to true, will always perform an ajax call whenever the list is opened.  If false, the first AJAX call's results are cached.
@@ -262,7 +263,9 @@
           ulContents = '',
           upTopOpts = 0,
           hasOptGroups = this.element.find('optgroup').length,
-          moveSelected = '' + self.settings.moveSelected;
+          isMultiselect = this.settings.multiple === true,
+          moveSelected = '' + this.settings.moveSelected,
+          showSelectAll = this.settings.showSelectAll === true;
 
         if (!listExists) {
           listContents = '<div class="dropdown-list' +
@@ -325,6 +328,18 @@
           return liMarkup;
         }
 
+        // In multiselect scenarios, shows an option at the top of the list that will
+        // select all available options if checked.
+        if (isMultiselect && showSelectAll) {
+          var allSelected = opts.not('[disabled], .hidden').length === selectedOpts.not('[disabled], .hidden').length;
+
+          ulContents += '<li role="presentation" class="dropdown-select-all-list-item'+ (allSelected ? ' is-selected' : '') + '">' +
+            '<a role="option" href="#" id="dropdown-select-all-anchor" class="dropdown-select-all-anchor">' +
+              Locale.translate('SelectAll') +
+            '</a>' +
+          '</li>';
+        }
+
         // Move selected options in each group to just underneath their corresponding group headers.
         if (moveSelected === 'group') {
           // If no optgroups exist, change to "all" and skip this part.
@@ -360,8 +375,8 @@
           });
 
           // Only show the "all" header beneath the selected options if there are no other optgroups present
-          if (!hasOptGroups) {
-            ulContents += buildLiHeader('All ' + (self.isInlineLabel ? self.inlineLabelText.text() : this.label.text()));
+          if (!hasOptGroups && opts.length > 0) {
+            ulContents += buildLiHeader(Locale.translate('All') + ' ' + (self.isInlineLabel ? self.inlineLabelText.text() : this.label.text()));
           }
         }
 
@@ -1075,10 +1090,30 @@
             ddOption = target.closest('li');
 
           if (ddOption.length) {
+            // Do nothing for group labels or separators
             if (ddOption.is('.separator, .group-label')) {
               return;
             }
+
             target = ddOption;
+          }
+
+          if (target.is('.dropdown-select-all-anchor')) {
+            target = target.parent();
+          }
+
+          // If this is the Select All option, select/deselect all.
+          if (self.settings.multiple && target.is('.dropdown-select-all-list-item')) {
+            var doSelectAll = !(target.is('.is-selected'));
+            if (doSelectAll) {
+              target.addClass('is-selected');
+              self.selectOptions(self.element.find('option:not(:selected)'), true);
+            } else {
+              target.removeClass('is-selected');
+              self.selectOptions(self.element.find('option:selected'), true);
+            }
+
+            return true;
           }
 
           e.preventDefault();
@@ -1437,7 +1472,32 @@
         }
       },
 
-      //Select an option and optionally trigger events
+      /**
+       * Convenience method for running _selectOption()_ on a set of list options.
+       * Accepts an array or jQuery selector containing valid list options and selects/deselects them.
+       * @param {Array|jQuery[]} options - incoming options
+       * @param {boolean} noTrigger - if true, causes the 'selected' and 'change' events not to fire on each list item.
+       * @return {undefined}
+       */
+      selectOptions: function(options, noTrigger) {
+        // Use a jQuery selector if the incoming options are inside an array
+        if (Array.isArray(options)) {
+          options = $(options);
+        }
+
+        var self = this;
+        options.each(function() {
+          self.selectOption($(this), noTrigger);
+        });
+      },
+
+      /**
+       * Select an option and conditionally trigger events.
+       * Accepts an array or jQuery selector containing valid list options and selects/deselects them.
+       * @param {jQuery} option - the incoming option
+       * @param {boolean} noTrigger - if true, causes the 'selected' and 'change' events not to fire on the list item.
+       * @return {undefined}
+       */
       selectOption: function(option, noTrigger) {
         if (!option) {
           return option;
@@ -1540,9 +1600,12 @@
           this.searchInput.val(trimmed);
         }
 
+        // Set the new value on the <select>
+        this.element.val(val);
+
         // Fire the change event with the new value if the noTrigger flag isn't set
         if (!noTrigger) {
-          this.element.val(val).trigger('change').triggerHandler('selected', [option, isAdded]);
+          this.element.trigger('change').triggerHandler('selected', [option, isAdded]);
         }
 
         // If multiselect, reset the menu to the unfiltered mode
