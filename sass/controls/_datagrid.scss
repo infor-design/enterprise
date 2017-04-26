@@ -109,6 +109,11 @@ $datagrid-short-row-height: 23px;
       background-color: $datagrid-list-header-bg-color;
       border-right: 0;
 
+      .handle.handle:hover,
+      .is-draggable-target.handle:hover {
+        color: $datagrid-list-filter-color;
+      }
+
       .datagrid-header-text {
         color: $datagrid-list-header-color;
       }
@@ -164,7 +169,7 @@ $datagrid-short-row-height: 23px;
     }
 
     //Filter Row
-    .datagrid-filter-wrapper {
+    .is-filterable .datagrid-filter-wrapper {
       input,
       div.dropdown {
         // scss-lint:disable ImportantRule
