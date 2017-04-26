@@ -272,6 +272,7 @@
       'SearchList': {id: 'SearchList', value: 'Search List', comment: 'Search List tooltip'},
       'Select': {id: 'Select', value: 'Select', comment: 'text describing a select action'},
       'Selected': {id: 'Selected', value: 'Selected', comment: 'text describing a selected object'},
+      'SelectAll': {id: 'SelectAll', value: 'Select All', comment: 'describes the action of selecting all items available in a list'},
       'Send': {id: 'Send', value: 'Send', comment: 'Send tooltip'},
       'SetTime': {id: 'SetTime', value: 'Set Time', comment: 'button text that inserts time when clicked'},
       'Settings': {id: 'Settings', value: 'Settings', comment: 'Settings tooltip'},
