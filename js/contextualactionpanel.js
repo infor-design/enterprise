@@ -268,8 +268,9 @@
         if (this.settings.trigger === 'immediate') {
           destroy = true;
         }
-
-        this.panel.data('modal').close(destroy);
+        if (this.panel.data('modal')) {
+          this.panel.data('modal').close(destroy);
+        }
       },
 
       disable: function() {
