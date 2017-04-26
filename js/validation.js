@@ -99,7 +99,7 @@
       });
 
       //Link on to the current object and perform validation.
-      this.inputs.filter('input, textarea, div').filter(attribs).not('input[type=checkbox]').each(function () {
+      this.inputs.filter('input, textarea, div').filter(attribs).not('input[type=checkbox], [readonly]').each(function () {
         var field = $(this),
         attribs = field.attr('data-validation-events'),
         events = (attribs ? attribs : 'blur.validate change.validate keyup.validate');

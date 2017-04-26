@@ -52,7 +52,7 @@ $toolbar-buttonset-height: 40px;
       min-width: 34px;
     }
 
-    > .separator {
+    .separator {
       background-color: $formatter-toolbar-separator-color;
       display: inline-block;
       height: 20px;
@@ -337,6 +337,12 @@ $toolbar-buttonset-height: 40px;
         + .icon {
           margin-left: 0;
         }
+      }
+    }
+
+    .btn-split-menu {
+      &.btn {
+        margin-right: 10px;
       }
     }
   }

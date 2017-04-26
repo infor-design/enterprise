@@ -25,6 +25,7 @@ window.Chart = function(container) {
 
   this.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   this.pieColors = d3.scale.ordinal().range(colorRange);
+  this.colorRange = colorRange;
   this.greyColors = d3.scale.ordinal().range(['#737373', '#999999', '#bdbdbd', '#d8d8d8']);
   this.sparklineColors = d3.scale.ordinal().range(['#1D5F8A', '#999999', '#bdbdbd', '#d8d8d8']);
   this.colors = d3.scale.ordinal().range(colorRange);
@@ -55,7 +56,7 @@ window.Chart = function(container) {
     }
 
     if (chartType === 'pie') {
-      return this.pieColors(i);
+      return this.colorRange[i];
     }
     if (chartType === 'bar-single' || chartType === 'column-single') {
       return '#1D5F8A';
@@ -563,7 +564,7 @@ window.Chart = function(container) {
         else {
           content = '<div class="chart-swatch">';
 
-          if(isStacked) {
+          if (isStacked) {
             for (j=0,l=dataset.length; j<l; j++) {
               total = 0;
               hexColor = charts.chartColor(j, 'bar', series[j]);
@@ -794,7 +795,7 @@ window.Chart = function(container) {
 
     var chartData = initialData[0].data;
     chartData = chartData.sort(function(a, b) {
-      return +a.value - +b.value;
+      return isRTL ? +b.value - +a.value : +a.value - +b.value;
     });
 
     var total = d3.sum(chartData, function(d) { return d.value; });
@@ -812,12 +813,8 @@ window.Chart = function(container) {
 
     var pie = d3.layout.pie().value(function (d) {
       return d.value;
-    });
-    // .sort(null);
+    }).sort(null);
 
-    if (isRTL) {
-      pie.sort(null);
-    }
 
     // Store our chart dimensions
     var dims = {
@@ -954,7 +951,7 @@ window.Chart = function(container) {
         clearInterval(tooltipInterval);
         charts.hideTooltip();
       })
-      .style('fill', function(d, i) {return charts.chartColor(i, 'pie', d.data); })
+      .style('fill', function(d, i) {return charts.chartColor(self.isRTL ? chartData.length-i-1 : i, 'pie', d.data); })
       .transition().duration(750)
       .attrTween('d', function(d) {
         var i = d3.interpolate(d.startAngle + 0.1, d.endAngle);
@@ -1079,7 +1076,7 @@ window.Chart = function(container) {
       },
 
       labelsColorFormatter = function (d, i, opt) {
-        return opt === 'color-as-arc' ? (charts.chartColor(i, 'pie', d.data)) : (opt === 'default' ? '' : opt);
+        return opt === 'color-as-arc' ? (charts.chartColor(self.isRTL ? chartData.length-i-1 : i, 'pie', d.data)) : (opt === 'default' ? '' : opt);
       },
 
       drawTextlabels = function (isShortName) {

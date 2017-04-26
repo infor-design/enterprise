@@ -346,7 +346,7 @@
             textValue = secondCounter < 10 ? '0' + secondCounter : secondCounter;
 
             selected = '';
-            if (self.initValues.seconds === secondCounter || (!self.initValues.seconds && textValue === '00')) {
+            if (parseInt(self.initValues.seconds, 10) === secondCounter || (!self.initValues.seconds && textValue === '00')) {
               selected = ' selected';
             }
             secondSelect.append($('<option' + selected + '>' + textValue + '</option>'));

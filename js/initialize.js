@@ -196,7 +196,7 @@
             ['button', '.btn, .btn-secondary, .btn-primary, .btn-modal-primary, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split, .btn-secondary-border'],
 
             //Hide Focus
-            ['hideFocus', 'a.hide-focus, a.tick, a.hyperlink'],
+            ['hideFocus', 'a.hide-focus, a.tick, a.hyperlink, .checkbox, .radio, .switch'],
 
             //Circle Pager
             ['circlepager'],

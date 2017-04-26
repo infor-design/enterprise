@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Valdiation Test: Multiple Validation Errors</h2>
+    <p><a class="hyperlink" href="http://jira/browse/SOHO-6104" target="_blank">Related JIRA Ticket</a>.</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <h2 class="fieldset-title">Some Form</h2>
+
+    <div class="field">
+      <label for="username-display">Username</label>
+      <input class="lookup" name="username-display" id="username-display" autocomplete="off" data-validate="required"  />
+    </div>
+
+    <div class="field">
+      <button class="btn-secondary" type="button" id="show">Show Error</button>
+      <button class="btn-secondary" type="button" id="hide">Hide Error</button>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('button').button().on('click', function () {
+    $('#username-display')
+      .removeError()
+      .addError({ message: 'I have an Error.', showTooltip: true })
+      .addError({ message: 'I have another Error.', showTooltip: true });
+  });
+
+  $('#hide').button().on('click', function () {
+    $('#username-display').removeError();
+  });
+</script>

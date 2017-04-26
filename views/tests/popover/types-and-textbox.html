@@ -1,94 +1,10 @@
+{{> tests/popover/types}}
+
 <div class="row">
   <div class="six columns">
 
-  <!-- Normal Menu -->
-    <button type="button" class="btn-tertiary  btn-menu hide-focus" >
-      <span>Normal Menu</span>
-      <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-dropdown"><use xlink:href="#icon-dropdown"/></svg>
-    </button>
-    <ul class="popupmenu">
-      <li><a href="#">Menu Option #1</a></li>
-      <li><a href="#">Menu Option #2</a></li>
-      <li><a href="#">Menu Option #3</a></li>
-    </ul><br><br>
-
-    <!-- Normal Menu -->
-    <button type="button" class="btn-tertiary  btn-menu hide-focus" >
-      <span>Selectable Menu</span>
-      <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-dropdown"><use xlink:href="#icon-dropdown"/></svg>
-    </button>
-    <ul class="popupmenu has-icons is-selectable">
-      <li><a href="#">Menu Option #1</a></li>
-      <li><a href="#">Menu Option #2</a></li>
-      <li><a href="#">Menu Option #3</a></li>
-      <li class="is-checked"><a href="#">Sub Option #4</a></li>
-      <li><a href="#">Menu Option #5</a></li>
-      <li><a href="#">Menu Option #6</a></li>
-    </ul><br><br>
-
-    <!-- Normal Menu -->
-    <button type="button" class="btn-tertiary btn-menu hide-focus" >
-      <span>Multiselectable Menu</span>
-      <svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-dropdown"><use xlink:href="#icon-dropdown"/></svg>
-    </button>
-    <ul class="popupmenu has-icons is-multiselectable">
-      <li><a href="#">Menu Option #1</a></li>
-      <li class="is-checked"><a href="#">Sub Option #2</a></li>
-      <li><a href="#">Menu Option #3</a></li>
-      <li><a href="#">Menu Option #4</a></li>
-      <li><a href="#">Menu Option #5</a></li>
-      <li><a href="#">Menu Option #6</a></li>
-    </ul><br><br>
-
-    <!-- Conents Popover -->
-    <button type="button" class="btn-tertiary" data-popover="popover-contents-click" data-title="ABC Engine Company" data-trigger="click" type="button" data-closebutton="true" data-extra-class="alternate">Content Popover</button>
-    <div id="popover-contents-click" class="hidden">
-      <p>Purchase <strong>2</strong> more to save <a href="#" class="hyperlink"><strong>$100</strong></a> total</p>
-      <div style="width: 315px; margin: 7px auto;">
-        <table role="grid" style="width: 210px" class="l-pull-left">
-          <thead>
-            <tr>
-              <th scope="col" role="columnheader">Quantity</th>
-              <th scope="col" role="columnheader">Unit Price</th>
-              <th scope="col" role="columnheader">Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>50</td>
-              <td>$18.00</td>
-              <td><strong>$900.00</strong></td>
-            </tr>
-          </tbody>
-        </table>
-        <button class="btn-primary" type="button">Apply</button>
-      </div>
-      <div class="modal-buttonset">
-        <button type="button" type="button" class="btn-modal-primary">View more</button>
-      </div>
-    </div>
+    <h2 class="fieldset-title">Moved Icon-Popover Example:</h2>
+    <p><a class="hyperlink" href="/tests/popover/attached-to-textbox">Attached To Textbox</a></p>
 
   </div>
-</div>
-
-
-
-<div class="row">
-	<div class="two columns">
-		&nbsp;
-	</div>
-	<div class="eight columns field">
-		<label id="lblName" class="inforLabel required" role="presentation" for="txtName">Your Name</label>
-		<input name="txtName" value="" maxlength="200" style="width:725px" id="txtName" class="inforTextbox wide-text-input required" type="text" aria-required="true" data-validate="required" placeholder="[Please enter your full name including your title such as Mr or Ms etc.]">
-		<a href="#" data-popover="divPopoverName" data-trigger="hover" tabindex="-1" style="position: relative; top: -6px;">
-			<svg role="presentation" aria-hidden="true" focusable="false" class="icon icon-info">
-        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-info"></use>
-      </svg>
-		</a>
-	</div>
-	<div class="two columns">
-		&nbsp;
-	</div>
-
-	<div id="divPopoverName" class="hidden">[Please enter your full name including your title such as Mr or Ms etc.]</div>
 </div>

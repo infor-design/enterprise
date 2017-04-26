@@ -393,30 +393,62 @@
 
   //Hide Focus - Only show on key entry
   $.fn.hideFocus = function() {
-    var element = $(this);
+    var element = $(this),
+      label = element.next(),
+      isClick = false,
+      isFocused = false,
+      labelClicked = false;
 
-    var isClick = false,
-      isFocused = false;
-
-    element.addClass('hide-focus').on('mousedown.hide-focus touchstart.hide-focus', function() {
-      isClick = true;
-      $(this).addClass('hide-focus');
-    }).on('focusin.hide-focus', function() {
-      var elem = $(this);
-
-      if (!isClick && !isFocused) {
-        elem.removeClass('hide-focus');
+    // Checkbox, Radio buttons or Switch
+    if (element.is('.checkbox, .radio, .switch')) {
+      if (label.is('[type="hidden"]')) {
+        label = label.next();
       }
-      isClick = false;
-      isFocused = true;
-    }).on('focusout.hide-focus', function() {
-      $(this).addClass('hide-focus');
-      isClick = false;
-      isFocused = false;
-    });
+      element.addClass('hide-focus')
+        .on('focusin.hide-focus', function() {
+          if (!isClick && !isFocused && !labelClicked) {
+            element.removeClass('hide-focus');
+          }
+          isClick = false;
+          isFocused = true;
+          labelClicked = false;
+        })
+        .on('focusout.hide-focus', function() {
+          element.addClass('hide-focus');
+          labelClicked = label.is(labelClicked);
+          isClick = false;
+          isFocused = false;
+        });
 
+      label.on('mousedown.hide-focus', function() {
+        labelClicked = this;
+        isClick = true;
+        element.addClass('hide-focus');
+      });
+    }
+
+    // All other elements (ie. Hyperlinks)
+    else {
+      element.addClass('hide-focus')
+        .on('mousedown.hide-focus touchstart.hide-focus', function() {
+          isClick = true;
+          element.addClass('hide-focus');
+        })
+        .on('focusin.hide-focus', function() {
+          if (!isClick && !isFocused) {
+            element.removeClass('hide-focus');
+          }
+          isClick = false;
+          isFocused = true;
+        })
+        .on('focusout.hide-focus', function() {
+          element.addClass('hide-focus');
+          isClick = false;
+          isFocused = false;
+        });
+    }
   };
-
+  
   //Clearable (Shows an X to clear)
   $.fn.clearable = function() {
     var self = this;

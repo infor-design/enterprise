@@ -98,36 +98,57 @@
 
         input.data('original', valMethod(input))
          .on('change.dirty', function () {
-          var input = $(this),
-            el = input,
+          var el = input,
             field = input.closest('.field'),
-            cssClass = '';
+            label = $('label:visible', field),
+            d = {class: '', style: ''};
+
+          // Used element without .field wrapper
+          if (!label[0]) {
+            label = input.next('label');
+          }
 
           if (input.attr('data-trackdirty') !== 'true') {
             return;
           }
 
-          //Set css class
+          // Add class to element
           input.addClass('dirty');
-          if ((input.attr('type')==='checkbox' || input.attr('type')==='radio')) {
-            cssClass +=' dirty-'+ input.attr('type') +
-                      (input.is(':checked') ? ' is-checked' : '');
+
+          //Set css class
+          if (input.is('[type="checkbox"], [type="radio"]')) {
+            d.class += ' dirty-'+ input.attr('type');
+            d.class += input.is(':checked') ? ' is-checked' : '';
           }
           if (input.is('select')) {
-            cssClass += ' is-select';
+            d.class += ' is-select';
             el = $('.dropdown-wrapper input[type="text"]', field);
           }
 
           //Add class and icon
-          if (!el.prev().is('.icon-dirty')) {
-            el.before('<span class="icon-dirty' + cssClass + '"></span>');
-            $('label:visible', field).append('<span class="audible msg-dirty">'+ Locale.translate('MsgDirty') +'</span>');
+          d.icon = el.prev();
+          if (!d.icon.is('.icon-dirty')) {
+            if (input.is('[type="checkbox"]')) {
+              d.rect = label[0].getBoundingClientRect();
+              d.style = ' style="left:'+ d.rect.left +'px; top:'+ d.rect.top +'px;"';
+            }
+            d.icon = '<span class="icon-dirty'+ d.class +'"'+ d.style +'></span>';
+            d.msg = Locale.translate('MsgDirty') || '';
+            d.msg = '<span class="audible msg-dirty">'+ d.msg +'</span>';
+
+            // Add icon and msg
+            el.before(d.icon);
+            label.append(d.msg);
+
+            // Cache icon and msg
+            d.icon = el.prev();
+            d.msg = label.find('.msg-dirty');
           }
 
           //Handle reseting value back
           if (valMethod(input) === input.data('original')) {
             input.removeClass('dirty');
-            $('.icon-dirty, .msg-dirty', field).remove();
+            $('.icon-dirty, .msg-dirty', field).add(d.icon).add(d.msg).remove();
             input.trigger('pristine');
             return;
           }
@@ -163,6 +184,17 @@
     $('input:radio').on('click.radios', function() {
       this.focus();
     });
+  });
+
+  // Add css classes to parent for apply special rules
+  $(function () {
+    var addCssClassToParent = function(elemArray, cssClass) {
+      for (var i = 0, l = elemArray.length; i < l; i++) {
+        $(elemArray[i]).parent().addClass(cssClass);
+      }
+    };
+    addCssClassToParent($('.field > input:checkbox, .field > .inline-checkbox'), 'field-checkbox');
+    addCssClassToParent($('.field > input:radio, .field > .inline-radio'), 'field-radio');
   });
 
 /* start-amd-strip-block */

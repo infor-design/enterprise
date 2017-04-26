@@ -366,62 +366,9 @@
 
         //Handle Events in Anchors
         this.menu.onTouchClick('popupmenu', 'a')
-          .on('click.popupmenu', 'a', function (e) {
-
-          var anchor = $(this),
-            href = anchor.attr('href'),
-            selectionResult = [anchor];
-
-          if (anchor.parent().is('.submenu, .hidden, .is-disabled') || anchor[0].disabled) {
-            //Do not close parent items of submenus on click
-            e.preventDefault();
-            return;
-          }
-
-          if (anchor.find('input[checkbox]').length > 0) {
-            return;
-          }
-
-          if (self.element.hasClass('btn-filter')) {
-            self.iconFilteringUpdate(anchor);
-            e.preventDefault();
-          }
-
-          if (self.isInSelectableSection(anchor) || self.menu.hasClass('is-selectable') || self.menu.hasClass('is-multiselectable')) {
-            selectionResult = self.select(anchor);
-          }
-
-          //Single toggle on off of checkbox class
-          if (anchor.parent().hasClass('is-toggleable')) {
-            anchor.parent().toggleClass('is-checked');
-          }
-
-          // Trigger a selected event containing the anchor that was selected
-          self.element.triggerHandler('selected', selectionResult);
-
-          // MultiSelect Lists should act like other "multiselect" items and not close the menu when options are chosen.
-          if (self.menu.hasClass('is-multiselectable') || self.isInMultiselectSection(anchor)) {
-            return;
-          }
-
-          self.close();
-
-          if (self.element.is('.autocomplete')) {
-            return;
-          }
-
-          if (href && href.charAt(0) !== '#') {
-            if (anchor.attr('target') === '_blank') {
-              window.open(href, '_blank');
-            } else {
-              window.location.href = href;
-            }
-            return true;
-          }
-
-          e.preventDefault();
-          e.stopPropagation();
-        });
+          .on('click.popupmenu', 'a', function(e) {
+            self.handleItemClick(e, $(this));
+          });
 
         var excludes = 'li:not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)';
 
@@ -566,6 +513,81 @@
           }
 
         });
+      },
+
+      /**
+       * Handles the action of clicking items in the popupmenu.
+       * @param {$.Event} [e] - The jQuery Event object.
+       * @return undefined;
+       */
+      handleItemClick: function(e, anchor) {
+        var href = anchor.attr('href'),
+          selectionResult = [anchor];
+
+        if (!e && !anchor) {
+          return;
+        }
+
+        if (anchor.parent().is('.submenu, .hidden, .is-disabled') || anchor[0].disabled) {
+          //Do not close parent items of submenus on click
+          e.preventDefault();
+          return;
+        }
+
+        if (anchor.find('input[checkbox]').length > 0) {
+          return;
+        }
+
+        if (this.element.hasClass('btn-filter')) {
+          this.iconFilteringUpdate(anchor);
+          e.preventDefault();
+        }
+
+        if (this.isInSelectableSection(anchor) || this.menu.hasClass('is-selectable') || this.menu.hasClass('is-multiselectable')) {
+          selectionResult = this.select(anchor);
+        }
+
+        // Single toggle on off of checkbox class
+        if (anchor.parent().hasClass('is-toggleable')) {
+          anchor.parent().toggleClass('is-checked');
+        }
+
+        // Trigger a selected event containing the anchor that was selected
+        // If an event object is not passed to `handleItemClick()`, assume it was due to this
+        // event being triggered already, making it not necessary to re-trigger it.
+        if (e) {
+          if (selectionResult.length === 1) {
+            selectionResult.push(undefined);
+          }
+
+          selectionResult.push(true);
+          this.element.triggerHandler('selected', selectionResult);
+        }
+
+        // MultiSelect Lists should act like other "multiselect" items and not close the menu when options are chosen.
+        if (this.menu.hasClass('is-multiselectable') || this.isInMultiselectSection(anchor)) {
+          return;
+        }
+
+        this.close();
+
+        if (this.element.is('.autocomplete')) {
+          return;
+        }
+
+        if (href && href.charAt(0) !== '#') {
+          if (anchor.attr('target') === '_blank') {
+            window.open(href, '_blank');
+          } else {
+            window.location.href = href;
+          }
+          return true;
+        }
+
+        if (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
       },
 
       // Filtering icon initial setup
@@ -773,9 +795,6 @@
 
         this.element.addClass('is-open');
         this.menu.addClass('is-open').attr('aria-hidden', 'false');
-
-        this.menu.find('a').attr('aria-disabled', 'false').parent().removeClass('is-disabled');
-        this.menu.find('a[disabled]').attr('aria-disabled', 'false').parent().addClass('is-disabled');
 
         this.position(e);
 

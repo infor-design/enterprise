@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="twelve columns">
+    <div class="field">
+      <label for="states" class="label">States</label>
+      <select id="states" name="states" class="dropdown">
+        <option value="AL" selected>Alabama</option>
+        <option value="DE">Delaware</option>
+        <option value="DC" disabled>District Of Columbia</option>
+        <option value="FL" disabled>Florida</option>
+        <option value="GA">Georgia</option>
+        <option value="HI">Hawaii</option>
+        <option value="ID">Idaho</option>
+        <option value="OK">Oklahoma</option>
+        <option value="OR">Oregon</option>
+        <option value="PA">Pennsylvania</option>
+        <option value="RI">Rhode Island</option>
+        <option value="SC">South Carolina</option>
+        </select>
+     </div>
+
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function() {
+    //One Way:
+    //var api = $('#states').val('OR').trigger('updated');
+
+    var api = $('#states').data('dropdown');
+    api.setCode('OR');
+  });
+</script>
