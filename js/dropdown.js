@@ -86,7 +86,7 @@
         if (!this.isWrapped) {
           this.wrapper = $('<div class="dropdown-wrapper"></div>').insertAfter(baseElement);
         }
-
+        
         if (this.isWrapped) {
           this.pseudoElem = this.wrapper.find('.' + pseudoClassString);
           this.trigger = this.wrapper.find('.trigger');
