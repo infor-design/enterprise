@@ -165,6 +165,10 @@ define([
       expect(Locale.formatDate(dt, {pattern: 'h:mm a'})).to.equal('12:01 AM');
       expect(Locale.formatDate(dt, {pattern: 'HHmmss'})).to.equal('000100');
 
+      //Test 12:00 specifically
+      expect(Locale.parseDate('10/28/2015 12:00:00 AM', 'M/d/yyyy h:mm:ss a').getTime()).to.equal(new Date(2015, 9, 28, 0, 0, 0).getTime());
+      expect(Locale.parseDate('25/04/2017 12:00:00 AM', { pattern: 'd/MM/yyyy h:mm:ss a'}).getTime()).to.equal(new Date(2017, 3, 25, 0, 0, 0).getTime());
+
     },
 
     //Test Long Formatting

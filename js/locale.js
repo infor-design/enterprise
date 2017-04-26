@@ -439,7 +439,7 @@
               dateObj.a = 'AM';
 
               if (dateObj.h) {
-                if (dateObj.h === 12) {
+                if (dateObj.h === 12 || dateObj.h === '12') {
                   dateObj.h = 0;
                 }
               }
