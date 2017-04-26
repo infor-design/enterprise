@@ -785,9 +785,9 @@
           return;
         }
 
-        var otherMenus = $('.popupmenu').not(this.menu);  //close others.
+        var otherMenus = $('.popupmenu.is-open').not(this.menu);  //close others.
         otherMenus.each(function() {
-          var api = $(this).data('popupmenu');
+          var api = $(this).data('trigger').data('popupmenu');
           if (api && typeof api.close === 'function') {
             api.close();
           }
