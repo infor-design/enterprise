@@ -6,26 +6,36 @@
       <a class="hyperlink" href="http://jira/browse/SOHO-5911" target="_blank">Related JIRA Ticket</a>.
     </p>
     <p>
-      The multiselect on the left/top shows rendering<br />
-      The multiselect on the right/bottom shows <em>startsWith</em>-style filtering.
+      The multiselects on this page display all possible 'selected' styles for filtered items on the Dropdown:<br/><br/>
+      <b>left/top</b> shows all selected items moved to the top of the filtered list.<br />
+      <b>middle</b> shows all selected items moved to the top of their corresponding group headers.<br />
+      <b>right/bottom</b> shows all selected items remaining in their original place when filtering.
     </p>
 
   </div>
 </div>
 
 <div class="row">
-  <div class="six columns">
+  <div class="four columns">
 
     <div class="field">
-      <label for="move-to-top">Move To The Top</label>
+      <label for="move-to-top">Towns</label>
       <select id="move-to-top" name="move-to-top" class="multiselect" data-init="false" multiple></select>
     </div>
 
   </div>
-  <div class="six columns">
+  <div class="four columns">
 
     <div class="field">
-      <label for="stay-where-they-are">Stay Where They Are</label>
+      <label for="move-to-group-header">Towns</label>
+      <select id="move-to-group-header" name="move-to-group-header" class="multiselect" data-init="false" multiple></select>
+    </div>
+
+  </div>
+  <div class="four columns">
+
+    <div class="field">
+      <label for="stay-where-they-are">Towns</label>
       <select id="stay-where-they-are" name="stay-where-they-are" class="multiselect" data-init="false" multiple></select>
     </div>
 
@@ -35,8 +45,7 @@
 <script type="text/javascript">
   $('body').on('initialized', function() {
 
-    function statesSource(response, term) {
-      //$.getJSON('{{basepath}}api/states?term='+term, function(data) {
+    function townsSource(response, term) {
       $.getJSON('{{basepath}}api/towns', function(data, term) {
         console.log(data, term);
         response(data);
@@ -44,13 +53,18 @@
     }
 
     $('#move-to-top').multiselect({
-      moveSelectedToTop: true,
-      source: statesSource
+      moveSelected: 'all',
+      source: townsSource
+    });
+
+    $('#move-to-group-header').multiselect({
+      moveSelected: 'group',
+      source: townsSource
     });
 
     $('#stay-where-they-are').multiselect({
-      moveSelectedToTop: false,
-      source: statesSource
+      moveSelected: 'none',
+      source: townsSource
     });
 
   });

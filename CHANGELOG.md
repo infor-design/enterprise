@@ -16,6 +16,7 @@ http://usalvlhlpool1.infor.com/4.3.0-rc/controls
 - Datagrid - Added am option (allowOneExpanded) to only show one expandable row at a time. It is now the default.
 - Datagrid - Added an optional light background color on the list version by adding class datagrid-alternate-bg-color to the datagrid div. See tests/datagrid/datagrid-expandable-row-one-only.html
 - Dropdown - Added ability to set text on blank items on (Clear Selection)
+- Multiselect - Added ability to move selected items to the top of the entire list or to the top of groups when the list is opened.
 - Locale - Added new set of translated strings for 37 languages / 49 locales
 
 ### Bug Fixes
@@ -25,6 +26,7 @@ http://usalvlhlpool1.infor.com/4.3.0-rc/controls
 - Tag - Revised the spelling of the CSS class for "X" buttons on tags from "is-dismissable" to "is-dismissible".  The original class still works, but is deprecated and will be removed in a future version.
 - Pie - The Chart now sorts slices in the order of the dataset (was on size from biggest to smallest before).
 - Button - Changed the standard `.btn` style on forms to reflect Tertiary button style instead of Secondary button style (SOHO-6083).
+- Multiselect - `moveSelectedToTop` has been deprecated in favor of `moveSelected`, which is now a text string instead of a boolean.  This defaults to `"all"` on Multiselect but can be defined as `"group"` or `"none"` as well.
 
 ### Ui Changes
 - Added heart and heart-filled icons

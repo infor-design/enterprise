@@ -24,15 +24,18 @@
           cssClass: null,  //Append a css class to dropdown-list
           filterMode: 'contains',  // startsWith and contains Supported - false will not client side filter
           maxSelected: undefined, //If in multiple mode, sets a limit on the number of items that can be selected
-          moveSelectedToTop: false, //When the menu is opened, displays all selected options at the top of the list
+          moveSelected: 'none', //If set to "all" When the menu is opened, displays all selected options at the top of the list.  If set to "group", move each section to the top of it's designated optgroup
+          moveSelectedToTop: undefined, //(Deprecated - see the 'moveSelected' setting)
           multiple: false, //Turns the dropdown into a multiple selection box
           noSearch: false, //If true, disables the ability of the user to enter text in the Search Input field in the open combo box
+          showEmptyGroupHeaders: false, // If true, displays <optgroup> headers in the list even if no selectable options are present underneath.
           source: undefined, //A function that can do an ajax call.
           sourceArguments: {}, // If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
           reloadSourceOnOpen: false, // If set to true, will always perform an ajax call whenever the list is opened.  If false, the first AJAX call's results are cached.
           empty: false, //Initialize Empty Value
           delay: 300 //Typing Buffer Delay
         },
+        moveSelectedOpts = ['none', 'all', 'group'],
         settings = $.extend({}, defaults, options);
 
     /**
@@ -152,10 +155,34 @@
         if (dataMaxselected && !isNaN(dataMaxselected)) {
           this.settings.maxSelected = parseInt(dataMaxselected, 10);
         }
-        var dataMoveSelected = this.element.attr('data-move-selected');
-        if (dataMoveSelected && !this.settings.moveSelectedToTop) {
-          this.settings.moveSelectedToTop = dataMoveSelected === 'true';
+
+        // TODO: deprecate "moveSelectedToTop" in favor of "moveSelected"
+        // _getMoveSelectedSetting()_ converts the old setting to the new text type.
+        function getMoveSelectedSetting(incomingSetting, useText) {
+          switch (incomingSetting) {
+            case (useText ? 'true' : true):
+              return 'all';
+            case (useText ? 'false' : false):
+              return 'none';
+            default:
+              if (moveSelectedOpts.indexOf(incomingSetting) > -1) {
+                return incomingSetting;
+              }
+              return 'none';
+          }
         }
+
+        var selectedOpt = this.settings.moveSelectedToTop ? this.settings.moveSelectedToTop : this.settings.moveSelected,
+          dataMoveSelected = this.element.attr('data-move-selected');
+
+        if (dataMoveSelected) {
+          if (selectedOpt) {
+            this.settings.moveSelected = getMoveSelectedSetting(selectedOpt);
+          } else {
+            this.settings.moveSelected = getMoveSelectedSetting(dataMoveSelected);
+          }
+        }
+
         var dataCloseOnSelect = this.element.attr('data-close-on-select');
         if (dataCloseOnSelect && !this.settings.closeOnSelect) {
           this.settings.closeOnSelect = dataCloseOnSelect === 'true';
@@ -234,7 +261,8 @@
           listContents = '',
           ulContents = '',
           upTopOpts = 0,
-          hasOptGroups = this.element.find('optgroup').length;
+          hasOptGroups = this.element.find('optgroup').length,
+          moveSelected = '' + self.settings.moveSelected;
 
         if (!listExists) {
           listContents = '<div class="dropdown-list' +
@@ -254,6 +282,7 @@
         var opts = this.element.find('option');
         var groups = this.element.find('optgroup');
         var selectedOpts = opts.filter(':selected');
+        var groupsSelectedOpts = [];
 
         function buildLiHeader(textContent) {
           return '<li role="presentation" class="group-label" focusable="false">' +
@@ -296,11 +325,28 @@
           return liMarkup;
         }
 
+        // Move selected options in each group to just underneath their corresponding group headers.
+        if (moveSelected === 'group') {
+          // If no optgroups exist, change to "all" and skip this part.
+          if (!groups || !groups.length) {
+            moveSelected = 'all';
+          } else {
 
+            // Break apart selectedOpts into groups.
+            // These selected items are applied when the header is generated.
+            groups.each(function(i, g) {
+              var els = selectedOpts.filter(function() {
+                return $.contains(g, this);
+              });
+              groupsSelectedOpts.push(els);
+            });
+
+          }
+        }
 
         // Move all selected options to the top of the list if the setting is true.
         // Also adds a group heading if other option groups are found in the <select> element.
-        if (self.settings.moveSelectedToTop) {
+        if (moveSelected === 'all') {
           opts = opts.not(selectedOpts);
 
           // Show a "selected" header if there are selected options
@@ -322,16 +368,31 @@
         opts.each(function(i) {
           var count = i + upTopOpts,
             option = $(this),
-            parent = option.parent();
+            parent = option.parent(),
+            optgroupIsNotDrawn,
+            optgroupIndex;
 
           // Add Group Header if this is an <optgroup>
           // Remove the group header from the queue.
-          if (parent.is('optgroup') && groups.index(parent) > -1) {
-            groups = groups.not(parent);
-            ulContents += buildLiHeader('' + parent.attr('label'));
+          if (parent.is('optgroup') && groups.length) {
+            optgroupIndex = parent.index();
+            optgroupIsNotDrawn = groups.index(parent) > -1;
+
+            if (optgroupIsNotDrawn) {
+              groups = groups.not(parent);
+              ulContents += buildLiHeader('' + parent.attr('label'));
+
+              // Add all selected items for this group
+              if (moveSelected === 'group') {
+                groupsSelectedOpts[optgroupIndex].each(function(i) {
+                  ulContents += buildLiOption(this, i);
+                  upTopOpts++;
+                });
+              }
+            }
           }
 
-          if (self.settings.moveSelectedToTop && option.is(':selected')) {
+          if (moveSelected !== 'none' && option.is(':selected')) {
             return;
           }
 
@@ -525,7 +586,8 @@
       filterList: function(term) {
         var self = this,
           selected = false,
-          list = $('li.dropdown-option', this.listUl),
+          list = $('.dropdown-option', this.listUl),
+          headers = $('.group-label', this.listUl),
           results;
 
         if (!list.length || !this.list || this.list && !this.list.length) {
@@ -551,7 +613,7 @@
           return;
         }
 
-        list.not(results).addClass('hidden');
+        list.not(results).add(headers).addClass('hidden');
         list.filter(results).each(function(i) {
           var li = $(this);
           li.attr('tabindex', i === 0 ? '0' : '-1');
@@ -565,6 +627,13 @@
           var exp = new RegExp('(' + term + ')', 'i');
           var text = li.text().replace(exp, '<i>$1</i>');
           li.removeClass('hidden').children('a').html(text);
+        });
+
+        headers.each(function() {
+          var children = $(this).nextUntil('.group-label, .selector').not('.hidden');
+          if (self.settings.showEmptyGroupHeaders || children.length) {
+            $(this).removeClass('hidden');
+          }
         });
 
         term = '';
