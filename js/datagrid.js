@@ -376,9 +376,15 @@ window.Formatters = {
 
   // Badge (Visual Indictors)
   Badge: function (row, cell, value, col) {
-    var ranges = Formatters.ClassRange(row, cell, value, col);
+    var colorClasses = col.color,
+      text = col.name;
 
-    return '<span class="badge ' + ranges.classes +'">' + value +' <span class="audible">'+ ranges.text+ '</span></span>';
+    if (col.ranges) {
+      var ranges = Formatters.ClassRange(row, cell, value, col);
+      colorClasses = ranges.classes;
+      text = ranges.text;
+    }
+    return '<span class="badge ' + colorClasses +'">' + value +' <span class="audible">'+ text+ '</span></span>';
   },
 
   // Tags (low priority)
@@ -1787,6 +1793,10 @@ $.fn.datagrid = function(options) {
         self.headerRow = $('<thead>' + headerRow + '</thead>').appendTo(self.headerContainer.find('table'));
         self.element.prepend(self.headerContainer);
       } else {
+        self.headerContainer.find('table').css('width', this.totalWidth);
+
+          this.tableBody.parent().width(), this.totalWidth);
+
         self.headerRow.html(headerRow);
         self.headerColGroup.html(cols);
       }
