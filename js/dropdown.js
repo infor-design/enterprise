@@ -510,6 +510,9 @@
           self.ignoreKeys($(this), e);
           self.handleKeyDown($(this), e);
         }).on('keypress.dropdown', function(e) {
+          if (e.keyCode === 9) {
+            return;
+          }
           self.ignoreKeys($(this), e);
           self.toggleList();
           self.handleAutoComplete(e);
