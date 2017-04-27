@@ -1324,6 +1324,7 @@ $.fn.datagrid = function(options) {
         pagesizes: [10, 25, 50, 75],
         indeterminate: false, //removed ability to go to a specific page.
         source: null, //callback for paging
+        hidePagerOnOnePage: false, //If true, hides the pager if there's only one page worth of results.
         //Filtering Options
         filterable: false,
         disableClientFilter: false, //Disable Filter Logic client side and let your server do it
@@ -1558,8 +1559,13 @@ $.fn.datagrid = function(options) {
         else if (typeof location === 'number') {
           activePage = Math.floor(location / this.pager.settings.pagesize + 1);
         }
-        this.pager.pagingInfo = this.pager.pagingInfo || {};
-        this.pager.pagingInfo.activePage = activePage;
+
+        this.pager.pagingInfo = $.extend({}, this.pager.pagingInfo, {
+          activePage: activePage,
+          total: this.settings.dataset.length,
+          pagesize: this.settings.pagesize
+        });
+
         this.renderPager(this.pager.pagingInfo);
       }
     },
@@ -3751,7 +3757,7 @@ $.fn.datagrid = function(options) {
         count = totals;
       }
 
-      var countText = '(' + count + ' ' + Locale.translate('Results') + ')';
+      var countText = '(' + count + ' ' + Locale.translate(count === 1 ? 'Result' : 'Results') + ')';
       if (self.settings.resultsText) {
         if (typeof self.settings.resultsText === 'function') {
           countText = self.settings.resultsText(self, count);
@@ -6024,6 +6030,7 @@ $.fn.datagrid = function(options) {
       pagerElem.pager({
         componentAPI: this,
         dataset: this.settings.dataset,
+        hideOnOnePage: this.settings.hidePagerOnOnePage,
         source: this.settings.source,
         pagesize: this.settings.pagesize,
         indeterminate: this.settings.indeterminate,
@@ -6048,17 +6055,12 @@ $.fn.datagrid = function(options) {
     },
 
     refreshPagerState: function (pagingInfo) {
-      if (!this.pager) {
+      if (!this.pager || !pagingInfo) {
         return;
       }
 
-      if (pagingInfo) {
-        this.pager.activePage = pagingInfo.activePage;
-      }
-
-      if (pagingInfo) {
-        this.pager.updatePagingInfo(pagingInfo);
-      }
+      this.pager.activePage = pagingInfo.activePage;
+      this.pager.updatePagingInfo(pagingInfo);
     },
 
     renderPager: function (pagingInfo, isResponse) {
