@@ -1794,9 +1794,6 @@ $.fn.datagrid = function(options) {
         self.element.prepend(self.headerContainer);
       } else {
         self.headerContainer.find('table').css('width', this.totalWidth);
-
-          this.tableBody.parent().width(), this.totalWidth);
-
         self.headerRow.html(headerRow);
         self.headerColGroup.html(cols);
       }
