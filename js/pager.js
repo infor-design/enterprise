@@ -22,6 +22,7 @@
           type: 'list', //Different types of pagers: list, table and more
           position: 'bottom',  //Can be on top as well.
           activePage: 1, //Start on this page
+          hideOnOnePage: false, // If true, hides the pager if there is only one page worth of results.
           source: null,  //Call Back Function for Pager Data Source
           pagesize: 15, //Can be calculate or a specific number
           pagesizes: [15, 25, 50, 75],
