@@ -496,7 +496,7 @@
             activePage: self.activePage,
             pagesize: self.settings.pagesize,
             type: op,
-            total: -1
+            total: self.settings.componentAPI ? self.settings.componentAPI.settings.dataset.length : -1
           };
 
         //Make an ajax call and wait
@@ -585,6 +585,11 @@
        */
       updatePagingInfo: function(pagingInfo) {
         this.settings.pagesize = pagingInfo.pagesize || this.settings.pagesize;
+
+        if (this.settings.hideOnOnePage && pagingInfo.total <= pagingInfo.pagesize) {
+          this.pagerBar[0].classList.add('hidden');
+          return;
+        }
 
         var prevButtons = this.pagerBar.find('.pager-first a, .pager-prev a'),
           nextButtons = this.pagerBar.find('.pager-next a, .pager-last a'),
