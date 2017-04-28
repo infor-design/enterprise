@@ -787,7 +787,7 @@
 
     var dims = options.dims,
       hiddenParents = el.parents().add(el).not(':visible'),
-      props = { visibility: 'hidden', display: 'block'/*, position: 'absolute'*/ },
+      props = { visibility: 'hidden', display: 'block' },
       oldProps = [];
 
     hiddenParents.each(function () {
