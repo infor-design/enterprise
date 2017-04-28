@@ -5229,9 +5229,6 @@ $.fn.datagrid = function(options) {
         return;
       }
 
-      // Put the Cell into Focus Mode
-      this.setActiveCell(row, cell);
-
       var dataRowIndex = this.dataRowIndex(this.dataRowNode(row)),
         rowData = this.settings.treeGrid ?
           this.settings.treeDepth[dataRowIndex].node :
@@ -5612,6 +5609,8 @@ $.fn.datagrid = function(options) {
 
       if (typeof row === 'number') {
         rowNum = row;
+        rowElem = this.tableBody.find('tr').eq(row);
+        dataRowNum = this.dataRowIndex(rowElem);
       }
 
       //Support passing the td in
@@ -5647,7 +5646,7 @@ $.fn.datagrid = function(options) {
       }
 
       //Find the cell if it exists
-      self.activeCell.node = self.cellNode((isGroupRow ? rowElem: rowNum), (isGroupRow ? 0 : cell)).attr('tabindex', '0');
+      self.activeCell.node = self.cellNode((isGroupRow ? rowElem : (dataRowNum || rowNum)), (isGroupRow ? 0 : cell)).attr('tabindex', '0');
 
       if (self.activeCell.node && prevCell.node.length === 1) {
         self.activeCell.row = rowNum;
