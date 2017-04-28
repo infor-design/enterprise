@@ -376,9 +376,15 @@ window.Formatters = {
 
   // Badge (Visual Indictors)
   Badge: function (row, cell, value, col) {
-    var ranges = Formatters.ClassRange(row, cell, value, col);
+    var colorClasses = col.color,
+      text = col.name;
 
-    return '<span class="badge ' + ranges.classes +'">' + value +' <span class="audible">'+ ranges.text+ '</span></span>';
+    if (col.ranges) {
+      var ranges = Formatters.ClassRange(row, cell, value, col);
+      colorClasses = ranges.classes;
+      text = ranges.text;
+    }
+    return '<span class="badge ' + colorClasses +'">' + value +' <span class="audible">'+ text+ '</span></span>';
   },
 
   // Tags (low priority)
@@ -1324,6 +1330,7 @@ $.fn.datagrid = function(options) {
         pagesizes: [10, 25, 50, 75],
         indeterminate: false, //removed ability to go to a specific page.
         source: null, //callback for paging
+        hidePagerOnOnePage: false, //If true, hides the pager if there's only one page worth of results.
         //Filtering Options
         filterable: false,
         disableClientFilter: false, //Disable Filter Logic client side and let your server do it
@@ -1558,8 +1565,13 @@ $.fn.datagrid = function(options) {
         else if (typeof location === 'number') {
           activePage = Math.floor(location / this.pager.settings.pagesize + 1);
         }
-        this.pager.pagingInfo = this.pager.pagingInfo || {};
-        this.pager.pagingInfo.activePage = activePage;
+
+        this.pager.pagingInfo = $.extend({}, this.pager.pagingInfo, {
+          activePage: activePage,
+          total: this.settings.dataset.length,
+          pagesize: this.settings.pagesize
+        });
+
         this.renderPager(this.pager.pagingInfo);
       }
     },
@@ -1787,6 +1799,7 @@ $.fn.datagrid = function(options) {
         self.headerRow = $('<thead>' + headerRow + '</thead>').appendTo(self.headerContainer.find('table'));
         self.element.prepend(self.headerContainer);
       } else {
+        self.headerContainer.find('table').css('width', this.totalWidth);
         self.headerRow.html(headerRow);
         self.headerColGroup.html(cols);
       }
@@ -3751,7 +3764,7 @@ $.fn.datagrid = function(options) {
         count = totals;
       }
 
-      var countText = '(' + count + ' ' + Locale.translate('Results') + ')';
+      var countText = '(' + count + ' ' + Locale.translate(count === 1 ? 'Result' : 'Results') + ')';
       if (self.settings.resultsText) {
         if (typeof self.settings.resultsText === 'function') {
           countText = self.settings.resultsText(self, count);
@@ -5223,9 +5236,6 @@ $.fn.datagrid = function(options) {
         return;
       }
 
-      // Put the Cell into Focus Mode
-      this.setActiveCell(row, cell);
-
       var dataRowIndex = this.dataRowIndex(this.dataRowNode(row)),
         rowData = this.settings.treeGrid ?
           this.settings.treeDepth[dataRowIndex].node :
@@ -5606,6 +5616,8 @@ $.fn.datagrid = function(options) {
 
       if (typeof row === 'number') {
         rowNum = row;
+        rowElem = this.tableBody.find('tr').eq(row);
+        dataRowNum = this.dataRowIndex(rowElem);
       }
 
       //Support passing the td in
@@ -5641,7 +5653,7 @@ $.fn.datagrid = function(options) {
       }
 
       //Find the cell if it exists
-      self.activeCell.node = self.cellNode((isGroupRow ? rowElem: rowNum), (isGroupRow ? 0 : cell)).attr('tabindex', '0');
+      self.activeCell.node = self.cellNode((isGroupRow ? rowElem : (dataRowNum || rowNum)), (isGroupRow ? 0 : cell)).attr('tabindex', '0');
 
       if (self.activeCell.node && prevCell.node.length === 1) {
         self.activeCell.row = rowNum;
@@ -6024,6 +6036,7 @@ $.fn.datagrid = function(options) {
       pagerElem.pager({
         componentAPI: this,
         dataset: this.settings.dataset,
+        hideOnOnePage: this.settings.hidePagerOnOnePage,
         source: this.settings.source,
         pagesize: this.settings.pagesize,
         indeterminate: this.settings.indeterminate,
@@ -6048,17 +6061,12 @@ $.fn.datagrid = function(options) {
     },
 
     refreshPagerState: function (pagingInfo) {
-      if (!this.pager) {
+      if (!this.pager || !pagingInfo) {
         return;
       }
 
-      if (pagingInfo) {
-        this.pager.activePage = pagingInfo.activePage;
-      }
-
-      if (pagingInfo) {
-        this.pager.updatePagingInfo(pagingInfo);
-      }
+      this.pager.activePage = pagingInfo.activePage;
+      this.pager.updatePagingInfo(pagingInfo);
     },
 
     renderPager: function (pagingInfo, isResponse) {

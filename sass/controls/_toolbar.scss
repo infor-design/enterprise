@@ -264,13 +264,14 @@ $toolbar-buttonset-height: 40px;
 
     [class^="btn"] {
       color: $contextual-toolbar-button-color;
-      // scss-lint:disable ImportantRule
-      fill: $contextual-toolbar-button-color !important;
-      // scss-lint:enable ImportantRule
       height: 30px;
       margin-top: 5px;
       min-width: 0;
       padding: 0 10px;
+
+      .icon {
+        fill: $contextual-toolbar-button-color;
+      }
 
       &.btn-actions {
         margin-top: 0;
@@ -286,13 +287,25 @@ $toolbar-buttonset-height: 40px;
 
       &:hover {
         color: $contextual-toolbar-button-hover-color;
+
+        .icon {
+          fill: $contextual-toolbar-button-hover-color;
+        }
       }
 
       &.is-selected {
         color: $contextual-toolbar-color;
 
+        .icon {
+          fill: $contextual-toolbar-color;
+        }
+
         &:focus:not(.hide-focus) {
           color: $contextual-toolbar-color;
+
+          .icon {
+            fill: $contextual-toolbar-color;
+          }
         }
       }
 

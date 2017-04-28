@@ -1163,6 +1163,7 @@
             return this;
           }
           var types, clipboardData, pastedData,
+            paste, p, paragraphs,
             getCleanedHtml = function(pastedData) {
               var s = pastedData || '';
               if (self.isWordFormat(s)) {
@@ -1181,12 +1182,32 @@
               clipboardData = e.originalEvent.clipboardData;
             }
           }
-          types = clipboardData.types;
 
-          // jshint undef:false
-          if (types && ((types instanceof DOMStringList && types.contains('text/html')) || (types.indexOf && types.indexOf('text/html') !== -1))) {
-          // jshint undef:true
-            pastedData =  e.originalEvent.clipboardData.getData('text/html');
+          if (clipboardData && clipboardData.types) {
+            types = clipboardData.types;
+            // jshint undef:false
+            if ((types instanceof DOMStringList && types.contains('text/html')) ||
+                (types.indexOf && types.indexOf('text/html') !== -1)) {
+            // jshint undef:true
+              pastedData =  e.originalEvent.clipboardData.getData('text/html');
+            }
+          } else {
+            paste = window.clipboardData.getData('Text');
+            paragraphs = paste.split(/[\r\n]/g);
+            pastedData = '';
+            for (p = 0; p < paragraphs.length; p += 1) {
+              if (paragraphs[p] !== '') {
+                if (navigator.userAgent.match(/firefox/i) && p === 0) {
+                  pastedData += '<p>' + self.htmlEntities(paragraphs[p]) + '</p>';
+                } else {
+                  if((/\.(gif|jpg|jpeg|tiff|png)$/i).test(paragraphs[p])) {
+                    pastedData += '<img src="' + self.htmlEntities(paragraphs[p]) + '" />';
+                  } else {
+                    pastedData += '<p>' + self.htmlEntities(paragraphs[p]) + '</p>';
+                  }
+                }
+              }
+            }
           }
 
           self.pastedData = getCleanedHtml(pastedData);
