@@ -22,6 +22,7 @@
           type: 'list', //Different types of pagers: list, table and more
           position: 'bottom',  //Can be on top as well.
           activePage: 1, //Start on this page
+          hideOnOnePage: false, // If true, hides the pager if there is only one page worth of results.
           source: null,  //Call Back Function for Pager Data Source
           pagesize: 15, //Can be calculate or a specific number
           pagesizes: [15, 25, 50, 75],
@@ -495,7 +496,7 @@
             activePage: self.activePage,
             pagesize: self.settings.pagesize,
             type: op,
-            total: -1
+            total: self.settings.componentAPI ? self.settings.componentAPI.settings.dataset.length : -1
           };
 
         //Make an ajax call and wait
@@ -584,6 +585,11 @@
        */
       updatePagingInfo: function(pagingInfo) {
         this.settings.pagesize = pagingInfo.pagesize || this.settings.pagesize;
+
+        if (this.settings.hideOnOnePage && pagingInfo.total <= pagingInfo.pagesize) {
+          this.pagerBar[0].classList.add('hidden');
+          return;
+        }
 
         var prevButtons = this.pagerBar.find('.pager-first a, .pager-prev a'),
           nextButtons = this.pagerBar.find('.pager-next a, .pager-last a'),

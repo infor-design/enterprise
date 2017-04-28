@@ -1,28 +1,29 @@
 <div class="row">
   <div class="twelve columns">
 
-    <h1>
-      Hidden Toolbar Sizing
-    </h1>
-    <h4>
-      Toolbar #1 and Toolbar #2 are the same, except that #1 is initialized while visible and #2 is initialized while hidden.
-      These toolbars should appear the same.
-    </h4>
-    <p>
-      <b>Note:</b> We can't rely on teams manually calling a resize trigger because with Angular the visibility
-      of controls on the screen can be very dynamic.
-    </p>
+    <h2>Hidden Toolbar Sizing</h2>
+    <p>Toolbar #1 and Toolbar #2 are the same, except that #1 is initialized while visible and #2 is initialized while hidden. These toolbars should appear the same.</p>
+    <p><b>Note:</b> We can't rely on teams manually calling a resize trigger because with Angular the visibility of controls on the screen can be very dynamic.</p>
 
-    <br><br><br>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
 
     <div class="field">
       <input type="checkbox" class="checkbox" id="checkbox-test" onchange="$('#toolbar2').toggle()">
       <label for="checkbox-test" class="checkbox-label">Show Toolbar #2</label>
     </div>
 
-    <br><br>
+  </div>
+</div>
 
-    <div class="toolbar" id="toolbar1" role="toolbar">
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="toolbar" id="toolbar1" role="toolbar" data-options='{ "resizeContainers" : true }'>
       <div class="title">
         Toolbar #1 (initially visible)
       </div>
@@ -55,7 +56,7 @@
       </div>
     </div>
 
-    <div class="toolbar" id="toolbar2" role="toolbar" style="display: none">
+    <div class="toolbar" id="toolbar2" role="toolbar" style="display: none" data-options='{ "resizeContainers" : true }'>
       <div class="title">
         Toolbar #2 (initially hidden)
       </div>

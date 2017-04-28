@@ -623,19 +623,18 @@
           containerElem.classList.add('do-resize');
         }
 
-        var toolbarStyle = window.getComputedStyle(containerElem),
-          toolbarWidth = parseInt(toolbarStyle.width),
-          padding = parseInt(toolbarStyle.paddingLeft) + parseInt(toolbarStyle.paddingRight),
-          buttonsetWidth = parseInt(window.getComputedStyle(buttonsetElem).width) + WHITE_SPACE,
-          moreWidth = moreElem !== undefined ? parseInt(window.getComputedStyle(moreElem).width) : 0,
-          titleScrollWidth = titleElem.scrollWidth + 1;
+        var toolbarDims = $(containerElem).getHiddenSize(),
+          buttonsetDims = $(buttonsetElem).getHiddenSize(),
+          titleDims = $(titleElem).getHiddenSize(),
+          moreDims = $(moreElem).getHiddenSize(),
+          toolbarPadding = parseInt(toolbarDims.padding.left) + parseInt(toolbarDims.padding.right);
 
-        if (isNaN(moreWidth)) {
-          moreWidth = 50;
+        if (isNaN(moreDims.width)) {
+          moreDims.width = 50;
         }
 
-        if (isNaN(buttonsetWidth) || buttonsetWidth < MIN_BUTTONSET_SIZE) {
-          buttonsetWidth = MIN_BUTTONSET_SIZE;
+        if (isNaN(buttonsetDims.width) || buttonsetDims.width < MIN_BUTTONSET_SIZE) {
+          buttonsetDims.width = MIN_BUTTONSET_SIZE;
         }
 
         function addPx(val) {
@@ -652,11 +651,11 @@
           targetButtonsetWidth = parseInt(buttonsetSize);
         } else {
           if (this.settings.favorButtonset) {
-            targetButtonsetWidth = buttonsetWidth;
-            targetTitleWidth = toolbarWidth - (padding + buttonsetWidth + moreWidth);
+            targetButtonsetWidth = buttonsetDims.width;
+            targetTitleWidth = toolbarDims.width - (toolbarPadding + buttonsetDims.width + moreDims.width);
           } else {
-            targetTitleWidth = titleScrollWidth;
-            targetButtonsetWidth = toolbarWidth - (padding + titleScrollWidth + moreWidth);
+            targetTitleWidth = titleDims.scrollWidth;
+            targetButtonsetWidth = toolbarDims.width - (toolbarPadding + titleDims.scrollWidth + moreDims.width);
           }
         }
 

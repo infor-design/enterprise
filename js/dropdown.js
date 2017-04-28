@@ -87,12 +87,18 @@
         if (!this.isWrapped) {
           this.wrapper = $('<div class="dropdown-wrapper"></div>').insertAfter(baseElement);
         }
-
+        
         if (this.isWrapped) {
           this.pseudoElem = this.wrapper.find('.' + pseudoClassString);
           this.trigger = this.wrapper.find('.trigger');
         } else {
           this.pseudoElem = $('div#'+ orgId + '-shdo');
+        }
+
+        if(elemClassList.contains('text-align-reverse')) {
+          pseudoClassString += ' text-align-reverse';
+        } else if (elemClassList.contains('text-align-center')){
+          pseudoClassString += ' text-align-center';
         }
 
         // Build sub-elements if they don't exist
@@ -263,16 +269,24 @@
           ulContents = '',
           upTopOpts = 0,
           hasOptGroups = this.element.find('optgroup').length,
+          reverseText = '',
           isMultiselect = this.settings.multiple === true,
           moveSelected = '' + this.settings.moveSelected,
           showSelectAll = this.settings.showSelectAll === true;
 
+        if(this.element[0].classList.contains('text-align-reverse')){
+          reverseText = ' text-align-reverse';
+        } else if (this.element[0].classList.contains('text-align-center')){
+          reverseText = ' text-align-center';
+        }
+
         if (!listExists) {
-          listContents = '<div class="dropdown-list' +
+          listContents = '<div class="dropdown-list' + reverseText +
             (isMobile ? ' mobile' : '') +
             (this.settings.multiple ? ' multiple' : '') + '" id="dropdown-list" role="application" ' + (this.settings.multiple ? 'aria-multiselectable="true"' : '') + '>' +
             '<label for="dropdown-search" class="audible">' + Locale.translate('Search') + '</label>' +
-            '<input type="text" class="dropdown-search" role="combobox" aria-expanded="true" id="dropdown-search" aria-autocomplete="list">' +
+            '<input type="text" class="dropdown-search' + reverseText +
+            '" role="combobox" aria-expanded="true" id="dropdown-search" aria-autocomplete="list">' +
             '<span class="trigger">' +
               (isMobile ? $.createIcon({ icon: 'close', classes: ['close'] }) : $.createIcon('dropdown')) +
               '<span class="audible">' + (isMobile ? Locale.translate('Close') : Locale.translate('Collapse')) + '</span>' +
