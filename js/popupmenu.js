@@ -103,7 +103,7 @@
             break;
           case 'object': // jQuery Object
             if (this.settings.menu === null) {
-              this.menu = this.element.next('.popupmenu');
+              this.menu = this.element.next('.popupmenu, .popupmenu-wrapper');
             } else {
               this.menu = $(this.settings.menu);
             }
@@ -116,11 +116,21 @@
             break;
         }
 
-        //Reuse Same menu
-        if (this.menu.parent().is('.popupmenu-wrapper')) {
-          return;
+        // If markup already exists for the wrapper, use that instead of rebuilding.
+        if (this.menu.is('.popupmenu-wrapper')) {
+          this.preExistingWrapper = true;
+          this.wrapper = this.menu;
+          this.menu = this.wrapper.children('.popupmenu').first();
         }
 
+        // Similar check as above, assuming the menu wasn't a popupmenu wrapper.
+        if (this.menu.parent().is('.popupmenu-wrapper')) {
+          this.preExistingWrapper = true;
+          this.wrapper = this.menu.parent();
+        }
+
+        // If we still don't have a menu reference at this point, fail gracefully by returning out
+        // and simply acting like a button.
         if (this.menu.length === 0) {
           return false;
         }
@@ -132,13 +142,23 @@
           this.menu.detach().appendTo('body');
         }
 
-        this.menu.addClass('popupmenu')
-          .data('trigger', this.element)
-          .attr('role', (this.settings.ariaListbox ? 'listbox' : 'menu'))
-          .wrap('<div class="popupmenu-wrapper"></div>');
+        if (!this.menu.is('.popupmenu')) {
+          this.menu.addClass('popupmenu')
+            .data('trigger', this.element)
+            .attr('role', (this.settings.ariaListbox ? 'listbox' : 'menu'));
+        }
 
         this.wrapper = this.menu.parent('.popupmenu-wrapper');
-        this.wrapper.find('svg').icon();
+        if (!this.wrapper.length) {
+          this.wrapper = this.menu.wrap('<div class="popupmenu-wrapper"></div>');
+        }
+
+        // Invoke all icons as icons
+        this.wrapper.find('svg').each(function() {
+          if (!$(this).data('icon')) {
+            $(this).icon();
+          }
+        });
 
         //Enforce Correct Modality
         this.menu.parent('.popupmenu-wrapper').attr('role', 'application').attr('aria-hidden', 'true');
@@ -161,10 +181,9 @@
           if (!(popup.parent().hasClass('wrapper'))) {
             popup.wrap('<div class="wrapper"></div>');
           }
-
         });
 
-        // If a button with no border append arrow markup
+        // If the trigger element is a button with no border append arrow markup
         var containerClass = this.element.parent().attr('class');
         if ((this.element.hasClass('btn-menu') ||
             this.element.hasClass('btn-actions') ||
@@ -182,9 +201,8 @@
         }
 
         // If inside of a ".field-short" container, make smaller
-        if (this.element.closest('.field-short').length) {
-          this.menu.addClass('popupmenu-short');
-        }
+        var addFieldShort = this.element.closest('.field-short').length;
+        this.menu[addFieldShort ? 'addClass' : 'removeClass']('popupmenu-short');
 
         // If button is part of a header/masthead or a container using the "alternate" UI color, add the "alternate" class.
         if (containerClass !== undefined &&
@@ -1159,8 +1177,12 @@
         });
 
         function unwrapPopup(menu) {
+          if (!this.preExistingWrapper) {
+            return;
+          }
+
           var wrapper = menu.parent();
-          if (wrapper.is('.popupmenu-wrapper')) {
+          if (wrapper.is('.popupmenu-wrapper, .wrapper')) {
             if (wrapper.data('place')) {
               wrapper.data('place').destroy();
             }
