@@ -763,7 +763,7 @@
    * @param {HTMLElement|SVGElement|jQuery[]} el - The element being manipulated.
    * @param {object} options - incoming options.
    * @param {jQuery[]} [parentElement=undefined] - the parent element where a clone of this hidden element will be attached.
-   * @returns {number}
+   * @returns {object}
    */
   window.Soho.utils.getHiddenSize = function getHiddenSize(el, options) {
     var defaults = {
@@ -834,7 +834,7 @@
   /**
    * Binds the Soho Util _getHiddenSize()_ to a jQuery selector
    * @param {object} options - incoming options
-   * @returns {number}
+   * @returns {object}
    */
   $.fn.getHiddenSize = function(options) {
     return window.Soho.utils.getHiddenSize(this, options);
