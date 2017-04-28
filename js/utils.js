@@ -448,7 +448,7 @@
         });
     }
   };
-  
+
   //Clearable (Shows an X to clear)
   $.fn.clearable = function() {
     var self = this;
@@ -587,13 +587,25 @@
   };
 
   /**
+   * Checks if an element is valid
+   * @param {HTMLElement|SVGElement|jQuery[]} el - The element being checked
+   * @returns {boolean} - represents all values normally contained by a DOMRect or ClientRect
+   */
+  window.Soho.DOM.isElement = function isElement(el) {
+    if ((el instanceof HTMLElement) || (el instanceof SVGElement) || (el instanceof $ && el.length)) {
+      return true;
+    }
+    return false;
+  };
+
+  /**
    * Runs the generic _getBoundingClientRect()_ method on an element, but returns its results
    * as a plain object instead of a ClientRect
    * @param {HTMLElement|SVGElement|jQuery[]} el - The element being manipulated
    * @returns {object} - represents all values normally contained by a DOMRect or ClientRect
    */
   window.Soho.DOM.getDimensions = function getDimensions(el) {
-    if (!(el instanceof HTMLElement) && !(el instanceof SVGElement) && !(el instanceof $)) {
+    if (!Soho.DOM.isElement(el)) {
       return {};
     }
 
@@ -713,7 +725,7 @@
    * @returns {object[]}
    */
   window.Soho.utils.getContainerScrollDistance = function getContainerScrollDistance(element) {
-    if (!element || (!(element instanceof HTMLElement) && !(element instanceof SVGElement) && !(element instanceof $))) {
+    if (!Soho.DOM.isElement(element)) {
       return [];
     }
 
@@ -744,6 +756,88 @@
     }
 
     return containers;
+  };
+
+  /**
+   * Takes an element that is currently hidden by some means (FX: "display: none;") and gets its potential dimensions by checking a clone of the element that is NOT hidden.
+   * @param {HTMLElement|SVGElement|jQuery[]} el - The element being manipulated.
+   * @param {object} options - incoming options.
+   * @param {jQuery[]} [parentElement=undefined] - the parent element where a clone of this hidden element will be attached.
+   * @returns {object}
+   */
+  window.Soho.utils.getHiddenSize = function getHiddenSize(el, options) {
+    var defaults = {
+      dims: { width: 0, height: 0, innerWidth: 0, innerHeight: 0, outerWidth: 0, outerHeight: 0 },
+      parentElement: undefined,
+      includeMargin: false
+    };
+
+    if (!Soho.DOM.isElement(el)) {
+      return defaults.dims;
+    }
+
+    el = $(el);
+    options = $.extend({}, defaults, options);
+
+    // element becomes clone and appended to a parentElement, if defined
+    var hasDefinedParentElement = Soho.DOM.isElement(options.parentElement);
+    if (hasDefinedParentElement) {
+      el = el.clone().appendTo(options.parentElement);
+    }
+
+    var dims = options.dims,
+      hiddenParents = el.parents().add(el).not(':visible'),
+      props = { visibility: 'hidden', display: 'block' },
+      oldProps = [];
+
+    hiddenParents.each(function () {
+      var old = {};
+
+      for (var name in props) {
+        old[name] = this.style[name];
+        this.style[name] = props[name];
+      }
+
+      oldProps.push(old);
+    });
+
+    dims.padding = {
+      bottom: el.css('padding-bottom'),
+      left: el.css('padding-left'),
+      right: el.css('padding-right'),
+      top: el.css('padding-top')
+    };
+    dims.width = el.width();
+    dims.outerWidth = el.outerWidth(options.includeMargin);
+    dims.innerWidth = el.innerWidth();
+    dims.scrollWidth = el[0].scrollWidth;
+    dims.height = el.height();
+    dims.innerHeight = el.innerHeight();
+    dims.outerHeight = el.outerHeight(options.includeMargin);
+    dims.scrollHeight = el[0].scrollHeight;
+
+    hiddenParents.each(function (i) {
+      var old = oldProps[i];
+      for (var name in props) {
+        this.style[name] = old[name];
+      }
+    });
+
+    // element is ONLY removed when a parentElement is defined because it was cloned.
+    if (hasDefinedParentElement) {
+      el.remove();
+    }
+
+    return dims;
+  };
+
+  /**
+   * Binds the Soho Util _getHiddenSize()_ to a jQuery selector
+   * @param {object} options - incoming options
+   * @returns {object}
+   */
+  $.fn.getHiddenSize = function(options) {
+    return window.Soho.utils.getHiddenSize(this, options);
   };
 
 /* start-amd-strip-block */
