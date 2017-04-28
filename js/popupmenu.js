@@ -785,7 +785,10 @@
           return;
         }
 
-        var otherMenus = $('.popupmenu.is-open').not(this.menu);  //close others.
+        var otherMenus = $('.popupmenu.is-open').filter(function() {
+          return $(this).parents('.popupmenu').length === 0;
+        }).not(this.menu);  //close others.
+
         otherMenus.each(function() {
           var api = $(this).data('trigger').data('popupmenu');
           if (api && typeof api.close === 'function') {
