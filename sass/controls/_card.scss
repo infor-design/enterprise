@@ -61,7 +61,7 @@
       }
     }
 
-    .btn-toggle {
+    .btn-expander {
       border: 1px solid transparent;
       border-radius: 2px;
       display: inline-block;
@@ -194,7 +194,7 @@
   &:not(.has-toolbar) {
 
     > .btn-actions ,
-    > .btn-toggle {
+    > .btn-expander {
       line-height: normal;
       margin: 0;
       padding: 0;
@@ -206,7 +206,7 @@
       top: 7px;
     }
 
-    > .btn-toggle {
+    > .btn-expander {
       top: 5px;
 
       .icon {
