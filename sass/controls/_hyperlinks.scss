@@ -6,10 +6,10 @@
   display: block;
   pointer-events: none;
   position: absolute;
-  height: calc(100% + 10px);
-  width: calc(100% + 10px);
-  left: -6px;
-  top: -6px;
+  height: calc(100% + 4px);
+  width: calc(100% + 4px);
+  left: -3px;
+  top: -3px;
 
   @include css3(transition, border-color 100ms cubic-bezier(.17, .04, .03, .94));
   border: 1px solid transparent;
@@ -146,14 +146,14 @@
 
   &.back {
     .icon {
-      left: -8px;
-      margin-right: -12px;
+      left: -7px;
+      margin-right: -8px;
     }
 
     span {
       &::after {
         margin-left: 16px;
-        width: calc(100% - 8px);
+        width: calc(100% - 12px);
       }
     }
   }
@@ -166,7 +166,8 @@
 
     span {
       &::after {
-        width: calc(100% - 8px);
+        left: -5px;
+        width: calc(100% - 10px);
       }
     }
   }
