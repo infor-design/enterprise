@@ -142,6 +142,10 @@
   margin-bottom: 20px;
   position: relative;
 
+  &:last-child {
+    margin-bottom: 0;
+  }
+
   textarea + .btn-actions {
     margin-left: 4px;
     position: absolute;
@@ -425,6 +429,10 @@ label,
   font-size: 0;
   margin-bottom: 10px;
   position: relative;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 
   input {
     @include font-size(12);
