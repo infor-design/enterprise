@@ -80,12 +80,8 @@
 html[dir='rtl'] {
   .modal.about {
     .close-container {
-      float: left;
-      right: 13px;
-    }
-
-    .about-logo {
-      margin-left: -40px;
+      left: 13px;
+      right: auto;
     }
   }
 }
