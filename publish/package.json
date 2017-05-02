@@ -15,9 +15,9 @@
     "d3": "^3.4.6",
     "jquery": "^3.1.1"
   },
-  "main": "sohoxi/js/sohoxi.min.js",
+  "main": "dist/js/sohoxi.min.js",
   "jspm": {
-    "main": "sohoxi/js/sohoxi.min.js"
+    "main": "dist/js/sohoxi.min.js"
   },
   "devDependencies": {
   }
