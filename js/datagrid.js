@@ -486,7 +486,7 @@ window.Formatters = {
     return html;
   },
 
-  Favorite: function (row, cell, value, col) {
+  Favorite: function (row, cell, value, col, item, api) {
     var isChecked;
 
     // Use isChecked function if exists
@@ -496,7 +496,13 @@ window.Formatters = {
       isChecked = (value == undefined ? false : value == true); // jshint ignore:line
     }
 
-    return !isChecked ? '' : '<span class="audible">'+ Locale.translate('Favorite') + '</span><span class="icon-favorite">' + $.createIcon({ icon: 'star-filled' }) + '</span>';
+    var isEditable = col.editor && api.settings.editable;
+
+    if (isChecked) {
+      return '<span aria-label="'+ Locale.translate('Favorite') +'" class="icon-favorite'+ (isEditable ? ' is-editable': '') + '">' + $.createIcon({ icon: 'star-filled' }) + '</span>';
+    } else {
+      return col.showEmpty ? '<span aria-label="'+ Locale.translate('Favorite') +'" class="icon-favorite'+ (isEditable ? ' is-editable': '') + '">' + $.createIcon({ icon: 'star-outlined' }) + '</span>' : '';
+    }
   },
 
   Status: function (row, cell, value, col, item) {
@@ -706,7 +712,7 @@ window.Editors = {
     this.originalValue = value;
 
     this.init = function () {
-      this.input = $('<input type="checkbox" class="checkboxn"/>').appendTo(container);
+      this.input = $('<input type="checkbox" class="checkbox"/>').appendTo(container);
       this.input.after('<label class="checkbox-label"></label>');
 
       if (column.align) {
@@ -1163,8 +1169,57 @@ window.Editors = {
     };
 
     this.init();
-  }
+  },
 
+  Favorite: function(row, cell, value, container, column, event, grid) {
+    this.name = 'favorite';
+    this.useValue = true;
+    this.originalValue = value;
+
+    this.init = function () {
+      this.input = $('<span class="icon-favorite">' +
+            $.createIcon({ icon: value ? 'star-filled' : 'star-outlined' }) + '<input type="checkbox"></span>').appendTo(container);
+
+      this.input = this.input.find('input');
+    };
+
+    this.val = function (value) {
+      var isChecked;
+
+      if (value === undefined) {
+        return this.input.prop('checked');
+      }
+
+      // Use isChecked function if exists
+      if (column.isChecked) {
+        isChecked = column.isChecked(value);
+      } else {
+        isChecked = value;
+      }
+
+      if (event.type === 'click' || (event.type === 'keydown' && event.keyCode === 32)) {
+        //just toggle it
+        isChecked = !isChecked;
+        grid.setNextActiveCell(event);
+      }
+
+      this.input.prop('checked', isChecked);
+      this.input.find('use').attr('xlink:href', isChecked ? '#icon-star-filled' : '#icon-star-outlined');
+    };
+
+    this.focus = function () {
+      this.input.trigger('focusout').focus();
+    };
+
+    this.destroy = function () {
+      var self = this;
+      setTimeout(function() {
+        self.input.parent().remove();
+      }, 0);
+    };
+
+    this.init();
+  }
 };
 
 window.GroupBy = (function() {
@@ -4105,7 +4160,7 @@ $.fn.datagrid = function(options) {
         // Keep icon clickable in edit mode
         var target = e.target;
 
-        if ($(target).is('input.lookup, input.timepicker, input.datepicker , input.spinbox')) {
+        if ($(target).is('input.lookup, input.timepicker, input.datepicker, input.spinbox')) {
           // Wait for modal popup, if did not found modal popup means
           // icon was not clicked, then commit cell edit
           setTimeout(function() {

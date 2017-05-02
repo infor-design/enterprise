@@ -1007,8 +1007,24 @@ $datagrid-short-row-height: 23px;
     }
 
     .icon-favorite {
+      border: 1px solid transparent;
+      display: block;
+      height: 32px;
+      left: -8px;
+      padding-left: 5px;
+      padding-top: 6px;
       position: relative;
-      top: 3px;
+      top: 4px;
+      width: 32px;
+
+      &.is-editable {
+        cursor: pointer;
+      }
+
+      input {
+        left: -99px;
+        position: absolute;
+      }
     }
 
     .datagrid-img {

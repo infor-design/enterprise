@@ -15,6 +15,7 @@ http://usalvlhlpool1.infor.com/4.3.0-rc/controls
 ### Improvements
 - Datagrid - Added am option (allowOneExpanded) to only show one expandable row at a time. It is now the default.
 - Datagrid - Added an optional light background color on the list version by adding class datagrid-alternate-bg-color to the datagrid div. See tests/datagrid/datagrid-expandable-row-one-only.html
+- Datagrid - Added Favorites Editor
 - Dropdown - Added ability to set text on blank items on (Clear Selection)
 - Multiselect - Added ability to move selected items to the top of the entire list or to the top of groups when the list is opened.
 - Locale - Added new set of translated strings for 37 languages / 49 locales
