@@ -4411,8 +4411,14 @@ $.fn.datagrid = function(options) {
         dataset = this.settings.treeGrid ?
           this.settings.treeDepth : this.settings.dataset;
 
-      for (var i=0, l=dataset.length; i < l; i++) {
-        rows.push(i);
+      for (var i = 0, l = dataset.length; i < l; i++) {
+        if (this.filterRowRendered) {
+          if (!dataset[i].isFiltered) {
+            rows.push(i);
+          }
+        } else {
+          rows.push(i);
+        }
       }
 
       this.dontSyncUi = true;
@@ -4511,16 +4517,26 @@ $.fn.datagrid = function(options) {
 
     //Set ui elements based on selected rows
     syncSelectedUI: function () {
+      var s = this.settings,
+        dataset = s.treeGrid ? s.treeDepth : s.dataset,
+        headerCheckbox = this.headerRow.find('.datagrid-checkbox'),
+        rows = dataset;
 
-      var headerCheckbox = this.headerRow.find('.datagrid-checkbox'),
-        s = this.settings;
+      if (this.filterRowRendered) {
+        rows = [];
+        for (var i = 0, l = dataset.length; i < l; i++) {
+          if (!dataset[i].isFiltered) {
+            rows.push(i);
+          }
+        }
+      }
 
       //Sync the header checkbox
       if (this._selectedRows.length > 0) {
         headerCheckbox.addClass('is-checked is-partial');
       }
 
-      if (this._selectedRows.length === (s.treeGrid ? s.treeDepth : s.dataset).length) {
+      if (this._selectedRows.length === rows.length) {
         headerCheckbox.addClass('is-checked').removeClass('is-partial');
       }
 
