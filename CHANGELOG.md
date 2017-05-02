@@ -19,6 +19,7 @@ http://usalvlhlpool1.infor.com/4.3.0-rc/controls
 - Dropdown - Added ability to set text on blank items on (Clear Selection)
 - Multiselect - Added ability to move selected items to the top of the entire list or to the top of groups when the list is opened.
 - Locale - Added new set of translated strings for 37 languages / 49 locales
+- Toggle Button - New official toggle button, can change icon or state to "pressed"
 
 ### Bug Fixes
 - Datagrid - Fixed column alignment issue on reload with hidden columns

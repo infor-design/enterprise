@@ -13,12 +13,16 @@
 }(function($) {
 /* end-amd-strip-block */
 
-  $.fn.button = function() {
-
+  $.fn.button = function(options) {
     'use strict';
 
     // Settings and Options
-    var pluginName = 'button';
+    var pluginName = 'button',
+      defaults = {
+        toggleOnIcon: null,
+        toggleOffIcon: null
+      },
+      settings = $.extend({}, defaults, options);
 
     /**
      * @constructor
@@ -26,6 +30,7 @@
      */
     function Button(element) {
       this.element = $(element);
+      this.settings = $.extend({}, settings);
       Soho.logTimeStart(pluginName);
       this.init();
       Soho.logTimeEnd(pluginName);
@@ -62,17 +67,31 @@
           }
         }
 
-        if (this.element.hasClass('icon-favorite')) {
-          this.element.on('click.favorite', function() {
-            var svg = $(this).find('svg:not(.ripple-effect)');
+        if (this.element.hasClass('btn-toggle')) {
+          this.element.attr('aria-pressed', 'false').on('click.favorite', function() {
+            var elem = $(this),
+              svg = elem.find('svg:not(.ripple-effect)'),
+              isPressed = elem.attr('aria-pressed') === 'true';
 
-            if (svg.find('use').attr('xlink:href') === '#icon-star-filled') {
-              svg.changeIcon('star-outlined');
+            elem.attr('aria-pressed', isPressed ? 'false' : 'true');
+            if (self.settings.toggleOffIcon && self.settings.toggleOnIcon) {
+              svg.changeIcon(isPressed ? self.settings.toggleOffIcon : self.settings.toggleOnIcon);
             } else {
+              elem.toggleClass('is-pressed');
+            }
+
+            if (elem.hasClass('icon-favorite') && svg.find('use').attr('xlink:href') === '#icon-star-filled') {
+              svg.changeIcon('star-outlined');
+            } else if (elem.hasClass('icon-favorite')) {
               svg.changeIcon('star-filled');
             }
 
           });
+
+          if (!this.element.attr('aria-pressed')) {
+            this.element.attr('aria-pressed', 'false');
+          }
+
         }
 
         if (!this.element.parent().is('.field') && this.element.hasClass('btn-actions') && !this.element.data('tooltip')) {

@@ -463,7 +463,7 @@ a.btn-menu {
 
 // Chevron Toggle Buttons (Expand/Collapse)
 @mixin btn-chevron-style {
-  background-color: transparent;
+  background-color: transparent !important;
   border-color: transparent;
   color: $font-color-highcontrast;
   height: 38px;
@@ -542,11 +542,20 @@ a.btn-menu {
   }
 }
 
-.btn-toggle {
+//Card Expander Chevron
+.btn-expander {
   @include btn-chevron-style;
 }
 
+.btn-toggle {
+  &.is-pressed {
+    color: $primary-btn-bg-color !important;
 
+    svg {
+      fill: $primary-btn-bg-color !important;
+    }
+  }
+}
 
 @include keyframes(ripple-animation) {
   0% {
