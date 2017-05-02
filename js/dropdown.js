@@ -32,6 +32,7 @@
           showSelectAll: false, // If true, on Multiselect dropdowns, will show an additional option at the top of the list labeled "select all".
           source: undefined, //A function that can do an ajax call.
           sourceArguments: {}, // If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
+          dontManageOptions: false, //Option used in Angular as angular will mange the options add.
           reloadSourceOnOpen: false, // If set to true, will always perform an ajax call whenever the list is opened.  If false, the first AJAX call's results are cached.
           empty: false, //Initialize Empty Value
           delay: 300 //Typing Buffer Delay
@@ -87,7 +88,7 @@
         if (!this.isWrapped) {
           this.wrapper = $('<div class="dropdown-wrapper"></div>').insertAfter(baseElement);
         }
-        
+
         if (this.isWrapped) {
           this.pseudoElem = this.wrapper.find('.' + pseudoClassString);
           this.trigger = this.wrapper.find('.trigger');
@@ -1659,7 +1660,7 @@
           this.isFiltering = false;
 
           var sourceType = typeof this.settings.source,
-            response = function (data) {
+            response = function (data, isManagedByTemplate) {
             //to do - no results back do not open.
             var list = '',
               val = self.element.val();
@@ -1709,23 +1710,25 @@
             if (!self.isFiltering && !Soho.utils.equals(data, self.dataset)) {
               self.dataset = data;
 
-              self.element.empty();
-              for (var i=0; i < data.length; i++) {
-                var opts;
+              if (!isManagedByTemplate) {
+                self.element.empty();
+                for (var i=0; i < data.length; i++) {
+                  var opts;
 
-                if (data[i].group) {
-                  opts = data[i].options;
-                  list += '<optgroup label="' + data[i].group + '">';
-                  for (var ii = 0; ii < opts.length; ii++) {
-                    buildOption(opts[ii]);
+                  if (data[i].group) {
+                    opts = data[i].options;
+                    list += '<optgroup label="' + data[i].group + '">';
+                    for (var ii = 0; ii < opts.length; ii++) {
+                      buildOption(opts[ii]);
+                    }
+                    list += '</optgroup>';
+                  } else {
+                    buildOption(data[i]);
                   }
-                  list += '</optgroup>';
-                } else {
-                  buildOption(data[i]);
                 }
-              }
 
-              self.element.append(list);
+                self.element.append(list);
+              }
               self.updateList();
             }
 
