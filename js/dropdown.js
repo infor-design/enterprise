@@ -32,7 +32,6 @@
           showSelectAll: false, // If true, on Multiselect dropdowns, will show an additional option at the top of the list labeled "select all".
           source: undefined, //A function that can do an ajax call.
           sourceArguments: {}, // If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
-          dontManageOptions: false, //Option used in Angular as angular will mange the options add.
           reloadSourceOnOpen: false, // If set to true, will always perform an ajax call whenever the list is opened.  If false, the first AJAX call's results are cached.
           empty: false, //Initialize Empty Value
           delay: 300 //Typing Buffer Delay
