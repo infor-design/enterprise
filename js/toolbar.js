@@ -428,11 +428,17 @@
 
         this.items.filter('.btn-menu, .btn-actions')
           .off('close.toolbar').on('close.toolbar', function onClosePopup() {
-            var el = $(this);
+            var el = $(this),
+              last;
+
             if (el.is('.is-overflowed')) {
-              self.getLastVisibleButton()[0].focus();
+              last = self.getLastVisibleButton();
+              if (last && last.length) {
+                last[0].focus();
+              }
               return;
             }
+
             el.focus();
             self.buttonset.scrollTop(0);
           });
