@@ -81,15 +81,20 @@
         }
 
         // Add a default tabs class of "horizontal" if it doesn't already exist
-        var noClass = true;
+        var noClass = true,
+          closestHeader = this.element.closest('.header');
         tabContainerTypes.forEach(function tabTypeIterator(val, i) {
           if (self.element.hasClass(tabContainerTypes[i])) {
             noClass = false;
           }
         });
         if (noClass) {
-          if (this.element.closest('.header').length) {
-            self.element.addClass('header-tabs');
+          if (closestHeader.length) {
+            if (closestHeader.hasClass('has-composite-tabs')) {
+              self.element.addClass('composite-tabs');
+            } else {
+              self.element.addClass('header-tabs');
+            }
           } else {
             self.element.addClass('horizontal');
           }

@@ -1,0 +1,39 @@
+// Module Tabs
+//================================================== //
+
+.tab-container.composite-tabs {
+
+  .tab-list-container {
+    background-color: $composite-tabs-bg-color;
+    border-top: 1px solid $composite-tabs-border-color;
+  }
+
+  .tab-list {
+    height: 50px;
+    white-space: nowrap;
+  }
+
+  .tab {
+    @include font-size(14);
+
+    a {
+      margin-top: 3px;
+      padding: 14px 10px 17px;
+    }
+  }
+
+  .animated-bar {
+    background-color: $composite-tabs-focus-state-color;
+  }
+}
+
+.header {
+  .tab-container.composite-tabs {
+    margin-top: auto;
+    padding: 1px 0 0;
+  }
+
+  &.has-composite-tabs {
+    border-bottom: 1px solid $composite-tabs-border-color;
+  }
+}

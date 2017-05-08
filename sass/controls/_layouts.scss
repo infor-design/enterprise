@@ -440,6 +440,20 @@ body.no-scroll {
     }
   }
 
+  &.has-composite-tabs {
+    height: 113px;
+
+    + .page-container,
+    + .application-menu + .page-container {
+      height: calc(100% - 113px);
+      margin-top: 113px;
+    }
+
+    .toolbar {
+      margin-bottom: 0;
+    }
+  }
+
   &.has-tabs-only {
     height: 60px;
 
