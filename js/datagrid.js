@@ -130,7 +130,7 @@ window.Formatters = {
   Decimal:  function(row, cell, value, col) {
     var formatted = value;
     if (typeof Locale !== undefined) {
-       formatted = Locale.formatNumber(value, col.numberFormat || null);
+       formatted = Locale.formatNumber(+value, col.numberFormat || null);
     }
     return ((formatted === null || formatted === undefined) ? '' : formatted);
   },
@@ -138,7 +138,7 @@ window.Formatters = {
   Integer:  function(row, cell, value, col) {
     var formatted = value;
     if (typeof Locale !== undefined) {
-      formatted = Locale.formatNumber(value, col.numberFormat || {style: 'integer'});
+      formatted = Locale.formatNumber(+value, col.numberFormat || {style: 'integer'});
     }
     return (formatted === null || formatted === undefined) ? '' : formatted;
   },
