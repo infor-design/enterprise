@@ -1509,6 +1509,27 @@ $datagrid-short-row-height: 23px;
       top: -9px;
       width: calc(100% - 20px);
 
+      &.percent {
+        &::before,
+        &::after {
+          @include font-size(14);
+          color: $datagrid-filter-icon-color;
+          display: inline-block;
+          position: absolute;
+          top: -2px;
+        }
+
+        &::before {
+          content: attr(data-currency-symbol);
+          left: auto;
+          right: 0;
+        }
+
+        [data-mask-mode="number"] {
+          padding: 3px 22px 2px 0;
+        }
+      }
+
       input {
         background-color: transparent;
         border-color: $datagrid-filter-border-color;
@@ -2291,6 +2312,19 @@ html[dir='rtl'] {
     .datepicker + .icon {
       margin-left: 0;
       margin-right: -15px;
+    }
+  }
+
+  .datagrid-header .is-filterable .datagrid-filter-wrapper {
+    &.percent {
+      &::before {
+        left: 0;
+        right: auto;
+      }
+
+      [data-mask-mode="number"] {
+        padding: 3px 0 2px 22px;
+      }
     }
   }
 
