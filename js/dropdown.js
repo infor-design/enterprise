@@ -87,7 +87,7 @@
         if (!this.isWrapped) {
           this.wrapper = $('<div class="dropdown-wrapper"></div>').insertAfter(baseElement);
         }
-        
+
         if (this.isWrapped) {
           this.pseudoElem = this.wrapper.find('.' + pseudoClassString);
           this.trigger = this.wrapper.find('.trigger');
@@ -179,15 +179,16 @@
           }
         }
 
-        var selectedOpt = this.settings.moveSelectedToTop ? this.settings.moveSelectedToTop : this.settings.moveSelected,
-          dataMoveSelected = this.element.attr('data-move-selected');
+        // Backwards compatibility for deprecated "moveSelectedToTop" setting.
+        if (this.settings.moveSelectedToTop !== undefined) {
+          this.settings.moveSelected = this.settings.moveSelectedToTop;
+        }
 
+        var dataMoveSelected = this.element.attr('data-move-selected');
         if (dataMoveSelected) {
-          if (selectedOpt) {
-            this.settings.moveSelected = getMoveSelectedSetting(selectedOpt);
-          } else {
-            this.settings.moveSelected = getMoveSelectedSetting(dataMoveSelected);
-          }
+          this.settings.moveSelected = getMoveSelectedSetting(dataMoveSelected, true);
+        } else {
+          this.settings.moveSelected = getMoveSelectedSetting(this.settings.moveSelected);
         }
 
         var dataCloseOnSelect = this.element.attr('data-close-on-select');
@@ -1659,7 +1660,7 @@
           this.isFiltering = false;
 
           var sourceType = typeof this.settings.source,
-            response = function (data) {
+            response = function (data, isManagedByTemplate) {
             //to do - no results back do not open.
             var list = '',
               val = self.element.val();
@@ -1709,23 +1710,25 @@
             if (!self.isFiltering && !Soho.utils.equals(data, self.dataset)) {
               self.dataset = data;
 
-              self.element.empty();
-              for (var i=0; i < data.length; i++) {
-                var opts;
+              if (!isManagedByTemplate) {
+                self.element.empty();
+                for (var i=0; i < data.length; i++) {
+                  var opts;
 
-                if (data[i].group) {
-                  opts = data[i].options;
-                  list += '<optgroup label="' + data[i].group + '">';
-                  for (var ii = 0; ii < opts.length; ii++) {
-                    buildOption(opts[ii]);
+                  if (data[i].group) {
+                    opts = data[i].options;
+                    list += '<optgroup label="' + data[i].group + '">';
+                    for (var ii = 0; ii < opts.length; ii++) {
+                      buildOption(opts[ii]);
+                    }
+                    list += '</optgroup>';
+                  } else {
+                    buildOption(data[i]);
                   }
-                  list += '</optgroup>';
-                } else {
-                  buildOption(data[i]);
                 }
-              }
 
-              self.element.append(list);
+                self.element.append(list);
+              }
               self.updateList();
             }
 

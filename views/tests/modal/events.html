@@ -98,15 +98,15 @@
   function handleSimilarEvents(id, modalElement) {
     var modalName = customContent[id].title
 
-    return modalElement.on('open', function () {
+    return modalElement.one('open', function () {
       toast(modalName + ': open');
-    }).on('afteropen', function () {
+    }).one('afteropen', function () {
       toast(modalName + ': afteropen');
-    }).on('beforeclose', function() {
+    }).one('beforeclose', function() {
       toast(modalName + ': beforeclose');
-    }).on('close', function() {
+    }).one('close', function() {
       toast(modalName + ': close');
-    }).on('afterclose', function() {
+    }).one('afterclose', function() {
       toast(modalName + ': afterclose');
     });
   }
@@ -116,7 +116,7 @@
     var thisModal = createModal('modal1');
     thisModal = handleSimilarEvents('modal1', thisModal);
 
-    thisModal.on('beforeopen', function () {
+    thisModal.one('beforeopen', function () {
       toast('Add Content: beforeopen');
       return false;
     });
@@ -127,7 +127,7 @@
     var thisModal = createModal('modal2');
     thisModal = handleSimilarEvents('modal2', thisModal);
 
-    thisModal.on('beforeopen', function() {
+    thisModal.one('beforeopen', function() {
       toast('Modal 2: beforeopen');
     });
   });

@@ -84,7 +84,7 @@
             // Use icon-based expander in the header
             expander = instance.header.find('expandable-expander');
             if (!expander.length) {
-              expander = $('<a href="#" target="_self" class="btn-toggle">' +
+              expander = $('<a href="#" target="_self" class="btn-expander">' +
                 '<svg class="chevron icon" focusable="false" aria-hidden="true" role="presenation">' +
                   '<use xlink:href="' + '#icon-caret-down' + '"></use>' +
                 '</svg>' +

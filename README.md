@@ -32,6 +32,7 @@ For updates please joining our [mailing list| http://infor.us14.list-manage.com/
 * Globalization
 * Input Formatting
 * Validation
+* Security XSS
 
 ## Upgrade Guide (from 3.x)
 https://soho.infor.com/upgrade-guide

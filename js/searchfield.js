@@ -537,10 +537,10 @@
        * Gets the currently selected categories as data.
        * @param {boolean} [onlyReturnSelected=false] - If set to true, will only return checked list items.
        * @returns {Object[]} data -
-       * @returns {string} data[].name - Category name
-       * @returns {string|number} data[].id - Category element's ID (if applicable)
-       * @returns {string|number} data[].value - Category element's value (if applicable)
-       * @returns {boolean} [data[].checked=true] - Category's selection status
+       * @returns {string} name - Category name
+       * @returns {string|number} id - Category element's ID (if applicable)
+       * @returns {string|number} value - Category element's value (if applicable)
+       * @returns {boolean} [checked=true] - Category's selection status
        */
       getCategoryData: function(onlyReturnSelected) {
         var categories = this.getCategories(),
@@ -578,9 +578,9 @@
        * Updates just the categories setting and rerenders the category list.
        * @param {Object[]} categories - Array of category object definitions.
        * @param {string} categories[].name - Category name.
-       * @param {string|number} [data[].id] - Category element's ID (if applicable).
-       * @param {string|number} [data[].value] - Category element's value (if applicable).
-       * @param {boolean} [data[].checked=true] - Category's selection status
+       * @param {string|number} [id] - Category element's ID (if applicable).
+       * @param {string|number} [value] - Category element's value (if applicable).
+       * @param {boolean} [checked=true] - Category's selection status
        * @return {undefined}
        */
       updateCategories: function(categories) {
@@ -592,9 +592,9 @@
        * Creates a new set of categories on the Searchfield and rerenders it.
        * @param {Object[]} categories - Array of category object definitions.
        * @param {string} categories[].name - Category name.
-       * @param {string|number} [data[].id] - Category element's ID (if applicable).
-       * @param {string|number} [data[].value] - Category element's value (if applicable).
-       * @param {boolean} [data[].checked=true] - Category's selection status
+       * @param {string|number} [id] - Category element's ID (if applicable).
+       * @param {string|number} [value] - Category element's value (if applicable).
+       * @param {boolean} [checked=true] - Category's selection status
        * @return {undefined}
        */
       setCategories: function(categories) {

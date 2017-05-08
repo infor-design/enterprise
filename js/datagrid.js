@@ -128,28 +128,19 @@ window.Formatters = {
   },
 
   Decimal:  function(row, cell, value, col) {
-    var formatted;
-    formatted = value;
-
+    var formatted = value;
     if (typeof Locale !== undefined) {
-       formatted = Locale.formatNumber(value, (col.numberFormat ? col.numberFormat : null));
+       formatted = Locale.formatNumber(value, col.numberFormat || null);
     }
-
-    formatted = ((formatted === null || formatted === undefined) ? '' : formatted);
-    return formatted;
+    return ((formatted === null || formatted === undefined) ? '' : formatted);
   },
 
   Integer:  function(row, cell, value, col) {
-    var formatted;
-
-    formatted = value;
-
+    var formatted = value;
     if (typeof Locale !== undefined) {
-      formatted = Locale.formatNumber(value, (col.numberFormat ? col.numberFormat : {style: 'integer'}));
+      formatted = Locale.formatNumber(value, col.numberFormat || {style: 'integer'});
     }
-
-    formatted = ((formatted === null || formatted === undefined) ? '' : formatted);
-    return formatted;
+    return (formatted === null || formatted === undefined) ? '' : formatted;
   },
 
   Hyperlink: function(row, cell, value, col, item, api) {
@@ -486,7 +477,7 @@ window.Formatters = {
     return html;
   },
 
-  Favorite: function (row, cell, value, col) {
+  Favorite: function (row, cell, value, col, item, api) {
     var isChecked;
 
     // Use isChecked function if exists
@@ -496,7 +487,13 @@ window.Formatters = {
       isChecked = (value == undefined ? false : value == true); // jshint ignore:line
     }
 
-    return !isChecked ? '' : '<span class="audible">'+ Locale.translate('Favorite') + '</span><span class="icon-favorite">' + $.createIcon({ icon: 'star-filled' }) + '</span>';
+    var isEditable = col.editor && api.settings.editable;
+
+    if (isChecked) {
+      return '<span aria-label="'+ Locale.translate('Favorite') +'" class="icon-favorite'+ (isEditable ? ' is-editable': '') + '">' + $.createIcon({ icon: 'star-filled' }) + '</span>';
+    } else {
+      return col.showEmpty ? '<span aria-label="'+ Locale.translate('Favorite') +'" class="icon-favorite'+ (isEditable ? ' is-editable': '') + '">' + $.createIcon({ icon: 'star-outlined' }) + '</span>' : '';
+    }
   },
 
   Status: function (row, cell, value, col, item) {
@@ -534,7 +531,7 @@ window.Editors = {
       if (column.inlineEditor) {
         this.input = container.find('input');
       } else {
-        this.input = $('<input type="'+ (column.inputType ? column.inputType : 'text') +'"/>')
+        this.input = $('<input type="'+ (column.inputType || 'text') +'"/>')
           .appendTo(container);
       }
 
@@ -555,8 +552,13 @@ window.Editors = {
     };
 
     this.val = function (value) {
+      var thisValue;
       if (value) {
         this.input.val(value);
+      }
+      if (column && column.numberFormat && column.numberFormat.style === 'percent') {
+        thisValue = this.input.val().trim().replace(/(\s%?|%)$/g, '');
+        return Locale.parseNumber(thisValue) / 100;
       }
       return this.input.val();
     };
@@ -706,7 +708,7 @@ window.Editors = {
     this.originalValue = value;
 
     this.init = function () {
-      this.input = $('<input type="checkbox" class="checkboxn"/>').appendTo(container);
+      this.input = $('<input type="checkbox" class="checkbox"/>').appendTo(container);
       this.input.after('<label class="checkbox-label"></label>');
 
       if (column.align) {
@@ -1163,8 +1165,57 @@ window.Editors = {
     };
 
     this.init();
-  }
+  },
 
+  Favorite: function(row, cell, value, container, column, event, grid) {
+    this.name = 'favorite';
+    this.useValue = true;
+    this.originalValue = value;
+
+    this.init = function () {
+      this.input = $('<span class="icon-favorite">' +
+            $.createIcon({ icon: value ? 'star-filled' : 'star-outlined' }) + '<input type="checkbox"></span>').appendTo(container);
+
+      this.input = this.input.find('input');
+    };
+
+    this.val = function (value) {
+      var isChecked;
+
+      if (value === undefined) {
+        return this.input.prop('checked');
+      }
+
+      // Use isChecked function if exists
+      if (column.isChecked) {
+        isChecked = column.isChecked(value);
+      } else {
+        isChecked = value;
+      }
+
+      if (event.type === 'click' || (event.type === 'keydown' && event.keyCode === 32)) {
+        //just toggle it
+        isChecked = !isChecked;
+        grid.setNextActiveCell(event);
+      }
+
+      this.input.prop('checked', isChecked);
+      this.input.find('use').attr('xlink:href', isChecked ? '#icon-star-filled' : '#icon-star-outlined');
+    };
+
+    this.focus = function () {
+      this.input.trigger('focusout').focus();
+    };
+
+    this.destroy = function () {
+      var self = this;
+      setTimeout(function() {
+        self.input.parent().remove();
+      }, 0);
+    };
+
+    this.init();
+  }
 };
 
 window.GroupBy = (function() {
@@ -1848,6 +1899,13 @@ $.fn.datagrid = function(options) {
             case 'decimal':
               filterMarkup += '<input ' + (col.filterDisabled ? ' disabled' : '') + ' type="text" id="'+ filterId +'" data-mask-mode="number" data-mask="'+ (col.mask ? col.mask : '####.00') + '">';
               break;
+            case 'percent':
+              col.maskOptions = {
+                showSymbol: 'percent',
+                pattern: col.mask || (((col.name + '').toLowerCase() === 'decimal') ? '####.00' : '')
+              };
+              filterMarkup += '<input' + (col.filterDisabled ? ' disabled' : '') + ' type="text" id="'+ filterId +'" data-mask-mode="number" data-mask="'+ col.maskOptions.pattern +'"/>';
+              break;
             case 'contents':
             case 'select':
               filterMarkup += '<select ' + (col.filterDisabled ? ' disabled' : '') + (col.filterType ==='select' ? ' class="dropdown"' : ' multiple class="multiselect"') + 'id="'+ filterId +'">';
@@ -1875,7 +1933,7 @@ $.fn.datagrid = function(options) {
           header.find('.datepicker').datepicker(col.editorOptions ? col.editoroptions : {dateFormat: col.dateFormat});
           header.find('select.dropdown').dropdown(col.editorOptions);
           header.find('.multiselect').multiselect(col.editorOptions);
-          header.find('[data-mask]').mask();
+          header.find('[data-mask]').mask(col.maskOptions);
         }
       }
 
@@ -1963,7 +2021,7 @@ $.fn.datagrid = function(options) {
           render('is-not-empty', 'IsNotEmpty');
       }
 
-      if (filterType === 'integer' || filterType === 'date' || filterType === 'decimal') {
+      if (/\b(integer|decimal|date|percent)\b/g.test(filterType)) {
         btnMarkup += ''+
           render('less-than', 'LessThan') +
           render('less-equals', 'LessOrEquals') +
@@ -2022,6 +2080,18 @@ $.fn.datagrid = function(options) {
             rowValue = self.fieldValue(rowData, field),
             rowValueStr = rowValue.toString().toLowerCase(),
             conditionValue = conditions[i].value.toString().toLowerCase();
+
+          //Percent filter type
+          if (columnDef.filterType === 'percent') {
+            conditionValue = (conditionValue / 100).toString();
+            if ((columnDef.name + '').toLowerCase() === 'decimal') {
+              rowValue = window.Formatters.Decimal(false, false, rowValue, columnDef);
+              conditionValue = window.Formatters.Decimal(false, false, conditionValue, columnDef);
+            } else if ((columnDef.name + '').toLowerCase() === 'integer') {
+              rowValue = window.Formatters.Integer(false, false, rowValue, columnDef);
+              conditionValue = window.Formatters.Integer(false, false, conditionValue, columnDef);
+            }
+          }
 
           //Run Data over the formatter
           if (columnDef.filterType === 'text') {
@@ -4105,7 +4175,7 @@ $.fn.datagrid = function(options) {
         // Keep icon clickable in edit mode
         var target = e.target;
 
-        if ($(target).is('input.lookup, input.timepicker, input.datepicker , input.spinbox')) {
+        if ($(target).is('input.lookup, input.timepicker, input.datepicker, input.spinbox')) {
           // Wait for modal popup, if did not found modal popup means
           // icon was not clicked, then commit cell edit
           setTimeout(function() {
@@ -4411,8 +4481,14 @@ $.fn.datagrid = function(options) {
         dataset = this.settings.treeGrid ?
           this.settings.treeDepth : this.settings.dataset;
 
-      for (var i=0, l=dataset.length; i < l; i++) {
-        rows.push(i);
+      for (var i = 0, l = dataset.length; i < l; i++) {
+        if (this.filterRowRendered) {
+          if (!dataset[i].isFiltered) {
+            rows.push(i);
+          }
+        } else {
+          rows.push(i);
+        }
       }
 
       this.dontSyncUi = true;
@@ -4511,16 +4587,26 @@ $.fn.datagrid = function(options) {
 
     //Set ui elements based on selected rows
     syncSelectedUI: function () {
+      var s = this.settings,
+        dataset = s.treeGrid ? s.treeDepth : s.dataset,
+        headerCheckbox = this.headerRow.find('.datagrid-checkbox'),
+        rows = dataset;
 
-      var headerCheckbox = this.headerRow.find('.datagrid-checkbox'),
-        s = this.settings;
+      if (this.filterRowRendered) {
+        rows = [];
+        for (var i = 0, l = dataset.length; i < l; i++) {
+          if (!dataset[i].isFiltered) {
+            rows.push(i);
+          }
+        }
+      }
 
       //Sync the header checkbox
       if (this._selectedRows.length > 0) {
         headerCheckbox.addClass('is-checked is-partial');
       }
 
-      if (this._selectedRows.length === (s.treeGrid ? s.treeDepth : s.dataset).length) {
+      if (this._selectedRows.length === rows.length) {
         headerCheckbox.addClass('is-checked').removeClass('is-partial');
       }
 
