@@ -179,15 +179,16 @@
           }
         }
 
-        var selectedOpt = this.settings.moveSelectedToTop ? this.settings.moveSelectedToTop : this.settings.moveSelected,
-          dataMoveSelected = this.element.attr('data-move-selected');
+        // Backwards compatibility for deprecated "moveSelectedToTop" setting.
+        if (this.settings.moveSelectedToTop !== undefined) {
+          this.settings.moveSelected = this.settings.moveSelectedToTop;
+        }
 
+        var dataMoveSelected = this.element.attr('data-move-selected');
         if (dataMoveSelected) {
-          if (selectedOpt) {
-            this.settings.moveSelected = getMoveSelectedSetting(selectedOpt);
-          } else {
-            this.settings.moveSelected = getMoveSelectedSetting(dataMoveSelected);
-          }
+          this.settings.moveSelected = getMoveSelectedSetting(dataMoveSelected, true);
+        } else {
+          this.settings.moveSelected = getMoveSelectedSetting(this.settings.moveSelected);
         }
 
         var dataCloseOnSelect = this.element.attr('data-close-on-select');
