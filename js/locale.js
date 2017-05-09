@@ -515,8 +515,8 @@
       var formattedNum, curFormat, percentFormat,
         decimal = options && options.decimal ? options.decimal : this.numbers().decimal,
         group = options && options.group !== undefined ? options.group : this.numbers().group,
-        minimumFractionDigits = options && options.minimumFractionDigits !== undefined ? options.minimumFractionDigits : (options && options.style && (options.style === 'currency' || options.style === 'percent') ? 2: 2),
-        maximumFractionDigits = options && options.maximumFractionDigits !== undefined ? options.maximumFractionDigits : (options && options.style && (options.style === 'currency' || options.style === 'percent') ? 2: (options && options.minimumFractionDigits ? options.minimumFractionDigits :3));
+        minimumFractionDigits = options && options.minimumFractionDigits !== undefined ? options.minimumFractionDigits : (options && options.style && options.style === 'currency' ? 2 : (options && options.style && options.style === 'percent') ? 0 : 2),
+        maximumFractionDigits = options && options.maximumFractionDigits !== undefined ? options.maximumFractionDigits : (options && options.style && (options.style === 'currency' || options.style === 'percent') ? 2 : (options && options.minimumFractionDigits ? options.minimumFractionDigits : 3));
 
       if (number === undefined || number === null || number === '') {
         return undefined;
@@ -525,10 +525,6 @@
       if (options && options.style === 'integer') {
         maximumFractionDigits = 0;
         minimumFractionDigits = 0;
-      }
-
-      if (!minimumFractionDigits && options && options.style === 'percent') {
-        minimumFractionDigits = 2;
       }
 
       //TODO: Doc Note: Uses Truncation

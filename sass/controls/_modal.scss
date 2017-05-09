@@ -136,14 +136,6 @@
       border-right-color: transparent;
     }
   }
-
-  // Messages
-  &.message {
-    .modal-buttonset {
-      margin-top: 20px;
-    }
-  }
-
 }
 
 .overlay {
@@ -272,6 +264,7 @@
 .modal-buttonset {
   border-top: 1px solid $modal-btn-border-color;
   height: 50px;
+  margin-top: 20px;
   padding: 2px;// Keep 2px padding around for border to show around on focus
 
   button {
@@ -340,8 +333,6 @@
 //RTL Styles
 html[dir='rtl'] {
   .modal-buttonset {
-    margin: 0;
-
     button {
       float: right;
       margin-left: 0;

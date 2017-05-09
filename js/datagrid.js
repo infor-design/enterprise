@@ -128,28 +128,19 @@ window.Formatters = {
   },
 
   Decimal:  function(row, cell, value, col) {
-    var formatted;
-    formatted = value;
-
+    var formatted = value;
     if (typeof Locale !== undefined) {
-       formatted = Locale.formatNumber(value, (col.numberFormat ? col.numberFormat : null));
+       formatted = Locale.formatNumber(+value, col.numberFormat);
     }
-
-    formatted = ((formatted === null || formatted === undefined) ? '' : formatted);
-    return formatted;
+    return ((formatted === null || formatted === undefined) ? '' : formatted);
   },
 
   Integer:  function(row, cell, value, col) {
-    var formatted;
-
-    formatted = value;
-
+    var formatted = value;
     if (typeof Locale !== undefined) {
-      formatted = Locale.formatNumber(value, (col.numberFormat ? col.numberFormat : {style: 'integer'}));
+      formatted = Locale.formatNumber(+value, col.numberFormat || {style: 'integer'});
     }
-
-    formatted = ((formatted === null || formatted === undefined) ? '' : formatted);
-    return formatted;
+    return (formatted === null || formatted === undefined) ? '' : formatted;
   },
 
   Hyperlink: function(row, cell, value, col, item, api) {
@@ -333,7 +324,7 @@ window.Formatters = {
     }
 
     if (typeof Locale !== undefined && col.numberFormat) {
-       value = Locale.formatNumber(value, (col.numberFormat ? col.numberFormat : null));
+       value = Locale.formatNumber(+value, col.numberFormat);
     }
 
     return (beforeText + ((value === null || value === undefined || value === '') ? '' : value.toString()) + afterText);
@@ -542,7 +533,7 @@ window.Editors = {
       if (column.inlineEditor) {
         this.input = container.find('input');
       } else {
-        this.input = $('<input type="'+ (column.inputType ? column.inputType : 'text') +'"/>')
+        this.input = $('<input type="'+ (column.inputType || 'text') +'"/>')
           .appendTo(container);
       }
 
@@ -563,8 +554,13 @@ window.Editors = {
     };
 
     this.val = function (value) {
+      var thisValue;
       if (value) {
         this.input.val(value);
+      }
+      if (column && column.numberFormat && column.numberFormat.style === 'percent') {
+        thisValue = this.input.val().trim().replace(/(\s%?|%)$/g, '');
+        return Locale.parseNumber(thisValue) / 100;
       }
       return this.input.val();
     };
@@ -1907,6 +1903,13 @@ $.fn.datagrid = function(options) {
             case 'decimal':
               filterMarkup += '<input ' + (col.filterDisabled ? ' disabled' : '') + ' type="text" id="'+ filterId +'" data-mask-mode="number" data-mask="'+ (col.mask ? col.mask : '####.00') + '">';
               break;
+            case 'percent':
+              col.maskOptions = {
+                showSymbol: 'percent',
+                pattern: col.mask || (((col.name + '').toLowerCase() === 'decimal') ? '####.00' : '')
+              };
+              filterMarkup += '<input' + (col.filterDisabled ? ' disabled' : '') + ' type="text" id="'+ filterId +'" data-mask-mode="number" data-mask="'+ col.maskOptions.pattern +'"/>';
+              break;
             case 'contents':
             case 'select':
               filterMarkup += '<select ' + (col.filterDisabled ? ' disabled' : '') + (col.filterType ==='select' ? ' class="dropdown"' : ' multiple class="multiselect"') + 'id="'+ filterId +'">';
@@ -1934,7 +1937,7 @@ $.fn.datagrid = function(options) {
           header.find('.datepicker').datepicker(col.editorOptions ? col.editoroptions : {dateFormat: col.dateFormat});
           header.find('select.dropdown').dropdown(col.editorOptions);
           header.find('.multiselect').multiselect(col.editorOptions);
-          header.find('[data-mask]').mask();
+          header.find('[data-mask]').mask(col.maskOptions);
         }
       }
 
@@ -2022,7 +2025,7 @@ $.fn.datagrid = function(options) {
           render('is-not-empty', 'IsNotEmpty');
       }
 
-      if (filterType === 'integer' || filterType === 'date' || filterType === 'decimal') {
+      if (/\b(integer|decimal|date|percent)\b/g.test(filterType)) {
         btnMarkup += ''+
           render('less-than', 'LessThan') +
           render('less-equals', 'LessOrEquals') +
@@ -2081,6 +2084,18 @@ $.fn.datagrid = function(options) {
             rowValue = self.fieldValue(rowData, field),
             rowValueStr = rowValue.toString().toLowerCase(),
             conditionValue = conditions[i].value.toString().toLowerCase();
+
+          //Percent filter type
+          if (columnDef.filterType === 'percent') {
+            conditionValue = (conditionValue / 100).toString();
+            if ((columnDef.name + '').toLowerCase() === 'decimal') {
+              rowValue = window.Formatters.Decimal(false, false, rowValue, columnDef);
+              conditionValue = window.Formatters.Decimal(false, false, conditionValue, columnDef);
+            } else if ((columnDef.name + '').toLowerCase() === 'integer') {
+              rowValue = window.Formatters.Integer(false, false, rowValue, columnDef);
+              conditionValue = window.Formatters.Integer(false, false, conditionValue, columnDef);
+            }
+          }
 
           //Run Data over the formatter
           if (columnDef.filterType === 'text') {
