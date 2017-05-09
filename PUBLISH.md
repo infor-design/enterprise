@@ -38,7 +38,7 @@ npm publish ./ --tag=develop
 Update the info in dist/package.json
 
 ```bash
-npm publish dist --tag rc
+npm publish dist --tag dev
 npm publish dist --tag release/4.2.6
 npm publish dist
 ```

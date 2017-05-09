@@ -17,9 +17,9 @@
     data.push({ id: 4, button: 'Test D', link: 'Test D', checkbox: false, favorite: false });
 
     //Define Columns for the Grid.
-    columns.push({ id: 'button',   name: 'Button',   field: 'button',   align: 'center', formatter: Formatters.Button,    click: function () { alert('Button Clicked'); }});
+    columns.push({ id: 'button',   name: 'Button',   field: 'button',   align: 'center', formatter: Formatters.Button, click: function () { alert('Button Clicked'); }});
     columns.push({ id: 'link',     name: 'Link',     field: 'link',     align: 'center', formatter: Formatters.Hyperlink, click: function () { alert('Link Clicked'); }});
-    columns.push({ id: 'favorite', name: 'Favorite', field: 'favorite', align: 'center', formatter: Formatters.Favorite,  click: function () { alert('Favorite Icon Clicked'); }, width: 300 });
+    columns.push({ id: 'favs', name: 'Favorite', field: 'favorite', align: 'center', showEmpty: true, formatter: Formatters.Favorite, editor: Editors.Favorite});
     columns.push({ id: 'checkbox', name: 'CheckBox', field: 'checkbox', align: 'center', formatter: Formatters.Checkbox, editor: Editors.Checkbox});
 
     //Init and get the api for the grid
@@ -27,7 +27,7 @@
       columns: columns,
       dataset: data,
       editable: true,
-      selectable: 'single',
+      selectable: false,
       paging: true,
       pagesize: 5,
       pagesizes: [5, 10, 25, 50]
