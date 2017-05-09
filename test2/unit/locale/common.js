@@ -438,7 +438,7 @@ define([
 
     'should format percent': function() {
       Locale.set('en-US');
-      expect(Locale.formatNumber(0.0500000, {style: 'percent'})).to.equal('5.00 %');
+      expect(Locale.formatNumber(0.0500000, {style: 'percent'})).to.equal('5 %');
       expect(Locale.formatNumber(0.050000, {style: 'percent', maximumFractionDigits: 0})).to.equal('5 %');
       expect(Locale.formatNumber(0.05234, {style: 'percent', minimumFractionDigits: 4, maximumFractionDigits: 4})).to.equal('5.2340 %');
 
@@ -449,10 +449,10 @@ define([
       expect(Locale.formatNumber(0.5755, {style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2})).to.equal('57.55 %');
 
       Locale.set('tr-TR');
-      expect(Locale.formatNumber(0.0500000, {style: 'percent'})).to.equal('%5,00');
+      expect(Locale.formatNumber(0.0500000, {style: 'percent'})).to.equal('%5');
 
       Locale.set('it-IT');
-      expect(Locale.formatNumber(0.0500000, {style: 'percent'})).to.equal('5,00%');
+      expect(Locale.formatNumber(0.0500000, {style: 'percent'})).to.equal('5%');
     },
 
     'should parse numbers back': function() {
