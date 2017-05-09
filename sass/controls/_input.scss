@@ -387,7 +387,8 @@ label,
 
 // Error States
 .error,
-.error-message {
+.error-message,
+.error-message p {
   color: $error-color;
 }
 
