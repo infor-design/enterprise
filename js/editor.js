@@ -31,10 +31,7 @@
             'separator', 'source'
           ],
           source: [
-            'bold','italic','underline',
-            'separator', 'anchor',
-            'separator', 'quote',
-            'separator', 'visual'
+            'visual'
           ]
         },
         excludeButtons: {
