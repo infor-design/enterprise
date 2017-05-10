@@ -25,6 +25,12 @@
   .animated-bar {
     background-color: $composite-tabs-focus-state-color;
   }
+
+  .tab-focus-indicator {
+    &.is-visible {
+      border-color: $composite-tabs-focus-state-color;
+    }
+  }
 }
 
 .header {

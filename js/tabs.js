@@ -30,7 +30,7 @@
           sourceArguments: {}, // If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
           tabCounts: false, // If true, Displays a modifiable count above each tab.
         },
-        tabContainerTypes = ['horizontal', 'vertical', 'module-tabs', 'header-tabs'],
+        tabContainerTypes = ['horizontal', 'vertical', 'module-tabs', 'header-tabs', 'composite-tabs'],
         settings = $.extend({}, defaults, options);
 
     /**
@@ -1135,6 +1135,10 @@
 
       isHeaderTabs: function() {
         return this.element.hasClass('header-tabs');
+      },
+
+      isCompositeTabs: function() {
+        return this.element.hasClass('composite-tabs');
       },
 
       isHidden: function() {

@@ -126,10 +126,11 @@ $subheader-height: 60px;
 
     .title {
       color: $header-text-color;
-      height: $header-height - 10;
+      height: $header-height;
       overflow: visible;
       text-overflow: clip;
 
+      /*
       > h1 {
         margin-left: 1.7rem;
       }
@@ -137,6 +138,7 @@ $subheader-height: 60px;
       > button:first-child + h1 {
         margin-left: 0;
       }
+      */
 
       .btn-menu {
         text-transform: none;
