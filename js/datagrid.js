@@ -6140,6 +6140,7 @@ $.fn.datagrid = function(options) {
 
     },
 
+    /*
     refreshPagerState: function (pagingInfo) {
       if (!this.pager || !pagingInfo) {
         return;
@@ -6148,17 +6149,20 @@ $.fn.datagrid = function(options) {
       this.pager.activePage = pagingInfo.activePage;
       this.pager.updatePagingInfo(pagingInfo);
     },
+    */
 
     renderPager: function (pagingInfo, isResponse) {
-      if (!this.pager) {
+      var api = this.pager;
+
+      if (!api) {
         return;
       }
 
-      this.refreshPagerState(pagingInfo);
+      //this.refreshPagerState(pagingInfo);
+      api.updatePagingInfo(pagingInfo);
 
-      this.pager.renderBar();
       if (!isResponse) {
-        this.pager.renderPages(pagingInfo.type);
+        api.renderPages(pagingInfo.type);
       }
 
       // Update selected and Sync header checkbox
