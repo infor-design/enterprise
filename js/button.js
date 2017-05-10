@@ -67,8 +67,8 @@
           }
         }
 
-        if (this.element.hasClass('btn-toggle')) {
-          this.element.attr('aria-pressed', 'false').on('click.favorite', function() {
+        if (this.element.hasClass('btn-toggle') || this.element.hasClass('icon-favorite')) {
+          this.element.on('click.favorite', function() {
             var elem = $(this),
               svg = elem.find('svg:not(.ripple-effect)'),
               isPressed = elem.attr('aria-pressed') === 'true';
@@ -80,9 +80,9 @@
               elem.toggleClass('is-pressed');
             }
 
-            if (elem.hasClass('icon-favorite') && svg.find('use').attr('xlink:href') === '#icon-star-filled') {
+            if (elem.hasClass('icon-favorite') && !elem.hasClass('btn-toggle') && svg.find('use').attr('xlink:href') === '#icon-star-filled') {
               svg.changeIcon('star-outlined');
-            } else if (elem.hasClass('icon-favorite')) {
+            } else if (elem.hasClass('icon-favorite') && !elem.hasClass('btn-toggle')) {
               svg.changeIcon('star-filled');
             }
 
