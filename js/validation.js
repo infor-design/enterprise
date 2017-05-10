@@ -221,9 +221,9 @@
         allValid = true;
 
       if (modalFields.length > 0) {
-        field.data('isValid', isValid);
         modalFields.each(function () {
           var modalField = $(this);
+          modalField.data('isValid', isValid);
           if (modalField.closest('.datagrid-filter-wrapper').length > 0) {
             return;
           }
