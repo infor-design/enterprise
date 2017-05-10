@@ -472,9 +472,14 @@
         this.pagerBar
           .find('.pager-count input').val(this.activePage);
 
+        // Update the total number of pages
         if (this._pageCount !== '0' && !isNaN(this._pageCount)) {
           this.pagerBar.find('.pager-total-pages').text(this._pageCount);
         }
+
+        // Update the number of records per page
+        this.pagerBar.find('.btn-menu span')
+          .text(Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize));
 
         // Refresh Disabled
         var prev = pb.find('.pager-prev a'),
