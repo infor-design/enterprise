@@ -16,6 +16,7 @@ http://usalvlhlpool1.infor.com/4.3.0-rc/controls
 - Datagrid - Added am option (allowOneExpanded) to only show one expandable row at a time. It is now the default.
 - Datagrid - Added an optional light background color on the list version by adding class datagrid-alternate-bg-color to the datagrid div. See tests/datagrid/datagrid-expandable-row-one-only.html
 - Datagrid - Added Favorites Editor
+- Datagrid - Changed clickable editors (buttons, favorites, links), to only fire when clicking the object not the cell.
 - Dropdown - Added ability to set text on blank items on (Clear Selection)
 - Multiselect - Added ability to move selected items to the top of the entire list or to the top of groups when the list is opened.
 - Locale - Added new set of translated strings for 37 languages / 49 locales
@@ -23,6 +24,10 @@ http://usalvlhlpool1.infor.com/4.3.0-rc/controls
 
 ### Bug Fixes
 - Datagrid - Fixed column alignment issue on reload with hidden columns
+
+### Notes
+- Latest bleeding edge build is now available in NPM. Use at your own risk with command:
+`npm install @infor/sohoxi@dev`
 
 ### Breaking Changes
 - Tag - Revised the spelling of the CSS class for "X" buttons on tags from "is-dismissable" to "is-dismissible".  The original class still works, but is deprecated and will be removed in a future version.
