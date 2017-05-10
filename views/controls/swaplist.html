@@ -190,6 +190,7 @@
 
     // On swap update ==========================================================
     var api1 = $('#example-swaplist-1').data('swaplist');
+    api1.updated();
     api1.element.on('swapupdate', function (e, items) {
       console.log(api1.dataset);
       console.log(api1.getAvailable());
