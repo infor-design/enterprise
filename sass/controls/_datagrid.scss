@@ -1317,6 +1317,11 @@ $datagrid-short-row-height: 23px;
       .datagrid-cell-wrapper {
         text-align: center;
       }
+
+      .icon-favorite {
+        left: -5px;
+        margin: 0 auto;
+      }
     }
 
     &.text-ellipsis {
@@ -1508,6 +1513,27 @@ $datagrid-short-row-height: 23px;
       position: relative;
       top: -9px;
       width: calc(100% - 20px);
+
+      &.percent {
+        &::before,
+        &::after {
+          @include font-size(14);
+          color: $datagrid-filter-icon-color;
+          display: inline-block;
+          position: absolute;
+          top: -2px;
+        }
+
+        &::before {
+          content: attr(data-currency-symbol);
+          left: auto;
+          right: 0;
+        }
+
+        [data-mask-mode="number"] {
+          padding: 3px 22px 2px 0;
+        }
+      }
 
       input {
         background-color: transparent;
@@ -1844,6 +1870,10 @@ td .btn-actions {
     left: 5px;
     margin-top: 0;
     top: 1px;
+  }
+
+  &.is-checked.no-animation::after {
+    animation: none;
   }
 
   &.is-partial {
@@ -2291,6 +2321,19 @@ html[dir='rtl'] {
     .datepicker + .icon {
       margin-left: 0;
       margin-right: -15px;
+    }
+  }
+
+  .datagrid-header .is-filterable .datagrid-filter-wrapper {
+    &.percent {
+      &::before {
+        left: 0;
+        right: auto;
+      }
+
+      [data-mask-mode="number"] {
+        padding: 3px 0 2px 22px;
+      }
     }
   }
 

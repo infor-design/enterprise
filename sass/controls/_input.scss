@@ -142,7 +142,7 @@
   margin-bottom: 20px;
   position: relative;
 
-  &:last-child {
+  &:last-child:not(:only-child) {
     margin-bottom: 0;
   }
 
@@ -387,7 +387,8 @@ label,
 
 // Error States
 .error,
-.error-message {
+.error-message,
+.error-message p {
   color: $error-color;
 }
 
@@ -430,7 +431,7 @@ label,
   margin-bottom: 10px;
   position: relative;
 
-  &:last-child {
+  &:last-child:not(:only-child) {
     margin-bottom: 0;
   }
 

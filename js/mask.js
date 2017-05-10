@@ -131,7 +131,7 @@
           }
 
           $('<span class="audible ' + symbolType + '"></span>').text(' ' + symbol).appendTo(self.element.prev('label'));
-          this.element.parent('.field')
+          this.element.parent('.field, .datagrid-filter-wrapper')
             .attr('data-currency-symbol', '' + symbol)
             .addClass(symbolType);
         }
