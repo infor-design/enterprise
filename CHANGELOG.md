@@ -34,6 +34,7 @@ http://usalvlhlpool1.infor.com/4.3.0-rc/controls
 - Pie - The Chart now sorts slices in the order of the dataset (was on size from biggest to smallest before).
 - Button - Changed the standard `.btn` style on forms to reflect Tertiary button style instead of Secondary button style (SOHO-6083).
 - Multiselect - `moveSelectedToTop` has been deprecated in favor of `moveSelected`, which is now a text string instead of a boolean.  This defaults to `"all"` on Multiselect but can be defined as `"group"` or `"none"` as well.
+- Editor - Removed 'bold','italic','underline', 'anchor', 'quote' options from HTML editor.
 
 ### Ui Changes
 - Added heart and heart-filled icons
