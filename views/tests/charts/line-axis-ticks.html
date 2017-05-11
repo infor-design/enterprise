@@ -1,0 +1,38 @@
+
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Line Chart Title</h2>
+        </div>
+        <div class="widget-content">
+          <div id="line-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+
+  var url = '{{basepath}}api/364points';
+
+  //TODO https://bl.ocks.org/mbostock/1849162
+
+  $.getJSON(url, function(res) {
+    $('#line-example').chart({
+      type: 'line',
+      dataset: res,
+      xAxisTicks: 10,
+      hideDots: true,
+      //xAxisValues: [0, 10 , 20, 30, 40, 50, 60 , 70, 80, 90, 100],
+      xAxisFormatter: function (value, d, i) {
+        console.log(value, d, i);
+        return value.substr(0,7);
+      }
+      });
+  });
+
+});
+</script>
