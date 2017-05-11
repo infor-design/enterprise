@@ -130,7 +130,7 @@ window.Formatters = {
   Decimal:  function(row, cell, value, col) {
     var formatted = value;
     if (typeof Locale !== undefined) {
-       formatted = Locale.formatNumber(value, col.numberFormat || null);
+       formatted = Locale.formatNumber(+value, col.numberFormat);
     }
     return ((formatted === null || formatted === undefined) ? '' : formatted);
   },
@@ -138,7 +138,7 @@ window.Formatters = {
   Integer:  function(row, cell, value, col) {
     var formatted = value;
     if (typeof Locale !== undefined) {
-      formatted = Locale.formatNumber(value, col.numberFormat || {style: 'integer'});
+      formatted = Locale.formatNumber(+value, col.numberFormat || {style: 'integer'});
     }
     return (formatted === null || formatted === undefined) ? '' : formatted;
   },
@@ -213,7 +213,7 @@ window.Formatters = {
     );
   },
 
-  Checkbox: function (row, cell, value, col) {
+  Checkbox: function (row, cell, value, col, item, api) {
     var isChecked;
 
     // Use isChecked function if exists
@@ -224,8 +224,10 @@ window.Formatters = {
       isChecked = (value == undefined ? false : value == true); // jshint ignore:line
     }
 
+    var animate = api.wasJustUpdated;
+    api.wasJustUpdated = false;
     return '<div class="datagrid-checkbox-wrapper"><span role="checkbox" aria-label="'+ col.name +'" class="datagrid-checkbox ' +
-     (isChecked ? 'is-checked' : '') +'" aria-checked="'+isChecked+'"></span></div>';
+     (isChecked ? 'is-checked ' + (!animate ? ' no-animation' : ' ') : '') +'" aria-checked="'+isChecked+'"></span></div>';
   },
 
   SelectionCheckbox: function (row, cell, value, col) {
@@ -322,7 +324,7 @@ window.Formatters = {
     }
 
     if (typeof Locale !== undefined && col.numberFormat) {
-       value = Locale.formatNumber(value, (col.numberFormat ? col.numberFormat : null));
+       value = Locale.formatNumber(+value, col.numberFormat);
     }
 
     return (beforeText + ((value === null || value === undefined || value === '') ? '' : value.toString()) + afterText);
@@ -708,12 +710,14 @@ window.Editors = {
     this.originalValue = value;
 
     this.init = function () {
+
       this.input = $('<input type="checkbox" class="checkbox"/>').appendTo(container);
       this.input.after('<label class="checkbox-label"></label>');
 
       if (column.align) {
         this.input.addClass('l-'+ column.align +'-text');
       }
+
     };
 
     this.val = function (value) {
@@ -730,8 +734,8 @@ window.Editors = {
         isChecked = value;
       }
 
-      if (event.type === 'click' || (event.type === 'keydown' && event.keyCode === 32)) {
-        //just toggle it
+      //just toggle it if we click right on it
+      if ((event.type === 'click' || (event.type === 'keydown' && event.keyCode === 32)) && !$(event.target).is('.datagrid-checkbox-wrapper')) {
         isChecked = !isChecked;
         grid.setNextActiveCell(event);
       }
@@ -1193,8 +1197,8 @@ window.Editors = {
         isChecked = value;
       }
 
-      if (event.type === 'click' || (event.type === 'keydown' && event.keyCode === 32)) {
-        //just toggle it
+      //just toggle it when clicked
+      if ((event.type === 'click' || (event.type === 'keydown' && event.keyCode === 32)) && (!$(event.target).is('.datagrid-cell-wrapper'))) {
         isChecked = !isChecked;
         grid.setNextActiveCell(event);
       }
@@ -2633,7 +2637,7 @@ $.fn.datagrid = function(options) {
           //First push group row
           if (!this.settings.groupable.suppressGroupRow) {
             //Show the grouping row
-            tableHtml += self.rowHtml(dataset[i], this.recordCount, true);
+            tableHtml += self.rowHtml(dataset[i], this.recordCount, i, true);
           }
 
           if (this.settings.groupable.showOnlyGroupRow && dataset[i].values[0]) {
@@ -2645,32 +2649,32 @@ $.fn.datagrid = function(options) {
 
             rowData.values = dataset[i].values;
 
-            tableHtml += self.rowHtml(rowData, this.recordCount);
+            tableHtml += self.rowHtml(rowData, this.recordCount, i);
             this.recordCount++;
             continue;
           }
 
           //Now Push Groups
           for (var k = 0; k < dataset[i].values.length; k++) {
-            tableHtml += self.rowHtml(dataset[i].values[k], this.recordCount);
+            tableHtml += self.rowHtml(dataset[i].values[k], this.recordCount, i);
             this.recordCount++;
           }
 
           // Now Push summary rowHtml
           if (this.settings.groupable.groupFooterRow) {
-            tableHtml += self.rowHtml(dataset[i], this.recordCount, true, true);
+            tableHtml += self.rowHtml(dataset[i], this.recordCount, i, true, true);
           }
 
           continue;
         }
 
-        tableHtml += self.rowHtml(dataset[i], s.treeGrid ? this.recordCount : i);
+        tableHtml += self.rowHtml(dataset[i], s.treeGrid ? this.recordCount : i, i);
         this.recordCount++;
       }
 
       //Append a Summary Row
       if (this.settings.summaryRow) {
-        tableHtml += self.rowHtml(self.calculateTotals(), this.recordCount, false, true);
+        tableHtml += self.rowHtml(self.calculateTotals(), this.recordCount, null, false, true);
       }
 
       if (self.bodyColGroupHtml !== '<colgroup>') {
@@ -2729,7 +2733,6 @@ $.fn.datagrid = function(options) {
         }
 
         self.element.trigger('afterrender', {body: self.tableBody, header: self.headerRow, pager: self.pagerBar});
-
       }, 0);
     },
 
@@ -2834,7 +2837,7 @@ $.fn.datagrid = function(options) {
 
     recordCount: 0,
 
-    rowHtml: function (rowData, dataRowIdx, isGroup, isFooter) {
+    rowHtml: function (rowData, dataRowIdx, actualIndex, isGroup, isFooter) {
       var isEven = false,
         self = this,
         isSummaryRow = this.settings.summaryRow && !isGroup && isFooter,
@@ -2893,6 +2896,7 @@ $.fn.datagrid = function(options) {
       isEven = (this.recordCount % 2 === 0);
 
       rowHtml = '<tr role="row" aria-rowindex="' + ariaRowindex + '"' +
+                ' data-index="' + actualIndex + '"' +
                 (self.settings.treeGrid && rowData.children ? ' aria-expanded="' + (rowData.expanded ? 'true"' : 'false"') : '') +
                 (self.settings.treeGrid ? ' aria-level= "' + depth + '"' : '') +
                 ' class="datagrid-row'+
@@ -3033,7 +3037,7 @@ $.fn.datagrid = function(options) {
       if (rowData.children) {
         for (i=0, l=rowData.children.length; i<l; i++) {
           this.recordCount++;
-          rowHtml += self.rowHtml(rowData.children[i], this.recordCount);
+          rowHtml += self.rowHtml(rowData.children[i], this.recordCount, i);
         }
       }
 
@@ -3588,7 +3592,7 @@ $.fn.datagrid = function(options) {
 
           for (var i = 0; i < dataset.length; i++) {
             if (!dataset[i].isFiltered) {
-              tableHtml += self.rowHtml(dataset[i], i);
+              tableHtml += self.rowHtml(dataset[i], i, i);
             }
           }
 
@@ -4029,7 +4033,7 @@ $.fn.datagrid = function(options) {
           cell = elem.parent().children(':visible').index(elem),
           col = self.columnSettings(cell, true);
 
-        if (col.click && typeof col.click === 'function') {
+        if (col.click && typeof col.click === 'function' && target.is('button, input[checkbox], a')) {
 
           var rowElem = $(this).closest('tr'),
             rowIdx = self.dataRowIndex(rowElem),
@@ -4045,7 +4049,7 @@ $.fn.datagrid = function(options) {
             }
           }
 
-          if (!elem.hasClass('is-cell-readonly')) {
+          if (!elem.hasClass('is-cell-readonly') && target.is('button, input[checkbox], a')) {
             col.click(e, [{row: rowIdx, cell: self.activeCell.cell, item: item, originalEvent: e}]);
           }
         }
@@ -4061,30 +4065,20 @@ $.fn.datagrid = function(options) {
         }
 
         // Apply Quick Edit Mode
-          if (self.isCellEditable(dataRowIdx, cell)) {
-            setTimeout(function() {
-              if ($('textarea, input', elem).length &&
-                  (!$('.dropdown,' +
-                  '[type=image],' +
-                  '[type=button],' +
-                  '[type=submit],' +
-                  '[type=reset],' +
-                  '[type=checkbox],' +
-                  '[type=radio]', elem).length)) {
-                self.quickEditMode = true;
-              }
-            }, 0);
-          }
-
-        /* Test Quick Edit Mode without this. Especially Drop Down
-          if (self.isCellEditable(dataRowIdx, cell)) {
-            setTimeout(function() {
-              if (self.isContainTextfield(elem) && self.notContainTextfield(elem)) {
-                self.quickEditMode = true;
-              }
-            }, 0);
-          }
-         */
+        if (self.isCellEditable(dataRowIdx, cell)) {
+          setTimeout(function() {
+            if ($('textarea, input', elem).length &&
+                (!$('.dropdown,' +
+                '[type=image],' +
+                '[type=button],' +
+                '[type=submit],' +
+                '[type=reset],' +
+                '[type=checkbox],' +
+                '[type=radio]', elem).length)) {
+              self.quickEditMode = true;
+            }
+          }, 0);
+        }
 
       });
 
@@ -5652,6 +5646,7 @@ $.fn.datagrid = function(options) {
           args.rowData = this.settings.treeDepth[row].node;
         }
         this.element.trigger('cellchange', args);
+        this.wasJustUpdated = true;
 
         if (this.settings.showDirty) {
           this.rowStatus(row, 'dirty');
@@ -5687,6 +5682,10 @@ $.fn.datagrid = function(options) {
 
     dataRowIndex: function (row) {
      return row.attr('aria-rowindex') - 1;
+    },
+
+    actualArrayIndex: function (rowElem) {
+     return parseInt(rowElem.attr('data-index'));
     },
 
     // Update a specific Cell
@@ -5749,7 +5748,7 @@ $.fn.datagrid = function(options) {
         self.activeCell = prevCell;
       }
 
-      if (!$('input, button:not(.datagrid-expand-btn, .datagrid-drilldown, .btn-icon)', self.activeCell.node).length) {
+      if (!$('input, button:not(.btn-secondary, .row-btn, .datagrid-expand-btn, .datagrid-drilldown, .btn-icon)', self.activeCell.node).length) {
         self.activeCell.node.focus();
       }
       if (self.activeCell.node.hasClass('is-focusable')) {
@@ -5893,7 +5892,7 @@ $.fn.datagrid = function(options) {
         expandRow = rowElement.next(),
         expandButton = rowElement.find('.datagrid-expand-btn'),
         detail = expandRow.find('.datagrid-row-detail'),
-        item = self.settings.dataset[dataRowIndex];
+        item = self.settings.dataset[self.actualArrayIndex(rowElement)];
 
       if (rowElement.hasClass('datagrid-tree-parent')) {
         return;
@@ -6146,6 +6145,7 @@ $.fn.datagrid = function(options) {
 
     },
 
+    /*
     refreshPagerState: function (pagingInfo) {
       if (!this.pager || !pagingInfo) {
         return;
@@ -6154,17 +6154,20 @@ $.fn.datagrid = function(options) {
       this.pager.activePage = pagingInfo.activePage;
       this.pager.updatePagingInfo(pagingInfo);
     },
+    */
 
     renderPager: function (pagingInfo, isResponse) {
-      if (!this.pager) {
+      var api = this.pager;
+
+      if (!api) {
         return;
       }
 
-      this.refreshPagerState(pagingInfo);
+      //this.refreshPagerState(pagingInfo);
+      api.updatePagingInfo(pagingInfo);
 
-      this.pager.renderBar();
       if (!isResponse) {
-        this.pager.renderPages(pagingInfo.type);
+        api.renderPages(pagingInfo.type);
       }
 
       // Update selected and Sync header checkbox

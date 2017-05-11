@@ -1317,6 +1317,11 @@ $datagrid-short-row-height: 23px;
       .datagrid-cell-wrapper {
         text-align: center;
       }
+
+      .icon-favorite {
+        left: -5px;
+        margin: 0 auto;
+      }
     }
 
     &.text-ellipsis {
@@ -1865,6 +1870,10 @@ td .btn-actions {
     left: 5px;
     margin-top: 0;
     top: 1px;
+  }
+
+  &.is-checked.no-animation::after {
+    animation: none;
   }
 
   &.is-partial {

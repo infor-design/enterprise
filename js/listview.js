@@ -223,16 +223,11 @@
 
       renderPager: function(updatedPagerInfo) {
         var api = this.element.data('pager');
-
         if (!api || !this.settings.pager) {
           return;
         }
 
-        if (updatedPagerInfo) {
-          api.updatePagingInfo(updatedPagerInfo);
-        }
-
-        api.renderBar();
+        api.updatePagingInfo(updatedPagerInfo);
       },
 
       // Get the Data Source. Can be an array, Object or Url

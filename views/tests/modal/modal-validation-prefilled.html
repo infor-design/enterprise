@@ -1,0 +1,68 @@
+
+<div class="row">
+  <div class="twelve columns">
+
+    <button class="btn-secondary" type="button" data-modal="modal-1">Add Context</button>
+    <div class="modal" id="modal-1">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h1 class="modal-title">Add Context</h1>
+        </div>
+
+        <div class="modal-body">
+
+          <div class="field">
+            <label for="context-type">Type</label>
+            <select class="dropdown" id="context-type" name="type">
+              <option value="0"></option>
+              <option value="1">Context 01</option>
+              <option value="2">Context 02</option>
+              <option value="3">Context 03</option>
+              <option value="4">Context 04</option>
+              <option value="5">Context 05</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="context-name" class="required">Name</label>
+            <input id="context-name" name="context-name" value="I have a value" data-validate="required" type="text" placeholder="Example: Name One">
+          </div>
+
+          <div class="field">
+            <label for="context-name2" class="required">Name 2</label>
+            <input id="context-name" name="context-name2" value="I have a value too" data-validate="required" type="text" placeholder="Example: Name One">
+          </div>
+<!--
+          <div class="field">
+           <label for="context-desc" class="required">Description</label>
+           <textarea id="context-desc" data-validate="required" name="context-desc" placeholder="Example: A description goes here">I have a value</textarea>
+          </div>
+
+          <div class="field hidden">
+           <label for="context-desc2" class="required">Description (Hidden)</label>
+           <textarea id="context-desc2" data-validate="required" name="context-desc2" placeholder="Example: A description goes here"></textarea>
+          </div>-->
+
+          <div>
+            <fieldset class="radio-group">
+              <legend>So, yes or no?</legend>
+              <input runat="server" type="radio" class="radio" name="rbModalLogons" id="rbModalLogonsYes" />
+              <label id="lblModalLogonsYes" runat="server" for="rbModalLogonsYes" class="radio-label">Yes</label>
+              <br>
+              <input runat="server" type="radio" class="radio" name="rbModalLogons" id="rbModalLogonsNo" />
+            	<label id="lblModalLogonsNo" runat="server" for="rbModalLogonsNo"  class="radio-label">No</label>
+            </fieldset>
+          </div>
+
+
+          <div class="modal-buttonset">
+            <button type="button" class="btn-modal" style="width: 50%;">Cancel</button>
+            <button type="button" id="submit" class="btn-modal-primary" style="width: 50%;">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

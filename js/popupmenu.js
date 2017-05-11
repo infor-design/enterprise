@@ -144,9 +144,11 @@
 
         if (!this.menu.is('.popupmenu')) {
           this.menu.addClass('popupmenu')
-            .data('trigger', this.element)
             .attr('role', (this.settings.ariaListbox ? 'listbox' : 'menu'));
         }
+
+        // Always store a reference to the trigger element under jQuery data.
+        this.menu.data('trigger', this.element);
 
         this.wrapper = this.menu.parent('.popupmenu-wrapper');
         if (!this.wrapper.length) {
@@ -808,6 +810,11 @@
         }).not(this.menu);  //close others.
 
         otherMenus.each(function() {
+          var trigger = $(this).data('trigger');
+          if (!trigger || !trigger.length) {
+            return;
+          }
+
           var api = $(this).data('trigger').data('popupmenu');
           if (api && typeof api.close === 'function') {
             api.close();
