@@ -66,6 +66,11 @@
         if (this.settings.trigger === 'immediate') {
           this.open(this.settings.eventObj);
         }
+
+        // Use some css rules on submenu parents
+        if (this.menu.find('.submenu').length) {
+          this.menu.addClass('has-submenu');
+        }
       },
 
       isRTL: function() {
