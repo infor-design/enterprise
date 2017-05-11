@@ -1,5 +1,7 @@
-// Module Tabs
+// Composite Form Tabs
 //================================================== //
+
+$composite-tabs-height: 50px;
 
 .tab-container.composite-tabs {
 
@@ -9,16 +11,41 @@
   }
 
   .tab-list {
-    height: 50px;
+    display: inline-block;
+    height: $composite-tabs-height;
     white-space: nowrap;
+    width: calc(100% - 51px);
   }
 
-  .tab {
-    @include font-size(14);
+  .tab-more {
+    background-color: $composite-tabs-bg-color;
+    border-left: 1px solid $composite-tabs-border-color;
+    height: $composite-tabs-height;
+    padding: 16px;
+    position: relative;
+    vertical-align: top;
+    width: 50px;
 
-    a {
-      margin-top: 3px;
-      padding: 14px 10px 17px;
+    // Background fade on the left edge
+    &::before {
+      background-color: transparent;
+      background-image: linear-gradient(
+        to right,
+        rgba($composite-tabs-bg-color, 0),
+        rgba($composite-tabs-bg-color, 1)
+      );
+      content: '';
+      display: inline-block;
+      height: inherit;
+      pointer-events: none;
+      position: absolute;
+      left: -41px; // bleed into the tab list (width of this element + 1 for border)
+      top: 0;
+      width: 40px;
+    }
+
+    .icon {
+      fill: $composite-tabs-text-color;
     }
   }
 
@@ -29,6 +56,15 @@
   .tab-focus-indicator {
     &.is-visible {
       border-color: $composite-tabs-focus-state-color;
+    }
+  }
+
+  .tab {
+    @include font-size(14);
+
+    a {
+      margin-top: 3px;
+      padding: 14px 10px 17px;
     }
   }
 }
@@ -42,4 +78,15 @@
   &.has-composite-tabs {
     border-bottom: 1px solid $composite-tabs-border-color;
   }
+}
+
+// RTL Styles
+html[dir="rtl"] {
+
+  .tab-container.composite-tabs {
+    .tab-more {
+      border-left: 1px solid $composite-tabs-border-color;
+    }
+  }
+
 }

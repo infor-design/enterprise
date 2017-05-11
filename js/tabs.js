@@ -2079,7 +2079,8 @@
         }
 
         // Add "has-more-button" class if we need it, remove it if we don't
-        if (tablist.scrollHeight > tabListHeight) {
+        // Always display the more button on Composite Tabs
+        if (this.isCompositeTabs() || (tablist.scrollHeight > tabListHeight)) {
           if (!hasMoreIndex) {
             elem.classList.add(HAS_MORE);
           }
@@ -2457,7 +2458,7 @@
       // Used for checking if a particular tab (in the form of a jquery-wrapped list item) is spilled into
       // the overflow area of the tablist container <UL>.
       isTabOverflowed: function(li) {
-        if (this.isVerticalTabs()) {
+        if (this.isVerticalTabs() || this.isCompositeTabs()) {
           return false;
         }
 
