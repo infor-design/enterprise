@@ -1,0 +1,63 @@
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div id="datagrid">
+    </div>
+
+  </div>
+</div>
+
+<script>
+  var gridApi = null;
+
+  $('body').one('initialized', function () {
+
+      var grid,
+        data = [],
+        columns = [];
+
+      // Some Sample Data
+      data.push({ value: '0.122' });
+      data.push({ value: '0.125' });
+      data.push({ value: '0.35' });
+      data.push({ value: '0.42' });
+      data.push({ value: '0.50' });
+
+      //Define Columns for the Grid.
+      columns.push({ id: 'id', name: 'Manufacturer', field: 'manufacturer', filterType: 'text', width: 120});
+      columns.push({ id: 'manufacturerName', name: 'Manufacturer Name', field: 'manufacturerName', filterType: 'text'});
+      columns.push({ id: 'inventoryValue', name: 'Inventory', field: 'inventoryValue'});
+      columns.push({ id: 'customerSatisfaction', name: 'CustomerSatisfaction', field: 'customerSatisfaction', formatter: Formatters.TargetedAchievement, ranges: [{'min': 0, 'max': 2, 'classes': 'error'}, {'value': 41, 'classes': 'good'}]});
+
+      //Get some data via ajax
+      var url = '{{basepath}}api/bikes';
+
+      $.getJSON(url, function(res) {
+
+        $('#datagrid').datagrid({
+          columns: columns,
+          dataset: res,
+          paging: true,
+          pagesize: 10,
+          toolbar: {title: 'Bike Dealers', results: true, personalize: true, actions: true, rowHeight: true}
+        });
+      });
+
+      return;
+
+      //Init and get the api for the grid
+      $('#datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        editable: true,
+        filterable: true,
+        toolbar: {title: 'Compressors', results: true, actions: true, rowHeight: true}
+      })
+      .on('cellchange', function (e, args) {
+        console.log(args.value);
+      });
+
+  });
+
+</script>

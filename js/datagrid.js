@@ -378,7 +378,6 @@ window.Formatters = {
     return '<span class="badge ' + colorClasses +'">' + value +' <span class="audible">'+ text+ '</span></span>';
   },
 
-  // Tags (low priority)
   Tag: function (row, cell, value, col) {
     var ranges = Formatters.ClassRange(row, cell, value, col);
     return '<span class="tag ' + ranges.classes +'">'+ value + '</span>';
@@ -505,6 +504,11 @@ window.Formatters = {
     return $.createIcon({ icon: item.rowStatus.icon, classes: ['icon', 'icon-' + item.rowStatus.icon, 'datagrid-alert-icon'] }) + '<span class="audible">' + item.rowStatus.text + '</span>';
   },
 
+  TargetedAchievement: function (row, cell, value, col) {
+    var ranges = Formatters.ClassRange(row, cell, value, col);
+    console.log(ranges);
+    return '<div class="total bar chart-completion-target chart-targeted-achievement"><div class="target remaining bar" style="width: 100%;"></div><div class="completed bar primary" style="width: 80%;"></div><span class="completed-label" aria-hidden="true"><span class="text">300K of 250K</span></span></div>';
+  },
   // TODO Possible future Formatters
   // Percent
   // Image?

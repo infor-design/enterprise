@@ -1309,20 +1309,12 @@ var express = require('express'),
     next();
   }
 
-  router.get('/api/deployments', function(req, res, next) {
-    sendJSONFile('deployments', req, res, next);
-  });
-
-  router.get('/api/general/status-codes', function(req, res, next) {
-    sendJSONFile('status-codes', req, res, next);
-  });
-
   router.get('/api/my-projects', function(req, res, next) {
     sendJSONFile('projects', req, res, next);
   });
 
-  router.get('/api/companies', function(req, res, next) {
-    sendJSONFile('companies', req, res, next);
+  router.get('/api/accounts-sm', function(req, res, next) {
+    sendJSONFile('accounts-sm', req, res, next);
   });
 
   router.get('/api/accounts', function(req, res, next) {
@@ -1333,20 +1325,20 @@ var express = require('express'),
     sendJSONFile('assets', req, res, next);
   });
 
-  router.get('/api/accounts-sm', function(req, res, next) {
-    sendJSONFile('accounts-sm', req, res, next);
-  });
-
-  router.get('/api/incidents', function(req, res, next) {
-    sendJSONFile('incidents', req, res, next);
-  });
-
-  router.get('/api/fires', function(req, res, next) {
-    sendJSONFile('fires', req, res, next);
-  });
-
   router.get('/api/autocomplete/turkish', function(req, res, next) {
     sendJSONFile('autocomplete-turkish', req, res, next);
+  });
+
+  router.get('/api/bikes', function(req, res, next) {
+    sendJSONFile('bikes', req, res, next);
+  });
+
+  router.get('/api/companies', function(req, res, next) {
+    sendJSONFile('companies', req, res, next);
+  });
+
+  router.get('/api/deployments', function(req, res, next) {
+    sendJSONFile('deployments', req, res, next);
   });
 
   router.get('/api/dummy-dropdown-data', function(req, res, next) {
@@ -1354,6 +1346,18 @@ var express = require('express'),
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(data));
     next();
+  });
+
+  router.get('/api/fires', function(req, res, next) {
+    sendJSONFile('fires', req, res, next);
+  });
+
+  router.get('/api/incidents', function(req, res, next) {
+    sendJSONFile('incidents', req, res, next);
+  });
+
+  router.get('/api/general/status-codes', function(req, res, next) {
+    sendJSONFile('status-codes', req, res, next);
   });
 
 module.exports = app;
