@@ -37,9 +37,9 @@ $composite-tabs-height: 50px;
       content: '';
       display: inline-block;
       height: inherit;
+      left: -41px; // bleed into the tab list (width of this element + 1 for border)
       pointer-events: none;
       position: absolute;
-      left: -41px; // bleed into the tab list (width of this element + 1 for border)
       top: 0;
       width: 40px;
     }

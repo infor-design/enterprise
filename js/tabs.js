@@ -698,6 +698,14 @@
           }
         }
 
+        function openMenu(oldHref) {
+          e.preventDefault();
+          // setTimeout is used to bypass triggering of the keyboard when self.buildPopupMenu() is invoked.
+          setTimeout(function() {
+            self.buildPopupMenu(oldHref);
+          }, 0);
+        }
+
         var self = this,
           allExcludes = ':not(.separator):not(.is-disabled):not(:hidden)',
           currentLi = $(e.currentTarget).parent(),
@@ -718,7 +726,13 @@
           if (self.settings.addTabButton) {
             return self.addTabButton;
           }
-          return self.tablist.children('li' + allExcludes).last();
+
+          var last = self.tablist.children('li' + allExcludes).last();
+          if (self.isCompositeTabs()) {
+            openMenu(last.find('a').attr('href'));
+          }
+
+          return last;
         }
 
         function nextTab() {
@@ -730,10 +744,16 @@
             i++;
           }
 
+          var first = self.tablist.children('li' + allExcludes).first();
+          if (self.isCompositeTabs()) {
+            openMenu(first.find('a').attr('href'));
+            return first;
+          }
+
           if (self.settings.addTabButton) {
             return self.addTabButton;
           }
-          return self.tablist.children('li' + allExcludes).first();
+          return first;
         }
 
         function checkAngularClick() {
@@ -806,13 +826,7 @@
 
         // Use the matching option in the popup menu if the target is hidden by overflow.
         if (this.isTabOverflowed(targetLi)) {
-          e.preventDefault();
-          var oldHref = targetLi.children('a').attr('href');
-          // setTimeout is used to bypass triggering of the keyboard when self.buildPopupMenu() is invoked.
-          setTimeout(function() {
-            self.buildPopupMenu(oldHref);
-          }, 0);
-          return;
+          return openMenu(targetLi.children('a').attr('href'));
         }
 
         if (!isAddTabButton) {
@@ -2223,7 +2237,11 @@
           var $item = $(item),
             $itemA = $item.children('a');
 
-          if (!self.isTabOverflowed($item) || $item.is(':hidden')) {
+          if ($item.is(':hidden')) {
+            return;
+          }
+
+          if (!self.isCompositeTabs() && !self.isTabOverflowed($item)) {
             return;
           }
 
@@ -2480,6 +2498,12 @@
       findLastVisibleTab: function() {
         var tabs = this.tablist.children('li:not(.separator):not(.hidden):not(.is-disabled)'),
           targetFocus = tabs.first();
+
+        // if Composite Tabs, simply get the last tab and focus.
+        if (this.isCompositeTabs()) {
+          return tabs.last().find('a').focus();
+        }
+
         while(!(this.isTabOverflowed(targetFocus))) {
           targetFocus = tabs.eq(tabs.index(targetFocus) + 1);
         }
