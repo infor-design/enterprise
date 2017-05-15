@@ -378,6 +378,8 @@ var express = require('express'),
       return base + 'container/layout';
     } else if (path.match(/\/different-header-types/)) {
       return base + 'different-header-types/layout';
+    } else if (path.match(/\/empty/)) {
+      return base + 'empty/layout';
     } else if (path.match(/\/lms/)) {
       return base + 'lms/layout';
     } else if (path.match(/\/six-levels-with-icons/)) {

@@ -17,18 +17,12 @@
         data = [],
         columns = [];
 
-      // Some Sample Data
-      data.push({ value: '0.122' });
-      data.push({ value: '0.125' });
-      data.push({ value: '0.35' });
-      data.push({ value: '0.42' });
-      data.push({ value: '0.50' });
-
       //Define Columns for the Grid.
-      columns.push({ id: 'id', name: 'Manufacturer', field: 'manufacturer', filterType: 'text', width: 120});
       columns.push({ id: 'manufacturerName', name: 'Manufacturer Name', field: 'manufacturerName', filterType: 'text'});
-      columns.push({ id: 'inventoryValue', name: 'Inventory', field: 'inventoryValue'});
-      columns.push({ id: 'customerSatisfaction', name: 'CustomerSatisfaction', field: 'customerSatisfaction', formatter: Formatters.TargetedAchievement, ranges: [{'min': 0, 'max': 2, 'classes': 'error'}, {'value': 41, 'classes': 'good'}]});
+      columns.push({ id: 'inventoryValue', name: 'Inventory', field: 'inventoryValue', width: 120});
+      columns.push({ id: 'customerSatisfaction', name: 'Customer Satisfaction w/o Color and Text', field: 'customerSatisfaction', formatter: Formatters.TargetedAchievement, showPercentText: true});
+      columns.push({ id: 'customerSatisfaction2', name: 'Customer Satisfaction with Color', field: 'customerSatisfaction', formatter: Formatters.TargetedAchievement, ranges: [{'min': 0, 'max': 40, 'classes': 'error'}, {'value': 79, 'classes': 'good'}]});
+      columns.push({ id: 'customerSatisfaction3', name: 'Customer Satisfaction to Target', field: 'customerSatisfaction', formatter: Formatters.TargetedAchievement, target: 80});
 
       //Get some data via ajax
       var url = '{{basepath}}api/bikes';

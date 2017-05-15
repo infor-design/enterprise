@@ -52,7 +52,7 @@ $toolbar-buttonset-height: 40px;
       min-width: 34px;
     }
 
-    .separator {
+    > .separator {
       background-color: $formatter-toolbar-separator-color;
       display: inline-block;
       height: 20px;
