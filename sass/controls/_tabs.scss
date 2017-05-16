@@ -188,6 +188,7 @@
   > .page-container {
     position: static;
   }
+
   &.can-show {
     > .page-container {
       position: absolute;
@@ -236,10 +237,47 @@
 .tab-container.horizontal,
 .tab-container.header-tabs {
 
+  //========================================
+  // Before/After control the faded edges
+  //========================================
+  &::after,
+  &::before {
+    @include transition(width 200ms $cubic-ease);
+    background-color: transparent;
+    content: '';
+    display: inline-block;
+    height: inherit;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    width: 0;
+    z-index: 20;
+  }
+
+  // Background fade on the left edge
+  // Fade colors are determined by pattern/implementation (see different tab CSS files for definitions)
+  &::before {
+    left: 0;
+  }
+
+  // Background fade on the right edge
+  // Fade colors are determined by pattern/implementation (see different tab CSS files for definitions)
+  &::after {
+    right: 51px; // bleed into the tab list (width of this element + 1 for border)
+  }
+
+  &.scrolled-left::after,
+  &.scrolled-right::before {
+    width: 40px;
+  }
+
   .tab-more,
   .add-tab-button {
     @include font-size(14);
     background-color: transparent;
+    padding: 16px;
+    position: relative;
+    vertical-align: top;
 
     .icon {
       height: 16px;
@@ -249,12 +287,8 @@
     }
   }
 
-  .tab-more {
-    max-width: 105px;
-  }
-
-  .add-tab-button {
-    max-width: 44px;
+  .more-text {
+    display: none;
   }
 
   &.has-add-button {
@@ -273,34 +307,36 @@
       padding-right: 110px;
     }
 
-    .tab-more {
-      right: 0;
-      top: 0;
-    }
-
     &.has-add-button {
       .tab-list {
         padding-right: 166px;
       }
 
       .tab-more {
-        right: 45px;
-        top: 0;
       }
     }
   }
 
-  // Tab Headers aka Notches
-  // Ref: http://bradsknutson.com/blog/css-sliding-underline/
-  .tab-list {
-    padding: 0;
-    width: 100%;
+  .tab-list-container {
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+    width: calc(100% - 51px);
   }
 
-  > .tab-list {
-    > .tab {
+  > .tab-list-container {
+    height: inherit;
+
+    > .tab-list {
+      display: inline-block;
+      height: inherit;
+      white-space: nowrap;
+    }
+
+    .tab {
       @include css3(transition, background-color .25s ease);
       border-radius: 2px 2px 0 0;
+      height: inherit;
       padding: 0;
 
       &:not(.last-child) {

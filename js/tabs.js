@@ -78,7 +78,7 @@
         // Composite Form tabs.
         var tablistContainer = this.element.children('.tab-list-container');
         if (!tablistContainer.length && this.isCompositeTabs()) {
-          tablistContainer = $('<div class="tab-list-container"></div>').appendTo(this.element);
+          tablistContainer = $('<div class="tab-list-container"></div>').prependTo(this.element);
         }
         if (tablistContainer.length) {
           this.tablistContainer = tablistContainer;
@@ -136,6 +136,12 @@
           }
         }
 
+        // Double-check that the `.tab-list-container` actually contains the `.tab-list`.
+        // Move it if necessary.
+        if (this.tablistContainer && !this.tablist.parent().is(this.tablistContainer)) {
+          this.tablistContainer.append(this.tablist);
+        }
+
         self.tablist
           .attr({
             'class': 'tab-list',
@@ -166,8 +172,8 @@
           button.append( $('<span class="more-text">').text(Locale.translate('More')));
           button.append($.createIconElement({ classes: 'icon-more', icon: 'dropdown' }));
 
-          if (self.isCompositeTabs()) {
-            self.element.append(button);
+          if (self.tablistContainer) {
+            button.insertAfter(self.tablistContainer);
           } else {
             self.tablist.after(button);
           }
@@ -722,7 +728,8 @@
           return;
         }
 
-        var passableKeys = [8, 13, 32];
+        var self = this,
+          passableKeys = [8, 13, 32];
 
         function isPassableKey() {
           return $.inArray(e.which, passableKeys) > -1;
@@ -747,8 +754,7 @@
           }, 0);
         }
 
-        var self = this,
-          allExcludes = ':not(.separator):not(.is-disabled):not(:hidden)',
+        var allExcludes = ':not(.separator):not(.is-disabled):not(:hidden)',
           currentLi = $(e.currentTarget).parent(),
           currentA = currentLi.children('a'),
           targetLi,
@@ -1140,6 +1146,7 @@
 
         this.handleVerticalTabResize();
         this.renderVisiblePanel();
+        this.renderEdgeFading();
       },
 
       handleVerticalTabResize: function() {
@@ -1193,8 +1200,7 @@
       },
 
       isCompositeTabs: function() {
-        return this.element.hasClass('composite-tabs');
-        //return (!this.isModuleTabs() && !this.isVerticalTabs());
+        return this.element.hasClass('composite-tabs') || (!this.isModuleTabs() && !this.isVerticalTabs());
       },
 
       isHidden: function() {
@@ -1431,12 +1437,11 @@
 
         var tablistContainerElem = this.tablistContainer[0],
           scrollLeft = tablistContainerElem.scrollLeft,
-          width = parseInt(window.getComputedStyle(tablistContainerElem).getPropertyValue('width'));
+          scrollWidth = tablistContainerElem.scrollWidth,
+          containerWidth = parseInt(window.getComputedStyle(tablistContainerElem).getPropertyValue('width'));
 
-        tablistContainerElem.classList[ scrollLeft === 0 ? 'remove' : 'add' ]('scrolled-right');
-        tablistContainerElem.classList[ scrollLeft > width ? 'add' : 'remove' ]('scrolled-left');
-
-        return;
+        this.element[0].classList[ scrollLeft > 0 ? 'add' : 'remove' ]('scrolled-right');
+        this.element[0].classList[ (scrollWidth - scrollLeft) <= containerWidth ? 'remove' : 'add' ]('scrolled-left');
       },
 
       /**
@@ -2143,8 +2148,18 @@
         var elem = this.element[0],
           tablist = this.tablist[0],
           HAS_MORE = 'has-more-button',
-          hasMoreIndex = elem.classList.contains(HAS_MORE),
-          tablistStyle = window.getComputedStyle(tablist, null),
+          hasMoreIndex = elem.classList.contains(HAS_MORE);
+
+        // "New"-style tabs always display the more button
+        if (this.isCompositeTabs()) {
+          if (!hasMoreIndex) {
+            elem.classList.add(HAS_MORE);
+          }
+          return;
+        }
+
+        // Continue with legacy overflow check
+        var tablistStyle = window.getComputedStyle(tablist, null),
           tabListHeight = parseInt(tablistStyle.getPropertyValue('height')) + 1; // +1 to fix an IE bug
 
         // Recalc tab width before detection of overflow
@@ -2154,7 +2169,7 @@
 
         // Add "has-more-button" class if we need it, remove it if we don't
         // Always display the more button on Composite Tabs
-        if (this.isCompositeTabs() || (tablist.scrollHeight > tabListHeight)) {
+        if (tablist.scrollHeight > tabListHeight) {
           if (!hasMoreIndex) {
             elem.classList.add(HAS_MORE);
           }
@@ -2678,10 +2693,12 @@
           isModuleTabs = this.isModuleTabs(),
           isRTL = Locale.isRTL(),
           parentContainer = this.element,
-          scrollingTablist = this.tablistContainer;
+          scrollingTablist = this.tablistContainer,
+          accountForPadding = scrollingTablist && this.focusState.parent().is(scrollingTablist);
 
         function adjustForParentContainer(targetRectObj, parentElement, tablistContainer) {
           var parentRect = parentElement[0].getBoundingClientRect(),
+            parentPadding,
             tablistScrollLeft;
           targetRectObj.top = targetRectObj.top - parentRect.top;
 
@@ -2701,6 +2718,12 @@
             tablistScrollLeft = tablistContainer ? tablistContainer[0].scrollLeft : 0;
             targetRectObj.left = targetRectObj.left + tablistScrollLeft;
             targetRectObj.right = targetRectObj.right + tablistScrollLeft;
+
+            if (accountForPadding) {
+              parentPadding = parseInt(window.getComputedStyle(parentElement[0])[ 'padding' + (isRTL ? 'Right' : 'Left') ]);
+              targetRectObj.left = targetRectObj.left - parentPadding;
+              targetRectObj.right = targetRectObj.right - parentPadding;
+            }
           }
 
           return targetRectObj;

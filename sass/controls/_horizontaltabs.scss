@@ -2,17 +2,34 @@
 //================================================== //
 
 .tab-container.horizontal {
+  border-bottom: 1px solid $tab-border-color;
+  height: 50px;
   margin-bottom: 20px;
 
-  > .tab-list {
-    border-bottom: 1px solid $tab-border-color;
-    height: 50px;
+  &::before {
+    background-image: linear-gradient(
+      to right,
+      rgba($body-bg-color, 1),
+      rgba($body-bg-color, 0)
+    );
+  }
+
+  &::after {
+    background-image: linear-gradient(
+      to right,
+      rgba($body-bg-color, 0),
+      rgba($body-bg-color, 1)
+    );
+  }
+
+  > .tab-list-container {
+    height: inherit;
 
     .icon:not(.icon-error) {
       fill: $tab-text-color;
     }
 
-    > .tab {
+    .tab {
       color: $tab-text-color;
 
       a {

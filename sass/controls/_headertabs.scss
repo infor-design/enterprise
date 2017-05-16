@@ -2,15 +2,33 @@
 //================================================== //
 
 .tab-container.header-tabs {
+  height: 40px;
   margin-bottom: 0;
   margin-top: -12px;
   padding: 1px 20px 0;
 
-  > .tab-list {
-    border-bottom: 0;
-    height: 40px;
+  &::before {
+    background-image: linear-gradient(
+      to right,
+      rgba($header-bg-color, 1),
+      rgba($header-bg-color, 0)
+    );
+  }
 
-    > .tab {
+  &::after {
+    background-image: linear-gradient(
+      to right,
+      rgba($header-bg-color, 0),
+      rgba($header-bg-color, 1)
+    );
+    right: 71px; // Adjust for the extra 20px of right-padding on Header tabs.
+  }
+
+  > .tab-list-container {
+    border-bottom: 0;
+    height: inherit;
+
+    .tab {
       color: $header-tab-normal-color;
       font-weight: bold;
       overflow: hidden;
@@ -23,7 +41,7 @@
       a {
         line-height: 12px;
         overflow: hidden;
-        padding: 15px 11px 13px;
+        padding: 14px 11px 13px;
         text-overflow: ellipsis;
         white-space: nowrap;
       }
@@ -117,7 +135,7 @@
   }
 
   .tab-more {
-    padding: 12px 0 12px 14px;
+    padding: 12px 9px;
   }
 
   .add-tab-button {
@@ -125,14 +143,10 @@
   }
 
   &.has-more-button {
-    .tab-more {
-      right: 20px;
-    }
   }
 
   &.has-add-button {
     .add-tab-button {
-      right: 20px;
       width: 44px;
     }
 
