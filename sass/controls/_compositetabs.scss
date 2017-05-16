@@ -4,17 +4,62 @@
 $composite-tabs-height: 50px;
 
 .tab-container.composite-tabs {
+  background-color: $composite-tabs-bg-color;
+  border-top: 1px solid $composite-tabs-border-color;
+
+  //========================================
+  // Before/After control the faded edges
+  //========================================
+  &::after,
+  &::before {
+    @include transition(width 200ms $cubic-ease);
+    background-color: transparent;
+    content: '';
+    display: inline-block;
+    height: $composite-tabs-height;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    width: 0;
+    z-index: 20;
+  }
+
+  // Background fade on the left edge
+  &::before {
+    background-image: linear-gradient(
+      to right,
+      rgba($composite-tabs-bg-color, 1),
+      rgba($composite-tabs-bg-color, 0)
+    );
+    left: 0;
+  }
+
+  // Background fade on the right edge
+  &::after {
+    background-image: linear-gradient(
+      to right,
+      rgba($composite-tabs-bg-color, 0),
+      rgba($composite-tabs-bg-color, 1)
+    );
+    right: 51px; // bleed into the tab list (width of this element + 1 for border)
+  }
+
+  &.scrolled-left::after,
+  &.scrolled-right::before {
+    width: 40px;
+  }
 
   .tab-list-container {
-    background-color: $composite-tabs-bg-color;
-    border-top: 1px solid $composite-tabs-border-color;
+    display: inline-block;
+    overflow: hidden;
+    position: relative;
+    width: calc(100% - 51px);
   }
 
   .tab-list {
     display: inline-block;
     height: $composite-tabs-height;
     white-space: nowrap;
-    width: calc(100% - 51px);
   }
 
   .tab-more {
@@ -25,24 +70,6 @@ $composite-tabs-height: 50px;
     position: relative;
     vertical-align: top;
     width: 50px;
-
-    // Background fade on the left edge
-    &::before {
-      background-color: transparent;
-      background-image: linear-gradient(
-        to right,
-        rgba($composite-tabs-bg-color, 0),
-        rgba($composite-tabs-bg-color, 1)
-      );
-      content: '';
-      display: inline-block;
-      height: inherit;
-      left: -41px; // bleed into the tab list (width of this element + 1 for border)
-      pointer-events: none;
-      position: absolute;
-      top: 0;
-      width: 40px;
-    }
 
     .icon {
       fill: $composite-tabs-text-color;
@@ -71,8 +98,8 @@ $composite-tabs-height: 50px;
 
 .header {
   .tab-container.composite-tabs {
-    margin-top: auto;
-    padding: 1px 0 0;
+    margin-top: 1px;
+    padding: 0;
   }
 
   &.has-composite-tabs {

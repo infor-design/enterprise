@@ -73,6 +73,17 @@
           }
         }
 
+        // Detect the existence of a "tab-list-container" element, if applicable.
+        // Tab List containers are optional for all tab container types, but mandatory for
+        // Composite Form tabs.
+        var tablistContainer = this.element.children('.tab-list-container');
+        if (!tablistContainer.length && this.isCompositeTabs()) {
+          tablistContainer = $('<div class="tab-list-container"></div>').appendTo(this.element);
+        }
+        if (tablistContainer.length) {
+          this.tablistContainer = tablistContainer;
+        }
+
         // Setting containerElement overrides any changes to the tab panel container.
         var container = $(this.settings.containerElement);
         if (container.length) {
@@ -106,9 +117,23 @@
         }
 
         //Attach Tablist role and class to the tab headers container
-        self.tablist = self.element.children('.tab-list');
-        if (!self.tablist.length) {
-          self.tablist = self.element.children('.tab-list-container').children('.tab-list');
+        this.tablist = this.element.children('.tab-list');
+        if (!this.tablist.length) {
+
+          // If we have a `.tab-list-container` element, check that before creating markup
+          if (this.tablistContainer) {
+            this.tablist = this.tablistContainer.children('.tab-list');
+          }
+
+          // Create and append the `.tab-list` if it still doesn't exist.
+          if (!this.tablist.length) {
+            this.tablist = $('<ul class="tab-list"></ul>');
+            if (this.tablistContainer) {
+              this.tablist.appendTo(this.tablistContainer);
+            } else {
+              this.tablist.appendTo(this.element);
+            }
+          }
         }
 
         self.tablist
@@ -128,8 +153,10 @@
         if (this.hasAnimatedBar()) {
           self.animatedBar = self.container.children('.animated-bar');
           if (!self.animatedBar.length) {
-            self.animatedBar = $('<div class="animated-bar" role="presentation"></div>').insertBefore(self.tablist);
+            self.animatedBar = $('<div class="animated-bar" role="presentation"></div>');
           }
+
+          self.animatedBar.insertBefore(self.tablist);
         }
 
         // Add the markup for the "More" button if it doesn't exist.
@@ -138,7 +165,13 @@
           var button = $('<div>').attr({'class': 'tab-more'});
           button.append( $('<span class="more-text">').text(Locale.translate('More')));
           button.append($.createIconElement({ classes: 'icon-more', icon: 'dropdown' }));
-          self.tablist.after(button);
+
+          if (self.isCompositeTabs()) {
+            self.element.append(button);
+          } else {
+            self.tablist.after(button);
+          }
+
           self.moreButton = button;
         }
 
@@ -334,6 +367,14 @@
               self.animatedBar.removeClass('no-transition');
             }, 0);
           });
+        }
+
+        // Setup Edge Fades
+        if (this.tablistContainer) {
+          this.tablistContainer.on('scroll.tabs', function() {
+            self.renderEdgeFading();
+          });
+          this.renderEdgeFading();
         }
 
         return this;
@@ -1153,6 +1194,7 @@
 
       isCompositeTabs: function() {
         return this.element.hasClass('composite-tabs');
+        //return (!this.isModuleTabs() && !this.isVerticalTabs());
       },
 
       isHidden: function() {
@@ -1376,7 +1418,25 @@
             }
           });
         }
+      },
 
+      /**
+       * Shows/Hides some tabsets' faded edges based on scrolling position, if applicable.
+       * @returns {undefined}
+       */
+      renderEdgeFading: function() {
+        if (!this.isCompositeTabs() || !this.tablistContainer) {
+          return;
+        }
+
+        var tablistContainerElem = this.tablistContainer[0],
+          scrollLeft = tablistContainerElem.scrollLeft,
+          width = parseInt(window.getComputedStyle(tablistContainerElem).getPropertyValue('width'));
+
+        tablistContainerElem.classList[ scrollLeft === 0 ? 'remove' : 'add' ]('scrolled-right');
+        tablistContainerElem.classList[ scrollLeft > width ? 'add' : 'remove' ]('scrolled-left');
+
+        return;
       },
 
       /**
@@ -2526,6 +2586,7 @@
 
         var self = this,
           target = li,
+          scrollingTablist = this.tablistContainer,
           paddingLeft, paddingRight, width,
           anchorStyle, targetStyle;
 
@@ -2555,7 +2616,7 @@
 
         function animationTimeout(cb) {
           var style = self.animatedBar[0].style;
-          style.left = left + 'px';
+          style.left = left + (scrollingTablist ? scrollingTablist[0].scrollLeft : 0) + 'px';
           style.width = width + 'px';
 
           if (cb && typeof cb === 'function') {
@@ -2612,25 +2673,16 @@
         }
 
         var focusStateElem = this.focusState[0],
-          targetPos = target[0].getBoundingClientRect(),
+          targetPos = Soho.DOM.getDimensions(target[0]),
           targetClassList = target[0].classList,
           isModuleTabs = this.isModuleTabs(),
           isRTL = Locale.isRTL(),
-          parentContainer = this.element;
+          parentContainer = this.element,
+          scrollingTablist = this.tablistContainer;
 
-        function convertClientRectToObj(clientRect) {
-          return {
-            left: clientRect.left,
-            right: clientRect.right,
-            top: clientRect.top,
-            bottom: clientRect.bottom,
-            width: clientRect.width,
-            height: clientRect.height
-          };
-        }
-
-        function adjustForParentContainer(targetRectObj, parentElement) {
-          var parentRect = parentElement[0].getBoundingClientRect();
+        function adjustForParentContainer(targetRectObj, parentElement, tablistContainer) {
+          var parentRect = parentElement[0].getBoundingClientRect(),
+            tablistScrollLeft;
           targetRectObj.top = targetRectObj.top - parentRect.top;
 
           if (isRTL) {
@@ -2645,23 +2697,27 @@
             targetRectObj.top = targetRectObj.top - 1;
           }
 
+          if (tablistContainer) {
+            tablistScrollLeft = tablistContainer ? tablistContainer[0].scrollLeft : 0;
+            targetRectObj.left = targetRectObj.left + tablistScrollLeft;
+            targetRectObj.right = targetRectObj.right + tablistScrollLeft;
+          }
+
           return targetRectObj;
         }
 
-        // convert ClientRects to objects so we can mess with them
-        var targetPosObj = convertClientRectToObj(targetPos);
-
         // Adjust the values one more time if we have tabs contained inside of a page-container, or some other scrollable container.
-        targetPosObj = adjustForParentContainer(targetPosObj, parentContainer);
+
+        targetPos = adjustForParentContainer(targetPos, parentContainer, scrollingTablist);
 
         // build CSS string containing each prop and set it:
         var targetPosString = '';
-        for (var property in targetPosObj) {
-          if (targetPosObj.hasOwnProperty(property)) {
+        for (var property in targetPos) {
+          if (targetPos.hasOwnProperty(property)) {
             if (targetPosString.length) {
               targetPosString += ' ';
             }
-            targetPosString += '' + property + ': ' + targetPosObj[property] + 'px;';
+            targetPosString += '' + property + ': ' + targetPos[property] + 'px;';
           }
         }
         focusStateElem.setAttribute('style', targetPosString);
