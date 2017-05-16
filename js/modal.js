@@ -114,6 +114,7 @@
               body = self.element.find('.modal-body');
 
             body.append(self.settings.content);
+            alert();
             Soho.utils.fixSVGIcons(body);
           }
 
