@@ -19,8 +19,8 @@
     //Define Columns for the Grid.
     columns.push({ id: 'button',   name: 'Button',   field: 'button',   align: 'center', formatter: Formatters.Button, click: function () { alert('Button Clicked'); }});
     columns.push({ id: 'link',     name: 'Link',     field: 'link',     align: 'center', formatter: Formatters.Hyperlink, click: function () { alert('Link Clicked'); }});
-    columns.push({ id: 'favs', name: 'Favorite', field: 'favorite', align: 'center', showEmpty: true, formatter: Formatters.Favorite, editor: Editors.Favorite});
-    columns.push({ id: 'checkbox', name: 'CheckBox', field: 'checkbox', align: 'center', formatter: Formatters.Checkbox, editor: Editors.Checkbox});
+    columns.push({ id: 'favs', name: 'Favorite', field: 'favorite', align: 'center', showEmpty: true, formatter: Formatters.Favorite, editor: Editors.Favorite, click: function () { alert('Favorite Clicked'); }});
+    columns.push({ id: 'checkbox', name: 'CheckBox', field: 'checkbox', align: 'center', formatter: Formatters.Checkbox, editor: Editors.Checkbox, click: function () { alert('Checkbox Clicked'); }});
 
     //Init and get the api for the grid
     $grid = $('#datagrid').datagrid({
@@ -33,6 +33,9 @@
       pagesizes: [5, 10, 25, 50]
     });
 
+    $grid.on('click', function(event, data) {
+      console.log(data, 'datagrid - on click');
+    });
     gridApi = $grid.data('datagrid');
 
     // ISSUES:

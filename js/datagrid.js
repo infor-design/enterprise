@@ -4033,7 +4033,7 @@ $.fn.datagrid = function(options) {
           cell = elem.parent().children(':visible').index(elem),
           col = self.columnSettings(cell, true);
 
-        if (col.click && typeof col.click === 'function' && target.is('button, input[checkbox], a')) {
+        if (col.click && typeof col.click === 'function' && (target.is('button, input[checkbox], a') || target.parent().is('button'))) {
 
           var rowElem = $(this).closest('tr'),
             rowIdx = self.dataRowIndex(rowElem),
@@ -4049,7 +4049,7 @@ $.fn.datagrid = function(options) {
             }
           }
 
-          if (!elem.hasClass('is-cell-readonly') && target.is('button, input[checkbox], a')) {
+          if (!elem.hasClass('is-cell-readonly') && (target.is('button, input[checkbox], a') || target.parent().is('button'))) {
             col.click(e, [{row: rowIdx, cell: self.activeCell.cell, item: item, originalEvent: e}]);
           }
         }
