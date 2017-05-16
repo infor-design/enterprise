@@ -380,7 +380,6 @@ window.Formatters = {
     return '<span class="badge ' + colorClasses +'">' + value +' <span class="audible">'+ text+ '</span></span>';
   },
 
-  // Tags (low priority)
   Tag: function (row, cell, value, col) {
     var ranges = Formatters.ClassRange(row, cell, value, col);
     return '<span class="tag ' + ranges.classes +'">'+ value + '</span>';
@@ -507,9 +506,16 @@ window.Formatters = {
     return $.createIcon({ icon: item.rowStatus.icon, classes: ['icon', 'icon-' + item.rowStatus.icon, 'datagrid-alert-icon'] }) + '<span class="audible">' + item.rowStatus.text + '</span>';
   },
 
+  TargetedAchievement: function (row, cell, value, col) {
+    var perc = (100*value),
+      ranges = Formatters.ClassRange(row, cell, perc, col),
+      target = col.target;
+
+    var isWhite = perc > 55;  //Maybe implement this later perc > 60;
+    return '<div class="total bar chart-completion-target chart-targeted-achievement"><div class="target remaining bar" style="width: '+ (target || 0) +'%;"></div><div class="completed bar ' + (col.ranges && ranges.classes ? ranges.classes : 'primary') + '" style="width: '+ perc +'%;"></div>' + (col.showPercentText ? '<div class="chart-targeted-text" '+ (isWhite ? 'style="color: white"' : '') +'>'+ perc +'%</div></div>' : '');
+  },
   // TODO Possible future Formatters
-  // Percent
-  // Image?
+    // Image?
   // Multi Select
   // Sparkline
   // Progress Indicator (n of 100%)
