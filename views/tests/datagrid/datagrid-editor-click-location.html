@@ -33,6 +33,12 @@
       pagesizes: [5, 10, 25, 50]
     });
 
+    $grid.on('click', function(event, data) {
+      console.log(data, 'datagrid - on click');
+    }).on('cellchange', function (e, args) {
+      console.log(args.oldValue, args.value);
+    });
+
     gridApi = $grid.data('datagrid');
 
     // ISSUES:

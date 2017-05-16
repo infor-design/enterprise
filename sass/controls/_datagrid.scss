@@ -311,6 +311,24 @@ $datagrid-short-row-height: 23px;
     .arrange-placeholder {
       height: $datagrid-short-row-height + 7;
     }
+
+    .chart-targeted-achievement {
+      height: 20px;
+      margin-top: 1px;
+
+      .bar {
+        height: 20px;
+      }
+
+      .completed {
+        margin-top: -20px;
+      }
+
+      .chart-targeted-text {
+        margin-top: -25px;
+      }
+
+    }
   }
 
   &.medium-rowheight {
@@ -363,6 +381,14 @@ $datagrid-short-row-height: 23px;
 
     .arrange-placeholder {
       height: $datagrid-medium-row-height + 10;
+    }
+
+    .chart-targeted-achievement {
+      margin-top: 2px;
+
+      .chart-targeted-text {
+        margin-top: -30px;
+      }
     }
 
   }
@@ -858,6 +884,10 @@ $datagrid-short-row-height: 23px;
       .is-readonly {
         background-color: $datagrid-row-hover-color;
       }
+
+      .chart-targeted-achievement {
+        background-color: $chart-progressbar-bg-color-dark;
+      }
     }
 
     &.is-selected:not(.hide-selected-color) td:not(.is-editing),
@@ -1031,6 +1061,14 @@ $datagrid-short-row-height: 23px;
       display: block;
       height: 38px;
       width: 38px;
+    }
+
+    .chart-targeted-achievement {
+      height: 25px;
+      // scss-lint:disable ImportantRule
+      margin-bottom: 0 !important;
+      // scss-lint:enable ImportantRule
+      margin-top: 7px;
     }
   }
 

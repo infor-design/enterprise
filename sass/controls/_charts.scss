@@ -332,6 +332,12 @@
     }
   }
 
+  .chart-targeted-text {
+    left: 50%;
+    margin-top: -38px;
+    position: relative;
+  }
+
   .completed {
     background-color: $chart-progressbar-completed-fill;
     border-right: 1px solid $chart-progressbar-bg-color;
@@ -517,7 +523,7 @@
 
 .chart-targeted-achievement {
   // scss-lint:disable ImportantRule
-  margin-bottom: 22px !important;
+  margin-bottom: 18px !important;
   // scss-lint:enable ImportantRule
 
   .label {
