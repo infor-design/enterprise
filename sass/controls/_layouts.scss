@@ -429,27 +429,34 @@ body.no-scroll {
     margin-top: 120px;
   }
 
-  &.has-tabs {
-    height: 94px;
+  &.has-tabs,
+  &.has-alternate-tabs  {
+    height: 100px;
+
+    > .toolbar {
+      height: 60px;
+      margin-bottom: 0;
+    }
 
     + .page-container,
     + .application-menu + .page-container {
-      height: calc(100% - 94px);
-      margin-top: 94px;
+      height: calc(100% - 100px);
+      margin-top: 100px;
     }
   }
 
   &.has-composite-tabs {
     height: 113px;
 
+    > .toolbar {
+      height: 50px;
+      margin-bottom: 0;
+    }
+
     + .page-container,
     + .application-menu + .page-container {
       height: calc(100% - 113px);
       margin-top: 113px;
-    }
-
-    .toolbar {
-      margin-bottom: 0;
     }
   }
 
@@ -474,9 +481,12 @@ body.no-scroll {
     }
   }
 
-  &.has-breadcrumb,
-  &.has-alternate-tabs {
+  &.has-breadcrumb {
     height: 105px;
+
+    > .toolbar {
+      margin-bottom: 0;
+    }
 
     + .page-container,
     + .application-menu + .page-container {

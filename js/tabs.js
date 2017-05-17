@@ -2690,6 +2690,7 @@
         var focusStateElem = this.focusState[0],
           targetPos = Soho.DOM.getDimensions(target[0]),
           targetClassList = target[0].classList,
+          isAlternateHeaderTabs = this.isHeaderTabs() && this.element[0].classList.contains('alternate'),
           isModuleTabs = this.isModuleTabs(),
           isRTL = Locale.isRTL(),
           parentContainer = this.element,
@@ -2724,6 +2725,11 @@
               targetRectObj.left = targetRectObj.left - parentPadding;
               targetRectObj.right = targetRectObj.right - parentPadding;
             }
+          }
+
+          // Alternate Header Tabs have 1px removed from bottom to prevent overlap onto the bottom border
+          if (isAlternateHeaderTabs) {
+            targetRectObj.height = targetRectObj.height - 1;
           }
 
           return targetRectObj;

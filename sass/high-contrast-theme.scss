@@ -659,10 +659,12 @@ $about-text-hover-border-color: $black;
 
 // Header Tabs
 $header-tabcontainer-border-color: $graphite04;
+$header-tab-separator: $graphite10;
 $header-tab-normal-color: $graphite01;
 $header-tab-hover-color: $inverse-color;
 $header-tab-selected-color: $inverse-color;
 $header-tab-alt-bg-color: $slate10;
+$header-tab-alt-separator: $header-tabcontainer-border-color;
 $header-tab-alt-normal-color: $inverse-color;
 $header-tab-alt-hover-color: $inverse-color;
 $header-tab-alt-selected-color: $inverse-color;

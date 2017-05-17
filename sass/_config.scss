@@ -711,11 +711,13 @@ $about-text-border-color: $graphite03;
 $about-text-hover-border-color: $graphite07;
 
 // Header Tabs
-$header-tabcontainer-border-color: $graphite02;
+$header-tabcontainer-border-color: $graphite03;
+$header-tab-separator: $graphite08;
 $header-tab-normal-color: rgba(255, 255, 255, .7);
 $header-tab-hover-color: $inverse-color;
 $header-tab-selected-color: $graphite01;
 $header-tab-alt-bg-color: $white;
+$header-tab-alt-separator: $header-tabcontainer-border-color;
 $header-tab-alt-normal-color: $graphite06;
 $header-tab-alt-hover-color: $font-color-highcontrast;
 $header-tab-alt-selected-color: $primary-color;

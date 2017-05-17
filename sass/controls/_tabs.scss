@@ -291,32 +291,6 @@
     display: none;
   }
 
-  &.has-add-button {
-    .tab-list {
-      padding-right: 45px;
-    }
-
-    .add-tab-button {
-      right: 0;
-      top: 0;
-    }
-  }
-
-  &.has-more-button {
-    .tab-list {
-      padding-right: 110px;
-    }
-
-    &.has-add-button {
-      .tab-list {
-        padding-right: 166px;
-      }
-
-      .tab-more {
-      }
-    }
-  }
-
   .tab-list-container {
     display: inline-block;
     overflow: hidden;
