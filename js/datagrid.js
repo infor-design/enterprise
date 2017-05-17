@@ -1401,7 +1401,8 @@ $.fn.datagrid = function(options) {
         virtualRowBuffer: 10, //how many extra rows top and bottom to allow as a buffer
         rowReorder: false, //Allows you to reorder rows. Requires rowReorder formatter
         showDirty: false,
-        allowOneExpandedRow: true //Only allows one expandable row at a time
+        allowOneExpandedRow: true, //Only allows one expandable row at a time
+        enableTooltips: false  //Process tooltip logic at a cost of performance
       },
       settings = $.extend({}, defaults, options);
 
@@ -1867,7 +1868,9 @@ $.fn.datagrid = function(options) {
         self.headerColGroup.html(cols);
       }
 
-      self.headerRow.find('th[title]').tooltip();
+      if (this.settings.enableTooltips) {
+        self.headerRow.find('th[title]').tooltip();
+      }
 
       if (self.settings.columnReorder) {
         self.createDraggableColumns();
@@ -3008,7 +3011,7 @@ $.fn.datagrid = function(options) {
         rowHtml += '<td role="gridcell" ' + ariaReadonly + ' aria-colindex="' + (j+1) + '" '+
             ' aria-describedby="' + self.uniqueId('-header-' + j) + '"' +
            (cssClass ? ' class="' + cssClass + '"' : '') +
-           (col.tooltip ? ' title="' + col.tooltip.replace('{{value}}', cellValue) + '"' : '') +
+           (col.tooltip && typeof col.tooltip === 'string' ? ' title="' + col.tooltip.replace('{{value}}', cellValue) + '"' : '') +
            (col.id === 'rowStatus' && rowData.rowStatus && rowData.rowStatus.tooltip ? ' title="' + rowData.rowStatus.tooltip + '"' : '') +
            (self.settings.columnGroups ? 'headers = "' + self.uniqueId('-header-' + j) + ' ' + self.getColumnGroup(j) + '"' : '') +
            (rowspan ? rowspan : '' ) +
@@ -3330,6 +3333,10 @@ $.fn.datagrid = function(options) {
     },
 
     setupTooltips: function () {
+      if (!this.settings.enableTooltips) {
+        return;
+      }
+
       var self = this;
       // Implement Tooltip on cells with title attribute
       this.tableBody.find('td[title]').tooltip({placement: 'left', offset: {left: -5, top: 0}});
