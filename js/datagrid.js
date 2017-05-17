@@ -1503,6 +1503,8 @@ $.fn.datagrid = function(options) {
 
       if (this.settings.isList) {
         $(this.element).addClass('is-gridlist');
+      } else {
+        $(this.element).removeClass('is-gridlist');
       }
 
       self.table.empty();
