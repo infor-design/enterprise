@@ -5906,20 +5906,32 @@ $.fn.datagrid = function(options) {
 
       if (self.settings.allowOneExpandedRow) {
         //collapse any other expandable rows
-        var prevExpandRow = self.tableBody.find('tr.is-expanded');
+        var prevExpandRow = self.tableBody.find('tr.is-expanded'),
+          parentRow = prevExpandRow.prev(),
+          parentRowIdx = parentRow.attr('aria-rowindex');
+
         if (prevExpandRow.length && expandRow.index() !== prevExpandRow.index()) {
-          var parentRow = prevExpandRow.prev(),
-            parentRowIdx = parentRow.attr('aria-rowindex'),
-            prevDetail = prevExpandRow.find('.datagrid-row-detail');
+          var prevDetail = prevExpandRow.find('.datagrid-row-detail');
 
           prevExpandRow.removeClass('is-expanded');
           parentRow.removeClass('is-rowactivated');
           parentRow.find('.plus-minus').removeClass('active');
-
           prevDetail.animateClosed().on('animateclosedcomplete', function () {
             prevExpandRow.css('display', 'none').removeClass('is-expanded');
             self.element.triggerHandler('collapserow', [{grid: self, row: parentRowIdx, detail: prevDetail, item: self.settings.dataset[parentRowIdx] }]);
           });
+
+          var prevActionBtn = prevExpandRow.prev().find('.btn-primary');
+          prevActionBtn.attr('class', prevActionBtn.attr('class').replace('btn-primary','btn-secondary'));
+        }
+
+        //Toggle the button to make it primary
+        var isExpanded = !expandRow.hasClass('is-expanded'),
+          actionButton = expandRow.prev().find(isExpanded ? '.btn-secondary' : '.btn-primary');
+
+        if (parentRow && actionButton) {
+          actionButton.attr('class', actionButton.attr('class').replace(isExpanded ? 'btn-secondary' : 'btn-primary',
+              isExpanded ? 'btn-primary' : 'btn-secondary') );
         }
       }
 
