@@ -2654,9 +2654,13 @@ window.Chart = function(container) {
       .scale(xScale)
       .orient('bottom')
       .tickSize(isBubble ? -(height + 10) : 0)
-      .ticks(isBubble && isViewSmall ? Math.round(entries/2) : entries)
+      .ticks(settings.xAxisValues ? settings.xAxisValues : isBubble && isViewSmall ? Math.round(entries/2) : entries)
       .tickPadding(10)
       .tickFormat(function (d, i) {
+
+        if (settings.xAxisFormatter)  {
+          return settings.xAxisFormatter(isBubble ? d : names[i], d, i);
+        }
         return isBubble ? d : names[i];
       });
 
