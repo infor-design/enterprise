@@ -2076,8 +2076,8 @@ $.fn.datagrid = function(options) {
       }
 
       var checkRow = function (rowData) {
-
         var isMatch = true;
+
         for (var i = 0; i < conditions.length; i++) {
           var columnDef = self.columnById(conditions[i].columnId)[0],
             field = columnDef.field,
