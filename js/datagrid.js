@@ -380,7 +380,6 @@ window.Formatters = {
     return '<span class="badge ' + colorClasses +'">' + value +' <span class="audible">'+ text+ '</span></span>';
   },
 
-  // Tags (low priority)
   Tag: function (row, cell, value, col) {
     var ranges = Formatters.ClassRange(row, cell, value, col);
     return '<span class="tag ' + ranges.classes +'">'+ value + '</span>';
@@ -507,9 +506,16 @@ window.Formatters = {
     return $.createIcon({ icon: item.rowStatus.icon, classes: ['icon', 'icon-' + item.rowStatus.icon, 'datagrid-alert-icon'] }) + '<span class="audible">' + item.rowStatus.text + '</span>';
   },
 
+  TargetedAchievement: function (row, cell, value, col) {
+    var perc = (100*value),
+      ranges = Formatters.ClassRange(row, cell, perc, col),
+      target = col.target;
+
+    var isWhite = perc > 55;  //Maybe implement this later perc > 60;
+    return '<div class="total bar chart-completion-target chart-targeted-achievement"><div class="target remaining bar" style="width: '+ (target || 0) +'%;"></div><div class="completed bar ' + (col.ranges && ranges.classes ? ranges.classes : 'primary') + '" style="width: '+ perc +'%;"></div>' + (col.showPercentText ? '<div class="chart-targeted-text" '+ (isWhite ? 'style="color: white"' : '') +'>'+ perc +'%</div></div>' : '');
+  },
   // TODO Possible future Formatters
-  // Percent
-  // Image?
+    // Image?
   // Multi Select
   // Sparkline
   // Progress Indicator (n of 100%)
@@ -1395,7 +1401,8 @@ $.fn.datagrid = function(options) {
         virtualRowBuffer: 10, //how many extra rows top and bottom to allow as a buffer
         rowReorder: false, //Allows you to reorder rows. Requires rowReorder formatter
         showDirty: false,
-        allowOneExpandedRow: true //Only allows one expandable row at a time
+        allowOneExpandedRow: true, //Only allows one expandable row at a time
+        enableTooltips: false  //Process tooltip logic at a cost of performance
       },
       settings = $.extend({}, defaults, options);
 
@@ -1497,6 +1504,8 @@ $.fn.datagrid = function(options) {
 
       if (this.settings.isList) {
         $(this.element).addClass('is-gridlist');
+      } else {
+        $(this.element).removeClass('is-gridlist');
       }
 
       self.table.empty();
@@ -1859,7 +1868,9 @@ $.fn.datagrid = function(options) {
         self.headerColGroup.html(cols);
       }
 
-      self.headerRow.find('th[title]').tooltip();
+      if (this.settings.enableTooltips) {
+        self.headerRow.find('th[title]').tooltip();
+      }
 
       if (self.settings.columnReorder) {
         self.createDraggableColumns();
@@ -2141,13 +2152,13 @@ $.fn.datagrid = function(options) {
 
               break;
             case 'does-not-equal':
-              isMatch = (rowValue !== conditionValue && rowValue !== '');
+              isMatch = (rowValue !== conditionValue);
               break;
             case 'contains':
               isMatch = (rowValueStr.indexOf(conditionValue) > -1 && rowValue.toString() !== '');
               break;
             case 'does-not-contain':
-              isMatch = (rowValueStr.indexOf(conditionValue) === -1 && rowValue.toString() !== '');
+              isMatch = (rowValueStr.indexOf(conditionValue) === -1);
               break;
             case 'end-with':
               isMatch = (rowValueStr.lastIndexOf(conditionValue) === (rowValueStr.length - conditionValue.toString().length)  && rowValueStr !== '' && (rowValueStr.length >= conditionValue.toString().length));
@@ -2637,7 +2648,7 @@ $.fn.datagrid = function(options) {
           //First push group row
           if (!this.settings.groupable.suppressGroupRow) {
             //Show the grouping row
-            tableHtml += self.rowHtml(dataset[i], this.recordCount, true);
+            tableHtml += self.rowHtml(dataset[i], this.recordCount, i, true);
           }
 
           if (this.settings.groupable.showOnlyGroupRow && dataset[i].values[0]) {
@@ -2649,32 +2660,32 @@ $.fn.datagrid = function(options) {
 
             rowData.values = dataset[i].values;
 
-            tableHtml += self.rowHtml(rowData, this.recordCount);
+            tableHtml += self.rowHtml(rowData, this.recordCount, i);
             this.recordCount++;
             continue;
           }
 
           //Now Push Groups
           for (var k = 0; k < dataset[i].values.length; k++) {
-            tableHtml += self.rowHtml(dataset[i].values[k], this.recordCount);
+            tableHtml += self.rowHtml(dataset[i].values[k], this.recordCount, i);
             this.recordCount++;
           }
 
           // Now Push summary rowHtml
           if (this.settings.groupable.groupFooterRow) {
-            tableHtml += self.rowHtml(dataset[i], this.recordCount, true, true);
+            tableHtml += self.rowHtml(dataset[i], this.recordCount, i, true, true);
           }
 
           continue;
         }
 
-        tableHtml += self.rowHtml(dataset[i], s.treeGrid ? this.recordCount : i);
+        tableHtml += self.rowHtml(dataset[i], s.treeGrid ? this.recordCount : i, i);
         this.recordCount++;
       }
 
       //Append a Summary Row
       if (this.settings.summaryRow) {
-        tableHtml += self.rowHtml(self.calculateTotals(), this.recordCount, false, true);
+        tableHtml += self.rowHtml(self.calculateTotals(), this.recordCount, null, false, true);
       }
 
       if (self.bodyColGroupHtml !== '<colgroup>') {
@@ -2837,7 +2848,7 @@ $.fn.datagrid = function(options) {
 
     recordCount: 0,
 
-    rowHtml: function (rowData, dataRowIdx, isGroup, isFooter) {
+    rowHtml: function (rowData, dataRowIdx, actualIndex, isGroup, isFooter) {
       var isEven = false,
         self = this,
         isSummaryRow = this.settings.summaryRow && !isGroup && isFooter,
@@ -2896,6 +2907,7 @@ $.fn.datagrid = function(options) {
       isEven = (this.recordCount % 2 === 0);
 
       rowHtml = '<tr role="row" aria-rowindex="' + ariaRowindex + '"' +
+                ' data-index="' + actualIndex + '"' +
                 (self.settings.treeGrid && rowData.children ? ' aria-expanded="' + (rowData.expanded ? 'true"' : 'false"') : '') +
                 (self.settings.treeGrid ? ' aria-level= "' + depth + '"' : '') +
                 ' class="datagrid-row'+
@@ -2999,7 +3011,7 @@ $.fn.datagrid = function(options) {
         rowHtml += '<td role="gridcell" ' + ariaReadonly + ' aria-colindex="' + (j+1) + '" '+
             ' aria-describedby="' + self.uniqueId('-header-' + j) + '"' +
            (cssClass ? ' class="' + cssClass + '"' : '') +
-           (col.tooltip ? ' title="' + col.tooltip.replace('{{value}}', cellValue) + '"' : '') +
+           (col.tooltip && typeof col.tooltip === 'string' ? ' title="' + col.tooltip.replace('{{value}}', cellValue) + '"' : '') +
            (col.id === 'rowStatus' && rowData.rowStatus && rowData.rowStatus.tooltip ? ' title="' + rowData.rowStatus.tooltip + '"' : '') +
            (self.settings.columnGroups ? 'headers = "' + self.uniqueId('-header-' + j) + ' ' + self.getColumnGroup(j) + '"' : '') +
            (rowspan ? rowspan : '' ) +
@@ -3036,7 +3048,7 @@ $.fn.datagrid = function(options) {
       if (rowData.children) {
         for (i=0, l=rowData.children.length; i<l; i++) {
           this.recordCount++;
-          rowHtml += self.rowHtml(rowData.children[i], this.recordCount);
+          rowHtml += self.rowHtml(rowData.children[i], this.recordCount, i);
         }
       }
 
@@ -3321,6 +3333,10 @@ $.fn.datagrid = function(options) {
     },
 
     setupTooltips: function () {
+      if (!this.settings.enableTooltips) {
+        return;
+      }
+
       var self = this;
       // Implement Tooltip on cells with title attribute
       this.tableBody.find('td[title]').tooltip({placement: 'left', offset: {left: -5, top: 0}});
@@ -3591,7 +3607,7 @@ $.fn.datagrid = function(options) {
 
           for (var i = 0; i < dataset.length; i++) {
             if (!dataset[i].isFiltered) {
-              tableHtml += self.rowHtml(dataset[i], i);
+              tableHtml += self.rowHtml(dataset[i], i, i);
             }
           }
 
@@ -4032,7 +4048,7 @@ $.fn.datagrid = function(options) {
           cell = elem.parent().children(':visible').index(elem),
           col = self.columnSettings(cell, true);
 
-        if (col.click && typeof col.click === 'function' && target.is('button, input[checkbox], a')) {
+        if (col.click && typeof col.click === 'function' && (target.is('button, input[checkbox], a') || target.parent().is('button'))) {
 
           var rowElem = $(this).closest('tr'),
             rowIdx = self.dataRowIndex(rowElem),
@@ -4048,7 +4064,7 @@ $.fn.datagrid = function(options) {
             }
           }
 
-          if (!elem.hasClass('is-cell-readonly') && target.is('button, input[checkbox], a')) {
+          if (!elem.hasClass('is-cell-readonly') && (target.is('button, input[checkbox], a') || target.parent().is('button'))) {
             col.click(e, [{row: rowIdx, cell: self.activeCell.cell, item: item, originalEvent: e}]);
           }
         }
@@ -5683,6 +5699,10 @@ $.fn.datagrid = function(options) {
      return row.attr('aria-rowindex') - 1;
     },
 
+    actualArrayIndex: function (rowElem) {
+     return parseInt(rowElem.attr('data-index'));
+    },
+
     // Update a specific Cell
     setActiveCell: function (row, cell) {
       var self = this,
@@ -5887,7 +5907,7 @@ $.fn.datagrid = function(options) {
         expandRow = rowElement.next(),
         expandButton = rowElement.find('.datagrid-expand-btn'),
         detail = expandRow.find('.datagrid-row-detail'),
-        item = self.settings.dataset[dataRowIndex];
+        item = self.settings.dataset[self.actualArrayIndex(rowElement)];
 
       if (rowElement.hasClass('datagrid-tree-parent')) {
         return;
@@ -5895,20 +5915,32 @@ $.fn.datagrid = function(options) {
 
       if (self.settings.allowOneExpandedRow) {
         //collapse any other expandable rows
-        var prevExpandRow = self.tableBody.find('tr.is-expanded');
+        var prevExpandRow = self.tableBody.find('tr.is-expanded'),
+          parentRow = prevExpandRow.prev(),
+          parentRowIdx = parentRow.attr('aria-rowindex');
+
         if (prevExpandRow.length && expandRow.index() !== prevExpandRow.index()) {
-          var parentRow = prevExpandRow.prev(),
-            parentRowIdx = parentRow.attr('aria-rowindex'),
-            prevDetail = prevExpandRow.find('.datagrid-row-detail');
+          var prevDetail = prevExpandRow.find('.datagrid-row-detail');
 
           prevExpandRow.removeClass('is-expanded');
           parentRow.removeClass('is-rowactivated');
           parentRow.find('.plus-minus').removeClass('active');
-
           prevDetail.animateClosed().on('animateclosedcomplete', function () {
             prevExpandRow.css('display', 'none').removeClass('is-expanded');
             self.element.triggerHandler('collapserow', [{grid: self, row: parentRowIdx, detail: prevDetail, item: self.settings.dataset[parentRowIdx] }]);
           });
+
+          var prevActionBtn = prevExpandRow.prev().find('.btn-primary');
+          prevActionBtn.attr('class', prevActionBtn.attr('class').replace('btn-primary','btn-secondary'));
+        }
+
+        //Toggle the button to make it primary
+        var isExpanded = !expandRow.hasClass('is-expanded'),
+          actionButton = expandRow.prev().find(isExpanded ? '.btn-secondary' : '.btn-primary');
+
+        if (parentRow && actionButton) {
+          actionButton.attr('class', actionButton.attr('class').replace(isExpanded ? 'btn-secondary' : 'btn-primary',
+              isExpanded ? 'btn-primary' : 'btn-secondary') );
         }
       }
 

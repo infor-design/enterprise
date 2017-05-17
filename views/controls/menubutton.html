@@ -20,9 +20,7 @@
 </div>
 
 <script type="text/javascript">
-  $('#test').on('open', function () {
-    //alert('open');
-  }).on('close', function () {
-    //alert('close');
+  $('#test').on('selected', function (e, args) {
+    console.log(args);
   });
 </script>

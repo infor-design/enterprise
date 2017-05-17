@@ -34,6 +34,8 @@ http://usalvlhlpool1.infor.com/4.3.0-rc/controls
 - Pie - The Chart now sorts slices in the order of the dataset (was on size from biggest to smallest before).
 - Button - Changed the standard `.btn` style on forms to reflect Tertiary button style instead of Secondary button style (SOHO-6083).
 - Multiselect - `moveSelectedToTop` has been deprecated in favor of `moveSelected`, which is now a text string instead of a boolean.  This defaults to `"all"` on Multiselect but can be defined as `"group"` or `"none"` as well.
+- Editor - Removed 'bold','italic','underline', 'anchor', 'quote' options from HTML editor.
+- Datagrid - Made a new option enableTooltips which defaults to false. You know need to enable this to have the tooltips anyplace in the datagrid. This has a significant performance especially for Ellipsis columns, so should only be used if you are sure or your datagrid is not huge.
 
 ### Ui Changes
 - Added heart and heart-filled icons
