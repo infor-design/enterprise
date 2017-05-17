@@ -154,6 +154,10 @@
     @include font-size(14);
     color: $input-color;
     list-style: disc;
+
+    li {
+      margin-bottom: 8px;
+    }
   }
 
   ol {
