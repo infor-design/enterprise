@@ -2738,6 +2738,12 @@ $.fn.datagrid = function(options) {
           self.setActiveCell(self.activeCell.row, self.activeCell.cell);
         }
 
+        //Update Selected Rows Across Page
+        if (self.settings.paging && self.settings.source) {
+          self._selectedRows = [];
+          self.syncSelectedUI();
+        }
+
         self.element.trigger('afterrender', {body: self.tableBody, header: self.headerRow, pager: self.pagerBar});
       }, 0);
     },
@@ -4478,13 +4484,14 @@ $.fn.datagrid = function(options) {
 
     selectAllRows: function () {
       var rows = [],
+        self = this,
         dataset = this.settings.treeGrid ?
           this.settings.treeDepth : this.settings.dataset;
 
       for (var i = 0, l = dataset.length; i < l; i++) {
         if (this.filterRowRendered) {
           if (!dataset[i].isFiltered) {
-            rows.push(i);
+            rows.push(self.settings.paging && self.settings.source ? i  : i);
           }
         } else {
           rows.push(i);
@@ -4682,7 +4689,7 @@ $.fn.datagrid = function(options) {
     toggleRowSelection: function (idx) {
       var row = (typeof idx === 'number' ? this.tableBody.find('tr[aria-rowindex="'+ (idx + 1) +'"]') : idx),
         isSingle = this.settings.selectable === 'single',
-        rowIndex = (typeof idx === 'number' ? idx : this.dataRowIndex(row));
+        rowIndex = (typeof idx === 'number' ? idx : this.actualArrayIndex(row));
 
       if (this.settings.selectable === false) {
         return;
@@ -5679,7 +5686,13 @@ $.fn.datagrid = function(options) {
     },
 
     visualRowNode: function (idx) {
-      return this.tableBody.find('tr[aria-rowindex="'+ (idx + 1) +'"]');
+      var rowIdx = idx;
+
+      if (this.settings.paging && this.settings.source) {
+        rowIdx = rowIdx + ((this.pager.activePage -1) * this.settings.pagesize);
+      }
+
+      return this.tableBody.find('tr[aria-rowindex="'+ (rowIdx + 1) +'"]');
     },
 
     dataRowNode: function (idx) {
