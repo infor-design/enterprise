@@ -2076,6 +2076,7 @@ $.fn.datagrid = function(options) {
       }
 
       var checkRow = function (rowData) {
+
         var isMatch = true;
         for (var i = 0; i < conditions.length; i++) {
           var columnDef = self.columnById(conditions[i].columnId)[0],
@@ -2139,7 +2140,7 @@ $.fn.datagrid = function(options) {
               }
 
               break;
-            case 'does-not-equal':  
+            case 'does-not-equal':
               isMatch = (rowValue !== conditionValue);
               break;
             case 'contains':
