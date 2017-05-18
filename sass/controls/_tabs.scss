@@ -17,7 +17,7 @@
 
 @mixin tab-after-off {
   background-color: rgba($tab-hover-color, 0); //background: transparent;
-  bottom: 0;
+  bottom: 1px;
   content: '';
   display: block;
   height: 3px;
@@ -111,7 +111,7 @@
 
 // Animated Bar
 .animated-bar {
-  @include transition(left .25s ease, width .25s ease);
+  @include transition(background-color .25s ease, left .25s ease, right .25s ease, width .25s ease);
   background-color: rgba($tab-selected-color, 0); //background: transparent;
   bottom: 0;
   display: inline-block;
@@ -121,7 +121,6 @@
   width: 20px;
 
   &.visible {
-    @include transition(background-color .25s ease, left .25s ease, width .25s ease);
     background-color: rgba($tab-selected-color, 1);
   }
 }
@@ -587,7 +586,6 @@ html[dir='rtl'] {
   // More Button
   .tab-more,
   .add-tab-button {
-    padding: 8px 14px 8px 0;
     right: auto;
   }
 
@@ -595,14 +593,20 @@ html[dir='rtl'] {
     left: 0;
   }
 
+  .tab-container.horizontal {
+    &::before {
+      left: auto;
+      right: 0;
+    }
+
+    &::after {
+      left: 51px;
+      right: auto;
+    }
+  }
+
   .tab-container.horizontal,
   .tab-container.header-tabs {
-    &.has-more-button {
-      .tab-list {
-        padding-left: 110px;
-        padding-right: inherit;
-      }
-    }
 
     .tab {
       &:not(.last-child) {
@@ -615,48 +619,18 @@ html[dir='rtl'] {
         right: auto;
       }
     }
+
+    .tab-more {
+      padding: 12px 14px 11px 4px;
+
+      &::before {
+        left: auto;
+        right: 0;
+      }
+    }
   }
 
   .tab-focus-indicator {
     right: auto;
-  }
-
-  .tab-container.horizontal,
-  .tab-container.header-tabs {
-    &.has-add-button {
-      .tab-list {
-        padding-left: 45px;
-        padding-right: auto;
-      }
-
-      .add-tab-button {
-        left: 0;
-        right: auto;
-      }
-    }
-
-    &.has-more-button {
-      .tab-list {
-        padding-left: 110px;
-        padding-right: auto;
-      }
-
-      .tab-more {
-        left: 0;
-        right: auto;
-      }
-
-      &.has-add-button {
-        .tab-list {
-          padding-left: 166px;
-          padding-right: auto;
-        }
-
-        .tab-more {
-          left: 45px;
-          right: 0;
-        }
-      }
-    }
   }
 }

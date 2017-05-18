@@ -268,3 +268,50 @@
     }
   }
 }
+
+// RTL Styles for Header Tabs
+html[dir='rtl'] {
+
+  .tab-container.header-tabs {
+    padding: 0 20px 0 0;
+
+    &::before {
+      background-image: linear-gradient(
+        to left,
+        rgba($header-bg-color, 1),
+        rgba($header-bg-color, 0)
+      );
+      left: auto;
+      right: 20px;
+    }
+
+    &::after {
+      background-image: linear-gradient(
+        to left,
+        rgba($header-bg-color, 0),
+        rgba($header-bg-color, 1)
+      );
+      left: 51px;
+      right: auto;
+    }
+
+    &.alternate {
+      &::before {
+        background-image: linear-gradient(
+          to left,
+          rgba($header-tab-alt-bg-color, 1),
+          rgba($header-tab-alt-bg-color, 0)
+        );
+      }
+
+      &::after {
+        background-image: linear-gradient(
+          to left,
+          rgba($header-tab-alt-bg-color, 0),
+          rgba($header-tab-alt-bg-color, 1)
+        );
+      }
+    }
+  }
+
+}

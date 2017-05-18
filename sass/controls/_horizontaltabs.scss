@@ -1,9 +1,11 @@
 // Regular, in-page Horizontal Tabs
 //================================================== //
 
+$horizontal-tabs-height: 40px;
+
 .tab-container.horizontal {
   border-bottom: 1px solid $tab-border-color;
-  height: 40px;
+  height: $horizontal-tabs-height;
   margin-bottom: 20px;
 
   &::before {
@@ -12,6 +14,7 @@
       rgba($body-bg-color, 1),
       rgba($body-bg-color, 0)
     );
+    height: ($horizontal-tabs-height - 1px);
   }
 
   &::after {
@@ -20,6 +23,7 @@
       rgba($body-bg-color, 0),
       rgba($body-bg-color, 1)
     );
+    height: ($horizontal-tabs-height - 1px);
   }
 
   > .tab-list-container {
@@ -108,7 +112,7 @@
   }
 
   .animated-bar {
-    top: 37px;
+    top: 36px;
   }
 
   // Displays the Big Numbers over top of each title
@@ -128,6 +132,7 @@
           position: static;
         }
       }
+
     }
 
     .animated-bar {

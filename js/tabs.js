@@ -1435,13 +1435,19 @@
           return;
         }
 
-        var tablistContainerElem = this.tablistContainer[0],
+        var isRTL = Locale.isRTL(),
+          tablistContainerElem = this.tablistContainer[0],
           scrollLeft = tablistContainerElem.scrollLeft,
           scrollWidth = tablistContainerElem.scrollWidth,
           containerWidth = parseInt(window.getComputedStyle(tablistContainerElem).getPropertyValue('width'));
 
-        this.element[0].classList[ scrollLeft > 0 ? 'add' : 'remove' ]('scrolled-right');
-        this.element[0].classList[ (scrollWidth - scrollLeft) <= containerWidth ? 'remove' : 'add' ]('scrolled-left');
+        if (isRTL) {
+          this.element[0].classList[ scrollLeft > 0 ? 'add' : 'remove' ]('scrolled-left');
+          this.element[0].classList[ (scrollWidth - scrollLeft) <= containerWidth ? 'remove' : 'add' ]('scrolled-right');
+        } else {
+          this.element[0].classList[ scrollLeft > 0 ? 'add' : 'remove' ]('scrolled-right');
+          this.element[0].classList[ (scrollWidth - scrollLeft) <= containerWidth ? 'remove' : 'add' ]('scrolled-left');
+        }
       },
 
       /**
@@ -2602,7 +2608,11 @@
         var self = this,
           target = li,
           scrollingTablist = this.tablistContainer,
+          isRTL = Locale.isRTL(),
           paddingLeft, paddingRight, width,
+          tabMoreWidth,
+          tablistScrollWidth,
+          tablistScrollLeft,
           anchorStyle, targetStyle;
 
         this.animatedBar.removeClass('no-transition');
@@ -2623,16 +2633,30 @@
           paddingRight += parseInt(anchorStyle.getPropertyValue('padding-right'), 10) || 0;
         }
 
-        var left = Locale.isRTL() ?
-          (paddingRight + target.position().left) : (target.position().left);
+        var left = isRTL ?
+          (paddingRight + target.position().left + target.outerWidth(true)) : (target.position().left);
 
         clearTimeout(self.animationTimeout);
         this.animatedBar.addClass('visible');
 
         function animationTimeout(cb) {
           var style = self.animatedBar[0].style;
-          style.left = left + (scrollingTablist ? scrollingTablist[0].scrollLeft : 0) + 'px';
+          tablistScrollLeft = scrollingTablist[0].scrollLeft;
+          tablistScrollWidth = scrollingTablist[0].scrollWidth;
+          tabMoreWidth = this.moreButton.outerWidth(true);
+
+          if (isRTL) {
+            style.right = tablistScrollWidth + paddingRight - (left + tablistScrollLeft) + 'px';
+          } else {
+            style.left = left + tablistScrollLeft + 'px';
+          }
           style.width = width + 'px';
+
+          /*
+          if (isRTL && style.left) {
+            style.left = 'auto';
+          }
+          */
 
           if (cb && typeof cb === 'function') {
             cb();
@@ -2690,9 +2714,11 @@
         var focusStateElem = this.focusState[0],
           targetPos = Soho.DOM.getDimensions(target[0]),
           targetClassList = target[0].classList,
+          targetMarginLeft = parseInt(window.getComputedStyle(target[0]).marginLeft),
           isAlternateHeaderTabs = this.isHeaderTabs() && this.element[0].classList.contains('alternate'),
           isModuleTabs = this.isModuleTabs(),
           isRTL = Locale.isRTL(),
+          tabMoreWidth = this.moreButton.outerWidth(true),
           parentContainer = this.element,
           scrollingTablist = this.tablistContainer,
           accountForPadding = scrollingTablist && this.focusState.parent().is(scrollingTablist);
@@ -2700,30 +2726,44 @@
         function adjustForParentContainer(targetRectObj, parentElement, tablistContainer) {
           var parentRect = parentElement[0].getBoundingClientRect(),
             parentPadding,
+            tablistScrollWidth,
             tablistScrollLeft;
+
           targetRectObj.top = targetRectObj.top - parentRect.top;
 
           if (isRTL) {
-            targetRectObj.right = parentRect.right - targetRectObj.right;
+            //targetRectObj.right = parentRect.right - targetRectObj.right;
           } else {
             targetRectObj.left = targetRectObj.left - parentRect.left;
           }
 
-          // Dirty Hack for Module Tabs
-          // TODO: Explore why this happens
+          // Module tabs use the old style
           if (isModuleTabs) {
+            // Dirty Hack for Module Tabs
+            // TODO: Explore why this happens
             targetRectObj.top = targetRectObj.top - 1;
           }
 
+          // If inside a scrollable tablist, account for the scroll position
           if (tablistContainer) {
             tablistScrollLeft = tablistContainer ? tablistContainer[0].scrollLeft : 0;
-            targetRectObj.left = targetRectObj.left + tablistScrollLeft;
-            targetRectObj.right = targetRectObj.right + tablistScrollLeft;
+            tablistScrollWidth = tablistContainer ? tablistContainer[0].scrollWidth : 0;
+
+            if (isRTL) {
+              var tmpLeft = targetRectObj.left;
+              //targetRectObj.left = tablistScrollWidth - (targetRectObj.right + tablistScrollLeft + tabMoreWidth) - 32;
+              //targetRectObj.right = tablistScrollWidth - (tmpLeft + tablistScrollLeft + tabMoreWidth) - 32;
+              targetRectObj.left = (tablistScrollWidth - parentRect.left) - (targetRectObj.right + tablistScrollLeft + tabMoreWidth);
+              targetRectObj.right = (tablistScrollWidth - parentRect.left) - (tmpLeft + tablistScrollLeft + tabMoreWidth);
+            } else {
+              targetRectObj.left = targetRectObj.left + tablistScrollLeft;
+              targetRectObj.right = targetRectObj.right + tablistScrollLeft;
+            }
 
             if (accountForPadding) {
               parentPadding = parseInt(window.getComputedStyle(parentElement[0])[ 'padding' + (isRTL ? 'Right' : 'Left') ]);
-              targetRectObj.left = targetRectObj.left - parentPadding;
-              targetRectObj.right = targetRectObj.right - parentPadding;
+              targetRectObj.left = targetRectObj.left + (isRTL ? parentPadding : (parentPadding * -1));
+              targetRectObj.right = targetRectObj.right + (isRTL ? parentPadding : (parentPadding * -1));
             }
           }
 
