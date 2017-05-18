@@ -1311,6 +1311,18 @@ var express = require('express'),
     next();
   }
 
+  router.get('/api/36points', function(req, res, next) {
+    sendJSONFile('36points', req, res, next);
+  });
+
+  router.get('/api/364points', function(req, res, next) {
+    sendJSONFile('364points', req, res, next);
+  });
+
+  router.get('/api/724points', function(req, res, next) {
+    sendJSONFile('724points', req, res, next);
+  });
+
   router.get('/api/my-projects', function(req, res, next) {
     sendJSONFile('projects', req, res, next);
   });
