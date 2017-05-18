@@ -5657,9 +5657,9 @@ $.fn.datagrid = function(options) {
         this.validateCell(row, cell);
 
         var args = {row: row, cell: cell, target: cellNode, value: coercedVal, oldValue: oldVal, column: col};
-        if (this.settings.treeDepth[row]) {
-          args.rowData = this.settings.treeDepth[row].node;
-        }
+        args.rowData = isTreeGrid && this.settings.treeDepth[row] ?
+          this.settings.treeDepth[row].node : rowData;
+
         this.element.trigger('cellchange', args);
         this.wasJustUpdated = true;
 
