@@ -1,0 +1,220 @@
+<div class="page-container scrollable" id="mainContainer" role="main">
+  <div class="row">
+		  <div class="five columns">
+		  	<div class="contextual-toolbar toolbar is-hidden">
+				<div class="title selection-count">1 Selected</div>
+				<div class="buttonset">
+					<button class="btn" onclick="addToDatagridB()">
+	                    <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+	                      <use xlink:href="#icon-expand-app-tray"></use>
+	                    </svg>
+	                    <span>Add selected</span>
+					</button>
+				</div>
+			</div>
+		  	<div id="datagridA"></div>
+		  </div>
+
+		  <div class="seven columns">
+		  	<div id="datagridB"></div>
+		  </div>
+		</div>
+</div>
+
+<script>
+		function addToDatagridB(){
+			let datagridAApi = $('#datagridA').data('datagrid');
+			let datagridBApi = $('#datagridB').data('datagrid');
+			let selectedRows = datagridAApi.selectedRows();
+			let datagridBRows = datagridBApi.settings.dataset;
+
+			selectedRowsLoop: for(var i=0; i < selectedRows.length; i++){
+				let existingProduct = false;
+
+				datagridBRowsLoop: for(var j=0; j < datagridBRows.length; j++){
+					if(datagridBRows[j].id == selectedRows[i].data.id){
+						existingProduct = true;
+						break datagridBRowsLoop;
+					}
+			    }
+			    if(!existingProduct){
+			    	datagridBApi.addRow(selectedRows[i].data);
+				}
+		    }
+			datagridAApi.removeSelected();
+		}
+
+        $('body').one('initialized', function () {
+        	var gridApiA, columnsA = [], dataA = [];
+        	var gridApiB, columnsB = [], dataB = [];
+
+        	columnsA.push({
+				id : 'selectionCheckbox',
+				name : '',
+				sortable : false,
+				resizable : false,
+				formatter : Formatters.SelectionCheckbox,
+				align : 'center'
+			});
+			columnsA.push({
+				id : 'productId',
+				name : 'Product Id',
+				field : 'productId',
+				formatter : Formatters.Text,
+				width : '20%'
+			});
+			columnsA.push({
+				id : 'productName',
+				name : 'Product Name',
+				field : 'productName'
+			});
+
+			dataA.push({
+				id : 1,
+				productId : 'T100',
+				productName : 'Compressor',
+				activity : 'Assemble Paint',
+				quantity : 1,
+				price : '800.9905673502324',
+				status : 'OK',
+				orderDate : new Date(2014, 12, 8),
+				action : 'Action',
+				favorite: true
+			});
+			dataA.push({
+				id : 2,
+				productId : '200',
+				productName : 'Different Compressor',
+				activity : 'Inspect and Repair',
+				quantity : '2',
+				price : 210.99,
+				status : '',
+				orderDate : new Date(2015, 7, 3),
+				action : 'On Hold',
+				favorite: true
+			});
+			dataA.push({
+				id : 3,
+				productId : '300',
+				productName : 'Compressor',
+				activity : 'Inspect and Repair',
+				quantity : 1,
+				price : '120.99',
+				status : null,
+				orderDate : new Date(2014, 6, 3),
+				action : 'Action',
+				favorite: false
+			});
+			dataA.push({
+				id : 4,
+				productId : 'Z400',
+				productName : 'Another Compressor',
+				activity : 'Assemble Paint',
+				quantity : 3,
+				price : '2345',
+				status : 'OK',
+				orderDate : new Date(2015, 3, 3),
+				action : 'Action',
+				favorite: true
+			});
+			dataA.push({
+				id : 5,
+				productId : 2642206,
+				productName : 'Some Compressor',
+				activity : 'inspect and Repair',
+				quantity : 41,
+				price : '123.99',
+				status : 'OK',
+				orderDate : null,
+				action : 'On Hold',
+				favorite: false
+			});
+
+			$('#datagridA').datagrid({
+				columns: columnsA,
+			    dataset: dataA,
+			    editable: true,
+			    clickToSelect: true,
+			    rowHeight: 'short',
+			    selectable: 'multiple',
+			    toolbar: {title: 'Datagrid A', results: true}
+			});
+
+			dataB.push({
+				id : 6,
+				productId : '00789MK',
+				productName : 'Some Compressor',
+				activity : 'inspect and Repair',
+				quantity : 41,
+				price : '200',
+				status : 'OK',
+				orderDate : null,
+				action : 'On Hold',
+				favorite: true
+			});
+
+			dataB.push({
+				id : 7,
+				productId : '0045A',
+				productName : 'Compressor A',
+				activity : 'inspect and Repair',
+				quantity : 41,
+				price : '123.99',
+				status : 'OK',
+				orderDate : null,
+				action : 'On Hold',
+				favorite: true
+			});
+
+			columnsB.push({
+				id : 'selectionCheckbox',
+				name : '',
+				sortable : false,
+				resizable : false,
+				formatter : Formatters.SelectionCheckbox,
+				align : 'center'
+			});
+			columnsB.push({
+				id : 'productId',
+				name : 'Product Id',
+				field : 'productId',
+				formatter : Formatters.Tex
+			});
+			columnsB.push({
+				id : 'productName',
+				name : 'Product Name',
+				field : 'productName'
+			});
+			columnsB.push({
+				id : 'favorite',
+				name : 'Default',
+				field : 'favorite',
+				formatter: Formatters.Favorite,
+				editor: Editors.Favorite,
+				showEmpty: true,
+				align:  'center'
+			});
+
+			$('#datagridB').datagrid({
+				columns: columnsB,
+			    dataset: dataB,
+			    editable: true,
+			    clickToSelect: false,
+			    rowHeight: 'short',
+			    selectable: 'multiple',
+			    toolbar: {title: 'Datagrid B', results: true}
+			}).on('cellchange', function (e, args) {
+				console.log(args);
+				if(args.column.id == 'favorite'){
+					var rowData = args.rowData;
+					var productId = rowData.productId;
+					var productName = rowData.productName;
+
+					$('body').toast({
+						title: Locale.translate('Info'),
+						message: productId + " - " + productName
+					});
+				}
+			});
+		});
+	</script>

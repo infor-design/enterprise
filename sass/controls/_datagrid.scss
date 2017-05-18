@@ -329,6 +329,14 @@ $datagrid-short-row-height: 23px;
       }
 
     }
+
+    // scss-lint:disable ImportantRule
+    .icon-favorite {
+      margin: -10px auto !important;
+      top: 4px;
+    }
+    // scss-lint:enabled ImportantRule
+
   }
 
   &.medium-rowheight {
@@ -1889,7 +1897,7 @@ td .btn-actions {
   display: inline-block;
   left: -7px;
   position: relative;
-  top: -14px;
+  top: -13px;
 
   &::before {
     @include checkbox-unchecked-before-style;
