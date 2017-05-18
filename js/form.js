@@ -122,7 +122,7 @@
           }
           if (input.is('select')) {
             d.class += ' is-select';
-            el = $('.dropdown-wrapper input[type="text"]', field);
+            el = input.next('.dropdown-wrapper').find('.dropdown');
           }
 
           //Add class and icon
