@@ -74,7 +74,7 @@ input.checkbox,
 span.checkbox > input {
   left: 0;
   opacity: 0;
-  position: absolute;
+  position: fixed;// use fixed, to prevent page jump on click
   top: 0;
   width: 16px;
 }

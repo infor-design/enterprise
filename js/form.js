@@ -96,6 +96,20 @@
           }
         }
 
+        // Get absolute position for an element
+        function getAbsolutePosition(element) {
+          var pos = element.position();
+          element.parents().each(function() {
+            var el = this;
+            if (window.getComputedStyle(el, null).position === 'relative') {
+              return false;
+            }
+            pos.left += el.scrollLeft;
+            pos.top += el.scrollTop;
+          });
+          return {left:pos.left, top:pos.top};
+        }
+
         input.data('original', valMethod(input))
          .on('change.dirty', function () {
           var el = input,
@@ -129,7 +143,7 @@
           d.icon = el.prev();
           if (!d.icon.is('.icon-dirty')) {
             if (input.is('[type="checkbox"]')) {
-              d.rect = label[0].getBoundingClientRect();
+              d.rect = getAbsolutePosition(label);
               d.style = ' style="left:'+ d.rect.left +'px; top:'+ d.rect.top +'px;"';
             }
             d.icon = '<span class="icon-dirty'+ d.class +'"'+ d.style +'></span>';
