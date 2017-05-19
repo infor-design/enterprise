@@ -882,6 +882,10 @@
           self.addTabButton.focus();
         }
 
+        if (this.isCompositeTabs()) {
+          this.scrollTabList(focusStateTarget);
+        }
+
         if (self.hasSquareFocusState()) {
           self.positionFocusState(focusStateTarget, true);
         }
@@ -2308,9 +2312,14 @@
 
         // Build the new markup for the popupmenu if it doesn't exist.
         // Reset it if it does exist.
-        var menuHtml = $('#tab-container-popupmenu');
+        var menuHtml = $('#tab-container-popupmenu'),
+          shouldBeSelectable = '';
+        if (this.isCompositeTabs()) {
+          shouldBeSelectable = ' is-selectable';
+        }
+
         if (menuHtml.length === 0) {
-          menuHtml = $('<ul class="tab-list-spillover">').attr('id', 'tab-container-popupmenu').appendTo('body');
+          menuHtml = $('<ul id="tab-container-popupmenu" class="tab-list-spillover'+ shouldBeSelectable +'">').appendTo('body');
         } else {
           menuHtml.html('');
         }
@@ -2339,7 +2348,14 @@
           var popupLi = $item.clone(),
             popupA = popupLi.children('a');
 
-          popupLi[0].classList.remove('tab', 'is-selected');
+          popupLi[0].classList.remove('tab');
+          if (popupLi[0].classList.contains('is-selected')) {
+            popupLi[0].classList.remove('is-selected');
+            if (self.isCompositeTabs()) {
+              popupLi[0].classList.add('is-checked');
+            }
+          }
+
           popupLi[0].removeAttribute('style');
 
           popupLi.children('.icon').off().appendTo(popupA);
