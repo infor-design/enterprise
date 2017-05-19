@@ -2554,6 +2554,19 @@ window.Chart = function(container) {
 
     $(container).addClass('line-chart' + (isBubble ? ' bubble' : ''));
 
+    var dots = {
+      radius: 5,
+      radiusOnHover: 7,
+      strokeWidth: 2,
+      class: 'dot'
+    };
+    if (isBubble) {
+      dots.radius = 0;
+      dots.radiusOnHover = 0;
+      dots.strokeWidth = 0;
+    }
+    $.extend(true, dots, settings.dots);
+
     var isRTL = charts.isRTL;
 
     var tooltipInterval,
@@ -2790,11 +2803,11 @@ window.Chart = function(container) {
           .data(d.data)
           .enter()
           .append('circle')
-          .attr('class', 'dot')
+          .attr('class', dots.class)
           .attr('cx', function (d, i) { return xScale(isBubble ? d.value.x : i); })
           .attr('cy', function (d) { return yScale(isBubble ? 0 : d.value); })
-          .attr('r', (isBubble ? 0 : 5))
-          .style('stroke-width', (isBubble ? 0 : 2))
+          .attr('r', dots.radius)
+          .style('stroke-width', dots.strokeWidth)
           .style('fill', function () { return charts.chartColor(i, 'line', d); })
           .style('opacity', (isBubble ? '.7' : '1'))
           .on('mouseenter.chart', function(d2) {
@@ -2869,12 +2882,16 @@ window.Chart = function(container) {
             }
 
             //Circle associated with hovered point
-            d3.select(this).attr('r', function (d) { return 2+(isBubble ? zScale(d.value.z) : 5); });
+            d3.select(this).attr('r', function (d) {
+              return isBubble ? (2 + zScale(d.value.z)) : dots.radiusOnHover;
+            });
           })
           .on('mouseleave.chart', function() {
             clearInterval(tooltipInterval);
             charts.hideTooltip();
-            d3.select(this).attr('r', function (d) { return isBubble ? zScale(d.value.z) : 5; });
+            d3.select(this).attr('r', function (d) {
+              return isBubble ? zScale(d.value.z) : dots.radius;
+            });
           })
           .on('click.chart', function(d) {
             charts.selectElement(d3.select(this.parentNode), svg.selectAll('.line-group'), d);
