@@ -54,6 +54,12 @@ $datagrid-short-row-height: 23px;
     }
   }
 
+  &.has-filterable-columns {
+    .datagrid-body {
+      height: calc(100% - 62px);
+    }
+  }
+
   td:last-child {
     border-right-color: transparent;
   }
@@ -247,6 +253,12 @@ $datagrid-short-row-height: 23px;
       height: calc(100% - 45px);
     }
 
+    &.has-filterable-columns {
+      .datagrid-body {
+        height: calc(100% - 60px);
+      }
+    }
+
     //Resize Drag Arrows
     .drag-target-arrows {
       font-size: 1.5em;
@@ -341,6 +353,13 @@ $datagrid-short-row-height: 23px;
 
   &.medium-rowheight {
     //Set Container Heights for scrolling
+
+    &.has-filterable-columns {
+      .datagrid-body {
+        height: calc(100% - 60px);
+      }
+    }
+
     .datagrid-body {
       height: calc(100% - 30px);
     }
