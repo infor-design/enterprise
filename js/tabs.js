@@ -1412,6 +1412,11 @@
 
         selectedStateTarget.addClass('is-selected');
 
+        // Scroll the tablist, if applicable
+        if (this.isCompositeTabs()) {
+          this.scrollTabList(targetTab);
+        }
+
         // Fires a resize on any invoked child toolbars inside the tab panel.
         // Needed to fix issues with Toolbar alignment, since we can't properly detect
         // size on hidden elements.
@@ -2685,6 +2690,46 @@
         }, 350);
       },
 
+      /**
+       * Wrapper for the Soho behavior _smoothScrollTo()_ that will determine scroll distance.
+       * @param {jQuery[]} target - the target <li> or <a> tag
+       * @param {Number} duration - the time it will take to scroll
+       * @returns {undefined}
+       */
+      scrollTabList: function(target, duration) {
+        if (!this.tablistContainer) {
+          return;
+        }
+
+        if (!duration || isNaN(duration)) {
+          duration = 250;
+        }
+
+        var //startPos = this.tablistContainer[0].scrollLeft,
+          tablistRect = Soho.DOM.getDimensions(this.tablistContainer),
+          //visibleTablistWidth = this.tablistContainer.outerWidth(true),
+          targetRect = Soho.DOM.getDimensions(target),
+          d = 0;
+
+        // Don't scroll anywhere if the target's boundaries land within the visible area
+        var withinLeftBoundary = targetRect.left >= tablistRect.left,
+          withinRightBoundary = targetRect.right <= tablistRect.right;
+
+        if (withinLeftBoundary && withinRightBoundary) {
+          return;
+        }
+
+        if (!withinLeftBoundary) {
+          d = d - (tablistRect.left - targetRect.left);
+        }
+        if (!withinRightBoundary) {
+          d = d + (targetRect.right - tablistRect.right);
+        }
+
+        // Scroll the tablist container
+        this.tablistContainer.smoothScroll(d, duration);
+      },
+
       hideFocusState: function() {
         if (this.hasSquareFocusState()) {
           this.focusState.removeClass('is-visible');
@@ -2714,7 +2759,6 @@
         var focusStateElem = this.focusState[0],
           targetPos = Soho.DOM.getDimensions(target[0]),
           targetClassList = target[0].classList,
-          targetMarginLeft = parseInt(window.getComputedStyle(target[0]).marginLeft),
           isAlternateHeaderTabs = this.isHeaderTabs() && this.element[0].classList.contains('alternate'),
           isModuleTabs = this.isModuleTabs(),
           isRTL = Locale.isRTL(),

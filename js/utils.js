@@ -840,6 +840,118 @@
     return window.Soho.utils.getHiddenSize(this, options);
   };
 
+  //==================================================================
+  // Simple Behaviors
+  //==================================================================
+  window.Soho.behaviors = {};
+
+  /**
+   * Allows for the smooth scrolling of an element's content area.
+   * @param {HTMLElement|SVGElement|jQuery[]} el - The element being manipulated.
+   * @param {Number} target - target distance.
+   * @param {Number} duration - the time that will be needed for the scrolling to complete.
+   * @returns {$.Deferred}
+   */
+  window.Soho.behaviors.smoothScrollTo = function(el, target, duration) {
+    var dfd = $.Deferred();
+
+    if (!Soho.DOM.isElement(el)) {
+      // Not a workable element
+      return dfd.reject();
+    }
+
+    // Strip the jQuery
+    if (el instanceof $ && el.length) {
+      el = el[0];
+    }
+
+    target = Math.round(target);
+    duration = Math.round(duration);
+
+    if (duration < 0) {
+      // bad duration
+      return dfd.fail();
+    }
+
+    if (duration === 0) {
+      el.scrollLeft = target;
+      return dfd.resolve();
+    }
+
+    var startTime = Date.now(),
+      endTime = startTime + duration,
+      startLeft = el.scrollLeft,
+      distance = target - startLeft;
+
+    // based on http://en.wikipedia.org/wiki/Smoothstep
+    function smoothStep(start, end, point) {
+      if (point <= start) { return 0; }
+      if (point >= end) { return 1; }
+      var x = (point - start) / (end - start); // interpolation
+      return x*x*(3 - 2*x);
+    }
+
+    // This is to keep track of where the element's scrollLeft is
+    // supposed to be, based on what we're doing
+    var previousLeft = el.scrollLeft;
+
+    // This is like a think function from a game loop
+    function scrollFrame() {
+      if (el.scrollLeft !== previousLeft) {
+        // interrupted
+        dfd.reject();
+        return;
+      }
+
+      // set the scrollLeft for this frame
+      var now = Date.now();
+      var point = smoothStep(startTime, endTime, now);
+      var frameLeft = Math.round(startLeft + (distance * point));
+      el.scrollLeft = frameLeft;
+
+      // check if we're done!
+      if (now >= endTime) {
+        dfd.resolve();
+        return;
+      }
+
+      // If we were supposed to scroll but didn't, then we
+      // probably hit the limit, so consider it done; not
+      // interrupted.
+      if (el.scrollLeft === previousLeft && el.scrollLeft !== frameLeft) {
+        dfd.resolve();
+        return;
+      }
+      previousLeft = el.scrollLeft;
+
+      // schedule next frame for execution
+      setTimeout(scrollFrame, 0);
+    }
+
+    // boostrap the animation process
+    setTimeout(scrollFrame, 0);
+
+    return dfd;
+  };
+
+  /**
+   * Binds the Soho Behavior _smoothScrollTo()_ to a jQuery selector
+   * @param {Number} target - target distance to scroll the element
+   * @param {Number} duration - the time that will be needed for the scrolling to complete.
+   * @returns {$.Deferred}
+   */
+  $.fn.smoothScroll = function(target, duration) {
+    // default options
+    if (isNaN(target)) {
+      target = 150;
+    }
+    if (isNaN(duration)) {
+      duration = 250;
+    }
+
+    return window.Soho.behaviors.smoothScrollTo(this, target, duration);
+  };
+
 /* start-amd-strip-block */
 }));
 /* end-amd-strip-block */
