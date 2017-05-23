@@ -505,7 +505,8 @@
           });
 
           li.on('selected.tabs', function(e, anchor) {
-            var href = $(anchor).attr('href');
+            var li = $(this),
+              href = $(anchor).attr('href');
             self.activate(href);
 
             if (self.hasSquareFocusState()) {
@@ -517,6 +518,8 @@
             }
 
             a.focus();
+            self.scrollTabList(li);
+
             li.addClass('is-selected');
             return false;
           });
@@ -647,6 +650,10 @@
         }
 
         a.focus();
+
+        if (this.isCompositeTabs()) {
+          this.scrollTabList(li);
+        }
 
         // Hide these states
         this.focusBar(li);
@@ -1417,9 +1424,9 @@
         selectedStateTarget.addClass('is-selected');
 
         // Scroll the tablist, if applicable
-        if (this.isCompositeTabs()) {
-          this.scrollTabList(targetTab);
-        }
+        //if (this.isCompositeTabs()) {
+          //this.scrollTabList(targetTab);
+        //}
 
         // Fires a resize on any invoked child toolbars inside the tab panel.
         // Needed to fix issues with Toolbar alignment, since we can't properly detect
@@ -2449,6 +2456,8 @@
           // NOTE: If we switch the focusing-operations back to how they used to be (blue bar moving around with the focus state)
           // remove the line below.
           self.moreButton.focus();
+
+          self.scrollTabList(tab);
         }
 
         self.moreButton
@@ -2712,38 +2721,33 @@
        * @param {Number} duration - the time it will take to scroll
        * @returns {undefined}
        */
-      scrollTabList: function(target, duration) {
-        if (!this.tablistContainer) {
+      scrollTabList: function(target) {
+        if (!this.tablistContainer || !target || !(target instanceof $) || !target.length) {
           return;
         }
 
-        if (!duration || isNaN(duration)) {
-          duration = 250;
+        var tabCoords = Soho.DOM.getDimensions(target[0]),
+          tabContainerDims = Soho.DOM.getDimensions(this.tablistContainer[0]),
+          scrollLeft = this.tablistContainer[0].scrollLeft,
+          d;
+
+        var FADED_AREA = 40, // the faded edges on the sides of the tabset
+          adjustedLeft = tabCoords.left,
+          adjustedRight = tabCoords.right;
+
+        if (adjustedLeft < tabContainerDims.left + FADED_AREA) {
+          d = Math.round(tabContainerDims.left - Math.abs(adjustedLeft));
+        }
+        if (adjustedRight > tabContainerDims.right - FADED_AREA) {
+          d = Math.round(Math.abs(adjustedRight) - tabContainerDims.right);
         }
 
-        var //startPos = this.tablistContainer[0].scrollLeft,
-          tablistRect = Soho.DOM.getDimensions(this.tablistContainer),
-          //visibleTablistWidth = this.tablistContainer.outerWidth(true),
-          targetRect = Soho.DOM.getDimensions(target),
-          d = 0;
-
-        // Don't scroll anywhere if the target's boundaries land within the visible area
-        var withinLeftBoundary = targetRect.left >= tablistRect.left,
-          withinRightBoundary = targetRect.right <= tablistRect.right;
-
-        if (withinLeftBoundary && withinRightBoundary) {
-          return;
-        }
-
-        if (!withinLeftBoundary) {
-          d = d - (tablistRect.left - targetRect.left);
-        }
-        if (!withinRightBoundary) {
-          d = d + (targetRect.right - tablistRect.right);
+        if (d === 0) {
+          d = undefined;
         }
 
         // Scroll the tablist container
-        this.tablistContainer.smoothScroll(d, duration);
+        this.tablistContainer.smoothScroll(d, 250);
       },
 
       hideFocusState: function() {

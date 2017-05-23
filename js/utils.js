@@ -865,6 +865,15 @@
       el = el[0];
     }
 
+    // undefined (not zero) target should instantly resolve
+    if (target === undefined || target === null) {
+      return dfd.resolve();
+    }
+
+    if (isNaN(duration)) {
+      duration = 0;
+    }
+
     target = Math.round(target);
     duration = Math.round(duration);
 
@@ -874,7 +883,7 @@
     }
 
     if (duration === 0) {
-      el.scrollLeft = target;
+      el.scrollLeft = el.scrollLeft + target;
       return dfd.resolve();
     }
 
@@ -941,14 +950,6 @@
    * @returns {$.Deferred}
    */
   $.fn.smoothScroll = function(target, duration) {
-    // default options
-    if (isNaN(target)) {
-      target = 150;
-    }
-    if (isNaN(duration)) {
-      duration = 250;
-    }
-
     return window.Soho.behaviors.smoothScrollTo(this, target, duration);
   };
 
