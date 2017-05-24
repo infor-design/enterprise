@@ -292,7 +292,8 @@
 
   .tab-list-container {
     display: inline-block;
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: auto;
     position: relative;
     width: calc(100% - 51px);
   }

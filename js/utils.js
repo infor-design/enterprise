@@ -890,7 +890,7 @@
     var startTime = Date.now(),
       endTime = startTime + duration,
       startLeft = el.scrollLeft,
-      distance = target - startLeft;
+      distance = target /*- startLeft*/;
 
     // based on http://en.wikipedia.org/wiki/Smoothstep
     function smoothStep(start, end, point) {

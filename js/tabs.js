@@ -141,6 +141,11 @@
         if (this.tablistContainer && !this.tablist.parent().is(this.tablistContainer)) {
           this.tablistContainer.append(this.tablist);
         }
+        this.tablistContainer.on('mousewheel.tabs', function(e) {
+          if (e.deltaY) {
+            this.scrollLeft += e.deltaY;
+          }
+        });
 
         self.tablist
           .attr({
@@ -2408,6 +2413,10 @@
         }
 
         self.tablist.children('li:not(.separator)').removeClass('is-focused');
+        var xOffset = 1;
+        if (!this.isCompositeTabs()) {
+          xOffset = 3;
+        }
 
         // Invoke the popup menu on the button.
         self.moreButton.popupmenu({
@@ -2415,7 +2424,7 @@
           attachToBody: true,
           menu: 'tab-container-popupmenu',
           trigger: 'immediate',
-          offset: {x: 3}
+          offset: { x: xOffset }
         });
         self.moreButton.addClass('popup-is-open');
         self.popupmenu = self.moreButton.data('popupmenu');
@@ -2736,10 +2745,10 @@
           adjustedRight = tabCoords.right;
 
         if (adjustedLeft < tabContainerDims.left + FADED_AREA) {
-          d = Math.round(tabContainerDims.left - Math.abs(adjustedLeft));
+          d = (Math.round(Math.abs(tabContainerDims.left - adjustedLeft)) * -1) - FADED_AREA;
         }
         if (adjustedRight > tabContainerDims.right - FADED_AREA) {
-          d = Math.round(Math.abs(adjustedRight) - tabContainerDims.right);
+          d = Math.round(Math.abs(adjustedRight - tabContainerDims.right)) + FADED_AREA;
         }
 
         if (d === 0) {
@@ -3093,6 +3102,10 @@
 
         this.moreButton.off().remove();
         this.moreButton = undefined;
+
+        if (this.tablistContainer) {
+          this.tablistContainer.off('mousewheel.tabs');
+        }
 
         if (this.hasSquareFocusState()) {
           this.focusState.remove();
