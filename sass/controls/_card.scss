@@ -232,6 +232,18 @@
   .contained {
     height: inherit;
   }
+
+  .widget-chart-action {
+    padding-top: 7px;
+
+    .toolbar {
+      margin-bottom: 0;
+
+      .title {
+        padding: 0 20px;
+      }
+    }
+  }
 }
 
 .card-footer,

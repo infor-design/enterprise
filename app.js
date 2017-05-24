@@ -1323,6 +1323,10 @@ var express = require('express'),
     sendJSONFile('724points', req, res, next);
   });
 
+  router.get('/api/year2014', function(req, res, next) {
+    sendJSONFile('year2014', req, res, next);
+  });
+
   router.get('/api/my-projects', function(req, res, next) {
     sendJSONFile('projects', req, res, next);
   });

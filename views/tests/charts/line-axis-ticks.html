@@ -6,6 +6,23 @@
           <h2 class="widget-title">Line Chart Title</h2>
         </div>
         <div class="widget-content">
+          <div class="widget-chart-action">
+            <div class="toolbar no-actions-button right-aligned" role="toolbar" aria-label="Chart action toolbar">
+              <div class="buttonset">
+                <button type="button" class="btn-menu" data-init="false" id='test-btn-menu'>
+                  <span>Year 2014</span>
+                  <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                    <use xlink:href="#icon-dropdown"></use>
+                  </svg>
+                </button>
+                <ul class="popupmenu is-selectable">
+                  <li class="is-checked"><a href="#" data-theme="light-theme">Year 2014</a></li>
+                  <li><a href="#" data-theme="dark-theme">Year 2015</a></li>
+                  <li><a href="#" data-theme="high-contrast-theme">Year 2016</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
           <div id="line-example" class="chart-container">
           </div>
         </div>
@@ -16,19 +33,65 @@
 <script>
 $('body').on('initialized', function () {
 
-  var url = '{{basepath}}api/36points';
+  $('#test-btn-menu').button().popupmenu()
+  .on('click', function () {
+    console.log('click event');
+  }).on('selected', function (e, args) {
+    console.log(args);
+    $(this).find('span').text(args.text());
+  });
+
+  var url = '{{basepath}}api/year2014';
+
+  // D3 parse/format date
+  var parseDate = d3.time.format('%Y-%m-%d').parse,
+    formatDate = d3.time.format('%b');
 
   //TODO https://bl.ocks.org/mbostock/1849162
 
   $.getJSON(url, function(res) {
+    var data = res[0].data,
+      dates = data.map(function(d, i) {
+        var dt = parseDate(d.name);
+        // Add custom tooltip
+        d.tooltip = 'Value: '+ d.value +'<br>'+ d3.time.format('%a %B %d %Y')(dt);
+        return  dt;
+      });
+
+    // Sort data
+    data.sort(function(a, b) {
+      var d1 = parseDate(a.name);
+      var d2 = parseDate(b.name);
+      if (d1 == d2) return 0;
+      if (d1 > d2) return 1;
+      return -1;
+    });
+
+    // Get min and max dates
+    var minDate = (d3.min(d3.values(dates))),
+        maxDate = d3.max(d3.values(dates));
+
+    // Invoke
     $('#line-example').chart({
       type: 'line',
       dataset: res,
-      //xAxisTicks: 10,
-      hideDots: false,
-      //xAxisValues: [0, 10 , 20, 30, 40, 50, 60 , 70, 80, 90, 100],
-      xAxisFormatter: function (value, d, i) {
-        return value.substr(0,7);
+      xAxis: {
+        scale: d3.time.scale(),
+        domain: [minDate, maxDate],
+        ticks: d3.time.months,
+        // rotate: '-45',
+        formatter: function (d, i) {
+          return formatDate(d);
+        },
+        parser: function (d, i) {
+          return parseDate(d.name);
+        }
+      },
+      dots: {
+        radius: 2,
+        radiusOnHover: 3,
+        strokeWidth: 0,
+        class: 'custom-dots'
       }
     });
   });
