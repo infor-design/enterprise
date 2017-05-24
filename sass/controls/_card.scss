@@ -233,15 +233,26 @@
     height: inherit;
   }
 
+  .card-group-action,
+  .widget-group-action,
+  .card-chart-action,
   .widget-chart-action {
-    padding-top: 7px;
+    padding: 0 10px 0 20px;
+
+    &.card-chart-action,
+    &.widget-chart-action {
+      padding-top: 7px;
+    }
+
+    &.card-group-action,
+    &.widget-group-action {
+      background-color: $body-bg-color;
+      border: 1px solid transparent;
+      border-bottom-color: $listview-border-color;
+    }
 
     .toolbar {
       margin-bottom: 0;
-
-      .title {
-        padding: 0 20px;
-      }
     }
   }
 }
