@@ -2595,15 +2595,21 @@ window.Chart = function(container) {
     var dataset = chartData,
       hideDots = (options.hideDots),
       parent = $(container).parent(),
+      isCardAction = !!$('.widget-chart-action', parent).length,
+      isAxisXRotate = !!(!!settings.xAxis && settings.xAxis.rotate !== undefined),
       isViewSmall = parent.width() < 450,
       margin = {
-        top: (isAxisLabels.top ? 40 : 30),
+        top: (isAxisLabels.top ? (isCardAction ? 15 : 40) : (isCardAction ? 5 : 30)),
         right: (isAxisLabels.right ? (isViewSmall ? 45 : 65) : (isViewSmall ? 45 : 55)),
-        bottom: (isAxisLabels.bottom ? 50 : 35),
+        bottom: (isAxisLabels.bottom ? (isAxisXRotate ? 60 : 50) : (isAxisXRotate ? 45 : 35)),
         left: (isAxisLabels.right ? (isViewSmall ? 55 : 75) : (isViewSmall ? 45 : 65))
       },
       width = parent.width() - margin.left - margin.right,
       height = parent.height() - margin.top - margin.bottom - 30; //legend
+
+    if (isCardAction) {
+      height -= 40;
+    }
 
     var svg = d3.select(container).append('svg')
         .attr('width', width + margin.left + margin.right)
@@ -2639,7 +2645,7 @@ window.Chart = function(container) {
 
     // Calculate the Domain X and Y Ranges
     var maxes,
-      x = d3.scale.linear().range([0, width]),
+      x = ((!!settings.xAxis && !!settings.xAxis.scale) ? (settings.xAxis.scale) : (d3.scale.linear())).range([0, width]),
       y = d3.scale.linear().range([height, 0]),
       z = d3.scale.linear().range([1, 25]),
       getMaxes = function (d, option) {
@@ -2659,20 +2665,19 @@ window.Chart = function(container) {
     }
 
     var entries = d3.max(dataset.map(function(d){ return d.data.length; })) -1,
-      xScale = x.domain([0, isBubble ? d3.max(maxes.x) : entries]).nice(),
+      xScale = x.domain(!!settings.xAxis && !!settings.xAxis.domain ? (settings.xAxis.domain) : ([0, isBubble ? d3.max(maxes.x) : entries])).nice(),
       yScale = y.domain([0, d3.max(isBubble ? maxes.y : maxes)]).nice(),
       zScale = z.domain([0, d3.max(isBubble ? maxes.z : maxes)]).nice();
 
     var xAxis = d3.svg.axis()
       .scale(xScale)
       .orient('bottom')
-      .tickSize(isBubble ? -(height + 10) : 0)
-      .ticks(settings.xAxisValues ? settings.xAxisValues : isBubble && isViewSmall ? Math.round(entries/2) : entries)
+      .ticks((!!settings.xAxis && !!settings.xAxis.ticks) ? (settings.xAxis.ticks) : (isBubble && isViewSmall ? Math.round(entries/2) : entries))
       .tickPadding(10)
+      .tickSize(isBubble ? -(height + 10) : 0)
       .tickFormat(function (d, i) {
-
-        if (settings.xAxisFormatter)  {
-          return settings.xAxisFormatter(isBubble ? d : names[i], d, i);
+        if (!!settings.xAxis && !!settings.xAxis.formatter) {
+          return settings.xAxis.formatter(d, i);
         }
         return isBubble ? d : names[i];
       });
@@ -2744,9 +2749,19 @@ window.Chart = function(container) {
       svg.selectAll('.y.axis text').style('text-anchor', 'start');
     }
 
+    if (isAxisXRotate) {
+      svg.selectAll('.x.axis .tick text')  // select all the text for the xaxis
+      .attr('transform', function() {
+         return 'translate(' + this.getBBox().height*-2 + ', '+ this.getBBox().height + ')rotate('+ settings.xAxis.rotate +')';
+     });
+    }
+
     // Create the line generator
     var line = d3.svg.line()
       .x(function(d, i) {
+        if (!!settings.xAxis && !!settings.xAxis.parser)  {
+          return xScale(settings.xAxis.parser(d, i));
+        }
         return xScale(isBubble ? d.value.x : i);
       })
       .y(function(d) {
@@ -2804,7 +2819,12 @@ window.Chart = function(container) {
           .enter()
           .append('circle')
           .attr('class', dots.class)
-          .attr('cx', function (d, i) { return xScale(isBubble ? d.value.x : i); })
+          .attr('cx', function (d, i) {
+            if (!!settings.xAxis && !!settings.xAxis.parser)  {
+              return xScale(settings.xAxis.parser(d, i));
+            }
+            return xScale(isBubble ? d.value.x : i);
+          })
           .attr('cy', function (d) { return yScale(isBubble ? 0 : d.value); })
           .attr('r', dots.radius)
           .style('stroke-width', dots.strokeWidth)
