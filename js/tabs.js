@@ -21,7 +21,7 @@
           addTabButton: false, // If set to true, creates a button at the end of the tab list that can be used to add an empty tab and panel
           addTabButtonCallback: null, // if defined as a function, will be used in-place of the default Tab Adding method
           ajaxOptions: null, // if defined, will be used by any internal Tabs AJAX calls as the desired request settings.
-          containerElement: null, // Defines a separate element to be used for containing the tab panels.  Defaults to the Tab Container itself
+          containerElement: null, // Defines a separate element to be used for containing the tab panels.  Defaults to a `.tab-panel-container` element that is created if it doesn't already exist.
           changeTabOnHashChange: false, // If true, will change the selected tab on invocation based on the URL that exists after the hash
           hashChangeCallback: null, // If defined as a function, provides an external method for adjusting the current page hash used by these tabs
           lazyLoad: true, // if true, when using full URLs in tab HREFs, or when using Ajax calls, tabs will be loaded as needed instead of the markup all being established at once.
@@ -89,6 +89,9 @@
         if (container.length) {
           this.container = container;
           this.container.addClass('tab-panel-container');
+        } else {
+          // Create a `.tab-panel-container`
+          this.container = $('<div class="tab-panel-container"></div>').insertAfter(this.element);
         }
 
         // Add a default tabs class of "horizontal" if it doesn't already exist
@@ -113,7 +116,7 @@
 
         // Build Tab Counts
         if (self.settings.tabCounts) {
-          self.container.addClass('has-counts');
+          self.element.addClass('has-counts');
         }
 
         //Attach Tablist role and class to the tab headers container
@@ -155,18 +158,17 @@
           });
 
         if (this.hasSquareFocusState()) {
-          self.focusState = self.container.children('.tab-focus-indicator');
+          self.focusState = self.element.find('.tab-focus-indicator');
           if (!self.focusState.length) {
             self.focusState = $('<div class="tab-focus-indicator" role="presentation"></div>').insertBefore(self.tablist);
           }
         }
 
         if (this.hasAnimatedBar()) {
-          self.animatedBar = self.container.children('.animated-bar');
+          self.animatedBar = self.element.find('.animated-bar');
           if (!self.animatedBar.length) {
             self.animatedBar = $('<div class="animated-bar" role="presentation"></div>');
           }
-
           self.animatedBar.insertBefore(self.tablist);
         }
 
@@ -261,7 +263,8 @@
         function associateAnchorWithPanel() {
           var a = $(this),
             li = a.parent(),
-            popup = li.data('popupmenu');
+            popup = li.data('popupmenu'),
+            panel;
 
           // Associated the current one
           var href = a.attr('href');
@@ -272,7 +275,7 @@
           }
 
           if (href !== undefined && href !== '#') {
-            var panel = $(href);
+            panel = $(href);
 
             if (li.is(':not(.has-popupmenu)') && !panel.length) {
               return;
@@ -327,6 +330,8 @@
           .addClass('tab-panel')
           .attr({'role': 'tabpanel'})
           .find('h3:first').attr('tabindex', '0');
+
+        self.panels.appendTo(self.container);
 
         var excludes = ':not(.separator):not(.is-disabled):not(.is-hidden)',
           tabs = this.tablist.children('li' + excludes),
@@ -787,7 +792,8 @@
           }
 
           var last = self.tablist.children('li' + allExcludes).last();
-          if (self.isCompositeTabs()) {
+
+          if (self.hasMoreButton() && self.isCompositeTabs()) {
             openMenu(last.find('a').attr('href'));
           }
 
@@ -804,7 +810,8 @@
           }
 
           var first = self.tablist.children('li' + allExcludes).first();
-          if (self.isCompositeTabs()) {
+
+          if (self.hasMoreButton() && self.isCompositeTabs()) {
             openMenu(first.find('a').attr('href'));
             return first;
           }
@@ -1203,6 +1210,10 @@
         return true;
       },
 
+      hasMoreButton: function() {
+        return this.element[0].classList.contains('has-more-button');
+      },
+
       isModuleTabs: function() {
         return this.element.hasClass('module-tabs');
       },
@@ -1428,11 +1439,6 @@
 
         selectedStateTarget.addClass('is-selected');
 
-        // Scroll the tablist, if applicable
-        //if (this.isCompositeTabs()) {
-          //this.scrollTabList(targetTab);
-        //}
-
         // Fires a resize on any invoked child toolbars inside the tab panel.
         // Needed to fix issues with Toolbar alignment, since we can't properly detect
         // size on hidden elements.
@@ -1497,7 +1503,7 @@
             // Get a new random tab ID for this tab if one can't be derived from the URL string
             if (isURL) {
               var anchor = self.tablist.find('[href="'+ href +'"]'),
-                containerId = self.container[0].id || '',
+                containerId = self.element[0].id || '',
                 id = anchor.uniqueId('tab', containerId);
 
               href = '#' + id;
@@ -1508,8 +1514,8 @@
             self.createTabPanel(href, htmlContent, true);
             self.activate(href);
 
-            self.container.triggerHandler('complete'); // For Busy Indicator
-            self.container.trigger('requestend', [href, htmlContent]);
+            self.element.triggerHandler('complete'); // For Busy Indicator
+            self.element.trigger('requestend', [href, htmlContent]);
           };
 
         this.container.triggerHandler('start'); // For Busy Indicator
@@ -1909,11 +1915,16 @@
           return this;
         }
 
-        var a = prevLi.children('a');
+        var a = prevLi.children('a'),
+          activateTargetA = a;
+
         this.positionFocusState(a);
 
         if (wasSelected) {
-          this.activate(a.attr('href'));
+          if (prevLi.is('.has-popupmenu') && prevLi.data('popupmenu')) {
+            activateTargetA = prevLi.data('popupmenu').menu.children().first().children('a');
+          }
+          this.activate(activateTargetA.attr('href'));
         }
 
         this.focusBar(prevLi);
@@ -2175,28 +2186,31 @@
         var elem = this.element[0],
           tablist = this.tablist[0],
           HAS_MORE = 'has-more-button',
-          hasMoreIndex = elem.classList.contains(HAS_MORE);
-
-        // "New"-style tabs always display the more button
-        if (this.isCompositeTabs()) {
-          if (!hasMoreIndex) {
-            elem.classList.add(HAS_MORE);
-          }
-          return;
-        }
-
-        // Continue with legacy overflow check
-        var tablistStyle = window.getComputedStyle(tablist, null),
-          tabListHeight = parseInt(tablistStyle.getPropertyValue('height')) + 1; // +1 to fix an IE bug
+          hasMoreIndex = this.hasMoreButton(),
+          isCompositeTabs = this.isCompositeTabs();
 
         // Recalc tab width before detection of overflow
         if (this.isModuleTabs()) {
           this.adjustModuleTabs();
         }
 
+        var tablistStyle, tablistHeight,
+          tablistContainerScrollWidth, tablistContainerWidth,
+          overflowCondition;
+
+        if (isCompositeTabs) {
+          tablistContainerScrollWidth = this.tablistContainer[0].scrollWidth;
+          tablistContainerWidth = this.tablistContainer[0].offsetWidth;
+          overflowCondition = tablistContainerScrollWidth > tablistContainerWidth;
+        } else {
+          tablistStyle = window.getComputedStyle(tablist, null);
+          tablistHeight = parseInt(tablistStyle.getPropertyValue('height')) + 1; // +1 to fix an IE bug
+          overflowCondition = tablist.scrollHeight > tablistHeight; // Normal tabs check the height
+        }
+
         // Add "has-more-button" class if we need it, remove it if we don't
         // Always display the more button on Composite Tabs
-        if (tablist.scrollHeight > tabListHeight) {
+        if (overflowCondition) {
           if (!hasMoreIndex) {
             elem.classList.add(HAS_MORE);
           }
@@ -2691,12 +2705,6 @@
           }
           style.width = width + 'px';
 
-          /*
-          if (isRTL && style.left) {
-            style.left = 'auto';
-          }
-          */
-
           if (cb && typeof cb === 'function') {
             cb();
           }
@@ -2737,7 +2745,6 @@
 
         var tabCoords = Soho.DOM.getDimensions(target[0]),
           tabContainerDims = Soho.DOM.getDimensions(this.tablistContainer[0]),
-          scrollLeft = this.tablistContainer[0].scrollLeft,
           d;
 
         var FADED_AREA = 40, // the faded edges on the sides of the tabset
@@ -2775,7 +2782,7 @@
             self.moreButton.hasClass('is-selected') ? self.moreButton :
             self.tablist.children('.is-selected').length > 0 ? self.tablist.children('.is-selected').children('a') : undefined;
 
-        if (!target || target === undefined || !target.length) {
+        if (!target || target === undefined || !target.length || (target.is(this.moreButton) && this.isCompositeTabs())) {
           this.focusState.removeClass('is-visible');
           return;
         }
@@ -2788,7 +2795,7 @@
         var focusStateElem = this.focusState[0],
           targetPos = Soho.DOM.getDimensions(target[0]),
           targetClassList = target[0].classList,
-          isAlternateHeaderTabs = this.isHeaderTabs() && this.element[0].classList.contains('alternate'),
+          isNotHeaderTabs = (!this.isHeaderTabs() || this.isHeaderTabs() && this.element[0].classList.contains('alternate')),
           isModuleTabs = this.isModuleTabs(),
           isRTL = Locale.isRTL(),
           tabMoreWidth = this.moreButton.outerWidth(true),
@@ -2841,7 +2848,7 @@
           }
 
           // Alternate Header Tabs have 1px removed from bottom to prevent overlap onto the bottom border
-          if (isAlternateHeaderTabs) {
+          if (isNotHeaderTabs) {
             targetRectObj.height = targetRectObj.height - 1;
           }
 

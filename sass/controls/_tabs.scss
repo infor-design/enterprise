@@ -141,8 +141,8 @@
 // Tab Body
 .tab-panel {
   display: none;
-  padding-top: 20px;
   opacity: 0;
+  padding-top: 20px;
   @include transition(opacity 500ms cubic-bezier(.17, .04, .03, .94));
 
   &.can-show {
@@ -235,6 +235,7 @@
 // Common styles between Horizontal and Header tabs
 .tab-container.horizontal,
 .tab-container.header-tabs {
+  overflow: hidden;
 
   //========================================
   // Before/After control the faded edges
@@ -292,14 +293,14 @@
 
   .tab-list-container {
     display: inline-block;
-    overflow-x: auto;
-    overflow-y: auto;
+    overflow-x: auto; // facilitates scrolling of the tabset
     position: relative;
     width: calc(100% - 51px);
   }
 
   > .tab-list-container {
-    height: inherit;
+    margin-bottom: -17px; // Hide the scrollbar
+    //height: inherit;
 
     > .tab-list {
       display: inline-block;
@@ -440,7 +441,7 @@
         display: block;
         height: 100%;
         position: absolute;
-        top: calc(50% - 6px);
+        top: 0;
         width: 1px;
       }
 

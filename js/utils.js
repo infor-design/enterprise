@@ -617,17 +617,14 @@
       el = el[0];
     }
 
-    var rect = el.getBoundingClientRect();
-    return {
-      top: rect.top,
-      bottom: rect.bottom,
-      left: rect.left,
-      right: rect.right,
-      width: rect.width,
-      height: rect.height,
-      x: rect.x,
-      y: rect.y
-    };
+    var rect = el.getBoundingClientRect(),
+      rectObj = {};
+    for (var prop in rect) {
+      if (!isNaN(rect[prop])) {
+        rectObj[prop] = rect[prop];
+      }
+    }
+    return rectObj;
   };
 
   // Debounce method
