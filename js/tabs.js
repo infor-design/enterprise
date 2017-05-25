@@ -62,16 +62,49 @@
       },
 
       build: function() {
-        var self = this;
+        var self = this,
+          tabPanelContainer,
+          moveTabPanelContainer = false;
 
-        this.container = this.element;
-        // Special case for Header Tabs, find the page container use that as the container
-        if (this.element.closest('.header').length > 0) {
-          this.container = $('body > .page-container');
-          if (!this.container.length) {
-            this.container = this.element;
+        // Check for a tab panel container immediately after the `.tab-container` element (default as of Soho Xi 4.3.0)
+        tabPanelContainer = this.element.next('.tab-panel-container');
+
+        // Auto-detect and move existing tab-panel containers in key areas, if applicable.
+        // Check inside the container first
+        if (!tabPanelContainer.length) {
+          tabPanelContainer = this.element.children('.tab-panel-container');
+
+          if (!this.isVerticalTabs()) {
+            moveTabPanelContainer = true;
           }
         }
+
+        // Special case for Header Tabs, find the page container and use that as the container
+        var bodyPageContainer = $('body > .page-container');
+        if (this.element.closest('.header').length > 0 && bodyPageContainer.length) {
+          tabPanelContainer = bodyPageContainer;
+        }
+
+        // Defining `this.settings.containerElement` ultimately overrides any internal changes to the tab panel container.
+        if (this.settings.containerElement && $(this.settings.containerElement).length) {
+          tabPanelContainer = $(this.settings.containerElement);
+          moveTabPanelContainer = false;
+        }
+
+        // If a `.tab-panel-container` still doesn't exist, create one.
+        if (!tabPanelContainer || !tabPanelContainer.length) {
+          tabPanelContainer = $('<div class="tab-panel-container"></div>');
+          moveTabPanelContainer = true;
+        }
+
+        if (!tabPanelContainer[0].classList.contains('tab-panel-container')) {
+          tabPanelContainer[0].classList.add('tab-panel-container');
+        }
+        if (moveTabPanelContainer) {
+          tabPanelContainer.insertAfter(this.element);
+        }
+
+        this.container = tabPanelContainer;
 
         // Detect the existence of a "tab-list-container" element, if applicable.
         // Tab List containers are optional for all tab container types, but mandatory for
@@ -82,16 +115,6 @@
         }
         if (tablistContainer.length) {
           this.tablistContainer = tablistContainer;
-        }
-
-        // Setting containerElement overrides any changes to the tab panel container.
-        var container = $(this.settings.containerElement);
-        if (container.length) {
-          this.container = container;
-          this.container.addClass('tab-panel-container');
-        } else {
-          // Create a `.tab-panel-container`
-          this.container = $('<div class="tab-panel-container"></div>').insertAfter(this.element);
         }
 
         // Add a default tabs class of "horizontal" if it doesn't already exist
@@ -141,14 +164,17 @@
 
         // Double-check that the `.tab-list-container` actually contains the `.tab-list`.
         // Move it if necessary.
-        if (this.tablistContainer && !this.tablist.parent().is(this.tablistContainer)) {
-          this.tablistContainer.append(this.tablist);
-        }
-        this.tablistContainer.on('mousewheel.tabs', function(e) {
-          if (e.deltaY) {
-            this.scrollLeft += e.deltaY;
+        if (this.tablistContainer) {
+          if (!this.tablist.parent().is(this.tablistContainer)) {
+            this.tablistContainer.append(this.tablist);
           }
-        });
+
+          this.tablistContainer.on('mousewheel.tabs', function(e) {
+            if (e.deltaY) {
+              this.scrollLeft += e.deltaY;
+            }
+          });
+        }
 
         self.tablist
           .attr({
@@ -2809,6 +2835,7 @@
             tablistScrollWidth,
             tablistScrollLeft;
 
+          // Adjust from the top
           targetRectObj.top = targetRectObj.top - parentRect.top;
 
           if (isRTL) {
@@ -2855,8 +2882,19 @@
           return targetRectObj;
         }
 
-        // Adjust the values one more time if we have tabs contained inside of a page-container, or some other scrollable container.
+        // Move the focus state from inside the tab list container, if applicable.
+        // Put it back into the tab list container, if not.
+        if (target.is('.add-tab-button, .tab-more')) {
+          if (!this.focusState.parent().is(this.element)) {
+            this.focusState.prependTo(this.element);
+          }
+        } else {
+          if (!this.focusState.parent().is(this.tablistContainer)) {
+            this.focusState.prependTo(this.tablistContainer);
+          }
+        }
 
+        // Adjust the values one more time if we have tabs contained inside of a page-container, or some other scrollable container.
         targetPos = adjustForParentContainer(targetPos, parentContainer, scrollingTablist);
 
         // build CSS string containing each prop and set it:

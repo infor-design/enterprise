@@ -132,7 +132,7 @@
 
     &.can-show {
       display: inline-block;
-      width: calc(100% - 318px);
+      width: 100% //calc(100% - 318px);
     }
 
     h3 {
@@ -144,9 +144,9 @@
     display: inline-block;
     margin: 0;
     width: calc(100% - 318px);
-    &.can-show {
-      margin: 0px;
-      width: calc(100% - 318px);
+
+    > .tab-panel.can-show {
+      width: 100%;
     }
   }
 

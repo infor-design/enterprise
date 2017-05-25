@@ -147,19 +147,7 @@
   }
 
   .add-tab-button {
-    padding: 12px 0 12px 18px;
-  }
-
-  &.has-add-button {
-    .add-tab-button {
-      width: 44px;
-    }
-
-    &.has-more-button {
-      .tab-more {
-        right: 86px;
-      }
-    }
+    padding: 12px 4px 12px 14px;
   }
 
 // Alternate Header-Tab Backgrounds (Page Context)

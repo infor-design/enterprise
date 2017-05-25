@@ -271,6 +271,12 @@
     width: 40px;
   }
 
+  &.has-add-button {
+    &::after {
+      right: 95px;
+    }
+  }
+
   .tab-more,
   .add-tab-button {
     @include font-size(14);
@@ -287,6 +293,12 @@
     }
   }
 
+  .add-tab-button {
+    padding: 11px 12px;
+    text-align: center;
+    width: 50px;
+  }
+
   .more-text {
     display: none;
   }
@@ -298,9 +310,14 @@
     width: calc(100% - 51px);
   }
 
+  &.has-add-button {
+    .tab-list-container {
+      width: calc(100% - 102px);
+    }
+  }
+
   > .tab-list-container {
     margin-bottom: -17px; // Hide the scrollbar
-    //height: inherit;
 
     > .tab-list {
       display: inline-block;
@@ -604,6 +621,12 @@ html[dir='rtl'] {
     &::after {
       left: 51px;
       right: auto;
+    }
+
+    &.has-add-button {
+      &::after {
+        left: 95px;
+      }
     }
   }
 
