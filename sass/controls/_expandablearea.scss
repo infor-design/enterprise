@@ -163,14 +163,6 @@
         margin-top: 0;
       }
     }
-
-    &.is-full-page-mobile {
-      background-color: $body-bg-color;
-      height: 100%;
-      position: absolute;
-      top: 80px;
-      z-index: 1;
-    }
   }
 
   .expandable-pane {

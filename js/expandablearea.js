@@ -21,8 +21,7 @@
     var pluginName = 'expandablearea',
         defaults = {
           trigger: null, //Id of some other button to use as a trigger
-          bottomBorder: false, //Change the border to bottom vs top
-          fullPageOnMobile: false //Opens full page at Mobile
+          bottomBorder: false //Change the border to bottom vs top
         },
         settings = $.extend({}, defaults, options);
 
@@ -119,10 +118,6 @@
         // Change the borer to the bottom vs top
         if (this.settings.bottomBorder) {
           this.element.addClass('has-bottom-border');
-        }
-
-        if (this.settings.fullPageOnMobile) {
-        //TODO  this.element.addClass('is-full-page-mobile');
         }
 
         //Initialized in expanded mode.
