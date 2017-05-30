@@ -2844,8 +2844,7 @@
             parentPadding,
             tabLeftMargin,
             tablistScrollWidth,
-            tablistScrollLeft,
-            tablistOuterWidth;
+            tablistScrollLeft;
 
           // Adjust from the top
           targetRectObj.top = targetRectObj.top - parentRect.top;
