@@ -2845,8 +2845,10 @@
         function adjustForParentContainer(targetRectObj, parentElement, tablistContainer) {
           var parentRect = parentElement[0].getBoundingClientRect(),
             parentPadding,
+            tabLeftMargin,
             tablistScrollWidth,
-            tablistScrollLeft;
+            tablistScrollLeft,
+            tablistOuterWidth;
 
           // Adjust from the top
           targetRectObj.top = targetRectObj.top - parentRect.top;
@@ -2873,12 +2875,16 @@
             tablistScrollWidth = tablistContainer ? tablistContainer[0].scrollWidth : 0;
 
             if (isRTL && !isVerticalTabs) {
+              // TODO: Improve this calculation because there's something off
               var tmpLeft = targetRectObj.left;
-
-              // TODO: This calculation isn't quite correct
-              // Need to figure out what "32" represents
-              targetRectObj.left = tablistScrollWidth - (targetRectObj.right + tablistScrollLeft + (tabMoreWidth) + 32);
-              targetRectObj.right = tablistScrollWidth - (tmpLeft + tablistScrollLeft + (tabMoreWidth) + 32);
+              if (isNotHeaderTabs) {
+                tabLeftMargin = parseInt(window.getComputedStyle(target[0]).marginLeft);
+                targetRectObj.left = tablistScrollWidth - tabLeftMargin - targetRectObj.right + tablistScrollLeft;
+                targetRectObj.right = tablistScrollWidth - tabLeftMargin - tmpLeft + tablistScrollLeft;
+              } else {
+                targetRectObj.left = tablistScrollWidth - (targetRectObj.right + tablistScrollLeft + (tabMoreWidth) + 32);
+                targetRectObj.right = tablistScrollWidth - (tmpLeft + tablistScrollLeft + (tabMoreWidth) + 32);
+              }
             } else {
               targetRectObj.left = targetRectObj.left + tablistScrollLeft;
               targetRectObj.right = targetRectObj.right + tablistScrollLeft;
