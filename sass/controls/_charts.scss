@@ -523,11 +523,12 @@
 
 .chart-targeted-achievement {
   // scss-lint:disable ImportantRule
-  margin-bottom: 18px !important;
+  margin-bottom: 15px !important;
   // scss-lint:enable ImportantRule
 
   .label {
     @include font-size(14);
+    margin-top: 2px;
   }
 
   .bar {
