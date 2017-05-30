@@ -109,6 +109,25 @@
         }
       }
     }
+
+    // Adjust for scrollable tab containers
+    &.scrollable,
+    &.scrollable-x,
+    &.scrollable-y {
+      height: 100%;
+    }
+  }
+
+  > .tab-panel-container {
+    display: inline-block;
+    margin: 0;
+    width: calc(100% - 250px);
+
+    &.scrollable,
+    &.scrollable-x,
+    &.scrollable-y {
+      height: 100%;
+    }
   }
 
   // Normal configuration of the tabset can just have '.tab-list' directly inside the vertical tabs container.
@@ -132,21 +151,11 @@
 
     &.can-show {
       display: inline-block;
-      width: 100% //calc(100% - 318px);
+      min-width: calc(100% - 60px); // 60px = left/right margin
     }
 
     h3 {
       margin-bottom: 20px;
-    }
-  }
-
-  > .tab-panel-container {
-    display: inline-block;
-    margin: 0;
-    width: calc(100% - 318px);
-
-    > .tab-panel.can-show {
-      width: 100%;
     }
   }
 
@@ -189,8 +198,8 @@
   height: 100%;
   overflow: auto;
 
-  .tab-list,
-  .tab-list-container {
+  .tab-list-container,
+  .tab-panel-container {
     min-height: 100%;
   }
 }
