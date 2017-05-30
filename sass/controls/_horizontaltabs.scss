@@ -24,6 +24,24 @@ $horizontal-tabs-height: 40px;
     height: ($horizontal-tabs-height - 1px);
   }
 
+  &.alternate {
+    &::before {
+      background-image: linear-gradient(
+        to right,
+        rgba($inverse-color, 1),
+        rgba($inverse-color, 0)
+      );
+    }
+
+    &::after {
+      background-image: linear-gradient(
+        to right,
+        rgba($inverse-color, 0),
+        rgba($inverse-color, 1)
+      );
+    }
+  }
+
   > .tab-list-container {
 
     .icon:not(.icon-error) {
@@ -145,4 +163,45 @@ $horizontal-tabs-height: 40px;
   + .tab-panel-container {
     margin-bottom: 20px;
   }
+}
+
+// RTL Styles
+html[dir='rtl'] {
+
+  .tab-container.horizontal {
+    &::before {
+      background-image: linear-gradient(
+        to left,
+        rgba($body-bg-color, 1),
+        rgba($body-bg-color, 0)
+      );
+    }
+
+    &::after {
+      background-image: linear-gradient(
+        to left,
+        rgba($body-bg-color, 0),
+        rgba($body-bg-color, 1)
+      );
+    }
+
+    &.alternate {
+      &::before {
+        background-image: linear-gradient(
+          to left,
+          rgba($inverse-color, 1),
+          rgba($inverse-color, 0)
+        );
+      }
+
+      &::after {
+        background-image: linear-gradient(
+          to left,
+          rgba($inverse-color, 0),
+          rgba($inverse-color, 1)
+        );
+      }
+    }
+  }
+
 }

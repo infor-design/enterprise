@@ -147,6 +147,10 @@
 
   &.can-show {
     display: block;
+
+    > .page-container {
+      position: absolute;
+    }
   }
 
   &.is-visible {
@@ -186,12 +190,6 @@
   // These two rules fix an IE bug where contents of all tab panels are shown.
   > .page-container {
     position: static;
-  }
-
-  &.can-show {
-    > .page-container {
-      position: absolute;
-    }
   }
 
 }
@@ -651,6 +649,12 @@ html[dir='rtl'] {
       &::before {
         left: auto;
         right: 0;
+      }
+    }
+
+    &.has-counts {
+      .tab-more {
+        padding: 24px 14px 24px 4px;
       }
     }
   }

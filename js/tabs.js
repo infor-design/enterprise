@@ -1377,7 +1377,7 @@
       },
 
       isURL: function(href) {
-        if (href.indexOf('#') === 0) {
+        if (!href || href.indexOf('#') === 0) {
           return false;
         }
 
@@ -2818,13 +2818,26 @@
           target = target.parent();
         }
 
+        // Move the focus state from inside the tab list container, if applicable.
+        // Put it back into the tab list container, if not.
+        if (target.is('.add-tab-button, .tab-more')) {
+          if (!this.focusState.parent().is(this.element)) {
+            this.focusState.prependTo(this.element);
+          }
+        } else {
+          if (!this.focusState.parent().is(this.tablistContainer)) {
+            this.focusState.prependTo(this.tablistContainer);
+          }
+        }
+
         var focusStateElem = this.focusState[0],
           targetPos = Soho.DOM.getDimensions(target[0]),
           targetClassList = target[0].classList,
           isNotHeaderTabs = (!this.isHeaderTabs() || this.isHeaderTabs() && this.element[0].classList.contains('alternate')),
           isModuleTabs = this.isModuleTabs(),
+          isVerticalTabs = this.isVerticalTabs(),
           isRTL = Locale.isRTL(),
-          tabMoreWidth = this.moreButton.outerWidth(true),
+          tabMoreWidth = !isVerticalTabs ? this.moreButton.outerWidth(true) : 0,
           parentContainer = this.element,
           scrollingTablist = this.tablistContainer,
           accountForPadding = scrollingTablist && this.focusState.parent().is(scrollingTablist);
@@ -2837,9 +2850,12 @@
 
           // Adjust from the top
           targetRectObj.top = targetRectObj.top - parentRect.top;
+          if (isVerticalTabs) {
+            targetRectObj.top = targetRectObj.top + parentElement[0].scrollTop;
+          }
 
           if (isRTL) {
-            //targetRectObj.right = parentRect.right - targetRectObj.right;
+            targetRectObj.right = parentRect.right - targetRectObj.right;
           } else {
             targetRectObj.left = targetRectObj.left - parentRect.left;
           }
@@ -2856,12 +2872,13 @@
             tablistScrollLeft = tablistContainer ? tablistContainer[0].scrollLeft : 0;
             tablistScrollWidth = tablistContainer ? tablistContainer[0].scrollWidth : 0;
 
-            if (isRTL) {
+            if (isRTL && !isVerticalTabs) {
               var tmpLeft = targetRectObj.left;
-              //targetRectObj.left = tablistScrollWidth - (targetRectObj.right + tablistScrollLeft + tabMoreWidth) - 32;
-              //targetRectObj.right = tablistScrollWidth - (tmpLeft + tablistScrollLeft + tabMoreWidth) - 32;
-              targetRectObj.left = (tablistScrollWidth - parentRect.left) - (targetRectObj.right + tablistScrollLeft + tabMoreWidth);
-              targetRectObj.right = (tablistScrollWidth - parentRect.left) - (tmpLeft + tablistScrollLeft + tabMoreWidth);
+
+              // TODO: This calculation isn't quite correct
+              // Need to figure out what "32" represents
+              targetRectObj.left = tablistScrollWidth - (targetRectObj.right + tablistScrollLeft + (tabMoreWidth) + 32);
+              targetRectObj.right = tablistScrollWidth - (tmpLeft + tablistScrollLeft + (tabMoreWidth) + 32);
             } else {
               targetRectObj.left = targetRectObj.left + tablistScrollLeft;
               targetRectObj.right = targetRectObj.right + tablistScrollLeft;
@@ -2875,23 +2892,11 @@
           }
 
           // Alternate Header Tabs have 1px removed from bottom to prevent overlap onto the bottom border
-          if (isNotHeaderTabs) {
+          if (isNotHeaderTabs && !isVerticalTabs) {
             targetRectObj.height = targetRectObj.height - 1;
           }
 
           return targetRectObj;
-        }
-
-        // Move the focus state from inside the tab list container, if applicable.
-        // Put it back into the tab list container, if not.
-        if (target.is('.add-tab-button, .tab-more')) {
-          if (!this.focusState.parent().is(this.element)) {
-            this.focusState.prependTo(this.element);
-          }
-        } else {
-          if (!this.focusState.parent().is(this.tablistContainer)) {
-            this.focusState.prependTo(this.tablistContainer);
-          }
         }
 
         // Adjust the values one more time if we have tabs contained inside of a page-container, or some other scrollable container.
