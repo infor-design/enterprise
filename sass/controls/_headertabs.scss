@@ -195,7 +195,7 @@
         &:hover:not(.is-disabled) {
           color: $header-tab-alt-hover-color;
 
-          &:before {
+          &::before {
             background-color: rgba($header-tab-alt-hover-color, 1);
           }
         }
@@ -203,7 +203,7 @@
         &.is-selected:not(.is-disabled) {
           color: $header-tab-alt-selected-color;
 
-          &:before {
+          &::before {
             background-color: rgba($header-tab-alt-selected-color, 1);
           }
 

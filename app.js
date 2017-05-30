@@ -443,9 +443,6 @@ var express = require('express'),
     if (directory.match(/tests\/signin/)) {
       opts.layout = 'tests/layout-noheader';
     }
-    if (directory.match(/tests\/tabs-composite/)) {
-      opts.layout = 'tests/tabs-composite/layout';
-    }
     if (directory.match(/tests\/tabs-module/)) {
       opts.layout = 'tests/tabs-module/layout';
     }

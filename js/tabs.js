@@ -30,7 +30,7 @@
           sourceArguments: {}, // If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
           tabCounts: false, // If true, Displays a modifiable count above each tab.
         },
-        tabContainerTypes = ['horizontal', 'vertical', 'module-tabs', 'header-tabs', 'composite-tabs'],
+        tabContainerTypes = ['horizontal', 'vertical', 'module-tabs', 'header-tabs'],
         settings = $.extend({}, defaults, options);
 
     /**
@@ -110,7 +110,7 @@
         // Tab List containers are optional for all tab container types, but mandatory for
         // Composite Form tabs.
         var tablistContainer = this.element.children('.tab-list-container');
-        if (!tablistContainer.length && this.isCompositeTabs()) {
+        if (!tablistContainer.length && this.isScrollableTabs()) {
           tablistContainer = $('<div class="tab-list-container"></div>').prependTo(this.element);
         }
         if (tablistContainer.length) {
@@ -127,11 +127,7 @@
         });
         if (noClass) {
           if (closestHeader.length) {
-            if (closestHeader.hasClass('has-composite-tabs')) {
-              self.element.addClass('composite-tabs');
-            } else {
-              self.element.addClass('header-tabs');
-            }
+            self.element.addClass('header-tabs');
           } else {
             self.element.addClass('horizontal');
           }
@@ -687,7 +683,7 @@
 
         a.focus();
 
-        if (this.isCompositeTabs()) {
+        if (this.isScrollableTabs()) {
           this.scrollTabList(li);
         }
 
@@ -819,7 +815,7 @@
 
           var last = self.tablist.children('li' + allExcludes).last();
 
-          if (self.hasMoreButton() && self.isCompositeTabs()) {
+          if (self.hasMoreButton() && self.isScrollableTabs()) {
             openMenu(last.find('a').attr('href'));
           }
 
@@ -837,7 +833,7 @@
 
           var first = self.tablist.children('li' + allExcludes).first();
 
-          if (self.hasMoreButton() && self.isCompositeTabs()) {
+          if (self.hasMoreButton() && self.isScrollableTabs()) {
             openMenu(first.find('a').attr('href'));
             return first;
           }
@@ -927,7 +923,7 @@
           self.addTabButton.focus();
         }
 
-        if (this.isCompositeTabs()) {
+        if (this.isScrollableTabs()) {
           this.scrollTabList(focusStateTarget);
         }
 
@@ -1252,8 +1248,8 @@
         return this.element.hasClass('header-tabs');
       },
 
-      isCompositeTabs: function() {
-        return this.element.hasClass('composite-tabs') || (!this.isModuleTabs() && !this.isVerticalTabs());
+      isScrollableTabs: function() {
+        return !this.isModuleTabs() && !this.isVerticalTabs();
       },
 
       isHidden: function() {
@@ -1484,7 +1480,7 @@
        * @returns {undefined}
        */
       renderEdgeFading: function() {
-        if (!this.isCompositeTabs() || !this.tablistContainer) {
+        if (!this.isScrollableTabs() || !this.tablistContainer) {
           return;
         }
 
@@ -2213,7 +2209,7 @@
           tablist = this.tablist[0],
           HAS_MORE = 'has-more-button',
           hasMoreIndex = this.hasMoreButton(),
-          isCompositeTabs = this.isCompositeTabs();
+          isScrollableTabs = this.isScrollableTabs();
 
         // Recalc tab width before detection of overflow
         if (this.isModuleTabs()) {
@@ -2224,7 +2220,7 @@
           tablistContainerScrollWidth, tablistContainerWidth,
           overflowCondition;
 
-        if (isCompositeTabs) {
+        if (isScrollableTabs) {
           tablistContainerScrollWidth = this.tablistContainer[0].scrollWidth;
           tablistContainerWidth = this.tablistContainer[0].offsetWidth;
           overflowCondition = tablistContainerScrollWidth > tablistContainerWidth;
@@ -2235,7 +2231,7 @@
         }
 
         // Add "has-more-button" class if we need it, remove it if we don't
-        // Always display the more button on Composite Tabs
+        // Always display the more button on Scrollable Tabs
         if (overflowCondition) {
           if (!hasMoreIndex) {
             elem.classList.add(HAS_MORE);
@@ -2366,7 +2362,7 @@
         // Reset it if it does exist.
         var menuHtml = $('#tab-container-popupmenu'),
           shouldBeSelectable = '';
-        if (this.isCompositeTabs()) {
+        if (this.isScrollableTabs()) {
           shouldBeSelectable = ' is-selectable';
         }
 
@@ -2388,7 +2384,7 @@
             return;
           }
 
-          if (!self.isCompositeTabs() && !self.isTabOverflowed($item)) {
+          if (!self.isScrollableTabs() && !self.isTabOverflowed($item)) {
             return;
           }
 
@@ -2403,7 +2399,7 @@
           popupLi[0].classList.remove('tab');
           if (popupLi[0].classList.contains('is-selected')) {
             popupLi[0].classList.remove('is-selected');
-            if (self.isCompositeTabs()) {
+            if (self.isScrollableTabs()) {
               popupLi[0].classList.add('is-checked');
             }
           }
@@ -2455,7 +2451,7 @@
 
         self.tablist.children('li:not(.separator)').removeClass('is-focused');
         var xOffset = 1;
-        if (!this.isCompositeTabs()) {
+        if (!this.isScrollableTabs()) {
           xOffset = 3;
         }
 
@@ -2637,7 +2633,7 @@
       // Used for checking if a particular tab (in the form of a jquery-wrapped list item) is spilled into
       // the overflow area of the tablist container <UL>.
       isTabOverflowed: function(li) {
-        if (this.isVerticalTabs() || this.isCompositeTabs()) {
+        if (this.isVerticalTabs() || this.isScrollableTabs()) {
           return false;
         }
 
@@ -2660,8 +2656,8 @@
         var tabs = this.tablist.children('li:not(.separator):not(.hidden):not(.is-disabled)'),
           targetFocus = tabs.first();
 
-        // if Composite Tabs, simply get the last tab and focus.
-        if (this.isCompositeTabs()) {
+        // if Scrollable Tabs, simply get the last tab and focus.
+        if (this.isScrollableTabs()) {
           return tabs.last().find('a').focus();
         }
 
@@ -2809,7 +2805,7 @@
             self.moreButton.hasClass('is-selected') ? self.moreButton :
             self.tablist.children('.is-selected').length > 0 ? self.tablist.children('.is-selected').children('a') : undefined;
 
-        if (!target || target === undefined || !target.length || (target.is(this.moreButton) && this.isCompositeTabs())) {
+        if (!target || target === undefined || !target.length || (target.is(this.moreButton) && this.isScrollableTabs())) {
           this.focusState.removeClass('is-visible');
           return;
         }
