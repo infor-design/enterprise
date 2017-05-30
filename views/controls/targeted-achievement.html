@@ -39,8 +39,8 @@
   var dataset2 = [{
     data: [{
       name: {text: 'Label B'},
-      completed: {text: '300K of 250K', value: 300000, format: '.2s', color: 'primary'},
-      remaining: {value: 50000, format: '.2s', text: ' Excess'},
+      completed: {text: '250K of 250K', value: 250000, format: '.2s', color: 'primary'},
+      remaining: {value: 250000, format: '.2s', text: ' Complete'},
       total: {value: 250000, format: '.2s'},
     }]
   }];
@@ -50,8 +50,8 @@
   var dataset3 = [{
     data: [{
       name: {text: 'Label C'},
-      completed: {text: '230K of 250K', value: 230000, format: '.2s', color: 'error'},
-      total: {value: 250000, text: ' Remaining', format: '.2s'},
+      completed: {text: '20K of 250K', value: 20000, format: '.2s', color: 'error'},
+      total: {value: 250000, difference: true, text: ' Remaining', format: '.2s'},
     }]
   }];
 
@@ -63,9 +63,9 @@
 
     var dataset1 = [{
       data: [{
-        name: {text: 'Label A'},
-        completed: {text: '250K of 250K', value: 250000, format: '.2s', color: 'primary'},
-        remaining: {value: 250000, format: '.2s', text: ' Completed'},
+        name: {text: upd===1 ? 'Label A' : 'Label B'},
+        completed: {text: upd===1 ? '250K of 250K' : '230K of 250', value: upd===1 ? 250000 : 230000, format: '.2s', color: 'primary'},
+        remaining: {value: upd===1 ? 250000 : 230000, format: '.2s', text: ' Completed'},
         total: {value: 250000, format: '.2s'},
       }]
     }];

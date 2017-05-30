@@ -3414,9 +3414,15 @@ window.Chart = function(container) {
     // Render
     var html = {body: $('<div class="total bar" />')};
     if (isTarget || isAchievment) {
+      var difference = {};
       html.body.addClass('chart-completion-target' + (isAchievment ? ' chart-targeted-achievement' : ''));
 
-      var totalText = setFormat(dataset.total) + (dataset.total.text ? dataset.total.text : '');
+      if (dataset.total.difference) {
+        difference.value = (dataset.total.value - dataset.completed.value);
+        difference.format = dataset.total.format;
+      }
+
+      var totalText = setFormat(dataset.total.difference ? difference : dataset.total) + (dataset.total.text ? dataset.total.text : '');
       totalText = isAchievment && dataset.remaining ? setFormat(dataset.remaining) + (dataset.remaining.text ? dataset.remaining.text : ''): totalText;
 
       html.label = ''+
