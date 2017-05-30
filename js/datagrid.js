@@ -380,7 +380,6 @@ window.Formatters = {
     return '<span class="badge ' + colorClasses +'">' + value +' <span class="audible">'+ text+ '</span></span>';
   },
 
-  // Tags (low priority)
   Tag: function (row, cell, value, col) {
     var ranges = Formatters.ClassRange(row, cell, value, col);
     return '<span class="tag ' + ranges.classes +'">'+ value + '</span>';
@@ -507,9 +506,16 @@ window.Formatters = {
     return $.createIcon({ icon: item.rowStatus.icon, classes: ['icon', 'icon-' + item.rowStatus.icon, 'datagrid-alert-icon'] }) + '<span class="audible">' + item.rowStatus.text + '</span>';
   },
 
+  TargetedAchievement: function (row, cell, value, col) {
+    var perc = (100*value),
+      ranges = Formatters.ClassRange(row, cell, perc, col),
+      target = col.target;
+
+    var isWhite = perc > 55;  //Maybe implement this later perc > 60;
+    return '<div class="total bar chart-completion-target chart-targeted-achievement"><div class="target remaining bar" style="width: '+ (target || 0) +'%;"></div><div class="completed bar ' + (col.ranges && ranges.classes ? ranges.classes : 'primary') + '" style="width: '+ perc +'%;"></div>' + (col.showPercentText ? '<div class="chart-targeted-text" '+ (isWhite ? 'style="color: white"' : '') +'>'+ perc +'%</div></div>' : '');
+  },
   // TODO Possible future Formatters
-  // Percent
-  // Image?
+    // Image?
   // Multi Select
   // Sparkline
   // Progress Indicator (n of 100%)
@@ -1395,7 +1401,8 @@ $.fn.datagrid = function(options) {
         virtualRowBuffer: 10, //how many extra rows top and bottom to allow as a buffer
         rowReorder: false, //Allows you to reorder rows. Requires rowReorder formatter
         showDirty: false,
-        allowOneExpandedRow: true //Only allows one expandable row at a time
+        allowOneExpandedRow: true, //Only allows one expandable row at a time
+        enableTooltips: false  //Process tooltip logic at a cost of performance
       },
       settings = $.extend({}, defaults, options);
 
@@ -1497,6 +1504,8 @@ $.fn.datagrid = function(options) {
 
       if (this.settings.isList) {
         $(this.element).addClass('is-gridlist');
+      } else {
+        $(this.element).removeClass('is-gridlist');
       }
 
       self.table.empty();
@@ -1859,7 +1868,9 @@ $.fn.datagrid = function(options) {
         self.headerColGroup.html(cols);
       }
 
-      self.headerRow.find('th[title]').tooltip();
+      if (this.settings.enableTooltips) {
+        self.headerRow.find('th[title]').tooltip();
+      }
 
       if (self.settings.columnReorder) {
         self.createDraggableColumns();
@@ -2141,13 +2152,13 @@ $.fn.datagrid = function(options) {
 
               break;
             case 'does-not-equal':
-              isMatch = (rowValue !== conditionValue && rowValue !== '');
+              isMatch = (rowValue !== conditionValue);
               break;
             case 'contains':
               isMatch = (rowValueStr.indexOf(conditionValue) > -1 && rowValue.toString() !== '');
               break;
             case 'does-not-contain':
-              isMatch = (rowValueStr.indexOf(conditionValue) === -1 && rowValue.toString() !== '');
+              isMatch = (rowValueStr.indexOf(conditionValue) === -1);
               break;
             case 'end-with':
               isMatch = (rowValueStr.lastIndexOf(conditionValue) === (rowValueStr.length - conditionValue.toString().length)  && rowValueStr !== '' && (rowValueStr.length >= conditionValue.toString().length));
@@ -2732,6 +2743,12 @@ $.fn.datagrid = function(options) {
           self.setActiveCell(self.activeCell.row, self.activeCell.cell);
         }
 
+        //Update Selected Rows Across Page
+        if (self.settings.paging && self.settings.source) {
+          self._selectedRows = [];
+          self.syncSelectedUI();
+        }
+
         self.element.trigger('afterrender', {body: self.tableBody, header: self.headerRow, pager: self.pagerBar});
       }, 0);
     },
@@ -3000,7 +3017,7 @@ $.fn.datagrid = function(options) {
         rowHtml += '<td role="gridcell" ' + ariaReadonly + ' aria-colindex="' + (j+1) + '" '+
             ' aria-describedby="' + self.uniqueId('-header-' + j) + '"' +
            (cssClass ? ' class="' + cssClass + '"' : '') +
-           (col.tooltip ? ' title="' + col.tooltip.replace('{{value}}', cellValue) + '"' : '') +
+           (col.tooltip && typeof col.tooltip === 'string' ? ' title="' + col.tooltip.replace('{{value}}', cellValue) + '"' : '') +
            (col.id === 'rowStatus' && rowData.rowStatus && rowData.rowStatus.tooltip ? ' title="' + rowData.rowStatus.tooltip + '"' : '') +
            (self.settings.columnGroups ? 'headers = "' + self.uniqueId('-header-' + j) + ' ' + self.getColumnGroup(j) + '"' : '') +
            (rowspan ? rowspan : '' ) +
@@ -3322,6 +3339,10 @@ $.fn.datagrid = function(options) {
     },
 
     setupTooltips: function () {
+      if (!this.settings.enableTooltips) {
+        return;
+      }
+
       var self = this;
       // Implement Tooltip on cells with title attribute
       this.tableBody.find('td[title]').tooltip({placement: 'left', offset: {left: -5, top: 0}});
@@ -4033,7 +4054,7 @@ $.fn.datagrid = function(options) {
           cell = elem.parent().children(':visible').index(elem),
           col = self.columnSettings(cell, true);
 
-        if (col.click && typeof col.click === 'function' && target.is('button, input[checkbox], a')) {
+        if (col.click && typeof col.click === 'function' && (target.is('button, input[checkbox], a') || target.parent().is('button'))) {
 
           var rowElem = $(this).closest('tr'),
             rowIdx = self.dataRowIndex(rowElem),
@@ -4049,7 +4070,7 @@ $.fn.datagrid = function(options) {
             }
           }
 
-          if (!elem.hasClass('is-cell-readonly') && target.is('button, input[checkbox], a')) {
+          if (!elem.hasClass('is-cell-readonly') && (target.is('button, input[checkbox], a') || target.parent().is('button'))) {
             col.click(e, [{row: rowIdx, cell: self.activeCell.cell, item: item, originalEvent: e}]);
           }
         }
@@ -4472,13 +4493,14 @@ $.fn.datagrid = function(options) {
 
     selectAllRows: function () {
       var rows = [],
+        self = this,
         dataset = this.settings.treeGrid ?
           this.settings.treeDepth : this.settings.dataset;
 
       for (var i = 0, l = dataset.length; i < l; i++) {
         if (this.filterRowRendered) {
           if (!dataset[i].isFiltered) {
-            rows.push(i);
+            rows.push(self.settings.paging && self.settings.source ? i  : i);
           }
         } else {
           rows.push(i);
@@ -4676,7 +4698,7 @@ $.fn.datagrid = function(options) {
     toggleRowSelection: function (idx) {
       var row = (typeof idx === 'number' ? this.tableBody.find('tr[aria-rowindex="'+ (idx + 1) +'"]') : idx),
         isSingle = this.settings.selectable === 'single',
-        rowIndex = (typeof idx === 'number' ? idx : this.dataRowIndex(row));
+        rowIndex = (typeof idx === 'number' ? idx : this.actualArrayIndex(row));
 
       if (this.settings.selectable === false) {
         return;
@@ -5642,9 +5664,9 @@ $.fn.datagrid = function(options) {
         this.validateCell(row, cell);
 
         var args = {row: row, cell: cell, target: cellNode, value: coercedVal, oldValue: oldVal, column: col};
-        if (this.settings.treeDepth[row]) {
-          args.rowData = this.settings.treeDepth[row].node;
-        }
+        args.rowData = isTreeGrid && this.settings.treeDepth[row] ?
+          this.settings.treeDepth[row].node : rowData;
+
         this.element.trigger('cellchange', args);
         this.wasJustUpdated = true;
 
@@ -5673,7 +5695,13 @@ $.fn.datagrid = function(options) {
     },
 
     visualRowNode: function (idx) {
-      return this.tableBody.find('tr[aria-rowindex="'+ (idx + 1) +'"]');
+      var rowIdx = idx;
+
+      if (this.settings.paging && this.settings.source) {
+        rowIdx = rowIdx + ((this.pager.activePage -1) * this.settings.pagesize);
+      }
+
+      return this.tableBody.find('tr[aria-rowindex="'+ (rowIdx + 1) +'"]');
     },
 
     dataRowNode: function (idx) {
@@ -5900,20 +5928,32 @@ $.fn.datagrid = function(options) {
 
       if (self.settings.allowOneExpandedRow) {
         //collapse any other expandable rows
-        var prevExpandRow = self.tableBody.find('tr.is-expanded');
+        var prevExpandRow = self.tableBody.find('tr.is-expanded'),
+          parentRow = prevExpandRow.prev(),
+          parentRowIdx = parentRow.attr('aria-rowindex');
+
         if (prevExpandRow.length && expandRow.index() !== prevExpandRow.index()) {
-          var parentRow = prevExpandRow.prev(),
-            parentRowIdx = parentRow.attr('aria-rowindex'),
-            prevDetail = prevExpandRow.find('.datagrid-row-detail');
+          var prevDetail = prevExpandRow.find('.datagrid-row-detail');
 
           prevExpandRow.removeClass('is-expanded');
           parentRow.removeClass('is-rowactivated');
           parentRow.find('.plus-minus').removeClass('active');
-
           prevDetail.animateClosed().on('animateclosedcomplete', function () {
             prevExpandRow.css('display', 'none').removeClass('is-expanded');
             self.element.triggerHandler('collapserow', [{grid: self, row: parentRowIdx, detail: prevDetail, item: self.settings.dataset[parentRowIdx] }]);
           });
+
+          var prevActionBtn = prevExpandRow.prev().find('.btn-primary');
+          prevActionBtn.attr('class', prevActionBtn.attr('class').replace('btn-primary','btn-secondary'));
+        }
+
+        //Toggle the button to make it primary
+        var isExpanded = !expandRow.hasClass('is-expanded'),
+          actionButton = expandRow.prev().find(isExpanded ? '.btn-secondary' : '.btn-primary');
+
+        if (parentRow && actionButton) {
+          actionButton.attr('class', actionButton.attr('class').replace(isExpanded ? 'btn-secondary' : 'btn-primary',
+              isExpanded ? 'btn-primary' : 'btn-secondary') );
         }
       }
 

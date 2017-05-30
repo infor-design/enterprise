@@ -54,6 +54,12 @@ $datagrid-short-row-height: 23px;
     }
   }
 
+  &.has-filterable-columns {
+    .datagrid-body {
+      height: calc(100% - 62px);
+    }
+  }
+
   td:last-child {
     border-right-color: transparent;
   }
@@ -247,6 +253,12 @@ $datagrid-short-row-height: 23px;
       height: calc(100% - 45px);
     }
 
+    &.has-filterable-columns {
+      .datagrid-body {
+        height: calc(100% - 60px);
+      }
+    }
+
     //Resize Drag Arrows
     .drag-target-arrows {
       font-size: 1.5em;
@@ -311,10 +323,43 @@ $datagrid-short-row-height: 23px;
     .arrange-placeholder {
       height: $datagrid-short-row-height + 7;
     }
+
+    .chart-targeted-achievement {
+      height: 20px;
+      margin-top: 1px;
+
+      .bar {
+        height: 20px;
+      }
+
+      .completed {
+        margin-top: -20px;
+      }
+
+      .chart-targeted-text {
+        margin-top: -25px;
+      }
+
+    }
+
+    // scss-lint:disable ImportantRule
+    .icon-favorite {
+      margin: -10px auto !important;
+      top: 4px;
+    }
+    // scss-lint:enabled ImportantRule
+
   }
 
   &.medium-rowheight {
     //Set Container Heights for scrolling
+
+    &.has-filterable-columns {
+      .datagrid-body {
+        height: calc(100% - 60px);
+      }
+    }
+
     .datagrid-body {
       height: calc(100% - 30px);
     }
@@ -363,6 +408,14 @@ $datagrid-short-row-height: 23px;
 
     .arrange-placeholder {
       height: $datagrid-medium-row-height + 10;
+    }
+
+    .chart-targeted-achievement {
+      margin-top: 2px;
+
+      .chart-targeted-text {
+        margin-top: -30px;
+      }
     }
 
   }
@@ -858,6 +911,10 @@ $datagrid-short-row-height: 23px;
       .is-readonly {
         background-color: $datagrid-row-hover-color;
       }
+
+      .chart-targeted-achievement {
+        background-color: $chart-progressbar-bg-color-dark;
+      }
     }
 
     &.is-selected:not(.hide-selected-color) td:not(.is-editing),
@@ -1031,6 +1088,14 @@ $datagrid-short-row-height: 23px;
       display: block;
       height: 38px;
       width: 38px;
+    }
+
+    .chart-targeted-achievement {
+      height: 25px;
+      // scss-lint:disable ImportantRule
+      margin-bottom: 0 !important;
+      // scss-lint:enable ImportantRule
+      margin-top: 7px;
     }
   }
 
@@ -1851,7 +1916,7 @@ td .btn-actions {
   display: inline-block;
   left: -7px;
   position: relative;
-  top: -14px;
+  top: -13px;
 
   &::before {
     @include checkbox-unchecked-before-style;

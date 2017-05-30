@@ -197,15 +197,22 @@
     var homepageApi = $('.homepage').data('homepage');
     var circlepagerApi = $('.circlepager').data('circlepager');
 
-    homepageApi.element.on('resize', function(e, numberOfColumns) {
+    // Set view type
+    var setView = function(numberOfColumns) {
       if (numberOfColumns > 2) {
         circlepagerApi.showExpandedView();
       } else {
         circlepagerApi.showCollapsedView();
       }
+    };
+
+    // Bind resize
+    homepageApi.element.on('resize', function(e, numberOfColumns) {
+      setView(numberOfColumns);
     });
 
-    // Init resize
-    homepageApi.element.triggerHandler('resize');
+
+    // Init
+    setView(homepageApi.settings.columns);
   });
 </script>

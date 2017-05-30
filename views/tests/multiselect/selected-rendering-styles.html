@@ -41,6 +41,24 @@
 
   </div>
 </div>
+<div class="row">
+  <div class="four columns">
+
+    <div class="field">
+      <label for="move-selected-to-top-multiselect">Towns using multiselect</label>
+      <select id="move-selected-to-top-multiselect" name="move-selected-to-top-multiselect" class="multiselect" data-init="false" multiple></select>
+    </div>
+
+  </div>
+  <div class="four columns">
+
+    <div class="field">
+      <label for="move-selected-to-top-dropdown">Towns using dropdown</label>
+      <select id="move-selected-to-top-dropdown" name="move-selected-to-top-dropdown" class="multiselect" data-init="false" multiple></select>
+    </div>
+
+  </div>
+</div>
 
 <script type="text/javascript">
   $('body').on('initialized', function() {
@@ -51,6 +69,14 @@
         response(data);
       });
     }
+
+    function statesSource(response, term) {
+      $.getJSON('{{basepath}}api/states', function(data, term) {
+        console.log(data, term);
+        response(data);
+      });
+    }
+
 
     $('#move-to-top').multiselect({
       moveSelected: 'all',
@@ -64,6 +90,16 @@
 
     $('#stay-where-they-are').multiselect({
       moveSelected: 'none',
+      source: townsSource
+    });
+
+    $('#move-selected-to-top-multiselect').multiselect({
+      moveSelectedToTop: true,
+      source: townsSource
+    });
+
+    $('#move-selected-to-top-dropdown').dropdown({
+      moveSelectedToTop: true,
       source: townsSource
     });
 
