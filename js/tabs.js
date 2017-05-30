@@ -2415,6 +2415,7 @@
 
           // Link tab to its corresponding "More Tabs" menu option
           $item.data('moremenu-link', popupA);
+          popupA.find('.icon-more').remove();
 
           // Link "More Tabs" menu option to its corresponding Tab.
           // Remove onclick methods from the popup <li> because they are called
