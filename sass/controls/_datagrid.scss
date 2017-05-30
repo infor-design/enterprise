@@ -1685,8 +1685,11 @@ $datagrid-short-row-height: 23px;
         + .icon {
           fill: $datagrid-filter-icon-color;
           height: 13px;
-          margin-left: -9px;
-          top: -3px;
+          position: relative;
+          margin-left: -15px;
+          left: -2px;
+          top: 7px;
+          vertical-align: top;
           width: 13px;
         }
 
@@ -1704,6 +1707,13 @@ $datagrid-short-row-height: 23px;
         }
 
       }
+
+      // scss-lint:disable ImportantRule
+      .datepicker + .icon {
+        left: 6px !important;
+        top: -3px !important;
+      }
+      // scss-lint:enable ImportantRule
 
       .btn-filter {
         height: 21px;

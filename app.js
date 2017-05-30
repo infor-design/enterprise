@@ -155,6 +155,12 @@ var express = require('express'),
     return noHtml;
   }
 
+  function toTitleCase(str){
+    return str.replace(/\w\S*/g, function(txt){
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+  }
+
   // Checks the target file path for its type (is it a file, a directory, etc)
   // http://stackoverflow.com/questions/15630770/node-js-check-if-path-is-file-or-directory
   function is(type, filePath) {
@@ -312,7 +318,7 @@ var express = require('express'),
     }
 
     controlName = stripHtml(req.params.control);
-    opts.subtitle = controlName.charAt(0).toUpperCase() + controlName.slice(1).replace('-',' ');
+    opts.subtitle = toTitleCase(controlName.charAt(0).toUpperCase() + controlName.slice(1).replace('-',' '));
 
     // Specific Changes for certain controls
     opts.subtitle = opts.subtitle.replace('Contextualactionpanel', 'Contextual Action Panel');
@@ -556,19 +562,28 @@ var express = require('express'),
   };
 
   function defaultLayoutRouteHandler(req, res, next) {
-    var opts = extend({}, res.opts, layoutOpts);
-    res.render('layouts/index', opts);
-    next();
+    var exclude = [
+      '_masthead.html',
+      'header-only.html',
+      'header-scroll.html',
+      'header-sticky.html'
+    ];
+
+    getDirectoryListing('layouts/', req, res, next, exclude);
+    return;
   }
 
   function layoutRouteHandler(req, res, next) {
-    var opts = extend({}, res.opts, layoutOpts),
+    var pageName = '',
+      opts = extend({}, res.opts, layoutOpts),
       layout = req.params.layout;
 
     if (!layout || !layout.length) {
       return defaultLayoutRouteHandler(req, res, next);
     }
 
+    pageName = stripHtml(req.params.layout);
+    opts.subtitle = toTitleCase(pageName.charAt(0).toUpperCase() +pageName.slice(1).replace('-',' '));
     res.render('layouts/' + layout, opts);
     next();
   }
@@ -659,25 +674,6 @@ var express = require('express'),
     }
 
     res.render('angular/' + end, opts);
-    next();
-  });
-
-  // React Support
-  var reactOpts = {
-    subtitle: 'React',
-    layout: 'react/layout'
-  };
-
-  router.get('/react*', function(req, res, next) {
-    var opts = extend({}, res.opts, reactOpts),
-      end = req.url.replace(/\/react(\/)?/, '');
-
-    if (!end || !end.length || end === '/') {
-      getDirectoryListing('react/', req, res, next);
-      return;
-    }
-
-    res.render('react/' + end, opts);
     next();
   });
 
@@ -1356,6 +1352,10 @@ var express = require('express'),
 
   router.get('/api/incidents', function(req, res, next) {
     sendJSONFile('incidents', req, res, next);
+  });
+
+  router.get('/api/jobs', function(req, res, next) {
+    sendJSONFile('jobs', req, res, next);
   });
 
   router.get('/api/general/status-codes', function(req, res, next) {
