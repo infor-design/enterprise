@@ -510,10 +510,11 @@ html[dir='rtl'] {
       padding: 0 10px;
     }
 
-    &.has-icons {
+    &.has-icons,
+    &.is-selectable {
       > li a {
         padding-left: 10px;
-        padding-right: 40px;
+        padding-right: 35px;
       }
 
       .icon {

@@ -198,7 +198,7 @@
             this.element.closest('.toolbar').length > 0 ||
             this.element.closest('.masthead').length > 0 ||
             this.element.is('.searchfield-category-button') ||
-            (containerClass && containerClass.indexOf('more') >= 0 && this.element.is(':not(.tab-more)')) ||
+            (containerClass && containerClass.indexOf('more') >= 0) ||
             containerClass && containerClass.indexOf('btn-group') >= 0)) {
 
           var arrow = $('<div class="arrow"></div>'),

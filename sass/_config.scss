@@ -712,11 +712,13 @@ $about-text-border-color: $graphite03;
 $about-text-hover-border-color: $graphite07;
 
 // Header Tabs
-$header-tabcontainer-border-color: $graphite02;
+$header-tabcontainer-border-color: $graphite03;
+$header-tab-separator: $graphite08;
 $header-tab-normal-color: rgba(255, 255, 255, .7);
 $header-tab-hover-color: $inverse-color;
 $header-tab-selected-color: $graphite01;
 $header-tab-alt-bg-color: $white;
+$header-tab-alt-separator: $header-tabcontainer-border-color;
 $header-tab-alt-normal-color: $graphite06;
 $header-tab-alt-hover-color: $font-color-highcontrast;
 $header-tab-alt-selected-color: $primary-color;
@@ -741,6 +743,12 @@ $module-tabs-disabled-x-border-color: $azure04;
 $module-tabs-disabled-y-border-color: $azure07;
 $module-tabs-disabled-text-color: $azure04;
 
+// Composite Form Tabs
+$composite-tabs-text-color: $graphite06;
+$composite-tabs-bg-color: $graphite02;
+$composite-tabs-border-color: $graphite05;
+$composite-tabs-focus-state-color: $graphite04;
+
 // Splitter
 $splitter-grip-bg-color: $graphite06;
 $splitter-active-bg-color: $graphite02;
@@ -762,3 +770,6 @@ $field-sm: 150px;
 $field-md: 300px;
 $field-lg: 400px;
 $field-full: 100%;
+
+//Misc
+$cubic-ease: cubic-bezier(.17, .04, .03, .94);

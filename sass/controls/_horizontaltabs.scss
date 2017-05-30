@@ -1,23 +1,58 @@
 // Regular, in-page Horizontal Tabs
 //================================================== //
 
-.tab-container.horizontal {
-  margin-bottom: 20px;
+$horizontal-tabs-height: 40px;
 
-  > .tab-list {
-    border-bottom: 1px solid $tab-border-color;
-    height: 50px;
+.tab-container.horizontal {
+  border-bottom: 1px solid $tab-border-color;
+
+  &::before {
+    background-image: linear-gradient(
+      to right,
+      rgba($body-bg-color, 1),
+      rgba($body-bg-color, 0)
+    );
+    height: ($horizontal-tabs-height - 1px);
+  }
+
+  &::after {
+    background-image: linear-gradient(
+      to right,
+      rgba($body-bg-color, 0),
+      rgba($body-bg-color, 1)
+    );
+    height: ($horizontal-tabs-height - 1px);
+  }
+
+  &.alternate {
+    &::before {
+      background-image: linear-gradient(
+        to right,
+        rgba($inverse-color, 1),
+        rgba($inverse-color, 0)
+      );
+    }
+
+    &::after {
+      background-image: linear-gradient(
+        to right,
+        rgba($inverse-color, 0),
+        rgba($inverse-color, 1)
+      );
+    }
+  }
+
+  > .tab-list-container {
 
     .icon:not(.icon-error) {
       fill: $tab-text-color;
     }
 
-    > .tab {
+    .tab {
       color: $tab-text-color;
 
       a {
-        line-height: 12px;
-        padding: 20px 11px 18px;
+        padding: 12px 11px;
       }
 
       &:hover:not(.is-disabled) {
@@ -72,25 +107,26 @@
   }
 
   .tab-more {
-    max-width: 110px;
-    padding: 17px 0 16px 11px;
-  }
+    padding: 12px 4px 11px 14px;
 
-  .add-tab-button {
-    padding: 17px 0 16px 17px;
-    width: 44px;
+    &::before {
+      background-color: rgba($tab-border-color, .8);
+      content: '';
+      display: inline-block;
+      height: 30px;
+      left: 7px;
+      position: absolute;
+      top: 4px;
+      width: 1px;
+    }
   }
 
   .animated-bar {
-    top: 47px;
+    top: 36px;
   }
 
   // Displays the Big Numbers over top of each title
   &.has-counts {
-
-    .tab-list {
-      height: 62px;
-    }
 
     .tab {
       a {
@@ -102,16 +138,70 @@
           position: static;
         }
       }
+
     }
 
     .animated-bar {
-      top: 59px;
+      top: 61px;
     }
 
     .tab-more {
-      padding: 22px 0 22px 14px;
+      padding: 24px 0 24px 14px;
+
+      &::before {
+        height: 50px;
+      }
     }
 
+    .separator {
+      &::before {
+        height: 50px;
+      }
+    }
+  }
+
+  + .tab-panel-container {
+    margin-bottom: 20px;
+  }
+}
+
+// RTL Styles
+html[dir='rtl'] {
+
+  .tab-container.horizontal {
+    &::before {
+      background-image: linear-gradient(
+        to left,
+        rgba($body-bg-color, 1),
+        rgba($body-bg-color, 0)
+      );
+    }
+
+    &::after {
+      background-image: linear-gradient(
+        to left,
+        rgba($body-bg-color, 0),
+        rgba($body-bg-color, 1)
+      );
+    }
+
+    &.alternate {
+      &::before {
+        background-image: linear-gradient(
+          to left,
+          rgba($inverse-color, 1),
+          rgba($inverse-color, 0)
+        );
+      }
+
+      &::after {
+        background-image: linear-gradient(
+          to left,
+          rgba($inverse-color, 0),
+          rgba($inverse-color, 1)
+        );
+      }
+    }
   }
 
 }
