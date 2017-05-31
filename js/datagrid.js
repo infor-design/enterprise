@@ -741,7 +741,7 @@ window.Editors = {
       }
 
       //just toggle it if we click right on it
-      if ((event.type === 'click' || (event.type === 'keydown' && event.keyCode === 32)) && !$(event.target).is('.datagrid-checkbox-wrapper')) {
+      if ((event.type === 'click' || (event.type === 'keydown' && event.keyCode === 32)) && !$(event.target).is('.datagrid-checkbox-wrapper, .datagrid-cell-wrapper')) {
         isChecked = !isChecked;
         grid.setNextActiveCell(event);
       }
@@ -3899,7 +3899,8 @@ $.fn.datagrid = function(options) {
 
     //Returns a cell node
     cellNode: function (row, cell, includeGroups) {
-      var rowNode = this.tableBody.find('tr:not(.datagrid-expandable-row)[aria-rowindex="'+ (row + 1) +'"]');
+      var cells,
+        rowNode = this.tableBody.find('tr:not(.datagrid-expandable-row)[aria-rowindex="'+ (row + 1) +'"]');
 
       if (row instanceof jQuery) {
         rowNode = row;
@@ -3907,13 +3908,17 @@ $.fn.datagrid = function(options) {
 
       if (includeGroups && this.settings.groupable) {
         rowNode = this.tableBody.prevAll('.datagrid-rowgroup-header').eq(row);
+        if (rowNode) {
+          rowNode = this.tableBody.find('.datagrid-rowgroup-header').eq(row);
+        }
       }
 
       if (cell === -1) {
         return $();
       }
 
-      return rowNode.find('td').eq(cell);
+      cells = rowNode.find('td');
+      return cells.eq(cell >= cells.length ? cells.length-1 : cell);
     },
 
     scrollLeft: 0,
@@ -5009,6 +5014,8 @@ $.fn.datagrid = function(options) {
               move = key === 37 ? (index > 0 ? index-1 : index) : (index < last ? index+1 : last);
             }
           }
+          // Update active cell
+          self.activeCell.cell = move;
 
           // Making move
           th.removeAttr('tabindex').removeClass('is-active');
@@ -5059,6 +5066,7 @@ $.fn.datagrid = function(options) {
           row = self.activeCell.row,
           cell = self.activeCell.cell,
           col = self.columnSettings(cell),
+          isGroupRow = rowNode.is('.datagrid-rowgroup-header, .datagrid-rowgroup-footer'),
           item = self.settings.dataset[self.dataRowIndex(node)],
           visibleRows = self.tableBody.find('tr:visible'),
           getVisibleRows = function(index) {
@@ -5068,13 +5076,27 @@ $.fn.datagrid = function(options) {
             }
             return self.dataRowIndex(row);
           },
-          getNextVisibleCell = function(currentCell, lastCell, prev) {
+          getGroupCell = function(currentCell, lastCell, prev) {
+            var n = self.activeCell.groupNode || node;
             var nextCell = currentCell + (prev ? -1 : +1);
 
             if (nextCell > lastCell) {
+              nextCell = prev ?
+                n.prevAll(':visible').last() : n.nextAll(':visible').last();
+            } else {
+              nextCell = prev ?
+                n.prevAll(':visible').first() : n.nextAll(':visible').first();
+            }
+            return nextCell;
+          },
+          getNextVisibleCell = function(currentCell, lastCell, prev) {
+            if (isGroupRow) {
+              return getGroupCell(currentCell, lastCell, prev);
+            }
+            var nextCell = currentCell + (prev ? -1 : +1);
+            if (nextCell > lastCell) {
              return lastCell;
             }
-
             while (self.settings.columns[nextCell] && self.settings.columns[nextCell].hidden) {
               nextCell = prev ? nextCell-1 : nextCell+1;
             }
@@ -5105,7 +5127,11 @@ $.fn.datagrid = function(options) {
             } else {
               cell = getNextVisibleCell(cell, lastCell);
             }
-            self.setActiveCell(row, cell);
+            if (cell instanceof jQuery) {
+              self.setActiveCell(cell);
+            } else {
+              self.setActiveCell(row, cell);
+            }
             self.quickEditMode = false;
             handled = true;
           }
@@ -5679,19 +5705,7 @@ $.fn.datagrid = function(options) {
 
     //For the row node get the index - adjust for paging / invisible rowsCache
     visualRowIndex: function (row) {
-      var rowIdx = (row.attr('aria-rowindex')-1);
-      if (this.pager) {
-        rowIdx = rowIdx - ((this.pager.activePage -1) * this.settings.pagesize);
-      }
-
-      if (this.settings.groupable) {
-        rowIdx = rowIdx + row.prevAll('.datagrid-rowgroup-header').length;
-      }
-
-      if (isNaN(rowIdx)) {  //Grouped Rows
-        return row.index();
-      }
-      return rowIdx;
+      return this.tableBody.find('tr:visible').index(row);
     },
 
     visualRowNode: function (idx) {
@@ -5729,7 +5743,7 @@ $.fn.datagrid = function(options) {
 
       if (typeof row === 'number') {
         rowNum = row;
-        rowElem = this.tableBody.find('tr').eq(row);
+        rowElem = this.tableBody.find('tr:visible').eq(row);
         dataRowNum = this.dataRowIndex(rowElem);
       }
 
@@ -5739,9 +5753,9 @@ $.fn.datagrid = function(options) {
         if (isGroupRow) {
           rowElem = row.parent();
         }
-        cell = isGroupRow ? 0 : row.index();
-        rowNum = isGroupRow ? 0 : this.visualRowIndex(row.parent());
-		    dataRowNum = isGroupRow ? 0 : this.dataRowIndex(row.parent());
+        cell = row.index();
+        rowNum = this.visualRowIndex(row.parent());
+		    dataRowNum = this.dataRowIndex(row.parent());
         rowElem = row.parent();
       }
 
@@ -5766,7 +5780,7 @@ $.fn.datagrid = function(options) {
       }
 
       //Find the cell if it exists
-      self.activeCell.node = self.cellNode((isGroupRow ? rowElem : (dataRowNum || rowNum)), (isGroupRow ? 0 : cell)).attr('tabindex', '0');
+      self.activeCell.node = self.cellNode((isGroupRow ? rowElem : (dataRowNum > -1 ? dataRowNum : rowNum)), (cell)).attr('tabindex', '0');
 
       if (self.activeCell.node && prevCell.node.length === 1) {
         self.activeCell.row = rowNum;
@@ -5778,6 +5792,9 @@ $.fn.datagrid = function(options) {
 
       if (!$('input, button:not(.btn-secondary, .row-btn, .datagrid-expand-btn, .datagrid-drilldown, .btn-icon)', self.activeCell.node).length) {
         self.activeCell.node.focus();
+        if (isGroupRow) {
+          self.activeCell.groupNode = self.activeCell.node;
+        }
       }
       if (self.activeCell.node.hasClass('is-focusable')) {
         self.activeCell.node.find('button').focus();
@@ -5786,16 +5803,26 @@ $.fn.datagrid = function(options) {
       if (dataRowNum !== undefined) {
         self.activeCell.dataRow = dataRowNum;
       }
+      var colSpan = +rowElem.find('td[colspan]').attr('colspan');
 
-      if (isGroupRow) {
-        self.activeCell.node.find('td:visible:first').attr('tabindex', '0').focus();
+      if (isGroupRow && self.activeCell.node && prevCell.node && !(row instanceof jQuery && row.is('td'))) {
+        if (cell < colSpan) {
+          rowElem.find('td[colspan]').attr('tabindex', '0').focus();
+          self.activeCell.groupNode = rowElem.find('td[colspan]');
+        }
+        else if (cell >= colSpan) {
+          rowElem.find('td').eq(cell-colSpan + 1).attr('tabindex', '0').focus();
+          self.activeCell.groupNode = rowElem.find('td').eq(cell-colSpan + 1);
+        } else {
+          rowElem.find('td').eq(cell).attr('tabindex', '0').focus();
+          self.activeCell.groupNode = rowElem.find('td').eq(cell);
+        }
       }
 
-      if (isGroupRow && self.activeCell.node && prevCell.node) {
-        var colSpan = self.activeCell.node.attr('colspan');
-        if (colSpan >= prevCell.cell) {
-          self.activeCell.node = self.activeCell.node.parent().find('td').eq((prevCell.cell - colSpan) + 1);
-          self.activeCell.node.attr('tabindex', '0').focus();
+      if (isGroupRow && row instanceof jQuery && row.is('td')) {
+        self.activeCell.cell = (colSpan - 1) + cell;
+        if (row.is('[colspan]')) {
+          self.activeCell.cell = cell;
         }
       }
 
@@ -5926,7 +5953,7 @@ $.fn.datagrid = function(options) {
         return;
       }
 
-      if (self.settings.allowOneExpandedRow) {
+      if (self.settings.allowOneExpandedRow && self.settings.groupable === null) {
         //collapse any other expandable rows
         var prevExpandRow = self.tableBody.find('tr.is-expanded'),
           parentRow = prevExpandRow.prev(),
