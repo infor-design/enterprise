@@ -206,6 +206,10 @@
     height: 100%;
     overflow: auto;
 
+    &:only-child {
+      width: 100%;
+    }
+
     > .tab-list-container,
     > .tab-panel-container,
     + .tab-panel-container {
