@@ -201,6 +201,7 @@
 // Also works for placing a set of vertical tabs directly inside of a higher-level '.tab-panel' element
 .page-container,
 .tab-panel {
+
   > .tab-container.vertical {
     height: 100%;
     overflow: auto;
@@ -209,6 +210,11 @@
     > .tab-panel-container,
     + .tab-panel-container {
       min-height: 100%;
+    }
+
+    + .tab-panel-container > .tab-panel {
+      margin: 30px;
+      padding-top: 0;
     }
   }
 }
