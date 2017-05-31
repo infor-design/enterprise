@@ -83,8 +83,10 @@
 
 .tab-container.vertical {
   background-color: $vertical-tab-panel-bg-color;
+  display: inline-block;
   margin-top: 0;
   min-height: 200px;
+  min-width: 250px;
   position: relative;
 
   > .tab-list,
@@ -118,9 +120,12 @@
     }
   }
 
-  > .tab-panel-container {
+  > .tab-panel-container,
+  + .tab-panel-container {
+    background-color: $vertical-tab-panel-bg-color;
     display: inline-block;
     margin: 0;
+    vertical-align: top;
     width: calc(100% - 250px);
 
     &.scrollable,
@@ -133,6 +138,7 @@
   // Normal configuration of the tabset can just have '.tab-list' directly inside the vertical tabs container.
   > .tab-list {
     @include vertical-tab-style;
+    height: 100%;
 
     > .tab {
       a {
@@ -193,13 +199,26 @@
 
 // Set padding/height etc. when using Vertical Tabs directly inside a page container
 // Also works for placing a set of vertical tabs directly inside of a higher-level '.tab-panel' element
-.page-container > .tab-container.vertical,
-.tab-panel > .tab-container.vertical {
-  height: 100%;
-  overflow: auto;
+.page-container,
+.tab-panel {
 
-  .tab-list-container,
-  .tab-panel-container {
-    min-height: 100%;
+  > .tab-container.vertical {
+    height: 100%;
+    overflow: auto;
+
+    &:only-child {
+      width: 100%;
+    }
+
+    > .tab-list-container,
+    > .tab-panel-container,
+    + .tab-panel-container {
+      min-height: 100%;
+    }
+
+    + .tab-panel-container > .tab-panel {
+      margin: 30px;
+      padding-top: 0;
+    }
   }
 }
