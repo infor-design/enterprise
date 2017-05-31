@@ -385,6 +385,7 @@ body.no-scroll {
 .page-container {
   @include transition(height 300ms cubic-bezier(.17, .04, .03, .94));
   bottom: 0;
+  font-size: 0;
   height: 100%;
   margin: 0 auto;
   position: absolute;
