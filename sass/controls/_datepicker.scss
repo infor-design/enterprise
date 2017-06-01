@@ -367,7 +367,7 @@ html[dir='rtl'] {
     text-align: right;
 
     button {
-      left: 37px;
+      left: 0;
       right: auto;
 
       &.prev {
@@ -380,7 +380,7 @@ html[dir='rtl'] {
       }
 
       &.next {
-        left: 11px;
+        left: 30px;
         margin: 3px 5px 0 0;
         right: auto;
 

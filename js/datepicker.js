@@ -402,8 +402,11 @@
         this.element.addClass('is-active').trigger('listopened');
 
         // Calendar Html in Popups
+        var prevButton = '<button type="button" class="btn-icon prev">' + $.createIcon('caret-left') + '<span>'+ Locale.translate('PreviousMonth') +'</span></button>',
+            nextButton = '<button type="button" class="btn-icon next">' + $.createIcon('caret-right') + '<span>'+ Locale.translate('NextMonth') +'</span></button>';
+
         this.table = $('<table class="calendar-table" aria-label="'+ Locale.translate('Calendar') +'" role="application"></table>');
-        this.header = $('<div class="calendar-header"><span class="month">november</span><span class="year">2015</span><button type="button" class="btn-icon prev">' + $.createIcon('caret-left') + '<span>'+ Locale.translate('PreviousMonth') +'</span></button><button type="button" class="btn-icon next">' + $.createIcon('caret-right') + '<span>'+ Locale.translate('NextMonth') +'</span></button></div>');
+        this.header = $('<div class="calendar-header"><span class="month">november</span><span class="year">2015</span>'+ (Locale.isRTL() ? prevButton + nextButton : prevButton + nextButton) +'</div>');
         this.dayNames = $('<thead><tr><th>SU</th> <th>MO</th> <th>TU</th> <th>WE</th> <th>TH</th> <th>FR</th> <th>SA</th> </tr> </thead>').appendTo(this.table);
         this.days = $('<tbody> <tr> <td class="alternate">26</td> <td class="alternate">27</td> <td class="alternate">28</td> <td class="alternate">29</td> <td class="alternate" >30</td> <td class="alternate">31</td> <td>1</td> </tr> <tr> <td>2</td> <td>3</td> <td>4</td> <td>5</td> <td>6</td> <td>7</td> <td>8</td> </tr> <tr> <td>9</td> <td>10</td> <td>11</td> <td>12</td> <td>13</td> <td>14</td> <td>15</td> </tr> <tr> <td>16</td> <td>17</td> <td>18</td> <td>19</td> <td class="is-today">20</td> <td>21</td> <td>22</td> </tr> <tr> <td>23</td> <td>24</td> <td>25</td> <td>26</td> <td>27</td> <td>28</td> <td class="alternate">1</td> </tr> <tr> <td class="alternate">2</td> <td class="alternate">3</td> <td class="alternate">4</td> <td class="alternate">5</td> <td class="alternate">6</td> <td class="alternate">7</td> <td class="alternate">8</td> </tr> </tbody>').appendTo(this.table);
         this.timepickerContainer = $('<div class="datepicker-time-container"></div>');
@@ -466,13 +469,6 @@
         }).off('open.datepicker').on('open.datepicker', function () {
           self.activeTabindex(self.days.find('.is-selected'), true);
         });
-
-        // ICONS: Right to Left Direction
-        setTimeout(function() {
-          if (Locale.isRTL()) {
-            Locale.flipIconsHorizontally();
-          }
-        }, 0);
 
         this.handleKeys($('#calendar-popup'));
         $('.calendar-footer a', this.calendar).button();
@@ -568,7 +564,7 @@
           var btn = $(this);
 
           if (btn.hasClass('cancel')) {
-            self.element.val('').trigger('change');
+            self.element.val('').trigger('change').trigger('input');
             self.currentDate = null;
             self.closeCalendar();
           }
@@ -953,7 +949,7 @@
             }
           }
 
-          this.setValue(date);
+          this.setValue(date, true);
           this.days.find('.is-selected').removeClass('is-selected').removeAttr('aria-selected').removeAttr('tabindex');
           dateTd.addClass('is-selected').attr({'aria-selected': true});
           this.activeTabindex(dateTd, true);
@@ -1017,7 +1013,7 @@
         this.element.val(Locale.formatDate(date, {pattern: this.pattern}));
 
         if (trigger) {
-          this.element.trigger('change');
+          this.element.trigger('change').trigger('input');
         }
 
       },
@@ -1073,7 +1069,7 @@
         if (this.isOpen()) {
           this.insertDate(this.isIslamic ? this.currentDateIslamic : this.currentDate, true);
         } else {
-          this.element.val(Locale.formatDate(this.currentDate, {pattern: this.pattern})).trigger('change');
+          this.element.val(Locale.formatDate(this.currentDate, {pattern: this.pattern})).trigger('change').trigger('input');
         }
 
       },
