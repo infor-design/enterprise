@@ -24,7 +24,6 @@
     nativeName: 'العربية (المملكة العربية السعودية)',
     //layout/orientation/@characters
     direction: 'right-to-left',
-    //ca-gregorian
     calendars: [{
       name: 'islamic-umalqura',
       dateFormat: {'separator': '/', //Infered
@@ -249,7 +248,8 @@
           return [hyear, hmonth - 1, days + 1];
         }
       }
-    }, {
+    },
+    {
       name: 'gregorian',
       //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
       dateFormat: {'separator': '/', //Infered

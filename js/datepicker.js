@@ -1029,9 +1029,13 @@
         }
 
         this.currentDate = gregorianValue || new Date();
-        this.currentMonth = this.currentDate.getMonth();
-        this.currentYear = this.currentDate.getFullYear();
-        this.currentDay = this.currentDate.getDate();
+        if (this.currentDate instanceof Date) {
+          this.currentMonth = this.currentDate.getMonth();
+          this.currentYear = this.currentDate.getFullYear();
+          this.currentDay = this.currentDate.getDate();
+        } else {
+          this.currentDate = Locale.parseDate(this.currentDate, this.pattern, false);
+        }
 
         if (this.isIslamic) {
           this.currentDateIslamic = this.conversions.fromGregorian(this.currentDate);
