@@ -171,6 +171,12 @@ define([
 
     },
 
+    'should be able to parse 2 and 3 digit years': function() {
+      Locale.set('en-US');
+      expect(Locale.parseDate('10/10/10', 'M/d/yyyy').getTime()).to.equal(new Date(2010, 09, 10, 0, 0, 0).getTime());
+      expect(Locale.parseDate('10/10/010', 'M/d/yyyy').getTime()).to.equal(new Date(2010, 09, 10, 0, 0, 0).getTime());
+    },
+
     //Test Long Formatting
     'should format long': function() {
       Locale.set('en-US');    //year, month, day, hours, mins , secs
@@ -206,7 +212,7 @@ define([
       expect(Locale.formatDate(new Date(2015, 0, 1, 13, 40), {date: 'long'})).to.equal('1. Januar 2015');
 
       Locale.set('ar-EG');
-      expect(Locale.formatDate(new Date(2015, 0, 1, 13, 40), {date: 'long'})).to.equal('1 يناير، 2015');
+      expect(Locale.formatDate(new Date(2015, 0, 1, 13, 40), {date: 'long'})).to.equal('1 محرم، 2015');
 
       Locale.set('bg-BG');
       expect(Locale.formatDate(new Date(2015, 0, 1, 13, 40), {date: 'long'})).to.equal('1 януари 2015 г.');
@@ -215,7 +221,7 @@ define([
     'should be able to parse dates': function() {
       Locale.set('en-US');    //year, month, day
       expect(Locale.parseDate('11/8/2000').getTime()).to.equal(new Date(2000, 10, 8).getTime());
-      expect(Locale.parseDate('11/8/00').getTime()).to.equal(new Date(1900, 10, 8).getTime());
+      expect(Locale.parseDate('11/8/00').getTime()).to.equal(new Date(2000, 10, 8).getTime());
       expect(Locale.parseDate('10 / 15 / 2014').getTime()).to.equal(new Date(2014, 9, 15).getTime());
       Locale.set('de-DE');    //year, month, day
       expect(Locale.parseDate('08.11.2000').getTime()).to.equal(new Date(2000, 10, 8).getTime());

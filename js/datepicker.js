@@ -1029,13 +1029,12 @@
         }
 
         this.currentDate = gregorianValue || new Date();
-        if (this.currentDate instanceof Date) {
-          this.currentMonth = this.currentDate.getMonth();
-          this.currentYear = this.currentDate.getFullYear();
-          this.currentDay = this.currentDate.getDate();
-        } else {
+        if (typeof this.currentDate === 'string') {
           this.currentDate = Locale.parseDate(this.currentDate, this.pattern, false);
         }
+        this.currentMonth = this.currentDate.getMonth();
+        this.currentYear = this.currentDate.getFullYear();
+        this.currentDay = this.currentDate.getDate();
 
         if (this.isIslamic) {
           this.currentDateIslamic = this.conversions.fromGregorian(this.currentDate);
@@ -1085,17 +1084,7 @@
           seconds = this.isSeconds ? $('#timepicker-seconds').val() : 0,
           period = $('#timepicker-period');
 
-        var timepicker = $('.timepicker.is-active');
-        if (timepicker.length && (!minutes || this.isSeconds && !seconds)) {
-          var d = new Date(date),
-            regex = new RegExp('(\\d+)(?::(\\d\\d))'+ (this.isSeconds ? '(?::(\\d\\d))' : '') +'?\\s*(p?)'),
-            time = timepicker.val().match(regex);
-          d.setHours(parseInt(time[1]) + (time[3] ? 12 : 0));
-          d.setMinutes(parseInt(time[2]) || 0);
-          d.setSeconds(parseInt(time[3]) || 0);
-          minutes = d.getMinutes();
-          seconds = d.getSeconds();
-        }
+
         hours = (period.length && period.val() === 'PM' && hours < 12) ? (parseInt(hours, 10) + 12) : hours;
         hours = (period.length && period.val() === 'AM' && parseInt(hours, 10) === 12) ? 0 : hours;
 

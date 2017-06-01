@@ -475,6 +475,15 @@
         dateObj.year = (new Date()).getFullYear();
       }
 
+      //Fix incomelete 2 and 3 digit years
+      if (dateObj.year.length === 2) {
+        dateObj.year = '20'+dateObj.year;
+      }
+
+      if (dateObj.year.length === 3) {
+        dateObj.year = '2'+dateObj.year;
+      }
+
       if (!dateObj.month && dateObj.month !== 0 && !isStrict) {
         dateObj.month = (new Date()).getMonth();
       }

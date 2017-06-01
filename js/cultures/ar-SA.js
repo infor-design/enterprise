@@ -29,7 +29,7 @@
       dateFormat: {'separator': '/', //Infered
                    'short': 'dd/MM/yyyy', //use four digit year
                    'medium': 'dd MMM، y',
-                   'long': 'dd MMMM، yyy',
+                   'long': 'd MMMM، yyyy',
                    'full': 'EEEE، dd MMMM، yyyy',
                    'datetime': 'dd/MM/yyyy h:mm a'}, //Infered short + short gregorian/dateTimeFormats
       days: {
@@ -254,14 +254,14 @@
       //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
       dateFormat: {'separator': '/', //Infered
                    'timeSeparator': ':',
-                   'short': 'd/M/yyyy', //use four digit year
+                   'short': 'd/MM//yyyy', //use four digit year
                    'medium': 'dd/MM/yyyy',
                    'long': 'd MMMM، yyyy',
                    'full': 'EEEE، d MMMM، yyyy',
                    'month': 'dd MMMM',
                    'year': 'MMMM yyyy',
                    'timestamp': 'h:mm:ss a',
-                   'datetime': 'd/M/yyyy h:mm a'}, //Infered short + short gregorian/dateTimeFormats
+                   'datetime': 'd/MM//yyyy h:mm a'}, //Infered short + short gregorian/dateTimeFormats
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
         wide: ['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'],

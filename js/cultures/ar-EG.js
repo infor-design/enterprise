@@ -30,7 +30,7 @@
       dateFormat: {'separator': '/', //Infered
                    'short': 'dd/MM/yyyy', //use four digit year
                    'medium': 'dd MMM، y',
-                   'long': 'dd MMMM، yyy',
+                   'long': 'd MMMM، yyyy',
                    'full': 'EEEE، dd MMMM، yyyy',
                    'datetime': 'dd/MM/yyyy h:mm a'}, //Infered short + short gregorian/dateTimeFormats
       days: {
