@@ -950,6 +950,49 @@
     return window.Soho.behaviors.smoothScrollTo(this, target, duration);
   };
 
+  //==================================================================
+  // JS-level Breakpoint Access
+  // NOTE: these should match whatever the breakpoints are in "/sass/_config.scss"
+  //==================================================================
+  window.Soho.breakpoints = {
+    'phone': 320,
+    'slim': 400,
+    'phablet': 610,
+    'phone-to-tablet': 767,
+    'wide-tablet': 968,
+    'tablet-to-desktop': 1280,
+    'desktop-to-extralarge': 1600
+  };
+
+  /**
+   * @param {string} breakpoint - matches one of the entries in the "Soho.breakpoints" object.
+   * @returns {boolean}
+   */
+  window.Soho.breakpoints.isAbove = function isAbove(breakpoint) {
+    var bp = Soho.breakpoints[breakpoint];
+    if (!bp) {
+      return false;
+    }
+
+    var windowWidth = $(window).width();
+    return windowWidth > bp;
+  };
+
+  /**
+   * @param {string} breakpoint - matches one of the entries in the "Soho.breakpoints" object.
+   * @returns {boolean}
+   */
+  window.Soho.breakpoints.isBelow = function isBelow(breakpoint) {
+    var bp = Soho.breakpoints[breakpoint];
+    if (!bp) {
+      return false;
+    }
+
+    var windowWidth = $(window).width();
+    return windowWidth < bp;
+  };
+
+
 /* start-amd-strip-block */
 }));
 /* end-amd-strip-block */

@@ -42,6 +42,10 @@ $horizontal-tabs-height: 40px;
     }
   }
 
+  .tab-list-info {
+    display: none;
+  }
+
   > .tab-list-container {
 
     .icon:not(.icon-error) {
