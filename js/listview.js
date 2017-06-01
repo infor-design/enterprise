@@ -600,8 +600,9 @@
           li = $(this.element.children()[0]).children().eq(li);
         }
         // Un-select selected item
+        // and donot trigger selected event, sinnce we removeing
         if (li.is('.is-selected')) {
-          this.select(li);
+          this.select(li, false);
         }
         li.remove();
       },
@@ -714,9 +715,17 @@
       },
 
       // Handle Selecting the List Element
-      select: function (li) {
+      select: function (li, isTrigger) {
         var self = this,
           isChecked = false;
+
+        isTrigger = (
+          typeof isTrigger === 'undefined' ||
+          isTrigger === null ||
+          isTrigger === true ||
+          isTrigger === 'true'
+        );
+
 
         self.selectedItems = [];
         if (typeof li === 'number') {
@@ -757,7 +766,9 @@
         });
 
         li.attr('aria-selected', !isChecked);
-        this.element.triggerHandler('selected', {selectedItems: this.selectedItems, elem: li});
+        if (isTrigger) {
+          this.element.triggerHandler('selected', {selectedItems: this.selectedItems, elem: li});
+        }
 
         var toolbar, toolbarControl,
           parent = this.element.closest('.card, .widget');
