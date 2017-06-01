@@ -19,7 +19,10 @@
 
     // Settings and Options
     var pluginName = 'expandablearea',
-        defaults = {},
+        defaults = {
+          trigger: null, //Id of some other button to use as a trigger
+          bottomBorder: false //Change the border to bottom vs top
+        },
         settings = $.extend({}, defaults, options);
 
     /**
@@ -50,7 +53,7 @@
           this.id = id = 'expandable-area-' + $('body').find('.expandable-area').index(this.element);
         }
 
-        this.header = this.element.children('.expandable-header');
+        this.header = this.settings.trigger ? this.element : this.element.children('.expandable-header');
         this.footer = this.element.children('.expandable-footer');
         this.content = this.element.children('.expandable-pane');
 
@@ -73,7 +76,7 @@
 
         // Add the link and footer if not there.
         // If we're using an expandable card,
-        if (!this.isCard && !this.footer.length) {
+        if (!this.isCard && !this.footer.length && !this.settings.trigger) {
           this.footer =  $('<div class="expandable-footer"></div>').appendTo(this.element);
         }
 
@@ -106,8 +109,16 @@
         }
 
         this.expander = getExpander(self, this.isCard);
-
         this.expander.attr('href', '#').hideFocus();
+
+        if (this.expander.length === 0) {
+          this.expander = $('#' + this.settings.trigger);
+        }
+
+        // Change the borer to the bottom vs top
+        if (this.settings.bottomBorder) {
+          this.element.addClass('has-bottom-border');
+        }
 
         //Initialized in expanded mode.
         if (expanded) {

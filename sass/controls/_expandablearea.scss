@@ -142,11 +142,29 @@
     }
   }
 
+  &.has-bottom-border {
+    border-bottom: 1px solid $expandable-area-border-color;
+    margin-top: -5px;
+
+    .row:last-child {
+      margin-bottom: 15px;
+    }
+  }
+
 }
 
 // Overrides for smaller break point
 // scss-lint:disable ImportantRule
 @include respond-to(phabletdown) {
+
+  .expandable-area {
+    &.has-bottom-border {
+      .column:not(:first-child) {
+        margin-top: 0;
+      }
+    }
+  }
+
   .expandable-pane {
 
     .column:not(:first-child) {

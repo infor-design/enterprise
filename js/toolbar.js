@@ -1089,7 +1089,10 @@
         }
 
         if (this.title && this.title.length) {
-          this.title.off('beforeshow.toolbar').data('tooltip').destroy();
+          var dataTooltip = this.title.off('beforeshow.toolbar').data('tooltip');
+          if (dataTooltip) {
+            dataTooltip.destroy();
+          }
         }
 
         this.moreMenu.children('li').each(deconstructMenuItem);
