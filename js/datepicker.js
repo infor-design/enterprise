@@ -89,6 +89,9 @@
         //Append a trigger button
         this.trigger = $.createIconElement('calendar').insertAfter(this.element);
         this.addAria();
+
+        this.isIslamic = Locale.calendar().name === 'islamic-umalqura';
+        this.conversions = Locale.calendar().conversions;
       },
 
       addAria: function () {
@@ -475,17 +478,12 @@
         $('.calendar-footer a', this.calendar).button();
 
         // Show Month
-        var currentVal = Locale.parseDate(this.element.val(), this.pattern);
-
-        this.currentDate = currentVal || new Date();
-        this.currentMonth = this.currentDate.getMonth();
-        this.currentYear = this.currentDate.getFullYear();
-        this.currentDay = this.currentDate.getDate();
+        this.setValueFromField();
 
         // Set timepicker
         if (this.settings.showTime) {
           timeOptions.parentElement = this.timepickerContainer;
-          this.time = self.getTimeString(currentVal, self.show24Hours);
+          this.time = self.getTimeString(this.currentDate, self.show24Hours);
           this.timepicker = this.timepickerContainer.timepicker(timeOptions).data('timepicker');
           this.timepickerContainer.find('dropdown').dropdown();
 
@@ -501,6 +499,13 @@
         this.todayMonth = this.todayDate.getMonth();
         this.todayYear = this.todayDate.getFullYear();
         this.todayDay = this.todayDate.getDate();
+
+        if (this.isIslamic) {
+          this.todayDateIslamic = this.conversions.fromGregorian(this.todayDate);
+          this.todayYear = this.todayDateIslamic[0];
+          this.todayMonth = this.todayDateIslamic[1];
+          this.todayDay = this.todayDateIslamic[2];
+        }
 
         this.showMonth(this.currentMonth, this.currentYear);
         this.popup = $('#calendar-popup');
@@ -541,7 +546,18 @@
             }
 
             self.currentDate = new Date(year, month, day);
-            self.insertDate(self.currentDate);
+
+            if (self.isIslamic) {
+              self.currentDateIslamic[0] = year;
+              self.currentDateIslamic[1] = month;
+              self.currentDateIslamic[2] = day;
+              self.currentYear = self.currentDateIslamic[0];
+              self.currentMonth = self.currentDateIslamic[1];
+              self.currentDay = self.currentDateIslamic[2];
+              self.currentDate = self.conversions.toGregorian(self.currentDateIslamic[0], self.currentDateIslamic[1], self.currentDateIslamic[2]);
+            }
+
+            self.insertDate(self.isIslamic ? self.currentDateIslamic : self.currentDate);
             self.closeCalendar();
             self.element.focus();
           }
@@ -772,6 +788,10 @@
         var elementDate = this.currentDate.getDate() ?
           this.currentDate : (new Date()).setHours(0,0,0,0);
 
+        if (this.isIslamic) {
+          elementDate = this.currentDateIslamic;
+        }
+
         if (year.toString().length < 4) {
           year = new Date().getFullYear();
         }
@@ -797,8 +817,9 @@
         this.currentYear = year;
 
         // Set the Days of the week
+        var firstDayofWeek = (Locale.calendar().firstDayofWeek || 0);
         this.dayNames.find('th').each(function (i) {
-          $(this).text(days[i]);
+          $(this).text(days[(i + firstDayofWeek) % 7]);
         });
 
         //Localize Month Name
@@ -816,9 +837,10 @@
 
         //Adjust days of the week
         //lead days
-        var leadDays = (new Date(year, month, 1)).getDay();
-        var lastMonthDays = (new Date(year, month+0, 0)).getDate(),
-          thisMonthDays = (new Date(year, month+1, 0)).getDate(),
+        var firstDayOfMonth = this.firstDayOfMonth(year, month),
+          leadDays = (firstDayOfMonth - (Locale.calendar().firstDayofWeek || 0) + 7) % 7,
+          lastMonthDays = this.daysInMonth(year, month+1),
+          thisMonthDays = this.daysInMonth(year, month+0),
           dayCnt = 1, nextMonthDayCnt = 1, exYear, exMonth, exDay;
 
         this.days.find('td').each(function (i) {
@@ -837,12 +859,20 @@
 
           if (i >= leadDays && dayCnt <= thisMonthDays) {
             th.html('<span aria-hidden="true">' + dayCnt + '</span>');
-            var tHours = elementDate.getHours(),
-              tMinutes = elementDate.getMinutes(),
-              tSeconds = self.isSeconds ? elementDate.getSeconds() : 0;
 
-            if ((new Date(year, month, dayCnt)).setHours(tHours, tMinutes, tSeconds,0) === elementDate.setHours(tHours, tMinutes, tSeconds, 0)) {
-              th.addClass('is-selected').attr('aria-selected', 'true');
+            //Add Selected Class to Selected Date
+            if (self.isIslamic) {
+              if (year === elementDate[0] && month === elementDate[1] && dayCnt === elementDate[2]) {
+                th.addClass('is-selected').attr('aria-selected', 'true');
+              }
+            } else {
+              var tHours = elementDate.getHours(),
+                tMinutes = elementDate.getMinutes(),
+                tSeconds = self.isSeconds ? elementDate.getSeconds() : 0;
+
+              if ((new Date(year, month, dayCnt)).setHours(tHours, tMinutes, tSeconds,0) === elementDate.setHours(tHours, tMinutes, tSeconds, 0)) {
+                th.addClass('is-selected').attr('aria-selected', 'true');
+              }
             }
 
             if (dayCnt === self.todayDay && self.currentMonth === self.todayMonth &&
@@ -888,11 +918,13 @@
 
       // Put the date in the field and select on the calendar
       insertDate: function (date, isReset) {
-        var input = this.element;
+        var month = (date instanceof Array ? date[1] : date.getMonth()),
+            year  = (date instanceof Array ? date[0] : date.getFullYear()),
+            day = (date instanceof Array ? date[2] : date.getDate()).toString();
 
         // Make sure Calendar is showing that month
-        if (this.currentMonth !== date.getMonth() || this.currentYear !== date.getFullYear()) {
-          this.showMonth(date.getMonth(), date.getFullYear());
+        if (this.currentMonth !== month || this.currentYear !== year) {
+          this.showMonth(month, year);
         }
 
         if (!this.isOpen()) {
@@ -901,7 +933,7 @@
 
         // Show the Date in the UI
         var dateTd = this.days.find('td:not(.alternate)').filter(function() {
-          return $(this).text().toLowerCase() === date.getDate().toString();
+          return $(this).text().toLowerCase() === day;
         });
 
         if (dateTd.hasClass('is-disabled')) {
@@ -921,7 +953,7 @@
             }
           }
 
-          input.val(Locale.formatDate(date, {pattern: this.pattern})).trigger('change');
+          this.setValue(date);
           this.days.find('.is-selected').removeClass('is-selected').removeAttr('aria-selected').removeAttr('tabindex');
           dateTd.addClass('is-selected').attr({'aria-selected': true});
           this.activeTabindex(dateTd, true);
@@ -934,11 +966,83 @@
         return !isNaN(num) ? !!num : !!String(val).toLowerCase().replace(!!0, '');
       },
 
+      // Find the day of the week of the first of a given month
+      firstDayOfMonth: function (year, month) {
+
+        if (this.isIslamic) {
+		      var firstDay = this.conversions.toGregorian(year, month, 1);
+			    return (firstDay === null ? 1 : firstDay.getDay());
+        }
+        return  (new Date(year, month, 1)).getDay();
+      },
+
+      islamicYearIndex: function (islamicYear) {
+        var yearIdx = islamicYear - 1318;
+        if (yearIdx < 0 || yearIdx >= this.conversions.yearInfo.length) {
+          return 0; // for an out-of-range year, simply returns 0
+        } else {
+          return yearIdx;
+        }
+      },
+
+      // Find the date of the Month (29, 30, 31 ect)
+      daysInMonth: function (year, month) {
+
+        if (this.isIslamic) {
+		      var monthLengthBitmap = this.conversions.yearInfo[this.islamicYearIndex(year)][0];
+    			var monthDayCount = 0;
+    			for (var M = 0; M <= month; M++) {
+    				monthDayCount = 29 + (monthLengthBitmap & 1);
+    				if (M === month) {
+    					return monthDayCount;
+    				}
+    				monthLengthBitmap = monthLengthBitmap >> 1;
+    			}
+    			return 0;
+        }
+        return  (new Date(year, month, 0)).getDate();
+      },
+
       // Set the Formatted value in the input
-      setValue: function(date) {
+      setValue: function(date, trigger) {
         //TODO Document this as the way to get the date
         this.currentDate = date;
+
+        if (date instanceof Array) {
+          this.currentIslamicDate = date;
+          this.currentDate = this.conversions.toGregorian(date[0], date[1], date[2]);
+          date = new Date(date[0], date[1], date[2]);
+        }
+
         this.element.val(Locale.formatDate(date, {pattern: this.pattern}));
+
+        if (trigger) {
+          this.element.trigger('change');
+        }
+
+      },
+
+      //Get the value from the field and set the internal variables or use current date
+      setValueFromField: function() {
+        var fieldValue = this.element.val(),
+          gregorianValue = fieldValue;
+
+        if (this.isIslamic && fieldValue) {
+          var islamicValue = Locale.parseDate(this.element.val(), this.pattern);
+          gregorianValue = this.conversions.toGregorian(islamicValue.getFullYear(), islamicValue.getMonth(),  islamicValue.getDate());
+        }
+
+        this.currentDate = gregorianValue || new Date();
+        this.currentMonth = this.currentDate.getMonth();
+        this.currentYear = this.currentDate.getFullYear();
+        this.currentDay = this.currentDate.getDate();
+
+        if (this.isIslamic) {
+          this.currentDateIslamic = this.conversions.fromGregorian(this.currentDate);
+          this.currentYear = this.currentDateIslamic[0];
+          this.currentMonth = this.currentDateIslamic[1];
+          this.currentDay = this.currentDateIslamic[2];
+        }
       },
 
       // Make input enabled
@@ -962,11 +1066,16 @@
       setToday: function() {
         this.currentDate = new Date();
 
+        if (this.isIslamic) {
+          this.currentDateIslamic = this.conversions.fromGregorian(this.currentDate);
+        }
+
         if (this.isOpen()) {
-          this.insertDate(this.currentDate, true);
+          this.insertDate(this.isIslamic ? this.currentDateIslamic : this.currentDate, true);
         } else {
           this.element.val(Locale.formatDate(this.currentDate, {pattern: this.pattern})).trigger('change');
         }
+
       },
 
       // Set time

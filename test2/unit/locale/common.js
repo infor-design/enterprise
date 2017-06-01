@@ -547,6 +547,21 @@ define([
       expect(Locale.toLowerCase('İSTANBUL')).to.equal('istanbul');
       expect(Locale.capitalize('istanbul')).to.equal('İstanbul');
       expect(Locale.capitalizeWords('kodları istanbul')).to.equal('Kodları İstanbul');
+    },
+
+    'should properly convert from Gregorian to Islamic UmAlQura': function() {
+      Locale.set('ar-SA');
+      var islamicDate = Locale.calendar().conversions.fromGregorian(new Date(new Date(2017, 04, 31)));
+      expect(islamicDate[0].toString()+ ' ' + islamicDate[1].toString()+ ' ' + islamicDate[2].toString()).to.equal('1438 8 5');
+
+      islamicDate = Locale.calendar().conversions.fromGregorian(new Date(new Date(2010, 11, 01)));
+      expect(islamicDate[0].toString()+ ' ' + islamicDate[1].toString()+ ' ' + islamicDate[2].toString()).to.equal('1431 11 25');
+    },
+
+    'should properly convert from Islamic UmAlQura to Gregorian': function() {
+      Locale.set('ar-SA');
+      expect(Locale.calendar().conversions.toGregorian(1438, 8, 5).getTime()).to.equal(new Date(2017, 04, 31, 0, 0, 0).getTime());
+      expect(Locale.calendar().conversions.toGregorian(1431, 11, 25).getTime()).to.equal(new Date(2010, 11, 1, 0, 0, 0).getTime());
     }
 
   });

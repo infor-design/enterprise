@@ -1,0 +1,28 @@
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="islamic-date" class="label">Date Picker</label>
+      <input id="islamic-date" data-init="false" class="datepicker" name="islamic-date" type="text">
+    </div>
+
+    <button type="button" class="btn-secondary" id="convert">Convert</button>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+
+    //Change locale to one that supports umalqura calendar (Hijri)
+    Locale.set('ar-SA').done(function () {
+      $('#islamic-date').datepicker().on('change', function () {
+        console.log($(this).val());
+      });
+    });
+
+    //Test Convert Current Date to Hijri
+
+  });
+
+</script>
