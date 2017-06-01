@@ -96,6 +96,10 @@ input::-webkit-inner-spin-button {
     top: 0;
   }
 
+  + .icon-error {
+    margin-top: -15px;
+  }
+
   &.is-focused {
 
     > .spinbox-control {

@@ -1,4 +1,4 @@
-// Badges
+// Badges & Tags
 //================================================== */
 
 // See also Colors.scss
@@ -87,7 +87,7 @@
     border: 1px solid transparent;
     cursor: default;
     line-height: 21px;
-    padding: 0 24px 0 10px;
+    padding: 0 10px 0 10px;
 
     &:focus:not(.hide-focus) {
       border-color: $primary-color;
@@ -96,17 +96,23 @@
       -moz-outline-style: none;
     }
 
+    &.secondary {
+      background-color: $badge-secondary-bg-color;
+      border: 1px solid $badge-secondary-border-color;
+      color: $badge-secondary-color;
+    }
+
     .dismissable-btn,
     .dismissible-btn {
       cursor: pointer;
-      margin-top: 5px;
       padding-left: 5px;
-      position: absolute;
+      position: relative;
 
       .icon {
         fill: $badge-neutral-icon-color;
         height: 10px;
-        top: -1px;
+        left: 2px;
+        top: 1px;
         width: 10px;
       }
 
@@ -211,26 +217,19 @@
   }
 }
 
+//Tag Strip/List
+.tag-list {
+  margin: 20px 20px 0 25px;
+
+  .tag {
+    margin: 0 5px 5px 0;
+  }
+}
+
 //RTL Styles
 html[dir='rtl'] {
   .hyperlink + .tag {
     margin-left: inherit;
     margin-right: 10px;
-  }
-}
-
-// Fix for Dismissible Buttons in firefox
-.is-firefox {
-  .tag,
-  .badge {
-    &.is-dismissable,
-    &.is-dismissible {
-      .dismissable-btn,
-      .dismissible-btn {
-        .icon {
-          top: 0;
-        }
-      }
-    }
   }
 }

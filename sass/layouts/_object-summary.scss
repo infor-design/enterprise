@@ -12,6 +12,7 @@
 
   .image {
     margin: 10px 20px 0 0;
+    padding-bottom: 20px;
     width: 200px;
   }
 
@@ -29,8 +30,8 @@
 
     .subtitle {
       @include font-size(16);
-      margin-top: 0;
       margin-bottom: 10px;
+      margin-top: 0;
     }
 
     p {
@@ -40,8 +41,6 @@
   }
 }
 
-// Media queries
-//==================================================//
 @include respond-to(tabletdown) {
   .object-summary {
 
@@ -66,4 +65,3 @@
     }
   }
 }
-
