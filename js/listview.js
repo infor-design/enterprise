@@ -602,7 +602,7 @@
         // Un-select selected item
         // and donot trigger selected event, sinnce we removeing
         if (li.is('.is-selected')) {
-          this.select(li, false);
+          this.select(li, true);
         }
         li.remove();
       },
@@ -715,17 +715,9 @@
       },
 
       // Handle Selecting the List Element
-      select: function (li, isTrigger) {
+      select: function (li, noTrigger) {
         var self = this,
           isChecked = false;
-
-        isTrigger = (
-          typeof isTrigger === 'undefined' ||
-          isTrigger === null ||
-          isTrigger === true ||
-          isTrigger === 'true'
-        );
-
 
         self.selectedItems = [];
         if (typeof li === 'number') {
@@ -766,7 +758,7 @@
         });
 
         li.attr('aria-selected', !isChecked);
-        if (isTrigger) {
+        if (!noTrigger) {
           this.element.triggerHandler('selected', {selectedItems: this.selectedItems, elem: li});
         }
 
