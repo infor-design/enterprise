@@ -29,6 +29,7 @@
           source: null, // If defined, will serve as a way of pulling in external content to fill tabs.
           sourceArguments: {}, // If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
           tabCounts: false, // If true, Displays a modifiable count above each tab.
+          verticalResponsive: false // If Vertical Tabs & true, will automatically switch to Horizontal Tabs on smaller breakpoints.
         },
         tabContainerTypes = ['horizontal', 'vertical', 'module-tabs', 'header-tabs'],
         settings = $.extend({}, defaults, options);
@@ -179,62 +180,11 @@
             'aria-multiselectable': 'false'
           });
 
-        if (this.hasSquareFocusState()) {
-          self.focusState = self.element.find('.tab-focus-indicator');
-          if (!self.focusState.length) {
-            self.focusState = $('<div class="tab-focus-indicator" role="presentation"></div>').insertBefore(self.tablist);
-          }
-        }
+        // Conditionally Change layout classes if veritcal tabs is in responsive mode, and breakpoints match
+        this.checkResponsive();
 
-        if (this.hasAnimatedBar()) {
-          self.animatedBar = self.element.find('.animated-bar');
-          if (!self.animatedBar.length) {
-            self.animatedBar = $('<div class="animated-bar" role="presentation"></div>');
-          }
-          self.animatedBar.insertBefore(self.tablist);
-        }
-
-        // Add the markup for the "More" button if it doesn't exist.
-        self.moreButton = self.tablist.next('.tab-more');
-        if (!self.isVerticalTabs() && self.moreButton.length === 0) {
-          var button = $('<div>').attr({'class': 'tab-more'});
-          button.append( $('<span class="more-text">').text(Locale.translate('More')));
-          button.append($.createIconElement({ classes: 'icon-more', icon: 'dropdown' }));
-
-          if (self.tablistContainer) {
-            button.insertAfter(self.tablistContainer);
-          } else {
-            self.tablist.after(button);
-          }
-
-          self.moreButton = button;
-        }
-
-        // Add the application menu Module Tab, if applicable
-        if (self.isModuleTabs() && !this.tablist.find('.application-menu-trigger').length) {
-          var appMenuTrigger = $('<li class="tab application-menu-trigger"><a href="#">' +
-            '<span class="icon app-header"><span class="one"></span><span class="two"></span><span class="three"></span></span>' +
-            '<span>Menu</span>' +
-            '</a></tab>');
-          this.tablist.prepend(appMenuTrigger);
-        }
-
-        // Add Tab Button
-        if (this.settings.addTabButton) {
-          this.addTabButton = this.moreButton.next('.add-tab-button');
-          if (!this.addTabButton || !this.addTabButton.length) {
-            this.addTabButton = $('<div class="add-tab-button" tabindex="0" role="button">' +
-              '<span aria-hidden="true" role="presentation">+</span>' +
-              '<span class="audible">'+ Locale.translate('AddNewTab') +'</span>' +
-              '</div>');
-            this.addTabButton.insertAfter(this.moreButton);
-            this.element.addClass('has-add-button');
-          }
-        }
-        if (!this.settings.addTabButton && this.addTabButton && this.addTabButton.length) {
-          this.addTabButton.remove();
-          this.element.removeClass('has-add-button');
-        }
+        // Handle Focus State, Animated Bar, More Button, Add Tabs Button, and App Menu Button.
+        this.renderHelperMarkup();
 
         //for each item in the tabsList...
         self.anchors = self.tablist.children('li:not(.separator)').children('a');
@@ -418,6 +368,104 @@
         return this;
       },
 
+      /**
+       * Adds/removes helper buttons and accessibility-centric markup, based on Tabs' configuration
+       * Designed to be run at any point in the Tabs lifecycle.
+       * @returns {this}
+       */
+      renderHelperMarkup: function() {
+        var auxilaryButtonLocation = this.tablistContainer || this.tablist;
+
+        // Square Focus State
+        if (this.hasSquareFocusState()) {
+          this.focusState = this.element.find('.tab-focus-indicator');
+          if (!this.focusState.length) {
+            this.focusState = $('<div class="tab-focus-indicator" role="presentation"></div>').insertBefore(this.tablist);
+          }
+        } else {
+          if (this.focusState && this.focusState.length) {
+            this.focusState.off().remove();
+            this.focusState = undefined;
+          }
+        }
+
+        // Animated Bar
+        if (this.hasAnimatedBar()) {
+          this.animatedBar = this.element.find('.animated-bar');
+          if (!this.animatedBar.length) {
+            this.animatedBar = $('<div class="animated-bar" role="presentation"></div>');
+          }
+          this.animatedBar.insertBefore(this.tablist);
+        } else {
+          if (this.animatedBar && this.animatedBar.length) {
+            this.animatedBar.off().remove();
+            this.animatedBar = undefined;
+          }
+        }
+
+        // Add the markup for the "More" button if it doesn't exist.
+        if (!this.moreButton) {
+          this.moreButton = $();
+        }
+
+        if (!this.isVerticalTabs()) {
+          if (!this.moreButton.length) {
+            this.moreButton = auxilaryButtonLocation.next('.tab-more');
+          }
+          // If we still don't have a More Button, create one
+          if (!this.moreButton.length) {
+            this.moreButton = $('<div>').attr({'class': 'tab-more'});
+            this.moreButton.append( $('<span class="more-text">').text(Locale.translate('More')));
+            this.moreButton.append($.createIconElement({ classes: 'icon-more', icon: 'dropdown' }));
+          }
+
+          // Append in the right place based on configuration
+          auxilaryButtonLocation.after(this.moreButton);
+        } else {
+          if (this.moreButton.length) {
+            this.moreButton.off().remove();
+            this.moreButton = $();
+          }
+        }
+
+        // Add the application menu Module Tab, if applicable
+        var appMenuTrigger = this.tablist.find('.application-menu-trigger');
+        if (this.isModuleTabs()) {
+          if (!appMenuTrigger.length) {
+            appMenuTrigger = $('<li class="tab application-menu-trigger"><a href="#">' +
+              '<span class="icon app-header"><span class="one"></span><span class="two"></span><span class="three"></span></span>' +
+              '<span>Menu</span>' +
+              '</a></tab>');
+            this.tablist.prepend(appMenuTrigger);
+          }
+        } else {
+          if (this.isVerticalTabs() && appMenuTrigger.length) {
+            appMenuTrigger.off().remove();
+          }
+        }
+
+        // Add Tab Button
+        if (this.settings.addTabButton) {
+          this.addTabButton = this.moreButton.next('.add-tab-button');
+          if (!this.addTabButton || !this.addTabButton.length) {
+            this.addTabButton = $('<div class="add-tab-button" tabindex="0" role="button">' +
+              '<span aria-hidden="true" role="presentation">+</span>' +
+              '<span class="audible">'+ Locale.translate('AddNewTab') +'</span>' +
+              '</div>');
+            this.addTabButton.insertAfter(this.moreButton);
+            this.element.addClass('has-add-button');
+          }
+        } else {
+          if (this.addTabButton && this.addTabButton.length) {
+            this.addTabButton.remove();
+            this.addTabButton = undefined;
+            this.element.removeClass('has-add-button');
+          }
+        }
+
+        return this;
+      },
+
       setupEvents: function() {
         var self = this;
 
@@ -475,6 +523,8 @@
         // element so that tabs can be added/removed/hidden/shown without needing to change event bindings.
         this.tablist
           .on('mousedown.tabs', '> li', function(e) {
+            self.handleAddFocusData(e, $(this));
+
             // let right click pass through
             if (e.which !== 3) {
               return self.handleTabClick(e, $(this));
@@ -489,21 +539,6 @@
           .on('keydown.tabs', 'a', function(e) {
             return self.handleTabKeyDown(e);
           });
-
-        // Setup a mousedown event on tabs to determine in the focus handler whether or a not a keystroked cause
-        // a change in focus, or a click.  Keystroke focus changes cause different visual situations
-        function addClickFocusData(e) {
-          var tab = $(this);
-          if (tab.is('.is-disabled')) {
-            e.preventDefault();
-            return false;
-          }
-
-          self.hideFocusState();
-          tab.children('a').data('focused-by-click', true);
-        }
-        this.tablist.on('mousedown.tabs', '> li', addClickFocusData);
-        this.moreButton.on('mousedown.tabs', addClickFocusData);
 
         // Setup events on Dropdown Tabs
         function dropdownTabEvents(i, tab) {
@@ -572,32 +607,8 @@
         var dismissible = self.tablist.find('li').filter('is-dismissible');
         dismissible.each(dismissibleTabEvents);
 
-        // Setup the "more" function
-        this.moreButton
-          .onTouchClick('tabs')
-          .on('click.tabs', function(e) {
-            self.handleMoreButtonClick(e);
-          })
-          .on('keydown.tabs', function(e) {
-            self.handleMoreButtonKeydown(e);
-          })
-          .on('focus.tabs', function(e) {
-            self.handleMoreButtonFocus(e);
-          });
-
-        if (this.settings.addTabButton) {
-          this.addTabButton
-            .onTouchClick('tabs')
-            .on('click.tabs', function() {
-              self.handleAddButton();
-            })
-            .on('keydown.tabs', function(e) {
-              self.handleAddButtonKeydown(e);
-            })
-            .on('focus.tabs', function(e) {
-              self.handleAddButtonFocus(e);
-            });
-        }
+        // Events specific to markup that can be re-rendered mid-lifecycle
+        this.setupHelperMarkupEvents();
 
         this.panels.on('keydown.tabs', function(e) {
           self.handlePanelKeydown(e);
@@ -628,9 +639,89 @@
         $('body').on('resize.tabs' + this.tabsIndex, function() {
           self.handleResize();
         });
-        self.handleResize();
+        self.handleResize(true);
 
         return this;
+      },
+
+      /**
+       * Adds events associated with elements that are re-renderable during the Tabs lifecycle
+       * @private
+       * @returns {this}
+       */
+      setupHelperMarkupEvents: function () {
+        var self = this;
+
+        // Setup the "more" function
+        this.moreButton
+          .onTouchClick('tabs')
+          .on('click.tabs', function(e) {
+            self.handleMoreButtonClick(e);
+          })
+          .on('keydown.tabs', function(e) {
+            self.handleMoreButtonKeydown(e);
+          })
+          .on('focus.tabs', function(e) {
+            self.handleMoreButtonFocus(e);
+          })
+          .on('mousedown.tabs', function(e) {
+            self.handleAddFocusData(e, $(this));
+          });
+
+        if (this.settings.addTabButton) {
+          this.addTabButton
+            .onTouchClick('tabs')
+            .on('click.tabs', function() {
+              self.handleAddButton();
+            })
+            .on('keydown.tabs', function(e) {
+              self.handleAddButtonKeydown(e);
+            })
+            .on('focus.tabs', function(e) {
+              self.handleAddButtonFocus(e);
+            });
+        }
+      },
+
+      /**
+       * Removes events associated with elements that are re-renderable during the Tabs lifecycle
+       * @private
+       * @returns {this}
+       */
+      removeHelperMarkupEvents: function() {
+        if (this.moreButton && this.moreButton.length) {
+          this.moreButton.offTouchClick('tabs')
+            .off('click.tabs keydown.tabs focus.tabs mousedown.tabs');
+        }
+
+        if (this.addTabButton && this.addTabButton.length) {
+          this.addTabButton.offTouchClick('tabs')
+            .off('click.tabs keydown.tabs focus.tabs');
+        }
+
+        return this;
+      },
+
+      /**
+       * Setup a mousedown event on tabs to determine in the focus handler whether or a not a keystroked cause
+       * a change in focus, or a click.  Keystroke focus changes cause different visual situations
+       * @param {$.Event} e
+       * @param {jQuery[]} elem
+       * @returns {undefined}
+       */
+      handleAddFocusData(e, elem) {
+        var tab = elem;
+        if (tab.is('.is-disabled')) {
+          e.preventDefault();
+          return false;
+        }
+
+        if (!tab.is(this.moreButton)) {
+          tab = tab.children('a');
+        }
+
+        this.hideFocusState();
+        tab.data('focused-by-click', true);
       },
 
       handleTabClick: function(e, li) {
@@ -1173,7 +1264,11 @@
         this.positionFocusState(this.addTabButton, true);
       },
 
-      handleResize: function() {
+      handleResize: function(ignoreResponsiveCheck) {
+        if (!ignoreResponsiveCheck) {
+          this.checkResponsive();
+        }
+
         this.setOverflow();
 
         var selected = this.tablist.find('.is-selected');
@@ -1192,6 +1287,44 @@
         this.handleVerticalTabResize();
         this.renderVisiblePanel();
         this.renderEdgeFading();
+      },
+
+      checkResponsive: function() {
+        var self = this,
+          classList = self.element[0].classList;
+
+        function rebuild() {
+          self.removeHelperMarkupEvents();
+          self.renderHelperMarkup();
+          self.setupHelperMarkupEvents();
+        }
+
+        function makeResponsive() {
+          if (!classList.contains('is-in-responsive-mode')) {
+            classList.add('is-in-responsive-mode', 'header-tabs', 'alternate');
+            classList.remove('vertical');
+            rebuild();
+          }
+        }
+
+        function makeVertical() {
+          if (classList.contains('is-in-responsive-mode')) {
+            classList.add('vertical');
+            classList.remove('is-in-responsive-mode', 'header-tabs', 'alternate');
+            rebuild();
+          }
+        }
+
+        // Check for responsive mode for Vertical tabs
+        if (this.isResponsiveVerticalTabs()) {
+          if (Soho.breakpoints.isBelow('phone-to-tablet')) {
+            makeResponsive();
+          } else {
+            makeVertical();
+          }
+        } else {
+          makeVertical();
+        }
       },
 
       handleVerticalTabResize: function() {
@@ -1236,12 +1369,20 @@
         return this.element[0].classList.contains('has-more-button');
       },
 
+      isInResponsiveMode: function() {
+        return this.element[0].classList.contains('is-in-responsive-mode');
+      },
+
       isModuleTabs: function() {
         return this.element.hasClass('module-tabs');
       },
 
       isVerticalTabs: function() {
         return this.element.hasClass('vertical');
+      },
+
+      isResponsiveVerticalTabs() {
+        return this.settings.verticalResponsive === true;
       },
 
       isHeaderTabs: function() {
@@ -1659,7 +1800,7 @@
             api = c.data('tabs');
 
           if (api && api.handleResize && typeof api.handleResize === 'function') {
-            api.handleResize();
+            api.handleResize(true);
           }
         });
       },
@@ -3147,13 +3288,7 @@
           popup.destroy();
         }
 
-        if (this.addTabButton && this.addTabButton.length) {
-          this.addTabButton.off().remove();
-          this.addTabButton = undefined;
-        }
-
-        this.moreButton.off().remove();
-        this.moreButton = undefined;
+        this.removeHelperMarkupEvents();
 
         if (this.tablistContainer) {
           this.tablistContainer.off('mousewheel.tabs');
