@@ -494,8 +494,16 @@
         this.pagerBar[0].classList.remove('hidden');
         prevGroup.add(nextGroup).removeAttr('disabled tabindex');
 
+        // Explicit false turns buttons back on.
+        if (pagingInfo.firstPage === false) {
+          prevGroup.removeAttr('disabled').removeAttr('tabindex');
+        }
+        if (pagingInfo.lastPage === false) {
+          nextGroup.removeAttr('disabled').removeAttr('tabindex');
+        }
+
         // First page
-        if (pagingInfo.firstPage === true || this.activePage === 1) {
+        if (pagingInfo.firstPage === true || (pagingInfo.firstPage === undefined && this.activePage === 1)) {
           prevGroup.attr(disabledAttrs);
 
           if (pagingInfo.lastPage !== true) {
@@ -504,7 +512,7 @@
         }
 
         // Last page
-        if (pagingInfo.lastPage === true || this.activePage === this.pageCount()) {
+        if (pagingInfo.lastPage === true || (pagingInfo.lastPage === undefined && this.activePage === this.pageCount())) {
           nextGroup.attr(disabledAttrs);
 
           if (pagingInfo.firstPage !== true) {
