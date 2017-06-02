@@ -709,7 +709,7 @@
        * @param {jQuery[]} elem
        * @returns {undefined}
        */
-      handleAddFocusData(e, elem) {
+      handleAddFocusData: function(e, elem) {
         var tab = elem;
         if (tab.is('.is-disabled')) {
           e.preventDefault();
@@ -1381,7 +1381,7 @@
         return this.element.hasClass('vertical');
       },
 
-      isResponsiveVerticalTabs() {
+      isResponsiveVerticalTabs: function() {
         return this.settings.verticalResponsive === true;
       },
 
