@@ -3,7 +3,7 @@ module.exports = function(grunt) {
   grunt.file.preserveBOM = true;
 
   const sass = require('./build/configs/sass.js'),
-    watch = require('./build/configs/watch.js'),
+    chokidar = require('./build/configs/watch.js'),
     amdHeader = require('./build/configs/amdHeader.js'),
     copy = require('./build/configs/copy.js'),
     cssmin = require('./build/configs/cssmin.js'),
@@ -65,7 +65,7 @@ module.exports = function(grunt) {
 
   grunt.initConfig(Object.assign({},
     config,
-    watch,
+    chokidar,
     clean,
     jshint,
     sass,
@@ -128,6 +128,9 @@ module.exports = function(grunt) {
     'clean:publish',
     'copy:publish'
   ]);
+
+  // Swap "watch" for "chokidar"
+  grunt.registerTask('watch', ['chokidar']);
 
   // Don't do any uglify/minify/jshint while the Dev Watch is running.
   grunt.registerTask('sohoxi-watch', [
