@@ -5536,15 +5536,14 @@ $.fn.datagrid = function(options) {
     },
 
     clearNodeErrors: function (node) {
-        node.removeClass('error').removeAttr('data-errormessage');
+      node.removeClass('error').removeAttr('data-errormessage');
 
-        var icon = node.find('.icon-error');
-        var tooltip = icon.data('tooltip');
-        if (tooltip) {
-          tooltip.hide();
-        }
-        node.find('.icon-error').remove();
-
+      var icon = node.find('.icon-error');
+      var tooltip = icon.data('tooltip');
+      if (tooltip) {
+        tooltip.hide();
+      }
+      node.find('.icon-error').remove();
     },
 
     resetRowStatus: function () {
