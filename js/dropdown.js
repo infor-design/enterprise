@@ -961,7 +961,7 @@
           input[0].focus();
         }
 
-        if ((self.isIe10 || self.isIe11) && input.closest('.time-parts').length) {
+        if (self.isIe10 || self.isIe11) {
           setTimeout(function() {
             input[0].focus();
           }, 0);
