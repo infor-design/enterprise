@@ -1008,8 +1008,8 @@ $datagrid-short-row-height: 23px;
 
     .datagrid-img {
       display: block;
-      height: 38px;
-      width: 38px;
+      height: 45px;
+      width: 45px;
     }
   }
 
@@ -1038,8 +1038,17 @@ $datagrid-short-row-height: 23px;
       word-wrap: break-word;
 
       .hyperlink {
+        display: inline;
         margin-top: 2px;
         white-space: pre-line;
+
+        &:hover {
+          display: inline;
+        }
+
+        &:focus:after {
+          border-color: transparent;
+        }
       }
 
       .micro-text {
