@@ -1180,6 +1180,9 @@
             if (target.is('.separator, .group-label')) {
               return;
             }
+
+            self.list.find('li').removeClass('is-focused');
+            target.addClass('is-focused');
           });
 
         // Some list-closing events are on a timer to prevent immediate list close
