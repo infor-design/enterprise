@@ -222,6 +222,8 @@ var express = require('express'),
         }
         excludes.push(/^(layout)(\s)?(\.html)?/gm); // matches any filename that begins with "layout" (fx: "layout***.html")
         excludes.push(/footer\.html/);
+        excludes.push(/_header\.html/);
+        excludes.push(/_layout\.html/);
         excludes.push(/\.DS_Store/);
 
         var match = false;
@@ -422,6 +424,9 @@ var express = require('express'),
     }
     if (directory.match(/tests\/base-tag/)) {
       opts.usebasehref = true;
+    }
+    if (directory.match(/tests\/composite-form/)) {
+      opts.layout = 'tests/composite-form/_layout';
     }
     if (directory.match(/tests\/call-to-action-header/)) {
       opts.layout = 'tests/call-to-action-header/layout';

@@ -180,6 +180,9 @@
             //Listbuilder
             ['listbuilder'],
 
+            //Composite Form Wrapper
+            ['compositeform', '.composite-form'],
+
             //Progress
             ['progress', '.progress-bar'],
 
