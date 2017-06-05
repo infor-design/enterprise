@@ -171,6 +171,12 @@ define([
 
     },
 
+    'should be able to parse 2 and 3 digit years': function() {
+      Locale.set('en-US');
+      expect(Locale.parseDate('10/10/10', 'M/d/yyyy').getTime()).to.equal(new Date(2010, 09, 10, 0, 0, 0).getTime());
+      expect(Locale.parseDate('10/10/010', 'M/d/yyyy').getTime()).to.equal(new Date(2010, 09, 10, 0, 0, 0).getTime());
+    },
+
     //Test Long Formatting
     'should format long': function() {
       Locale.set('en-US');    //year, month, day, hours, mins , secs
@@ -206,7 +212,7 @@ define([
       expect(Locale.formatDate(new Date(2015, 0, 1, 13, 40), {date: 'long'})).to.equal('1. Januar 2015');
 
       Locale.set('ar-EG');
-      expect(Locale.formatDate(new Date(2015, 0, 1, 13, 40), {date: 'long'})).to.equal('1 يناير، 2015');
+      expect(Locale.formatDate(new Date(2015, 0, 1, 13, 40), {date: 'long'})).to.equal('1 محرم، 2015');
 
       Locale.set('bg-BG');
       expect(Locale.formatDate(new Date(2015, 0, 1, 13, 40), {date: 'long'})).to.equal('1 януари 2015 г.');
@@ -215,7 +221,7 @@ define([
     'should be able to parse dates': function() {
       Locale.set('en-US');    //year, month, day
       expect(Locale.parseDate('11/8/2000').getTime()).to.equal(new Date(2000, 10, 8).getTime());
-      expect(Locale.parseDate('11/8/00').getTime()).to.equal(new Date(1900, 10, 8).getTime());
+      expect(Locale.parseDate('11/8/00').getTime()).to.equal(new Date(2000, 10, 8).getTime());
       expect(Locale.parseDate('10 / 15 / 2014').getTime()).to.equal(new Date(2014, 9, 15).getTime());
       Locale.set('de-DE');    //year, month, day
       expect(Locale.parseDate('08.11.2000').getTime()).to.equal(new Date(2000, 10, 8).getTime());
@@ -547,6 +553,21 @@ define([
       expect(Locale.toLowerCase('İSTANBUL')).to.equal('istanbul');
       expect(Locale.capitalize('istanbul')).to.equal('İstanbul');
       expect(Locale.capitalizeWords('kodları istanbul')).to.equal('Kodları İstanbul');
+    },
+
+    'should properly convert from Gregorian to Islamic UmAlQura': function() {
+      Locale.set('ar-SA');
+      var islamicDate = Locale.calendar().conversions.fromGregorian(new Date(new Date(2017, 04, 31)));
+      expect(islamicDate[0].toString()+ ' ' + islamicDate[1].toString()+ ' ' + islamicDate[2].toString()).to.equal('1438 8 5');
+
+      islamicDate = Locale.calendar().conversions.fromGregorian(new Date(new Date(2010, 11, 01)));
+      expect(islamicDate[0].toString()+ ' ' + islamicDate[1].toString()+ ' ' + islamicDate[2].toString()).to.equal('1431 11 25');
+    },
+
+    'should properly convert from Islamic UmAlQura to Gregorian': function() {
+      Locale.set('ar-SA');
+      expect(Locale.calendar().conversions.toGregorian(1438, 8, 5).getTime()).to.equal(new Date(2017, 04, 31, 0, 0, 0).getTime());
+      expect(Locale.calendar().conversions.toGregorian(1431, 11, 25).getTime()).to.equal(new Date(2010, 11, 1, 0, 0, 0).getTime());
     }
 
   });

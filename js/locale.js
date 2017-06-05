@@ -344,12 +344,17 @@
       // Check the incoming date string's parts to make sure the values are valid against the localized
       // Date pattern.
       var month = this.getDatePart(formatParts, dateStringParts, 'M', 'MM', 'MMM'),
-        year = this.getDatePart(formatParts, dateStringParts, 'yy', 'yyyy');
+        year = this.getDatePart(formatParts, dateStringParts, 'yy', 'yyyy'),
+        hasDays = false;
 
       for (var i = 0; i < dateStringParts.length; i++) {
         var pattern = formatParts[i],
           value = dateStringParts[i],
           numberValue = parseInt(value);
+
+        if (!hasDays) {
+          hasDays = pattern.toLowerCase().indexOf('d') > -1;
+        }
 
         switch(pattern) {
           case 'd':
@@ -470,11 +475,20 @@
         dateObj.year = (new Date()).getFullYear();
       }
 
+      //Fix incomelete 2 and 3 digit years
+      if (dateObj.year.length === 2) {
+        dateObj.year = '20'+dateObj.year;
+      }
+
+      if (dateObj.year.length === 3) {
+        dateObj.year = '2'+dateObj.year;
+      }
+
       if (!dateObj.month && dateObj.month !== 0 && !isStrict) {
         dateObj.month = (new Date()).getMonth();
       }
 
-      if (!dateObj.day && dateObj.day !== 0 && !isStrict) {
+      if (!dateObj.day && dateObj.day !== 0 && (!isStrict || !hasDays)) {
         dateObj.day = 1;
       }
 
