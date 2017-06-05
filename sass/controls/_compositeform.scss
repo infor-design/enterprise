@@ -29,6 +29,10 @@ header + .composite-form {
     }
   }
 
+  .tab-panel-container {
+    background-color: $composite-tabs-panel-bg-color;
+  }
+
   .tab-panel {
     margin: 20px 0;
     padding-top: 0;
