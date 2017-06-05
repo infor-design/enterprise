@@ -99,7 +99,7 @@
       });
 
       //Link on to the current object and perform validation.
-      this.inputs.filter('input, textarea, div').filter(attribs).not('input[type=checkbox]').each(function () {
+      this.inputs.filter('input, textarea, div').filter(attribs).not('input[type=checkbox], [readonly]').each(function () {
         var field = $(this),
         attribs = field.attr('data-validation-events'),
         events = (attribs ? attribs : 'blur.validate change.validate keyup.validate');
@@ -221,9 +221,9 @@
         allValid = true;
 
       if (modalFields.length > 0) {
-        field.data('isValid', isValid);
         modalFields.each(function () {
           var modalField = $(this);
+          modalField.data('isValid', isValid);
           if (modalField.closest('.datagrid-filter-wrapper').length > 0) {
             return;
           }

@@ -144,8 +144,6 @@ svg.icon-logo {
   }
 
   &.dirty-checkbox {
-    left: 1px;
-    top: -1px;
 
     &.is-checked {
       border-width: 4px;
@@ -188,7 +186,7 @@ svg.icon-logo {
 
   svg {
     display: inline-block;
-    fill: #ffffff;
+    fill: $white;
     height: 45px;
     margin-left: 26px;
     margin-top: 25px;

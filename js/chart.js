@@ -2554,6 +2554,19 @@ window.Chart = function(container) {
 
     $(container).addClass('line-chart' + (isBubble ? ' bubble' : ''));
 
+    var dots = {
+      radius: 5,
+      radiusOnHover: 7,
+      strokeWidth: 2,
+      class: 'dot'
+    };
+    if (isBubble) {
+      dots.radius = 0;
+      dots.radiusOnHover = 0;
+      dots.strokeWidth = 0;
+    }
+    $.extend(true, dots, settings.dots);
+
     var isRTL = charts.isRTL;
 
     var tooltipInterval,
@@ -2582,15 +2595,21 @@ window.Chart = function(container) {
     var dataset = chartData,
       hideDots = (options.hideDots),
       parent = $(container).parent(),
+      isCardAction = !!$('.widget-chart-action', parent).length,
+      isAxisXRotate = !!(!!settings.xAxis && settings.xAxis.rotate !== undefined),
       isViewSmall = parent.width() < 450,
       margin = {
-        top: (isAxisLabels.top ? 40 : 30),
+        top: (isAxisLabels.top ? (isCardAction ? 15 : 40) : (isCardAction ? 5 : 30)),
         right: (isAxisLabels.right ? (isViewSmall ? 45 : 65) : (isViewSmall ? 45 : 55)),
-        bottom: (isAxisLabels.bottom ? 50 : 35),
+        bottom: (isAxisLabels.bottom ? (isAxisXRotate ? 60 : 50) : (isAxisXRotate ? 45 : 35)),
         left: (isAxisLabels.right ? (isViewSmall ? 55 : 75) : (isViewSmall ? 45 : 65))
       },
       width = parent.width() - margin.left - margin.right,
       height = parent.height() - margin.top - margin.bottom - 30; //legend
+
+    if (isCardAction) {
+      height -= 40;
+    }
 
     var svg = d3.select(container).append('svg')
         .attr('width', width + margin.left + margin.right)
@@ -2626,7 +2645,7 @@ window.Chart = function(container) {
 
     // Calculate the Domain X and Y Ranges
     var maxes,
-      x = d3.scale.linear().range([0, width]),
+      x = ((!!settings.xAxis && !!settings.xAxis.scale) ? (settings.xAxis.scale) : (d3.scale.linear())).range([0, width]),
       y = d3.scale.linear().range([height, 0]),
       z = d3.scale.linear().range([1, 25]),
       getMaxes = function (d, option) {
@@ -2646,17 +2665,20 @@ window.Chart = function(container) {
     }
 
     var entries = d3.max(dataset.map(function(d){ return d.data.length; })) -1,
-      xScale = x.domain([0, isBubble ? d3.max(maxes.x) : entries]).nice(),
+      xScale = x.domain(!!settings.xAxis && !!settings.xAxis.domain ? (settings.xAxis.domain) : ([0, isBubble ? d3.max(maxes.x) : entries])).nice(),
       yScale = y.domain([0, d3.max(isBubble ? maxes.y : maxes)]).nice(),
       zScale = z.domain([0, d3.max(isBubble ? maxes.z : maxes)]).nice();
 
     var xAxis = d3.svg.axis()
       .scale(xScale)
       .orient('bottom')
-      .tickSize(isBubble ? -(height + 10) : 0)
-      .ticks(isBubble && isViewSmall ? Math.round(entries/2) : entries)
+      .ticks((!!settings.xAxis && !!settings.xAxis.ticks) ? (settings.xAxis.ticks) : (isBubble && isViewSmall ? Math.round(entries/2) : entries))
       .tickPadding(10)
+      .tickSize(isBubble ? -(height + 10) : 0)
       .tickFormat(function (d, i) {
+        if (!!settings.xAxis && !!settings.xAxis.formatter) {
+          return settings.xAxis.formatter(d, i);
+        }
         return isBubble ? d : names[i];
       });
 
@@ -2727,9 +2749,19 @@ window.Chart = function(container) {
       svg.selectAll('.y.axis text').style('text-anchor', 'start');
     }
 
+    if (isAxisXRotate) {
+      svg.selectAll('.x.axis .tick text')  // select all the text for the xaxis
+      .attr('transform', function() {
+         return 'translate(' + this.getBBox().height*-2 + ', '+ this.getBBox().height + ')rotate('+ settings.xAxis.rotate +')';
+     });
+    }
+
     // Create the line generator
     var line = d3.svg.line()
       .x(function(d, i) {
+        if (!!settings.xAxis && !!settings.xAxis.parser)  {
+          return xScale(settings.xAxis.parser(d, i));
+        }
         return xScale(isBubble ? d.value.x : i);
       })
       .y(function(d) {
@@ -2786,11 +2818,16 @@ window.Chart = function(container) {
           .data(d.data)
           .enter()
           .append('circle')
-          .attr('class', 'dot')
-          .attr('cx', function (d, i) { return xScale(isBubble ? d.value.x : i); })
+          .attr('class', dots.class)
+          .attr('cx', function (d, i) {
+            if (!!settings.xAxis && !!settings.xAxis.parser)  {
+              return xScale(settings.xAxis.parser(d, i));
+            }
+            return xScale(isBubble ? d.value.x : i);
+          })
           .attr('cy', function (d) { return yScale(isBubble ? 0 : d.value); })
-          .attr('r', (isBubble ? 0 : 5))
-          .style('stroke-width', (isBubble ? 0 : 2))
+          .attr('r', dots.radius)
+          .style('stroke-width', dots.strokeWidth)
           .style('fill', function () { return charts.chartColor(i, 'line', d); })
           .style('opacity', (isBubble ? '.7' : '1'))
           .on('mouseenter.chart', function(d2) {
@@ -2865,12 +2902,16 @@ window.Chart = function(container) {
             }
 
             //Circle associated with hovered point
-            d3.select(this).attr('r', function (d) { return 2+(isBubble ? zScale(d.value.z) : 5); });
+            d3.select(this).attr('r', function (d) {
+              return isBubble ? (2 + zScale(d.value.z)) : dots.radiusOnHover;
+            });
           })
           .on('mouseleave.chart', function() {
             clearInterval(tooltipInterval);
             charts.hideTooltip();
-            d3.select(this).attr('r', function (d) { return isBubble ? zScale(d.value.z) : 5; });
+            d3.select(this).attr('r', function (d) {
+              return isBubble ? zScale(d.value.z) : dots.radius;
+            });
           })
           .on('click.chart', function(d) {
             charts.selectElement(d3.select(this.parentNode), svg.selectAll('.line-group'), d);
@@ -3373,9 +3414,15 @@ window.Chart = function(container) {
     // Render
     var html = {body: $('<div class="total bar" />')};
     if (isTarget || isAchievment) {
+      var difference = {};
       html.body.addClass('chart-completion-target' + (isAchievment ? ' chart-targeted-achievement' : ''));
 
-      var totalText = setFormat(dataset.total) + (dataset.total.text ? dataset.total.text : '');
+      if (dataset.total.difference) {
+        difference.value = (dataset.total.value - dataset.completed.value);
+        difference.format = dataset.total.format;
+      }
+
+      var totalText = setFormat(dataset.total.difference ? difference : dataset.total) + (dataset.total.text ? dataset.total.text : '');
       totalText = isAchievment && dataset.remaining ? setFormat(dataset.remaining) + (dataset.remaining.text ? dataset.remaining.text : ''): totalText;
 
       html.label = ''+

@@ -1,0 +1,49 @@
+<div class="row top-padding">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Up Time in %</h2>
+        </div>
+        <div class="widget-content">
+          <div id="column-bar-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+
+    var dataset = [{
+      data: [{
+        name: Locale.formatDate(new Date('2017-05-12'), {pattern: 'dd-mm'}),
+        currency: 'USD',
+        value: 12345.67
+      }, {
+        name: Locale.formatDate(new Date('2017-05-13'), {pattern: 'dd-mmm'}),
+        currency: 'USD',
+        value: 2000
+      }, {
+        name: new Date('2017-05-14'),
+        currency: 'USD',
+        value: 0
+      }, {
+        name: new Date('2017-05-15'),
+        currency: 'USD',
+        value: 0
+      }, {
+        name: new Date('2017-05-16'),
+        currency: 'USD',
+        value: 10000
+      }, {
+        name: new Date('2017-05-24'),
+        currency: 'USD',
+        value: 7000
+      } ]
+    }];
+
+    $('#column-bar-example').chart({type: 'column', dataset: dataset});
+
+});
+</script>

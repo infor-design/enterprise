@@ -87,10 +87,6 @@
         pageInfo.lastPage = true;
         pageInfo.refresh = true;
         api.loadData(res.data, pageInfo, true);
-
-        pageInfo.lastPage = true;
-        pageInfo.uiOnly = true;
-        api.refreshPagerState(pageInfo, true);
       });
 
   });

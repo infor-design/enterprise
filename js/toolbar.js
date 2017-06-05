@@ -124,6 +124,7 @@
         this.buttonsetItems = this.buttonset.children('button')
           .add(this.buttonset.find('input')); // Searchfield Wrappers
 
+        // Items contains all actionable items in the toolbar, including the ones in the title, and the more button
         this.items = this.buttonsetItems
           .add(this.title.children('button'))
           .add(this.more);
@@ -179,7 +180,15 @@
         function buildMenuItem() {
           /*jshint validthis:true */
           var item = $(this),
-            popupLi = $('<li></li>'),
+            isSplitButton = false;
+
+          // If this item should be skipped, just return out
+          if (item.data('skipit') === true) {
+            item.data('skipit', undefined);
+            return;
+          }
+
+          var popupLi = $('<li></li>'),
             a = $('<a href="#"></a>').appendTo(popupLi);
 
           if (item.is(':hidden')) {
@@ -197,7 +206,6 @@
           var submenuDesignIcon = $.getBaseURL('#icon-dropdown');
           var icon = item.children('.icon').filter(function() {
             var iconName = $(this).getIconName();
-
             return iconName && iconName !== submenuDesignIcon && iconName.indexOf('dropdown') === -1;
           });
 
@@ -240,6 +248,10 @@
 
               if (omiSubMenu.length && dmiSubMenu.length) {
                 addItemLinksRecursively(omiSubMenu, dmiSubMenu, dmi);
+              }
+
+              if (isSplitButton) {
+                dmi.removeClass('is-checked');
               }
             });
 
@@ -285,7 +297,9 @@
         function refreshTextAndDisabled(menu) {
           $('li > a', menu).each(function () {
             var a = $(this),
+                li = a.parent(),
                 item = a.data('originalButton'),
+                itemParent,
                 text = self.getItemText(item),
                 submenu;
 
@@ -297,19 +311,27 @@
               }
 
               if (item.is('.hidden') || item.parent().is('.hidden')) {
-                a.closest('li').addClass('hidden');
+                li.addClass('hidden');
               } else {
-                a.closest('li').removeClass('hidden');
+                li.removeClass('hidden');
               }
 
               if (item.parent().is('.is-disabled') || item.is(':disabled')) { // if it's disabled menu item, OR a disabled menu-button
-                a.closest('li').addClass('is-disabled');
-                a.attr('tabindex', '-1')
-                  .attr('aria-disabled', 'true');
+                li.addClass('is-disabled');
+                a.attr('tabindex', '-1');
               } else {
-                a.closest('li').removeClass('is-disabled');
-                a.removeAttr('disabled')
-                  .attr('aria-disabled', 'false');
+                li.removeClass('is-disabled');
+                a.removeAttr('disabled');
+              }
+
+              if (item.is('a')) {
+                itemParent = item.parent('li');
+
+                if (itemParent.is('.is-checked')) {
+                  li.addClass('is-checked');
+                } else {
+                  li.removeClass('is-checked');
+                }
               }
 
               if (item.is('.btn-menu')) {
@@ -406,7 +428,19 @@
 
         this.items.filter('.btn-menu, .btn-actions')
           .off('close.toolbar').on('close.toolbar', function onClosePopup() {
-            $(this).focus();
+            var el = $(this),
+              last;
+
+            if (el.is('.is-overflowed')) {
+              last = self.getLastVisibleButton();
+              if (last && last.length) {
+                last[0].focus();
+              }
+              return;
+            }
+
+            el.focus();
+            self.buttonset.scrollTop(0);
           });
 
         this.items.not(this.more).off('selected.toolbar').on('selected.toolbar', function(e, anchor) {
@@ -441,7 +475,8 @@
         var itemLink = anchor.data('original-button'),
           li = anchor.parent(),
           itemEvts,
-          toolbarEvts;
+          toolbarEvts,
+          popup, popupTrigger;
 
         // Don't continue if hidden/readonly/disabled
         if (li.is('.hidden, .is-disabled') || anchor.is('[readonly], [disabled]')) {
@@ -485,7 +520,15 @@
             }
           }
 
-          // Trigger Select on the linked item, since it won't be done by another event
+          // If the linked element is a child of a menu button, trigger its 'selected' event.
+          popup = itemLink.parents('.popupmenu');
+          popupTrigger = popup.data('trigger');
+          if (popup.length && popupTrigger instanceof $ && popupTrigger.length) {
+            popupTrigger.triggerHandler('selected', [itemLink]);
+            return;
+          }
+
+          // Manually Trigger Select on the linked item, since it won't be done by another event
           this.triggerSelect(itemLink);
           return;
         }
@@ -508,23 +551,6 @@
           target = $(e.target),
           isActionButton = target.is('.btn-actions'),
           isRTL = Locale.isRTL();
-
-        /*
-        if (target.is('.btn-actions')) {
-          if (key === 37 || key === 38) { // Left/Up
-            e.preventDefault();
-            target = isRTL ? self.getFirstVisibleButton() : self.getLastVisibleButton();
-          }
-
-          if (key === 39 || (key === 40 && target.attr('aria-expanded') !== 'true')) { // Right (or Down if the menu's closed)
-            e.preventDefault();
-            target = isRTL ? self.getLastVisibleButton() : self.getFirstVisibleButton();
-          }
-
-          self.setActiveButton(target);
-          return;
-        }
-        */
 
         if ((key === 37 && target.is(':not(input)')) ||
           (key === 37 && target.is('input') && e.shiftKey) || // Shift + Left Arrow should be able to navigate away from Searchfields
@@ -603,19 +629,18 @@
           containerElem.classList.add('do-resize');
         }
 
-        var toolbarStyle = window.getComputedStyle(containerElem),
-          toolbarWidth = parseInt(toolbarStyle.width),
-          padding = parseInt(toolbarStyle.paddingLeft) + parseInt(toolbarStyle.paddingRight),
-          buttonsetWidth = parseInt(window.getComputedStyle(buttonsetElem).width) + WHITE_SPACE,
-          moreWidth = moreElem !== undefined ? parseInt(window.getComputedStyle(moreElem).width) : 0,
-          titleScrollWidth = titleElem.scrollWidth + 1;
+        var toolbarDims = $(containerElem).getHiddenSize(),
+          buttonsetDims = $(buttonsetElem).getHiddenSize(),
+          titleDims = $(titleElem).getHiddenSize(),
+          moreDims = $(moreElem).getHiddenSize(),
+          toolbarPadding = parseInt(toolbarDims.padding.left) + parseInt(toolbarDims.padding.right);
 
-        if (isNaN(moreWidth)) {
-          moreWidth = 50;
+        if (isNaN(moreDims.width)) {
+          moreDims.width = 50;
         }
 
-        if (isNaN(buttonsetWidth) || buttonsetWidth < MIN_BUTTONSET_SIZE) {
-          buttonsetWidth = MIN_BUTTONSET_SIZE;
+        if (isNaN(buttonsetDims.width) || buttonsetDims.width < MIN_BUTTONSET_SIZE) {
+          buttonsetDims.width = MIN_BUTTONSET_SIZE;
         }
 
         function addPx(val) {
@@ -632,11 +657,11 @@
           targetButtonsetWidth = parseInt(buttonsetSize);
         } else {
           if (this.settings.favorButtonset) {
-            targetButtonsetWidth = buttonsetWidth;
-            targetTitleWidth = toolbarWidth - (padding + buttonsetWidth + moreWidth);
+            targetButtonsetWidth = buttonsetDims.width;
+            targetTitleWidth = toolbarDims.width - (toolbarPadding + buttonsetDims.width + moreDims.width);
           } else {
-            targetTitleWidth = titleScrollWidth;
-            targetButtonsetWidth = toolbarWidth - (padding + titleScrollWidth + moreWidth);
+            targetTitleWidth = titleDims.scrollWidth;
+            targetButtonsetWidth = toolbarDims.width - (toolbarPadding + titleDims.scrollWidth + moreDims.width);
           }
         }
 
@@ -704,7 +729,7 @@
         var i = 0,
           elem;
 
-        while(!target && i < items.length - 1) {
+        while(!target && i < items.length) {
           elem = $(items[i]);
           if (!this.isItemOverflowed(elem)) {
             target = elem;
@@ -717,8 +742,8 @@
           target = items.first();
         }
 
-        while(target.is('.separator, *:disabled, *:hidden')) {
-          target = target.next();
+        while(target.length && target.is('.separator, *:disabled, *:hidden')) {
+          target = target.prev();
         }
 
         return target;
@@ -854,6 +879,12 @@
           if (doHide) {
             li.classList.add('hidden');
             elem.classList.remove('is-overflowed');
+
+            /*
+            if (elem.classList.contains('btn-split-menu') && elem.classList.contains('btn-menu')) {
+              $elem.last().last().removeClass('is-overflowed');
+            }
+            */
             return;
           }
 
@@ -861,6 +892,12 @@
             li.classList.remove('hidden');
           }
           elem.classList.add('is-overflowed');
+
+          /*
+          if (elem.classList.contains('btn-split-menu') && elem.classList.contains('btn-menu')) {
+            $elem.last().last().addClass('is-overflowed');
+          }
+          */
 
           if ($elem.find('.icon').length) {
             iconDisplay = 'addClass';
@@ -1052,7 +1089,10 @@
         }
 
         if (this.title && this.title.length) {
-          this.title.off('beforeshow.toolbar').data('tooltip').destroy();
+          var dataTooltip = this.title.off('beforeshow.toolbar').data('tooltip');
+          if (dataTooltip) {
+            dataTooltip.destroy();
+          }
         }
 
         this.moreMenu.children('li').each(deconstructMenuItem);
@@ -1071,6 +1111,17 @@
             searchFields.data('toolbarsearchfield').destroy();
           }
         }
+
+        /*
+        // Remove split button wrappers
+        if (this.splitButtonWrappers.length) {
+          $.each(this.splitButtonWrappers, function(wrapper) {
+            var els = wrapper.children().detach();
+            els.insertAfter(wrapper);
+            wrapper.remove();
+          });
+        }
+        */
 
         if (this.more.length && this.more.data('popupmenu') !== undefined) {
           this.more.data('popupmenu').destroy();

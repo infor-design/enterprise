@@ -14,7 +14,7 @@
         </div>
         <div class="buttonset"></div>
       </div>
-      <div class="tab-container" data-options='{ "containerElement": "#tab-panel-container" }'>
+      <div id="header-tabs" class="tab-container" data-options='{ "containerElement": "#tab-panel-container" }'>
         <ul class="tab-list">
           <li class="tab"><a href="#header-tabs-1">Header Tabs 1</a></li>
           <li class="tab"><a href="#header-tabs-2">Header Tabs 2</a></li>
@@ -132,3 +132,11 @@
 
     </div>
   </div>
+
+  <script type="text/javascript">
+    $('#header-tabs').on('focusin', 'a', function() {
+      if (console && typeof console.log === 'function') {
+        console.log('Tab Content: "'+ $(this).text().trim() +'"');
+      }
+    });
+  </script>

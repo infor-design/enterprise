@@ -183,6 +183,14 @@
 
         self.modal.element.find('.btn-actions').removeClass('is-selected');
 
+        // Fix: IE-11 more button was not showing
+        var thisMoreBtn = self.modal.element.find('.toolbar .more > .btn-actions');
+        if (thisMoreBtn.length) {
+          setTimeout(function() {
+            window.Soho.utils.fixSVGIcons(thisMoreBtn);
+          }, 600);
+        }
+
         self.element.trigger('afteropen', [self.modal, self.grid]);
 
         if (self.settings.validator) {
@@ -250,7 +258,6 @@
           cssClass: 'lookup-modal' + (!hasKeywordSearch ? ' lookup-no-search' : '')
         }).off('open').on('open', function () {
           self.createGrid();
-          self.element.trigger('afteropen', [self.modal, self.grid]);
         }).off('close').on('close', function () {
           self.element.focus();
         });

@@ -375,12 +375,16 @@
       },
 
       teardown: function() {
+        var api;
         this.accordion.off('blur.applicationmenu');
         this.menu.off('animateopencomplete animateclosedcomplete');
         $(window).off('scroll.applicationmenu');
         $(document).off('touchend.applicationmenu touchcancel.applicationmenu click.applicationmenu open-applicationmenu close-applicationmenu');
 
-        this.accordion.data('accordion').destroy();
+        api = this.accordion ? this.accordion.data('accordion') : null;
+        if (api && api.destroy) {
+          api.destroy();
+        }
 
         if (this.hasTriggers()) {
           this.triggers.off('click.applicationmenu');

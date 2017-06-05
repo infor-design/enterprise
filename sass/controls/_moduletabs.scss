@@ -64,6 +64,10 @@
     width: calc(100% - 1px);
   }
 
+  .tab-list-info {
+    display: none;
+  }
+
   .tab-list {
     height: 34px;
     overflow: hidden;

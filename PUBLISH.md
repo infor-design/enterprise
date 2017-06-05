@@ -38,7 +38,7 @@ npm publish ./ --tag=develop
 Update the info in dist/package.json
 
 ```bash
-npm publish dist --tag rc
+npm publish dist --tag dev
 npm publish dist --tag release/4.2.6
 npm publish dist
 ```
@@ -109,6 +109,9 @@ curl -X DELETE -H "Content-Type: application/json"     -u hookandloop:n98Y-uhPb-
 sudo docker ps -a
 docker stop 6410bbcfd5e2
 docker rm 6410bbcfd5e2
+
+docker images | grep <name>
+docker rmi PID
 ```
 ### Update version in @infor/sohoxi-angular
 * Clone repo

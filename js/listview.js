@@ -223,16 +223,11 @@
 
       renderPager: function(updatedPagerInfo) {
         var api = this.element.data('pager');
-
         if (!api || !this.settings.pager) {
           return;
         }
 
-        if (updatedPagerInfo) {
-          api.updatePagingInfo(updatedPagerInfo);
-        }
-
-        api.renderBar();
+        api.updatePagingInfo(updatedPagerInfo);
       },
 
       // Get the Data Source. Can be an array, Object or Url
@@ -591,7 +586,7 @@
           return;
         }
 
-        item.removeAttr('tabindex');
+        item.siblings().removeAttr('tabindex');
         item.attr('tabindex', 0).focus();
 
         if (this.settings.selectOnFocus && (this.settings.selectable !== 'multiple')) {
@@ -605,8 +600,9 @@
           li = $(this.element.children()[0]).children().eq(li);
         }
         // Un-select selected item
+        // and donot trigger selected event, sinnce we removeing
         if (li.is('.is-selected')) {
-          this.select(li);
+          this.select(li, true);
         }
         li.remove();
       },
@@ -719,7 +715,7 @@
       },
 
       // Handle Selecting the List Element
-      select: function (li) {
+      select: function (li, noTrigger) {
         var self = this,
           isChecked = false;
 
@@ -731,8 +727,10 @@
         isChecked = li.hasClass('is-selected');
 
         //focus
-        li.parent().children().removeAttr('tabindex');
-        li.attr('tabindex', 0);
+        if (!li.is('[tabindex="0"]')) {
+          li.siblings().removeAttr('tabindex');
+          li.attr('tabindex', 0);
+        }
 
         if (this.settings.selectable === false || this.settings.selectable === 'false') {
           return;
@@ -760,7 +758,9 @@
         });
 
         li.attr('aria-selected', !isChecked);
-        this.element.triggerHandler('selected', {selectedItems: this.selectedItems, elem: li});
+        if (!noTrigger) {
+          this.element.triggerHandler('selected', {selectedItems: this.selectedItems, elem: li});
+        }
 
         var toolbar, toolbarControl,
           parent = this.element.closest('.card, .widget');

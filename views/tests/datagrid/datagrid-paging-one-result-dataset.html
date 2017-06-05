@@ -1,0 +1,107 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <div role="toolbar" class="toolbar">
+
+      <div class="title">
+        Data Grid with one result
+        <span class="datagrid-result-count"></span>
+      </div>
+
+      <div class="buttonset">
+
+        <button class="btn" type="button" id="add-btn">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-add"></use>
+          </svg>
+          <span>Add</span>
+        </button>
+
+      </div>
+    </div>
+
+    <div class="contextual-toolbar toolbar is-hidden">
+      <div class="title selection-count"></div>
+      <div class="buttonset">
+        <button class="btn" type="button" id='remove-btn'>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-delete"></use>
+          </svg>
+          <span>Remove</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="datagrid">
+
+    </div>
+  </div>
+</div>
+
+
+<script>
+  $('body').one('initialized', function () {
+
+      var grid,
+        columns = [],
+        data = [];
+
+      // Some Sample Data
+      data.push({ id: 1, productId: 2142201, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1, price: 210.99, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action'});
+
+      //Define Columns for the Grid.
+      columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Readonly});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', editor: Editors.Input});
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, editor: Editors.Input});
+      columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', editor: Editors.Input});
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', formatter: Formatters.Integer, editor: Editors.Input});
+      columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal, editor: Editors.Input});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+
+      //Init and get the api for the grid
+      grid = $('#datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        selectable: 'multiple',
+        editable: true,
+        paging: true,
+        pagesize: 10,
+        toolbar: {
+          title: 'Data Grid Header Title',
+          results: true,
+          dateFilter: false,
+          keywordFilter: true,
+          advancedFilter: true,
+          actions: true,
+          views: true,
+          rowHeight: true,
+          collapsibleFilter: true
+        }
+      }).data('datagrid');
+
+      //Add Code for Add and icon-delete
+      $('#add-btn').on('click', function () {
+        var topRow = $('> tr[aria-rowindex]:first-child', grid.tableBody),
+          topRowIndex = topRow.length ? parseInt(topRow.attr('aria-rowindex'), 10) : 0,
+          location = topRowIndex ? topRowIndex-1 : 'top';
+
+        grid.addRow({
+          id: data.length,
+          productId: data.length,
+          productName: 'New Product',
+          activity: 'Product activity',
+          quantity: 0,
+          price: 0.00,
+          status: 'New',
+          orderDate: new Date(),
+          action: 'Action'
+        }, location);
+      });
+
+      //Add Code for Add and icon-delete
+      $('#remove-btn').on('click', function () {
+        grid.removeSelected();
+      });
+
+  });
+</script>

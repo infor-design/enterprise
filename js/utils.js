@@ -393,28 +393,60 @@
 
   //Hide Focus - Only show on key entry
   $.fn.hideFocus = function() {
-    var element = $(this);
+    var element = $(this),
+      label = element.next(),
+      isClick = false,
+      isFocused = false,
+      labelClicked = false;
 
-    var isClick = false,
-      isFocused = false;
-
-    element.addClass('hide-focus').on('mousedown.hide-focus touchstart.hide-focus', function() {
-      isClick = true;
-      $(this).addClass('hide-focus');
-    }).on('focusin.hide-focus', function() {
-      var elem = $(this);
-
-      if (!isClick && !isFocused) {
-        elem.removeClass('hide-focus');
+    // Checkbox, Radio buttons or Switch
+    if (element.is('.checkbox, .radio, .switch')) {
+      if (label.is('[type="hidden"]')) {
+        label = label.next();
       }
-      isClick = false;
-      isFocused = true;
-    }).on('focusout.hide-focus', function() {
-      $(this).addClass('hide-focus');
-      isClick = false;
-      isFocused = false;
-    });
+      element.addClass('hide-focus')
+        .on('focusin.hide-focus', function() {
+          if (!isClick && !isFocused && !labelClicked) {
+            element.removeClass('hide-focus');
+          }
+          isClick = false;
+          isFocused = true;
+          labelClicked = false;
+        })
+        .on('focusout.hide-focus', function() {
+          element.addClass('hide-focus');
+          labelClicked = label.is(labelClicked);
+          isClick = false;
+          isFocused = false;
+        });
 
+      label.on('mousedown.hide-focus', function() {
+        labelClicked = this;
+        isClick = true;
+        element.addClass('hide-focus');
+      });
+    }
+
+    // All other elements (ie. Hyperlinks)
+    else {
+      element.addClass('hide-focus')
+        .on('mousedown.hide-focus touchstart.hide-focus', function() {
+          isClick = true;
+          element.addClass('hide-focus');
+        })
+        .on('focusin.hide-focus', function() {
+          if (!isClick && !isFocused) {
+            element.removeClass('hide-focus');
+          }
+          isClick = false;
+          isFocused = true;
+        })
+        .on('focusout.hide-focus', function() {
+          element.addClass('hide-focus');
+          isClick = false;
+          isFocused = false;
+        });
+    }
   };
 
   //Clearable (Shows an X to clear)
@@ -555,13 +587,25 @@
   };
 
   /**
+   * Checks if an element is valid
+   * @param {HTMLElement|SVGElement|jQuery[]} el - The element being checked
+   * @returns {boolean} - represents all values normally contained by a DOMRect or ClientRect
+   */
+  window.Soho.DOM.isElement = function isElement(el) {
+    if ((el instanceof HTMLElement) || (el instanceof SVGElement) || (el instanceof $ && el.length)) {
+      return true;
+    }
+    return false;
+  };
+
+  /**
    * Runs the generic _getBoundingClientRect()_ method on an element, but returns its results
    * as a plain object instead of a ClientRect
    * @param {HTMLElement|SVGElement|jQuery[]} el - The element being manipulated
    * @returns {object} - represents all values normally contained by a DOMRect or ClientRect
    */
   window.Soho.DOM.getDimensions = function getDimensions(el) {
-    if (!(el instanceof HTMLElement) && !(el instanceof SVGElement) && !(el instanceof $)) {
+    if (!Soho.DOM.isElement(el)) {
       return {};
     }
 
@@ -573,17 +617,14 @@
       el = el[0];
     }
 
-    var rect = el.getBoundingClientRect();
-    return {
-      top: rect.top,
-      bottom: rect.bottom,
-      left: rect.left,
-      right: rect.right,
-      width: rect.width,
-      height: rect.height,
-      x: rect.x,
-      y: rect.y
-    };
+    var rect = el.getBoundingClientRect(),
+      rectObj = {};
+    for (var prop in rect) {
+      if (!isNaN(rect[prop])) {
+        rectObj[prop] = rect[prop];
+      }
+    }
+    return rectObj;
   };
 
   // Debounce method
@@ -681,7 +722,7 @@
    * @returns {object[]}
    */
   window.Soho.utils.getContainerScrollDistance = function getContainerScrollDistance(element) {
-    if (!element || (!(element instanceof HTMLElement) && !(element instanceof SVGElement) && !(element instanceof $))) {
+    if (!Soho.DOM.isElement(element)) {
       return [];
     }
 
@@ -713,6 +754,244 @@
 
     return containers;
   };
+
+  /**
+   * Takes an element that is currently hidden by some means (FX: "display: none;") and gets its potential dimensions by checking a clone of the element that is NOT hidden.
+   * @param {HTMLElement|SVGElement|jQuery[]} el - The element being manipulated.
+   * @param {object} options - incoming options.
+   * @param {jQuery[]} [parentElement=undefined] - the parent element where a clone of this hidden element will be attached.
+   * @returns {object}
+   */
+  window.Soho.utils.getHiddenSize = function getHiddenSize(el, options) {
+    var defaults = {
+      dims: { width: 0, height: 0, innerWidth: 0, innerHeight: 0, outerWidth: 0, outerHeight: 0 },
+      parentElement: undefined,
+      includeMargin: false
+    };
+
+    if (!Soho.DOM.isElement(el)) {
+      return defaults.dims;
+    }
+
+    el = $(el);
+    options = $.extend({}, defaults, options);
+
+    // element becomes clone and appended to a parentElement, if defined
+    var hasDefinedParentElement = Soho.DOM.isElement(options.parentElement);
+    if (hasDefinedParentElement) {
+      el = el.clone().appendTo(options.parentElement);
+    }
+
+    var dims = options.dims,
+      hiddenParents = el.parents().add(el).not(':visible'),
+      props = { visibility: 'hidden', display: 'block' },
+      oldProps = [];
+
+    hiddenParents.each(function () {
+      var old = {};
+
+      for (var name in props) {
+        old[name] = this.style[name];
+        this.style[name] = props[name];
+      }
+
+      oldProps.push(old);
+    });
+
+    dims.padding = {
+      bottom: el.css('padding-bottom'),
+      left: el.css('padding-left'),
+      right: el.css('padding-right'),
+      top: el.css('padding-top')
+    };
+    dims.width = el.width();
+    dims.outerWidth = el.outerWidth(options.includeMargin);
+    dims.innerWidth = el.innerWidth();
+    dims.scrollWidth = el[0].scrollWidth;
+    dims.height = el.height();
+    dims.innerHeight = el.innerHeight();
+    dims.outerHeight = el.outerHeight(options.includeMargin);
+    dims.scrollHeight = el[0].scrollHeight;
+
+    hiddenParents.each(function (i) {
+      var old = oldProps[i];
+      for (var name in props) {
+        this.style[name] = old[name];
+      }
+    });
+
+    // element is ONLY removed when a parentElement is defined because it was cloned.
+    if (hasDefinedParentElement) {
+      el.remove();
+    }
+
+    return dims;
+  };
+
+  /**
+   * Binds the Soho Util _getHiddenSize()_ to a jQuery selector
+   * @param {object} options - incoming options
+   * @returns {object}
+   */
+  $.fn.getHiddenSize = function(options) {
+    return window.Soho.utils.getHiddenSize(this, options);
+  };
+
+  //==================================================================
+  // Simple Behaviors
+  //==================================================================
+  window.Soho.behaviors = {};
+
+  /**
+   * Allows for the smooth scrolling of an element's content area.
+   * @param {HTMLElement|SVGElement|jQuery[]} el - The element being manipulated.
+   * @param {Number} target - target distance.
+   * @param {Number} duration - the time that will be needed for the scrolling to complete.
+   * @returns {$.Deferred}
+   */
+  window.Soho.behaviors.smoothScrollTo = function(el, target, duration) {
+    var dfd = $.Deferred();
+
+    if (!Soho.DOM.isElement(el)) {
+      // Not a workable element
+      return dfd.reject();
+    }
+
+    // Strip the jQuery
+    if (el instanceof $ && el.length) {
+      el = el[0];
+    }
+
+    // undefined (not zero) target should instantly resolve
+    if (target === undefined || target === null) {
+      return dfd.resolve();
+    }
+
+    if (isNaN(duration)) {
+      duration = 0;
+    }
+
+    target = Math.round(target);
+    duration = Math.round(duration);
+
+    if (duration < 0) {
+      // bad duration
+      return dfd.fail();
+    }
+
+    if (duration === 0) {
+      el.scrollLeft = el.scrollLeft + target;
+      return dfd.resolve();
+    }
+
+    var startTime = Date.now(),
+      endTime = startTime + duration,
+      startLeft = el.scrollLeft,
+      distance = target /*- startLeft*/;
+
+    // based on http://en.wikipedia.org/wiki/Smoothstep
+    function smoothStep(start, end, point) {
+      if (point <= start) { return 0; }
+      if (point >= end) { return 1; }
+      var x = (point - start) / (end - start); // interpolation
+      return x*x*(3 - 2*x);
+    }
+
+    // This is to keep track of where the element's scrollLeft is
+    // supposed to be, based on what we're doing
+    var previousLeft = el.scrollLeft;
+
+    // This is like a think function from a game loop
+    function scrollFrame() {
+      if (el.scrollLeft !== previousLeft) {
+        // interrupted
+        dfd.reject();
+        return;
+      }
+
+      // set the scrollLeft for this frame
+      var now = Date.now();
+      var point = smoothStep(startTime, endTime, now);
+      var frameLeft = Math.round(startLeft + (distance * point));
+      el.scrollLeft = frameLeft;
+
+      // check if we're done!
+      if (now >= endTime) {
+        dfd.resolve();
+        return;
+      }
+
+      // If we were supposed to scroll but didn't, then we
+      // probably hit the limit, so consider it done; not
+      // interrupted.
+      if (el.scrollLeft === previousLeft && el.scrollLeft !== frameLeft) {
+        dfd.resolve();
+        return;
+      }
+      previousLeft = el.scrollLeft;
+
+      // schedule next frame for execution
+      setTimeout(scrollFrame, 0);
+    }
+
+    // boostrap the animation process
+    setTimeout(scrollFrame, 0);
+
+    return dfd;
+  };
+
+  /**
+   * Binds the Soho Behavior _smoothScrollTo()_ to a jQuery selector
+   * @param {Number} target - target distance to scroll the element
+   * @param {Number} duration - the time that will be needed for the scrolling to complete.
+   * @returns {$.Deferred}
+   */
+  $.fn.smoothScroll = function(target, duration) {
+    return window.Soho.behaviors.smoothScrollTo(this, target, duration);
+  };
+
+  //==================================================================
+  // JS-level Breakpoint Access
+  // NOTE: these should match whatever the breakpoints are in "/sass/_config.scss"
+  //==================================================================
+  window.Soho.breakpoints = {
+    'phone': 320,
+    'slim': 400,
+    'phablet': 610,
+    'phone-to-tablet': 767,
+    'wide-tablet': 968,
+    'tablet-to-desktop': 1280,
+    'desktop-to-extralarge': 1600
+  };
+
+  /**
+   * @param {string} breakpoint - matches one of the entries in the "Soho.breakpoints" object.
+   * @returns {boolean}
+   */
+  window.Soho.breakpoints.isAbove = function isAbove(breakpoint) {
+    var bp = Soho.breakpoints[breakpoint];
+    if (!bp) {
+      return false;
+    }
+
+    var windowWidth = $(window).width();
+    return windowWidth > bp;
+  };
+
+  /**
+   * @param {string} breakpoint - matches one of the entries in the "Soho.breakpoints" object.
+   * @returns {boolean}
+   */
+  window.Soho.breakpoints.isBelow = function isBelow(breakpoint) {
+    var bp = Soho.breakpoints[breakpoint];
+    if (!bp) {
+      return false;
+    }
+
+    var windowWidth = $(window).width();
+    return windowWidth < bp;
+  };
+
 
 /* start-amd-strip-block */
 }));

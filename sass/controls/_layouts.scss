@@ -385,6 +385,7 @@ body.no-scroll {
 .page-container {
   @include transition(height 300ms cubic-bezier(.17, .04, .03, .94));
   bottom: 0;
+  font-size: 0;
   height: 100%;
   margin: 0 auto;
   position: absolute;
@@ -395,7 +396,6 @@ body.no-scroll {
   }
 
   > .row:first-child {
-    padding-bottom: 20px;
     padding-top: 20px;
   }
 
@@ -424,13 +424,25 @@ body.no-scroll {
     margin-top: 60px;
   }
 
-  &.has-tabs {
-    height: 94px;
+  + .subheader + .page-container,
+  + .subheader + .application-menu + .page-container {
+    height: calc(100% - 120px);
+    margin-top: 120px;
+  }
+
+  &.has-tabs,
+  &.has-alternate-tabs {
+    height: 100px;
+
+    > .toolbar {
+      height: 60px;
+      margin-bottom: 0;
+    }
 
     + .page-container,
     + .application-menu + .page-container {
-      height: calc(100% - 94px);
-      margin-top: 94px;
+      height: calc(100% - 100px);
+      margin-top: 100px;
     }
   }
 
@@ -447,11 +459,20 @@ body.no-scroll {
       height: calc(100% - 60px);
       margin-top: 60px;
     }
+
+    + .subheader + .page-container,
+    + .subheader + .application-menu + .page-container {
+      height: calc(100% - 120px);
+      margin-top: 120px;
+    }
   }
 
-  &.has-breadcrumb,
-  &.has-alternate-tabs {
+  &.has-breadcrumb {
     height: 105px;
+
+    > .toolbar {
+      margin-bottom: 0;
+    }
 
     + .page-container,
     + .application-menu + .page-container {

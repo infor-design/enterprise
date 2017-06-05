@@ -155,6 +155,12 @@ var express = require('express'),
     return noHtml;
   }
 
+  function toTitleCase(str){
+    return str.replace(/\w\S*/g, function(txt){
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+  }
+
   // Checks the target file path for its type (is it a file, a directory, etc)
   // http://stackoverflow.com/questions/15630770/node-js-check-if-path-is-file-or-directory
   function is(type, filePath) {
@@ -312,7 +318,7 @@ var express = require('express'),
     }
 
     controlName = stripHtml(req.params.control);
-    opts.subtitle = controlName.charAt(0).toUpperCase() + controlName.slice(1).replace('-',' ');
+    opts.subtitle = toTitleCase(controlName.charAt(0).toUpperCase() + controlName.slice(1).replace('-',' '));
 
     // Specific Changes for certain controls
     opts.subtitle = opts.subtitle.replace('Contextualactionpanel', 'Contextual Action Panel');
@@ -378,6 +384,8 @@ var express = require('express'),
       return base + 'container/layout';
     } else if (path.match(/\/different-header-types/)) {
       return base + 'different-header-types/layout';
+    } else if (path.match(/\/empty/)) {
+      return base + 'empty/layout';
     } else if (path.match(/\/lms/)) {
       return base + 'lms/layout';
     } else if (path.match(/\/six-levels-with-icons/)) {
@@ -554,19 +562,28 @@ var express = require('express'),
   };
 
   function defaultLayoutRouteHandler(req, res, next) {
-    var opts = extend({}, res.opts, layoutOpts);
-    res.render('layouts/index', opts);
-    next();
+    var exclude = [
+      '_masthead.html',
+      'header-only.html',
+      'header-scroll.html',
+      'header-sticky.html'
+    ];
+
+    getDirectoryListing('layouts/', req, res, next, exclude);
+    return;
   }
 
   function layoutRouteHandler(req, res, next) {
-    var opts = extend({}, res.opts, layoutOpts),
+    var pageName = '',
+      opts = extend({}, res.opts, layoutOpts),
       layout = req.params.layout;
 
     if (!layout || !layout.length) {
       return defaultLayoutRouteHandler(req, res, next);
     }
 
+    pageName = stripHtml(req.params.layout);
+    opts.subtitle = toTitleCase(pageName.charAt(0).toUpperCase() +pageName.slice(1).replace('-',' '));
     res.render('layouts/' + layout, opts);
     next();
   }
@@ -657,25 +674,6 @@ var express = require('express'),
     }
 
     res.render('angular/' + end, opts);
-    next();
-  });
-
-  // React Support
-  var reactOpts = {
-    subtitle: 'React',
-    layout: 'react/layout'
-  };
-
-  router.get('/react*', function(req, res, next) {
-    var opts = extend({}, res.opts, reactOpts),
-      end = req.url.replace(/\/react(\/)?/, '');
-
-    if (!end || !end.length || end === '/') {
-      getDirectoryListing('react/', req, res, next);
-      return;
-    }
-
-    res.render('react/' + end, opts);
     next();
   });
 
@@ -1309,20 +1307,16 @@ var express = require('express'),
     next();
   }
 
-  router.get('/api/deployments', function(req, res, next) {
-    sendJSONFile('deployments', req, res, next);
-  });
-
-  router.get('/api/general/status-codes', function(req, res, next) {
-    sendJSONFile('status-codes', req, res, next);
+  router.get('/api/year2014', function(req, res, next) {
+    sendJSONFile('year2014', req, res, next);
   });
 
   router.get('/api/my-projects', function(req, res, next) {
     sendJSONFile('projects', req, res, next);
   });
 
-  router.get('/api/companies', function(req, res, next) {
-    sendJSONFile('companies', req, res, next);
+  router.get('/api/accounts-sm', function(req, res, next) {
+    sendJSONFile('accounts-sm', req, res, next);
   });
 
   router.get('/api/accounts', function(req, res, next) {
@@ -1333,20 +1327,20 @@ var express = require('express'),
     sendJSONFile('assets', req, res, next);
   });
 
-  router.get('/api/accounts-sm', function(req, res, next) {
-    sendJSONFile('accounts-sm', req, res, next);
-  });
-
-  router.get('/api/incidents', function(req, res, next) {
-    sendJSONFile('incidents', req, res, next);
-  });
-
-  router.get('/api/fires', function(req, res, next) {
-    sendJSONFile('fires', req, res, next);
-  });
-
   router.get('/api/autocomplete/turkish', function(req, res, next) {
     sendJSONFile('autocomplete-turkish', req, res, next);
+  });
+
+  router.get('/api/bikes', function(req, res, next) {
+    sendJSONFile('bikes', req, res, next);
+  });
+
+  router.get('/api/companies', function(req, res, next) {
+    sendJSONFile('companies', req, res, next);
+  });
+
+  router.get('/api/deployments', function(req, res, next) {
+    sendJSONFile('deployments', req, res, next);
   });
 
   router.get('/api/dummy-dropdown-data', function(req, res, next) {
@@ -1354,6 +1348,22 @@ var express = require('express'),
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(data));
     next();
+  });
+
+  router.get('/api/fires', function(req, res, next) {
+    sendJSONFile('fires', req, res, next);
+  });
+
+  router.get('/api/incidents', function(req, res, next) {
+    sendJSONFile('incidents', req, res, next);
+  });
+
+  router.get('/api/jobs', function(req, res, next) {
+    sendJSONFile('jobs', req, res, next);
+  });
+
+  router.get('/api/general/status-codes', function(req, res, next) {
+    sendJSONFile('status-codes', req, res, next);
   });
 
 module.exports = app;

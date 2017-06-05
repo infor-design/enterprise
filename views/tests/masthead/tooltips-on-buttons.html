@@ -1,0 +1,53 @@
+<section class="masthead">
+  <div class="toolbar no-actions-button" data-options="{ maxVisibleButtons: 9 }">
+    <div class="title">
+      <button type="button" class="masthead-icon" class="btn">
+        <svg class="icon icon-logo" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-logo"></use>
+        </svg>
+         <span class="audible">Go To Home</span>
+      </button>
+      <h1 class="masthead-appname">Infor Application</h1>
+    </div>
+
+    <div class="buttonset">
+      <button id="icon-only" type="button" class="btn" title="This is a button!" data-init="false">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-star-outlined"></use>
+        </svg>
+      </button>
+
+      <button id="long-text-button" type="button" class="btn" title="This is also a button!" data-init="false">
+        <span>Long Text Button</span>
+      </button>
+
+      <button id="text-then-icon" type="button" class="btn" title="Even this is a button!" data-init="false">
+        <span>Delete</span>
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-delete"></use>
+        </svg>
+      </button>
+
+      <button id="icon-then-text" type="button" class="btn" title="Yet another amazing button!" data-init="false">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-settings"></use>
+        </svg>
+        <span>Settings</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<div class="page-container scrollable">
+  <div class="row">
+    <div class="six columns">
+      <h2>Masthead Test: Different Button Types</h2>
+      <p>The masthead above contains different button types that should all be aligned and styled correctly.</p>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  var buttons = $('#icon-only').add('#long-text-button').add('#text-then-icon').add('#icon-then-text');
+  buttons.tooltip();
+</script>

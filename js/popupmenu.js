@@ -66,6 +66,11 @@
         if (this.settings.trigger === 'immediate') {
           this.open(this.settings.eventObj);
         }
+
+        // Use some css rules on submenu parents
+        if (this.menu.find('.submenu').length) {
+          this.menu.addClass('has-submenu');
+        }
       },
 
       isRTL: function() {
@@ -103,7 +108,7 @@
             break;
           case 'object': // jQuery Object
             if (this.settings.menu === null) {
-              this.menu = this.element.next('.popupmenu');
+              this.menu = this.element.next('.popupmenu, .popupmenu-wrapper');
             } else {
               this.menu = $(this.settings.menu);
             }
@@ -116,11 +121,21 @@
             break;
         }
 
-        //Reuse Same menu
-        if (this.menu.parent().is('.popupmenu-wrapper')) {
-          return;
+        // If markup already exists for the wrapper, use that instead of rebuilding.
+        if (this.menu.is('.popupmenu-wrapper')) {
+          this.preExistingWrapper = true;
+          this.wrapper = this.menu;
+          this.menu = this.wrapper.children('.popupmenu').first();
         }
 
+        // Similar check as above, assuming the menu wasn't a popupmenu wrapper.
+        if (this.menu.parent().is('.popupmenu-wrapper')) {
+          this.preExistingWrapper = true;
+          this.wrapper = this.menu.parent();
+        }
+
+        // If we still don't have a menu reference at this point, fail gracefully by returning out
+        // and simply acting like a button.
         if (this.menu.length === 0) {
           return false;
         }
@@ -132,13 +147,25 @@
           this.menu.detach().appendTo('body');
         }
 
-        this.menu.addClass('popupmenu')
-          .data('trigger', this.element)
-          .attr('role', (this.settings.ariaListbox ? 'listbox' : 'menu'))
-          .wrap('<div class="popupmenu-wrapper"></div>');
+        if (!this.menu.is('.popupmenu')) {
+          this.menu.addClass('popupmenu')
+            .attr('role', (this.settings.ariaListbox ? 'listbox' : 'menu'));
+        }
+
+        // Always store a reference to the trigger element under jQuery data.
+        this.menu.data('trigger', this.element);
 
         this.wrapper = this.menu.parent('.popupmenu-wrapper');
-        this.wrapper.find('svg').icon();
+        if (!this.wrapper.length) {
+          this.wrapper = this.menu.wrap('<div class="popupmenu-wrapper"></div>');
+        }
+
+        // Invoke all icons as icons
+        this.wrapper.find('svg').each(function() {
+          if (!$(this).data('icon')) {
+            $(this).icon();
+          }
+        });
 
         //Enforce Correct Modality
         this.menu.parent('.popupmenu-wrapper').attr('role', 'application').attr('aria-hidden', 'true');
@@ -161,10 +188,9 @@
           if (!(popup.parent().hasClass('wrapper'))) {
             popup.wrap('<div class="wrapper"></div>');
           }
-
         });
 
-        // If a button with no border append arrow markup
+        // If the trigger element is a button with no border append arrow markup
         var containerClass = this.element.parent().attr('class');
         if ((this.element.hasClass('btn-menu') ||
             this.element.hasClass('btn-actions') ||
@@ -172,7 +198,7 @@
             this.element.closest('.toolbar').length > 0 ||
             this.element.closest('.masthead').length > 0 ||
             this.element.is('.searchfield-category-button') ||
-            (containerClass && containerClass.indexOf('more') >= 0 && this.element.is(':not(.tab-more)')) ||
+            (containerClass && containerClass.indexOf('more') >= 0) ||
             containerClass && containerClass.indexOf('btn-group') >= 0)) {
 
           var arrow = $('<div class="arrow"></div>'),
@@ -182,9 +208,8 @@
         }
 
         // If inside of a ".field-short" container, make smaller
-        if (this.element.closest('.field-short').length) {
-          this.menu.addClass('popupmenu-short');
-        }
+        var addFieldShort = this.element.closest('.field-short').length;
+        this.menu[addFieldShort ? 'addClass' : 'removeClass']('popupmenu-short');
 
         // If button is part of a header/masthead or a container using the "alternate" UI color, add the "alternate" class.
         if (containerClass !== undefined &&
@@ -366,62 +391,9 @@
 
         //Handle Events in Anchors
         this.menu.onTouchClick('popupmenu', 'a')
-          .on('click.popupmenu', 'a', function (e) {
-
-          var anchor = $(this),
-            href = anchor.attr('href'),
-            selectionResult = [anchor];
-
-          if (anchor.parent().is('.submenu, .hidden, .is-disabled') || anchor[0].disabled) {
-            //Do not close parent items of submenus on click
-            e.preventDefault();
-            return;
-          }
-
-          if (anchor.find('input[checkbox]').length > 0) {
-            return;
-          }
-
-          if (self.element.hasClass('btn-filter')) {
-            self.iconFilteringUpdate(anchor);
-            e.preventDefault();
-          }
-
-          if (self.isInSelectableSection(anchor) || self.menu.hasClass('is-selectable') || self.menu.hasClass('is-multiselectable')) {
-            selectionResult = self.select(anchor);
-          }
-
-          //Single toggle on off of checkbox class
-          if (anchor.parent().hasClass('is-toggleable')) {
-            anchor.parent().toggleClass('is-checked');
-          }
-
-          // Trigger a selected event containing the anchor that was selected
-          self.element.triggerHandler('selected', selectionResult);
-
-          // MultiSelect Lists should act like other "multiselect" items and not close the menu when options are chosen.
-          if (self.menu.hasClass('is-multiselectable') || self.isInMultiselectSection(anchor)) {
-            return;
-          }
-
-          self.close();
-
-          if (self.element.is('.autocomplete')) {
-            return;
-          }
-
-          if (href && href.charAt(0) !== '#') {
-            if (anchor.attr('target') === '_blank') {
-              window.open(href, '_blank');
-            } else {
-              window.location.href = href;
-            }
-            return true;
-          }
-
-          e.preventDefault();
-          e.stopPropagation();
-        });
+          .on('click.popupmenu', 'a', function(e) {
+            self.handleItemClick(e, $(this));
+          });
 
         var excludes = 'li:not(.separator):not(.hidden):not(.heading):not(.group):not(.is-disabled)';
 
@@ -566,6 +538,81 @@
           }
 
         });
+      },
+
+      /**
+       * Handles the action of clicking items in the popupmenu.
+       * @param {$.Event} [e] - The jQuery Event object.
+       * @return undefined;
+       */
+      handleItemClick: function(e, anchor) {
+        var href = anchor.attr('href'),
+          selectionResult = [anchor];
+
+        if (!e && !anchor) {
+          return;
+        }
+
+        if (anchor.parent().is('.submenu, .hidden, .is-disabled') || anchor[0].disabled) {
+          //Do not close parent items of submenus on click
+          e.preventDefault();
+          return;
+        }
+
+        if (anchor.find('input[checkbox]').length > 0) {
+          return;
+        }
+
+        if (this.element.hasClass('btn-filter')) {
+          this.iconFilteringUpdate(anchor);
+          e.preventDefault();
+        }
+
+        if (this.isInSelectableSection(anchor) || this.menu.hasClass('is-selectable') || this.menu.hasClass('is-multiselectable')) {
+          selectionResult = this.select(anchor);
+        }
+
+        // Single toggle on off of checkbox class
+        if (anchor.parent().hasClass('is-toggleable')) {
+          anchor.parent().toggleClass('is-checked');
+        }
+
+        // Trigger a selected event containing the anchor that was selected
+        // If an event object is not passed to `handleItemClick()`, assume it was due to this
+        // event being triggered already, making it not necessary to re-trigger it.
+        if (e) {
+          if (selectionResult.length === 1) {
+            selectionResult.push(undefined);
+          }
+
+          selectionResult.push(true);
+          this.element.triggerHandler('selected', selectionResult);
+        }
+
+        // MultiSelect Lists should act like other "multiselect" items and not close the menu when options are chosen.
+        if (this.menu.hasClass('is-multiselectable') || this.isInMultiselectSection(anchor)) {
+          return;
+        }
+
+        this.close();
+
+        if (this.element.is('.autocomplete')) {
+          return;
+        }
+
+        if (href && href.charAt(0) !== '#') {
+          if (anchor.attr('target') === '_blank') {
+            window.open(href, '_blank');
+          } else {
+            window.location.href = href;
+          }
+          return true;
+        }
+
+        if (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
       },
 
       // Filtering icon initial setup
@@ -763,9 +810,17 @@
           return;
         }
 
-        var otherMenus = $('.popupmenu').not(this.menu);  //close others.
+        var otherMenus = $('.popupmenu.is-open').filter(function() {
+          return $(this).parents('.popupmenu').length === 0;
+        }).not(this.menu);  //close others.
+
         otherMenus.each(function() {
-          var api = $(this).data('popupmenu');
+          var trigger = $(this).data('trigger');
+          if (!trigger || !trigger.length) {
+            return;
+          }
+
+          var api = $(this).data('trigger').data('popupmenu');
           if (api && typeof api.close === 'function') {
             api.close();
           }
@@ -1134,8 +1189,12 @@
         });
 
         function unwrapPopup(menu) {
+          if (!this.preExistingWrapper) {
+            return;
+          }
+
           var wrapper = menu.parent();
-          if (wrapper.is('.popupmenu-wrapper')) {
+          if (wrapper.is('.popupmenu-wrapper, .wrapper')) {
             if (wrapper.data('place')) {
               wrapper.data('place').destroy();
             }

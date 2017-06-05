@@ -1188,7 +1188,7 @@
           var node = $(this);
           e.preventDefault();
 
-          $(e.currentTarget).popupmenu({menuId: menuId, eventObj: e, trigger: 'immediate'}).off('selected').on('selected', function (e, args) {
+          $(e.currentTarget).popupmenu({menuId: menuId, eventObj: e, trigger: 'immediate', attachToBody: true}).off('selected').on('selected', function (e, args) {
             self.element.triggerHandler('menuselect', {node: node, item: args});
           });
 

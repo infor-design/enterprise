@@ -591,17 +591,12 @@
   }
 }
 
-// Toggle Button
-.btn-toggle {
-
-}
-
 // Level 1 Accordion Pane
 .accordion-pane {
-  height: 0;
-  padding: 0;
-  overflow: hidden;
   @include transition(padding 300ms cubic-bezier(.17, .04, .03, .94));
+  height: 0;
+  overflow: hidden;
+  padding: 0;
 
   // Visible accordion panes force a border to show up on the next accordion header for visual separation
   &.is-expanded {

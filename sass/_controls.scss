@@ -27,7 +27,7 @@
 @import 'controls/listview';
 @import 'controls/listbuilder';
 @import 'controls/swaplist';
-@import 'controls/badges';
+@import 'controls/badges-tags';
 @import 'controls/circlepager';
 @import 'controls/pager';
 @import 'controls/datagrid';
@@ -79,14 +79,16 @@
 @import 'patterns/header-detail';
 @import 'patterns/step-process';
 @import 'patterns/call-to-action-container';
+@import 'patterns/card-deck';
+@import 'patterns/master-detail';
 
 // Core Layouts
 @import 'layouts/object-summary';
 @import 'layouts/panes';
+@import 'layouts/scrollable-flex';
 @import 'layouts/summary-form';
 @import 'layouts/top-bottom-anchored';
-@import 'patterns/card-deck';
-@import 'patterns/master-detail';
+@import 'layouts/forms';
 
 // These controls come last
 @import 'controls/colors';

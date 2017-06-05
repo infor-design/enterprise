@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Busy Indicator Test: Container with <span class="code">font-size: 0;</span></h2>
+    <p><a class="hyperlink" href="http://jira/browse/SOHO-6145" target="_blank">Related JIRA Ticket</a>.</p>
+    <p>Busy Indicators placed inside of UI containers with a "zero" font-size (to remove extra text padding, etc) should still properly display a busy indicator.  The linked ticket fixes a bug where this was not the case, since the busy indicator used to be constructed against <span class="code">em</span> measurements.</p>
+  </div>
+</div>
+
+<style id="test-style">
+  #standalone-busy .busy-indicator-container {
+    font-size: 0;
+  }
+</style>
+
+<div class="row">
+  <div class="six columns">
+    <button class="btn-secondary" id="busy-start-trigger" type="button">Fire "start" Event</button><br />
+    <br>
+    <button class="btn-secondary" id="busy-complete-trigger" type="button">Fire "complete" Event</button><br />
+  </div>
+  <div class="six columns">
+    <div id="standalone-busy" class="busy card"></div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+    $('#busy-start-trigger').click(function(e) {
+      e.preventDefault();
+      $('#standalone-busy').trigger('start.busyindicator');
+    });
+    $('#busy-complete-trigger').click(function(e) {
+      e.preventDefault();
+      $('#standalone-busy').trigger('complete.busyindicator');
+    });
+  });
+</script>

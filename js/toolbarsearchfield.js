@@ -463,7 +463,11 @@
           self.inputWrapper.addClass('is-open');
           self.calculateOpenWidth();
           self.setOpenWidth();
-          self.input.focus(); // for iOS
+
+          var iOS = /(iPad|iPhone|iPod)/g.test( navigator.userAgent );
+          if (iOS) {
+            self.input.focus();
+          }
 
           var eventArgs = [];
           if (containerSizeSetters) {

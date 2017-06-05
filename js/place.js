@@ -783,8 +783,7 @@
         if (target.is('.datepicker, .timepicker')) {
           target = target.next('.icon');
         }
-
-        if (target.is('.btn-split-menu, .btn-menu, .btn-actions, .btn-filter, .tab')) {
+        if (target.is('.btn-split-menu, .btn-menu, .btn-actions, .btn-filter, .tab, .tab-more')) {
           target = target.find('.icon').last();
         }
         if (target.is('.searchfield-category-button')) {

@@ -93,3 +93,20 @@
     list-style: inside;
   }
 }
+
+// Handle RTL Pages
+html[dir='rtl'] {
+  label {
+    text-align: right;
+  }
+
+  .checkbox-label {
+    float: right;
+  }
+
+  .error-message {
+    .message-text {
+      text-align: right;
+    }
+  }
+}

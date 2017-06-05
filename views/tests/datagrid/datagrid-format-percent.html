@@ -1,0 +1,50 @@
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div id="datagrid">
+    </div>
+
+  </div>
+</div>
+
+<script>
+  var gridApi = null;
+
+  $('body').one('initialized', function () {
+
+      var grid,
+        data = [],
+        columns = [];
+
+      // Some Sample Data
+      data.push({ value: '-0.122' });
+      data.push({ value: '0.122' });
+      data.push({ value: '0.125' });
+      data.push({ value: '0.35' });
+      data.push({ value: '0.42' });
+      data.push({ value: '0.50' });
+
+      //Define Columns for the Grid.
+      columns.push({ id: 'percent1', name: 'Value', field: 'value', width: 150, filterType: 'text', filterDisabled: true });
+
+      columns.push({ id: 'percent2', name: 'Integer', field: 'value', align: 'right', formatter: Formatters.Integer, numberFormat: {style: "percent"}, editor: Editors.Input, mask: '-####', maskMode: 'number', filterType: 'percent'});
+
+      columns.push({ id: 'percent3', name: 'Decimal', field: 'value', align: 'right', formatter: Formatters.Decimal, numberFormat: {style: "percent", minimumFractionDigits: 1}, editor: Editors.Input, mask: '-####.00', maskMode: 'number', filterType: 'percent'});
+
+
+      //Init and get the api for the grid
+      $('#datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        editable: true,
+        filterable: true,
+        toolbar: {title: 'Compressors', results: true, actions: true, rowHeight: true}
+      })
+      .on('cellchange', function (e, args) {
+        console.log(args.value);
+      });
+
+  });
+
+</script>

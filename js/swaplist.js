@@ -98,7 +98,7 @@
           selections = self.selections;
 
         // TOP BUTTONS =============================================================================
-        self.actionButtons.onTouchClick('swaplist').on('click.swaplist', function () {
+        self.actionButtons.off('click.swaplist').on('click.swaplist', function () {
           var actionButton = $(this),
             container = actionButton.closest('.card'); // Current list clicked from
 

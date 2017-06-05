@@ -32,6 +32,7 @@ For updates please joining our [mailing list| http://infor.us14.list-manage.com/
 * Globalization
 * Input Formatting
 * Validation
+* Security XSS
 
 ## Upgrade Guide (from 3.x)
 https://soho.infor.com/upgrade-guide
@@ -112,6 +113,17 @@ Also your project should be initialized with a package.json. This can be done vi
 
 ```bash
 npm config set @infor:registry=http://npm.infor.com:4873
+```
+
+## Npm Install Rc Via Git
+
+Latest:
+```bash
+npm install git+http://git.infor.com/scm/soho/controls.git#4.3.0-rc --save
+cd node_modules/@infor/sohoxi
+npm install
+grunt
+cd ../../../
 ```
 
 ### Installation

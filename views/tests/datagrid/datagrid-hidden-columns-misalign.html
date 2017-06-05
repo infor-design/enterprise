@@ -1,0 +1,125 @@
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    <div class="row" >
+      <div class="twelve columns grid-container">
+
+        <div class="toolbar" role="toolbar">
+            <div class="title">
+                Grid
+                <span class="datagrid-result-count"></span><br />
+                <span class="last-refresh"></span>
+
+            </div>
+            <div class="buttonset">
+                <span class="searchfield-wrapper toolbar-searchfield-wrapper">
+                    <label class="audible" for="gridfilter">Keyword</label><input name="searchfield" tabindex="0" class="searchfield" id="gridfilter" aria-label="Keyword" placeholder="Keyword" autocomplete="off">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" role="presentation" aria-hidden="true" focusable="false">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-search" />
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="close icon is-empty" role="presentation" aria-hidden="true" focusable="false">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-close" />
+                    </svg>
+                </span>
+            </div>
+            <div class="more">
+                <button class="btn-actions">
+                    <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                        <use xlink:href="#icon-more"></use>
+                    </svg>
+                    <span class="audible">More Actions</span>
+                </button>
+
+                <ul class="popupmenu">
+                    <li><a data-option="personalize-columns" href="#">Personalize Columns</a></li>
+                    <li><a data-option="export-to-excel" href="#">Export to Excel</a></li>
+                    <li><a ng-click="saveGridOptions()">Save Grid Options</a></li>
+                    <li class="separator single-selectable-section"></li>
+                    <li class="heading">Row Height</li>
+                    <li id="rowShortUnitStatus" class="is-selectable"><a data-option="row-short" href="#">Short</a></li>
+                    <li id="rowMediumUnitStatus" class="is-selectable"><a data-option="row-medium" href="#">Medium</a></li>
+                    <li id="rowNormalUnitStatus" class="is-selectable"><a data-option="row-normal" href="#">Normal</a></li>
+                </ul>
+            </div>
+
+        </div>
+        <div id="datagrid" style="height:150px;">
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+    var dataGrid;
+
+    $('body').one('initialized', function () {
+
+        var grid,
+          columns = [];
+
+        //Define Columns for the Grid.
+        columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly});
+        columns.push({ id: 'test1', name: 'test1', field: 'test1', width: 500, hidden: true });
+        columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, formatter: Formatters.Hyperlink });
+        columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});
+        columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125 });
+        columns.push({ id: 'test2', name: 'test2', field: 'test2', width: 100, hidden: true });
+        columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal, width: 125 });
+        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy', width: 125 });
+        columns.push({ id: 'test3', name: 'test3', field: 'test3', width: 100, hidden: true });
+        columns.push({ id: 'test4', name: 'test4', field: 'test4', width: 100, hidden: true });
+        columns.push({ id: 'test5', name: 'test5', field: 'test5', width: 100, hidden: true });
+
+        var data = [];
+        data.push({productId: 1, productName: "Test1", quantity: 4, price: 13, orderDate: "1/1/2017"})
+        data.push({productId: 2, productName: "Test2", quantity: 4, price: 13, orderDate: "1/1/2017"})
+        data.push({productId: 3, productName: "Test3", quantity: 4, price: 13, orderDate: "1/1/2017"})
+        data.push({productId: 4, productName: "Test4", quantity: 4, price: 13, orderDate: "1/1/2017"})
+        data.push({productId: 5, productName: "Test5", quantity: 4, price: 13, orderDate: "1/1/2017"})
+        data.push({productId: 6, productName: "Test6", quantity: 4, price: 13, orderDate: "1/1/2017"})
+        data.push({productId: 7, productName: "Test7", quantity: 4, price: 13, orderDate: "1/1/2017"})
+        data.push({productId: 8, productName: "Test8", quantity: 4, price: 13, orderDate: "1/1/2017"})
+        data.push({productId: 9, productName: "Test9", quantity: 4, price: 13, orderDate: "1/1/2017"})
+        data.push({productId: 10, productName: "Test10", quantity: 4, price: 13, orderDate: "1/1/2017"})
+        data.push({productId: 11, productName: "Test11", quantity: 4, price: 13, orderDate: "1/1/2017"})
+        data.push({productId: 12, productName: "Test12", quantity: 4, price: 13, orderDate: "1/1/2017"})
+
+        dataGrid = $('#datagrid').datagrid({
+            columns: columns,
+            columnReorder: true,
+            saveColumns: false,
+            sortable: true,
+            dataset: data,
+            rowHeight: 'short',
+            toolbar: { personalize: true, results: true }
+        });
+
+    });
+
+    setTimeout(function () { updateGrid(); }, 2000);
+
+    function updateGrid() {
+        var data = [];
+        data.push({ productId: 1, productName: "Test1", quantity: 4, price: 13, orderDate: "1/1/2016"})
+        data.push({ productId: 2, productName: "Test2", quantity: 4, price: 13, orderDate: "1/1/2016" })
+        data.push({ productId: 3, productName: "Test3", quantity: 4, price: 13, orderDate: "1/1/2016" })
+        data.push({ productId: 4, productName: "Test4", quantity: 4, price: 13, orderDate: "1/1/2016" })
+        data.push({ productId: 5, productName: "Test5", quantity: 4, price: 13, orderDate: "1/1/2016" })
+        data.push({ productId: 6, productName: "Test6", quantity: 4, price: 13, orderDate: "1/1/2016" })
+        data.push({ productId: 7, productName: "Test7", quantity: 4, price: 13, orderDate: "1/1/2016" })
+        data.push({ productId: 8, productName: "Test8", quantity: 4, price: 13, orderDate: "1/1/2016" })
+        data.push({ productId: 9, productName: "Test9", quantity: 4, price: 13, orderDate: "1/1/2016" })
+        data.push({ productId: 10, productName: "Test10", quantity: 4, price: 13, orderDate: "1/1/2016" })
+        data.push({ productId: 11, productName: "Test11", quantity: 4, price: 13, orderDate: "1/1/2016" })
+        data.push({ productId: 12, productName: "Test12", quantity: 4, price: 13, orderDate: "1/1/2016" })
+
+        var grid = dataGrid.data('datagrid');
+        if (grid != undefined) {
+          grid.loadData(data);
+        }
+    }
+
+</script>

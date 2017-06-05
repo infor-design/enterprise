@@ -40,35 +40,35 @@
 
     <div class="field">
       <label for="static-width" class="label">Set Width</label>
-        <select id="static-width" name="setWidth" class="dropdown" style="width: 50px">
-          <option value="AL">Alabama</option>
-          <option value="DE">Delaware</option>
-          <option value="DC">District Of Columbia</option>
-          <option value="FL">Florida</option>
-          <option value="GA">Georgia</option>
-          <option value="HI">Hawaii</option>
-          <option value="ID">Idaho</option>
-          <option value="OK">Oklahoma</option>
-          <option value="OR">Oregon</option>
-          <option value="PA">Pennsylvania</option>
-          <option value="RI">Rhode Island</option>
-          <option value="SC">South Carolina</option>
+        <select id="static-width" name="setWidth" class="dropdown" style="width: 80px">
+          <option value="AL">AL</option>
+          <option value="DE">DE</option>
+          <option value="DC">DC</option>
+          <option value="FL">FL</option>
+          <option value="GA">GA</option>
+          <option value="HI">HI</option>
+          <option value="ID">ID</option>
+          <option value="OK">OK</option>
+          <option value="OR">OR</option>
+          <option value="PA">PA</option>
+          <option value="RI">RI</option>
+          <option value="SC">SC</option>
         </select>
     </div>
 
     <div class="field">
       <label for="static-width-small" class="label">Set Width Small</label>
-        <select id="static-width-small" name="setWidthSmall" class="dropdown" style="width: 50px">
-          <option value="30">30</option>
-          <option value="35">35</option>
-          <option value="40">40</option>
-          <option value="45">45</option>
+        <select id="static-width-small" name="setWidthSmall" class="dropdown" style="width: 55px">
+          <option value="3">3</option>
+          <option value="5">5</option>
+          <option value="4">4</option>
+          <option value="7">7</option>
         </select>
     </div>
 
-    <div class="field" style="left: 436px; position: absolute;top: 356px;">
+    <div class="field" style="left:436px; position:absolute; top:356px; z-index:1;">
       <label for="abs1" class="label">Absolute Position (Bad Practice)</label>
-      <select id="abs1" name="abs1" class="dropdown" style="width: 50px;">
+      <select id="abs1" name="abs1" class="dropdown" style="width: 150px;">
         <option value="AL">Alabama</option>
         <option value="DE">Delaware</option>
         <option value="DC">District Of Columbia</option>
@@ -114,6 +114,15 @@
         <option value="">&nbsp;</option>
         <option value="notBlank" selected>Not Blank</option>
         <option value="alsoNotBlank">Also Not Blank</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="dirty" class="label">Dirty</label>
+      <select id="dirty" name="dirty" class="dropdown" data-trackdirty="true">
+        <option value=" "></option>
+        <option value="A">A</option>
+        <option value="B">B</option>
       </select>
     </div>
 

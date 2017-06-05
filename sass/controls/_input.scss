@@ -127,6 +127,18 @@
   display: inline-block;
   margin-right: 15px;
   vertical-align: top;
+
+  input[type="checkbox"] + label {
+    margin-top: 32px;
+
+    &::after {
+      top: 6px;
+    }
+
+    &::before {
+      margin-top: -3px;
+    }
+  }
 }
 
 .compound-field > .field-short {
@@ -141,6 +153,10 @@
 .field {
   margin-bottom: 20px;
   position: relative;
+
+  &:last-child:not(:only-child) {
+    margin-bottom: 0;
+  }
 
   textarea + .btn-actions {
     margin-left: 4px;
@@ -168,6 +184,24 @@
   > .textarea-wordcount {
     color: $label-color;
     margin-bottom: 14px;
+  }
+
+  &.field-radio {
+    margin-bottom: 10px;
+  }
+
+  &.field-checkbox {
+    margin-bottom: 12px;
+
+    .inline-checkbox .label-text {
+      // scss-lint:disable ImportantRule
+      margin-bottom: 1px !important;
+      // scss-lint:enable ImportantRule
+    }
+  }
+
+  .field:not(.field-checkbox) + &.field-checkbox {
+    margin-bottom: 18px;
   }
 
   &.l-pull-left {
@@ -305,7 +339,7 @@ textarea {
 }
 
 .inline {
-  $controls: ('busy', 'colorpicker', 'datepicker', 'switch', 'lookup', 'searchfield', 'timepicker');
+  $controls: ('busy', 'colorpicker', 'datepicker', 'switch', 'lookup', 'searchfield', 'timepicker, radio');
   @include inline-control-label($controls);
   @include inline-control($controls);
 
@@ -369,7 +403,8 @@ label,
 
 // Error States
 .error,
-.error-message {
+.error-message,
+.error-message p {
   color: $error-color;
 }
 
@@ -411,6 +446,10 @@ label,
   font-size: 0;
   margin-bottom: 10px;
   position: relative;
+
+  &:last-child:not(:only-child) {
+    margin-bottom: 0;
+  }
 
   input {
     @include font-size(12);
@@ -456,15 +495,6 @@ label,
     margin-top: 6px;
     top: auto;
     width: 18px;
-  }
-
-  .error-message {
-    margin-top: -10px;
-
-    .message-text {
-      margin-top: 3px;
-      position: relative;
-    }
   }
 }
 
@@ -556,10 +586,6 @@ label,
     max-width: 280px;
     padding-left: $icon-width + 5;
   }
-
-  + .error-message {
-    margin-top: -10px;
-  }
 }
 
 .dropdown-wrapper .icon + .error-message,
@@ -571,10 +597,6 @@ label,
     position: relative;
     right: initial;
   }
-}
-
-.dropdown-wrapper + .error-message {
-  margin-top: -15px;
 }
 
 .column,

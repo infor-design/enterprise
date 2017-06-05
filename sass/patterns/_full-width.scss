@@ -2,7 +2,7 @@
 //================================================== //
 
 .full-width {
-  padding: 30px;
+  padding: 20px;
   width: 100%;
 
   &.contained {
@@ -12,21 +12,43 @@
   &.no-padding {
     margin: 0;
   }
+
+  &.no-top-padding {
+    margin: 0;
+    padding: 0 0 10px;
+  }
+
+  .row {
+    max-width: 100%;
+    width: 100%;
+  }
 }
 
 .full-height {
-  height: calc(100% - 60px);
-  margin: 30px;
+  height: calc(100% - 40px);
+  margin: 20px;
   overflow: hidden;
 
   &.full-width {
     padding: 0;
-    width: calc(100% - 60px);
+    width: calc(100% - 40px);
   }
 
   &.no-padding {
     margin: 0;
   }
+
+  > .tab-container {
+    height: 100%;
+
+    > .tab-panel {
+      height: calc(100% - 35px);
+    }
+  }
+}
+
+.full-height-toolbar {
+  height: calc(100% - 40px);
 }
 
 .tab-panel > .full-width {

@@ -8,9 +8,14 @@
   width: 0;
 }
 
+.inline-radio {
+  margin-bottom: 0;
+}
+
 .inline .radio ~ .label-text,
 .radio + label {
   @include font-size(14);
+  color: $checkbox-label-color;
   cursor: pointer;
   line-height: 24px;
   margin-bottom: 6px;
@@ -47,7 +52,7 @@
   display: inline-block;
   line-height: 20px;
 
-  &:first-of-type {
+  &.radio-label:first-of-type {
     margin-top: 4px;
   }
 

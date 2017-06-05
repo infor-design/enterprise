@@ -54,6 +54,12 @@ $datagrid-short-row-height: 23px;
     }
   }
 
+  &.has-filterable-columns {
+    .datagrid-body {
+      height: calc(100% - 62px);
+    }
+  }
+
   td:last-child {
     border-right-color: transparent;
   }
@@ -108,6 +114,11 @@ $datagrid-short-row-height: 23px;
     th {
       background-color: $datagrid-list-header-bg-color;
       border-right: 0;
+
+      .handle.handle:hover,
+      .is-draggable-target.handle:hover {
+        color: $datagrid-list-filter-color;
+      }
 
       .datagrid-header-text {
         color: $datagrid-list-header-color;
@@ -164,7 +175,7 @@ $datagrid-short-row-height: 23px;
     }
 
     //Filter Row
-    .datagrid-filter-wrapper {
+    .is-filterable .datagrid-filter-wrapper {
       input,
       div.dropdown {
         // scss-lint:disable ImportantRule
@@ -242,6 +253,12 @@ $datagrid-short-row-height: 23px;
       height: calc(100% - 45px);
     }
 
+    &.has-filterable-columns {
+      .datagrid-body {
+        height: calc(100% - 60px);
+      }
+    }
+
     //Resize Drag Arrows
     .drag-target-arrows {
       font-size: 1.5em;
@@ -306,10 +323,43 @@ $datagrid-short-row-height: 23px;
     .arrange-placeholder {
       height: $datagrid-short-row-height + 7;
     }
+
+    .chart-targeted-achievement {
+      height: 20px;
+      margin-top: 1px;
+
+      .bar {
+        height: 20px;
+      }
+
+      .completed {
+        margin-top: -20px;
+      }
+
+      .chart-targeted-text {
+        margin-top: -25px;
+      }
+
+    }
+
+    // scss-lint:disable ImportantRule
+    .icon-favorite {
+      margin: -10px auto !important;
+      top: 4px;
+    }
+    // scss-lint:enabled ImportantRule
+
   }
 
   &.medium-rowheight {
     //Set Container Heights for scrolling
+
+    &.has-filterable-columns {
+      .datagrid-body {
+        height: calc(100% - 60px);
+      }
+    }
+
     .datagrid-body {
       height: calc(100% - 30px);
     }
@@ -358,6 +408,14 @@ $datagrid-short-row-height: 23px;
 
     .arrange-placeholder {
       height: $datagrid-medium-row-height + 10;
+    }
+
+    .chart-targeted-achievement {
+      margin-top: 2px;
+
+      .chart-targeted-text {
+        margin-top: -30px;
+      }
     }
 
   }
@@ -853,6 +911,10 @@ $datagrid-short-row-height: 23px;
       .is-readonly {
         background-color: $datagrid-row-hover-color;
       }
+
+      .chart-targeted-achievement {
+        background-color: $chart-progressbar-bg-color-dark;
+      }
     }
 
     &.is-selected:not(.hide-selected-color) td:not(.is-editing),
@@ -1002,14 +1064,38 @@ $datagrid-short-row-height: 23px;
     }
 
     .icon-favorite {
+      border: 1px solid transparent;
+      display: block;
+      height: 32px;
+      left: -8px;
+      padding-left: 5px;
+      padding-top: 6px;
       position: relative;
-      top: 3px;
+      top: 4px;
+      width: 32px;
+
+      &.is-editable {
+        cursor: pointer;
+      }
+
+      input {
+        left: -99px;
+        position: absolute;
+      }
     }
 
     .datagrid-img {
       display: block;
       height: 45px;
       width: 45px;
+    }
+
+    .chart-targeted-achievement {
+      height: 25px;
+      // scss-lint:disable ImportantRule
+      margin-bottom: 0 !important;
+      // scss-lint:enable ImportantRule
+      margin-top: 7px;
     }
   }
 
@@ -1305,6 +1391,11 @@ $datagrid-short-row-height: 23px;
       .datagrid-cell-wrapper {
         text-align: center;
       }
+
+      .icon-favorite {
+        left: -5px;
+        margin: 0 auto;
+      }
     }
 
     &.text-ellipsis {
@@ -1497,6 +1588,27 @@ $datagrid-short-row-height: 23px;
       top: -9px;
       width: calc(100% - 20px);
 
+      &.percent {
+        &::before,
+        &::after {
+          @include font-size(14);
+          color: $datagrid-filter-icon-color;
+          display: inline-block;
+          position: absolute;
+          top: -2px;
+        }
+
+        &::before {
+          content: attr(data-currency-symbol);
+          left: auto;
+          right: 0;
+        }
+
+        [data-mask-mode="number"] {
+          padding: 3px 22px 2px 0;
+        }
+      }
+
       input {
         background-color: transparent;
         border-color: $datagrid-filter-border-color;
@@ -1601,8 +1713,11 @@ $datagrid-short-row-height: 23px;
         + .icon {
           fill: $datagrid-filter-icon-color;
           height: 13px;
-          margin-left: -9px;
-          top: -3px;
+          position: relative;
+          margin-left: -15px;
+          left: -2px;
+          top: 7px;
+          vertical-align: top;
           width: 13px;
         }
 
@@ -1620,6 +1735,13 @@ $datagrid-short-row-height: 23px;
         }
 
       }
+
+      // scss-lint:disable ImportantRule
+      .datepicker + .icon {
+        left: 6px !important;
+        top: -3px !important;
+      }
+      // scss-lint:enable ImportantRule
 
       .btn-filter {
         height: 21px;
@@ -1813,7 +1935,7 @@ td .btn-actions {
   display: inline-block;
   left: -7px;
   position: relative;
-  top: -14px;
+  top: -13px;
 
   &::before {
     @include checkbox-unchecked-before-style;
@@ -1832,6 +1954,10 @@ td .btn-actions {
     left: 5px;
     margin-top: 0;
     top: 1px;
+  }
+
+  &.is-checked.no-animation::after {
+    animation: none;
   }
 
   &.is-partial {
@@ -2279,6 +2405,19 @@ html[dir='rtl'] {
     .datepicker + .icon {
       margin-left: 0;
       margin-right: -15px;
+    }
+  }
+
+  .datagrid-header .is-filterable .datagrid-filter-wrapper {
+    &.percent {
+      &::before {
+        left: 0;
+        right: auto;
+      }
+
+      [data-mask-mode="number"] {
+        padding: 3px 0 2px 22px;
+      }
     }
   }
 

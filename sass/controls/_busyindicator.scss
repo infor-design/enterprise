@@ -1,7 +1,7 @@
 // Busy Indicator
 //================================================== //
 
-$busy-indicator-size: 6.2em;
+$busy-indicator-size: 64px;
 $busy-indicator-color: $primary-btn-bg-color;
 $busy-indicator-check-color: $inverse-color;
 
@@ -37,7 +37,7 @@ $busy-indicator-check-color: $inverse-color;
   @include opacity(1);
   display: inline-block;
   height: $busy-indicator-size;
-  margin: .8em;
+  margin: 8px;
   position: relative;
   vertical-align: middle;
   width: $busy-indicator-size;
@@ -49,8 +49,8 @@ $busy-indicator-check-color: $inverse-color;
   .bar {
     background-color: $busy-indicator-color;
     display: inline-block;
-    height: 5em;
-    margin-right: .5em;
+    height: 50px;
+    margin-right: 5px;
     width: 5px;
 
     &:last-child {
@@ -111,9 +111,9 @@ input + .busy-indicator-container,
     width: 40px;
 
     .bar {
-      height: 2.2em;
-      margin-right: .3em;
-      width: .3em;
+      height: 22px;
+      margin-right: 3px;
+      width: 3px;
 
       &:last-child {
         margin-right: 0;
@@ -134,9 +134,9 @@ input + .busy-indicator-container,
       width: 40px;
 
       .bar {
-        height: 2.4em;
-        margin-right: .3em;
-        width: .3em;
+        height: 24px;
+        margin-right: 3px;
+        width: 3px;
 
         &:last-child {
           margin-right: 0;
@@ -191,9 +191,9 @@ input + .busy-indicator-container,
     width: inherit;
 
     .bar {
-      height: 1.2em;
-      margin-right: .1em;
-      width: .2em;
+      height: 12px;
+      margin-right: 2px;
+      width: 2px;
 
       &:last-child {
         margin-right: 0;
@@ -216,9 +216,9 @@ input + .busy-indicator-container,
     width: inherit;
 
     .bar {
-      height: 2.2em;
-      margin-right: .3em;
-      width: .3em;
+      height: 22px;
+      margin-right: 3px;
+      width: 3px;
 
       &:last-child {
         margin-right: 0;
@@ -231,7 +231,7 @@ input + .busy-indicator-container,
 html[dir='rtl'] {
   .busy-indicator {
     .bar {
-      margin-left: .5em;
+      margin-left: 5px;
       margin-right: 0;
 
       &:last-child {
@@ -248,7 +248,7 @@ html[dir='rtl'] {
       right: auto;
 
       .bar {
-        margin-left: .3em;
+        margin-left: 3px;
         margin-right: 0;
 
         &:last-child {
@@ -261,7 +261,7 @@ html[dir='rtl'] {
   .busy-xs {
     .busy-indicator {
       .bar {
-        margin-left: .1em;
+        margin-left: 2px;
         margin-right: 0;
 
         &:last-child {
@@ -274,7 +274,7 @@ html[dir='rtl'] {
   .busy-sm {
     .busy-indicator {
       .bar {
-        margin-left: .3em;
+        margin-left: 2px;
         margin-right: 0;
 
         &:last-child {

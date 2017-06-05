@@ -74,7 +74,7 @@ input.checkbox,
 span.checkbox > input {
   left: 0;
   opacity: 0;
-  position: absolute;
+  position: fixed;// use fixed, to prevent page jump on click
   top: 0;
   width: 16px;
 }
@@ -85,6 +85,7 @@ input.checkbox + input[type="hidden"] + label,
 span.checkbox > label {
   @include no-select();
   @include font-size(14);
+  color: $checkbox-label-color;
   cursor: pointer;
   display: inline-block;
   padding-left: 26px;
@@ -171,10 +172,10 @@ span.checkbox > input:disabled:checked + label::after {
 }
 
 // Focus State
-label.inline .checkbox:focus ~ .label-text::before,
-input.checkbox:focus + label::before,
-input.checkbox:focus + input[type="hidden"] + label::before,
-span.checkbox > input:focus + label::before {
+label.inline .checkbox:focus:not(.hide-focus) ~ .label-text::before,
+input.checkbox:focus:not(.hide-focus) + label::before,
+input.checkbox:focus:not(.hide-focus) + input[type="hidden"] + label::before,
+span.checkbox > input:focus:not(.hide-focus) + label::before {
   @include checkbox-focus-state;
 }
 
@@ -191,6 +192,7 @@ label.inline .checkbox ~ .label-text,
 .checkbox-label {
   display: inline-block;
   line-height: 17px;
+  margin-bottom: 13px;
 }
 
 .is-firefox {
@@ -232,11 +234,12 @@ span.checkbox > input:checked + label::after,
 
 .checkbox-group-label {
   @include font-size(12);
+  @include antialiased();
   display: block;
-  margin-bottom: 9px;
+  margin-bottom: 12px;
 
   ~ .field {
-    margin-bottom: 8px;
+    margin-bottom: 12px;
   }
 
   ~ .field-short {
@@ -275,7 +278,7 @@ span.checkbox > input:checked + label::after,
 }
 
 label.inline:not(.checkbox-label) .checkbox ~ .label-text {
-  margin: 0 auto 5px -5px;
+  margin: 0 auto 3px -5px;
 }
 
 .ie9 {

@@ -31,7 +31,7 @@
       data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '100.99', status: 'OK', orderDate: new Date(2014, 6, 9, 12, 12, 12), action: 'On Hold', ordered: 0});
 
       //Define Columns for the Grid.
-      columns.push({ id: 'drillDown', name: 'Drill In', field: '', formatter: Formatters.Drilldown, cssClass: 'l-center-text', width: 80});
+      columns.push({ id: 'drilldown', name: 'Drill In', field: '', formatter: Formatters.Drilldown, cssClass: 'l-center-text', width: 80});
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly, width: '25%' });
       columns.push({ id: 'productDesc', name: 'Product Desc', field: 'productName', formatter: Formatters.Hyperlink, width: '25%'});
       columns.push({ id: 'comment', name: 'Comment', field: 'comment', formatter: Formatters.Ellipsis, width: '45%'});
@@ -40,7 +40,8 @@
       $('#readonly-datagrid').datagrid({
         columns: columns,
         dataset: data,
-        editable: true
+        editable: true,
+        enableTooltips: true // Can opt out of tooltip logic
       });
     });
 

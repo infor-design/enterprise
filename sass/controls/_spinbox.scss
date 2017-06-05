@@ -82,10 +82,6 @@ input::-webkit-inner-spin-button {
   }
 }
 
-.inline .spinbox-control {
-  margin-top: -10px;
-}
-
 // Everything inside the spinbox wrapper is vertically-aligned middle.
 .spinbox-wrapper {
   display: inline-block;
@@ -98,6 +94,10 @@ input::-webkit-inner-spin-button {
     margin-right: auto;
     right: 38px;
     top: 0;
+  }
+
+  + .icon-error {
+    margin-top: -15px;
   }
 
   &.is-focused {
