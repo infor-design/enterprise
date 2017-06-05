@@ -4202,14 +4202,13 @@ $.fn.datagrid = function(options) {
             if (!$('.lookup-modal.is-visible, #timepicker-popup, #calendar-popup').length &&
                 !!self.editor && self.editor.input.is(target)) {
 
-              if (self.lastClicked.is('.spinbox') || self.lastClicked.is('.spinbox-control') || self.lastClicked.find('.spinbox-control').length > 1) {
+              if ($('*:focus').is('.spinbox')) {
                 return;
               }
-
               self.commitCellEdit(self.editor.input);
             }
 
-          }, 200);
+          }, 150);
 
           return;
         }
@@ -4220,6 +4219,7 @@ $.fn.datagrid = function(options) {
         }
 
         if (self.editor && self.editor.input) {
+          self.lastClicked = null;
           self.commitCellEdit(self.editor.input);
         }
 
