@@ -11,6 +11,10 @@
       <button id="force-disabled" class="btn-primary">
         <span>Force the Pager to become Disabled</span>
       </button>
+
+      <button id="force-enabled" class="btn-secondary">
+        <span>Force the Pager to become Enabled</span>
+      </button>
     </div>
   </div>
 </div>
@@ -93,9 +97,14 @@
       pagingInfo.activePage = gridApi.pager.activePage;
       pagingInfo.pagesize = gridApi.pager.settings.pagesize;
 
-      if (forceDisable === true) {
-        pagingInfo.firstPage = true;
-        pagingInfo.lastPage = true;
+      if (forceDisable !== undefined) {
+        if (forceDisable === true) {
+          pagingInfo.firstPage = true;
+          pagingInfo.lastPage = true;
+        } else if (forceDisable === false) {
+          pagingInfo.firstPage = false;
+          pagingInfo.lastPage = false;
+        }
       }
 
       gridSource(pagingInfo, function(data, req) {
@@ -106,17 +115,24 @@
         title: 'Grid Refresh',
         message: 'The Datagrid has been refreshed.'
       });
-      
+
       startCounting();
     }
 
-    var countTimer = 500;
+    var countTimer = 500,
+      forceStop = false;
+
     function count() {
       countTimer = countTimer - 1;
       $('#reset-counter-time').html('<b>'+countTimer+'</b>');
 
-      while(countTimer > 0) {
+      while(countTimer > 0 && forceStop === false) {
         return requestAnimationFrame(count);
+      }
+
+      if (forceStop === true) {
+        forceStop = false;
+        return;
       }
 
       $('#go-for-closechildren').trigger('done');
@@ -129,7 +145,13 @@
     }
 
     $('#force-disabled').on('click', function() {
+      forceStop = true;
       reloadGrid(true);
+    });
+
+    $('#force-enabled').on('click', function() {
+      forceStop = true;
+      reloadGrid(false);
     });
 
     //==================================
