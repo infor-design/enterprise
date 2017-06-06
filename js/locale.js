@@ -161,7 +161,19 @@
       //Convert if a string..
       if (!(value instanceof Date)) {
         var tDate = new Date(value);
-        value = new Date(tDate.getUTCFullYear(), tDate.getUTCMonth(), tDate.getUTCDate());
+        if (isNaN(tDate) && attribs.date === 'datetime' &&
+          value.substr(4, 1) === '-' &&
+          value.substr(7, 1) === '-') {
+          tDate = new Date(
+            value.substr(0, 4),
+            value.substr(5, 2) - 1,
+            value.substr(8, 2),
+            value.substr(11, 2),
+            value.substr(14, 2),
+            value.substr(17, 2)
+          );
+        }
+        value = tDate;
       }
 
       // TODO: Can we handle this if (this.dff.state()==='pending')
