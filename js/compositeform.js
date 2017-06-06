@@ -92,6 +92,15 @@
           self.updated();
         });
 
+        function changeExpanderText() {
+          var isExpanded = self.expandableAreaAPI.isExpanded();
+          self.setExpanderText(self.settings[isExpanded ? 'expandedText' : 'collapsedText']);
+        }
+
+        this.expandableArea
+          .on('expand.' + pluginName, changeExpanderText)
+          .on('collapse.' + pluginName, changeExpanderText);
+
         return this;
       },
 
@@ -141,7 +150,9 @@
        * @returns {this}
        */
       teardown: function() {
+        $('body').off('resize.' + pluginName);
         this.element.off('updated.' + pluginName);
+        this.expandableArea.off('expand.' + pluginName + ' collapse.' + pluginName);
         return this;
       },
 

@@ -194,9 +194,17 @@
         this.header.removeClass('is-focused');
       },
 
+      /**
+       * Indicates whether or not this area is expanded.
+       * @returns {boolean}
+       */
+      isExpanded: function() {
+        return this.element.is('.is-expanded');
+      },
+
       toggleExpanded: function() {
         // if (this.header.attr('aria-expanded') === 'true') {
-        if (this.element.is('.is-expanded')) {
+        if (this.isExpanded()) {
           this.close();
         } else {
           this.open();

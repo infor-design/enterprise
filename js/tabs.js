@@ -608,7 +608,10 @@
         dismissible.each(dismissibleTabEvents);
 
         // Events specific to markup that can be re-rendered mid-lifecycle
-        this.setupHelperMarkupEvents();
+        // The responsive vertical tabs system will set this up automatically, so skip
+        if (!this.isResponsiveVerticalTabs()) {
+          this.setupHelperMarkupEvents();
+        }
 
         this.panels.on('keydown.tabs', function(e) {
           self.handlePanelKeydown(e);
