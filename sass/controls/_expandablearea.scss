@@ -159,8 +159,10 @@
 
   .expandable-area {
     &.has-bottom-border {
-      .column:not(:first-child) {
-        margin-top: 0;
+      .row {
+        .column:not(:first-child) {
+          margin-top: 0;
+        }
       }
     }
   }
@@ -188,24 +190,3 @@
   }
 }
 // scss-lint:enable ImportantRule
-
-@include respond-to(tabletdown) {
-  .expandable-pane {
-    .one-half-mobile.column:nth-child(1n+1) {
-      margin-top: 0;
-    }
-
-    .row {
-      .one-half-mobile.column:nth-child(1n+3) {
-        margin-top: 20px;
-      }
-
-      &.no-top-margins {
-        .one-half-mobile.column:nth-child(1n+3) {
-          margin-top: 0;
-        }
-      }
-    }
-
-  }
-}
