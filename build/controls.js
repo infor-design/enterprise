@@ -15,6 +15,7 @@ module.exports = [
   'temp/amd/button.js',
   'temp/amd/chart.js',
   'temp/amd/colorpicker.js',
+  'temp/amd/compositeform.js',
   'temp/amd/contextualactionpanel.js',
   'temp/amd/datepicker.js',
   'temp/amd/datagrid.js',

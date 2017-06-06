@@ -159,16 +159,25 @@
 
   .expandable-area {
     &.has-bottom-border {
-      .column:not(:first-child) {
-        margin-top: 0;
+      .row {
+        .column:not(:first-child) {
+          margin-top: 0;
+        }
       }
     }
   }
 
   .expandable-pane {
+    .row {
+      .column:not(:first-child) {
+        margin-top: 20px;
+      }
 
-    .column:not(:first-child) {
-      margin-top: 20px;
+      &.no-top-margins {
+        .column:not(:first-child) {
+          margin-top: 0;
+        }
+      }
     }
 
     > .content {

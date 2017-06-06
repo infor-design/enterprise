@@ -1,0 +1,73 @@
+// Composite Form
+//================================================== //
+
+header + .composite-form {
+  height: 100%;
+  margin-top: 0;
+
+  > .scrollable-flex-content {
+    border-top: 1px solid $panel-border-color;
+    height: inherit;
+    overflow-y: hidden;
+
+    > .tab-container {
+      height: inherit;
+
+      > .tab-list-container {
+        height: calc(100% - 20px);
+      }
+    }
+
+    > .tab-panel-container {
+      height: inherit;
+
+      &.scrollable,
+      &.scrollable-x,
+      &.scrollable-y {
+        height: calc(100% - 60px);
+      }
+    }
+  }
+
+  .tab-panel-container {
+    background-color: $composite-tabs-panel-bg-color;
+  }
+
+  .tab-panel {
+    margin: 20px 0;
+    padding-top: 0;
+  }
+
+  //=================================================
+  // Responsive Mode
+  //=================================================
+  &.is-in-responsive-mode {
+
+    > .scrollable-flex-content {
+      > .tab-container {
+        height: 40px;
+
+        > .tab-list-container {
+          height: 40px;
+          overflow-y: hidden;
+        }
+
+        + .tab-panel-container {
+          height: calc(100% - 101px);
+        }
+      }
+    }
+
+    .tab-panel {
+      margin: 20px;
+    }
+  }
+
+  .expandable-pane {
+    margin: 4px 28px;
+  }
+
+  .expandable-footer {
+    margin: 4px 18px;
+  }
+}
