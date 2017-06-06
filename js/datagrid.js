@@ -5516,8 +5516,7 @@ $.fn.datagrid = function(options) {
         return;
       }
 
-      node.removeClass('error').removeAttr('data-errormessage');
-      node.find('.icon-error').remove();
+      this.clearNodeErrors(node);
     },
 
     clearRowError: function (row) {
@@ -5528,11 +5527,23 @@ $.fn.datagrid = function(options) {
     },
 
     clearAllErrors: function () {
+      var self = this;
+
       this.tableBody.find('td.error').each(function () {
         var node = $(this);
-        node.removeClass('error').removeAttr('data-errormessage');
-        node.find('.icon-error').remove();
+        self.clearNodeErrors(node);
       });
+    },
+
+    clearNodeErrors: function (node) {
+      node.removeClass('error').removeAttr('data-errormessage');
+
+      var icon = node.find('.icon-error');
+      var tooltip = icon.data('tooltip');
+      if (tooltip) {
+        tooltip.hide();
+      }
+      node.find('.icon-error').remove();
     },
 
     resetRowStatus: function () {
