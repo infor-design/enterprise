@@ -65,10 +65,19 @@
       build: function() {
         var self = this,
           tabPanelContainer,
+          appMenu,
           moveTabPanelContainer = false;
 
         // Check for a tab panel container immediately after the `.tab-container` element (default as of Soho Xi 4.3.0)
         tabPanelContainer = this.element.next('.tab-panel-container');
+
+        // Check for a page container after an application menu
+        if (!tabPanelContainer.length) {
+          appMenu = $('.application-menu');
+          if (appMenu.length) {
+            tabPanelContainer = appMenu.next('.page-container');
+          }
+        }
 
         // Auto-detect and move existing tab-panel containers in key areas, if applicable.
         // Check inside the container first
