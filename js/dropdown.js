@@ -723,7 +723,7 @@
       },
 
       handleKeyDown: function(input, e) {
-        var selectedIndex = this.element[0].selectedIndex,
+        var selectedIndex = this.element[0].selectedIndex || -1,
             options = this.element[0].options,
             key = e.which,
             self = this,
@@ -796,6 +796,7 @@
               }
 
               e.preventDefault();
+
               self.selectOption($(options[selectedIndex])); // store the current selection
               if (self.settings.closeOnSelect) {
                 self.closeList('select');  // Close the option list
@@ -1536,6 +1537,12 @@
             });
           }
         }
+
+        var value = option.val();
+        if (!value) {
+          return value;
+        }
+
         if (!li) {
           li = this.listUl.find('li[data-val="'+ option.val().replace('"', '/quot/') +'"]');
         }
@@ -1551,6 +1558,7 @@
           trimmed = '',
           clearSelection = false,
           isAdded = true; // Sets to false if the option is being removed from a multi-select instead of added
+
         if (option.val() === 'clear') {
           clearSelection = true;
         }
