@@ -228,8 +228,15 @@
             return;
           }
           var isVisible = modalField[0].offsetParent !== null;
-          if (isVisible && !modalField.isValid()) {
-            allValid = false;
+          if (modalField.is('.required')) {
+            if (isVisible && !modalField.val()) {
+              allValid = false;
+            }
+          } else {
+            modalField.checkValidation();
+            if (isVisible && !modalField.isValid()) {
+              allValid = false;
+            }
           }
         });
       }
