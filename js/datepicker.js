@@ -76,9 +76,6 @@
       init: function() {
         this.build();
         this.handleEvents();
-        // if (Soho.env.os.name === 'ios') {
-        //   this.element.css({'font-size': '16px'});
-        // }
       },
 
       //Add any markup
