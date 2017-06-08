@@ -5,7 +5,7 @@
 
     <header class="header has-tabs-only">
       <div class="call-to-action-header">
-        <div class="tab-container header-tabs">
+        <div class="tab-container header-tabs" data-options="{containerElement: '#header-tabs-container'}">
           <ul class="tab-list">
             <li class="tab is-selected"><a href="#recent-activity">Recent Activity</a></li>
             <li class="tab"><a href="#customers">Customers</a></li>
@@ -20,7 +20,7 @@
         </div>
       </div>
     </header>
-    <div class="page-container scrollable">
+    <div class="page-container scrollable" id="header-tabs-container">
       <div id="recent-activity" class="tab-panel">
         <header class="subheader">
           <div class="full-searchfield-container">
