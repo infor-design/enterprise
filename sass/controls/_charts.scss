@@ -44,7 +44,6 @@
 
   .chart-donut-text {
     @include font-size(18);
-    font-weight: lighter;
   }
 
   .label-line {
@@ -636,11 +635,9 @@
   .title {
     @include font-size(12);
     font-weight: bold;
-    text-transform: uppercase;
   }
 
   .subtitle {
-    fill: $font-color-lowcontrast;
     font-weight: normal;
     text-transform: none;
   }

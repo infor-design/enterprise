@@ -27,6 +27,7 @@ $primary-color: $azure06;
 $inverse-color: $white;
 
 // Text Color
+// These are Deprecated. Use "Default, Descriptive, Link, Muted, Alert" ect going forward
 $font-color-extrahighcontrast: $graphite10;
 $font-color-highcontrast: $graphite08;
 $font-color: $graphite06;
@@ -36,12 +37,19 @@ $label-disabled-color: $graphite04;
 $disabled-color: $graphite04;
 $signin-title-color: $graphite07;
 
+// New Text Colors
+$font-color-default: $graphite10;
+$font-color-descriptive: $graphite06;
+$font-color-hyperlink: $primary-color;
+$font-color-muted: $graphite04;
+$font-color-alert: $alert-red;
+
 //The hyperlink Style
 $hyperlink-color: $primary-color;
 $hyperlink-focus-border-color: $primary-color;
 $hyperlink-visited-color: $amethyst06;
 $hyperlink-disabled-color: $disabled-color;
-$hyperlink-hover-color: $primary-color;
+$hyperlink-hover-color: $azure07;
 
 // Rules
 $hr-top-color: $graphite03;
@@ -165,7 +173,7 @@ $secondary-border-btn-hover-border-color: $graphite10;
 $secondary-border-btn-ripple-color: #8dc9e6;
 
 // Buttons
-$button-font-size: 12;
+$button-font-size: 14;
 
 // Menu Button
 $menubutton-height: 34px;

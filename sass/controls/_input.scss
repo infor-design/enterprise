@@ -286,10 +286,6 @@ textarea {
     padding: 10px 25px 10px 10px;
   }
 
-  + .textarea-wordcount {
-    margin-top: 5px;
-  }
-
   &[readonly],
   &[disabled] {
     + .textarea-wordcount {
@@ -304,7 +300,6 @@ textarea {
 
   display: block;
   min-height: auto;
-  text-transform: uppercase;
   width: 362px;
 
   .focus {

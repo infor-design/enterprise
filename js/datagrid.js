@@ -5412,7 +5412,7 @@ $.fn.datagrid = function(options) {
       }
       this.editor.val(cellValue);
       this.editor.focus();
-      this.element.triggerHandler('entereditmode');
+      this.element.triggerHandler('entereditmode', [{editor: this.editor}]);
     },
 
     commitCellEdit: function(input) {
@@ -5450,7 +5450,7 @@ $.fn.datagrid = function(options) {
 
       //Save the Cell Edit back to the data set
       this.updateCellNode(rowIndex, cellNode.index(), newValue, false, isInline);
-      this.element.triggerHandler('exiteditmode');
+      this.element.triggerHandler('exiteditmode', [{editor: this.editor}]);
     },
 
     //Validate a particular cell if it has validation on the column and its visible
