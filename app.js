@@ -527,37 +527,6 @@ var express = require('express'),
   });
 
   // =========================================
-  // Old Soho Site Pages
-  // =========================================
-
-  var layoutOpts = {
-    subtitle: 'Soho Site',
-    layout: 'soho-site/layout'
-  };
-
-  function defaultSohoSiteRouteHandler(req, res, next) {
-    var opts = extend({}, res.opts, layoutOpts);
-    res.render('soho-site/index', opts);
-    next();
-  }
-
-  function sohoSiteRouteHandler(req, res, next) {
-    var opts = extend({}, res.opts, layoutOpts),
-      soho = req.params.soho;
-
-    if (!soho || !soho.length) {
-      return defaultDocsRouteHandler(req, res, next);
-    }
-
-    res.render('soho-site/' + soho, opts);
-    next();
-  }
-
-  router.get('/soho-site/:soho', sohoSiteRouteHandler);
-  router.get('/soho-site/', defaultSohoSiteRouteHandler);
-  router.get('/soho-site', defaultSohoSiteRouteHandler);
-
-  // =========================================
   // Layouts Pages
   // =========================================
 

@@ -204,7 +204,6 @@
     font-weight: bold;
     line-height: 25px;
     padding: 0 10px;
-    text-transform: uppercase;
   }
 
   li {
@@ -455,7 +454,7 @@
 
   button {
     @include css3(transition, color .3s ease 0s);
-    @include font-size(12);
+    @include font-size(14);
     border: 1px solid transparent;
     border-left: 1px solid $popover-separator-color;
     border-radius: 0;
@@ -469,7 +468,6 @@
     position: relative;
     text-align: center;
     text-decoration: none;
-    text-transform: uppercase;
     width: 50%;
 
     &:hover {

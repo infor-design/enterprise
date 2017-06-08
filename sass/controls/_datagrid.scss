@@ -537,6 +537,13 @@ $datagrid-short-row-height: 23px;
       top: 3px;
     }
 
+    .chart-completion-target {
+      top: 2px;
+
+      .chart-targeted-text {
+        margin-top: -33px;
+      }
+    }
   }
 
   &.short-rowheight {
@@ -765,6 +772,14 @@ $datagrid-short-row-height: 23px;
       // scss-lint:disable ImportantRule
       margin-left: -29px !important;
       // scss-lint:enable ImportantRule
+    }
+
+    .chart-completion-target {
+      top: -2px;
+
+      .chart-targeted-text {
+        margin-top: -27px;
+      }
     }
 
   }
@@ -1066,6 +1081,15 @@ $datagrid-short-row-height: 23px;
       }
     }
 
+    // scss-lint:disable ImportantRule
+    .chart-completion-target {
+      height: 25px;
+      margin-bottom: 0 !important;
+      position: relative;
+      top: 8px;
+    }
+    // scss-lint:enable ImportantRule
+
     .spinbox-wrapper {
       margin-bottom: 0;
       margin-top: 5px;
@@ -1316,7 +1340,7 @@ $datagrid-short-row-height: 23px;
 
     &.l-image-text {
       .datagrid-cell-wrapper {
-        padding: 0 0px 0px 15px;
+        padding: 0 0 0 15px;
         text-align: center;
       }
     }

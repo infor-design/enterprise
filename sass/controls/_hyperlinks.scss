@@ -19,13 +19,11 @@
 .hyperlink {
   @include font-size(12);
   @include antialiased();
-  border-bottom: 1px solid transparent;
   color: $hyperlink-color;
   cursor: pointer;
-  line-height: 16px;
+  line-height: 1.5rem;
   position: relative;
-  text-decoration: none;
-  white-space: nowrap;
+  text-decoration: underline;
 
   // Focus states appear in ::after pseudo elements to take
   // advantage of border radius.
@@ -34,7 +32,6 @@
   }
 
   &:hover:not([disabled]) {
-    border-bottom-color: $hyperlink-hover-color;
     color: $hyperlink-hover-color;
   }
 
@@ -42,27 +39,20 @@
     display: inline-block;
     margin: 60px 20px 40px;
     text-align: center;
+    text-decoration: none;
   }
 
   .xl-text {
     @include font-size(50);
-    font-weight: lighter;
   }
 
-  &.show-visited:visited {
+  &.show-visited:visited,
+  &.force-visited {
     color: $hyperlink-visited-color;
 
     &:focus:not(.hide-focus),
     &:active {
       outline: none;
-
-      &::after {
-        border-color: $hyperlink-visited-color;
-      }
-    }
-
-    &:hover:not([disabled]) {
-      border-bottom-color: $hyperlink-visited-color;
     }
   }
 
@@ -82,10 +72,6 @@
       cursor: default;
     }
 
-    &:active {
-      border-bottom: 1px solid transparent;
-    }
-
     &:focus:not(.hide-focus) {
       outline: none;
 
@@ -98,7 +84,6 @@
   &.back,
   &.directional {
     @include font-size(12);
-    border-bottom: 0;
     color: $hyperlink-color;
 
     &::after {
@@ -106,7 +91,6 @@
     }
 
     span {
-      border-bottom: 1px solid transparent;
 
       &::after {
         @include hyperlink-focus-state;
@@ -123,18 +107,6 @@
       width: 22px;
     }
 
-    &:active:not([disabled]),
-    &:focus:not([disabled]),
-    &:hover:not([disabled]):not(.no-focus) {
-      border-bottom: 1px solid transparent;
-    }
-
-    &:hover:not([disabled]) {
-      span {
-        border-bottom: 1px solid $hyperlink-hover-color;
-      }
-    }
-
     &:focus:not(.hide-focus) {
       span {
         &::after {
@@ -146,7 +118,7 @@
 
   &.back {
     .icon {
-      left: -7px;
+      left: -4px;
       margin-right: -8px;
     }
 
@@ -160,7 +132,7 @@
 
   &.directional {
     .icon {
-      left: -3px;
+      left: -5px;
       margin-right: -7px;
     }
 
@@ -171,6 +143,12 @@
       }
     }
   }
+}
+
+//Inline text should be 14px to match content
+p .hyperlink {
+  @include font-size(14);
+  white-space: nowrap;
 }
 
 // Links Stacked - as on the controls index page
@@ -196,13 +174,6 @@
       top: 2px;
     }
 
-    a:hover:not([disabled]) {
-      border-bottom-color: transparent;
-
-      span {
-        border-bottom-color: $primary-color;
-      }
-    }
   }
 
   div {
@@ -215,10 +186,6 @@
 
   }
 
-  &.no-border div {
-    border-bottom: 0;
-  }
-
   .timestamp {
     color: $graphite04;
     display: block;
@@ -226,13 +193,7 @@
     margin: 0;
     padding: 0;
     position: static;
-    text-transform: uppercase;
   }
-}
-
-//Inline text should be 14px to match content
-p .hyperlink {
-  @include font-size(14);
 }
 
 //Firefox

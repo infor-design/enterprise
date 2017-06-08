@@ -9,6 +9,7 @@
     list-style: none;
 
     &::after {
+      @include font-size(10);
       content: '\002F';
       padding: 0 10px;
     }
@@ -72,10 +73,9 @@
 .toolbar .breadcrumb {
   padding-top: 6px;
 
-  .hyperlink,
-  .current {
+  a,
+  span {
     @include font-size(14);
-    top: 3px;
   }
 }
 

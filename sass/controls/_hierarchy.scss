@@ -115,7 +115,6 @@ $hierarchy-line-width: 1px;
       @include ellipsis();
       @include font-size(16);
       color: $font-color-extrahighcontrast;
-      font-weight: lighter;
       line-height: 20px;
       margin-top: 8px;
     }

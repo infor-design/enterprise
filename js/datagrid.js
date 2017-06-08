@@ -1402,7 +1402,8 @@ $.fn.datagrid = function(options) {
         rowReorder: false, //Allows you to reorder rows. Requires rowReorder formatter
         showDirty: false,
         allowOneExpandedRow: true, //Only allows one expandable row at a time
-        enableTooltips: false  //Process tooltip logic at a cost of performance
+        enableTooltips: false,  //Process tooltip logic at a cost of performance
+        disableRowDeactivation: false // If a row is activated the user should not be able to deactivate it by clicking on the activated row
       },
       settings = $.extend({}, defaults, options);
 
@@ -4670,9 +4671,9 @@ $.fn.datagrid = function(options) {
 
       if (activatedRow.length) {
         var rowIndex = this.dataRowIndex(activatedRow);
-        return [{ row: rowIndex, item: this.settings.dataset[ rowIndex ] }];
+        return [{ row: rowIndex, item: this.settings.dataset[rowIndex], elem: activatedRow }];
       } else {
-        return [{ row: -1, item: undefined }];
+        return [{ row: -1, item: undefined, elem: activatedRow }];
       }
     },
 
@@ -4681,19 +4682,20 @@ $.fn.datagrid = function(options) {
         rowIndex = (typeof idx === 'number' ? idx : this.dataRowIndex(row)),
         isActivated = row.hasClass('is-rowactivated');
 
-      //Deselect old row
-      var oldActivated = this.tableBody.find('tr.is-rowactivated');
-      if (oldActivated.length) {
-        oldActivated.removeClass('is-rowactivated');
-
-        var oldIdx = this.dataRowIndex(oldActivated);
-        this.element.triggerHandler('rowdeactivated', [{row: oldIdx, item: this.settings.dataset[oldIdx]}]);
-      }
-
       if (isActivated) {
-        row.removeClass('is-rowactivated');
-        this.element.triggerHandler('rowdeactivated', [{row: rowIndex, item: this.settings.dataset[rowIndex]}]);
+        if (!this.settings.disableRowDeactivation) {
+          row.removeClass('is-rowactivated');
+          this.element.triggerHandler('rowdeactivated', [{row: rowIndex, item: this.settings.dataset[rowIndex]}]);
+        }
       } else {
+        //Deselect old row
+        var oldActivated = this.tableBody.find('tr.is-rowactivated');
+        if (oldActivated.length) {
+          oldActivated.removeClass('is-rowactivated');
+
+          var oldIdx = this.dataRowIndex(oldActivated);
+          this.element.triggerHandler('rowdeactivated', [{row: oldIdx, item: this.settings.dataset[oldIdx]}]);
+        }
         row.addClass('is-rowactivated');
         this.element.triggerHandler('rowactivated', [{row: rowIndex, item: this.settings.dataset[rowIndex]}]);
       }
@@ -5412,7 +5414,7 @@ $.fn.datagrid = function(options) {
       }
       this.editor.val(cellValue);
       this.editor.focus();
-      this.element.triggerHandler('entereditmode');
+      this.element.triggerHandler('entereditmode', [{editor: this.editor}]);
     },
 
     commitCellEdit: function(input) {
@@ -5450,7 +5452,7 @@ $.fn.datagrid = function(options) {
 
       //Save the Cell Edit back to the data set
       this.updateCellNode(rowIndex, cellNode.index(), newValue, false, isInline);
-      this.element.triggerHandler('exiteditmode');
+      this.element.triggerHandler('exiteditmode', [{editor: this.editor}]);
     },
 
     //Validate a particular cell if it has validation on the column and its visible

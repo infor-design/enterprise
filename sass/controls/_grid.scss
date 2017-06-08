@@ -10,6 +10,7 @@ $gutter-neg-size: -20px;
 //$breakpoint-tablet-to-desktop: 1160px;
 //$breakpoint-desktop-to-extralarge: 1440px;
 .row {
+  @include font-size(12);
   clear: both;
   margin: 0 auto;
   max-width: $breakpoint-tablet-to-desktop;
