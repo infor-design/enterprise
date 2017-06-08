@@ -3013,13 +3013,6 @@
             targetRectObj.left = targetRectObj.left - parentRect.left;
           }
 
-          // Module tabs use the old style
-          if (isModuleTabs) {
-            // Dirty Hack for Module Tabs
-            // TODO: Explore why this happens
-            //targetRectObj.top = targetRectObj.top - 1;
-          }
-
           // If inside a scrollable tablist, account for the scroll position
           if (tablistContainer) {
             tablistScrollLeft = tablistContainer ? tablistContainer[0].scrollLeft : 0;

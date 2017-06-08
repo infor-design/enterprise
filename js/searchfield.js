@@ -767,7 +767,6 @@
         if (this.element.parent().hasClass('searchfield-wrapper')) {
           this.element.parent().find('ul').remove();
           this.element.parent().find('.icon').remove();
-          //this.element.unwrap();
         }
 
         return this;
