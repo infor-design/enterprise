@@ -384,6 +384,9 @@
        */
       renderHelperMarkup: function() {
         var auxilaryButtonLocation = this.tablistContainer || this.tablist;
+        if (this.isModuleTabs()) {
+          auxilaryButtonLocation = this.tablist;
+        }
 
         // Square Focus State
         if (this.hasSquareFocusState()) {
@@ -455,7 +458,6 @@
 
         // Add Tab Button
         if (this.settings.addTabButton) {
-          this.addTabButton = this.moreButton.next('.add-tab-button');
           if (!this.addTabButton || !this.addTabButton.length) {
             this.addTabButton = $('<div class="add-tab-button" tabindex="0" role="button">' +
               '<span aria-hidden="true" role="presentation">+</span>' +
@@ -3015,7 +3017,7 @@
           if (isModuleTabs) {
             // Dirty Hack for Module Tabs
             // TODO: Explore why this happens
-            targetRectObj.top = targetRectObj.top - 1;
+            //targetRectObj.top = targetRectObj.top - 1;
           }
 
           // If inside a scrollable tablist, account for the scroll position

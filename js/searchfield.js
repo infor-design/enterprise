@@ -336,7 +336,7 @@
         }
 
         // if Toolbar Searchfield, allow that control to handle adding this class
-        if (!this.wrapper.is('.toolbar-searchfield-wrapper')) {
+        if (!this.isToolbarSearchfield()) {
           this.wrapper.addClass('has-focus');
         }
 
@@ -382,7 +382,7 @@
         var self = this;
         this.recalculateParent();
 
-        if (!this.wrapper.is('.toolbar-searchfield-wrapper')) {
+        if (!this.isToolbarSearchfield()) {
           setTimeout(function() {
             self.wrapper.removeClass('has-focus');
           }, 10);
@@ -473,6 +473,14 @@
       },
 
       /**
+       * Detects whether or not this component is a Toolbar Searchfield
+       * @returns {boolean}
+       */
+      isToolbarSearchfield: function() {
+        return this.wrapper.is('.toolbar-searchfield-wrapper');
+      },
+
+      /**
        * Category Selection event handler
        * @private
        * @returns {undefined}
@@ -496,7 +504,7 @@
        */
       handleCategoryFocus: function() {
         // if Toolbar Searchfield, allow that control to handle adding this class
-        if (this.wrapper.is('.toolbar-searchfield-wrapper')) {
+        if (this.isToolbarSearchfield()) {
           return;
         }
 
@@ -510,7 +518,7 @@
        */
       handleCategoryBlur: function() {
         // if Toolbar Searchfield, allow that control to handle adding this class
-        if (this.wrapper.is('.toolbar-searchfield-wrapper')) {
+        if (this.isToolbarSearchfield()) {
           return;
         }
 
