@@ -79,13 +79,6 @@
             }
           }, 150);
 
-        })
-        .on('blur.signin change.signin keypress.signin', 'input', function () {
-          if (!$(this).is('#confirm-password')) {
-            $('#username').val($('#username-display').val());
-            $('#password').val($('#password-display').val());
-            $('#new-password').val($('#new-password-display').val());
-          }
         });
       },
 
