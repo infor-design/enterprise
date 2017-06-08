@@ -268,7 +268,7 @@
   padding: 2px;// Keep 2px padding around for border to show around on focus
 
   button {
-    @include font-size(12);
+    @include font-size(14);
     @include css3(transition, color .3s ease 0s);
     border: 1px solid transparent;
     border-left: 1px solid $modal-btn-border-color;
@@ -282,7 +282,6 @@
     overflow: hidden;
     position: relative;
     text-align: center;
-    text-transform: uppercase;
     width: 100%;
 
     &:hover {

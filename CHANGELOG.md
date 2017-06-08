@@ -10,7 +10,7 @@ Full Jira Release Notes: http://bit.ly/2mWAmjY
 http://usalvlhlpool1.infor.com/4.3.0-rc/controls
 
 ### Key New Features
--
+- Hijri (Umm Al Qura) - Arabic Calendar Support
 
 ### Improvements
 - Datagrid - Added am option (allowOneExpanded) to only show one expandable row at a time. It is now the default.
@@ -36,9 +36,20 @@ http://usalvlhlpool1.infor.com/4.3.0-rc/controls
 - Multiselect - `moveSelectedToTop` has been deprecated in favor of `moveSelected`, which is now a text string instead of a boolean.  This defaults to `"all"` on Multiselect but can be defined as `"group"` or `"none"` as well.
 - Editor - Removed 'bold','italic','underline', 'anchor', 'quote' options from HTML editor.
 - Datagrid - Made a new option enableTooltips which defaults to false. You know need to enable this to have the tooltips anyplace in the datagrid. This has a significant performance especially for Ellipsis columns, so should only be used if you are sure or your datagrid is not huge.
+- Removed Search Results Page as it was an example for the site
+- Removed Old Soho Site Styles from this project
 
 ### Ui Changes
 - Added heart and heart-filled icons
+- Text/Typography
+  - Removed all font-weight: lighter (effecting components: charts, hierarchy, search results, site)
+  - Removed all text-transform: uppercase (effecting buttons, modals, bullet chart, timestamp text, dropdown and multiselect, Text Area (word count), Popupmenu Headings, Hero Image, Chart Axises, Toolbar Search Field )
+  - Changed H1 - H6 Sizes
+  - Introduced new class based colors for fonts
+  - Header text reduced from 20px to 18px
+  - Links get underlines now by default, have a new hover state
+  - Charts should be lower case (fx JAN, FEB should be Jan, Feb) - this is in the data set and should be changed manually.
+  - Note that Radios , Switches and Checkboxes should be Sentence case.
 
 ### Whats Next
 -

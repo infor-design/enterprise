@@ -72,7 +72,6 @@
     }
   }
 
-  .stamp-text,
   .small-thin-text {
     @include font-size(11);
     color: $font-color-lowcontrast;
@@ -283,10 +282,6 @@
     background-color: $body-bg-color;
   }
 
-  .stamp-text {
-    color: $font-color-lowcontrast;
-    fill: $font-color-lowcontrast;
-  }
 }
 
 .card-list-item-thumbnail {

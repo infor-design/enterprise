@@ -40,12 +40,19 @@ $label-disabled-color: $slate04;
 $disabled-color: $slate05;
 $signin-title-color: $slate01;
 
+// New Text Colors
+$font-color-default: $white;
+$font-color-descriptive: $slate03;
+$font-color-hyperlink: $primary-color;
+$font-color-muted: $slate04;
+$font-color-alert: $alert-red;
+
 //The hyperlink Style
 $hyperlink-color: $azure04;
 $hyperlink-focus-border-color: $azure06;
 $hyperlink-visited-color: $amethyst03;
 $hyperlink-disabled-color: $disabled-color;
-$hyperlink-hover-color: $azure04;
+$hyperlink-hover-color: $azure06;
 
 // Rules
 $hr-top-color: $slate09;

@@ -4,15 +4,13 @@
 @mixin searchfield-text-style() {
   color: $font-color;
   font-weight: bold;
-  @include font-size(12);
-  text-transform: uppercase;
+  @include font-size(14);
 }
 
 @mixin searchfield-text-style-hover() {
   color: $primary-color;
   font-weight: bold;
-  @include font-size(12);
-  text-transform: uppercase;
+  @include font-size(14);
 }
 
 @mixin context-searchfield-boxshadow() {

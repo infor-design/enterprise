@@ -21,13 +21,14 @@ button {
   @include css3-extended(color, transparent, (-webkit-tap-highlight-));
   @include font-size($button-font-size);
   @include transition(color 300ms cubic-bezier(.17, .04, .03, .94), background-color 300ms cubic-bezier(.17, .04, .03, .94));
+  @include antialiased();
   color: inherit;
   font-weight: 700;
   height: 34px;
+  line-height: normal;
   min-width: 100px;
   overflow: hidden;
   position: relative;
-  text-transform: uppercase;
   white-space: nowrap;
   width: auto;
 
@@ -41,6 +42,7 @@ button {
 
   > .icon {
     fill: inherit;
+    margin-top: -3px;
     position: static;
     width: 18px;
 
@@ -585,8 +587,6 @@ a.btn-menu {
  	}
 }
 
-
-
 // Short field buttons
 .field-short {
   [class*="btn"] {
@@ -706,4 +706,10 @@ html[lang^='fr-'] {
 .btn-filter {
   min-width: 45px;
   width: 45px;
+}
+
+.is-firefox {
+  [class^="btn"] {
+    line-height: 34px;
+  }
 }

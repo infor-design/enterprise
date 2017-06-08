@@ -28,7 +28,7 @@ $subheader-height: 60px;
   }
 
   h1 {
-    @include font-size(20);
+    @include font-size(18);
     @include transition(transform 150ms cubic-bezier(.17, .04, .03, .94));
     color: $header-text-color;
     display: inline-block;
@@ -129,16 +129,6 @@ $subheader-height: 60px;
       height: $header-height;
       overflow: visible;
       text-overflow: clip;
-
-      /*
-      > h1 {
-        margin-left: 1.7rem;
-      }
-
-      > button:first-child + h1 {
-        margin-left: 0;
-      }
-      */
 
       .btn-menu {
         text-transform: none;
@@ -448,13 +438,6 @@ html[dir='rtl'] {
     padding-left: 20px;
     padding-right: 0;
   }
-
-  /*
-  .header .toolbar .title > *:first-child {
-    margin-left: 10px;
-    margin-right: 20px;
-  }
-  */
 }
 
 // Print Style Sheet
