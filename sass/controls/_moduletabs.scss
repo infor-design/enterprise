@@ -267,12 +267,13 @@
 
     [class^="btn"],
     .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary) {
+      background-color: transparent;
       color: $module-tabs-inactive-text-color;
       height: 32px;
       margin-top: 1px;
 
       &:not(.btn-menu) {
-        border-color: $module-tabs-inactive-text-color;
+        border-color: transparent;
       }
 
       .ripple-effect {
@@ -329,6 +330,8 @@
   }
 
   .toolbar-searchfield-wrapper {
+    color: $module-tabs-active-text-color;
+
     .icon:not(.error) {
       fill: $module-tabs-inactive-text-color;
     }
@@ -338,6 +341,26 @@
       border-bottom-color: rgba($searchfield-moduletabs-border-color, 0);
       border-top-color: rgba($searchfield-moduletabs-bg-color, 0);
       color: $module-tabs-inactive-text-color;
+
+      &::-webkit-input-placeholder { // Chrome/Opera/Safari */
+        color: $module-tabs-inactive-text-color;
+      }
+      &::-moz-placeholder { // Firefox 19+ */
+        color: $module-tabs-inactive-text-color;
+      }
+      &:-ms-input-placeholder { // IE 10+ */
+        color: $module-tabs-inactive-text-color;
+      }
+      &:-moz-placeholder { // Firefox 18- */
+        color: $module-tabs-inactive-text-color;
+      }
+    }
+
+    [class^="btn"] {
+      &.active,
+      &.has-focus {
+        border-color: $module-tabs-inactive-text-color;
+      }
     }
 
     &.non-collapsible {
@@ -353,6 +376,19 @@
       .searchfield {
         background-color: rgba($searchfield-moduletabs-bg-color, .4);
         border-bottom-color: rgba($searchfield-moduletabs-border-color, .4);
+
+        &::-webkit-input-placeholder { // Chrome/Opera/Safari */
+          color: transparent;
+        }
+        &::-moz-placeholder { // Firefox 19+ */
+          color: transparent;
+        }
+        &:-ms-input-placeholder { // IE 10+ */
+          color: transparent;
+        }
+        &:-moz-placeholder { // Firefox 18- */
+          color: transparent;
+        }
       }
     }
 
@@ -364,6 +400,10 @@
       .icon:not(.error) {
         fill: $module-tabs-active-text-color;
       }
+    }
+
+    &.has-categories {
+      width: 101px;
     }
   }
 

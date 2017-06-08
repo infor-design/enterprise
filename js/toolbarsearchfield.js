@@ -82,7 +82,7 @@
         // Invoke Searchfield, pass settings on
         var sfSettings = $.extend({}, this.settings, $.fn.parseOptions(this.input[0]));
         this.input.searchfield(sfSettings);
-        this.inputWrapper = this.input.parent('.searchfield-wrapper');
+        this.inputWrapper = this.input.parent();
         this.inputWrapper.addClass('toolbar-searchfield-wrapper');
 
         if (sfSettings.categories) {
@@ -575,10 +575,6 @@
       teardown: function() {
         this.inputWrapper.off('mousedown.toolbarsearchfield focusin.toolbarsearchfield collapse.toolbarsearchfield');
         this.inputWrapper.find('.icon').remove();
-
-        if (this.button && this.button.length) {
-          this.button.remove();
-        }
 
         if (this.xButton && this.xButton.length) {
           this.xButton.remove();
