@@ -437,7 +437,8 @@
         } else {
           // Re-adjust the size of the buttonset element if the expanded searchfield would be
           // too large to fit.
-          var buttonsetWidth = parseInt(window.getComputedStyle(this.buttonsetElem).width),
+          var titleElemWidth = parseInt(window.getComputedStyle(this.titleElem).width),
+            buttonsetWidth = parseInt(window.getComputedStyle(this.buttonsetElem).width),
             d = TOOLBARSEARCHFIELD_EXPAND_SIZE;
 
           if (buttonsetWidth < TOOLBARSEARCHFIELD_EXPAND_SIZE) {
@@ -445,11 +446,10 @@
           }
 
           containerSizeSetters = {
-            buttonset: buttonsetWidth + TOOLBARSEARCHFIELD_EXPAND_SIZE
+            buttonset: buttonsetWidth
           };
 
-          if (this.titleElem) {
-            var titleElemWidth = parseInt(window.getComputedStyle(this.titleElem).width);
+          if (this.titleElem && d > 0) {
             containerSizeSetters.title = (titleElemWidth - d);
           }
 

@@ -35,7 +35,6 @@ $subheader-height: 60px;
     font-weight: normal;
     margin-bottom: 0;
     text-overflow: ellipsis;
-    width: calc(100% - 60px);
 
     span {
       display: block;
@@ -127,7 +126,9 @@ $subheader-height: 60px;
     .title {
       color: $header-text-color;
       height: $header-height;
+      left: 8px;
       overflow: visible;
+      position: absolute;
       text-overflow: clip;
 
       .btn-menu {
@@ -147,6 +148,20 @@ $subheader-height: 60px;
 
     &.has-title-button + .breadcrumb {
       padding-left: 65px;
+    }
+
+    &.do-resize {
+
+      .title {
+        left: 8px;
+      }
+
+      &.has-more-button {
+        .title {
+          left: 8px;
+        }
+      }
+
     }
   }
 
@@ -421,6 +436,26 @@ $subheader-height: 60px;
   }
 }
 
+// RTL Styles
+html[dir='rtl'] {
+
+  .header {
+    .toolbar {
+      &.has-more-button {
+
+      }
+
+      &.do-resize {
+        .title {
+          left: auto;
+          right: 8px;
+        }
+      }
+    }
+  }
+
+}
+
 //Hide text behind an ellipsis when on smaller breaks
 @media (max-width: $breakpoint-phone-to-tablet - 1) {
   .header {
@@ -429,14 +464,6 @@ $subheader-height: 60px;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-  }
-}
-
-//RTL Styles
-html[dir='rtl'] {
-  .header .toolbar {
-    padding-left: 20px;
-    padding-right: 0;
   }
 }
 
