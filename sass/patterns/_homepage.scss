@@ -187,6 +187,10 @@
       text {
         fill: $header-text-color;
       }
+
+      .chart-legend-item-text {
+        color: $header-text-color;
+      }
     }
 
     .circlepager.is-active .controls .control-button {

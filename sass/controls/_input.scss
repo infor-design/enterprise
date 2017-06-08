@@ -182,7 +182,7 @@
   }
 
   > .textarea-wordcount {
-    color: $label-color;
+    color: $font-color-muted;
     margin-bottom: 14px;
   }
 
@@ -295,16 +295,12 @@ textarea {
 }
 
 .textarea-wordcount {
-  @include font-size(10);
+  @include font-size(12);
   @include rem(line-height, 2rem);
 
   display: block;
   min-height: auto;
   width: 362px;
-
-  .focus {
-    color: $input-color;
-  }
 
   &.almost-empty {
     color: $error-color;
