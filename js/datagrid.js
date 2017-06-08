@@ -5926,12 +5926,12 @@ $.fn.datagrid = function(options) {
             node.attr('aria-level') > level) {
             restCollapsed = node.find('.datagrid-expand-btn.is-expanded').length === 0;
             node[isExpanded ? 'addClass' : 'removeClass']('is-hidden');
-            return;
+            return true;
           }
 
-          if (restCollapsed) {
+          if (restCollapsed && node.attr('aria-level') > level) {
             node.addClass('is-hidden');
-            return;
+            return true;
           }
 
           if (node.attr('aria-level') > level) {
