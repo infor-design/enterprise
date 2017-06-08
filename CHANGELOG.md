@@ -38,6 +38,7 @@ http://usalvlhlpool1.infor.com/4.3.0-rc/controls
 - Datagrid - Made a new option enableTooltips which defaults to false. You know need to enable this to have the tooltips anyplace in the datagrid. This has a significant performance especially for Ellipsis columns, so should only be used if you are sure or your datagrid is not huge.
 - Removed Search Results Page as it was an example for the site
 - Removed Old Soho Site Styles from this project
+- Sign In Page was changed to not copy to invisible fields. Update your markup accordingly. (wont break but may need a look)
 
 ### Ui Changes
 - Added heart and heart-filled icons
