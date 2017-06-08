@@ -87,7 +87,7 @@
         columns: columnsHeader,
         editable: false,
         selectable: 'mixed',
-        disableRowDectivation: true
+        disableRowDeactivation: true
       }).on('rowactivated', function (e, args) {
         console.log('Row ' + args.row + ' Was Activated');
         syncDetail(args.row);

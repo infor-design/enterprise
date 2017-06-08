@@ -1403,7 +1403,7 @@ $.fn.datagrid = function(options) {
         showDirty: false,
         allowOneExpandedRow: true, //Only allows one expandable row at a time
         enableTooltips: false,  //Process tooltip logic at a cost of performance
-        disableRowDectivation: false // If a row is activated the user should not be able to deactivate it by clicking on the activated row
+        disableRowDeactivation: false // If a row is activated the user should not be able to deactivate it by clicking on the activated row
       },
       settings = $.extend({}, defaults, options);
 
@@ -4683,7 +4683,7 @@ $.fn.datagrid = function(options) {
         isActivated = row.hasClass('is-rowactivated');
 
       if (isActivated) {
-        if (!this.settings.disableRowDectivation) {
+        if (!this.settings.disableRowDeactivation) {
           row.removeClass('is-rowactivated');
           this.element.triggerHandler('rowdeactivated', [{row: rowIndex, item: this.settings.dataset[rowIndex]}]);
         }
