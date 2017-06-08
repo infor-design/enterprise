@@ -19,7 +19,7 @@
               <div class="title">Oakham Branch Sales Report</div>
               <div class="buttonset">
                 <button id="hero-header-toolbar-btn-view" class="btn-menu" type="button">
-                  <span>View: Month to Date</span>
+                  <span>View: Last 6 Months</span>
                 </button>
                 <ul class="popupmenu is-selectable">
                   <li class="is-checked"><a href="#">Month to Date</a></li>
@@ -138,7 +138,7 @@
       {name: 'Negative', value: 25, color: 'error'},
       { name: 'Neutral', value: 10, color: 'neutral'}
     ],
-    centerLabel: 'Donut Chart'
+    centerLabel: 'Reviews'
   }];
 
   var barData = [{
@@ -149,7 +149,7 @@
           {name: 'Apr', value: 10, color: '#7cc0b5'},
           {name: 'May', value: 14, color: '#ff9426'}
         ],
-        name: 'Comp A'
+        name: 'Team A'
       }, {
         data: [
           {name: 'Jan', value: 22, color: 'alertYellow'},
@@ -158,7 +158,7 @@
           {name: 'Apr', value: 20, color: '#7cc0b5'},
           {name: 'May', value: 21, color: '#ff9426'}
         ],
-        name: 'Comp B'
+        name: 'Team B'
       }, {
         data: [
           {name: 'Jan', value: 32, color: 'alertYellow'},
@@ -167,29 +167,30 @@
           {name: 'Apr', value: 30, color: '#7cc0b5'},
           {name: 'May', value: 33, color: '#ff9426'}
         ],
-        name: 'Comp C'
+        name: 'Team C'
       }];
 
   var areaData = [{
     data: [
       {name: 'Jan', value: 12}, {name: 'Feb', value: 11}, {name: 'Mar', value: 14},
       {name: 'Apr', value: 10}, {name: 'May', value: 14}, {name: 'Jun', value: 8}],
-    name: 'Component A', color: '#ede3fc'
+    name: 'Metals', color: '#ede3fc'
   }, {
     data: [
       {name: 'Jan', value: 22}, {name: 'Feb', value: 21}, {name: 'Mar', value: 24},
       {name: 'Apr', value: 20}, {name: 'May', value: 24}, {name: 'Jun', value: 28}],
-    name: 'Component B', color: 'alertYellow'
+    name: 'Stone', color: 'alertYellow'
   }, {
     data: [
       {name: 'Jan', value: 32}, {name: 'Feb', value: 31}, {name: 'Mar', value: 34},
       {name: 'Apr', value: 30}, {name: 'May', value: 34}, {name: 'Jun', value: 38}],
-    name: 'Component C', color: 'error'
+    name: 'Wood', color: 'error'
   }];
 
   $('#donut-alert1').chart({type: 'donut', dataset: donutData});
   $('#bar-grouped-example').chart({type: 'bar-grouped', dataset: barData, showLegend: false});
-  $('#area-example').chart({type: 'area', dataset: areaData, showLegend: false});
+  $('#area-example').chart({type: 'area',
+        dataset: areaData});
 
 
   // Wait for initialize

@@ -2929,7 +2929,7 @@ window.Chart = function(container) {
     });
 
     var series = dataset.map(function (d) {
-      return {name: d.name, selectionObj: svg.selectAll('.line-group'), selectionInverse: svg.selectAll('.line-group'), data: d};
+      return {color: d.color, name: d.name, selectionObj: svg.selectAll('.line-group'), selectionInverse: svg.selectAll('.line-group'), data: d};
     });
 
     if (charts.showLegend) {

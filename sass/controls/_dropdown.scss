@@ -366,6 +366,7 @@ div.multiselect {
     @include css3(user-select, none);
     @include font-size(12);
     color: $dropdown-group-label-color;
+    font-weight: bold;
     line-height: 20px;
     min-height: 20px;
     padding: 6px 0 4px;
