@@ -2984,7 +2984,6 @@
           targetPos = Soho.DOM.getDimensions(target[0]),
           targetClassList = target[0].classList,
           isNotHeaderTabs = (!this.isHeaderTabs() || this.isHeaderTabs() && this.element[0].classList.contains('alternate')),
-          isModuleTabs = this.isModuleTabs(),
           isVerticalTabs = this.isVerticalTabs(),
           isRTL = Locale.isRTL(),
           tabMoreWidth = !isVerticalTabs ? this.moreButton.outerWidth(true) : 0,
