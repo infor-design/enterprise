@@ -197,6 +197,7 @@
           ariaListbox: true,
           mouseFocus: false,
           trigger: 'immediate',
+          attachToBody: true,
           autoFocus: false,
           placementOpts: {
             callback: autocompletePlaceCallback,
@@ -207,8 +208,7 @@
         this.element.addClass('is-open')
           .popupmenu(popupOpts)
           .on('close.autocomplete', function () {
-            self.list.parent('.popupmenu-wrapper').remove();
-            self.element.removeClass('is-open');
+            self.closeList();
           });
 
         // Optionally select the first item in the list
@@ -262,11 +262,14 @@
       closeList: function() {
         var popup = this.element.data('popupmenu');
         if (!popup) {
+          popup.close();
           return;
         }
 
-        popup.close();
         this.element.trigger('listclose');
+        $('#autocomplete-list').parent('.popupmenu-wrapper').remove();
+        $('#autocomplete-list').remove();
+        this.element.removeClass('is-open');
       },
 
       listIsOpen: function() {
