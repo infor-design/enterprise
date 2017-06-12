@@ -412,13 +412,14 @@
       },
 
       expand: function() {
-        if (this.inputWrapper.hasClass('active')) {
+        if (this.inputWrapper.hasClass('active') || this.settings.collapsible === false) {
           return;
         }
 
         var self = this,
           notFullWidth = !this.shouldBeFullWidth(),
           dontRecalculateButtons = false,
+          toolbarSettings = this.toolbarParent.data('toolbar').settings,
           containerSizeSetters;
 
         if (this.animationTimer) {
@@ -448,7 +449,7 @@
             buttonset: buttonsetWidth + TOOLBARSEARCHFIELD_EXPAND_SIZE
           };
 
-          if (this.titleElem) {
+          if (toolbarSettings.favorButtonset === true && this.titleElem) {
             var titleElemWidth = parseInt(window.getComputedStyle(this.titleElem).width);
             containerSizeSetters.title = (titleElemWidth - d);
           }
@@ -487,6 +488,10 @@
       },
 
       collapse: function() {
+        if (this.settings.collapsible === false) {
+          return;
+        }
+
         var self = this,
           textMethod = 'removeClass';
 

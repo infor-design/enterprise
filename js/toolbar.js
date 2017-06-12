@@ -674,8 +674,8 @@
             targetButtonsetWidth = targetButtonsetWidth - d;
           }
 
-          buttonsetElem.style.width = addPx(targetButtonsetWidth);
-          titleElem.style.width = addPx(targetTitleWidth);
+          buttonsetElem.style.width = addPx(targetButtonsetWidth + 1);
+          titleElem.style.width = addPx(targetTitleWidth - 1);
 
           return this;
         }
