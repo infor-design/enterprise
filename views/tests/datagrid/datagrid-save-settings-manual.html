@@ -88,16 +88,20 @@
           localStorage[grid.uniqueId('rowHeight')] = args.rowHeight;
           localStorage[grid.uniqueId('sortOrder')] = JSON.stringify(args.sortOrder);
           localStorage[grid.uniqueId('pagesize')] = args.pagesize;
+          localStorage[grid.uniqueId('activePage')] = args.activePage;
+          localStorage[grid.uniqueId('filter')] = JSON.stringify(args.filter);
 
         }).data('datagrid');
 
-        var savedColumns = grid.columnsFromString(localStorage[grid.uniqueId('columns')]),
+        var savedColumns = localStorage[grid.uniqueId('columns')] ? grid.columnsFromString(localStorage[grid.uniqueId('columns')]) : null,
           savedRowHeight = localStorage[grid.uniqueId('rowHeight')],
-          savedSortOrder = JSON.parse(localStorage[grid.uniqueId('sortOrder')]),
-          savedPagesize = localStorage[grid.uniqueId('pagesize')];
+          savedSortOrder = localStorage[grid.uniqueId('sortOrder')] ? JSON.parse(localStorage[grid.uniqueId('sortOrder')]) : null,
+          savedPagesize = localStorage[grid.uniqueId('pagesize')],
+          savedActivePage = localStorage[grid.uniqueId('activePage')],
+          savedFilter = localStorage[grid.uniqueId('filter')] ? JSON.parse(localStorage[grid.uniqueId('filter')]) : null;
 
-        grid.restoreUserSettings({columns: savedColumns,
-              rowHeight: savedRowHeight, sortOrder: savedSortOrder, pagesize: savedPagesize});
+        grid.restoreUserSettings({activePage: savedActivePage, columns: savedColumns,
+              rowHeight: savedRowHeight, sortOrder: savedSortOrder, pagesize: savedPagesize, filter: savedFilter});
 
     });
  });

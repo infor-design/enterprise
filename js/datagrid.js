@@ -3473,7 +3473,9 @@ $.fn.datagrid = function(options) {
       this.element.trigger('settingschanged', [{rowHeight: this.settings.rowHeight,
         columns: this.settings.columns,
         sortOrder: this.sortColumn,
-        pagesize: this.settings.pagesize}]);
+        pagesize: this.settings.pagesize,
+        activePage: this.pager ? this.pager.activePage : 1,
+        filter: this.filterConditions()}]);
 
       // Save to Local Storage if the options are set
       var options = this.settings.saveUserSettings;
@@ -3524,6 +3526,10 @@ $.fn.datagrid = function(options) {
     },
 
     columnsFromString: function(columnStr) {
+      if (!columnStr) {
+        return;
+      }
+
       var self = this,
         columns = JSON.parse(columnStr);
 
@@ -3580,7 +3586,7 @@ $.fn.datagrid = function(options) {
         return;
       }
 
-      // TODO: Restore The data thats passed in
+      // Restore The data thats passed in
       if (settings) {
 
         if (settings.columns) {
@@ -3596,13 +3602,13 @@ $.fn.datagrid = function(options) {
         }
 
         if (settings.pagesize) {
-          this.settings.pagesize = settings.pagesize;
-          this.pager.settings.pagesize = settings.pagesize;
+          this.settings.pagesize = parseInt(settings.pagesize);
+          this.pager.settings.pagesize = parseInt(settings.pagesize);
           this.pager.setActivePage(1, true);
         }
 
         if (settings.activePage) {
-          this.pager.setActivePage(settings.activePage, true);
+          this.pager.setActivePage(parseInt(settings.activePage), true);
         }
 
         if (settings.filter) {
@@ -3643,7 +3649,7 @@ $.fn.datagrid = function(options) {
       if (options.pagesize) {
         var savedPagesize = localStorage[this.uniqueId('usersettings-pagesize')];
         if (savedPagesize) {
-          this.settings.pagesize = savedPagesize;
+          this.settings.pagesize = parseInt(savedPagesize);
         }
       }
 
@@ -3651,7 +3657,7 @@ $.fn.datagrid = function(options) {
       if (options.activePage) {
         var savedActivePage = localStorage[this.uniqueId('usersettings-active-page')];
         if (savedActivePage) {
-          this.savedActivePage = savedActivePage;
+          this.savedActivePage = parseInt(savedActivePage);
           this.restoreActivePage = true;
         }
       }
@@ -4425,7 +4431,34 @@ $.fn.datagrid = function(options) {
       return false;
     },
 
-    appendToolbar: function () {
+    // Adjust to set a changed row height
+    refreshSelectedRowHeight: function () {
+      var toolbar = this.element.parent().find('.toolbar:not(.contextual-toolbar)'),
+        short = toolbar.find('[data-option="row-short"]'),
+        med = toolbar.find('[data-option="row-medium"]'),
+        normal = toolbar.find('[data-option="row-normal"]');
+
+        if (this.settings.rowHeight === 'short') {
+          short.parent().addClass('is-checked');
+          med.parent().removeClass('is-checked');
+          normal.parent().removeClass('is-checked');
+        }
+
+        if (this.settings.rowHeight === 'medium') {
+          short.parent().removeClass('is-checked');
+          med.parent().addClass('is-checked');
+          normal.parent().removeClass('is-checked');
+        }
+
+        if (this.settings.rowHeight === 'normal') {
+          short.parent().removeClass('is-checked');
+          med.parent().removeClass('is-checked');
+          normal.parent().addClass('is-checked');
+        }
+
+    },
+
+     appendToolbar: function () {
       var toolbar, title = '', more, self = this;
 
       if (!settings.toolbar) {
@@ -4435,33 +4468,7 @@ $.fn.datagrid = function(options) {
       //Allow menu to be added manually
       if (this.element.parent().find('.toolbar:not(.contextual-toolbar)').length === 1) {
         toolbar = this.element.parent().find('.toolbar:not(.contextual-toolbar)');
-
-        // Adjust to set row height
-        if (settings.toolbar.rowHeight || settings.saveUserSettings.rowHeight) {
-          var short = toolbar.find('[data-option="row-short"]'),
-            med = toolbar.find('[data-option="row-medium"]'),
-            normal = toolbar.find('[data-option="row-normal"]');
-
-          if (this.settings.rowHeight === 'short') {
-            short.parent().addClass('is-checked');
-            med.parent().removeClass('is-checked');
-            normal.parent().removeClass('is-checked');
-          }
-
-          if (this.settings.rowHeight === 'medium') {
-            short.parent().removeClass('is-checked');
-            med.parent().addClass('is-checked');
-            normal.parent().removeClass('is-checked');
-          }
-
-          if (this.settings.rowHeight === 'normal') {
-            short.parent().removeClass('is-checked');
-            med.parent().removeClass('is-checked');
-            normal.parent().addClass('is-checked');
-          }
-
-        }
-
+        this.refreshSelectedRowHeight();
       } else {
         toolbar = $('<div class="toolbar" role="toolbar"></div>');
 
@@ -4622,6 +4629,7 @@ $.fn.datagrid = function(options) {
       }
 
       this.saveUserSettings();
+      this.refreshSelectedRowHeight();
       return settings.rowHeight;
     },
 
@@ -6427,7 +6435,7 @@ $.fn.datagrid = function(options) {
         indeterminate: this.settings.indeterminate,
         rowTemplate: this.settings.rowTemplate,
         pagesizes: this.settings.pagesizes,
-        activePage: this.restoreActivePage ? this.savedActivePage: 1
+        activePage: this.restoreActivePage ? parseInt(this.savedActivePage) : 1
       });
 
       if (this.restoreActivePage) {
