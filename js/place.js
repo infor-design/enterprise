@@ -766,9 +766,9 @@
 
         arrow[0].removeAttribute('style');
 
-        if (placementObj.attemptedFlips) {
+        //if (placementObj.attemptedFlips) { TJM Removed for pager bug. Seems to work.
           element.removeClass('top right bottom left').addClass(dir);
-        }
+        //}
 
         // Flip the arrow if we're in RTL mode
         if (this.isRTL && isXCoord) {

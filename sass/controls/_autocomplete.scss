@@ -47,8 +47,12 @@
     }
   }
 
-  a:before,
-  a:after {
+  small {
+    color: inherit;
+  }
+
+  a::before,
+  a::after {
     display: none;
   }
 

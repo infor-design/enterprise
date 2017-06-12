@@ -43,7 +43,7 @@
 </div>
 
 <script>
-  $(function() {
+  $('body').one('initialized', function () {
 
     var grid,
       columns = [],
@@ -80,16 +80,28 @@
           pagesize: 10,
           pagesizes: [5, 10, 15],
           filterable: true,
-          saveColumns: false,  //deprecated
-          saveUserSettings: {columns: true,
-                             rowHeight: true,
-                             sortOrder: true,
-                             pagesize: true,
-                             filter: true},
           toolbar: {personalize: true, filterRow: true, results: true, resetLayout: true}
         }).on('settingschanged', function (e, args) {
-          console.log('Settings Changed', args);
-        });
+
+          // Save Each Setting in Local storage (or you could use your own DB)
+          localStorage[grid.uniqueId('columns')] = JSON.stringify(args.columns);
+          localStorage[grid.uniqueId('rowHeight')] = args.rowHeight;
+          localStorage[grid.uniqueId('sortOrder')] = JSON.stringify(args.sortOrder);
+          localStorage[grid.uniqueId('pagesize')] = args.pagesize;
+          localStorage[grid.uniqueId('activePage')] = args.activePage;
+          localStorage[grid.uniqueId('filter')] = JSON.stringify(args.filter);
+
+        }).data('datagrid');
+
+        var savedColumns = localStorage[grid.uniqueId('columns')] ? grid.columnsFromString(localStorage[grid.uniqueId('columns')]) : null,
+          savedRowHeight = localStorage[grid.uniqueId('rowHeight')],
+          savedSortOrder = localStorage[grid.uniqueId('sortOrder')] ? JSON.parse(localStorage[grid.uniqueId('sortOrder')]) : null,
+          savedPagesize = localStorage[grid.uniqueId('pagesize')],
+          savedActivePage = localStorage[grid.uniqueId('activePage')],
+          savedFilter = localStorage[grid.uniqueId('filter')] ? JSON.parse(localStorage[grid.uniqueId('filter')]) : null;
+
+        grid.restoreUserSettings({activePage: savedActivePage, columns: savedColumns,
+              rowHeight: savedRowHeight, sortOrder: savedSortOrder, pagesize: savedPagesize, filter: savedFilter});
 
     });
  });
