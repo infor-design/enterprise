@@ -520,7 +520,7 @@
           if (li.hasClass('dismissible')) {
             e.preventDefault();
             e.stopPropagation();
-            self.closeDismissibleTab(li.children('a'));
+            self.closeDismissibleTab(li.children('a').attr('href'));
           }
         }
 
@@ -613,7 +613,7 @@
           });
         }
 
-        var dismissible = self.tablist.find('li').filter('is-dismissible');
+        var dismissible = self.tablist.find('li').filter('.dismissible');
         dismissible.each(dismissibleTabEvents);
 
         // Events specific to markup that can be re-rendered mid-lifecycle
@@ -772,9 +772,11 @@
 
         // close tab on middle click
         if (e.which === 2) {
+          if (li.is('.dismissible') && $(e.target).is('.close')) {
+            this.closeDismissibleTab(href);
+          }
           e.preventDefault();
-          this.closeDismissibleTab(href);
-          return;
+          return false;
         }
 
         this.activate(href);
