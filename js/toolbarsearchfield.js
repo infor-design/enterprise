@@ -25,7 +25,7 @@
         defaults = {
           clearable: true,  // If "true", provides an "x" button on the right edge that clears the field
           collapsible: true, // If "true", allows the field to expand/collapse on larger breakpoints when focused/blurred respectively
-          collapsibleOnMobile: true // If true, overrides `collapsible` only on mobile settings.
+          collapsibleOnMobile: false // If true, overrides `collapsible` only on mobile settings.
         },
         settings = $.extend({}, defaults, options);
 
@@ -97,7 +97,7 @@
         this.xButton = this.inputWrapper.children('.icon.close');
 
         // Open the searchfield once on intialize if it's a "non-collapsible" searchfield
-        if (!this.shouldExpandOnMobile()) {
+        if (this.settings.collapsible === false && this.shouldExpandOnMobile()) {
           this.inputWrapper.addClass('no-transition').one('expanded.' + this.id, function() {
             $(this).removeClass('no-transition');
           });
@@ -173,6 +173,7 @@
 
         function searchfieldCollapseTimer() {
           if (!$.contains(self.inputWrapper[0], document.activeElement) && self.inputWrapper.hasClass('active')) {
+            self.focusElem = document.activeElement;
             self.collapse();
           }
         }
@@ -416,7 +417,7 @@
         var self = this,
           notFullWidth = !this.shouldBeFullWidth();
 
-        if (this.inputWrapper.hasClass('active') || notFullWidth) {
+        if (this.inputWrapper.hasClass('active')) {
           return;
         }
 
@@ -456,6 +457,8 @@
           self.inputWrapper.triggerHandler('expanded');
         }
 
+
+
         // Places the input wrapper into the toolbar on smaller breakpoints
         if (!notFullWidth) {
           this.elemBeforeWrapper = this.inputWrapper.prev();
@@ -487,7 +490,7 @@
         this.inputWrapper.addClass('active');
         this.handleDeactivationEvents();
 
-        if (notFullWidth) {
+        if (this.shouldExpandOnMobile()) {
           expandCallback();
           return;
         }
@@ -500,9 +503,11 @@
           textMethod = 'removeClass';
 
         function closeWidth() {
+          /*
           if (!self.shouldBeFullWidth()) {
             return;
           }
+          */
 
           if (self.button instanceof $ && self.button.length) {
             self.setClosedWidth();
@@ -521,8 +526,13 @@
             self.button.data('popupmenu').close(false, true);
           }
 
-          self.toolbarParent.triggerHandler('recalculate-buttons');
           self.inputWrapper.triggerHandler('collapsed');
+
+          // TODO: Make this process more solid, without FOUC/jumpiness and better focus handling (EPC)
+          // See http://jira/browse/SOHO-6347
+          self.inputWrapper.one($.fn.transitionEndName(), function() {
+            self.toolbarParent.triggerHandler('recalculate-buttons');
+          });
         }
 
         // Puts the input wrapper back where it should be if it's been moved due to small form factors.
@@ -578,7 +588,7 @@
        * @returns {boolean}
        */
       shouldExpandOnMobile: function() {
-        if (this.settings.collapsible === false) {
+        if (this.settings.collapsible === true) {
           return false;
         }
         if (this.settings.collapsibleOnMobile === true) {
