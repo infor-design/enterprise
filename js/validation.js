@@ -833,7 +833,8 @@
             dateFormat = field.data('datepicker').pattern;
           }
 
-          var parsedDate = Locale.parseDate(value, dateFormat, true);
+          var isStrict = !(dateFormat === 'MMMM d' || dateFormat === 'yyyy'),
+            parsedDate = Locale.parseDate(value, dateFormat, isStrict);
           return ((parsedDate === undefined) && value !== '') ? false : true;
         },
         message: 'Invalid Date'

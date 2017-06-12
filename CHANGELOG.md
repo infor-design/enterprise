@@ -34,14 +34,16 @@ http://usalvlhlpool1.infor.com/4.3.0-rc/controls
 
 ### Breaking Changes
 - Tag - Revised the spelling of the CSS class for "X" buttons on tags from "is-dismissable" to "is-dismissible".  The original class still works, but is deprecated and will be removed in a future version.
+- Multiselect - `moveSelectedToTop` has been deprecated in favor of `moveSelected`, which is now a text string instead of a boolean.  This defaults to `"all"` on Multiselect but can be defined as `"group"` or `"none"` as well.
+- Removed Search Results Page as it was an example for the site
+- Sign In Page was changed to not copy to invisible fields. Update your markup accordingly. (wont break but may need a look)
+
+### Behavior Changes
 - Pie - The Chart now sorts slices in the order of the dataset (was on size from biggest to smallest before).
 - Button - Changed the standard `.btn` style on forms to reflect Tertiary button style instead of Secondary button style (SOHO-6083).
-- Multiselect - `moveSelectedToTop` has been deprecated in favor of `moveSelected`, which is now a text string instead of a boolean.  This defaults to `"all"` on Multiselect but can be defined as `"group"` or `"none"` as well.
 - Editor - Removed 'bold','italic','underline', 'anchor', 'quote' options from HTML editor.
 - Datagrid - Made a new option enableTooltips which defaults to false. You know need to enable this to have the tooltips anyplace in the datagrid. This has a significant performance especially for Ellipsis columns, so should only be used if you are sure or your datagrid is not huge.
-- Removed Search Results Page as it was an example for the site
-- Removed Old Soho Site Styles from this project
-- Sign In Page was changed to not copy to invisible fields. Update your markup accordingly. (wont break but may need a look)
+- Datagrid - Added option sizeColumnsEqually which defaults to false. If set all the columns will get an equal size. (this used to do it automatically for the first 8 columns)
 
 ### Ui Changes
 - Added heart and heart-filled icons

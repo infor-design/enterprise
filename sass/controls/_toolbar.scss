@@ -28,6 +28,10 @@ $toolbar-buttonset-height: 40px;
     vertical-align: middle;
   }
 
+  [class^="btn"] {
+    margin: 0;
+  }
+
   .buttonset {
     @include no-select();
     height: $toolbar-buttonset-height;
@@ -75,7 +79,7 @@ $toolbar-buttonset-height: 40px;
   .title {
     @include enable-select();
     height: $toolbar-buttonset-height;
-    left: 1px; //FOUC - Interacts with other title widths
+    left: -3px; //FOUC - Interacts with other title widths
     overflow: hidden;
     position: relative;
     text-align: left;
@@ -136,8 +140,12 @@ $toolbar-buttonset-height: 40px;
         width: calc(100% - 44px);
       }
 
-      .title + .buttonset {
-        width: auto;
+      .title {
+        left: 0;
+
+        + .buttonset {
+          width: auto;
+        }
       }
     }
   }
@@ -378,7 +386,7 @@ html[dir='rtl'] {
 
     .title {
       left: auto;
-      right: 1rem;
+      right: -3px; //FOUC - Interacts with other title widths
       text-align: right;
 
       + .buttonset {
@@ -387,6 +395,11 @@ html[dir='rtl'] {
     }
 
     &.has-more-button {
+      .title {
+        left: auto;
+        right: -5px; //FOUC
+      }
+
       .buttonset > *:last-child {
         margin-left: 5px;
         margin-right: 0;
@@ -395,4 +408,10 @@ html[dir='rtl'] {
 
   }
 
+}
+
+.is-firefox {
+  .contextual-toolbar.toolbar [class^="btn"] {
+    line-height: 30px;
+  }
 }

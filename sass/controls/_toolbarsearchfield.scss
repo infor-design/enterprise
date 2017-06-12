@@ -210,6 +210,10 @@ $toolbarsearchfield-category-empty-width: 54px;
       fill: $tertiary-btn-hover-color;
     }
 
+    .searchfield {
+      border-color: transparent;
+    }
+
     &.active {
       .icon {
         fill: $searchfield-text-color;

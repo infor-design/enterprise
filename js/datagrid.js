@@ -1404,7 +1404,8 @@ $.fn.datagrid = function(options) {
         showDirty: false,
         allowOneExpandedRow: true, //Only allows one expandable row at a time
         enableTooltips: false,  //Process tooltip logic at a cost of performance
-        disableRowDeactivation: false // If a row is activated the user should not be able to deactivate it by clicking on the activated row
+        disableRowDeactivation: false, // If a row is activated the user should not be able to deactivate it by clicking on the activated row
+        sizeColumnsEqually: false //If true make all the columns equal width
       },
       settings = $.extend({}, defaults, options);
 
@@ -3250,7 +3251,7 @@ $.fn.datagrid = function(options) {
       var lastColumn = index === this.lastColumnIdx() && this.totalWidth !== colWidth;
 
       // Simulate Auto Width Algorithm
-      if ((!this.widthSpecified || col.width === undefined) && visibleColumns.length < 8 &&
+      if ((!this.widthSpecified || col.width === undefined) && this.settings.sizeColumnsEqually &&
         (['selectionCheckbox', 'expander', 'drilldown', 'rowStatus', 'favorite'].indexOf(col.id) === -1)) {
 
         var percentWidth = Math.round(this.elemWidth / visibleColumns.length);
