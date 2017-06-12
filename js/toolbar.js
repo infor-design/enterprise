@@ -23,7 +23,7 @@
         defaults = {
           rightAligned: false, // Will always attempt to right-align the contents of the toolbar.
           maxVisibleButtons: 3, // Total amount of buttons that can be present, not including the More button
-          resizeContainers: false, // If true, uses Javascript to size the Title and Buttonset elements in a way that shows as much of the Title area as possible.
+          resizeContainers: true, // If true, uses Javascript to size the Title and Buttonset elements in a way that shows as much of the Title area as possible.
           favorButtonset: true // If "resizeContainers" is true, setting this to true will try to display as many buttons as possible while resizing the toolbar.  Setting to false attempts to show the entire title instead.
         },
         settings = $.extend({}, defaults, options);
@@ -622,8 +622,8 @@
           MIN_TITLE_SIZE = 44 + WHITE_SPACE,
           MIN_BUTTONSET_SIZE = 0;
 
-        buttonsetElem.style.width = 'auto';
-        titleElem.style.width = 'auto';
+        buttonsetElem.style.width = '';
+        titleElem.style.width = '';
 
         if (!containerElem.classList.contains('do-resize')) {
           containerElem.classList.add('do-resize');
@@ -674,8 +674,8 @@
             targetButtonsetWidth = targetButtonsetWidth - d;
           }
 
-          buttonsetElem.style.width = addPx(targetButtonsetWidth);
-          titleElem.style.width = addPx(targetTitleWidth);
+          buttonsetElem.style.width = addPx(targetButtonsetWidth + 1);
+          titleElem.style.width = addPx(targetTitleWidth - 1);
 
           return this;
         }
@@ -689,8 +689,9 @@
           targetTitleWidth = targetTitleWidth - d;
         }
 
-        titleElem.style.width = addPx(targetTitleWidth);
-        buttonsetElem.style.width = addPx(targetButtonsetWidth);
+        // Always favor the title by one extra px for Chrome
+        titleElem.style.width = addPx(targetTitleWidth + 1);
+        buttonsetElem.style.width = addPx(targetButtonsetWidth - 1);
         return this;
       },
 
