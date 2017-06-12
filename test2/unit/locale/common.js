@@ -174,7 +174,8 @@ define([
     'should be able to parse 2 and 3 digit years': function() {
       Locale.set('en-US');
       expect(Locale.parseDate('10/10/10', 'M/d/yyyy').getTime()).to.equal(new Date(2010, 09, 10, 0, 0, 0).getTime());
-      expect(Locale.parseDate('10/10/010', 'M/d/yyyy').getTime()).to.equal(new Date(2010, 09, 10, 0, 0, 0).getTime());
+      expect(Locale.parseDate('10/10/010', 'M/d/yyyy')).to.equal(undefined);
+      // expect(Locale.parseDate('10/10/010', 'M/d/yyyy').getTime()).to.equal(new Date(2010, 09, 10, 0, 0, 0).getTime());
     },
 
     //Test Long Formatting

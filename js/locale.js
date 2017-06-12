@@ -283,7 +283,8 @@
       var formatParts,
         dateStringParts,
         dateObj = {},
-        isDateTime = (dateFormat.toLowerCase().indexOf('h') > -1);
+        isDateTime = (dateFormat.toLowerCase().indexOf('h') > -1),
+        i, l;
 
       if (isDateTime) {
         //replace [space & colon & dot] with "/"
@@ -313,12 +314,12 @@
         var lastChar = dateFormat[0],
           newFormat = '', newDateString = '';
 
-        for (var j = 0; j < dateFormat.length; j++) {
-          newFormat +=  (dateFormat[j] !== lastChar ? '/' + dateFormat[j]  : dateFormat[j]);
-          newDateString += (dateFormat[j] !== lastChar ? '/' + dateString[j]  : dateString[j]);
+        for (i = 0, l = dateFormat.length; i < l; i++) {
+          newFormat +=  (dateFormat[i] !== lastChar ? '/' + dateFormat[i]  : dateFormat[i]);
+          newDateString += (dateFormat[i] !== lastChar ? '/' + dateString[i]  : dateString[i]);
 
-          if (j > 1) {
-            lastChar = dateFormat[j];
+          if (i > 1) {
+            lastChar = dateFormat[i];
           }
         }
 
@@ -359,8 +360,8 @@
         year = this.getDatePart(formatParts, dateStringParts, 'yy', 'yyyy'),
         hasDays = false;
 
-      for (var i = 0; i < dateStringParts.length; i++) {
-        var pattern = formatParts[i],
+      for (i = 0, l = dateStringParts.length; i < l; i++) {
+        var pattern = formatParts[i] + '',
           value = dateStringParts[i],
           numberValue = parseInt(value);
 
@@ -398,9 +399,9 @@
           case 'MMM':
               var abrMonth = this.calendar().months.abbreviated;
 
-              for (var l = 0; l < abrMonth.length; l++) {
-                if (orgDatestring.indexOf(abrMonth[l]) > -1) {
-                  dateObj.month = l;
+              for (var len = 0; len < abrMonth.length; len++) {
+                if (orgDatestring.indexOf(abrMonth[len]) > -1) {
+                  dateObj.month = len;
                 }
               }
 
@@ -484,24 +485,64 @@
       }
 
       if (!dateObj.year && dateObj.year !== 0 && !isStrict) {
-        dateObj.year = (new Date()).getFullYear();
+        dateObj.isUndefindedYear = true;
+        for (i = 0, l = formatParts.length; i < l; i++) {
+          if (formatParts[i].indexOf('y') > -1 && dateStringParts[i] !== undefined) {
+            dateObj.isUndefindedYear = false;
+            break;
+          }
+        }
+        if (dateObj.isUndefindedYear) {
+          dateObj.year = (new Date()).getFullYear();
+        } else {
+          delete dateObj.year;
+        }
       }
 
       //Fix incomelete 2 and 3 digit years
-      if (dateObj.year.length === 2) {
-        dateObj.year = '20'+dateObj.year;
+      if (dateObj.year && dateObj.year.length === 2) {
+        dateObj.year = '20' + dateObj.year;
       }
 
-      if (dateObj.year.length === 3) {
-        dateObj.year = '2'+dateObj.year;
+      // TODO: Need to find solution for three digit year
+      // http://jira/browse/SOHO-4691
+      // if (dateObj.year && dateObj.year.length === 3) {
+      //   dateObj.year = '2' + dateObj.year;
+      // }
+
+      dateObj.year = $.trim(dateObj.year);
+      dateObj.day = $.trim(dateObj.day);
+
+      if (dateObj.year === '' || (dateObj.year && !((dateObj.year + '').length === 2 || (dateObj.year + '').length === 4))) {
+        delete dateObj.year;
       }
 
       if (!dateObj.month && dateObj.month !== 0 && !isStrict) {
-        dateObj.month = (new Date()).getMonth();
+        dateObj.isUndefindedMonth = true;
+        for (i = 0, l = formatParts.length; i < l; i++) {
+          if (formatParts[i].indexOf('M') > -1 && dateStringParts[i] !== undefined) {
+            dateObj.isUndefindedMonth = false;
+            break;
+          }
+        }
+        if (dateObj.isUndefindedMonth) {
+          dateObj.month = (new Date()).getMonth();
+        }
       }
 
       if (!dateObj.day && dateObj.day !== 0 && (!isStrict || !hasDays)) {
-        dateObj.day = 1;
+        dateObj.isUndefindedDay = true;
+        for (i = 0, l = formatParts.length; i < l; i++) {
+          if (formatParts[i].indexOf('d') > -1 && dateStringParts[i] !== undefined) {
+            dateObj.isUndefindedDay = false;
+            break;
+          }
+        }
+        if (dateObj.isUndefindedDay) {
+          dateObj.day = 1;
+        } else {
+          delete dateObj.day;
+        }
       }
 
       if (isDateTime) {
