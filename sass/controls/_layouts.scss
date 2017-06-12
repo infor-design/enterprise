@@ -42,11 +42,6 @@
   }
 }
 
-// Give Space from header
-.header + section {
-  margin-top: 30px;
-}
-
 // scss-lint:disable ImportantRule
 .no-scroll {
   overflow: hidden !important;
@@ -406,6 +401,10 @@ body.no-scroll {
   .svg-patterns + .row {
     padding-top: 20px;
   }
+}
+
+.page-content-container {
+  height: calc(100% - 60px);
 }
 
 .header {

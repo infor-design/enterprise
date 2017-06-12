@@ -65,19 +65,10 @@
       build: function() {
         var self = this,
           tabPanelContainer,
-          appMenu,
           moveTabPanelContainer = false;
 
         // Check for a tab panel container immediately after the `.tab-container` element (default as of Soho Xi 4.3.0)
         tabPanelContainer = this.element.next('.tab-panel-container');
-
-        // Check for a page container after an application menu
-        if (!tabPanelContainer.length) {
-          appMenu = $('.application-menu');
-          if (appMenu.length) {
-            tabPanelContainer = appMenu.next('.page-container');
-          }
-        }
 
         // Auto-detect and move existing tab-panel containers in key areas, if applicable.
         // Check inside the container first
@@ -90,9 +81,16 @@
         }
 
         // Special case for Header Tabs, find the page container and use that as the container
-        var bodyPageContainer = $('body > .page-container');
+        var bodyPageContainer = $('body > .page-container, .application-menu + .page-container');
         if (this.element.closest('.header').length > 0 && bodyPageContainer.length) {
           tabPanelContainer = bodyPageContainer;
+        }
+
+        // Special case for Module Tabs, where it's possible for layout reasons for there to be
+        // an application menu element adjacent between the Tab list and the Tab Panel container
+        if (this.element.next('.application-menu')) {
+          tabPanelContainer = this.element.next().next('.page-container');
+          moveTabPanelContainer = false;
         }
 
         // Defining `this.settings.containerElement` ultimately overrides any internal changes to the tab panel container.
@@ -2986,7 +2984,6 @@
           targetPos = Soho.DOM.getDimensions(target[0]),
           targetClassList = target[0].classList,
           isNotHeaderTabs = (!this.isHeaderTabs() || this.isHeaderTabs() && this.element[0].classList.contains('alternate')),
-          isModuleTabs = this.isModuleTabs(),
           isVerticalTabs = this.isVerticalTabs(),
           isRTL = Locale.isRTL(),
           tabMoreWidth = !isVerticalTabs ? this.moreButton.outerWidth(true) : 0,
