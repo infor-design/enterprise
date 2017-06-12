@@ -776,7 +776,7 @@
             this.closeDismissibleTab(href);
           }
           e.preventDefault();
-          return false;
+          return;
         }
 
         this.activate(href);
