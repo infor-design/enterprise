@@ -403,6 +403,10 @@ body.no-scroll {
   }
 }
 
+.page-content-container {
+  height: calc(100% - 60px);
+}
+
 .header {
   + .container,
   + .site-content,

@@ -24,7 +24,7 @@
       &.scrollable,
       &.scrollable-x,
       &.scrollable-y {
-        height: calc(100% - 60px);
+        height: 100%;
       }
     }
   }
@@ -49,11 +49,11 @@
 
         > .tab-list-container {
           height: 40px;
-          overflow-y: hidden;
+          overflow: hidden;
         }
 
         + .tab-panel-container {
-          height: calc(100% - 101px);
+          height: calc(100% - 41px);
         }
       }
     }
@@ -68,6 +68,9 @@
   }
 
   .expandable-footer {
-    margin: 4px 18px;
+    margin-top: 10px !important;
+    margin-bottom: 12px !important;
+    margin-right: 18px;
+    margin-left: 18px;
   }
 }
