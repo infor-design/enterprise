@@ -436,6 +436,15 @@ $subheader-height: 60px;
   }
 }
 
+
+.is-firefox {
+  .header {
+    h1 {
+      margin-top: 3px;
+    }
+  }
+}
+
 // RTL Styles
 html[dir='rtl'] {
 

@@ -783,16 +783,25 @@
     }
 
     var dims = options.dims,
-      hiddenParents = el.parents().add(el).not(':visible'),
-      props = { visibility: 'hidden', display: 'block' },
+      hiddenParents = el.parents().add(el),
+      props = {
+        transition: 'none',
+        webkitTransition: 'none',
+        mozTransition: 'none',
+        msTransition: 'none',
+        visibility: 'hidden',
+        display: 'block',
+      },
       oldProps = [];
 
     hiddenParents.each(function () {
       var old = {};
 
       for (var name in props) {
-        old[name] = this.style[name];
-        this.style[name] = props[name];
+        if (this.style[name]) {
+          old[name] = this.style[name];
+          this.style[name] = props[name];
+        }
       }
 
       oldProps.push(old);
@@ -816,7 +825,9 @@
     hiddenParents.each(function (i) {
       var old = oldProps[i];
       for (var name in props) {
-        this.style[name] = old[name];
+        if (old[name]) {
+          this.style[name] = old[name];
+        }
       }
     });
 
