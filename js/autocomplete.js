@@ -262,10 +262,10 @@
       closeList: function() {
         var popup = this.element.data('popupmenu');
         if (!popup) {
-          popup.close();
           return;
         }
 
+        popup.close();
         this.element.trigger('listclose');
         $('#autocomplete-list').parent('.popupmenu-wrapper').remove();
         $('#autocomplete-list').remove();
