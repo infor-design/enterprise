@@ -3,13 +3,39 @@
   <div class="twelve columns">
 
     <div class="field">
-      <label for="islamic-date" class="label">Date Picker</label>
-      <input id="islamic-date" data-init="false" class="datepicker" name="islamic-date" type="text">
+      <label for="MMMyyyy-date" class="label">3-digit Month Year</label>
+      <input id="MMMyyyy-date" data-init="false" class="datepicker" name="MMMyyyy-date" type="text">
+    </div>
+
+    <div class="field">
+      <label for="MMMMd-date" class="label">Month Day</label>
+      <input id="MMMMd-date" data-init="false" class="datepicker" name="MMMMd-date" type="text">
+    </div>
+
+    <div class="field">
+      <label for="yyyy-date" class="label">Year</label>
+      <input id="yyyy-date" data-init="false" class="datepicker" name="yyyy-date" type="text">
+    </div>
+
+    <div class="field">
+      <label for="MMMMyyyy-date" class="label">Month Year</label>
+      <input id="MMMMyyyy-date" data-init="false" class="datepicker" name="MMMMyyyy-date" type="text">
+    </div>
+
+    <div class="field">
+      <label for="Mdyyyy-date" class="label">Month/Day/Year</label>
+      <input id="Mdyyyy-date" data-init="false" class="datepicker" name="Mdyyyy-date" type="text">
     </div>
 
   </div>
 </div>
 
 <script>
-  $('#islamic-date').datepicker({dateFormat: 'MMM yyyy'});
+  Locale.set('en-US');
+
+  $('#MMMyyyy-date').datepicker({dateFormat: 'MMM yyyy'});
+  $('#MMMMd-date').datepicker({dateFormat: Locale.calendar().dateFormat.month});
+  $('#yyyy-date').datepicker({dateFormat: 'yyyy'});
+  $('#MMMMyyyy-date').datepicker({dateFormat: Locale.calendar().dateFormat.year});
+  $('#Mdyyyy-date').datepicker({dateFormat: Locale.calendar().dateFormat.short});
 </script>

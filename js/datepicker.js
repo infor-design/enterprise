@@ -323,6 +323,7 @@
           customEvents = this.element.attr('data-validation-events'),
           mask = this.pattern.toLowerCase()
                    .replace(/yyyy/g,'####')
+                   .replace(/mmmm/g,'*********')
                    .replace(/mmm/g,'***')
                    .replace(/mm/g,'##')
                    .replace(/dd/g,'##')
@@ -1048,6 +1049,7 @@
         if (typeof this.currentDate === 'string') {
           this.currentDate = Locale.parseDate(this.currentDate, this.pattern, false);
         }
+        this.currentDate = this.currentDate || new Date();
         this.currentMonth = this.currentDate.getMonth();
         this.currentYear = this.currentDate.getFullYear();
         this.currentDay = this.currentDate.getDate();
