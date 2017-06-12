@@ -35,7 +35,6 @@ function handleTouchMove(e) {
     var xDiff = xDown - xUp,
       yDiff = yDown - yUp;
 
-    console.log(xDiff, yDiff);
     if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
       if ( xDiff > 0 ) {
         /* left swipe */
@@ -46,7 +45,6 @@ function handleTouchMove(e) {
       }
       e.preventDefault();
       e.stopPropagation();
-      alert();
     } else {
       if ( yDiff > 0 ) {
           /* up swipe */

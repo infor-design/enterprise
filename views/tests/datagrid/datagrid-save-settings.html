@@ -43,7 +43,7 @@
 </div>
 
 <script>
-  $(function() {
+  $('body').one('initialized', function () {
 
     var grid,
       columns = [],
@@ -80,15 +80,13 @@
           pagesize: 10,
           pagesizes: [5, 10, 15],
           filterable: true,
-          saveColumns: false,  //deprecated
           saveUserSettings: {columns: true,
-                             rowHeight: true,
-                             sortOrder: true,
-                             pagesize: true,
-                             filter: true},
+             rowHeight: true,
+             sortOrder: true,
+             pagesize: true,
+             activePage: true,
+             filter: true},
           toolbar: {personalize: true, filterRow: true, results: true, resetLayout: true}
-        }).on('settingschanged', function (e, args) {
-          console.log('Settings Changed', args);
         });
 
     });

@@ -407,8 +407,8 @@ $datagrid-short-row-height: 23px;
         }
 
         .hyperlink {
-          margin-top: 5px;
-          vertical-align: top;
+          margin-top: -5px;
+          vertical-align: middle;
         }
 
         .datagrid-drilldown {
@@ -868,6 +868,11 @@ $datagrid-short-row-height: 23px;
       .is-readonly {
         background-color: $datagrid-row-hover-color;
       }
+
+      .chart-completion-target {
+        background-color: $chart-targeted-achievement-darker-bg-color;
+      }
+
     }
 
     &.is-selected:not(.hide-selected-color) td:not(.is-editing),
@@ -1133,7 +1138,7 @@ $datagrid-short-row-height: 23px;
       @include font-size(14);
       color: $hyperlink-color;
       display: inline-block;
-      margin-top: 2px;
+      margin-top: -1px;
       vertical-align: middle;
 
       &:focus {
@@ -1546,6 +1551,10 @@ $datagrid-short-row-height: 23px;
         vertical-align: top;
         width: calc(100% - 44px);
 
+        &.datepicker {
+          padding: 3px 24px 2px 5px;
+        }
+
         &:focus {
           border-color: $datagrid-filter-focus-color;
         }
@@ -1560,14 +1569,14 @@ $datagrid-short-row-height: 23px;
       }
 
       [data-mask-mode="number"] {
-        padding: 3px 7px 2px 0;
+        padding: 3px 7px 2px 3px;
       }
 
       .dropdown {
         background-color: transparent;
         color: $datagrid-filter-color;
         height: 24px;
-        line-height: 24px;
+        line-height: 21px;
         padding: 0 0 0 5px;
         -webkit-text-fill-color: $datagrid-filter-color;
         vertical-align: top;
@@ -1683,6 +1692,7 @@ $datagrid-short-row-height: 23px;
           height: 14px;
           left: -7px;
           position: relative;
+          top: 2px;
           vertical-align: top;
           width: 14px;
 
@@ -2377,10 +2387,10 @@ html[dir='rtl'] {
     .is-draggable-target {
       display: none;
       font-size: 2.6em;
-      height: $datagrid-header-height + 2;
+      height: $datagrid-header-height + 1;
       left: 0;
       margin: 0;
-      padding: 5px 0 0 6px;
+      padding: 1px 0 0 6px;
       position: absolute;
       top: 0;
 
@@ -2453,14 +2463,14 @@ html[dir='rtl'] {
 
     th {
       .handle {
-        padding: 8px 0 0 7px;
+        padding: 6px 0 0 7px;
       }
     }
 
     &.short-rowheight {
       th {
         .handle {
-          padding: 4px 0 0 2px;
+          padding: 3px 0 0 1.5px;
         }
       }
     }
@@ -2468,7 +2478,7 @@ html[dir='rtl'] {
     &.medium-rowheight {
       th {
         .handle {
-          padding: 5px 0 0 5px;
+          padding: 3px 0 0 3px;
         }
       }
     }

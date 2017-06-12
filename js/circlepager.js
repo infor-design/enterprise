@@ -138,7 +138,6 @@
 
           href = href.toLowerCase().replace(/[\s,--]+/g, '-');
 
-          // console.log(href, text);
           htmlContent += '<a href="'+ href +'" class="control-button hyperlink hide-focus"'+ isDisabled +'><span class="audible">'+ text +'</span></a>';
         }
 

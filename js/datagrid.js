@@ -1374,7 +1374,8 @@ $.fn.datagrid = function(options) {
         columns: [],
         dataset: [],
         columnReorder: false, // Allow Column reorder
-        saveColumns: true, //Save Column Reorder and resize
+        saveColumns: false, //Save Column Reorder and resize
+        saveUserSettings: {}, //Save one or all of the following to local storage : columns: true, rowHeight: true, sortOrder: true, pagesize: true, activePage: true, filter: true
         editable: false,
         isList: false, // Makes a readonly "list"
         menuId: null,  //Id to the right click context menu
@@ -1434,8 +1435,9 @@ $.fn.datagrid = function(options) {
       this.initSettings();
       this.originalColumns = self.columnsFromString(JSON.stringify(this.settings.columns));
 
-      this.appendToolbar();
       this.restoreColumns();
+      this.restoreUserSettings();
+      this.appendToolbar();
       this.setTreeDepth();
       this.setRowGrouping();
       this.setTreeRootNodes();
@@ -1879,6 +1881,16 @@ $.fn.datagrid = function(options) {
 
       this.renderFilterRow();
 
+      if (this.restoreSortOrder) {
+        this.setSortIndicator(this.sortColumn.sortId, this.sortColumn.sortAsc);
+        this.restoreSortOrder = false;
+      }
+
+      if (this.restoreFilter) {
+        this.applyFilter(this.savedFilter);
+        this.restoreFilter = false;
+        this.savedFilter = null;
+      }
     },
 
     filterRowRendered: false,
@@ -1961,24 +1973,16 @@ $.fn.datagrid = function(options) {
         self.applyFilter();
       });
 
-      var lastValue = '';
-
       this.headerRow.on('keydown.datagrid', '.datagrid-filter-wrapper input', function (e) {
-        var input = $(this);
         e.stopPropagation();
 
-        if (e.which === 13 && lastValue !== input.val()) {
+        if (e.which === 13) {
           e.preventDefault();
           $(this).trigger('change');
-          lastValue = input.val();
         }
 
       }).on('change.datagrid', '.datagrid-filter-wrapper input', function () {
-        var input = $(this);
-        if (lastValue !== input.val()) {
-          self.applyFilter();
-          lastValue = input.val();
-        }
+        self.applyFilter();
       });
 
       this.headerRow.find('.dropdown, .multiselect').on('selected.datagrid', function () {
@@ -2083,7 +2087,9 @@ $.fn.datagrid = function(options) {
       var self = this;
       this.filteredDataset = null;
 
-      if (!conditions) {
+      if (conditions) {
+        this.setFilterConditions(conditions);
+      } else {
         conditions = this.filterConditions();
       }
 
@@ -2240,12 +2246,40 @@ $.fn.datagrid = function(options) {
       }
       this.renderRows();
       this.resetPager('filtered');
+      this.element.trigger('filtered', {op: 'apply', conditions: conditions});
+      this.saveUserSettings();
     },
 
     //Clear and reset the filter
     clearFilter: function () {
       this.renderFilterRow();
       this.applyFilter();
+      this.element.trigger('filtered', {op: 'clear', conditions: []});
+    },
+
+    // Set the filter row from passed data / settings
+    setFilterConditions: function (conditions) {
+      for (var i = 0; i < conditions.length; i++) {
+        //Find the filter row
+        var rowElem = this.headerRow.find('th[data-column-id="'+ conditions[i].columnId +'"]'),
+          input = rowElem.find('input, select'),
+          btn = rowElem.find('.btn-filter');
+
+        if (conditions[i].value === undefined) {
+          conditions[i].value = '';
+        }
+
+        input.val(conditions[i].value);
+
+        if (input.is('select') && conditions[i].value instanceof Array) {
+          for (var j = 0; j < conditions[i].value.length; j++) {
+            input.find('option[value="'+ conditions[i].value[j] + '"]').prop('selected', true);
+          }
+          input.trigger('updated');
+        }
+
+        btn.find('svg:first > use').attr('xlink:href', '#icon-filter-' + conditions[i].operator);
+      }
     },
 
     //Get filter conditions in array form from the UI
@@ -2282,8 +2316,7 @@ $.fn.datagrid = function(options) {
 
         var condition = {columnId: rowElem.attr('data-column-id'),
           operator: op,
-          value: input.val() ? input.val() : '',
-          ignorecase: 'yes'};
+          value: input.val() ? input.val() : ''};
 
         if (input.data('datepicker')) {
           var format = input.data('datepicker').settings.dateFormat;
@@ -2487,8 +2520,6 @@ $.fn.datagrid = function(options) {
       }
 
       // Attach the Drag API
-      //var rowHeight = this.settings.rowHeight === 'normal' ? 50 : (this.settings.rowHeight === 'medium' ? 40 : 30);
-
       this.tableBody.arrange({
           placeholder: '<tr class="datagrid-reorder-placeholder"><td colspan="'+ this.visibleColumns().length +'"></td></tr>',
           handle: '.datagrid-reorder-icon'
@@ -2607,6 +2638,10 @@ $.fn.datagrid = function(options) {
       // Reset recordCount for paging
       if (s.treeGrid && s.paging && !s.source && activePage > 1) {
         self.recordCount = s.treeRootNodes[(pagesize * activePage) - pagesize].idx-1;
+      }
+
+      if (this.restoreSortOrder) {
+        this.sortDataset();
       }
 
       for (i = 0; i < dataset.length; i++) {
@@ -2752,6 +2787,7 @@ $.fn.datagrid = function(options) {
 
         self.element.trigger('afterrender', {body: self.tableBody, header: self.headerRow, pager: self.pagerBar});
       }, 0);
+
     },
 
     cacheVirtualStats: function () {
@@ -3415,6 +3451,7 @@ $.fn.datagrid = function(options) {
       this.resetPager('updatecolumns');
       this.element.trigger('columnchange', [{type: 'updatecolumns', columns: this.settings.columns}]);
       this.saveColumns();
+      this.saveUserSettings();
     },
 
     saveColumns: function () {
@@ -3426,6 +3463,53 @@ $.fn.datagrid = function(options) {
       if (this.canUseLocalStorage()) {
         localStorage[this.uniqueId('columns')] = JSON.stringify(this.settings.columns);
       }
+    },
+
+    // Omit events and save to local storage for supported settings
+    saveUserSettings: function () {
+
+      // Emit Event
+      this.element.trigger('settingschanged', [{rowHeight: this.settings.rowHeight,
+        columns: this.settings.columns,
+        sortOrder: this.sortColumn,
+        pagesize: this.settings.pagesize}]);
+
+      // Save to Local Storage if the options are set
+      var options = this.settings.saveUserSettings;
+      if ($.isEmptyObject(options) || !this.canUseLocalStorage()) {
+        return;
+      }
+
+      // Save Columns
+      if (options.columns) {
+        localStorage[this.uniqueId('usersettings-columns')] = JSON.stringify(this.settings.columns);
+      }
+
+      // Save Row Height
+      if (options.rowHeight) {
+        localStorage[this.uniqueId('usersettings-row-height')] = this.settings.rowHeight;
+      }
+
+      // Save Sort Order
+      if (options.sortOrder) {
+        localStorage[this.uniqueId('usersettings-sort-order')] = JSON.stringify(this.sortColumn);
+      }
+
+      // Save Page Size
+      if (options.pagesize) {
+        localStorage[this.uniqueId('usersettings-pagesize')] = this.settings.pagesize;
+      }
+
+      // Save Page Num
+      if (options.activePage && this.pager) {
+        localStorage[this.uniqueId('usersettings-active-page')] = this.pager.activePage;
+      }
+
+      // Filter Conditions
+      if (options.filter) {
+        localStorage[this.uniqueId('usersettings-filter')] = JSON.stringify(this.filterConditions());
+      }
+
     },
 
     canUseLocalStorage: function () {
@@ -3466,7 +3550,7 @@ $.fn.datagrid = function(options) {
       return columns;
     },
 
-    //Restore the columns from a saved list or local storage
+    // Restore the columns from a saved list or local storage
     restoreColumns: function (cols) {
       if (!this.settings.saveColumns || !this.canUseLocalStorage()) {
         return;
@@ -3488,6 +3572,100 @@ $.fn.datagrid = function(options) {
 
     },
 
+    restoreUserSettings: function (settings) {
+      var options = this.settings.saveUserSettings;
+
+      if (!settings && ($.isEmptyObject(options) || !this.canUseLocalStorage())) {
+        return;
+      }
+
+      // TODO: Restore The data thats passed in
+      if (settings) {
+
+        if (settings.columns) {
+          this.updateColumns(settings.columns);
+        }
+
+        if (settings.rowHeight) {
+          this.rowHeight(settings.rowHeight);
+        }
+
+        if (settings.sortOrder) {
+          this.setSortColumn(settings.sortOrder.sortId, settings.sortOrder.sortAsc);
+        }
+
+        if (settings.pagesize) {
+          this.settings.pagesize = settings.pagesize;
+          this.pager.settings.pagesize = settings.pagesize;
+          this.pager.setActivePage(1, true);
+        }
+
+        if (settings.activePage) {
+          this.pager.setActivePage(settings.activePage, true);
+        }
+
+        if (settings.filter) {
+          this.applyFilter(settings.filter);
+        }
+        return;
+      }
+
+      // Restore Column Width and Order
+      if (options.columns) {
+        var savedColumns = localStorage[this.uniqueId('usersettings-columns')];
+        this.originalColumns = this.settings.columns;
+
+        if (savedColumns) {
+          this.settings.columns = this.columnsFromString(savedColumns);
+        }
+      }
+
+      // Restore Row Height
+      if (options.rowHeight) {
+        var savedRowHeight = localStorage[this.uniqueId('usersettings-row-height')];
+
+        if (savedRowHeight) {
+          this.settings.rowHeight = savedRowHeight;
+        }
+      }
+
+      // Restore Sort Order
+      if (options.sortOrder) {
+        var savedSortOrder = localStorage[this.uniqueId('usersettings-sort-order')];
+        if (savedSortOrder) {
+          this.sortColumn = JSON.parse(savedSortOrder);
+          this.restoreSortOrder = true;
+        }
+      }
+
+      // Restore Page Size
+      if (options.pagesize) {
+        var savedPagesize = localStorage[this.uniqueId('usersettings-pagesize')];
+        if (savedPagesize) {
+          this.settings.pagesize = savedPagesize;
+        }
+      }
+
+      // Restore Active Page
+      if (options.activePage) {
+        var savedActivePage = localStorage[this.uniqueId('usersettings-active-page')];
+        if (savedActivePage) {
+          this.savedActivePage = savedActivePage;
+          this.restoreActivePage = true;
+        }
+      }
+
+      if (options.filter) {
+        var savedFilter = localStorage[this.uniqueId('usersettings-filter')];
+        if (savedFilter) {
+          this.savedFilter = JSON.parse(savedFilter);
+          this.restoreFilter = true;
+        }
+      }
+
+    },
+
+    // Reset Columns from the Menu Option
     resetColumns: function () {
       if (this.canUseLocalStorage()) {
         localStorage.removeItem(this.uniqueId('columns'));
@@ -3498,10 +3676,9 @@ $.fn.datagrid = function(options) {
         this.updateColumns(this.originalColumns);
         this.originalColumns = this.columnsFromString(JSON.stringify(this.settings.columns));
       }
-
     },
 
-    //Hide a column
+    // Hide a column
     hideColumn: function(id) {
       var idx = this.columnIdxById(id);
 
@@ -3519,6 +3696,7 @@ $.fn.datagrid = function(options) {
 
       this.element.trigger('columnchange', [{type: 'hidecolumn', index: idx, columns: this.settings.columns}]);
       this.saveColumns();
+      this.saveUserSettings();
     },
 
     //Show a hidden column
@@ -3539,6 +3717,7 @@ $.fn.datagrid = function(options) {
 
       this.element.trigger('columnchange', [{type: 'showcolumn', index: idx, columns: this.settings.columns}]);
       this.saveColumns();
+      this.saveUserSettings();
     },
 
     // Export To Excel
@@ -3776,6 +3955,10 @@ $.fn.datagrid = function(options) {
         self.headerTable.css('width', parseInt(self.tableWidth) + diff);
         self.table.css('width', parseInt(self.tableWidth) + diff);
       }
+
+      this.element.trigger('columnchange', [{type: 'resizecolumn', index: idx, columns: this.settings.columns}]);
+      this.saveColumns();
+      this.saveUserSettings();
       this.clearHeaderCache();
     },
 
@@ -4251,6 +4434,33 @@ $.fn.datagrid = function(options) {
       //Allow menu to be added manually
       if (this.element.parent().find('.toolbar:not(.contextual-toolbar)').length === 1) {
         toolbar = this.element.parent().find('.toolbar:not(.contextual-toolbar)');
+
+        // Adjust to set row height
+        if (settings.toolbar.rowHeight || settings.saveUserSettings.rowHeight) {
+          var short = toolbar.find('[data-option="row-short"]'),
+            med = toolbar.find('[data-option="row-medium"]'),
+            normal = toolbar.find('[data-option="row-normal"]');
+
+          if (this.settings.rowHeight === 'short') {
+            short.parent().addClass('is-checked');
+            med.parent().removeClass('is-checked');
+            normal.parent().removeClass('is-checked');
+          }
+
+          if (this.settings.rowHeight === 'medium') {
+            short.parent().removeClass('is-checked');
+            med.parent().addClass('is-checked');
+            normal.parent().removeClass('is-checked');
+          }
+
+          if (this.settings.rowHeight === 'normal') {
+            short.parent().removeClass('is-checked');
+            med.parent().removeClass('is-checked');
+            normal.parent().addClass('is-checked');
+          }
+
+        }
+
       } else {
         toolbar = $('<div class="toolbar" role="toolbar"></div>');
 
@@ -4402,7 +4612,6 @@ $.fn.datagrid = function(options) {
         settings.rowHeight = height;
       }
 
-      //TODO: Save in Grid Personalization
       this.element.add(this.table)
         .removeClass('short-rowheight medium-rowheight normal-rowheight')
         .addClass(settings.rowHeight + '-rowheight');
@@ -4410,6 +4619,8 @@ $.fn.datagrid = function(options) {
       if (this.virtualRange && this.virtualRange.rowHeight) {
         this.virtualRange.rowHeight = (height === 'normal' ? 40 : (height === 'medium' ? 30 : 25));
       }
+
+      this.saveUserSettings();
       return settings.rowHeight;
     },
 
@@ -4444,7 +4655,7 @@ $.fn.datagrid = function(options) {
       }
 
       term = term.toLowerCase();
-      this.filterExpr.push({column: 'all', operator: 'contains', value: term, ignorecase: 'yes'});
+      this.filterExpr.push({column: 'all', operator: 'contains', value: term});
 
       this.highlightSearchRows(term);
       this.displayCounts();
@@ -6063,7 +6274,6 @@ $.fn.datagrid = function(options) {
 
     //Api Event to set the sort Column
     setSortColumn: function(id, ascending) {
-      var sort;
       //Set Direction based on if passed in or toggling existing field
       if (ascending !== undefined) {
         this.sortColumn.sortAsc = ascending;
@@ -6078,18 +6288,11 @@ $.fn.datagrid = function(options) {
 
       this.sortColumn.sortId = id;
       this.sortColumn.sortField = (this.columnById(id)[0] ? this.columnById(id)[0].field : id);
-
-      if (this.originalDataset) {
-        this.settings.dataset = this.originalDataset;
-      }
+      this.sortColumn.sortAsc = ascending;
 
       //Do Sort on Data Set
       this.setSortIndicator(id, ascending);
-      sort = this.sortFunction(this.sortColumn.sortId, ascending);
-
-      if (!this.settings.disableClientSort) {
-        settings.dataset.sort(sort);
-      }
+      this.sortDataset();
 
       var wasFocused = this.activeCell.isFocused;
       this.setTreeDepth();
@@ -6106,10 +6309,26 @@ $.fn.datagrid = function(options) {
 
       this.resetPager('sorted');
       this.tableBody.removeClass('is-loading');
+      this.saveUserSettings();
       this.element.trigger('sorted', [this.sortColumn]);
     },
 
+    sortDataset: function() {
+      if (this.originalDataset) {
+        this.settings.dataset = this.originalDataset;
+      }
+      var sort = this.sortFunction(this.sortColumn.sortId, this.sortColumn.sortAsc);
+
+      if (!this.settings.disableClientSort) {
+        settings.dataset.sort(sort);
+      }
+    },
+
     setSortIndicator: function(id, ascending) {
+      if (!this.headerRow) {
+        return;
+      }
+
       //Set Visual Indicator
       this.headerRow.find('.is-sorted-asc, .is-sorted-desc').removeClass('is-sorted-asc is-sorted-desc').attr('aria-sort', 'none');
       this.headerRow.find('[data-column-id="' +id + '"]')
@@ -6206,8 +6425,15 @@ $.fn.datagrid = function(options) {
         pagesize: this.settings.pagesize,
         indeterminate: this.settings.indeterminate,
         rowTemplate: this.settings.rowTemplate,
-        pagesizes: this.settings.pagesizes
+        pagesizes: this.settings.pagesizes,
+        activePage: this.restoreActivePage ? this.savedActivePage: 1
       });
+
+      if (this.restoreActivePage) {
+        this.savedActivePage = null;
+        this.restoreActivePage = false;
+      }
+
       this.pager = pagerElem.data('pager');
 
       pagerElem.on('afterpaging', function (e, args) {
@@ -6225,17 +6451,6 @@ $.fn.datagrid = function(options) {
 
     },
 
-    /*
-    refreshPagerState: function (pagingInfo) {
-      if (!this.pager || !pagingInfo) {
-        return;
-      }
-
-      this.pager.activePage = pagingInfo.activePage;
-      this.pager.updatePagingInfo(pagingInfo);
-    },
-    */
-
     renderPager: function (pagingInfo, isResponse) {
       var api = this.pager;
 
@@ -6243,7 +6458,6 @@ $.fn.datagrid = function(options) {
         return;
       }
 
-      //this.refreshPagerState(pagingInfo);
       api.updatePagingInfo(pagingInfo);
 
       if (!isResponse) {

@@ -17,6 +17,9 @@ http://usalvlhlpool1.infor.com/4.3.0-rc/controls
 - Datagrid - Added an optional light background color on the list version by adding class datagrid-alternate-bg-color to the datagrid div. See tests/datagrid/datagrid-expandable-row-one-only.html
 - Datagrid - Added Favorites Editor
 - Datagrid - Changed clickable editors (buttons, favorites, links), to only fire when clicking the object not the cell.
+- Datagrid - Added filtered event that fires when filter runs
+- Datagrid - Added ability to set filter conditions programmatically with applyFilter
+- Datagrid - Added ability to save filter, page, pagesize, rowheight and column widths in local storage
 - Dropdown - Added ability to set text on blank items on (Clear Selection)
 - Multiselect - Added ability to move selected items to the top of the entire list or to the top of groups when the list is opened.
 - Locale - Added new set of translated strings for 37 languages / 49 locales

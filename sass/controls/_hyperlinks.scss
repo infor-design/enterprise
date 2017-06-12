@@ -161,7 +161,7 @@ p .hyperlink {
     svg {
       fill: $primary-color;
       height: 16px;
-      left: 0;
+      left: 6px;
       margin-right: 2px;
       top: 4px;
       width: 16px;
@@ -169,6 +169,7 @@ p .hyperlink {
 
     a span {
       border: 1px solid transparent;
+      padding-left: 7px;
       position: relative;
       text-transform: capitalize;
       top: 2px;

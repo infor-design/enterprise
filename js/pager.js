@@ -307,6 +307,9 @@
 
         this.renderBar(pagingInfo);
         this.renderPages(op);
+        if (this.settings.componentAPI) {
+          this.settings.componentAPI.saveUserSettings();
+        }
         return pageNum;
       },
 
@@ -405,6 +408,10 @@
             tag.closest('.popupmenu').find('.is-checked').removeClass('is-checked');
             tag.parent('li').addClass('is-checked');
             self.settings.pagesize = parseInt(tag.text());
+
+            if (self.settings.componentAPI) {
+              self.settings.componentAPI.settings.pagesize = self.settings.pagesize;
+            }
             self.setActivePage(1, true, 'first');
           });
         }
