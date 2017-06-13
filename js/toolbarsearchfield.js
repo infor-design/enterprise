@@ -97,11 +97,14 @@
         this.xButton = this.inputWrapper.children('.icon.close');
 
         // Open the searchfield once on intialize if it's a "non-collapsible" searchfield
-        if (this.settings.collapsible === false && this.shouldExpandOnMobile()) {
+        if (this.settings.collapsible === false) {
           this.inputWrapper.addClass('no-transition').one('expanded.' + this.id, function() {
             $(this).removeClass('no-transition');
           });
-          this.expand(true);
+
+          if (!this.shouldBeFullWidth()) {
+            this.expand(true);
+          }
         } else {
           if (this.button instanceof $ && this.button.length) {
             this.setClosedWidth();
