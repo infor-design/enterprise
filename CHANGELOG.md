@@ -11,6 +11,7 @@ http://usalvlhlpool1.infor.com/4.3.0-rc/controls
 
 ### Key New Features
 - Hijri (Umm Al Qura) - Arabic Calendar Support
+- "New Tabs" - New Visual Design and functionality for In-Page and Header Tabs
 
 ### Improvements
 - Datagrid - Added am option (allowOneExpanded) to only show one expandable row at a time. It is now the default.
@@ -24,6 +25,7 @@ http://usalvlhlpool1.infor.com/4.3.0-rc/controls
 - Multiselect - Added ability to move selected items to the top of the entire list or to the top of groups when the list is opened.
 - Locale - Added new set of translated strings for 37 languages / 49 locales
 - Toggle Button - New official toggle button, can change icon or state to "pressed"
+- Vertical Tabs - New setting 'verticalResponsive' allows a Vertical Tabset to become an instance of "header tabs" when viewed at the phone breakpoint.
 
 ### Bug Fixes
 - Datagrid - Fixed column alignment issue on reload with hidden columns
@@ -37,6 +39,7 @@ http://usalvlhlpool1.infor.com/4.3.0-rc/controls
 - Multiselect - `moveSelectedToTop` has been deprecated in favor of `moveSelected`, which is now a text string instead of a boolean.  This defaults to `"all"` on Multiselect but can be defined as `"group"` or `"none"` as well.
 - Removed Search Results Page as it was an example for the site
 - Sign In Page was changed to not copy to invisible fields. Update your markup accordingly. (wont break but may need a look)
+- Tabs (Header/Module/Vertical) - it's now necessary to define the `containerElement` setting either through Javascript or via a `data-options` attribute if the element that contains tab panels cannot be directly adjacent to the `.tab-container` element.  Existing tab markup that places tab panels inside of the `.tab-container` element must be changed to contain the panels outside of this element.
 
 ### Behavior Changes
 - Pie - The Chart now sorts slices in the order of the dataset (was on size from biggest to smallest before).
@@ -44,6 +47,8 @@ http://usalvlhlpool1.infor.com/4.3.0-rc/controls
 - Editor - Removed 'bold','italic','underline', 'anchor', 'quote' options from HTML editor.
 - Datagrid - Made a new option enableTooltips which defaults to false. You know need to enable this to have the tooltips anyplace in the datagrid. This has a significant performance especially for Ellipsis columns, so should only be used if you are sure or your datagrid is not huge.
 - Datagrid - Added option sizeColumnsEqually which defaults to false. If set all the columns will get an equal size. (this used to do it automatically for the first 8 columns)
+- Tabs - In-Page/Header tabs will allow the list of tabs to scroll left/right if using a device with touch capabilities.
+- Tabs - The "Spillover Menu" for In-Page/Header tabs is now a full list of all available tabs.  This menu has been redesigned to be more touch/responsive friendly.
 
 ### Ui Changes
 - Added heart and heart-filled icons
