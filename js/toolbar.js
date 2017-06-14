@@ -23,7 +23,7 @@
         defaults = {
           rightAligned: false, // Will always attempt to right-align the contents of the toolbar.
           maxVisibleButtons: 3, // Total amount of buttons that can be present, not including the More button
-          resizeContainers: true, // If true, uses Javascript to size the Title and Buttonset elements in a way that shows as much of the Title area as possible.
+          resizeContainers: false, // If true, uses Javascript to size the Title and Buttonset elements in a way that shows as much of the Title area as possible.
           favorButtonset: true // If "resizeContainers" is true, setting this to true will try to display as many buttons as possible while resizing the toolbar.  Setting to false attempts to show the entire title instead.
         },
         settings = $.extend({}, defaults, options);

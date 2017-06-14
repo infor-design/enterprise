@@ -79,7 +79,7 @@ $toolbar-buttonset-height: 40px;
   .title {
     @include enable-select();
     height: $toolbar-buttonset-height;
-    left: -3px; //FOUC - Interacts with other title widths
+    //left: -3px; //FOUC - Interacts with other title widths
     overflow: hidden;
     position: relative;
     text-align: left;
@@ -131,6 +131,7 @@ $toolbar-buttonset-height: 40px;
     }
 
     .title {
+      left: 0;
       position: absolute;
       width: auto;
     }
@@ -141,8 +142,6 @@ $toolbar-buttonset-height: 40px;
       }
 
       .title {
-        left: 0;
-
         + .buttonset {
           width: auto;
         }
@@ -151,9 +150,11 @@ $toolbar-buttonset-height: 40px;
   }
 
   &.has-more-button {
+    /*
     .title {
       left: -5px; //FOUC
     }
+    */
 
     .buttonset {
       width: calc(100% - 44px);
