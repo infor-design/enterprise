@@ -1435,6 +1435,7 @@ $.fn.datagrid = function(options) {
       this.settings = settings;
       this.initSettings();
       this.originalColumns = self.columnsFromString(JSON.stringify(this.settings.columns));
+      this.removeToolbarOnDestroy = false;
 
       this.restoreColumns();
       this.restoreUserSettings();
@@ -4471,6 +4472,7 @@ $.fn.datagrid = function(options) {
         this.refreshSelectedRowHeight();
       } else {
         toolbar = $('<div class="toolbar" role="toolbar"></div>');
+        this.removeToolbarOnDestroy = true;
 
         if (settings.toolbar.title) {
           title = $('<div class="title">' + settings.toolbar.title + '  </div>');
@@ -6496,8 +6498,8 @@ $.fn.datagrid = function(options) {
     destroy: function() {
       //Remove the toolbar, clean the div out and remove the pager
       this.element.off().empty().removeClass('datagrid-container');
-      if (this.settings.toolbar) {
-        // only remove toolbar if the settings.toolbar caused it's creation.
+      if (this.removeToolbarOnDestroy) {
+        // only remove toolbar if it was created by this datagrid
         this.element.prev('.toolbar').remove();
       }
       this.element.next('.pager-toolbar').remove();
