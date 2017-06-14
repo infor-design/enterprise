@@ -79,7 +79,6 @@ $toolbar-buttonset-height: 40px;
   .title {
     @include enable-select();
     height: $toolbar-buttonset-height;
-    //left: -3px; //FOUC - Interacts with other title widths
     overflow: hidden;
     position: relative;
     text-align: left;
@@ -131,14 +130,14 @@ $toolbar-buttonset-height: 40px;
     }
 
     .title {
-      left: 0;
+      left: 1px;
       position: absolute;
       width: auto;
     }
 
     &.has-more-button {
       .buttonset {
-        width: calc(100% - 44px);
+        width: calc(100% - 38px);
       }
 
       .title {
@@ -147,17 +146,17 @@ $toolbar-buttonset-height: 40px;
         }
       }
     }
+
+    &.standalone {
+      .title {
+        left: 11px;
+      }
+    }
   }
 
   &.has-more-button {
-    /*
-    .title {
-      left: -5px; //FOUC
-    }
-    */
-
     .buttonset {
-      width: calc(100% - 44px);
+      width: calc(100% - 38px);
 
       > *:last-child {
         margin-right: 5px; // Add back the 5px since we need to visually separate the More button from the others.
@@ -166,7 +165,7 @@ $toolbar-buttonset-height: 40px;
 
     &.has-title {
       .buttonset {
-        width: calc(55% - 44px);
+        width: calc(55% - 38px);
       }
     }
 
@@ -386,8 +385,6 @@ html[dir='rtl'] {
     }
 
     .title {
-      left: auto;
-      right: -3px; //FOUC - Interacts with other title widths
       text-align: right;
 
       + .buttonset {
@@ -396,14 +393,23 @@ html[dir='rtl'] {
     }
 
     &.has-more-button {
-      .title {
-        left: auto;
-        right: -5px; //FOUC
-      }
-
       .buttonset > *:last-child {
         margin-left: 5px;
         margin-right: 0;
+      }
+    }
+
+    &.do-resize {
+      .title {
+        left: auto;
+        right: 0;
+      }
+
+      &.standalone {
+        .title {
+          left: auto;
+          right: 10px;
+        }
       }
     }
 
