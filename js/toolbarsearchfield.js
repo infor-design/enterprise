@@ -25,7 +25,7 @@
         defaults = {
           clearable: true,  // If "true", provides an "x" button on the right edge that clears the field
           collapsible: true, // If "true", allows the field to expand/collapse on larger breakpoints when focused/blurred respectively
-          collapsibleOnMobile: false // If true, overrides `collapsible` only on mobile settings.
+          collapsibleOnMobile: true // If true, overrides `collapsible` only on mobile settings.
         },
         settings = $.extend({}, defaults, options);
 
@@ -97,7 +97,7 @@
         this.xButton = this.inputWrapper.children('.icon.close');
 
         // Open the searchfield once on intialize if it's a "non-collapsible" searchfield
-        if (this.settings.collapsible === false) {
+        if (this.settings.collapsible === false ) {
           this.inputWrapper.addClass('no-transition').one('expanded.' + this.id, function() {
             $(this).removeClass('no-transition');
           });
@@ -360,18 +360,21 @@
           nextElem = buttonset;
         }
 
-        if (!buttonset.length) {
-          return;
-        }
-
         if (this.shouldBeFullWidth()) {
           width = '100%';
 
           if (this.toolbarParent.closest('.header').length) {
             width = 'calc(100% - 40px)';
           }
+          if (this.toolbarParent.closest('.tab-container.module-tabs').length) {
+            width = 'calc(100% - 1px)';
+          }
 
           this.openWidth = width;
+          return;
+        }
+
+        if (!buttonset.length) {
           return;
         }
 
@@ -404,6 +407,10 @@
 
         if (!isFullWidth && !hasStyleAttr) {
           this.calculateOpenWidth();
+
+          if (this.settings.collapsible === false) {
+            this.expand(true);
+          }
         }
       },
 
@@ -493,6 +500,16 @@
         this.inputWrapper.addClass('active');
         this.handleDeactivationEvents();
 
+        /*
+        // Return out without collapsing or handling callbacks for the `collapse` event if:
+        // Searchfield is not collapsible in general -OR-
+        // Searchfield is only collapsible on mobile, and we aren't below the mobile breakpoint
+        if ((self.settings.collapsible === false && self.settings.collapsibleOnMobile === false) ||
+           (self.settings.collapsible === false && self.settings.collapsibleOnMobile === true && !self.shouldBeFullWidth())) {
+          return;
+        }
+        */
+
         if (this.shouldExpandOnMobile()) {
           expandCallback();
           return;
@@ -506,12 +523,6 @@
           textMethod = 'removeClass';
 
         function closeWidth() {
-          /*
-          if (!self.shouldBeFullWidth()) {
-            return;
-          }
-          */
-
           if (self.button instanceof $ && self.button.length) {
             self.setClosedWidth();
           } else {
@@ -545,6 +556,7 @@
           } else {
             this.inputWrapper.detach().insertAfter(this.elemBeforeWrapper);
           }
+          self.toolbarParent.triggerHandler('scrollup');
           Soho.utils.fixSVGIcons(this.inputWrapper);
 
           this.elemBeforeWrapper = null;
@@ -560,6 +572,14 @@
         }
 
         self.inputWrapper.removeClass('active has-focus');
+
+        // Return out without collapsing or handling callbacks for the `collapse` event if:
+        // Searchfield is not collapsible in general -OR-
+        // Searchfield is only collapsible on mobile, and we aren't below the mobile breakpoint
+        if ((self.settings.collapsible === false && self.settings.collapsibleOnMobile === false) ||
+           (self.settings.collapsible === false && self.settings.collapsibleOnMobile === true && !self.shouldBeFullWidth())) {
+          return;
+        }
 
         if (this.fastExpand || !this.shouldExpandOnMobile()) {
           collapseCallback();

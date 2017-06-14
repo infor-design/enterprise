@@ -449,6 +449,13 @@ $toolbarsearchfield-category-empty-width: 54px;
   }
 }
 
+
+.is-firefox.is-mac {
+  .toolbar-searchfield-wrapper.searchfield-wrapper .btn {
+    height: 32px;
+  }
+}
+
 // For non-collapsible searchfields:  Only be non-collapsible on larger breakpoints.
 @media(min-width: $breakpoint-phone-to-tablet) {
 
