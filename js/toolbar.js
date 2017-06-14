@@ -462,6 +462,11 @@
           self.updated();
         }).off('recalculate-buttons.toolbar').on('recalculate-buttons.toolbar', function(e, containerDims) {
           self.handleResize(containerDims);
+        }).off('scrollup.toolbar').on('scrollup.toolbar', function() {
+          var moduleTabsParent = self.element.parents('.tab-container.module-tabs');
+          if (moduleTabsParent.length) {
+            moduleTabsParent.scrollTop(0);
+          }
         });
 
         $('body').off('resize.toolbar-' + this.id).on('resize.toolbar-' + this.id, function() {

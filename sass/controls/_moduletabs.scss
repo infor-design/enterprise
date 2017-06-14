@@ -357,6 +357,8 @@
     }
 
     [class^="btn"] {
+      background-color: transparent;
+
       &.active,
       &.has-focus {
         border-color: $module-tabs-inactive-text-color;
@@ -405,10 +407,14 @@
     &.has-categories {
       width: 101px;
     }
+
+    .btn:focus {
+      border-color: $module-tabs-active-text-color;
+    }
   }
 
   > .toolbar-searchfield-wrapper.active {
-    width: 100%;
+    width: calc(100% - 1px);
   }
 
   &.has-add-button {
