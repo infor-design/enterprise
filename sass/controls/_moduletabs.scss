@@ -46,12 +46,10 @@
   }
 
   .icon {
-    fill: $module-tabs-inactive-text-color;
-
     &.app-header {
       left: -6px;
       position: relative;
-      top: -5px;
+      top: -7px;
 
       span:not(.audible) {
         background-color: $module-tabs-inactive-text-color;
@@ -97,6 +95,10 @@
     min-width: 120px;
     overflow: hidden;
     text-align: center;
+
+    .icon {
+      fill: $module-tabs-inactive-text-color;
+    }
 
     &:not(:first-child) {
       border-left: 1px solid $module-tabs-x-border-color;
