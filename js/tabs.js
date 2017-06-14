@@ -737,7 +737,7 @@
       },
 
       handleTabClick: function(e, li) {
-        if (this.element.is('.is-disabled') || (li && li.is('.is-disabled'))) {
+        if (this.element.is('.is-disabled') || (li && (li.is('.is-disabled') || li.is('.separator')))) {
           e.stopPropagation();
           e.preventDefault();
           return false;
