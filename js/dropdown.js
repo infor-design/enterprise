@@ -515,7 +515,10 @@
             return;
           }
           self.ignoreKeys($(this), e);
-          self.toggleList();
+
+          if (!self.settings.noSearch) {
+            self.toggleList();
+          }
           self.handleAutoComplete(e);
         }).on('click.dropdown', function(e) {
           e.stopPropagation();
@@ -873,7 +876,7 @@
 
         self.initialFilter = false;
 
-        if (!self.isOpen() && !self.isControl(key) && !this.settings.source) {
+        if (!self.isOpen() && !self.isControl(key) && !this.settings.source && !this.settings.noSearch) {
           //Make this into Auto Complete
           self.initialFilter = true;
           self.isFiltering = true;
