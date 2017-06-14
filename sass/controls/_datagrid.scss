@@ -242,6 +242,10 @@ $datagrid-short-row-height: 23px;
       height: calc(100% - 45px);
     }
 
+    &.has-toolbar.paginated {
+      height: calc(100% - 103px);
+    }
+
     //Resize Drag Arrows
     .drag-target-arrows {
       font-size: 1.5em;
