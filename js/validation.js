@@ -233,7 +233,6 @@
               allValid = false;
             }
           } else {
-            modalField.checkValidation();
             if (isVisible && !modalField.isValid()) {
               allValid = false;
             }
