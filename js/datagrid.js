@@ -6496,7 +6496,10 @@ $.fn.datagrid = function(options) {
     destroy: function() {
       //Remove the toolbar, clean the div out and remove the pager
       this.element.off().empty().removeClass('datagrid-container');
-      this.element.prev('.toolbar').remove();
+      if (this.settings.toolbar) {
+        // only remove toolbar if the settings.toolbar caused it's creation.
+        this.element.prev('.toolbar').remove();
+      }
       this.element.next('.pager-toolbar').remove();
       $.removeData(this.element[0], pluginName);
 
