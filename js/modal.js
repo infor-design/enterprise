@@ -159,7 +159,7 @@
 
       disableSubmit: function () {
         var body = this.element,
-          fields = body.find('[data-validate]'),
+          fields = body.find('[data-validate]:visible'),
           inlineBtns = body.find('.modal-buttonset button'),
           primaryButton = inlineBtns.filter('.btn-modal-primary').not('.no-validation');
 
