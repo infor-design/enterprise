@@ -50,6 +50,10 @@
             </fieldset>
           </div>
 
+          <div class="field">
+            <label for="yyyy-date" class="label">Year</label>
+            <input id="yyyy-date" data-init="false" class="datepicker" name="yyyy-date" type="text">
+          </div>
 
           <div class="modal-buttonset">
             <button type="button" class="btn-modal" style="width: 50%;">Cancel</button>
@@ -61,3 +65,10 @@
 
   </div>
 </div>
+
+
+<script>
+  Locale.set('en-US');
+
+  $('#yyyy-date').datepicker({dateFormat: 'yyyy'});
+</script>
