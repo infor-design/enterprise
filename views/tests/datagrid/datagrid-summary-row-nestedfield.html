@@ -1,0 +1,46 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+
+<script>
+  $('body').one('initialized', function () {
+
+      var grid,
+        columns = [];
+	
+      var model = {"lifrcois":{"lifrcoi":[
+        {"@status":"est","@crc":"00000021","@id":"BRJDNjY2","tpklifrcoi":666,"tfklifrtch":669,"tfklifotin":44761,"lifotin":{"@status":"mod","@crc":"00000028","@id":"BxJDNDQ3NjE=","tpklifotin":44761,"tfklifintp":99947,"balance":10.0,"ofncdate":"2001-07-09T14:30:00.000Z","fmtticket_n":"L00001","reference_n":"","offtpdtls_n":"Local Law 1"}},
+        {"@status":"est","@crc":"00000000","@id":"VE1QOjE1","tpklifrcoi":927,"tfklifrtch":669,"tfklifotin":44885,"lifotin":{"@status":"mod","@crc":"00000023","@id":"BxJDNDQ4ODU=","tpklifotin":44885,"tfklifintp":99947,"balance":25.0,"ofncdate":"2002-06-03T14:30:00.000Z","fmtticket_n":"L00002","reference_n":"","offtpdtls_n":"Local Law 1"}}
+      ]}};
+      var data = model.lifrcois.lifrcoi;;
+
+      //Sample Custom Formatters
+
+      /*Formatters.customSummaryRow = function (row, cell, value, col) {
+        return value + ' %';
+      };*/
+
+      //Define Columns for the Grid.
+      columns.push({ id: 'lifotin.fmtticket_n', name: 'Ticket Number', field: 'lifotin.fmtticket_n',  filterType: 'text', sortable: false, maxLength:'25', align: 'left',         formatter: Formatters.Readonly });
+      columns.push({ id: 'lifotin.reference_n', name: 'Registration', field: 'lifotin.reference_n', filterType: 'text', sortable: false, maxLength:'50', align: 'left',         formatter: Formatters.Readonly });
+      columns.push({ id: 'lifotin.ofncdate', name: 'Offence Date', field: 'lifotin.ofncdate', filterType: 'date', sortable: false,  align: 'left',    sourceFormat: 'yyyy-MM-ddTHH:mm:ss.SSS',    formatter: Formatters.Date });
+      columns.push({ id: 'lifotin.offtpdtls_n', name: 'Offence Type', field: 'lifotin.offtpdtls_n',  filterType: 'text', sortable: false, maxLength:'50', align: 'left',         formatter: Formatters.Readonly });
+      columns.push({ id: 'lifotin.balance', name: 'Balance', field: 'lifotin.balance', filterType: 'decimal', sortable: false,  align: 'right',      numberFormat: { minimumFractionDigits: 2 , maximumFractionDigits: 2 },  mask: '-#,###,###,###.00', maskMode: 'number',  summaryRowFormatter: Formatters.SummaryRow, aggregator: 'sum',   formatter: Formatters.Decimal });
+
+      
+
+      $('#datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        summaryRow: true,
+        toolbar: {title: 'Offences', results: true, personalize: true, rowHeight: true}
+      });
+      
+ });
+
+</script>

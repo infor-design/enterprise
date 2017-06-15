@@ -1340,23 +1340,50 @@ GroupBy.register('list', function(item) {
 
 //Simple Summary Row Accumlator
 window.Aggregators = {};
-window.Aggregators.aggregate = function(items, columns) {
-  var totals = {}, self = this;
+window.Aggregators.aggregate = function (items, columns) {
+    var totals = {}, self = this;
 
-  for (var i = 0; i < columns.length; i++) {
-    if (columns[i].aggregator) {
-      var field = columns[i].field;
+    for (var i = 0; i < columns.length; i++) {
+        if (columns[i].aggregator) {
+            var field = columns[i].field;
 
-      self.sum = function(sum, node) {
-        return sum + Number(node[field]);
-      };
+            self.sum = function (sum, node) {
+                var value;
+                if (field.indexOf('.') > -1) {
+                    value = field.split('.').reduce(function (o, x) {
+                        return (o ? o[x] : '');
+                    }, node);
+                }
+                else {
+                    value = node[field];
+                }
+                return sum + Number(value);
+            };
 
-      var total = items.reduce(self[columns[i].aggregator], 0);
-      totals[field] = total;
+            var total = items.reduce(self[columns[i].aggregator], 0);
+
+            if (field.indexOf('.') > -1) {
+                var currentObj = totals;
+                for (var j = 0; j < field.split('.').length; j++) {
+                    if (j === field.split('.').length - 1) {
+                        currentObj[field.split('.')[j]] = total;
+                    }
+                    else {
+                        if (!(field.split('.')[j] in currentObj)) {
+                            currentObj[field.split('.')[j]] = {};
+                        }
+
+                        currentObj = currentObj[field.split('.')[j]];
+                    }
+                }
+            }
+            else {
+                totals[field] = total;
+            }
+        }
     }
-  }
 
-  return totals;
+    return totals;
 };
 
 $.fn.datagrid = function(options) {
