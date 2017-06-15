@@ -111,7 +111,11 @@
         }
 
         input.data('original', valMethod(input))
-         .on('change.dirty', function () {
+        .on('resetdirty.dirty', function () {
+          input.data('original', valMethod(input))
+            .triggerHandler('doresetdirty.dirty');
+        })
+        .on('change.dirty doresetdirty.dirty', function (e) {
           var el = input,
             field = input.closest('.field'),
             label = $('label:visible', field),
@@ -121,7 +125,6 @@
           if (!label[0]) {
             label = input.next('label');
           }
-
           if (input.attr('data-trackdirty') !== 'true') {
             return;
           }
@@ -163,7 +166,7 @@
           if (valMethod(input) === input.data('original')) {
             input.removeClass('dirty');
             $('.icon-dirty, .msg-dirty', field).add(d.icon).add(d.msg).remove();
-            input.trigger('pristine');
+            input.trigger(e.type === 'doresetdirty' ? 'afterresetdirty' : 'pristine');
             return;
           }
 

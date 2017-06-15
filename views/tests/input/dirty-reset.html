@@ -1,0 +1,70 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Form - Dirty / Events</h2>
+    <p>The department field has dit tracking on. Change the value will trigger the dirty event output to the console and show a visual indicator.
+       Reseting the value back to its orginal will trigger the 'pristine' event.
+    </p>
+    <p>Save - It will reset the original value, basically it use the current value in the element and set it to the original value and make the current state pristine.
+</p>
+    <br>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="twelve columns">
+
+    <form id="test-form" action="#" method="POST">
+        <div class="field">
+          <label for="department-code">Department Code</label>
+          <input type="text" id="department-code" value = 'Original Value' data-trackdirty="true" >
+        </div>
+        <div class="field">
+          <label for="dropdown-dirty" class="label">Dirty</label>
+          <select id="dropdown-dirty" name="dropdown-dirty" class="dropdown" data-trackdirty="true">
+            <option value="original-option">Original option</option>
+            <option value="a">A</option>
+            <option value="b">B</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="description-dirty">Notes (dirty tracking)</label>
+          <textarea id="description-dirty" class="textarea" data-trackdirty="true" name="description-dirty" >I will show a dirty indicator if change me and tab out.</textarea>
+        </div>
+        <div class="field">
+          <input type="checkbox" data-trackdirty="true"  class="checkbox" id="checkbox-trackdirty">
+          <label for="checkbox-trackdirty" class="checkbox-label" >Dirty tracking</label>
+        </div>
+
+        <button id="btn-save" class="btn-secondary" type="button">Save</button>
+    </form>
+    <br><br><br>
+  </div>
+</div>
+
+<script>
+  var elements = $('#department-code, #dropdown-dirty, #description-dirty, #checkbox-trackdirty');
+
+  // Bind events
+  elements.on('dirty', function () {
+    console.log('Dirty Fired');
+  })
+  .on('pristine', function () {
+    console.log('Pristine Fired');
+  })
+  .on('afterresetdirty', function () {
+    console.log('Reset Dirty Fired');
+  });
+
+  // Resetdirty
+  $('#btn-save').on('click', function () {
+    elements.trigger('resetdirty');
+  });
+
+  // Parent Dirty Fired
+  $('body').on('dirty', function () {
+    console.log('Parent Dirty Fired');
+  });
+
+</script>
