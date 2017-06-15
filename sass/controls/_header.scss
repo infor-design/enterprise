@@ -450,8 +450,9 @@ html[dir='rtl'] {
 
   .header {
     .toolbar {
-      &.has-more-button {
-
+      .title {
+        left: auto;
+        right: 8px;
       }
 
       &.do-resize {
