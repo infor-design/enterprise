@@ -5726,7 +5726,7 @@ $.fn.datagrid = function(options) {
           ruleValid = rule.check(cellValue, $('<input>').val(cellValue), gridInfo);
 
         if (!ruleValid) {
-          messages += rule.message;
+          messages = (messages ? messages + '<br>' : '') + '\u2022 ' + rule.message;
           isValid = false;
         }
       }
