@@ -180,7 +180,7 @@ define([
 
     'should be able to parse UTC toISOString': function() {
       Locale.set('en-US');
-      expect(Locale.parseDate('2000-01-01T00:00:00.000Z', 'yyyy-MM-ddTHH:mm:ss.SSSZ').getTime()).to.equal(new Date(Date.UTC(2000, 0, 0, 0, 0, 0).getTime()));
+      expect(Locale.parseDate('2000-01-01T00:00:00.000Z', 'yyyy-MM-ddTHH:mm:ss.SSSZ').getTime()).to.equal(new Date(Date.UTC(2000, 0, 1, 0, 0, 0)).getTime());
       expect(Locale.parseDate('2000-01-01T00:00:00.001Z', 'yyyy-MM-DDTHH:mm:ss.SSSZ').toISOString()).to.equal('2000-01-01T00:00:00.001Z');
     },
 
