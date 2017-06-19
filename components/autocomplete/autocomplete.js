@@ -16,24 +16,34 @@
   $.fn.autocomplete = function(options) {
     'use strict';
 
-    // Settings and Options
+    /**
+    * The Autocomplete control provides an easier means of searching through a large amount of data by filtering down the results based on keyboard input from the user.
+    *
+    * @class Autocomplete
+    *
+    * @param {String} source  &nbsp;-&nbsp; Defines the data to use, must be specified.
+    * @param {String} sourceArguments  &nbsp;-&nbsp; If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
+    * @param {Boolean} template  &nbsp;-&nbsp; If defined, use this to draw the contents of each search result instead of the default draw routine.
+    * @param {String} filterMode  &nbsp;-&nbsp; The matching algorithm, startsWith and contains are supported - false will not filter client side
+    * @param {Boolean} delay  &nbsp;-&nbsp; The delay between key strokes on the keypad before it thinks you stopped typing
+    * @param {String} width  &nbsp;-&nbsp; Width of the open auto complete menu
+    * @param {String} offset  &nbsp;-&nbsp; For the open menu, the left or top offset
+    * @param {String} autoSelectFirstItem  &nbsp;-&nbsp; Whether or not to select he first item in the list to be selected
+    *
+    */
     var pluginName = 'autocomplete',
       defaults = {
-        source: [], //Defines the data to use, must be specified.
-        sourceArguments: {}, // If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
-        template: undefined, // If defined, use this to draw the contents of each search result instead of the default draw routine.
-        filterMode: 'startsWith',  // startsWith and contains Supported - false will not client side filter
-        delay: 300, // delay is the delay between key strokes on the keypad before it thinks you stopped typing
-        width: null, //width of the auto complete menu
-        offset: null, //left or top offset
-        autoSelectFirstItem: false // if true will cause the first item in the list to be selected
+        source: [],
+        sourceArguments: {},
+        template: undefined,
+        filterMode: 'startsWith',
+        delay: 300,
+        width: null,
+        offset: null,
+        autoSelectFirstItem: false
       },
       settings = $.extend({}, defaults, options);
 
-    /**
-     * @constructor
-     * @param {Object} element
-     */
     function Autocomplete(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -273,23 +283,6 @@
         return this.list instanceof $ && this.list.length && this.list.is(':visible');
       },
 
-      handleEvents: function () {
-        //similar code as dropdown but close enough to be dry
-        var self = this;
-
-        this.element.off('updated.autocomplete').on('updated.autocomplete', function() {
-          self.updated();
-        }).off('keydown.autocomplete').on('keydown.autocomplete', function(e) {
-          self.handleAutocompleteKeydown(e);
-        }).off('input.autocomplete').on('input.autocomplete', function (e) {
-          self.handleAutocompleteInput(e);
-        }).off('focus.autocomplete').on('focus.autocomplete', function () {
-          self.handleAutocompleteFocus();
-        }).off('focusout.autocomplete').on('focusout.autocomplete', function () {
-          self.checkActiveElement();
-        });
-      },
-
       // Handles the Autocomplete's "keydown" event
       handleAutocompleteKeydown: function(e) {
         var self = this;
@@ -379,8 +372,9 @@
       /**
        * Check to see whether or not the currently-focused element resides within the Autocomplete's field
        * or list, and if not, fires a "safe-blur" event on the element.
-       * @param {$.Event} e - The event object passed in from the jQuery `.on()` listener.
-       * @returns {undefined}
+       *
+       * @private
+       * @param {Object} e - The event object passed in from the jQuery `.on()` listener.
        */
       checkActiveElement: function() {
         var self = this;
@@ -555,10 +549,16 @@
         return this;
       },
 
+      /**
+      * Enable the input from readonly or disabled state.
+      */
       enable: function() {
         this.element.prop('disabled', false);
       },
 
+      /**
+      * Disable the input from editing
+      */
       disable: function() {
         this.element.prop('disabled', true);
       },
@@ -573,10 +573,43 @@
         return this;
       },
 
+      /**
+      * Teardown and remove any added markup and events.
+      */
       destroy: function() {
         this.teardown();
         $.removeData(this.element[0], pluginName);
+      },
+
+      /**
+       *  This component fires the following events.
+       *
+       * @fires About#events
+       * @param {Object} listopen  &nbsp;-&nbsp; Fires when the menu is opened.
+       * @param {Object} listclosed  &nbsp;-&nbsp; Fires when the menu is closed.
+       * @param {Object} populated  &nbsp;-&nbsp; Fires after the menu is populated with its contents.
+       * @param {Object} input  &nbsp;-&nbsp; Fires after the input is edited.
+       * @param {Object} safe-blur  &nbsp;-&nbsp; Fires after the input (and menu) both loose focus
+       * @param {Object} requestend  &nbsp;-&nbsp; Fires when the ajax request (source option) is completed
+       * @param {Object} requeststart  &nbsp;-&nbsp; Fires when the ajax request (source option) is initiated
+       */
+      handleEvents: function () {
+        //similar code as dropdown but close enough to be dry
+        var self = this;
+
+        this.element.off('updated.autocomplete').on('updated.autocomplete', function() {
+          self.updated();
+        }).off('keydown.autocomplete').on('keydown.autocomplete', function(e) {
+          self.handleAutocompleteKeydown(e);
+        }).off('input.autocomplete').on('input.autocomplete', function (e) {
+          self.handleAutocompleteInput(e);
+        }).off('focus.autocomplete').on('focus.autocomplete', function () {
+          self.handleAutocompleteFocus();
+        }).off('focusout.autocomplete').on('focusout.autocomplete', function () {
+          self.checkActiveElement();
+        });
       }
+
     };
 
     // Initialize Once
