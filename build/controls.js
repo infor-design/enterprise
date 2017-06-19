@@ -49,7 +49,6 @@ module.exports = [
   'temp/amd/rating.js',
   'temp/amd/resize.js',
   'temp/amd/searchfield.js',
-  'temp/amd/sidebar.js',
   'temp/amd/signin.js',
   'temp/amd/slider.js',
   'temp/amd/arrange.js',

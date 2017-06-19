@@ -244,8 +244,6 @@
 
             ['contextualactionpanel', '.contextual-action-panel-trigger'],
 
-            ['sidebar', '.sidebar-nav'],
-
             ['expandablearea', '.expandable-area'],
 
             ['modalsearch', '.modal-search'],
