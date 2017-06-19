@@ -103,7 +103,7 @@ input + .busy-indicator-container,
   }
 
   .busy-indicator {
-    background-color: $body-bg-color;
+    background-color: transparent;
     height: 22px;
     margin: 6px 1px 1px;
     position: absolute;
@@ -126,7 +126,7 @@ input + .busy-indicator-container,
   + .busy-indicator-container,
   .dropdown-wrapper > .busy-indicator-container {
     .busy-indicator {
-      background-color: $body-bg-color;
+      background-color: transparent;
       height: 22px;
       margin: 5px 1px 1px;
       position: absolute;
