@@ -125,7 +125,7 @@ http://usalvlhlpool1.infor.com/4.3.0-rc/controls
 - Removed Search Results Page as it was an example for the site
 - Sign In Page was changed to not copy to invisible fields. Update your markup accordingly. (wont break but may need a look)
 - Tabs (Header/Module/Vertical) - it's now necessary to define the `containerElement` setting either through Javascript or via a `data-options` attribute if the element that contains tab panels cannot be directly adjacent to the `.tab-container` element.  Existing tab markup that places tab panels inside of the `.tab-container` element must be changed to contain the panels outside of this element.
-- Lightbox is deprecated / removed as this is for the soho site only
+- Lightbox and SideBar are deprecated / removed as this is for the soho site only and its being recreated
 
 ### Behavior Changes
 - Pie - The Chart now sorts slices in the order of the dataset (was on size from biggest to smallest before).

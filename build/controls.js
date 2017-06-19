@@ -33,7 +33,6 @@ module.exports = [
   'temp/amd/icon.js',
   'temp/amd/lookup.js',
   'temp/amd/lifecycle.js',
-  'temp/amd/lightbox.js',
   'temp/amd/listview.js',
   'temp/amd/listbuilder.js',
   'temp/amd/circlepager.js',

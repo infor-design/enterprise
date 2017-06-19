@@ -174,9 +174,6 @@
             //Rating
             ['rating'],
 
-            //Light Box
-            ['lightbox'],
-
             //Listbuilder
             ['listbuilder'],
 
