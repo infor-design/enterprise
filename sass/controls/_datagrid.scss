@@ -234,6 +234,10 @@ $datagrid-short-row-height: 23px;
       height: calc(100% - 25px);
     }
 
+    &.has-filterable-columns .datagrid-body {
+      height: calc(100% - 60px);
+    }
+
     &.has-toolbar {
       height: calc(100% - 45px);
     }
@@ -867,10 +871,6 @@ $datagrid-short-row-height: 23px;
 
       .is-readonly {
         background-color: $datagrid-row-hover-color;
-      }
-
-      .chart-completion-target {
-        background-color: $chart-targeted-achievement-darker-bg-color;
       }
 
     }

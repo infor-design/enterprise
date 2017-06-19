@@ -24,16 +24,24 @@
     var pluginName = 'accordion',
         defaults = {
           allowOnePane: true,
-          displayChevron: true, // Displays a "Chevron" icon that sits off to the right-most side of a top-level accordion header.  Used in place of an Expander (+/-) if enabled.
-          rerouteOnLinkClick: true, // Can be set to false if routing is externally handled
+          displayChevron: true,
+          rerouteOnLinkClick: true,
           source: null
         },
         settings = $.extend({}, defaults, options);
 
     /**
-     * @constructor
-     * @param {Object} element
-     */
+    * The Accordion is a grouped set of collapsible panels used to navigate sections of
+    * related content. Each panel consists of two levels: the top level identifies the
+    * category or section header, and the second level provides the associated options.
+    *
+    * @class Accordion
+    * @param {String} allowOnePane &nbsp;-&nbsp; If set to true, allows only one pane of the Accordion to be open at a time.  If an Accordion pane is open, and that pane contains sub-headers, only one of the pane's sub-headers can be open at a time. (default true)
+    * @param {String} displayChevron  &nbsp;-&nbsp; Displays a "Chevron" icon that sits off to the right-most side of a top-level accordion header.  Used in place of an Expander (+/-) if enabled.
+    * @param {String} rerouteOnLinkClick  &nbsp;-&nbsp; Can be set to false if routing is externally handled
+    * @param {Boolean} source  &nbsp;-&nbsp; A callback function that when implemented provided a call back for "ajax loading" of tab contents on open.
+    *
+    */
     function Accordion(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -204,102 +212,6 @@
           this.expand(targetsToExpand);
           this.select(targetsToExpand.last());
         }
-
-        return this;
-      },
-
-      handleEvents: function() {
-        var self = this,
-          headerWhereMouseDown = null,
-          linkFollowedByTouch = null;
-
-        // Returns "Header", "Anchor", or "Expander" based on the element's tag
-        function getElementType(element) {
-          var elementType = 'Header';
-          if (element.is('a')) {
-            elementType = 'Anchor';
-          }
-          if (element.is('button')) {
-            elementType = 'Expander';
-          }
-          return elementType;
-        }
-
-        // Intercepts a 'touchend' event in order to either prevent a link from being followed,
-        // or allows it to continue.
-        function touchendInterceptor(e, element) {
-          linkFollowedByTouch = true;
-          var type = getElementType(element),
-            result = self['handle' + type + 'Click'](e, element);
-
-          if (!result) {
-            e.preventDefault();
-          }
-          return result;
-        }
-
-        // Intercepts a 'click' event in order to either prevent a link from being followed,
-        // or allows it to continue.
-        function clickInterceptor(e, element) {
-          var type = getElementType(element);
-          if (linkFollowedByTouch) {
-            linkFollowedByTouch = null;
-            return false;
-          }
-          return self['handle' + type + 'Click'](e, element);
-        }
-
-        this.headers.on('touchend.accordion', function(e) {
-          return touchendInterceptor(e, $(this));
-        }).on('click.accordion', function(e) {
-          return clickInterceptor(e, $(this));
-        }).on('focusin.accordion', function(e) {
-          var target = $(e.target);
-
-          if (!self.originalSelection) {
-            self.originalSelection = target;
-          }
-
-          if (target.is(':not(.btn)')) {
-            $(this).addClass('is-focused');
-          }
-        }).on('focusout.accordion', function() {
-          if (!$.contains(this, headerWhereMouseDown) || $(this).is($(headerWhereMouseDown))) {
-            $(this).removeClass('is-focused');
-          }
-        }).on('keydown.accordion', function(e) {
-          self.handleKeys(e);
-        }).on('mousedown.accordion', function(e) {
-          $(this).addClass('is-focused');
-          headerWhereMouseDown = e.target;
-        }).on('mouseup.accordion', function() {
-          headerWhereMouseDown = null;
-        });
-
-        this.anchors.on('touchend.accordion', function(e) {
-          return touchendInterceptor(e, $(this));
-        }).on('click.accordion', function(e) {
-          return clickInterceptor(e, $(this));
-        });
-
-        this.headers.children('[class^="btn"]')
-          .on('touchend.accordion', function(e) {
-            return touchendInterceptor(e, $(this));
-          })
-          .on('click.accordion', function(e) {
-            return clickInterceptor(e, $(this));
-          }).on('keydown.accordion', function(e) {
-            self.handleKeys(e);
-          });
-
-        this.element.on('selected.accordion', function(e) {
-          // Don't propagate this event above the accordion element
-          e.stopPropagation();
-        }).on('updated.accordion', function(e) {
-          // Don't propagate just in case this is contained by an Application Menu
-          e.stopPropagation();
-          self.updated();
-        });
 
         return this;
       },
@@ -514,7 +426,11 @@
         items.addClass('child-selected');
       },
 
-      // Checks if a particular header is disabled, or if the entire accordion is disabled.
+      /**
+      * Checks if a particular header is disabled, or if the entire accordion is disabled..
+      * @param {Object} header &nbsp;-&nbsp; the jquery header element
+      * @returns {Boolean}
+      */
       isDisabled: function(header) {
         if (this.element.hasClass('is-disabled')) {
           return true;
@@ -527,7 +443,11 @@
         return header.hasClass('is-disabled');
       },
 
-      // Checks if an Accordion Section is currently expanded
+      /**
+      * Checks if an Accordion Section is currently expanded
+      * @param {Object} header &nbsp;-&nbsp; the jquery header element
+      * @returns {Boolean}
+      */
       isExpanded: function(header) {
         if (!header || !header.length) {
           return;
@@ -536,6 +456,10 @@
         return header.children('a').attr('aria-expanded') === 'true';
       },
 
+      /**
+      * Toggle the given Panel on the Accordion between expanded and collapsed
+      * @param {Object} header &nbsp;-&nbsp; the jquery header element
+      */
       toggle: function(header) {
         if (!header || !header.length || this.isDisabled(header)) {
           return;
@@ -548,6 +472,10 @@
         this.expand(header);
       },
 
+      /**
+      * Expand the given Panel on the Accordion.
+      * @param {Object} header &nbsp;-&nbsp; the jquery header element
+      */
       expand: function(header) {
         if (!header || !header.length) {
           return;
@@ -606,6 +534,10 @@
         }
       },
 
+      /**
+      * Collapse the given Panel on the Accordion.
+      * @param {Object} header &nbsp;-&nbsp; the jquery header element
+      */
       collapse: function(header) {
         if (!header || !header.length) {
           return;
@@ -629,6 +561,8 @@
 
         pane.removeClass('is-expanded').closeChildren();
         a.attr('aria-expanded', 'false');
+
+        self.element.trigger('collapse', [a]);
 
         pane.one('animateclosedcomplete', function(e) {
           e.stopPropagation();
@@ -862,6 +796,9 @@
         }
       },
 
+      /**
+      * Disable an accordion from events
+      */
       disable: function() {
         this.element
           .addClass('is-disabled');
@@ -869,6 +806,9 @@
         this.anchors.add(this.headers.children('[class^="btn"]')).attr('tabindex', '-1');
       },
 
+      /**
+      * Enable a disabled accordion.
+      */
       enable: function() {
         this.element
           .removeClass('is-disabled');
@@ -917,11 +857,122 @@
         return this;
       },
 
-      // Teardown - Remove added markup and events
+      /**
+      * Teardown and remove any added markup and events.
+      */
       destroy: function() {
         this.teardown();
         $.removeData(this.element[0], pluginName);
+      },
+
+      /**
+       *  This component fires the following events.
+       *
+       * @fires Accordion#events
+       * @param {Object} selected  &nbsp;-&nbsp; Fires when a panel is opened.
+       * @param {Object} followlink  &nbsp;-&nbsp; If the anchor is a real link, follow the link and die here. This indicates the link has been followed.
+       * @param {Object} expand  &nbsp;-&nbsp; Fires when expanding a pane is initiated.
+       * @param {Object} afterexpand  &nbsp;-&nbsp; Fires after a pane is expanded.
+       * @param {Object} collapse  &nbsp;-&nbsp; Fires when collapsed a pane is initiated.
+       * @param {Object} aftercollapse  &nbsp;-&nbsp; Fires after a pane is collapsed.
+       *
+       */
+      handleEvents: function() {
+        var self = this,
+          headerWhereMouseDown = null,
+          linkFollowedByTouch = null;
+
+        // Returns "Header", "Anchor", or "Expander" based on the element's tag
+        function getElementType(element) {
+          var elementType = 'Header';
+          if (element.is('a')) {
+            elementType = 'Anchor';
+          }
+          if (element.is('button')) {
+            elementType = 'Expander';
+          }
+          return elementType;
+        }
+
+        // Intercepts a 'touchend' event in order to either prevent a link from being followed,
+        // or allows it to continue.
+        function touchendInterceptor(e, element) {
+          linkFollowedByTouch = true;
+          var type = getElementType(element),
+            result = self['handle' + type + 'Click'](e, element);
+
+          if (!result) {
+            e.preventDefault();
+          }
+          return result;
+        }
+
+        // Intercepts a 'click' event in order to either prevent a link from being followed,
+        // or allows it to continue.
+        function clickInterceptor(e, element) {
+          var type = getElementType(element);
+          if (linkFollowedByTouch) {
+            linkFollowedByTouch = null;
+            return false;
+          }
+          return self['handle' + type + 'Click'](e, element);
+        }
+
+        this.headers.on('touchend.accordion', function(e) {
+          return touchendInterceptor(e, $(this));
+        }).on('click.accordion', function(e) {
+          return clickInterceptor(e, $(this));
+        }).on('focusin.accordion', function(e) {
+          var target = $(e.target);
+
+          if (!self.originalSelection) {
+            self.originalSelection = target;
+          }
+
+          if (target.is(':not(.btn)')) {
+            $(this).addClass('is-focused');
+          }
+        }).on('focusout.accordion', function() {
+          if (!$.contains(this, headerWhereMouseDown) || $(this).is($(headerWhereMouseDown))) {
+            $(this).removeClass('is-focused');
+          }
+        }).on('keydown.accordion', function(e) {
+          self.handleKeys(e);
+        }).on('mousedown.accordion', function(e) {
+          $(this).addClass('is-focused');
+          headerWhereMouseDown = e.target;
+        }).on('mouseup.accordion', function() {
+          headerWhereMouseDown = null;
+        });
+
+        this.anchors.on('touchend.accordion', function(e) {
+          return touchendInterceptor(e, $(this));
+        }).on('click.accordion', function(e) {
+          return clickInterceptor(e, $(this));
+        });
+
+        this.headers.children('[class^="btn"]')
+          .on('touchend.accordion', function(e) {
+            return touchendInterceptor(e, $(this));
+          })
+          .on('click.accordion', function(e) {
+            return clickInterceptor(e, $(this));
+          }).on('keydown.accordion', function(e) {
+            self.handleKeys(e);
+          });
+
+        this.element.on('selected.accordion', function(e) {
+          // Don't propagate this event above the accordion element
+          e.stopPropagation();
+        }).on('updated.accordion', function(e) {
+          // Don't propagate just in case this is contained by an Application Menu
+          e.stopPropagation();
+          self.updated();
+        });
+
+        return this;
       }
+
     };
 
     // Initialize the plugin (Once)

@@ -11,6 +11,10 @@ http://usalvlhlpool1.infor.com/4.3.0-rc/controls
 
 ### Key New Features
 - Hijri (Umm Al Qura) - Arabic Calendar Support
+- Datagrid - Now Saves all user based settings (by option)
+- Datagrid - Added ability to save filter, page, pagesize, rowheight and column widths in local storage
+- Vertical Tabs - Now Responsive
+- Targetted Achivement Chart Added
 
 ### Improvements
 - Datagrid - Added am option (allowOneExpanded) to only show one expandable row at a time. It is now the default.
@@ -19,11 +23,17 @@ http://usalvlhlpool1.infor.com/4.3.0-rc/controls
 - Datagrid - Changed clickable editors (buttons, favorites, links), to only fire when clicking the object not the cell.
 - Datagrid - Added filtered event that fires when filter runs
 - Datagrid - Added ability to set filter conditions programmatically with applyFilter
-- Datagrid - Added ability to save filter, page, pagesize, rowheight and column widths in local storage
+
 - Dropdown - Added ability to set text on blank items on (Clear Selection)
-- Multiselect - Added ability to move selected items to the top of the entire list or to the top of groups when the list is opened.
+- Dropdown - Fixed Broken No Search Option
+- Examples - [Product Search page example | http://usalvlhlpool1.infor.com/4.3.0-rc/examples/saleshub/product-search.html
+], shows an editable listview.
 - Locale - Added new set of translated strings for 37 languages / 49 locales
+- Modal - Fixed bugs on validation / enabling / disabling buttons
+- Modul Tabs - Improved use of search categories on module tabs
+- Multiselect - Added ability to move selected items to the top of the entire list or to the top of groups when the list is opened.
 - Toggle Button - New official toggle button, can change icon or state to "pressed"
+- Toolbar - Improvements to header text being cut off and search field rendering
 
 ### Bug Fixes
 - Datagrid - Fixed column alignment issue on reload with hidden columns

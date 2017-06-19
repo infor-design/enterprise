@@ -29,38 +29,17 @@
         settings = $.extend({}, defaults, options);
 
     /**
-    *
-    * The About Dialog Component displays information regarding the application.
-    * It should present the application name, version, copyright and any other
-    * information that would be useful for application users to present to
-    * support teams. Modal dialogs should not be used as a splash screen.
-    *
-    * Keyboard Usage<br>
-    * <b>Esc</b> Closes and cancels the dialog. <br>
-    * <b>Tab/Shift Tab</b> Move around the objects within the dialog <br>
-    *
-    * Check out the following sample pages: <br>
-    * {@link /controls/about|Main About Example} <br>
-    * {@link /tests/about/as-button|Shows how to show the about via a button click} <br>
-    * {@link /tests/about/close-event|Shows using the Close Event} <br>
+    * The About Dialog Component is displays information regarding the application.
     *
     * @class About
-    * @param {Object} [element=this] - The element to attach to (if manually calling the constructor)
-    * @param {Object} options
-    * @param {String} options.appName The Main Application Name to display in the heading
-    * @param {String} options.content Additional Text content to display at the top.
-    * @param {String} options.copyrightYear The year displayed in the copyright, defaults to current year.
-    * @param {Boolean} options.deviceSpecs Determines whether or not to display device information (Browser, Platform, Locale, Cookies Enabled)
-    * @param {String} options.productName Additional product name information to display
-    * @param {Boolean} options.useDefaultCopyright Add the Legal Approved Infor Copy Right Txt
-    * @param {String} options.version Semantic Version Number fx (4.0.0)
+    * @param {String} appName  &nbsp;-&nbsp; The Main Application Name to display in the heading
+    * @param {String} content  &nbsp;-&nbsp; Additional Text content to display at the top.
+    * @param {String} copyrightYear  &nbsp;-&nbsp; The year displayed in the copyright, defaults to current year.
+    * @param {Boolean} deviceSpecs  &nbsp;-&nbsp; Determines whether or not to display device information (Browser, Platform, Locale, Cookies Enabled)
+    * @param {String} productName  &nbsp;-&nbsp; Additional product name information to display
+    * @param {Boolean} useDefaultCopyright  &nbsp;-&nbsp; Add the Legal Approved Infor Copy Right Text
+    * @param {String} version  &nbsp;-&nbsp; Semantic Version Number for example (4.0.0)
     *
-    * @example
-    * $('body').about({
-    *   appName: 'SoHo Xi ',
-    *   productName: 'Product Name',
-    *   content: '<p>Fashionable components for fashionable applications.</p>'
-    * });
     */
     function About(element) {
       this.settings = $.extend({}, settings);
@@ -168,75 +147,6 @@
       },
 
       /**
-      * Beforeopen event, fires before the about is opened.
-      * Opening can be cancelled with return false;
-      *
-      * @event About#beforeopen
-      * @property {Object} node - The about dialog Dom element.
-      */
-
-      /**
-      * Open event, fires as the about dialog is opened.
-      *
-      * @event About#open
-      * @property {Object} node - The about dialog Dom element.
-      */
-
-      /**
-      * After Open event, fires whne the dialog is done opening and is rendered.
-      * Could be used for UI adjstments.
-      *
-      * @event About#afteropen
-      * @property {Object} node - The about dialog Dom element.
-      */
-
-      /**
-      * Beforeclose event, fires before the dialog closes, and can be used to cancel.
-      *
-      * @event About#beforeclose
-      * @property {Object} node - The about dialog Dom element.
-      */
-
-      /**
-      * Close event, fires as the about dialog is closing.
-      *
-      * @event About#close
-      * @property {Object} node - The about dialog Dom element.
-      */
-
-       /**
-       * After Close event, fires when the about dialog has completely closed.
-       *
-       * @event About#afterclose
-       * @property {Object} node - The about dialog Dom element.
-       */
-      handleEvents: function() {
-        var self = this;
-
-        this.element.on('open.about', function(e) {
-          e.stopPropagation();
-          self.element.trigger('click');
-        });
-
-        this.buttons.filter('[name="done"], [name="close"]').on('click.about', function() {
-          self.close();
-        });
-
-        this.modal.data('modal').element.on('beforeopen.about', function() {
-          self.modal.find('.modal-body').scrollTop(0);
-        });
-
-        $(document).on('keydown.about', function(e) {
-          // Close on Escape.
-          if (e.which === 0 || e.which === 27) {
-            self.close();
-          }
-        });
-
-        return this;
-      },
-
-      /**
       * Return the browser specs. Currently returns browse, os, cookiesEnabled and locale
       * @returns {String}
       */
@@ -299,7 +209,43 @@
         this.buttons.off();
         this.element.off('open.about');
         $.removeData(this.element[0], pluginName);
+      },
+
+      /**
+       *  This component fires the following events.
+       *
+       * @fires About#events
+       * @param {Object} beforeclose  &nbsp;-&nbsp; Fires before the dialog is closing. You can return false asyncronously to delay closing.
+       * @param {Object} close  &nbsp;-&nbsp; Fires as the dialog is closing
+       * @param {Object} afterclose  &nbsp;-&nbsp; Fires after the dialog has closed in the DOM entirely
+       *
+       */
+      handleEvents: function() {
+        var self = this;
+
+        this.element.on('open.about', function(e) {
+          e.stopPropagation();
+          self.element.trigger('click');
+        });
+
+        this.buttons.filter('[name="done"], [name="close"]').on('click.about', function() {
+          self.close();
+        });
+
+        this.modal.data('modal').element.on('beforeopen.about', function() {
+          self.modal.find('.modal-body').scrollTop(0);
+        });
+
+        $(document).on('keydown.about', function(e) {
+          // Close on Escape.
+          if (e.which === 0 || e.which === 27) {
+            self.close();
+          }
+        });
+
+        return this;
       }
+
     };
 
     // Initialize the plugin (Once)
