@@ -246,6 +246,10 @@ $datagrid-short-row-height: 23px;
       height: calc(100% - 45px);
     }
 
+    &.has-toolbar.paginated {
+      height: calc(100% - 103px);
+    }
+
     //Resize Drag Arrows
     .drag-target-arrows {
       font-size: 1.5em;
@@ -2339,6 +2343,25 @@ html[dir='rtl'] {
     padding-left: 0;
     padding-right: 10px;
   }
+
+  //Contextual toolbar
+  .datagrid-contextual-toolbar.contextual-toolbar {
+    &.toolbar {
+      padding: 0 20px 0 5px;
+    }
+
+    .title {
+      left: auto;
+      right: -8px;
+    }
+
+    &.do-resize {
+      .title {
+        left: auto;
+        right: 13px;
+      }
+    }
+  }
 }
 // scss-lint:enable ImportantRule
 
@@ -2492,17 +2515,23 @@ html[dir='rtl'] {
 
 //Contextual toolbar
 .datagrid-contextual-toolbar.contextual-toolbar {
-  margin-left: 1px;
-  margin-right: 1px;
-  padding: 0 20px;
+  &.toolbar {
+    padding: 0 5px 0 20px;
+  }
 
   .buttonset {
     height: 40px;
-    padding-left: 2px;
   }
 
   .title {
+    left: -8px;
     padding-top: 3px;
+  }
+
+  &.do-resize {
+    .title {
+      left: 13px;
+    }
   }
 }
 

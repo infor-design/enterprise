@@ -445,9 +445,11 @@
       @include css3(user-select, none);
       cursor: default;
       display: inline-block;
+      height: 24px;
       margin: 0 12px;
-      padding: 11px 0;
+      padding: 0;
       position: relative;
+      vertical-align: middle;
 
       &::before {
         @include css3(transition, none);

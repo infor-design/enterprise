@@ -24,7 +24,8 @@
     }
   }
 
-  .toolbar + .datagrid-container {
+  .toolbar + .datagrid-container,
+  .has-toolbar + .datagrid-container {
     height: calc(100% - 45px);
 
     &.paginated {

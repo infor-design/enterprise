@@ -27,7 +27,6 @@ input::-webkit-inner-spin-button {
 
   > .spinbox-wrapper {
     @include font-size(0);
-    margin-bottom: 20px;
     position: relative;
   }
 }

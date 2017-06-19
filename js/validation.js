@@ -217,7 +217,7 @@
     // Set disable/enable primary button in modal
     setModalPrimaryBtn: function(field, modalBtn, isValid) {
       var modal = field.closest('.modal'),
-        modalFields = modal.find('[data-validate]'),
+        modalFields = modal.find('[data-validate]:visible'),
         allValid = true;
 
       if (modalFields.length > 0) {
@@ -233,7 +233,6 @@
               allValid = false;
             }
           } else {
-            modalField.checkValidation();
             if (isVisible && !modalField.isValid()) {
               allValid = false;
             }

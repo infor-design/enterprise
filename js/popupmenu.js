@@ -261,6 +261,7 @@
             }
 
             if (a.hasAttribute('disabled')) {
+              Soho.DOM.addClass(li, 'is-disabled');
               a.setAttribute('aria-disabled', 'true');
               a.disabled = true;
             }

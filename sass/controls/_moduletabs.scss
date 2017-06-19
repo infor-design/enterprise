@@ -46,12 +46,10 @@
   }
 
   .icon {
-    fill: $module-tabs-inactive-text-color;
-
     &.app-header {
       left: -6px;
       position: relative;
-      top: -5px;
+      top: -7px;
 
       span:not(.audible) {
         background-color: $module-tabs-inactive-text-color;
@@ -97,6 +95,10 @@
     min-width: 120px;
     overflow: hidden;
     text-align: center;
+
+    .icon {
+      fill: $module-tabs-inactive-text-color;
+    }
 
     &:not(:first-child) {
       border-left: 1px solid $module-tabs-x-border-color;
@@ -357,6 +359,8 @@
     }
 
     [class^="btn"] {
+      background-color: transparent;
+
       &.active,
       &.has-focus {
         border-color: $module-tabs-inactive-text-color;
@@ -405,10 +409,14 @@
     &.has-categories {
       width: 101px;
     }
+
+    .btn:focus {
+      border-color: $module-tabs-active-text-color;
+    }
   }
 
   > .toolbar-searchfield-wrapper.active {
-    width: 100%;
+    width: calc(100% - 1px);
   }
 
   &.has-add-button {

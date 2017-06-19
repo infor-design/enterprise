@@ -24,7 +24,8 @@
     var pluginName = 'toolbarsearchfield',
         defaults = {
           clearable: true,  // If "true", provides an "x" button on the right edge that clears the field
-          collapsible: true // If "true", allows the field to expand/collapse on larger breakpoints when focused/blurred respectively
+          collapsible: true, // If "true", allows the field to expand/collapse on larger breakpoints when focused/blurred respectively
+          collapsibleOnMobile: true // If true, overrides `collapsible` only on mobile settings.
         },
         settings = $.extend({}, defaults, options);
 
@@ -96,11 +97,14 @@
         this.xButton = this.inputWrapper.children('.icon.close');
 
         // Open the searchfield once on intialize if it's a "non-collapsible" searchfield
-        if (!this.settings.collapsible) {
+        if (this.settings.collapsible === false ) {
           this.inputWrapper.addClass('no-transition').one('expanded.' + this.id, function() {
             $(this).removeClass('no-transition');
           });
-          this.expand();
+
+          if (!this.shouldBeFullWidth()) {
+            this.expand(true);
+          }
         } else {
           if (this.button instanceof $ && this.button.length) {
             this.setClosedWidth();
@@ -172,6 +176,7 @@
 
         function searchfieldCollapseTimer() {
           if (!$.contains(self.inputWrapper[0], document.activeElement) && self.inputWrapper.hasClass('active')) {
+            self.focusElem = document.activeElement;
             self.collapse();
           }
         }
@@ -355,18 +360,21 @@
           nextElem = buttonset;
         }
 
-        if (!buttonset.length) {
-          return;
-        }
-
         if (this.shouldBeFullWidth()) {
           width = '100%';
 
           if (this.toolbarParent.closest('.header').length) {
             width = 'calc(100% - 40px)';
           }
+          if (this.toolbarParent.closest('.tab-container.module-tabs').length) {
+            width = 'calc(100% - 1px)';
+          }
 
           this.openWidth = width;
+          return;
+        }
+
+        if (!buttonset.length) {
           return;
         }
 
@@ -399,6 +407,10 @@
 
         if (!isFullWidth && !hasStyleAttr) {
           this.calculateOpenWidth();
+
+          if (this.settings.collapsible === false) {
+            this.expand(true);
+          }
         }
       },
 
@@ -411,16 +423,22 @@
         }
       },
 
-      expand: function() {
-        if (this.inputWrapper.hasClass('active') || this.settings.collapsible === false) {
+      expand: function(noFocus) {
+        var self = this,
+          notFullWidth = !this.shouldBeFullWidth();
+
+        if (this.inputWrapper.hasClass('active')) {
           return;
         }
 
-        var self = this,
-          notFullWidth = !this.shouldBeFullWidth(),
-          dontRecalculateButtons = false,
-          toolbarSettings = this.toolbarParent.data('toolbar').settings,
+        var dontRecalculateButtons = false,
+          toolbarAPI = this.toolbarParent.data('toolbar'),
+          toolbarSettings,
           containerSizeSetters;
+
+        if (toolbarAPI) {
+           toolbarSettings = this.toolbarParent.data('toolbar').settings;
+        }
 
         if (this.animationTimer) {
           clearTimeout(this.animationTimer);
@@ -430,12 +448,34 @@
           this.getToolbarElements();
         }
 
+        function expandCallback() {
+          self.inputWrapper.addClass('is-open');
+          self.calculateOpenWidth();
+          self.setOpenWidth();
+
+          var iOS = /(iPad|iPhone|iPod)/g.test( navigator.userAgent );
+          if (!noFocus || iOS) {
+            self.input.focus();
+          }
+
+          var eventArgs = [];
+          if (containerSizeSetters) {
+            eventArgs.push(containerSizeSetters);
+          }
+
+          self.toolbarParent.triggerHandler('recalculate-buttons', eventArgs);
+          self.inputWrapper.triggerHandler('expanded');
+        }
+
+
+
         // Places the input wrapper into the toolbar on smaller breakpoints
         if (!notFullWidth) {
           this.elemBeforeWrapper = this.inputWrapper.prev();
           this.inputWrapper.detach().prependTo(this.containmentParent);
           Soho.utils.fixSVGIcons(this.inputWrapper);
         } else {
+
           // Re-adjust the size of the buttonset element if the expanded searchfield would be
           // too large to fit.
           var buttonsetWidth = parseInt(window.getComputedStyle(this.buttonsetElem).width),
@@ -449,7 +489,7 @@
             buttonset: buttonsetWidth + TOOLBARSEARCHFIELD_EXPAND_SIZE
           };
 
-          if (toolbarSettings.favorButtonset === true && this.titleElem) {
+          if (toolbarSettings && toolbarSettings.favorButtonset === true && this.titleElem) {
             var titleElemWidth = parseInt(window.getComputedStyle(this.titleElem).width);
             containerSizeSetters.title = (titleElemWidth - d);
           }
@@ -460,26 +500,17 @@
         this.inputWrapper.addClass('active');
         this.handleDeactivationEvents();
 
-        function expandCallback() {
-          self.inputWrapper.addClass('is-open');
-          self.calculateOpenWidth();
-          self.setOpenWidth();
-
-          var iOS = /(iPad|iPhone|iPod)/g.test( navigator.userAgent );
-          if (iOS) {
-            self.input.focus();
-          }
-
-          var eventArgs = [];
-          if (containerSizeSetters) {
-            eventArgs.push(containerSizeSetters);
-          }
-
-          self.toolbarParent.triggerHandler('recalculate-buttons', eventArgs);
-          self.inputWrapper.triggerHandler('expanded');
+        /*
+        // Return out without collapsing or handling callbacks for the `collapse` event if:
+        // Searchfield is not collapsible in general -OR-
+        // Searchfield is only collapsible on mobile, and we aren't below the mobile breakpoint
+        if ((self.settings.collapsible === false && self.settings.collapsibleOnMobile === false) ||
+           (self.settings.collapsible === false && self.settings.collapsibleOnMobile === true && !self.shouldBeFullWidth())) {
+          return;
         }
+        */
 
-        if (this.settings.collapsible === false && !this.shouldBeFullWidth()) {
+        if (this.shouldExpandOnMobile()) {
           expandCallback();
           return;
         }
@@ -488,30 +519,15 @@
       },
 
       collapse: function() {
-        if (this.settings.collapsible === false) {
-          return;
-        }
-
         var self = this,
           textMethod = 'removeClass';
 
         function closeWidth() {
-          if (self.settings.collapsible || self.shouldBeFullWidth()) {
-            if (self.button instanceof $ && self.button.length) {
-              self.setClosedWidth();
-            } else {
-              self.inputWrapper.removeAttr('style');
-            }
+          if (self.button instanceof $ && self.button.length) {
+            self.setClosedWidth();
+          } else {
+            self.inputWrapper.removeAttr('style');
           }
-        }
-
-        if (this.input.val().trim() !== '') {
-          textMethod = 'addClass';
-        }
-        this.inputWrapper[textMethod]('has-text');
-
-        if (this.animationTimer) {
-          clearTimeout(this.animationTimer);
         }
 
         function collapseCallback() {
@@ -524,8 +540,13 @@
             self.button.data('popupmenu').close(false, true);
           }
 
-          self.toolbarParent.triggerHandler('recalculate-buttons');
           self.inputWrapper.triggerHandler('collapsed');
+
+          // TODO: Make this process more solid, without FOUC/jumpiness and better focus handling (EPC)
+          // See http://jira/browse/SOHO-6347
+          self.inputWrapper.one($.fn.transitionEndName(), function() {
+            self.toolbarParent.triggerHandler('recalculate-buttons');
+          });
         }
 
         // Puts the input wrapper back where it should be if it's been moved due to small form factors.
@@ -535,27 +556,68 @@
           } else {
             this.inputWrapper.detach().insertAfter(this.elemBeforeWrapper);
           }
+          self.toolbarParent.triggerHandler('scrollup');
           Soho.utils.fixSVGIcons(this.inputWrapper);
 
           this.elemBeforeWrapper = null;
         }
 
+        if (this.input.val().trim() !== '') {
+          textMethod = 'addClass';
+        }
+        this.inputWrapper[textMethod]('has-text');
+
+        if (this.animationTimer) {
+          clearTimeout(this.animationTimer);
+        }
+
         self.inputWrapper.removeClass('active has-focus');
 
-        if (this.fastExpand || this.settings.collapsible === false) {
+        // Return out without collapsing or handling callbacks for the `collapse` event if:
+        // Searchfield is not collapsible in general -OR-
+        // Searchfield is only collapsible on mobile, and we aren't below the mobile breakpoint
+        if ((self.settings.collapsible === false && self.settings.collapsibleOnMobile === false) ||
+           (self.settings.collapsible === false && self.settings.collapsibleOnMobile === true && !self.shouldBeFullWidth())) {
+          return;
+        }
+
+        if (this.fastExpand || !this.shouldExpandOnMobile()) {
           collapseCallback();
           return;
         }
 
-        this.animationTimer = setTimeout(collapseCallback, 100);
+        this.animationTimer = setTimeout(collapseCallback, 310);
       },
 
+      /**
+       * Determines whether or not the full-size Searchfield should open over top of its sibling Toolbar elements.
+       * @private
+       * @returns {boolean}
+       */
       shouldBeFullWidth: function() {
         var header = this.inputWrapper.closest('.header'),
-          headerWidth = header.width(),
-          windowWidth = $(window).width();
+          headerCondition = false;
 
-        return windowWidth < 767 || (header.length > 0 && headerWidth < 320);
+        if (header.length) {
+          headerCondition = header.width() < 320;
+        }
+
+        return headerCondition || Soho.breakpoints.isBelow('phone-to-tablet');
+      },
+
+      /**
+       * Determines whether or not the Searchfield should expand on the Mobile breakpoint.
+       * @private
+       * @returns {boolean}
+       */
+      shouldExpandOnMobile: function() {
+        if (this.settings.collapsible === true) {
+          return false;
+        }
+        if (this.settings.collapsibleOnMobile === true) {
+          return true;
+        }
+        return this.shouldBeFullWidth();
       },
 
       // Used when the control has its settings or structural markup changed.  Rebuilds key parts of the control that

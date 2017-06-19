@@ -18,128 +18,70 @@
       {{> includes/header-actionbutton}}
     </div>
 
-    <div class="tab-container">
-      <ul class="tab-list">
-        <li class="tab"><a href="#header-tab1">Left/Right</a></li>
-        <li class="tab"><a href="#header-tab2">Top/Bottom</a></li>
-        <li class="tab"><a href="#header-tab3">Left Column</a></li>
-        <li class="tab"><a href="#header-tab4">Right Column</a></li>
-        <li class="tab"><a href="#header-tab5">Top Row</a></li>
-        <li class="tab"><a href="#header-tab6">Bottom Row</a></li>
-        <li class="tab"><a href="#header-tab7">4 Panes</a></li>
-      </ul>
+    <div class="tab-container" data-options="{ containerElement: '#maincontent' }">
+      <div class="tab-list-container">
+        <ul class="tab-list">
+          <li class="tab"><a href="#header-tab1">Left/Right</a></li>
+          <li class="tab"><a href="#header-tab2">Top/Bottom</a></li>
+          <li class="tab"><a href="#header-tab3">Left Column</a></li>
+          <li class="tab"><a href="#header-tab4">Right Column</a></li>
+          <li class="tab"><a href="#header-tab5">Top Row</a></li>
+          <li class="tab"><a href="#header-tab6">Bottom Row</a></li>
+          <li class="tab"><a href="#header-tab7">4 Panes</a></li>
+        </ul>
+      </div>
     </div>
   </header>
 
-  <div id="maincontent" class="page-container scrollable" role="main">
-      <div id="header-tab1" class="tab-panel">
-          <div class="page-container">
-              <section class="pane left card">{{> examples/landmark/pagepane-card1}}</section>
-              <section class="pane right card">{{> examples/landmark/pagepane-card2}}</section>
-          </div>
+  <div id="maincontent" class="page-container tab-panel-container scrollable" role="main">
+    <div id="header-tab1" class="tab-panel">
+      <div class="page-container">
+        <section class="pane left card">{{> examples/landmark/pagepane-card1}}</section>
+        <section class="pane right card">{{> examples/landmark/pagepane-card2}}</section>
       </div>
-      <div id="header-tab2">
-          <div class="page-container">
-              <section class="pane top card">{{> examples/landmark/pagepane-card1}}</section>
-              <section class="pane bottom card">{{> examples/landmark/pagepane-card2}}</section>
-          </div>
+    </div>
+    <div id="header-tab2">
+      <div class="page-container">
+        <section class="pane top card">{{> examples/landmark/pagepane-card1}}</section>
+        <section class="pane bottom card">{{> examples/landmark/pagepane-card2}}</section>
       </div>
-      <div id="header-tab3">
-          <div class="page-container">
-              <section class="pane left card">{{> examples/landmark/pagepane-card1}}</section>
-              <section class="pane top-right card">{{> examples/landmark/pagepane-card2}}</section>
-              <section class="pane bottom-right card">{{> examples/landmark/pagepane-card3}}</section>
-          </div>
+    </div>
+    <div id="header-tab3">
+      <div class="page-container">
+        <section class="pane left card">{{> examples/landmark/pagepane-card1}}</section>
+        <section class="pane top-right card">{{> examples/landmark/pagepane-card2}}</section>
+        <section class="pane bottom-right card">{{> examples/landmark/pagepane-card3}}</section>
       </div>
-      <div id="header-tab4">
-          <div class="page-container">
-              <section class="pane right card">{{> examples/landmark/pagepane-card1}}</section>
-              <section class="pane top-left card">{{> examples/landmark/pagepane-card2}}</section>
-              <section class="pane bottom-left card">{{> examples/landmark/pagepane-card3}}</section>
-          </div>
+    </div>
+    <div id="header-tab4">
+      <div class="page-container">
+        <section class="pane right card">{{> examples/landmark/pagepane-card1}}</section>
+        <section class="pane top-left card">{{> examples/landmark/pagepane-card2}}</section>
+        <section class="pane bottom-left card">{{> examples/landmark/pagepane-card3}}</section>
       </div>
-      <div id="header-tab5">
-          <div class="page-container">
-              <section class="pane top card">{{> examples/landmark/pagepane-card1}}</section>
-              <section class="pane bottom-left card">{{> examples/landmark/pagepane-card2}}</section>
-              <section class="pane bottom-right card">{{> examples/landmark/pagepane-card3}}</section>
-          </div>
+    </div>
+    <div id="header-tab5">
+      <div class="page-container">
+        <section class="pane top card">{{> examples/landmark/pagepane-card1}}</section>
+        <section class="pane bottom-left card">{{> examples/landmark/pagepane-card2}}</section>
+        <section class="pane bottom-right card">{{> examples/landmark/pagepane-card3}}</section>
       </div>
-      <div id="header-tab6">
-          <div class="page-container">
-              <section class="pane top-left card">{{> examples/landmark/pagepane-card2}}</section>
-              <section class="pane top-right card">{{> examples/landmark/pagepane-card3}}</section>
-              <section class="pane bottom card">{{> examples/landmark/pagepane-card1}}</section>
-          </div>
+    </div>
+    <div id="header-tab6">
+      <div class="page-container">
+        <section class="pane top-left card">{{> examples/landmark/pagepane-card2}}</section>
+        <section class="pane top-right card">{{> examples/landmark/pagepane-card3}}</section>
+        <section class="pane bottom card">{{> examples/landmark/pagepane-card1}}</section>
       </div>
-      <div id="header-tab7">
-          <div class="page-container">
-              <section class="pane top-left card">{{> examples/landmark/pagepane-card1}}</section>
-              <section class="pane top-right card">{{> examples/landmark/pagepane-card2}}</section>
-              <section class="pane bottom-left card">{{> examples/landmark/pagepane-card3}}</section>
-              <section class="pane bottom-right card">{{> examples/landmark/pagepane-card4}}</section>
-          </div>
+    </div>
+    <div id="header-tab7">
+      <div class="page-container">
+        <section class="pane top-left card">{{> examples/landmark/pagepane-card1}}</section>
+        <section class="pane top-right card">{{> examples/landmark/pagepane-card2}}</section>
+        <section class="pane bottom-left card">{{> examples/landmark/pagepane-card3}}</section>
+        <section class="pane bottom-right card">{{> examples/landmark/pagepane-card4}}</section>
       </div>
+    </div>
   </div>
+
 </div>
-
-<script>
-    $(function() {
-        init();
-    });
-
-    function getColumns()
-    {
-        var columns = [];
-        //Define Columns for the Grid.
-        columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140, formatter: Formatters.Readonly});
-        columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, formatter: Formatters.Hyperlink});
-        columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125});
-        columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
-        columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});
-        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
-        return columns;
-    }
-
-    function init()
-    {
-        var gridPageSize = 10;
-
-        $('.datagrid').datagrid({
-            columns: getColumns(),
-            selectable: 'single',
-            rowHeight: 'short', //(short, medium or tall)
-            paging: true,
-            pagesize: gridPageSize,
-            indeterminate: true,
-            source: function(req, response)
-            {
-                var pageNum = req.activePage;
-                var pagesize = req.pagesize;
-
-                if (req.type === 'initial')
-                {
-                    pageNum = 1;
-                    pagesize = gridPageSize;
-                }
-
-                var url = '{{basepath}}api/compressors?pageNum='+ pageNum +'&pageSize='+ pagesize;
-
-                if (req.sortField)
-                    url += '&sortField=' + req.sortField + '&sortAsc=' + req.sortAsc;
-
-                if (req.filterExpr && req.filterExpr[0])
-                    url += '&filter=' + req.filterExpr[0].value;
-
-                $.getJSON(url, function(res) {
-                    req.total = res.total;
-                    response(res.data, req);  //Option 1, return paging info here.
-                });
-            }
-        });
-
-        $('body').on("initialized", function() {
-            $(".datagrid-wrapper").css({"overflow":"auto", "height":"calc(100% - 55px)"});
-        });
-    }
-</script>

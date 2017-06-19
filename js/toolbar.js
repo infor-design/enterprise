@@ -462,6 +462,11 @@
           self.updated();
         }).off('recalculate-buttons.toolbar').on('recalculate-buttons.toolbar', function(e, containerDims) {
           self.handleResize(containerDims);
+        }).off('scrollup.toolbar').on('scrollup.toolbar', function() {
+          var moduleTabsParent = self.element.parents('.tab-container.module-tabs');
+          if (moduleTabsParent.length) {
+            moduleTabsParent.scrollTop(0);
+          }
         });
 
         $('body').off('resize.toolbar-' + this.id).on('resize.toolbar-' + this.id, function() {
@@ -922,6 +927,10 @@
 
       // Item is considered overflow if it's right-most edge sits past the right-most edge of the border.
       isItemOverflowed: function(item) {
+        if (this.hasNoMoreButton()) {
+          return false;
+        }
+
         if (!item || item.length === 0) {
           return true;
         }
@@ -965,6 +974,14 @@
           itemBelowYEdge = itemRect.bottom >= buttonsetRect.bottom;
 
         return (itemBelowYEdge === true || itemOutsideXEdge === true);
+      },
+
+      /**
+       * Detection for this toolbar to have a More Button
+       * @returns {boolean}
+       */
+      hasNoMoreButton: function() {
+        return this.element[0].classList.contains('no-more-button');
       },
 
       toggleMoreMenu: function() {

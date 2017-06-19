@@ -18,20 +18,22 @@
       {{> includes/header-actionbutton}}
     </div>
 
-    <div class="tab-container">
-      <ul class="tab-list">
-        <li class="tab"><a href="#header-tab1">Left/Right</a></li>
-        <li class="tab"><a href="#header-tab2">Top/Bottom</a></li>
-        <li class="tab"><a href="#header-tab3">Left Column</a></li>
-        <li class="tab"><a href="#header-tab4">Right Column</a></li>
-        <li class="tab"><a href="#header-tab5">Top Row</a></li>
-        <li class="tab"><a href="#header-tab6">Bottom Row</a></li>
-        <li class="tab"><a href="#header-tab7">4 Panes</a></li>
-      </ul>
+    <div class="tab-container" data-options="{ containerElement: '#maincontent' }">
+      <div class="tab-list-container">
+        <ul class="tab-list">
+          <li class="tab"><a href="#header-tab1">Left/Right</a></li>
+          <li class="tab"><a href="#header-tab2">Top/Bottom</a></li>
+          <li class="tab"><a href="#header-tab3">Left Column</a></li>
+          <li class="tab"><a href="#header-tab4">Right Column</a></li>
+          <li class="tab"><a href="#header-tab5">Top Row</a></li>
+          <li class="tab"><a href="#header-tab6">Bottom Row</a></li>
+          <li class="tab"><a href="#header-tab7">4 Panes</a></li>
+        </ul>
+      </div>
     </div>
   </header>
 
-  <div id="maincontent" class="page-container scrollable" role="main">
+  <div id="maincontent" class="page-container tab-panel-container scrollable" role="main">
     <div id="header-tab1" class="tab-panel">
       <div class="page-container">
         <section class="pane left no-scroll">{{> examples/landmark/pagepanes-grid1}}</section>

@@ -88,7 +88,7 @@
 
         // Special case for Module Tabs, where it's possible for layout reasons for there to be
         // an application menu element adjacent between the Tab list and the Tab Panel container
-        if (this.element.next('.application-menu')) {
+        if (this.element.next('.application-menu').length) {
           tabPanelContainer = this.element.next().next('.page-container');
           moveTabPanelContainer = false;
         }
@@ -737,7 +737,7 @@
       },
 
       handleTabClick: function(e, li) {
-        if (this.element.is('.is-disabled') || (li && li.is('.is-disabled'))) {
+        if (this.element.is('.is-disabled') || (li && (li.is('.is-disabled') || li.is('.separator')))) {
           e.stopPropagation();
           e.preventDefault();
           return false;
@@ -1315,7 +1315,9 @@
 
         function makeResponsive() {
           if (!classList.contains('is-in-responsive-mode')) {
-            classList.add('is-in-responsive-mode', 'header-tabs', 'alternate');
+            classList.add('is-in-responsive-mode');
+            classList.add('header-tabs');
+            classList.add('alternate');
             classList.remove('vertical');
             rebuild();
           }
@@ -1324,7 +1326,9 @@
         function makeVertical() {
           if (classList.contains('is-in-responsive-mode')) {
             classList.add('vertical');
-            classList.remove('is-in-responsive-mode', 'header-tabs', 'alternate');
+            classList.remove('is-in-responsive-mode');
+            classList.remove('header-tabs');
+            classList.remove('alternate');
             rebuild();
           }
         }
