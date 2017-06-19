@@ -573,51 +573,28 @@ var express = require('express'),
       return;
     }
 
+    // Handle Redirects to new Structure
+    var component = req.params.component,
+      example = req.params.example;
+
+    var path = 'components/' + component + '/example-' + example.replace('.html', '')  + '.html';
+    if (fs.existsSync(path)) {
+      res.redirect('/' + path);
+    }
+
+    path = 'components/' + component + '/test-' + example.replace('.html', '') + '.html';
+    if (fs.existsSync(path)) {
+      res.redirect('/' + path);
+    }
+
     res.render(directory, opts);
     next();
   }
 
   //Tests Index Page and controls sub pages
+  router.get('/tests/:component/:example', testsRouteHandler);
   router.get('/tests*', testsRouteHandler);
-  router.get('/tests', testsRouteHandler);
-
-  // =========================================
-  // Docs Pages
-  // =========================================
-
-  var docLayoutOpts = {
-    subtitle: 'SoHo Xi Docs',
-    layout: 'includes/docs-layout'
-  };
-
-  function defaultDocsRouteHandler(req, res, next) {
-    res.render('docs/index', docLayoutOpts);
-    next();
-  }
-
-  router.get('/docs/', defaultDocsRouteHandler);
-  router.get('/docs', defaultDocsRouteHandler);
-  router.get('docs', defaultDocsRouteHandler);
-
-  app.get('/docs/assets/bass.css', function(req, res){
-    res.sendFile(__dirname + '/views/docs/assets/bass.css');
-  });
-
-  app.get('/docs/assets/style.css', function(req, res){
-    res.sendFile(__dirname + '/views/docs/assets/style.css');
-  });
-
-  app.get('/docs/assets/github.css', function(req, res){
-    res.sendFile(__dirname + '/views/docs/assets/github.css');
-  });
-
-  app.get('/docs/assets/anchor.js', function(req, res){
-    res.sendFile(__dirname + '/views/docs/assets/anchor.js');
-  });
-
-  app.get('/docs/assets/site.js', function(req, res){
-    res.sendFile(__dirname + '/views/docs/assets/site.js');
-  });
+  router.get('/tests/', testsRouteHandler);
 
   // =========================================
   // Layouts Pages
