@@ -334,7 +334,10 @@ var express = require('express'),
 
     // Handle Redirects to new Structure
     if (!fs.existsSync('views/controls/' + controlName + '.html')) {
-      res.redirect('/components/' + controlName);
+      if (controlName === 'buttons') {
+        controlName = 'button';
+      }
+      res.redirect('/components/' + controlName + '/example-index');
     }
 
     res.render('controls/' + controlName, opts);
