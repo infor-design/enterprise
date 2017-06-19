@@ -590,7 +590,7 @@
       /**
        *  This component fires the following events.
        *
-       * @fires About#events
+       * @fires Autocomplete#events
        * @param {Object} listopen  &nbsp;-&nbsp; Fires when the menu is opened.
        * @param {Object} listclosed  &nbsp;-&nbsp; Fires when the menu is closed.
        * @param {Object} populated  &nbsp;-&nbsp; Fires after the menu is populated with its contents.

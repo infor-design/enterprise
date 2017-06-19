@@ -16,7 +16,15 @@
   $.fn.button = function(options) {
     'use strict';
 
-    // Settings and Options
+    /**
+    * Clickable Button Elements.
+    *
+    * @class Button
+    *
+    * @param {String} toggleOnIcon  &nbsp;-&nbsp; The icon to use for on state on toggle buttons
+    * @param {String} toggleOffIcon  &nbsp;-&nbsp; The icon to use for off state on toggle buttons
+    *
+    */
     var pluginName = 'button',
       defaults = {
         toggleOnIcon: null,
@@ -24,10 +32,6 @@
       },
       settings = $.extend({}, defaults, options);
 
-    /**
-     * @constructor
-     * @param {Object} element
-     */
     function Button(element) {
       this.element = $(element);
       this.settings = $.extend({}, settings);
@@ -169,6 +173,9 @@
         }, 1000);
       },
 
+      /**
+      * Teardown and remove any added markup and events.
+      */
       destroy: function() {
         this.element.off('click.button touchstart.button focusin.hide-focus focusout.hide-focus mousedown.hide-focus touchstart.hide-focus');
 
@@ -178,6 +185,16 @@
         }
 
         $.removeData(this.element[0], pluginName);
+      },
+
+      /**
+       *  This component fires the following events.
+       *
+       * @fires Autocomplete#events
+       * @param {Object} click  &nbsp;-&nbsp; Fires when the button is clicked (if enabled).
+       * @param {Object} focus  &nbsp;-&nbsp; Fires when the menu is focused.
+       */
+      handleEvents: function () {
       }
     };
 
