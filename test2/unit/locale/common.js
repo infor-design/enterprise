@@ -178,6 +178,13 @@ define([
       // expect(Locale.parseDate('10/10/010', 'M/d/yyyy').getTime()).to.equal(new Date(2010, 09, 10, 0, 0, 0).getTime());
     },
 
+	'should be able to parse UTC toISOString': function() {
+      Locale.set('en-US');
+      expect(Locale.parseDate('2000-01-01T00:00:00.000Z', 'yyyy-MM-ddTHH:mm:ss.SSSZ').getTime()).to.equal(new Date(Date.UTC(2000, 0, 0, 0, 0, 0).getTime());
+	  expect(Locale.parseDate('2000-01-01T00:00:00.001Z', 'yyyy-MM-DDTHH:mm:ss.SSSZ').toISOString()).to.equal('2000-01-01T00:00:00.001Z');	  
+    },
+	
+
     //Test Long Formatting
     'should format long': function() {
       Locale.set('en-US');    //year, month, day, hours, mins , secs
