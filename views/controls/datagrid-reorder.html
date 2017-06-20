@@ -59,7 +59,7 @@
     data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '123.99', status: 'OK', orderDate: null, action: 'On Hold'});
 
     //Define Columns for the Grid.
-    columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Text, filterType: 'text'});
+    columns.push({ id: 'id', reorderable: false, name: 'Id', field: 'id', formatter: Formatters.Text, filterType: 'text'});
     columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, filterType: 'text'});
     columns.push({ id: 'activity', name: 'Activity', field: 'activity', filterType: 'text'});
     columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', filterType: 'integer'});
