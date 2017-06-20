@@ -9,7 +9,7 @@ var express = require('express'),
   fs = require('fs'),
   http = require('http'),
   git = require('git-rev-sync'),
-  basepath = process.env.BASEPATH || '/',
+  BASE_PATH = process.env.BASEPATH || '/',
   getJSONFile = require(path.resolve(__dirname, 'demoapp', 'js', 'getJSONFile')),
   packageJSON = getJSONFile(path.resolve('package.json'));
 
@@ -37,7 +37,7 @@ var express = require('express'),
     layout: 'layout',
     locale: 'en-US',
     title: 'SoHo XI',
-    basepath: basepath,
+    basepath: BASE_PATH,
     version: packageJSON.version,
     commit: git.long(),
   };
@@ -201,6 +201,115 @@ var express = require('express'),
 
     return path.substr(path.length - 1) === '/';
   }
+
+  /**
+   * Filters an array of paths and detects if they actually exist
+   * @private
+   * @param {String[]} paths -
+   * @param {String} link -
+   */
+  function filterUnusablePaths(paths, excludes) {
+    var truePaths = [];
+
+    paths.forEach(function pathIterator(val) {
+      if (excludes === undefined) {
+        excludes = [];
+      }
+
+      var match = false;
+      excludes.forEach(function(exclude) {
+        if (val.match(exclude)) {
+          match = true;
+          return;
+        }
+      });
+
+      if (match) {
+        return;
+      }
+
+      truePaths.push(val);
+    });
+
+    return truePaths;
+  }
+
+  /**
+   * @private
+   * @param {String} type -
+   * @param {String} link -
+   */
+  function pathMapper(link) {
+    var href = link.replace(/\\/g, '/'),
+      icon;
+
+    if (is('directory', href.replace(BASE_PATH, ''))) {
+      icon = '#icon-folder';
+
+      if (href.charAt(href.length - 1) !== '/') {
+        href = href + '/';
+      }
+    }
+
+    return {
+      icon: icon,
+      href: href,
+      text: link
+    };
+  }
+
+  /**
+   * Excluded file names that should never appear in the DemoApp List Pages
+   */
+  const GENERAL_LISTING_EXCLUDES = [
+    /^(layout)(\s)?(\.html)?/gm, // matches any filename that begins with "layout" (fx: "layout***.html")
+    /footer\.html/,
+    /_header\.html/,
+    /_layout\.html/,
+    /\.DS_Store/
+  ];
+
+  /**
+   * Returns a listing of both "examples" and "tests" for a particular type of component.
+   * @param {String} type - the component/layout/pattern type
+   * @param {Object} req
+   * @param {Object} res
+   * @param {function} next
+   * @returns {?}
+   */
+  function getFullListing(type, req, res, next) {
+    var allPaths = [],
+      componentPaths,
+      testPaths,
+      extraExcludes = [
+        // TODO: type.html, _type.scss, type.js, type.md
+      ];
+
+    componentPaths = fs.readdirSync('./components/' + type + '/', function(err, paths) {
+      if (err) {
+        console.log(err);
+        res.render(err);
+        return next();
+      }
+    });
+    componentPaths = filterUnusablePaths(componentPaths, GENERAL_LISTING_EXCLUDES.concat(extraExcludes))
+
+    // TODO: Handle the test paths the same way as before.
+    testPaths = ;
+
+    // TODO: Add metadata to paths that label them either "tests" or "examples"
+
+    // TODO: Combine the arrays
+
+    var opts = extend({}, res.opts, {
+      subtitle: 'All Examples &amp; Tests for ' + type,
+      paths: allPaths.map(pathMapper)
+    });
+
+    res.render('listing', opts);
+    next();
+  }
+
 
   // Returns a directory listing as page content with working links
   // @param Array excludes - List of files names to exclude
@@ -428,6 +537,10 @@ var express = require('express'),
 
     if (req.params.example === 'doc' || req.params.example === 'docs') {
       return docsRoute(req, res, next);
+    }
+
+    if (req.params.example === 'list') {
+      return getDirectoryListing();
     }
 
     res.render(componentName + '/' +  req.params.example, opts);
