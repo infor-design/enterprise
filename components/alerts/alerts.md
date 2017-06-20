@@ -1,13 +1,13 @@
 
-# Accordion Component Implementation Detail [Learn More](https://soho.infor.com/index.php?p=component/accordion)
+# Alert Component Implementation Detail [Learn More](https://soho.infor.com/index.php?p=component/accordion)
 
 ## Api Details
 
 ### Settings
 
+
 * Icon Types - icon-alert, icon-confirm, icon-dirty, icon-error, icon-info, icon-pending, icon-new, icon-in-progress, icon-info-field
 * Icon Colors - This is done automatically by the type (alert, error ect)
-
 
 ## Configuration Options
 
@@ -15,9 +15,7 @@
 
 ## Code Example
 
-### Alerts
-
-You can added alert icons by adding an svg element with the icons. You should also include an audible span for better accessibility.
+Alerts are just specially classed icons. You can added alert icons by adding an svg element with the icons. You should also include an audible span for better accessibility.
 
 ```html
 

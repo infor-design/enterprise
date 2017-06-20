@@ -582,14 +582,16 @@ var express = require('express'),
     var component = req.params.component,
       example = req.params.example;
 
-    var path = 'components/' + component + '/example-' + example.replace('.html', '')  + '.html';
-    if (fs.existsSync(path)) {
-      res.redirect('/' + path);
-    }
+    if (example && component) {
+      var path = 'components/' + component + '/example-' + example.replace('.html', '')  + '.html';
+      if (fs.existsSync(path)) {
+        res.redirect('/' + path);
+      }
 
-    path = 'components/' + component + '/test-' + example.replace('.html', '') + '.html';
-    if (fs.existsSync(path)) {
-      res.redirect('/' + path);
+      path = 'components/' + component + '/test-' + example.replace('.html', '') + '.html';
+      if (fs.existsSync(path)) {
+        res.redirect('/' + path);
+      }
     }
 
     res.render(directory, opts);
