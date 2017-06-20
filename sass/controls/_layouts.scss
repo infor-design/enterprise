@@ -431,7 +431,7 @@ body.no-scroll {
 
   &.has-tabs,
   &.has-alternate-tabs {
-    height: 104px;
+    height: 100px;
 
     > .toolbar {
       height: 60px;
@@ -726,11 +726,11 @@ body.no-scroll {
 
     .tab-container.alternate {
       position: relative;
-      top: -50px;
+      top: -40px;
 
       + .tab-panel.alternate {
         position: relative;
-        top: -50px;
+        top: -40px;
       }
     }
 
