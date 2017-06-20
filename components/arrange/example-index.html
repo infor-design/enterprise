@@ -4,8 +4,22 @@
   padding: 0;
   width: 310px;
 }
+.is-disabled {
+  opacity: .6;
+}
 .grid {
   overflow: hidden;
+}
+.icon-handle {
+  fill: #999999;
+  height: 15px;
+  width: 17px;
+  position: relative;
+  left: -4px;
+  top: 2px;
+}
+.icon-handle:hover {
+  fill: #454545;
 }
 .example li {
   font-size: 1.3em;
@@ -34,9 +48,7 @@
 .connected.no2 {
   float: right;
 }
-.connected .green {
-  background: #D5F6C0;
-}
+
 .example li:not(.arrange-placeholder),
 .grid > div:not(.arrange-placeholder) {
   border: 1px solid #BDBDBD;
@@ -50,11 +62,9 @@ html[dir='rtl'] .grid > div {
 }
 </style>
 
-<div class="row">
+<div class="row top-padding">
   <div class="twelve columns">
-    <h1>Drag and drop</h1>
 
-    <br><br>
     <h2>Sortable List</h2>
     <ul class="arrange list example">
       <li>Item 1</li>
@@ -82,20 +92,20 @@ html[dir='rtl'] .grid > div {
       <li>Item 1</li>
       <li>Item 2</li>
       <li>Item 3</li>
-      <li data-arrange-exclude="true">Item 4</li>
-      <li data-arrange-exclude="true">Item 5</li>
-      <li data-arrange-exclude="true">Item 6</li>
+      <li data-arrange-exclude="true" class="is-disabled">Item 4</li>
+      <li data-arrange-exclude="true" class="is-disabled">Item 5</li>
+      <li data-arrange-exclude="true" class="is-disabled">Item 6</li>
     </ul>
 
     <br><br>
     <h2>Sortable List with Handles</h2>
     <ul class="arrange list example" data-arrange-handle=".handle">
-      <li><span class="handle">::</span> Item 1</li>
-      <li><span class="handle">::</span> Item 2</li>
-      <li><span class="handle">::</span> Item 3</li>
-      <li><span class="handle">::</span> Item 4</li>
-      <li><span class="handle">::</span> Item 5</li>
-      <li><span class="handle">::</span> Item 6</li>
+      <li><span class="handle"><svg class="icon icon-handle" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-drag"></use></svg></span> Item 1</li>
+      <li><span class="handle"><svg class="icon icon-handle" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-drag"></use></svg></span>  Item 2</li>
+      <li><span class="handle"><svg class="icon icon-handle" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-drag"></use></svg></span> Item 3</li>
+      <li><span class="handle"><svg class="icon icon-handle" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-drag"></use></svg></span>  Item 4</li>
+      <li><span class="handle"><svg class="icon icon-handle" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-drag"></use></svg></span>  Item 5</li>
+      <li><span class="handle"><svg class="icon icon-handle" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-drag"></use></svg></span>  Item 6</li>
     </ul>
 
     <br><br>
@@ -120,6 +130,5 @@ html[dir='rtl'] .grid > div {
     </div>
 
 
-    <br><br>
   </div>
 </div>
