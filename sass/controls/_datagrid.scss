@@ -2602,8 +2602,8 @@ html[dir='rtl'] {
   }
 
   .datagrid-summary-totals {
-    color: font-color-lowcontrast;
-    float: left;
+    margin-left: -10px;
+    padding-right: 10px;
   }
 }
 
