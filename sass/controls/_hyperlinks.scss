@@ -100,11 +100,11 @@
     .icon {
       display: inline;
       fill: $hyperlink-color;
-      height: 22px;
+      height: 20px;
       position: relative;
       top: -1px;
       vertical-align: middle;
-      width: 22px;
+      width: 20px;
     }
 
     &:focus:not(.hide-focus) {
@@ -118,14 +118,14 @@
 
   &.back {
     .icon {
-      left: -4px;
-      margin-right: -8px;
+      left: -6px;
+      margin-right: -12px;
     }
 
     span {
       &::after {
-        margin-left: 16px;
-        width: calc(100% - 12px);
+        margin-left: -2px;
+        width: calc(100% + 4px);
       }
     }
   }
@@ -139,7 +139,7 @@
     span {
       &::after {
         left: -5px;
-        width: calc(100% - 10px);
+        width: calc(100% - 1px);
       }
     }
   }

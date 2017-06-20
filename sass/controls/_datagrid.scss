@@ -234,6 +234,10 @@ $datagrid-short-row-height: 23px;
       height: calc(100% - 25px);
     }
 
+    &.has-filterable-columns .datagrid-body {
+      height: calc(100% - 60px);
+    }
+
     &.has-toolbar {
       height: calc(100% - 45px);
     }
@@ -873,10 +877,6 @@ $datagrid-short-row-height: 23px;
         background-color: $datagrid-row-hover-color;
       }
 
-      .chart-completion-target {
-        background-color: $chart-targeted-achievement-darker-bg-color;
-      }
-
     }
 
     &.is-selected:not(.hide-selected-color) td:not(.is-editing),
@@ -1411,15 +1411,10 @@ $datagrid-short-row-height: 23px;
       display: none;
     }
 
-    &:last-child {
-      border-right: 0;
-    }
-
     .datagrid-header-text {
       @include font-size(12);
       @include no-select();
       color: $datagrid-header-color;
-      direction: ltr;
       display: table-cell;
       font-weight: bold;
       text-align: left;
@@ -2602,8 +2597,8 @@ html[dir='rtl'] {
   }
 
   .datagrid-summary-totals {
-    color: font-color-lowcontrast;
-    float: left;
+    margin-left: -10px;
+    padding-right: 10px;
   }
 }
 

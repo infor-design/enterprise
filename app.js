@@ -14,7 +14,7 @@ var express = require('express'),
   packageJSON = getJSONFile(path.resolve('package.json'));
 
   app.set('view engine', 'html');
-  app.set('views', path.join(__dirname, 'views'));
+  app.set('views', [path.join(__dirname, 'components'), path.join(__dirname, 'views')]);
   mmm.setEngine('hogan.js');
   app.engine('html', mmm.__express);
 
@@ -277,7 +277,12 @@ var express = require('express'),
   // ======================================
 
   router.get('/', function(req, res, next) {
-    res.render('index', res.opts);
+    res.redirect('/components/');
+    next();
+  });
+
+  router.get('/kitchen-sink', function(req, res, next) {
+    res.render('kitchen-sink', res.opts);
     next();
   });
 
@@ -332,12 +337,105 @@ var express = require('express'),
       opts.layout = 'tests/layout-noheader';
     }
 
+    // Handle Redirects to new Structure
+    if (!fs.existsSync('views/controls/' + controlName + '.html')) {
+      if (controlName === 'buttons') {
+        controlName = 'button';
+      }
+      res.redirect('/components/' + controlName + '/example-index');
+    }
+
     res.render('controls/' + controlName, opts);
     next();
   });
 
   router.get('/controls/', defaultControlsRoute);
   router.get('/controls', defaultControlsRoute);
+
+
+  // ======================================
+  //  Components Section
+  // ======================================
+
+  var componentOpts = {
+    'layout': 'layout',
+    'subtitle': 'Style',
+  };
+
+  function defaultDocsRoute(req, res, next) {
+    var opts = extend({}, res.opts, componentOpts);
+    opts.layout = 'doc-layout';
+    opts.showbacklink = false;
+
+    res.render('index', opts);
+    next();
+  }
+
+  //Docs Routers
+  function docsStyleGuideRoute(req, res, next) {
+    var opts = extend({}, res.opts, componentOpts);
+    opts.subtitle = 'Doc Style Guide';
+    opts.layout = 'doc-layout';
+
+    res.render('doc-styleguide', opts);
+    next();
+  }
+
+  function docsRoute(req, res, next) {
+    var opts = extend({}, res.opts, componentOpts);
+    opts.subtitle = 'Documentation';
+    opts.layout = 'doc-layout';
+
+    var componentName = stripHtml(req.params.component);
+    opts.subtitle = toTitleCase(componentName.charAt(0).toUpperCase() + componentName.slice(1).replace('-',' '));
+
+    res.render(componentName + '/doc', opts);
+    next();
+  }
+
+  router.get('/components/:component', function(req, res, next) {
+    var componentName = '',
+      opts = extend({}, res.opts, componentOpts);
+
+    if (!req.params.component) {
+      return defaultDocsRoute(req, res, next);
+    }
+
+    componentName = stripHtml(req.params.component);
+    opts.subtitle = toTitleCase(componentName.charAt(0).toUpperCase() + componentName.slice(1).replace('-',' '));
+
+    opts.showbacklink = true;
+    opts.layout = 'doc-layout';
+
+    if (req.params.component === 'doc-styleguide') {
+      return docsStyleGuideRoute(req, res, next);
+    }
+
+    res.render(componentName, opts);
+    next();
+  });
+
+  router.get('/components/:component/:example', function(req, res, next) {
+    var componentName = '',
+      opts = extend({}, res.opts, componentOpts);
+
+    if (!req.params.component && !req.params.example) {
+      return defaultDocsRoute(req, res, next);
+    }
+
+    componentName = stripHtml(req.params.component);
+    opts.subtitle = toTitleCase(componentName.charAt(0).toUpperCase() + componentName.slice(1).replace('-',' '));
+
+    if (req.params.example === 'doc' || req.params.example === 'docs') {
+      return docsRoute(req, res, next);
+    }
+
+    res.render(componentName + '/' +  req.params.example, opts);
+    next();
+  });
+
+  router.get('/components/', defaultDocsRoute);
+  router.get('/components', defaultDocsRoute);
 
   // ======================================
   //  Patterns Section
@@ -480,51 +578,28 @@ var express = require('express'),
       return;
     }
 
+    // Handle Redirects to new Structure
+    var component = req.params.component,
+      example = req.params.example;
+
+    var path = 'components/' + component + '/example-' + example.replace('.html', '')  + '.html';
+    if (fs.existsSync(path)) {
+      res.redirect('/' + path);
+    }
+
+    path = 'components/' + component + '/test-' + example.replace('.html', '') + '.html';
+    if (fs.existsSync(path)) {
+      res.redirect('/' + path);
+    }
+
     res.render(directory, opts);
     next();
   }
 
   //Tests Index Page and controls sub pages
+  router.get('/tests/:component/:example', testsRouteHandler);
   router.get('/tests*', testsRouteHandler);
-  router.get('/tests', testsRouteHandler);
-
-  // =========================================
-  // Docs Pages
-  // =========================================
-
-  var docLayoutOpts = {
-    subtitle: 'SoHo Xi Docs',
-    layout: 'includes/docs-layout'
-  };
-
-  function defaultDocsRouteHandler(req, res, next) {
-    res.render('docs/index', docLayoutOpts);
-    next();
-  }
-
-  router.get('/docs/', defaultDocsRouteHandler);
-  router.get('/docs', defaultDocsRouteHandler);
-  router.get('docs', defaultDocsRouteHandler);
-
-  app.get('/docs/assets/bass.css', function(req, res){
-    res.sendFile(__dirname + '/views/docs/assets/bass.css');
-  });
-
-  app.get('/docs/assets/style.css', function(req, res){
-    res.sendFile(__dirname + '/views/docs/assets/style.css');
-  });
-
-  app.get('/docs/assets/github.css', function(req, res){
-    res.sendFile(__dirname + '/views/docs/assets/github.css');
-  });
-
-  app.get('/docs/assets/anchor.js', function(req, res){
-    res.sendFile(__dirname + '/views/docs/assets/anchor.js');
-  });
-
-  app.get('/docs/assets/site.js', function(req, res){
-    res.sendFile(__dirname + '/views/docs/assets/site.js');
-  });
+  router.get('/tests/', testsRouteHandler);
 
   // =========================================
   // Layouts Pages
@@ -648,28 +723,6 @@ var express = require('express'),
     }
 
     res.render('angular/' + end, opts);
-    next();
-  });
-
-  // =========================================
-  // Knockout Support Test Pages
-  // =========================================
-
-  var knockoutOpts = {
-    subtitle: 'Knockout',
-    layout: 'knockout/layout'
-  };
-
-  router.get('/knockout*', function(req, res, next) {
-    var opts = extend({}, res.opts, knockoutOpts),
-      end = req.url.replace(/\/knockout(\/)?/g, '');
-
-    if (!end || !end.length || end === '/') {
-      getDirectoryListing('knockout/', req, res, next);
-      return;
-    }
-
-    res.render('knockout/' + end, opts);
     next();
   });
 

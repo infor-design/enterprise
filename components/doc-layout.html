@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+
+  <title>
+    {{#subtitle}}
+      {{subtitle}} |
+    {{/subtitle}}
+    {{title}}
+  </title>
+
+  <!-- Meta Info -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="version" content="{{version}}">
+  <meta name="commit" content="{{commit}}">
+
+  <link rel="stylesheet" href="{{basepath}}stylesheets/site.css" type="text/css">
+
+</head>
+<body class="no-scroll">
+
+  <div class="svg-icons">
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="svg-icons">
+
+    <symbol id="icon-launch" viewBox="0 0 18 18">
+      <path d="M6.293 11.707c.391.391 1.023.391 1.414 0l6.293-6.293v3.586c0 .552.447 1 1 1 .553 0 1-.448 1-1v-6c0-.552-.447-1-1-1h-6c-.553 0-1 .448-1 1s.447 1 1 1h3.586l-6.293 6.293c-.391.391-.391 1.023 0 1.414zm8.717.293c-.547 0-.991.447-.991 1v.599c0 .389-.445.401-.496.401h-9.046c-.051 0-.495-.012-.495-.401v-9.099c0-.275.221-.5.495-.5h.533c.547 0 .99-.447.99-1 0-.553-.443-1-.99-1h-.533c-1.366 0-2.477 1.121-2.477 2.5v9.099c0 1.346 1.088 2.401 2.477 2.401h9.046c1.389 0 2.477-1.055 2.477-2.401v-.599c0-.553-.443-1-.99-1z"></path>
+    </symbol>
+
+    </svg>
+  </div>
+
+  <div class="page-container scrollable" id="maincontent" role="main">
+    <div class="row">
+      <div class="full column">
+        {{#showbacklink}}
+          <a href="/components" class="link">Go To Component Code Index</a>
+        {{/showbacklink}}
+
+        {{> content}}
+      </div>
+    </div>
+  </div>
+
+  {{#enableLiveReload}}
+  <!-- Live Reload - "grunt watch" -->
+  <script>
+    if (window.location.hostname === 'localhost' && window.navigator.userAgent.indexOf('IE') === -1) {
+      var script = '\x3Cscript type="text/javascript" src="//' +
+                    window.location.hostname + ':35729/livereload.js">\x3C/script>';
+      document.write(script); // jshint ignore:line
+    }
+  </script>
+  {{/enableLiveReload}}
+
+</body>
+</html>

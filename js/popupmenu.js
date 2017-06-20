@@ -840,7 +840,7 @@
 
         //Close on Document Click ect..
         setTimeout(function () {
-          $(document).on('touchend.popupmenu.' + this.id +' click.popupmenu.' + this.id, function (e) {
+          $(document).on('touchend.popupmenu.' + self.id +' click.popupmenu.' + self.id, function (e) {
             if (e.button === 2) {
               return;
             }
@@ -1097,7 +1097,8 @@
       },
 
       detach: function () {
-        $(document).off('click.popupmenu touchend.popupmenu keydown.popupmenu');
+
+        $(document).off('touchend.popupmenu.' + this.id +' click.popupmenu.' + this.id +' keydown.popupmenu');
         $(window).off('scroll.popupmenu orientationchange.popupmenu');
         $('body').off('resize.popupmenu');
         $('.scrollable').off('scroll.popupmenu');

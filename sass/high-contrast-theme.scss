@@ -155,7 +155,7 @@ $btn-focus-bg-color: $primary-color;
 $btn-focus-border-color: $primary-color;
 $btn-active-bg-color: $graphite05;
 $btn-disabled-bg-color: $graphite07;
-$btn-disabled-color: $graphite07;
+$btn-disabled-color: $white;
 $btn-disabled-border-color: $graphite07;
 $btn-disabled-opacity: .5;
 
@@ -166,7 +166,7 @@ $tertiary-btn-open-color: $primary-color;
 $tertiary-btn-active-color: $graphite06;
 $tertiary-btn-ripple-color: $azure07;
 
-// Secondary With Border
+// Secondary with Border
 $secondary-border-btn-color:  $graphite09;
 $secondary-border-btn-border-color: $graphite09;
 $secondary-border-btn-hover-color:  $graphite10;
@@ -598,7 +598,6 @@ $chart-progressbar-target-fill: $graphite05;
 $chart-progressbar-primary-fill: $primary-color;
 $chart-progressbar-dark-fill: $graphite08;
 $chart-targeted-achievement-bg-color: $graphite03;
-$chart-targeted-achievement-darker-bg-color: $graphite05;
 
 //Timeline
 $timeline-indicator-color: $graphite05;
@@ -616,9 +615,8 @@ $wizard-active-color: $primary-color;
 $wizard-active-text-color: $primary-color;
 $wizard-focus-box-shadow: 0 0 0 1px $azure07;
 
-
-//Themable Variables in config.scss
-$hierarchy-line-color: $graphite03;
+//Org Chart
+$hierarchy-line-color: $graphite10;
 
 // Searchfield Colors
 $searchfield-bg-color: $white;

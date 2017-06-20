@@ -25,9 +25,9 @@
     "test:unit": "./bin/test.sh client config=test2/intern.local.unit",
     "develop-tag": "./bin/add-npm-tag.js develop",
     "bump-version": "./bin/bump-version.js",
-    "documentation": "documentation build js/*.js -f html -o views/docs -g false",
-    "documentation:build": "documentation build js/*.js -f html -o docs -g false",
-    "publish": "grunt publish && npm publish publish --tag dev --force"
+    "publish": "grunt publish && npm publish publish --tag dev --force",
+    "preinstall": "npm install -g pandoc-bin grunt-cli documentation",
+    "documentation": "./build/generate-documentation.js"
   },
   "dependencies": {
     "d3": "^3.4.6",
@@ -63,8 +63,6 @@
     "grunt-contrib-uglify": "^2.0.0",
     "grunt-documentation": "^1.2.1",
     "grunt-git-revision": "0.0.1",
-    "grunt-jsdoc": "^2.1.0",
-    "grunt-md2html": "^0.3.1",
     "grunt-mocha-cli": "^3.0.0",
     "grunt-nodemon": "^0.4.2",
     "grunt-run": "^0.6.0",
@@ -77,6 +75,7 @@
     "load-grunt-tasks": "^3.5.2",
     "mmm": "^0.2.2",
     "mocha": "^3.2.0",
+    "node-pandoc": "^0.3.0",
     "phantomjs": "^2.1.7",
     "requirejs": "^2.2.0",
     "selenium-standalone": "^6.0.0",
