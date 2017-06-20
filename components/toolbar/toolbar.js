@@ -679,8 +679,8 @@
             targetButtonsetWidth = targetButtonsetWidth - d;
           }
 
-          buttonsetElem.style.width = addPx(targetButtonsetWidth + 1);
-          titleElem.style.width = addPx(targetTitleWidth - 1);
+          buttonsetElem.style.width = addPx(targetButtonsetWidth + 2);
+          titleElem.style.width = addPx(targetTitleWidth - 2);
 
           return this;
         }
@@ -695,8 +695,8 @@
         }
 
         // Always favor the title by one extra px for Chrome
-        titleElem.style.width = addPx(targetTitleWidth + 1);
-        buttonsetElem.style.width = addPx(targetButtonsetWidth - 1);
+        titleElem.style.width = addPx(targetTitleWidth + 2);
+        buttonsetElem.style.width = addPx(targetButtonsetWidth - 2);
         return this;
       },
 

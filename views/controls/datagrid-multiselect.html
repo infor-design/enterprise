@@ -54,7 +54,7 @@
         columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
 
         //Init and get the api for the grid
-        grid = $('#datagrid').datagrid({
+        gridApi = $('#datagrid').datagrid({
           columns: columns,
           dataset: data,
           selectable: 'multiple',
@@ -63,9 +63,11 @@
           console.log(args.length, action);
         }).data('datagrid');
 
-        // Set Rows as Selected via the API
-        //grid.selectedRows([0]);
-        //grid.selectRow(0);
+        //Add Code for Add and icon-delete
+        $('#remove-btn').on('click', function () {
+          gridApi.removeSelected();
+        });
+
   });
 
 </script>

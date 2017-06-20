@@ -174,9 +174,6 @@
             //Rating
             ['rating'],
 
-            //Light Box
-            ['lightbox'],
-
             //Listbuilder
             ['listbuilder'],
 
@@ -246,8 +243,6 @@
             ['about'],
 
             ['contextualactionpanel', '.contextual-action-panel-trigger'],
-
-            ['sidebar', '.sidebar-nav'],
 
             ['expandablearea', '.expandable-area'],
 

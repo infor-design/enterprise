@@ -166,7 +166,7 @@ $tertiary-btn-open-color: $primary-color;
 $tertiary-btn-active-color: $graphite06;
 $tertiary-btn-ripple-color: $azure07;
 
-// Secondary With Border
+// Secondary with Border
 $secondary-border-btn-color:  $graphite09;
 $secondary-border-btn-border-color: $graphite09;
 $secondary-border-btn-hover-color:  $graphite10;
@@ -615,9 +615,8 @@ $wizard-active-color: $primary-color;
 $wizard-active-text-color: $primary-color;
 $wizard-focus-box-shadow: 0 0 0 1px $azure07;
 
-
-//Themable Variables in config.scss
-$hierarchy-line-color: $graphite03;
+//Org Chart
+$hierarchy-line-color: $graphite10;
 
 // Searchfield Colors
 $searchfield-bg-color: $white;

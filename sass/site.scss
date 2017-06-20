@@ -10,13 +10,23 @@
 $color-font-dark: #222427;
 $color-font-lighter: #484a51;
 $color-hyperlink: #007576;
-$font-family: proxima nova, helvetica, arial;
 
+// scss-lint:disable VendorPrefix
 * {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
+// scss-lint:disable VendorPrefix
+
+@font-face {font-family: 'ProximaNova-Regular';
+  src: url('/webfonts/ProximaNova-Regular.eot');
+  src: url('/webfonts/ProximaNova-Regular.eot?#iefix') format('embedded-opentype'),
+       url('/webfonts/ProximaNova-Regular.woff') format('woff'),
+       url('/webfonts/ProximaNova-Regular.ttf') format('truetype');
+}
+
+$font-family: ProximaNova-Regular, helvetica, arial;
 
 html {
   font-size: 62.5%;

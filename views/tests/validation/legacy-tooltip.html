@@ -8,7 +8,7 @@
 
        <div class="field">
         <label class="required" for="email-address-ok">Email Address <span class="audible">Required</span></label>
-        <input type="text" id="email-address-ok" name="email-address-ok" data-validate="required" data-error-type="tooltip" placeholder="someone@someplace.com" value="someone@someplace.com">
+        <input type="text" id="email-address-ok" name="email-address-ok" data-validate="required customRule" data-error-type="tooltip" placeholder="someone@someplace.com" value="someone@someplace.com">
       </div>
 
       <div class="field">
@@ -54,5 +54,31 @@
       <button type="submit" id = 'test1' class="btn-primary">Submit</button>
     </form>
 
+	<script>
+      $(function() {
+        $.fn.validation.rules.customRule = {
+          check: function (value) {
+
+            return false;
+          },
+          message: 'Custom Error'
+        };
+
+        $('#test').on('validated', function (e, isValid) {
+
+          if (isValid) {
+            // Do some stuff before it goes to postback/submit
+
+            //Manually post/submit or change window
+            //http://stackoverflow.com/questions/1200266/submit-a-form-using-jquery
+            window.location = 'http://www.google.com';
+            return;
+          }
+
+          // Do some stuff other than highlighting what's required and obviously cancel the submit.
+
+        });
+      });
+    </script>
   </div>
 </div>

@@ -1,11 +1,5 @@
 /**
 * @constructor
-* @todo:
-*   Make vertical bar chart (have horizontal)
-*   Work on update functions or routine
-*   Make responsive
-*   Make Area/Dot Chart
-*   Test With Screen readers
 */
 
 window.Chart = function(container) {
@@ -1238,10 +1232,9 @@ window.Chart = function(container) {
 
       if (lb.hideLabels) {
         var isRunning = true,
-          // maxRunning = textLabels.length * 15,
           maxRunning = textLabelsLength * 15,
           orgLabelPos,
-          spacing = Math.round(textLabels.node().getBBox().height) + 1;
+          spacing = 35;
 
         // Resolve label positioning collisions
         (function () {
@@ -1267,7 +1260,7 @@ window.Chart = function(container) {
                     db = d3.select(b),
                     y2 = +db.attr('y');
 
-                  if (da.attr('text-anchor') === db.attr('text-anchor')) {
+                  if (da.attr('text-anchor') === db.attr('text-anchor') && (a === textLabels[0][i2-1])) {
                     deltaY = Math.round(Math.abs(y1 - y2));
                     if (deltaY < spacing) {
                       deltaY += 1;
@@ -1305,6 +1298,8 @@ window.Chart = function(container) {
           clearInterval(intervalId);
 
           // Fix x position
+          var labelCircles = svg.selectAll('.label-circle');
+          spacing *=  -1;
           textLabels.each(function(d, i) {
             var x,
               label = d3.select(this),
@@ -1322,6 +1317,16 @@ window.Chart = function(container) {
 
               if (lb.isTwoline) {
                 label.select('.lb-bottom').attr('x', x);
+              }
+
+              var t = d3.transform(d3.select(labelCircles[0][i]).attr('transform')),
+                tx = t.translate[0] + (t.translate[0] > 0 ? 10 : -10);
+
+              if (x < tx || Math.abs(x) > dims.center.x) {
+                label.attr('x', tx);
+                if (lb.isTwoline) {
+                  label.select('.lb-bottom').attr('x', tx);
+                }
               }
             }
           });

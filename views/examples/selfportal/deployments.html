@@ -1,5 +1,5 @@
 {{> examples/selfportal/_applicationmenu}}
-  <div id="maincontent" class="two-column page-container fixed no-scroll list-detail">
+  <div class="two-column page-container fixed no-scroll list-detail">
 
     <div class="sidebar " role="complementary">
 
@@ -45,18 +45,20 @@
           {{> includes/header-actionbutton}}
         </div>
 
-        <div class="tab-container alternate">
-          <ul class="tab-list">
-            <li class="tab"><a href="#header-tabs-details">Details</a></li>
-            <li class="tab is-selected" ><a href="#header-tabs-service">Service Requests</a></li>
-            <li class="tab"><a href="#header-tabs-access">Access Control</a></li>
-            <li class="tab"><a href="#header-tabs-logs">Logs</a></li>
-            <li class="tab"><a href="#header-tabs-uptime">Uptime Reports</a></li>
-          </ul>
+        <div class="tab-container alternate" data-options="{ containerElement: '#maincontent' }">
+          <div class="tab-list-container">
+            <ul class="tab-list">
+              <li class="tab"><a href="#header-tabs-details">Details</a></li>
+              <li class="tab is-selected" ><a href="#header-tabs-service">Service Requests</a></li>
+              <li class="tab"><a href="#header-tabs-access">Access Control</a></li>
+              <li class="tab"><a href="#header-tabs-logs">Logs</a></li>
+              <li class="tab"><a href="#header-tabs-uptime">Uptime Reports</a></li>
+            </ul>
+          </div>
         </div>
       </header>
 
-      <div class="scrollable">
+      <div class="scrollable" id="maincontent">
 
         <div id="header-tabs-details" class="tab-panel alternate">
           <div class="row" style="height: 10000px">

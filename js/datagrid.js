@@ -1867,6 +1867,7 @@ $.fn.datagrid = function(options) {
         headerRow += '<th scope="col" role="columnheader" class="' + (isSortable ? 'is-sortable' : '') + (isResizable ? ' is-resizable' : '') + (column.hidden ? ' is-hidden' : '') + (column.filterType ? ' is-filterable' : '') + (alignmentClass ? alignmentClass : '') + '"' +
          ' id="' + id + '" data-column-id="'+ column.id + '"' + (column.field ? ' data-field="'+ column.field +'"' : '') +
          (column.headerTooltip ? 'title="' + column.headerTooltip + '"' : '') +
+         (column.reorderable === false ? ' data-reorder="false"' : '') +
          (colGroups ? ' headers="' + self.getColumnGroup(j) + '"' : '') + '>';
 
         headerRow += '<div class="' + (isSelection ? 'datagrid-checkbox-wrapper ': 'datagrid-column-wrapper') + (column.align === undefined ? '' : ' l-'+ column.align +'-text') + '"><span class="datagrid-header-text'+ (column.required ? ' required': '') + '">' + self.headerText(settings.columns[j]) + '</span>';
@@ -2365,7 +2366,7 @@ $.fn.datagrid = function(options) {
     // Create draggable columns
     createDraggableColumns: function () {
       var self = this,
-        headers = self.headerNodes().not('[data-column-id="selectionCheckbox"]'),
+        headers = self.headerNodes().not('[data-column-id="selectionCheckbox"]').not('[data-reorder="false"]'),
         showTarget = $('.drag-target-arrows', self.element);
 
       if (!showTarget.length) {
@@ -5726,7 +5727,7 @@ $.fn.datagrid = function(options) {
           ruleValid = rule.check(cellValue, $('<input>').val(cellValue), gridInfo);
 
         if (!ruleValid) {
-          messages += rule.message;
+          messages = (messages ? messages + '<br>' : '') + '\u2022 ' + rule.message;
           isValid = false;
         }
       }

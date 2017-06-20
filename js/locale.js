@@ -284,12 +284,13 @@
         dateStringParts,
         dateObj = {},
         isDateTime = (dateFormat.toLowerCase().indexOf('h') > -1),
+		isUTC = (dateString.toLowerCase().indexOf('z') > -1),
         i, l;
 
       if (isDateTime) {
         //replace [space & colon & dot] with "/"
-        dateFormat = dateFormat.replace(/[\s:.-]/g,'/');
-        dateString = dateString.replace(/[\s:.]/g,'/');
+        dateFormat = dateFormat.replace(/[T\s:.-]/g,'/').replace(/z/i, '');
+        dateString = dateString.replace(/[T\s:.-]/g,'/').replace(/z/i, '');
       }
 
       if (dateFormat === 'Mdyyyy' || dateFormat === 'dMyyyy') {
@@ -442,6 +443,10 @@
             }
             dateObj.ss = value;
             break;
+			
+	      case 'SSS':
+            dateObj.ms = value;
+            break;
 
           case 'mm':
             if (numberValue < 0 || numberValue > 60) {
@@ -546,11 +551,28 @@
       }
 
       if (isDateTime) {
-        if (dateObj.h) {
-          dateObj.return = new Date(dateObj.year, dateObj.month, dateObj.day, dateObj.h, dateObj.mm);
+        if (isUTC) {
+          if (dateObj.h) {
+            dateObj.return = new Date(Date.UTC(dateObj.year, dateObj.month, dateObj.day, dateObj.h, dateObj.mm));
+          }
+          if (dateObj.ss !== undefined) {
+            dateObj.return = new Date(Date.UTC(dateObj.year, dateObj.month, dateObj.day, dateObj.h, dateObj.mm, dateObj.ss));
+          }
+          if (dateObj.ms !== undefined) {
+            dateObj.return = new Date(Date.UTC(dateObj.year, dateObj.month, dateObj.day, dateObj.h, dateObj.mm, dateObj.ss, dateObj.ms));
+          }
         }
-        if (dateObj.ss !== undefined) {
-          dateObj.return = new Date(dateObj.year, dateObj.month, dateObj.day, dateObj.h, dateObj.mm, dateObj.ss);
+        else
+        {
+          if (dateObj.h) {
+            dateObj.return = new Date(dateObj.year, dateObj.month, dateObj.day, dateObj.h, dateObj.mm);
+          }
+          if (dateObj.ss !== undefined) {
+            dateObj.return = new Date(dateObj.year, dateObj.month, dateObj.day, dateObj.h, dateObj.mm, dateObj.ss);
+          }
+          if (dateObj.ms !== undefined) {
+            dateObj.return = new Date(dateObj.year, dateObj.month, dateObj.day, dateObj.h, dateObj.mm, dateObj.ss, dateObj.ms);
+          }
         }
       } else {
         dateObj.return = new Date(dateObj.year, dateObj.month, dateObj.day);
