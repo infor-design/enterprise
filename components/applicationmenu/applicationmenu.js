@@ -20,16 +20,25 @@
     // Settings and Options
     var pluginName = 'applicationmenu',
         defaults = {
-          breakpoint: 'phablet', // can be 'tablet' (+720), 'desktop' +(1024), or 'large' (+1280);
-          openOnLarge: false, // If true, will automatically open the Application Menu when a large screen-width breakpoint is met.
-          triggers: [] // An Array of jQuery-wrapped elements that are able to open/close this nav menu.
+          breakpoint: 'phablet',
+          openOnLarge: false,
+          triggers: []
         },
         settings = $.extend({}, defaults, options);
 
     /**
-     * @constructor
-     * @param {Object} element
-     */
+    * The Application Menu provides access to all the functions, pages, and forms in an application.
+    *
+    * @class ApplicationMenu
+    * @param {String} breakpoint  &nbsp;-&nbsp; Can be 'tablet' (+720), 'phablet (+968), ' 'desktop' +(1024), or 'large' (+1280). Default is phablet (968)
+    * @param {String} openOnLarge  &nbsp;-&nbsp; If true, will automatically open the Application Menu when a large screen-width breakpoint is met.
+    * @param {String} triggers  &nbsp;-&nbsp; An Array of jQuery-wrapped elements that are able to open/close this nav menu.
+    * @param {Boolean} deviceSpecs  &nbsp;-&nbsp; Determines whether or not to display device information (Browser, Platform, Locale, Cookies Enabled)
+    * @param {String} productName  &nbsp;-&nbsp; Additional product name information to display
+    * @param {Boolean} useDefaultCopyright  &nbsp;-&nbsp; Add the Legal Approved Infor Copy Right Text
+    * @param {String} version  &nbsp;-&nbsp; Semantic Version Number for example (4.0.0)
+    *
+    */
     function ApplicationMenu(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -96,49 +105,6 @@
         }
 
         this.adjustHeight();
-
-        return this;
-      },
-
-      handleEvents: function() {
-        var self = this;
-
-        this.handleTriggerEvents();
-
-        // Setup notification change events
-        this.menu.on('notify.applicationmenu', function(e, anchor, value) {
-          self.notify(anchor, value);
-        }).on('updated.applicationmenu', function() {
-          self.updated();
-        });
-
-        this.accordion.on('blur.applicationmenu', function() {
-          self.closeMenu();
-        });
-
-        $(document).on('open-applicationmenu', function() {
-          self.openMenu();
-        }).on('close-applicationmenu', function() {
-          self.closeMenu();
-        });
-
-        $(window).on('scroll.applicationmenu', function() {
-          self.adjustHeight();
-        }).on('resize.applicationmenu', function() {
-          self.testWidth();
-        });
-
-        if (this.settings.openOnLarge && this.isLargerThanBreakpoint()) {
-          this.menu.addClass('no-transition');
-          $('.page-container').addClass('no-transition');
-        }
-        this.testWidth();
-
-        //Remove after initial transition
-        setTimeout(function() {
-          self.menu.removeClass('no-transition');
-          $('.page-container').removeClass('no-transition');
-        }, 800);
 
         return this;
       },
@@ -393,13 +359,18 @@
         return this;
       },
 
+      /**
+      * Triggers a UI Resync.
+      */
       updated: function() {
         return this
           .teardown()
           .init();
       },
 
-      // Teardown - Remove added markup and events
+      /**
+      * Teardown - Remove added markup and events
+      */
       destroy: function() {
         this.teardown();
         this.menu
@@ -408,7 +379,59 @@
           .removeClass('short')
           .removeAttr('style');
         $.removeData(this.element[0], pluginName);
+      },
+
+      /**
+       *  This component fires the following events.
+       *
+       * @fires Applicationmenu#events
+       * @param {Object} applicationmenuopen  &nbsp;-&nbsp; Fires when the menu is opened.
+       * @param {Object} applicationmenuclose  &nbsp;-&nbsp; Fires as the menu is closed.
+        *
+       */
+      handleEvents: function() {
+        var self = this;
+
+        this.handleTriggerEvents();
+
+        // Setup notification change events
+        this.menu.on('notify.applicationmenu', function(e, anchor, value) {
+          self.notify(anchor, value);
+        }).on('updated.applicationmenu', function() {
+          self.updated();
+        });
+
+        this.accordion.on('blur.applicationmenu', function() {
+          self.closeMenu();
+        });
+
+        $(document).on('open-applicationmenu', function() {
+          self.openMenu();
+        }).on('close-applicationmenu', function() {
+          self.closeMenu();
+        });
+
+        $(window).on('scroll.applicationmenu', function() {
+          self.adjustHeight();
+        }).on('resize.applicationmenu', function() {
+          self.testWidth();
+        });
+
+        if (this.settings.openOnLarge && this.isLargerThanBreakpoint()) {
+          this.menu.addClass('no-transition');
+          $('.page-container').addClass('no-transition');
+        }
+        this.testWidth();
+
+        //Remove after initial transition
+        setTimeout(function() {
+          self.menu.removeClass('no-transition');
+          $('.page-container').removeClass('no-transition');
+        }, 800);
+
+        return this;
       }
+
     };
 
     // Initialize the plugin (Once)

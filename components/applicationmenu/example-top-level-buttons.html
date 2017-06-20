@@ -1,0 +1,90 @@
+{{> includes/head}}
+
+<body class="no-scroll">
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+  {{> controls/svg}}
+  {{> controls/svg-extended}}
+
+  <div class="page-container no-scroll">
+    <header class="header is-personalizable">
+      <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+
+      <div class="toolbar no-actions-button" role="toolbar" aria-label="Lms Toolbar">
+        <div class="title">
+           <button class="btn-icon application-menu-trigger" type="button">
+            <span class="audible">Show navigation</span>
+            <span class="icon app-header">
+              <span class="one"></span>
+              <span class="two"></span>
+              <span class="three"></span>
+            </span>
+          </button>
+
+         {{> includes/page-title}}
+        </div>
+        <div class="buttonset">
+          <button type="button" class="btn-menu">
+            <span>Learner</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-dropdown"></use>
+            </svg>
+          </button>
+          <ul class="popupmenu">
+            <li><a href="#">Learner</a></li>
+            <li class="is-checked"><a href="#">Author</a></li>
+            <li><a href="#">Administrator</a></li>
+          </ul>
+
+          <button class="btn-icon" type="button">
+            <svg class="icon">
+              <use xlink:href="#icon-mail"></use>
+            </svg>
+            <span>Mail</span>
+          </button>
+
+          <button class="btn-icon" type="button">
+            <svg class="icon">
+              <use xlink:href="#icon-search"></use>
+            </svg>
+            <span>Search</span>
+          </button>
+
+        </div>
+      </div>
+
+    </header>
+
+    <nav id="application-menu" class="application-menu">
+      <div class="accordion panel inverse">
+        <div class="accordion-header">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-process"></use>
+          </svg>
+          <a href="#"><span>Header 1</span></a>
+        </div>
+
+        <div class="accordion-header">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-technology"></use>
+          </svg>
+          <a href="#"><span>Header 2</span></a>
+        </div>
+
+      </div>
+
+      <div class="branding">
+        <svg class="icon" viewBox="0 0 34 34" focusable="false" aria-hidden="true" role="presentation">
+          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-logo"></use>
+        </svg>
+      </div>
+
+    </nav>
+
+    <div id="maincontent" class="page-container scrollable" role="main">
+
+    </div>
+  </div>
+
+{{> includes/footer}}
+</body>
+</html>
