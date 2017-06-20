@@ -277,7 +277,12 @@ var express = require('express'),
   // ======================================
 
   router.get('/', function(req, res, next) {
-    res.render('index', res.opts);
+    res.redirect('/components/');
+    next();
+  });
+
+  router.get('/kitchen-sink', function(req, res, next) {
+    res.render('kitchen-sink', res.opts);
     next();
   });
 

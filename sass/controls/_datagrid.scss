@@ -1411,15 +1411,10 @@ $datagrid-short-row-height: 23px;
       display: none;
     }
 
-    &:last-child {
-      border-right: 0;
-    }
-
     .datagrid-header-text {
       @include font-size(12);
       @include no-select();
       color: $datagrid-header-color;
-      direction: ltr;
       display: table-cell;
       font-weight: bold;
       text-align: left;
