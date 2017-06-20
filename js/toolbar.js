@@ -392,6 +392,7 @@
         setActiveToolbarItem();
 
         // Toggles the More Menu based on overflow of toolbar items
+        this.adjustMenuItemVisibility();
         this.handleResize();
 
         this.element.triggerHandler('rendered');
@@ -585,17 +586,16 @@
       },
 
       handleResize: function(containerDims) {
-        var buttons = this.getVisibleButtons();
-
-        for (var i = 0; i < buttons.length; i++) {
-          buttons.visible[i][0].classList.remove('is-overflowed');
-        }
-
         if (this.settings.resizeContainers) {
           var title = containerDims ? containerDims.title : undefined,
             buttonset = containerDims ? containerDims.buttonset : undefined;
 
           this.sizeContainers(title, buttonset);
+        }
+
+        var buttons = this._getButtonsetButtons();
+        for (var i = 0; i < buttons.length; i++) {
+          buttons[i].removeClass('is-overflowed');
         }
 
         if (this.element.is(':not(:hidden)')) {
@@ -661,12 +661,14 @@
           targetTitleWidth = parseInt(titleSize);
           targetButtonsetWidth = parseInt(buttonsetSize);
         } else {
-          if (this.settings.favorButtonset) {
-            targetButtonsetWidth = buttonsetDims.width;
-            targetTitleWidth = toolbarDims.width - (toolbarPadding + buttonsetDims.width + moreDims.width);
-          } else {
-            targetTitleWidth = titleDims.scrollWidth;
-            targetButtonsetWidth = toolbarDims.width - (toolbarPadding + titleDims.scrollWidth + moreDims.width);
+          if ((buttonsetDims.scrollWidth + titleDims.scrollWidth + moreDims.width + toolbarPadding) > toolbarDims.width) {
+            if (this.settings.favorButtonset) {
+              targetButtonsetWidth = buttonsetDims.width;
+              targetTitleWidth = toolbarDims.width - (toolbarPadding + buttonsetDims.width + moreDims.width);
+            } else {
+              targetTitleWidth = titleDims.scrollWidth;
+              targetButtonsetWidth = toolbarDims.width - (toolbarPadding + titleDims.scrollWidth + moreDims.width);
+            }
           }
         }
 
