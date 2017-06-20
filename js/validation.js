@@ -464,7 +464,7 @@
       }
 
       if (!inline) {
-        this.showTooltipError(field, message, showTooltip);
+        this.showTooltipError(field, appendedMsg, showTooltip);
         return;
       }
 
@@ -508,6 +508,9 @@
 
         $('.icon-confirm', loc.parent('.field, .field-short')).remove();
       }
+	  else {
+		svg = loc.parent('.field, .field-short').find('svg.icon-error');
+	  }
 
       return svg;
     },
