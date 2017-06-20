@@ -5,7 +5,7 @@
 
 ## Configuration Options
 
-1. Default About Example [View Example]( /components/about/example)
+1. Default About Example [View Example]( /components/about/example-index)
 2. Close Event Demo [View Example]( /components/about/test-close-event)
 
 ## Code Example
