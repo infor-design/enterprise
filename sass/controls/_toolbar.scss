@@ -257,25 +257,30 @@ $toolbar-buttonset-height: 40px;
   // Updated changes from listview button and font sizes
   // Override Toolbar styles
   &.toolbar {
-    height: 52px;
+    height: 42px;
     margin-bottom: 0;
     padding: 0 20px;
 
     .title {
       @include font-size(14);
       color: $contextual-toolbar-color;
+      height: 42px;
     }
 
     .buttonset {
-      height: 40px;
+      height: 42px;
     }
 
+    // EPC: NOTE: Do NOT add different margins and heights to buttons inside of contextual toolbars.
+    // Toolbar Overflow Calculation needs buttons to be "shorter" than the buttonset.
     [class^="btn"] {
       color: $contextual-toolbar-button-color;
-      height: 30px;
-      margin-top: 5px;
       min-width: 0;
       padding: 0 10px;
+
+      &.btn-icon {
+        padding: 0 8px;
+      }
 
       .icon {
         fill: $contextual-toolbar-button-color;
