@@ -1359,7 +1359,7 @@
         // use the list's width instead of the parent's width
         var listDefaultWidth, useParentWidth,
           parentElementStyle = window.getComputedStyle(parentElement[0]),
-          parentElementWidth = Math.round(parseInt(parentElementStyle.width + parentElementStyle.borderLeftWidth + parentElementStyle.borderRightWidth));
+          parentElementWidth = Math.round(parseInt(parentElement[0].clientWidth + parentElementStyle.borderLeftWidth + parentElementStyle.borderRightWidth));
 
         this.searchInput[0].style.cssText = 'width:'+ parentElementWidth +'px !important';
         listDefaultWidth = Math.round(this.list.width());
