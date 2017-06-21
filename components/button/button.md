@@ -25,7 +25,7 @@ This example shows four types of buttons, all controlled by class.
 
 All buttons are assumed to be icon + text. To add the icon you add the svg icon element and use a span to hold the button text.
 
-```html
+```javascript
 
   <button class="btn-primary" type="button">Action</button>
 

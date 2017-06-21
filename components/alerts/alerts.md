@@ -11,7 +11,9 @@
 
 ## Configuration Options
 
-1. Different Alerts [View Example]( /components/alerts/example-index)
+1. Alerts (Icons) [View Example]( /components/alerts/example-index)
+2. Alerts (Badges) [View Example]( /components/alerts/example-badges)
+3. More Badge Examples [View Example]( /components/alerts/example-additional-badges)
 
 ## Code Example
 
@@ -35,7 +37,7 @@ Alerts are just specially classed icons. You can added alert icons by adding an 
 
 ## Keyboard Shortcuts
 
-Alert icons do not have tab stops or keyboard interaction on their own. However, they may be placed in a grid cell or other object that has tab focus.
+Alert icons and Badges do not have tab stops or keyboard interaction on their own. However, they may be placed in a grid cell or other object that has tab focus.
 
 ## Upgrading from 3.X
 

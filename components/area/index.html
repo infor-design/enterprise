@@ -1,0 +1,96 @@
+<h1 id="area-component-implementation-detail-learn-more">Area Component Implementation Detail <a href="#">Learn More</a></h1>
+<h2 id="configuration-options">Configuration Options</h2>
+<ol>
+<li>Area Chart Example <a href="/components/area/example-index">View Example</a><br /></li>
+<li>Make the Tooltip Formatted (Currency) <a href="/components/area/example-formatter">View Example</a><br /></li>
+<li>Make a slice selected by default <a href="/components/area/example-selected">View Example</a></li>
+</ol>
+<h2 id="code-example">Code Example</h2>
+<p>This example shows how to invoke the area chart option in the charts component. In this example we pass a dataset with x and y axis values for three lines.</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">
+<span class="kw">var</span> dataset = [{
+  <span class="dt">data</span>: [{
+      <span class="dt">name</span>: <span class="st">&#39;Jan&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">12</span>
+  }, {
+      <span class="dt">name</span>: <span class="st">&#39;Feb&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">11</span>
+  }, {
+      <span class="dt">name</span>: <span class="st">&#39;Mar&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">14</span>
+  }, {
+      <span class="dt">name</span>: <span class="st">&#39;Apr&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">10</span>
+  }, {
+      <span class="dt">name</span>: <span class="st">&#39;May&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">14</span>
+  }, {
+      <span class="dt">name</span>: <span class="st">&#39;Jun&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">8</span>
+  }],
+  <span class="dt">name</span>: <span class="st">&#39;Component A&#39;</span>
+}, {
+  <span class="dt">data</span>: [{
+      <span class="dt">name</span>: <span class="st">&#39;Jan&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">22</span>
+  }, {
+      <span class="dt">name</span>: <span class="st">&#39;Feb&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">21</span>
+  }, {
+      <span class="dt">name</span>: <span class="st">&#39;Mar&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">24</span>
+  }, {
+      <span class="dt">name</span>: <span class="st">&#39;Apr&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">20</span>
+  }, {
+      <span class="dt">name</span>: <span class="st">&#39;May&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">24</span>
+  }, {
+      <span class="dt">name</span>: <span class="st">&#39;Jun&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">28</span>
+  }],
+  <span class="dt">name</span>: <span class="st">&#39;Component B&#39;</span>
+}, {
+  <span class="dt">data</span>: [{
+      <span class="dt">name</span>: <span class="st">&#39;Jan&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">32</span>
+  }, {
+      <span class="dt">name</span>: <span class="st">&#39;Feb&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">31</span>
+  }, {
+      <span class="dt">name</span>: <span class="st">&#39;Mar&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">34</span>
+  }, {
+      <span class="dt">name</span>: <span class="st">&#39;Apr&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">30</span>
+  }, {
+      <span class="dt">name</span>: <span class="st">&#39;May&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">34</span>
+  }, {
+      <span class="dt">name</span>: <span class="st">&#39;Jun&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">38</span>
+  }],
+  <span class="dt">name</span>: <span class="st">&#39;Component C&#39;</span>
+}];
+
+<span class="fu">$</span>(<span class="st">&#39;#area-example&#39;</span>).<span class="fu">chart</span>({<span class="dt">type</span>: <span class="st">&#39;area&#39;</span>, <span class="dt">dataset</span>: dataset});
+</code></pre>
+<h2 id="accessibility">Accessibility</h2>
+<ul>
+<li>The contrast and actual colors can be a concern for visibility impaired and color blind people. However, you can customize the color by passing it next to the name fx..</li>
+</ul>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">
+color: <span class="st">&#39;#000000&#39;</span>
+name: <span class="st">&#39;Component C&#39;</span>
+</code></pre>
+<h2 id="code-tips">Code Tips</h2>
+<p>The about component example by default adds the current years copyright, and useful browser info. This should be useful info for support situations. Don't make your contents of the modal too overloaded with info. Also About dialogs do not need to be overly prominent in your application (for example as a splash screen). The typical placement is in a top level actions button menu item.</p>
+<h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
+<ul>
+<li><strong>Tab:</strong> You can tab into the chart area and through the legend values as each has a focus state.<br /></li>
+<li><strong>Enter/Space:</strong> Will select the area the corresponds with the focus'd legend item.</li>
+</ul>
+<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
+<ul>
+<li>The area chart was added after version 3.X</li>
+</ul>
