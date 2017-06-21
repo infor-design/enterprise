@@ -205,20 +205,22 @@ var express = require('express'),
   /**
    * Filters an array of paths and detects if they actually exist
    * @private
-   * @param {String[]} paths -
+   * @param {Object[]} pathDefs -
    * @param {String} link -
    */
-  function filterUnusablePaths(paths, excludes) {
+  function filterUnusablePaths(pathDefs, excludes) {
     var truePaths = [];
+    if (excludes === undefined) {
+      excludes = [];
+    }
 
-    paths.forEach(function pathIterator(val) {
-      if (excludes === undefined) {
-        excludes = [];
-      }
+    pathDefs.forEach(function pathIterator(pathDef) {
+      console.log('Checking path: "' + pathDef.link + '"');
 
       var match = false;
       excludes.forEach(function(exclude) {
-        if (val.match(exclude)) {
+
+        if (pathDef.link.match(exclude)) {
           match = true;
           return;
         }
@@ -228,7 +230,7 @@ var express = require('express'),
         return;
       }
 
-      truePaths.push(val);
+      truePaths.push(pathDef);
     });
 
     return truePaths;
@@ -236,12 +238,28 @@ var express = require('express'),
 
   /**
    * @private
-   * @param {String} type -
-   * @param {String} link -
+   * @param {String} text
    */
-  function pathMapper(link) {
-    var href = link.replace(/\\/g, '/'),
+  function formatPath(text) {
+    return text.replace(/-/g, ' ').replace(/\.html/, '');
+  }
+
+  /**
+   * @private
+   * @param {Object} pathDef
+   * @param {String} pathDef.link
+   * @param {String} pathDef.type
+   * @param {String} pathDef.labelColor
+   */
+  function pathMapper(pathDef) {
+    var href = pathDef.link.replace(/\\/g, '/'),
       icon;
+
+    console.log('HREF: "' + href + '"');
+
+    if (href.indexOf(BASE_PATH) !== 0) {
+      href = BASE_PATH + href;
+    }
 
     if (is('directory', href.replace(BASE_PATH, ''))) {
       icon = '#icon-folder';
@@ -251,11 +269,25 @@ var express = require('express'),
       }
     }
 
-    return {
-      icon: icon,
+    var mappedPath = {
       href: href,
-      text: link
+      text: formatPath(pathDef.link)
     };
+
+    if (pathDef.text) {
+      mappedPath.text = pathDef.text;
+    }
+
+    if (icon) {
+      mappedPath.icon = icon;
+    }
+
+    if (pathDef.type && pathDef.type.length) {
+      mappedPath.pageType = pathDef.type;
+      mappedPath.labelColor = pathDef.labelColor || 'graphite07';
+    }
+
+    return mappedPath;
   }
 
   /**
@@ -270,39 +302,90 @@ var express = require('express'),
   ];
 
   /**
+   * @private
+   * @param {String} type
+   */
+  function getFolderContents(type, dir, folderName) {
+    var paths = [];
+    try {
+      paths = fs.readdirSync(dir);
+    } catch(e) {
+      // Handle 'No Directory' errors
+      if (e.code === 'ENOENT') {
+        console.log('No '+ folderName +' Folder found for "' + type + '');
+        paths = [];
+      } else {
+        throw e;
+      }
+    }
+    return paths;
+  }
+
+  /**
    * Returns a listing of both "examples" and "tests" for a particular type of component.
    * @param {String} type - the component/layout/pattern type
    * @param {Object} req
    * @param {Object} res
    * @param {function} next
+   * @param {Array} [extraExcludes]
    * @returns {?}
    */
-  function getFullListing(type, req, res, next) {
+  function getFullListing(type, req, res, next, extraExcludes) {
     var allPaths = [],
       componentPaths,
-      testPaths,
-      extraExcludes = [
-        // TODO: type.html, _type.scss, type.js, type.md
-      ];
+      testPaths;
 
-    componentPaths = fs.readdirSync('./components/' + type + '/', function(err, paths) {
-      if (err) {
-        console.log(err);
-        res.render(err);
-        return next();
-      }
+    if (!extraExcludes) {
+      extraExcludes = [];
+    }
+
+    // Add Component-specific file name filters
+    extraExcludes = extraExcludes.concat([
+      new RegExp(type + '\\.html'),
+      new RegExp('_' + type + '\\.scss'),
+      new RegExp(type + '\\.js'),
+      new RegExp(type + '\\.md')
+    ]);
+
+    function componentTextFormatter(path) {
+      path = path.replace('test-', '').replace('example-', '');
+      return formatPath(path);
+    }
+
+    // Search the "/components/<type>" folder for all tests/examples located here
+    componentPaths = getFolderContents(type, 'components/' + type + '/', 'Components');
+    componentPaths.forEach(function(path, i) {
+      var isTest = path.substr(0, 4) === 'test-';
+
+      componentPaths[i] = {
+        text: componentTextFormatter(path),
+        link: 'components/' + type + '/' + path,
+        type: isTest ? 'test' : 'example',
+        labelColor: isTest ? 'azure07' : 'ruby07'
+      };
     });
-    componentPaths = filterUnusablePaths(componentPaths, GENERAL_LISTING_EXCLUDES.concat(extraExcludes))
+    componentPaths = filterUnusablePaths(componentPaths, GENERAL_LISTING_EXCLUDES.concat(extraExcludes).concat([
+      /[^-.]index\.html/,
+    ]));
 
     // TODO: Handle the test paths the same way as before.
-    testPaths = ;
+    // Search the legacy "tests" folder for any relevant tests
+    testPaths = getFolderContents(type, 'views/tests/' + type + '/', 'Tests');
+    testPaths.forEach(function(path, i) {
+      testPaths[i] = {
+        text: formatPath(path),
+        link: 'tests/' + type + '/' + path,
+        type: 'test',
+        labelColor: 'azure07'
+      };
+    });
+    testPaths = filterUnusablePaths(testPaths, GENERAL_LISTING_EXCLUDES.concat(extraExcludes));
 
-    // TODO: Add metadata to paths that label them either "tests" or "examples"
-
-    // TODO: Combine the arrays
+    // Combine the arrays and filter out the junk
+    allPaths = allPaths.concat(componentPaths).concat(testPaths);
 
     var opts = extend({}, res.opts, {
-      subtitle: 'All Examples &amp; Tests for ' + type,
+      subtitle: 'All Examples & Tests for ' + type,
       paths: allPaths.map(pathMapper)
     });
 
@@ -310,10 +393,19 @@ var express = require('express'),
     next();
   }
 
+  /**
+   * Returns a directory listing as page content with working links
+   * @param {String} directory
+   * @param {Object} req
+   * @param {Object} res
+   * @param {function} next
+   * @param {Array} [extraExcludes] - List of files names to exclude
+   */
+  function getDirectoryListing(directory, req, res, next, extraExcludes) {
+    if (!extraExcludes) {
+      extraExcludes = [];
+    }
 
-  // Returns a directory listing as page content with working links
-  // @param Array excludes - List of files names to exclude
-  function getDirectoryListing(directory, req, res, next, excludes) {
     fs.readdir('./views/' + directory, function(err, paths) {
       if (err) {
         console.log(err);
@@ -321,59 +413,19 @@ var express = require('express'),
         return next();
       }
 
-      var realPaths = [];
-      // TODO: var dirs = [];  Separate paths from directories and place an icon next to them
-
       // Strip out paths that aren't going to ever work
-      paths.forEach(function pathIterator(val) {
-        if (excludes === undefined) {
-          excludes = [];
-        }
-        excludes.push(/^(layout)(\s)?(\.html)?/gm); // matches any filename that begins with "layout" (fx: "layout***.html")
-        excludes.push(/footer\.html/);
-        excludes.push(/_header\.html/);
-        excludes.push(/_layout\.html/);
-        excludes.push(/\.DS_Store/);
-
-        var match = false;
-
-        excludes.forEach(function(exclude) {
-          if (val.match(exclude)) {
-            match = true;
-            return;
-          }
-        });
-
-        if (match) {
-          return;
-        }
-
-        realPaths.push(val);
+      paths.forEach(function pathIterator(path, i) {
+        paths[i] = {
+          text: path,
+          link: '/' + directory + '/' + path
+        };
       });
 
-      // Map with links, add to
-      function pathMapper(link) {
-        var href = path.join(basepath, directory, link).replace(/\\/g, '/'),
-          icon;
-
-        if (is('directory', href.replace(basepath,''))) {
-          icon = '#icon-folder';
-
-          if (href.charAt(href.length - 1) !== '/') {
-            href = href + '/';
-          }
-        }
-
-        return {
-          icon: icon,
-          href: href,
-          text: link
-        };
-      }
+      paths = filterUnusablePaths(paths, GENERAL_LISTING_EXCLUDES.concat(extraExcludes));
 
       var opts = extend({}, res.opts, {
         subtitle: 'Listing for ' + directory,
-        paths: realPaths.map(pathMapper)
+        paths: paths.map(pathMapper)
       });
 
       res.render('listing', opts);
@@ -540,7 +592,7 @@ var express = require('express'),
     }
 
     if (req.params.example === 'list') {
-      return getDirectoryListing();
+      return getFullListing(componentName, req, res, next);
     }
 
     res.render(componentName + '/' +  req.params.example, opts);
