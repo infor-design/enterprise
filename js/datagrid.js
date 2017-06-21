@@ -5771,13 +5771,19 @@ $.fn.datagrid = function(options) {
 	showNonVisibleCellErrors: function () {
       var messages, tableerrors, icon;
 	  
+	  // Create empty toolbar
+	  if (!this.toolbar) {
+		settings.toolbar = { title: '' };
+		this.appendToolbar();
+	  }
+	  
 	  if (this.toolbar.parent().find('.tableerrors').length === 1) {
         tableerrors = this.element.parent().find('.tableerrors');
       }
 	   
 	  if (!this.nonVisibleCellErrors.length) {
 		// clear the displayed error
-		if (tableerrors.length) {
+		if (tableerrors && tableerrors.length) {
 		  icon = tableerrors.find('.icon-error');
           var tooltip = icon.data('tooltip');
           if (tooltip) {
