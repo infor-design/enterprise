@@ -594,6 +594,11 @@ var express = require('express'),
     if (req.params.example === 'list') {
       return getFullListing(componentName, req, res, next);
     }
+      
+    if (req.params.component === 'applicationmenu' && (req.params.example.indexOf('example-') > -1 || req.params.example.indexOf('test-') > -1)) {
+      console.log(req.params.component, req.params.example);
+      opts.layout = null;
+    }
 
     res.render(componentName + '/' +  req.params.example, opts);
     next();

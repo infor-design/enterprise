@@ -467,8 +467,6 @@
           self.inputWrapper.triggerHandler('expanded');
         }
 
-
-
         // Places the input wrapper into the toolbar on smaller breakpoints
         if (!notFullWidth) {
           this.elemBeforeWrapper = this.inputWrapper.prev();
@@ -485,13 +483,28 @@
             d = TOOLBARSEARCHFIELD_EXPAND_SIZE - buttonsetWidth;
           }
 
+          var buttonsetElemWidth = buttonsetWidth + TOOLBARSEARCHFIELD_EXPAND_SIZE;
           containerSizeSetters = {
-            buttonset: buttonsetWidth + TOOLBARSEARCHFIELD_EXPAND_SIZE
+            buttonset: buttonsetElemWidth
           };
 
           if (toolbarSettings && toolbarSettings.favorButtonset === true && this.titleElem) {
-            var titleElemWidth = parseInt(window.getComputedStyle(this.titleElem).width);
-            containerSizeSetters.title = (titleElemWidth - d);
+            var toolbarStyle = window.getComputedStyle(this.toolbarParent[0]),
+              titleStyle = window.getComputedStyle(this.titleElem),
+              toolbarElemWidth = parseInt(toolbarStyle.width),
+              toolbarPadding = parseInt(toolbarStyle.paddingLeft) + parseInt(toolbarStyle.paddingRight),
+              titleElemWidth = parseInt(titleStyle.width),
+              moreElem = this.toolbarParent.children('more'),
+              moreStyle, moreElemWidth = 0;
+
+            if (moreElem.length) {
+              moreStyle = window.getComputedStyle(moreElem[0]);
+              moreElemWidth = moreStyle.width;
+            }
+
+            if (toolbarElemWidth < (toolbarPadding + titleElemWidth + buttonsetElemWidth + moreElemWidth)) {
+              containerSizeSetters.title = (titleElemWidth - d);
+            }
           }
 
           dontRecalculateButtons = true;

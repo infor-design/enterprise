@@ -1,0 +1,79 @@
+{{> includes/head}}
+
+<body class="no-scroll">
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+  {{> includes/svg-inline-refs}}
+
+  {{> includes/applicationmenu}}
+
+  <div id="maincontent" class="page-container scrollable" role="main">
+
+      <header class="header is-personalizable">
+        <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+
+        <div class="toolbar">
+          <div class="title">
+            <button class="btn-icon application-menu-trigger" type="button">
+              <span class="audible">Show navigation</span>
+              <span class="icon app-header">
+                <span class="one"></span>
+                <span class="two"></span>
+                <span class="three"></span>
+              </span>
+            </button>
+
+            {{> includes/page-title}}
+          </div>
+
+          <div class="buttonset">
+            <button class="btn-icon header-search" type="button">
+              <span class="audible">Search</span>
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-search"></use>
+              </svg>
+            </button>
+          </div>
+
+          {{> includes/header-actionbutton}}
+        </div>
+
+      </header>
+
+    <div class="row">
+      <div class="twelve columns">
+
+        <br>
+        <br>
+        <h2>Notes About How This Test Works</h2>
+        <p>
+          There are three items in the Navigation Menu on this test:
+          <br>
+          <br>
+          1. <b>Home</b>: Working link with no accordion panes beneath.  Clicking it anywhere should simply open the link.
+          <br>
+          2. <b>Articles</b>: Working link with accordion panes beneath.  Clicking the "link" area should take activate the link.  Clicking the expander (+/-) should expand/collapse the accordion pane.
+          <br>
+          3. <b>Components</b>: Inactive link with accordion panes beneath.  Clicking anywhere on this header will expand/collapse the accordion pane.
+          <br>
+        </p>
+
+        <p>
+          The user will know that a link "worked" if an alert dialog is triggered when the link is clicked.
+        </p>
+
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      $('#application-menu').on('selected.tests', function(e, target) {
+        if (!e.defaultPrevented) {
+          alert('Link "'+ $(target).text().trim() +'" was clicked!');
+        }
+      });
+    </script>
+
+  </div>
+
+  {{> includes/footer}}
+</body>
+</html>
