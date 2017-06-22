@@ -1,8 +1,6 @@
 #!/usr/bin/env node
 /* jshint node:true */
 
-console.log();
-
 const glob = require('glob'),
   fs = require('fs'),
   spawn = require('child_process').execFile,

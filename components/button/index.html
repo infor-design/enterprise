@@ -36,24 +36,24 @@
 <li>btn-icon -&gt; Icon only button</li>
 </ul>
 <p>All buttons are assumed to be icon + text. To add the icon you add the svg icon element and use a span to hold the button text.</p>
-<pre class="sourceCode html"><code class="sourceCode html">
-  <span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;btn-primary&quot;</span><span class="ot"> type=</span><span class="st">&quot;button&quot;</span><span class="kw">&gt;</span>Action<span class="kw">&lt;/button&gt;</span>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">
+  &lt;button <span class="kw">class</span>=<span class="st">&quot;btn-primary&quot;</span> type=<span class="st">&quot;button&quot;</span>&gt;Action&lt;<span class="ot">/button&gt;</span>
 
-  <span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;btn-secondary&quot;</span><span class="ot"> type=</span><span class="st">&quot;button&quot;</span><span class="kw">&gt;</span>Action<span class="kw">&lt;/button&gt;</span>
+<span class="ot">  &lt;button class=&quot;btn-secondary&quot; type=&quot;button&quot;&gt;Action&lt;/button</span>&gt;
 
-  <span class="kw">&lt;button</span><span class="ot"> type=</span><span class="st">&quot;button&quot;</span><span class="ot"> class=</span><span class="st">&quot;btn-tertiary&quot;</span><span class="kw">&gt;</span>
-    <span class="kw">&lt;svg</span><span class="ot"> role=</span><span class="st">&quot;presentation&quot;</span><span class="ot"> aria-hidden=</span><span class="st">&quot;true&quot;</span><span class="ot"> focusable=</span><span class="st">&quot;false&quot;</span><span class="ot"> class=</span><span class="st">&quot;icon&quot;</span><span class="kw">&gt;</span>
-      <span class="kw">&lt;use</span><span class="ot"> xlink:href=</span><span class="st">&quot;#icon-filter&quot;</span><span class="kw">/&gt;</span>
-    <span class="kw">&lt;/svg&gt;</span>
-    <span class="kw">&lt;span&gt;</span>Action<span class="kw">&lt;/span&gt;</span>
-  <span class="kw">&lt;/button&gt;</span>
+  &lt;button type=<span class="st">&quot;button&quot;</span> <span class="kw">class</span>=<span class="st">&quot;btn-tertiary&quot;</span>&gt;
+    &lt;svg role=<span class="st">&quot;presentation&quot;</span> aria-hidden=<span class="st">&quot;true&quot;</span> focusable=<span class="st">&quot;false&quot;</span> <span class="kw">class</span>=<span class="st">&quot;icon&quot;</span>&gt;
+      &lt;use xlink:href=<span class="st">&quot;#icon-filter&quot;</span><span class="ot">/&gt;</span>
+<span class="ot">    &lt;/svg</span>&gt;
+    &lt;span&gt;Action&lt;<span class="ot">/span&gt;</span>
+<span class="ot">  &lt;/button</span>&gt;
 
-  <span class="kw">&lt;button</span><span class="ot"> type=</span><span class="st">&quot;button&quot;</span><span class="ot"> class=</span><span class="st">&quot;btn-icon&quot;</span><span class="kw">&gt;</span>
-    <span class="kw">&lt;svg</span><span class="ot"> role=</span><span class="st">&quot;presentation&quot;</span><span class="ot"> aria-hidden=</span><span class="st">&quot;true&quot;</span><span class="ot"> focusable=</span><span class="st">&quot;false&quot;</span><span class="ot"> class=</span><span class="st">&quot;icon&quot;</span><span class="kw">&gt;</span>
-      <span class="kw">&lt;use</span><span class="ot"> xlink:href=</span><span class="st">&quot;#icon-calendar&quot;</span><span class="kw">/&gt;</span>
-    <span class="kw">&lt;/svg&gt;</span>
-    <span class="kw">&lt;span&gt;</span>Date<span class="kw">&lt;/span&gt;</span>
-  <span class="kw">&lt;/button&gt;</span>
+  &lt;button type=<span class="st">&quot;button&quot;</span> <span class="kw">class</span>=<span class="st">&quot;btn-icon&quot;</span>&gt;
+    &lt;svg role=<span class="st">&quot;presentation&quot;</span> aria-hidden=<span class="st">&quot;true&quot;</span> focusable=<span class="st">&quot;false&quot;</span> <span class="kw">class</span>=<span class="st">&quot;icon&quot;</span>&gt;
+      &lt;use xlink:href=<span class="st">&quot;#icon-calendar&quot;</span><span class="ot">/&gt;</span>
+<span class="ot">    &lt;/svg</span>&gt;
+    &lt;span&gt;Date&lt;<span class="ot">/span&gt;</span>
+<span class="ot">  &lt;/button</span>&gt;
 </code></pre>
 <h2 id="implementation-tips">Implementation Tips</h2>
 <ul>

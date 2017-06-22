@@ -110,3 +110,81 @@ p strong {
     content: ':';
   }
 }
+
+// Pandoc code highlight styles - customized
+// https://github.com/jgm/highlighting-kate/blob/master/css/hk-pyg.css
+//==================================================//
+
+// scss-lint:disable SelectorFormat, ColorVariable
+table.sourceCode,
+tr.sourceCode,
+td.lineNumbers,
+td.sourceCode,
+table.sourceCode pre {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  vertical-align: baseline;
+}
+
+td.lineNumbers {
+  border-right: 1px solid #aaaaaa;
+  color: #aaaaaa;
+  padding-left: 5px;
+  padding-right: 5px;
+  text-align: right;
+}
+
+td.sourceCode {
+  padding-left: 5px;
+}
+
+code.sourceCode span.kw {
+  color: #006699;
+}
+
+code.sourceCode span.dt {
+  color: #902000;
+}
+
+code.sourceCode span.dv {
+  color: #40a070;
+}
+
+code.sourceCode span.bn {
+  color: #40a070;
+}
+
+code.sourceCode span.fl {
+  color: #40a070;
+}
+
+code.sourceCode span.ch {
+  color: #4070a0;
+}
+
+code.sourceCode span.st {
+  color: #d44950;
+}
+
+code.sourceCode span.co {
+  color: #60a0b0;
+  font-style: italic;
+}
+
+code.sourceCode span.ot {
+  color: #4f9fcf;
+}
+
+code.sourceCode span.al {
+  color: #ff0000;
+}
+
+code.sourceCode span.fu {
+  color: #06287e;
+}
+
+code.sourceCode span.er {
+  color: #ff0000;
+}
+// scss-lint:enable SelectorFormat, ColorVariable
