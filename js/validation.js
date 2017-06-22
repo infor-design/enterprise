@@ -454,7 +454,13 @@
 
     addError: function(field, message, inline, showTooltip) {
       var loc = this.getField(field).addClass('error'),
-         appendedMsg = (loc.data('data-errormessage') ? loc.data('data-errormessage') + '<br>' : '') + '\u2022 ' + message;
+         dataMsg = loc.data('data-errormessage'),
+         appendedMsg = message;
+
+      if (dataMsg) {
+        appendedMsg = (/^\u2022/.test(dataMsg)) ? '' : '\u2022 ';
+        appendedMsg += dataMsg + '<br>\u2022 ' + message;
+      }
 
       loc.data('data-errormessage', appendedMsg);
 

@@ -1464,7 +1464,7 @@ $.fn.datagrid = function(options) {
       this.originalColumns = self.columnsFromString(JSON.stringify(this.settings.columns));
       this.removeToolbarOnDestroy = false;
       this.nonVisibleCellErrors = [];
-	  
+
       this.restoreColumns();
       this.restoreUserSettings();
       this.appendToolbar();
@@ -5670,7 +5670,8 @@ $.fn.datagrid = function(options) {
 
     commitCellEdit: function(input) {
       var newValue, cellNode,
-        isEditor = input.is('.editor');
+        isEditor = input.is('.editor'),
+        isUseActiveRow = !(input.is('.timepicker, .datepicker, .lookup, .spinbox'));
 
       if (!this.editor) {
         return;
@@ -5695,10 +5696,10 @@ $.fn.datagrid = function(options) {
       this.editor = null;
 
       var rowIndex;
-      if (this.settings.source != null) {
-        rowIndex= this.activeCell.row;
+      if (this.settings.source !== null && isUseActiveRow) {
+        rowIndex = this.activeCell.row;
       } else {
-        rowIndex= this.dataRowIndex(cellNode.parent());
+        rowIndex = this.dataRowIndex(cellNode.parent());
       }
 
       //Save the Cell Edit back to the data set
@@ -5728,7 +5729,12 @@ $.fn.datagrid = function(options) {
           ruleValid = rule.check(cellValue, $('<input>').val(cellValue), gridInfo);
 
         if (!ruleValid) {
-          messages = (messages ? messages + '<br>' : '') + '\u2022 ' + rule.message;
+          if (messages) {
+            messages = ((/^\u2022/.test(messages)) ? '' : '\u2022 ') + messages;
+            messages += '<br>' + '\u2022 ' + rule.message;
+          } else {
+            messages = rule.message;
+          }
           isValid = false;
         }
       }
@@ -5747,7 +5753,7 @@ $.fn.datagrid = function(options) {
 
 	  // clear the table nonVisibleCellErrors for the row and cell
 	  this.clearNonVisibleCellErrors(row, cell);
-	  
+
       if (!node.length) {
 		// Store the nonVisibleCellError
 	    this.nonVisibleCellErrors.push({ row: row, cell: cell, errorMessage: errorMessage });
@@ -5767,20 +5773,20 @@ $.fn.datagrid = function(options) {
       }
 
     },
-	
+
 	showNonVisibleCellErrors: function () {
       var messages, tableerrors, icon;
-	  
+
 	  // Create empty toolbar
 	  if (!this.toolbar) {
 		settings.toolbar = { title: '' };
 		this.appendToolbar();
 	  }
-	  
+
 	  if (this.toolbar.parent().find('.tableerrors').length === 1) {
         tableerrors = this.element.parent().find('.tableerrors');
       }
-	   
+
 	  if (!this.nonVisibleCellErrors.length) {
 		// clear the displayed error
 		if (tableerrors && tableerrors.length) {
@@ -5793,17 +5799,17 @@ $.fn.datagrid = function(options) {
 		}
 		return;
 	  }
-	  
+
 	  for (var i = 0; i < this.nonVisibleCellErrors.length; i++) {
 		   messages = (messages ? messages + '<br>' : '') + this.nonVisibleCellErrors[i].errorMessage;
 	  }
-	  
+
 	  if (this.element.parent().find('.tableerrors').length === 0) {
         tableerrors = $('<div class="tableerrors"></div>');
 	  }
 	  icon = tableerrors.find('.icon-error');
 	  if (!icon.length) {
-		icon = $($.createIcon({ classes: ['icon-error'], icon: 'error' }));  
+		icon = $($.createIcon({ classes: ['icon-error'], icon: 'error' }));
 		tableerrors.append(icon);
 	  }
 	  if (this.element.hasClass('has-toolbar')) {
@@ -5812,9 +5818,9 @@ $.fn.datagrid = function(options) {
 	  }
       icon.tooltip({placement: 'bottom', isErrorColor: true, content: messages});
       icon.data('tooltip').show();
-	 
+
     },
-	
+
     clearCellError: function (row, cell) {
 	  this.clearNonVisibleCellErrors(row, cell);
       var node = this.cellNode(row, cell);
@@ -5827,22 +5833,22 @@ $.fn.datagrid = function(options) {
     },
 
 	clearNonVisibleCellErrors: function (row, cell) {
-      
+
 	  if (!this.nonVisibleCellErrors.length) {
         return;
 	  }
-	  
+
 	  this.nonVisibleCellErrors = $.grep(this.nonVisibleCellErrors, function (error) {
         if (!(error.row === row && error.cell === cell)) {
           return error;
         }
       });
-	  
+
 	  if (!this.nonVisibleCellErrors.length) {
-		this.showNonVisibleCellErrors();  
+		this.showNonVisibleCellErrors();
 	  }
     },
-	
+
     clearRowError: function (row) {
       var rowNode = this.dataRowNode(row);
 
@@ -6024,7 +6030,7 @@ $.fn.datagrid = function(options) {
 	    //Validate the cell
         this.validateCell(row, cell);
 	  }
-	  
+
       if (coercedVal !== oldVal && !fromApiCall) {
         var args = {row: row, cell: cell, target: cellNode, value: coercedVal, oldValue: oldVal, column: col};
         args.rowData = isTreeGrid && this.settings.treeDepth[row] ?
