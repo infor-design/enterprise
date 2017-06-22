@@ -27,10 +27,18 @@
         },
         settings = $.extend({}, defaults, options);
 
+
     /**
-     * @constructor
-     * @param {Object} element
-     */
+    * The Arrange Component allows touch and drag support to sort UI items.
+    *
+    * @class Arrange
+    * @param {String} handle  &nbsp;-&nbsp; The class name of the handle element to connect
+    * @param {String} itemsSelector  &nbsp;-&nbsp; The selector to match all the sortable elements.
+    * @param {String} connectWith  &nbsp;-&nbsp; The optional element to connect with when using two lists
+    * @param {String} placeholder  &nbsp;-&nbsp; The html for the element that appears while dragging
+    * @param {String} placeholderCssClass  &nbsp;-&nbsp; The class to add to the ghost element that is being dragged.
+    *
+    */
     function Arrange(element) {
       this.element = $(element);
       Soho.logTimeStart(pluginName);
@@ -41,14 +49,72 @@
     // Arrange Methods
     Arrange.prototype = {
 
+      // example from: https://github.com/farhadi/html5arrangeable/blob/master/jquery.arrangeable.js
       init: function() {
         this.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         this.isIe11 = (Soho.env.browser.name === 'ie' && Soho.env.browser.version === '11');
         this.handleEvents();
       },
 
-      // Handle Events
-      // example from: https://github.com/farhadi/html5arrangeable/blob/master/jquery.arrangeable.js
+      // Get Element By Touch In List
+      getElementByTouchInList: function(list, x, y) {
+        var returns = false;
+        $(list).each(function() {
+          var item = $(this), offset = item.offset();
+          if (!(x <= offset.left || x >= offset.left + item.outerWidth() ||
+                y <= offset.top  || y >= offset.top + item.outerHeight())) {
+            returns = item;
+          }
+        });
+        return returns;
+      },
+
+      // Dragg touch element
+      dragTouchElement: function(e, elm) {
+        var orig = e.originalEvent.changedTouches[0];
+        elm[0].style.top = (orig.pageY - this.offset.y) + 'px';
+        elm[0].style.left = (orig.pageX - this.offset.x) + 'px';
+      },
+
+      unbind: function() {
+        this.items
+          .removeClass('draggable')
+          .removeAttr('draggable')
+          .off('selectstart.arrange '+ this.dragStart +' '+ this.dragEnd +' '+ this.dragWhileDragging);
+
+        $(this.handle, this.items)
+          .removeClass('draggable')
+          .off('mousedown.arrange mouseup.arrange touchstart.arrange touchend.arrange');
+
+        return this;
+      },
+
+      /**
+      * Resync the UI and Settings.
+      */
+      updated: function() {
+        return this
+          .unbind()
+          .init();
+      },
+
+      /**
+      * Teardown and remove any added markup and events.
+      */
+      destroy: function() {
+        this.unbind();
+        $.removeData(this.element[0], pluginName);
+      },
+
+
+      /**
+       *  This component fires the following events.
+       *
+       * @fires Arrange#events
+       * @param {Object} beforearrange  &nbsp;-&nbsp; Fires before moving an element allowing you to access the ui to customize the draggable item
+       * @param {Object} afterearrange  &nbsp;-&nbsp; Fires after moving an element allowing you do any follow up updating.
+       *
+       */
       handleEvents: function() {
         var self = this,
           index, isHandle,
@@ -134,7 +200,7 @@
                 .clone().addClass('is-touch').attr('id', 'arrange-placeholder-touch')
                 .insertBefore(self.dragging);
 
-              self.draggTouchElement(e, self.placeholderTouch);
+              self.dragTouchElement(e, self.placeholderTouch);
             } else {
               var dt = e.originalEvent.dataTransfer;
               dt.effectAllowed = 'move';
@@ -224,59 +290,15 @@
             }
 
             if (self.isTouch) {
-              self.draggTouchElement(e, self.placeholderTouch);
+              self.dragTouchElement(e, self.placeholderTouch);
               return;
             } else {
               return false;
             }
           });//-----------------------------------------------------------------
         });//end each items
-      },
-
-      // Get Element By Touch In List
-      getElementByTouchInList: function(list, x, y) {
-        var returns = false;
-        $(list).each(function() {
-          var item = $(this), offset = item.offset();
-          if (!(x <= offset.left || x >= offset.left + item.outerWidth() ||
-                y <= offset.top  || y >= offset.top + item.outerHeight())) {
-            returns = item;
-          }
-        });
-        return returns;
-      },
-
-      // Dragg touch element
-      draggTouchElement: function(e, elm) {
-        var orig = e.originalEvent.changedTouches[0];
-        elm[0].style.top = (orig.pageY - this.offset.y) + 'px';
-        elm[0].style.left = (orig.pageX - this.offset.x) + 'px';
-      },
-
-      unbind: function() {
-        this.items
-          .removeClass('draggable')
-          .removeAttr('draggable')
-          .off('selectstart.arrange '+ this.dragStart +' '+ this.dragEnd +' '+ this.dragWhileDragging);
-
-        $(this.handle, this.items)
-          .removeClass('draggable')
-          .off('mousedown.arrange mouseup.arrange touchstart.arrange touchend.arrange');
-
-        return this;
-      },
-
-      updated: function() {
-        return this
-          .unbind()
-          .init();
-      },
-
-      // Teardown
-      destroy: function() {
-        this.unbind();
-        $.removeData(this.element[0], pluginName);
       }
+
     };
 
     // Initialize the plugin (Once)

@@ -9,7 +9,7 @@ var express = require('express'),
   fs = require('fs'),
   http = require('http'),
   git = require('git-rev-sync'),
-  basepath = process.env.BASEPATH || '/',
+  BASE_PATH = process.env.BASEPATH || '/',
   getJSONFile = require(path.resolve(__dirname, 'demoapp', 'js', 'getJSONFile')),
   packageJSON = getJSONFile(path.resolve('package.json'));
 
@@ -37,7 +37,7 @@ var express = require('express'),
     layout: 'layout',
     locale: 'en-US',
     title: 'SoHo XI',
-    basepath: basepath,
+    basepath: BASE_PATH,
     version: packageJSON.version,
     commit: git.long(),
   };
@@ -202,9 +202,210 @@ var express = require('express'),
     return path.substr(path.length - 1) === '/';
   }
 
-  // Returns a directory listing as page content with working links
-  // @param Array excludes - List of files names to exclude
-  function getDirectoryListing(directory, req, res, next, excludes) {
+  /**
+   * Filters an array of paths and detects if they actually exist
+   * @private
+   * @param {Object[]} pathDefs -
+   * @param {String} link -
+   */
+  function filterUnusablePaths(pathDefs, excludes) {
+    var truePaths = [];
+    if (excludes === undefined) {
+      excludes = [];
+    }
+
+    pathDefs.forEach(function pathIterator(pathDef) {
+      console.log('Checking path: "' + pathDef.link + '"');
+
+      var match = false;
+      excludes.forEach(function(exclude) {
+
+        if (pathDef.link.match(exclude)) {
+          match = true;
+          return;
+        }
+      });
+
+      if (match) {
+        return;
+      }
+
+      truePaths.push(pathDef);
+    });
+
+    return truePaths;
+  }
+
+  /**
+   * @private
+   * @param {String} text
+   */
+  function formatPath(text) {
+    return text.replace(/-/g, ' ').replace(/\.html/, '');
+  }
+
+  /**
+   * @private
+   * @param {Object} pathDef
+   * @param {String} pathDef.link
+   * @param {String} pathDef.type
+   * @param {String} pathDef.labelColor
+   */
+  function pathMapper(pathDef) {
+    var href = pathDef.link.replace(/\\/g, '/'),
+      icon;
+
+    console.log('HREF: "' + href + '"');
+
+    if (href.indexOf(BASE_PATH) !== 0) {
+      href = BASE_PATH + href;
+    }
+
+    if (is('directory', href.replace(BASE_PATH, ''))) {
+      icon = '#icon-folder';
+
+      if (href.charAt(href.length - 1) !== '/') {
+        href = href + '/';
+      }
+    }
+
+    var mappedPath = {
+      href: href,
+      text: formatPath(pathDef.link)
+    };
+
+    if (pathDef.text) {
+      mappedPath.text = pathDef.text;
+    }
+
+    if (icon) {
+      mappedPath.icon = icon;
+    }
+
+    if (pathDef.type && pathDef.type.length) {
+      mappedPath.pageType = pathDef.type;
+      mappedPath.labelColor = pathDef.labelColor || 'graphite07';
+    }
+
+    return mappedPath;
+  }
+
+  /**
+   * Excluded file names that should never appear in the DemoApp List Pages
+   */
+  const GENERAL_LISTING_EXCLUDES = [
+    /^(layout)(\s)?(\.html)?/gm, // matches any filename that begins with "layout" (fx: "layout***.html")
+    /footer\.html/,
+    /_header\.html/,
+    /_layout\.html/,
+    /\.DS_Store/
+  ];
+
+  /**
+   * @private
+   * @param {String} type
+   */
+  function getFolderContents(type, dir, folderName) {
+    var paths = [];
+    try {
+      paths = fs.readdirSync(dir);
+    } catch(e) {
+      // Handle 'No Directory' errors
+      if (e.code === 'ENOENT') {
+        console.log('No '+ folderName +' Folder found for "' + type + '');
+        paths = [];
+      } else {
+        throw e;
+      }
+    }
+    return paths;
+  }
+
+  /**
+   * Returns a listing of both "examples" and "tests" for a particular type of component.
+   * @param {String} type - the component/layout/pattern type
+   * @param {Object} req
+   * @param {Object} res
+   * @param {function} next
+   * @param {Array} [extraExcludes]
+   * @returns {?}
+   */
+  function getFullListing(type, req, res, next, extraExcludes) {
+    var allPaths = [],
+      componentPaths,
+      testPaths;
+
+    if (!extraExcludes) {
+      extraExcludes = [];
+    }
+
+    // Add Component-specific file name filters
+    extraExcludes = extraExcludes.concat([
+      new RegExp(type + '\\.html'),
+      new RegExp('_' + type + '\\.scss'),
+      new RegExp(type + '\\.js'),
+      new RegExp(type + '\\.md')
+    ]);
+
+    function componentTextFormatter(path) {
+      path = path.replace('test-', '').replace('example-', '');
+      return formatPath(path);
+    }
+
+    // Search the "/components/<type>" folder for all tests/examples located here
+    componentPaths = getFolderContents(type, 'components/' + type + '/', 'Components');
+    componentPaths.forEach(function(path, i) {
+      var isTest = path.substr(0, 4) === 'test-';
+
+      componentPaths[i] = {
+        text: componentTextFormatter(path),
+        link: 'components/' + type + '/' + path,
+        type: isTest ? 'test' : 'example',
+        labelColor: isTest ? 'azure07' : 'ruby07'
+      };
+    });
+    componentPaths = filterUnusablePaths(componentPaths, GENERAL_LISTING_EXCLUDES.concat(extraExcludes).concat([
+      /[^-.]index\.html/,
+    ]));
+
+    // TODO: Handle the test paths the same way as before.
+    // Search the legacy "tests" folder for any relevant tests
+    testPaths = getFolderContents(type, 'views/tests/' + type + '/', 'Tests');
+    testPaths.forEach(function(path, i) {
+      testPaths[i] = {
+        text: formatPath(path),
+        link: 'tests/' + type + '/' + path,
+        type: 'test',
+        labelColor: 'azure07'
+      };
+    });
+    testPaths = filterUnusablePaths(testPaths, GENERAL_LISTING_EXCLUDES.concat(extraExcludes));
+
+    // Combine the arrays and filter out the junk
+    allPaths = allPaths.concat(componentPaths).concat(testPaths);
+
+    var opts = extend({}, res.opts, {
+      subtitle: 'All Examples & Tests for ' + type,
+      paths: allPaths.map(pathMapper)
+    });
+
+    res.render('listing', opts);
+    next();
+  }
+
+  /**
+   * Returns a directory listing as page content with working links
+   * @param {String} directory
+   * @param {Object} req
+   * @param {Object} res
+   * @param {function} next
+   * @param {Array} [extraExcludes] - List of files names to exclude
+   */
+  function getDirectoryListing(directory, req, res, next, extraExcludes) {
+    if (!extraExcludes) {
+      extraExcludes = [];
+    }
+
     fs.readdir('./views/' + directory, function(err, paths) {
       if (err) {
         console.log(err);
@@ -212,59 +413,19 @@ var express = require('express'),
         return next();
       }
 
-      var realPaths = [];
-      // TODO: var dirs = [];  Separate paths from directories and place an icon next to them
-
       // Strip out paths that aren't going to ever work
-      paths.forEach(function pathIterator(val) {
-        if (excludes === undefined) {
-          excludes = [];
-        }
-        excludes.push(/^(layout)(\s)?(\.html)?/gm); // matches any filename that begins with "layout" (fx: "layout***.html")
-        excludes.push(/footer\.html/);
-        excludes.push(/_header\.html/);
-        excludes.push(/_layout\.html/);
-        excludes.push(/\.DS_Store/);
-
-        var match = false;
-
-        excludes.forEach(function(exclude) {
-          if (val.match(exclude)) {
-            match = true;
-            return;
-          }
-        });
-
-        if (match) {
-          return;
-        }
-
-        realPaths.push(val);
+      paths.forEach(function pathIterator(path, i) {
+        paths[i] = {
+          text: path,
+          link: '/' + directory + '/' + path
+        };
       });
 
-      // Map with links, add to
-      function pathMapper(link) {
-        var href = path.join(basepath, directory, link).replace(/\\/g, '/'),
-          icon;
-
-        if (is('directory', href.replace(basepath,''))) {
-          icon = '#icon-folder';
-
-          if (href.charAt(href.length - 1) !== '/') {
-            href = href + '/';
-          }
-        }
-
-        return {
-          icon: icon,
-          href: href,
-          text: link
-        };
-      }
+      paths = filterUnusablePaths(paths, GENERAL_LISTING_EXCLUDES.concat(extraExcludes));
 
       var opts = extend({}, res.opts, {
         subtitle: 'Listing for ' + directory,
-        paths: realPaths.map(pathMapper)
+        paths: paths.map(pathMapper)
       });
 
       res.render('listing', opts);
@@ -277,7 +438,7 @@ var express = require('express'),
   // ======================================
 
   router.get('/', function(req, res, next) {
-    res.redirect('/components/');
+    res.redirect('/kitchen-sink');
     next();
   });
 
@@ -430,6 +591,10 @@ var express = require('express'),
       return docsRoute(req, res, next);
     }
 
+    if (req.params.example === 'list') {
+      return getFullListing(componentName, req, res, next);
+    }
+      
     if (req.params.component === 'applicationmenu' && (req.params.example.indexOf('example-') > -1 || req.params.example.indexOf('test-') > -1)) {
       console.log(req.params.component, req.params.example);
       opts.layout = null;
@@ -590,12 +755,14 @@ var express = require('express'),
     if (example && component) {
       var path = 'components/' + component + '/example-' + example.replace('.html', '')  + '.html';
       if (fs.existsSync(path)) {
-        res.redirect('/' + path);
+        res.redirect(path);
+        next();
       }
 
       path = 'components/' + component + '/test-' + example.replace('.html', '') + '.html';
       if (fs.existsSync(path)) {
-        res.redirect('/' + path);
+        res.redirect(path);
+        next();
       }
     }
 

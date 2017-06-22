@@ -24,14 +24,15 @@ module.exports = {
         {expand: true, flatten: true, src: ['js/cultures/*.*'], dest: 'public/js/cultures/', filter: 'isFile'},
         {expand: true, flatten: true, src: ['js/cultures/*.*'], dest: 'dist/js/cultures/', filter: 'isFile'},
         {expand: true, flatten: true, src: ['views/controls/svg*.html'], dest: 'dist/svg/', filter: 'isFile'},
-        {expand: true, flatten: true, src: ['views/controls/svg*.html'], dest: 'public/svg/', filter: 'isFile'}
+        {expand: true, flatten: true, src: ['views/controls/svg*.html'], dest: 'public/svg/', filter: 'isFile'},
+        {expand: true, flatten: true, src: ['demoapp/js/*site.js'], dest: 'public/js/', filter: 'isFile'}
       ]
     },
 
     amd: {
       files: [
         {expand: true, flatten: true, src: ['js/*.*'], dest: 'temp/amd/', filter: 'isFile'},
-        {expand: true, flatten: true, src: ['components/**/*.js'], dest: 'temp/amd/', filter: 'isFile'},
+        {expand: true, flatten: true, src: ['components/**/*.js'], dest: 'temp/amd/', filter: 'isFile'}
       ]
     },
 

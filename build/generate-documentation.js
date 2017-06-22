@@ -1,8 +1,6 @@
 #!/usr/bin/env node
 /* jshint node:true */
 
-console.log();
-
 const glob = require('glob'),
   fs = require('fs'),
   spawn = require('child_process').execFile,
@@ -38,6 +36,8 @@ glob('components/*/', function(err, components) {
         var cat = spawn('documentation', ['build', componentPath + componentName + '.js' , '-f' , 'md']);
         cat.stdout.on('data', function(apiData) {
 
+          console.log(apiData);
+
           //Some Scrubbing that document.js cant handle
           apiData = apiData.substr(0, apiData.indexOf('### Table')) + apiData.substr(apiData.indexOf('**Parameters**'));
           apiData = apiData.replace(/###/g, '####');
@@ -48,10 +48,13 @@ glob('components/*/', function(err, components) {
           apiData = apiData.replace('#### handleEvents', '### Events');
           apiData = apiData.replace('### handleEvents', '### Events');
 
-          // More Fixes
+          // More Fixes z
           apiData = apiData.replace('-   `element`', '');
           apiData = apiData.replace('**Parameters**', '');
           runPandoc(mdData.replace('{{api-details}}', '\r\n'+apiData+'\r\n'), componentPath);
+        });
+        cat.stderr.on('data', function(apiData) {
+          console.log(apiData);
         });
 
         return;

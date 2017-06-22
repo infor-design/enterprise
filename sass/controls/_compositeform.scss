@@ -29,6 +29,10 @@
     }
   }
 
+  > .scrollable-flex-header {
+    height: auto;
+  }
+
   .tab-panel-container {
     background-color: $composite-tabs-panel-bg-color;
   }
