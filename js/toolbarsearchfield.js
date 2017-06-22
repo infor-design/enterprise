@@ -344,7 +344,8 @@
           var buttonStyle = window.getComputedStyle(this.button[0]),
             buttonWidth = parseInt(buttonStyle.width),
             buttonPadding = parseInt(buttonStyle.paddingLeft) + parseInt(buttonStyle.paddingRight),
-            inputWidth = 'calc(100% - ' + (buttonWidth + buttonPadding) + 'px)';
+            buttonBorder = (parseInt(buttonStyle.borderWidth) * 2),
+            inputWidth = 'calc(100% - ' + (buttonWidth + buttonPadding + buttonBorder - 2) + 'px)';
 
           this.input[0].style.width = inputWidth;
         }
