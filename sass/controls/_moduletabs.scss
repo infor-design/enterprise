@@ -682,6 +682,13 @@ html[dir='rtl'] {
   }
 }
 
+// IE always gets cut off without this.
+.ie11 {
+  .toolbar-searchfield-wrapper {
+    padding-left: 1px;
+  }
+}
+
 // Firefox has weird padding on the Add Tabs Button and Application Menu Triggers without this bit of code
 .is-firefox {
   .tab-container.module-tabs {
