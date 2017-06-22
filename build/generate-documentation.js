@@ -36,7 +36,7 @@ glob('components/*/', function(err, components) {
         var cat = spawn('documentation', ['build', componentPath + componentName + '.js' , '-f' , 'md']);
         cat.stdout.on('data', function(apiData) {
 
-          console.log(apiData);
+          //console.log(apiData);
 
           //Some Scrubbing that document.js cant handle
           apiData = apiData.substr(0, apiData.indexOf('### Table')) + apiData.substr(apiData.indexOf('**Parameters**'));
@@ -53,9 +53,9 @@ glob('components/*/', function(err, components) {
           apiData = apiData.replace('**Parameters**', '');
           runPandoc(mdData.replace('{{api-details}}', '\r\n'+apiData+'\r\n'), componentPath);
         });
-        cat.stderr.on('data', function(apiData) {
+        /*cat.stderr.on('data', function(apiData) {
           console.log(apiData);
-        });
+        });*/
 
         return;
       }
