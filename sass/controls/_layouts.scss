@@ -732,6 +732,10 @@ body.no-scroll {
         position: relative;
         top: -40px;
       }
+
+      .tab-list-container {
+        overflow-y: hidden;
+      }
     }
 
   }
