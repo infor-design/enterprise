@@ -5771,13 +5771,19 @@ $.fn.datagrid = function(options) {
 	showNonVisibleCellErrors: function () {
       var messages, tableerrors, icon;
 	  
+	  // Create empty toolbar
+	  if (!this.toolbar) {
+		settings.toolbar = { title: '' };
+		this.appendToolbar();
+	  }
+	  
 	  if (this.toolbar.parent().find('.tableerrors').length === 1) {
         tableerrors = this.element.parent().find('.tableerrors');
       }
 	   
 	  if (!this.nonVisibleCellErrors.length) {
 		// clear the displayed error
-		if (tableerrors.length) {
+		if (tableerrors && tableerrors.length) {
 		  icon = tableerrors.find('.icon-error');
           var tooltip = icon.data('tooltip');
           if (tooltip) {
@@ -6014,10 +6020,12 @@ $.fn.datagrid = function(options) {
         cellNode.find('.datagrid-cell-wrapper').html(formatted);
       }
 
-      if (coercedVal !== oldVal && !fromApiCall) {
-        //Validate the cell
+	  if (!fromApiCall) {
+	    //Validate the cell
         this.validateCell(row, cell);
-
+	  }
+	  
+      if (coercedVal !== oldVal && !fromApiCall) {
         var args = {row: row, cell: cell, target: cellNode, value: coercedVal, oldValue: oldVal, column: col};
         args.rowData = isTreeGrid && this.settings.treeDepth[row] ?
           this.settings.treeDepth[row].node : rowData;
