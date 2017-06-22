@@ -17,6 +17,8 @@
   <meta name="commit" content="{{commit}}">
 
   <link rel="stylesheet" href="{{basepath}}stylesheets/site.css" type="text/css">
+  <script src="{{basepath}}js/jquery-3.1.1.js"></script>
+  <script src="{{basepath}}js/site.js"></script>
 
 </head>
 <body class="no-scroll">
@@ -34,6 +36,15 @@
   <div class="page-container scrollable" id="maincontent" role="main">
     <div class="row">
       <div class="full column">
+
+        <div class="field">
+          <label for="version" class="version">Soho Version</label>
+          <select id="version" name="version" class="dropdown" autocomplete="off">
+            <option value="4.3.0">4.3.0</option>
+            <option value="4.2.6">4.2.6</option>
+          </select><br>
+        </div>
+
         {{#showbacklink}}
           <a href="/components" class="link">Go To Component Code Index</a>
         {{/showbacklink}}

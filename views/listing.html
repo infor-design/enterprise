@@ -1,15 +1,37 @@
+<style id="demoapp-listing-styles">
+  .directory-listing {
+    margin-top: 20px;
+  }
+
+  .badge.azure07,
+  .badge.ruby07 {
+    min-width: 75px;
+    color: white;
+    text-align: center;
+  }
+</style>
+
 <div class="row">
   <div class="six columns">
 
-    <ul class="link-list">
+    <ul class="directory-listing link-list">
       {{#paths}}
         <li>
+          {{#icon}}
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="{{icon}}"></use>
+            </svg>
+            &nbsp;
+          {{/icon}}
+          {{^icon}}
+            {{#pageType}}
+              <span class="badge {{labelColor}}">
+                {{pageType}}
+              </span>
+              &nbsp;
+            {{/pageType}}
+          {{/icon}}
           <a class="hyperlink" href="{{href}}">
-            {{#icon}}
-              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                <use xlink:href="{{icon}}"></use>
-              </svg>
-            {{/icon}}
             <span>{{text}}</span>
           </a>
         </li>

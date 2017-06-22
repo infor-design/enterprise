@@ -1,0 +1,51 @@
+<h1 id="breadcrumb-component-implementation-detail-learn-more">Breadcrumb Component Implementation Detail <a href="#">Learn More</a></h1>
+<p>{{api-details}}</p>
+<h2 id="configuration-options">Configuration Options</h2>
+<ol>
+<li>Default Breadcrumb Example <a href="/components/breadcrumb/example-index">View Example</a><br /></li>
+<li>Breadcrumb with current item a link <a href="/components/breadcrumb/example-current-as-link">View Example</a></li>
+</ol>
+<h2 id="code-example">Code Example</h2>
+<h3 id="breadcrumbs">Breadcrumbs</h3>
+<p>This is an example showing a bread crumb pattern with four items. The current item should be last and have the current class. All items take the hyperlink style via class hyperlink. However, based on background element (header vs page) the style may adopt and change. Like hyperlinks the states has an underline appearing. The disabled class can be added to prevent links from being clicked, however they can still be focused because the hyperlink element cannot by valid html standards contain a disabled property.</p>
+<p>This control is entirely html and css, to update you will need to implement the logic to replace the link elements in the hierrarchy.</p>
+<pre class="sourceCode html"><code class="sourceCode html">
+
+<span class="kw">&lt;nav</span><span class="ot"> class=</span><span class="st">&quot;breadcrumb&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;ol</span><span class="ot"> aria-label=</span><span class="st">&quot;breadcrumb&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;li&gt;</span>
+      <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="ot"> class=</span><span class="st">&quot;hyperlink hide-focus&quot;</span><span class="kw">&gt;</span>Home<span class="kw">&lt;/a&gt;</span>
+    <span class="kw">&lt;/li&gt;</span>
+    <span class="kw">&lt;li&gt;</span>
+      <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="ot"> class=</span><span class="st">&quot;hyperlink hide-focus&quot;</span><span class="kw">&gt;</span>Second Item<span class="kw">&lt;/a&gt;</span>
+    <span class="kw">&lt;/li&gt;</span>
+    <span class="kw">&lt;li&gt;</span>
+      <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="ot"> class=</span><span class="st">&quot;hyperlink hide-focus&quot;</span><span class="kw">&gt;</span>Third Item<span class="kw">&lt;/a&gt;</span>
+    <span class="kw">&lt;/li&gt;</span>
+    <span class="kw">&lt;li</span><span class="ot"> class=</span><span class="st">&quot;current&quot;</span><span class="kw">&gt;</span>Fourth Item <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;audible&quot;</span><span class="kw">&gt;</span>Current<span class="kw">&lt;/span&gt;&lt;/li&gt;</span>
+  <span class="kw">&lt;/ol&gt;</span>
+<span class="kw">&lt;/nav&gt;</span>
+</code></pre>
+<h2 id="accessibility">Accessibility</h2>
+<ul>
+<li>Add an aria-label with the localized term breadcrumb<br /></li>
+<li>May need to add audible spans to indicate levels</li>
+</ul>
+<h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
+<ul>
+<li><strong>Tab</strong> moves focus to the link. A second tab moves focus to the next focusable item.<br /></li>
+<li><strong>Space or Enter</strong> executes the link.</li>
+</ul>
+<h2 id="states-and-variations">States and Variations</h2>
+<ul>
+<li>Hover<br /></li>
+<li>Focus<br /></li>
+<li>Active<br /></li>
+<li>Disabled<br /></li>
+<li>Hide Focus</li>
+</ul>
+<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
+<ul>
+<li>Collapsing Lists Is Deprecated<br /></li>
+<li>Markup entirely changed, see updated example</li>
+</ul>
