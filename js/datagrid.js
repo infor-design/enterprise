@@ -1463,7 +1463,8 @@ $.fn.datagrid = function(options) {
       this.initSettings();
       this.originalColumns = self.columnsFromString(JSON.stringify(this.settings.columns));
       this.removeToolbarOnDestroy = false;
-
+      this.nonVisibleCellErrors = [];
+	  
       this.restoreColumns();
       this.restoreUserSettings();
       this.appendToolbar();
@@ -1867,6 +1868,7 @@ $.fn.datagrid = function(options) {
         headerRow += '<th scope="col" role="columnheader" class="' + (isSortable ? 'is-sortable' : '') + (isResizable ? ' is-resizable' : '') + (column.hidden ? ' is-hidden' : '') + (column.filterType ? ' is-filterable' : '') + (alignmentClass ? alignmentClass : '') + '"' +
          ' id="' + id + '" data-column-id="'+ column.id + '"' + (column.field ? ' data-field="'+ column.field +'"' : '') +
          (column.headerTooltip ? 'title="' + column.headerTooltip + '"' : '') +
+         (column.reorderable === false ? ' data-reorder="false"' : '') +
          (colGroups ? ' headers="' + self.getColumnGroup(j) + '"' : '') + '>';
 
         headerRow += '<div class="' + (isSelection ? 'datagrid-checkbox-wrapper ': 'datagrid-column-wrapper') + (column.align === undefined ? '' : ' l-'+ column.align +'-text') + '"><span class="datagrid-header-text'+ (column.required ? ' required': '') + '">' + self.headerText(settings.columns[j]) + '</span>';
@@ -2365,7 +2367,7 @@ $.fn.datagrid = function(options) {
     // Create draggable columns
     createDraggableColumns: function () {
       var self = this,
-        headers = self.headerNodes().not('[data-column-id="selectionCheckbox"]'),
+        headers = self.headerNodes().not('[data-column-id="selectionCheckbox"]').not('[data-reorder="false"]'),
         showTarget = $('.drag-target-arrows', self.element);
 
       if (!showTarget.length) {
@@ -5726,13 +5728,13 @@ $.fn.datagrid = function(options) {
           ruleValid = rule.check(cellValue, $('<input>').val(cellValue), gridInfo);
 
         if (!ruleValid) {
-          messages += rule.message;
+          messages = (messages ? messages + '<br>' : '') + '\u2022 ' + rule.message;
           isValid = false;
         }
       }
 
       if (!isValid) {
-        self.showCellError(row, cell, messages);
+		self.showCellError(row, cell, messages);
         self.element.trigger('cellerror', {row: row, cell: cell, message: messages, target: this.cellNode(row, cell), value: cellValue, column: column});
       } else {
         self.clearCellError(row, cell);
@@ -5743,7 +5745,13 @@ $.fn.datagrid = function(options) {
     showCellError: function (row, cell, errorMessage) {
       var node = this.cellNode(row, cell);
 
+	  // clear the table nonVisibleCellErrors for the row and cell
+	  this.clearNonVisibleCellErrors(row, cell);
+	  
       if (!node.length) {
+		// Store the nonVisibleCellError
+	    this.nonVisibleCellErrors.push({ row: row, cell: cell, errorMessage: errorMessage });
+		this.showNonVisibleCellErrors();
         return;
       }
 
@@ -5759,8 +5767,56 @@ $.fn.datagrid = function(options) {
       }
 
     },
-
+	
+	showNonVisibleCellErrors: function () {
+      var messages, tableerrors, icon;
+	  
+	  // Create empty toolbar
+	  if (!this.toolbar) {
+		settings.toolbar = { title: '' };
+		this.appendToolbar();
+	  }
+	  
+	  if (this.toolbar.parent().find('.tableerrors').length === 1) {
+        tableerrors = this.element.parent().find('.tableerrors');
+      }
+	   
+	  if (!this.nonVisibleCellErrors.length) {
+		// clear the displayed error
+		if (tableerrors && tableerrors.length) {
+		  icon = tableerrors.find('.icon-error');
+          var tooltip = icon.data('tooltip');
+          if (tooltip) {
+            tooltip.hide();
+          }
+          tableerrors.find('.icon-error').remove();
+		}
+		return;
+	  }
+	  
+	  for (var i = 0; i < this.nonVisibleCellErrors.length; i++) {
+		   messages = (messages ? messages + '<br>' : '') + this.nonVisibleCellErrors[i].errorMessage;
+	  }
+	  
+	  if (this.element.parent().find('.tableerrors').length === 0) {
+        tableerrors = $('<div class="tableerrors"></div>');
+	  }
+	  icon = tableerrors.find('.icon-error');
+	  if (!icon.length) {
+		icon = $($.createIcon({ classes: ['icon-error'], icon: 'error' }));  
+		tableerrors.append(icon);
+	  }
+	  if (this.element.hasClass('has-toolbar')) {
+		//Add Error to the Toolbar
+		this.toolbar.append(tableerrors);
+	  }
+      icon.tooltip({placement: 'bottom', isErrorColor: true, content: messages});
+      icon.data('tooltip').show();
+	 
+    },
+	
     clearCellError: function (row, cell) {
+	  this.clearNonVisibleCellErrors(row, cell);
       var node = this.cellNode(row, cell);
 
       if (!node.length) {
@@ -5770,6 +5826,23 @@ $.fn.datagrid = function(options) {
       this.clearNodeErrors(node);
     },
 
+	clearNonVisibleCellErrors: function (row, cell) {
+      
+	  if (!this.nonVisibleCellErrors.length) {
+        return;
+	  }
+	  
+	  this.nonVisibleCellErrors = $.grep(this.nonVisibleCellErrors, function (error) {
+        if (!(error.row === row && error.cell === cell)) {
+          return error;
+        }
+      });
+	  
+	  if (!this.nonVisibleCellErrors.length) {
+		this.showNonVisibleCellErrors();  
+	  }
+    },
+	
     clearRowError: function (row) {
       var rowNode = this.dataRowNode(row);
 
@@ -5947,10 +6020,12 @@ $.fn.datagrid = function(options) {
         cellNode.find('.datagrid-cell-wrapper').html(formatted);
       }
 
-      if (coercedVal !== oldVal && !fromApiCall) {
-        //Validate the cell
+	  if (!fromApiCall) {
+	    //Validate the cell
         this.validateCell(row, cell);
-
+	  }
+	  
+      if (coercedVal !== oldVal && !fromApiCall) {
         var args = {row: row, cell: cell, target: cellNode, value: coercedVal, oldValue: oldVal, column: col};
         args.rowData = isTreeGrid && this.settings.treeDepth[row] ?
           this.settings.treeDepth[row].node : rowData;

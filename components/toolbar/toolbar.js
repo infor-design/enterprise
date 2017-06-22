@@ -13,25 +13,32 @@
 }(function($) {
 /* end-amd-strip-block */
 
-  //NOTE: Just this part will show up in SoHo Xi Builds.
-  $.fn.toolbar = function(options) {
 
+  $.fn.toolbar = function(options) {
     'use strict';
 
-    // Settings and Options
+    /**
+     * The Toolbar Component manages various levels of application navigation.  It contains a group of buttons that functionally
+     * related content. Each panel consists of two levels: the top level identifies the
+     * category or section header, and the second level provides the associated options.
+     *
+     * @class Toolbar
+     *
+     * @param {HTMLElement|SVGElement|jQuery[]} element   &nbsp;-&nbsp; The element that will serve as the base for this Toolbar component.
+     * @param {boolean} rightAligned   &nbsp;-&nbsp; Will always attempt to right-align the contents of the toolbar.
+     * @param {Number} maxVisibleButtons   &nbsp;-&nbsp; Total amount of buttons that can be present, not including the More button.
+     * @param {boolean} resizeContainers   &nbsp;-&nbsp; If true, uses Javascript to size the Title and Buttonset elements in a way that shows as much of the Title area as possible.
+     * @param {boolean} favorButtonset   &nbsp;-&nbsp; If "resizeContainers" is true, setting this to true will try to display as many buttons as possible while resizing the toolbar.  Setting to false attempts to show the entire title instead.
+     */
     var pluginName = 'toolbar',
         defaults = {
-          rightAligned: false, // Will always attempt to right-align the contents of the toolbar.
-          maxVisibleButtons: 3, // Total amount of buttons that can be present, not including the More button
-          resizeContainers: true, // If true, uses Javascript to size the Title and Buttonset elements in a way that shows as much of the Title area as possible.
-          favorButtonset: true // If "resizeContainers" is true, setting this to true will try to display as many buttons as possible while resizing the toolbar.  Setting to false attempts to show the entire title instead.
+          rightAligned: false,
+          maxVisibleButtons: 3,
+          resizeContainers: true,
+          favorButtonset: true
         },
         settings = $.extend({}, defaults, options);
 
-    /**
-     * @constructor
-     * @param {Object} element
-     */
     function Toolbar(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -43,6 +50,12 @@
     // Plugin Methods
     Toolbar.prototype = {
 
+      /**
+       * Initializes the Toolbar Component
+       * @private
+       * @chainable
+       * @returns {this}
+       */
       init: function() {
         return this
           .setup()
@@ -50,15 +63,27 @@
           .handleEvents();
       },
 
+      /**
+       * Detects discrepencies in settings.  In general, configures the component based on user settings.
+       * @private
+       * @chainable
+       * @returns {this}
+       */
       setup: function() {
         // Can't have zero buttons
         if (this.settings.maxVisibleButtons <= 0) {
-          this.settings.maxVisibleButtons = 3;
+          this.settings.maxVisibleButtons = defaults.maxVisibleButtons;
         }
 
         return this;
       },
 
+      /**
+       * Adds additional markup, wraps some internal elements, and helps construct a complete Toolbar representation in the HTML Markup.  This method also builds the "More Actions" menu and ties its elements to the toolbar items.
+       * @private
+       * @chainable
+       * @returns {this}
+       */
       build: function() {
         var self = this;
 
@@ -392,14 +417,23 @@
         setActiveToolbarItem();
 
         // Toggles the More Menu based on overflow of toolbar items
+        this.adjustMenuItemVisibility();
         this.handleResize();
 
         this.element.triggerHandler('rendered');
         return this;
       },
 
-      // Order of operations for populating the List Item text:
-      // span contents (.audible) >> button title attribute >> tooltip text (if applicable)
+      /**
+       * Gets the complete text contnts of a Toolbar Item, in order to create its corresponding "more actions" menu item.
+       *
+       * Order of operations for populating the List Item text:
+       * 1. span contents (.audible), then
+       * 2. button title attribute, then
+       * 3. tooltip text (if applicable)
+       * @param {jQuery[]} item - the item being evaluated.
+       * @returns {string} - the complete text representation.
+       */
       getItemText: function (item) {
         if (!item) {
           return;
@@ -416,6 +450,12 @@
         return popupLiText;
       },
 
+      /**
+       * Sets up all necessary event handling on a Toolbar component
+       * @private
+       * @chainable
+       * @returns {this}
+       */
       handleEvents: function() {
         var self = this;
 
@@ -476,6 +516,13 @@
         return this;
       },
 
+      /**
+       * Event handler for the Soho `selected` event on toolbar items
+       * @private
+       * @listens {jQuery.Event} e
+       * @param {jQuery.Event} e
+       * @returns {undefined}
+       */
       handleSelected: function(e, anchor) {
         var itemLink = anchor.data('original-button'),
           li = anchor.parent(),
@@ -544,12 +591,26 @@
         this.triggerSelect(anchor);
       },
 
+      /**
+       * Event handler for clicks on toolbar items
+       * @private
+       * @listens {jQuery.Event} e
+       * @param {jQuery.Event} e
+       * @returns {false}
+       */
       handleClick: function(e) {
         this.setActiveButton($(e.currentTarget));
         this.triggerSelect($(e.currentTarget));
         return false;
       },
 
+      /**
+       * Event handler for key presses on toolbar items
+       * @private
+       * @listens {jQuery.Event} e
+       * @param {jQuery.Event} e
+       * @returns {undefined}
+       */
       handleKeys: function(e) {
         var self = this,
           key = e.which,
@@ -584,18 +645,24 @@
         return;
       },
 
+      /**
+       * Re-renders the toolbar element and adjusts all internal parts to account for the new size.
+       * @param {Object} [containerDims] - an object containing dimensions that can be set on the Toolbar's title and buttonset elements.
+       * @param {number} [containerDims.title] - represents the width that will be applied to the title element
+       * @param {number} [containerDims.buttonset] - represents the width that will be applied to the buttonset element
+       * @returns {undefined}
+       */
       handleResize: function(containerDims) {
-        var buttons = this.getVisibleButtons();
-
-        for (var i = 0; i < buttons.length; i++) {
-          buttons.visible[i][0].classList.remove('is-overflowed');
-        }
-
         if (this.settings.resizeContainers) {
           var title = containerDims ? containerDims.title : undefined,
             buttonset = containerDims ? containerDims.buttonset : undefined;
 
           this.sizeContainers(title, buttonset);
+        }
+
+        var buttons = this._getButtonsetButtons();
+        for (var i = 0; i < buttons.length; i++) {
+          buttons[i].removeClass('is-overflowed');
         }
 
         if (this.element.is(':not(:hidden)')) {
@@ -604,6 +671,14 @@
         }
       },
 
+      /**
+       * Resizes the Toolbar's internal container areas (title, buttonset) to make efficient use of their space.
+       * @private
+       * @chainable
+       * @param {number} titleSize - desired size of the title element.
+       * @param {number} buttonsetSize - desired size of the buttonset element.
+       * @returns {this}
+       */
       sizeContainers: function(titleSize, buttonsetSize) {
         var containerElem = this.element[0],
           titleElem = this.title[0],
@@ -661,12 +736,14 @@
           targetTitleWidth = parseInt(titleSize);
           targetButtonsetWidth = parseInt(buttonsetSize);
         } else {
-          if (this.settings.favorButtonset) {
-            targetButtonsetWidth = buttonsetDims.width;
-            targetTitleWidth = toolbarDims.width - (toolbarPadding + buttonsetDims.width + moreDims.width);
-          } else {
-            targetTitleWidth = titleDims.scrollWidth;
-            targetButtonsetWidth = toolbarDims.width - (toolbarPadding + titleDims.scrollWidth + moreDims.width);
+          if ((buttonsetDims.scrollWidth + titleDims.scrollWidth + moreDims.width + toolbarPadding) > toolbarDims.width) {
+            if (this.settings.favorButtonset) {
+              targetButtonsetWidth = buttonsetDims.width;
+              targetTitleWidth = toolbarDims.width - (toolbarPadding + buttonsetDims.width + moreDims.width);
+            } else {
+              targetTitleWidth = titleDims.scrollWidth;
+              targetButtonsetWidth = toolbarDims.width - (toolbarPadding + titleDims.scrollWidth + moreDims.width);
+            }
           }
         }
 
@@ -679,8 +756,8 @@
             targetButtonsetWidth = targetButtonsetWidth - d;
           }
 
-          buttonsetElem.style.width = addPx(targetButtonsetWidth + 1);
-          titleElem.style.width = addPx(targetTitleWidth - 1);
+          buttonsetElem.style.width = addPx(targetButtonsetWidth + 2);
+          titleElem.style.width = addPx(targetTitleWidth - 2);
 
           return this;
         }
@@ -695,12 +772,16 @@
         }
 
         // Always favor the title by one extra px for Chrome
-        titleElem.style.width = addPx(targetTitleWidth + 1);
-        buttonsetElem.style.width = addPx(targetButtonsetWidth - 1);
+        titleElem.style.width = addPx(targetTitleWidth + 2);
+        buttonsetElem.style.width = addPx(targetButtonsetWidth - 2);
         return this;
       },
 
-      // Go To a button
+      /**
+       * Changes the "active" button on the toolbar.
+       * @param {number} direction - can be `-1` (previous), `1` (next), or `0` (remain on current).
+       * @returns {jQuery[]}
+       */
       navigate: function (direction) {
         var items = this.items.filter(':visible:not(:disabled)'),
           current = items.index(this.activeButton),
@@ -727,7 +808,10 @@
         return false;
       },
 
-      // Gets the last button that's above the overflow line
+      /**
+       * Gets a reference to the last visible (not overflowed) button inside of the buttonset.
+       * @returns {jQuery[]}
+       */
       getLastVisibleButton: function() {
         var items = $(this.items.get().reverse()).not(this.more),
           target;
@@ -755,6 +839,10 @@
         return target;
       },
 
+      /**
+       * Gets a reference to the first visible (not overflowed) button inside of the buttonset.
+       * @returns {jQuery[]}
+       */
       getFirstVisibleButton: function() {
         var i = 0,
           items = this.items,
@@ -768,6 +856,11 @@
         return target;
       },
 
+      /**
+       * Sets the currently "active" (focused) Toolbar item
+       * @param {jQuery[]} activeButton - the preferred target element to make active.
+       * @param {boolean} [noFocus] - if defined, prevents this method from giving focus to the new active button.
+       */
       setActiveButton: function(activeButton, noFocus) {
         // Return out of this if we're clicking the currently-active item
         if (activeButton[0] === this.activeButton[0]) {
@@ -811,8 +904,9 @@
         }
       },
 
-      /** Triggers a "selected" event on the base Toolbar element using a common element as an argument.
-       * @param {Object} element - a jQuery Object containing an anchor tag, button, or input field.
+      /**
+       * Triggers a "selected" event on the base Toolbar element using a common element as an argument.
+       * @param {HTMLElement|SVGElement|jQuery[]} element - a jQuery Object containing an anchor tag, button, or input field.
        */
       triggerSelect: function(element) {
         var elem = $(element);
@@ -823,6 +917,10 @@
         this.element.triggerHandler('selected', [elem]);
       },
 
+      /**
+       * Assembles and returns a list of all buttons inside the Buttonset element.
+       * @returns {Array}
+       */
       _getButtonsetButtons: function() {
         var buttons = [],
           items = this.buttonsetItems,
@@ -838,6 +936,13 @@
         return buttons;
       },
 
+      /**
+       * Gets and Iterates through a list of toolbar items and determines which are currently overflowed, and which are visible.
+       * @param {Array} buttons - an Array of jQuery-wrapped elements that represents toolbar items.
+       * @returns {VisibilitySortedToolbarItems}
+       * @returns {VisibilitySortedToolbarItems.Array} visible - An array containing all visible items.
+       * @returns {VisibilitySortedToolbarItems.Array} hidden - An array containing all hidden (overflowed) items.
+      */
       getVisibleButtons: function(buttons) {
         var self = this,
           hiddenButtons = [],
@@ -870,6 +975,11 @@
         };
       },
 
+      /**
+       * Gets and Iterates through the full list of Toolbar Items and determines which ones should currently be present in the More Actions menu.
+       * @param {Object} items - an object (normally generated by `_.getVisibleButtons()`) containing arrays of currently visible and hidden buttons, along with some meta-data.
+       * @returns {undefined}
+       */
       adjustMenuItemVisibility: function(items) {
         var iconDisplay = 'removeClass';
 
@@ -925,7 +1035,11 @@
         this.moreMenu[iconDisplay]('has-icons');
       },
 
-      // Item is considered overflow if it's right-most edge sits past the right-most edge of the border.
+      /**
+       * Detects whether or not a toolbar item is currently overflowed.  In general, toolbar items are considered overflow if their right-most edge sits past the right-most edge of the buttonset border.  There are some edge-cases.
+       * @param {jQuery[]} item - the Toolbar item being tested.
+       * @returns {boolean}
+       */
       isItemOverflowed: function(item) {
         if (this.hasNoMoreButton()) {
           return false;
@@ -984,6 +1098,11 @@
         return this.element[0].classList.contains('no-more-button');
       },
 
+      /**
+       * Determines whether or not the "more actions" button should be displayed.
+       * @private
+       * @returns {undefined}
+       */
       toggleMoreMenu: function() {
         if (this.element.hasClass('no-actions-button')) {
           return;
@@ -1022,6 +1141,11 @@
         }
       },
 
+      /**
+       * Creates an `aria-label` attribute on the toolbar, for bettery accessibility
+       * @private
+       * @returns {undefined}
+       */
       buildAriaLabel: function() {
         // Set up an aria-label as per AOL guidelines
         // http://access.aol.com/dhtml-style-guide-working-group/#toolbar
@@ -1047,18 +1171,32 @@
           .init();
       },
 
+      /**
+       * Enables the entire Toolbar component
+       * @returns {undefined}
+       */
       enable: function() {
         this.element.prop('disabled', false);
         this.items.prop('disabled', false);
         this.more.prop('disabled', false);
       },
 
+      /**
+       * Disables the entire Toolbar component
+       * @returns {undefined}
+       */
       disable: function() {
         this.element.prop('disabled', true);
         this.items.prop('disabled', true);
         this.more.prop('disabled', true).data('popupmenu').close();
       },
 
+      /**
+       * Removes currently associated event listeners from the Toolbar.
+       * @private
+       * @chainable
+       * @returns {this}
+       */
       unbind: function() {
         this.items
           .offTouchClick('toolbar')
@@ -1069,6 +1207,11 @@
         return this;
       },
 
+      /**
+       * Returns the Toolbar's internal markup to its original state.
+       * @chainable
+       * @returns {this}
+       */
       teardown: function() {
         function deconstructMenuItem(i, item) {
           var li = $(item),
@@ -1117,7 +1260,10 @@
         return this;
       },
 
-      // Teardown - Remove added markup and events
+      /**
+       * Destroys this Toolbar Component instance and completely disassociates it from its corresponding DOM Element.
+       * @returns {undefined}
+       */
       destroy: function() {
         this
           .unbind()

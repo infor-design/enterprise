@@ -1571,26 +1571,28 @@
           return;
         }
 
-        if (this.settings.source && targetPanel.length < 1) {
-          return this.callSource(href);
+        if (targetPanel.length < 1) {
+          if (this.settings.source) {
+            return this.callSource(href);
+          }
+        } else {
+          oldPanel[0].classList.remove('can-show');
+          oldPanel[0].classList.remove('is-visible');
+          oldPanel.closeChildren();
+          self.element.trigger('activated', [a]);
+
+          targetPanelElem.classList.add('can-show');
+          self.renderVisiblePanel();
+          // trigger reflow as display property is none for animation
+          targetPanelElem.offsetHeight; // jshint ignore:line
+
+          targetPanel.one($.fn.transitionEndName() + '.tabs', function() {
+            self.element.trigger('afteractivated', [a]);
+          });
+
+          // Triggers the CSS Animation
+          targetPanelElem.classList.add('is-visible');
         }
-
-        oldPanel[0].classList.remove('can-show');
-        oldPanel[0].classList.remove('is-visible');
-        oldPanel.closeChildren();
-        self.element.trigger('activated', [a]);
-
-        targetPanelElem.classList.add('can-show');
-        self.renderVisiblePanel();
-        // trigger reflow as display property is none for animation
-        targetPanelElem.offsetHeight; // jshint ignore:line
-
-        targetPanel.one($.fn.transitionEndName() + '.tabs', function() {
-          self.element.trigger('afteractivated', [a]);
-        });
-
-        // Triggers the CSS Animation
-        targetPanelElem.classList.add('is-visible');
 
         // Update the currently-selected tab
         self.updateAria(a);

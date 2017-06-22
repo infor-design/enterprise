@@ -326,9 +326,31 @@
               text = Locale.translate('ClearSelection');
             }
           }
+
+          // Set attributes need to be copy over
+          var attrToCopy = {
+            str: '',
+            isExclude: function(attr) {
+              var toExclude = ['data-badge', 'data-badge-color', 'data-val'];
+              return $.inArray(attr, toExclude) > -1;
+            }
+          };
+          for (var key in attributes) {
+            if (!attributes.hasOwnProperty(key)) {
+              continue;
+            }
+            attrToCopy.name = attributes[key].name + '';
+            attrToCopy.isData = attrToCopy.name.substr(0, 5) === 'data-';
+            if (attrToCopy.isData && !attrToCopy.isExclude(attrToCopy.name)) {
+              attrToCopy.str += ' '+
+                attrToCopy.name +'="'+ attributes[key].value +'"';
+            }
+          }
+
           liMarkup += '<li role="presentation" class="dropdown-option'+ (isSelected ? ' is-selected' : '') +
                         (isDisabled ? ' is-disabled' : '') +
                         (cssClasses ? ' ' + cssClasses.value : '' ) + '"' +
+                        attrToCopy.str +
                         ' data-val="' + trueValue.replace('"', '/quot/') + '"' +
                         ' tabindex="' + (index && index === 0 ? 0 : -1) + '">' +
                         (title ? '" title="' + title.value + '"' : '') +
@@ -1337,7 +1359,7 @@
         // use the list's width instead of the parent's width
         var listDefaultWidth, useParentWidth,
           parentElementStyle = window.getComputedStyle(parentElement[0]),
-          parentElementWidth = Math.round(parseInt(parentElementStyle.width + parentElementStyle.borderLeftWidth + parentElementStyle.borderRightWidth));
+          parentElementWidth = Math.round(parseInt(parentElement[0].clientWidth + parentElementStyle.borderLeftWidth + parentElementStyle.borderRightWidth));
 
         this.searchInput[0].style.cssText = 'width:'+ parentElementWidth +'px !important';
         listDefaultWidth = Math.round(this.list.width());
