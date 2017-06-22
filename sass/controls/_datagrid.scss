@@ -1127,7 +1127,7 @@ $datagrid-short-row-height: 23px;
 
       &.l-right-text {
         .datagrid-cell-wrapper .icon-error {
-          left: -100%;
+          left: 0;
           margin-left: 0;
           margin-right: -15px;
         }
@@ -1277,7 +1277,7 @@ $datagrid-short-row-height: 23px;
       .datepicker {
         border: 0;
         margin-top: 17px;
-        padding: 0 20px;
+        padding: 0 0 0 20px;
         width: calc(100% - 28px);
 
         ~ .icon {
@@ -1936,8 +1936,8 @@ td .btn-actions {
     width: calc(100% - 10px);
   }
 
-  &:not(.is-readonly):hover,
-  &:not(.is-readonly):focus {
+  &:not(.is-readonly):not(.error):hover,
+  &:not(.is-readonly):not(.error):focus {
     .icon {
       visibility: visible;
     }
@@ -2230,10 +2230,6 @@ td .btn-actions {
     &.search {
       margin-top: 14px;
     }
-  }
-
-  li a {
-    padding-left: 10px;
   }
 }
 
