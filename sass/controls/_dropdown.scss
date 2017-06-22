@@ -328,7 +328,7 @@ div.multiselect {
 
     li.is-selected::after {
       @include checkbox-checked-after-style;
-      left: 16px;
+      left: 15px;
       margin-top: 0;
       top: 9px;
     }
@@ -549,7 +549,7 @@ div.dropdown-xs,
   }
 
   &.is-ontop {
-    margin-top: 10px;
+    margin-top: 7px;
   }
 
   > .icon {
@@ -579,7 +579,6 @@ div.dropdown-xs,
       }
 
       &::after {
-        left: 10px;
         margin-top: 0;
       }
 
@@ -589,7 +588,6 @@ div.dropdown-xs,
         }
 
         &::after {
-          left: 10px;
           margin-top: 0;
         }
       }
@@ -606,7 +604,7 @@ div.dropdown-xs,
 // Firefox needs a nudge on the list items
 .is-firefox {
   div.dropdown {
-    padding: 8px 32px 7px 10px;
+    padding-top: 8px
   }
 
   .dropdown-list {
@@ -686,7 +684,7 @@ html[dir='rtl'] {
 
       li.is-selected::after {
         left: inherit;
-        right: 16px;
+        right: 15px;
       }
 
       li.is-disabled.is-selected::after {
@@ -768,7 +766,6 @@ html[dir='rtl'] {
 
         &.is-selected::after {
           left: inherit;
-          right: 10px;
         }
       }
     }
