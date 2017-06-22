@@ -85,19 +85,15 @@ $('#area-example').chart({type: 'area', dataset: dataset});
 
 ## Accessibility
 
-- The contrast and actual colors can be a concern for visibility impaired and color blind people. However, you can customize the color by passing it next to the name fx..
+- The contrast and actual colors can be a concern for visibility impaired and color blind people. However, you can customize the color by passing higher contrast colors.
 
 ```javascript
 
-color: '#000000'
+color: '#1a1a1a'
 name: 'Component C'
 
 
 ```
-
-## Code Tips
-
-The about component example by default adds the current years copyright, and useful browser info. This should be useful info for support situations. Don't make your contents of the modal too overloaded with info. Also About dialogs do not need to be overly prominent in your application (for example as a splash screen). The typical placement is in a top level actions button menu item.
 
 ## Keyboard Shortcuts
 
