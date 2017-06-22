@@ -551,11 +551,13 @@
           insertBufferBeforeDecimal = true,
           decimalAlreadyExists = false;
 
-        // Are we placing the new content after the decimal?
-        insertBufferBeforeDecimal = currentDecimalIndex < pos.begin;
-
         // Does it already exist?
         decimalAlreadyExists = currentDecimalIndex !== -1;
+		
+		if (decimalAlreadyExists) {
+          // Are we placing the new content after the decimal?
+          insertBufferBeforeDecimal = currentDecimalIndex >= pos.begin;
+        }
 
         // insert the buffer's contents
         insertBuffer();
@@ -607,6 +609,7 @@
             var inputParts = originalVal.replace(THOUSANDS_SEP_REGEX, '').split(DECIMAL_SYMBOL),
               targetDecimalIndex;
 
+            
             // reposition the decimal in the correct spot based on total number of characters
             // in either part of the mask.
             if (inputParts[1].length < maskParts[1].length) {
@@ -617,15 +620,15 @@
               }
             } else if (inputParts[1].length === maskParts[1].length) {
               targetDecimalIndex = (val.length - maskParts[1].length);
+			  if (!insertBufferBeforeDecimal) {
+				targetDecimalIndex -= 1;
+			    val = val.substring(0, val.length - 1);
+			  }
             } else {
               targetDecimalIndex = (val.length - maskParts[1].length);
             }
 
             val = this.insertAtIndex(val, DECIMAL_SYMBOL, targetDecimalIndex);
-            if (pos.begin === targetDecimalIndex || pos.begin === targetDecimalIndex + 1) {
-              moveCaret(1);
-            }
-
           } else {
             // The decimal doesn't already exist in the value string.
             // if the current value has more characters than the "integer" portion of the mask,
