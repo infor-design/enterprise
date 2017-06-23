@@ -47,7 +47,7 @@ glob('components/*/', function(err, components) {
           apiData = apiData.replace('#### handleEvents', '### Events');
           apiData = apiData.replace('### handleEvents', '### Events');
 
-          // More Fixes z
+          // More Fixes
           apiData = apiData.replace('-   `element`', '');
           apiData = apiData.replace('**Parameters**', '');
           runPandoc(mdData.replace('{{api-details}}', '\r\n'+apiData+'\r\n'), componentPath);
