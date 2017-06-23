@@ -1,16 +1,24 @@
 <div class="row">
   <div class="six columns">
     <h2>Toolbar Test:  Separators in the Spillover Menu</h2>
-    <p><a class="hyperlink" href="http://jira/browse/SOHO-6194" target="_blank">Related JIRA Ticket</a>.</p>
+    <p><a class="hyperlink" href="http://jira/browse/SOHO-6194" target="_blank">Related JIRA Ticket</a>.  Toolbars that contain separators should properly spill the separators over into the "More Actions" menu.  They should also properly exist in the "More Actions" menu's submenus.</p>
   </div>
 </div>
 
 <div class="row">
   <div class="twelve columns">
 
-    <div class="toolbar" role="toolbar" aria-label="Data table actions">
+    <div class="toolbar" role="toolbar" aria-label="Data table actions" data-options='{ "maxVisibleButtons": 5 }'>
       <div class="title">163 Accounts</div>
       <div class="buttonset">
+        <button type="button" class="btn">
+          <span>Categories</span>
+        </button>
+
+        <button type="button" class="btn">
+          <span>Other Stuff</span>
+        </button>
+
         <button type="button" class="btn">
           <svg class="icon">
             <use xlink:href="#icon-calendar"></use>
@@ -23,6 +31,15 @@
             <use xlink:href="#icon-settings"></use>
           </svg>
           <span>Settings</span>
+        </button>
+
+        <div class="separator"></div>
+
+        <button type="button" class="btn">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-filter"></use>
+          </svg>
+          <span>Filter</span>
         </button>
 
         <button type="button" class="btn-menu">

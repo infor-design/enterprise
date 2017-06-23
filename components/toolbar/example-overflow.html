@@ -1,8 +1,21 @@
-<div class="row">
+<style id="overflow-test-style">
+  ul.actual-list {
+    list-style: disc;
+    margin-left: 20px;
+    font-size: 14px;
+  }
+
+  ul.actual-list li + li {
+    margin-top: 5px;
+  }
+
+</style>
+
+<div class="row top-padding">
   <div class="twelve columns">
     <h2>Toolbar Test: Overflow Examples</h2>
-    <p>The following methods of toolbar item overflow are described in <a href="http://jira/browse/HFC-2950" target="_blank">this JIRA Ticket</a>:</p>
-    <ul>
+    <p><a class="hyperlink" href="http://jira/browse/HFC-2950" target="_blank">Related JIRA Ticket</a>.  The following toolbars demonstrate normal conditions for generating the "More Actions" menu.</p>
+    <ul class="actual-list">
       <li>1 Button: all buttons may be shown</li>
       <li>2 Buttons: all buttons may be shown</li>
       <li>3 Buttons: all buttons may be shown</li>
