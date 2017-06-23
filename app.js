@@ -438,7 +438,7 @@ var express = require('express'),
   // ======================================
 
   router.get('/', function(req, res, next) {
-    res.redirect('/kitchen-sink');
+    res.redirect(BASE_PATH + 'kitchen-sink');
     next();
   });
 
@@ -503,7 +503,7 @@ var express = require('express'),
       if (controlName === 'buttons') {
         controlName = 'button';
       }
-      res.redirect('/components/' + controlName + '/example-index');
+      res.redirect(BASE_PATH + 'components/' + controlName + '/example-index');
     }
 
     res.render('controls/' + controlName, opts);
@@ -732,14 +732,14 @@ var express = require('express'),
     if (example && component) {
       var path = 'components/' + component + '/example-' + example.replace('.html', '')  + '.html';
       if (fs.existsSync(path)) {
-        res.redirect(path);
+        res.redirect(BASE_PATH + path);
         next();
         return;
       }
 
       path = 'components/' + component + '/test-' + example.replace('.html', '') + '.html';
       if (fs.existsSync(path)) {
-        res.redirect(path);
+        res.redirect(BASE_PATH + path);
         next();
         return;
       }
