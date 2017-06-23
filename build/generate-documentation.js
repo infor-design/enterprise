@@ -52,9 +52,9 @@ glob('components/*/', function(err, components) {
           apiData = apiData.replace('**Parameters**', '');
           runPandoc(mdData.replace('{{api-details}}', '\r\n'+apiData+'\r\n'), componentPath);
         });
-        cat.stderr.on('data', function(apiData) {
-          console.log(apiData);
-        });
+        //cat.stderr.on('data', function(apiData) {
+        //  console.log(apiData);
+        //});
 
         return;
       }
