@@ -215,11 +215,12 @@ var express = require('express'),
     }
 
     pathDefs.forEach(function pathIterator(pathDef) {
+      pathDef.link = pathDef.link.replace(/\/\//g, '/');
       console.log('Checking path: "' + pathDef.link + '"');
 
       var match = false;
       excludes.forEach(function(exclude) {
-
+        console.log(pathDef.link, exclude, pathDef.link.match(exclude));
         if (pathDef.link.match(exclude)) {
           match = true;
           return;
@@ -252,10 +253,8 @@ var express = require('express'),
    * @param {String} pathDef.labelColor
    */
   function pathMapper(pathDef) {
-    var href = pathDef.link.replace(/\\/g, '/'),
+    var href = pathDef.link.replace(/\\/g, '/').replace(/\/\//g, '/'),
       icon;
-
-    console.log('HREF: "' + href + '"');
 
     if (href.indexOf(BASE_PATH) !== 0) {
       href = BASE_PATH + href;
@@ -298,6 +297,7 @@ var express = require('express'),
     /footer\.html/,
     /_header\.html/,
     /_layout\.html/,
+    /layout/,
     /\.DS_Store/
   ];
 

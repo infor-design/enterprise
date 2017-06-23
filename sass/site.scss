@@ -187,4 +187,15 @@ code.sourceCode span.fu {
 code.sourceCode span.er {
   color: #ff0000;
 }
+
+// Inline Code
+
+// scss-lint:disable MergeableSelector
+code {
+  background-color: #f0f0f0;
+  color: #d44950;
+  padding: 2px;
+}
+// scss-lint:enable MergeableSelector
+
 // scss-lint:enable SelectorFormat, ColorVariable

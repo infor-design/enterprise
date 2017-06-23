@@ -59,14 +59,6 @@ button {
     }
   }
 
-  &.btn-tertiary {
-    > .icon {
-      + span:not(.audible):not(:empty) {
-        padding-left: 0;
-      }
-    }
-  }
-
   .icon {
     @include transition(fill 300ms cubic-bezier(.17, .04, .03, .94));
   }
