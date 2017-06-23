@@ -619,11 +619,10 @@
                 targetDecimalIndex = inputParts[0].length;
               }
             } else if (inputParts[1].length === maskParts[1].length) {
-              targetDecimalIndex = (val.length - maskParts[1].length);
 			  if (!insertBufferBeforeDecimal) {
-				targetDecimalIndex -= 1;
-			    val = val.substring(0, val.length - 1);
+			    val = val.substring(0, inputParts[0].length + maskParts[1].length);
 			  }
+			  targetDecimalIndex = (val.length - maskParts[1].length);
             } else {
               targetDecimalIndex = (val.length - maskParts[1].length);
             }
@@ -633,7 +632,19 @@
             // The decimal doesn't already exist in the value string.
             // if the current value has more characters than the "integer" portion of the mask,
             // automatically add the decimal at index of the last pre-decimal pattern character.
-            if (val.length > maskParts[0].length || decimalInBuffer) {
+			if (decimalInBuffer){
+				if ((val.length - (pos.begin - 1)) > maskParts[1].length) {
+				  val = val.substring(0, (pos.begin - 1) + maskParts[1].length);
+				}
+				if (buffer.indexOf(DECIMAL_SYMBOL) === 0) {
+				  val = this.insertAtIndex(val, DECIMAL_SYMBOL, pos.begin - 1);
+				}
+				else
+				{
+				  val = this.insertAtIndex(val, DECIMAL_SYMBOL, buffer.indexOf(DECIMAL_SYMBOL));
+				}
+			}
+            else if (val.length > maskParts[0].length) {
               val = this.insertAtIndex(val, DECIMAL_SYMBOL, maskParts[0].length);
               if (pos.begin === maskParts[0].length) {
                 moveCaret(1);
