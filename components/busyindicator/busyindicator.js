@@ -19,18 +19,25 @@
     // Settings and Options
     var pluginName = 'busyindicator',
         defaults = {
-          blockUI: true, // makes the element that Busy Indicator is invoked on unusable while it's displayed.
-          text: null, //Custom Text To Show or Will Show Localized Loading....
-          displayDelay: 1000, // number in miliseconds to pass before the markup is displayed.  If 0, displays immediately.
-          timeToComplete: 0, // fires the 'complete' trigger at a certain timing interval.  If 0, goes indefinitely.
-          transparentOverlay: false, // If true, allows the "blockUI" setting to display an overlay that prevents interaction, but appears transparent instead of gray.
+          blockUI: true,
+          text: null,
+          displayDelay: 1000,
+          timeToComplete: 0,
+          transparentOverlay: false
         },
         settings = $.extend({}, defaults, options);
 
     /**
-     * @constructor
-     * @param {Object} element
-     */
+    * A Busy Indicator notifies the user that the system is processing a request, and that they must wait for that request to be processed before continuing with the current task.
+    *
+    * @class BusyIndicator
+    * @param {String} blockUI  &nbsp;-&nbsp; makes the element that Busy Indicator is invoked on unusable while it's displayed.
+    * @param {String} text  &nbsp;-&nbsp; Custom Text To Show or Will Show Localized Loading....
+    * @param {String} displayDelay  &nbsp;-&nbsp; umber in miliseconds to pass before the markup is displayed.  If 0, displays immediately.
+    * @param {Boolean} timeToComplete  &nbsp;-&nbsp; fires the 'complete' trigger at a certain timing interval.  If 0, goes indefinitely.
+    * @param {String} transparentOverlay  &nbsp;-&nbsp; If true, allows the "blockUI" setting to display an overlay that prevents interaction, but appears transparent instead of gray.
+    *
+    */
     function BusyIndicator(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -66,26 +73,9 @@
         return this;
       },
 
-      handleEvents: function() {
-        var self = this;
-        self.element.on('start.busyindicator', function(e) {
-          e.stopPropagation();
-          self.activate();
-        }).on('afterstart.busyindicator', function() {
-          // Complete event is only active once the indicator is "started"
-          self.element.on('complete.busyindicator', function(e) {
-            e.stopPropagation();
-            self.close(true);
-          });
-        }).on('updated.busyindicator', function() {
-          self.close(true);
-          self.updated();
-        });
-
-        return this;
-      },
-
-      // Builds and starts the indicator
+      /**
+      * Builds and starts the indicator
+      */
       activate: function() {
         var self = this;
 
@@ -212,7 +202,9 @@
         }
       },
 
-      // Removes the appended markup and hides any trace of the indicator
+      /**
+      * Removes the appended markup and hides any trace of the indicator
+      */
       close: function(fromEvent) {
         var self = this;
 
@@ -319,11 +311,42 @@
         return this.setup();
       },
 
-      // Teardown / Destroy
+      /**
+      * Teardown and remove any added markup and events.
+      */
       destroy: function() {
         this.element.off('start.busyindicator complete.busyindicator afterstart.busyindicator aftercomplete.busyindicator updated.busyindicator');
         $.removeData(this.element[0], pluginName);
-      }
+      },
+
+      /**
+       *  This component listens to the following events.
+       *
+       * @fires Busyindicator#events
+       * @param {Object} start  &nbsp;-&nbsp; Starts / shows the indictor.
+       * @param {Object} complete  &nbsp;-&nbsp; Hides / Ends the indictaor
+       * @param {Object} updated  &nbsp;-&nbsp; Sync the UI/Settings. Fx chnaging the text in the DOM.
+       *
+       */
+      handleEvents: function() {
+        var self = this;
+        self.element.on('start.busyindicator', function(e) {
+          e.stopPropagation();
+          self.activate();
+        }).on('afterstart.busyindicator', function() {
+          // Complete event is only active once the indicator is "started"
+          self.element.on('complete.busyindicator', function(e) {
+            e.stopPropagation();
+            self.close(true);
+          });
+        }).on('updated.busyindicator', function() {
+          self.close(true);
+          self.updated();
+        });
+
+        return this;
+      },
+
     };
 
     // Initialize the plugin (Once)

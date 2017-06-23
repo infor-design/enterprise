@@ -183,7 +183,7 @@
     .icon {
       &:not(.arrow) {
         height: 16px;
-        margin-left: 10px;
+        margin-left: -30px;
         margin-top: 8.5px;
         pointer-events: none;
         position: absolute;
@@ -325,6 +325,12 @@
     .popupmenu.is-open {
       display: block;
       visibility: visible;
+    }
+
+    .icon {
+      &:not(.arrow) {
+        margin-left: 10px;
+      }
     }
 
     > a {
