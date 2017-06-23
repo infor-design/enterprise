@@ -594,7 +594,7 @@ var express = require('express'),
     if (req.params.example === 'list') {
       return getFullListing(componentName, req, res, next);
     }
-      
+
     if (req.params.component === 'applicationmenu' && (req.params.example.indexOf('example-') > -1 || req.params.example.indexOf('test-') > -1)) {
       console.log(req.params.component, req.params.example);
       opts.layout = null;
@@ -643,27 +643,6 @@ var express = require('express'),
     layout: 'tests/layout'
   };
 
-  // Custom Application Menu Layout files.  Since the markup for the Application Menu lives higher up than the
-  // content filter lives on most templates, we have a special layout-changing system for Application Menu Tests.
-  function getApplicationMenuTestLayout(path) {
-    var base = 'tests/applicationmenu/';
-
-    if (path.match(/\/site/)) {
-      return base + 'site/layout';
-    } else if (path.match(/\/container/)) {
-      return base + 'container/layout';
-    } else if (path.match(/\/different-header-types/)) {
-      return base + 'different-header-types/layout';
-    } else if (path.match(/\/empty/)) {
-      return base + 'empty/layout';
-    } else if (path.match(/\/lms/)) {
-      return base + 'lms/layout';
-    } else if (path.match(/\/six-levels-with-icons/)) {
-      return base + 'six-levels-with-icons/layout';
-    }
-    return base + 'six-levels/layout';
-  }
-
   function testsRouteHandler(req, res, next) {
     var opts = extend({}, res.opts, testOpts),
       end = req.url.replace(/\/tests(\/)?/, '');
@@ -687,9 +666,7 @@ var express = require('express'),
     }
 
     // Custom configurations for some test folders
-    if (directory.match(/tests\/applicationmenu/)) {
-      opts.layout = getApplicationMenuTestLayout(directory);
-    }
+
     if (directory.match(/tests\/base-tag/)) {
       opts.usebasehref = true;
     }
@@ -757,12 +734,14 @@ var express = require('express'),
       if (fs.existsSync(path)) {
         res.redirect(path);
         next();
+        return;
       }
 
       path = 'components/' + component + '/test-' + example.replace('.html', '') + '.html';
       if (fs.existsSync(path)) {
         res.redirect(path);
         next();
+        return;
       }
     }
 
@@ -772,8 +751,10 @@ var express = require('express'),
 
   //Tests Index Page and controls sub pages
   router.get('/tests/:component/:example', testsRouteHandler);
-  router.get('/tests*', testsRouteHandler);
+  router.get('/tests/:component', testsRouteHandler);
+  router.get('/tests/:component/', testsRouteHandler);
   router.get('/tests/', testsRouteHandler);
+  router.get('/tests', testsRouteHandler);
 
   // =========================================
   // Layouts Pages
