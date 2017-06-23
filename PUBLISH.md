@@ -79,12 +79,12 @@ http://bamboo.infor.com/browse/SOHO-NGV-16
 - Update dev53
 - add label to successful build
 
-# How To Make Release (4.2.6)
+# How To Make Release (4.3.0)
 
 * Check Change Log is updated
-* Create Release Email Template
+* Create Release Email Template (Jonathan)
 * Merge 4.2.6-rc (the rc branch) back onto the 4.2.x (masterish branch) - PR or Git Merge
-* Enable the npm publish task on
+* Enable the npm publish task on the build.
 * Label the build Release/426
 * Delete the 4.2.6-rc branch
 * Check there is a build (Plan name , Plan key make same fx CUR  === SOHO-CUR)
@@ -169,7 +169,7 @@ Site error: `C:\inetpub\wwwroot\craft\storage isn't writable by PHP. Please fix 
 To Confirm Permissions:
 
 * Right click /inetpub/wwwroot/craft/storage and select Properties
-* Click Securtity tab > Advanced
+* Click Security tab > Advanced
 * Confirm that Users(USALVWSOHO2\Users) has Full Control Access
 * If not then:
 	* Click Change Permissions > Disable inheritance

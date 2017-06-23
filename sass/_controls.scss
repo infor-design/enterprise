@@ -8,7 +8,7 @@
 @import 'components/button/button';
 @import 'controls/hyperlinks';
 @import 'controls/images';
-@import 'controls/card';
+@import 'components/cards/cards';
 @import 'controls/input';
 @import 'controls/grid';
 @import 'controls/compositeform';
@@ -39,7 +39,7 @@
 @import 'controls/draggable';
 @import 'controls/colorpicker';
 @import 'controls/timepicker';
-@import 'controls/busyindicator';
+@import 'components/busyindicator/busyindicator';
 @import 'controls/toast';
 @import 'controls/charts';
 @import 'controls/searchfield';

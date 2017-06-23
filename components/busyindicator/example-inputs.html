@@ -1,0 +1,49 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <h2 class="fieldset-title">On Input Fields</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="one-half column">
+    <div class="field">
+      <label class="label" for="busy-input">Busy Input Field</label>
+      <input class="busy" type="text" id="busy-input" data-options="{ 'blockUI': false, 'displayDelay': 100, 'timeToComplete': 40000 }"/>
+    </div>
+    <div class="field">
+      <button class="btn-secondary" id="trigger-busy-input" type="button">Load</button>
+    </div>
+  </div>
+
+  <div class="one-half column">
+    <div class="field">
+      <label class="label" for="busy-dropdown">Busy Dropdown</label>
+      <select class="dropdown busy" id="busy-dropdown" data-options="{ 'blockUI': false, 'displayDelay': 100, 'timeToComplete': 4000 }">
+        <option selected>Busy</option>
+        <option>Preoccupied</option>
+        <option>Distracted</option>
+        <option>Engaged</option>
+      </select>
+    </div>
+    <div class="field">
+      <button class="btn-secondary" id="trigger-busy-dropdown" type="button">Load</button>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+
+    $('#trigger-busy-input').click(function(e) {
+      e.preventDefault();
+      $('#busy-input').trigger('start');
+    });
+
+    $('#trigger-busy-dropdown').click(function(e) {
+      e.preventDefault();
+      $('#busy-dropdown').trigger('start');
+    });
+
+  });
+</script>

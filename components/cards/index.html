@@ -1,0 +1,70 @@
+<h1 id="cards-component-implementation-detail-learn-more">Cards Component Implementation Detail <a href="#">Learn More</a></h1>
+<p>{{api-details}}</p>
+<h2 id="configuration-options">Configuration Options</h2>
+<ol>
+<li>Simple Card Example <a href="/components/cards/example-index">View Example</a><br /></li>
+<li>Expandable Card <a href="/components/cards/example-expandable">View Example</a><br /></li>
+<li>Full Page of Cards <a href="/components/cards/example-full-page">View Example</a><br /></li>
+<li>A group action toolbar area <a href="/components/cards/example-group-action">View Example</a><br /></li>
+<li>Menu Button in the Header <a href="/components/cards/example-menubutton">View Example</a><br /></li>
+<li>Datagrid In a Card (Bad Practice) <a href="/components/cards/test-datagrid">View Test</a><br /></li>
+<li>Datagrid With Pager (Bad Practice) <a href="/components/cards/test-paging-datagrid">View Test</a><br /></li>
+<li>Toolbar In The Header <a href="/components/cards/test-toolbar-header">View Test</a></li>
+</ol>
+<h2 id="code-example">Code Example</h2>
+<p>Note that either the class <code>card</code> or <code>widget</code> can be used interchangeably. A card is just a div with class=&quot;card&quot;. Usually its used in conjunction with home pages or the responsive grid. It can also have a header object and a content area (with scrolling). By adding the classes as noted in the example. Also checkout the homepage examples and homepage component.</p>
+<pre class="sourceCode html"><code class="sourceCode html">
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;row&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;one-third column&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;card&quot;</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;card-header&quot;</span><span class="kw">&gt;</span>
+          <span class="kw">&lt;h2</span><span class="ot"> class=</span><span class="st">&quot;widget-title&quot;</span><span class="kw">&gt;</span>Card Title<span class="kw">&lt;/h2&gt;</span>
+          <span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;btn-actions&quot;</span><span class="ot"> type=</span><span class="st">&quot;button&quot;</span><span class="kw">&gt;</span>
+            <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;audible&quot;</span><span class="kw">&gt;</span>Actions<span class="kw">&lt;/span&gt;</span>
+            <span class="kw">&lt;svg</span><span class="ot"> class=</span><span class="st">&quot;icon&quot;</span><span class="ot"> focusable=</span><span class="st">&quot;false&quot;</span><span class="ot"> aria-hidden=</span><span class="st">&quot;true&quot;</span><span class="ot"> role=</span><span class="st">&quot;presentation&quot;</span><span class="kw">&gt;</span>
+              <span class="kw">&lt;use</span><span class="ot"> xlink:href=</span><span class="st">&quot;#icon-more&quot;</span><span class="kw">&gt;&lt;/use&gt;</span>
+            <span class="kw">&lt;/svg&gt;</span>
+          <span class="kw">&lt;/button&gt;</span>
+          <span class="kw">&lt;ul</span><span class="ot"> class=</span><span class="st">&quot;popupmenu&quot;</span><span class="kw">&gt;</span>
+            <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Action One<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+            <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Action Two<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+          <span class="kw">&lt;/ul&gt;</span>
+
+      <span class="kw">&lt;/div&gt;</span>
+      <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;card-content&quot;</span><span class="kw">&gt;</span>
+
+      <span class="kw">&lt;/div&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;two-thirds column&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;card&quot;</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;card-header&quot;</span><span class="kw">&gt;</span>
+          <span class="kw">&lt;h2</span><span class="ot"> class=</span><span class="st">&quot;widget-title&quot;</span><span class="kw">&gt;</span>Card Title<span class="kw">&lt;/h2&gt;</span>
+          <span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;btn-actions&quot;</span><span class="ot"> type=</span><span class="st">&quot;button&quot;</span><span class="kw">&gt;</span>
+            <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;audible&quot;</span><span class="kw">&gt;</span>Actions<span class="kw">&lt;/span&gt;</span>
+            <span class="kw">&lt;svg</span><span class="ot"> class=</span><span class="st">&quot;icon&quot;</span><span class="ot"> focusable=</span><span class="st">&quot;false&quot;</span><span class="ot"> aria-hidden=</span><span class="st">&quot;true&quot;</span><span class="ot"> role=</span><span class="st">&quot;presentation&quot;</span><span class="kw">&gt;</span>
+              <span class="kw">&lt;use</span><span class="ot"> xlink:href=</span><span class="st">&quot;#icon-more&quot;</span><span class="kw">&gt;&lt;/use&gt;</span>
+            <span class="kw">&lt;/svg&gt;</span>
+          <span class="kw">&lt;/button&gt;</span>
+          <span class="kw">&lt;ul</span><span class="ot"> class=</span><span class="st">&quot;popupmenu&quot;</span><span class="kw">&gt;</span>
+            <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Action One<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+            <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Action Two<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+          <span class="kw">&lt;/ul&gt;</span>
+
+      <span class="kw">&lt;/div&gt;</span>
+      <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;card-content&quot;</span><span class="kw">&gt;</span>
+
+      <span class="kw">&lt;/div&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+</code></pre>
+<h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
+<ul>
+<li>The Header contains a toolbar. Arrow keys should be used between buttons on the toolbars.<br /></li>
+<li>Tab to each section.</li>
+</ul>
+<h2 id="responsive-guidelines">Responsive Guidelines</h2>
+<ul>
+<li>Either fluid based on parent grid, or uses masonry style layout: see example</li>
+</ul>
