@@ -2,4 +2,7 @@
 
 {{api-details}}
 
-1. Common Configuration [View Example]()
+1. [Common Configuration](/components/searchfield/example-index.html)
+2. [Context Search](/components/searchfield/example-context.html)
+
+## Code Example
