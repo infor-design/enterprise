@@ -1956,7 +1956,7 @@ $.fn.datagrid = function(options) {
               //just the button
               break;
             case 'date':
-              filterMarkup += '<input ' + (col.filterDisabled ? ' disabled' : '') + ' type="text" class="datepicker" id="'+ filterId +'"/>';
+              filterMarkup += '<input ' + (col.filterDisabled ? ' disabled' : '') + ' type="text" class="datepicker" ' + (col.dateFormat ? 'data-options="{dateFormat: ' + col.dateFormat + '}"' : '') + ' id="'+ filterId +'"/>';
               break;
             case 'decimal':
               filterMarkup += '<input ' + (col.filterDisabled ? ' disabled' : '') + ' type="text" id="'+ filterId +'" data-mask-mode="number" data-mask="'+ (col.mask ? col.mask : '####.00') + '">';
@@ -2164,10 +2164,23 @@ $.fn.datagrid = function(options) {
             rowValue = rowValue.toLowerCase();
           }
 
-          if (rowValue instanceof Date) {
-            rowValue = rowValue.getTime();
-            conditionValue = Locale.parseDate(conditions[i].value, conditions[i].format).getTime();
-          }
+		  if (columnDef.filterType === 'date') {
+			conditionValue = Locale.parseDate(conditions[i].value, conditions[i].format).getTime();
+            if (rowValue instanceof Date) {
+              rowValue = rowValue.getTime();
+            }
+			else if (typeof rowValue === 'string' && rowValue) {
+              if (!columnDef.sourceFormat) {
+                rowValue = Locale.parseDate(rowValue, (typeof columnDef.dateFormat === 'string' ? {pattern: columnDef.dateFormat}: columnDef.dateFormat));
+              } else {
+                rowValue = Locale.parseDate(rowValue, (typeof columnDef.sourceFormat === 'string' ? {pattern: columnDef.sourceFormat}: columnDef.sourceFormat));
+              }
+
+              if (rowValue) {
+				rowValue = rowValue.getTime();
+              }
+		    }
+		  }
 
           if (typeof rowValue === 'number') {
             rowValue =  parseFloat(rowValue);
