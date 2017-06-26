@@ -8,9 +8,6 @@ define([
   document = jsdom('<!DOCTYPE html><html id="html"><head></head><body></body></html>'); // jshint ignore:line
   window = document.defaultView;  // jshint ignore:line
 
-  //Load Jquery from node packages
-  $ = jQuery = require('jquery'); // jshint ignore:line
-
   //Load the Locale.js we are testing
   require('../../../js/locale.js');
   Locale = window.Locale; // jshint ignore:line
@@ -314,13 +311,6 @@ define([
 
       // Test date only different format
       expect(Locale.parseDate('05-10-2015', 'dd-MM-yyyy').getTime()).to.equal(new Date(2015, 09, 5, 0, 0, 0).getTime());
-
-      // Test full UTC
-      //$('#date-field').data('datepicker').setValue('2015-05-10T00:00:00');
-      // Test full UTC around midday
-      //$('#date-field-2').data('datepicker').setValue('2015-05-10T12:00:00');
-      // Test full UTC with Date object
-      //$('#date-field-3').data('datepicker').setValue(new Date('2015-05-10T00:00:00'));
 
     },
 

@@ -31,16 +31,17 @@
 
         //Define Columns for the Grid.
         columns.push({ id: 'time1', name: 'Value', field: 'value', width: 150 });
-        columns.push({ id: 'time2', name: 'Default', field: 'value', formatter: Formatters.Time, editor: Editors.Time, width: 150 });
-        columns.push({ id: 'time3', name: 'Time 24', field: 'value', formatter: Formatters.Time, editor: Editors.Time, editorOptions: {'timeFormat': 'HH:mm'}, timeFormat: 'HH:mm', width: 150 });
-        columns.push({ id: 'time4', name: 'Seconds', field: 'value', formatter: Formatters.Time, editor: Editors.Time, editorOptions: {'timeFormat': 'hh:mm:ss a'}, timeFormat: 'hh:mm:ss a', width: 150 });
-        columns.push({ id: 'time5', name: 'Seconds 24', field: 'value', formatter: Formatters.Time, editor: Editors.Time, editorOptions: {'timeFormat': 'HH:mm:ss'}, timeFormat: 'HH:mm:ss', width: 150 });
+        columns.push({ id: 'time2', name: 'Default', field: 'value', formatter: Formatters.Time, editor: Editors.Time, width: 150, filterType: 'time' });
+        columns.push({ id: 'time3', name: 'Time 24', field: 'value', formatter: Formatters.Time, editor: Editors.Time, editorOptions: {'timeFormat': 'HH:mm'}, timeFormat: 'HH:mm', width: 150, filterType: 'time' });
+        columns.push({ id: 'time4', name: 'Seconds', field: 'value', formatter: Formatters.Time, editor: Editors.Time, editorOptions: {'timeFormat': 'h:mm:ss a'}, timeFormat: 'h:mm:ss a', width: 150, filterType: 'time' });
+        columns.push({ id: 'time5', name: 'Seconds 24', field: 'value', formatter: Formatters.Time, editor: Editors.Time, editorOptions: {'timeFormat': 'HH:mm:ss'}, timeFormat: 'HH:mm:ss', width: 150, filterType: 'time' });
 
         //Init and get the api for the grid
         $('#datagrid').datagrid({
           columns: columns,
           dataset: data,
           editable: true,
+		  filterable: true,
           toolbar: {title: 'Compressors', results: true, actions: true, rowHeight: true}
         });
 

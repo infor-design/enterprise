@@ -1,6 +1,6 @@
 {
   "name": "@infor/sohoxi",
-  "version": "4.3.0",
+  "version": "4.3.1-rc",
   "shortName": "sohoxi",
   "description": "Hook & Loop - SoHo XI Controls",
   "author": "Hook & Loop",
@@ -25,8 +25,9 @@
     "test:unit": "./bin/test.sh client config=test2/intern.local.unit",
     "develop-tag": "./bin/add-npm-tag.js develop",
     "bump-version": "./bin/bump-version.js",
-    "publish": "grunt publish && npm publish publish --tag dev --force",
-    "preinstall": "npm install -g pandoc-bin grunt-cli documentation",
+    "publish-dev": "grunt publish && npm publish publish --tag dev --force",
+    "publish-prod": "grunt publish && npm publish publish --force",
+    "install-global": "npm install -g pandoc-bin grunt-cli documentation",
     "documentation": "./build/generate-documentation.js"
   },
   "dependencies": {
