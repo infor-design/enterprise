@@ -1,8 +1,8 @@
 # Searchfield Component Implementation Detail [Learn More](https://soho.infor.com/index.php?p=component/search-box)
 
-## Important
+## Important Notes
 
-There is a specific component wrapper for searchfield components that reside inside of [Toolbars](/components/toolbar/) entitled [Toolbar Searchfield](/components/toolbar-searchfield).  These components
+Described below is the general API that is present in all searchfields.  There is a specific component wrapper for searchfield components that reside inside of [Toolbars](/components/toolbar/) entitled [Toolbar Searchfield](/components/toolbar-searchfield).  These components are very different from regular searchfields and have an expanded API.
 
 {{api-details}}
 
