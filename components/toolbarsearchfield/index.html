@@ -4,7 +4,7 @@
 <h3 id="functions">Functions</h3>
 <h2 id="configuration-options">Configuration Options</h2>
 <ol>
-<li><a href="/components/toolbar-searchfield/example-index.html">Common Configuration</a></li>
+<li><a href="/components/toolbarsearchfield/example-index.html">Common Configuration</a></li>
 </ol>
 <h2 id="code-example">Code Example</h2>
 <p><em>NOTE:</em> Toolbar Searchfields can only exist when a searchfield becomes invoked inside of a Toolbar element. The minimum amount of markup for building a toolbar is present in the code sample below. For more information about how to define and configure the Toolbar component, please see the <a href="/components/toolbar/">Toolbar API page</a>.</p>
@@ -21,6 +21,34 @@
   <span class="kw">&lt;/div&gt;</span>
 </code></pre>
 <h2 id="implementation-tips">Implementation Tips</h2>
-<h2 id="accessibility">Accessibility</h2>
+<ul>
+<li>A regular (Searchfield)[/components/searchfield] defined as an input field with a <code>.searchfield</code> class will be automatically converted to Toolbar Searchfield by its parent toolbar element when being invoked.</li>
+</ul>
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
+<ul>
+<li><em>Shift+left/up arrows</em> or <em>Shift+right/down arrows</em> - When focused on a Toolbar Searchfield, the focused element is wrapped inside of a <a href="/components/toolbar">Toolbar</a> element, which has its own rules that govern navigation with the arrow keys. These shortcuts help the user navigate a toolbar while leaving movement of the text cursor to be controlled with the arrow keys.<br /></li>
+<li><em>Alt+Del</em> - On a <code>clearable</code> searchfield, pressing this will clear its contents.</li>
+</ul>
 <h2 id="states-and-variations">States and Variations</h2>
+<ul>
+<li>Disabled<br /></li>
+<li>Enabled<br /></li>
+<li>Focused</li>
+</ul>
+<h3 id="contextual-colors">Contextual Colors</h3>
+<p>There are several scenarios where the background, border, and text color of a Toolbar Searchfield can change based on how it's used:</p>
+<ul>
+<li>There is an <a href="/components/toolbarsearchfield/example-alternate-style">Alternate In-Page Style</a> for Toolbar Searchfields that can be used when content is displayed over a gray background.<br /></li>
+<li><a href="/components/toolbarsearchfield/example-inside-contextual-panel.html">Inside Contextual Action Panels</a>, the background and border colors change to match the header.<br /></li>
+<li>In any example of a <a href="/components/header">Header</a>, the Toolbar Searchfield's background color becomes semi-transparent black, and the text/border change to stand out better on the darker colors defined in the Header's background.<br /></li>
+<li>Inside of <a href="/components/masthead">Mastheads</a>, the Toolbar Searchfield will change to a dark graphite/slate to match the background color of the Masthead.</li>
+</ul>
+<h3 id="size-settings">Size Settings</h3>
+<ul>
+<li><em>Collapsed</em> - If the <code>collapsible</code> setting is changed to true, toolbar searchfield can become &quot;collapsed&quot; when either de-focusing the searchfield wrapper, or resizing the page.<br /></li>
+<li><em>Expanded</em> - This is the default state for Toolbar Searchfields when <code>collapsible</code> is set to false. The searchfield will also look like this when focused in either case.</li>
+</ul>
+<h2 id="responsive-guidelines">Responsive Guidelines</h2>
+<ul>
+<li>When Activating a Toolbar Searchfield beneath the Phone Breakpoint Size, it will resize to become the full width of the viewport to make the search text easier to read.</li>
+</ul>

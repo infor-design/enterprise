@@ -20,9 +20,15 @@ Described below is the general API that is present in all searchfields.  There i
 ## Code Example
 
 ```html
+
+  <input class="searchfield" placeholder="Search..."/>
+
+
 ```
 
 ## Implementation Tips
+
+- Defining the `source` setting on Searchfield will cause it to invoke an [Autocomplete](/components/autocomplete).  The source is not directly handled by the Searchfield component, and is passed directly into this new Autocomplete instance.
 
 ## Accessibility
 

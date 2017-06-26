@@ -96,8 +96,13 @@
 <li><a href="/components/searchfield/example-categories-full.html">Categories (Full Size)</a></li>
 </ol>
 <h2 id="code-example">Code Example</h2>
-<pre class="sourceCode html"><code class="sourceCode html"></code></pre>
+<pre class="sourceCode html"><code class="sourceCode html">
+  <span class="kw">&lt;input</span><span class="ot"> class=</span><span class="st">&quot;searchfield&quot;</span><span class="ot"> placeholder=</span><span class="st">&quot;Search...&quot;</span><span class="kw">/&gt;</span>
+</code></pre>
 <h2 id="implementation-tips">Implementation Tips</h2>
+<ul>
+<li>Defining the <code>source</code> setting on Searchfield will cause it to invoke an <a href="/components/autocomplete">Autocomplete</a>. The source is not directly handled by the Searchfield component, and is passed directly into this new Autocomplete instance.</li>
+</ul>
 <h2 id="accessibility">Accessibility</h2>
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
 <h2 id="states-and-variations">States and Variations</h2>
