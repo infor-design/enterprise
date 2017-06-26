@@ -13,14 +13,14 @@
       <input class="lookup" name="username-display" id="username-display" autocomplete="off" data-validate="required"  />
     </div>
 
-    <button class="btn" type="button" id="show">Show Error</button>
-    <button class="btn" type="button" id="hide">Hide Error</button>
+    <button class="btn-secondary" type="button" id="show">Show Error</button>
+    <button class="btn-secondary" type="button" id="hide">Hide Error</button>
   </div>
 </div>
 
 <script type="text/javascript">
   $('button').button().on('click', function () {
-    $('#username-display').removeError().addError({message: 'I have an Error.', showTooltip: true});
+    $('#username-display').removeError().addError({message: 'I have an Error.', showTooltip: true}).addError({message: 'I have another Error.', showTooltip: true});
   });
 
   $('#hide').button().on('click', function () {

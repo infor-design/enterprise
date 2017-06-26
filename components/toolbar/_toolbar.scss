@@ -1,0 +1,429 @@
+// Toolbars
+//================================================== */
+
+$toolbar-buttonset-height: 40px;
+
+// See also Colors.scss
+.toolbar,
+.formatter-toolbar {
+  position: relative;
+  text-align: left;
+  -webkit-touch-callout: none;
+
+  &.has-title {
+    text-align: right;
+  }
+
+  &.right-aligned {
+    text-align: right;
+  }
+
+  // Acts as a spacer that causes the toolbar items to vertically align.
+  &::before {
+    @include vertical-alignment-spacer;
+  }
+
+  > * {
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  [class^="btn"] {
+    margin: 0;
+  }
+
+  .buttonset {
+    @include no-select();
+    height: $toolbar-buttonset-height;
+    overflow: hidden;
+    padding-left: 1px;  //for the focus state
+    width: 100%; // Overridden by sizing calculation.
+
+    > * {
+      margin: 3px 5px 3px 0;
+      vertical-align: top;
+
+      &:last-child {
+        margin-right: 1px;
+      }
+
+      &.is-overflowed {
+        display: none;
+      }
+    }
+
+    > [class^="btn"] {
+      min-width: 34px;
+    }
+
+    > .separator {
+      background-color: $formatter-toolbar-separator-color;
+      display: inline-block;
+      height: 20px;
+      margin: 3px 16px 0;
+      position: relative;
+      top: 6px;
+      width: 1px;
+    }
+
+    // Hide separators that come after "overflowed" elements
+    .is-overflowed {
+      + .separator,
+      + .popupmenu,
+      + .popupmenu-wrapper + .separator {
+        display: none;
+      }
+    }
+  }
+
+  .title {
+    @include enable-select();
+    height: $toolbar-buttonset-height;
+    overflow: hidden;
+    position: relative;
+    text-align: left;
+    text-overflow: ellipsis;
+    top: 0;
+    white-space: nowrap;
+    width: 45%; // Overridden by sizing calculation.
+
+    // Acts as a spacer that causes the toolbar items to vertically align.
+    &::before {
+      @include vertical-alignment-spacer;
+    }
+
+    > * {
+      display: inline-block;
+      margin: auto 0;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    > h1 {
+      text-overflow: ellipsis;
+
+      + [class^="btn"] {
+        margin-left: 5px;
+      }
+    }
+
+    + .buttonset {
+      text-align: right;
+      width: calc(55% - 1px); // -1px for the spacer in the ::after pseudo on the toolbar elem.
+    }
+  }
+
+  // Container for More Button
+  .more {
+    @include no-select();
+    display: none;
+    text-align: right;
+
+    > * {
+      margin-right: 1px;
+    }
+  }
+
+  &.do-resize {
+    .buttonset {
+      width: auto;
+    }
+
+    .title {
+      left: 1px;
+      position: absolute;
+      width: auto;
+    }
+
+    &.has-more-button {
+      .buttonset {
+        width: calc(100% - 38px);
+      }
+
+      .title {
+        + .buttonset {
+          width: auto;
+        }
+      }
+    }
+
+    &.standalone {
+      .title {
+        left: 11px;
+      }
+    }
+  }
+
+  &.has-more-button {
+    .buttonset {
+      width: calc(100% - 38px);
+
+      > *:last-child {
+        margin-right: 5px; // Add back the 5px since we need to visually separate the More button from the others.
+      }
+    }
+
+    &.has-title {
+      .buttonset {
+        width: calc(55% - 38px);
+      }
+    }
+
+    .more {
+      // scss-lint:disable ImportantRule
+      display: inline-block !important;
+      // scss-lint:enable ImportantRule
+    }
+  }
+
+  // Standalone Toolbar simply has a background and border that surrounds its boundaries
+  &.standalone {
+    background-color: $toolbar-standalone-bg-color;
+    border-bottom: 1px solid $toolbar-standalone-border-color;
+    padding: 0 1rem;
+
+    [class^="btn"] {
+      &[disabled],
+      &[disabled]:hover {
+        color: $toolbar-standalone-disabled-color;
+      }
+    }
+  }
+}
+
+// Styles for regular toolbar only
+.toolbar {
+  font-size: 0;
+  margin-bottom: 5px;
+
+  .title {
+    @include antialiased();
+    @include font-size(16);
+    color: $font-color-extrahighcontrast;
+
+    + .buttonset {
+      text-align: right;
+    }
+  }
+}
+
+// Used in Editor, some card menus, etc.
+.popupmenu.toolbar-options {
+  li {
+    > a {
+      padding: 0 30px;
+    }
+
+    > .icon,
+    > b {
+      margin-left: 10px;
+      width: 28px;
+    }
+
+    &.is-selected {
+      background-color: $popupmenu-hover-color;
+      color: $font-color-highcontrast;
+    }
+  }
+
+  &.has-icons {
+    li {
+      > a {
+        padding: 0 30px 0 45px;
+      }
+    }
+  }
+}
+
+.is-safari .toolbar,
+.is-safari .formatter-toolbar {
+  overflow-x: initial;
+}
+
+// Styles for contextual toolbar
+.contextual-toolbar {
+  background-color: $contextual-toolbar-bg-color;
+  margin: 0;
+  // scss-lint:disable ImportantRule
+  overflow: hidden !important;
+  // scss-lint:enable ImportantRule
+  z-index: 20;
+
+  + .listview {
+    @include css3(transition, height 300ms cubic-bezier(.17, .04, .03, .94));
+    height: calc(100% - 44px);
+  }
+
+  // Updated changes from listview button and font sizes
+  // Override Toolbar styles
+  &.toolbar {
+    height: 42px;
+    margin-bottom: 0;
+    padding: 0 20px;
+
+    .title {
+      @include font-size(14);
+      color: $contextual-toolbar-color;
+      height: 42px;
+    }
+
+    .buttonset {
+      height: 42px;
+    }
+
+    // EPC: NOTE: Do NOT add different margins and heights to buttons inside of contextual toolbars.
+    // Toolbar Overflow Calculation needs buttons to be "shorter" than the buttonset.
+    [class^="btn"] {
+      color: $contextual-toolbar-button-color;
+      min-width: 0;
+      padding: 0 10px;
+
+      &.btn-icon {
+        padding: 0 8px;
+      }
+
+      .icon {
+        fill: $contextual-toolbar-button-color;
+      }
+
+      &.btn-actions {
+        margin-top: 0;
+      }
+
+      &:focus {
+        box-shadow: 0 0 0 2px transparent, 0 0 0 1px $contextual-toolbar-color;
+
+        &:not(.hide-focus) {
+          color: $contextual-toolbar-color;
+        }
+      }
+
+      &:hover {
+        color: $contextual-toolbar-button-hover-color;
+
+        .icon {
+          fill: $contextual-toolbar-button-hover-color;
+        }
+      }
+
+      &.is-selected {
+        color: $contextual-toolbar-color;
+
+        .icon {
+          fill: $contextual-toolbar-color;
+        }
+
+        &:focus:not(.hide-focus) {
+          color: $contextual-toolbar-color;
+
+          .icon {
+            fill: $contextual-toolbar-color;
+          }
+        }
+      }
+
+      .ripple {
+        background-color: $contextual-toolbar-color;
+      }
+    }
+  }
+
+  &.is-hidden {
+    display: none;
+    height: 0;
+  }
+}
+
+@include respond-to(phone) {
+  .toolbar {
+    .btn,
+    .btn-tertiary {
+      padding: 0 5px;
+    }
+  }
+}
+
+@media (max-width: $breakpoint-phone-to-tablet - 1) {
+  .toolbar {
+    // Show text with icon buttons by using this class.
+    // Text will still become invisible on small breakpoint (but still visible to screen readers).
+    // See respond-to(tabletdown) below.
+    [class^="btn"] {
+      width: auto;
+
+      > .icon + span {
+        display: inline-block;
+        visibility: hidden;
+        width: 0;
+
+        &:not(.audible) {
+          padding-left: 0;
+        }
+
+        + .icon {
+          margin-left: 0;
+        }
+      }
+    }
+
+    .btn-split-menu {
+      &.btn {
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+//RTL Styles
+html[dir='rtl'] {
+
+  .toolbar,
+  .formatter-toolbar {
+    text-align: right;
+
+    &.has-title {
+      text-align: left;
+    }
+
+    &.right-aligned {
+      text-align: left;
+    }
+
+    .title {
+      text-align: right;
+
+      + .buttonset {
+        text-align: left;
+      }
+    }
+
+    &.has-more-button {
+      .buttonset > *:last-child {
+        margin-left: 5px;
+        margin-right: 0;
+      }
+    }
+
+    &.do-resize {
+      .title {
+        left: auto;
+        right: 0;
+      }
+
+      &.standalone {
+        .title {
+          left: auto;
+          right: 10px;
+        }
+      }
+    }
+
+  }
+
+}
+
+.is-firefox {
+  .contextual-toolbar.toolbar [class^="btn"] {
+    line-height: 30px;
+  }
+}

@@ -89,7 +89,6 @@
   p {
     @include font-size(12);
     color: $tooltip-color;
-    text-align: center;
     word-break: normal;
     word-wrap: break-word;
   }
@@ -112,7 +111,6 @@
 
   .action-tooltip {
     font-weight: bold;
-    text-transform: uppercase;
   }
 
 }
@@ -217,9 +215,10 @@
   .tooltip-content {
     padding: 20px;
 
-    > div {
-      overflow: hidden;
-    }
+    // SOHO-6032
+    //> div {
+    //  overflow: hidden;
+    //}
   }
 
   &.alternate {

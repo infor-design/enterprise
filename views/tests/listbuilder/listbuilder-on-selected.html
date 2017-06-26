@@ -51,6 +51,8 @@
         </div>
       </div>
 
+      <p>On load few times list will select different items after every one second (1000 milliseconds)</p>
+
     </div>
   </div>
 
@@ -94,7 +96,8 @@ $('body').one('initialized', function () {
     ds.push({id: 1, value: 'opt-1', text: 'Argentina'});
     ds.push({id: 2, value: 'opt-2', text: 'Belize'});
     ds.push({id: 3, value: 'opt-3', text: 'Colombia'});
-    ds.push({id: 4, value: 'opt-4', text: 'Dominican Republic'});
+    // Make selected thru dataset (selected: true)
+    ds.push({id: 4, value: 'opt-4', text: 'Dominican Republic', selected: true});
     ds.push({id: 5, value: 'opt-5', text: 'Ecuador', disabled: true});
     ds.push({id: 6, value: 'opt-6', text: 'France'});
     ds.push({id: 7, value: 'opt-7', text: 'Germany'});
@@ -107,12 +110,30 @@ $('body').one('initialized', function () {
     var elem = $('#example-listbuilder');
     elem.listbuilder({ dataset: ds, template: $('#listbuilder-tmpl').html() });
 
-    // On selected ==========================================================
+    // On selected =============================================================
     elem.on('selected', function (e, args) {
      console.log(args);
     });
 
-  });
+    // Get api
+    var api = elem.data('listbuilder');
 
+    // Make selected after every one second (1000 milliseconds) ================
+    // Select first item
+    setTimeout(function() {
+      api.select('first');
+    }, 1000);
+
+    // Select last item
+    setTimeout(function() {
+      api.select('last');
+    }, 2000);
+
+    // Select third item (zero based index)
+    setTimeout(function() {
+      api.select(2);
+    }, 3000);
+
+  });
 });
 </script>

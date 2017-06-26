@@ -78,7 +78,7 @@
   @each $control in $controls {
     &.inline-#{$control} {
       .label-text {
-        margin-bottom: 5px;
+        margin-bottom: 8px;
       }
     }
   }
@@ -112,11 +112,12 @@
   color: $checkbox-label-color;
   display: inline-block;
   margin-top: 1px;
+  margin-bottom: 0;
 }
 
 .field > input,
 .field > textarea {
-  margin-bottom: 20px;
+  margin-bottom: 0;
 }
 
 // Two Connected Fields
@@ -126,6 +127,18 @@
   display: inline-block;
   margin-right: 15px;
   vertical-align: top;
+
+  input[type="checkbox"] + label {
+    margin-top: 32px;
+
+    &::after {
+      top: 6px;
+    }
+
+    &::before {
+      margin-top: -3px;
+    }
+  }
 }
 
 .compound-field > .field-short {
@@ -138,7 +151,12 @@
 }
 
 .field {
+  margin-bottom: 20px;
   position: relative;
+
+  &:last-child:not(:only-child) {
+    margin-bottom: 0;
+  }
 
   textarea + .btn-actions {
     margin-left: 4px;
@@ -164,8 +182,26 @@
   }
 
   > .textarea-wordcount {
-    color: $label-color;
+    color: $font-color-muted;
     margin-bottom: 14px;
+  }
+
+  &.field-radio {
+    margin-bottom: 10px;
+  }
+
+  &.field-checkbox {
+    margin-bottom: 12px;
+
+    .inline-checkbox .label-text {
+      // scss-lint:disable ImportantRule
+      margin-bottom: 1px !important;
+      // scss-lint:enable ImportantRule
+    }
+  }
+
+  .field:not(.field-checkbox) + &.field-checkbox {
+    margin-bottom: 18px;
   }
 
   &.l-pull-left {
@@ -180,7 +216,7 @@
       @include font-size(14);
       display: inline-block;
       position: absolute;
-      top: 27px;
+      top: 32px;
     }
   }
 
@@ -249,30 +285,26 @@ textarea {
   &.error {
     padding: 10px 25px 10px 10px;
   }
+
+  &[readonly],
+  &[disabled] {
+    + .textarea-wordcount {
+      display: none;
+    }
+  }
 }
 
 .textarea-wordcount {
-  @include font-size(10);
+  @include font-size(12);
   @include rem(line-height, 2rem);
 
   display: block;
-  margin-top: -20px;
   min-height: auto;
-  text-transform: uppercase;
   width: 362px;
-
-  .focus {
-    color: $input-color;
-  }
 
   &.almost-empty {
     color: $error-color;
   }
-}
-
-textarea[readonly] + .textarea-wordcount,
-textarea[disabled] + .textarea-wordcount {
-  display: none;
 }
 
 .textarea-print {
@@ -298,7 +330,7 @@ textarea[disabled] + .textarea-wordcount {
 }
 
 .inline {
-  $controls: ('busy', 'colorpicker', 'datepicker', 'switch', 'lookup', 'searchfield', 'timepicker');
+  $controls: ('busy', 'colorpicker', 'datepicker', 'switch', 'lookup', 'searchfield', 'timepicker, radio');
   @include inline-control-label($controls);
   @include inline-control($controls);
 
@@ -362,7 +394,8 @@ label,
 
 // Error States
 .error,
-.error-message {
+.error-message,
+.error-message p {
   color: $error-color;
 }
 
@@ -402,11 +435,16 @@ label,
 // Shorter/Legacy Inputs
 .field-short {
   font-size: 0;
+  margin-bottom: 10px;
   position: relative;
+
+  &:last-child:not(:only-child) {
+    margin-bottom: 0;
+  }
 
   input {
     @include font-size(12);
-    margin-bottom: 10px;
+    margin-bottom: 0;
     padding: 5px;
     resize: none;
     text-align: left;
@@ -448,15 +486,6 @@ label,
     margin-top: 6px;
     top: auto;
     width: 18px;
-  }
-
-  .error-message {
-    margin-top: -10px;
-
-    .message-text {
-      margin-top: 3px;
-      position: relative;
-    }
   }
 }
 
@@ -528,7 +557,7 @@ label,
   color: $error-color;
   display: block;
   line-height: 1.2rem;
-  margin-top: -15px;
+  margin-top: 7px;
   max-width: 300px;
   position: relative;
 
@@ -545,14 +574,8 @@ label,
   .message-text {
     font-size: inherit;
     line-height: 15px;
-    margin-bottom: 15px;
-    margin-top: 1px;
     max-width: 280px;
     padding-left: $icon-width + 5;
-  }
-
-  + .error-message {
-    margin-top: -10px;
   }
 }
 
@@ -565,10 +588,6 @@ label,
     position: relative;
     right: initial;
   }
-}
-
-.dropdown-wrapper + .error-message {
-  margin-top: -15px;
 }
 
 .column,

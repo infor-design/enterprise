@@ -11,34 +11,31 @@
 
         <h1>Application Name</h1>
 
-        <div class="field">
-          <label for="username-display" class="required">Email</label>
-          <input type="text" name="username-display" id="username-display" autocomplete="off" data-validate="required">
-        </div>
-
-        <div class="field">
-          <label for="password-display" class="required">Password</label>
-          <input type="password" id="password-display" data-validate="required">
-        </div>
-
-        <div class="field">
-          <label for="states"class="label">Server</label>
-          <select id="states"name="states"class="dropdown">
-            <option value="N">NL</option>
-            <option value="U">US</option>
-            <option value="E">EU</option>
-            <option value="c">China</option>
-          </select>
-        </div>
-
         <form id="signin" data-validate-on="submit" autocomplete="off">
-            <button class="btn-primary" type="submit">Sign in</button>
-            <a class="hyperlink" href="forgotpassword">Forgot Password?</a>
 
-            <label for="username" class="audible">Username</label>
-            <input type="hidden" name="username" id="username" >
-            <label for="password" class="audible">Password</label>
-            <input type="password" id="xxx" name="password">
+          <div class="field">
+            <label for="username" class="required">Email</label>
+            <input type="text" name="username" id="username" autocomplete="off" data-validate="required">
+          </div>
+
+          <div class="field">
+            <label for="password" class="required">Password</label>
+            <input type="password" id="password" data-validate="required" name="password">
+          </div>
+
+          <div class="field">
+            <label for="states" class="label">Server</label>
+            <select id="states" name="states" class="dropdown">
+              <option value="N">NL</option>
+              <option value="U">US</option>
+              <option value="E">EU</option>
+              <option value="c">China</option>
+            </select>
+          </div>
+
+          <button class="btn-primary" type="submit">Sign in</button>
+          <a class="hyperlink" href="forgotpassword">Forgot Password?</a>
+
         </form>
     </section>
   </div>

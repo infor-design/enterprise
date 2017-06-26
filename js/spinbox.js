@@ -18,7 +18,11 @@
 
     // Settings and Options
     var pluginName = 'spinbox',
-        defaults = {},
+        defaults = {
+          min: null,
+          max: null,
+          step: null
+        },
         settings = $.extend({}, defaults, options);
 
     /**
@@ -36,9 +40,12 @@
     Spinbox.prototype = {
 
       init: function() {
+        this.settings = $.extend({}, settings);
         this.inlineLabel = this.element.closest('label');
         this.inlineLabelText = this.inlineLabel.find('.label-text');
         this.isInlineLabel = this.element.parent().is('.inline');
+        this.isWrapped = this.element.parent().is('.spinbox-wrapper');
+
         this
           .setInitialValue()
           .addMarkup()
@@ -74,6 +81,18 @@
         if (iOS) {
           this.element.attr('pattern','\\d*');
         }
+
+        if (this.settings.max) {
+          this.element.attr('max', this.settings.max);
+        }
+        if (this.settings.step) {
+          this.element.attr('step', this.settings.step);
+        }
+        if (this.settings.min) {
+          this.element.attr('min', this.settings.min);
+        }
+
+
         return this;
       },
 
@@ -82,11 +101,23 @@
         if (this.isInlineLabel) {
           this.inlineLabel.addClass('spinbox-wrapper');
         }
-        else if (!this.element.parent('.spinbox-wrapper').length) {
+        else if (!this.isWrapped) {
           this.element.wrap('<span class="spinbox-wrapper"></span>');
         }
 
         this.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+        if (this.isWrapped) {
+          this.buttons = {
+            'down' : this.element.parent().find('.down').button(),
+            'up' : this.element.parent().find('.up').button()
+          };
+
+          if (this.isTouch) {
+            this.buttons.down.attr('aria-hidden', 'true');
+            this.buttons.up.attr('aria-hidden', 'true');
+          }
+        }
 
         if (!this.buttons) {
           this.buttons = {

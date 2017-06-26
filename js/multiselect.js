@@ -22,6 +22,9 @@
         defaults = {
           filterMode: 'contains',
           maxSelected: undefined,
+          moveSelected: 'all',
+          showEmptyGroupHeaders: false,
+          showSelectAll: false,
           source: undefined
         },
         settings = $.extend({}, defaults, options);
@@ -49,7 +52,7 @@
         var ddOpts = {
             closeOnSelect: false,
             empty: true,
-            moveSelectedToTop: true,
+            moveSelected: 'all',
             multiple: true
           };
 
@@ -63,6 +66,18 @@
 
         if (this.settings.maxSelected) {
           ddOpts.maxSelected = this.settings.maxSelected;
+        }
+
+        if (this.settings.moveSelected) {
+          ddOpts.moveSelected = this.settings.moveSelected;
+        }
+
+        if (this.settings.showEmptyGroupHeaders) {
+          ddOpts.showEmptyGroupHeaders = this.settings.showEmptyGroupHeaders;
+        }
+
+        if (this.settings.showSelectAll) {
+          ddOpts.showSelectAll = this.settings.showSelectAll;
         }
 
         this.element.dropdown(ddOpts);

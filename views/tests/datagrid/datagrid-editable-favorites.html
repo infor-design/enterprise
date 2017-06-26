@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="twelve columns">
+     <div class="toolbar" role="toolbar">
+        <div class="title">
+          <span class="datagrid-row-count"></span> results in Companies for "Gravel"
+        </div>
+      </div>
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+      var grid,
+        columns = [];
+
+      //Define Columns for the Grid.
+
+      columns.push({ id: 'companyName', name: 'Company Name', field: 'companyName', formatter: Formatters.Hyperlink, width: 350});
+      columns.push({ id: 'phone', name: 'Phone', field: 'phone', editor: Editors.Input});
+      columns.push({ id: 'location', name: 'Location', field: 'location', editor: Editors.Input});
+      columns.push({ id: 'contact', name: 'Contact Name', field: 'contact', editor: Editors.Input});
+      columns.push({ id: 'customerSince', name: 'Customer Since', field: 'customerSince', editor: Editors.Input});
+      columns.push({ id: 'favorite', name: '', field: 'favorite', showEmpty: true, formatter: Formatters.Favorite, editor: Editors.Favorite});
+
+       var url = '{{basepath}}api/companies';
+
+      $.getJSON(url, function(res) {
+         //Init and get the api for the grid
+        grid = $('#datagrid').datagrid({
+          columns: columns,
+          editable: true,
+          dataset: res,
+          rowHeight: 'short',
+          toolbar: {results: true}
+        }).on('cellchange', function (e, args) {
+          console.log(args);
+        });
+      });
+
+    });
+</script>

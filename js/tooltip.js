@@ -33,6 +33,7 @@
         parentElement: null,
         keepOpen: false,
         extraClass: null,
+        placementOpts: undefined,
         maxWidth: null
       };
 
@@ -162,7 +163,7 @@
         var self = this, timer, delay = 400;
 
         if (this.settings.trigger === 'hover' && !this.settings.isError) {
-          this.element
+          ((this.element.is('.dropdown, .multiselect')) ? this.activeElement : this.element)
             .on('mouseenter.tooltip', function() {
               timer = setTimeout(function() {
                 self.show();

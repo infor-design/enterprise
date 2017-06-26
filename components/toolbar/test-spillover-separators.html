@@ -1,0 +1,81 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Toolbar Test:  Separators in the Spillover Menu</h2>
+    <p><a class="hyperlink" href="http://jira/browse/SOHO-6194" target="_blank">Related JIRA Ticket</a>.  Toolbars that contain separators should properly spill the separators over into the "More Actions" menu.  They should also properly exist in the "More Actions" menu's submenus.</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="toolbar" role="toolbar" aria-label="Data table actions" data-options='{ "maxVisibleButtons": 5 }'>
+      <div class="title">163 Accounts</div>
+      <div class="buttonset">
+        <button type="button" class="btn">
+          <span>Categories</span>
+        </button>
+
+        <button type="button" class="btn">
+          <span>Other Stuff</span>
+        </button>
+
+        <button type="button" class="btn">
+          <svg class="icon">
+            <use xlink:href="#icon-calendar"></use>
+          </svg>
+          <span>Date</span>
+        </button>
+
+        <button type="button" class="btn">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-settings"></use>
+          </svg>
+          <span>Settings</span>
+        </button>
+
+        <div class="separator"></div>
+
+        <button type="button" class="btn">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-filter"></use>
+          </svg>
+          <span>Filter</span>
+        </button>
+
+        <button type="button" class="btn-menu">
+          <span>Status</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-dropdown"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu has-icons">
+          <li><a href="#">New</a></li>
+          <li class="is-checked"><a href="#">Active</a></li>
+          <li class="separator"></li>
+          <li><a href="#">Processing</a></li>
+          <li><a href="#">Completed</a></li>
+        </ul>
+      </div>
+
+      <div class="more">
+        <button class="btn-actions" type="button">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+          <span class="audible">More Actions</span>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Option One</a></li>
+          <li><a href="#">Option Two</a></li>
+          <li><a href="#">Option Three</a></li>
+          <li class="separator single-selectable-section"></li>
+          <li class="heading">Row Height</li>
+          <li class="is-selectable"><a data-option="row-short" href="#">Short</a></li>
+          <li class="is-selectable"><a data-option="row-medium" href="#">Medium</a></li>
+          <li class="is-selectable is-checked"><a data-option="row-normal" href="#">Normal</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>

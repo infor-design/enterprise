@@ -1,0 +1,41 @@
+<style>
+.dropdown-option[data-my-custom-attr="2-Two"] {
+  background-color: #ffd726;
+}
+.dropdown-option[data-my-custom-attr="3-Three"] {
+  background-color: #80ce4d;
+}
+</style>
+
+<div class="row">
+  <div class="six columns">
+    <h3>Dropdown Test: with data attribute</h3><br><br>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="with-data-attribute">With data attribute</label>
+      <select id="with-data-attribute" data-validate="required" class="dropdown">
+        <option value=""></option>
+        <option value="1" data-my-custom-attr="1-One" data-test="another data attribute">One</option>
+        <option value="2" data-my-custom-attr="2-Two">Two</option>
+        <option value="3" data-my-custom-attr="3-Three">Three</option>
+        <option value="4" data-my-custom-attr="4-Four">Four</option>
+      </select>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+
+    $('#with-data-attribute').on('selected', function (e, args) {
+      console.log(args.attr('data-my-custom-attr'));
+    });
+
+  });
+</script>

@@ -1,0 +1,1342 @@
+[
+  {
+    "value": "AAT",
+    "shortLabel": "Onaylama Denetimi İzleme",
+    "label": "AAT Onaylama Denetimi İzleme"
+  },
+  {
+    "value": "ABQ",
+    "shortLabel": "Hesap Bakiyesi İnceleme",
+    "label": "ABQ Hesap Bakiyesi İnceleme"
+  },
+  {
+    "value": "ACA",
+    "shortLabel": "Hesap Dağıtım",
+    "label": "ACA Hesap Dağıtım"
+  },
+  {
+    "value": "ACD",
+    "shortLabel": "Hesap Dokümanları",
+    "label": "ACD Hesap Dokümanları"
+  },
+  {
+    "value": "ACL",
+    "shortLabel": "Ek Kod Listesi",
+    "label": "ACL Ek Kod Listesi"
+  },
+  {
+    "value": "ACQ",
+    "shortLabel": "Hesap İnceleme",
+    "label": "ACQ Hesap İnceleme"
+  },
+  {
+    "value": "ADD",
+    "shortLabel": "Adresler",
+    "label": "ADD Adresler"
+  },
+  {
+    "value": "AFS",
+    "shortLabel": "Ek Sahalar Oluşturma",
+    "label": "AFS Ek Sahalar Oluşturma"
+  },
+  {
+    "value": "ALC",
+    "shortLabel": "Dağıtım Kodları Oluşturma",
+    "label": "ALC Dağıtım Kodları Oluşturma"
+  },
+  {
+    "value": "ANC",
+    "shortLabel": "Analiz Kodları",
+    "label": "ANC Analiz Kodları"
+  },
+  {
+    "value": "AND",
+    "shortLabel": "Analiz Boyutları",
+    "label": "AND Analiz Boyutları"
+  },
+  {
+    "value": "ANH",
+    "shortLabel": "Analiz Hiyerarşisi",
+    "label": "ANH Analiz Hiyerarşisi"
+  },
+  {
+    "value": "ANM",
+    "shortLabel": "Deftere Analiz Aktarma",
+    "label": "ANM Deftere Analiz Aktarma"
+  },
+  {
+    "value": "ANS",
+    "shortLabel": "Analiz Yapısı",
+    "label": "ANS Analiz Yapısı"
+  },
+  {
+    "value": "ANY",
+    "shortLabel": "Analiz Hiyerarşisi Kod Atama",
+    "label": "ANY Analiz Hiyerarşisi Kod Atama"
+  },
+  {
+    "value": "AOT",
+    "shortLabel": "Bekleyen Onaylama",
+    "label": "AOT Bekleyen Onaylama"
+  },
+  {
+    "value": "APV",
+    "shortLabel": "Onay Veri Toplama",
+    "label": "APV Onay Veri Toplama"
+  },
+  {
+    "value": "ATS",
+    "shortLabel": "Onay Tabloları",
+    "label": "ATS Onay Tabloları"
+  },
+  {
+    "value": "AUL",
+    "shortLabel": "Onay Detayları",
+    "label": "AUL Onay Detayları"
+  },
+  {
+    "value": "AUS",
+    "shortLabel": "Onaylama Aşaması Oluşturma",
+    "label": "AUS Onaylama Aşaması Oluşturma"
+  },
+  {
+    "value": "AUT",
+    "shortLabel": "Onaylar",
+    "label": "AUT Onaylar"
+  },
+  {
+    "value": "BAC",
+    "shortLabel": "İş Hesap Kodları",
+    "label": "BAC İş Hesap Kodları"
+  },
+  {
+    "value": "BCQ",
+    "shortLabel": "Bütçe Kontrolu İnceleme",
+    "label": "BCQ Bütçe Kontrolu İnceleme"
+  },
+  {
+    "value": "BCS",
+    "shortLabel": "Bütçe Kontrolu Oluşturma",
+    "label": "BCS Bütçe Kontrolu Oluşturma"
+  },
+  {
+    "value": "BDE",
+    "shortLabel": "Banka Detayları Ek Oluşturma",
+    "label": "BDE Banka Detayları Ek Oluşturma"
+  },
+  {
+    "value": "BLA",
+    "shortLabel": "İş Satırı Arşivi",
+    "label": "BLA İş Satırı Arşivi"
+  },
+  {
+    "value": "BLB",
+    "shortLabel": "Bütçe Etiketleri",
+    "label": "BLB Bütçe Etiketleri"
+  },
+  {
+    "value": "BNK",
+    "shortLabel": "Banka Detayları Oluşturma",
+    "label": "BNK Banka Detayları Oluşturma"
+  },
+  {
+    "value": "BPL",
+    "shortLabel": "Deftere Grup Nakli",
+    "label": "BPL Deftere Grup Nakli"
+  },
+  {
+    "value": "BRS",
+    "shortLabel": "Grup Referansları Oluşturma",
+    "label": "BRS Grup Referansları Oluşturma"
+  },
+  {
+    "value": "BUA",
+    "shortLabel": "Şirket İdaresi",
+    "label": "BUA Şirket İdaresi"
+  },
+  {
+    "value": "BUN",
+    "shortLabel": "Şirket Adı",
+    "label": "BUN Şirket Adı"
+  },
+  {
+    "value": "CAA",
+    "shortLabel": "Masraf Dağıtım Takvimi",
+    "label": "CAA Masraf Dağıtım Takvimi"
+  },
+  {
+    "value": "CAD",
+    "shortLabel": "Masraf Dağıtım Oluşturma",
+    "label": "CAD Masraf Dağıtım Oluşturma"
+  },
+  {
+    "value": "CAL",
+    "shortLabel": "Masraf Dağıtım Çalıştırma",
+    "label": "CAL Masraf Dağıtım Çalıştırma"
+  },
+  {
+    "value": "CAR",
+    "shortLabel": "Masraf Dağıtım Oranları",
+    "label": "CAR Masraf Dağıtım Oranları"
+  },
+  {
+    "value": "CAS",
+    "shortLabel": "Masraf Dağıtım Kaynakları",
+    "label": "CAS Masraf Dağıtım Kaynakları"
+  },
+  {
+    "value": "CAT",
+    "shortLabel": "Masraf Dağıtım Hedefi",
+    "label": "CAT Masraf Dağıtım Hedefi"
+  },
+  {
+    "value": "CBG",
+    "shortLabel": "Bütçe Değiştir",
+    "label": "CBG Bütçe Değiştir"
+  },
+  {
+    "value": "CBU",
+    "shortLabel": "Şirket Değiştir",
+    "label": "CBU Şirket Değiştir"
+  },
+  {
+    "value": "CDS",
+    "shortLabel": "Kontrol Birimi Güvenliği",
+    "label": "CDS Kontrol Birimi Güvenliği"
+  },
+  {
+    "value": "CGM",
+    "shortLabel": "Configuration Manager",
+    "label": "CGM Configuration Manager"
+  },
+  {
+    "value": "CGS",
+    "shortLabel": "Konsolidasyon Grupları",
+    "label": "CGS Konsolidasyon Grupları"
+  },
+  {
+    "value": "CHI",
+    "shortLabel": "Paylaştırma İndeksi",
+    "label": "CHI Paylaştırma İndeksi"
+  },
+  {
+    "value": "CHR",
+    "shortLabel": "Paylaştırma Kuralları",
+    "label": "CHR Paylaştırma Kuralları"
+  },
+  {
+    "value": "CIT",
+    "shortLabel": "Arayüz Tablolarını Temizle",
+    "label": "CIT Arayüz Tablolarını Temizle"
+  },
+  {
+    "value": "CNC",
+    "shortLabel": "Para Birimi Kodları",
+    "label": "CNC Para Birimi Kodları"
+  },
+  {
+    "value": "CND",
+    "shortLabel": "Para Birimi Günlük Oranları",
+    "label": "CND Para Birimi Günlük Oranları"
+  },
+  {
+    "value": "CNP",
+    "shortLabel": "Para Birimi Dönem Oranları",
+    "label": "CNP Para Birimi Dönem Oranları"
+  },
+  {
+    "value": "COA",
+    "shortLabel": "Hesap Planı",
+    "label": "COA Hesap Planı"
+  },
+  {
+    "value": "CON",
+    "shortLabel": "İlgili Kişiler",
+    "label": "CON İlgili Kişiler"
+  },
+  {
+    "value": "CPD",
+    "shortLabel": "Dönemi Değiştir",
+    "label": "CPD Dönemi Değiştir"
+  },
+  {
+    "value": "CPS",
+    "shortLabel": "Şifre Değiştir",
+    "label": "CPS Şifre Değiştir"
+  },
+  {
+    "value": "CRT",
+    "shortLabel": "Currency Rate Types",
+    "label": "CRT Currency Rate Types"
+  },
+  {
+    "value": "CUS",
+    "shortLabel": "Müşteriler",
+    "label": "CUS Müşteriler"
+  },
+  {
+    "value": "DAC",
+    "shortLabel": "Veri Denetim Konfigürasyonu",
+    "label": "DAC Veri Denetim Konfigürasyonu"
+  },
+  {
+    "value": "DAE",
+    "shortLabel": "Veri Denetim Derleme",
+    "label": "DAE Veri Denetim Derleme"
+  },
+  {
+    "value": "DAL",
+    "shortLabel": "Veri Erişim Temizleme",
+    "label": "DAL Veri Erişim Temizleme"
+  },
+  {
+    "value": "DAM",
+    "shortLabel": "Veri Denetimi Tutma",
+    "label": "DAM Veri Denetimi Tutma"
+  },
+  {
+    "value": "DDE",
+    "shortLabel": "Veri Tanımlama Editörü",
+    "label": "DDE Veri Tanımlama Editörü"
+  },
+  {
+    "value": "DFM",
+    "shortLabel": "Varsayımsal Forma Dön",
+    "label": "DFM Varsayımsal Forma Dön"
+  },
+  {
+    "value": "DFS",
+    "shortLabel": "Doküman Formatı",
+    "label": "DFS Doküman Formatı"
+  },
+  {
+    "value": "DMG",
+    "shortLabel": "Veri Transferi",
+    "label": "DMG Veri Transferi"
+  },
+  {
+    "value": "DYB",
+    "shortLabel": "Günlük Defter Oluşturma",
+    "label": "DYB Günlük Defter Oluşturma"
+  },
+  {
+    "value": "DYL",
+    "shortLabel": "Günlük Defter Listeleme",
+    "label": "DYL Günlük Defter Listeleme"
+  },
+  {
+    "value": "ECP",
+    "shortLabel": "Kurumsal Veri Yayın Konfigürasyonu",
+    "label": "ECP Kurumsal Veri Yayın Konfigürasyonu"
+  },
+  {
+    "value": "ECS",
+    "shortLabel": "Kurumsal Veri Üyeliği Konfigürasyonu",
+    "label": "ECS Kurumsal Veri Üyeliği Konfigürasyonu"
+  },
+  {
+    "value": "ELP",
+    "shortLabel": "Kurumsal Veri Yayın Aktivitesi Logu",
+    "label": "ELP Kurumsal Veri Yayın Aktivitesi Logu"
+  },
+  {
+    "value": "ELS",
+    "shortLabel": "Kurumsal Veri Üyeliği Aktivite Logu",
+    "label": "ELS Kurumsal Veri Üyeliği Aktivite Logu"
+  },
+  {
+    "value": "EMP",
+    "shortLabel": "Çalışanlar",
+    "label": "EMP Çalışanlar"
+  },
+  {
+    "value": "EMR",
+    "shortLabel": "Çalışanlar Rolleri",
+    "label": "EMR Çalışanlar Rolleri"
+  },
+  {
+    "value": "EVP",
+    "shortLabel": "Faaliyet Profilleri",
+    "label": "EVP Faaliyet Profilleri"
+  },
+  {
+    "value": "FAA",
+    "shortLabel": "Varlık Ayrıntı Amrtsmn Hesplm",
+    "label": "FAA Varlık Ayrıntı Amrtsmn Hesplm"
+  },
+  {
+    "value": "FAB",
+    "shortLabel": "Varlık Bütçe Detayları",
+    "label": "FAB Varlık Bütçe Detayları"
+  },
+  {
+    "value": "FAC",
+    "shortLabel": "Varlık Sınıfı",
+    "label": "FAC Varlık Sınıfı"
+  },
+  {
+    "value": "FAD",
+    "shortLabel": "Varlık Elden Çıkarma",
+    "label": "FAD Varlık Elden Çıkarma"
+  },
+  {
+    "value": "FAE",
+    "shortLabel": "Varlık Elden Çıkarma Seçimi",
+    "label": "FAE Varlık Elden Çıkarma Seçimi"
+  },
+  {
+    "value": "FAF",
+    "shortLabel": "Varlık Kısmi Elden Çıkarma",
+    "label": "FAF Varlık Kısmi Elden Çıkarma"
+  },
+  {
+    "value": "FAQ",
+    "shortLabel": "Varlık İnceleme",
+    "label": "FAQ Varlık İnceleme"
+  },
+  {
+    "value": "FAR",
+    "shortLabel": "Varlık İndirim Amortisman Hesaplaması",
+    "label": "FAR Varlık İndirim Amortisman Hesaplaması"
+  },
+  {
+    "value": "FAS",
+    "shortLabel": "Varlık Kayıtları",
+    "label": "FAS Varlık Kayıtları"
+  },
+  {
+    "value": "FAT",
+    "shortLabel": "Varlık Durum Raporu",
+    "label": "FAT Varlık Durum Raporu"
+  },
+  {
+    "value": "FCB",
+    "shortLabel": "Şirkete göre Mali Takvimler",
+    "label": "FCB Şirkete göre Mali Takvimler"
+  },
+  {
+    "value": "FCP",
+    "shortLabel": "Dönemleri Yönet",
+    "label": "FCP Dönemleri Yönet"
+  },
+  {
+    "value": "FCQ",
+    "shortLabel": "Mali Takvim İnceleme",
+    "label": "FCQ Mali Takvim İnceleme"
+  },
+  {
+    "value": "FCS",
+    "shortLabel": "Mali Takvimler",
+    "label": "FCS Mali Takvimler"
+  },
+  {
+    "value": "FCY",
+    "shortLabel": "Mali Yılı Kapat",
+    "label": "FCY Mali Yılı Kapat"
+  },
+  {
+    "value": "FDA",
+    "shortLabel": "Varlık Ayrıntı Amrtsmn Seçimi",
+    "label": "FDA Varlık Ayrıntı Amrtsmn Seçimi"
+  },
+  {
+    "value": "FDC",
+    "shortLabel": "Varlık Amortisman Hesaplama",
+    "label": "FDC Varlık Amortisman Hesaplama"
+  },
+  {
+    "value": "FDH",
+    "shortLabel": "Varlık Amortismanı Tablo Başlıkları",
+    "label": "FDH Varlık Amortismanı Tablo Başlıkları"
+  },
+  {
+    "value": "FDR",
+    "shortLabel": "Varlık İndirim Amortisman Seçimi",
+    "label": "FDR Varlık İndirim Amortisman Seçimi"
+  },
+  {
+    "value": "FDT",
+    "shortLabel": "Varlık Amortisman Tabloları",
+    "label": "FDT Varlık Amortisman Tabloları"
+  },
+  {
+    "value": "FDU",
+    "shortLabel": "Varlık Amortismanı Zamanlama Kuralları",
+    "label": "FDU Varlık Amortismanı Zamanlama Kuralları"
+  },
+  {
+    "value": "FJC",
+    "shortLabel": "Mali İşler Red Kodları Oluşturma",
+    "label": "FJC Mali İşler Red Kodları Oluşturma"
+  },
+  {
+    "value": "FNA",
+    "shortLabel": "Mali Analiz",
+    "label": "FNA Mali Analiz"
+  },
+  {
+    "value": "FNL",
+    "shortLabel": "Mali Analiz Düzenlemeleri",
+    "label": "FNL Mali Analiz Düzenlemeleri"
+  },
+  {
+    "value": "FRH",
+    "shortLabel": "Mali Raporlar Sütun Başlıkları",
+    "label": "FRH Mali Raporlar Sütun Başlıkları"
+  },
+  {
+    "value": "FSC",
+    "shortLabel": "Mali Raporlama Alt Boyutları",
+    "label": "FSC Mali Raporlama Alt Boyutları"
+  },
+  {
+    "value": "FSL",
+    "shortLabel": "Mali Bildirim Düzenlemeleri",
+    "label": "FSL Mali Bildirim Düzenlemeleri"
+  },
+  {
+    "value": "FSR",
+    "shortLabel": "Mali Bildirim Satırları",
+    "label": "FSR Mali Bildirim Satırları"
+  },
+  {
+    "value": "FSS",
+    "shortLabel": "Mali Bildirimler",
+    "label": "FSS Mali Bildirimler"
+  },
+  {
+    "value": "FTB",
+    "shortLabel": "Mali Tablolar",
+    "label": "FTB Mali Tablolar"
+  },
+  {
+    "value": "FTC",
+    "shortLabel": "Mali Tablo Sütunları",
+    "label": "FTC Mali Tablo Sütunları"
+  },
+  {
+    "value": "FTF",
+    "shortLabel": "Mali Tablo Formatları",
+    "label": "FTF Mali Tablo Formatları"
+  },
+  {
+    "value": "FTR",
+    "shortLabel": "Mali Tablo Satırları",
+    "label": "FTR Mali Tablo Satırları"
+  },
+  {
+    "value": "IBS",
+    "shortLabel": "Stok İş Oluşturma",
+    "label": "IBS Stok İş Oluşturma"
+  },
+  {
+    "value": "ICE",
+    "shortLabel": "Stok Sayım Girişi",
+    "label": "ICE Stok Sayım Girişi"
+  },
+  {
+    "value": "ICG",
+    "shortLabel": "Stok Sayım Oluştur",
+    "label": "ICG Stok Sayım Oluştur"
+  },
+  {
+    "value": "ICL",
+    "shortLabel": "Stok Maliyet Sınıflandırma",
+    "label": "ICL Stok Maliyet Sınıflandırma"
+  },
+  {
+    "value": "ICM",
+    "shortLabel": "Stok Maliyet Kombinasyonu",
+    "label": "ICM Stok Maliyet Kombinasyonu"
+  },
+  {
+    "value": "ICN",
+    "shortLabel": "Stok Maliyetleme İncelemesi",
+    "label": "ICN Stok Maliyetleme İncelemesi"
+  },
+  {
+    "value": "ICO",
+    "shortLabel": "Stok Maliyetleme",
+    "label": "ICO Stok Maliyetleme"
+  },
+  {
+    "value": "ICP",
+    "shortLabel": "Stok Sayım Onayı - Naklet",
+    "label": "ICP Stok Sayım Onayı - Naklet"
+  },
+  {
+    "value": "ICS",
+    "shortLabel": "Stok Sayım",
+    "label": "ICS Stok Sayım"
+  },
+  {
+    "value": "ICT",
+    "shortLabel": "Stok Maliyet Tipleri",
+    "label": "ICT Stok Maliyet Tipleri"
+  },
+  {
+    "value": "ICU",
+    "shortLabel": "Kalem Müşterisi",
+    "label": "ICU Kalem Müşterisi"
+  },
+  {
+    "value": "IDC",
+    "shortLabel": "Stok Sevk Teyidi",
+    "label": "IDC Stok Sevk Teyidi"
+  },
+  {
+    "value": "IIC",
+    "shortLabel": "Tetkik Kodları",
+    "label": "IIC Tetkik Kodları"
+  },
+  {
+    "value": "ILC",
+    "shortLabel": "Stok Lokasyonları",
+    "label": "ILC Stok Lokasyonları"
+  },
+  {
+    "value": "INC",
+    "shortLabel": "Entegrasyon Konfigürasyonu",
+    "label": "INC Entegrasyon Konfigürasyonu"
+  },
+  {
+    "value": "INL",
+    "shortLabel": "Entegrasyon Hata Logu",
+    "label": "INL Entegrasyon Hata Logu"
+  },
+  {
+    "value": "INM",
+    "shortLabel": "Entegrasyon Veri Yönetimi",
+    "label": "INM Entegrasyon Veri Yönetimi"
+  },
+  {
+    "value": "INQ",
+    "shortLabel": "Stok İnceleme",
+    "label": "INQ Stok İnceleme"
+  },
+  {
+    "value": "INS",
+    "shortLabel": "Entegrasyon Sistemleri Oluşturma",
+    "label": "INS Entegrasyon Sistemleri Oluşturma"
+  },
+  {
+    "value": "IPK",
+    "shortLabel": "Stok Hazırlık Teyidi",
+    "label": "IPK Stok Hazırlık Teyidi"
+  },
+  {
+    "value": "IRE",
+    "shortLabel": "Stok Giriş Makbuzu Girişi",
+    "label": "IRE Stok Giriş Makbuzu Girişi"
+  },
+  {
+    "value": "IRI",
+    "shortLabel": "Stok Giriş Makbuzu Tetkiki",
+    "label": "IRI Stok Giriş Makbuzu Tetkiki"
+  },
+  {
+    "value": "IRM",
+    "shortLabel": "Stok Yeniden Değerleme",
+    "label": "IRM Stok Yeniden Değerleme"
+  },
+  {
+    "value": "IRP",
+    "shortLabel": "Stok Yeniden Değerleme Profili",
+    "label": "IRP Stok Yeniden Değerleme Profili"
+  },
+  {
+    "value": "IRT",
+    "shortLabel": "Stok Giriş Makbuzu Transferi",
+    "label": "IRT Stok Giriş Makbuzu Transferi"
+  },
+  {
+    "value": "ISU",
+    "shortLabel": "Kalem Satıcısı",
+    "label": "ISU Kalem Satıcısı"
+  },
+  {
+    "value": "ITB",
+    "shortLabel": "Kalem Grubu Kalem Karakteristikleri Ata",
+    "label": "ITB Kalem Grubu Kalem Karakteristikleri Ata"
+  },
+  {
+    "value": "ITC",
+    "shortLabel": "Kalem Karakteristikleri",
+    "label": "ITC Kalem Karakteristikleri"
+  },
+  {
+    "value": "ITM",
+    "shortLabel": "Kalem Yönetimi",
+    "label": "ITM Kalem Yönetimi"
+  },
+  {
+    "value": "IUA",
+    "shortLabel": "Kullanıcı Tanımlı Maliyet Düzeltme",
+    "label": "IUA Kullanıcı Tanımlı Maliyet Düzeltme"
+  },
+  {
+    "value": "IUC",
+    "shortLabel": "Kullanıcı Tanımlı Stok Maliyeti",
+    "label": "IUC Kullanıcı Tanımlı Stok Maliyeti"
+  },
+  {
+    "value": "IZN",
+    "shortLabel": "Stok Bölgeleri",
+    "label": "IZN Stok Bölgeleri"
+  },
+  {
+    "value": "JNC",
+    "shortLabel": "Fiş Sınıfı Oluşturma",
+    "label": "JNC Fiş Sınıfı Oluşturma"
+  },
+  {
+    "value": "JNP",
+    "shortLabel": "Fiş Ön Düzenlemeleri",
+    "label": "JNP Fiş Ön Düzenlemeleri"
+  },
+  {
+    "value": "JNQ",
+    "shortLabel": "Fiş İnceleme",
+    "label": "JNQ Fiş İnceleme"
+  },
+  {
+    "value": "JNT",
+    "shortLabel": "Fiş Tipi",
+    "label": "JNT Fiş Tipi"
+  },
+  {
+    "value": "JRC",
+    "shortLabel": "Fiş Ters İşlemi ve Kopyalama",
+    "label": "JRC Fiş Ters İşlemi ve Kopyalama"
+  },
+  {
+    "value": "LAI",
+    "shortLabel": "Defter Dağıtım Göstergeleri",
+    "label": "LAI Defter Dağıtım Göstergeleri"
+  },
+  {
+    "value": "LAN",
+    "shortLabel": "Dil",
+    "label": "LAN Dil"
+  },
+  {
+    "value": "LAQ",
+    "shortLabel": "Defter İnceleme",
+    "label": "LAQ Defter İnceleme"
+  },
+  {
+    "value": "LBC",
+    "shortLabel": "Defter Bakiye Konfigürasyonu",
+    "label": "LBC Defter Bakiye Konfigürasyonu"
+  },
+  {
+    "value": "LBM",
+    "shortLabel": "Defter Bakiye Yönetimi",
+    "label": "LBM Defter Bakiye Yönetimi"
+  },
+  {
+    "value": "LBR",
+    "shortLabel": "Defter Bakiyeleri Oluştur",
+    "label": "LBR Defter Bakiyeleri Oluştur"
+  },
+  {
+    "value": "LBU",
+    "shortLabel": "Defter Bakiyelerini Güncelle",
+    "label": "LBU Defter Bakiyelerini Güncelle"
+  },
+  {
+    "value": "LCL",
+    "shortLabel": "Defter Kapanışı",
+    "label": "LCL Defter Kapanışı"
+  },
+  {
+    "value": "LCN",
+    "shortLabel": "Defter Çevirimi",
+    "label": "LCN Defter Çevirimi"
+  },
+  {
+    "value": "LEH",
+    "shortLabel": "Defter Girişi - Tutulmuş Fişler",
+    "label": "LEH Defter Girişi - Tutulmuş Fişler"
+  },
+  {
+    "value": "LEN",
+    "shortLabel": "Defter Girişi",
+    "label": "LEN Defter Girişi"
+  },
+  {
+    "value": "LEP",
+    "shortLabel": "Defter Yeniden Değ Profilleri",
+    "label": "LEP Defter Yeniden Değ Profilleri"
+  },
+  {
+    "value": "LEQ",
+    "shortLabel": "Defter Sırası",
+    "label": "LEQ Defter Sırası"
+  },
+  {
+    "value": "LER",
+    "shortLabel": "Defter Yeniden Değerleme",
+    "label": "LER Defter Yeniden Değerleme"
+  },
+  {
+    "value": "LES",
+    "shortLabel": "Defter Oluşturma",
+    "label": "LES Defter Oluşturma"
+  },
+  {
+    "value": "LIA",
+    "shortLabel": "Defter Arayüz Hesap Tanıma Kodları",
+    "label": "LIA Defter Arayüz Hesap Tanıma Kodları"
+  },
+  {
+    "value": "LIM",
+    "shortLabel": "Defter İthali",
+    "label": "LIM Defter İthali"
+  },
+  {
+    "value": "LIS",
+    "shortLabel": "Defter Arayüzü",
+    "label": "LIS Defter Arayüzü"
+  },
+  {
+    "value": "MOE",
+    "shortLabel": "Hareket Sipariş Girişi",
+    "label": "MOE Hareket Sipariş Girişi"
+  },
+  {
+    "value": "MOP",
+    "shortLabel": "Hareket Sipariş Ön Düzenlemeleri",
+    "label": "MOP Hareket Sipariş Ön Düzenlemeleri"
+  },
+  {
+    "value": "MOQ",
+    "shortLabel": "Hareket İnceleme",
+    "label": "MOQ Hareket İnceleme"
+  },
+  {
+    "value": "MTS",
+    "shortLabel": "Hareket Tipleri",
+    "label": "MTS Hareket Tipleri"
+  },
+  {
+    "value": "NSS",
+    "shortLabel": "Numara Akışı",
+    "label": "NSS Numara Akışı"
+  },
+  {
+    "value": "OFA",
+    "shortLabel": "Sipariş Modül Arşivi",
+    "label": "OFA Sipariş Modül Arşivi"
+  },
+  {
+    "value": "OLT",
+    "shortLabel": "İsteğe Bağlı Defter Tabloları",
+    "label": "OLT İsteğe Bağlı Defter Tabloları"
+  },
+  {
+    "value": "OPV",
+    "shortLabel": "İşletmen Görünümü",
+    "label": "OPV İşletmen Görünümü"
+  },
+  {
+    "value": "PBC",
+    "shortLabel": "Satın Alma Genel Kontratları",
+    "label": "PBC Satın Alma Genel Kontratları"
+  },
+  {
+    "value": "PBS",
+    "shortLabel": "Satın Alma İş Oluşturma",
+    "label": "PBS Satın Alma İş Oluşturma"
+  },
+  {
+    "value": "PGS",
+    "shortLabel": "Ürün Grubu",
+    "label": "PGS Ürün Grubu"
+  },
+  {
+    "value": "PIE",
+    "shortLabel": "Satın Alma Fatura Girişi",
+    "label": "PIE Satın Alma Fatura Girişi"
+  },
+  {
+    "value": "PIM",
+    "shortLabel": "Satın Alma Faturası Eşleme",
+    "label": "PIM Satın Alma Faturası Eşleme"
+  },
+  {
+    "value": "PIP",
+    "shortLabel": "Satın Alma Faturası Ön Düzenlemeleri",
+    "label": "PIP Satın Alma Faturası Ön Düzenlemeleri"
+  },
+  {
+    "value": "POE",
+    "shortLabel": "Satın Alma Sipariş Girişi",
+    "label": "POE Satın Alma Sipariş Girişi"
+  },
+  {
+    "value": "POP",
+    "shortLabel": "Satın Alma Sipariş Ön Düzenlemeleri",
+    "label": "POP Satın Alma Sipariş Ön Düzenlemeleri"
+  },
+  {
+    "value": "POQ",
+    "shortLabel": "Satın Alma İncelemesi",
+    "label": "POQ Satın Alma İncelemesi"
+  },
+  {
+    "value": "PPB",
+    "shortLabel": "Satın Alma Fiyat Kitabı",
+    "label": "PPB Satın Alma Fiyat Kitabı"
+  },
+  {
+    "value": "PPH",
+    "shortLabel": "Satın Alma Fiyat Kitapları Hiyerarşisi",
+    "label": "PPH Satın Alma Fiyat Kitapları Hiyerarşisi"
+  },
+  {
+    "value": "PPP",
+    "shortLabel": "Satın Alma Fiyat Kitapları Sayfaları",
+    "label": "PPP Satın Alma Fiyat Kitapları Sayfaları"
+  },
+  {
+    "value": "PPT",
+    "shortLabel": "Ara Fişleri Naklet",
+    "label": "PPT Ara Fişleri Naklet"
+  },
+  {
+    "value": "PRE",
+    "shortLabel": "Requisition Order Entry",
+    "label": "PRE Requisition Order Entry"
+  },
+  {
+    "value": "PRJ",
+    "shortLabel": "Geçici Fiş Çağırma",
+    "label": "PRJ Geçici Fiş Çağırma"
+  },
+  {
+    "value": "PRN",
+    "shortLabel": "Satın Alma İade Makbuzu",
+    "label": "PRN Satın Alma İade Makbuzu"
+  },
+  {
+    "value": "PRQ",
+    "shortLabel": "Satın Alma Giriş Makbuzu İnceleme",
+    "label": "PRQ Satın Alma Giriş Makbuzu İnceleme"
+  },
+  {
+    "value": "PTS",
+    "shortLabel": "Satın Alma Tipleri",
+    "label": "PTS Satın Alma Tipleri"
+  },
+  {
+    "value": "PWT",
+    "shortLabel": "Stopaj Vergilerini Naklet",
+    "label": "PWT Stopaj Vergilerini Naklet"
+  },
+  {
+    "value": "PYC",
+    "shortLabel": "Tahsilat Çalıştırma",
+    "label": "PYC Tahsilat Çalıştırma"
+  },
+  {
+    "value": "PYD",
+    "shortLabel": "Ödeme Dokümanları",
+    "label": "PYD Ödeme Dokümanları"
+  },
+  {
+    "value": "PYP",
+    "shortLabel": "Ödeme Profilleri",
+    "label": "PYP Ödeme Profilleri"
+  },
+  {
+    "value": "PYR",
+    "shortLabel": "Ödeme Çalıştırma",
+    "label": "PYR Ödeme Çalıştırma"
+  },
+  {
+    "value": "PYS",
+    "shortLabel": "Ödeme Seçimi ve İncelemesi",
+    "label": "PYS Ödeme Seçimi ve İncelemesi"
+  },
+  {
+    "value": "PYT",
+    "shortLabel": "Ödeme Koşulları",
+    "label": "PYT Ödeme Koşulları"
+  },
+  {
+    "value": "PYU",
+    "shortLabel": "Ödeme Koşulları Güncelleme",
+    "label": "PYU Ödeme Koşulları Güncelleme"
+  },
+  {
+    "value": "PYV",
+    "shortLabel": "Ödeme İptali",
+    "label": "PYV Ödeme İptali"
+  },
+  {
+    "value": "RBB",
+    "shortLabel": "Bütçe Bakiyeleri Oluştur",
+    "label": "RBB Bütçe Bakiyeleri Oluştur"
+  },
+  {
+    "value": "RCA",
+    "shortLabel": "Mutabakat Hesapları",
+    "label": "RCA Mutabakat Hesapları"
+  },
+  {
+    "value": "RCM",
+    "shortLabel": "Mutabakat Yönetimi",
+    "label": "RCM Mutabakat Yönetimi"
+  },
+  {
+    "value": "RCP",
+    "shortLabel": "Mutabakat Profilleri",
+    "label": "RCP Mutabakat Profilleri"
+  },
+  {
+    "value": "RDI",
+    "shortLabel": "Tanımlanmış Veri Ögeleri Oluşturma",
+    "label": "RDI Tanımlanmış Veri Ögeleri Oluşturma"
+  },
+  {
+    "value": "RDK",
+    "shortLabel": "Kural Verisi Set Anahtarları",
+    "label": "RDK Kural Verisi Set Anahtarları"
+  },
+  {
+    "value": "RDS",
+    "shortLabel": "Kural Verisi Setleri",
+    "label": "RDS Kural Verisi Setleri"
+  },
+  {
+    "value": "REM",
+    "shortLabel": "Requisition Email Notification Configuration",
+    "label": "REM Requisition Email Notification Configuration"
+  },
+  {
+    "value": "RFP",
+    "shortLabel": "Başarısız Nakilleri Kurtar",
+    "label": "RFP Başarısız Nakilleri Kurtar"
+  },
+  {
+    "value": "RMA",
+    "shortLabel": "Rapor Yönetimi",
+    "label": "RMA Rapor Yönetimi"
+  },
+  {
+    "value": "RMB",
+    "shortLabel": "Rapor Yedekleri",
+    "label": "RMB Rapor Yedekleri"
+  },
+  {
+    "value": "RMC",
+    "shortLabel": "Rapor Listeleri",
+    "label": "RMC Rapor Listeleri"
+  },
+  {
+    "value": "RMD",
+    "shortLabel": "Report Models",
+    "label": "RMD Report Models"
+  },
+  {
+    "value": "RMG",
+    "shortLabel": "Kural Mesajları",
+    "label": "RMG Kural Mesajları"
+  },
+  {
+    "value": "RQA",
+    "shortLabel": "Requisition Inquiry (All Requisitions)",
+    "label": "RQA Requisition Inquiry (All Requisitions)"
+  },
+  {
+    "value": "RQM",
+    "shortLabel": "Requisition Inquiry (My Requisitions)",
+    "label": "RQM Requisition Inquiry (My Requisitions)"
+  },
+  {
+    "value": "RSC",
+    "shortLabel": "Sebep Kodları",
+    "label": "RSC Sebep Kodları"
+  },
+  {
+    "value": "RST",
+    "shortLabel": "Kural Setleri",
+    "label": "RST Kural Setleri"
+  },
+  {
+    "value": "RTS",
+    "shortLabel": "Requisition Types",
+    "label": "RTS Requisition Types"
+  },
+  {
+    "value": "RWQ",
+    "shortLabel": "Requisition Work Queue",
+    "label": "RWQ Requisition Work Queue"
+  },
+  {
+    "value": "SBC",
+    "shortLabel": "Satış Genel Kontratı",
+    "label": "SBC Satış Genel Kontratı"
+  },
+  {
+    "value": "SBS",
+    "shortLabel": "Satış İş Oluşturma",
+    "label": "SBS Satış İş Oluşturma"
+  },
+  {
+    "value": "SCH",
+    "shortLabel": "Planlanmış Ödeme Oluşturma",
+    "label": "SCH Planlanmış Ödeme Oluşturma"
+  },
+  {
+    "value": "SCP",
+    "shortLabel": "Connect Portal",
+    "label": "SCP Connect Portal"
+  },
+  {
+    "value": "SEA",
+    "shortLabel": "Güvenlik Denetimi",
+    "label": "SEA Güvenlik Denetimi"
+  },
+  {
+    "value": "SEC",
+    "shortLabel": "Güvenlik Kullanıcı Aktivitesi",
+    "label": "SEC Güvenlik Kullanıcı Aktivitesi"
+  },
+  {
+    "value": "SEG",
+    "shortLabel": "Güvenlik Gruplar",
+    "label": "SEG Güvenlik Gruplar"
+  },
+  {
+    "value": "SES",
+    "shortLabel": "Güvenlik Tanımları",
+    "label": "SES Güvenlik Tanımları"
+  },
+  {
+    "value": "SEU",
+    "shortLabel": "Güvenlik Kullanıcılar",
+    "label": "SEU Güvenlik Kullanıcılar"
+  },
+  {
+    "value": "SFM",
+    "shortLabel": "Sunumcu Dosya Yönetimi",
+    "label": "SFM Sunumcu Dosya Yönetimi"
+  },
+  {
+    "value": "SLI",
+    "shortLabel": "Satış Faturalama",
+    "label": "SLI Satış Faturalama"
+  },
+  {
+    "value": "SNF",
+    "shortLabel": "Seri No Formatı Oluşturma",
+    "label": "SNF Seri No Formatı Oluşturma"
+  },
+  {
+    "value": "SNO",
+    "shortLabel": "Seri No.",
+    "label": "SNO Seri No."
+  },
+  {
+    "value": "SOE",
+    "shortLabel": "Satış Sipariş Girişi",
+    "label": "SOE Satış Sipariş Girişi"
+  },
+  {
+    "value": "SOP",
+    "shortLabel": "Satış Sipariş ÖnDüzenlemeleri",
+    "label": "SOP Satış Sipariş ÖnDüzenlemeleri"
+  },
+  {
+    "value": "SOQ",
+    "shortLabel": "Satış Siparişi İnceleme",
+    "label": "SOQ Satış Siparişi İnceleme"
+  },
+  {
+    "value": "SPB",
+    "shortLabel": "Satış Fiyat Kitabı",
+    "label": "SPB Satış Fiyat Kitabı"
+  },
+  {
+    "value": "SPG",
+    "shortLabel": "Satış Fiyat Kitabı Sayfaları",
+    "label": "SPG Satış Fiyat Kitabı Sayfaları"
+  },
+  {
+    "value": "SPH",
+    "shortLabel": "Satış Fiyat Kitabı Hiyerarşisi",
+    "label": "SPH Satış Fiyat Kitabı Hiyerarşisi"
+  },
+  {
+    "value": "SRN",
+    "shortLabel": "Satış İade Makbuzu",
+    "label": "SRN Satış İade Makbuzu"
+  },
+  {
+    "value": "STC",
+    "shortLabel": "Standart Metin Sınıfları",
+    "label": "STC Standart Metin Sınıfları"
+  },
+  {
+    "value": "STL",
+    "shortLabel": "Standart Metin Dil Farklılıkları",
+    "label": "STL Standart Metin Dil Farklılıkları"
+  },
+  {
+    "value": "STS",
+    "shortLabel": "Satış Tipleri",
+    "label": "STS Satış Tipleri"
+  },
+  {
+    "value": "SUS",
+    "shortLabel": "Satıcı",
+    "label": "SUS Satıcı"
+  },
+  {
+    "value": "TBL",
+    "shortLabel": "Mizan",
+    "label": "TBL Mizan"
+  },
+  {
+    "value": "TRH",
+    "shortLabel": "Transfer Geçmişi Görüntüleme",
+    "label": "TRH Transfer Geçmişi Görüntüleme"
+  },
+  {
+    "value": "TRM",
+    "shortLabel": "İşlem Eşleme",
+    "label": "TRM İşlem Eşleme"
+  },
+  {
+    "value": "TRP",
+    "shortLabel": "Transfer Profilleri",
+    "label": "TRP Transfer Profilleri"
+  },
+  {
+    "value": "TRS",
+    "shortLabel": "İşlem Referansı",
+    "label": "TRS İşlem Referansı"
+  },
+  {
+    "value": "TXD",
+    "shortLabel": "Vergi Detayları",
+    "label": "TXD Vergi Detayları"
+  },
+  {
+    "value": "TXR",
+    "shortLabel": "Vergi Raporlama",
+    "label": "TXR Vergi Raporlama"
+  },
+  {
+    "value": "U4C",
+    "shortLabel": "4.Para Birimini Değiştir",
+    "label": "U4C 4.Para Birimini Değiştir"
+  },
+  {
+    "value": "UCV",
+    "shortLabel": "Standart Birim Çevirileri",
+    "label": "UCV Standart Birim Çevirileri"
+  },
+  {
+    "value": "ULC",
+    "shortLabel": "Birim Etiket Çevirisi",
+    "label": "ULC Birim Etiket Çevirisi"
+  },
+  {
+    "value": "UMC",
+    "shortLabel": "İstatistik Para Birimini Değiştir",
+    "label": "UMC İstatistik Para Birimini Değiştir"
+  },
+  {
+    "value": "UOM",
+    "shortLabel": "Ölçü Birimi Etiketleri",
+    "label": "UOM Ölçü Birimi Etiketleri"
+  },
+  {
+    "value": "UTS",
+    "shortLabel": "Kullanıcı Takımı Oluşturma",
+    "label": "UTS Kullanıcı Takımı Oluşturma"
+  },
+  {
+    "value": "VBK",
+    "shortLabel": "Değer Kitabı",
+    "label": "VBK Değer Kitabı"
+  },
+  {
+    "value": "VBP",
+    "shortLabel": "Değer Kitabı Sayfaları",
+    "label": "VBP Değer Kitabı Sayfaları"
+  },
+  {
+    "value": "VLB",
+    "shortLabel": "Değer Etiketleri",
+    "label": "VLB Değer Etiketleri"
+  },
+  {
+    "value": "VNS",
+    "shortLabel": "Makbuz No Akışı Oluşturma",
+    "label": "VNS Makbuz No Akışı Oluşturma"
+  },
+  {
+    "value": "VVN",
+    "shortLabel": "Makbuz Numaralamaya Bak",
+    "label": "VVN Makbuz Numaralamaya Bak"
+  },
+  {
+    "value": "WFC",
+    "shortLabel": "İş Akışı Konfigürasyonu",
+    "label": "WFC İş Akışı Konfigürasyonu"
+  },
+  {
+    "value": "WFH",
+    "shortLabel": "İş Akışı Yetkilendirme Tarihçesi",
+    "label": "WFH İş Akışı Yetkilendirme Tarihçesi"
+  },
+  {
+    "value": "WHG",
+    "shortLabel": "Depo Grupları",
+    "label": "WHG Depo Grupları"
+  },
+  {
+    "value": "WHS",
+    "shortLabel": "Depo Oluşturma",
+    "label": "WHS Depo Oluşturma"
+  },
+  {
+    "value": "WTE",
+    "shortLabel": "Withholding Tax Exemptions",
+    "label": "WTE Withholding Tax Exemptions"
+  },
+  {
+    "value": "WTF",
+    "shortLabel": "Time Frames",
+    "label": "WTF Time Frames"
+  },
+  {
+    "value": "WTT",
+    "shortLabel": "Withholding Tax Types",
+    "label": "WTT Withholding Tax Types"
+  },
+  {
+    "value": "XAP",
+    "shortLabel": "Dışsal Aplikasyon",
+    "label": "XAP Dışsal Aplikasyon"
+  },
+  {
+    "value": "ZZL",
+    "shortLabel": "Finansal Kilitleri Temizle",
+    "label": "ZZL Finansal Kilitleri Temizle"
+  },
+  {
+    "value": "ZZP",
+    "shortLabel": "İzinler Derleme",
+    "label": "ZZP İzinler Derleme"
+  },
+  {
+    "value": "ZZS",
+    "shortLabel": "Serilizasyon",
+    "label": "ZZS Serilizasyon"
+  }
+]

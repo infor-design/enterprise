@@ -7,7 +7,7 @@ $font-regular: Helvetica, Arial;
 // Special Fonts for Certain Languages
 $cultures-font-family: (
   'ar-EG': ('Helvetica', 'Arial', 'Tahoma', 'DejaVu'),
-  'ar-SA': ('Helvetica', 'Arial', 'Tahoma', 'DejaVu', 'Helvetica', 'Arial'),
+  'ar-SA': ('Helvetica', 'Arial', 'Tahoma', 'DejaVu'),
   'ja-JP': ('Helvetica', 'Arial', 'MS PGothic'),
   'ko-KR': ('Helvetica', 'Arial', 'Batang', 'Gulim'),
   'zh-CN': ('Helvetica', 'Arial', 'Microsoft YaHei New', '微软雅黑', '宋体', 'SimSun', 'STXihei', '华文细黑'),
@@ -20,7 +20,7 @@ html {
 
   body {
     background-color: $body-bg-color;
-    color: $font-color;
+    color: $font-color-default;
     font-family: $font-regular;
     font-size: 1rem;
     height: 100%;
@@ -50,22 +50,10 @@ ol {
   line-height: normal;
 }
 
-h1,
-h2,
-h3,
-h4 {
-  @include rem(margin-bottom, 1rem);
-  color: $font-color-highcontrast;
-  font-weight: lighter;
-
-  .extra {
-    color: $font-color-lowcontrast;
-    font-weight: lighter;
-  }
-}
-
 h1 {
-  @include font-size(28);
+  @include font-size(18);
+  @include rem(line-height, 2.5rem);
+  color: $font-color-default;
 
   + p {
     margin: 20px 0;
@@ -73,7 +61,9 @@ h1 {
 }
 
 h2 {
-  @include font-size(24);
+  @include font-size(16);
+  @include rem(line-height, 2rem);
+  color: $font-color-default;
 
   + p {
     margin: 20px 0;
@@ -81,16 +71,21 @@ h2 {
 }
 
 h3 {
-  @include font-size(20);
+  @include font-size(16);
+  @include rem(line-height, 2rem);
+  color: $font-color-default;
 }
 
 h4 {
   @include font-size(16);
+  @include rem(line-height, 2rem);
+  color: $font-color-default;
 }
 
 p {
   @include font-size(14);
-  line-height: 1.5em;
+  color: $font-color-default;
+  line-height: 2rem;
 
   + h1,
   + h2,
@@ -104,10 +99,61 @@ p {
   }
 }
 
-// Add Some Seperation in Kitchen Sink Page
-.columns > h1 {
-  margin-top: 30px;
+// Text Color Labels
+.text-default {
+  color: $font-color-default;
 }
+
+.text-descriptive {
+  color: $font-color-descriptive;
+}
+
+.text-link {
+  color: $font-color-hyperlink;
+}
+
+.text-muted {
+  color: $font-color-muted;
+}
+
+// scss-lint:disable ImportantRule
+.text-emphasis {
+  font-style: italic !important;
+}
+
+.text-strong {
+  font-weight: bold !important;
+}
+// scss-lint:enable ImportantRule
+
+.text-alert {
+  color: $alert-red;
+}
+
+.text-primary,
+a.text-primary {
+  @include font-size(18);
+  @include rem(line-height, 2.5rem);
+}
+
+.text-secondary,
+a.text-secondary {
+  @include font-size(16);
+  @include rem(line-height, 2rem);
+}
+
+
+.text-base,
+a.text-base {
+  @include font-size(14);
+  @include rem(line-height, 1.5rem);
+}
+
+.text-small,
+a.text-small {
+  @include font-size(12);
+}
+
 
 // Labels
 label,
@@ -116,7 +162,7 @@ label,
   color: $label-color;
   display: block;
   line-height: 13px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   min-height: 13px; //prevents need to use &nbsp;
 }
 
@@ -168,21 +214,67 @@ small,
   @include font-size(12);
   @include rem(margin-bottom, 1rem);
   @include rem(line-height, 1.5rem);
-  color: $font-color;
+  color: $font-color-default;
 }
 
-.stamp-text,
 .alert-text {
   @include font-size(11);
   @include rem(margin-bottom, 1rem);
   @include rem(line-height, 2rem);
   color: $font-color-lowcontrast;
-  font-weight: bold; //Accessible
-  text-transform: uppercase;
+  font-weight: bold;
 }
 
-.uppercase {
-  text-transform: uppercase;
+.error-text {
+  @include font-size(11);
+  color: $alert01;
+  font-weight: bold;
+}
+
+.warning-text {
+  @include font-size(11);
+  color: $alert02;
+  font-weight: bold;
+}
+
+.good-text {
+  @include font-size(11);
+  color: $alert04;
+  font-weight: bold;
+}
+
+.info-text {
+  @include font-size(11);
+  color: $azure07;
+  font-weight: bold;
+}
+
+.small-thin-text {
+  @include font-size(10);
+  color: $font-color;
+  font-weight: bold;
+
+  + .small-thin-text {
+    margin-top: 0;
+  }
+}
+
+.larger-heavy-text {
+  @include font-size(14);
+  color: $font-color-highcontrast;
+  font-weight: bold;
+}
+
+.align-text-left {
+  text-align: left;
+}
+
+.align-text-right {
+  text-align: right;
+}
+
+.center-text {
+  text-align: center;
 }
 
 .alert-text {
@@ -198,21 +290,6 @@ small,
     margin-top: 4px;
     position: absolute;
     width: 8px;
-  }
-}
-
-.stamp-text {
-  // Used for showing groupings within a line of text.
-  // Uses the '#text-arrow' SVG symbol.
-  > .text-arrow {
-    @include transform(rotate(-90deg));
-    fill: $font-color;
-    height: .9rem;
-    margin: 0 .6rem;
-
-    &.left {
-      @include transform(rotate(90deg));
-    }
   }
 }
 

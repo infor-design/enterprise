@@ -17,7 +17,7 @@
 
 @mixin tab-after-off {
   background-color: rgba($tab-hover-color, 0); //background: transparent;
-  bottom: 0;
+  bottom: 1px;
   content: '';
   display: block;
   height: 3px;
@@ -73,6 +73,7 @@
 // Styles specific to any tabs used in SoHo Xi
 // (padding/color rules are different for all tabs so they aren't in the generic class)
 .tab {
+  @include css3(user-select, none);
   cursor: pointer;
   display: inline-block;
   position: relative;
@@ -110,7 +111,7 @@
 
 // Animated Bar
 .animated-bar {
-  @include transition(left .25s ease, width .25s ease);
+  @include transition(background-color .25s ease, left .25s ease, right .25s ease, width .25s ease);
   background-color: rgba($tab-selected-color, 0); //background: transparent;
   bottom: 0;
   display: inline-block;
@@ -120,7 +121,6 @@
   width: 20px;
 
   &.visible {
-    @include transition(background-color .25s ease, left .25s ease, width .25s ease);
     background-color: rgba($tab-selected-color, 1);
   }
 }
@@ -141,12 +141,16 @@
 // Tab Body
 .tab-panel {
   display: none;
-  padding-top: 20px;
   opacity: 0;
+  padding-top: 20px;
   @include transition(opacity 500ms cubic-bezier(.17, .04, .03, .94));
 
   &.can-show {
     display: block;
+
+    > .page-container {
+      position: absolute;
+    }
   }
 
   &.is-visible {
@@ -186,11 +190,6 @@
   // These two rules fix an IE bug where contents of all tab panels are shown.
   > .page-container {
     position: static;
-  }
-  &.can-show {
-    > .page-container {
-      position: absolute;
-    }
   }
 
 }
@@ -234,11 +233,55 @@
 // Common styles between Horizontal and Header tabs
 .tab-container.horizontal,
 .tab-container.header-tabs {
+  overflow: hidden;
+
+  //========================================
+  // Before/After control the faded edges
+  //========================================
+  &::after,
+  &::before {
+    @include transition(width 200ms $cubic-ease);
+    background-color: transparent;
+    content: '';
+    display: inline-block;
+    height: inherit;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    width: 0;
+    z-index: 20;
+  }
+
+  // Background fade on the left edge
+  // Fade colors are determined by pattern/implementation (see different tab CSS files for definitions)
+  &::before {
+    left: 0;
+  }
+
+  // Background fade on the right edge
+  // Fade colors are determined by pattern/implementation (see different tab CSS files for definitions)
+  &::after {
+    right: 51px; // bleed into the tab list (width of this element + 1 for border)
+  }
+
+  &.scrolled-left::after,
+  &.scrolled-right::before {
+    width: 40px;
+  }
+
+  &.has-add-button {
+    &::after {
+      right: 95px;
+    }
+  }
 
   .tab-more,
   .add-tab-button {
     @include font-size(14);
     background-color: transparent;
+    padding: 16px;
+    position: relative;
+    vertical-align: top;
 
     .icon {
       height: 16px;
@@ -248,58 +291,42 @@
     }
   }
 
-  .tab-more {
-    max-width: 105px;
+  .add-tab-button {
+    padding: 11px 12px;
+    text-align: center;
+    width: 50px;
   }
 
-  .add-tab-button {
-    max-width: 44px;
+  .more-text {
+    display: none;
+  }
+
+  .tab-list-container {
+    display: inline-block;
+    overflow-x: auto; // facilitates scrolling of the tabset
+    position: relative;
+    width: calc(100% - 51px);
   }
 
   &.has-add-button {
-    .tab-list {
-      padding-right: 45px;
-    }
-
-    .add-tab-button {
-      right: 0;
-      top: 0;
+    .tab-list-container {
+      width: calc(100% - 102px);
     }
   }
 
-  &.has-more-button {
-    .tab-list {
-      padding-right: 110px;
+  > .tab-list-container {
+    margin-bottom: -17px; // Hide the scrollbar
+
+    > .tab-list {
+      display: inline-block;
+      height: inherit;
+      white-space: nowrap;
     }
 
-    .tab-more {
-      right: 0;
-      top: 0;
-    }
-
-    &.has-add-button {
-      .tab-list {
-        padding-right: 166px;
-      }
-
-      .tab-more {
-        right: 45px;
-        top: 0;
-      }
-    }
-  }
-
-  // Tab Headers aka Notches
-  // Ref: http://bradsknutson.com/blog/css-sliding-underline/
-  .tab-list {
-    padding: 0;
-    width: 100%;
-  }
-
-  > .tab-list {
-    > .tab {
+    .tab {
       @include css3(transition, background-color .25s ease);
       border-radius: 2px 2px 0 0;
+      height: inherit;
       padding: 0;
 
       &:not(.last-child) {
@@ -418,9 +445,11 @@
       @include css3(user-select, none);
       cursor: default;
       display: inline-block;
+      height: 24px;
       margin: 0 12px;
-      padding: 11px 0;
+      padding: 0;
       position: relative;
+      vertical-align: middle;
 
       &::before {
         @include css3(transition, none);
@@ -429,7 +458,7 @@
         display: block;
         height: 100%;
         position: absolute;
-        top: calc(50% - 6px);
+        top: 0;
         width: 1px;
       }
 
@@ -575,7 +604,6 @@ html[dir='rtl'] {
   // More Button
   .tab-more,
   .add-tab-button {
-    padding: 8px 14px 8px 0;
     right: auto;
   }
 
@@ -583,14 +611,26 @@ html[dir='rtl'] {
     left: 0;
   }
 
-  .tab-container.horizontal,
-  .tab-container.header-tabs {
-    &.has-more-button {
-      .tab-list {
-        padding-left: 110px;
-        padding-right: inherit;
+  .tab-container.horizontal {
+    &::before {
+      left: auto;
+      right: 0;
+    }
+
+    &::after {
+      left: 51px;
+      right: auto;
+    }
+
+    &.has-add-button {
+      &::after {
+        left: 95px;
       }
     }
+  }
+
+  .tab-container.horizontal,
+  .tab-container.header-tabs {
 
     .tab {
       &:not(.last-child) {
@@ -603,48 +643,24 @@ html[dir='rtl'] {
         right: auto;
       }
     }
+
+    .tab-more {
+      padding: 12px 14px 11px 4px;
+
+      &::before {
+        left: auto;
+        right: 0;
+      }
+    }
+
+    &.has-counts {
+      .tab-more {
+        padding: 24px 14px 24px 4px;
+      }
+    }
   }
 
   .tab-focus-indicator {
     right: auto;
-  }
-
-  .tab-container.horizontal,
-  .tab-container.header-tabs {
-    &.has-add-button {
-      .tab-list {
-        padding-left: 45px;
-        padding-right: auto;
-      }
-
-      .add-tab-button {
-        left: 0;
-        right: auto;
-      }
-    }
-
-    &.has-more-button {
-      .tab-list {
-        padding-left: 110px;
-        padding-right: auto;
-      }
-
-      .tab-more {
-        left: 0;
-        right: auto;
-      }
-
-      &.has-add-button {
-        .tab-list {
-          padding-left: 166px;
-          padding-right: auto;
-        }
-
-        .tab-more {
-          left: 45px;
-          right: 0;
-        }
-      }
-    }
   }
 }

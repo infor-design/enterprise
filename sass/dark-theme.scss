@@ -40,12 +40,19 @@ $label-disabled-color: $slate04;
 $disabled-color: $slate05;
 $signin-title-color: $slate01;
 
+// New Text Colors
+$font-color-default: $white;
+$font-color-descriptive: $slate03;
+$font-color-hyperlink: $primary-color;
+$font-color-muted: $slate04;
+$font-color-alert: $alert-red;
+
 //The hyperlink Style
 $hyperlink-color: $azure04;
 $hyperlink-focus-border-color: $azure06;
 $hyperlink-visited-color: $amethyst03;
 $hyperlink-disabled-color: $disabled-color;
-$hyperlink-hover-color: $azure04;
+$hyperlink-hover-color: $azure06;
 
 // Rules
 $hr-top-color: $slate09;
@@ -106,6 +113,7 @@ $badge-focus-transparent-shadow: 0 0 0 1px $body-bg-color inset;
 // Popup Menu
 $popupmenu-color: $white;
 $popupmenu-arrow-color: $slate03;
+$popupmenu-icon-color: $slate01;
 $popupmenu-heading-color: $slate04;
 $popupmenu-color-filtered-text: $font-color-lowcontrast;
 $popupmenu-bg-color: $slate07;
@@ -560,6 +568,7 @@ $tree-hover-icon-color: $white;
 
 //Chart Progress Bar
 $chart-progressbar-bg-color: $slate04;
+$chart-progressbar-bg-color-dark: $slate02;
 $chart-progressbar-completed-fill: $emerald08;
 $chart-progressbar-target-fill: $slate06;
 $chart-progressbar-primary-fill: $primary-color;
@@ -635,10 +644,12 @@ $about-text-hover-border-color: $slate03;
 
 // Header Tabs
 $header-tabcontainer-border-color: $slate09;
+$header-tab-separator: $slate10;
 $header-tab-normal-color: $slate03;
 $header-tab-hover-color: $inverse-color;
 $header-tab-selected-color: $inverse-color;
 $header-tab-alt-bg-color: $slate10;
+$header-tab-alt-separator: $white;
 $header-tab-alt-normal-color: $slate03;
 $header-tab-alt-hover-color: $inverse-color;
 $header-tab-alt-selected-color: $inverse-color;
@@ -662,6 +673,9 @@ $module-tabs-disabled-bg-color: $slate06;
 $module-tabs-disabled-x-border-color: $slate04;
 $module-tabs-disabled-y-border-color: $slate07;
 $module-tabs-disabled-text-color: $slate04;
+
+// Composite Tabs
+$composite-tabs-panel-bg-color: $slate10;
 
 // Splitter
 $splitter-grip-bg-color: $slate03;

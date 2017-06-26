@@ -2,15 +2,35 @@
 //================================================== //
 
 .tab-container.header-tabs {
+  height: 40px;
   margin-bottom: 0;
-  margin-top: -12px;
-  padding: 1px 20px 0;
+  padding: 0 0 0 20px;
 
-  > .tab-list {
+  &::before {
+    background-image: linear-gradient(
+      to right,
+      rgba($header-bg-color, 1),
+      rgba($header-bg-color, 0)
+    );
+    left: 20px;
+  }
+
+  &::after {
+    background-image: linear-gradient(
+      to right,
+      rgba($header-bg-color, 0),
+      rgba($header-bg-color, 1)
+    );
+  }
+
+  .tab-list-info {
+    display: none;
+  }
+
+  > .tab-list-container {
     border-bottom: 0;
-    height: 40px;
 
-    > .tab {
+    .tab {
       color: $header-tab-normal-color;
       font-weight: bold;
       overflow: hidden;
@@ -21,9 +41,8 @@
       }
 
       a {
-        line-height: 12px;
         overflow: hidden;
-        padding: 15px 11px 13px;
+        padding: 12px 11px;
         text-overflow: ellipsis;
         white-space: nowrap;
       }
@@ -117,30 +136,22 @@
   }
 
   .tab-more {
-    padding: 12px 0 12px 14px;
+    padding: 12px 4px 11px 14px;
+
+    &::before {
+      background-color: rgba($header-tab-separator, .8);
+      content: '';
+      display: inline-block;
+      height: 30px;
+      left: 7px;
+      position: absolute;
+      top: 4px;
+      width: 1px;
+    }
   }
 
   .add-tab-button {
-    padding: 12px 0 12px 18px;
-  }
-
-  &.has-more-button {
-    .tab-more {
-      right: 20px;
-    }
-  }
-
-  &.has-add-button {
-    .add-tab-button {
-      right: 20px;
-      width: 44px;
-    }
-
-    &.has-more-button {
-      .tab-more {
-        right: 86px;
-      }
-    }
+    padding: 12px 4px 12px 14px;
   }
 
 // Alternate Header-Tab Backgrounds (Page Context)
@@ -149,25 +160,46 @@
   &.alternate {
     background-color: $header-tab-alt-bg-color;
     border-bottom: 1px solid $header-tabcontainer-border-color;
-    margin-top: -5px;
 
-    > .tab-list {
+    &::before,
+    &::after {
+      height: 39px;
+    }
 
-      > .tab {
+    &::before {
+      background-image: linear-gradient(
+        to right,
+        rgba($header-tab-alt-bg-color, 1),
+        rgba($header-tab-alt-bg-color, 0)
+      );
+    }
+
+    &::after {
+      background-image: linear-gradient(
+        to right,
+        rgba($header-tab-alt-bg-color, 0),
+        rgba($header-tab-alt-bg-color, 1)
+      );
+    }
+
+    > .tab-list-container {
+
+      .tab {
         color: $header-tab-alt-normal-color;
 
-        &:before {
+        &::before {
           background-color: rgba($header-tab-alt-normal-color, 0);
+          bottom: 1px;
         }
 
         a { // has 12px line height;
-          padding: 16px 11px 15px;
+          padding: 12px 11px;
         }
 
         &:hover:not(.is-disabled) {
           color: $header-tab-alt-hover-color;
 
-          &:before {
+          &::before {
             background-color: rgba($header-tab-alt-hover-color, 1);
           }
         }
@@ -175,7 +207,7 @@
         &.is-selected:not(.is-disabled) {
           color: $header-tab-alt-selected-color;
 
-          &:before {
+          &::before {
             background-color: rgba($header-tab-alt-selected-color, 1);
           }
 
@@ -187,14 +219,10 @@
 
     }
 
-    .tab-list {
-      height: 43px; // Reset to 43
-    }
-
     .animated-bar {
       background-color: rgba($header-tab-alt-selected-color, 1);
       margin-top: 0;
-      top: 42px;
+      top: 36px;
     }
 
     .tab-focus-indicator.is-visible {
@@ -203,7 +231,10 @@
 
     .tab-more {
       color: $header-tab-alt-normal-color;
-      padding: 13px 0 14px 14px;
+
+      &::before {
+        background-color: $header-tab-alt-separator;
+      }
 
       .icon {
         fill: $header-tab-alt-normal-color;
@@ -227,4 +258,51 @@
       }
     }
   }
+}
+
+// RTL Styles for Header Tabs
+html[dir='rtl'] {
+
+  .tab-container.header-tabs {
+    padding: 0 20px 0 0;
+
+    &::before {
+      background-image: linear-gradient(
+        to left,
+        rgba($header-bg-color, 1),
+        rgba($header-bg-color, 0)
+      );
+      left: auto;
+      right: 20px;
+    }
+
+    &::after {
+      background-image: linear-gradient(
+        to left,
+        rgba($header-bg-color, 0),
+        rgba($header-bg-color, 1)
+      );
+      left: 51px;
+      right: auto;
+    }
+
+    &.alternate {
+      &::before {
+        background-image: linear-gradient(
+          to left,
+          rgba($header-tab-alt-bg-color, 1),
+          rgba($header-tab-alt-bg-color, 0)
+        );
+      }
+
+      &::after {
+        background-image: linear-gradient(
+          to left,
+          rgba($header-tab-alt-bg-color, 0),
+          rgba($header-tab-alt-bg-color, 1)
+        );
+      }
+    }
+  }
+
 }

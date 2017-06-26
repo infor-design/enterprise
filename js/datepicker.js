@@ -89,6 +89,9 @@
         //Append a trigger button
         this.trigger = $.createIconElement('calendar').insertAfter(this.element);
         this.addAria();
+
+        this.isIslamic = Locale.calendar().name === 'islamic-umalqura';
+        this.conversions = Locale.calendar().conversions;
       },
 
       addAria: function () {
@@ -116,167 +119,183 @@
       handleKeys: function (elem) {
         var self = this;
 
-        elem.off('keydown.datepicker').on('keydown.datepicker', function (e) {
-          var handled = false,
-            key = e.keyCode || e.charCode || 0,
-            focused = $(':focus'),
-            focusedlabel = focused.attr('aria-label');
+        if (elem.is('#calendar-popup')) {
+          elem.off('keydown.datepicker').on('keydown.datepicker', '.calendar-table', function (e) {
+            var handled = false,
+              key = e.keyCode || e.charCode || 0;
 
-          // Focus did not auto move from readonly
-          if (key === 9 && self.element.is('[readonly]')) { //tab
-            self.setFocusOnFocusableElement(self.element, (e.shiftKey ? 'prev' : 'next'));
-            return;
-          }
-
-          if (focusedlabel) {
-            var focusedDate = new Date(focusedlabel);
-            self.currentDate = new Date(focusedDate.getTime());
-          } else if (focused.hasClass('alternate')) {
-              var year = parseInt(self.header.find('.year').text()),
-              month = parseInt(self.header.find('.month').attr('data-month')),
-              day = parseInt(focused.text());
-
-            if (focused.hasClass('prev-month')) {
-              if(month === 0) {
-                month = 11;
-                year--;
-              }
-              else {
-                month--;
-              }
-            } else if (focused.hasClass('next-month')) {
-              if(month === 11) {
-                month = 0;
-                year++;
-              }
-              else {
-                month++;
-              }
+            //Arrow Down: select same day of the week in the next week
+            if (key === 40) {
+                handled = true;
+                self.currentDate.setDate(self.currentDate.getDate() + 7);
+                self.insertDate(self.currentDate);
             }
-            self.currentDate = new Date(year, month, day);
-          }
 
-         //Arrow Down or Alt first opens the dialog
-          if (key === 40 && !self.isOpen()) {
-            handled = true;
-            self.openCalendar();
-
-            setTimeout(function() {
-              self.setFocusAfterOpen();
-            }, 200);
-          }
-
-          //Arrow Down: select same day of the week in the next week
-          if (key === 40 && self.isOpen()) {
+            //Arrow Up: select same day of the week in the previous week
+            if (key === 38) {
               handled = true;
-              self.currentDate.setDate(self.currentDate.getDate() + 7);
+              self.currentDate.setDate(self.currentDate.getDate() - 7);
               self.insertDate(self.currentDate);
-          }
-
-          //Arrow Up: select same day of the week in the previous week
-          if (key === 38 && self.isOpen()) {
-            handled = true;
-            self.currentDate.setDate(self.currentDate.getDate() - 7);
-            self.insertDate(self.currentDate);
-          }
-
-          //Arrow Left
-          if (key === 37 && self.isOpen()) {
-            handled = true;
-            self.currentDate.setDate(self.currentDate.getDate() - 1);
-            self.insertDate(self.currentDate);
-          }
-
-          //Arrow Right
-          if (key === 39 && self.isOpen()) {
-            handled = true;
-            self.currentDate.setDate(self.currentDate.getDate() + 1);
-            self.insertDate(self.currentDate);
-          }
-
-          //Page Up Selects Same Day Next Month
-          if (key === 33 && !e.altKey && self.isOpen()) {
-            handled = true;
-            self.currentDate.setMonth(self.currentDate.getMonth() + 1);
-            self.insertDate(self.currentDate);
-          }
-
-          //Page Down Selects Same Day Prev Month
-          if (key === 34 && !e.altKey && self.isOpen()) {
-            handled = true;
-            self.currentDate.setMonth(self.currentDate.getMonth() - 1);
-            self.insertDate(self.currentDate);
-          }
-
-          //ctrl + Page Up Selects Same Day Next Year
-          if (key === 33 && e.ctrlKey && self.isOpen()) {
-            handled = true;
-            self.currentDate.setFullYear(self.currentDate.getFullYear() + 1);
-            self.insertDate(self.currentDate);
-          }
-
-          //ctrl + Page Down Selects Same Day Prev Year
-          if (key === 34 && e.ctrlKey && self.isOpen()) {
-            handled = true;
-            self.currentDate.setFullYear(self.currentDate.getFullYear() - 1);
-            self.insertDate(self.currentDate);
-          }
-
-          //Home Moves to End of the month
-          if (key === 35 && self.isOpen()) {
-            handled = true;
-            var lastDay =  new Date(self.currentDate.getFullYear(), self.currentDate.getMonth()+1, 0);
-            self.currentDate = lastDay;
-            self.insertDate(self.currentDate);
-          }
-
-          //End Moves to Start of the month
-          if (key === 36 && self.isOpen()) {
-            var firstDay =  new Date(self.currentDate.getFullYear(), self.currentDate.getMonth(), 1);
-            self.currentDate = firstDay;
-            self.insertDate(self.currentDate);
-          }
-
-          // 't' selects today
-          if (key === 84) {
-            handled = true;
-            self.currentDate = new Date();
-
-            if (self.isOpen()) {
-              self.insertDate(self.currentDate, true);
-            } else {
-              self.element.val(Locale.formatDate(self.currentDate, {pattern: self.pattern})).trigger('change');
             }
-          }
 
-          // Space or Enter closes Date Picker, selecting the Date
-          if (key === 32 && self.isOpen() || key === 13 && self.isOpen()) {
-            self.closeCalendar();
-            self.element.focus();
-            handled = true;
-          }
+            //Arrow Left
+            if (key === 37) {
+              handled = true;
+              self.currentDate.setDate(self.currentDate.getDate() - 1);
+              self.insertDate(self.currentDate);
+            }
 
-          // Tab closes Date Picker and goes to next field
-          if (key === 9 && self.isOpen()) {
-            if (!self.settings.showTime) {
-              self.element.focus();
+            //Arrow Right
+            if (key === 39) {
+              handled = true;
+              self.currentDate.setDate(self.currentDate.getDate() + 1);
+              self.insertDate(self.currentDate);
+            }
+
+            //Page Up Selects Same Day Next Month
+            if (key === 33 && !e.altKey) {
+              handled = true;
+              self.currentDate.setMonth(self.currentDate.getMonth() + 1);
+              self.insertDate(self.currentDate);
+            }
+
+            //Page Down Selects Same Day Prev Month
+            if (key === 34 && !e.altKey) {
+              handled = true;
+              self.currentDate.setMonth(self.currentDate.getMonth() - 1);
+              self.insertDate(self.currentDate);
+            }
+
+            //ctrl + Page Up Selects Same Day Next Year
+            if (key === 33 && e.ctrlKey) {
+              handled = true;
+              self.currentDate.setFullYear(self.currentDate.getFullYear() + 1);
+              self.insertDate(self.currentDate);
+            }
+
+            //ctrl + Page Down Selects Same Day Prev Year
+            if (key === 34 && e.ctrlKey) {
+              handled = true;
+              self.currentDate.setFullYear(self.currentDate.getFullYear() - 1);
+              self.insertDate(self.currentDate);
+            }
+
+            //Home Moves to End of the month
+            if (key === 35) {
+              handled = true;
+              var lastDay =  new Date(self.currentDate.getFullYear(), self.currentDate.getMonth()+1, 0);
+              self.currentDate = lastDay;
+              self.insertDate(self.currentDate);
+            }
+
+            //End Moves to Start of the month
+            if (key === 36) {
+              var firstDay =  new Date(self.currentDate.getFullYear(), self.currentDate.getMonth(), 1);
+              self.currentDate = firstDay;
+              self.insertDate(self.currentDate);
+            }
+
+            // 't' selects today
+            if (key === 84) {
+              handled = true;
+              self.setToday();
+            }
+
+            // Space or Enter closes Date Picker, selecting the Date
+            if (key === 32 || key === 13) {
               self.closeCalendar();
+              self.element.focus();
+              handled = true;
             }
-          }
 
-          // Esc closes Date Picker and goes back to field
-          if (key === 27 && self.isOpen()) {
-            self.closeCalendar();
-            self.element.focus();
-          }
+            // Tab closes Date Picker and goes to next field
+            if (key === 9) {
+              if (!self.settings.showTime) {
+                self.element.focus();
+                self.closeCalendar();
+              }
+            }
 
-          if (handled) {
-            e.stopPropagation();
-            e.preventDefault();
-            return false;
-          }
+            // Esc closes Date Picker and goes back to field
+            if (key === 27) {
+              self.closeCalendar();
+              self.element.focus();
+            }
 
-        });
+            if (handled) {
+              e.stopPropagation();
+              e.preventDefault();
+              return false;
+            }
+
+          });
+        }
+        else {
+          elem.off('keydown.datepicker').on('keydown.datepicker', function (e) {
+            var handled = false,
+              key = e.keyCode || e.charCode || 0,
+              focused = $(':focus'),
+              focusedlabel = focused.attr('aria-label');
+
+            // Focus did not auto move from readonly
+            if (key === 9 && self.element.is('[readonly]')) { //tab
+              self.setFocusOnFocusableElement(self.element, (e.shiftKey ? 'prev' : 'next'));
+              return;
+            }
+
+            if (focusedlabel) {
+              var focusedDate = new Date(focusedlabel);
+              self.currentDate = new Date(focusedDate.getTime());
+            } else if (focused.hasClass('alternate')) {
+                var year = parseInt(self.header.find('.year').text()),
+                month = parseInt(self.header.find('.month').attr('data-month')),
+                day = parseInt(focused.text());
+
+              if (focused.hasClass('prev-month')) {
+                if(month === 0) {
+                  month = 11;
+                  year--;
+                }
+                else {
+                  month--;
+                }
+              } else if (focused.hasClass('next-month')) {
+                if(month === 11) {
+                  month = 0;
+                  year++;
+                }
+                else {
+                  month++;
+                }
+              }
+              self.currentDate = new Date(year, month, day);
+            }
+
+           //Arrow Down or Alt first opens the dialog
+            if (key === 40 && !self.isOpen()) {
+              handled = true;
+              self.openCalendar();
+
+              setTimeout(function() {
+                self.setFocusAfterOpen();
+              }, 200);
+            }
+
+            // 't' selects today
+            if (key === 84) {
+              handled = true;
+              self.setToday();
+            }
+
+            if (handled) {
+              e.stopPropagation();
+              e.preventDefault();
+              return false;
+            }
+
+          });
+        }
+
       },
 
       //Parse the Date Format Options
@@ -304,6 +323,7 @@
           customEvents = this.element.attr('data-validation-events'),
           mask = this.pattern.toLowerCase()
                    .replace(/yyyy/g,'####')
+                   .replace(/mmmm/g,'*********')
                    .replace(/mmm/g,'***')
                    .replace(/mm/g,'##')
                    .replace(/dd/g,'##')
@@ -357,6 +377,16 @@
         return this.openCalendar();
       },
 
+      activeTabindex: function(elem, isFocus) {
+        $('td', this.days).removeAttr('tabindex');
+        elem.attr('tabindex', 0);
+
+        if (isFocus) {
+          elem.focus();
+        }
+        return elem;
+      },
+
       // Open the calendar in a popup
       openCalendar: function () {
         var self = this,
@@ -373,12 +403,15 @@
         this.element.addClass('is-active').trigger('listopened');
 
         // Calendar Html in Popups
+        var prevButton = '<button type="button" class="btn-icon prev">' + $.createIcon('caret-left') + '<span>'+ Locale.translate('PreviousMonth') +'</span></button>',
+            nextButton = '<button type="button" class="btn-icon next">' + $.createIcon('caret-right') + '<span>'+ Locale.translate('NextMonth') +'</span></button>';
+
         this.table = $('<table class="calendar-table" aria-label="'+ Locale.translate('Calendar') +'" role="application"></table>');
-        this.header = $('<div class="calendar-header"><span class="month">november</span><span class="year">2015</span><button type="button" class="btn-icon prev" tabindex="-1">' + $.createIcon('caret-left') + '<span>'+ Locale.translate('PreviousMonth') +'</span></button><button type="button" class="btn-icon next" tabindex="-1">' + $.createIcon('caret-right') + '<span>'+ Locale.translate('NextMonth') +'</span></button></div>');
+        this.header = $('<div class="calendar-header"><span class="month">november</span><span class="year">2015</span>'+ (Locale.isRTL() ? prevButton + nextButton : prevButton + nextButton) +'</div>');
         this.dayNames = $('<thead><tr><th>SU</th> <th>MO</th> <th>TU</th> <th>WE</th> <th>TH</th> <th>FR</th> <th>SA</th> </tr> </thead>').appendTo(this.table);
         this.days = $('<tbody> <tr> <td class="alternate">26</td> <td class="alternate">27</td> <td class="alternate">28</td> <td class="alternate">29</td> <td class="alternate" >30</td> <td class="alternate">31</td> <td>1</td> </tr> <tr> <td>2</td> <td>3</td> <td>4</td> <td>5</td> <td>6</td> <td>7</td> <td>8</td> </tr> <tr> <td>9</td> <td>10</td> <td>11</td> <td>12</td> <td>13</td> <td>14</td> <td>15</td> </tr> <tr> <td>16</td> <td>17</td> <td>18</td> <td>19</td> <td class="is-today">20</td> <td>21</td> <td>22</td> </tr> <tr> <td>23</td> <td>24</td> <td>25</td> <td>26</td> <td>27</td> <td>28</td> <td class="alternate">1</td> </tr> <tr> <td class="alternate">2</td> <td class="alternate">3</td> <td class="alternate">4</td> <td class="alternate">5</td> <td class="alternate">6</td> <td class="alternate">7</td> <td class="alternate">8</td> </tr> </tbody>').appendTo(this.table);
         this.timepickerContainer = $('<div class="datepicker-time-container"></div>');
-        this.footer = $('<div class="popup-footer"> <button type="button" class="cancel btn-tertiary" tabindex="-1">'+ Locale.translate('Clear') +'</button> <button type="button" tabindex="-1" class="is-today btn-tertiary">'+Locale.translate('Today')+'</button> </div>');
+        this.footer = $('<div class="popup-footer"> <button type="button" class="cancel btn-tertiary">'+ Locale.translate('Clear') +'</button> <button type="button" class="is-today btn-tertiary">'+Locale.translate('Today')+'</button> </div>');
 
         // Timepicker options
         if (this.settings.showTime) {
@@ -432,34 +465,37 @@
         };
 
         this.trigger.popover(popoverOpts)
-        .off('hide.datepicker').on('hide.datepicker', function () {
-          self.closeCalendar();
-        }).off('open.datepicker').on('open.datepicker', function () {
-          self.days.find('.is-selected').attr('tabindex', 0).focus();
-        });
-
-        // ICONS: Right to Left Direction
-        setTimeout(function() {
-          if (Locale.isRTL()) {
-            Locale.flipIconsHorizontally();
+        .off('show.datepicker').on('show.datepicker', function () {
+          if (Soho.env.os.name === 'ios') {
+            $('head').triggerHandler('disable-zoom');
           }
-        }, 0);
+          // Horizontal view on mobile
+          if (window.innerHeight < 400) {
+            self.popup.find('.arrow').hide();
+            self.popup.css('min-height', (self.popupClosestScrollable[0].scrollHeight + 2) +'px');
+            self.popupClosestScrollable.css('min-height', '375px');
+          }
+        })
+        .off('hide.datepicker').on('hide.datepicker', function () {
+          if (Soho.env.os.name === 'ios') {
+            self.trigger.one('hide', function() {
+              $('head').triggerHandler('enable-zoom');
+            });
+          }
+          self.popupClosestScrollable.add(self.popup).css('min-height', 'inherit');
+          self.closeCalendar();
+        });
 
         this.handleKeys($('#calendar-popup'));
         $('.calendar-footer a', this.calendar).button();
 
         // Show Month
-        var currentVal = Locale.parseDate(this.element.val(), this.pattern);
-
-        this.currentDate = currentVal || new Date();
-        this.currentMonth = this.currentDate.getMonth();
-        this.currentYear = this.currentDate.getFullYear();
-        this.currentDay = this.currentDate.getDate();
+        this.setValueFromField();
 
         // Set timepicker
         if (this.settings.showTime) {
           timeOptions.parentElement = this.timepickerContainer;
-          this.time = self.getTimeString(currentVal, self.show24Hours);
+          this.time = self.getTimeString(this.currentDate, self.show24Hours);
           this.timepicker = this.timepickerContainer.timepicker(timeOptions).data('timepicker');
           this.timepickerContainer.find('dropdown').dropdown();
 
@@ -467,7 +503,6 @@
           setTimeout(function() {
             self.timepicker.initValues = self.timepicker.getTimeFromField(self.time);
             self.timepicker.afterShow(self.timepickerContainer);
-            self.timepickerContainer.find('div.dropdown').attr('tabindex', '-1');
             return;
           }, 1);
         }
@@ -477,8 +512,16 @@
         this.todayYear = this.todayDate.getFullYear();
         this.todayDay = this.todayDate.getDate();
 
+        if (this.isIslamic) {
+          this.todayDateIslamic = this.conversions.fromGregorian(this.todayDate);
+          this.todayYear = this.todayDateIslamic[0];
+          this.todayMonth = this.todayDateIslamic[1];
+          this.todayDay = this.todayDateIslamic[2];
+        }
+
         this.showMonth(this.currentMonth, this.currentYear);
         this.popup = $('#calendar-popup');
+        this.popupClosestScrollable = this.popup.closest('.scrollable');
         this.popup.attr('role', 'dialog');
         this.originalDate = this.element.val();
 
@@ -486,7 +529,7 @@
         this.days.off('click.datepicker').on('click.datepicker', 'td', function () {
           var td = $(this);
           if (td.hasClass('is-disabled')) {
-            td.attr('tabindex', 0).focus();
+            self.activeTabindex(td, true);
           }
           else {
             self.days.find('.is-selected').removeClass('is-selected').removeAttr('aria-selected');
@@ -516,7 +559,18 @@
             }
 
             self.currentDate = new Date(year, month, day);
-            self.insertDate(self.currentDate);
+
+            if (self.isIslamic) {
+              self.currentDateIslamic[0] = year;
+              self.currentDateIslamic[1] = month;
+              self.currentDateIslamic[2] = day;
+              self.currentYear = self.currentDateIslamic[0];
+              self.currentMonth = self.currentDateIslamic[1];
+              self.currentDay = self.currentDateIslamic[2];
+              self.currentDate = self.conversions.toGregorian(self.currentDateIslamic[0], self.currentDateIslamic[1], self.currentDateIslamic[2]);
+            }
+
+            self.insertDate(self.isIslamic ? self.currentDateIslamic : self.currentDate);
             self.closeCalendar();
             self.element.focus();
           }
@@ -527,14 +581,13 @@
           var btn = $(this);
 
           if (btn.hasClass('cancel')) {
-            self.element.val('').trigger('change');
+            self.element.val('').trigger('change').trigger('input');
             self.currentDate = null;
             self.closeCalendar();
           }
 
           if (btn.hasClass('is-today')) {
-            self.currentDate = new Date();
-            self.insertDate(self.currentDate);
+            self.setToday();
             self.closeCalendar();
           }
           self.element.focus();
@@ -738,7 +791,7 @@
         if (!this.calendar) {
           return;
         }
-        this.calendar.find('.is-selected').attr('tabindex', 0).focus();
+        this.activeTabindex(this.calendar.find('.is-selected'), true);
       },
 
       // Update the calendar to show the month (month is zero based)
@@ -747,6 +800,10 @@
 
         var elementDate = this.currentDate.getDate() ?
           this.currentDate : (new Date()).setHours(0,0,0,0);
+
+        if (this.isIslamic) {
+          elementDate = this.currentDateIslamic;
+        }
 
         if (year.toString().length < 4) {
           year = new Date().getFullYear();
@@ -773,8 +830,9 @@
         this.currentYear = year;
 
         // Set the Days of the week
+        var firstDayofWeek = (Locale.calendar().firstDayofWeek || 0);
         this.dayNames.find('th').each(function (i) {
-          $(this).text(days[i]);
+          $(this).text(days[(i + firstDayofWeek) % 7]);
         });
 
         //Localize Month Name
@@ -792,9 +850,10 @@
 
         //Adjust days of the week
         //lead days
-        var leadDays = (new Date(year, month, 1)).getDay();
-        var lastMonthDays = (new Date(year, month+0, 0)).getDate(),
-          thisMonthDays = (new Date(year, month+1, 0)).getDate(),
+        var firstDayOfMonth = this.firstDayOfMonth(year, month),
+          leadDays = (firstDayOfMonth - (Locale.calendar().firstDayofWeek || 0) + 7) % 7,
+          lastMonthDays = this.daysInMonth(year, month+1),
+          thisMonthDays = this.daysInMonth(year, month+0),
           dayCnt = 1, nextMonthDayCnt = 1, exYear, exMonth, exDay;
 
         this.days.find('td').each(function (i) {
@@ -813,12 +872,20 @@
 
           if (i >= leadDays && dayCnt <= thisMonthDays) {
             th.html('<span aria-hidden="true">' + dayCnt + '</span>');
-            var tHours = elementDate.getHours(),
-              tMinutes = elementDate.getMinutes(),
-              tSeconds = self.isSeconds ? elementDate.getSeconds() : 0;
 
-            if ((new Date(year, month, dayCnt)).setHours(tHours, tMinutes, tSeconds,0) === elementDate.setHours(tHours, tMinutes, tSeconds, 0)) {
-              th.addClass('is-selected').attr('aria-selected', 'true');
+            //Add Selected Class to Selected Date
+            if (self.isIslamic) {
+              if (year === elementDate[0] && month === elementDate[1] && dayCnt === elementDate[2]) {
+                th.addClass('is-selected').attr('aria-selected', 'true');
+              }
+            } else {
+              var tHours = elementDate.getHours(),
+                tMinutes = elementDate.getMinutes(),
+                tSeconds = self.isSeconds ? elementDate.getSeconds() : 0;
+
+              if ((new Date(year, month, dayCnt)).setHours(tHours, tMinutes, tSeconds,0) === elementDate.setHours(tHours, tMinutes, tSeconds, 0)) {
+                th.addClass('is-selected').attr('aria-selected', 'true');
+              }
             }
 
             if (dayCnt === self.todayDay && self.currentMonth === self.todayMonth &&
@@ -864,11 +931,13 @@
 
       // Put the date in the field and select on the calendar
       insertDate: function (date, isReset) {
-        var input = this.element;
+        var month = (date instanceof Array ? date[1] : date.getMonth()),
+            year  = (date instanceof Array ? date[0] : date.getFullYear()),
+            day = (date instanceof Array ? date[2] : date.getDate()).toString();
 
         // Make sure Calendar is showing that month
-        if (this.currentMonth !== date.getMonth() || this.currentYear !== date.getFullYear()) {
-          this.showMonth(date.getMonth(), date.getFullYear());
+        if (this.currentMonth !== month || this.currentYear !== year) {
+          this.showMonth(month, year);
         }
 
         if (!this.isOpen()) {
@@ -877,11 +946,11 @@
 
         // Show the Date in the UI
         var dateTd = this.days.find('td:not(.alternate)').filter(function() {
-          return $(this).text().toLowerCase() === date.getDate().toString();
+          return $(this).text().toLowerCase() === day;
         });
 
         if (dateTd.hasClass('is-disabled')) {
-          dateTd.attr({'tabindex': 0}).focus();
+          this.activeTabindex(dateTd, true);
         } else {
           if (this.settings.showTime) {
             if (isReset) {
@@ -897,9 +966,10 @@
             }
           }
 
-          input.val(Locale.formatDate(date, {pattern: this.pattern})).trigger('change');
+          this.setValue(date, true);
           this.days.find('.is-selected').removeClass('is-selected').removeAttr('aria-selected').removeAttr('tabindex');
-          dateTd.addClass('is-selected').attr({'aria-selected': true, 'tabindex': 0}).focus();
+          dateTd.addClass('is-selected').attr({'aria-selected': true});
+          this.activeTabindex(dateTd, true);
         }
       },
 
@@ -909,11 +979,87 @@
         return !isNaN(num) ? !!num : !!String(val).toLowerCase().replace(!!0, '');
       },
 
+      // Find the day of the week of the first of a given month
+      firstDayOfMonth: function (year, month) {
+
+        if (this.isIslamic) {
+		      var firstDay = this.conversions.toGregorian(year, month, 1);
+			    return (firstDay === null ? 1 : firstDay.getDay());
+        }
+        return  (new Date(year, month, 1)).getDay();
+      },
+
+      islamicYearIndex: function (islamicYear) {
+        var yearIdx = islamicYear - 1318;
+        if (yearIdx < 0 || yearIdx >= this.conversions.yearInfo.length) {
+          return 0; // for an out-of-range year, simply returns 0
+        } else {
+          return yearIdx;
+        }
+      },
+
+      // Find the date of the Month (29, 30, 31 ect)
+      daysInMonth: function (year, month) {
+
+        if (this.isIslamic) {
+		      var monthLengthBitmap = this.conversions.yearInfo[this.islamicYearIndex(year)][0];
+    			var monthDayCount = 0;
+    			for (var M = 0; M <= month; M++) {
+    				monthDayCount = 29 + (monthLengthBitmap & 1);
+    				if (M === month) {
+    					return monthDayCount;
+    				}
+    				monthLengthBitmap = monthLengthBitmap >> 1;
+    			}
+    			return 0;
+        }
+        return  (new Date(year, month, 0)).getDate();
+      },
+
       // Set the Formatted value in the input
-      setValue: function(date) {
+      setValue: function(date, trigger) {
         //TODO Document this as the way to get the date
         this.currentDate = date;
+
+        if (date instanceof Array) {
+          this.currentIslamicDate = date;
+          this.currentDate = this.conversions.toGregorian(date[0], date[1], date[2]);
+          date = new Date(date[0], date[1], date[2]);
+        }
+
         this.element.val(Locale.formatDate(date, {pattern: this.pattern}));
+
+        if (trigger) {
+          this.element.trigger('change').trigger('input');
+        }
+
+      },
+
+      //Get the value from the field and set the internal variables or use current date
+      setValueFromField: function() {
+        var fieldValue = this.element.val(),
+          gregorianValue = fieldValue;
+
+        if (this.isIslamic && fieldValue) {
+          var islamicValue = Locale.parseDate(this.element.val(), this.pattern);
+          gregorianValue = this.conversions.toGregorian(islamicValue.getFullYear(), islamicValue.getMonth(),  islamicValue.getDate());
+        }
+
+        this.currentDate = gregorianValue || new Date();
+        if (typeof this.currentDate === 'string') {
+          this.currentDate = Locale.parseDate(this.currentDate, this.pattern, false);
+        }
+        this.currentDate = this.currentDate || new Date();
+        this.currentMonth = this.currentDate.getMonth();
+        this.currentYear = this.currentDate.getFullYear();
+        this.currentDay = this.currentDate.getDate();
+
+        if (this.isIslamic) {
+          this.currentDateIslamic = this.conversions.fromGregorian(this.currentDate);
+          this.currentYear = this.currentDateIslamic[0];
+          this.currentMonth = this.currentDateIslamic[1];
+          this.currentDay = this.currentDateIslamic[2];
+        }
       },
 
       // Make input enabled
@@ -933,6 +1079,22 @@
         this.element.attr('readonly', 'readonly');
       },
 
+      // Set today
+      setToday: function() {
+        this.currentDate = new Date();
+
+        if (this.isIslamic) {
+          this.currentDateIslamic = this.conversions.fromGregorian(this.currentDate);
+        }
+
+        if (this.isOpen()) {
+          this.insertDate(this.isIslamic ? this.currentDateIslamic : this.currentDate, true);
+        } else {
+          this.element.val(Locale.formatDate(this.currentDate, {pattern: this.pattern})).trigger('change').trigger('input');
+        }
+
+      },
+
       // Set time
       setTime: function(date) {
         var hours = $('#timepicker-hours').val(),
@@ -940,17 +1102,7 @@
           seconds = this.isSeconds ? $('#timepicker-seconds').val() : 0,
           period = $('#timepicker-period');
 
-        var timepicker = $('.timepicker.is-active');
-        if (timepicker.length && (!minutes || this.isSeconds && !seconds)) {
-          var d = new Date(date),
-            regex = new RegExp('(\\d+)(?::(\\d\\d))'+ (this.isSeconds ? '(?::(\\d\\d))' : '') +'?\\s*(p?)'),
-            time = timepicker.val().match(regex);
-          d.setHours(parseInt(time[1]) + (time[3] ? 12 : 0));
-          d.setMinutes(parseInt(time[2]) || 0);
-          d.setSeconds(parseInt(time[3]) || 0);
-          minutes = d.getMinutes();
-          seconds = d.getSeconds();
-        }
+
         hours = (period.length && period.val() === 'PM' && hours < 12) ? (parseInt(hours, 10) + 12) : hours;
         hours = (period.length && period.val() === 'AM' && parseInt(hours, 10) === 12) ? 0 : hours;
 

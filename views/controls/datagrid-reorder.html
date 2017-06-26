@@ -59,25 +59,38 @@
     data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '123.99', status: 'OK', orderDate: null, action: 'On Hold'});
 
     //Define Columns for the Grid.
-    columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly, hideable: false});
-    columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, hideable: false});
-    columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity'});
-    columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
-    columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal});
-    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
-    columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Text});
-    columns.push({ id: 'action', name: 'Action Item', field: 'action'});
+    columns.push({ id: 'id', reorderable: false, name: 'Id', field: 'id', formatter: Formatters.Text, filterType: 'text'});
+    columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, filterType: 'text'});
+    columns.push({ id: 'activity', name: 'Activity', field: 'activity', filterType: 'text'});
+    columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', filterType: 'integer'});
+    columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal, filterType: 'decimal'});
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy', filterType: 'date'});
 
-    //Init and get the api for the grid
-    grid = $('#datagrid').datagrid({
-      columns: columns,
-      columnReorder: true,
-      dataset: data,
-      saveColumns: false,
-      toolbar: {personalize: true, results: true, resetLayout: true}
-    }).on('columnchange', function (e, args) {
-      console.log('Changed', args.columns);
+    //Get some data via ajax
+    var url = '{{basepath}}api/compressors?pageNum=1&pageSize=1000';
+
+    $.getJSON(url, function(res) {
+
+        //Init and get the api for the grid
+        grid = $('#datagrid').datagrid({
+          columns: columns,
+          columnReorder: true,
+          dataset: res.data,
+          paging: true,
+          pagesize: 10,
+          pagesizes: [5, 10, 15],
+          filterable: true,
+          saveColumns: false,  //deprecated
+          saveUserSettings: {columns: true,
+                             rowHeight: true,
+                             sortOrder: true,
+                             pagesize: true,
+                             filter: true},
+          toolbar: {personalize: true, filterRow: true, results: true, resetLayout: true}
+        }).on('settingschanged', function (e, args) {
+          console.log('Settings Changed', args);
+        });
+
     });
-
  });
 </script>

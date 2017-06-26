@@ -18,6 +18,8 @@ $header-button-color: rgba($white, 1);
 $header-button-focus-color: rgba($white, 1);
 $header-button-hover-color: rgba($white, .85);
 $header-button-disabled-color: rgba($white, .3);
+$header-primary-btn-background-color: $azure06;
+$header-primary-btn-background-hover-color: $azure05;
 $header-disabled-color: $graphite05;
 $panel-bg-color: $graphite02;
 $panel-border-color: $graphite06;
@@ -31,11 +33,18 @@ $inverse-color: #ffffff;
 $font-color-extrahighcontrast: $graphite10;
 $font-color-highcontrast: $graphite10;
 $font-color: $graphite09;
-$font-color-lowcontrast: $graphite06;
+$font-color-lowcontrast: $graphite07;
 $label-color: $graphite09;
 $label-disabled-color: $graphite05;
 $disabled-color: $graphite05;
 $signin-title-color: $slate10;
+
+// New Text Colors
+$font-color-default: $black;
+$font-color-descriptive: $graphite09;
+$font-color-hyperlink: $primary-color;
+$font-color-muted: $graphite05;
+$font-color-alert: $alert-red;
 
 //The hyperlink Style
 $hyperlink-color: $azure09;
@@ -119,6 +128,7 @@ $badge-focus-transparent-shadow: 0 0 0 1px $body-bg-color inset;
 $popupmenu-arrow-color: $font-color-extrahighcontrast;
 $popupmenu-color: $font-color-extrahighcontrast;
 $popupmenu-color-filtered-text: $font-color;
+$popupmenu-icon-color: $graphite06;
 $popupmenu-bg-color: $white;
 $popupmenu-border-color: $graphite06;
 $popupmenu-box-shadow: 0 2px 5px $drop-shadow-depth;
@@ -145,7 +155,7 @@ $btn-focus-bg-color: $primary-color;
 $btn-focus-border-color: $primary-color;
 $btn-active-bg-color: $graphite05;
 $btn-disabled-bg-color: $graphite07;
-$btn-disabled-color: $graphite07;
+$btn-disabled-color: $white;
 $btn-disabled-border-color: $graphite07;
 $btn-disabled-opacity: .5;
 
@@ -156,7 +166,7 @@ $tertiary-btn-open-color: $primary-color;
 $tertiary-btn-active-color: $graphite06;
 $tertiary-btn-ripple-color: $azure07;
 
-// Secondary With Border
+// Secondary with Border
 $secondary-border-btn-color:  $graphite09;
 $secondary-border-btn-border-color: $graphite09;
 $secondary-border-btn-hover-color:  $graphite10;
@@ -209,12 +219,12 @@ $listview-header-bg-color: $graphite04;
 $listview-header-color: $font-color-extrahighcontrast;
 $listview-subhead-color: $graphite06;
 
-$listview-toolbar-button-text-color: $graphite03;
-$listview-toolbar-button-icon-color: $graphite03;
-$listview-toolbar-button-text-hover-color: $white;
-$listview-toolbar-button-icon-hover-color: $white;
-$listview-toolbar-button-text-selected-color: $white;
-$listview-toolbar-button-icon-selected-color: $white;
+$listview-toolbar-button-text-color: $tertiary-btn-color;
+$listview-toolbar-button-icon-color: $tertiary-btn-color;
+$listview-toolbar-button-text-hover-color: $primary-color;
+$listview-toolbar-button-icon-hover-color: $primary-color;
+$listview-toolbar-button-text-selected-color: $primary-color;
+$listview-toolbar-button-icon-selected-color: $primary-color;
 
 // Listbuilder
 $listbuilder-bg-color: $input-bg-color;
@@ -581,7 +591,8 @@ $progress-border-color: $graphite06;
 $progress-bar-bg-color: $azure09;
 
 //Chart Progress Bar
-$chart-progressbar-bg-color: $graphite01;
+$chart-progressbar-bg-color: $graphite03;
+$chart-progressbar-bg-color-dark: $graphite05;
 $chart-progressbar-completed-fill: #2f6b0a;
 $chart-progressbar-target-fill: $graphite05;
 $chart-progressbar-primary-fill: $primary-color;
@@ -604,9 +615,8 @@ $wizard-active-color: $primary-color;
 $wizard-active-text-color: $primary-color;
 $wizard-focus-box-shadow: 0 0 0 1px $azure07;
 
-
-//Themable Variables in config.scss
-$hierarchy-line-color: $graphite03;
+//Org Chart
+$hierarchy-line-color: $graphite10;
 
 // Searchfield Colors
 $searchfield-bg-color: $white;
@@ -624,8 +634,8 @@ $searchfield-context-boxshadow-color: $graphite03;
 $searchfield-context-icon-color: $graphite04;
 $searchfield-context-text-color: $font-color;
 
-$searchfield-card-bg-color: $graphite01;
-$searchfield-card-border-color: $graphite02;
+$searchfield-card-bg-color: $white;
+$searchfield-card-border-color: $graphite03;
 $searchfield-card-icon-color: $graphite03;
 $searchfield-card-text-color: $font-color;
 
@@ -657,10 +667,12 @@ $about-text-hover-border-color: $black;
 
 // Header Tabs
 $header-tabcontainer-border-color: $graphite04;
+$header-tab-separator: $graphite10;
 $header-tab-normal-color: $graphite01;
 $header-tab-hover-color: $inverse-color;
 $header-tab-selected-color: $inverse-color;
 $header-tab-alt-bg-color: $slate10;
+$header-tab-alt-separator: $header-tabcontainer-border-color;
 $header-tab-alt-normal-color: $inverse-color;
 $header-tab-alt-hover-color: $inverse-color;
 $header-tab-alt-selected-color: $inverse-color;
@@ -684,6 +696,9 @@ $module-tabs-disabled-bg-color: $azure06;
 $module-tabs-disabled-x-border-color: $azure04;
 $module-tabs-disabled-y-border-color: $azure07;
 $module-tabs-disabled-text-color: $azure04;
+
+// Composite Tabs
+$composite-tabs-panel-bg-color: $slate10;
 
 // Splitter
 $splitter-grip-bg-color: $graphite09;

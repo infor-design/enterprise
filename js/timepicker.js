@@ -249,7 +249,7 @@
       },
 
       // Add masking with the mask function
-      mask: function () {
+            mask: function () {
         if (this.element.data('mask') && typeof this.element.data('mask') === 'object') {
           this.element.data('mask').destroy();
         }
@@ -264,12 +264,21 @@
           customEvents = this.element.attr('data-validation-events');
 
         if (customValidation === 'required' && !customEvents) {
-          validation = customValidation + ' ' + validation;
-          $.extend(events, {'required': 'change blur'});
-        }
-
-        if (customEvents) {
-          events = customEvents;
+            validation = customValidation + ' ' + validation;
+            $.extend(events, {
+                'required': 'change blur'
+            });
+        } else if (!!customValidation && !!customEvents) {
+            // Remove default validation, if found "no-default-validation" string in "data-validate" attribute
+            if (customValidation.indexOf('no-default-validation') > -1) {
+                validation = customValidation.replace(/no-default-validation/g, '');
+                events = $.fn.parseOptions(this.element, 'data-validation-events');
+            }
+                // Keep default validation along custom validation
+            else {
+                validation = customValidation + ' ' + validation;
+                $.extend(events, $.fn.parseOptions(this.element, 'data-validation-events'));
+            }
         }
 
         this.element
@@ -346,7 +355,7 @@
             textValue = secondCounter < 10 ? '0' + secondCounter : secondCounter;
 
             selected = '';
-            if (self.initValues.seconds === secondCounter || (!self.initValues.seconds && textValue === '00')) {
+            if (parseInt(self.initValues.seconds, 10) === secondCounter || (!self.initValues.seconds && textValue === '00')) {
               selected = ' selected';
             }
             secondSelect.append($('<option' + selected + '>' + textValue + '</option>'));

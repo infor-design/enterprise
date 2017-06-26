@@ -1,0 +1,59 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+      var grid,
+        columns = [],
+        data = [];
+
+      //Define Columns for the Grid.
+      columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
+      columns.push({ id: 'id', name: 'Id', field: 'id'});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140});
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 150, formatter: Formatters.Hyperlink, editor: Editors.Input});
+      columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125, editor: Editors.Input});
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
+      columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+
+      //Init and get the api for the grid
+      grid = $('#datagrid').datagrid({
+        columns: columns,
+        selectable: 'multiple',
+        paging: true,
+        editable: false,
+        selectable: 'multiple',
+        pagesize: 10,
+        source: function(req, response) {
+          var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
+
+          if (req.sortId) {
+            url += '&sortId=' + req.sortId + '&sortAsc=' + req.sortAsc;
+          }
+
+          if (req.filterExpr && req.filterExpr[0]) {
+            url += '&filter=' + req.filterExpr[0].value;
+          }
+
+          //Get Page Based on info in Req, return results into response;
+          $.getJSON(url, function(res) {
+            req.total = res.total;
+            response(res.data, req);
+          });
+        },
+        toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true, collapsibleFilter: true}
+      }).on('selected', function (e, args, action) {
+        if (args[0]) {
+          console.log(action, args.length, args[0].idx);
+        }
+      });
+
+  });
+</script>

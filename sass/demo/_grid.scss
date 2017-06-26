@@ -12,9 +12,8 @@
 
   h2 {
     font-size: 1.8rem;
-    padding-top: 11px;
+    padding-top: 3px;
   }
-
 }
 
 .row.demo-tests-grid {
@@ -34,4 +33,47 @@
 .draggable.card.demo {
   min-height: 150px;
   width: 150px;
+}
+
+// Typography Sample Page
+.demo-typography {
+
+  .row {
+    margin-top: 20px;
+    max-width: 100%;
+
+    > .one-fifth:first-child span {
+      position: relative;
+      right: 20px;
+      text-align: right;
+      top: 4px;
+    }
+
+    &:first-child {
+      margin-top: 30px;
+    }
+  }
+}
+
+@include respond-to(phone) {
+  .demo-typography .row   > .one-fifth:first-child span {
+    position: static;
+    right: initial;
+    text-align: left;
+    top: initial;
+  }
+
+  .demo-typography {
+    // scss-lint:disable ImportantRule
+    .row {
+      margin-left: 0 !important;
+      margin-top: 20px;
+
+      &:first-child {
+        display: none;
+      }
+    }
+    // scss-lint:enable ImportantRule
+  }
+
 }

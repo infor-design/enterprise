@@ -1,20 +1,37 @@
 // Hyperlinks
 //================================================== //
 
+@mixin hyperlink-focus-state {
+  content: '';
+  display: block;
+  pointer-events: none;
+  position: absolute;
+  height: calc(100% + 4px);
+  width: calc(100% + 4px);
+  left: -3px;
+  top: -3px;
+
+  @include css3(transition, border-color 100ms cubic-bezier(.17, .04, .03, .94));
+  border: 1px solid transparent;
+  border-radius: 2px;
+}
+
 .hyperlink {
   @include font-size(12);
   @include antialiased();
-  border: 1px solid transparent;
-  border-radius: 2px;
   color: $hyperlink-color;
   cursor: pointer;
-  line-height: 16px;
-  padding-top: 2px;
-  text-decoration: none;
-  white-space: nowrap;
+  line-height: 1.5rem;
+  position: relative;
+  text-decoration: underline;
+
+  // Focus states appear in ::after pseudo elements to take
+  // advantage of border radius.
+  &::after {
+    @include hyperlink-focus-state;
+  }
 
   &:hover:not([disabled]) {
-    border-bottom-color: $hyperlink-hover-color;
     color: $hyperlink-hover-color;
   }
 
@@ -22,33 +39,30 @@
     display: inline-block;
     margin: 60px 20px 40px;
     text-align: center;
+    text-decoration: none;
   }
 
   .xl-text {
     @include font-size(50);
-    font-weight: lighter;
   }
 
-  &.show-visited:visited {
+  &.show-visited:visited,
+  &.force-visited {
     color: $hyperlink-visited-color;
 
-    &:focus {
-      outline: 1px solid $hyperlink-visited-color;
-    }
-
-    &:hover {
-      border-bottom-color: $hyperlink-disabled-color;
+    &:focus:not(.hide-focus),
+    &:active {
+      outline: none;
     }
   }
 
-  &:focus:not(.hide-focus) {
-    outline: 1px solid $hyperlink-focus-border-color;
-    outline-offset: 3px;
-  }
-
+  &:focus:not(.hide-focus),
   &:active {
     outline: none;
-    outline-offset: 3px;
+
+    &::after {
+      border-color: $hyperlink-focus-border-color;
+    }
   }
 
   &[disabled] {
@@ -58,12 +72,12 @@
       cursor: default;
     }
 
-    &:active {
-      border-bottom: 1px solid transparent;
-    }
+    &:focus:not(.hide-focus) {
+      outline: none;
 
-    &:focus {
-      outline: 1px solid $disabled-color;
+      &::after {
+        border-color: $disabled-color;
+      }
     }
   }
 
@@ -71,47 +85,70 @@
   &.directional {
     @include font-size(12);
     color: $hyperlink-color;
-    display: inline-block;
+
+    &::after {
+      display: none;
+    }
+
+    span {
+
+      &::after {
+        @include hyperlink-focus-state;
+      }
+    }
 
     .icon {
       display: inline;
       fill: $hyperlink-color;
-      height: 22px;
-      left: -5px;
-      margin-right: -11px;
+      height: 20px;
       position: relative;
       top: -1px;
       vertical-align: middle;
-      width: 22px;
+      width: 20px;
     }
 
-    &:active:not([disabled]),
-    &:focus:not([disabled]),
-    &:hover:not([disabled]):not(.no-focus) {
-      border-bottom: 1px solid transparent;
-      outline: none;
-    }
-
-    &:hover:not([disabled]) {
+    &:focus:not(.hide-focus) {
       span {
-        border-bottom: 1px solid $hyperlink-hover-color;
+        &::after {
+          border-color: $hyperlink-focus-border-color;
+        }
       }
     }
+  }
 
-    &:focus:not(.hide-focus) span {
-      outline: 1px solid $hyperlink-focus-border-color;
-      outline-offset: 3px;
+  &.back {
+    .icon {
+      left: -6px;
+      margin-right: -12px;
+    }
+
+    span {
+      &::after {
+        margin-left: -2px;
+        width: calc(100% + 4px);
+      }
     }
   }
 
   &.directional {
-
     .icon {
       left: -5px;
       margin-right: -7px;
-      top: -1px;
+    }
+
+    span {
+      &::after {
+        left: -5px;
+        width: calc(100% - 1px);
+      }
     }
   }
+}
+
+//Inline text should be 14px to match content
+p .hyperlink {
+  @include font-size(14);
+  white-space: nowrap;
 }
 
 // Links Stacked - as on the controls index page
@@ -124,7 +161,7 @@
     svg {
       fill: $primary-color;
       height: 16px;
-      left: 0;
+      left: 6px;
       margin-right: 2px;
       top: 4px;
       width: 16px;
@@ -132,18 +169,12 @@
 
     a span {
       border: 1px solid transparent;
+      padding-left: 7px;
       position: relative;
       text-transform: capitalize;
       top: 2px;
     }
 
-    a:hover:not([disabled]) {
-      border-bottom-color: transparent;
-
-      span {
-        border-bottom-color: $primary-color;
-      }
-    }
   }
 
   div {
@@ -156,10 +187,6 @@
 
   }
 
-  &.no-border div {
-    border-bottom: 0;
-  }
-
   .timestamp {
     color: $graphite04;
     display: block;
@@ -167,24 +194,46 @@
     margin: 0;
     padding: 0;
     position: static;
-    text-transform: uppercase;
   }
 }
 
-//Inline text should be 14px to match content
-p .hyperlink {
-  @include font-size(14);
+//Firefox
+.is-firefox {
+  .hyperlink {
+    &:not(.directional) {
+      padding-top: 2px;
+    }
+
+    &.directional {
+      span {
+        padding-top: 2px;
+      }
+    }
+  }
 }
 
 //Right To Left Styles
 html[dir='rtl'] {
-  .hyperlink.back span {
-    margin-left: 7px;
-    margin-right: 0;
+
+  .hyperlink {
+    &.back {
+      .icon {
+        left: auto;
+        margin-left: -10px;
+        margin-right: auto;
+        right: -8px;
+      }
+
+      span::after {
+        margin-left: 0;
+      }
+    }
+
+    &.directional {
+      span::after {
+        margin-left: 18px;
+      }
+    }
   }
 
-  .hyperlink.forward::after {
-    padding-left: 0;
-    padding-right: 5px;
-  }
 }

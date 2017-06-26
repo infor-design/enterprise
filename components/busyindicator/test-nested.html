@@ -1,0 +1,71 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Busy Indicator Test: Nested Busy Indicators</h2>
+    <p>The "card" busy indicator (marked by the card border) is nested inside the "form" busy indicator (marked in amber).  They should both still operate independently of one another.  The <b>start</b> and <b>complete</b> events on a "busy" element should never bubble.</p>
+    <p></p>
+  </div>
+</div>
+
+<form id="nested-busy-form" class="busy amber01" action="#" method="POST" data-completion-time="2000" data-close-time="3000" style="padding: 20px;">
+
+  <div class="row">
+    <div class="six columns">
+      <div class="field">
+        <label for="nested-busy-field-name">Name</label>
+        <input id="nested-busy-field-name" name="nested-busy-field-name" />
+      </div>
+      <div class="field">
+        <label for="nested-busy-field-address">Address</label>
+        <input id="nested-busy-field-address" name="nested-busy-field-address" />
+      </div>
+      <div class="field">
+        <label for="nested-busy-field-cats">Number of Cats</label>
+        <input id="nested-busy-field-cats" name="nested-busy-field-cats" />
+      </div>
+      <div class="field">
+        <button type="reset" class="btn-secondary">Clear</button>
+        <button type="submit" class="btn-primary">Submit</button><br>
+      </div>
+    </div>
+    <div class="six columns">
+
+      <div class="row">
+        <div class="one-half column">
+          <button class="btn-secondary" id="nested-busy-start-trigger" type="button">Fire "start" Event</button><br />
+          <br>
+          <button class="btn-secondary" id="nested-busy-complete-trigger" type="button">Fire "complete" Event</button><br />
+        </div>
+        <div class="one-half column">
+          <div id="nested-busy-standalone" class="busy card"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</form>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+    var topForm = $('#nested-busy-form'),
+      topFormSubmit = topForm.find('button[type="submit"]'),
+      standalone = $('#nested-busy-standalone'),
+      standaloneStart = $('#nested-busy-start-trigger'),
+      standaloneComplete = $('#nested-busy-complete-trigger');
+
+    topForm.on('submit.test', function(e) {
+      e.preventDefault();
+      topForm.trigger('start.busyindicator');
+    });
+
+    standaloneStart.click(function(e) {
+      e.preventDefault();
+      standalone.trigger('start.busyindicator');
+    });
+
+    standaloneComplete.click(function(e) {
+      e.preventDefault();
+      standalone.trigger('complete.busyindicator');
+    });
+  });
+</script>

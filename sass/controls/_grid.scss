@@ -10,10 +10,16 @@ $gutter-neg-size: -20px;
 //$breakpoint-tablet-to-desktop: 1160px;
 //$breakpoint-desktop-to-extralarge: 1440px;
 .row {
+  @include font-size(12);
   clear: both;
   margin: 0 auto;
   max-width: $breakpoint-tablet-to-desktop;
   width: 100%;
+
+  &.full-width {
+    margin-top: 20px;
+    max-width: 100%;
+  }
 
   &:last-child {
     margin-bottom: 30px;
@@ -41,6 +47,12 @@ $gutter-neg-size: -20px;
     padding-bottom: 10px !important;
     // scss-lint:enable ImportantRule
   }
+
+  &.full-height {
+    height: 100%;
+    margin: 0 auto;
+  }
+
 }
 
 .row::after {
@@ -73,6 +85,21 @@ $gutter-neg-size: -20px;
       }
     }
   }
+
+  &.full-height {
+    height: 100%;
+    margin: 0;
+
+    .datagrid-body {
+      height: calc(100% - 85px);
+    }
+
+    .has-toolbar .datagrid-body {
+      height: calc(100% - 40px);
+    }
+
+  }
+
 }
 
 @include respond-to(phabletdown) {
@@ -80,7 +107,7 @@ $gutter-neg-size: -20px;
     margin-left: 0;
     width: 50%;
 
-    &:nth-child(even) {
+    + .one-half-mobile {
       padding-left: 0;
     }
   }
@@ -168,6 +195,11 @@ $gutter-neg-size: -20px;
   .one-fifth.column {
     margin-left: $gutter-size;
     width: calc(20% - 20px);
+  }
+
+  .one-fourth.column {
+    margin-left: $gutter-size;
+    width: calc(25% - 20px);
   }
 
   .one-third.column {

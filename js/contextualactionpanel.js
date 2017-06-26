@@ -100,7 +100,7 @@
           isIframe = false,
           contents;
 
-        this.panel.find('svg').icon();//fixSvg();
+        this.panel.find('svg').icon();
 
         if (this.panel.find('.modal-content').length === 0) {
           children = this.panel.children();
@@ -168,6 +168,7 @@
           this.toolbar.toolbar();
         }
 
+        Soho.utils.fixSVGIcons(this.element);
         return this;
       },
 
@@ -211,6 +212,7 @@
 
           // Focus the first focusable element inside the Contextual Panel's Body
           self.panel.find('.modal-body-wrapper').find(':focusable').first().focus();
+          Soho.utils.fixSVGIcons(self.panel);
         }).on('beforedestroy.contextualactionpanel', function() {
           self.teardown();
         });
@@ -268,8 +270,9 @@
         if (this.settings.trigger === 'immediate') {
           destroy = true;
         }
-
-        this.panel.data('modal').close(destroy);
+        if (this.panel.data('modal')) {
+          this.panel.data('modal').close(destroy);
+        }
       },
 
       disable: function() {

@@ -24,37 +24,44 @@ $toolbarsearchfield-category-empty-width: 54px;
 
   .searchfield {
     @include antialiased();
-    background-color: rgba(0, 0, 0, 0);
-    border: 1px solid rgba(0, 0, 0, 0);
+    @include font-size(12);
+    @include transition(background-color 300ms cubic-bezier(.17, .04, .03, .94),
+    border-color 300ms cubic-bezier(.17, .04, .03, .94));
+    background-color: transparent;
+    border: 1px solid transparent;
     box-shadow: none !important;
     color: $searchfield-text-color;
-    @include font-size(12);
     font-weight: 700;
     height: 34px;
     outline: 0 !important;
     text-overflow: ellipsis;
-    text-transform: uppercase;
-    @include transition(background-color 300ms cubic-bezier(.17, .04, .03, .94),
-      border-color 300ms cubic-bezier(.17, .04, .03, .94));
     width: 100%;
 
+    &.alternate {
+      background-color: $panel-bg-color !important;
+    }
+
     &::-webkit-input-placeholder {
-      color: $searchfield-text-color;
       @include font-size(12);
+      color: $searchfield-text-color;
       font-weight: 700;
     }
 
     &::-moz-placeholder {
-      color: $searchfield-text-color;
       @include font-size(12);
+      color: $searchfield-text-color;
       font-weight: 700;
     }
 
     &:-ms-input-placeholder {
-      color: $searchfield-text-color;
       @include font-size(12);
+      color: $searchfield-text-color;
       font-weight: 700;
     }
+  }
+
+  label {
+    display: none;
   }
 
   .icon {
@@ -66,11 +73,11 @@ $toolbarsearchfield-category-empty-width: 54px;
     }
 
     &:not(.close) {
-      height: 18px;
-      top: 8px;
       @include transition(height 300ms cubic-bezier(.17, .04, .03, .94),
         top 300ms cubic-bezier(.17, .04, .03, .94),
         left 300ms cubic-bezier(.17, .04, .03, .94));
+      height: 18px;
+      top: 8px;
     }
   }
 
@@ -203,6 +210,10 @@ $toolbarsearchfield-category-empty-width: 54px;
       fill: $tertiary-btn-hover-color;
     }
 
+    .searchfield {
+      border-color: transparent;
+    }
+
     &.active {
       .icon {
         fill: $searchfield-text-color;
@@ -256,6 +267,12 @@ $toolbarsearchfield-category-empty-width: 54px;
     .btn {
       border: 1px solid transparent;
       height: 34px;
+    }
+
+    &.searchfield-wrapper.show-category {
+      .searchfield {
+        border-left-color: transparent;
+      }
     }
   }
 
@@ -432,38 +449,46 @@ $toolbarsearchfield-category-empty-width: 54px;
   }
 }
 
+
+.is-firefox.is-mac {
+  .toolbar-searchfield-wrapper.searchfield-wrapper .btn {
+    height: 32px;
+  }
+}
+
 // For non-collapsible searchfields:  Only be non-collapsible on larger breakpoints.
 @media(min-width: $breakpoint-phone-to-tablet) {
+
   .toolbar-searchfield-wrapper.non-collapsible {
     width: $toolbarsearchfield-max-width;
 
     // reset all the styling for the searchfield to correctly appear open.
     .searchfield {
+      @include font-size(14);
       background-color: rgba($searchfield-bg-color, 1);
       border-bottom-color: rgba($searchfield-border-color, 1);
       border-radius: 0;
       color: $searchfield-text-color;
-      @include font-size(14);
       font-weight: normal;
       text-transform: none;
 
       &::-webkit-input-placeholder {
-        color: $searchfield-text-color;
         @include font-size(14);
+        color: $searchfield-text-color;
         font-weight: normal;
         text-transform: none;
       }
 
       &::-moz-placeholder {
-        color: $searchfield-text-color;
         @include font-size(14);
+        color: $searchfield-text-color;
         font-weight: normal;
         text-transform: none;
       }
 
       &:-ms-input-placeholder {
-        color: $searchfield-text-color;
         @include font-size(14);
+        color: $searchfield-text-color;
         font-weight: normal;
         text-transform: none;
       }
@@ -547,6 +572,16 @@ $toolbarsearchfield-category-empty-width: 54px;
         background-color: rgba($searchfield-header-bg-color, .5);
         border-bottom-color: rgba($searchfield-header-border-color, .7);
       }
+    }
+  }
+
+}
+
+@include respond-to(phone) {
+
+  .toolbar-searchfield-wrapper:not(.is-open) {
+    .searchfield.alternate {
+      background-color: transparent !important;
     }
   }
 

@@ -144,8 +144,6 @@ svg.icon-logo {
   }
 
   &.dirty-checkbox {
-    left: 1px;
-    top: -1px;
 
     &.is-checked {
       border-width: 4px;
@@ -188,7 +186,7 @@ svg.icon-logo {
 
   svg {
     display: inline-block;
-    fill: #ffffff;
+    fill: $white;
     height: 45px;
     margin-left: 26px;
     margin-top: 25px;
@@ -240,6 +238,8 @@ svg.icon-dirty {
 
   &::before,
   &::after {
+    @include css3(transform-origin, 50% 50% 0);
+    @include transition(transform 300ms cubic-bezier(.17, .04, .03, .94) 0s);
     background-color: $icon-color;
     border-radius: 2px;
     content: '';
@@ -248,8 +248,6 @@ svg.icon-dirty {
     position: absolute;
     top: 1.4em;
     width: 14px;
-    @include css3(transform-origin, 50% 50% 0);
-    @include transition(transform 300ms cubic-bezier(.17, .04, .03, .94) 0s);
   }
 
   &::before {
@@ -274,30 +272,30 @@ svg.icon-dirty {
 .icon.app-header {
 
   span:not(.audible) {
-    background-color: $icon-color;
-    border-radius: 4px;
-    height: 2px;
-    position: absolute;
     @include css3(transform-origin, 50% 50% 0);
     @include transition(transform 300ms cubic-bezier(.17, .04, .03, .94) 0s,
       left 300ms cubic-bezier(.17, .04, .03, .94),
       top 300ms cubic-bezier(.17, .04, .03, .94));
+    background-color: $icon-color;
+    border-radius: 4px;
+    height: 2px;
+    position: absolute;
     width: 20px;
   }
 
   span.one {
     left: 6px;
-    top: 6.5px;
+    top: 8.5px;
   }
 
   span.two {
     left: 6px;
-    top: 12.5px;
+    top: 14.5px;
   }
 
   span.three {
     left: 6px;
-    top: 18.5px;
+    top: 20.5px;
   }
 
   &.go-back {

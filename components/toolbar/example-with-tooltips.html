@@ -1,0 +1,67 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Toolbar Test: Icon Buttons with Tooltips</h2>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="toolbar">
+      <div class="title">All Icon Buttons</div>
+      <div class="buttonset">
+
+        <button type="button" class="btn" title="Edit">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-edit"></use>
+          </svg>
+          <span class="audible">Edit</span>
+        </button>
+
+        <button type="button" class="btn" title="Open">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-check"></use>
+          </svg>
+          <span class="audible">Open</span>
+        </button>
+
+        <button type="button" class="btn" title="Close">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-cancel"></use>
+          </svg>
+          <span class="audible">Close</span>
+        </button>
+
+        <button type="button" class="btn" title="Refresh">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-refresh"></use>
+          </svg>
+          <!--<span class="audible">Refresh</span>-->
+        </button>
+
+        <button type="button" class="btn" title="Delete">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-delete"></use>
+          </svg>
+          <span class="audible">Delete</span>
+        </button>
+
+        <button type="button" class="btn" title="Settings">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-settings"></use>
+          </svg>
+          <span class="audible">Settings</span>
+        </button>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+    $('button[title]').tooltip();
+  });
+</script>

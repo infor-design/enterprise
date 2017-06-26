@@ -19,7 +19,10 @@
 
     // Settings and Options
     var pluginName = 'expandablearea',
-        defaults = {},
+        defaults = {
+          trigger: null, //Id of some other button to use as a trigger
+          bottomBorder: false //Change the border to bottom vs top
+        },
         settings = $.extend({}, defaults, options);
 
     /**
@@ -50,9 +53,11 @@
           this.id = id = 'expandable-area-' + $('body').find('.expandable-area').index(this.element);
         }
 
-        this.header = this.element.children('.expandable-header');
+        this.header = this.settings.trigger ? this.element : this.element.children('.expandable-header');
         this.footer = this.element.children('.expandable-footer');
         this.content = this.element.children('.expandable-pane');
+
+        this.isCard = this.element.is('.card, .widget');
         return this;
       },
 
@@ -69,17 +74,51 @@
           'id': this.id + '-content'
         });
 
-        //Add the link and footer if not there.
-        if (!this.footer.length) {
+        // Add the link and footer if not there.
+        // If we're using an expandable card,
+        if (!this.isCard && !this.footer.length && !this.settings.trigger) {
           this.footer =  $('<div class="expandable-footer"></div>').appendTo(this.element);
         }
 
-        this.expander = this.footer.find('.expandable-expander');
-        if (!this.expander.length) {
-          this.expander = $('<a href="#" target="_self" class="expandable-expander hyperlink"><span data-translated="true">'+ Locale.translate('ShowMore') +'</span></a>').prependTo(this.footer);
+        function getExpander(instance, useHeaderExpander) {
+          var expander;
+
+          if (useHeaderExpander === true) {
+            // Use icon-based expander in the header
+            expander = instance.header.find('expandable-expander');
+            if (!expander.length) {
+              expander = $('<a href="#" target="_self" class="btn-expander">' +
+                '<svg class="chevron icon" focusable="false" aria-hidden="true" role="presenation">' +
+                  '<use xlink:href="' + '#icon-caret-down' + '"></use>' +
+                '</svg>' +
+                '<span class="audible">'+ Locale.translate('ShowMore') +'</span>' +
+              '</a>').appendTo(instance.header);
+            }
+
+            return expander;
+          }
+
+          // Use the text-based expander button in the footer
+          expander = instance.footer.find('.expandable-expander');
+          if (!expander.length) {
+            expander = $('<a href="#" target="_self" class="expandable-expander hyperlink">' +
+              '<span data-translated="true">'+ Locale.translate('ShowMore') +'</span>' +
+            '</a>').prependTo(instance.footer);
+          }
+          return expander;
         }
 
+        this.expander = getExpander(self, this.isCard);
         this.expander.attr('href', '#').hideFocus();
+
+        if (this.expander.length === 0) {
+          this.expander = $('#' + this.settings.trigger);
+        }
+
+        // Change the borer to the bottom vs top
+        if (this.settings.bottomBorder) {
+          this.element.addClass('has-bottom-border');
+        }
 
         //Initialized in expanded mode.
         if (expanded) {
@@ -155,9 +194,17 @@
         this.header.removeClass('is-focused');
       },
 
+      /**
+       * Indicates whether or not this area is expanded.
+       * @returns {boolean}
+       */
+      isExpanded: function() {
+        return this.element.is('.is-expanded');
+      },
+
       toggleExpanded: function() {
         // if (this.header.attr('aria-expanded') === 'true') {
-        if (this.element.is('.is-expanded')) {
+        if (this.isExpanded()) {
           this.close();
         } else {
           this.open();
@@ -179,6 +226,10 @@
 
         this.expander.find('span[data-translated="true"]').text(Locale.translate('ShowLess') ? Locale.translate('ShowLess') : 'Show Less');
 
+        if (this.isCard) {
+          this.expander.find('.icon').addClass('active');
+        }
+
         if (this.content[0]) {
           this.content[0].style.display = 'block';
         }
@@ -198,6 +249,10 @@
         this.expander.removeClass('active');
         this.element.triggerHandler('collapse', [this.element]);
         this.expander.find('span[data-translated="true"]').text(Locale.translate('ShowMore') ? Locale.translate('ShowMore') : 'Show More');
+
+        if (this.isCard) {
+          this.expander.find('.icon').removeClass('active');
+        }
 
         this.content.one('animateclosedcomplete', function() {
           self.element.removeClass('is-expanded');

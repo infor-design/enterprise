@@ -1,0 +1,65 @@
+<h1 id="bar-chart-component-implementation-detail-learn-more">Bar Chart Component Implementation Detail <a href="#">Learn More</a></h1>
+<h2 id="configuration-options">Configuration Options</h2>
+<ol>
+<li>Bar Chart Main Example <a href="/components/bar/example-index">View Example</a><br /></li>
+<li>Another Example with More Elements and Longer Text <a href="/components/bar/example-alignment">View Example</a><br /></li>
+<li>Example showing how to set Colors <a href="/components/bar/example-colors">View Example</a><br /></li>
+<li>Example showing the formatter <a href="/components/bar/example-formatter">View Example</a><br /></li>
+<li>Example showing the option to hide the formatter <a href="/components/bar/example-hide-legend">View Example</a><br /></li>
+<li>Example showing an edge case of longer text <a href="/components/bar/example-long-text">View Example</a><br /></li>
+<li>Example showing with negative values <a href="/components/bar/example-negative-values">View Example</a><br /></li>
+<li>Example showing color patterns <a href="/components/bar/example-patterns">View Example</a><br /></li>
+<li>Example showing defaulting a selected value <a href="/components/bar/example-selected">View Example</a></li>
+</ol>
+<h2 id="code-example">Code Example</h2>
+<p>This example shows how to invoke a simple bar chart with a dataset showing the value.</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">
+ <span class="kw">var</span> dataset = [{
+      <span class="dt">data</span>: [{
+          <span class="dt">name</span>: <span class="st">&#39;Category A&#39;</span>,
+          <span class="dt">value</span>: <span class="dv">373</span>
+      }, {
+          <span class="dt">name</span>: <span class="st">&#39;Category B&#39;</span>,
+          <span class="dt">value</span>: <span class="dv">372</span>
+      }, {
+          <span class="dt">name</span>: <span class="st">&#39;Category C&#39;</span>,
+          <span class="dt">value</span>: <span class="fl">236.35</span>
+      }],
+      <span class="dt">name</span>: <span class="st">&#39;&#39;</span>
+    }];
+
+  <span class="fu">$</span>(<span class="st">&#39;#bar-example&#39;</span>).<span class="fu">chart</span>({<span class="dt">type</span>: <span class="st">&#39;bar&#39;</span>, <span class="dt">dataset</span>: dataset});
+</code></pre>
+<h2 id="accessibility">Accessibility</h2>
+<ul>
+<li>The contrast and actual colors can be a concern for visibility impaired and color blind people. However, you can customize the color by passing higher contrast colors.</li>
+</ul>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">
+color: <span class="st">&#39;#1a1a1a&#39;</span>
+name: <span class="st">&#39;Component C&#39;</span>
+</code></pre>
+<h2 id="code-tips">Code Tips</h2>
+<p>You can override the tooltip by passing in a specific tooltip text value.</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">
+{<span class="dt">type</span>: <span class="st">&#39;bar-grouped&#39;</span>, <span class="dt">dataset</span>: dataset, <span class="dt">tooltip</span>: <span class="st">&#39;Tooltip by attribute&#39;</span>}
+</code></pre>
+<p>Or if you have more dynamic requirements you can do this with an ajax callback.</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">
+<span class="fu">$</span>(<span class="st">&#39;#bar-grouped-example&#39;</span>).<span class="fu">chart</span>({<span class="dt">type</span>: <span class="st">&#39;bar-grouped&#39;</span>, <span class="dt">dataset</span>: dataset,
+  <span class="dt">tooltip</span>: <span class="kw">function</span>(response) {
+    <span class="co">//Ajax Call or async op</span>
+    <span class="fu">setTimeout</span>(<span class="kw">function</span> () {
+      <span class="fu">response</span>(<span class="st">&#39;&lt;strong&gt;Tooltips Provide &lt;br&gt; Interesting Information&lt;/strong&gt;&#39;</span>);
+    }, <span class="dv">400</span>);
+  }
+});
+</code></pre>
+<h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
+<ul>
+<li><strong>Tab:</strong> You can tab into the chart area and through the legend values as each has a focus state.<br /></li>
+<li><strong>Enter/Space:</strong> Will select the bar group the corresponds with the focus'd legend item.</li>
+</ul>
+<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
+<ul>
+<li>The bar chart was added in 3.6. From 3.6 the api is mostly compatible.</li>
+</ul>

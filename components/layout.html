@@ -1,0 +1,16 @@
+{{> includes/head}}
+<body class="no-scroll">
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+  {{> includes/svg-inline-refs}}
+  {{> includes/applicationmenu}}
+
+  <div class="page-container">
+    {{> includes/header-controls}}
+    <div class="page-container scrollable" id="maincontent" role="main">
+      {{> content}}
+    </div>
+  </div>
+
+  {{> includes/footer}}
+</body>
+</html>

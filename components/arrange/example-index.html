@@ -1,0 +1,134 @@
+<style>
+.example {
+  margin: 0;
+  padding: 0;
+  width: 310px;
+}
+.is-disabled {
+  opacity: .6;
+}
+.grid {
+  overflow: hidden;
+}
+.icon-handle {
+  fill: #999999;
+  height: 15px;
+  width: 17px;
+  position: relative;
+  left: -4px;
+  top: 2px;
+}
+.icon-handle:hover {
+  fill: #454545;
+}
+.example li {
+  font-size: 1.3em;
+  height: 35px;
+  list-style: none;
+  margin: 3px;
+  padding: 7px 10px;
+}
+.grid > div {
+  float: left;
+  font-size: 1.3em;
+  height: 80px;
+  line-height: 67px;
+  margin: 3px;
+  padding: 7px 10px;
+  text-align: center;
+  width: 80px;
+}
+.connected-wrap {
+  overflow: hidden;
+  width: 650px;
+}
+.connected {
+  float: left;
+}
+.connected.no2 {
+  float: right;
+}
+
+.example li:not(.arrange-placeholder),
+.grid > div:not(.arrange-placeholder) {
+  border: 1px solid #BDBDBD;
+}
+html[dir='rtl'] .connected.no2 {
+  float: left;
+}
+html[dir='rtl'] .connected,
+html[dir='rtl'] .grid > div {
+  float: right;
+}
+</style>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <h2>Sortable List</h2>
+    <ul class="arrange list example">
+      <li>Item 1</li>
+      <li>Item 2</li>
+      <li>Item 3</li>
+      <li>Item 4</li>
+      <li>Item 5</li>
+      <li>Item 6</li>
+    </ul>
+
+    <br><br>
+    <h2>Sortable Grid</h2>
+    <div class="arrange grid example">
+      <div>Item 1</div>
+      <div>Item 2</div>
+      <div>Item 3</div>
+      <div>Item 4</div>
+      <div>Item 5</div>
+      <div>Item 6</div>
+    </div>
+
+    <br><br>
+    <h2>Exclude Items</h2>
+    <ul class="arrange list example">
+      <li>Item 1</li>
+      <li>Item 2</li>
+      <li>Item 3</li>
+      <li data-arrange-exclude="true" class="is-disabled">Item 4</li>
+      <li data-arrange-exclude="true" class="is-disabled">Item 5</li>
+      <li data-arrange-exclude="true" class="is-disabled">Item 6</li>
+    </ul>
+
+    <br><br>
+    <h2>Sortable List with Handles</h2>
+    <ul class="arrange list example" data-arrange-handle=".handle">
+      <li><span class="handle"><svg class="icon icon-handle" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-drag"></use></svg></span> Item 1</li>
+      <li><span class="handle"><svg class="icon icon-handle" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-drag"></use></svg></span>  Item 2</li>
+      <li><span class="handle"><svg class="icon icon-handle" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-drag"></use></svg></span> Item 3</li>
+      <li><span class="handle"><svg class="icon icon-handle" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-drag"></use></svg></span>  Item 4</li>
+      <li><span class="handle"><svg class="icon icon-handle" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-drag"></use></svg></span>  Item 5</li>
+      <li><span class="handle"><svg class="icon icon-handle" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-drag"></use></svg></span>  Item 6</li>
+    </ul>
+
+    <br><br>
+    <h2>Connected Sortable Lists</h2>
+    <div class="connected-wrap">
+      <ul class="arrange list example connected" data-arrange-connectWith=".connected">
+        <li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+        <li>Item 4</li>
+        <li>Item 5</li>
+        <li>Item 6</li>
+      </ul>
+      <ul class="list example connected no2">
+        <li class="green">Item 1</li>
+        <li class="green">Item 2</li>
+        <li class="green">Item 3</li>
+        <li class="green">Item 4</li>
+        <li class="green">Item 5</li>
+        <li class="green">Item 6</li>
+      </ul>
+    </div>
+
+
+  </div>
+</div>

@@ -4,13 +4,14 @@
 @import 'controls/visibility';
 
 @import 'controls/placeable';
-@import 'controls/breadcrumb';
-@import 'controls/buttons';
+@import 'components/breadcrumb/breadcrumb';
+@import 'components/button/button';
 @import 'controls/hyperlinks';
-@import 'controls/code';
 @import 'controls/images';
+@import 'components/cards/cards';
 @import 'controls/input';
 @import 'controls/grid';
+@import 'controls/compositeform';
 @import 'controls/checkboxes';
 @import 'controls/radios';
 @import 'controls/switch';
@@ -26,23 +27,23 @@
 @import 'controls/listview';
 @import 'controls/listbuilder';
 @import 'controls/swaplist';
-@import 'controls/badges';
+@import 'components/badges/badges';
 @import 'controls/circlepager';
 @import 'controls/pager';
 @import 'controls/datagrid';
 @import 'controls/header';
 @import 'controls/spinbox';
-@import 'controls/autocomplete';
+@import 'components/autocomplete/autocomplete';
 @import 'controls/mask';
 @import 'controls/datepicker';
 @import 'controls/draggable';
 @import 'controls/colorpicker';
 @import 'controls/timepicker';
-@import 'controls/busyindicator';
+@import 'components/busyindicator/busyindicator';
 @import 'controls/toast';
 @import 'controls/charts';
 @import 'controls/searchfield';
-@import 'controls/toolbar';
+@import 'components/toolbar/toolbar';
 @import 'controls/editor';
 @import 'controls/skiplink';
 @import 'controls/fileupload';
@@ -50,9 +51,9 @@
 @import 'controls/processindicator';
 @import 'controls/timeline';
 @import 'controls/blockgrid';
-@import 'controls/about';
-@import 'controls/accordion';
-@import 'controls/applicationmenu';
+@import 'components/about/about';
+@import 'components/accordion/accordion';
+@import 'components/applicationmenu/applicationmenu';
 @import 'controls/contextualactionpanel';
 @import 'controls/expandablearea';
 @import 'controls/fieldset';
@@ -64,27 +65,27 @@
 @import 'controls/toolbarsearchfield';
 @import 'controls/instance-count';
 @import 'controls/splitter';
-@import 'controls/lightbox';
-@import 'controls/sidebar';
 
 // Core Patterns
 @import 'patterns/homepage';
 @import 'patterns/signin';
-@import 'patterns/searchresults';
 @import 'patterns/builder';
 @import 'patterns/commonnav';
 @import 'patterns/full-width';
 @import 'patterns/list-detail';
 @import 'patterns/header-detail';
 @import 'patterns/step-process';
+@import 'patterns/call-to-action-container';
+@import 'patterns/card-deck';
+@import 'patterns/master-detail';
 
 // Core Layouts
 @import 'layouts/object-summary';
 @import 'layouts/panes';
+@import 'layouts/scrollable-flex';
 @import 'layouts/summary-form';
 @import 'layouts/top-bottom-anchored';
-@import 'patterns/card-deck';
-@import 'patterns/master-detail';
+@import 'layouts/forms';
 
 // These controls come last
 @import 'controls/colors';

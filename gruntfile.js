@@ -3,7 +3,7 @@ module.exports = function(grunt) {
   grunt.file.preserveBOM = true;
 
   const sass = require('./build/configs/sass.js'),
-    watch = require('./build/configs/watch.js'),
+    chokidar = require('./build/configs/watch.js'),
     amdHeader = require('./build/configs/amdHeader.js'),
     copy = require('./build/configs/copy.js'),
     cssmin = require('./build/configs/cssmin.js'),
@@ -11,14 +11,14 @@ module.exports = function(grunt) {
     compress = require('./build/configs/compress.js'),
     meta = require('./build/configs/meta.js'),
     revision = require('./build/configs/revision.js'),
-    md2html = require('./build/configs/md2html.js'),
     stripCode = require('./build/configs/strip_code.js'),
     clean = require('./build/configs/clean.js'),
     jshint = require('./build/configs/jshint.js'),
     uglify = require('./build/configs/uglify.js'),
     dependencyBuilder = require('./build/dependencybuilder.js'),
     strBanner = require('./build/strbanner.js'),
-    controls = require('./build/controls.js');
+    controls = require('./build/controls.js'),
+    run = require('./build/configs/run.js');
 
   let selectedControls = dependencyBuilder(grunt),
     bannerText = `/**\n* Soho XI Controls v<%= pkg.version %>\n* Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %>\n* Revision: <%= meta.revision %>\n*/\n`;
@@ -65,7 +65,7 @@ module.exports = function(grunt) {
 
   grunt.initConfig(Object.assign({},
     config,
-    watch,
+    chokidar,
     clean,
     jshint,
     sass,
@@ -78,11 +78,12 @@ module.exports = function(grunt) {
     uglify,
     usebanner,
     compress,
-    md2html
+    run
   ));
 
   // load all grunt tasks from 'node_modules' matching the `grunt-*` pattern
   require('load-grunt-tasks')(grunt);
+  //require('load-grunt-parent-tasks')(grunt);
 
   grunt.registerTask('default', [
     'clean:dist',
@@ -99,7 +100,7 @@ module.exports = function(grunt) {
     'copy:main',
     'compress',
     'usebanner',
-    'md2html'
+    'run:documentation'
   ]);
 
   grunt.registerTask('js', [
@@ -114,6 +115,35 @@ module.exports = function(grunt) {
     'concat:basic',
     'uglify'
   ]);
+
+  grunt.registerTask('publish', [
+    'revision',
+    'sass',
+    'copy:amd',
+    'strip_code',
+    'concat',
+    'clean:amd',
+    'copy:main',
+    'usebanner',
+    'clean:publish',
+    'copy:publish'
+  ]);
+
+  // Swap "watch" for "chokidar"
+  grunt.registerTask('watch', ['chokidar']);
+
+  // Run the event to regen docs
+  grunt.event.on('chokidar', function(action, filepath) {
+    if (filepath.indexOf('components') > -1 && (filepath.indexOf('.js') > -1 || filepath.indexOf('.md') > -1)) {
+      //grunt.log.writeln('Generating Docs for ' + ': ' + filepath );
+      var runConfig = grunt.config.get(['run']),
+        componentName = filepath.substr(filepath.lastIndexOf('/')+1).replace('.js','').replace('.md','');
+
+      runConfig.documentation.args[2] = componentName;
+      grunt.config.set('run', runConfig);
+      grunt.task.run('run:documentation');
+    }
+  });
 
   // Don't do any uglify/minify/jshint while the Dev Watch is running.
   grunt.registerTask('sohoxi-watch', [

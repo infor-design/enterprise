@@ -31,10 +31,7 @@
             'separator', 'source'
           ],
           source: [
-            'bold','italic','underline',
-            'separator', 'anchor',
-            'separator', 'quote',
-            'separator', 'visual'
+            'visual'
           ]
         },
         excludeButtons: {
@@ -1163,13 +1160,49 @@
             return this;
           }
           var types, clipboardData, pastedData,
+            paste, p, paragraphs,
             getCleanedHtml = function(pastedData) {
-              var s = pastedData || '';
+              var i, l, attributeStripper,
+                s = pastedData || '',
+                badAttributes = [
+                  'start','xmlns','xmlns:o','xmlns:w','xmlns:x','xmlns:m',
+                  'onmouseover','onmouseout','onmouseenter','onmouseleave',
+                  'onmousemove','onload','onfocus','onblur','onclick',
+                  'style'
+                ];
+
+              // Remove extra word formating
               if (self.isWordFormat(s)) {
                 s = self.cleanWordHtml(s);
               }
-              s = s.replace(/<\/?(html|body)>/gi, '');
+
+              // Remove bad attributes
+              for (i = 0, l = badAttributes.length; i < l; i++) {
+                attributeStripper = new RegExp(' ' + badAttributes[i] + '="(.*?)"','gi');
+                s = self.stripAttribute(s, badAttributes[i], attributeStripper);
+
+                attributeStripper = new RegExp(' ' + badAttributes[i] + '=\'(.*?)\'','gi');
+                s = self.stripAttribute(s, badAttributes[i], attributeStripper);
+              }
+
+              // Remove "ng-" directives and "ng-" classes
+              s = s.replace(/(ng-\w+-\w+="(.|\n)*?"|ng-\w+="(.|\n)*?"|ng-(\w+-\w+)|ng-(\w+))/g, '');
+
+              // Remove comments
+              s = s.replace(/<!--(.*?)-->/gm, '');
+
+              // Remove extra spaces
+              s = s.replace(/\s\s+/g, ' ').replace(/\s>+/g, '>');
+
+              // Remove extra attributes from list elements
+              s = s.replace(/<(ul|ol)(.*?)>/gi, '<$1>');
+
+              // Remove html and body tags
+              s = s.replace(/<\/?(html|body)(.*?)>/gi, '');
+
+              // Remove header tag and content
               s = s.replace(/<head\b[^>]*>(.*?)<\/head>/gi, '');
+
               return s;
             };
 
@@ -1181,12 +1214,32 @@
               clipboardData = e.originalEvent.clipboardData;
             }
           }
-          types = clipboardData.types;
 
-          // jshint undef:false
-          if (types && ((types instanceof DOMStringList && types.contains('text/html')) || (types.indexOf && types.indexOf('text/html') !== -1))) {
-          // jshint undef:true
-            pastedData =  e.originalEvent.clipboardData.getData('text/html');
+          if (clipboardData && clipboardData.types) {
+            types = clipboardData.types;
+            // jshint undef:false
+            if ((types instanceof DOMStringList && types.contains('text/html')) ||
+                (types.indexOf && types.indexOf('text/html') !== -1)) {
+            // jshint undef:true
+              pastedData =  e.originalEvent.clipboardData.getData('text/html');
+            }
+          } else {
+            paste = window.clipboardData.getData('Text');
+            paragraphs = paste.split(/[\r\n]/g);
+            pastedData = '';
+            for (p = 0; p < paragraphs.length; p += 1) {
+              if (paragraphs[p] !== '') {
+                if (navigator.userAgent.match(/firefox/i) && p === 0) {
+                  pastedData += '<p>' + self.htmlEntities(paragraphs[p]) + '</p>';
+                } else {
+                  if((/\.(gif|jpg|jpeg|tiff|png)$/i).test(paragraphs[p])) {
+                    pastedData += '<img src="' + self.htmlEntities(paragraphs[p]) + '" />';
+                  } else {
+                    pastedData += '<p>' + self.htmlEntities(paragraphs[p]) + '</p>';
+                  }
+                }
+              }
+            }
           }
 
           self.pastedData = getCleanedHtml(pastedData);
@@ -1767,11 +1820,10 @@
         });
 
         // Remove line breaks / Mso classes
-        s = s.replace(/(\n|\r| class=(")?Mso[a-zA-Z]+(")?)/g, ' ');
+        s = s.replace(/(\n|\r| class=(\'|")?Mso[a-zA-Z]+(\'|")?)/g, ' ');
 
         var i, l, re,
-          badTags = ['style', 'script','applet','embed','noframes','noscript'],
-          badAttributes = ['style', 'start'];
+          badTags = ['style', 'script','applet','embed','noframes','noscript'];
 
         // Remove everything in between and including "badTags"
         for (i = 0, l = badTags.length; i < l; i++) {
@@ -1779,13 +1831,29 @@
           s = s.replace(re, '');
         }
 
-        // Remove attributes
-        for (i = 0, l = badAttributes.length; i < l; i++) {
-          var attributeStripper = new RegExp(' ' + badAttributes[i] + '="(.*?)"','gi');
-          s = s.replace(attributeStripper, '');
-        }
-
         return s;
+      },
+
+      // Strip attributes
+      stripAttribute: function (s, attribute, attributeStripper) {
+        return (attribute === 'style') ?
+          this.stripStyles(s, attributeStripper) :
+          s.replace(attributeStripper, '');
+      },
+
+      // Strip styles
+      stripStyles: function (s, styleStripper) {
+        var stylesToKeep = ['color','background','font-weight','font-style','text-decoration','text-align'];
+        return s.replace(styleStripper, function(m) {
+          m = m.replace(/( style=|("|\'))/gi, '');
+          var attributes = m.split(';'),
+          strStyle = '';
+          for (var i = 0; i < attributes.length; i++) {
+            var entry = attributes[i].split(':');
+            strStyle += (stylesToKeep.indexOf(entry[0]) > -1) ? entry[0] +':'+ entry[1] +';' : '';
+          }
+          return (strStyle !=='') ? (' style="'+ strStyle +'"') : '';
+        });
       },
 
       getIndent: function(level) {

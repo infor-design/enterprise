@@ -21,13 +21,13 @@
             <li><a href="#" data-action="cacr">Clear All Cells in Row</a></li>
             <li><a href="#" data-action="carc">Clear All Rows and Cells</a></li>
           </ul>
-          <button class="btn" type="button" id="add-reset">
+          <button class="btn-icon" type="button" id="add-reset">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-reset"></use>
           </svg>
           <span>Reset</span>
         </button>
-        <button class="btn" type="button" id="add-btn">
+        <button class="btn-icon" type="button" id="add-btn">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-add"></use>
           </svg>
@@ -60,7 +60,7 @@
     <div class="contextual-toolbar toolbar is-hidden">
       <div class="title selection-count">1 Selected</div>
       <div class="buttonset">
-        <button class="btn" type="button" id="remove-btn">
+        <button class="btn-icon" type="button" id="remove-btn">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-delete"></use>
           </svg>
@@ -120,7 +120,8 @@
           toolbar: {title: 'Data Grid Header Title', results: true, personalize: true, actions: true, rowHeight: true, keywordFilter: true,  collapsibleFilter: true},
           paging: true,
           pagesize: 5,
-          pagesizes: [5, 10, 25, 50]
+          pagesizes: [5, 10, 25, 50],
+          source: function () {}
         }).on('cellchange', function (e, args) {
           console.log(args.oldValue, args.value);
         }).on('rowadd', function (e, args) {
@@ -132,6 +133,7 @@
         gridApi = $('#datagrid').data('datagrid');
 
         //Example row status
+        gridApi.setActiveCell(1,2, 0)
         gridApi.rowStatus(0, 'error', 'Error');
         gridApi.rowStatus(0, 'error', 'Error 2');
         gridApi.rowStatus(0, 'error', 'Error 3');
@@ -139,7 +141,7 @@
         gridApi.rowStatus(2, 'info', 'Info');
         gridApi.rowStatus(3, 'in-progress', 'inProgress');
         gridApi.rowStatus(4, 'confirm', 'Confirm');
-        gridApi.rowStatus(5, 'dirty');
+        //gridApi.rowStatus(5, 'dirty');
         //gridApi.rowStatus(6, 'new', 'new');
         gridApi.rowStatus(6, 'error', 'This row has errors');
 

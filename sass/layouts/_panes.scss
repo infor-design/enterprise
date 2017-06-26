@@ -15,10 +15,53 @@
     width: 100%;
   }
 
-  // scss-lint:disable ImportantRule
-  .datagrid-contained {
-    height: calc(100% - 90px) !important;
+  // used for panes that have a datagrid with a pager
+  .datagrid-container {
+    height: 100%;
+
+    &.paginated {
+      height: calc(100% - 58px);
+    }
   }
+
+  .toolbar + .datagrid-container,
+  .has-toolbar + .datagrid-container {
+    height: calc(100% - 45px);
+
+    &.paginated {
+      height: calc(100% - 103px);
+    }
+  }
+
+  .tab-container.horizontal {
+    height: 100%;
+
+    .tab-panel {
+      height: calc(100% - 50px);
+
+      .page-container {
+        position: static;
+
+        .toolbar + .datagrid-container {
+          height: calc(100% - 45px);
+
+          &.paginated {
+            height: calc(100% - 103px);
+          }
+        }
+
+        // used for panes that have a datagrid with a pager
+        .datagrid-container {
+          height: 100%;
+
+          &.paginated {
+            height: calc(100% - 58px);
+          }
+        }
+      }
+    }
+  }
+
   // scss-lint:enable ImportantRule
   //
   //Directional Panes

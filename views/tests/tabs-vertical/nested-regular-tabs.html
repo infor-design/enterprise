@@ -1,8 +1,7 @@
 <body class="no-scroll">
+  {{> includes/svg-inline-refs}}
 
   <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
-  {{> controls/svg-inline-refs}}
-  {{> includes/applicationmenu}}
 
   <!-- Page Container -->
   <div class="page-container no-scroll">
@@ -20,10 +19,8 @@
     <div class="page-container no-scroll">
 
       <!-- Vertical Tabs inside of a tab panel -->
-      <div id="tabs-vertical" class="vertical tab-container scrollable">
-
-        <div class="tab-list-container">
-
+      <div id="tabs-vertical" class="vertical tab-container no-scroll">
+        <div class="tab-list-container scrollable-y">
           <div class="tab-list-info">
             <p>
               Choose one of the pages below
@@ -34,72 +31,73 @@
             <li class="tab"><a href="#page-two">Page Two</a></li>
             <li class="tab"><a href="#page-three">Page Three</a></li>
           </ul>
-
         </div>
-        <div class="tab-panel-container">
-          <div id="page-one" class="tab-panel">
-            <h3>Page One</h3>
+      </div>
+      <div class="tab-panel-container scrollable-y">
+        <div id="page-one" class="tab-panel">
+          <h3>Page One</h3>
+          <br /><br /><br />
 
-            <div id="page-one-tab-container" class="tab-container">
-              <ul class="tab-list">
-                <li><a href="#page-one-tab-one" class="tab is-selected">Page One - Tab #1</a></li>
-                <li><a href="#page-one-tab-two" class="tab">Page One - Tab #2</a></li>
-                <li><a href="#page-one-tab-three" class="tab">Page One - Tab #3</a></li>
-              </ul>
-              <div id="page-one-tab-one" class="tab-panel">
-                <h4>Tab #1</h4>
-              </div>
-              <div id="page-one-tab-two" class="tab-panel">
-                <h4>Tab #2</h4>
-              </div>
-              <div id="page-one-tab-three" class="tab-panel">
-                <h4>Tab #3</h4>
-              </div>
+          <div id="page-one-tab-container" class="tab-container alternate">
+            <ul class="tab-list">
+              <li><a href="#page-one-tab-one" class="tab is-selected">Page One - Tab #1</a></li>
+              <li><a href="#page-one-tab-two" class="tab">Page One - Tab #2</a></li>
+              <li><a href="#page-one-tab-three" class="tab">Page One - Tab #3</a></li>
+            </ul>
+            <div id="page-one-tab-one" class="tab-panel">
+              <h4>Tab #1</h4>
+            </div>
+            <div id="page-one-tab-two" class="tab-panel">
+              <h4>Tab #2</h4>
+            </div>
+            <div id="page-one-tab-three" class="tab-panel">
+              <h4>Tab #3</h4>
             </div>
           </div>
+        </div>
 
-          <div id="page-two" class="tab-panel">
-            <h3>Page Two</h3>
+        <div id="page-two" class="tab-panel">
+          <h3>Page Two</h3>
+          <br /><br /><br />
 
-            <div id="page-two-tab-container" class="tab-container">
-              <ul class="tab-list">
-                <li><a href="#page-two-tab-one" class="tab is-selected">Page Two - Tab #1</a></li>
-                <li><a href="#page-two-tab-two" class="tab">Page Two - Tab #2</a></li>
-                <li><a href="#page-two-tab-three" class="tab">Page Two - Tab #3</a></li>
-              </ul>
-              <div id="page-two-tab-one" class="tab-panel">
-                <h4>Tab #1</h4>
-              </div>
-              <div id="page-two-tab-two" class="tab-panel">
-                <h4>Tab #2</h4>
-              </div>
-              <div id="page-two-tab-three" class="tab-panel">
-                <h4>Tab #3</h4>
-              </div>
+          <div id="page-two-tab-container" class="tab-container alternate">
+            <ul class="tab-list">
+              <li><a href="#page-two-tab-one" class="tab is-selected">Page Two - Tab #1</a></li>
+              <li><a href="#page-two-tab-two" class="tab">Page Two - Tab #2</a></li>
+              <li><a href="#page-two-tab-three" class="tab">Page Two - Tab #3</a></li>
+            </ul>
+            <div id="page-two-tab-one" class="tab-panel">
+              <h4>Tab #1</h4>
+            </div>
+            <div id="page-two-tab-two" class="tab-panel">
+              <h4>Tab #2</h4>
+            </div>
+            <div id="page-two-tab-three" class="tab-panel">
+              <h4>Tab #3</h4>
             </div>
           </div>
+        </div>
 
-          <div id="page-three" class="tab-panel">
-            <h3>Page Three</h3>
+        <div id="page-three" class="tab-panel">
+          <h3>Page Three</h3>
+          <br /><br /><br />
 
-            <div id="page-three-tab-container" class="tab-container">
-              <ul class="tab-list">
-                <li><a href="#page-three-tab-one" class="tab is-selected">Page Three - Tab #1</a></li>
-                <li><a href="#page-three-tab-two" class="tab">Page Three - Tab #2</a></li>
-                <li><a href="#page-three-tab-three" class="tab">Page Three - Tab #3</a></li>
-              </ul>
-              <div id="page-three-tab-one" class="tab-panel">
-                <h4>Tab #1</h4>
-              </div>
-              <div id="page-three-tab-two" class="tab-panel">
-                <h4>Tab #2</h4>
-              </div>
-              <div id="page-three-tab-three" class="tab-panel">
-                <h4>Tab #3</h4>
-              </div>
+          <div id="page-three-tab-container" class="tab-container alternate">
+            <ul class="tab-list">
+              <li><a href="#page-three-tab-one" class="tab is-selected">Page Three - Tab #1</a></li>
+              <li><a href="#page-three-tab-two" class="tab">Page Three - Tab #2</a></li>
+              <li><a href="#page-three-tab-three" class="tab">Page Three - Tab #3</a></li>
+            </ul>
+            <div id="page-three-tab-one" class="tab-panel">
+              <h4>Tab #1</h4>
+            </div>
+            <div id="page-three-tab-two" class="tab-panel">
+              <h4>Tab #2</h4>
+            </div>
+            <div id="page-three-tab-three" class="tab-panel">
+              <h4>Tab #3</h4>
             </div>
           </div>
-
         </div>
       </div>
 

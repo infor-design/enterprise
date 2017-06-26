@@ -1,0 +1,235 @@
+// Badges & Tags
+//================================================== */
+
+// See also Colors.scss
+.tag,
+.badge {
+  @include antialiased();
+  @include font-size(12);
+  background-color: $badge-neutral-bg-color;
+  border-radius: 15px;
+  color: $badge-neutral-color;
+  display: inline-block;
+  font-weight: normal;
+  height: 22px;
+  line-height: 22px;
+  padding: 0 10px;
+  text-decoration: none;
+  vertical-align: middle;
+
+  &.secondary {
+    background-color: $badge-secondary-bg-color;
+    border: 1px solid $badge-secondary-border-color;
+    color: $badge-secondary-color;
+    line-height: 21px;
+  }
+
+  // scss-lint:disable ImportantRule
+  &.error {
+    background-color: $error-color;
+    color: $badge-error-color !important;
+  }
+
+  &.alert {
+    background-color: $alert-yellow;
+    color: $badge-alert-color !important;
+  }
+
+  &.neutral {
+    background-color: $badge-neutral-bg-color;
+    color: $badge-neutral-color !important;
+  }
+
+  &.good {
+    background-color: $alert-green;
+    color: $badge-good-color !important;
+  }
+
+  &.info {
+    background-color: $badge-info-bg-color;
+    color: $badge-info-color !important;
+  }
+  // scss-lint:enable ImportantRule
+
+  &.graphite03,
+  &.graphite02 {
+    color: $badge-neutral-color;
+  }
+
+  &.round {
+    padding: 0;
+    text-align: center;
+    width: 22px;
+  }
+
+  &.is-clickable {
+    background-color: $badge-neutral-bg-color;
+    border: 1px solid transparent;
+    cursor: pointer;
+    line-height: 21px;
+
+    &:hover {
+      background-color: $badge-neutral-hover-bg-color;
+    }
+
+    &:focus:not(.hide-focus) {
+      border-color: $primary-color;
+      box-shadow: $badge-focus-transparent-shadow;
+      outline: none;
+      -moz-outline-style: none;
+    }
+  }
+
+  // EPC: Deprecating "dismissable" in favor of "dismissible" as of 4.3.0
+  &.is-dismissable,
+  &.is-dismissible {
+    background-color: $badge-neutral-bg-color;
+    border: 1px solid transparent;
+    cursor: default;
+    line-height: 21px;
+    padding: 0 10px 0 10px;
+
+    &:focus:not(.hide-focus) {
+      border-color: $primary-color;
+      box-shadow: $badge-focus-transparent-shadow;
+      outline: none;
+      -moz-outline-style: none;
+    }
+
+    &.secondary {
+      background-color: $badge-secondary-bg-color;
+      border: 1px solid $badge-secondary-border-color;
+      color: $badge-secondary-color;
+    }
+
+    .dismissable-btn,
+    .dismissible-btn {
+      cursor: pointer;
+      padding-left: 5px;
+      position: relative;
+
+      .icon {
+        fill: $badge-neutral-icon-color;
+        height: 10px;
+        left: 2px;
+        top: 1px;
+        width: 10px;
+      }
+
+      &:hover {
+        .icon {
+          fill: $badge-neutral-hover-icon-color;
+        }
+      }
+
+    }
+  }
+}
+
+.badge {
+
+  &.pending {
+    min-height: 22px;
+    min-width: 22px;
+    position: relative;
+
+    // Clock circle
+    &::before {
+      border: 1px solid $white;
+      border-radius: 50%;
+      content: '';
+      height: 14px;
+      left: 3px;
+      position: absolute;
+      top: 3px;
+      width: 14px;
+    }
+
+    // Clock hands
+    &::after {
+      border-bottom: 1px solid $white;
+      border-left: 1px solid $white;
+      content: '';
+      height: 24%;
+      left: .75em;
+      position: absolute;
+      top: .55em;
+      width: 19.5%;
+    }
+
+    [class*='ie'] &::before {
+      // scss-lint:disable ImportantRule
+      left: 3px !important;
+      // scss-lint:enable ImportantRule
+      top: 2.5px;
+    }
+
+    &.current {
+      background-color: $alert-orange;
+    }
+  }
+
+  &.checked {
+    &::after {
+      @include css3(transform, scaleX(-1) rotate(135deg));
+      border-color: $checkbox-arrow-color;
+      border-style: solid;
+      border-width: 2px 2px 0 0;
+      content: '';
+      height: 10px;
+      left: 8px;
+      margin-top: 4px;
+      position: absolute;
+      width: 4px;
+    }
+  }
+
+  &.exclamation {
+    &::before {
+      color: $inverse-color;
+      content: '!';
+      display: inline-block;
+      font-size: 1.3em;
+      font-weight: bold;
+      height: 100%;
+      left: 0;
+      position: absolute;
+      text-align: center;
+      top: -1px;
+      width: 100%;
+    }
+  }
+}
+
+.hyperlink + .tag {
+  margin-bottom: 0;
+  margin-left: 10px;
+  margin-top: -2px;
+}
+
+.alert {
+  &.slate03 {
+    background-color: transparent;
+
+    svg {
+      fill: $slate03;
+    }
+  }
+}
+
+//Tag Strip/List
+.tag-list {
+  margin: 20px 20px 0 25px;
+
+  .tag {
+    margin: 0 5px 5px 0;
+  }
+}
+
+//RTL Styles
+html[dir='rtl'] {
+  .hyperlink + .tag {
+    margin-left: inherit;
+    margin-right: 10px;
+  }
+}

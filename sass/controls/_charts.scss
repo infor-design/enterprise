@@ -44,7 +44,6 @@
 
   .chart-donut-text {
     @include font-size(18);
-    font-weight: lighter;
   }
 
   .label-line {
@@ -332,6 +331,12 @@
     }
   }
 
+  .chart-targeted-text {
+    left: 50%;
+    margin-top: -38px;
+    position: relative;
+  }
+
   .completed {
     background-color: $chart-progressbar-completed-fill;
     border-right: 1px solid $chart-progressbar-bg-color;
@@ -517,11 +522,12 @@
 
 .chart-targeted-achievement {
   // scss-lint:disable ImportantRule
-  margin-bottom: 22px !important;
+  margin-bottom: 17px !important;
   // scss-lint:enable ImportantRule
 
   .label {
     @include font-size(14);
+    margin-top: 2px;
   }
 
   .bar {
@@ -629,11 +635,9 @@
   .title {
     @include font-size(12);
     font-weight: bold;
-    text-transform: uppercase;
   }
 
   .subtitle {
-    fill: $font-color-lowcontrast;
     font-weight: normal;
     text-transform: none;
   }

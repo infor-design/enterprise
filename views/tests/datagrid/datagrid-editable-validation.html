@@ -35,7 +35,7 @@
         };
 
         //Define Columns for the Grid.
-        columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, validate: 'customRule', editor: Editors.Input});
+        columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink, validate: 'required customRule', editor: Editors.Input});
         columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Input, editor: Editors.Input, validate: 'required'});
         columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, align: 'right', editor: Editors.Input, formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '###.000'});
         columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date, validate: 'required date'});

@@ -138,6 +138,34 @@
           border-color: transparent;
           color: $tree-selected-color;
         }
+
+        &.is-disabled {
+          @include unselectable;
+          background-color: transparent;
+          cursor: default;
+
+          .tree-text {
+            color: $tree-disabled-color;
+          }
+
+          svg {
+            fill: $tree-disabled-color;
+          }
+
+          // scss-lint:disable NestingDepth
+          &:hover {
+            color: $tree-disabled-color;
+
+            svg {
+              fill: $tree-disabled-color;
+            }
+
+            .tree-text {
+              color: $tree-disabled-color;
+            }
+          }
+          // scss-lint:enable NestingDepth
+        }
       }
     }
 
@@ -207,12 +235,40 @@
             top: 1px;
           }
         }
+
+        > a.is-disabled .tree-checkbox {
+          &::before {
+            @include checkbox-checked-disabled-before-style;
+          }
+
+          &::after {
+            @include checkbox-checked-disabled-after-style;
+            @include css3(transform-origin, -11px top 0);
+            @include checkbox-animation;
+            left: 9px;
+            top: 1px;
+          }
+        }
       }
 
       &.is-partial {
         > a .tree-checkbox {
           &::before {
             @include checkbox-checked-before-style;
+          }
+
+          &::after {
+            @include checkbox-checked-after-style;
+            @include  checkbox-partial-after-style;
+            @include no-animation();
+            left: 6px;
+            top: -3px;
+          }
+        }
+
+        > a.is-disabled .tree-checkbox {
+          &::before {
+            @include checkbox-checked-disabled-before-style;
           }
 
           &::after {

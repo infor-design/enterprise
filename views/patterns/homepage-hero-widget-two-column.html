@@ -138,47 +138,47 @@
 
   var barData = [{
         data: [
-          {name: 'JAN', value: 12, color: 'alertYellow'},
-          {name: 'FEB', value: 11, color: 'good'},
-          {name: 'MAR', value: -5, color: 'error'},
-          {name: 'APR', value: 10, color: '#7cc0b5'},
-          {name: 'MAY', value: 14, color: '#ff9426'}
+          {name: 'Jan', value: 12, color: 'alertYellow'},
+          {name: 'Feb', value: 11, color: 'good'},
+          {name: 'Mar', value: -5, color: 'error'},
+          {name: 'Apr', value: 10, color: '#7cc0b5'},
+          {name: 'May', value: 14, color: '#ff9426'}
         ],
         name: 'Comp A'
       }, {
         data: [
-          {name: 'JAN', value: 22, color: 'alertYellow'},
-          {name: 'FEB', value: 24, color: 'good'},
-          {name: 'MAR', value: 12, color: 'error'},
-          {name: 'APR', value: 20, color: '#7cc0b5'},
-          {name: 'MAY', value: 21, color: '#ff9426'}
+          {name: 'Jan', value: 22, color: 'alertYellow'},
+          {name: 'Feb', value: 24, color: 'good'},
+          {name: 'Mar', value: 12, color: 'error'},
+          {name: 'Apr', value: 20, color: '#7cc0b5'},
+          {name: 'May', value: 21, color: '#ff9426'}
         ],
         name: 'Comp B'
       }, {
         data: [
-          {name: 'JAN', value: 32, color: 'alertYellow'},
-          {name: 'FEB', value: 31, color: 'good'},
-          {name: 'MAR', value: 34, color: 'error'},
-          {name: 'APR', value: 30, color: '#7cc0b5'},
-          {name: 'MAY', value: 33, color: '#ff9426'}
+          {name: 'Jan', value: 32, color: 'alertYellow'},
+          {name: 'Feb', value: 31, color: 'good'},
+          {name: 'Mar', value: 34, color: 'error'},
+          {name: 'Apr', value: 30, color: '#7cc0b5'},
+          {name: 'May', value: 33, color: '#ff9426'}
         ],
         name: 'Comp C'
       }];
 
   var areaData = [{
     data: [
-      {name: 'JAN', value: 12}, {name: 'FEB', value: 11}, {name: 'MAR', value: 14},
-      {name: 'APR', value: 10}, {name: 'MAY', value: 14}, {name: 'JUN', value: 8}],
+      {name: 'Jan', value: 12}, {name: 'Feb', value: 11}, {name: 'Mar', value: 14},
+      {name: 'Apr', value: 10}, {name: 'May', value: 14}, {name: 'Jun', value: 8}],
     name: 'Component A', color: '#ede3fc'
   }, {
     data: [
-      {name: 'JAN', value: 22}, {name: 'FEB', value: 21}, {name: 'MAR', value: 24},
-      {name: 'APR', value: 20}, {name: 'MAY', value: 24}, {name: 'JUN', value: 28}],
+      {name: 'Jan', value: 22}, {name: 'Feb', value: 21}, {name: 'Mar', value: 24},
+      {name: 'Apr', value: 20}, {name: 'May', value: 24}, {name: 'Jun', value: 28}],
     name: 'Component B', color: 'alertYellow'
   }, {
     data: [
-      {name: 'JAN', value: 32}, {name: 'FEB', value: 31}, {name: 'MAR', value: 34},
-      {name: 'APR', value: 30}, {name: 'MAY', value: 34}, {name: 'JUN', value: 38}],
+      {name: 'Jan', value: 32}, {name: 'Feb', value: 31}, {name: 'Mar', value: 34},
+      {name: 'Apr', value: 30}, {name: 'May', value: 34}, {name: 'Jun', value: 38}],
     name: 'Component C', color: 'error'
   }];
 
@@ -192,15 +192,22 @@
     var homepageApi = $('.homepage').data('homepage');
     var circlepagerApi = $('.circlepager').data('circlepager');
 
-    homepageApi.element.on('resize', function(e, numberOfColumns) {
+    // Set view type
+    var setView = function(numberOfColumns) {
       if (numberOfColumns > 2) {
-        circlepagerApi.unactive();
+        circlepagerApi.showExpandedView();
       } else {
-        circlepagerApi.active();
+        circlepagerApi.showCollapsedView();
       }
+    };
+
+    // Bind resize
+    homepageApi.element.on('resize', function(e, numberOfColumns) {
+      setView(numberOfColumns);
     });
 
-    // Init resize
-    homepageApi.element.triggerHandler('resize');
+
+    // Init
+    setView(homepageApi.settings.columns);
   });
 </script>

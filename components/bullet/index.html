@@ -1,0 +1,36 @@
+<h1 id="bullet-chart-component-implementation-detail-learn-more">Bullet Chart Component Implementation Detail <a href="#">Learn More</a></h1>
+<h2 id="configuration-options">Configuration Options</h2>
+<ol>
+<li>Bullet chart example <a href="/components/bullet/example-index">View Example</a><br /></li>
+<li>Shows Grouping a Series of Related Bullet Charts <a href="/components/bullet/example-data-group">View Example</a><br /></li>
+<li>Shows a Bullet Chart with Positive and Negative Values <a href="/components/bullet/example-negative-positive-value">View Example</a><br /></li>
+<li>Shows a bullet with a negative value <a href="/components/bullet/example-negative-value">View Example</a></li>
+</ol>
+<h2 id="code-example">Code Example</h2>
+<p>This example shows how to invoke the bullet chart as part of the charts component. We pass a dataset data points for each bar group we want to show.</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">
+  <span class="kw">var</span> dataset1 = [{
+      <span class="dt">data</span>: [
+        {<span class="st">&#39;title&#39;</span>: <span class="st">&#39;Revenue&#39;</span>,<span class="st">&#39;subtitle&#39;</span>: <span class="st">&#39;US$, in thousands&#39;</span>,<span class="st">&#39;ranges&#39;</span>: [<span class="dv">150</span>, <span class="dv">225</span>, <span class="dv">300</span>, <span class="dv">400</span>, <span class="dv">600</span>], <span class="st">&#39;measures&#39;</span>: [<span class="dv">220</span>,<span class="dv">270</span>], <span class="st">&#39;markers&#39;</span>: [<span class="dv">250</span>], <span class="dt">url</span>: <span class="st">&#39;http://someplace.com&#39;</span>,
+          <span class="dt">tooltip</span>: [<span class="st">&#39;&lt;b&gt;Poor&lt;/b&gt; 150&#39;</span>, <span class="st">&#39;&lt;b&gt;Ok&lt;/b&gt; 225&#39;</span>, <span class="st">&#39;&lt;b&gt;Good&lt;/b&gt; 300&#39;</span>, <span class="st">&#39;&lt;b&gt;Excellent&lt;/b&gt; 400&#39;</span>, <span class="st">&#39;&lt;b&gt;Revenue&lt;/b&gt; 600&#39;</span>]}
+      ],
+      <span class="dt">barColors</span>: [<span class="st">&#39;#C0EDE3&#39;</span>, <span class="st">&#39;#8ED1C6&#39;</span>, <span class="st">&#39;#69ADA3&#39;</span>, <span class="st">&#39;#448D83&#39;</span>, <span class="st">&#39;#206B62&#39;</span>],
+      <span class="dt">lineColors</span>: [<span class="st">&#39;#000000&#39;</span>, <span class="st">&#39;#000000&#39;</span>, <span class="st">&#39;#000000&#39;</span>],
+      <span class="dt">markerColors</span>: [<span class="st">&#39;#000000&#39;</span>]
+    }];
+
+  <span class="fu">$</span>(<span class="st">&#39;#bullet-example1&#39;</span>).<span class="fu">chart</span>({<span class="dt">type</span>: <span class="st">&#39;bullet&#39;</span>, <span class="dt">dataset</span>: dataset1});
+</code></pre>
+<h2 id="accessibility">Accessibility</h2>
+<ul>
+<li>The contrast and actual colors can be a concern for visibility impaired and color blind people. However, you can customize the color by passing higher contrast colors.</li>
+</ul>
+<h2 id="code-tips">Code Tips</h2>
+<p>You can pass extra values like a url in the data which you can use in the events.</p>
+<p>Or if you have more dynamic requirements you can do this with an ajax callback.</p>
+<h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
+<p>None</p>
+<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
+<ul>
+<li>This component did not exist in 3.X</li>
+</ul>

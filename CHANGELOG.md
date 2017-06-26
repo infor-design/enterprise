@@ -1,3 +1,161 @@
+## 4.3.0
+Release Date: 2017-05-09
+
+### Download Build Assets:
+Build Server: http://bamboo.infor.com/browse/SOHO-NEXT
+Npm: http://npm.infor.com
+Full Jira Release Notes: http://bit.ly/2mWAmjY
+
+### Demo Site
+http://usalvlhlpool1.infor.com/4.3.0-rc/controls
+
+### Key New Features
+- Hijri (Umm Al Qura) - Arabic Calendar Support
+- Arabic RTL Fixes
+- Datagrid - Now Saves all user based settings (by option)
+- Datagrid - Added ability to save filter, page, pagesize, rowheight and column widths in local storage
+- Vertical Tabs - Now Responsive
+- Targetted Achivement Chart Added View Example](http://usalvlhlpool1.infor.com/4.3.0-rc/controls/targeted-achievement)
+- "New Tabs" - New Visual Design and functionality for In-Page and Header Tabs
+- Soho.infor.com - Now has widget guidelines
+- Added an Image Slider Control [View Example](http://usalvlhlpool1.infor.com/4.3.0-rc/tests/circlepager/on-form.html)
+- New Example Composite Form shows form layout and behaviors [View Example](http://usalvlhlpool1.infor.com/4.3.0-rc/tests/composite-form/index.html)
+- Added Search Form Example [View Example](http://usalvlhlpool1.infor.com/4.3.0-rc/examples/landmark/search-form)
+
+### Improvements
+- Badge - Can now format decimals
+- Datagrid - Added am option (allowOneExpanded) to only show one expandable row at a time. It is now the default.
+- Datagrid - Added an optional light background color on the list version by adding class datagrid-alternate-bg-color to the datagrid div. See tests/datagrid/datagrid-expandable-row-one-only.html
+- Datagrid - Added Favorites Editor
+- Datagrid - Changed clickable editors (buttons, favorites, links), to only fire when clicking the object not the cell.
+- Datagrid - Added filtered event that fires when filter runs
+- Datagrid - Added ability to set filter conditions programmatically with applyFilter
+- Datagrid - Added reorderable: false option to disable dragging of a particular column
+- Datagrid - Added option to disable row activation
+- Datagrid - Added option to close other expanded rows so only one is opened
+- Cards - Added Group action area [View Example](http://usalvlhlpool1.infor.com/4.3.0-rc/tests/cards/cards-group-action.html)
+- Cards - Added pager to Cards [View Example](http://usalvlhlpool1.infor.com/4.3.0-rc/tests/circlepager/more-than-one-slides-with-tabs.html)
+- Cards - Added collapsible card [View Example](http://usalvlhlpool1.infor.com/4.3.0-rc/tests/cards/expandable.html)
+- Charts - Added options to line chart to better format the x axis
+- Charts - Added options to set the dot radius size
+- Colors - Exposed Classes color-error, color-warning, color-good,color-info
+- Dropdown - Added ability to set text on blank items on (Clear Selection)
+- Dropdown - Added ability to use data- attributes on items
+- Examples - [Product Search page example | http://usalvlhlpool1.infor.com/4.3.0-rc/examples/saleshub/product-search.html
+], shows an editable listview.
+- Editor - Improved Paste support from external applictaions
+- Locale - Added new set of translated strings for 37 languages / 49 locales
+- Listbuilder - Added api to set selected elements
+- Module Tabs - Improved use of search categories on module tabs
+- Multiselect - Added ability to move selected items to the top of the entire list or to the top of groups when the list is opened.
+- Npm - Fixed main/root file link
+- Toggle Button - New official toggle button, can change icon or state to "pressed"
+- Toolbar - Improvements to header text being cut off and search field rendering
+- Toolbar - Mixed Style Bugs on Toolbar Seperators
+- Vertical Tabs - New setting 'verticalResponsive' allows a Vertical Tabset to become an instance of "header tabs" when viewed at the phone breakpoint.
+- Vertical Tabs - Fixed height to extend to bottom of the page with scrolling
+- Validation - Allow validation to work on "Anniversay" Dates fx June 2016
+
+### Bug Fixes
+- Autocomplete - Fixed bug with many autocompletes in different page areas
+- Autocomplete - Fixed bug typing turkish letters
+- Accordion - Fixed bug that prevented it from appearing on CAP
+- Card - Fixed styling issues on high contrast theme
+- Datagrid - Fixed column alignment issue on reload with hidden columns
+- Datagrid - Fixed tooltip glitch on validation cells
+- Datagrid - Fixed glitch on when column click event fires
+- Datagrid - Fixed select all checkbox with paging
+- Datagrid - Fixed column to header misalignment
+- Datagrid - Fixed editing issues with pager option
+- Datagrid - Fixed error calling hideColumn with no data.
+- Datagrid - Fixed checkbox header alignment
+- Datagrid - Fixed translation issue "1 Results" to "1 Result"
+- Datagrid - Fixed scrolling issue on click in IE
+- Datagrid - Fixed grouping / totals to work with nested data
+- Datagrid - Fixed select all behavior on when interacting with the filter feature
+- Datepicker - Updated Polish Translations
+- Datepicker - Fixed issue in Japanese that the month is shown twice.
+- Datepicker - Prevent validation from firing when open the calendar
+- Dropdown - Fixed Broken No Search Option
+- Dropdown - Fixed JS error on no match found
+- Dropdown - Fixed focus trap
+- Dropdown - Unable to set dirty indicator
+- Fileupload - Fixed destroy option
+- Icons - Fixed missing Icons on IE
+- Locale - Fixed parse issue on exactly 12:00 AM
+- Locale - Fixed formateDate error on IE and Safari
+- Layouts - Allow visible-lg* and visible-xl* to work together
+- Listbuilder - Fixed incorrect data in selected handler
+- Listbuilder - Fixed issue rendering on tabs
+- Multiselect - Fixed init on display: none
+- Multiselect - Fixed Bug where groups are not showing during search
+- Menu Button - Fixed keyboard trap on disabled items
+- Menu Button - Fixed submenus which were not working on IOS
+- Modal - Fixed bugs on validation / enabling / disabling buttons
+- Modal - Fixed event memory leak
+- Module Tabs - Improved usage of search categories in module tab header
+- Tabs - Fixed issue with middle mouse click
+- Timepicker - Fixed JS error when validating
+- Timepicker - Fixed issue where values where set to ...
+- Toolbar - Fixed style issue on disabled buttons in the overflow
+- Toolbar - Fixed bug with seperators in the overflow menu
+- Tree - Added a way to disable parent nodes
+- Theming - Improved FOUC issues (FF Only)
+- Swap list - fixed scrolling issues
+
+### Angular 2.0
+- Updated CLI
+- New Project Branch Structure
+- Accordion Wrapped and Added
+- Minor Api Updates
+- Multiselect - Added tooltip example
+- Multiselect - Fixed bug preventing it from being updatable
+- Swap List - Fixed bug updating dataset on the buttons
+- Menu Button - Fixed wrapping issues
+- Fixed issues where masked input fields do not update the model
+- DatePicker - Fixed error with time and date picker
+
+### Notes
+- Latest bleeding edge build is now available in NPM. Use at your own risk with command:
+`npm install @infor/sohoxi@dev`
+
+### Breaking Changes
+- Tag - Revised the spelling of the CSS class for "X" buttons on tags from "is-dismissable" to "is-dismissible".  The original class still works, but is deprecated and will be removed in a future version.
+- Multiselect - `moveSelectedToTop` has been deprecated in favor of `moveSelected`, which is now a text string instead of a boolean.  This defaults to `"all"` on Multiselect but can be defined as `"group"` or `"none"` as well.
+- Removed Search Results Page as it was an example for the site
+- Sign In Page was changed to not copy to invisible fields. Update your markup accordingly. (wont break but may need a look)
+- Tabs (Header/Module/Vertical) - it's now necessary to define the `containerElement` setting either through Javascript or via a `data-options` attribute if the element that contains tab panels cannot be directly adjacent to the `.tab-container` element.  Existing tab markup that places tab panels inside of the `.tab-container` element must be changed to contain the panels outside of this element.
+- Lightbox and SideBar are deprecated / removed as this is for the soho site only and its being recreated
+
+### Behavior Changes
+- Pie - The Chart now sorts slices in the order of the dataset (was on size from biggest to smallest before).
+- Button - Changed the standard `.btn` style on forms to reflect Tertiary button style instead of Secondary button style (SOHO-6083).
+- Editor - Removed 'bold','italic','underline', 'anchor', 'quote' options from HTML editor.
+- Datagrid - Made a new option enableTooltips which defaults to false. You know need to enable this to have the tooltips anyplace in the datagrid. This has a significant performance especially for Ellipsis columns, so should only be used if you are sure or your datagrid is not huge.
+- Datagrid - Added option sizeColumnsEqually which defaults to false. If set all the columns will get an equal size. (this used to do it automatically for the first 8 columns)
+- Datagrid - Changd Favorites and Checkbox to only edit when clicking the action object
+- Tabs - In-Page/Header tabs will allow the list of tabs to scroll left/right if using a device with touch capabilities.
+- Tabs - The "Spillover Menu" for In-Page/Header tabs is now a full list of all available tabs.  This menu has been redesigned to be more touch/responsive friendly.
+
+### Ui Changes
+- Added heart and heart-filled icons
+- Text/Typography
+  - Removed all font-weight: lighter (effecting components: charts, hierarchy, search results, site)
+  - Removed all text-transform: uppercase (effecting buttons, modals, bullet chart, timestamp text, dropdown and multiselect, Text Area (word count), Popupmenu Headings, Hero Image, Chart Axises, Toolbar Search Field )
+  - Changed H1 - H6 Sizes
+  - Introduced new class based colors for fonts
+  - Header text reduced from 20px to 18px
+  - Links get underlines now by default, have a new hover state
+  - Charts should be lower case (fx JAN, FEB should be Jan, Feb) - this is in the data set and should be changed manually.
+  - Note that Radios , Switches and Checkboxes should be Sentence case.
+- Minor (Design QA) padding and small adjustments to almost all components
+
+### Whats Next
+- New Documentation Site Structure
+- Many More Bug Fixes - Particularly Mobile Issues and Accessibility
+- Hero Theming
+- App Menu Search
+
 ## 4.2.6
 Release Date: 2017-04-02
 

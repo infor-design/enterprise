@@ -1,0 +1,45 @@
+//  Form Layouts
+//================================================== //
+
+.form-responsive {
+  input {
+    width: 100%;
+  }
+
+  .dropdown-wrapper {
+    width: 100%;
+
+    div.dropdown,
+    div.multiselect {
+      width: inherit;
+    }
+  }
+
+  .field .checkbox-label,
+  .field .checkbox > label {
+    margin-top: 30px;
+  }
+
+  .field-checkbox {
+    text-align: center;
+  }
+
+  .lookup-wrapper {
+    width: 100%;
+  }
+
+}
+
+@include respond-to(tabletdown) {
+  .form-responsive {
+    .field .checkbox-label,
+    .field .checkbox > label {
+      margin-top: -10px;
+    }
+
+    .field-checkbox {
+      text-align: left;
+    }
+
+  }
+}

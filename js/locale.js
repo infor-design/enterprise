@@ -161,7 +161,19 @@
       //Convert if a string..
       if (!(value instanceof Date)) {
         var tDate = new Date(value);
-        value = new Date(tDate.getUTCFullYear(), tDate.getUTCMonth(), tDate.getUTCDate());
+        if (isNaN(tDate) && attribs.date === 'datetime' &&
+          value.substr(4, 1) === '-' &&
+          value.substr(7, 1) === '-') {
+          tDate = new Date(
+            value.substr(0, 4),
+            value.substr(5, 2) - 1,
+            value.substr(8, 2),
+            value.substr(11, 2),
+            value.substr(14, 2),
+            value.substr(17, 2)
+          );
+        }
+        value = tDate;
       }
 
       // TODO: Can we handle this if (this.dff.state()==='pending')
@@ -201,9 +213,9 @@
         ret = ret.replace('h', 12);
       }
 
-      ret = ret.replace('hh', (hours > 12 ? hours - 12 : hours));
+      ret = ret.replace('hh', (hours > 12 ? this.pad(hours - 12, 2) : this.pad(hours, 2)));
       ret = ret.replace('h', (hours > 12 ? hours - 12 : hours));
-      ret = ret.replace('HH', hours);
+      ret = ret.replace('HH', this.pad(hours, 2));
       ret = ret.replace('H', (hours > 12 ? hours - 12 : hours));
       ret = ret.replace('mm', this.pad(mins, 2));
       ret = ret.replace('ss', this.pad(seconds, 2));
@@ -271,12 +283,14 @@
       var formatParts,
         dateStringParts,
         dateObj = {},
-        isDateTime = (dateFormat.toLowerCase().indexOf('h') > -1);
+        isDateTime = (dateFormat.toLowerCase().indexOf('h') > -1),
+		isUTC = (dateString.toLowerCase().indexOf('z') > -1),
+        i, l;
 
       if (isDateTime) {
         //replace [space & colon & dot] with "/"
-        dateFormat = dateFormat.replace(/[\s:.-]/g,'/');
-        dateString = dateString.replace(/[\s:.]/g,'/');
+        dateFormat = dateFormat.replace(/[T\s:.-]/g,'/').replace(/z/i, '');
+        dateString = dateString.replace(/[T\s:.-]/g,'/').replace(/z/i, '');
       }
 
       if (dateFormat === 'Mdyyyy' || dateFormat === 'dMyyyy') {
@@ -301,12 +315,12 @@
         var lastChar = dateFormat[0],
           newFormat = '', newDateString = '';
 
-        for (var j = 0; j < dateFormat.length; j++) {
-          newFormat +=  (dateFormat[j] !== lastChar ? '/' + dateFormat[j]  : dateFormat[j]);
-          newDateString += (dateFormat[j] !== lastChar ? '/' + dateString[j]  : dateString[j]);
+        for (i = 0, l = dateFormat.length; i < l; i++) {
+          newFormat +=  (dateFormat[i] !== lastChar ? '/' + dateFormat[i]  : dateFormat[i]);
+          newDateString += (dateFormat[i] !== lastChar ? '/' + dateString[i]  : dateString[i]);
 
-          if (j > 1) {
-            lastChar = dateFormat[j];
+          if (i > 1) {
+            lastChar = dateFormat[i];
           }
         }
 
@@ -344,12 +358,17 @@
       // Check the incoming date string's parts to make sure the values are valid against the localized
       // Date pattern.
       var month = this.getDatePart(formatParts, dateStringParts, 'M', 'MM', 'MMM'),
-        year = this.getDatePart(formatParts, dateStringParts, 'yy', 'yyyy');
+        year = this.getDatePart(formatParts, dateStringParts, 'yy', 'yyyy'),
+        hasDays = false;
 
-      for (var i = 0; i < dateStringParts.length; i++) {
-        var pattern = formatParts[i],
+      for (i = 0, l = dateStringParts.length; i < l; i++) {
+        var pattern = formatParts[i] + '',
           value = dateStringParts[i],
           numberValue = parseInt(value);
+
+        if (!hasDays) {
+          hasDays = pattern.toLowerCase().indexOf('d') > -1;
+        }
 
         switch(pattern) {
           case 'd':
@@ -381,9 +400,9 @@
           case 'MMM':
               var abrMonth = this.calendar().months.abbreviated;
 
-              for (var l = 0; l < abrMonth.length; l++) {
-                if (orgDatestring.indexOf(abrMonth[l]) > -1) {
-                  dateObj.month = l;
+              for (var len = 0; len < abrMonth.length; len++) {
+                if (orgDatestring.indexOf(abrMonth[len]) > -1) {
+                  dateObj.month = len;
                 }
               }
 
@@ -424,6 +443,10 @@
             }
             dateObj.ss = value;
             break;
+			
+	      case 'SSS':
+            dateObj.ms = value;
+            break;
 
           case 'mm':
             if (numberValue < 0 || numberValue > 60) {
@@ -437,6 +460,12 @@
             if((value.toLowerCase() === thisLocaleCalendar.dayPeriods[0]) ||
              (value.toUpperCase() === thisLocaleCalendar.dayPeriods[0])) {
               dateObj.a = 'AM';
+
+              if (dateObj.h) {
+                if (dateObj.h === 12 || dateObj.h === '12') {
+                  dateObj.h = 0;
+                }
+              }
             }
 
             if((value.toLowerCase() === thisLocaleCalendar.dayPeriods[1]) ||
@@ -444,7 +473,9 @@
               dateObj.a = 'PM';
 
               if (dateObj.h) {
-                dateObj.h = parseInt(dateObj.h) + 12;
+                if (dateObj.h < 12) {
+                  dateObj.h = parseInt(dateObj.h) + 12;
+                }
               }
             }
             break;
@@ -459,23 +490,89 @@
       }
 
       if (!dateObj.year && dateObj.year !== 0 && !isStrict) {
-        dateObj.year = (new Date()).getFullYear();
+        dateObj.isUndefindedYear = true;
+        for (i = 0, l = formatParts.length; i < l; i++) {
+          if (formatParts[i].indexOf('y') > -1 && dateStringParts[i] !== undefined) {
+            dateObj.isUndefindedYear = false;
+            break;
+          }
+        }
+        if (dateObj.isUndefindedYear) {
+          dateObj.year = (new Date()).getFullYear();
+        } else {
+          delete dateObj.year;
+        }
+      }
+
+      //Fix incomelete 2 and 3 digit years
+      if (dateObj.year && dateObj.year.length === 2) {
+        dateObj.year = '20' + dateObj.year;
+      }
+
+      // TODO: Need to find solution for three digit year
+      // http://jira/browse/SOHO-4691
+      // if (dateObj.year && dateObj.year.length === 3) {
+      //   dateObj.year = '2' + dateObj.year;
+      // }
+
+      dateObj.year = $.trim(dateObj.year);
+      dateObj.day = $.trim(dateObj.day);
+
+      if (dateObj.year === '' || (dateObj.year && !((dateObj.year + '').length === 2 || (dateObj.year + '').length === 4))) {
+        delete dateObj.year;
       }
 
       if (!dateObj.month && dateObj.month !== 0 && !isStrict) {
-        dateObj.month = (new Date()).getMonth();
+        dateObj.isUndefindedMonth = true;
+        for (i = 0, l = formatParts.length; i < l; i++) {
+          if (formatParts[i].indexOf('M') > -1 && dateStringParts[i] !== undefined) {
+            dateObj.isUndefindedMonth = false;
+            break;
+          }
+        }
+        if (dateObj.isUndefindedMonth) {
+          dateObj.month = (new Date()).getMonth();
+        }
       }
 
-      if (!dateObj.day && dateObj.day !== 0 && !isStrict) {
-        dateObj.day = 1;
+      if (!dateObj.day && dateObj.day !== 0 && (!isStrict || !hasDays)) {
+        dateObj.isUndefindedDay = true;
+        for (i = 0, l = formatParts.length; i < l; i++) {
+          if (formatParts[i].indexOf('d') > -1 && dateStringParts[i] !== undefined) {
+            dateObj.isUndefindedDay = false;
+            break;
+          }
+        }
+        if (dateObj.isUndefindedDay) {
+          dateObj.day = 1;
+        } else {
+          delete dateObj.day;
+        }
       }
 
       if (isDateTime) {
-        if (dateObj.h) {
-          dateObj.return = new Date(dateObj.year, dateObj.month, dateObj.day, dateObj.h, dateObj.mm);
+        if (isUTC) {
+          if (dateObj.h) {
+            dateObj.return = new Date(Date.UTC(dateObj.year, dateObj.month, dateObj.day, dateObj.h, dateObj.mm));
+          }
+          if (dateObj.ss !== undefined) {
+            dateObj.return = new Date(Date.UTC(dateObj.year, dateObj.month, dateObj.day, dateObj.h, dateObj.mm, dateObj.ss));
+          }
+          if (dateObj.ms !== undefined) {
+            dateObj.return = new Date(Date.UTC(dateObj.year, dateObj.month, dateObj.day, dateObj.h, dateObj.mm, dateObj.ss, dateObj.ms));
+          }
         }
-        if (dateObj.ss !== undefined) {
-          dateObj.return = new Date(dateObj.year, dateObj.month, dateObj.day, dateObj.h, dateObj.mm, dateObj.ss);
+        else
+        {
+          if (dateObj.h) {
+            dateObj.return = new Date(dateObj.year, dateObj.month, dateObj.day, dateObj.h, dateObj.mm);
+          }
+          if (dateObj.ss !== undefined) {
+            dateObj.return = new Date(dateObj.year, dateObj.month, dateObj.day, dateObj.h, dateObj.mm, dateObj.ss);
+          }
+          if (dateObj.ms !== undefined) {
+            dateObj.return = new Date(dateObj.year, dateObj.month, dateObj.day, dateObj.h, dateObj.mm, dateObj.ss, dateObj.ms);
+          }
         }
       } else {
         dateObj.return = new Date(dateObj.year, dateObj.month, dateObj.day);
@@ -507,8 +604,8 @@
       var formattedNum, curFormat, percentFormat,
         decimal = options && options.decimal ? options.decimal : this.numbers().decimal,
         group = options && options.group !== undefined ? options.group : this.numbers().group,
-        minimumFractionDigits = options && options.minimumFractionDigits !== undefined ? options.minimumFractionDigits : (options && options.style && (options.style === 'currency' || options.style === 'percent') ? 2: 2),
-        maximumFractionDigits = options && options.maximumFractionDigits !== undefined ? options.maximumFractionDigits : (options && options.style && (options.style === 'currency' || options.style === 'percent') ? 2: (options && options.minimumFractionDigits ? options.minimumFractionDigits :3));
+        minimumFractionDigits = options && options.minimumFractionDigits !== undefined ? options.minimumFractionDigits : (options && options.style && options.style === 'currency' ? 2 : (options && options.style && options.style === 'percent') ? 0 : 2),
+        maximumFractionDigits = options && options.maximumFractionDigits !== undefined ? options.maximumFractionDigits : (options && options.style && (options.style === 'currency' || options.style === 'percent') ? 2 : (options && options.minimumFractionDigits ? options.minimumFractionDigits : 3));
 
       if (number === undefined || number === null || number === '') {
         return undefined;
@@ -517,10 +614,6 @@
       if (options && options.style === 'integer') {
         maximumFractionDigits = 0;
         minimumFractionDigits = 0;
-      }
-
-      if (!minimumFractionDigits && options && options.style === 'percent') {
-        minimumFractionDigits = 2;
       }
 
       //TODO: Doc Note: Uses Truncation
@@ -700,6 +793,60 @@
 
     isRTL: function() {
       return this.currentLocale.data.direction === 'right-to-left';
+    },
+
+    /**
+     * Takes a string and converts its contents to upper case, taking into account Locale-specific character conversions.
+     * In most cases this method will simply pipe the string to `String.prototype.toUpperCase()`
+     * @param {string} str - the incoming string
+     * @returns {string}
+     */
+    toUpperCase: function(str) {
+      if (typeof this.currentLocale.data.toUpperCase === 'function') {
+        return this.currentLocale.data.toUpperCase(str);
+      }
+
+      return str.toLocaleUpperCase();
+    },
+
+    /**
+     * Takes a string and converts its contents to lower case, taking into account Locale-specific character conversions.
+     * In most cases this method will simply pipe the string to `String.prototype.toLowerCase()`
+     * @param {string} str - the incoming string
+     * @returns {string}
+     */
+    toLowerCase: function(str) {
+      if (typeof this.currentLocale.data.toLowerCase === 'function') {
+        return this.currentLocale.data.toLowerCase(str);
+      }
+
+      return str.toLocaleLowerCase();
+    },
+
+    /**
+     * Takes a string and capitalizes the first letter, taking into account Locale-specific character conversions.
+     * In most cases this method will simply use a simple algorithm for captializing the first letter of the string.
+     * @param {string} str - the incoming string
+     * @returns {string}
+     */
+    capitalize: function(str) {
+      return this.toUpperCase(str.charAt(0)) + str.slice(1);
+    },
+
+    /**
+     * Takes a string and capitalizes the first letter of each word in a string, taking into account Locale-specific character conversions.
+     * In most cases this method will simply use a simple algorithm for captializing the first letter of the string.
+     * @param {string} str - the incoming string
+     * @returns {string}
+     */
+    capitalizeWords: function(str) {
+      var words = str.split(' ');
+
+      for(var i = 0; i < words.length; i++) {
+        words[i] = this.capitalize(words[i]);
+      }
+
+      return words.join(' ');
     },
 
     flipIconsHorizontally: function() {

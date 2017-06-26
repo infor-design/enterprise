@@ -1,0 +1,58 @@
+<body class="no-scroll">
+{{> includes/svg-inline-refs}}
+
+<!-- Module Tabs -->
+<section id="module-tabs-example" class="tab-container module-tabs">
+  <div class="tab-list-container">
+    <ul class="tab-list"></ul>
+  </div>
+  <div class="toolbar">
+    <div class="buttonset">
+      <input type="text" class="searchfield" spellcheck="false" placeholder="Search..." autofocus />
+    </div>
+    {{> includes/header-actionbutton}}
+  </div>
+</section>
+
+{{> includes/applicationmenu}}
+
+<!-- Page Container -->
+<div id="module-tabs-container" class="page-container no-scroll"></div>
+
+<script type="text/javascript">
+  $('body').on('initialized', function () {
+
+    const $tabs = $('#module-tabs-example').tabs({
+      containerElement: '#module-tabs-container',
+      addTabButton: true,
+      moduleTabsTooltips: true
+    });
+
+    $tabs.data('tabs')
+      .add('tab1', {
+        name: 'Tab One',
+        content: '<div class="row top-padding"><div class="twelve columns"><h2>Tab One</h2><p>This is Tab One.</p></div></div>'
+      })
+      .add('tab2', {
+        name: 'Tab Two',
+        content: '<div class="row top-padding"><div class="twelve columns"><h2>Tab Two</h2><p>This is Tab Two.</p></div></div>'
+      });
+
+    $('input.searchfield').toolbarsearchfield({
+      collapsible: false,
+      showCategoryText: false,
+      categories: [{
+        checked: true,
+        name: "Lawson Applications",
+        id: "/servlet/LawSearch?PDL=APPS100&TYPE=Programs.token;Bookmarks;Programs.syscode;Programs.name&ROF=Programs.token&q=",
+        value: "LAW_SEARCH"
+      }, {
+        checked: false,
+        name: "Bookmarks",
+        id: "/servlet/LawSearch?PDL=APPS100&TYPE=bookmarks&q=",
+        value: "LAW_SEARCH"
+      }
+      ]
+    });
+  });
+</script>

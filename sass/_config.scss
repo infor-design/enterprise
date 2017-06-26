@@ -6,12 +6,15 @@
 // Form Background Color
 $body-bg-color:  $graphite01;
 $header-bg-color: $azure07;
-$subhead-bg-color: $azure06;
+$subhead-bg-color: $azure08;
+
 $header-border-color: $azure08;
 $header-button-color: rgba($white, .7);
 $header-button-focus-color: rgba($white, 1);
 $header-button-hover-color: rgba($white, 1);
 $header-button-disabled-color: rgba($white, .3);
+$header-primary-btn-background-color: $azure05;
+$header-primary-btn-background-hover-color: $azure06;
 $header-text-color: $white;
 $header-disabled-color: $slate05;
 $panel-bg-color: $white;
@@ -24,6 +27,7 @@ $primary-color: $azure06;
 $inverse-color: $white;
 
 // Text Color
+// These are Deprecated. Use "Default, Descriptive, Link, Muted, Alert" ect going forward
 $font-color-extrahighcontrast: $graphite10;
 $font-color-highcontrast: $graphite08;
 $font-color: $graphite06;
@@ -33,12 +37,19 @@ $label-disabled-color: $graphite04;
 $disabled-color: $graphite04;
 $signin-title-color: $graphite07;
 
+// New Text Colors
+$font-color-default: $graphite10;
+$font-color-descriptive: $graphite06;
+$font-color-hyperlink: $primary-color;
+$font-color-muted: $graphite04;
+$font-color-alert: $alert-red;
+
 //The hyperlink Style
 $hyperlink-color: $primary-color;
 $hyperlink-focus-border-color: $primary-color;
 $hyperlink-visited-color: $amethyst06;
 $hyperlink-disabled-color: $disabled-color;
-$hyperlink-hover-color: $primary-color;
+$hyperlink-hover-color: $azure07;
 
 // Rules
 $hr-top-color: $graphite03;
@@ -109,6 +120,7 @@ $badge-focus-transparent-shadow: 0 0 0 1px $body-bg-color inset;
 // Popup Menu
 $popupmenu-color: $font-color-extrahighcontrast;
 $popupmenu-arrow-color: $graphite06;
+$popupmenu-icon-color: $graphite06;
 $popupmenu-heading-color: $graphite04;
 $popupmenu-color-filtered-text: $font-color-lowcontrast;
 $popupmenu-bg-color: $inverse-color;
@@ -154,7 +166,7 @@ $tertiary-btn-ripple-color: #8dc9e6;
 $tertiary-btn-disabled-color: $graphite06;
 $tertiary-btn-disabled-opacity: .5;
 
-// Secondary With Border
+// Secondary with Border
 $secondary-border-btn-color:  $graphite06;
 $secondary-border-btn-border-color: $graphite04;
 $secondary-border-btn-hover-color:  $graphite10;
@@ -162,7 +174,7 @@ $secondary-border-btn-hover-border-color: $graphite10;
 $secondary-border-btn-ripple-color: #8dc9e6;
 
 // Buttons
-$button-font-size: 12;
+$button-font-size: 14;
 
 // Menu Button
 $menubutton-height: 34px;
@@ -359,6 +371,7 @@ $cardlist-bg-color: $inverse-color;
 $cardlist-border-color: $graphite03;
 $cardlist-header-color: $graphite10;
 $cardlist-actions-color: $graphite10;
+$cardlist-text-color: $font-color;
 
 // Checkboxes
 $checkbox-color: $primary-color;
@@ -380,6 +393,7 @@ $focus-color: #cbdce6;
 $focus-shadow: rgba(0, 0, 0, .3);
 
 $switch-checked-color: $primary-color;
+$switch-checked-hover-color: $azure07;
 $switch-checked-bg-color: $azure03;
 $switch-unchecked-bar-color: $graphite04;
 $switch-unchecked-border-color: $graphite03;
@@ -621,11 +635,11 @@ $progress-border-color: $graphite04;
 $progress-bar-bg-color: $azure06;
 
 //Chart Progress Bar
-$chart-progressbar-bg-color: $graphite02;
+$chart-progressbar-bg-color: $graphite03;
+$chart-progressbar-bg-color-dark: $graphite04;
 $chart-progressbar-completed-fill: $emerald07;
 $chart-progressbar-target-fill: $graphite04;
 $chart-progressbar-primary-fill: $primary-color;
-$chart-progressbar-dark-fill: $graphite06;
 $chart-progressbar-dark-fill: $graphite06;
 $chart-targeted-achievement-bg-color: $graphite03;
 
@@ -705,11 +719,13 @@ $about-text-border-color: $graphite03;
 $about-text-hover-border-color: $graphite07;
 
 // Header Tabs
-$header-tabcontainer-border-color: $graphite02;
+$header-tabcontainer-border-color: $graphite03;
+$header-tab-separator: $graphite08;
 $header-tab-normal-color: rgba(255, 255, 255, .7);
 $header-tab-hover-color: $inverse-color;
 $header-tab-selected-color: $graphite01;
 $header-tab-alt-bg-color: $white;
+$header-tab-alt-separator: $header-tabcontainer-border-color;
 $header-tab-alt-normal-color: $graphite06;
 $header-tab-alt-hover-color: $font-color-highcontrast;
 $header-tab-alt-selected-color: $primary-color;
@@ -734,6 +750,13 @@ $module-tabs-disabled-x-border-color: $azure04;
 $module-tabs-disabled-y-border-color: $azure07;
 $module-tabs-disabled-text-color: $azure04;
 
+// Composite Form Tabs
+$composite-tabs-text-color: $graphite06;
+$composite-tabs-bg-color: $graphite02;
+$composite-tabs-border-color: $graphite05;
+$composite-tabs-focus-state-color: $graphite04;
+$composite-tabs-panel-bg-color: $white;
+
 // Splitter
 $splitter-grip-bg-color: $graphite06;
 $splitter-active-bg-color: $graphite02;
@@ -755,3 +778,6 @@ $field-sm: 150px;
 $field-md: 300px;
 $field-lg: 400px;
 $field-full: 100%;
+
+//Misc
+$cubic-ease: cubic-bezier(.17, .04, .03, .94);

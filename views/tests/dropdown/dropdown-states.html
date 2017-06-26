@@ -8,19 +8,19 @@
                Readonly Dropdown Test
             </div>
             <div class="buttonset">
-               <button class="btn" id="enable">
+               <button class="btn-secondary" id="enable">
                   <span>Enable</span>
                </button>
 
-               <button class="btn" id="readonly">
+               <button class="btn-secondary" id="readonly">
                   <span>Readonly</span>
                </button>
 
-               <button class="btn" id="disable">
+               <button class="btn-secondary" id="disable">
                   <span>Disable</span>
                </button>
-               
-               <button class="btn" id="updated">
+
+               <button class="btn-secondary" id="updated">
                   <span>Updated</span>
                </button>
             </div>
@@ -44,7 +44,7 @@
             $('#enable').on('click', function () {
                $('#test-dropdown').enable();
             });
-      
+
             $('#readonly').on('click', function () {
                $('#test-dropdown').readonly();
             });
@@ -56,7 +56,7 @@
             $('#updated').on('click', function () {
                $('#test-dropdown').data('dropdown').updated();
             });
-            
+
          });
       });
    </script>

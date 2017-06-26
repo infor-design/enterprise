@@ -9,11 +9,12 @@ var express = require('express'),
   fs = require('fs'),
   http = require('http'),
   git = require('git-rev-sync'),
-  basepath = process.env.BASEPATH || '/',
-  getJSONFile = require(path.resolve(__dirname, 'demoapp', 'js', 'getJSONFile')); // jshint ignore:line
+  BASE_PATH = process.env.BASEPATH || '/',
+  getJSONFile = require(path.resolve(__dirname, 'demoapp', 'js', 'getJSONFile')),
+  packageJSON = getJSONFile(path.resolve('package.json'));
 
   app.set('view engine', 'html');
-  app.set('views', path.join(__dirname, 'views'));
+  app.set('views', [path.join(__dirname, 'components'), path.join(__dirname, 'views')]);
   mmm.setEngine('hogan.js');
   app.engine('html', mmm.__express);
 
@@ -36,9 +37,8 @@ var express = require('express'),
     layout: 'layout',
     locale: 'en-US',
     title: 'SoHo XI',
-    basepath: basepath,
-    // Ignore this because its not in our control
-    version: process.env.npm_package_version, // jshint ignore:line
+    basepath: BASE_PATH,
+    version: packageJSON.version,
     commit: git.long(),
   };
 
@@ -155,6 +155,12 @@ var express = require('express'),
     return noHtml;
   }
 
+  function toTitleCase(str){
+    return str.replace(/\w\S*/g, function(txt){
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+  }
+
   // Checks the target file path for its type (is it a file, a directory, etc)
   // http://stackoverflow.com/questions/15630770/node-js-check-if-path-is-file-or-directory
   function is(type, filePath) {
@@ -196,9 +202,210 @@ var express = require('express'),
     return path.substr(path.length - 1) === '/';
   }
 
-  // Returns a directory listing as page content with working links
-  // @param Array excludes - List of files names to exclude
-  function getDirectoryListing(directory, req, res, next, excludes) {
+  /**
+   * Filters an array of paths and detects if they actually exist
+   * @private
+   * @param {Object[]} pathDefs -
+   * @param {String} link -
+   */
+  function filterUnusablePaths(pathDefs, excludes) {
+    var truePaths = [];
+    if (excludes === undefined) {
+      excludes = [];
+    }
+
+    pathDefs.forEach(function pathIterator(pathDef) {
+      pathDef.link = pathDef.link.replace(/\/\//g, '/');
+      console.log('Checking path: "' + pathDef.link + '"');
+
+      var match = false;
+      excludes.forEach(function(exclude) {
+        console.log(pathDef.link, exclude, pathDef.link.match(exclude));
+        if (pathDef.link.match(exclude)) {
+          match = true;
+          return;
+        }
+      });
+
+      if (match) {
+        return;
+      }
+
+      truePaths.push(pathDef);
+    });
+
+    return truePaths;
+  }
+
+  /**
+   * @private
+   * @param {String} text
+   */
+  function formatPath(text) {
+    return text.replace(/-/g, ' ').replace(/\.html/, '');
+  }
+
+  /**
+   * @private
+   * @param {Object} pathDef
+   * @param {String} pathDef.link
+   * @param {String} pathDef.type
+   * @param {String} pathDef.labelColor
+   */
+  function pathMapper(pathDef) {
+    var href = pathDef.link.replace(/\\/g, '/').replace(/\/\//g, '/'),
+      icon;
+
+    if (href.indexOf(BASE_PATH) !== 0) {
+      href = BASE_PATH + href;
+    }
+
+    if (is('directory', href.replace(BASE_PATH, ''))) {
+      icon = '#icon-folder';
+
+      if (href.charAt(href.length - 1) !== '/') {
+        href = href + '/';
+      }
+    }
+
+    var mappedPath = {
+      href: href,
+      text: formatPath(pathDef.link)
+    };
+
+    if (pathDef.text) {
+      mappedPath.text = pathDef.text;
+    }
+
+    if (icon) {
+      mappedPath.icon = icon;
+    }
+
+    if (pathDef.type && pathDef.type.length) {
+      mappedPath.pageType = pathDef.type;
+      mappedPath.labelColor = pathDef.labelColor || 'graphite07';
+    }
+
+    return mappedPath;
+  }
+
+  /**
+   * Excluded file names that should never appear in the DemoApp List Pages
+   */
+  const GENERAL_LISTING_EXCLUDES = [
+    /^(layout)(\s)?(\.html)?/gm, // matches any filename that begins with "layout" (fx: "layout***.html")
+    /footer\.html/,
+    /_header\.html/,
+    /_layout\.html/,
+    /layout/,
+    /\.DS_Store/
+  ];
+
+  /**
+   * @private
+   * @param {String} type
+   */
+  function getFolderContents(type, dir, folderName) {
+    var paths = [];
+    try {
+      paths = fs.readdirSync(dir);
+    } catch(e) {
+      // Handle 'No Directory' errors
+      if (e.code === 'ENOENT') {
+        console.log('No '+ folderName +' Folder found for "' + type + '');
+        paths = [];
+      } else {
+        throw e;
+      }
+    }
+    return paths;
+  }
+
+  /**
+   * Returns a listing of both "examples" and "tests" for a particular type of component.
+   * @param {String} type - the component/layout/pattern type
+   * @param {Object} req
+   * @param {Object} res
+   * @param {function} next
+   * @param {Array} [extraExcludes]
+   * @returns {?}
+   */
+  function getFullListing(type, req, res, next, extraExcludes) {
+    var allPaths = [],
+      componentPaths,
+      testPaths;
+
+    if (!extraExcludes) {
+      extraExcludes = [];
+    }
+
+    // Add Component-specific file name filters
+    extraExcludes = extraExcludes.concat([
+      new RegExp(type + '\\.html'),
+      new RegExp('_' + type + '\\.scss'),
+      new RegExp(type + '\\.js'),
+      new RegExp(type + '\\.md')
+    ]);
+
+    function componentTextFormatter(path) {
+      path = path.replace('test-', '').replace('example-', '');
+      return formatPath(path);
+    }
+
+    // Search the "/components/<type>" folder for all tests/examples located here
+    componentPaths = getFolderContents(type, 'components/' + type + '/', 'Components');
+    componentPaths.forEach(function(path, i) {
+      var isTest = path.substr(0, 4) === 'test-';
+
+      componentPaths[i] = {
+        text: componentTextFormatter(path),
+        link: 'components/' + type + '/' + path,
+        type: isTest ? 'test' : 'example',
+        labelColor: isTest ? 'azure07' : 'ruby07'
+      };
+    });
+    componentPaths = filterUnusablePaths(componentPaths, GENERAL_LISTING_EXCLUDES.concat(extraExcludes).concat([
+      /[^-.]index\.html/,
+    ]));
+
+    // TODO: Handle the test paths the same way as before.
+    // Search the legacy "tests" folder for any relevant tests
+    testPaths = getFolderContents(type, 'views/tests/' + type + '/', 'Tests');
+    testPaths.forEach(function(path, i) {
+      testPaths[i] = {
+        text: formatPath(path),
+        link: 'tests/' + type + '/' + path,
+        type: 'test',
+        labelColor: 'azure07'
+      };
+    });
+    testPaths = filterUnusablePaths(testPaths, GENERAL_LISTING_EXCLUDES.concat(extraExcludes));
+
+    // Combine the arrays and filter out the junk
+    allPaths = allPaths.concat(componentPaths).concat(testPaths);
+
+    var opts = extend({}, res.opts, {
+      subtitle: 'All Examples & Tests for ' + type,
+      paths: allPaths.map(pathMapper)
+    });
+
+    res.render('listing', opts);
+    next();
+  }
+
+  /**
+   * Returns a directory listing as page content with working links
+   * @param {String} directory
+   * @param {Object} req
+   * @param {Object} res
+   * @param {function} next
+   * @param {Array} [extraExcludes] - List of files names to exclude
+   */
+  function getDirectoryListing(directory, req, res, next, extraExcludes) {
+    if (!extraExcludes) {
+      extraExcludes = [];
+    }
+
     fs.readdir('./views/' + directory, function(err, paths) {
       if (err) {
         console.log(err);
@@ -206,57 +413,19 @@ var express = require('express'),
         return next();
       }
 
-      var realPaths = [];
-      // TODO: var dirs = [];  Separate paths from directories and place an icon next to them
-
       // Strip out paths that aren't going to ever work
-      paths.forEach(function pathIterator(val) {
-        if (excludes === undefined) {
-          excludes = [];
-        }
-        excludes.push(/^(layout)(\s)?(\.html)?/gm); // matches any filename that begins with "layout" (fx: "layout***.html")
-        excludes.push(/footer\.html/);
-        excludes.push(/\.DS_Store/);
-
-        var match = false;
-
-        excludes.forEach(function(exclude) {
-          if (val.match(exclude)) {
-            match = true;
-            return;
-          }
-        });
-
-        if (match) {
-          return;
-        }
-
-        realPaths.push(val);
+      paths.forEach(function pathIterator(path, i) {
+        paths[i] = {
+          text: path,
+          link: '/' + directory + '/' + path
+        };
       });
 
-      // Map with links, add to
-      function pathMapper(link) {
-        var href = path.join(basepath, directory, link).replace(/\\/g, '/'),
-          icon;
-
-        if (is('directory', href.replace(basepath,''))) {
-          icon = '#icon-folder';
-
-          if (href.charAt(href.length - 1) !== '/') {
-            href = href + '/';
-          }
-        }
-
-        return {
-          icon: icon,
-          href: href,
-          text: link
-        };
-      }
+      paths = filterUnusablePaths(paths, GENERAL_LISTING_EXCLUDES.concat(extraExcludes));
 
       var opts = extend({}, res.opts, {
         subtitle: 'Listing for ' + directory,
-        paths: realPaths.map(pathMapper)
+        paths: paths.map(pathMapper)
       });
 
       res.render('listing', opts);
@@ -269,7 +438,12 @@ var express = require('express'),
   // ======================================
 
   router.get('/', function(req, res, next) {
-    res.render('index', res.opts);
+    res.redirect(BASE_PATH + 'kitchen-sink');
+    next();
+  });
+
+  router.get('/kitchen-sink', function(req, res, next) {
+    res.render('kitchen-sink', res.opts);
     next();
   });
 
@@ -312,7 +486,7 @@ var express = require('express'),
     }
 
     controlName = stripHtml(req.params.control);
-    opts.subtitle = controlName.charAt(0).toUpperCase() + controlName.slice(1).replace('-',' ');
+    opts.subtitle = toTitleCase(controlName.charAt(0).toUpperCase() + controlName.slice(1).replace('-',' '));
 
     // Specific Changes for certain controls
     opts.subtitle = opts.subtitle.replace('Contextualactionpanel', 'Contextual Action Panel');
@@ -324,12 +498,114 @@ var express = require('express'),
       opts.layout = 'tests/layout-noheader';
     }
 
+    // Handle Redirects to new Structure
+    if (!fs.existsSync('views/controls/' + controlName + '.html')) {
+      if (controlName === 'buttons') {
+        controlName = 'button';
+      }
+      res.redirect(BASE_PATH + 'components/' + controlName + '/example-index');
+    }
+
     res.render('controls/' + controlName, opts);
     next();
   });
 
   router.get('/controls/', defaultControlsRoute);
   router.get('/controls', defaultControlsRoute);
+
+
+  // ======================================
+  //  Components Section
+  // ======================================
+
+  var componentOpts = {
+    'layout': 'layout',
+    'subtitle': 'Style',
+  };
+
+  function defaultDocsRoute(req, res, next) {
+    var opts = extend({}, res.opts, componentOpts);
+    opts.layout = 'doc-layout';
+    opts.showbacklink = false;
+
+    res.render('index', opts);
+    next();
+  }
+
+  //Docs Routers
+  function docsStyleGuideRoute(req, res, next) {
+    var opts = extend({}, res.opts, componentOpts);
+    opts.subtitle = 'Doc Style Guide';
+    opts.layout = 'doc-layout';
+
+    res.render('doc-styleguide', opts);
+    next();
+  }
+
+  function docsRoute(req, res, next) {
+    var opts = extend({}, res.opts, componentOpts);
+    opts.subtitle = 'Documentation';
+    opts.layout = 'doc-layout';
+
+    var componentName = stripHtml(req.params.component);
+    opts.subtitle = toTitleCase(componentName.charAt(0).toUpperCase() + componentName.slice(1).replace('-',' '));
+
+    res.render(componentName + '/doc', opts);
+    next();
+  }
+
+  router.get('/components/:component', function(req, res, next) {
+    var componentName = '',
+      opts = extend({}, res.opts, componentOpts);
+
+    if (!req.params.component) {
+      return defaultDocsRoute(req, res, next);
+    }
+
+    componentName = stripHtml(req.params.component);
+    opts.subtitle = toTitleCase(componentName.charAt(0).toUpperCase() + componentName.slice(1).replace('-',' '));
+
+    opts.showbacklink = true;
+    opts.layout = 'doc-layout';
+
+    if (req.params.component === 'doc-styleguide') {
+      return docsStyleGuideRoute(req, res, next);
+    }
+
+    res.render(componentName, opts);
+    next();
+  });
+
+  router.get('/components/:component/:example', function(req, res, next) {
+    var componentName = '',
+      opts = extend({}, res.opts, componentOpts);
+
+    if (!req.params.component && !req.params.example) {
+      return defaultDocsRoute(req, res, next);
+    }
+
+    componentName = stripHtml(req.params.component);
+    opts.subtitle = toTitleCase(componentName.charAt(0).toUpperCase() + componentName.slice(1).replace('-',' '));
+
+    if (req.params.example === 'doc' || req.params.example === 'docs') {
+      return docsRoute(req, res, next);
+    }
+
+    if (req.params.example === 'list') {
+      return getFullListing(componentName, req, res, next);
+    }
+
+    if (req.params.component === 'applicationmenu' && (req.params.example.indexOf('example-') > -1 || req.params.example.indexOf('test-') > -1)) {
+      console.log(req.params.component, req.params.example);
+      opts.layout = null;
+    }
+
+    res.render(componentName + '/' +  req.params.example, opts);
+    next();
+  });
+
+  router.get('/components/', defaultDocsRoute);
+  router.get('/components', defaultDocsRoute);
 
   // ======================================
   //  Patterns Section
@@ -367,25 +643,6 @@ var express = require('express'),
     layout: 'tests/layout'
   };
 
-  // Custom Application Menu Layout files.  Since the markup for the Application Menu lives higher up than the
-  // content filter lives on most templates, we have a special layout-changing system for Application Menu Tests.
-  function getApplicationMenuTestLayout(path) {
-    var base = 'tests/applicationmenu/';
-
-    if (path.match(/\/site/)) {
-      return base + 'site/layout';
-    } else if (path.match(/\/container/)) {
-      return base + 'container/layout';
-    } else if (path.match(/\/different-header-types/)) {
-      return base + 'different-header-types/layout';
-    } else if (path.match(/\/lms/)) {
-      return base + 'lms/layout';
-    } else if (path.match(/\/six-levels-with-icons/)) {
-      return base + 'six-levels-with-icons/layout';
-    }
-    return base + 'six-levels/layout';
-  }
-
   function testsRouteHandler(req, res, next) {
     var opts = extend({}, res.opts, testOpts),
       end = req.url.replace(/\/tests(\/)?/, '');
@@ -409,11 +666,15 @@ var express = require('express'),
     }
 
     // Custom configurations for some test folders
-    if (directory.match(/tests\/applicationmenu/)) {
-      opts.layout = getApplicationMenuTestLayout(directory);
-    }
+
     if (directory.match(/tests\/base-tag/)) {
       opts.usebasehref = true;
+    }
+    if (directory.match(/tests\/composite-form/)) {
+      opts.layout = 'tests/composite-form/_layout';
+    }
+    if (directory.match(/tests\/call-to-action-header/)) {
+      opts.layout = 'tests/call-to-action-header/layout';
     }
     if (directory.match(/tests\/distribution/)) {
       opts.amd = true;
@@ -464,82 +725,36 @@ var express = require('express'),
       return;
     }
 
+    // Handle Redirects to new Structure
+    var component = req.params.component,
+      example = req.params.example;
+
+    if (example && component) {
+      var path = 'components/' + component + '/example-' + example.replace('.html', '')  + '.html';
+      if (fs.existsSync(path)) {
+        res.redirect(BASE_PATH + path);
+        next();
+        return;
+      }
+
+      path = 'components/' + component + '/test-' + example.replace('.html', '') + '.html';
+      if (fs.existsSync(path)) {
+        res.redirect(BASE_PATH + path);
+        next();
+        return;
+      }
+    }
+
     res.render(directory, opts);
     next();
   }
 
   //Tests Index Page and controls sub pages
-  router.get('/tests*', testsRouteHandler);
+  router.get('/tests/:component/:example', testsRouteHandler);
+  router.get('/tests/:component', testsRouteHandler);
+  router.get('/tests/:component/', testsRouteHandler);
+  router.get('/tests/', testsRouteHandler);
   router.get('/tests', testsRouteHandler);
-
-  // =========================================
-  // Docs Pages
-  // =========================================
-
-  var docLayoutOpts = {
-    subtitle: 'SoHo Xi Docs',
-    layout: 'includes/docs-layout'
-  };
-
-  function defaultDocsRouteHandler(req, res, next) {
-    res.render('docs/index', docLayoutOpts);
-    next();
-  }
-
-  router.get('/docs/', defaultDocsRouteHandler);
-  router.get('/docs', defaultDocsRouteHandler);
-  router.get('docs', defaultDocsRouteHandler);
-
-  app.get('/docs/assets/bass.css', function(req, res){
-    res.sendFile(__dirname + '/views/docs/assets/bass.css');
-  });
-
-  app.get('/docs/assets/style.css', function(req, res){
-    res.sendFile(__dirname + '/views/docs/assets/style.css');
-  });
-
-  app.get('/docs/assets/github.css', function(req, res){
-    res.sendFile(__dirname + '/views/docs/assets/github.css');
-  });
-
-  app.get('/docs/assets/anchor.js', function(req, res){
-    res.sendFile(__dirname + '/views/docs/assets/anchor.js');
-  });
-
-  app.get('/docs/assets/site.js', function(req, res){
-    res.sendFile(__dirname + '/views/docs/assets/site.js');
-  });
-
-  // =========================================
-  // Old Soho Site Pages
-  // =========================================
-
-  var layoutOpts = {
-    subtitle: 'Soho Site',
-    layout: 'soho-site/layout'
-  };
-
-  function defaultSohoSiteRouteHandler(req, res, next) {
-    var opts = extend({}, res.opts, layoutOpts);
-    res.render('soho-site/index', opts);
-    next();
-  }
-
-  function sohoSiteRouteHandler(req, res, next) {
-    var opts = extend({}, res.opts, layoutOpts),
-      soho = req.params.soho;
-
-    if (!soho || !soho.length) {
-      return defaultDocsRouteHandler(req, res, next);
-    }
-
-    res.render('soho-site/' + soho, opts);
-    next();
-  }
-
-  router.get('/soho-site/:soho', sohoSiteRouteHandler);
-  router.get('/soho-site/', defaultSohoSiteRouteHandler);
-  router.get('/soho-site', defaultSohoSiteRouteHandler);
 
   // =========================================
   // Layouts Pages
@@ -551,19 +766,28 @@ var express = require('express'),
   };
 
   function defaultLayoutRouteHandler(req, res, next) {
-    var opts = extend({}, res.opts, layoutOpts);
-    res.render('layouts/index', opts);
-    next();
+    var exclude = [
+      '_masthead.html',
+      'header-only.html',
+      'header-scroll.html',
+      'header-sticky.html'
+    ];
+
+    getDirectoryListing('layouts/', req, res, next, exclude);
+    return;
   }
 
   function layoutRouteHandler(req, res, next) {
-    var opts = extend({}, res.opts, layoutOpts),
+    var pageName = '',
+      opts = extend({}, res.opts, layoutOpts),
       layout = req.params.layout;
 
     if (!layout || !layout.length) {
       return defaultLayoutRouteHandler(req, res, next);
     }
 
+    pageName = stripHtml(req.params.layout);
+    opts.subtitle = toTitleCase(pageName.charAt(0).toUpperCase() +pageName.slice(1).replace('-',' '));
     res.render('layouts/' + layout, opts);
     next();
   }
@@ -654,47 +878,6 @@ var express = require('express'),
     }
 
     res.render('angular/' + end, opts);
-    next();
-  });
-
-  // React Support
-  var reactOpts = {
-    subtitle: 'React',
-    layout: 'react/layout'
-  };
-
-  router.get('/react*', function(req, res, next) {
-    var opts = extend({}, res.opts, reactOpts),
-      end = req.url.replace(/\/react(\/)?/, '');
-
-    if (!end || !end.length || end === '/') {
-      getDirectoryListing('react/', req, res, next);
-      return;
-    }
-
-    res.render('react/' + end, opts);
-    next();
-  });
-
-  // =========================================
-  // Knockout Support Test Pages
-  // =========================================
-
-  var knockoutOpts = {
-    subtitle: 'Knockout',
-    layout: 'knockout/layout'
-  };
-
-  router.get('/knockout*', function(req, res, next) {
-    var opts = extend({}, res.opts, knockoutOpts),
-      end = req.url.replace(/\/knockout(\/)?/g, '');
-
-    if (!end || !end.length || end === '/') {
-      getDirectoryListing('knockout/', req, res, next);
-      return;
-    }
-
-    res.render('knockout/' + end, opts);
     next();
   });
 
@@ -1306,20 +1489,16 @@ var express = require('express'),
     next();
   }
 
-  router.get('/api/deployments', function(req, res, next) {
-    sendJSONFile('deployments', req, res, next);
-  });
-
-  router.get('/api/general/status-codes', function(req, res, next) {
-    sendJSONFile('status-codes', req, res, next);
+  router.get('/api/year2014', function(req, res, next) {
+    sendJSONFile('year2014', req, res, next);
   });
 
   router.get('/api/my-projects', function(req, res, next) {
     sendJSONFile('projects', req, res, next);
   });
 
-  router.get('/api/companies', function(req, res, next) {
-    sendJSONFile('companies', req, res, next);
+  router.get('/api/accounts-sm', function(req, res, next) {
+    sendJSONFile('accounts-sm', req, res, next);
   });
 
   router.get('/api/accounts', function(req, res, next) {
@@ -1330,16 +1509,20 @@ var express = require('express'),
     sendJSONFile('assets', req, res, next);
   });
 
-  router.get('/api/accounts-sm', function(req, res, next) {
-    sendJSONFile('accounts-sm', req, res, next);
+  router.get('/api/autocomplete/turkish', function(req, res, next) {
+    sendJSONFile('autocomplete-turkish', req, res, next);
   });
 
-  router.get('/api/incidents', function(req, res, next) {
-    sendJSONFile('incidents', req, res, next);
+  router.get('/api/bikes', function(req, res, next) {
+    sendJSONFile('bikes', req, res, next);
   });
 
-  router.get('/api/fires', function(req, res, next) {
-    sendJSONFile('fires', req, res, next);
+  router.get('/api/companies', function(req, res, next) {
+    sendJSONFile('companies', req, res, next);
+  });
+
+  router.get('/api/deployments', function(req, res, next) {
+    sendJSONFile('deployments', req, res, next);
   });
 
   router.get('/api/dummy-dropdown-data', function(req, res, next) {
@@ -1347,6 +1530,22 @@ var express = require('express'),
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(data));
     next();
+  });
+
+  router.get('/api/fires', function(req, res, next) {
+    sendJSONFile('fires', req, res, next);
+  });
+
+  router.get('/api/incidents', function(req, res, next) {
+    sendJSONFile('incidents', req, res, next);
+  });
+
+  router.get('/api/jobs', function(req, res, next) {
+    sendJSONFile('jobs', req, res, next);
+  });
+
+  router.get('/api/general/status-codes', function(req, res, next) {
+    sendJSONFile('status-codes', req, res, next);
   });
 
 module.exports = app;

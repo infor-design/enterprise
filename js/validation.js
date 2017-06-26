@@ -99,7 +99,7 @@
       });
 
       //Link on to the current object and perform validation.
-      this.inputs.filter('input, textarea, div').filter(attribs).not('input[type=checkbox]').each(function () {
+      this.inputs.filter('input, textarea, div').filter(attribs).not('input[type=checkbox], [readonly]').each(function () {
         var field = $(this),
         attribs = field.attr('data-validation-events'),
         events = (attribs ? attribs : 'blur.validate change.validate keyup.validate');
@@ -217,19 +217,25 @@
     // Set disable/enable primary button in modal
     setModalPrimaryBtn: function(field, modalBtn, isValid) {
       var modal = field.closest('.modal'),
-        modalFields = modal.find('[data-validate]'),
+        modalFields = modal.find('[data-validate]:visible'),
         allValid = true;
 
       if (modalFields.length > 0) {
-        field.data('isValid', isValid);
         modalFields.each(function () {
           var modalField = $(this);
+          modalField.data('isValid', isValid);
           if (modalField.closest('.datagrid-filter-wrapper').length > 0) {
             return;
           }
           var isVisible = modalField[0].offsetParent !== null;
-          if (isVisible && !modalField.isValid()) {
-            allValid = false;
+          if (modalField.is('.required')) {
+            if (isVisible && !modalField.val()) {
+              allValid = false;
+            }
+          } else {
+            if (isVisible && !modalField.isValid()) {
+              allValid = false;
+            }
           }
         });
       }
@@ -448,7 +454,13 @@
 
     addError: function(field, message, inline, showTooltip) {
       var loc = this.getField(field).addClass('error'),
-         appendedMsg = (loc.data('data-errormessage') ? loc.data('data-errormessage') + '<br>' : '') + message;
+         dataMsg = loc.data('data-errormessage'),
+         appendedMsg = message;
+
+      if (dataMsg) {
+        appendedMsg = (/^\u2022/.test(dataMsg)) ? '' : '\u2022 ';
+        appendedMsg += dataMsg + '<br>\u2022 ' + message;
+      }
 
       loc.data('data-errormessage', appendedMsg);
 
@@ -458,7 +470,7 @@
       }
 
       if (!inline) {
-        this.showTooltipError(field, message, showTooltip);
+        this.showTooltipError(field, appendedMsg, showTooltip);
         return;
       }
 
@@ -502,6 +514,9 @@
 
         $('.icon-confirm', loc.parent('.field, .field-short')).remove();
       }
+	  else {
+		svg = loc.parent('.field, .field-short').find('svg.icon-error');
+	  }
 
       return svg;
     },
@@ -826,7 +841,8 @@
             dateFormat = field.data('datepicker').pattern;
           }
 
-          var parsedDate = Locale.parseDate(value, dateFormat, true);
+          var isStrict = !(dateFormat === 'MMMM d' || dateFormat === 'yyyy'),
+            parsedDate = Locale.parseDate(value, dateFormat, isStrict);
           return ((parsedDate === undefined) && value !== '') ? false : true;
         },
         message: 'Invalid Date'

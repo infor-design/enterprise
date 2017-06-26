@@ -50,7 +50,12 @@ div.multiselect {
   text-overflow: ellipsis;
   vertical-align: middle;
   white-space: nowrap;
-
+  &.text-align-reverse {
+    text-align: right;
+  }
+  &.text-align-center {
+    text-align: center;
+  }
   > span {
     display: inline-block;
     max-width: 100%;
@@ -151,7 +156,12 @@ div.multiselect {
   white-space: nowrap;
   width: auto;
   z-index: 4501;
-
+  &.text-align-reverse {
+    text-align: right;
+  }
+  &.text-align-center {
+    text-align: center;
+  }
   &:active {
     outline: 0;
   }
@@ -181,11 +191,16 @@ div.multiselect {
   li {
     min-height: 32px;
     position: relative;
-
+    padding-right: 5px;
+    padding-left: 5px;
     i {
       color: $dropdown-filter-color;
       font-style: normal;
       text-decoration: none;
+    }
+
+    & .clear-selection {
+      color: $label-disabled-color;
     }
 
     &:hover,
@@ -286,7 +301,7 @@ div.multiselect {
   &.multiple {
 
     ul {
-      text-indent: 38px;
+      text-indent: 33px;
     }
 
     li::before {
@@ -313,7 +328,7 @@ div.multiselect {
 
     li.is-selected::after {
       @include checkbox-checked-after-style;
-      left: 16px;
+      left: 15px;
       margin-top: 0;
       top: 9px;
     }
@@ -351,11 +366,11 @@ div.multiselect {
     @include css3(user-select, none);
     @include font-size(12);
     color: $dropdown-group-label-color;
+    font-weight: bold;
     line-height: 20px;
     min-height: 20px;
     padding: 6px 0 4px;
     text-indent: 10px;
-    text-transform: uppercase;
 
     &:not(:first-child) {
       border-top: 1px solid $dropdown-menu-separator-border-color;
@@ -409,6 +424,14 @@ div.multiselect {
   text-overflow: ellipsis;
   width: 100%;
 
+  &.text-align-reverse {
+    text-align: right;
+  }
+
+  &.text-align-center {
+    text-align: center;
+  }
+
   &::-ms-clear {
     display: none;
   }
@@ -443,6 +466,13 @@ input.dropdown.error:focus {
   color: $input-color;
 }
 
+.field,
+.field-short {
+  .dropdown-wrapper {
+    margin-bottom: 0;
+  }
+}
+
 //Shorter Field Size
 .field-short {
 
@@ -469,10 +499,6 @@ input.dropdown.error:focus {
     > span {
       min-height: 14px;
     }
-  }
-
-  .dropdown-wrapper {
-    margin-bottom: 10px;
   }
 
 }
@@ -523,7 +549,7 @@ div.dropdown-xs,
   }
 
   &.is-ontop {
-    margin-top: 10px;
+    margin-top: 7px;
   }
 
   > .icon {
@@ -553,7 +579,6 @@ div.dropdown-xs,
       }
 
       &::after {
-        left: 10px;
         margin-top: 0;
       }
 
@@ -563,7 +588,6 @@ div.dropdown-xs,
         }
 
         &::after {
-          left: 10px;
           margin-top: 0;
         }
       }
@@ -580,7 +604,7 @@ div.dropdown-xs,
 // Firefox needs a nudge on the list items
 .is-firefox {
   div.dropdown {
-    padding: 8px 32px 7px 10px;
+    padding-top: 8px
   }
 
   .dropdown-list {
@@ -631,6 +655,12 @@ html[dir='rtl'] {
     padding: 9px 10px 8px 32px;
     text-align: right;
 
+    &.text-align-reverse {
+      text-align: left;
+    }
+    &.text-align-center {
+      text-align: center;
+    }
     // Icon States
     + .icon {
       left: 6px;
@@ -654,7 +684,7 @@ html[dir='rtl'] {
 
       li.is-selected::after {
         left: inherit;
-        right: 16px;
+        right: 15px;
       }
 
       li.is-disabled.is-selected::after {
@@ -682,6 +712,12 @@ html[dir='rtl'] {
 
   .dropdown-search {
     padding: 9px 10px 8px 32px;
+    &.text-align-reverse {
+      text-align: left;
+    }
+    &.text-align-center {
+      text-align: center;
+    }
   }
 
   .dropdown-wrapper {
@@ -730,7 +766,6 @@ html[dir='rtl'] {
 
         &.is-selected::after {
           left: inherit;
-          right: 10px;
         }
       }
     }

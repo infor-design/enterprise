@@ -2,7 +2,7 @@
 <div class="row">
   <div class="twelve columns">
 
-    <button type="button" class="btn" type="button" data-modal="modal-1">Add Context</button>
+    <button type="button" class="btn-secondary" type="button" data-modal="modal-1">Add Context</button>
 <!-- Width and height prevents strange resize behavior but adds double scoll on smaller screens. -->
     <div class="modal" id="modal-1" style="width: 450px; height: 450px;">
       <div class="modal-content">
@@ -13,10 +13,10 @@
 
         <div class="modal-body">
 
-      <div id="tabs-normal" class="tab-container">
+      <div id="tabs-normal" class="tab-container alternate">
         <ul class="tab-list">
-        <li class="tab"><a href="#tabs-normal-contracts">Contracts</a></li>
-        <li class="tab"><a href="#tabs-normal-attachments">Attachments</a></li>
+          <li class="tab"><a href="#tabs-normal-contracts">Contracts</a></li>
+          <li class="tab"><a href="#tabs-normal-attachments">Attachments</a></li>
         </ul>
         <div id="tabs-normal-contracts" class="tab-panel">
         <h3>Contracts</h3>
@@ -46,7 +46,7 @@
       </div>
     </div>
 
-   <button class="btn" type="button" id="btn-add-comment2">Add Comment</button>
+   <button class="btn-secondary" type="button" id="btn-add-comment2">Add Comment</button>
   </div>
 </div>
 
@@ -57,7 +57,7 @@
     $('body').modal({
       cssClass: 'testClass',
       title: 'Add a Comment',
-      content: '<div id="tabs-normal2" class="tab-container">'
+      content: '<div id="tabs-normal2" class="tab-container alternate">'
     + '<ul class="tab-list">'
       + '<li class="tab"><a href="#tabs-normal-contracts2">Contracts</a></li>'
       + '<li class="tab"><a href="#tabs-normal-attachments2">Attachments</a></li>'

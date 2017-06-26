@@ -46,12 +46,10 @@
   }
 
   .icon {
-    fill: $module-tabs-inactive-text-color;
-
     &.app-header {
       left: -6px;
       position: relative;
-      top: -5px;
+      top: -7px;
 
       span:not(.audible) {
         background-color: $module-tabs-inactive-text-color;
@@ -62,6 +60,10 @@
   .tab-list-container {
     position: relative;
     width: calc(100% - 1px);
+  }
+
+  .tab-list-info {
+    display: none;
   }
 
   .tab-list {
@@ -93,6 +95,10 @@
     min-width: 120px;
     overflow: hidden;
     text-align: center;
+
+    .icon {
+      fill: $module-tabs-inactive-text-color;
+    }
 
     &:not(:first-child) {
       border-left: 1px solid $module-tabs-x-border-color;
@@ -263,12 +269,13 @@
 
     [class^="btn"],
     .btn-menu:not(.btn):not(.btn-primary):not(.btn-secondary):not(.btn-tertiary) {
+      background-color: transparent;
       color: $module-tabs-inactive-text-color;
       height: 32px;
       margin-top: 1px;
 
       &:not(.btn-menu) {
-        border-color: $module-tabs-inactive-text-color;
+        border-color: transparent;
       }
 
       .ripple-effect {
@@ -325,6 +332,8 @@
   }
 
   .toolbar-searchfield-wrapper {
+    color: $module-tabs-active-text-color;
+
     .icon:not(.error) {
       fill: $module-tabs-inactive-text-color;
     }
@@ -334,6 +343,28 @@
       border-bottom-color: rgba($searchfield-moduletabs-border-color, 0);
       border-top-color: rgba($searchfield-moduletabs-bg-color, 0);
       color: $module-tabs-inactive-text-color;
+
+      &::-webkit-input-placeholder { // Chrome/Opera/Safari */
+        color: $module-tabs-inactive-text-color;
+      }
+      &::-moz-placeholder { // Firefox 19+ */
+        color: $module-tabs-inactive-text-color;
+      }
+      &:-ms-input-placeholder { // IE 10+ */
+        color: $module-tabs-inactive-text-color;
+      }
+      &:-moz-placeholder { // Firefox 18- */
+        color: $module-tabs-inactive-text-color;
+      }
+    }
+
+    [class^="btn"] {
+      background-color: transparent;
+
+      &.active,
+      &.has-focus {
+        border-color: $module-tabs-inactive-text-color;
+      }
     }
 
     &.non-collapsible {
@@ -349,6 +380,19 @@
       .searchfield {
         background-color: rgba($searchfield-moduletabs-bg-color, .4);
         border-bottom-color: rgba($searchfield-moduletabs-border-color, .4);
+
+        &::-webkit-input-placeholder { // Chrome/Opera/Safari */
+          color: transparent;
+        }
+        &::-moz-placeholder { // Firefox 19+ */
+          color: transparent;
+        }
+        &:-ms-input-placeholder { // IE 10+ */
+          color: transparent;
+        }
+        &:-moz-placeholder { // Firefox 18- */
+          color: transparent;
+        }
       }
     }
 
@@ -361,10 +405,18 @@
         fill: $module-tabs-active-text-color;
       }
     }
+
+    &.has-categories {
+      width: 101px;
+    }
+
+    .btn:focus {
+      border-color: $module-tabs-active-text-color;
+    }
   }
 
   > .toolbar-searchfield-wrapper.active {
-    width: 100%;
+    width: calc(100% - 1px);
   }
 
   &.has-add-button {
@@ -627,6 +679,13 @@ html[dir='rtl'] {
         right: auto;
       }
     }
+  }
+}
+
+// IE always gets cut off without this.
+.ie11 {
+  .toolbar-searchfield-wrapper {
+    padding-left: 1px;
   }
 }
 

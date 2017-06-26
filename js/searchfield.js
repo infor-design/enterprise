@@ -223,7 +223,7 @@
 
         if (this.hasCategories()) {
           this.button.on('selected.searchfield', function(e, anchor) {
-            self.setCategoryButtonText(e, anchor.text().trim());
+            self.handleCategorySelected(e, anchor);
           }).on('focus.searchfield', function(e) {
             self.handleCategoryFocus(e);
           }).on('blur.searchfield', function(e) {
@@ -336,7 +336,7 @@
         }
 
         // if Toolbar Searchfield, allow that control to handle adding this class
-        if (!this.wrapper.is('.toolbar-searchfield-wrapper')) {
+        if (!this.isToolbarSearchfield()) {
           this.wrapper.addClass('has-focus');
         }
 
@@ -382,7 +382,7 @@
         var self = this;
         this.recalculateParent();
 
-        if (!this.wrapper.is('.toolbar-searchfield-wrapper')) {
+        if (!this.isToolbarSearchfield()) {
           setTimeout(function() {
             self.wrapper.removeClass('has-focus');
           }, 10);
@@ -473,13 +473,38 @@
       },
 
       /**
+       * Detects whether or not this component is a Toolbar Searchfield
+       * @returns {boolean}
+       */
+      isToolbarSearchfield: function() {
+        return this.wrapper.is('.toolbar-searchfield-wrapper');
+      },
+
+      /**
+       * Category Selection event handler
+       * @private
+       * @returns {undefined}
+       */
+      handleCategorySelected: function(e, anchor) {
+        this.setCategoryButtonText(e, anchor.text().trim());
+
+        // If this is a toolbar searchfield, run the size check that fixes the
+        // trigger button and input field size.
+        var tsAPI = this.element.data('toolbarsearchfield');
+        if (tsAPI && typeof tsAPI.setOpenWidth === 'function') {
+          tsAPI.calculateOpenWidth();
+          tsAPI.setOpenWidth();
+        }
+      },
+
+      /**
        * Category Button Focus event handler
        * @private
        * @returns {undefined}
        */
       handleCategoryFocus: function() {
         // if Toolbar Searchfield, allow that control to handle adding this class
-        if (this.wrapper.is('.toolbar-searchfield-wrapper')) {
+        if (this.isToolbarSearchfield()) {
           return;
         }
 
@@ -493,7 +518,7 @@
        */
       handleCategoryBlur: function() {
         // if Toolbar Searchfield, allow that control to handle adding this class
-        if (this.wrapper.is('.toolbar-searchfield-wrapper')) {
+        if (this.isToolbarSearchfield()) {
           return;
         }
 
@@ -520,10 +545,10 @@
        * Gets the currently selected categories as data.
        * @param {boolean} [onlyReturnSelected=false] - If set to true, will only return checked list items.
        * @returns {Object[]} data -
-       * @returns {string} data[].name - Category name
-       * @returns {string|number} data[].id - Category element's ID (if applicable)
-       * @returns {string|number} data[].value - Category element's value (if applicable)
-       * @returns {boolean} [data[].checked=true] - Category's selection status
+       * @returns {string} name - Category name
+       * @returns {string|number} id - Category element's ID (if applicable)
+       * @returns {string|number} value - Category element's value (if applicable)
+       * @returns {boolean} [checked=true] - Category's selection status
        */
       getCategoryData: function(onlyReturnSelected) {
         var categories = this.getCategories(),
@@ -561,9 +586,9 @@
        * Updates just the categories setting and rerenders the category list.
        * @param {Object[]} categories - Array of category object definitions.
        * @param {string} categories[].name - Category name.
-       * @param {string|number} [data[].id] - Category element's ID (if applicable).
-       * @param {string|number} [data[].value] - Category element's value (if applicable).
-       * @param {boolean} [data[].checked=true] - Category's selection status
+       * @param {string|number} [id] - Category element's ID (if applicable).
+       * @param {string|number} [value] - Category element's value (if applicable).
+       * @param {boolean} [checked=true] - Category's selection status
        * @return {undefined}
        */
       updateCategories: function(categories) {
@@ -575,9 +600,9 @@
        * Creates a new set of categories on the Searchfield and rerenders it.
        * @param {Object[]} categories - Array of category object definitions.
        * @param {string} categories[].name - Category name.
-       * @param {string|number} [data[].id] - Category element's ID (if applicable).
-       * @param {string|number} [data[].value] - Category element's value (if applicable).
-       * @param {boolean} [data[].checked=true] - Category's selection status
+       * @param {string|number} [id] - Category element's ID (if applicable).
+       * @param {string|number} [value] - Category element's value (if applicable).
+       * @param {boolean} [checked=true] - Category's selection status
        * @return {undefined}
        */
       setCategories: function(categories) {
@@ -742,7 +767,6 @@
         if (this.element.parent().hasClass('searchfield-wrapper')) {
           this.element.parent().find('ul').remove();
           this.element.parent().find('.icon').remove();
-          this.element.unwrap();
         }
 
         return this;

@@ -8,9 +8,6 @@ define([
   document = jsdom('<!DOCTYPE html><html id="html"><head></head><body></body></html>'); // jshint ignore:line
   window = document.defaultView;  // jshint ignore:line
 
-  //Load Jquery from node packages
-  $ = jQuery = require('jquery'); // jshint ignore:line
-
   //Load the Locale.js we are testing
   require('../../../js/locale.js');
   Locale = window.Locale; // jshint ignore:line
@@ -81,11 +78,11 @@ define([
 
       var dt = new Date(),
         h = (dt.getHours() > 12 ? dt.getHours()-12 : dt.getHours()).toString(),
-        h24 = dt.getHours().toString(),
+        h24 = Locale.pad(dt.getHours().toString(), 2),
         m = Locale.pad(dt.getMinutes(), 2).toString(),
         s = Locale.pad(dt.getSeconds(), 2).toString();
 
-      expect(Locale.formatDate(dt, {pattern: 'hhmmss'})).to.equal(h+m+s);
+      expect(Locale.formatDate(dt, {pattern: 'hmmss'})).to.equal(h+m+s);
       expect(Locale.formatDate(dt, {pattern: 'HHmmss'})).to.equal(h24+m+s);
       //expect(Locale.formatDate(dt, {date: 'timestamp'})).to.equal(h+m+s);
 
@@ -157,6 +154,33 @@ define([
       expect(Locale.isRTL()).to.equal(true);
     },
 
+    //Formating Hours
+    'should be able to format and parse hours': function() {
+      Locale.set('en-US');
+      var dt = Locale.parseDate('000100', 'HHmmss', false);
+      expect(dt.getTime()).to.equal(new Date((new Date()).getFullYear(), (new Date()).getMonth(), 1,'00', '01', '00').getTime());
+      expect(Locale.formatDate(dt, {pattern: 'h:mm a'})).to.equal('12:01 AM');
+      expect(Locale.formatDate(dt, {pattern: 'HHmmss'})).to.equal('000100');
+
+      //Test 12:00 specifically
+      expect(Locale.parseDate('10/28/2015 12:00:00 AM', 'M/d/yyyy h:mm:ss a').getTime()).to.equal(new Date(2015, 9, 28, 0, 0, 0).getTime());
+      expect(Locale.parseDate('25/04/2017 12:00:00 AM', { pattern: 'd/MM/yyyy h:mm:ss a'}).getTime()).to.equal(new Date(2017, 3, 25, 0, 0, 0).getTime());
+
+    },
+
+    'should be able to parse 2 and 3 digit years': function() {
+      Locale.set('en-US');
+      expect(Locale.parseDate('10/10/10', 'M/d/yyyy').getTime()).to.equal(new Date(2010, 09, 10, 0, 0, 0).getTime());
+      expect(Locale.parseDate('10/10/010', 'M/d/yyyy')).to.equal(undefined);
+      // expect(Locale.parseDate('10/10/010', 'M/d/yyyy').getTime()).to.equal(new Date(2010, 09, 10, 0, 0, 0).getTime());
+    },
+
+    'should be able to parse UTC toISOString': function() {
+      Locale.set('en-US');
+      expect(Locale.parseDate('2000-01-01T00:00:00.000Z', 'yyyy-MM-ddTHH:mm:ss.SSSZ').getTime()).to.equal(new Date(Date.UTC(2000, 0, 1, 0, 0, 0)).getTime());
+      expect(Locale.parseDate('2000-01-01T00:00:00.001Z', 'yyyy-MM-DDTHH:mm:ss.SSSZ').toISOString()).to.equal('2000-01-01T00:00:00.001Z');
+    },
+
     //Test Long Formatting
     'should format long': function() {
       Locale.set('en-US');    //year, month, day, hours, mins , secs
@@ -192,7 +216,7 @@ define([
       expect(Locale.formatDate(new Date(2015, 0, 1, 13, 40), {date: 'long'})).to.equal('1. Januar 2015');
 
       Locale.set('ar-EG');
-      expect(Locale.formatDate(new Date(2015, 0, 1, 13, 40), {date: 'long'})).to.equal('1 يناير، 2015');
+      expect(Locale.formatDate(new Date(2015, 0, 1, 13, 40), {date: 'long'})).to.equal('1 محرم، 2015');
 
       Locale.set('bg-BG');
       expect(Locale.formatDate(new Date(2015, 0, 1, 13, 40), {date: 'long'})).to.equal('1 януари 2015 г.');
@@ -201,7 +225,7 @@ define([
     'should be able to parse dates': function() {
       Locale.set('en-US');    //year, month, day
       expect(Locale.parseDate('11/8/2000').getTime()).to.equal(new Date(2000, 10, 8).getTime());
-      expect(Locale.parseDate('11/8/00').getTime()).to.equal(new Date(1900, 10, 8).getTime());
+      expect(Locale.parseDate('11/8/00').getTime()).to.equal(new Date(2000, 10, 8).getTime());
       expect(Locale.parseDate('10 / 15 / 2014').getTime()).to.equal(new Date(2014, 9, 15).getTime());
       Locale.set('de-DE');    //year, month, day
       expect(Locale.parseDate('08.11.2000').getTime()).to.equal(new Date(2000, 10, 8).getTime());
@@ -288,13 +312,6 @@ define([
       // Test date only different format
       expect(Locale.parseDate('05-10-2015', 'dd-MM-yyyy').getTime()).to.equal(new Date(2015, 09, 5, 0, 0, 0).getTime());
 
-      // Test full UTC
-      //$('#date-field').data('datepicker').setValue('2015-05-10T00:00:00');
-      // Test full UTC around midday
-      //$('#date-field-2').data('datepicker').setValue('2015-05-10T12:00:00');
-      // Test full UTC with Date object
-      //$('#date-field-3').data('datepicker').setValue(new Date('2015-05-10T00:00:00'));
-
     },
 
     'be able to return time format': function(){
@@ -370,6 +387,7 @@ define([
       expect(Locale.formatNumber(20.1, {style: 'decimal', round: true})).to.equal('20.10');
 	    expect(Locale.formatNumber('12,345.123')).to.equal('12,345.123');
 	    expect(Locale.formatNumber(12345.1234, {group: ''})).to.equal('12345.123');
+      expect(Locale.formatNumber(5.1, { minimumFractionDigits: 2 , maximumFractionDigits: 2 })).to.equal('5.10');
 
       Locale.set('de-DE');
       expect(Locale.formatNumber(12345.1)).to.equal('12.345,10');
@@ -423,7 +441,7 @@ define([
 
     'should format percent': function() {
       Locale.set('en-US');
-      expect(Locale.formatNumber(0.0500000, {style: 'percent'})).to.equal('5.00 %');
+      expect(Locale.formatNumber(0.0500000, {style: 'percent'})).to.equal('5 %');
       expect(Locale.formatNumber(0.050000, {style: 'percent', maximumFractionDigits: 0})).to.equal('5 %');
       expect(Locale.formatNumber(0.05234, {style: 'percent', minimumFractionDigits: 4, maximumFractionDigits: 4})).to.equal('5.2340 %');
 
@@ -434,10 +452,10 @@ define([
       expect(Locale.formatNumber(0.5755, {style: 'percent', minimumFractionDigits: 2, maximumFractionDigits: 2})).to.equal('57.55 %');
 
       Locale.set('tr-TR');
-      expect(Locale.formatNumber(0.0500000, {style: 'percent'})).to.equal('%5,00');
+      expect(Locale.formatNumber(0.0500000, {style: 'percent'})).to.equal('%5');
 
       Locale.set('it-IT');
-      expect(Locale.formatNumber(0.0500000, {style: 'percent'})).to.equal('5,00%');
+      expect(Locale.formatNumber(0.0500000, {style: 'percent'})).to.equal('5%');
     },
 
     'should parse numbers back': function() {
@@ -475,7 +493,7 @@ define([
       expect(Locale.formatDate(new Date(2016, 2, 15, 12, 30, 36), {pattern: 'd/M/yyyy h:mm:ss a'})).to.equal('15/3/2016 12:30:36 PM');
       expect(Locale.formatDate(new Date(2016, 2, 15, 0, 30, 36), {pattern: 'd/M/yyyy h:mm:ss a'})).to.equal('15/3/2016 12:30:36 AM');
       expect(Locale.formatDate(new Date(2016, 2, 15, 12, 30, 36), {pattern: 'd/M/yyyy HH:mm:ss'})).to.equal('15/3/2016 12:30:36');
-      expect(Locale.formatDate(new Date(2016, 2, 15, 0, 30, 36), {pattern: 'd/M/yyyy HH:mm:ss'})).to.equal('15/3/2016 0:30:36');
+      expect(Locale.formatDate(new Date(2016, 2, 15, 0, 30, 36), {pattern: 'd/M/yyyy HH:mm:ss'})).to.equal('15/3/2016 00:30:36');
     },
 
     'should handle minimumFractionDigits': function() {
@@ -523,6 +541,30 @@ define([
       expect(Locale.truncateDecimals('5.10', 2, 2)).to.equal('5.10');
       expect(Locale.truncateDecimals('5.1', 2, 2)).to.equal('5.10');
       expect(Locale.truncateDecimals('6.10', 2, 2)).to.equal('6.10');
+    },
+
+    // Related JIRA Ticket: SOHO-5408
+    'should properly convert character cases in some specific Locales': function() {
+      Locale.set('tr-TR');
+      expect(Locale.toUpperCase('kodları')).to.equal('KODLARI');
+      expect(Locale.toLowerCase('İSTANBUL')).to.equal('istanbul');
+      expect(Locale.capitalize('istanbul')).to.equal('İstanbul');
+      expect(Locale.capitalizeWords('kodları istanbul')).to.equal('Kodları İstanbul');
+    },
+
+    'should properly convert from Gregorian to Islamic UmAlQura': function() {
+      Locale.set('ar-SA');
+      var islamicDate = Locale.calendar().conversions.fromGregorian(new Date(new Date(2017, 04, 31)));
+      expect(islamicDate[0].toString()+ ' ' + islamicDate[1].toString()+ ' ' + islamicDate[2].toString()).to.equal('1438 8 5');
+
+      islamicDate = Locale.calendar().conversions.fromGregorian(new Date(new Date(2010, 11, 01)));
+      expect(islamicDate[0].toString()+ ' ' + islamicDate[1].toString()+ ' ' + islamicDate[2].toString()).to.equal('1431 11 25');
+    },
+
+    'should properly convert from Islamic UmAlQura to Gregorian': function() {
+      Locale.set('ar-SA');
+      expect(Locale.calendar().conversions.toGregorian(1438, 8, 5).getTime()).to.equal(new Date(2017, 04, 31, 0, 0, 0).getTime());
+      expect(Locale.calendar().conversions.toGregorian(1431, 11, 25).getTime()).to.equal(new Date(2010, 11, 1, 0, 0, 0).getTime());
     }
 
   });

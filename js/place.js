@@ -766,9 +766,9 @@
 
         arrow[0].removeAttribute('style');
 
-        if (placementObj.attemptedFlips) {
+        //if (placementObj.attemptedFlips) { TJM Removed for pager bug. Seems to work.
           element.removeClass('top right bottom left').addClass(dir);
-        }
+        //}
 
         // Flip the arrow if we're in RTL mode
         if (this.isRTL && isXCoord) {
@@ -783,8 +783,7 @@
         if (target.is('.datepicker, .timepicker')) {
           target = target.next('.icon');
         }
-
-        if (target.is('.btn-split-menu, .btn-menu, .btn-actions, .btn-filter, .tab')) {
+        if (target.is('.btn-split-menu, .btn-menu, .btn-actions, .btn-filter, .tab, .tab-more')) {
           target = target.find('.icon').last();
         }
         if (target.is('.searchfield-category-button')) {

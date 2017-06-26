@@ -154,7 +154,7 @@
   //Icon Positioning
   .icon,
   b {
-    fill: $popupmenu-color-filtered-text;
+    fill: $popupmenu-icon-color;
     height: 18px;
   }
 
@@ -181,15 +181,12 @@
     }
 
     .icon {
-      left: 2px;
-      position: absolute;
-      top: 6.5px;
-
       &:not(.arrow) {
         height: 16px;
-        margin-left: 8px;
-        margin-right: -13px;
-        margin-top: 1px;
+        margin-left: -30px;
+        margin-top: 8.5px;
+        pointer-events: none;
+        position: absolute;
       }
     }
   }
@@ -204,7 +201,6 @@
     font-weight: bold;
     line-height: 25px;
     padding: 0 10px;
-    text-transform: uppercase;
   }
 
   li {
@@ -331,6 +327,12 @@
       visibility: visible;
     }
 
+    .icon {
+      &:not(.arrow) {
+        margin-left: 10px;
+      }
+    }
+
     > a {
       padding-right: 48px;
 
@@ -455,7 +457,7 @@
 
   button {
     @include css3(transition, color .3s ease 0s);
-    @include font-size(12);
+    @include font-size(14);
     border: 1px solid transparent;
     border-left: 1px solid $popover-separator-color;
     border-radius: 0;
@@ -469,7 +471,6 @@
     position: relative;
     text-align: center;
     text-decoration: none;
-    text-transform: uppercase;
     width: 50%;
 
     &:hover {
@@ -492,6 +493,14 @@
   }
 }
 
+//IOS
+.ios {
+  .has-submenu {
+    overflow: hidden;
+  }
+}
+
+
 //RTL Styles
 html[dir='rtl'] {
 
@@ -502,10 +511,11 @@ html[dir='rtl'] {
       padding: 0 10px;
     }
 
-    &.has-icons {
+    &.has-icons,
+    &.is-selectable {
       > li a {
-        padding-left: 10px;
-        padding-right: 40px;
+        padding-left: 35px;
+        padding-right: 35px;
       }
 
       .icon {
@@ -513,19 +523,19 @@ html[dir='rtl'] {
         right: 1px;
 
         &:not(.arrow) {
-          margin-left: -13px;
+          margin-right: -13px;
           margin-right: 8px;
         }
       }
     }
 
     .submenu > a {
-      padding-left: 48px;
+      padding-left: 40px !important;
       padding-right: 10px;
 
       > .icon.icon-dropdown {
         @include css3(transform, rotate(90deg));
-        left: 8px;
+        left: 0;
         right: auto;
         top: 5px;
       }

@@ -1,16 +1,13 @@
 
 {{#enableLiveReload}}
-<!-- Live Reload - "grunt watch" -->
 <script>
-  if (window.location.hostname === 'localhost') {
+  if (window.location.hostname === 'localhost' && window.navigator.userAgent.indexOf('IE') === -1) {
     var script = '\x3Cscript type="text/javascript" src="//' +
                   window.location.hostname + ':35729/livereload.js">\x3C/script>';
     document.write(script); // jshint ignore:line
   }
 </script>
 {{/enableLiveReload}}
-
-{{> includes/svg-inline-scripts}}
 
 <script>
   // Initialize all SoHo Xi Controls and set the locale
@@ -20,7 +17,6 @@
   {{/locale}}
 
   $('body').initialize({locale: initialLocale});
-
 </script>
 
 <!--

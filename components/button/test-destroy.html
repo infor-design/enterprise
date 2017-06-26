@@ -1,0 +1,28 @@
+
+<div class="row">
+  <div class="twelve columns">
+
+    <button type="button" id="btn" class="btn-secondary">
+      <span>Destroy</span>
+    </button>
+
+  </div>
+</div>
+
+<script>
+    //In this Test we have an Ajax call that returns the columns and lookup data
+    var element = $('#btn').button();
+
+    $('#btn').on('click', function () {
+
+      if (element.data('button')) {
+        element.data('button').destroy();
+        $(this).text('Invoke');
+      } else {
+        element.button();
+        $(this).text('Destroy');
+      }
+
+    });
+
+</script>

@@ -1,0 +1,212 @@
+<h1 id="bubble-chart-component-implementation-detail-learn-more">Bubble Chart Component Implementation Detail <a href="#">Learn More</a></h1>
+<h2 id="configuration-options">Configuration Options</h2>
+<ol>
+<li>Bubble Chart Example <a href="/components/bubble/example-index">View Example</a><br /></li>
+<li>Defaulting a selected bubble <a href="/components/bubble/example-selected">View Example</a></li>
+</ol>
+<h2 id="code-example">Code Example</h2>
+<p>This example shows how to invoke a bubble chart. The data for the bubble chart should be 3 dimensional. You pass and x and y value and a depth (z) which controls the bubbles size on the x and y axis. You may need to transform your data to use this approach.</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">
+<span class="kw">var</span> dataset = [{
+  <span class="dt">data</span>: [{
+    <span class="dt">name</span>: <span class="st">&#39;January&#39;</span>,
+    <span class="dt">value</span>: {
+      <span class="dt">x</span>: <span class="dv">5</span>,
+      <span class="dt">y</span>: <span class="dv">3</span>,
+      <span class="dt">z</span>: <span class="dv">3</span>
+    }
+  }, {
+    <span class="dt">name</span>: <span class="st">&#39;February&#39;</span>,
+    <span class="dt">value</span>: {
+      <span class="dt">x</span>: <span class="dv">37</span>,
+      <span class="dt">y</span>: <span class="dv">5</span>,
+      <span class="dt">z</span>: <span class="dv">9</span>
+    }
+  }, {
+    <span class="dt">name</span>: <span class="st">&#39;March&#39;</span>,
+    <span class="dt">value</span>: {
+      <span class="dt">x</span>: <span class="dv">10</span>,
+      <span class="dt">y</span>: <span class="fl">5.3</span>,
+      <span class="dt">z</span>: <span class="dv">4</span>
+    }
+  }, {
+    <span class="dt">name</span>: <span class="st">&#39;April&#39;</span>,
+    <span class="dt">value</span>: {
+      <span class="dt">x</span>: <span class="dv">80</span>,
+      <span class="dt">y</span>: <span class="dv">6</span>,
+      <span class="dt">z</span>: <span class="dv">10</span>
+    }
+  }, {
+    <span class="dt">name</span>: <span class="st">&#39;May&#39;</span>,
+    <span class="dt">value</span>: {
+      <span class="dt">x</span>: <span class="dv">21</span>,
+      <span class="dt">y</span>: <span class="fl">4.8</span>,
+      <span class="dt">z</span>: <span class="dv">4</span>
+    }
+  }, {
+    <span class="dt">name</span>: <span class="st">&#39;June&#39;</span>,
+    <span class="dt">value</span>: {
+      <span class="dt">x</span>: <span class="dv">72</span>,
+      <span class="dt">y</span>: <span class="fl">5.2</span>,
+      <span class="dt">z</span>: <span class="dv">4</span>
+    }
+  }, {
+    <span class="dt">name</span>: <span class="st">&#39;July&#39;</span>,
+    <span class="dt">value</span>: {
+      <span class="dt">x</span>: <span class="dv">26</span>,
+      <span class="dt">y</span>: <span class="dv">8</span>,
+      <span class="dt">z</span>: <span class="dv">6</span>
+    }
+  }, {
+    <span class="dt">name</span>: <span class="st">&#39;August&#39;</span>,
+    <span class="dt">value</span>: {
+      <span class="dt">x</span>: <span class="dv">71</span>,
+      <span class="dt">y</span>: <span class="fl">3.9</span>,
+      <span class="dt">z</span>: <span class="dv">8</span>
+    }
+  }, {
+    <span class="dt">name</span>: <span class="st">&#39;September&#39;</span>,
+    <span class="dt">value</span>: {
+      <span class="dt">x</span>: <span class="dv">85</span>,
+      <span class="dt">y</span>: <span class="dv">8</span>,
+      <span class="dt">z</span>: <span class="dv">2</span>
+    }
+  }, {
+    <span class="dt">name</span>: <span class="st">&#39;October&#39;</span>,
+    <span class="dt">value</span>: {
+      <span class="dt">x</span>: <span class="dv">52</span>,
+      <span class="dt">y</span>: <span class="dv">3</span>,
+      <span class="dt">z</span>: <span class="dv">2</span>
+    }
+  }, {
+    <span class="dt">name</span>: <span class="st">&#39;November&#39;</span>,
+    <span class="dt">value</span>: {
+      <span class="dt">x</span>: <span class="dv">44</span>,
+      <span class="dt">y</span>: <span class="fl">5.9</span>,
+      <span class="dt">z</span>: <span class="dv">3</span>
+    }
+  }, {
+    <span class="dt">name</span>: <span class="st">&#39;December&#39;</span>,
+    <span class="dt">value</span>: {
+      <span class="dt">x</span>: <span class="dv">110</span>,
+      <span class="dt">y</span>: <span class="dv">7</span>,
+      <span class="dt">z</span>: <span class="dv">4</span>
+    }
+  }],
+  <span class="dt">name</span>: <span class="st">&#39;Series 01&#39;</span>,
+  <span class="dt">labels</span>: {
+    <span class="dt">name</span>: <span class="st">&#39;Month&#39;</span>,
+    <span class="dt">value</span>: {
+      <span class="dt">x</span>: <span class="st">&#39;Revenue&#39;</span>,
+      <span class="dt">y</span>: <span class="st">&#39;Sold&#39;</span>,
+      <span class="dt">z</span>: <span class="st">&#39;Market Share&#39;</span>
+    }
+  },
+  <span class="dt">valueFormatterString</span>: {
+    <span class="dt">z</span>: <span class="st">&#39;0.0%&#39;</span>
+  }
+},
+{
+  <span class="dt">data</span>: [{
+    <span class="dt">name</span>: <span class="st">&#39;January&#39;</span>,
+    <span class="dt">value</span>: {
+      <span class="dt">x</span>: <span class="dv">9</span>,
+      <span class="dt">y</span>: <span class="fl">3.2</span>,
+      <span class="dt">z</span>: <span class="dv">3</span>
+    }
+  }, {
+    <span class="dt">name</span>: <span class="st">&#39;February&#39;</span>,
+    <span class="dt">value</span>: {
+      <span class="dt">x</span>: <span class="dv">12</span>,
+      <span class="dt">y</span>: <span class="fl">6.3</span>,
+      <span class="dt">z</span>: <span class="dv">10</span>
+    }
+  }, {
+    <span class="dt">name</span>: <span class="st">&#39;March&#39;</span>,
+    <span class="dt">value</span>: {
+      <span class="dt">x</span>: <span class="dv">65</span>,
+      <span class="dt">y</span>: <span class="dv">4</span>,
+      <span class="dt">z</span>: <span class="dv">10</span>
+    }
+  }, {
+    <span class="dt">name</span>: <span class="st">&#39;April&#39;</span>,
+    <span class="dt">value</span>: {
+      <span class="dt">x</span>: <span class="dv">27</span>,
+      <span class="dt">y</span>: <span class="dv">7</span>,
+      <span class="dt">z</span>: <span class="dv">2</span>
+    }
+  }, {
+    <span class="dt">name</span>: <span class="st">&#39;May&#39;</span>,
+    <span class="dt">value</span>: {
+      <span class="dt">x</span>: <span class="dv">29</span>,
+      <span class="dt">y</span>: <span class="fl">8.5</span>,
+      <span class="dt">z</span>: <span class="dv">4</span>
+    }
+  }, {
+    <span class="dt">name</span>: <span class="st">&#39;June&#39;</span>,
+    <span class="dt">value</span>: {
+      <span class="dt">x</span>: <span class="dv">81</span>,
+      <span class="dt">y</span>: <span class="fl">3.9</span>,
+      <span class="dt">z</span>: <span class="dv">8</span>
+    }
+  }, {
+    <span class="dt">name</span>: <span class="st">&#39;July&#39;</span>,
+    <span class="dt">value</span>: {
+      <span class="dt">x</span>: <span class="dv">33</span>,
+      <span class="dt">y</span>: <span class="fl">4.1</span>,
+      <span class="dt">z</span>: <span class="dv">7</span>
+    }
+  }, {
+    <span class="dt">name</span>: <span class="st">&#39;August&#39;</span>,
+    <span class="dt">value</span>: {
+      <span class="dt">x</span>: <span class="dv">75</span>,
+      <span class="dt">y</span>: <span class="dv">4</span>,
+      <span class="dt">z</span>: <span class="dv">3</span>
+    }
+  }, {
+    <span class="dt">name</span>: <span class="st">&#39;September&#39;</span>,
+    <span class="dt">value</span>: {
+      <span class="dt">x</span>: <span class="dv">39</span>,
+      <span class="dt">y</span>: <span class="dv">7</span>,
+      <span class="dt">z</span>: <span class="dv">4</span>
+    }
+  }, {
+    <span class="dt">name</span>: <span class="st">&#39;October&#39;</span>,
+    <span class="dt">value</span>: {
+      <span class="dt">x</span>: <span class="dv">80</span>,
+      <span class="dt">y</span>: <span class="dv">2</span>,
+      <span class="dt">z</span>: <span class="dv">3</span>
+    }
+  }, {
+    <span class="dt">name</span>: <span class="st">&#39;November&#39;</span>,
+    <span class="dt">value</span>: {
+      <span class="dt">x</span>: <span class="dv">48</span>,
+      <span class="dt">y</span>: <span class="fl">6.2</span>,
+      <span class="dt">z</span>: <span class="dv">2</span>
+    }
+  }, {
+    <span class="dt">name</span>: <span class="st">&#39;December&#39;</span>,
+    <span class="dt">value</span>: {
+      <span class="dt">x</span>: <span class="dv">99</span>,
+      <span class="dt">y</span>: <span class="dv">4</span>,
+      <span class="dt">z</span>: <span class="dv">2</span>
+    }
+  }],
+  <span class="dt">name</span>: <span class="st">&#39;Series 02&#39;</span>
+}];
+
+<span class="fu">$</span>(<span class="st">&#39;#line-example&#39;</span>).<span class="fu">chart</span>({<span class="dt">type</span>: <span class="st">&#39;bubble&#39;</span>, <span class="dt">dataset</span>: dataset});
+</code></pre>
+<h2 id="accessibility">Accessibility</h2>
+<ul>
+<li>The contrast and actual colors can be a concern for visibility impaired and color blind people. However, you can customize the color by passing higher contrast colors.</li>
+</ul>
+<h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
+<ul>
+<li><strong>Tab:</strong> You can tab into the chart area and through the legend values as each has a focus state.<br /></li>
+<li><strong>Enter/Space:</strong> Will select the bar group the corresponds with the focus'd legend item.</li>
+</ul>
+<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
+<ul>
+<li>The bubble chart is a new component.</li>
+</ul>

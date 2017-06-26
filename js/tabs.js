@@ -21,7 +21,7 @@
           addTabButton: false, // If set to true, creates a button at the end of the tab list that can be used to add an empty tab and panel
           addTabButtonCallback: null, // if defined as a function, will be used in-place of the default Tab Adding method
           ajaxOptions: null, // if defined, will be used by any internal Tabs AJAX calls as the desired request settings.
-          containerElement: null, // Defines a separate element to be used for containing the tab panels.  Defaults to the Tab Container itself
+          containerElement: null, // Defines a separate element to be used for containing the tab panels.  Defaults to a `.tab-panel-container` element that is created if it doesn't already exist.
           changeTabOnHashChange: false, // If true, will change the selected tab on invocation based on the URL that exists after the hash
           hashChangeCallback: null, // If defined as a function, provides an external method for adjusting the current page hash used by these tabs
           lazyLoad: true, // if true, when using full URLs in tab HREFs, or when using Ajax calls, tabs will be loaded as needed instead of the markup all being established at once.
@@ -29,6 +29,7 @@
           source: null, // If defined, will serve as a way of pulling in external content to fill tabs.
           sourceArguments: {}, // If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
           tabCounts: false, // If true, Displays a modifiable count above each tab.
+          verticalResponsive: false // If Vertical Tabs & true, will automatically switch to Horizontal Tabs on smaller breakpoints.
         },
         tabContainerTypes = ['horizontal', 'vertical', 'module-tabs', 'header-tabs'],
         settings = $.extend({}, defaults, options);
@@ -62,33 +63,78 @@
       },
 
       build: function() {
-        var self = this;
+        var self = this,
+          tabPanelContainer,
+          moveTabPanelContainer = false;
 
-        this.container = this.element;
-        // Special case for Header Tabs, find the page container use that as the container
-        if (this.element.closest('.header').length > 0) {
-          this.container = $('body > .page-container');
-          if (!this.container.length) {
-            this.container = this.element;
+        // Check for a tab panel container immediately after the `.tab-container` element (default as of Soho Xi 4.3.0)
+        tabPanelContainer = this.element.next('.tab-panel-container');
+
+        // Auto-detect and move existing tab-panel containers in key areas, if applicable.
+        // Check inside the container first
+        if (!tabPanelContainer.length) {
+          tabPanelContainer = this.element.children('.tab-panel-container');
+
+          if (!this.isVerticalTabs()) {
+            moveTabPanelContainer = true;
           }
         }
 
-        // Setting containerElement overrides any changes to the tab panel container.
-        var container = $(this.settings.containerElement);
-        if (container.length) {
-          this.container = container;
-          this.container.addClass('tab-panel-container');
+        // Special case for Header Tabs, find the page container and use that as the container
+        var bodyPageContainer = $('body > .page-container, .application-menu + .page-container');
+        if (this.element.closest('.header').length > 0 && bodyPageContainer.length) {
+          tabPanelContainer = bodyPageContainer;
+        }
+
+        // Special case for Module Tabs, where it's possible for layout reasons for there to be
+        // an application menu element adjacent between the Tab list and the Tab Panel container
+        if (this.element.next('.application-menu').length) {
+          tabPanelContainer = this.element.next().next('.page-container');
+          moveTabPanelContainer = false;
+        }
+
+        // Defining `this.settings.containerElement` ultimately overrides any internal changes to the tab panel container.
+        if (this.settings.containerElement && $(this.settings.containerElement).length) {
+          tabPanelContainer = $(this.settings.containerElement);
+          moveTabPanelContainer = false;
+        }
+
+        // If a `.tab-panel-container` still doesn't exist, create one.
+        if (!tabPanelContainer || !tabPanelContainer.length) {
+          tabPanelContainer = $('<div class="tab-panel-container"></div>');
+          moveTabPanelContainer = true;
+        }
+
+        if (!tabPanelContainer[0].classList.contains('tab-panel-container')) {
+          tabPanelContainer[0].classList.add('tab-panel-container');
+        }
+        if (moveTabPanelContainer) {
+          tabPanelContainer.insertAfter(this.element);
+        }
+
+        this.container = tabPanelContainer;
+
+        // Detect the existence of a "tab-list-container" element, if applicable.
+        // Tab List containers are optional for all tab container types, but mandatory for
+        // Composite Form tabs.
+        var tablistContainer = this.element.children('.tab-list-container');
+        if (!tablistContainer.length && this.isScrollableTabs()) {
+          tablistContainer = $('<div class="tab-list-container"></div>').prependTo(this.element);
+        }
+        if (tablistContainer.length) {
+          this.tablistContainer = tablistContainer;
         }
 
         // Add a default tabs class of "horizontal" if it doesn't already exist
-        var noClass = true;
+        var noClass = true,
+          closestHeader = this.element.closest('.header');
         tabContainerTypes.forEach(function tabTypeIterator(val, i) {
           if (self.element.hasClass(tabContainerTypes[i])) {
             noClass = false;
           }
         });
         if (noClass) {
-          if (this.element.closest('.header').length) {
+          if (closestHeader.length) {
             self.element.addClass('header-tabs');
           } else {
             self.element.addClass('horizontal');
@@ -97,13 +143,41 @@
 
         // Build Tab Counts
         if (self.settings.tabCounts) {
-          self.container.addClass('has-counts');
+          self.element.addClass('has-counts');
         }
 
         //Attach Tablist role and class to the tab headers container
-        self.tablist = self.element.children('.tab-list');
-        if (!self.tablist.length) {
-          self.tablist = self.element.children('.tab-list-container').children('.tab-list');
+        this.tablist = this.element.children('.tab-list');
+        if (!this.tablist.length) {
+
+          // If we have a `.tab-list-container` element, check that before creating markup
+          if (this.tablistContainer) {
+            this.tablist = this.tablistContainer.children('.tab-list');
+          }
+
+          // Create and append the `.tab-list` if it still doesn't exist.
+          if (!this.tablist.length) {
+            this.tablist = $('<ul class="tab-list"></ul>');
+            if (this.tablistContainer) {
+              this.tablist.appendTo(this.tablistContainer);
+            } else {
+              this.tablist.appendTo(this.element);
+            }
+          }
+        }
+
+        // Double-check that the `.tab-list-container` actually contains the `.tab-list`.
+        // Move it if necessary.
+        if (this.tablistContainer) {
+          if (!this.tablist.parent().is(this.tablistContainer)) {
+            this.tablistContainer.append(this.tablist);
+          }
+
+          this.tablistContainer.on('mousewheel.tabs', function(e) {
+            if (e.deltaY) {
+              this.scrollLeft += e.deltaY;
+            }
+          });
         }
 
         self.tablist
@@ -113,55 +187,11 @@
             'aria-multiselectable': 'false'
           });
 
-        if (this.hasSquareFocusState()) {
-          self.focusState = self.container.children('.tab-focus-indicator');
-          if (!self.focusState.length) {
-            self.focusState = $('<div class="tab-focus-indicator" role="presentation"></div>').insertBefore(self.tablist);
-          }
-        }
+        // Conditionally Change layout classes if veritcal tabs is in responsive mode, and breakpoints match
+        this.checkResponsive();
 
-        if (this.hasAnimatedBar()) {
-          self.animatedBar = self.container.children('.animated-bar');
-          if (!self.animatedBar.length) {
-            self.animatedBar = $('<div class="animated-bar" role="presentation"></div>').insertBefore(self.tablist);
-          }
-        }
-
-        // Add the markup for the "More" button if it doesn't exist.
-        self.moreButton = self.tablist.next('.tab-more');
-        if (!self.isVerticalTabs() && self.moreButton.length === 0) {
-          var button = $('<div>').attr({'class': 'tab-more'});
-          button.append( $('<span class="more-text">').text(Locale.translate('More')));
-          button.append($.createIconElement({ classes: 'icon-more', icon: 'dropdown' }));
-          self.tablist.after(button);
-          self.moreButton = button;
-        }
-
-        // Add the application menu Module Tab, if applicable
-        if (self.isModuleTabs() && !this.tablist.find('.application-menu-trigger').length) {
-          var appMenuTrigger = $('<li class="tab application-menu-trigger"><a href="#">' +
-            '<span class="icon app-header"><span class="one"></span><span class="two"></span><span class="three"></span></span>' +
-            '<span>Menu</span>' +
-            '</a></tab>');
-          this.tablist.prepend(appMenuTrigger);
-        }
-
-        // Add Tab Button
-        if (this.settings.addTabButton) {
-          this.addTabButton = this.moreButton.next('.add-tab-button');
-          if (!this.addTabButton || !this.addTabButton.length) {
-            this.addTabButton = $('<div class="add-tab-button" tabindex="0" role="button">' +
-              '<span aria-hidden="true" role="presentation">+</span>' +
-              '<span class="audible">'+ Locale.translate('AddNewTab') +'</span>' +
-              '</div>');
-            this.addTabButton.insertAfter(this.moreButton);
-            this.element.addClass('has-add-button');
-          }
-        }
-        if (!this.settings.addTabButton && this.addTabButton && this.addTabButton.length) {
-          this.addTabButton.remove();
-          this.element.removeClass('has-add-button');
-        }
+        // Handle Focus State, Animated Bar, More Button, Add Tabs Button, and App Menu Button.
+        this.renderHelperMarkup();
 
         //for each item in the tabsList...
         self.anchors = self.tablist.children('li:not(.separator)').children('a');
@@ -212,7 +242,8 @@
         function associateAnchorWithPanel() {
           var a = $(this),
             li = a.parent(),
-            popup = li.data('popupmenu');
+            popup = li.data('popupmenu'),
+            panel;
 
           // Associated the current one
           var href = a.attr('href');
@@ -223,7 +254,7 @@
           }
 
           if (href !== undefined && href !== '#') {
-            var panel = $(href);
+            panel = $(href);
 
             if (li.is(':not(.has-popupmenu)') && !panel.length) {
               return;
@@ -279,6 +310,8 @@
           .attr({'role': 'tabpanel'})
           .find('h3:first').attr('tabindex', '0');
 
+        self.panels.appendTo(self.container);
+
         var excludes = ':not(.separator):not(.is-disabled):not(.is-hidden)',
           tabs = this.tablist.children('li' + excludes),
           selected = this.tablist.children('li.is-selected' + excludes),
@@ -331,6 +364,114 @@
           });
         }
 
+        // Setup Edge Fades
+        if (this.tablistContainer) {
+          this.tablistContainer.on('scroll.tabs', function() {
+            self.renderEdgeFading();
+          });
+          this.renderEdgeFading();
+        }
+
+        return this;
+      },
+
+      /**
+       * Adds/removes helper buttons and accessibility-centric markup, based on Tabs' configuration
+       * Designed to be run at any point in the Tabs lifecycle.
+       * @returns {this}
+       */
+      renderHelperMarkup: function() {
+        var auxilaryButtonLocation = this.tablistContainer || this.tablist;
+        if (this.isModuleTabs()) {
+          auxilaryButtonLocation = this.tablist;
+        }
+
+        // Square Focus State
+        if (this.hasSquareFocusState()) {
+          this.focusState = this.element.find('.tab-focus-indicator');
+          if (!this.focusState.length) {
+            this.focusState = $('<div class="tab-focus-indicator" role="presentation"></div>').insertBefore(this.tablist);
+          }
+        } else {
+          if (this.focusState && this.focusState.length) {
+            this.focusState.off().remove();
+            this.focusState = undefined;
+          }
+        }
+
+        // Animated Bar
+        if (this.hasAnimatedBar()) {
+          this.animatedBar = this.element.find('.animated-bar');
+          if (!this.animatedBar.length) {
+            this.animatedBar = $('<div class="animated-bar" role="presentation"></div>');
+          }
+          this.animatedBar.insertBefore(this.tablist);
+        } else {
+          if (this.animatedBar && this.animatedBar.length) {
+            this.animatedBar.off().remove();
+            this.animatedBar = undefined;
+          }
+        }
+
+        // Add the markup for the "More" button if it doesn't exist.
+        if (!this.moreButton) {
+          this.moreButton = $();
+        }
+
+        if (!this.isVerticalTabs()) {
+          if (!this.moreButton.length) {
+            this.moreButton = auxilaryButtonLocation.next('.tab-more');
+          }
+          // If we still don't have a More Button, create one
+          if (!this.moreButton.length) {
+            this.moreButton = $('<div>').attr({'class': 'tab-more'});
+            this.moreButton.append( $('<span class="more-text">').text(Locale.translate('More')));
+            this.moreButton.append($.createIconElement({ classes: 'icon-more', icon: 'dropdown' }));
+          }
+
+          // Append in the right place based on configuration
+          auxilaryButtonLocation.after(this.moreButton);
+        } else {
+          if (this.moreButton.length) {
+            this.moreButton.off().remove();
+            this.moreButton = $();
+          }
+        }
+
+        // Add the application menu Module Tab, if applicable
+        var appMenuTrigger = this.tablist.find('.application-menu-trigger');
+        if (this.isModuleTabs()) {
+          if (!appMenuTrigger.length) {
+            appMenuTrigger = $('<li class="tab application-menu-trigger"><a href="#">' +
+              '<span class="icon app-header"><span class="one"></span><span class="two"></span><span class="three"></span></span>' +
+              '<span>Menu</span>' +
+              '</a></tab>');
+            this.tablist.prepend(appMenuTrigger);
+          }
+        } else {
+          if (this.isVerticalTabs() && appMenuTrigger.length) {
+            appMenuTrigger.off().remove();
+          }
+        }
+
+        // Add Tab Button
+        if (this.settings.addTabButton) {
+          if (!this.addTabButton || !this.addTabButton.length) {
+            this.addTabButton = $('<div class="add-tab-button" tabindex="0" role="button">' +
+              '<span aria-hidden="true" role="presentation">+</span>' +
+              '<span class="audible">'+ Locale.translate('AddNewTab') +'</span>' +
+              '</div>');
+            this.addTabButton.insertAfter(this.moreButton);
+            this.element.addClass('has-add-button');
+          }
+        } else {
+          if (this.addTabButton && this.addTabButton.length) {
+            this.addTabButton.remove();
+            this.addTabButton = undefined;
+            this.element.removeClass('has-add-button');
+          }
+        }
+
         return this;
       },
 
@@ -379,7 +520,7 @@
           if (li.hasClass('dismissible')) {
             e.preventDefault();
             e.stopPropagation();
-            self.closeDismissibleTab(li.children('a'));
+            self.closeDismissibleTab(li.children('a').attr('href'));
           }
         }
 
@@ -391,6 +532,8 @@
         // element so that tabs can be added/removed/hidden/shown without needing to change event bindings.
         this.tablist
           .on('mousedown.tabs', '> li', function(e) {
+            self.handleAddFocusData(e, $(this));
+
             // let right click pass through
             if (e.which !== 3) {
               return self.handleTabClick(e, $(this));
@@ -405,21 +548,6 @@
           .on('keydown.tabs', 'a', function(e) {
             return self.handleTabKeyDown(e);
           });
-
-        // Setup a mousedown event on tabs to determine in the focus handler whether or a not a keystroked cause
-        // a change in focus, or a click.  Keystroke focus changes cause different visual situations
-        function addClickFocusData(e) {
-          var tab = $(this);
-          if (tab.is('.is-disabled')) {
-            e.preventDefault();
-            return false;
-          }
-
-          self.hideFocusState();
-          tab.children('a').data('focused-by-click', true);
-        }
-        this.tablist.on('mousedown.tabs', '> li', addClickFocusData);
-        this.moreButton.on('mousedown.tabs', addClickFocusData);
 
         // Setup events on Dropdown Tabs
         function dropdownTabEvents(i, tab) {
@@ -453,7 +581,8 @@
           });
 
           li.on('selected.tabs', function(e, anchor) {
-            var href = $(anchor).attr('href');
+            var li = $(this),
+              href = $(anchor).attr('href');
             self.activate(href);
 
             if (self.hasSquareFocusState()) {
@@ -465,6 +594,8 @@
             }
 
             a.focus();
+            self.scrollTabList(li);
+
             li.addClass('is-selected');
             return false;
           });
@@ -482,34 +613,13 @@
           });
         }
 
-        var dismissible = self.tablist.find('li').filter('is-dismissible');
+        var dismissible = self.tablist.find('li').filter('.dismissible');
         dismissible.each(dismissibleTabEvents);
 
-        // Setup the "more" function
-        this.moreButton
-          .onTouchClick('tabs')
-          .on('click.tabs', function(e) {
-            self.handleMoreButtonClick(e);
-          })
-          .on('keydown.tabs', function(e) {
-            self.handleMoreButtonKeydown(e);
-          })
-          .on('focus.tabs', function(e) {
-            self.handleMoreButtonFocus(e);
-          });
-
-        if (this.settings.addTabButton) {
-          this.addTabButton
-            .onTouchClick('tabs')
-            .on('click.tabs', function() {
-              self.handleAddButton();
-            })
-            .on('keydown.tabs', function(e) {
-              self.handleAddButtonKeydown(e);
-            })
-            .on('focus.tabs', function(e) {
-              self.handleAddButtonFocus(e);
-            });
+        // Events specific to markup that can be re-rendered mid-lifecycle
+        // The responsive vertical tabs system will set this up automatically, so skip
+        if (!this.isResponsiveVerticalTabs()) {
+          this.setupHelperMarkupEvents();
         }
 
         this.panels.on('keydown.tabs', function(e) {
@@ -541,13 +651,93 @@
         $('body').on('resize.tabs' + this.tabsIndex, function() {
           self.handleResize();
         });
-        self.handleResize();
+        self.handleResize(true);
 
         return this;
       },
 
+      /**
+       * Adds events associated with elements that are re-renderable during the Tabs lifecycle
+       * @private
+       * @returns {this}
+       */
+      setupHelperMarkupEvents: function () {
+        var self = this;
+
+        // Setup the "more" function
+        this.moreButton
+          .onTouchClick('tabs')
+          .on('click.tabs', function(e) {
+            self.handleMoreButtonClick(e);
+          })
+          .on('keydown.tabs', function(e) {
+            self.handleMoreButtonKeydown(e);
+          })
+          .on('focus.tabs', function(e) {
+            self.handleMoreButtonFocus(e);
+          })
+          .on('mousedown.tabs', function(e) {
+            self.handleAddFocusData(e, $(this));
+          });
+
+        if (this.settings.addTabButton) {
+          this.addTabButton
+            .onTouchClick('tabs')
+            .on('click.tabs', function() {
+              self.handleAddButton();
+            })
+            .on('keydown.tabs', function(e) {
+              self.handleAddButtonKeydown(e);
+            })
+            .on('focus.tabs', function(e) {
+              self.handleAddButtonFocus(e);
+            });
+        }
+      },
+
+      /**
+       * Removes events associated with elements that are re-renderable during the Tabs lifecycle
+       * @private
+       * @returns {this}
+       */
+      removeHelperMarkupEvents: function() {
+        if (this.moreButton && this.moreButton.length) {
+          this.moreButton.offTouchClick('tabs')
+            .off('click.tabs keydown.tabs focus.tabs mousedown.tabs');
+        }
+
+        if (this.addTabButton && this.addTabButton.length) {
+          this.addTabButton.offTouchClick('tabs')
+            .off('click.tabs keydown.tabs focus.tabs');
+        }
+
+        return this;
+      },
+
+      /**
+       * Setup a mousedown event on tabs to determine in the focus handler whether or a not a keystroked cause
+       * a change in focus, or a click.  Keystroke focus changes cause different visual situations
+       * @param {$.Event} e
+       * @param {jQuery[]} elem
+       * @returns {undefined}
+       */
+      handleAddFocusData: function(e, elem) {
+        var tab = elem;
+        if (tab.is('.is-disabled')) {
+          e.preventDefault();
+          return false;
+        }
+
+        if (!tab.is(this.moreButton)) {
+          tab = tab.children('a');
+        }
+
+        this.hideFocusState();
+        tab.data('focused-by-click', true);
+      },
+
       handleTabClick: function(e, li) {
-        if (this.element.is('.is-disabled') || (li && li.is('.is-disabled'))) {
+        if (this.element.is('.is-disabled') || (li && (li.is('.is-disabled') || li.is('.separator')))) {
           e.stopPropagation();
           e.preventDefault();
           return false;
@@ -582,8 +772,10 @@
 
         // close tab on middle click
         if (e.which === 2) {
+          if (li.is('.dismissible') && $(e.target).is('.close')) {
+            this.closeDismissibleTab(href);
+          }
           e.preventDefault();
-          this.closeDismissibleTab(href);
           return;
         }
 
@@ -595,6 +787,10 @@
         }
 
         a.focus();
+
+        if (this.isScrollableTabs()) {
+          this.scrollTabList(li);
+        }
 
         // Hide these states
         this.focusBar(li);
@@ -676,7 +872,8 @@
           return;
         }
 
-        var passableKeys = [8, 13, 32];
+        var self = this,
+          passableKeys = [8, 13, 32];
 
         function isPassableKey() {
           return $.inArray(e.which, passableKeys) > -1;
@@ -693,8 +890,15 @@
           }
         }
 
-        var self = this,
-          allExcludes = ':not(.separator):not(.is-disabled):not(:hidden)',
+        function openMenu(oldHref) {
+          e.preventDefault();
+          // setTimeout is used to bypass triggering of the keyboard when self.buildPopupMenu() is invoked.
+          setTimeout(function() {
+            self.buildPopupMenu(oldHref);
+          }, 0);
+        }
+
+        var allExcludes = ':not(.separator):not(.is-disabled):not(:hidden)',
           currentLi = $(e.currentTarget).parent(),
           currentA = currentLi.children('a'),
           targetLi,
@@ -713,7 +917,14 @@
           if (self.settings.addTabButton) {
             return self.addTabButton;
           }
-          return self.tablist.children('li' + allExcludes).last();
+
+          var last = self.tablist.children('li' + allExcludes).last();
+
+          if (self.hasMoreButton() && self.isScrollableTabs()) {
+            openMenu(last.find('a').attr('href'));
+          }
+
+          return last;
         }
 
         function nextTab() {
@@ -725,10 +936,17 @@
             i++;
           }
 
+          var first = self.tablist.children('li' + allExcludes).first();
+
+          if (self.hasMoreButton() && self.isScrollableTabs()) {
+            openMenu(first.find('a').attr('href'));
+            return first;
+          }
+
           if (self.settings.addTabButton) {
             return self.addTabButton;
           }
-          return self.tablist.children('li' + allExcludes).first();
+          return first;
         }
 
         function checkAngularClick() {
@@ -801,19 +1019,17 @@
 
         // Use the matching option in the popup menu if the target is hidden by overflow.
         if (this.isTabOverflowed(targetLi)) {
-          e.preventDefault();
-          var oldHref = targetLi.children('a').attr('href');
-          // setTimeout is used to bypass triggering of the keyboard when self.buildPopupMenu() is invoked.
-          setTimeout(function() {
-            self.buildPopupMenu(oldHref);
-          }, 0);
-          return;
+          return openMenu(targetLi.children('a').attr('href'));
         }
 
         if (!isAddTabButton) {
           focusStateTarget.focus();
         } else {
           self.addTabButton.focus();
+        }
+
+        if (this.isScrollableTabs()) {
+          this.scrollTabList(focusStateTarget);
         }
 
         if (self.hasSquareFocusState()) {
@@ -1062,7 +1278,11 @@
         this.positionFocusState(this.addTabButton, true);
       },
 
-      handleResize: function() {
+      handleResize: function(ignoreResponsiveCheck) {
+        if (!ignoreResponsiveCheck) {
+          this.checkResponsive();
+        }
+
         this.setOverflow();
 
         var selected = this.tablist.find('.is-selected');
@@ -1080,6 +1300,49 @@
 
         this.handleVerticalTabResize();
         this.renderVisiblePanel();
+        this.renderEdgeFading();
+      },
+
+      checkResponsive: function() {
+        var self = this,
+          classList = self.element[0].classList;
+
+        function rebuild() {
+          self.removeHelperMarkupEvents();
+          self.renderHelperMarkup();
+          self.setupHelperMarkupEvents();
+        }
+
+        function makeResponsive() {
+          if (!classList.contains('is-in-responsive-mode')) {
+            classList.add('is-in-responsive-mode');
+            classList.add('header-tabs');
+            classList.add('alternate');
+            classList.remove('vertical');
+            rebuild();
+          }
+        }
+
+        function makeVertical() {
+          if (classList.contains('is-in-responsive-mode')) {
+            classList.add('vertical');
+            classList.remove('is-in-responsive-mode');
+            classList.remove('header-tabs');
+            classList.remove('alternate');
+            rebuild();
+          }
+        }
+
+        // Check for responsive mode for Vertical tabs
+        if (this.isResponsiveVerticalTabs()) {
+          if (Soho.breakpoints.isBelow('phone-to-tablet')) {
+            makeResponsive();
+          } else {
+            makeVertical();
+          }
+        } else {
+          makeVertical();
+        }
       },
 
       handleVerticalTabResize: function() {
@@ -1120,6 +1383,14 @@
         return true;
       },
 
+      hasMoreButton: function() {
+        return this.element[0].classList.contains('has-more-button');
+      },
+
+      isInResponsiveMode: function() {
+        return this.element[0].classList.contains('is-in-responsive-mode');
+      },
+
       isModuleTabs: function() {
         return this.element.hasClass('module-tabs');
       },
@@ -1128,8 +1399,16 @@
         return this.element.hasClass('vertical');
       },
 
+      isResponsiveVerticalTabs: function() {
+        return this.settings.verticalResponsive === true;
+      },
+
       isHeaderTabs: function() {
         return this.element.hasClass('header-tabs');
+      },
+
+      isScrollableTabs: function() {
+        return !this.isModuleTabs() && !this.isVerticalTabs();
       },
 
       isHidden: function() {
@@ -1253,7 +1532,7 @@
       },
 
       isURL: function(href) {
-        if (href.indexOf('#') === 0) {
+        if (!href || href.indexOf('#') === 0) {
           return false;
         }
 
@@ -1292,26 +1571,28 @@
           return;
         }
 
-        if (this.settings.source && targetPanel.length < 1) {
-          return this.callSource(href);
+        if (targetPanel.length < 1) {
+          if (this.settings.source) {
+            return this.callSource(href);
+          }
+        } else {
+          oldPanel[0].classList.remove('can-show');
+          oldPanel[0].classList.remove('is-visible');
+          oldPanel.closeChildren();
+          self.element.trigger('activated', [a]);
+
+          targetPanelElem.classList.add('can-show');
+          self.renderVisiblePanel();
+          // trigger reflow as display property is none for animation
+          targetPanelElem.offsetHeight; // jshint ignore:line
+
+          targetPanel.one($.fn.transitionEndName() + '.tabs', function() {
+            self.element.trigger('afteractivated', [a]);
+          });
+
+          // Triggers the CSS Animation
+          targetPanelElem.classList.add('is-visible');
         }
-
-        oldPanel[0].classList.remove('can-show');
-        oldPanel[0].classList.remove('is-visible');
-        oldPanel.closeChildren();
-        self.element.trigger('activated', [a]);
-
-        targetPanelElem.classList.add('can-show');
-        self.renderVisiblePanel();
-        // trigger reflow as display property is none for animation
-        targetPanelElem.offsetHeight; // jshint ignore:line
-
-        targetPanel.one($.fn.transitionEndName() + '.tabs', function() {
-          self.element.trigger('afteractivated', [a]);
-        });
-
-        // Triggers the CSS Animation
-        targetPanelElem.classList.add('is-visible');
 
         // Update the currently-selected tab
         self.updateAria(a);
@@ -1353,7 +1634,30 @@
             }
           });
         }
+      },
 
+      /**
+       * Shows/Hides some tabsets' faded edges based on scrolling position, if applicable.
+       * @returns {undefined}
+       */
+      renderEdgeFading: function() {
+        if (!this.isScrollableTabs() || !this.tablistContainer) {
+          return;
+        }
+
+        var isRTL = Locale.isRTL(),
+          tablistContainerElem = this.tablistContainer[0],
+          scrollLeft = tablistContainerElem.scrollLeft,
+          scrollWidth = tablistContainerElem.scrollWidth,
+          containerWidth = parseInt(window.getComputedStyle(tablistContainerElem).getPropertyValue('width'));
+
+        if (isRTL) {
+          this.element[0].classList[ scrollLeft > 0 ? 'add' : 'remove' ]('scrolled-left');
+          this.element[0].classList[ (scrollWidth - scrollLeft) <= containerWidth ? 'remove' : 'add' ]('scrolled-right');
+        } else {
+          this.element[0].classList[ scrollLeft > 0 ? 'add' : 'remove' ]('scrolled-right');
+          this.element[0].classList[ (scrollWidth - scrollLeft) <= containerWidth ? 'remove' : 'add' ]('scrolled-left');
+        }
       },
 
       /**
@@ -1382,7 +1686,7 @@
             // Get a new random tab ID for this tab if one can't be derived from the URL string
             if (isURL) {
               var anchor = self.tablist.find('[href="'+ href +'"]'),
-                containerId = self.container[0].id || '',
+                containerId = self.element[0].id || '',
                 id = anchor.uniqueId('tab', containerId);
 
               href = '#' + id;
@@ -1393,8 +1697,8 @@
             self.createTabPanel(href, htmlContent, true);
             self.activate(href);
 
-            self.container.triggerHandler('complete'); // For Busy Indicator
-            self.container.trigger('requestend', [href, htmlContent]);
+            self.element.triggerHandler('complete'); // For Busy Indicator
+            self.element.trigger('requestend', [href, htmlContent]);
           };
 
         this.container.triggerHandler('start'); // For Busy Indicator
@@ -1516,7 +1820,7 @@
             api = c.data('tabs');
 
           if (api && api.handleResize && typeof api.handleResize === 'function') {
-            api.handleResize();
+            api.handleResize(true);
           }
         });
       },
@@ -1794,11 +2098,16 @@
           return this;
         }
 
-        var a = prevLi.children('a');
+        var a = prevLi.children('a'),
+          activateTargetA = a;
+
         this.positionFocusState(a);
 
         if (wasSelected) {
-          this.activate(a.attr('href'));
+          if (prevLi.is('.has-popupmenu') && prevLi.data('popupmenu')) {
+            activateTargetA = prevLi.data('popupmenu').menu.children().first().children('a');
+          }
+          this.activate(activateTargetA.attr('href'));
         }
 
         this.focusBar(prevLi);
@@ -2060,17 +2369,31 @@
         var elem = this.element[0],
           tablist = this.tablist[0],
           HAS_MORE = 'has-more-button',
-          hasMoreIndex = elem.classList.contains(HAS_MORE),
-          tablistStyle = window.getComputedStyle(tablist, null),
-          tabListHeight = parseInt(tablistStyle.getPropertyValue('height')) + 1; // +1 to fix an IE bug
+          hasMoreIndex = this.hasMoreButton(),
+          isScrollableTabs = this.isScrollableTabs();
 
         // Recalc tab width before detection of overflow
         if (this.isModuleTabs()) {
           this.adjustModuleTabs();
         }
 
+        var tablistStyle, tablistHeight,
+          tablistContainerScrollWidth, tablistContainerWidth,
+          overflowCondition;
+
+        if (isScrollableTabs) {
+          tablistContainerScrollWidth = this.tablistContainer[0].scrollWidth;
+          tablistContainerWidth = this.tablistContainer[0].offsetWidth;
+          overflowCondition = tablistContainerScrollWidth > tablistContainerWidth;
+        } else {
+          tablistStyle = window.getComputedStyle(tablist, null);
+          tablistHeight = parseInt(tablistStyle.getPropertyValue('height')) + 1; // +1 to fix an IE bug
+          overflowCondition = tablist.scrollHeight > tablistHeight; // Normal tabs check the height
+        }
+
         // Add "has-more-button" class if we need it, remove it if we don't
-        if (tablist.scrollHeight > tabListHeight) {
+        // Always display the more button on Scrollable Tabs
+        if (overflowCondition) {
           if (!hasMoreIndex) {
             elem.classList.add(HAS_MORE);
           }
@@ -2198,9 +2521,14 @@
 
         // Build the new markup for the popupmenu if it doesn't exist.
         // Reset it if it does exist.
-        var menuHtml = $('#tab-container-popupmenu');
+        var menuHtml = $('#tab-container-popupmenu'),
+          shouldBeSelectable = '';
+        if (this.isScrollableTabs()) {
+          shouldBeSelectable = ' is-selectable';
+        }
+
         if (menuHtml.length === 0) {
-          menuHtml = $('<ul class="tab-list-spillover">').attr('id', 'tab-container-popupmenu').appendTo('body');
+          menuHtml = $('<ul id="tab-container-popupmenu" class="tab-list-spillover'+ shouldBeSelectable +'">').appendTo('body');
         } else {
           menuHtml.html('');
         }
@@ -2213,7 +2541,11 @@
           var $item = $(item),
             $itemA = $item.children('a');
 
-          if (!self.isTabOverflowed($item) || $item.is(':hidden')) {
+          if ($item.is(':hidden')) {
+            return;
+          }
+
+          if (!self.isScrollableTabs() && !self.isTabOverflowed($item)) {
             return;
           }
 
@@ -2225,7 +2557,14 @@
           var popupLi = $item.clone(),
             popupA = popupLi.children('a');
 
-          popupLi[0].classList.remove('tab', 'is-selected');
+          popupLi[0].classList.remove('tab');
+          if (popupLi[0].classList.contains('is-selected')) {
+            popupLi[0].classList.remove('is-selected');
+            if (self.isScrollableTabs()) {
+              popupLi[0].classList.add('is-checked');
+            }
+          }
+
           popupLi[0].removeAttribute('style');
 
           popupLi.children('.icon').off().appendTo(popupA);
@@ -2233,6 +2572,7 @@
 
           // Link tab to its corresponding "More Tabs" menu option
           $item.data('moremenu-link', popupA);
+          popupA.find('.icon-more').remove();
 
           // Link "More Tabs" menu option to its corresponding Tab.
           // Remove onclick methods from the popup <li> because they are called
@@ -2271,6 +2611,10 @@
         }
 
         self.tablist.children('li:not(.separator)').removeClass('is-focused');
+        var xOffset = 1;
+        if (!this.isScrollableTabs()) {
+          xOffset = 3;
+        }
 
         // Invoke the popup menu on the button.
         self.moreButton.popupmenu({
@@ -2278,7 +2622,7 @@
           attachToBody: true,
           menu: 'tab-container-popupmenu',
           trigger: 'immediate',
-          offset: {x: 3}
+          offset: { x: xOffset }
         });
         self.moreButton.addClass('popup-is-open');
         self.popupmenu = self.moreButton.data('popupmenu');
@@ -2319,6 +2663,8 @@
           // NOTE: If we switch the focusing-operations back to how they used to be (blue bar moving around with the focus state)
           // remove the line below.
           self.moreButton.focus();
+
+          self.scrollTabList(tab);
         }
 
         self.moreButton
@@ -2448,9 +2794,10 @@
       // Used for checking if a particular tab (in the form of a jquery-wrapped list item) is spilled into
       // the overflow area of the tablist container <UL>.
       isTabOverflowed: function(li) {
-        if (this.isVerticalTabs()) {
+        if (this.isVerticalTabs() || this.isScrollableTabs()) {
           return false;
         }
+
         if (this.tablist.scrollTop() > 0) {
           this.tablist.scrollTop(0);
         }
@@ -2469,6 +2816,12 @@
       findLastVisibleTab: function() {
         var tabs = this.tablist.children('li:not(.separator):not(.hidden):not(.is-disabled)'),
           targetFocus = tabs.first();
+
+        // if Scrollable Tabs, simply get the last tab and focus.
+        if (this.isScrollableTabs()) {
+          return tabs.last().find('a').focus();
+        }
+
         while(!(this.isTabOverflowed(targetFocus))) {
           targetFocus = tabs.eq(tabs.index(targetFocus) + 1);
         }
@@ -2491,7 +2844,12 @@
 
         var self = this,
           target = li,
+          scrollingTablist = this.tablistContainer,
+          isRTL = Locale.isRTL(),
           paddingLeft, paddingRight, width,
+          tabMoreWidth,
+          tablistScrollWidth,
+          tablistScrollLeft,
           anchorStyle, targetStyle;
 
         this.animatedBar.removeClass('no-transition');
@@ -2512,15 +2870,23 @@
           paddingRight += parseInt(anchorStyle.getPropertyValue('padding-right'), 10) || 0;
         }
 
-        var left = Locale.isRTL() ?
-          (paddingRight + target.position().left) : (target.position().left);
+        var left = isRTL ?
+          (paddingRight + target.position().left + target.outerWidth(true)) : (target.position().left);
 
         clearTimeout(self.animationTimeout);
         this.animatedBar.addClass('visible');
 
         function animationTimeout(cb) {
           var style = self.animatedBar[0].style;
-          style.left = left + 'px';
+          tablistScrollLeft = scrollingTablist[0].scrollLeft;
+          tablistScrollWidth = scrollingTablist[0].scrollWidth;
+          tabMoreWidth = this.moreButton.outerWidth(true);
+
+          if (isRTL) {
+            style.right = tablistScrollWidth + paddingRight - (left + tablistScrollLeft) + 'px';
+          } else {
+            style.left = left + tablistScrollLeft + 'px';
+          }
           style.width = width + 'px';
 
           if (cb && typeof cb === 'function') {
@@ -2550,6 +2916,40 @@
         }, 350);
       },
 
+      /**
+       * Wrapper for the Soho behavior _smoothScrollTo()_ that will determine scroll distance.
+       * @param {jQuery[]} target - the target <li> or <a> tag
+       * @param {Number} duration - the time it will take to scroll
+       * @returns {undefined}
+       */
+      scrollTabList: function(target) {
+        if (!this.tablistContainer || !target || !(target instanceof $) || !target.length) {
+          return;
+        }
+
+        var tabCoords = Soho.DOM.getDimensions(target[0]),
+          tabContainerDims = Soho.DOM.getDimensions(this.tablistContainer[0]),
+          d;
+
+        var FADED_AREA = 40, // the faded edges on the sides of the tabset
+          adjustedLeft = tabCoords.left,
+          adjustedRight = tabCoords.right;
+
+        if (adjustedLeft < tabContainerDims.left + FADED_AREA) {
+          d = (Math.round(Math.abs(tabContainerDims.left - adjustedLeft)) * -1) - FADED_AREA;
+        }
+        if (adjustedRight > tabContainerDims.right - FADED_AREA) {
+          d = Math.round(Math.abs(adjustedRight - tabContainerDims.right)) + FADED_AREA;
+        }
+
+        if (d === 0) {
+          d = undefined;
+        }
+
+        // Scroll the tablist container
+        this.tablistContainer.smoothScroll(d, 250);
+      },
+
       hideFocusState: function() {
         if (this.hasSquareFocusState()) {
           this.focusState.removeClass('is-visible');
@@ -2566,7 +2966,7 @@
             self.moreButton.hasClass('is-selected') ? self.moreButton :
             self.tablist.children('.is-selected').length > 0 ? self.tablist.children('.is-selected').children('a') : undefined;
 
-        if (!target || target === undefined || !target.length) {
+        if (!target || target === undefined || !target.length || (target.is(this.moreButton) && this.isScrollableTabs())) {
           this.focusState.removeClass('is-visible');
           return;
         }
@@ -2576,27 +2976,41 @@
           target = target.parent();
         }
 
-        var focusStateElem = this.focusState[0],
-          targetPos = target[0].getBoundingClientRect(),
-          targetClassList = target[0].classList,
-          isModuleTabs = this.isModuleTabs(),
-          isRTL = Locale.isRTL(),
-          parentContainer = this.element;
-
-        function convertClientRectToObj(clientRect) {
-          return {
-            left: clientRect.left,
-            right: clientRect.right,
-            top: clientRect.top,
-            bottom: clientRect.bottom,
-            width: clientRect.width,
-            height: clientRect.height
-          };
+        // Move the focus state from inside the tab list container, if applicable.
+        // Put it back into the tab list container, if not.
+        if (target.is('.add-tab-button, .tab-more')) {
+          if (!this.focusState.parent().is(this.element)) {
+            this.focusState.prependTo(this.element);
+          }
+        } else {
+          if (!this.focusState.parent().is(this.tablistContainer)) {
+            this.focusState.prependTo(this.tablistContainer);
+          }
         }
 
-        function adjustForParentContainer(targetRectObj, parentElement) {
-          var parentRect = parentElement[0].getBoundingClientRect();
+        var focusStateElem = this.focusState[0],
+          targetPos = Soho.DOM.getDimensions(target[0]),
+          targetClassList = target[0].classList,
+          isNotHeaderTabs = (!this.isHeaderTabs() || this.isHeaderTabs() && this.element[0].classList.contains('alternate')),
+          isVerticalTabs = this.isVerticalTabs(),
+          isRTL = Locale.isRTL(),
+          tabMoreWidth = !isVerticalTabs ? this.moreButton.outerWidth(true) : 0,
+          parentContainer = this.element,
+          scrollingTablist = this.tablistContainer,
+          accountForPadding = scrollingTablist && this.focusState.parent().is(scrollingTablist);
+
+        function adjustForParentContainer(targetRectObj, parentElement, tablistContainer) {
+          var parentRect = parentElement[0].getBoundingClientRect(),
+            parentPadding,
+            tabLeftMargin,
+            tablistScrollWidth,
+            tablistScrollLeft;
+
+          // Adjust from the top
           targetRectObj.top = targetRectObj.top - parentRect.top;
+          if (isVerticalTabs) {
+            targetRectObj.top = targetRectObj.top + parentElement[0].scrollTop;
+          }
 
           if (isRTL) {
             targetRectObj.right = parentRect.right - targetRectObj.right;
@@ -2604,29 +3018,53 @@
             targetRectObj.left = targetRectObj.left - parentRect.left;
           }
 
-          // Dirty Hack for Module Tabs
-          // TODO: Explore why this happens
-          if (isModuleTabs) {
-            targetRectObj.top = targetRectObj.top - 1;
+          // If inside a scrollable tablist, account for the scroll position
+          if (tablistContainer) {
+            tablistScrollLeft = tablistContainer ? tablistContainer[0].scrollLeft : 0;
+            tablistScrollWidth = tablistContainer ? tablistContainer[0].scrollWidth : 0;
+
+            if (isRTL && !isVerticalTabs) {
+              // TODO: Improve this calculation because there's something off
+              var tmpLeft = targetRectObj.left;
+              if (isNotHeaderTabs) {
+                tabLeftMargin = parseInt(window.getComputedStyle(target[0]).marginLeft);
+                targetRectObj.left = tablistScrollWidth - tabLeftMargin - targetRectObj.right + tablistScrollLeft;
+                targetRectObj.right = tablistScrollWidth - tabLeftMargin - tmpLeft + tablistScrollLeft;
+              } else {
+                targetRectObj.left = tablistScrollWidth - (targetRectObj.right + tablistScrollLeft + (tabMoreWidth) + 32);
+                targetRectObj.right = tablistScrollWidth - (tmpLeft + tablistScrollLeft + (tabMoreWidth) + 32);
+              }
+            } else {
+              targetRectObj.left = targetRectObj.left + tablistScrollLeft;
+              targetRectObj.right = targetRectObj.right + tablistScrollLeft;
+            }
+
+            if (accountForPadding) {
+              parentPadding = parseInt(window.getComputedStyle(parentElement[0])[ 'padding' + (isRTL ? 'Right' : 'Left') ]);
+              targetRectObj.left = targetRectObj.left + (isRTL ? parentPadding : (parentPadding * -1));
+              targetRectObj.right = targetRectObj.right + (isRTL ? parentPadding : (parentPadding * -1));
+            }
+          }
+
+          // Alternate Header Tabs have 1px removed from bottom to prevent overlap onto the bottom border
+          if (isNotHeaderTabs && !isVerticalTabs) {
+            targetRectObj.height = targetRectObj.height - 1;
           }
 
           return targetRectObj;
         }
 
-        // convert ClientRects to objects so we can mess with them
-        var targetPosObj = convertClientRectToObj(targetPos);
-
         // Adjust the values one more time if we have tabs contained inside of a page-container, or some other scrollable container.
-        targetPosObj = adjustForParentContainer(targetPosObj, parentContainer);
+        targetPos = adjustForParentContainer(targetPos, parentContainer, scrollingTablist);
 
         // build CSS string containing each prop and set it:
         var targetPosString = '';
-        for (var property in targetPosObj) {
-          if (targetPosObj.hasOwnProperty(property)) {
+        for (var property in targetPos) {
+          if (targetPos.hasOwnProperty(property)) {
             if (targetPosString.length) {
               targetPosString += ' ';
             }
-            targetPosString += '' + property + ': ' + targetPosObj[property] + 'px;';
+            targetPosString += '' + property + ': ' + targetPos[property] + 'px;';
           }
         }
         focusStateElem.setAttribute('style', targetPosString);
@@ -2862,13 +3300,11 @@
           popup.destroy();
         }
 
-        if (this.addTabButton && this.addTabButton.length) {
-          this.addTabButton.off().remove();
-          this.addTabButton = undefined;
-        }
+        this.removeHelperMarkupEvents();
 
-        this.moreButton.off().remove();
-        this.moreButton = undefined;
+        if (this.tablistContainer) {
+          this.tablistContainer.off('mousewheel.tabs');
+        }
 
         if (this.hasSquareFocusState()) {
           this.focusState.remove();

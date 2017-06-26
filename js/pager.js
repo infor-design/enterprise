@@ -22,12 +22,15 @@
           type: 'list', //Different types of pagers: list, table and more
           position: 'bottom',  //Can be on top as well.
           activePage: 1, //Start on this page
+          hideOnOnePage: false, // If true, hides the pager if there is only one page worth of results.
           source: null,  //Call Back Function for Pager Data Source
           pagesize: 15, //Can be calculate or a specific number
           pagesizes: [15, 25, 50, 75],
           indeterminate: false // Will not show anything that lets you go to a specific page
         },
         settings = $.extend({}, defaults, options);
+
+    var PAGER_NON_NUMBER_BUTTON_SELECTOR = 'li:not(.pager-prev):not(.pager-next):not(.pager-first):not(.pager-last)';
 
     /**
      * @constructor
@@ -48,7 +51,6 @@
 
       init: function() {
         this.setup();
-        this.buttonExpr = 'li:not(.pager-prev):not(.pager-next):not(.pager-first):not(.pager-last)';
         this.createPagerBar();
         this.setActivePage(this.settings.activePage); //Get First Page
         this.renderBar();
@@ -259,20 +261,33 @@
       },
 
       //Set or Get Current Page
-      setActivePage: function(pageNum, force, op) {
-        var lis = this.pagerBar.find(this.buttonExpr);
+      setActivePage: function(pagingInfo, force, op) {
+        var lis = this.pagerBar.find(PAGER_NON_NUMBER_BUTTON_SELECTOR),
+          pageNum;
+
+        // Backwards compatibility with having "pageNum" as the first argument
+        // instead of "pagingInfo"
+        if (!isNaN(pagingInfo)) {
+          pageNum = pagingInfo;
+          pagingInfo = {
+            activePage: pageNum
+          };
+        }
 
         // Check to make sure our internal active page is set
         if (!this.activePage || isNaN(this.activePage)) {
           this.activePage = this.settings.activePage;
         }
 
+        // If any of the following conditions are met, don't rerender the pages.
+        // Only rerender the pager bar.
         if (pageNum === undefined ||
             pageNum === 0 ||
             isNaN(pageNum) ||
             pageNum > this.pageCount() ||
             (pageNum === this.activePage && !force)) {
 
+          this.renderBar(pagingInfo);
           return this.activePage;
         }
 
@@ -290,8 +305,11 @@
               .find('.audible').html(Locale.translate('PageOn'));
         }
 
-        this.renderBar();
+        this.renderBar(pagingInfo);
         this.renderPages(op);
+        if (this.settings.componentAPI) {
+          this.settings.componentAPI.saveUserSettings();
+        }
         return pageNum;
       },
 
@@ -316,7 +334,7 @@
         //Add in fake pages
         if (!this.isTable) {
           var i, thisClass, thisText, isAriaSelected, isAriaDisabled;
-          this.pagerBar.find(this.buttonExpr).remove();
+          this.pagerBar.find(PAGER_NON_NUMBER_BUTTON_SELECTOR).remove();
 
           for (i = pages; i > 0; i--) {
             if (i === (this.activePage || 1)) {
@@ -390,10 +408,12 @@
             tag.closest('.popupmenu').find('.is-checked').removeClass('is-checked');
             tag.parent('li').addClass('is-checked');
             self.settings.pagesize = parseInt(tag.text());
-            self.setActivePage(1, true, 'first');
-           });
 
-          //$('[href="#25"]').parent().addClass('is-checked');
+            if (self.settings.componentAPI) {
+              self.settings.componentAPI.settings.pagesize = self.settings.pagesize;
+            }
+            self.setActivePage(1, true, 'first');
+          });
         }
 
         var pattern = (''+ this._pageCount).replace(/\d/g, '#');
@@ -416,13 +436,23 @@
         return elements;
       },
 
-      // Render Pages
-      renderBar: function() {
+      /**
+       * Renders the pager bar based on derived or forced settings.
+       * @private
+       * @param {SohoPagingInfo} pagingInfo - an object containing information on how to render the pager.
+       * @returns {undefined}
+       */
+      renderBar: function(pagingInfo) {
         //How many can fit?
         var pb = this.pagerBar,
           elems, pc,
           width = (this.element.parent().width() / pb.find('li:first').width()),
-          howMany = Math.floor(width-3);   //Take out the ones that should be visible (buttons and selected)
+          VISIBLE_BUTTONS = 3, // Take out the ones that should be visible (buttons and selected)
+          howMany = Math.floor(width - VISIBLE_BUTTONS);
+
+        if (!pagingInfo) {
+          pagingInfo = {};
+        }
 
         //Check Data Attr
         if (this.element.attr('data-pagesize')) {
@@ -445,33 +475,72 @@
           this.pageCount(pc);
         }
 
-        //Refresh Disabled
+        // Update the input field's number
+        this.pagerBar
+          .find('.pager-count input').val(this.activePage);
+
+        // Update the total number of pages
+        if (this._pageCount !== '0' && !isNaN(this._pageCount)) {
+          this.pagerBar.find('.pager-total-pages').text(this._pageCount);
+        }
+
+        // Update the number of records per page
+        this.pagerBar.find('.btn-menu span')
+          .text(Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize));
+
+        // Refresh Disabled
         var prev = pb.find('.pager-prev a'),
           next = pb.find('.pager-next a'),
           first = pb.find('.pager-first a'),
           last = pb.find('.pager-last a'),
           prevGroup = prev.add(first).add('.pager-prev').add('.pager-first'),
-          nextGroup = next.add(last).add('.pager-next').add('.pager-last');
+          nextGroup = next.add(last).add('.pager-next').add('.pager-last'),
+          disabledAttrs = {'disabled': 'disabled', 'tabindex': -1};
 
-        // Reset all
-        prevGroup.add(nextGroup).removeAttr('disabled tabIndex');
+        // Reset all pager buttons' disabled/focusable states
+        this.pagerBar[0].classList.remove('hidden');
+        prevGroup.add(nextGroup).removeAttr('disabled tabindex');
+
+        // Explicit false turns buttons back on.
+        if (pagingInfo.firstPage === false) {
+          prevGroup.removeAttr('disabled').removeAttr('tabindex');
+        }
+        if (pagingInfo.lastPage === false) {
+          nextGroup.removeAttr('disabled').removeAttr('tabindex');
+        }
 
         // First page
-        if (this.activePage === 1) {
-          prevGroup.attr({'disabled': 'disabled', 'tabIndex': -1});
-          nextGroup.attr({'tabIndex': 0});
+        if (pagingInfo.firstPage === true || (pagingInfo.firstPage === undefined && this.activePage === 1)) {
+          prevGroup.attr(disabledAttrs);
+
+          if (pagingInfo.lastPage !== true) {
+            nextGroup.attr({'tabIndex': 0});
+          }
         }
 
         // Last page
-        if (this.activePage === this.pageCount()) {
-          nextGroup.attr({'disabled': 'disabled', 'tabIndex': -1});
-          prevGroup.attr({'tabIndex': 0});
+        if (pagingInfo.lastPage === true || (pagingInfo.lastPage === undefined && this.activePage === this.pageCount())) {
+          nextGroup.attr(disabledAttrs);
+
+          if (pagingInfo.firstPage !== true) {
+            prevGroup.attr({'tabindex': 0});
+          }
         }
 
-        //Remove from the front until selected is visible and we have at least howMany showing
-        //rowTemplate
+        // Hide the entire pager bar if we're only showing one page, if applicable
+        if (this.settings.hideOnOnePage && pagingInfo.total <= pagingInfo.pagesize) {
+          this.pagerBar[0].classList.add('hidden');
+        }
+
+        // Hide the entire pager bar if both sides are disabled, if applicable
+        if ((pagingInfo.firstPage === true && pagingInfo.lastPage === true) && pagingInfo.hideDisabledPagers) {
+          this.pagerBar[0].classList.add('hidden');
+        }
+
+        // Remove from the front until selected is visible and we have at least howMany showing
+        // rowTemplate
         if (!this.settings.source) {
-          elems = pb.find(this.buttonExpr);
+          elems = pb.find(PAGER_NON_NUMBER_BUTTON_SELECTOR);
           elems.show();
           if (elems.length < howMany) {
             return;
@@ -495,13 +564,12 @@
             activePage: self.activePage,
             pagesize: self.settings.pagesize,
             type: op,
-            total: -1
+            total: self.settings.componentAPI ? self.settings.componentAPI.settings.dataset.length : -1
           };
 
         //Make an ajax call and wait
         setTimeout(function () {
           var doPaging = self.element.triggerHandler('beforepaging', request);
-
           if (doPaging === false) {
             return;
           }
@@ -512,10 +580,10 @@
             response = function(data, pagingInfo) {
               //Render Data
               pagingInfo.preserveSelected = true;
-              self.settings.componentAPI.loadData(data, pagingInfo, true);
 
-              //Update Paging Info
-              self.updatePagingInfo(pagingInfo);
+              // Call out to the component's API to pull in dataset information.
+              // This method should also tell the Pager how to re-render itself.
+              self.settings.componentAPI.loadData(data, pagingInfo, true);
 
               setTimeout(function () {
                 self.element.trigger('afterpaging', pagingInfo);
@@ -583,55 +651,32 @@
        * @param {boolean} [pagingInfo.hideDisabledPagers=false] - causes the pager to become completely hidden if all buttons are disabled
        */
       updatePagingInfo: function(pagingInfo) {
-        this.settings.pagesize = pagingInfo.pagesize || this.settings.pagesize;
-
-        var prevButtons = this.pagerBar.find('.pager-first a, .pager-prev a'),
-          nextButtons = this.pagerBar.find('.pager-next a, .pager-last a'),
-          allButtons = prevButtons.add(nextButtons);
-
-        if (this.isTable && this.settings.componentAPI) {
-          this.settings.componentAPI.settings.pagesize = this.settings.pagesize;
+        if (!pagingInfo) {
+          return;
         }
-        this.pagerBar.find('.btn-menu span').text(Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize));
+
+        // Grab and retain the pagesize
+        if (pagingInfo.pagesize) {
+          this.settings.pagesize = pagingInfo.pagesize;
+          if (this.isTable && this.settings.componentAPI) {
+            this.settings.componentAPI.settings.pagesize = pagingInfo.pagesize;
+          }
+        }
+
+        // Set a default total if none are defined.
+        if (!pagingInfo.total) {
+          pagingInfo.total = 0;
+        }
 
         if (this.settings.source) {
           this._pageCount = Math.ceil(pagingInfo.total/this.settings.pagesize);
-          this.activePage = pagingInfo.activePage;
-
           //Set first and last page if passed
-          this.setActivePage(this.activePage, false, 'pageinfo');
+          // If we get a page number as a result, rendering has already happened and
+          // we should not attempt to re-render.
+          return this.setActivePage(pagingInfo, false, 'pageinfo');
         }
 
-        //Update the UI
-        this.pagerBar
-          .find('.pager-count input').val(this.activePage);
-
-        if (this._pageCount !== '0' && !isNaN(this._pageCount)) {
-          this.pagerBar.find('.pager-total-pages').text(this._pageCount);
-        }
-
-        this.pagerBar[0].classList.remove('hidden');
-
-        // Disable paging buttons that shouldn't be used.
-        var attrNames = 'tabindex disabled',
-          attrs = {
-            'disabled': 'disabled',
-            'tabindex': '-1'
-          };
-        if (pagingInfo.firstPage && pagingInfo.lastPage) {
-          allButtons.attr(attrs);
-
-          if (pagingInfo.hideDisabledPagers) {
-            this.pagerBar[0].classList.add('hidden');
-          }
-
-        } else if (pagingInfo.firstPage) {
-          prevButtons.attr(attrs);
-          nextButtons.removeAttr(attrNames);
-        } else if (pagingInfo.lastPage) {
-          prevButtons.removeAttr(attrNames);
-          nextButtons.attr(attrs);
-        }
+        this.renderBar(pagingInfo);
       },
 
       //Teardown

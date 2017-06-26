@@ -1,0 +1,34 @@
+<h1 id="alert-component-implementation-detail-learn-more">Alert Component Implementation Detail <a href="https://soho.infor.com/index.php?p=component/accordion">Learn More</a></h1>
+<h2 id="api-details">Api Details</h2>
+<h3 id="settings">Settings</h3>
+<ul>
+<li>Icon Types - icon-alert, icon-confirm, icon-dirty, icon-error, icon-info, icon-pending, icon-new, icon-in-progress, icon-info-field<br /></li>
+<li>Icon Colors - This is done automatically by the type (alert, error ect)</li>
+</ul>
+<h2 id="configuration-options">Configuration Options</h2>
+<ol>
+<li>Alerts (Icons) <a href="/components/alerts/example-index">View Example</a><br /></li>
+<li>Alerts (Badges) <a href="/components/alerts/example-badges">View Example</a><br /></li>
+<li>More Badge Examples <a href="/components/alerts/example-additional-badges">View Example</a></li>
+</ol>
+<h2 id="code-example">Code Example</h2>
+<p>Alerts are just specially classed icons. You can added alert icons by adding an svg element with the icons. You should also include an audible span for better accessibility.</p>
+<pre class="sourceCode html"><code class="sourceCode html">
+<span class="co">&lt;!-- Substitute icon-alert with any of the above icon types --&gt;</span>
+<span class="kw">&lt;svg</span><span class="ot"> class=</span><span class="st">&quot;icon icon-alert&quot;</span><span class="ot"> focusable=</span><span class="st">&quot;false&quot;</span><span class="ot"> aria-hidden=</span><span class="st">&quot;true&quot;</span><span class="ot"> role=</span><span class="st">&quot;presentation&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;use</span><span class="ot"> xlink:href=</span><span class="st">&quot;#icon-alert&quot;</span><span class="kw">&gt;&lt;/use&gt;</span>
+<span class="kw">&lt;/svg&gt;</span>
+<span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;audible&quot;</span><span class="kw">&gt;</span>Alert<span class="kw">&lt;/span&gt;</span>
+</code></pre>
+<h2 id="accessibility">Accessibility</h2>
+<ul>
+<li>The traffic light colors in the Light UI theme is technically a contrast violation, so care should be given not to use the identical colors if styling text near the alerts. The high-contrast theme provides an alternative<br /></li>
+<li>Make to include an offscreen label even though the element does not get focus. This could be read by the virtual cursor on a screen reader (class=&quot;audible&quot;)</li>
+</ul>
+<h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
+<p>Alert icons and Badges do not have tab stops or keyboard interaction on their own. However, they may be placed in a grid cell or other object that has tab focus.</p>
+<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
+<ul>
+<li>The old alerts where shown as div's, the new ones are displayed as spans. These could be used interchangeably, but span is easier to position in line so is usually a better fit.<br /></li>
+<li>Classes which were formerly inforAlertIcon shuld be changed to an svg element</li>
+</ul>

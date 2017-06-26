@@ -364,14 +364,15 @@ html[dir='rtl'] {
 
   // Header Area of Calendar
   .calendar-header {
+    padding-right: 15px;
     text-align: right;
 
     button {
-      left: 37px;
+      left: 0;
       right: auto;
 
       &.prev {
-        margin: 8px 0 0 5px;
+        margin: 3px 0 0 5px;
 
         svg {
           left: auto;
@@ -380,8 +381,8 @@ html[dir='rtl'] {
       }
 
       &.next {
-        left: 11px;
-        margin: 8px 5px 0 0;
+        left: 30px;
+        margin: 3px 5px 0 0;
         right: auto;
 
         svg {

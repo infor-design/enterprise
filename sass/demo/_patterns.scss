@@ -61,7 +61,7 @@
 @include respond-to(tabletdown) {
   .demo-column-content {
     > .content {
-      min-height: 500px;
+      min-height: 1000px;
     }
   }
 }

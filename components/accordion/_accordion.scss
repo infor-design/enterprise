@@ -1,0 +1,1321 @@
+// New Accordion Style
+//========================================================
+
+@mixin left-align-cascade-styles-header($a-padding, $icon-margin, $width, $li-padding) {
+  > a {
+    padding-left: $a-padding;
+  }
+
+  > .icon,
+  > [class^="btn"] {
+    margin-left: $icon-margin;
+
+    + a {
+      padding-left: 0;
+      width: calc(100% - #{$width});
+    }
+  }
+
+  &.list-item {
+    &::before {
+      padding-left: $li-padding;
+    }
+
+    a {
+      padding-left: 0;
+      width: calc(100% - #{$width});
+    }
+  }
+}
+
+@mixin left-align-cascade-styles-pane($leftPadding, $iconLinkPadding, $iconContentPadding) {
+  .accordion-content {
+    padding-left: $leftPadding;
+  }
+
+  &.has-icons {
+    .accordion-header.no-icon > a {
+      padding-left: $iconLinkPadding;
+    }
+
+    .accordion-content {
+      padding-left: $iconContentPadding;
+    }
+  }
+}
+
+.accordion {
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-bottom: 0;
+  font-size: 0;
+  overflow-y: visible;
+
+  &.is-disabled {
+    background-color: $accordion-disabled-bg-color !important;
+    border-bottom-color: $accordion-disabled-border-color;
+    pointer-events: none;
+
+    .accordion-header {
+      background-color: $accordion-disabled-bg-color !important;
+      border-bottom-color: $accordion-disabled-border-color !important;
+      color: $accordion-disabled-text-color !important;
+
+      a {
+        color: $accordion-disabled-text-color !important;
+      }
+
+      span {
+        color: $accordion-disabled-text-color !important;
+      }
+
+      .icon {
+        fill: $accordion-disabled-text-color !important;
+
+        &.plus-minus {
+          &::before,
+          &::after {
+            background-color: $accordion-disabled-text-color !important;
+          }
+        }
+      }
+
+      &.list-item {
+        &::before {
+          color: $accordion-disabled-text-color !important;
+        }
+      }
+    }
+
+    .accordion-pane {
+      background-color: $accordion-disabled-pane-bg-color !important;
+
+      .accordion-content,
+      .accordion-header {
+        background-color: $accordion-disabled-pane-bg-color !important;
+        border-bottom-color: $accordion-disabled-pane-bg-color !important;
+      }
+    }
+  }
+
+  // Reset the padding for various things when we have icons present
+  &.has-icons {
+
+    // Level 1
+    > .accordion-header {
+      > a {
+        padding-left: 54px;
+      }
+
+      > .icon,
+      > [class^="btn"] {
+
+        + a {
+          padding-left: 0;
+        }
+      }
+    }
+
+    .accordion-pane {
+      @include left-align-cascade-styles-pane(54px, 54px, 54px);
+
+      // Level 2
+      .accordion-header {
+        @include left-align-cascade-styles-header(36px, 30px, 56px, 37px);
+
+        &.no-icon {
+          > a {
+            padding-left: 54px;
+          }
+        }
+      }
+
+      .accordion-pane {
+        @include left-align-cascade-styles-pane(54px, 73px, 74px);
+
+        // Level 3
+        .accordion-header {
+          @include left-align-cascade-styles-header(54px, 49px, 76px, 56px);
+        }
+
+        .accordion-pane {
+          @include left-align-cascade-styles-pane(74px, 92px, 93px);
+
+          // Level 4
+          .accordion-header {
+            @include left-align-cascade-styles-header(74px, 68px, 95px, 75px);
+          }
+
+          .accordion-pane {
+            @include left-align-cascade-styles-pane(93px, 111px, 112px);
+
+            // Level 5
+            .accordion-header {
+              @include left-align-cascade-styles-header(93px, 87px, 114px, 94px);
+            }
+
+            .accordion-pane {
+              @include left-align-cascade-styles-pane(112px, 131px, 132px);
+
+              // Level 6
+              .accordion-header {
+                @include left-align-cascade-styles-header(112px, 106px, 134px, 113px);
+              }
+
+              .accordion-pane {
+                .accordion-content {
+                  padding-left: 132px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // Accordions that are styled as standalone "panels".
+  &.panel {
+    background-color: $accordion-bg-color;
+    border-color: $accordion-panel-border-color;
+    border-right-color: $accordion-toplevel-border-color;
+
+    .accordion-header {
+      border-bottom-color: $accordion-panel-border-color;
+
+      &.is-focused:not(.hide-focus) {
+        border-bottom-color: $accordion-selected-bg-color;
+      }
+
+      // Selected state only exists on Paneled accordions.
+      &.is-selected,
+      &.is-selected:hover,
+      &.is-focused.is-selected {
+        background-color: $accordion-selected-bg-color;
+        border-bottom-color: $accordion-selected-bg-color;
+        color: $accordion-selected-text-color;
+
+        > a {
+          color: $accordion-selected-text-color;
+        }
+
+        > .icon {
+          fill: $accordion-selected-text-color;
+        }
+
+        > [class^="btn"] {
+          .icon {
+            fill: $accordion-selected-text-color;
+
+            &.plus-minus {
+              &::before,
+              &::after {
+                background-color: $accordion-selected-text-color;
+              }
+            }
+          }
+
+          .audible {
+            color: $white;
+          }
+        }
+
+        [class^="btn"]:focus {
+          box-shadow: none;
+
+          &:not(.hide-focus) {
+            border: 1px solid $accordion-selected-text-color;
+          }
+        }
+
+        .accordion-header {
+          border-bottom-color: $accordion-selected-bg-color;
+        }
+      }
+
+
+      &:last-child {
+        border-bottom-color: transparent;
+      }
+    }
+
+    .accordion-pane {
+      background-color: $accordion-pane-bg-color;
+
+      // Visible accordion panes force a border to show up on the next accordion header for visual separation
+      &.is-expanded {
+        + .accordion-header:not(.is-focused):not(.is-selected),
+        + .accordion-content {
+          border-top-color: $accordion-alternate-border-color;
+        }
+      }
+
+      &:last-child {
+        .accordion-content:last-child {
+          border-bottom: 0;
+        }
+      }
+    }
+
+    .accordion-content {
+      border-bottom-color: $accordion-panel-border-color;
+    }
+
+    // Lighter-colored, "alternate" color scheme
+    &.alternate {
+      background-color: $accordion-alternate-bg-color;
+
+      .accordion-header {
+        border-bottom-color: $accordion-alternate-border-color;
+
+        &.is-focused:not(.hide-focus) {
+          border-bottom-color: $accordion-selected-bg-color;
+        }
+      }
+
+      .accordion-pane {
+        background-color: $accordion-alternate-pane-bg-color;
+
+        .accordion-header {
+          border-bottom-color: $accordion-alternate-border-color;
+
+          &:last-child {
+            border-bottom-color: transparent;
+          }
+
+          &.is-focused:not(.hide-focus) {
+            border-bottom-color: $accordion-focused-border-color;
+          }
+
+          &.is-selected,
+          &.is-selected:hover,
+          &.is-focused.is-selected {
+            border-bottom-color: $accordion-selected-bg-color;
+          }
+        }
+
+        .accordion-content {
+          color: $accordion-text-color;
+          border-bottom-color: $accordion-alternate-pane-bg-color;
+        }
+      }
+    }
+
+    // Darker, "inverse" color scheme
+    &.inverse {
+      background-color: $accordion-inverse-bg-color;
+      border-right: $accordion-inverse-border-color;
+
+      .accordion-header {
+        border-bottom-color: $accordion-inverse-border-color;
+        color: $accordion-inverse-text-color;
+
+        .icon {
+          fill: $accordion-inverse-text-color;
+
+          &.plus-minus {
+            &::before,
+            &::after {
+              background-color: $accordion-inverse-text-color;
+            }
+          }
+        }
+
+        > [class^="btn"] {
+          &:focus:not(.hide-focus) {
+            border-color: $accordion-inverse-focus-state-color;
+          }
+        }
+
+        &.list-item {
+          &::before {
+            color: $accordion-inverse-text-color;
+          }
+
+          &.is-selected,
+          &.is-selected:hover,
+          &.is-focused.is-selected {
+            color: $accordion-selected-text-color;
+          }
+        }
+
+        &.is-focused:not(.hide-focus) {
+          border-bottom-color: $accordion-selected-bg-color;
+        }
+
+        &.is-selected,
+        &.is-selected:hover,
+        &.is-focused.is-selected {
+          color: $accordion-selected-text-color;
+
+          .icon {
+            fill: $accordion-selected-text-color;
+
+            &.plus-minus {
+              &::before,
+              &::after {
+                background-color: $accordion-selected-text-color;
+              }
+            }
+          }
+
+          > [class^="btn"] {
+            &:focus:not(.hide-focus) {
+              border-color: $accordion-selected-text-color;
+            }
+          }
+        }
+
+        &:hover {
+          color: $accordion-inverse-text-hover-color;
+
+          .icon {
+            fill: $accordion-inverse-text-hover-color;
+
+            &.plus-minus {
+              &::before,
+              &::after {
+                background-color: $accordion-inverse-text-hover-color;
+              }
+            }
+          }
+        }
+      }
+
+      .accordion-pane {
+        background-color: $accordion-inverse-pane-bg-color;
+
+        // Visible accordion panes force a border to show up on the next accordion header for visual separation
+        &.is-expanded {
+          + .accordion-header:not(.is-focused):not(.is-selected),
+          + .accordion-content {
+            border-top-color: $accordion-inverse-border-color;
+          }
+        }
+
+        .accordion-header {
+          border-bottom-color: $accordion-inverse-pane-bg-color;
+
+          &:last-child {
+            border-bottom-color: transparent;
+          }
+
+          &.is-focused:not(.hide-focus) {
+            border-bottom-color: $accordion-selected-bg-color;
+          }
+
+          &.is-selected,
+          &.is-selected:hover,
+          &.is-focused.is-selected {
+            color: $accordion-selected-text-color;
+
+            .icon {
+              fill: $accordion-selected-text-color;
+            }
+          }
+        }
+
+        .accordion-content {
+          border-bottom-color: $accordion-inverse-pane-bg-color;
+          color: $accordion-inverse-text-color;
+        }
+      }
+    }
+
+  }
+
+  > .accordion-content {
+    padding-left: 20px;
+  }
+}
+
+.accordion-content {
+  @include font-size(14);
+}
+
+.accordion-header {
+  border: 1px solid transparent;
+  border-bottom-color: $accordion-border-color;
+  cursor: pointer;
+  font-size: 0;
+  height: 45px;
+  overflow: hidden;
+  position: relative;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+
+  > * {
+    vertical-align: middle;
+  }
+
+  // Set for accessibility
+  span {
+    color: inherit;
+
+    &.audible {
+      color: inherit;
+    }
+  }
+
+  a {
+    color: inherit;
+    @include font-size(14);
+    text-decoration: none;
+    text-overflow: ellipsis;
+  }
+
+  > a {
+    display: inline-block;
+    overflow: hidden;
+    padding: 13px 0 13px 20px;
+    white-space: nowrap;
+    width: calc(100% - 1px);
+  }
+
+  > [class^="btn"] {
+    @include btn-chevron-style;
+  }
+
+  > [class^="btn"],
+  > .icon {
+    + a {
+      padding-left: 0;
+    }
+  }
+
+  .icon {
+    fill: $accordion-icon-color;
+    height: 16px;
+    top: -1px;
+    width: 18px;
+  }
+
+  // NOT the same as the above rule.
+  > .icon {
+    margin: 0 18px;
+
+    + a {
+      width: calc(100% - 56px);
+    }
+  }
+
+  // Hover state
+  &:hover {
+    color: $accordion-hover-text-color;
+
+    > a {
+      text-decoration: $accordion-highcontrast-text-decoration;
+    }
+
+    .icon {
+      fill: $accordion-hover-text-color;
+
+      &.plus-minus {
+        &::before,
+        &::after {
+          background-color: $accordion-hover-text-color;
+        }
+      }
+    }
+  }
+
+  // Selected color scheme
+  &.is-focused:not(.hide-focus) {
+    border-color: $accordion-focused-border-color;
+  }
+
+  &.has-chevron {
+    > [class^="btn"] {
+      padding: 0;
+    }
+
+    > a {
+      width: calc(100% - 55px);
+    }
+
+    > .icon {
+      + a {
+        width: calc(100% - 109px);
+      }
+    }
+  }
+
+  &.is-disabled {
+    background-color: $accordion-disabled-bg-color !important;
+    color: $accordion-disabled-text-color !important;
+    pointer-events: none;
+
+    span.audible {
+      color: #ffffff !important;
+    }
+
+    a {
+      color: $accordion-disabled-text-color !important;
+    }
+
+    .icon {
+      fill: $accordion-disabled-text-color !important;
+
+      &.plus-minus {
+        &::before,
+        &::after {
+          background-color: $accordion-disabled-text-color !important;
+        }
+      }
+    }
+
+    + .accordion-pane {
+      background-color: $accordion-disabled-pane-bg-color !important;
+      border-bottom-color: $accordion-disabled-pane-bg-color !important;
+
+      .accordion-header {
+        background-color: $accordion-disabled-pane-bg-color !important;
+        border-bottom-color: $accordion-disabled-pane-bg-color !important;
+
+        a {
+          color: $accordion-disabled-text-color !important;
+        }
+
+        .icon {
+          fill: $accordion-disabled-text-color !important;
+
+          &.plus-minus {
+            &::before,
+            &::after {
+              background-color: $accordion-disabled-text-color !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Level 1 Accordion Pane
+.accordion-pane {
+  @include transition(padding 300ms cubic-bezier(.17, .04, .03, .94));
+  height: 0;
+  overflow: hidden;
+  padding: 0;
+
+  // Visible accordion panes force a border to show up on the next accordion header for visual separation
+  &.is-expanded {
+    padding: 5px 0;
+
+    + .accordion-header:not(.is-focused):not(.is-selected),
+    + .accordion-content {
+      border-top-color: $accordion-border-color;
+    }
+  }
+
+  .accordion-content {
+    color: $accordion-text-color;
+    overflow-x: visible;
+  }
+  @include left-align-cascade-styles-pane(20px, 40px, 40px);
+
+  // These rules allow the accordion to expand
+  // Level 2 Accordion Header
+  .accordion-header {
+    height: 34px;
+
+    &:not(:first-child) {
+      border-top-color: transparent;
+    }
+
+    &:last-child {
+      border-bottom: 1px solid transparent;
+    }
+
+    > a {
+      padding: 8px 0 8px 20px;
+    }
+
+    > [class^="btn"],
+    > .icon {
+      margin-left: 14px;
+
+      + a {
+        padding: 8px 0 8px 1px;
+        width: calc(100% - 41px);
+      }
+    }
+
+    > [class^="btn"] {
+      height: 25px;
+      width: 20px;
+
+      .icon.plus-minus {
+        &::before,
+        &::after {
+          left: 5px;
+          top: 10px;
+          width: 10px;
+        }
+      }
+    }
+
+    &.list-item {
+
+      &::before {
+        color: $accordion-icon-color;
+        content: '\25cf';
+        display: inline-block;
+        @include font-size(12);
+        padding: 8px 10px 8px 21px;
+        vertical-align: middle;
+      }
+
+      a {
+        padding-left: 1px;
+        vertical-align: middle;
+        width: calc(100% - 41px);
+      }
+
+      &.is-disabled {
+        > a {
+          color: $accordion-disabled-text-color;
+        }
+      }
+    }
+
+    &.is-focused:not(.hide-focus) {
+      border-color: $accordion-focused-border-color;
+
+      &:last-child {
+        border-bottom-color: $accordion-focused-border-color;
+      }
+    }
+
+    &.is-selected,
+    &.is-selected:hover,
+    &.is-focused.is-selected {
+      &.list-item {
+        &::before {
+          color: $accordion-selected-text-color !important;
+        }
+      }
+    }
+
+    &.is-disabled {
+      background-color: $accordion-disabled-pane-bg-color !important;
+      border-bottom-color: $accordion-disabled-pane-bg-color !important;
+    }
+  }
+
+  // Level 2 Accordion Pane
+  .accordion-pane {
+    padding: 0;
+    border-bottom-color: transparent;
+
+    @include left-align-cascade-styles-pane(59px, 59px, 40px);
+
+    // Level 3 Accordion Header
+    .accordion-header {
+      @include left-align-cascade-styles-header(40px, 34px, 59px, 41px);
+    }
+
+    // Level 3 Accordion Pane
+    .accordion-pane {
+      @include left-align-cascade-styles-pane(78px, 78px, 59px);
+
+
+      // Level 4 Accordion Header
+      .accordion-header {
+        @include left-align-cascade-styles-header(59px, 53px, 78px, 60px);
+      }
+
+      // Level 4 Accordion Pane
+      .accordion-pane {
+        @include left-align-cascade-styles-pane(97px, 97px, 78px);
+
+
+        // Level 5 Accordion Header
+        .accordion-header {
+          @include left-align-cascade-styles-header(78px, 72px, 97px, 79px);
+        }
+
+        // Level 5 Accordion Pane
+        .accordion-pane {
+          @include left-align-cascade-styles-pane(116px, 116px, 97px);
+
+          // Level 6 Accordion Header
+          .accordion-header {
+            @include left-align-cascade-styles-header(97px, 92px, 117px, 99px);
+          }
+
+          // Level 6 Accordion Pane
+          .accordion-pane {
+            .accordion-content {
+              padding-left: 116px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.accordion-content {
+  padding: 14px 0;
+}
+
+//RTL Styles
+html[dir='rtl'] {
+
+  .accordion {
+
+    > .accordion-content {
+      padding-left: auto;
+      padding-right: 20px;
+    }
+
+    // Level 1
+    .accordion-header {
+      -webkit-font-feature-settings: "ccmp" 0;
+
+      > a {
+        padding-left: 0;
+        padding-right: 20px;
+      }
+
+      > .icon,
+      > [class^="btn"] {
+
+        + a {
+          padding-right: 0;
+        }
+      }
+    }
+
+    .accordion-pane {
+      .accordion-content {
+        padding-left: 0;
+        padding-right: 20px;
+      }
+
+      &.has-icons {
+        .accordion-header.no-icon > a {
+          padding-right: 40px;
+        }
+
+        .accordion-content {
+          padding-right: 40px;
+        }
+      }
+
+      // Level 2
+      .accordion-header {
+        > a {
+          padding-left: 0;
+          padding-right: 20px;
+        }
+
+        > .icon,
+        > [class^="btn"] {
+          margin-left: 3px;
+          margin-right: 14px;
+
+          + a {
+            padding-left: 0;
+            padding-right: 1px;
+          }
+        }
+
+        &.list-item {
+          &::before {
+            padding-left: 10px;
+            padding-right: 21px;
+          }
+
+          a {
+            padding-right: 1px;
+          }
+        }
+      }
+
+      .accordion-pane {
+        .accordion-content {
+          padding-left: 0;
+          padding-right: 40px;
+        }
+
+        &.has-icons {
+          .accordion-header.no-icon > a {
+            padding-left: 0;
+            padding-right: 59px;
+          }
+
+          .accordion-content {
+            padding-left: 0;
+            padding-right: 59px;
+          }
+        }
+
+        // Level 3
+        .accordion-header {
+          > a {
+            padding-left: 0;
+            padding-right: 40px;
+          }
+
+          > .icon,
+          > [class^="btn"] {
+            margin-left: 3px;
+            margin-right: 34px;
+
+            + a {
+              padding-right: 0;
+            }
+          }
+
+          &.list-item {
+            &::before {
+              padding-left: 10px;
+              padding-right: 41px;
+            }
+
+            a {
+              padding-right: 1px;
+            }
+          }
+        }
+
+        .accordion-pane {
+          .accordion-content {
+            padding-left: 0;
+            padding-right: 59px;
+          }
+
+          &.has-icons {
+            .accordion-header.no-icon > a {
+              padding-left: 0;
+              padding-right: 78px;
+            }
+
+            .accordion-content {
+              padding-left: 0;
+              padding-right: 78px;
+            }
+          }
+
+          // Level 4
+          .accordion-header {
+            > a {
+              padding-left: 0;
+              padding-right: 59px;
+            }
+
+            > .icon,
+            > [class^="btn"] {
+              margin-left: 3px;
+              margin-right: 53px;
+
+              + a {
+                padding-right: 0;
+              }
+            }
+
+            &.list-item {
+              &::before {
+                padding-left: 10px;
+                padding-right: 60px;
+              }
+
+              a {
+                padding-right: 1px;
+              }
+            }
+          }
+
+          .accordion-pane {
+            .accordion-content {
+              padding-left: 0;
+              padding-right: 78px;
+            }
+
+            &.has-icons {
+              .accordion-header.no-icon > a {
+                padding-left: 0;
+                padding-right: 97px;
+              }
+
+              .accordion-content {
+                padding-left: 0;
+                padding-right: 97px;
+              }
+            }
+
+            // Level 5
+            .accordion-header {
+              > a {
+                padding-left: 0;
+                padding-right: 78px;
+              }
+
+              > .icon,
+              > [class^="btn"] {
+                margin-left: 3px;
+                margin-right: 72px;
+
+                + a {
+                  padding-right: 0;
+                }
+              }
+
+              &.list-item {
+                &::before {
+                  padding-left: 10px;
+                  padding-right: 79px;
+                }
+
+                a {
+                  padding-right: 1px;
+                }
+              }
+            }
+
+            .accordion-pane {
+              .accordion-content {
+                padding-left: 0;
+                padding-right: 78px;
+              }
+
+              &.has-icons {
+                .accordion-header.no-icon > a {
+                  padding-left: 0;
+                  padding-right: 116px;
+                }
+
+                .accordion-content {
+                  padding-left: 0;
+                  padding-right: 116px;
+                }
+              }
+
+              // Level 6
+              .accordion-header {
+                > a {
+                  padding-left: 0;
+                  padding-right: 97px;
+                }
+
+                > .icon,
+                > [class^="btn"] {
+                  margin-left: 3px;
+                  margin-right: 92px;
+
+                  + a {
+                    padding-right: 0;
+                  }
+                }
+
+                &.list-item {
+                  &::before {
+                    padding-left: 10px;
+                    padding-right: 99px;
+                  }
+
+                  a {
+                    padding-right: 1px;
+                  }
+                }
+              }
+
+              .accordion-pane {
+                .accordion-content {
+                  padding-left: 0;
+                  padding-right: 116px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // Change padding/margin for headers based on icon existence
+    &.has-icons {
+      .accordion-header {
+        > a {
+          padding-right: 55px;
+        }
+
+        > .icon,
+        > [class^="btn"] {
+
+          + a {
+            padding-right: 0;
+          }
+        }
+      }
+
+      .accordion-pane {
+        .accordion-content {
+          padding-right: 36px;
+        }
+
+
+
+        &.has-icons {
+          .accordion-header.no-icon > a {
+            padding-right: 55px;
+          }
+
+          .accordion-content {
+            padding-right: 55px;
+          }
+        }
+
+        // Level 2
+        .accordion-header {
+          > a {
+            padding-right: 36px;
+          }
+
+          &.no-icon {
+            > a {
+              padding-right: 55px;
+            }
+          }
+
+          > .icon,
+          > [class^="btn"] {
+            margin-left: 3px;
+            margin-right: 30px;
+
+            + a {
+              padding-left: 0;
+              padding-right: 1px;
+            }
+          }
+
+          &.list-item {
+            &::before {
+              padding-left: 10px;
+              padding-right: 37px;
+            }
+
+            a {
+              padding-right: 0;
+            }
+          }
+        }
+
+        .accordion-pane {
+          .accordion-content {
+            padding-right: 54px;
+          }
+
+          &.has-icons {
+            .accordion-header.no-icon > a {
+              padding-right: 74px;
+            }
+
+            .accordion-content {
+              padding-right: 74px;
+            }
+          }
+
+          // Level 3
+          .accordion-header {
+            > a {
+              padding-right: 54px;
+            }
+
+            > .icon,
+            > [class^="btn"] {
+              margin-left: 3px;
+              margin-right: 49px;
+
+              + a {
+                padding-left: 0;
+                padding-right: 0;
+              }
+            }
+
+            &.list-item {
+              &::before {
+                padding-left: 10px;
+                padding-right: 56px;
+              }
+
+              a {
+                padding-right: 0;
+              }
+            }
+          }
+
+          .accordion-pane {
+            .accordion-content {
+              padding-right: 74px;
+            }
+
+            &.has-icons {
+              .accordion-header.no-icon > a {
+                padding-right: 93px;
+              }
+
+              .accordion-content {
+                padding-right: 93px;
+              }
+            }
+
+            // Level 4
+            .accordion-header {
+              > a {
+                padding-right: 74px;
+              }
+
+              > .icon,
+              > [class^="btn"] {
+                margin-left: 3px;
+                margin-right: 68px;
+
+                + a {
+                  padding-left: 0;
+                  padding-right: 0;
+                }
+              }
+
+              &.list-item {
+                &::before {
+                  padding-left: 10px;
+                  padding-right: 75px;
+                }
+
+                a {
+                  padding-right: 0;
+                }
+              }
+            }
+
+            .accordion-pane {
+              .accordion-content {
+                padding-right: 93px;
+              }
+
+              &.has-icons {
+                .accordion-header.no-icon > a {
+                  padding-right: 112px;
+                }
+
+                .accordion-content {
+                  padding-right: 112px;
+                }
+              }
+
+              // Level 5
+              .accordion-header {
+                > a {
+                  padding-right: 93px;
+                }
+
+                > .icon,
+                > [class^="btn"] {
+                  margin-left: 3px;
+                  margin-right: 87px;
+
+                  + a {
+                    padding-left: 0;
+                    padding-right: 0;
+                  }
+                }
+
+                &.list-item {
+                  &::before {
+                    padding-left: 10px;
+                    padding-right: 94px;
+                  }
+
+                  a {
+                    padding-right: 0;
+                  }
+                }
+              }
+
+              .accordion-pane {
+                .accordion-content {
+                  padding-right: 112px;
+                }
+
+                &.has-icons {
+                  .accordion-header.no-icon > a {
+                    padding-right: 132px;
+                  }
+
+                  .accordion-content {
+                    padding-right: 132px;
+                  }
+                }
+
+                // Level 6
+                .accordion-header {
+                  > a {
+                    padding-right: 112px;
+                  }
+
+                  > .icon,
+                  > [class^="btn"] {
+                    margin-left: 3px;
+                    margin-right: 106px;
+
+                    + a {
+                      padding-left: 0;
+                      padding-right: 0;
+                    }
+                  }
+
+                  &.list-item {
+                    &::before {
+                      padding-left: 10px;
+                      padding-right: 113px;
+                    }
+
+                    a {
+                      padding-right: 0;
+                    }
+                  }
+                }
+
+                .accordion-pane {
+                  .accordion-content {
+                    padding-right: 132px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Dirty Hack because Firefox never lines things up right
+// These rules vertically "center" the plus-minus icon in
+.is-firefox {
+  .accordion-header {
+    > [class^="btn"] {
+      .icon.plus-minus {
+        &::before,
+        &::after {
+          top: 15px;
+        }
+      }
+    }
+  }
+
+  .accordion-pane {
+    .accordion-header {
+      > [class^="btn"] {
+        .icon.plus-minus {
+          &::before,
+          &::after {
+            top: 9px;
+          }
+        }
+      }
+    }
+  }
+}

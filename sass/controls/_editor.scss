@@ -154,6 +154,10 @@
     @include font-size(14);
     color: $input-color;
     list-style: disc;
+
+    li {
+      margin-bottom: 8px;
+    }
   }
 
   ol {
@@ -225,6 +229,7 @@
     border: 1px solid transparent;
     color: $editor-btn-color;
     height: 20px;
+    line-height: normal;
     margin-top: 6px;
     min-width: 18px;
     // scss-lint:disable ImportantRule
@@ -543,9 +548,4 @@ html[dir='rtl'] {
       }
     }
   }
-}
-
-.popupmenu .icon {
-  fill: $editor-btn-color;
-
 }

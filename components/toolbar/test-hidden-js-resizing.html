@@ -1,0 +1,89 @@
+<div class="row">
+  <div class="twelve columns">
+    <h2>Toolbar Test: Hidden Toolbar Sizing</h2>
+    <p><a class="hyperlink" href="http://jira/browse/SOHO-5723" target="_blank">Related JIRA Ticket</a>. Toolbar #1 and Toolbar #2 are the same, except that #1 is initialized while visible and #2 is initialized while hidden. When unhiding Toolbar #2 using the checkbox, these toolbars should appear the same.</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <input type="checkbox" class="checkbox" id="checkbox-test" onchange="$('#toolbar2').toggle()">
+      <label for="checkbox-test" class="checkbox-label">Show Toolbar #2</label>
+    </div>
+
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <div class="toolbar" id="toolbar1" role="toolbar" data-options='{ "resizeContainers" : true }'>
+      <div class="title">
+        Toolbar #1 (initially visible)
+      </div>
+      <div class="buttonset">
+
+        <label class="audible" for="toolbar-example-searchfield1">Toolbar Searchfield</label>
+        <input class="searchfield" placeholder="keyword" id="toolbar-example-searchfield1" name="toolbar-example-searchfield" />
+
+        <button class="btn" type="button">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-filter"></use>
+          </svg>
+          <span>Category</span>
+        </button>
+
+        <button class="btn-tertiary" type="button">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-calendar"></use>
+          </svg>
+          <span>Date</span>
+        </button>
+
+        <button class="btn" type="button">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-mingle-share"></use>
+          </svg>
+          <span>Share</span>
+        </button>
+
+      </div>
+    </div>
+
+    <div class="toolbar" id="toolbar2" role="toolbar" style="display: none" data-options='{ "resizeContainers" : true }'>
+      <div class="title">
+        Toolbar #2 (initially hidden)
+      </div>
+      <div class="buttonset">
+
+        <label class="audible" for="toolbar-example-searchfield2">Toolbar Searchfield</label>
+        <input class="searchfield" placeholder="keyword" id="toolbar-example-searchfield2" name="toolbar-example-searchfield" />
+
+        <button class="btn" type="button">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-filter"></use>
+          </svg>
+          <span>Category</span>
+        </button>
+
+        <button class="btn-tertiary" type="button">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-calendar"></use>
+          </svg>
+          <span>Date</span>
+        </button>
+
+        <button class="btn" type="button">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-mingle-share"></use>
+          </svg>
+          <span>Share</span>
+        </button>
+
+      </div>
+    </div>
+
+  </div>
+</div>

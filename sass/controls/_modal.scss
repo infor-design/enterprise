@@ -53,7 +53,6 @@
   }
 
   .textarea-wordcount {
-    margin-top: -9px;
     width: auto;
   }
 
@@ -158,7 +157,7 @@
 }
 
 .modal-header {
-  padding: 15px 20px 2px;
+  padding: 20px;
 }
 
 .modal-content {
@@ -213,7 +212,7 @@
   .modal-body-wrapper {
     overflow: auto;
     -webkit-overflow-scrolling: auto;
-    padding: 20px;
+    padding: 0 20px;
   }
 
   // Modal Buttons
@@ -265,10 +264,11 @@
 .modal-buttonset {
   border-top: 1px solid $modal-btn-border-color;
   height: 50px;
-  margin-top: 5px;
+  margin-top: 20px;
+  padding: 2px;// Keep 2px padding around for border to show around on focus
 
   button {
-    @include font-size(12);
+    @include font-size(14);
     @include css3(transition, color .3s ease 0s);
     border: 1px solid transparent;
     border-left: 1px solid $modal-btn-border-color;
@@ -277,12 +277,11 @@
     cursor: pointer;
     float: left;
     font-weight: bold;
-    height: 50px;
+    height: 46px;// [50px-4px] Keep smaller 4px for border to show around on focus
     margin-right: 0;
     overflow: hidden;
     position: relative;
     text-align: center;
-    text-transform: uppercase;
     width: 100%;
 
     &:hover {
@@ -333,8 +332,6 @@
 //RTL Styles
 html[dir='rtl'] {
   .modal-buttonset {
-    margin: 0;
-
     button {
       float: right;
       margin-left: 0;

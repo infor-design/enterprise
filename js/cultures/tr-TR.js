@@ -72,6 +72,7 @@
       'AddNewTab': {id: 'AddNewTab', value: 'Yeni Sekme Ekle', comment: 'Attached to a button that adds new tabs'},
       'AdvancedFilter': {id: 'AdvancedFilter', value: 'Gelişmiş Filtre Oluştur', comment: 'In a data grid active an advanced filtering feature'},
       'Alert': {id: 'Alert', value: 'Uyarı', comment: 'Alert'},
+      'All': {id: 'All', value: 'Hepsi', comment: 'All items in the context of a filter'},
       'AllResults': {id: 'AllResults', value: 'Şunun için Tüm Sonuçlar:', comment: 'Search Results Text'},
       'AligntoBottom': {id: 'AligntoBottom', value: 'Alta Hizala', comment: 'Align to Bottom tooltip'},
       'AlignCenterHorizontally': {id: 'AlignCenterHorizontally', value: 'Yatay Hizalama Orta', comment: 'Align Center Horizontally tooltip'},
@@ -80,6 +81,7 @@
       'Apply': {id: 'Apply', value: 'Uygula', comment: 'Text in a button to apply an action'},
       'Attach': {id: 'Attach', value: 'Ekle', comment: 'Attach'},
       'Azure': {id: 'Azure', value: 'Lacivert taşı', comment: 'Color in our color pallette'},
+      'BackgroundColor': {id: 'BackgroundColor', value: 'Arka plan rengi', comment: 'add or edit text background color in the editor'},
       'Between': {id: 'Between', value: 'Arasında', comment: 'Between in icons for filtering'},
       'Blockquote': {id: 'Blockquote', value: 'Alıntı kısmı', comment: 'insert a block quote in the editor'},
       'Bold': {id: 'Bold', value: 'Kalın', comment: 'Make text Bold'},
@@ -111,6 +113,7 @@
       'Completed': {id: 'Completed', value: 'Tamamlandı', comment: 'Text For a Completed Status'},
       'Confirm': {id: 'Confirm', value: 'Onayla', comment: 'Confirm tooltip'},
       'Contains': {id: 'Contains', value: 'Şunu İçerir', comment: 'Contains in icons for filtering'},
+      'CssClass': {id: 'CssClass', value: 'Css Sınıfı', comment: 'Label for entering a Css Class name'},
       'Cut': {id: 'Cut', value: 'Kes', comment: 'Cut tooltip'},
       'Date': {id: 'Date', value: 'Tarih', comment: 'Describes filtering by a date data type'},
       'Delete': {id: 'Delete', value: 'Sil', comment: 'Delete Toolbar Action Tooltip'},
@@ -169,8 +172,11 @@
       'Import': {id: 'Import', value: 'İçeri Aktar', comment: 'Import tooltip'},
       'Info': {id: 'Info', value: 'Bilgi', comment: 'Info tooltip'},
       'InProgress': {id: 'In Progress', value: 'Devam Ediyor', comment: 'Info tooltip that an action is in progress'},
+      'Insert': {id: 'Insert', value: 'Ekle', comment: 'Insert Modal Dialog Button'},
       'InsertAnchor': {id: 'InsertAnchor', value: 'Bağlayıcı Ekle', comment: 'Insert Acnhor (link) in an editor'},
       'InsertImage': {id: 'InsertImage', value: 'Görüntü Ekle', comment: 'Insert Image in an editor'},
+      'InsertLink': {id: 'InsertLink', value: 'Bağlantı Ekle', comment: 'Insert Link in an editor'},
+      'InsertUrl': {id: 'InsertUrl', value: 'Url Ekle', comment: 'Insert a Url in an editor'},
       'Italic': {id: 'Italic', value: 'İtalik', comment: 'Make Text Italic'},
       'InvalidDate': {id: 'InvalidDate', value: 'Geçersiz Tarih', comment: 'validation message for wrong date format (short)'},
       'InvalidTime': {id: 'InvalidTime', value: 'Geçersiz Saat', comment: 'validation message for wrong time format'},
@@ -209,6 +215,7 @@
       'MoreActions': {id: 'MoreActions', value: 'Daha Fazla Eylem', comment: 'Text on the More Actions button indictating hidden functions'},
       'MsgDirty': {id: 'MsgDirty', value: ', Düzenlenmiş', comment: 'for modified form fields'},
       'NewDocument': {id: 'NewDocument', value: 'Yeni Belge', comment: 'New Document tooltip'},
+      'NewItem': {id: 'NewItem', value: 'Yeni öğe', comment: 'New item in listbuilder'},
       'Next': {id: 'Next', value: 'Sonraki', comment: 'Next in icons tooltip'},
       'NextPage': {id: 'NextPage', value: 'Sonraki Sayfa', comment: 'Next on Pager'},
       'NextMonth': {id: 'NextMonth', value: 'Sonraki Ay', comment: 'the label for the button that moves calendar to next/prev'},
@@ -242,6 +249,7 @@
       'Refresh': {id: 'Refresh', value: 'Yenile', comment: 'Refresh tooltip'},
       'Required': {id: 'Required', value: 'Gerekli', comment: 'indicates a form field is manditory'},
       'Reset': {id: 'Reset', value: 'Sıfırla', comment: 'Reset tooltip'},
+      'ResetDefault': {id: 'ResetDefault', value: 'Varsayılana Sıfırla', comment: 'Reset Datagrid Columns, Filter and other Layout'},
       'Results': {id: 'Results', value: 'Sonuçlar', comment: 'As in showing N Results in a List'},
       'RightAlign': {id: 'RightAlign', value: 'Sağa Hizala', comment: 'Right Align tooltip'},
       'RightAlignText': {id: 'RightAlignText', value: 'Sağa Hizala', comment: 'Right Align Text tooltip'},
@@ -253,6 +261,7 @@
       'Save': {id: 'Save', value: 'Kaydet', comment: 'Save tooltip'},
       'SaveCurrentView': {id: 'SaveCurrentView', value: 'Mevcut Görünümü Kaydet', comment: 'Datagrids contain view sets. This menu option saves them'},
       'SavedViews': {id: 'SavedViews', value: 'Kaydedilen Görünümler', comment: 'Label for a list of Views'},
+      'Seconds': {id: 'Seconds', value: 'Saniye', comment: 'the seconds portion of a time'},
       'Search': {id: 'Search', value: 'Ara', comment: 'Search tooltip'},
       'SearchColumnName': {id: 'SearchColumnName', value: 'Bir sütun adı ara', comment: 'Search for a datagrid column by name'},
       'SearchFolder': {id: 'SearchFolder', value: 'Klasörde Ara', comment: 'Search Folder tooltip'},
@@ -271,7 +280,7 @@
       'SliderMaximumHandle': {id: 'SliderMaximumHandle', value: 'Şunun için maksimum tutamaç aralığı:', comment: 'Describes a maximum value handle in a Range (double slider), followed in code by the name of the control'},
       'SliderMinimumHandle': {id: 'SliderMinimumHandle', value: 'Şunun için minimum tutamaç aralığı:', comment: 'Describes a minimum value handle in a Range (double slider), followed in code by the name of the control'},
       'SkipToMain': {id: 'SkipToMain', value: 'Ana İçeriğe Atla', comment: 'Skip link in header, jumps when clicked on to main area'},
-      'StartsWith': {id: 'StartsWith', value: 'Şununla Başlar', comment: 'for condition filtering'},
+      'StartsWith': {id: 'StartsWith', value: 'Şununla biter', comment: 'for condition filtering'},
       'StrikeThrough': {id: 'StrikeThrough', value: 'Üstü Çizili', comment: 'turn on and off strike through text in text editor (like word)'},
       'SortAtoZ': {id: 'SortAtoZ', value: 'Artan Şekilde Sırala', comment: 'Sort A to Z in icons for filtering'},
       'SortZtoA': {id: 'SortZtoA', value: 'Azalan Şekilde Sırala', comment: 'Sort Z to A in icons for filtering'},
@@ -282,6 +291,9 @@
       'Tabs': {id: 'Tabs', value: 'Sekmeler...', comment: 'Used in the Tabs Control\'s more menu, preceeded by a number that describes how many tabs are in the spillover menu'},
       'Tack': {id: 'Tack', value: 'Sabitle', comment: 'Pin an object'},
       'Tall': {id: 'Tall', value: 'Uzun', comment: 'Describes a Taller Row Height in a grid/list'},
+      'Target': {id: 'Target', value: 'Hedef', comment: 'Label for an input to enter a Target (Url Attribute)'},
+      'TextColor': {id: 'TextColor', value: 'Metin rengi', comment: 'add or edit text color in the editor'},
+
       'Timer': {id: 'Timer', value: 'Zamanlayıcı', comment: 'Timer tooltip'},
       'Today': {id: 'Today', value: 'Bugün', comment: 'refering to today on a calendar'},
       'ToggleBold': {id: 'ToggleBold', value: 'Kalın Metni Değiştir', comment: 'turn on and off bold in text editor (like word)'},
@@ -292,6 +304,7 @@
       'Toolbar': {id: 'Toolbar', value: 'Araç Çubuğu', comment: 'describing the toolbar component'},
       'TopAlign': {id: 'TopAlign', value: 'Üste Hizala', comment: 'Top Align tooltip'},
       'Total': {id: 'Total', value: 'Toplam', comment: 'Mathematic total of a calculation'},
+      'Totals': {id: 'Totals', value: 'Toplam', comment: 'Mathematic total of a calculation (plural)'},
       'TreeCollapse': {id: 'TreeCollapse', value: 'Ağacı Daralt', comment: 'Tree Collapse tooltip'},
       'TreeExpand': {id: 'TreeExpand', value: 'Ağacı Genişlet', comment: 'Tree Expand tooltip'},
       'Turquoise': {id: 'Turquoise', value: 'Turkuaz', comment: 'Color in our color pallette'},
@@ -312,6 +325,39 @@
       'ViewSource': {id: 'ViewSource', value: 'Kaynağı Görüntüle', comment: 'Toggle the source view in the editor'},
       'ViewVisual': {id: 'ViewVisual', value: 'Görseli Görüntüle', comment: 'Toggle the visual view in the editor'},
       'Yes': {id: 'Yes', value: 'Evet', comment: 'On a dialog button'}
+    },
+
+    /**
+     * Turkish-specific rules for changing a string to uppercase
+     * @param {string} str - starting text string
+     * @returns {string}
+     */
+    toUpperCase: function(str) {
+      return str.replace(/ğ/g, 'Ğ')
+        .replace(/ü/g, 'Ü')
+        .replace(/ş/g, 'Ş')
+        .replace(/ı/g, 'I')
+        .replace(/i/g, 'İ')
+        .replace(/ö/g, 'Ö')
+        .replace(/ç/g, 'Ç')
+        .toUpperCase();
+    },
+
+    /**
+     * Turkish-specific rules for changing a string to lowercase
+     * @param {string} str - starting text string
+     * @returns {string}
+     */
+    toLowerCase: function(str) {
+      return str.replace(/Ğ/g, 'ğ')
+        .replace(/Ü/g, 'ü')
+        .replace(/Ş/g, 'ş')
+        .replace(/I/g, 'ı')
+        .replace(/İ/g, 'i')
+        .replace(/Ö/g, 'ö')
+        .replace(/Ç/g, 'ç')
+        .toLowerCase();
     }
+
   });
 }));

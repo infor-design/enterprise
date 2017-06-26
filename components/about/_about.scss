@@ -1,0 +1,87 @@
+// About
+//================================================== //
+
+.modal.about {
+  max-width: 560px;
+  min-width: 300px;
+  width: calc(100% - 40px);
+
+  .modal-content {
+    margin: 0;
+    position: relative;
+  }
+
+  .close-container {
+    position: absolute;
+    right: 8px;
+    text-align: right;
+    top: 8px;
+  }
+
+  .modal-header {
+    padding-top: 40px;
+    text-align: center;
+
+    h1 {
+      color: $about-header-color;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+  }
+
+  .modal-body {
+    border: 1px solid $about-text-border-color;
+    border-radius: 2px;
+    margin: 0 10px 30px;
+    max-height: 199px;
+    outline: medium none;
+    overflow-y: scroll;
+
+    &:hover {
+      border-color: $about-text-hover-border-color;
+    }
+
+    &:focus,
+    &.focusbody {
+      border-color: $input-focus-border-color;
+    }
+  }
+
+  .modal-body-wrapper {
+    margin-bottom: 20px;
+  }
+
+  .additional-content {
+    @include font-size(14);
+    @include antialiased();
+    color: $about-text-color;
+    line-height: normal;
+  }
+
+  .about-logo {
+    height: 72px;
+    margin-bottom: 6px;
+    width: 72px;
+  }
+
+  p {
+    color: $about-text-color;
+    margin-top: 0;
+    padding: 10px;
+
+    &:focus {
+      border: 1px solid $azure06;
+      outline: none;
+    }
+  }
+}
+
+html[dir='rtl'] {
+  .modal.about {
+    .close-container {
+      left: 8px;
+      right: auto;
+    }
+  }
+}

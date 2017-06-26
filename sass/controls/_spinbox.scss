@@ -26,12 +26,14 @@ input::-webkit-inner-spin-button {
   }
 
   > .spinbox-wrapper {
-    margin-bottom: 20px;
+    @include font-size(0);
     position: relative;
   }
 }
 
 .spinbox-control {
+  @include css3(user-select, none);
+  @include font-size(14);
   backface-visibility: hidden;  // Makes the round ripple-effect pressed state work
   background-color: $spinbox-button-color;
   border: 1px solid $input-border-color;
@@ -41,16 +43,14 @@ input::-webkit-inner-spin-button {
   display: inline-block;
   font-weight: 700;
   line-height: normal;
-  @include font-size(14);
   overflow: hidden;
   padding: 9px 10px;
   position: relative;
   resize: none;
   text-align: center;
+  width: 33px;
   -webkit-transform: translate3d(0, 0, 0);  // Makes the round ripple-effect pressed state work
   -moz-transform: translate3d(0, 0, 0);  // Makes the round ripple-effect pressed state work
-  @include css3(user-select, none);
-  width: 33px;
 
   &.up {
     border-bottom-right-radius: 2px;
@@ -81,10 +81,6 @@ input::-webkit-inner-spin-button {
   }
 }
 
-.inline .spinbox-control {
-  margin-top: -10px;
-}
-
 // Everything inside the spinbox wrapper is vertically-aligned middle.
 .spinbox-wrapper {
   display: inline-block;
@@ -97,6 +93,10 @@ input::-webkit-inner-spin-button {
     margin-right: auto;
     right: 38px;
     top: 0;
+  }
+
+  + .icon-error {
+    margin-top: -15px;
   }
 
   &.is-focused {
@@ -137,7 +137,7 @@ input::-webkit-inner-spin-button {
 // Short Fields
 .field-short {
   .spinbox-wrapper {
-    margin-bottom: 10px;
+    margin-bottom: 0;
   }
 
   .spinbox {

@@ -131,7 +131,7 @@
           }
 
           $('<span class="audible ' + symbolType + '"></span>').text(' ' + symbol).appendTo(self.element.prev('label'));
-          this.element.parent('.field')
+          this.element.parent('.field, .datagrid-filter-wrapper')
             .attr('data-currency-symbol', '' + symbol)
             .addClass(symbolType);
         }
@@ -551,11 +551,13 @@
           insertBufferBeforeDecimal = true,
           decimalAlreadyExists = false;
 
-        // Are we placing the new content after the decimal?
-        insertBufferBeforeDecimal = currentDecimalIndex < pos.begin;
-
         // Does it already exist?
         decimalAlreadyExists = currentDecimalIndex !== -1;
+		
+		if (decimalAlreadyExists) {
+          // Are we placing the new content after the decimal?
+          insertBufferBeforeDecimal = currentDecimalIndex >= pos.begin;
+        }
 
         // insert the buffer's contents
         insertBuffer();
@@ -604,33 +606,45 @@
         // if the original value had a decimal point, place it back in the right spot
         if (patternHasDecimal) {
           if (decimalAlreadyExists) {
-            var inputParts = originalVal.split(DECIMAL_SYMBOL),
+            var inputParts = originalVal.replace(THOUSANDS_SEP_REGEX, '').split(DECIMAL_SYMBOL),
               targetDecimalIndex;
 
+            
             // reposition the decimal in the correct spot based on total number of characters
             // in either part of the mask.
             if (inputParts[1].length < maskParts[1].length) {
               if (inputParts[0].length >= maskParts[0].length) {
                 targetDecimalIndex = maskParts[0].length;
               } else {
-                targetDecimalIndex = currentDecimalIndex;
+                targetDecimalIndex = inputParts[0].length;
               }
             } else if (inputParts[1].length === maskParts[1].length) {
-              targetDecimalIndex = (val.length - maskParts[1].length);
+			  if (!insertBufferBeforeDecimal) {
+			    val = val.substring(0, inputParts[0].length + maskParts[1].length);
+			  }
+			  targetDecimalIndex = (val.length - maskParts[1].length);
             } else {
               targetDecimalIndex = (val.length - maskParts[1].length);
             }
 
             val = this.insertAtIndex(val, DECIMAL_SYMBOL, targetDecimalIndex);
-            if (pos.begin === targetDecimalIndex || pos.begin === targetDecimalIndex + 1) {
-              moveCaret(1);
-            }
-
           } else {
             // The decimal doesn't already exist in the value string.
             // if the current value has more characters than the "integer" portion of the mask,
             // automatically add the decimal at index of the last pre-decimal pattern character.
-            if (val.length > maskParts[0].length || decimalInBuffer) {
+			if (decimalInBuffer){
+				if ((val.length - (pos.begin - 1)) > maskParts[1].length) {
+				  val = val.substring(0, (pos.begin - 1) + maskParts[1].length);
+				}
+				if (buffer.indexOf(DECIMAL_SYMBOL) === 0) {
+				  val = this.insertAtIndex(val, DECIMAL_SYMBOL, pos.begin - 1);
+				}
+				else
+				{
+				  val = this.insertAtIndex(val, DECIMAL_SYMBOL, buffer.indexOf(DECIMAL_SYMBOL));
+				}
+			}
+            else if (val.length > maskParts[0].length) {
               val = this.insertAtIndex(val, DECIMAL_SYMBOL, maskParts[0].length);
               if (pos.begin === maskParts[0].length) {
                 moveCaret(1);

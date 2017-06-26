@@ -12,6 +12,9 @@ public/stylesheets/
 temp/
 docs/
 views/docs
+publish/dist
+publish/sass
+templates/**/doc.html
 
 # Packages #
 ############

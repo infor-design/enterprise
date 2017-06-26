@@ -59,14 +59,11 @@
         </div>
       </div>
 
-      <button type="submit" id="test-submit-button" class="btn-primary">Submit</button>
       <button type="submit" id="test1" class="btn-primary">Submit</button>
     </form>
 
     <script>
       $(function() {
-        $('#test-form').on('validated', function (e, isValid) {
-
         $.fn.validation.rules.customRule = {
           check: function (value) {
 

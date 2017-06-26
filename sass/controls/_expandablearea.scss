@@ -142,15 +142,42 @@
     }
   }
 
+  &.has-bottom-border {
+    border-bottom: 1px solid $expandable-area-border-color;
+    margin-top: -5px;
+
+    .row:last-child {
+      margin-bottom: 15px;
+    }
+  }
+
 }
 
 // Overrides for smaller break point
 // scss-lint:disable ImportantRule
 @include respond-to(phabletdown) {
-  .expandable-pane {
 
-    .column:not(:first-child) {
-      margin-top: 20px;
+  .expandable-area {
+    &.has-bottom-border {
+      .row {
+        .column:not(:first-child) {
+          margin-top: 0;
+        }
+      }
+    }
+  }
+
+  .expandable-pane {
+    .row {
+      .column:not(:first-child) {
+        margin-top: 20px;
+      }
+
+      &.no-top-margins {
+        .column:not(:first-child) {
+          margin-top: 0;
+        }
+      }
     }
 
     > .content {
