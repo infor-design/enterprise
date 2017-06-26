@@ -25,7 +25,8 @@
     "test:unit": "./bin/test.sh client config=test2/intern.local.unit",
     "develop-tag": "./bin/add-npm-tag.js develop",
     "bump-version": "./bin/bump-version.js",
-    "publish": "grunt publish && npm publish publish --tag dev --force",
+    "publish-dev": "grunt publish && npm publish publish --tag dev --force",
+    "publish-prod": "grunt publish && npm publish publish --tag --force",
     "install-global": "npm install -g pandoc-bin grunt-cli documentation",
     "documentation": "./build/generate-documentation.js"
   },
