@@ -1985,6 +1985,9 @@ $.fn.datagrid = function(options) {
               filterMarkup += '</select>';
 
               break;
+			case 'time':
+              filterMarkup += '<input ' + (col.filterDisabled ? ' disabled' : '') + ' type="text" class="timepicker" id="'+ filterId +'"/>';
+              break;
             default:
               filterMarkup += '<input' + (col.filterDisabled ? ' disabled' : '') + ' type="text" id="'+ filterId +'"/>';
               break;
@@ -1996,6 +1999,7 @@ $.fn.datagrid = function(options) {
           header.find('select.dropdown').dropdown(col.editorOptions);
           header.find('.multiselect').multiselect(col.editorOptions);
           header.find('[data-mask]').mask(col.maskOptions);
+		  header.find('.timepicker').timepicker(col.editorOptions ? col.editorOptions : {timeFormat: col.timeFormat});
         }
       }
 
@@ -2069,13 +2073,13 @@ $.fn.datagrid = function(options) {
 
       if (filterType !== 'checkbox') {
         btnMarkup += ''+
-          render('equals', 'Equals', (filterType === 'integer' || filterType === 'date')) +
+          render('equals', 'Equals', (filterType === 'integer' || filterType === 'date' || filterType === 'time')) +
           render('does-not-equal', 'DoesNotEqual') +
           render('is-empty', 'IsEmpty') +
           render('is-not-empty', 'IsNotEmpty');
       }
 
-      if (/\b(integer|decimal|date|percent)\b/g.test(filterType)) {
+      if (/\b(integer|decimal|date|time|percent)\b/g.test(filterType)) {
         btnMarkup += ''+
           render('less-than', 'LessThan') +
           render('less-equals', 'LessOrEquals') +
@@ -2164,22 +2168,38 @@ $.fn.datagrid = function(options) {
             rowValue = rowValue.toLowerCase();
           }
 
-		  if (columnDef.filterType === 'date') {
-			conditionValue = Locale.parseDate(conditions[i].value, conditions[i].format).getTime();
+		  if (columnDef.filterType === 'date' || columnDef.filterType === 'time') {
+            conditionValue = Locale.parseDate(conditions[i].value, conditions[i].format);
+            if (conditionValue) {
+              if (columnDef.filterType === 'time') {
+                // drop the day, month and year
+                conditionValue.setDate(1);
+                conditionValue.setMonth(0);
+                conditionValue.setYear(0);
+              }
+              conditionValue = conditionValue.getTime();
+		    }
+			
             if (rowValue instanceof Date) {
               rowValue = rowValue.getTime();
             }
-			else if (typeof rowValue === 'string' && rowValue) {
+            else if (typeof rowValue === 'string' && rowValue) {
               if (!columnDef.sourceFormat) {
-                rowValue = Locale.parseDate(rowValue, (typeof columnDef.dateFormat === 'string' ? {pattern: columnDef.dateFormat}: columnDef.dateFormat));
+                rowValue = Locale.parseDate(rowValue, {pattern: conditions[i].format});	
               } else {
                 rowValue = Locale.parseDate(rowValue, (typeof columnDef.sourceFormat === 'string' ? {pattern: columnDef.sourceFormat}: columnDef.sourceFormat));
               }
 
               if (rowValue) {
-				rowValue = rowValue.getTime();
+                if (columnDef.filterType === 'time') {
+                  // drop the day, month and year
+                  rowValue.setDate(1);
+                  rowValue.setMonth(0);
+                  rowValue.setYear(0);
+                }
+                rowValue = rowValue.getTime();
               }
-		    }
+            }			
 		  }
 
           if (typeof rowValue === 'number') {
@@ -2341,7 +2361,8 @@ $.fn.datagrid = function(options) {
           input = rowElem.find('input, select'),
           isDropdown = input.is('select'),
           svg = btn.find('.icon-dropdown:first'),
-          op;
+          op,
+		  format;
 
         if (!btn.length && !isDropdown) {
           return;
@@ -2366,10 +2387,15 @@ $.fn.datagrid = function(options) {
           value: input.val() ? input.val() : ''};
 
         if (input.data('datepicker')) {
-          var format = input.data('datepicker').settings.dateFormat;
+          format = input.data('datepicker').settings.dateFormat;
           if (format === 'locale') {
             format = Locale.calendar().dateFormat.short;
           }
+          condition.format = format;
+        }
+		
+		if (input.data('timepicker')) {
+          format = input.data('timepicker').settings.timeFormat;
           condition.format = format;
         }
 
