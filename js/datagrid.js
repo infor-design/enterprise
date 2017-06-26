@@ -1992,7 +1992,7 @@ $.fn.datagrid = function(options) {
 
           filterMarkup += '</div>';
           header.find('.datagrid-column-wrapper').after(filterMarkup);
-          header.find('.datepicker').datepicker(col.editorOptions ? col.editoroptions : {dateFormat: col.dateFormat});
+          header.find('.datepicker').datepicker(col.editorOptions ? col.editorOptions : {dateFormat: col.dateFormat});
           header.find('select.dropdown').dropdown(col.editorOptions);
           header.find('.multiselect').multiselect(col.editorOptions);
           header.find('[data-mask]').mask(col.maskOptions);
