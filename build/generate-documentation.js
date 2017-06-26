@@ -10,10 +10,10 @@ const glob = require('glob'),
 //Generate a Doc file with buffered contrnt
 function runPandoc(data, componentPath) {
   // Note that im using markdown_github vs markdown for h level support
-  nodePandoc(data, ['-f','markdown_github','-t','html5','-o', componentPath + 'index.html'], function (err) {
-     if (err) {
-        console.error('Oh No: ',err);
-      }
+  nodePandoc(data, ['-f','markdown_github','-t','html5','-o', componentPath + 'index.html'], function () {
+     //if (err) {
+      //  console.error('Oh No: ',err);
+      //}
       // Without the -o arg, the converted value will be returned.
       //return console.log(result), result;
     });
