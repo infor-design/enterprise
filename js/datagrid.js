@@ -1956,7 +1956,7 @@ $.fn.datagrid = function(options) {
               //just the button
               break;
             case 'date':
-              filterMarkup += '<input ' + (col.filterDisabled ? ' disabled' : '') + ' type="text" class="datepicker" ' + (col.dateFormat ? 'data-options="{dateFormat: ' + col.dateFormat + '}"' : '') + ' id="'+ filterId +'"/>';
+              filterMarkup += '<input ' + (col.filterDisabled ? ' disabled' : '') + ' type="text" class="datepicker" id="'+ filterId +'"/>';
               break;
             case 'decimal':
               filterMarkup += '<input ' + (col.filterDisabled ? ' disabled' : '') + ' type="text" id="'+ filterId +'" data-mask-mode="number" data-mask="'+ (col.mask ? col.mask : '####.00') + '">';
