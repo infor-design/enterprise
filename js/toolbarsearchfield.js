@@ -145,9 +145,13 @@
       },
 
       handleDeactivationEvents: function() {
-        var self = this;
+        var self = this,
+          arr = ['click', 'touchend', 'touchcancel'].map(function(v) {
+            return v +'.'+ self.id;
+          });
+        self.handleOutsideStr = arr.join(' ');
 
-        $(document).onTouchClick(this.id).on('click.' + this.id, function(e) {
+        $(document).on(self.handleOutsideStr, function(e) {
           self.handleOutsideClick(e);
         });
       },
@@ -200,7 +204,7 @@
           }
         }
 
-        $(document).offTouchClick(this.id).off('click.' + this.id);
+        $(document).off(this.outsideEventStr);
         this.collapse();
       },
 
@@ -570,6 +574,7 @@
           } else {
             this.inputWrapper.detach().insertAfter(this.elemBeforeWrapper);
           }
+          self.handleDeactivationEvents();
           self.toolbarParent.triggerHandler('scrollup');
           Soho.utils.fixSVGIcons(this.inputWrapper);
 
@@ -656,6 +661,7 @@
       teardown: function() {
         this.inputWrapper.off('mousedown.toolbarsearchfield focusin.toolbarsearchfield collapse.toolbarsearchfield');
         this.inputWrapper.find('.icon').remove();
+        $(document).off(this.outsideEventStr);
 
         if (this.xButton && this.xButton.length) {
           this.xButton.remove();
