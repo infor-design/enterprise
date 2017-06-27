@@ -12,7 +12,7 @@
 @import 'controls/input';
 @import 'controls/grid';
 @import 'controls/compositeform';
-@import 'controls/checkboxes';
+@import 'components/checkboxes/checkboxes';
 @import 'controls/radios';
 @import 'controls/switch';
 @import 'controls/tabs';
@@ -41,7 +41,7 @@
 @import 'controls/timepicker';
 @import 'components/busyindicator/busyindicator';
 @import 'controls/toast';
-@import 'controls/charts';
+@import 'components/charts/charts';
 @import 'components/searchfield/searchfield';
 @import 'components/toolbar/toolbar';
 @import 'controls/editor';
