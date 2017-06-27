@@ -104,12 +104,14 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('js', [
+    'revision',
     'copy:amd',
     'strip_code',
     'concat:basic'
   ]);
 
   grunt.registerTask('js-uglify', [
+    'revision',
     'copy:amd',
     'strip_code',
     'concat:basic',
