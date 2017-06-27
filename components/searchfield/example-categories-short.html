@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Searchfield Example: Categories Compact (Short) Length</h2>
+    <p><a class="hyperlink" href="http://jira/browse/SOHO-3356" target="_blank">Related JIRA Ticket</a>.</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+    <div class="field">
+      <label for="category-searchfield">Category-Driven Single-Selectable Searchfield</label>
+      <input data-init="false" id="category-searchfield" class="searchfield" />
+    </div>
+  </div>
+  <div class="six columns">
+    <div class="field">
+      <label for="multi-category-searchfield">Category-Driven Multi-Selectable Searchfield</label>
+      <input data-init="false" id="multi-category-searchfield" class="searchfield" />
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  var singlesearchfield = $('#category-searchfield'),
+  multisearchfield = $('#multi-category-searchfield'),
+  categoryData = [
+    {name: 'Animals', id: 'animals', value: 'an', checked: true},
+    {name: 'Baby', id: 'baby', value: 'ba', checked: false},
+    {name: 'Clothing', id: 'clothing', value: 'cl', checked: true},
+    {name: 'Images', id: 'images', value: 'im', checked: true},
+    {name: 'People', id: 'people', value: 'pe', checked: false},
+    {name: 'Places', id: 'places', value: 'pl', checked: false}
+  ];
+
+  $('body').on('initialized', function() {
+    singlesearchfield.searchfield({
+      categories: categoryData,
+      showCategoryText: false
+    })
+
+    multisearchfield.searchfield({
+      categories: categoryData,
+      categoryMultiselect: true,
+      showCategoryText: false
+    });
+  });
+</script>

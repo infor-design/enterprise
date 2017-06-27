@@ -355,7 +355,7 @@ var express = require('express'),
     // Search the "/components/<type>" folder for all tests/examples located here
     componentPaths = getFolderContents(type, 'components/' + type + '/', 'Components');
     componentPaths.forEach(function(path, i) {
-      var isTest = path.substr(0, 4) === 'test-';
+      var isTest = path.substr(0, 5) === 'test-';
 
       componentPaths[i] = {
         text: componentTextFormatter(path),
