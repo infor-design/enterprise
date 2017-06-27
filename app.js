@@ -342,7 +342,7 @@ var express = require('express'),
     // Add Component-specific file name filters
     extraExcludes = extraExcludes.concat([
       new RegExp(type + '\\.html'),
-      new RegExp('_' + type + '\\.scss'),
+      new RegExp('(\d|\w|\s|-)*?\.(scss)'),
       new RegExp(type + '\\.js'),
       new RegExp(type + '\\.md')
     ]);
