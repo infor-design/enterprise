@@ -17,19 +17,6 @@
   $.fn.toolbar = function(options) {
     'use strict';
 
-    /**
-     * The Toolbar Component manages various levels of application navigation.  It contains a group of buttons that functionally
-     * related content. Each panel consists of two levels: the top level identifies the
-     * category or section header, and the second level provides the associated options.
-     *
-     * @class Toolbar
-     *
-     * @param {HTMLElement|SVGElement|jQuery[]} element   &nbsp;-&nbsp; The element that will serve as the base for this Toolbar component.
-     * @param {boolean} rightAligned   &nbsp;-&nbsp; Will always attempt to right-align the contents of the toolbar.
-     * @param {Number} maxVisibleButtons   &nbsp;-&nbsp; Total amount of buttons that can be present, not including the More button.
-     * @param {boolean} resizeContainers   &nbsp;-&nbsp; If true, uses Javascript to size the Title and Buttonset elements in a way that shows as much of the Title area as possible.
-     * @param {boolean} favorButtonset   &nbsp;-&nbsp; If "resizeContainers" is true, setting this to true will try to display as many buttons as possible while resizing the toolbar.  Setting to false attempts to show the entire title instead.
-     */
     var pluginName = 'toolbar',
         defaults = {
           rightAligned: false,
@@ -39,6 +26,18 @@
         },
         settings = $.extend({}, defaults, options);
 
+    /**
+     * The Toolbar Component manages various levels of application navigation.  It contains a group of buttons that functionally
+     * related content. Each panel consists of two levels: the top level identifies the
+     * category or section header, and the second level provides the associated options.
+     *
+     * @class Toolbar
+     *
+     * @param {boolean} rightAligned   &nbsp;-&nbsp; Will always attempt to right-align the contents of the toolbar.
+     * @param {Number} maxVisibleButtons   &nbsp;-&nbsp; Total amount of buttons that can be present, not including the More button.
+     * @param {boolean} resizeContainers   &nbsp;-&nbsp; If true, uses Javascript to size the Title and Buttonset elements in a way that shows as much of the Title area as possible.
+     * @param {boolean} favorButtonset   &nbsp;-&nbsp; If "resizeContainers" is true, setting this to true will try to display as many buttons as possible while resizing the toolbar.  Setting to false attempts to show the entire title instead.
+     */
     function Toolbar(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);

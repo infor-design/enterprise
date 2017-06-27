@@ -4,7 +4,6 @@
 
 <h2 id="api-details">Api Details</h2>
 <h3 id="settings">Settings</h3>
-<p><strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">HTMLElement</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate">SVGElement</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;)</strong>  -  The element that will serve as the base for this Toolbar component.</p>
 <ul>
 <li><code>rightAligned</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong>  -  Will always attempt to right-align the contents of the toolbar.<br /></li>
 <li><code>maxVisibleButtons</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong>  -  Total amount of buttons that can be present, not including the More button.<br /></li>
@@ -92,10 +91,23 @@
 <p>Disables the entire Toolbar component</p>
 <p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></strong></p>
 <h4 id="teardown">teardown</h4>
-<p>Returns the Toolbar's internal markup to its or</p>
+<p>Returns the Toolbar's internal markup to its original state.</p>
+<p>Returns <strong>this</strong></p>
+<h4 id="destroy">destroy</h4>
+<p>Destroys this Toolbar Component instance and completely disassociates it from its corresponding DOM Element.</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></strong></p>
 <h2 id="configuration-options">Configuration Options</h2>
 <ol>
-<li>Toolbar <a href="/components/toolbar/example-index">View Example</a></li>
+<li><a href="/components/toolbar/example-index">Common Configuration</a><br /></li>
+<li><a href="/components/toolbar/example-all-icon-buttons">Title + All Icon Buttons</a><br /></li>
+<li><a href="/components/toolbar/example-all-text-buttons">Title + All Text-Only Buttons</a><br /></li>
+<li><a href="/components/toolbar/example-no-title-icon-buttons">No Title + Searchfield + Icon/Text Buttons</a><br /></li>
+<li><a href="/components/toolbar/example-no-title-text-buttons">No title + Text-Only Buttons</a><br /></li>
+<li><a href="/components/toolbar/example-standalone-style">Standalone Toolbar Style</a><br /></li>
+<li><a href="/components/toolbar/example-no-action-button">No &quot;More Actions&quot; Button</a><br /></li>
+<li><a href="/components/toolbar/example-more-than-three-buttons"><code>MaxVisibleButtons</code> Defined as &quot;6&quot; Instead of &quot;3&quot;</a><br /></li>
+<li><a href="/components/toolbar/example-overflow">Additional Examples of <code>MaxVisibleButtons</code> Behavior</a><br /></li>
+<li><a href="/components/toolbar/example-selected-event"><code>selected</code> Event Behavior</a></li>
 </ol>
 <h2 id="code-example">Code Example</h2>
 <pre class="sourceCode html"><code class="sourceCode html">
