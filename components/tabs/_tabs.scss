@@ -594,10 +594,10 @@
   }
 }
 
-@import './horizontaltabs';
-@import './verticaltabs';
-@import './headertabs';
-@import './moduletabs';
+@import './tabs-horizontal';
+@import '../tabs-vertical/tabs-vertical';
+@import '../tabs-header/tabs-header';
+@import '../tabs-module/tabs-module';
 
 //RTL Styles
 html[dir='rtl'] {
