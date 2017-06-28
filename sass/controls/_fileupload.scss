@@ -8,7 +8,7 @@ label.fileupload {
   top: 18px;
 
   // Label
-  span:not(.audible) {
+  span:not(.audible):not(.icon-dirty) {
     cursor: pointer;
     display: inline-block;
     height: 34px;
