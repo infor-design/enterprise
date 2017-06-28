@@ -2,19 +2,15 @@
 <div class="row">
   <div class="six columns">
 
-    <button type="button" class="btn-secondary contextual-action-panel-trigger">
-      Contextual Action Panel
+    <button type="button" id="markup-contextual-panel" class="btn-secondary contextual-action-panel-trigger">
+      Contextual Action Panel (Uses Markup)
     </button>
     <div class="contextual-action-panel" style="display: none;">
       <div class="toolbar">
         <div class="title">Company Information</div>
         <div class="buttonset">
-          <button class="btn" type="button">
-  					<svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-  						<use xlink:href="#icon-save"></use>
-  					</svg>
-  					<span>Save</span>
-  				</button>
+          <input class="searchfield" placeholder="keyword" id="toolbar-example-searchfield" name="toolbar-example-searchfield" />
+
           <div class="separator"></div>
           <button name="close" class="btn" type="button">
             <svg class="icon icon-close" focusable="false" aria-hidden="true" role="presentation">
@@ -30,7 +26,8 @@
           <div class="field">
             <label for="company-name">Company Name</label>
             <select id="company-name" name="company-name" class="dropdown">
-                <option value="jawbone" selected>Jawbone, Inc.</option>
+              <option value=""></option>
+              <option value="jawbone" selected>Jawbone, Inc.</option>
               <option value="infor">Infor</option>
             </select>
           </div>
@@ -38,6 +35,7 @@
           <div class="field">
             <label for="purchase-form">Purchase Form</label>
             <select id="purchase-form" name="purchase-form" class="dropdown">
+              <option value=""></option>
               <option value="3567" selected>3567</option>
               <option value="3568">3568</option>
               <option value="3569">3569</option>
@@ -45,12 +43,19 @@
           </div>
 
           <div class="field">
-            <label for="template">Template</label>
-            <select id="template" name="template" class="dropdown">
-              <option value="" selected>None</option>
-              <option value="1">Template #1</option>
-              <option value="2">Template #2</option>
-            </select>
+           <button class="btn-menu">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-settings"></use>
+            </svg>
+            <span>Options</span>
+          </button>
+          <ul class="popupmenu">
+            <li><a href="#">Option #1</a></li>
+            <li><a href="#">Option #2</a></li>
+            <li><a href="#">Option #3</a></li>
+            <li><a href="#">Option #4</a></li>
+            <li><a href="#">Option #5</a></li>
+          </ul>
           </div>
 
           <div class="field">
@@ -97,6 +102,7 @@
         </div>
       </div>
     </div>
+
 
   </div>
 
