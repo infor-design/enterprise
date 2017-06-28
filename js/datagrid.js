@@ -4315,7 +4315,7 @@ $.fn.datagrid = function(options) {
         }
 
         self.lastClicked = target;
-        self.makeCellEditable(self.activeCell.row, self.activeCell.cell, e);
+        self.makeCellEditable(self.activeCell.dataRow, self.activeCell.cell, e);
 
         //Handle Cell Click Event
         var elem = $(this).closest('td'),
