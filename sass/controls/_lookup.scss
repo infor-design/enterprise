@@ -11,7 +11,7 @@
     padding-right: 35px;
     text-overflow: ellipsis;
 
-    &[readonly] + .trigger,
+    &[readonly]:not(.is-not-editable) + .trigger,
     &[disabled] + .trigger {
       cursor: default;
 

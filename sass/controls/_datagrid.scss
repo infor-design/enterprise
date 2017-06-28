@@ -1230,6 +1230,10 @@ $datagrid-short-row-height: 23px;
             top: calc(50% - 6px);
             width: inherit;
           }
+
+          &.is-not-editable {
+            border-color: transparent;
+          }
         }
 
         &.timepicker {
@@ -1247,6 +1251,10 @@ $datagrid-short-row-height: 23px;
         &:focus {
           box-shadow: none;
           outline: none;
+
+          &.is-not-editable {
+            border-color: transparent;
+          }
         }
       }
 
