@@ -13,7 +13,7 @@ module.exports = [
   'temp/amd/autocomplete.js',
   'temp/amd/busyindicator.js',
   'temp/amd/button.js',
-  'temp/amd/chart.js',
+  'temp/amd/charts.js',
   'temp/amd/colorpicker.js',
   'temp/amd/compositeform.js',
   'temp/amd/contextualactionpanel.js',
