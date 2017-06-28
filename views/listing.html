@@ -3,11 +3,14 @@
     margin-top: 20px;
   }
 
+  .badge.test-type {
+    min-width: 75px;
+    text-align: center;
+  }
+
   .badge.azure07,
   .badge.ruby07 {
-    min-width: 75px;
     color: white;
-    text-align: center;
   }
 </style>
 
@@ -25,7 +28,7 @@
           {{/icon}}
           {{^icon}}
             {{#pageType}}
-              <span class="badge {{labelColor}}">
+              <span class="badge test-type {{labelColor}}">
                 {{pageType}}
               </span>
               &nbsp;

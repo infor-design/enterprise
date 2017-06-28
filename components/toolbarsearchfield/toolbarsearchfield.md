@@ -9,6 +9,8 @@ This is a specific component wrapper for searchfield components that reside insi
 ## Configuration Options
 
 1. [Common Configuration](/components/toolbarsearchfield/example-index.html)
+2. [Alternate In-Page Style](/components/toolbarsearchfield/example-alternate-style.html)
+3. [`collapsibleOnMobile` Setting Demo](/components/toolbarsearchfield/example-collapsible-on-mobile.html)
 
 ## Code Example
 
@@ -60,7 +62,6 @@ There are several scenarios where the background, border, and text color of a To
 
 - *Collapsed* - If the `collapsible` setting is changed to true, toolbar searchfield can become "collapsed" when either de-focusing the searchfield wrapper, or resizing the page.
 - *Expanded* - This is the default state for Toolbar Searchfields when `collapsible` is set to false.  The searchfield will also look like this when focused in either case.
-
 
 ## Responsive Guidelines
 

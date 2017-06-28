@@ -376,7 +376,7 @@ var express = require('express'),
         text: formatPath(path),
         link: 'tests/' + type + '/' + path,
         type: 'test',
-        labelColor: 'azure07'
+        labelColor: 'amber07'
       };
     });
     testPaths = filterUnusablePaths(testPaths, GENERAL_LISTING_EXCLUDES.concat(extraExcludes));
