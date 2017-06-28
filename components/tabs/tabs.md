@@ -4,7 +4,12 @@
 
 ## Configuration Options
 
-1. [Common Configuration](/components/tabs/example-index.html)
+1. [Common Configuration](/components/tabs/example-index)
+2. [Tabs With Counts](/components/tabs/example-counts)
+3. [Dismissible Tabs](/components/tabs/example-dismissible-tabs)
+4. [Dropdown Tabs](/components/tabs/example-dropdown-tabs)
+5. [`updateCount()` Demo](/components/tabs/example-update-count-api)
+6. [`changeTabOnHashChange` Setting with Callback Demo](/components/tabs/example-url-hash-change)
 
 
 ## Code Examples
