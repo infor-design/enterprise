@@ -2,12 +2,12 @@
 Release Date: 2017-05-09
 
 ### Download Build Assets:
-Build Server: http://bamboo.infor.com/browse/SOHO-NEXT
+Build Server: http://bamboo.infor.com/browse/label/release-430
 Npm: http://npm.infor.com
-Full Jira Release Notes: http://bit.ly/2mWAmjY
+Full Jira Release Notes: http://bit.ly/2tk0hVy
 
 ### Demo Site
-http://usalvlhlpool1.infor.com/4.3.0-rc/controls
+http://usalvlhlpool1.infor.com/4.3.0/controls
 
 ### Key New Features
 - Hijri (Umm Al Qura) - Arabic Calendar Support
@@ -15,12 +15,12 @@ http://usalvlhlpool1.infor.com/4.3.0-rc/controls
 - Datagrid - Now Saves all user based settings (by option)
 - Datagrid - Added ability to save filter, page, pagesize, rowheight and column widths in local storage
 - Vertical Tabs - Now Responsive
-- Targetted Achivement Chart Added View Example](http://usalvlhlpool1.infor.com/4.3.0-rc/controls/targeted-achievement)
+- Targetted Achivement Chart Added View Example](http://usalvlhlpool1.infor.com/4.3.0/controls/targeted-achievement)
 - "New Tabs" - New Visual Design and functionality for In-Page and Header Tabs
 - Soho.infor.com - Now has widget guidelines
-- Added an Image Slider Control [View Example](http://usalvlhlpool1.infor.com/4.3.0-rc/tests/circlepager/on-form.html)
-- New Example Composite Form shows form layout and behaviors [View Example](http://usalvlhlpool1.infor.com/4.3.0-rc/tests/composite-form/index.html)
-- Added Search Form Example [View Example](http://usalvlhlpool1.infor.com/4.3.0-rc/examples/landmark/search-form)
+- Added an Image Slider Control [View Example](http://usalvlhlpool1.infor.com/4.3.0/tests/circlepager/on-form.html)
+- New Example Composite Form shows form layout and behaviors [View Example](http://usalvlhlpool1.infor.com/4.3.0/tests/composite-form/index.html)
+- Added Search Form Example [View Example](http://usalvlhlpool1.infor.com/4.3.0/examples/landmark/search-form)
 
 ### Improvements
 - Badge - Can now format decimals
@@ -33,15 +33,15 @@ http://usalvlhlpool1.infor.com/4.3.0-rc/controls
 - Datagrid - Added reorderable: false option to disable dragging of a particular column
 - Datagrid - Added option to disable row activation
 - Datagrid - Added option to close other expanded rows so only one is opened
-- Cards - Added Group action area [View Example](http://usalvlhlpool1.infor.com/4.3.0-rc/tests/cards/cards-group-action.html)
-- Cards - Added pager to Cards [View Example](http://usalvlhlpool1.infor.com/4.3.0-rc/tests/circlepager/more-than-one-slides-with-tabs.html)
-- Cards - Added collapsible card [View Example](http://usalvlhlpool1.infor.com/4.3.0-rc/tests/cards/expandable.html)
+- Cards - Added Group action area [View Example](http://usalvlhlpool1.infor.com/4.3.0/tests/cards/cards-group-action.html)
+- Cards - Added pager to Cards [View Example](http://usalvlhlpool1.infor.com/4.3.0/tests/circlepager/more-than-one-slides-with-tabs.html)
+- Cards - Added collapsible card [View Example](http://usalvlhlpool1.infor.com/4.3.0/tests/cards/expandable.html)
 - Charts - Added options to line chart to better format the x axis
 - Charts - Added options to set the dot radius size
 - Colors - Exposed Classes color-error, color-warning, color-good,color-info
 - Dropdown - Added ability to set text on blank items on (Clear Selection)
 - Dropdown - Added ability to use data- attributes on items
-- Examples - [Product Search page example | http://usalvlhlpool1.infor.com/4.3.0-rc/examples/saleshub/product-search.html
+- Examples - [Product Search page example | http://usalvlhlpool1.infor.com/4.3.0/examples/saleshub/product-search.html
 ], shows an editable listview.
 - Editor - Improved Paste support from external applictaions
 - Locale - Added new set of translated strings for 37 languages / 49 locales

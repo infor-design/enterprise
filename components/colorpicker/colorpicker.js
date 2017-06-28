@@ -110,14 +110,19 @@
             {label: 'Azure', number: '02', value: 'ADD8EB'},
             {label: 'Azure', number: '01', value: 'CBEBF4'}
           ],
-          placeIn: null // null|'editor'
+          placeIn: null, // null|'editor'
+          showLabel: false
         },
         settings = $.extend({}, defaults, options);
 
     /**
-     * @constructor
-     * @param {Object} options
-     */
+    * The ColorPicker Component is a trigger field with a listing colors that can be selected.
+    *
+    * @class ColorPicker
+    * @param {String} colors  &nbsp;-&nbsp; An array of objects of the form {label: 'Azure', number: '01', value: 'CBEBF4'} that can be used to populate the color grid.
+    * @param {String} showLabel  &nbsp;-&nbsp; Show the label if true vs the hex value if false.
+    *
+    */
     function ColorPicker(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -164,12 +169,18 @@
           .appendTo(this.isEditor ? this.element : this.container);
         this.icon.wrap('<span class="trigger"></span>');
 
-        if (initialValue && initialValue.substr(0,1) !== '#') {
+        if (initialValue && initialValue.substr(0,1) !== '#' && !this.settings.showLabel) {
           initialValue = '#' + initialValue;
           this.element.attr(this.isEditor ? 'data-value' : 'value', initialValue);
         }
 
-        if (initialValue && initialValue.length === 7) {
+        if (initialValue && this.settings.showLabel) {
+          var hexValue = this.getHexFromLabel(initialValue);
+          this.setColor(hexValue);
+          this.element.attr(this.isEditor ? 'data-value' : 'value', hexValue);
+        }
+
+        if (initialValue && initialValue.length === 7 && !this.settings.showLabel) {
           this.setColor(initialValue);
           this.element.attr(this.isEditor ? 'data-value' : 'value', initialValue);
         }
@@ -181,40 +192,22 @@
         this.addAria();
       },
 
+      getHexFromLabel: function(label) {
+        for (var i = 0; i < this.settings.colors.length; i++) {
+          var data = this.settings.colors[i];
+
+          if (label === data.label + data.number) {
+            return data.value;
+          }
+        }
+      },
+
       // Add/Update Aria
       addAria: function () {
         this.element.attr('role', 'combobox').attr('aria-autocomplete', 'list');
 
         $('label[for="'+ this.element.attr('id') + '"]')
           .append('<span class="audible">' + Locale.translate('UseArrow') + '</span>');
-      },
-
-      // Attach Control Events
-      handleEvents: function () {
-        var self = this;
-        this.icon.parent().onTouchClick().on('click.colorpicker', function () {
-          self.toggleList();
-        });
-
-        this.element.on('focus.colorpicker', function () {
-          $(this).parent().addClass('is-focused');
-        })
-        .on('blur.colorpicker', function () {
-          $(this).parent().removeClass('is-focused');
-        });
-
-        this.element.on('keypress.colorpicker', function () {
-          self.setColor($(this).val());
-        }).on('change.colorpicker', function () {
-          self.setColor($(this).val());
-        });
-
-        //Handle Key Down to open
-        this.element.on('keydown.colorpicker', function (e) {
-          if (e.keyCode === 38 || e.keyCode === 40) {
-            self.toggleList();
-          }
-        });
       },
 
       // Toggle / Open the List
@@ -270,7 +263,7 @@
         })
         .on('selected.colorpicker', function (e, item) {
           if (!self.isEditor) {
-            self.element.val('#'+item.data('value'));
+            self.element.val(self.settings.showLabel ? item.data('label') : '#'+item.data('value'));
             self.swatch[0].style.backgroundColor = '#' + item.data('value');
           }
           self.element.focus();
@@ -284,7 +277,11 @@
         }, 1);
       },
 
-      // Set the Visible Color
+      /**
+      * Set the Visible Color
+      * @param {String} hex  &nbsp;-&nbsp; The hex value to use (can have the # or not).
+      * @param {String} text  &nbsp;-&nbsp; The text to display
+      */
       setColor: function (hex, text) {
         // Make sure there is always a hash
         if (hex.substr(0,1) !== '#') {
@@ -305,6 +302,7 @@
       // Refresh and Append the Color Menu
       updateColorMenu: function () {
         var isMenu =  !!($('#colorpicker-menu').length),
+          self = this,
           menu = $('<ul id="colorpicker-menu" class="popupmenu colorpicker"></ul>'),
           currentTheme = Soho.theme;
 
@@ -322,6 +320,10 @@
             isBorder = false,
             regexp = new RegExp('\\b'+ currentTheme +'\\b'),
             elemValue = this.isEditor ? this.element.attr('data-value') : this.element.val();
+
+          if (self.settings.showLabel && !this.isEditor) {
+            elemValue = this.getHexFromLabel(elemValue);
+          }
 
           // Set border to this swatch
           if (isBorderAll || regexp.test(settings.colors[i].border)) {
@@ -366,16 +368,25 @@
         return menu;
       },
 
+      /**
+      * Change the color picker from enabled to disabled.
+      */
       enable: function() {
         this.element.prop('disabled', false);
         this.element.parent().removeClass('is-disabled');
       },
 
+      /**
+      * Make the color picker disabled
+      */
       disable: function() {
         this.element.prop('disabled', true);
         this.element.parent().addClass('is-disabled');
       },
 
+      /**
+      * Returns true if the color picker is disabled.
+      */
       isDisabled: function() {
         return this.element.prop('disabled');
       },
@@ -407,13 +418,51 @@
         }
       },
 
-      // Teardown
+      /**
+      * Detach events and restore DOM to default.
+      */
       destroy: function() {
         this.swatch.remove();
         this.element.off('keypress.colorpicker');
         this.swatch.off('click.colorpicker');
         $.removeData(this.element[0], pluginName);
+      },
+
+    /**
+     *  This component fires the following events.
+     *
+     * @fires About#events
+     * @param {Object} change  &nbsp;-&nbsp; Fires when a color is typed or selected.
+     * @param {Object} blur  &nbsp;-&nbsp; Fires as the input looses focus
+     *
+     */
+      handleEvents: function () {
+        var self = this;
+        this.icon.parent().onTouchClick().on('click.colorpicker', function () {
+          self.toggleList();
+        });
+
+        this.element.on('focus.colorpicker', function () {
+          $(this).parent().addClass('is-focused');
+        })
+        .on('blur.colorpicker', function () {
+          $(this).parent().removeClass('is-focused');
+        });
+
+        this.element.on('keypress.colorpicker', function () {
+          self.setColor($(this).val());
+        }).on('change.colorpicker', function () {
+          self.setColor($(this).val());
+        });
+
+        //Handle Key Down to open
+        this.element.on('keydown.colorpicker', function (e) {
+          if (e.keyCode === 38 || e.keyCode === 40) {
+            self.toggleList();
+          }
+        });
       }
+
     };
 
     // Initialize the plugin (Once)

@@ -526,7 +526,6 @@ var express = require('express'),
   function defaultDocsRoute(req, res, next) {
     var opts = extend({}, res.opts, componentOpts);
     opts.layout = 'doc-layout';
-    opts.showbacklink = false;
 
     res.render('index', opts);
     next();
@@ -564,8 +563,6 @@ var express = require('express'),
 
     componentName = stripHtml(req.params.component);
     opts.subtitle = toTitleCase(componentName.charAt(0).toUpperCase() + componentName.slice(1).replace('-',' '));
-
-    opts.showbacklink = true;
     opts.layout = 'doc-layout';
 
     if (req.params.component === 'doc-styleguide') {
