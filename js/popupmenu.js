@@ -359,7 +359,9 @@
             switch(e.which) {
               case 13:
               case 32:
-                self.open(e);
+                if (self.settings.trigger === 'click') {
+                  self.open(e);
+                }
                 break;
               case 121:
                 if (e.shiftKey) { //Shift F10
@@ -687,6 +689,14 @@
         if ((this.settings.trigger === 'immediate' && this.settings.eventObj) || this.settings.trigger === 'rightClick') {
           opts.x = getCoordinates(e, 'x') - (isRTL ? menuDimensions.width : 0) + ((isRTL ? -1 : 1) * this.settings.offset.x);
           opts.y = getCoordinates(e, 'y') + this.settings.offset.y;
+
+          if (opts.x === 0 && opts.y === 0) {
+            opts.x = this.settings.offset.x || 0;
+            opts.y = this.settings.offset.y || 0;
+            opts.parent = this.element;
+            opts.placement = 'bottom';
+            opts.parentXAlignment = isRTL ? 'right' : 'left';
+          }
 
         } else {
           opts.x = this.settings.offset.x || 0;
