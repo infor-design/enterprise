@@ -237,7 +237,7 @@
           self.handleKeyPress(e, self);
         }).on('keyup.spinbox', function(e) {
           self.handleKeyup(e, self);
-        }).on('afterPaste.mask', function() {
+        }).on('afterpaste.mask', function() {
           self.handleAfterPaste(self);
         });
 
