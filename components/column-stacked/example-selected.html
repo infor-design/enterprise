@@ -25,8 +25,7 @@ $('body').on('initialized', function () {
             value: 11
         }, {
             name: 'Mar',
-            value: 14,
-            selected: true
+            value: 14
         }, {
             name: 'Apr',
             value: 10
@@ -53,7 +52,8 @@ $('body').on('initialized', function () {
             value: 10
         }, {
             name: 'DEC',
-            value: 6
+            value: 6,
+            selected: true
         }],
         name: 'Component A'
       }, {
@@ -92,7 +92,8 @@ $('body').on('initialized', function () {
             value: 20
         }, {
             name: 'DEC',
-            value: 26
+            value: 26,
+            selected: true
         }],
         name: 'Component B'
       }, {
@@ -131,16 +132,13 @@ $('body').on('initialized', function () {
             value: 30
         }, {
             name: 'DEC',
-            value: 36
+            value: 36,
+            selected: true
         }],
-        name: 'Component C',
-        selected: true
+        name: 'Component C'
       }];
 
-    $('#column-bar-stacked-example').chart({type: 'column-stacked', dataset: dataset})
-      .on('selected', function (e, bar, d, i, selectedBars) {
-        console.log(e, bar, d, i, selectedBars);
-      });
+    $('#column-bar-stacked-example').chart({type: 'column-stacked', dataset: dataset});
 
 });
 </script>

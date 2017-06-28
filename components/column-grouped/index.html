@@ -1,0 +1,49 @@
+<h1 id="column-chart-grouped-component-implementation-detail-learn-more">Column Chart (Grouped) Component Implementation Detail <a href="#">Learn More</a></h1>
+<h2 id="configuration-options">Configuration Options</h2>
+<ol>
+<li>Example Grouped Column Chart <a href="/components/column-grouped/example-index">View Example</a><br /></li>
+<li>Default a Selected Group <a href="/components/column-grouped/example-selected">View Example</a><br /></li>
+<li>Handle Negative Values <a href="/components/column-grouped/example-negative-value">View Example</a></li>
+</ol>
+<h2 id="code-example">Code Example</h2>
+<p>This example shows how to invoke the grouped bar chart in the charts component. We pass a dataset data points for each bar group we want to show.</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">
+<span class="kw">var</span> dataset = [{
+  <span class="dt">data</span>: [{
+      <span class="dt">name</span>: <span class="st">&#39;Jan&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">12</span>
+  }, {
+      <span class="dt">name</span>: <span class="st">&#39;Feb&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">11</span>
+  }],
+  <span class="dt">name</span>: <span class="st">&#39;Component A&#39;</span>
+}, {
+  <span class="dt">data</span>: [{
+      <span class="dt">name</span>: <span class="st">&#39;Jan&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">22</span>
+  }, {
+      <span class="dt">name</span>: <span class="st">&#39;Feb&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">21</span>
+  }],
+  <span class="dt">name</span>: <span class="st">&#39;Component B&#39;</span>
+}];
+
+<span class="fu">$</span>(<span class="st">&#39;#column-grouped-example&#39;</span>).<span class="fu">chart</span>({<span class="dt">type</span>: <span class="st">&#39;column-grouped&#39;</span>, <span class="dt">dataset</span>: dataset});
+</code></pre>
+<h2 id="accessibility">Accessibility</h2>
+<ul>
+<li>The contrast and actual colors can be a concern for visibility impaired and color blind people. However, you can customize the color by passing higher contrast colors.</li>
+</ul>
+<h2 id="code-tips">Code Tips</h2>
+<ul>
+<li>You can override the tooltip by passing in a specific tooltip text value.</li>
+</ul>
+<h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
+<ul>
+<li><strong>Tab:</strong> You can tab into the chart area and through the legend values as each has a focus state.<br /></li>
+<li><strong>Enter/Space:</strong> Will select the bar group the corresponds with the focus'd legend item.</li>
+</ul>
+<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
+<ul>
+<li>The area chart was added in 3.6. From 3.6 the api is compatible.</li>
+</ul>

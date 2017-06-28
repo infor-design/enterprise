@@ -63,6 +63,16 @@ button {
     @include transition(fill 300ms cubic-bezier(.17, .04, .03, .94));
   }
 
+  &.half-width {
+    padding: 0 30px;
+    width: 50%;
+  }
+
+  &.full-width {
+    padding: 0 30px;
+    width: 100%;
+  }
+
   span {
     color: inherit;
     font-size: inherit;
