@@ -19,16 +19,21 @@
     // Settings and Options
     var pluginName = 'circlepager',
         defaults = {
-          slidesToShow: 1, // Max number of slides to show in one view
-          startingSlide: null, // First showing slide/group, an 0-based integer
-          loop: false // Setting loop: true will loop back after next/previous reached to end
+          slidesToShow: 1,
+          startingSlide: null,
+          loop: false
         },
         settings = $.extend({}, defaults, options);
 
     /**
-     * @constructor
-     * @param {Object} element
-     */
+    * The Circle Pager Displays content in a sliding carousel and has paging buttons.
+    *
+    * @class CirclePager
+    * @param {String} slidesToShow  &nbsp;-&nbsp; The number of slides to show in one view / pane
+    * @param {String} startingSlide  &nbsp;-&nbsp; First showing slide/group, an 0-based integer
+    * @param {String} loop  &nbsp;-&nbsp;  Setting loop: true will loop back after next/previous reached to end
+    *
+    */
     function CirclePager(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -163,6 +168,184 @@
         this.element.append(html);
       },
 
+      // Check if given element is visible in container
+      isVisibleInContainer: function(element) {
+        if (element && element[0]) {
+          var eRect = element[0].getBoundingClientRect();
+          var cRect = this.element[0].getBoundingClientRect();
+          return (eRect.left > cRect.left && eRect.left < (cRect.left + cRect.width) &&
+            eRect.top > cRect.top && eRect.top < (cRect.top + cRect.height));
+        }
+        return -1;
+      },
+
+      // Update number of slides to show in view
+      updateSlidesToShow: function(numOfSlides) {
+        if (!this.isActive) {
+          return;
+        }
+        this.settings.slidesToShow = numOfSlides || 1;
+        this.updated();
+        return this;
+      },
+
+      // Make sure max number of slides to show in view
+      responsiveSlidesToShow: function(numOfSlides) {
+        if (!this.isActive) {
+          return;
+        }
+        var self = this;
+        this.slidesToShow = numOfSlides || this.settings.slidesToShow;
+        this.unbind().slidesJQ.css('width', '');
+        if (this.slides.length) {
+          setTimeout(function() {
+            self.createControls();
+            self.handleEvents();
+            self.showCollapsedView();
+            self.initActiveSlide();
+          }, 0);
+        }
+      },
+
+      /**
+      * Show a slide to First Slide
+      * @param {String} index  &nbsp;-&nbsp; The index of the slide to show (0 based)
+      */
+      show: function(index) {
+        if (!this.isActive) {
+          return;
+        }
+        index = typeof index !== 'undefined' ? index : this.activeIndex;
+        this.activeIndex = index;
+
+        // var isBulletsNav = this.element.width() > this.controlButtons.length * 30;
+        var left = index > 0 ? ((Locale.isRTL() ? '' : '-') + (index * 100) +'%') : 0;
+        this.controlButtons.removeClass('is-active').eq(index).addClass('is-active');
+        this.container[0].style.left = left;
+
+        // Make sure bullets navigation do not overflow
+        if (!this.isBulletsNav) {
+          this.element.addClass('is-bullets-nav-hidden');
+          this.controlButtons.find('span').addClass('audible').end()
+            .eq(index).find('span').removeClass('audible');
+        } else {
+          this.element.removeClass('is-bullets-nav-hidden');
+          this.controlButtons.find('span').addClass('audible');
+        }
+
+        // Set focus
+        if (this.isFocus && this.isBulletsNav) {
+          this.isFocus = false;
+          this.controlButtons.eq(index).focus();
+        }
+      },
+
+      /**
+      * Move to First Slide
+      */
+      first: function() {
+        this.show(0);
+      },
+
+      /**
+      * Move to Last Slide
+      */
+      last: function() {
+        this.show(Math.round(this.slides.length/this.slidesToShow)-1);
+      },
+
+      /**
+      * Move to Previous Slide
+      */
+      prev: function() {
+        var self = this,
+          prev = this.activeIndex > 0 ?
+            this.activeIndex - 1 : (this.settings.loop ? Math.round(this.slides.length/this.slidesToShow)-1 : 0);
+
+        if (this.slides[prev].isDisabled) {
+          setTimeout(function() {
+            self.prev();
+          }, 0);
+          this.activeIndex = prev;
+          return false;
+        }
+        this.show(prev);
+      },
+
+      /**
+      * Move to Next Slide
+      */
+      next: function() {
+        var self = this,
+          next = this.activeIndex >= Math.round(this.slides.length/this.slidesToShow)-1 ?
+            (this.settings.loop ? 0 : this.activeIndex) : this.activeIndex + 1;
+
+        if (this.slides[next].isDisabled) {
+          setTimeout(function() {
+            self.next();
+          }, 0);
+          this.activeIndex = next;
+          return false;
+        }
+        this.show(next);
+      },
+
+      // Make active
+      showCollapsedView: function() {
+        this.isActive = true;
+        this.element.addClass('is-active');
+        this.container[0].style.width = (100 * this.slides.length) +'%';
+        if (this.settings.slidesToShow > 1 &&
+           (this.slidesJQ.eq(0).width() * this.slidesToShow > this.element.width())) {
+          this.responsiveSlidesToShow(this.slidesToShow - 1);
+          return;
+        }
+        for (var i = 0, l = this.slidesJQ.length; i < l; i++) {
+          this.slidesJQ[i].style.width = ((100/this.slidesToShow) / this.slides.length) +'%';
+        }
+        this.show();
+      },
+
+      // Make un-active
+      showExpandedView: function() {
+        this.isActive = false;
+        this.element.removeClass('is-active');
+        this.element[0].style.width = '';
+        this.container[0].style.width = '';
+        this.container[0].style.left = '';
+      },
+
+      // Initialize active slide
+      initActiveSlide: function() {
+        if (this.slides[this.activeIndex].isDisabled) {
+          this.next();
+          return false;
+        }
+        this.show();
+      },
+
+      unbind: function() {
+        $('body').off('resize.circlepager');
+        this.element.off('focus.circlepager keydown.circlepager', '*');
+        this.controlButtons.off('click.circlepager keydown.circlepager');
+        $('.btn-previous, .btn-next', this.element).off('click.circlepager');
+        $('.controls', this.element).remove();
+        this.showExpandedView();
+        return this;
+      },
+
+      updated: function() {
+        return this
+          .unbind()
+          .init();
+      },
+
+      // Teardown
+      destroy: function() {
+        this.unbind();
+        $.removeData(this.element[0], pluginName);
+      },
+
       // Handle events
       handleEvents: function() {
         var self = this;
@@ -294,173 +477,8 @@
           self.responsiveSlidesToShow();
         });
 
-      }, // END: Handle Events ---------------------------------------------------------------------
-      // Check if given element is visible in container
-      isVisibleInContainer: function(element) {
-        if (element && element[0]) {
-          var eRect = element[0].getBoundingClientRect();
-          var cRect = this.element[0].getBoundingClientRect();
-          return (eRect.left > cRect.left && eRect.left < (cRect.left + cRect.width) &&
-            eRect.top > cRect.top && eRect.top < (cRect.top + cRect.height));
-        }
-        return -1;
-      },
-
-      // Update number of slides to show in view
-      updateSlidesToShow: function(numOfSlides) {
-        if (!this.isActive) {
-          return;
-        }
-        this.settings.slidesToShow = numOfSlides || 1;
-        this.updated();
-        return this;
-      },
-
-      // Make sure max number of slides to show in view
-      responsiveSlidesToShow: function(numOfSlides) {
-        if (!this.isActive) {
-          return;
-        }
-        var self = this;
-        this.slidesToShow = numOfSlides || this.settings.slidesToShow;
-        this.unbind().slidesJQ.css('width', '');
-        if (this.slides.length) {
-          setTimeout(function() {
-            self.createControls();
-            self.handleEvents();
-            self.showCollapsedView();
-            self.initActiveSlide();
-          }, 0);
-        }
-      },
-
-      // Show slide
-      show: function(index) {
-        if (!this.isActive) {
-          return;
-        }
-        index = typeof index !== 'undefined' ? index : this.activeIndex;
-        this.activeIndex = index;
-
-        // var isBulletsNav = this.element.width() > this.controlButtons.length * 30;
-        var left = index > 0 ? ((Locale.isRTL() ? '' : '-') + (index * 100) +'%') : 0;
-        this.controlButtons.removeClass('is-active').eq(index).addClass('is-active');
-        this.container[0].style.left = left;
-
-        // Make sure bullets navigation do not overflow
-        if (!this.isBulletsNav) {
-          this.element.addClass('is-bullets-nav-hidden');
-          this.controlButtons.find('span').addClass('audible').end()
-            .eq(index).find('span').removeClass('audible');
-        } else {
-          this.element.removeClass('is-bullets-nav-hidden');
-          this.controlButtons.find('span').addClass('audible');
-        }
-
-        // Set focus
-        if (this.isFocus && this.isBulletsNav) {
-          this.isFocus = false;
-          this.controlButtons.eq(index).focus();
-        }
-      },
-
-      // First slide
-      first: function() {
-        this.show(0);
-      },
-
-      // Last slide
-      last: function() {
-        this.show(Math.round(this.slides.length/this.slidesToShow)-1);
-      },
-
-      // Previous slide
-      prev: function() {
-        var self = this,
-          prev = this.activeIndex > 0 ?
-            this.activeIndex - 1 : (this.settings.loop ? Math.round(this.slides.length/this.slidesToShow)-1 : 0);
-
-        if (this.slides[prev].isDisabled) {
-          setTimeout(function() {
-            self.prev();
-          }, 0);
-          this.activeIndex = prev;
-          return false;
-        }
-        this.show(prev);
-      },
-
-      // Next slide
-      next: function() {
-        var self = this,
-          next = this.activeIndex >= Math.round(this.slides.length/this.slidesToShow)-1 ?
-            (this.settings.loop ? 0 : this.activeIndex) : this.activeIndex + 1;
-
-        if (this.slides[next].isDisabled) {
-          setTimeout(function() {
-            self.next();
-          }, 0);
-          this.activeIndex = next;
-          return false;
-        }
-        this.show(next);
-      },
-
-      // Make active
-      showCollapsedView: function() {
-        this.isActive = true;
-        this.element.addClass('is-active');
-        this.container[0].style.width = (100 * this.slides.length) +'%';
-        if (this.settings.slidesToShow > 1 &&
-           (this.slidesJQ.eq(0).width() * this.slidesToShow > this.element.width())) {
-          this.responsiveSlidesToShow(this.slidesToShow - 1);
-          return;
-        }
-        for (var i = 0, l = this.slidesJQ.length; i < l; i++) {
-          this.slidesJQ[i].style.width = ((100/this.slidesToShow) / this.slides.length) +'%';
-        }
-        this.show();
-      },
-
-      // Make un-active
-      showExpandedView: function() {
-        this.isActive = false;
-        this.element.removeClass('is-active');
-        this.element[0].style.width = '';
-        this.container[0].style.width = '';
-        this.container[0].style.left = '';
-      },
-
-      // Initialize active slide
-      initActiveSlide: function() {
-        if (this.slides[this.activeIndex].isDisabled) {
-          this.next();
-          return false;
-        }
-        this.show();
-      },
-
-      unbind: function() {
-        $('body').off('resize.circlepager');
-        this.element.off('focus.circlepager keydown.circlepager', '*');
-        this.controlButtons.off('click.circlepager keydown.circlepager');
-        $('.btn-previous, .btn-next', this.element).off('click.circlepager');
-        $('.controls', this.element).remove();
-        this.showExpandedView();
-        return this;
-      },
-
-      updated: function() {
-        return this
-          .unbind()
-          .init();
-      },
-
-      // Teardown
-      destroy: function() {
-        this.unbind();
-        $.removeData(this.element[0], pluginName);
       }
+
     };
 
     // Initialize the plugin (Once)
