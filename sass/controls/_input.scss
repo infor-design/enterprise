@@ -154,10 +154,6 @@
   margin-bottom: 20px;
   position: relative;
 
-  &:last-child:not(:only-child) {
-    margin-bottom: 0;
-  }
-
   textarea + .btn-actions {
     margin-left: 4px;
     position: absolute;

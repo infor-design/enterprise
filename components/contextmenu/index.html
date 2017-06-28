@@ -1,0 +1,105 @@
+<h1 id="context-menu-implementation-detail-learn-more">Context Menu Implementation Detail <a href="https://soho.infor.com/index.php?p=component/about-dialog">Learn More</a></h1>
+<h2 id="api-details">Api Details</h2>
+<p><a href="/components/popupmenu">See popup menu</a></p>
+<h2 id="configuration-options">Configuration Options</h2>
+<ol>
+<li>Context Menu on an Input <a href="/components/contextmenu/example-index">View Example</a></li>
+</ol>
+<h2 id="code-example">Code Example</h2>
+<p>The context menu control is also referred to as a popmenu. It can be invoked in several ways. As a right click menu fx on an input field or grid or list row. As a click menu for example on a menu or actions button. Or manually on demand via the api.</p>
+<p>The structure of the menu is a ul element with li elements containing links for each of the rows in the menu. An other ul element can be added to create a submenu. Use only one level of submenus for accessibility and usability reasons.</p>
+<p>The class popmenu should be added to the ul elements at the top and submenu level. You can create rows as space separators for grouping with the tag with the class separator. You can create rows as groups with titles as well with the class group.</p>
+<p>The popupmenu can be linked as a right click menu item by adding the attribute data-popupmenu=&quot;action-popupmenu&quot; to any element that should get the menu, this should point to the id of the menu.</p>
+<p>This page focus on the right click popup menu (Context Menu).</p>
+<pre class="sourceCode html"><code class="sourceCode html">
+
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;input-menu&quot;</span><span class="kw">&gt;</span>Label<span class="kw">&lt;/label&gt;</span>
+  <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> data-popupmenu=</span><span class="st">&quot;action-popupmenu&quot;</span><span class="ot"> value=</span><span class="st">&quot;Right Click Me&quot;</span><span class="ot"> id=</span><span class="st">&quot;input-menu&quot;</span><span class="kw">&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;ul</span><span class="ot"> id=</span><span class="st">&quot;action-popupmenu&quot;</span><span class="ot"> class=</span><span class="st">&quot;popupmenu&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Cut<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Copy<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Paste<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="kw">&lt;li&gt;</span>
+    <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Paste Special<span class="kw">&lt;/a&gt;</span>
+    <span class="kw">&lt;ul</span><span class="ot"> class=</span><span class="st">&quot;popupmenu&quot;</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Sub Menu 1<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+      <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Sub Menu 2<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+    <span class="kw">&lt;/ul&gt;</span>
+  <span class="kw">&lt;/li&gt;</span>
+  <span class="kw">&lt;li</span><span class="ot"> class=</span><span class="st">&quot;separator&quot;</span><span class="kw">&gt;&lt;/li&gt;</span>
+  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Name and project range<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> id=</span><span class="st">&#39;x&#39;</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="ot"> disabled</span><span class="kw">&gt;</span>Insert comment<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="ot"> disabled</span><span class="kw">&gt;</span>Insert note<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="kw">&lt;li&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Clear notes<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="kw">&lt;li</span><span class="ot"> class=</span><span class="st">&quot;separator single-selectable-section&quot;</span><span class="kw">&gt;&lt;/li&gt;</span>
+  <span class="kw">&lt;li</span><span class="ot"> class=</span><span class="st">&quot;heading&quot;</span><span class="kw">&gt;</span>Additional Options<span class="kw">&lt;/li&gt;</span>
+  <span class="kw">&lt;li</span><span class="ot"> class=</span><span class="st">&quot;is-selectable is-checked&quot;</span><span class="kw">&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Conditional formatting<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+  <span class="kw">&lt;li</span><span class="ot"> class=</span><span class="st">&quot;is-selectable&quot;</span><span class="kw">&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#&quot;</span><span class="kw">&gt;</span>Data validation<span class="kw">&lt;/a&gt;&lt;/li&gt;</span>
+<span class="kw">&lt;/ul&gt;</span>
+</code></pre>
+<h2 id="coding-tips">Coding Tips</h2>
+<ul>
+<li>If necessary, the options can be broken up into categories<br /></li>
+<li>The Context Menu should not be used as a navigation method<br /></li>
+<li>A shortcut/right-click menu should never be the only method of performing specific actions, as such actions are not easily discoverable by the user</li>
+</ul>
+<h2 id="accessibility">Accessibility</h2>
+<ul>
+<li>Make sure to always focus the triggering element when closing<br /></li>
+<li>Add aria-hidden when menu is in closed/invisible state<br /></li>
+<li>Uses role = application for correct modality<br /></li>
+<li>Elements with a popup get aria-haspopup and aria-owns = id<br /></li>
+<li>li elements get role = presentation for groups and seperators<br /></li>
+<li>Checked items get aria-checked<br /></li>
+<li>Set aria-expanded when open<br /></li>
+<li>Can role = menu (usually role menu for popup menu, list box is for dropdown cases.<br /></li>
+<li>Anchor elements get role = menuitem</li>
+</ul>
+<h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
+<ul>
+<li><p><strong>Shift F10</strong></p>
+<ul>
+<li>Posts the Popup Menu Widget When it is used as a <a href="http://en.wikipedia.org/wiki/Context_menu">Contextual Menu</a><br /></li>
+<li>Place input focus on the first available menuitem in the Popup Menu<br /></li>
+<li><strong>Note:</strong> The Browser's Contextual Menu pops up if the element with input focus does not have a Popup Menu attached<br /></li>
+</ul></li>
+<li><p><strong>ESC</strong></p>
+<ul>
+<li>Causes no menu action and dismisses Popup Menu<br /></li>
+<li>Input focus is returned to the element from which the Popup Menu was called<br /></li>
+</ul></li>
+<li><p><strong>Up/Down Arrow</strong></p>
+<ul>
+<li>Moves input focus vertically between each menuitem<br /></li>
+<li>Input focus wraps from the last to the first menuitem on a Down key press and vice-versa when the Up key is pressed.<br /></li>
+</ul></li>
+<li><p><strong>Right/Left Arrow</strong></p>
+<ul>
+<li>Where applicable, causes a sub-menu to post or un-post<br /></li>
+<li>Causes no action if there is no sub-menu<br /></li>
+</ul></li>
+<li><p><strong>Enter</strong></p>
+<ul>
+<li>Opens the menu if on an element with click linkage. If open, then enter will select the focused menu item.</li>
+</ul></li>
+</ul>
+<h2 id="states-and-variations">States and Variations</h2>
+<p>The values within the Context Menu take the following states:</p>
+<ul>
+<li>Focus<br /></li>
+<li>Hover<br /></li>
+<li>Disabled</li>
+</ul>
+<h2 id="responsive-guidelines">Responsive Guidelines</h2>
+<ul>
+<li>Should always fit on the screen and scroll inside if necessary.</li>
+</ul>
+<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
+<ul>
+<li>Is relatively backwards compatible except inforContextMenu should be replaced with popupmenu in the api call and class name<br /></li>
+<li>Remove class divider it is deprecated<br /></li>
+<li>Checkbox construct is simplified<br /></li>
+<li>Group replaced with heading</li>
+</ul>
