@@ -1,0 +1,55 @@
+<h1 id="contextual-action-panel-component-implementation-detail-learn-more">Contextual Action Panel Component Implementation Detail <a href="#">Learn More</a></h1>
+<h3 id="functions">Functions</h3>
+<h2 id="configuration-options">Configuration Options</h2>
+<ol>
+<li>Default CAP Example <a href="/components/contextualactionpanel/example-index">View Example</a><br /></li>
+<li>CAP using jquery Object for Content <a href="/components/contextualactionpanel/example-jquery">View Example</a><br /></li>
+<li>CAP using Inline Markup for Content <a href="/components/contextualactionpanel/example-markup">View Example</a><br /></li>
+<li>Toolbar Alignment Test <a href="/component/scontextualactionpanel/test-alignment">View Test</a><br /></li>
+<li>Destroy Test <a href="/components/contextualactionpanel/test-destroy">View Test</a><br /></li>
+<li>Markup Test <a href="/components/contextualactionpanel/test-from-markup">View Test</a><br /></li>
+<li>Launching From a Menu <a href="/components/contextualactionpanel/test-from-menu">View Test</a><br /></li>
+<li>IFrame for Contents <a href="/components/contextualactionpanel/test-iframe">View Test</a><br /></li>
+<li>Open on Grid Rows <a href="/components/contextualactionpanel/test-trigger-immediate">View Test</a></li>
+</ol>
+<h2 id="code-example">Code Example</h2>
+<p>This example shows how to invoke a Contextual Action Panel (CAP) and pass in the content for the CAP body. The buttons option lets you customize the CAP's toolbar and functions.</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">
+<span class="fu">$</span>(<span class="st">&#39;body&#39;</span>).<span class="fu">contextualactionpanel</span>({
+  <span class="dt">id</span>: <span class="st">&#39;contextual-action-modal-id&#39;</span>,
+  <span class="dt">title</span>: <span class="st">&#39;Expenses: $50,000.00&#39;</span>,
+  <span class="dt">content</span>: <span class="st">&#39;&lt;markup&gt;&#39;</span>,
+  <span class="dt">trigger</span>: <span class="st">&#39;immediate&#39;</span>,
+  <span class="dt">buttons</span>: [
+    {
+      <span class="dt">type</span>: <span class="st">&#39;input&#39;</span>,
+      <span class="dt">text</span>: <span class="st">&#39;Keyword&#39;</span>,
+      <span class="dt">id</span>: <span class="st">&#39;filter&#39;</span>,
+      <span class="dt">name</span>: <span class="st">&#39;filter&#39;</span>,
+      <span class="dt">cssClass</span>: <span class="st">&#39;searchfield&#39;</span>
+    }, {
+      <span class="dt">text</span>: <span class="st">&#39;Close&#39;</span>,
+      <span class="dt">cssClass</span>: <span class="st">&#39;btn&#39;</span>,
+      <span class="dt">icon</span>: <span class="st">&#39;#icon-close&#39;</span>
+    }
+  ]
+});
+</code></pre>
+<h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
+<p>The Contextual Action Panel inherits the following keystrokes from other controls:</p>
+<ul>
+<li><strong>Escape</strong> closes the Contextual Action Panel the same way it would close an <a href="https://soho.infor.com/index.php?p=component/input-dialog">Input Dialog</a>.<br /></li>
+<li>When focused on elements inside the Toolbar at the top of the Contextual Action Panel, all <a href="https://soho.infor.com/index.php?p=component/toolbar">Toolbar</a> keystrokes take effect.<br /></li>
+<li><strong>Tab</strong> - should never tab off the Dialog</li>
+</ul>
+<h2 id="states-and-variations">States and Variations</h2>
+<ul>
+<li>Hidden<br /></li>
+<li>Visible</li>
+</ul>
+<h2 id="responsive-guidelines">Responsive Guidelines</h2>
+<p>The Contextual Action Panel responds similarly to an <a href="https://soho.infor.com/index.php?p=component/input-dialog">Input Dialog</a>, in that it will resize and center itself horizontally and vertically in the browser window, never fitting beyond 80% width and height of the window.</p>
+<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
+<ul>
+<li>Did not exist in 3.X, but any complex Modals should be changed to use this.</li>
+</ul>
