@@ -19,6 +19,11 @@ The Autocomplete control provides an easier means of searching through a large a
 
 This component listens to the following events:
 
+**Parameters**
+
+-   `module:Wizard~event`  :updated
+-   `module:Wizard~event`  :click
+
 ## Wizard
 
 **Parameters**
@@ -28,3 +33,8 @@ This component listens to the following events:
 ### handleEvents
 
 This component listens to the following events:
+
+**Parameters**
+
+-   `module:Wizard~event`  :updated
+-   `module:Wizard~event`  :click
