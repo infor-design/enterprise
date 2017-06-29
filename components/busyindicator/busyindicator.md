@@ -1,5 +1,5 @@
 
-# Busy Indicator Component Implementation Detail [Learn More](#)
+# Busy Indicator  [Learn More](#)
 
 {{api-details}}
 

@@ -1,5 +1,5 @@
 
-# Circle Pager Component Implementation Detail [Learn More](#)
+# Circle Pager  [Learn More](#)
 
 {{api-details}}
 

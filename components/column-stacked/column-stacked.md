@@ -1,5 +1,5 @@
 
-# Column Chart (Stacked) Component Implementation Detail [Learn More](#)
+# Column Chart (Stacked)  [Learn More](#)
 
 ## Api Details
 

@@ -1,4 +1,4 @@
-# Toolbar Searchfield Implementation Detail [Learn More](#)
+# Toolbar Searchfield [Learn More](#)
 
 ## Important Notes
 

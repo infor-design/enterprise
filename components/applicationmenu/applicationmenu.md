@@ -1,5 +1,5 @@
 
-# Application Menu Component Implementation Detail [Learn More](https://soho.infor.com/index.php?p=component/application-menu)
+# Application Menu  [Learn More](https://soho.infor.com/index.php?p=component/application-menu)
 
 {{api-details}}
 

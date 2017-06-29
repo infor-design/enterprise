@@ -1,5 +1,5 @@
 
-# Column Chart (Grouped) Component Implementation Detail [Learn More](#)
+# Column Chart (Grouped)  [Learn More](#)
 
 ## Configuration Options
 

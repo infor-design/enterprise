@@ -1,5 +1,5 @@
 
-# Breadcrumb Component Implementation Detail [Learn More](#)
+# Breadcrumb  [Learn More](#)
 
 {{api-details}}
 

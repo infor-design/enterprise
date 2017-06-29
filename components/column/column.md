@@ -1,5 +1,5 @@
 
-# Column Chart Component Implementation Detail [Learn More](#)
+# Column Chart  [Learn More](#)
 
 ## Api Details
 

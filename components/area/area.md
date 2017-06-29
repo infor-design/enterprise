@@ -1,5 +1,5 @@
 
-# Area Component Implementation Detail [Learn More](#)
+# Area  [Learn More](#)
 
 ## Configuration Options
 

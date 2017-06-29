@@ -1,5 +1,5 @@
 
-# About Component Implementation Detail [Learn More](https://soho.infor.com/index.php?p=component/about-dialog)
+# About  [Learn More](https://soho.infor.com/index.php?p=component/about-dialog)
 
 {{api-details}}
 

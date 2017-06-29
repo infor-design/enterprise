@@ -1,4 +1,4 @@
-# Button Component Implementation Detail [Learn More](https://soho.infor.com/index.php?p=component/buttons)
+# Button  [Learn More](https://soho.infor.com/index.php?p=component/buttons)
 
 {{api-details}}
 

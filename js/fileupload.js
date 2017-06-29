@@ -50,7 +50,7 @@
           elemClass = elem.find('input').attr('class'),
           instructions = Locale.translate('FileUpload'),
           label = $('<label for="'+ id +'-filename">'+ elem.text() +' <span class="audible">'+ instructions +'</span></label>'),
-          shadowField = $('<input readonly id="'+ id +'-filename" class="fileupload-background-transparent '+ elemClass +'" type="text">'),
+          shadowField = $('<input readonly id="'+ id +'-filename" class="fileupload-background-transparent'+ (elemClass ? ' '+ elemClass : '') +'" type="text">'),
           svg = '<span class="trigger" tabindex="-1">' + $.createIcon('folder') + '</span>';
 
         elem.before(label, shadowField);
@@ -85,7 +85,7 @@
         this.textInput.off('keypress.fileupload');
         this.element.closest('.field-fileupload')
           .removeClass('field-fileupload')
-          .find('>label:first, >[type="text"]:first, .trigger').remove();
+          .find('>label:first, >[type="text"]:first, .trigger, .icon-dirty, .msg-dirty').remove();
 
         $.removeData(this.element[0], pluginName);
       },
