@@ -86,25 +86,6 @@
         return this;
       },
 
-      /**
-       * This component listens to the following events:
-       * @listens Wizard:updated
-       * @listens Wizard:click
-       */
-      handleEvents: function() {
-        var self = this;
-
-        this.element.on('updated', function() {
-          self.updated();
-        });
-
-        this.ticks.onTouchClick('wizard').on('click.wizard', function(e) {
-          self.activate(e, $(this));
-        });
-
-        return this;
-      },
-
       buildTicks: function() {
         var settingTicks = this.settings.ticks,
           self = this;
@@ -273,6 +254,25 @@
       destroy: function() {
         this.teardown();
         $.removeData(this.element[0], pluginName);
+      },
+
+      /**
+       * This component listens to the following events:
+       * @listens Wizard:updated
+       * @listens Wizard:click
+       */
+      handleEvents: function() {
+        var self = this;
+
+        this.element.on('updated', function() {
+          self.updated();
+        });
+
+        this.ticks.onTouchClick('wizard').on('click.wizard', function(e) {
+          self.activate(e, $(this));
+        });
+
+        return this;
       }
     };
 
