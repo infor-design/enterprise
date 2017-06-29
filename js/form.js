@@ -121,6 +121,10 @@
             label = $('label:visible', field),
             d = {class: '', style: ''};
 
+          if (field.is('.field-fileupload')) {
+            el = label.prev('input');
+          }
+
           // Used element without .field wrapper
           if (!label[0]) {
             label = input.next('label');
