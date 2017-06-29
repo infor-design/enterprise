@@ -583,7 +583,6 @@ var express = require('express'),
   function defaultDocsRoute(req, res, next) {
     var opts = extend({}, res.opts, componentOpts);
     opts.layout = 'doc-layout';
-    opts.showbacklink = false;
 
     res.render('index', opts);
     next();
