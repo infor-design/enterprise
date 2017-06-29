@@ -1,5 +1,5 @@
 
-# Color Picker Component Implementation Detail [Learn More](#)
+# Color Picker  [Learn More](#)
 
 ## Configuration Options
 

@@ -1,5 +1,5 @@
 
-# Cards Component Implementation Detail [Learn More](#)
+# Cards  [Learn More](#)
 
 {{api-details}}
 

@@ -43,7 +43,7 @@ module.exports = {
         {expand: true, flatten: true, src: ['dist/js/*.*'], dest: 'publish/dist/js/', filter: 'isFile'},
         {expand: true, flatten: true, src: ['dist/js/all/*.*'], dest: 'publish/dist/js/all', filter: 'isFile'},
         {expand: true, flatten: true, src: ['dist/js/cultures/*.*'], dest: 'publish/dist/js/cultures', filter: 'isFile'},
-        {expand: true, flatten: false, src: ['sass/**/*'], dest: 'publish/', filter: 'isFile'}
+        {expand: true, flatten: true, src: ['sass/**/*.scss', 'components/**/*.scss'], dest: 'publish/sass/', filter: 'isFile'}
       ]
     }
   }

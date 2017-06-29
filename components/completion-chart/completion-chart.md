@@ -1,5 +1,5 @@
 
-# Completion Chart Component Implementation Detail [Learn More](#)
+# Completion Chart  [Learn More](#)
 
 ## Api Details
 

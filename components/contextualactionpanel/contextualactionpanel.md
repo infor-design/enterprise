@@ -1,5 +1,5 @@
 
-# Contextual Action Panel Component Implementation Detail [Learn More](#)
+# Contextual Action Panel  [Learn More](#)
 
 {{api-details}}
 

@@ -1,5 +1,5 @@
 
-# Arrange Component Implementation Detail [Learn More](#)
+# Arrange  [Learn More](#)
 
 {{api-details}}
 

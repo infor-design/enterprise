@@ -1,5 +1,5 @@
 
-# Charts Components Implementation Detail [Learn More](#)
+# Charts [Learn More](#)
 
 All of the charts are documented separately by type. See the respective pages for each chart in addition to this shared API info page. The following charts are currently supported
 

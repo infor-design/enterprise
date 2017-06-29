@@ -1,4 +1,4 @@
-# Autocomplete Component Implementation Detail [Learn More](https://soho.infor.com/index.php?p=component/autocomplete)
+# Autocomplete  [Learn More](https://soho.infor.com/index.php?p=component/autocomplete)
 
 {{api-details}}
 

@@ -1,5 +1,5 @@
 
-# Bar Chart (Grouped) Component Implementation Detail [Learn More](#)
+# Bar Chart (Grouped)  [Learn More](#)
 
 ## Configuration Options
 

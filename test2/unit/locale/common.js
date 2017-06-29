@@ -1,5 +1,5 @@
 define([
-  'intern!object',
+  //'intern!object',
   'intern/chai!expect',
   'jsdom',
 ], function(registerSuite, expect) {

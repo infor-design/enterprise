@@ -1,4 +1,4 @@
-# Checboxes Component Implementation Detail [Learn More](#)
+# Checboxes  [Learn More](#)
 
 ## Api Details
 
