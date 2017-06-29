@@ -258,8 +258,8 @@
 
       /**
        * This component listens to the following events:
-       * @listens Wizard:updated
-       * @listens Wizard:click
+       * @listens module:Wizard~event:updated
+       * @listens module:Wizard~event:click
        */
       handleEvents: function() {
         var self = this;
