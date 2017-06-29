@@ -14,14 +14,15 @@
 ## Configuration Options
 
 1. Column Chart Main Example [View Example]( /components/column/example-index)
-2. Balance Widget [View Example]( /components/column/example-balance)
-3. Changing Colors [View Example]( /components/column/example-colors)
-4. Changing the Y Domain [View Example]( /components/column/example-domain-change)
-5. Formatting the Values (Tooltip) [View Example]( /components/column/example-formatter)
-6. Negative Values [View Example]( /components/column/example-negative-value)
-7. Pattern Colors [View Example]( /components/column/example-patterns)
-8. Selecting a Section Colors [View Example]( /components/column/example-selected)
-9. Testing Date Values [View Test]( /components/column/test-by-date)
+2. Column Chart with Legend [View Example]( /components/column/example-legend)
+3. Balance Widget [View Example]( /components/column/example-balance)
+4. Changing Colors [View Example]( /components/column/example-colors)
+5. Changing the Y Domain [View Example]( /components/column/example-domain-change)
+6. Formatting the Values (Tooltip) [View Example]( /components/column/example-formatter)
+7. Negative Values [View Example]( /components/column/example-negative-value)
+8. Pattern Colors [View Example]( /components/column/example-patterns)
+9. Selecting a Section Colors [View Example]( /components/column/example-selected)
+10. Testing Date Values [View Test]( /components/column/test-by-date)
 
 ## Code Example
 
