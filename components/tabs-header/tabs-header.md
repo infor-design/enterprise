@@ -7,5 +7,5 @@ All Soho Tabs components use the same API.  For details on this component's API,
 ## Configuration Options
 
 1. [Common Configuration](/components/tabs-header/example-index)
-2. [Alternate Styling](/components/tabs/example-alternate)
-3. [Add Tab Button](/components/tabs/example-add-tab-button)
+2. [Alternate Styling](/components/tabs-header/example-alternate)
+3. [Add Tab Button](/components/tabs-header/example-add-tab-button)
