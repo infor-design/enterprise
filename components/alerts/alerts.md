@@ -1,5 +1,5 @@
 
-# Alert Component Implementation Detail [Learn More](https://soho.infor.com/index.php?p=component/accordion)
+# Alert  [Learn More](https://soho.infor.com/index.php?p=component/accordion)
 
 ## Api Details
 

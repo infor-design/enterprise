@@ -1,5 +1,5 @@
 
-# Bar Chart (Stacked) Component Implementation Detail [Learn More](#)
+# Bar Chart (Stacked)  [Learn More](#)
 
 ## Configuration Options
 

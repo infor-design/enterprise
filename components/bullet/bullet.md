@@ -1,5 +1,5 @@
 
-# Bullet Chart Component Implementation Detail [Learn More](#)
+# Bullet Chart  [Learn More](#)
 
 ## Configuration Options
 

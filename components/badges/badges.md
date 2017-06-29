@@ -1,4 +1,4 @@
-# Badge Component Implementation Detail [Learn More](#)
+# Badge  [Learn More](#)
 
 ## Api Details
 

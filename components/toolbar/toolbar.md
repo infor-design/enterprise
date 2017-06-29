@@ -1,4 +1,4 @@
-# Toolbar Component Implementation Detail [Learn More](https://soho.infor.com/index.php?p=component/toolbar)
+# Toolbar  [Learn More](https://soho.infor.com/index.php?p=component/toolbar)
 
 {{api-details}}
 

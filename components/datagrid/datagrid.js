@@ -1440,9 +1440,46 @@ $.fn.datagrid = function(options) {
       settings = $.extend({}, defaults, options);
 
   /**
-   * @constructor
-   * @param {Object} element
-   */
+  * The Datagrid Component displays and process data in tabular format.
+  *
+  * @class Datagrid
+  * @param {Boolean} actionableMode &nbsp;-&nbsp If actionableMode is "true”, tab and shift tab behave like left and right arrow key, if the cell is editable it goes in and out of edit mode. F2 - toggles actionableMode "true" and "false"
+  * @param {Boolean} cellNavigation &nbsp;-&nbsp If cellNavigation is "false”, will show border around whole row on focus
+  * @param {Boolean} rowNavigation  &nbsp;-&nbsp If rowNavigation is "false”, will NOT show border around the row
+  * @param {Boolean} alternateRowShading  &nbsp;-&nbsp Sets shading for readonly grids
+  * @param {Array} columns  &nbsp;-&nbsp an array of columns (see column options)
+  * @param {Array} dataset  &nbsp;-&nbsp an array of data objects
+  * @param {Boolean} columnReorder  &nbsp;-&nbsp Allow Column reorder
+  * @param {Boolean} saveColumns  &nbsp;-&nbsp Save Column Reorder and resize
+  * @param {Object} saveUserSettings  &nbsp;-&nbsp Save one or all of the following to local storage : columns: true, rowHeight: true, sortOrder: true, pagesize: true, activePage: true, filter: true
+  * @param {Boolean} editable &nbsp;-&nbsp Enable editing in the grid, requires column editors.
+  * @param {Boolean} isList  &nbsp;-&nbsp Makes the grid have readonly "list" styling
+  * @param {String} menuId  &nbsp;-&nbsp Id to link a right click context menu element
+  * @param {String} uniqueId &nbsp;-&nbsp Unique ID to use as local storage reference and internal variable names
+  * @param {String} rowHeight &nbsp;-&nbsp Controls the height of the rows / number visible rows. May be (short, medium or normal)
+  * @param {String} selectable &nbsp;-&nbsp Controls the selection Mode this may be: false, 'single' or 'multiple' or 'mixed'
+  * @param {Object} groupable &nbsp;-&nbsp  Controls fields to use for data grouping Use Data grouping fx. {fields: ['incidentId'], supressRow: true, aggregator: 'list', aggregatorOptions: ['unitName1']}
+  * @param {Boolean} clickToSelect &nbsp;-&nbsp Controls if using a selection mode if you can click the rows to select
+  * @param {Object} toolbar  &nbsp;-&nbsp Toggles and appends toolbar features fx.. {title: 'Data Grid Header Title', results: true, keywordFilter: true, filter: true, rowHeight: true, views: true}
+  * @param {Boolean} initializeToolbar &nbsp;-&nbsp Set to false if you will initialize the toolbar yourself
+  * @param {Boolean} paging &nbsp;-&nbsp Enable paging mode
+  * @param {Number} pagesize &nbsp;-&nbsp Number of rows per page
+  * @param {Array} pagesizes &nbsp;-&nbsp Array of page sizes to show in the page size dropdown.
+  * @param {Boolean} indeterminate &nbsp;-&nbsp Disable the ability to go to a specific page when paging.
+  * @param {Function} source  &nbsp;-&nbsp Callback function for paging
+  * @param {Boolean} hidePagerOnOnePage  &nbsp;-&nbsp If true, hides the pager if there's only one page worth of results.
+  * @param {Boolean} filterable &nbsp;-&nbsp Enable Column Filtering, This will require column filterTypes as well.
+  * @param {Boolean} disableClientFilter &nbsp;-&nbsp Disable Filter Logic client side and let your server do it
+  * @param {Boolean} disableClientSort &nbsp;-&nbsp Disable Sort Logic client side and let your server do it
+  * @param {String} resultsText &nbsp;-&nbsp Can provide a custom function to adjust results text on the toolbar
+  * @param {Boolean} rowReorder &nbsp;-&nbsp If set you can reorder rows. Requires rowReorder formatter
+  * @param {Boolean} showDirty &nbsp;-&nbsp  If true the dirty indicator will be shown on the rows
+  * @param {Boolean} allowOneExpandedRow  &nbsp;-&nbsp Controls if you cna expand more than one expandable row.
+  * @param {Boolean} enableTooltips &nbsp;-&nbsp Process tooltip logic at a cost of performance
+  * @param {Boolean} disableRowDeactivation &nbsp;-&nbsp if a row is activated the user should not be able to deactivate it by clicking on the activated row
+  * @param {Boolean} sizeColumnsEqually &nbsp;-&nbsp If true make all the columns equal width
+  *
+  */
   function Datagrid(element) {
     this.element = $(element);
     Soho.logTimeStart(pluginName);
@@ -1612,7 +1649,11 @@ $.fn.datagrid = function(options) {
       return dataset;
     },
 
-    // Add a Row
+    /**
+    * Add a row of data to the grid and dataset.
+    * @param {Object} data &nbsp;-&nbsp An data row object
+    * @param {String} location &nbsp;-&nbsp Where to add the row. This can be 'top' or leave off for 'bottom'
+    */
     addRow: function (data, location) {
       var self = this,
         isTop = false,
@@ -1676,7 +1717,11 @@ $.fn.datagrid = function(options) {
       }
     },
 
-    //Delete a Specific Row
+    /**
+    * Remove a row of data to the grid and dataset.
+    * @param {Number} row &nbsp;-&nbsp The row index
+    * @param {Boolean} nosync &nbsp;-&nbsp Dont sync the selected rows.
+    */
     removeRow: function (row, nosync) {
       var rowNode = this.tableBody.find('tr[aria-rowindex="'+ (row + 1) +'"]'),
         rowData = this.settings.dataset[row];
@@ -1687,7 +1732,9 @@ $.fn.datagrid = function(options) {
       this.element.trigger('rowremove', {row: row, cell: null, target: rowNode, value: [], oldValue: rowData});
     },
 
-    //Remove all selected rows
+    /**
+    * Remove all selected rows from the grid and dataset.
+    */
     removeSelected: function () {
 
       var self = this,
@@ -1701,7 +1748,6 @@ $.fn.datagrid = function(options) {
       this.syncSelectedUI();
     },
 
-    //Method to Reload the data set
     updateDataset: function (dataset, pagerInfo) {
       this.loadData(dataset, pagerInfo);
     },
@@ -2120,7 +2166,7 @@ $.fn.datagrid = function(options) {
 
     },
 
-    //Except conditions from outside or pull from filter row
+
     applyFilter: function (conditions) {
       var self = this;
       this.filteredDataset = null;
@@ -2179,13 +2225,13 @@ $.fn.datagrid = function(options) {
               }
               conditionValue = conditionValue.getTime();
 		    }
-			
+
             if (rowValue instanceof Date) {
               rowValue = rowValue.getTime();
             }
             else if (typeof rowValue === 'string' && rowValue) {
               if (!columnDef.sourceFormat) {
-                rowValue = Locale.parseDate(rowValue, {pattern: conditions[i].format});	
+                rowValue = Locale.parseDate(rowValue, {pattern: conditions[i].format});
               } else {
                 rowValue = Locale.parseDate(rowValue, (typeof columnDef.sourceFormat === 'string' ? {pattern: columnDef.sourceFormat}: columnDef.sourceFormat));
               }
@@ -2199,7 +2245,7 @@ $.fn.datagrid = function(options) {
                 }
                 rowValue = rowValue.getTime();
               }
-            }			
+            }
 		  }
 
           if (typeof rowValue === 'number') {
@@ -2317,14 +2363,15 @@ $.fn.datagrid = function(options) {
       this.saveUserSettings();
     },
 
-    //Clear and reset the filter
+    /**
+    * Clear the Filter row Conditions and Reset the Data.
+    */
     clearFilter: function () {
       this.renderFilterRow();
       this.applyFilter();
       this.element.trigger('filtered', {op: 'clear', conditions: []});
     },
 
-    // Set the filter row from passed data / settings
     setFilterConditions: function (conditions) {
       for (var i = 0; i < conditions.length; i++) {
         //Find the filter row
@@ -2393,7 +2440,7 @@ $.fn.datagrid = function(options) {
           }
           condition.format = format;
         }
-		
+
 		if (input.data('timepicker')) {
           format = input.data('timepicker').settings.timeFormat;
           condition.format = format;
@@ -3757,7 +3804,10 @@ $.fn.datagrid = function(options) {
       }
     },
 
-    // Hide a column
+    /**
+    * Hide a column.
+    * @param {String} id &nbsp;-&nbsp The id of the column to hide.
+    */
     hideColumn: function(id) {
       var idx = this.columnIdxById(id);
 

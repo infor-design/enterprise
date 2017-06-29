@@ -3,7 +3,7 @@
 
 const glob = require('glob'),
   fs = require('fs'),
-  spawn = require('child_process').execFile,
+  c = require('child_process'),
   nodePandoc = require('node-pandoc'),
   singleComponent = process.argv[2];
 
@@ -33,34 +33,32 @@ glob('components/*/', function(err, components) {
 
     // Read the md file and Generate the Pandoc / Html file for it
     fs.readFile(componentPath + componentName + '.md', 'utf8' ,function (err, mdData) {
-      if (fs.existsSync(componentPath + componentName + '.js')) {
-        var cat = spawn('documentation', ['build', componentPath + componentName + '.js' , '-f' , 'md']);
-        cat.stdout.on('data', function(apiData) {
 
-          //Some Scrubbing that document.js cant handle
-          apiData = apiData.substr(0, apiData.indexOf('### Table')) + apiData.substr(apiData.indexOf('**Parameters**'));
-          apiData = apiData.replace(/###/g, '####');
+        if (fs.existsSync(componentPath + componentName + '.js')) {
+          //Write the file out
+          c.execSync('documentation build '+ componentPath + componentName + '.js' +' -f md -o ' + componentPath + componentName + '-api.md');
 
-          // Add Section Titles
-          apiData = apiData.substr(0, apiData.indexOf('####')) + '\n### Functions \n' + apiData.substr(apiData.indexOf('####'));
-          apiData = apiData.replace('**Parameters**', '## Api Details \n### Settings');
-          apiData = apiData.replace('#### handleEvents', '### Events');
-          apiData = apiData.replace('### handleEvents', '### Events');
+          //Read it back in
+          fs.readFile(componentPath + componentName + '-api.md', 'utf8' ,function (err, apiData) {
 
-          // More Fixes
-          apiData = apiData.replace('-   `element`', '');
-          apiData = apiData.replace('**Parameters**', '');
-          runPandoc(mdData.replace('{{api-details}}', '\r\n'+apiData+'\r\n'), componentPath);
-        });
-        //cat.stderr.on('data', function(apiData) {
-        //  console.log(apiData);
-        //});
+            //Some Scrubbing that document.js cant handle
+            apiData = apiData.substr(0, apiData.indexOf('### Table')) + apiData.substr(apiData.indexOf('**Parameters**'));
+            apiData = apiData.replace(/### /g, '#### ');
 
-        return;
-      }
+            // Add Section Titles
+            apiData = apiData.substr(0, apiData.indexOf('####')) + '\n### Functions \n' + apiData.substr(apiData.indexOf('####'));
+            apiData = apiData.replace('**Parameters**', '## Api Details \n### Settings');
+            apiData = apiData.replace('#### handleEvents', '### Events');
+            apiData = apiData.replace('### handleEvents', '### Events');
 
-      runPandoc(mdData, componentPath);
+            // More Fixes
+            apiData = apiData.replace('-   `element`', '');
+
+            var fullData = mdData.replace('{{api-details}}', '\r\n'+apiData+'\r\n');
+            runPandoc(fullData, componentPath);
+          });
+        }
+
     });
-
   }
 });

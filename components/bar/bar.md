@@ -1,5 +1,5 @@
 
-# Bar Chart Component Implementation Detail [Learn More](#)
+# Bar Chart  [Learn More](#)
 
 ## Configuration Options
 

@@ -1,5 +1,5 @@
 
-# Context Menu Implementation Detail [Learn More](https://soho.infor.com/index.php?p=component/about-dialog)
+# Context Menu [Learn More](https://soho.infor.com/index.php?p=component/about-dialog)
 
 ## Api Details
 

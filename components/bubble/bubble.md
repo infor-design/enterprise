@@ -1,5 +1,5 @@
 
-# Bubble Chart Component Implementation Detail [Learn More](#)
+# Bubble Chart  [Learn More](#)
 
 ## Configuration Options
 
