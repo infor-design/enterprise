@@ -42,23 +42,6 @@ var express = require('express'),
     commit: git.long(),
   };
 
-  /**
-   * Simple Logging system that wraps `console.log()`
-   * @param {string} message
-   */
-  /*
-  var logger = function(message) {
-    // Don't log empty messages.
-    if (typeof message !== 'string' || !message.length) {
-      return;
-    }
-
-    if (console && console.log) {
-      console.log(message);
-    }
-  };
-  */
-
   // Option Handling - Custom Middleware
   // Writes a set of default options the 'req' object.  These options are always eventually passed to the HTML template.
   // In some cases, these options can be modified based on query parameters.  Check the default route for these options.
@@ -717,7 +700,7 @@ var express = require('express'),
 
     var directory = 'tests/' + end;
     if (hasTrailingSlash(directory)) {
-      if (is('directory', directory) ) {
+      if (is('directory', '/views/' + directory) ) {
         getDirectoryListing(directory, req, res, next);
         return;
       }
@@ -726,7 +709,6 @@ var express = require('express'),
     }
 
     // Custom configurations for some test folders
-
     if (directory.match(/tests\/base-tag/)) {
       opts.usebasehref = true;
     }
@@ -775,8 +757,8 @@ var express = require('express'),
     }
 
     // No trailing slash.  Check for an index file.  If no index file, do directory listing
-    if (is('directory', directory)) {
-      if (is('file', directory + '/index')) {
+    if (is('directory', '/views/' + directory)) {
+      if (is('file', '/views/' + directory + '/index')) {
         res.render(directory + '/index', opts);
         return next();
       }
@@ -811,8 +793,8 @@ var express = require('express'),
 
   //Tests Index Page and controls sub pages
   router.get('/tests/:component/:example', testsRouteHandler);
-  router.get('/tests/:component', testsRouteHandler);
   router.get('/tests/:component/', testsRouteHandler);
+  router.get('/tests/:component', testsRouteHandler);
   router.get('/tests/', testsRouteHandler);
   router.get('/tests', testsRouteHandler);
 
