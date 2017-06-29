@@ -1,4 +1,4 @@
-# Badge  [Learn More](#)
+# Badges  [Learn More](#)
 
 ## Api Details
 
