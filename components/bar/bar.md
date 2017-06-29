@@ -15,7 +15,7 @@
 
 ## Code Example
 
-This example shows how to invoke a simple bar chart with a dataset showing the value.
+This example shows how to invoke a simple bar chart with a dataset controlling the values.
 
 ```javascript
 

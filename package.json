@@ -5,7 +5,10 @@
   "description": "Hook & Loop - SoHo XI Controls",
   "author": "Hook & Loop",
   "license": "UNLICENSED",
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "git://git.infor.com/scm/soho/controls.git"
+  },
   "publishConfig": {
     "scope": "@infor",
     "registry": "http://npm.infor.com:4873/"
@@ -32,6 +35,7 @@
   },
   "dependencies": {
     "d3": "^3.4.6",
+    "intern": "^3.4.5",
     "jquery": "^3.1.1"
   },
   "main": "dist/js/sohoxi",

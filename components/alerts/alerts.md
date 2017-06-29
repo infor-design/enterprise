@@ -1,5 +1,5 @@
 
-# Alert  [Learn More](https://soho.infor.com/index.php?p=component/accordion)
+# Alerts  [Learn More](https://soho.infor.com/index.php?p=component/accordion)
 
 ## Api Details
 
@@ -20,8 +20,8 @@ Alerts are just specially classed icons. You can added alert icons by adding an 
 
 ```html
 
-<!-- Substitute icon-alert with any of the above icon types -->
 <svg class="icon icon-alert" focusable="false" aria-hidden="true" role="presentation">
+  <!-- Substitute icon-alert with any of the above icon types -->
   <use xlink:href="#icon-alert"></use>
 </svg>
 <span class="audible">Alert</span>
