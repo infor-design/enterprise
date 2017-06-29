@@ -42,6 +42,23 @@ var express = require('express'),
     commit: git.long(),
   };
 
+  /**
+   * Simple Logging system that wraps `console.log()`
+   * @param {string} message
+   */
+  /*
+  var logger = function(message) {
+    // Don't log empty messages.
+    if (typeof message !== 'string' || !message.length) {
+      return;
+    }
+
+    if (console && console.log) {
+      console.log(message);
+    }
+  };
+  */
+
   // Option Handling - Custom Middleware
   // Writes a set of default options the 'req' object.  These options are always eventually passed to the HTML template.
   // In some cases, these options can be modified based on query parameters.  Check the default route for these options.
@@ -155,14 +172,23 @@ var express = require('express'),
     return noHtml;
   }
 
+  function setHtml(routeParam) {
+    return stripHtml(routeParam) + '.html';
+  }
+
   function toTitleCase(str){
     return str.replace(/\w\S*/g, function(txt){
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
   }
 
-  // Checks the target file path for its type (is it a file, a directory, etc)
-  // http://stackoverflow.com/questions/15630770/node-js-check-if-path-is-file-or-directory
+  /**
+   * Checks the target file path for its type (is it a file, a directory, etc)
+   * http://stackoverflow.com/questions/15630770/node-js-check-if-path-is-file-or-directory
+   * @param {string} type - 'file' or 'folder'
+   * @param {string} filePath - a string representing the relative path of the item to be checked
+   * @returns {boolean}
+   */
   function is(type, filePath) {
     var types = ['file', 'folder'],
       defaultType = types[0],
@@ -182,7 +208,12 @@ var express = require('express'),
       return false;
     }
 
-    var targetPath = './views/' + filePath,
+    // Add beginning slash if it doesn't exist
+    if (filePath.indexOf('/') !== 0) {
+      filePath = '/' + filePath;
+    }
+
+    var targetPath = __dirname + filePath,
       methodName = mappings[type].methodName;
 
     try {
@@ -194,6 +225,11 @@ var express = require('express'),
     }
   }
 
+  /**
+   * Checks a path to see if it has a trailing slash.
+   * @param {string} path
+   * @returns {boolean}
+   */
   function hasTrailingSlash(path) {
     if (!path || typeof path !== 'string') {
       return false;
@@ -220,7 +256,6 @@ var express = require('express'),
 
       var match = false;
       excludes.forEach(function(exclude) {
-        console.log(pathDef.link, exclude, pathDef.link.match(exclude));
         if (pathDef.link.match(exclude)) {
           match = true;
           return;
@@ -523,6 +558,28 @@ var express = require('express'),
     'subtitle': 'Style',
   };
 
+  /**
+   * Detects the existence of a layout file inside of a subfolder that should be used
+   * instead of the default layout file in the root.
+   * @param {Object} opts - Express's res.opts
+   * @param {string} component - the name of the component
+   * @returns {Object}
+   */
+  function addDefaultFolderLayout(opts, component) {
+    let layoutFileNames = ['_layout.html', 'layout.html'],
+      layoutPath;
+
+    for (var i = 0; i < layoutFileNames.length; i++) {
+      layoutPath = '/components/' + component + '/' + layoutFileNames[i];
+      if (is('file', layoutPath)) {
+        opts.layout = stripHtml('' + component + '/' + layoutFileNames[i]);
+        console.log('layout for this folder changed to "' + opts.layout + '".');
+      }
+    }
+
+    return opts;
+  }
+
   function defaultDocsRoute(req, res, next) {
     var opts = extend({}, res.opts, componentOpts);
     opts.layout = 'doc-layout';
@@ -554,8 +611,12 @@ var express = require('express'),
     next();
   }
 
-  router.get('/components/:component', function(req, res, next) {
+  /**
+   * Handles routing to the Components/Docs section.
+   */
+  function componentRoute(req, res, next) {
     var componentName = '',
+      exampleName = '',
       opts = extend({}, res.opts, componentOpts);
 
     if (!req.params.component) {
@@ -565,45 +626,45 @@ var express = require('express'),
     componentName = stripHtml(req.params.component);
     opts.subtitle = toTitleCase(componentName.charAt(0).toUpperCase() + componentName.slice(1).replace('-',' '));
 
-    opts.showbacklink = true;
-    opts.layout = 'doc-layout';
+    // If no example, end on the main component docs page.
+    if (!req.params.example) {
+      opts.showbacklink = true;
+      opts.layout = 'doc-layout';
 
-    if (req.params.component === 'doc-styleguide') {
-      return docsStyleGuideRoute(req, res, next);
+      if (req.params.component === 'doc-styleguide') {
+        return docsStyleGuideRoute(req, res, next);
+      }
+
+      res.render(componentName, opts);
+      next();
     }
 
-    res.render(componentName, opts);
-    next();
-  });
+    exampleName = req.params.example;
 
-  router.get('/components/:component/:example', function(req, res, next) {
-    var componentName = '',
-      opts = extend({}, res.opts, componentOpts);
-
-    if (!req.params.component && !req.params.example) {
-      return defaultDocsRoute(req, res, next);
-    }
-
-    componentName = stripHtml(req.params.component);
-    opts.subtitle = toTitleCase(componentName.charAt(0).toUpperCase() + componentName.slice(1).replace('-',' '));
-
-    if (req.params.example === 'doc' || req.params.example === 'docs') {
+    // Some specific text content will change the route
+    if (exampleName === 'doc' || exampleName === 'docs') {
       return docsRoute(req, res, next);
     }
-
-    if (req.params.example === 'list') {
+    if (exampleName === 'list') {
       return getFullListing(componentName, req, res, next);
     }
 
-    if (req.params.component === 'applicationmenu' && (req.params.example.indexOf('example-') > -1 || req.params.example.indexOf('test-') > -1)) {
+    // Double check this folder for an alternative layout file.
+    opts = addDefaultFolderLayout(opts, componentName);
+
+    if (componentName === 'applicationmenu' && (exampleName.indexOf('example-') > -1 || exampleName.indexOf('test-') > -1)) {
       console.log(req.params.component, req.params.example);
       opts.layout = null;
     }
 
-    res.render(componentName + '/' +  req.params.example, opts);
+    res.render('' + componentName + '/' +  req.params.example, opts);
     next();
-  });
+  }
 
+  router.get('/components/:component', componentRoute);
+  router.get('/components/:component/', componentRoute);
+  router.get('/components/:component/:example', componentRoute);
+  router.get('/components/:component/:example/', componentRoute);
   router.get('/components/', defaultDocsRoute);
   router.get('/components', defaultDocsRoute);
 
@@ -730,14 +791,14 @@ var express = require('express'),
       example = req.params.example;
 
     if (example && component) {
-      var path = 'components/' + component + '/example-' + example.replace('.html', '')  + '.html';
+      var path = 'components/' + component + '/example-' + setHtml(example);
       if (fs.existsSync(path)) {
         res.redirect(BASE_PATH + path);
         next();
         return;
       }
 
-      path = 'components/' + component + '/test-' + example.replace('.html', '') + '.html';
+      path = 'components/' + component + '/test-' + setHtml(example);
       if (fs.existsSync(path)) {
         res.redirect(BASE_PATH + path);
         next();
