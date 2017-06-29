@@ -46,7 +46,7 @@
       },
       //ca-gregorian/main/dates/calendars/gregorian/months/format/wide
       months: {
-        wide: ['ledna','února','března','dubna','května','června','července','srpna','září','října','listopadu','prosince'],
+        wide: ['leden','únor','březen','duben','květen','červen','červenec','srpen','září','říjen','listopad','prosinec'],
         abbreviated: ['led', 'úno', 'bře', 'dub', 'kvě', 'čvn', 'čvc', 'srp', 'zář', 'říj', 'lis', 'pro']
       },
       //ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
