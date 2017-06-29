@@ -1,4 +1,4 @@
-# Tabs Component Implementation Detail [Learn More](https://soho.infor.com/index.php?p=component/tabs)
+# Tabs Component [Learn More](https://soho.infor.com/index.php?p=component/tabs)
 
 {{api-details}}
 
