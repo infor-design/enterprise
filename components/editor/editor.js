@@ -50,10 +50,31 @@
       settings = $.extend({}, defaults, options);
 
     /**
-     * Html Editor
-     * @constructor
-     * @param {Object} element
-     */
+    * The About Dialog Component is displays information regarding the application.
+    *
+    * @class Editor
+    * @param {String} appName  &nbsp;-&nbsp; Customize the list of buttons that can be shown in each group.  `buttons: {
+      editor: [
+        'header1', 'header2',
+        'separator', 'bold', 'italic', 'underline', 'strikethrough',
+        'separator', 'foreColor', 'backColor',
+        'separator', 'justifyLeft', 'justifyCenter', 'justifyRight',
+        'separator', 'quote', 'orderedlist', 'unorderedlist',
+        'separator', 'anchor',
+        'separator', 'image',
+        'separator', 'source'
+      ],
+      source: [
+        'visual'
+      ]
+    }`
+    * @param {String} firstHeader  &nbsp;-&nbsp; Allows you to set if the first header inserted is a h3 or h4 element. You should set this to match the structure of the parent page for accessibility
+    * @param {Boolean} secondHeader  &nbsp;-&nbsp; Allows you to set if the second header inserted is a h3 or h4 element. You should set this to match the structure of the parent page for accessibility
+    * @param {String} productName  &nbsp;-&nbsp; Additional product name information to display
+    * @param {String} pasteAsPlainText  &nbsp;-&nbsp; If true, when you paste into the editor the element will be unformatted to plain text.
+    * @param {String} anchor  &nbsp;-&nbsp; Info object to populate the link dialog defaulting to `{url: 'http://www.example.com', class: 'hyperlink', target: 'New window'},`
+    * @param {String} image  &nbsp;-&nbsp; Info object to populate the image dialog defaulting to ` {url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}`
+    */
     function Editor(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -311,6 +332,9 @@
         $('.trigger', cpElements).off('click.colorpicker');
       },
 
+      /**
+      * Switch between source and editing toolbar.
+      */
       switchToolbars: function() {
         this.destroyToolbar();
 
@@ -772,6 +796,9 @@
         return this;
       },
 
+      /**
+      * Function that creates the Url Modal Dialog. This can be customized by making a modal with ID `#editor-modal-url`
+      */
       createURLModal: function() {
         var targetOptions = '',
           isTargetCustom = true,
@@ -819,6 +846,9 @@
           '</div>').appendTo('body');
       },
 
+       /**
+       * Function that creates the Image Dialog. This can be customized by making a modal with ID `#editor-modal-image`
+       */
       createImageModal: function() {
         var imageModal = $('#editor-modal-image');
         if (imageModal.length > 0) {
@@ -1720,16 +1750,25 @@
         return this;
       },
 
+     /**
+     * Disable the editable area.
+     */
       disable: function () {
         this.element.addClass('is-disabled').attr('contenteditable', 'false');
         this.container.addClass('is-disabled');
       },
 
+      /**
+      * Enable the editable area.
+      */
       enable: function () {
         this.element.removeClass('is-disabled is-readonly').attr('contenteditable', 'true');
         this.container.removeClass('is-disabled is-readonly');
       },
 
+      /**
+      * Make the editable area readonly.
+      */
       readonly: function () {
         this.element.removeClass('is-readonly').attr('contenteditable', 'false');
         this.container.addClass('is-readonly');
@@ -1900,6 +1939,9 @@
         return result.trim();
       },
 
+      /**
+      * Detach Events and tear back additions.
+      */
       destroy: function () {
         $('html').off('mouseup.editor');
         this.destroyToolbar();
@@ -1908,7 +1950,20 @@
           $('#editor-modal-url, #editor-modal-image').remove();
         }
         $.removeData(this.element[0], pluginName);
+      },
+
+      /**
+       *  This component fires the following events.
+       *
+       * @fires Editor#events
+       * @param {Object} input  &nbsp;-&nbsp; Fires after the value in the input is changed by user interaction.
+       * @param {Object} keydown  &nbsp;-&nbsp; Fires after as keys are pressed.
+       *
+       */
+      handleEvents: function () {
+
       }
+
     };
 
     // Make it plugin protecting from double initialization

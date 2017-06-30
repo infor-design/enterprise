@@ -235,7 +235,7 @@ var express = require('express'),
 
     pathDefs.forEach(function pathIterator(pathDef) {
       pathDef.link = pathDef.link.replace(/\/\//g, '/');
-      console.log('Checking path: "' + pathDef.link + '"');
+      //console.log('Checking path: "' + pathDef.link + '"');
 
       var match = false;
       excludes.forEach(function(exclude) {
@@ -323,14 +323,14 @@ var express = require('express'),
    * @private
    * @param {String} type
    */
-  function getFolderContents(type, dir, folderName) {
+  function getFolderContents(type, dir) { //type, dir, folderName
     var paths = [];
     try {
       paths = fs.readdirSync(dir);
     } catch(e) {
       // Handle 'No Directory' errors
       if (e.code === 'ENOENT') {
-        console.log('No '+ folderName +' Folder found for "' + type + '');
+        //console.log('No '+ folderName +' Folder found for "' + type + '');
         paths = [];
       } else {
         throw e;
@@ -426,7 +426,7 @@ var express = require('express'),
 
     fs.readdir('./views/' + directory, function(err, paths) {
       if (err) {
-        console.log(err);
+        //console.log(err);
         res.render(err);
         return next();
       }
