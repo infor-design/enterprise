@@ -1,66 +1,70 @@
 <div class="row">
-  <div class="twelve columns">
+  <div class="six columns">
+    <h2>Validation Test: Inside Accordion</h2>
+  </div>
+</div>
 
-   <div class="field">
-        <label class="required" for="last-name">Last Name Outside Accordion</label>
-        <input type="text" id="last-name" aria-required="true" name="last-name" data-validate="required">
-    </div>
+<div class="row top-padding">
+  <div class="six columns">
 
-     <div data-options="{allowOnePane: false}" class="accordion"  >
-        <div class="accordion-header">
-            <a href="#"><span id="spnPersonalInformation" runat="server">Profile Info</span></a>
-        </div>
-        <div class="accordion-pane">
-            <div class="row">
-                <div class="content grid">
+    <div class="accordion alternate panel" data-options="{allowOnePane: false}">
+      <div class="accordion-header">
+        <a href="#">
+          <span id="spnPersonalInformation" runat="server">Profile Info</span>
+        </a>
+      </div>
+      <div class="accordion-pane">
+        <div class="accordion-content">
 
-                    <div class="section-line-container">
-                        <div class="section-line-left-container">
-                            <div class="field">
-                                <label class="required" for="last-name2">
-                                    Last Name Inside Accordion</label>
-                                <input type="text" id="last-name2" aria-required="true" name="last-name2" data-validate="required">
-                            </div>
-                        </div>
-                        <div class="section-line-right-container filler-container desktop-only">
-                        </div>
-                    </div>
-                     <div class="section-line-container">
-                        <div class="section-line-left-container">
-                            <div class="field">
-                                <label for="states" class="label">
-                                    States</label>
-                                    <select id="states" name="states" class="dropdown">
-                                    <option value="AL">Alabama</option>
-                                    <option value="CA">California</option>
-                                    <option value="DE">Delaware</option>
-                                    <option value="NY">New York</option>
-                                    <option value="WY">Wyoming</option>
-                                    <option value="AL">Alabama</option>
-                                    <option value="CA">California</option>
-                                    <option value="DE">Delaware</option>
-                                    <option value="NY">New York</option>
-                                    <option value="WY">Wyoming</option>
-                                    <option value="AL">Alabama</option>
-                                    <option value="CA">California</option>
-                                    <option value="DE">Delaware</option>
-                                    <option value="NY">New York</option>
-                                    <option value="WY">Wyoming</option>
-                                    <option value="AL">Alabama</option>
-                                    <option value="CA">California</option>
-                                    <option value="DE">Delaware</option>
-                                    <option value="NY">New York</option>
-                                    <option value="WY">Wyoming</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="section-line-right-container filler-container desktop-only">
-                        </div>
-                    </div>
+          <div class="row">
+            <div class="content grid">
+              <div class="section-line-container">
+                <div class="section-line-left-container">
+                  <div class="field">
+                    <label class="required" for="last-name2">Last Name Inside Accordion</label>
+                    <input type="text" id="last-name2" aria-required="true" name="last-name2" data-validate="required">
+                  </div>
                 </div>
+
+                <div class="section-line-right-container filler-container desktop-only"></div>
+              </div>
+
+              <div class="section-line-container">
+                <div class="section-line-left-container">
+                  <div class="field">
+                    <label for="states" class="label">States</label>
+                    <select id="states" name="states" class="dropdown">
+                      <option value="AL">Alabama</option>
+                      <option value="CA">California</option>
+                      <option value="DE">Delaware</option>
+                      <option value="NY">New York</option>
+                      <option value="WY">Wyoming</option>
+                      <option value="AL">Alabama</option>
+                      <option value="CA">California</option>
+                      <option value="DE">Delaware</option>
+                      <option value="NY">New York</option>
+                      <option value="WY">Wyoming</option>
+                      <option value="AL">Alabama</option>
+                      <option value="CA">California</option>
+                      <option value="DE">Delaware</option>
+                      <option value="NY">New York</option>
+                      <option value="WY">Wyoming</option>
+                      <option value="AL">Alabama</option>
+                      <option value="CA">California</option>
+                      <option value="DE">Delaware</option>
+                      <option value="NY">New York</option>
+                      <option value="WY">Wyoming</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="section-line-right-container filler-container desktop-only"></div>
+              </div>
             </div>
+          </div>
+
         </div>
-     </div>
+      </div>
+    </div>
 
   </div>
 </div>
