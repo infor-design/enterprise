@@ -1,0 +1,96 @@
+<style>
+  .drag-grid-row {
+    background-color: white;
+    position: fixed;
+    height: 20px;
+    width: 20px;
+  }
+</style>
+
+<div class="row">
+  <div class="three columns">
+    <div id="fields">
+    </div>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="five columns">
+    <div id="source">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+      //Init Fields Grid
+      var grid,
+        columns = [],
+        data = [];
+
+      data.push({ id: 1, month: 'JAN'});
+      data.push({ id: 2, month: 'FEB'});
+      data.push({ id: 3, month: 'MAR'});
+      data.push({ id: 4, month: 'APR'});
+      data.push({ id: 5, month: 'MARK'});
+      data.push({ id: 6, month: 'JAN'});
+
+      columns.push({ id: 'rowReorder', name: 'Map', field: 'id', align: 'center', sortable: false, formatter: Formatters.RowReorder, width: 85});
+      columns.push({ id: 'month', name: 'Product Name', field: 'month', formatter: Formatters.Text});
+
+      $('#fields').datagrid({
+        columns: columns,
+        dataset: data,
+        saveColumns: false,
+        toolbar: {title: 'Fields to Map'}
+      });
+
+      //Source Fields Grid
+      var grid,
+        columns = [],
+        data = [];
+
+      data.push({ id: 'Mappings'});
+      data.push({ id: 1, jan: 10, feb: 20, mar: 30, apr: 40});
+      data.push({ id: 2, jan: 10, feb: 20, mar: 30, apr: 40});
+      data.push({ id: 3, jan: 10, feb: 20, mar: 30, apr: 40});
+      data.push({ id: 4, jan: 10, feb: 20, mar: 30, apr: 40});
+
+      columns.push({ id: 'row', month: 'Id', field: 'id', formatter: Formatters.Text});
+      columns.push({ id: 'jan', name: 'Jan', field: 'jan', formatter: Formatters.Text});
+      columns.push({ id: 'feb', name: 'Feb', field: 'feb', formatter: Formatters.Text});
+      columns.push({ id: 'mar', name: 'Mar', field: 'mar', formatter: Formatters.Text});
+      columns.push({ id: 'apr', name: 'Apr', field: 'apr', formatter: Formatters.Text});
+
+      $('#source').datagrid({
+        columns: columns,
+        dataset: data,
+        sizeColumnsEqually: true,
+        saveColumns: false
+      });
+
+      // Meat of this example, make the element draggable and handle it in code.
+      /*$('#fields').find('tbody').arrange({
+          placeholder: '<tr class="datagrid-reorder-placeholder"><td colspan="2"></td></tr>',
+          handle: '.datagrid-reorder-icon'
+        })
+        .on('beforearrange.datagrid', function(e, status) {
+
+        })
+        .on('arrangeupdate.datagrid', function(e, status) {
+
+        });*/
+
+      $('.datagrid-reorder-icon').drag({containment: 'document', clone: 'true', clonePosIsFixed: true, cloneCssClass: 'drag-grid-row'})
+        .on('dragstart', function (e, pos, clone) {
+          var row = $(e.currentTarget).closest('tr').clone();
+          clone.empty().append('<table>' + row.html() + '</table>');
+          clone.offset(pos);
+        }).on('drag', function () {
+          console.log('drag')
+        }).on('dragend', function () {
+          console.log('dragend')
+        });
+ });
+</script>
