@@ -20,10 +20,10 @@
     var pluginName = 'datepicker',
         defaults = {
           showTime: false,
-          timeFormat: undefined, // The time format
-          minuteInterval: undefined, // Integer from 1 to 60. Multiples of this value are displayed as options in the minutes dropdown.
-          mode: undefined, // options: 'standard', 'range',
-          roundToInterval: undefined, // If a non-matching minutes value is entered, rounds the minutes value to the nearest interval when the field is blurred.
+          timeFormat: undefined,
+          minuteInterval: undefined,
+          mode: undefined,
+          roundToInterval: undefined,
           dateFormat: 'locale', //or can be a specific format like 'yyyy-MM-dd' iso8601 format
           placeholder: false,
           /*  Disabling of dates
@@ -54,14 +54,25 @@
         settings = $.extend({}, defaults, options);
 
     /**
-     * A component to support date entry.
-     * Users can either manually enter a date or select a date from a calendar.
-     * A secondary benefit is the ability to restrict the dates that are available for selection.
-     * @class
-     * @param {Object} [element=this] - The element to attach to (only when manually calling the constructor)
-     * @param {Object} [options]
-     * @param {string} [options.dateFormat='locale'] - The format in which to display the date. Defaults to the current locales format but can be set to a custom format like 'yyyy-MM-dd' (iso8601 format).
-     */
+    * A component to support date entry.
+    *
+    * @class DatePicker
+    * @param {Boolean} showTime  &nbsp;-&nbsp; If true the time selector will be shown.
+    * @param {String} timeFormat  &nbsp;-&nbsp; The format to use on the time section fx HH:mm, defaults to current locale's settings.
+    * @param {String} mode  &nbsp;-&nbsp; Time picker mode: options: 'standard', 'range', this controls the avilable selections in the time picker.
+    * @param {Boolean} roundToInterval  &nbsp;-&nbsp; In time picker mode, if a non-matching minutes value is entered, rounds the minutes value to the nearest interval when the field is blurred.
+    * @param {String} dateFormat  &nbsp;-&nbsp; Defaults to current locale but can be overriden to a specific format
+    * @param {Boolean} disable  &nbsp;-&nbsp; Disabled Dates Build up. `{
+      'dates'     : [],
+      'minDate'   : '',
+      'maxDate'   : '',
+      'dayOfWeek' : [],
+      'isEnable' : false
+    }`
+    * @param {Boolean} showLegend  &nbsp;-&nbsp; If true a legend is show to associate dates.
+    * @param {Array} legend  &nbsp;-&nbsp; Legend Build up for example `[{name: 'Public Holiday', color: '#76B051', dates: []}, {name: 'Weekends', color: '#EFA836', dayOfWeek: []}]`
+    *
+    */
     function DatePicker(element) {
       this.element = $(element);
       this.settings = settings;
@@ -97,22 +108,6 @@
       addAria: function () {
         this.label = $('label[for="'+ this.element.attr('id') + '"]');
         this.label.append('<span class="audible">' + Locale.translate('PressDown') + '</span>');
-      },
-
-      //Attach Events used by the Control
-      handleEvents: function () {
-        var self = this;
-
-        this.trigger.on('click.datepicker', function () {
-          if (self.isOpen()) {
-            self.closeCalendar();
-          } else {
-            self.openCalendar();
-          }
-        });
-
-        self.mask();
-        this.handleKeys(this.element);
       },
 
       // Handle Keyboard Stuff
@@ -367,12 +362,17 @@
         }
       },
 
-      // Return whether or not the calendar div is open.
+      /**
+      * Return whether or not the calendar div is open.
+      */
       isOpen: function () {
         return (this.popup && this.popup.is(':visible') &&
           !this.popup.hasClass('is-hidden'));
       },
 
+      /**
+      * Open the Calendar Popup.
+      */
       open: function() {
         return this.openCalendar();
       },
@@ -605,7 +605,9 @@
 
       },
 
-      // Alias for _closeCalendar()_ that works with the global "closeChildren" method
+      /**
+      * Close the calendar popup.
+      */
       close: function() {
         return this.closeCalendar();
       },
@@ -1016,7 +1018,11 @@
         return  (new Date(year, month, 0)).getDate();
       },
 
-      // Set the Formatted value in the input
+      /**
+      * Set the Formatted value in the input
+      * @param {Date} date  &nbsp;-&nbsp; The date to set in date format.
+      * @param {Boolean} trigger  &nbsp;-&nbsp; If true will trigger the change event.
+      */
       setValue: function(date, trigger) {
         //TODO Document this as the way to get the date
         this.currentDate = date;
@@ -1062,24 +1068,32 @@
         }
       },
 
-      // Make input enabled
+      /**
+      * Set input to enabled.
+      */
       enable: function() {
         this.element.removeAttr('disabled readonly').closest('.field').removeClass('is-disabled');
       },
 
-      // Make input disabled
+      /**
+      * Set input to disabled.
+      */
       disable: function() {
         this.enable();
         this.element.attr('disabled', 'disabled').closest('.field').addClass('is-disabled');
       },
 
-      // Make input readonly
+      /**
+      * Set input to readonly.
+      */
       readonly: function() {
         this.enable();
         this.element.attr('readonly', 'readonly');
       },
 
-      // Set today
+      /**
+      * Set to todays date in current format.
+      */
       setToday: function() {
         this.currentDate = new Date();
 
@@ -1183,10 +1197,39 @@
         return this;
       },
 
+      /**
+      * Remove all events and reset back to default.
+      */
       destroy: function() {
         this.teardown();
         $.removeData(this.element[0], pluginName);
+      },
+
+      /**
+       *  This component fires the following events.
+       *
+       * @fires About#events
+       * @param {Object} listopened  &nbsp;-&nbsp; Fires as the calendar popup is opened
+       * @param {Object} listclosed  &nbsp;-&nbsp; Fires as the calendar popup is closed
+       * @param {Object} change  &nbsp;-&nbsp; Fires after the value in the input is changed by any means.
+       * @param {Object} input  &nbsp;-&nbsp; Fires after the value in the input is changed by user interaction.
+       *
+       */
+      handleEvents: function () {
+        var self = this;
+
+        this.trigger.on('click.datepicker', function () {
+          if (self.isOpen()) {
+            self.closeCalendar();
+          } else {
+            self.openCalendar();
+          }
+        });
+
+        self.mask();
+        this.handleKeys(this.element);
       }
+
     };
 
     // Initialize the plugin (Once)
