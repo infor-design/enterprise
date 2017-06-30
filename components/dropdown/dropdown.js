@@ -20,29 +20,42 @@
     // Dropdown Settings and Options
     var pluginName = 'dropdown',
         defaults = {
-          closeOnSelect: true, // When an option is selected, the list will close if set to "true".  List stays open if "false".
-          cssClass: null,  //Append a css class to dropdown-list
-          filterMode: 'contains',  // startsWith and contains Supported - false will not client side filter
+          closeOnSelect: true,
+          cssClass: null,
+          filterMode: 'contains',
           maxSelected: undefined, //If in multiple mode, sets a limit on the number of items that can be selected
           moveSelected: 'none', //If set to "all" When the menu is opened, displays all selected options at the top of the list.  If set to "group", move each section to the top of it's designated optgroup
           moveSelectedToTop: undefined, //(Deprecated - see the 'moveSelected' setting)
           multiple: false, //Turns the dropdown into a multiple selection box
-          noSearch: false, //If true, disables the ability of the user to enter text in the Search Input field in the open combo box
-          showEmptyGroupHeaders: false, // If true, displays <optgroup> headers in the list even if no selectable options are present underneath.
+          noSearch: false,
+          showEmptyGroupHeaders: false,
           showSelectAll: false, // If true, on Multiselect dropdowns, will show an additional option at the top of the list labeled "select all".
-          source: undefined, //A function that can do an ajax call.
-          sourceArguments: {}, // If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
-          reloadSourceOnOpen: false, // If set to true, will always perform an ajax call whenever the list is opened.  If false, the first AJAX call's results are cached.
-          empty: false, //Initialize Empty Value
-          delay: 300 //Typing Buffer Delay
+          source: undefined,
+          sourceArguments: {},
+          reloadSourceOnOpen: false,
+          empty: false,
+          delay: 300
         },
         moveSelectedOpts = ['none', 'all', 'group'],
         settings = $.extend({}, defaults, options);
 
     /**
-     * @constructor
-     * @param {Object} element
-     */
+    * The Dropdown allows users to select from a list. Like an Html Select.
+    *
+    * @class Dropdown
+    * @param {Boolean} closeOnSelect  &nbsp;-&nbsp; When an option is selected, the list will close if set to "true".  List stays open if "false".
+    * @param {String} cssClass  &nbsp;-&nbsp; Append an optional css class to dropdown-list
+    * @param {String} filterMode  &nbsp;-&nbsp; Search mode to use between 'startsWith' and 'contains', false will not allow client side filter
+    * @param {Boolean} noSearch  &nbsp;-&nbsp; If true, disables the ability of the user to enter text in the Search Input field in the open combo box
+    * @param {Boolean} showEmptyGroupHeaders  &nbsp;-&nbsp; If true, displays <optgroup> headers in the list even if no selectable options are present underneath.
+    * @param {Boolean} source  &nbsp;-&nbsp; A function that can do an ajax call.
+    * @param {Boolean} sourceArguments  &nbsp;-&nbsp; If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
+    * @param {Boolean} sourceArguments  &nbsp;-&nbsp; If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.
+    * @param {Boolean} reloadSourceOnOpen  &nbsp;-&nbsp; If set to true, will always perform an ajax call whenever the list is opened.  If false, the first AJAX call's results are cached.
+    * @param {Boolean} empty  &nbsp;-&nbsp; Initialize Empty Value
+    * @param {Boolean} delay  &nbsp;-&nbsp; Typing Buffer Delay in ms
+    *
+    */
     function Dropdown(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -525,59 +538,6 @@
         }
       },
 
-      //Bind mouse and key events
-      handleEvents: function() {
-        var self = this;
-
-        this.pseudoElem.on('keydown.dropdown', function(e) {
-          self.ignoreKeys($(this), e);
-          self.handleKeyDown($(this), e);
-        }).on('keypress.dropdown', function(e) {
-          if (e.keyCode === 9) {
-            return;
-          }
-          self.ignoreKeys($(this), e);
-
-          if (!self.settings.noSearch) {
-            self.toggleList();
-          }
-          self.handleAutoComplete(e);
-        }).on('click.dropdown', function(e) {
-          e.stopPropagation();
-        }).on('mouseup.dropdown', function(e) {
-          if (e.button === 2) {
-            return;
-          }
-          self.toggleList();
-        }).on('touchend.dropdown touchcancel.dropdown', function(e) {
-          e.stopPropagation();
-          self.toggleList();
-          e.preventDefault();
-        });
-
-        self.element.on('activated.dropdown', function () {
-          self.label.trigger('click');
-        }).on('updated.dropdown', function (e) {
-          e.stopPropagation();
-          self.updated();
-        }).on('openlist.dropdown', function() {
-          self.toggleList();
-        });
-
-        //for form resets.
-        self.element.closest('form').on('reset.dropdown', function() {
-          setTimeout(function () {
-            self.element.triggerHandler('updated');
-          }, 1);
-        });
-
-        //Handle Label click
-        this.label.onTouchClick().on('click', function () {
-          self.pseudoElem.focus();
-        });
-
-      },
-
       ignoreKeys: function (input, e) {
         var charCode = e.which;
 
@@ -953,7 +913,9 @@
           return valid;
       },
 
-      // Focus the Element
+      /**
+      * Focus the input Element
+      */
       activate: function (useSearchInput) {
         var self = this,
           input = this.pseudoElem;
@@ -1318,7 +1280,7 @@
 
       /**
        * Set size and positioning of the list
-       * @returns {undefined}
+       * @private
        */
       position: function() {
         var self = this,
@@ -1522,9 +1484,8 @@
       /**
        * Convenience method for running _selectOption()_ on a set of list options.
        * Accepts an array or jQuery selector containing valid list options and selects/deselects them.
-       * @param {Array|jQuery[]} options - incoming options
-       * @param {boolean} noTrigger - if true, causes the 'selected' and 'change' events not to fire on each list item.
-       * @return {undefined}
+       * @param {Array / jQuery[]} options - incoming options
+       * @param {Boolean} noTrigger - if true, causes the 'selected' and 'change' events not to fire on each list item.
        */
       selectOptions: function(options, noTrigger) {
         // Use a jQuery selector if the incoming options are inside an array
@@ -1543,7 +1504,6 @@
        * Accepts an array or jQuery selector containing valid list options and selects/deselects them.
        * @param {jQuery} option - the incoming option
        * @param {boolean} noTrigger - if true, causes the 'selected' and 'change' events not to fire on the list item.
-       * @return {undefined}
        */
       selectOption: function(option, noTrigger) {
         if (!option) {
@@ -1802,7 +1762,11 @@
         return false;
       },
 
-      // External Facing function to set value by code - Depricated set on select and trigger updated
+      /**
+       * External Facing function to set value by code - Depricated set on select and trigger updated.
+       *
+       * @param {String} code - The value to match and set on the value element.
+       */
       setCode: function(code) {
         var self = this,
           doSetting = function ()  {
@@ -1823,6 +1787,9 @@
         return this.list.hasClass('is-closable');
       },
 
+      /**
+       * Disable the input element.
+       */
       disable: function() {
         this.element
           .prop('disabled', true)
@@ -1841,6 +1808,9 @@
         this.closeList('cancel');
       },
 
+      /**
+       * Enable the input element.
+       */
       enable: function() {
         this.element
           .prop('disabled', false)
@@ -1853,6 +1823,9 @@
           .removeClass('is-readonly');
       },
 
+      /**
+       * Make the input element readonly.
+       */
       readonly: function() {
         this.element
           .prop('disabled', false)
@@ -1896,6 +1869,9 @@
         return this;
       },
 
+      /**
+       * Tear down events and restore to default.
+       */
       destroy: function() {
         $.removeData(this.element[0], pluginName);
         this.closeList('cancel');
@@ -1905,6 +1881,68 @@
         this.wrapper.remove();
         this.listfilter.destroy();
         this.element.removeAttr('style');
+      },
+
+      /**
+       *  This component fires the following events.
+       *
+       * @fires Dropdown#events
+       * @param {Object} listopened  &nbsp;-&nbsp; Fires as the calendar popup is opened
+       * @param {Object} listclosed  &nbsp;-&nbsp; Fires as the calendar popup is closed
+       * @param {Object} change  &nbsp;-&nbsp; Fires after the value in the input is changed by any means.
+       * @param {Object} input  &nbsp;-&nbsp; Fires after the value in the input is changed by user interaction.
+       *
+       */
+      handleEvents: function() {
+        var self = this;
+
+        this.pseudoElem.on('keydown.dropdown', function(e) {
+          self.ignoreKeys($(this), e);
+          self.handleKeyDown($(this), e);
+        }).on('keypress.dropdown', function(e) {
+          if (e.keyCode === 9) {
+            return;
+          }
+          self.ignoreKeys($(this), e);
+
+          if (!self.settings.noSearch) {
+            self.toggleList();
+          }
+          self.handleAutoComplete(e);
+        }).on('click.dropdown', function(e) {
+          e.stopPropagation();
+        }).on('mouseup.dropdown', function(e) {
+          if (e.button === 2) {
+            return;
+          }
+          self.toggleList();
+        }).on('touchend.dropdown touchcancel.dropdown', function(e) {
+          e.stopPropagation();
+          self.toggleList();
+          e.preventDefault();
+        });
+
+        self.element.on('activated.dropdown', function () {
+          self.label.trigger('click');
+        }).on('updated.dropdown', function (e) {
+          e.stopPropagation();
+          self.updated();
+        }).on('openlist.dropdown', function() {
+          self.toggleList();
+        });
+
+        //for form resets.
+        self.element.closest('form').on('reset.dropdown', function() {
+          setTimeout(function () {
+            self.element.triggerHandler('updated');
+          }, 1);
+        });
+
+        //Handle Label click
+        this.label.onTouchClick().on('click', function () {
+          self.pseudoElem.focus();
+        });
+
       }
 
     };

@@ -50,12 +50,15 @@ div.multiselect {
   text-overflow: ellipsis;
   vertical-align: middle;
   white-space: nowrap;
+
   &.text-align-reverse {
     text-align: right;
   }
+
   &.text-align-center {
     text-align: center;
   }
+
   > span {
     display: inline-block;
     max-width: 100%;
@@ -156,12 +159,15 @@ div.multiselect {
   white-space: nowrap;
   width: auto;
   z-index: 4501;
+
   &.text-align-reverse {
     text-align: right;
   }
+
   &.text-align-center {
     text-align: center;
   }
+
   &:active {
     outline: 0;
   }
@@ -190,16 +196,17 @@ div.multiselect {
 
   li {
     min-height: 32px;
-    position: relative;
-    padding-right: 5px;
     padding-left: 5px;
+    padding-right: 5px;
+    position: relative;
+
     i {
       color: $dropdown-filter-color;
       font-style: normal;
       text-decoration: none;
     }
 
-    & .clear-selection {
+    .clear-selection {
       color: $label-disabled-color;
     }
 
@@ -604,7 +611,7 @@ div.dropdown-xs,
 // Firefox needs a nudge on the list items
 .is-firefox {
   div.dropdown {
-    padding-top: 8px
+    padding-top: 8px;
   }
 
   .dropdown-list {
@@ -658,9 +665,11 @@ html[dir='rtl'] {
     &.text-align-reverse {
       text-align: left;
     }
+
     &.text-align-center {
       text-align: center;
     }
+
     // Icon States
     + .icon {
       left: 6px;
@@ -712,9 +721,11 @@ html[dir='rtl'] {
 
   .dropdown-search {
     padding: 9px 10px 8px 32px;
+
     &.text-align-reverse {
       text-align: left;
     }
+
     &.text-align-center {
       text-align: center;
     }

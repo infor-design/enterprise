@@ -1208,7 +1208,7 @@
       /**
        *  This component fires the following events.
        *
-       * @fires About#events
+       * @fires Datepicker#events
        * @param {Object} listopened  &nbsp;-&nbsp; Fires as the calendar popup is opened
        * @param {Object} listclosed  &nbsp;-&nbsp; Fires as the calendar popup is closed
        * @param {Object} change  &nbsp;-&nbsp; Fires after the value in the input is changed by any means.
