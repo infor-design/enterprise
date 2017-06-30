@@ -4789,11 +4789,66 @@ $.fn.datagrid = function(options) {
       term = term.toLowerCase();
       this.filterExpr.push({column: 'all', operator: 'contains', value: term});
 
-      this.highlightSearchRows(term);
-      this.displayCounts();
+      this.filterKeywordSearch();
+      this.renderRows();
+      this.resetPager('searched');
+    },
 
-      if (this.pager) {
-        this.pager.setActivePage(1, true);
+    // Filter to keyword search
+    filterKeywordSearch: function () {
+      var self = this,
+        dataset, isFiltered, i, len,
+        filterExpr = self.filterExpr,
+
+        checkRow = function (data) {
+          var isMatch = false,
+
+            checkColumn = function (columnId) {
+              var column = self.columnById(columnId)[0],
+                value = (self.fieldValue(data, column.field)).toString().toLowerCase();
+              return value.indexOf(filterExpr.value) > -1;
+            };
+
+          // Check in all visible columns
+          if (filterExpr.column === 'all') {
+            self.headerRow.find('th:visible').each(function () {
+              var th = $(this),
+                columnId = th.attr('data-column-id');
+
+              isMatch = checkColumn(columnId);
+              if (isMatch) {
+                return false;
+              }
+            });
+          }
+          // Check in only one column, given by columnId
+          else if (filterExpr.columnId) {
+            isMatch = checkColumn(filterExpr.columnId);
+          }
+          return isMatch;
+        };
+
+      // Make sure not more/less than one filter expr
+      if (!filterExpr || filterExpr.length !== 1) {
+        return;
+      } else {
+        filterExpr = filterExpr[0];
+      }
+
+      // Check in dataset
+      if (self.settings.treeGrid) {
+        dataset = self.settings.treeDepth;
+        for (i = 0, len = dataset.length; i < len; i++) {
+          isFiltered = !checkRow(dataset[i].node);
+          dataset[i].node.isFiltered = isFiltered;
+        }
+      }
+      else {
+        dataset = self.settings.dataset;
+        for (i = 0, len = dataset.length; i < len; i++) {
+          isFiltered = !checkRow(dataset[i]);
+          dataset[i].isFiltered = isFiltered;
+        }
       }
     },
 
