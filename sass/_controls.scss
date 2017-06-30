@@ -1,7 +1,7 @@
 @import 'controls/icons';
 @import 'controls/typography';
 @import 'controls/layouts';
-@import 'controls/visibility';
+@import 'components/visibility/visibility';
 
 @import 'controls/placeable';
 @import 'components/breadcrumb/breadcrumb';
@@ -22,7 +22,7 @@
 @import 'controls/popupmenu';
 @import 'controls/tooltip';
 @import 'controls/masthead';
-@import 'controls/tree';
+@import 'components/tree/tree';
 @import 'controls/rating';
 @import 'controls/listview';
 @import 'controls/listbuilder';
@@ -59,7 +59,7 @@
 @import 'controls/fieldset';
 @import 'controls/modalsearch';
 @import 'controls/lookup';
-@import 'controls/wizard';
+@import 'components/wizard/wizard';
 @import 'controls/popdown';
 @import 'controls/hierarchy';
 @import 'components/toolbarsearchfield/toolbarsearchfield';

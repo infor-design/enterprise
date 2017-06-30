@@ -1,12 +1,16 @@
 <div class="row">
   <div class="twelve columns">
-
     <!-- NOTE:  Check Demo.js for extra code used in these tests -->
+    <h2>Validation Tests: Disabled Form Validation</h2>
+    <p></p>
+  </div>
+</div>
 
-    <h2 class="fieldset-title">Validation tests</h2>
+<div class="row">
+  <div class="six columns">
+
     <form id="test" autocomplete="off" data-validate-on="submit">
-
-       <div class="field">
+      <div class="field">
         <label class="required" for="email-address-ok">Email Address <span class="audible">Required</span></label>
         <input type="text" id="email-address-ok" name="email-address-ok" data-validate="required" placeholder="someone@someplace.com" value="someone@someplace.com">
       </div>
@@ -42,36 +46,38 @@
           <option value="PA">Pennsylvania</option>
           <option value="RI">Rhode Island</option>
           <option value="SC">South Carolina</option>
-          </select>
+        </select>
       </div>
 
-      <button type="submit" id='submit-button' class="btn-primary">Submit</button>
-      <button type="button" id='change-button' class="btn-secondary">Change</button>
-      <button type="button" id='reset-button' class="btn-secondary">Reset</button>
-
+      <div class="field">
+        <button type="submit" id='submit-button' class="btn-primary">Submit</button>
+        <button type="button" id='change-button' class="btn-secondary">Disable Validation</button>
+        <button type="button" id='reset-button' class="btn-secondary">Reset</button>
+      </div>
     </form>
 
     <script>
       $(function() {
-          $('#test').on('validated', function (e, isValid) {
-              alert(isValid ? 'Form is Valid' : 'Form is not Valid');
-           });
+        $('#test').on('validated', function (e, isValid) {
+          alert(isValid ? 'Form is Valid' : 'Form is not Valid');
+        });
 
-          $('#reset-button').on('click', function () {
-              $('#test').resetForm();
-           });
+        $('#reset-button').on('click', function () {
+          $('#test').resetForm();
+        });
 
-          $('#change-button').on('click', function () {
-              var field = $('#credit-code2');
+        $('#change-button').on('click', function () {
+          var button = $(this);
+          var field = $('#credit-code2');
 
-              if (field.attr('data-disable-validation') === 'true') {
-                field.removeAttr('data-disable-validation');
-              } else {
-                field.attr('data-disable-validation', 'true');
-              }
-
-           });
-
+          if (field.attr('data-disable-validation') === 'true') {
+            button.text('Enable Validation');
+            field.removeAttr('data-disable-validation');
+          } else {
+            button.text('Disable Validation');
+            field.attr('data-disable-validation', 'true');
+          }
+        });
       });
     </script>
 

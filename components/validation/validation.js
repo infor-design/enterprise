@@ -14,6 +14,7 @@
 /* end-amd-strip-block */
 
   /**
+   * @class Validator
    * @constructor
    * @param {Object} element
    */
@@ -27,8 +28,11 @@
   // Plugin Object
   Validator.prototype = {
 
+    /**
+     * @private
+     * @returns {undefined}
+     */
     init: function() {
-
       this.fields = 'input, textarea, select, div[data-validate], div[data-validation]';
       this.isPlaceholderSupport = !!('placeholder' in document.createElement('input'));//placeholder native support is-exists
 
@@ -43,8 +47,10 @@
       this.timeout = null;
     },
 
+    /**
+     * Gets a list of events
+     */
     extractEvents: function (events) {
-
       if (events.indexOf('{') > -1) {
         events = JSON.parse(events.replace(/'/g, '"'));
       }
@@ -59,9 +65,13 @@
         e = e.split(' ').join('.validate ');
         events = e;
       }
+
       return events;
     },
 
+    /**
+     *
+     */
     filterValidations: function (events, type) {
       var validations = [];
 
@@ -84,6 +94,9 @@
       return validations;
     },
 
+    /**
+     *
+     */
     attachEvents: function () {
       var self = this,
         attribs = '[data-validate],[data-validation]';
@@ -186,6 +199,9 @@
 
     },
 
+    /**
+     *
+     */
     validateForm: function (callback) {
       var self = this,
         deferreds = [];
@@ -214,7 +230,9 @@
       });
     },
 
-    // Set disable/enable primary button in modal
+    /**
+     * Set disable/enable primary button in modal
+     */
     setModalPrimaryBtn: function(field, modalBtn, isValid) {
       var modal = field.closest('.modal'),
         modalFields = modal.find('[data-validate]:visible'),
@@ -247,6 +265,11 @@
       }
     },
 
+    /**
+     * Gets the current value of a field
+     * @param {jQuery[]} field
+     * @returns {?}
+     */
     value: function(field) {
       if (field.is('input[type=checkbox]')) {
         return field.prop('checked');
@@ -257,8 +280,13 @@
       return field.val();
     },
 
+    /**
+     *
+     * @param {jQuery[]}
+     * @param {jQuery.Event} e
+     * @returns {Array}
+     */
     getTypes: function(field, e) {
-
       var filters = this.filterValidations(field.attr('data-validation-events'), e.type),
         validations;
 
@@ -287,10 +315,15 @@
           return n !== 'date' && n !== 'time';
         });
       }
+
       return validations;
     },
 
-    // Set Error icon on parent tabs/expandable
+    /**
+     * Set Error icon on parent tabs/expandable
+     * @param {jQuery[]} field
+     * @returns {undefined}
+     */
     setErrorOnParent: function (field) {
       var errorIcon = $.createIcon({ classes: ['icon-error'], icon: 'error' }),
         parent = field.closest('.tab-panel, .expandable-pane'),
@@ -370,6 +403,12 @@
       }
     },
 
+    /**
+     *
+     * @param {jQuery[]} field
+     * @param {boolean} showTooltip
+     * @param {jQuery.Event} e
+     */
     validate: function (field, showTooltip, e) {
       //call the validation function inline on the element
       var self = this,
@@ -441,6 +480,11 @@
       return dfds;
     },
 
+    /**
+     * Retrive the actionble element that should have an error class/icon appended to it.
+     * @param {jQuery[]} field
+     * @returns {jQuery[]}
+     */
     getField: function(field) {
       if (field.is('select') && field.data('dropdown') !== undefined) {
         field = field.data('dropdown').pseudoElem;
@@ -448,10 +492,21 @@
       return field;
     },
 
+    /**
+     * @param {jQuery[]} field
+     * @returns {boolean}
+     */
     hasError: function(field) {
       return this.getField(field).hasClass('error');
     },
 
+    /**
+     * Adds an error message/icon to a form field.
+     * @param {jQuery[]} field
+     * @param {String} message
+     * @param {boolean} inline
+     * @param {boolean} showTooltip
+     */
     addError: function(field, message, inline, showTooltip) {
       var loc = this.getField(field).addClass('error'),
          dataMsg = loc.data('data-errormessage'),
@@ -483,8 +538,12 @@
       this.showInlineError(loc, message);
     },
 
+    /**
+     * Shows an error icon
+     * @param {jQuery[]} field
+     * @returns {jQuery[]}
+     */
     showErrorIcon: function(field) {
-
       var loc = this.getField(field).addClass('error'),
         svg = $.createIconElement({ classes: ['icon-error'], icon: 'error' });
 
@@ -513,14 +572,19 @@
         }
 
         $('.icon-confirm', loc.parent('.field, .field-short')).remove();
+      } else {
+        svg = loc.parent('.field, .field-short').find('svg.icon-error');
       }
-	  else {
-		svg = loc.parent('.field, .field-short').find('svg.icon-error');
-	  }
 
       return svg;
     },
 
+    /**
+     * Shows an tooltip error
+     * @param {jQuery[]} field
+     * @param {string} message
+     * @param {boolean} showTooltip
+     */
     showTooltipError: function(field, message, showTooltip) {
       if (field.is(':radio')) {
         return;
@@ -596,7 +660,13 @@
       }
     },
 
-    // Toggle radio group error
+    /**
+     * Shows an tooltip error
+     * @param {jQuery[]} field
+     * @param {string} message
+     * @param {HTMLElement} markup
+     * @param {boolean} isShow
+     */
     toggleRadioError:  function (field, message, markup, isShow) {
       var all, loc,
         name = field.attr('name');
@@ -618,6 +688,11 @@
       }
     },
 
+    /**
+     * Shows an inline error message on a field
+     * @param {jQuery[]} field
+     * @param {string} message
+     */
     showInlineError: function (field, message) {
       var loc = this.getField(field).addClass('error'),
         markup = '<div class="error-message">' +
@@ -636,9 +711,12 @@
 
       //Remove positive errors
       field.parent().find('.icon-confirm').remove();
-
     },
 
+    /**
+     * Shows an inline error message on a field
+     * @param {jQuery[]} field
+     */
     addPositive: function(field) {
       var svg = $.createIcon({ icon: 'confirm', classes: 'icon-confirm'});
 
@@ -647,6 +725,10 @@
       }
     },
 
+    /**
+     * Shows an inline error message on a field
+     * @param {jQuery[]} field
+     */
     removeError: function(field) {
       var loc = this.getField(field),
         isRadio = field.is(':radio'),
@@ -711,9 +793,12 @@
       //Stuff for the inline error
       field.closest('.field, .field-short').find('.error-message').remove();
       field.parent('.field, .field-short').find('.formatter-toolbar').removeClass('error');
-
     },
 
+    /**
+     * Shows an inline error message on a field
+     * @param {jQuery[]} field
+     */
     removePositive: function(field) {
       $('.icon-confirm', field.parent('.field, .field-short')).remove();
     }

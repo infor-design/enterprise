@@ -18,6 +18,15 @@
   $.fn.wizard = function(options) {
     'use strict';
 
+    /**
+    * The Autocomplete control provides an easier means of searching through a large amount of data by filtering down the results based on keyboard input from the user.
+    *
+    * @class Wizard
+    *
+    * @param {jQuery[]} ticks  &nbsp;-&nbsp; Defines the data to use, must be specified.
+    *
+    */
+
     // Settings and Options
     var pluginName = 'wizard',
         defaults = {
@@ -40,12 +49,20 @@
     // Plugin Methods
     Wizard.prototype = {
 
+      /**
+       * @private
+       * @returns {this}
+       */
       init: function() {
         this
           .build()
           .handleEvents();
       },
 
+      /**
+       * @private
+       * @returns {this}
+       */
       build: function() {
         this.header = this.element.find('.wizard-header');
         if (!this.header.length) {
@@ -65,20 +82,6 @@
         this
           .buildTicks()
           .updateRange();
-
-        return this;
-      },
-
-      handleEvents: function() {
-        var self = this;
-
-        this.element.on('updated', function() {
-          self.updated();
-        });
-
-        this.ticks.onTouchClick('wizard').on('click.wizard', function(e) {
-          self.activate(e, $(this));
-        });
 
         return this;
       },
@@ -251,6 +254,25 @@
       destroy: function() {
         this.teardown();
         $.removeData(this.element[0], pluginName);
+      },
+
+      /**
+       * This component listens to the following events:
+       * @param module:Wizard~event:updated
+       * @param module:Wizard~event:click
+       */
+      handleEvents: function() {
+        var self = this;
+
+        this.element.on('updated', function() {
+          self.updated();
+        });
+
+        this.ticks.onTouchClick('wizard').on('click.wizard', function(e) {
+          self.activate(e, $(this));
+        });
+
+        return this;
       }
     };
 
