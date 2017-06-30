@@ -16,7 +16,7 @@
 @import 'controls/radios';
 @import 'controls/switch';
 @import 'components/tabs/tabs';
-@import 'controls/dropdown';
+@import 'components/dropdown/dropdown';
 @import 'controls/modal';
 @import 'controls/slider';
 @import 'controls/popupmenu';
@@ -35,8 +35,8 @@
 @import 'controls/spinbox';
 @import 'components/autocomplete/autocomplete';
 @import 'controls/mask';
-@import 'controls/datepicker';
-@import 'controls/draggable';
+@import 'components/datepicker/datepicker';
+@import 'components/drag/drag';
 @import 'components/colorpicker/colorpicker';
 @import 'controls/timepicker';
 @import 'components/busyindicator/busyindicator';
@@ -44,7 +44,7 @@
 @import 'components/charts/charts';
 @import 'components/searchfield/searchfield';
 @import 'components/toolbar/toolbar';
-@import 'controls/editor';
+@import 'components/editor/editor';
 @import 'controls/skiplink';
 @import 'controls/fileupload';
 @import 'controls/progress';
@@ -55,7 +55,7 @@
 @import 'components/accordion/accordion';
 @import 'components/applicationmenu/applicationmenu';
 @import 'components/contextualactionpanel/contextualactionpanel';
-@import 'controls/expandablearea';
+@import 'components/expandablearea/expandablearea';
 @import 'controls/fieldset';
 @import 'controls/modalsearch';
 @import 'controls/lookup';

@@ -20,15 +20,19 @@
     // Settings and Options
     var pluginName = 'expandablearea',
         defaults = {
-          trigger: null, //Id of some other button to use as a trigger
-          bottomBorder: false //Change the border to bottom vs top
+          trigger: null,
+          bottomBorder: false
         },
         settings = $.extend({}, defaults, options);
 
     /**
-     * @constructor
-     * @param {Object} element
-     */
+    * The About Dialog Component is displays information regarding the application.
+    *
+    * @class ExpandableArea
+    * @param {String} trigger  &nbsp;-&nbsp; Id of some other button to use as a trigger
+    * @param {String} bottomBorder  &nbsp;-&nbsp; Change the border to bottom vs top (for some cases)
+    *
+    */
     function ExpandableArea(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -140,28 +144,12 @@
         return this;
       },
 
+      /**
+      * Return if the expandable area is current disable or not.
+      * @returns {Boolean}
+      */
       isDisabled: function() {
         return this.element.hasClass('is-disabled');
-      },
-
-      handleEvents: function() {
-        var self = this;
-        this.expander.onTouchClick('expandablearea').on('click.expandablearea', function(e) {
-          if (!self.isDisabled()) {
-            e.preventDefault();
-            self.toggleExpanded();
-          }
-        });
-
-        this.header.on('keydown.expandablearea', function(e) {
-          self.handleKeys(e);
-        }).on('focus.expandablearea', function(e) {
-          self.handleFocus(e);
-        }).on('blur.expandablearea', function(e) {
-          self.handleBlur(e);
-        });
-
-        return this;
       },
 
       handleKeys: function(e) {
@@ -202,6 +190,9 @@
         return this.element.is('.is-expanded');
       },
 
+      /**
+       * Toggle Current Expansion State.
+       */
       toggleExpanded: function() {
         // if (this.header.attr('aria-expanded') === 'true') {
         if (this.isExpanded()) {
@@ -211,6 +202,9 @@
         }
       },
 
+      /**
+       * Open the pane if closed.
+       */
       open: function() {
         var self = this,
         canExpand = this.element.triggerHandler('beforeexpand', [this.element]);
@@ -238,6 +232,9 @@
         }).animateOpen();
       },
 
+      /**
+       * Close the pane if open.
+       */
       close: function() {
         var self = this,
         canCollapse = this.element.triggerHandler('beforecollapse', [this.element]);
@@ -262,15 +259,23 @@
         }).animateClosed();
       },
 
+      /**
+       * Disable the Expandable Area from being closable.
+       */
       disable: function() {
         this.element.addClass('is-disabled');
       },
 
+      /**
+       * Enable the Expandable Area to allow close.
+       */
       enable: function() {
         this.element.removeClass('is-disabled');
       },
 
-      // Teardown - Remove added markup and events
+      /**
+       * Teardown - Remove added markup and events
+       */
       destroy: function() {
         this.header.children('a').offTouchClick('expandablearea').off();
         this.header.off();
@@ -280,7 +285,28 @@
           .removeAttr('id');
         this.content.removeAttr('id').removeClass('no-transition');
         $.removeData(this.element[0], pluginName);
+      },
+
+      handleEvents: function() {
+        var self = this;
+        this.expander.onTouchClick('expandablearea').on('click.expandablearea', function(e) {
+          if (!self.isDisabled()) {
+            e.preventDefault();
+            self.toggleExpanded();
+          }
+        });
+
+        this.header.on('keydown.expandablearea', function(e) {
+          self.handleKeys(e);
+        }).on('focus.expandablearea', function(e) {
+          self.handleFocus(e);
+        }).on('blur.expandablearea', function(e) {
+          self.handleBlur(e);
+        });
+
+        return this;
       }
+
     };
 
     // Initialize the plugin (Once)

@@ -21,22 +21,31 @@
     // Settings and Options
     var pluginName = 'drag',
       defaults = {
-        axis: null, //Constrains dragging to either axis. Possible values: 'x', 'y'
-        clone: false, //Clone the object - Useful so you dont have to abs position
-        cloneCssClass: 'is-clone', // Css class added to clone element
-        clonePosIsFixed: false, //Clone object use as css style "position: fixed"
-        cloneAppendTo: null, //AppentTo selector for clone ['body'|'parent'|'jquery object'] default:'body'
-        containment: false, //Constrains dragging to within the bounds of the specified element or region. Possible values: "parent", "document", "window".
-        obstacle: false, //Selector of object(s) that you cannot drag into,
+        axis: null,
+        clone: false,
+        cloneCssClass: 'is-clone',
+        clonePosIsFixed: false,
+        cloneAppendTo: null,
+        containment: false,
+        obstacle: false,
         containmentOffset: {left: 0, top: 0}
       },
       settings = $.extend({}, defaults, options);
 
     /**
-     * Drag and Drop Functions with Touch Support
-     * @constructor
-     * @param {Object} element
-     */
+    * Drag/Drop functions with touch support.
+    *
+    * @class Drag
+    * @param {String} axis  &nbsp;-&nbsp; Constrains dragging to either axis. Possible values: null, 'x', 'y'
+    * @param {Boolean} clone  &nbsp;-&nbsp;  Set to true to clone the object to drag. In many situations this is needed to break out of layout.
+    * @param {String} cloneCssClass  &nbsp;-&nbsp; Css class added to clone element (defaults to is-clone)
+    * @param {Boolean} clonePosIsFixed  &nbsp;-&nbsp; if true cloned object will use css style "position: fixed"
+    * @param {String} cloneAppendTo  &nbsp;-&nbsp; Selector to append to for the clone ['body'|'parent'|'jquery object'] default:'body'
+    * @param {Boolean} containment  &nbsp;-&nbsp; Constrains dragging to within the bounds of the specified element or region. Possible values: "parent", "document", "window".
+    * @param {String} obstacle  &nbsp;-&nbsp; jQuery Selector of object(s) that you cannot drag into,
+    * @param {String} containmentOffset  &nbsp;-&nbsp; How close to the containment object should we be allowed to drag in position form. `{left: 0, top: 0}`
+    *
+    */
     function Drag(element) {
       this.element = $(element);
       Soho.logTimeStart(pluginName);
@@ -49,122 +58,6 @@
 
       init: function() {
         this.handleEvents();
-      },
-
-      // Handle Touch/Mouse Drag Drop
-      handleEvents: function() {
-        var self = this;
-        self.offset = null;
-
-        //Touch and Drag Support
-        self.element.attr('draggable', false);
-
-        if ('onpointerdown' in window || 'onmspointerdown' in window) {
-          // Setup pointer events
-          // TODO: Setup Pointer Events for IE10/11
-          /*
-          self.element.on('pointerdown MSPointerDown', function(e) {
-
-          })
-          .on('pointermove MSPointerMove', function(e) {
-
-          })
-          .on('pointerup MSPointerUp', function(e) {
-
-          });
-          */
-        }
-        else {
-
-          //Touch-only Drag Support
-          self.element.on('touchstart.draggable gesturestart.draggable', function(e) {
-            var pos = $(this).position(),
-                orig = e.originalEvent;
-
-            self.offset = {
-              x:  orig.changedTouches[0].pageX - pos.left,
-              y:  orig.changedTouches[0].pageY - pos.top
-            };
-
-            self.originalPos = pos;
-            self.element.addClass('is-dragging');
-            self.element.trigger('dragstart', pos);
-          })
-
-          // Move
-          .on('touchmove.draggable gesturechange.draggable', function(e) {
-            e.preventDefault();
-            var orig = e.originalEvent;
-
-            // do now allow two touch points to drag the same element
-            if (orig.targetTouches.length > 1) {
-              return;
-            }
-            self.move(orig.changedTouches[0].pageX - self.offset.x, orig.changedTouches[0].pageY - self.offset.y);
-          })
-
-          //Finish Touch Dragging
-          .on('touchend.draggable gestureend.draggable touchcancel.draggable', function (e) {
-            e.preventDefault();
-            var touch = e.originalEvent.changedTouches[0];
-            self.finish(touch.pageX - self.offset.x, touch.pageY - self.offset.y);
-          });
-
-        }
-
-        // Always bind mousedown in either scenario, in the event that a mouse is used
-        self.element.on('mousedown.draggable', function(e) {
-          e.preventDefault();
-
-
-          var pos = settings.clonePosIsFixed ?
-            self.element[0].getBoundingClientRect() : self.element.position();
-
-          //Save offset
-          self.offset = {
-            x: e.pageX - pos.left,
-            y: e.pageY - pos.top
-          };
-
-          self.originalPos = pos;
-
-          //Prevent Text Selection
-          $('body').addClass('disable-select');
-
-          //Handle Mouse Press over draggable element
-          $(document).on('mousemove.draggable', function (e) {
-            e.preventDefault();
-            self.move(e.pageX - self.offset.x, e.pageY - self.offset.y);
-          });
-
-          //Handle Mouse release over draggable element close out events and trigger
-          $(document).on('mouseup.draggable', function (e) {
-            e.preventDefault();
-            self.finish(e.pageX - self.offset.x, e.pageY - self.offset.y);
-          });
-
-          self.element.on('mouseup.draggable', function (e) {
-            e.preventDefault();
-            self.finish(e.pageX - self.offset.x, e.pageY - self.offset.y);
-          });
-
-          //Trigger dragging
-          //Clone
-          if (!self.clone && settings.clone) {
-            self.clone = self.element.clone(true);
-            if (settings.cloneAppendTo === 'parent') {
-              settings.cloneAppendTo = self.element.parent();
-            }
-            self.clone
-              .addClass(settings.cloneCssClass)
-              .appendTo(settings.cloneAppendTo || 'body');
-
-          }
-
-          self.element.addClass('is-dragging');
-          self.element.trigger('dragstart', [pos, self.clone]);
-        });
-
       },
 
       //Trigger events and remove clone
@@ -267,8 +160,8 @@
 
           // Caching this so drag is not jaggie
           if (!this.obstacle) {
-            var obstacleOffset = this.obstacle.offset();
             this.obstacle = $(settings.obstacle).not(this.element);
+            var obstacleOffset = $(this.obstacle).offset();
 
             this.constraints = {
               top: obstacleOffset.top,
@@ -300,11 +193,124 @@
         this.element.trigger('drag', css);
       },
 
-      // Teardown
+      /**
+      * Detach all functionality and events.
+      */
       destroy: function() {
         $.removeData(this.element[0], pluginName);
         this.element.off('touchstart.draggable MSPointerDown.draggable pointerdown.draggable touchmove.draggable touchend.draggable touchcancel.draggable mousedown.draggable');
+      },
+
+      /**
+       *  This component fires the following events.
+       *
+       * @fires Drag#events
+       * @param {Object} dragstart  &nbsp;-&nbsp; When the dragging is initiated. Use this to customize/style the drag/drop objects in the DOM.
+       * @param {Object} drag  &nbsp;-&nbsp; Fires (many times) while dragging is occuring. Use this for DOM feedback but be careful about what you do in here for performance.
+       * @param {Object} dragend  &nbsp;-&nbsp; Fires after the drag is completed. Use this to remove / set drag feedback off.
+       *
+       */
+      handleEvents: function() {
+        var self = this;
+        self.offset = null;
+
+        //Touch and Drag Support
+        self.element.attr('draggable', false);
+
+        if ('onpointerdown' in window || 'onmspointerdown' in window) {
+          // TODO: Setup Pointer Events for IE10/11 - pointerdown MSPointerDown, pointermove MSPointerMove, pointerup MSPointerUp
+        } else {
+
+          //Touch-only Drag Support
+          self.element.on('touchstart.draggable gesturestart.draggable', function(e) {
+            var pos = $(this).position(),
+                orig = e.originalEvent;
+
+            self.offset = {
+              x:  orig.changedTouches[0].pageX - pos.left,
+              y:  orig.changedTouches[0].pageY - pos.top
+            };
+
+            self.originalPos = pos;
+            self.element.addClass('is-dragging');
+            self.element.trigger('dragstart', pos);
+          })
+
+          // Move
+          .on('touchmove.draggable gesturechange.draggable', function(e) {
+            e.preventDefault();
+            var orig = e.originalEvent;
+
+            // do now allow two touch points to drag the same element
+            if (orig.targetTouches.length > 1) {
+              return;
+            }
+            self.move(orig.changedTouches[0].pageX - self.offset.x, orig.changedTouches[0].pageY - self.offset.y);
+          })
+
+          //Finish Touch Dragging
+          .on('touchend.draggable gestureend.draggable touchcancel.draggable', function (e) {
+            e.preventDefault();
+            var touch = e.originalEvent.changedTouches[0];
+            self.finish(touch.pageX - self.offset.x, touch.pageY - self.offset.y);
+          });
+
+        }
+
+        // Always bind mousedown in either scenario, in the event that a mouse is used
+        self.element.on('mousedown.draggable', function(e) {
+          e.preventDefault();
+
+          var pos = settings.clonePosIsFixed ?
+            self.element[0].getBoundingClientRect() : self.element.position();
+
+          //Save offset
+          self.offset = {
+            x: e.pageX - pos.left,
+            y: e.pageY - pos.top
+          };
+
+          self.originalPos = pos;
+
+          //Prevent Text Selection
+          $('body').addClass('disable-select');
+
+          //Handle Mouse Press over draggable element
+          $(document).on('mousemove.draggable', function (e) {
+            e.preventDefault();
+            self.move(e.pageX - self.offset.x, e.pageY - self.offset.y);
+          });
+
+          //Handle Mouse release over draggable element close out events and trigger
+          $(document).on('mouseup.draggable', function (e) {
+            e.preventDefault();
+            self.finish(e.pageX - self.offset.x, e.pageY - self.offset.y);
+          });
+
+          self.element.on('mouseup.draggable', function (e) {
+            e.preventDefault();
+            self.finish(e.pageX - self.offset.x, e.pageY - self.offset.y);
+          });
+
+          //Trigger dragging
+          //Clone
+          if (!self.clone && settings.clone) {
+            self.clone = self.element.clone(true);
+            if (settings.cloneAppendTo === 'parent') {
+              settings.cloneAppendTo = self.element.parent();
+            }
+            self.clone
+              .addClass(settings.cloneCssClass)
+              .appendTo(settings.cloneAppendTo || 'body');
+
+          }
+
+          self.element.addClass('is-dragging');
+          self.element.trigger('dragstart', [pos, self.clone]);
+        });
+
       }
+
     };
 
     // Initialize the plugin (Once)
