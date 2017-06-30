@@ -16,6 +16,19 @@
   //TODO: - Context Menus
   //      - Search
   $.fn.tree = function(options) {
+
+    /**
+     * @class {Tree}
+     *
+     * @param {string} selectable &nbsp;-&nbsp; 'single' or 'multiple'
+     * @param {boolean} hideCheckboxes &nbsp;-&nbsp; Only applies when `selectable` is set to 'multiple'.
+     * @param {null|string} menuId &nbsp;-&nbsp; if defined, will be used to identify a Context Menu by ID attribute in which to add nodes.
+     * @param {boolean} useStepUI &nbsp;-&nbsp; if `true`, turns this tree instance into a "Stepped" tree.
+     * @param {string} folderIconOpen &nbsp;-&nbsp; the icon used when a tree folder node is open.
+     * @param {string} folderIconClosed &nbsp;-&nbsp; the icon used when a tree folder node is closed.
+     * @param {boolean} sortable &nbsp;-&nbsp; if `true`, allows nodes to become sortable.
+     * @param {null|function} onBeforeSelect &nbsp;-&nbsp; if defined as a function, fires that function as a callback before the selection on a node occurs.
+     */
     var pluginName = 'tree',
       defaults = {
         selectable: 'single', // ['single'|'multiple']
@@ -42,6 +55,11 @@
 
     // Tree Methods
     Tree.prototype = {
+
+      /**
+       * @private
+       * @returns {undefined}
+       */
       init: function() {
         this.settings = $.extend({}, settings);
         this.isIe11 = (Soho.env.browser.name === 'ie' && Soho.env.browser.version === '11');
@@ -56,7 +74,9 @@
         this.createSortable();
       },
 
-      //Init Tree from ul, li, a markup structure in DOM
+      /**
+       * Init Tree from ul, li, a markup structure in DOM
+       */
       initTree: function() {
         var self = this,
           s = this.settings,
@@ -81,7 +101,9 @@
         });
       },
 
-      //Init selected notes
+      /**
+       * Init selected notes
+       */
       initSelected: function () {
         var self = this;
         this.element.find('li').each(function() {
@@ -89,17 +111,25 @@
         });
       },
 
-      //Focus first tree node
+      /**
+       * Focus the first tree node
+       */
       focusFirst: function () {
         this.element.find('a:first').attr('tabindex', '0');
       },
 
-      //Set focus
+      /**
+       * Set focus
+       * @param {jQuery[]} node
+       */
       setFocus: function (node) {
         node.focus();
       },
 
-      //From the LI, Read props and add stuff
+      /**
+       * From the LI, Read props and add stuff
+       * @param {jQuery[]} a - an anchor tag reference wrapped in a jQuery object.
+       */
       decorateNode: function(a) {
         var subNode,
         parentCount = 0,
@@ -216,17 +246,25 @@
         a.hideFocus();
       },
 
+      /**
+       * Sets the correct icon to use on a particular SVG element.
+       * @param {jQuery[]} svg - an SVG element reference wrapped in a jQuery object
+       * @param {string} icon - the ID of a Soho Icon type.
+       */
       setTreeIcon: function(svg, icon) {
         // Replace all "icon-", "hide-focus", "\s? - all spaces if any" with nothing
         var iconStr = icon.replace(/#?icon-|hide-focus|\s?/gi, '');
         svg.changeIcon(iconStr);
       },
 
-      //Expand all Parents
+      /**
+       * Expands a collection of tree nodes.
+       * @param {jQuery[]} nodes - a jQuery-wrapped collection of tree node elements.  If left undefined, this will automatically use all `ul[role=group]` elements.
+       */
       expandAll: function(nodes) {
         var self = this;
-
         nodes = nodes || this.element.find('ul[role=group]');
+
         nodes.each(function () {
           var node = $(this);
           node.addClass('is-open');
@@ -239,9 +277,13 @@
         });
       },
 
-      //Collapse all Parents
-      collapseAll: function () {
-        var nodes = this.element.find('ul[role=group]'), self = this;
+      /**
+       * Collapses a collection of tree nodes.
+       * @param {jQuery[]} nodes - a jQuery-wrapped collection of tree node elements.  If left undefined, this will automatically use all `ul[role=group]` elements.
+       */
+      collapseAll: function (nodes) {
+        var self = this;
+        nodes = nodes || this.element.find('ul[role=group]');
 
         nodes.each(function () {
           var node = $(this);
@@ -259,17 +301,28 @@
         });
       },
 
-      // Check if a jQuery object
+      /**
+       * Check if an object is an instance of a jQuery object
+       * @param {Object} obj - the object being tested.
+       * @returns {boolean}
+       */
       isjQuery: function (obj) {
+        // TODO: Move this to a Soho utility object?
         return (obj && (obj instanceof jQuery || obj.constructor.prototype.jquery));
       },
 
-      // Select node by id
+      /**
+       * Selects a tree node specifically using it's ID attribute.
+       * @param {string} id - the ID string to use.
+       */
       selectNodeById: function (id) {
         this.selectNodeByJquerySelector('#'+ id);
       },
 
-      // Select node by [jquery selector] -or- [jquery object]
+      /**
+       * Selects a tree node by [jquery selector] -or- [jquery object]
+       * @param {string|jQuery[]} selector - uses a string that represents a jQuery-wrapped element's ID attribute, or a jQuery-wrapped reference to the element itself.
+       */
       selectNodeByJquerySelector: function (selector) {
         var target = this.isjQuery(selector) ? selector : $(selector);
         if (target.length && !target.is('.is-disabled')) {
@@ -279,7 +332,11 @@
         }
       },
 
-      //Set a node as unselected
+      /**
+       * Deselects a tree node
+       * @param {jQuery[]} node - a jQuery-wrapped element reference to a tree node.
+       * @param {boolean} focus - if defined, causes the node to become focused.
+       */
       unSelectedNode: function (node, focus) {
         if (node.length === 0) {
           return;
@@ -310,7 +367,11 @@
         }, 0);
       },
 
-      //Set a node as the selected one
+      /**
+       * Selects a tree node
+       * @param {jQuery[]} node - a jQuery-wrapped element reference to a tree node.
+       * @param {boolean} focus - if defined, causes the node to become focused.
+       */
       selectNode: function (node, focus) {
         var self = this;
 
@@ -339,6 +400,11 @@
         }
       },
 
+      /**
+       * ?
+       * @param {jQuery[]} node - a jQuery-wrapped element reference to a tree node.
+       * @param {boolean} focus - if defined, causes the node to become focused.
+       */
       selectNodeFinish: function(node, focus) {
         var self = this;
         var aTags = $('a', this.element);
@@ -374,6 +440,10 @@
         }, 0);
       },
 
+      /**
+       * Deselects a tree node
+       * @param {jQuery[]} node - a jQuery-wrapped element reference to a tree node.
+       */
       setNodeStatus: function(node) {
         var self = this,
           data = node.data('jsonData'),
@@ -417,6 +487,11 @@
         setStatus(nodes, isFirstSkipped);
       },
 
+      /**
+       * Get's a tree node's current 'selected' status
+       * @param {jQuery[]} node - a jQuery-wrapped element reference to a tree node.
+       * @param {boolean} isFirstSkipped - ?
+       */
       getSelectedStatus: function(node, isFirstSkipped) {
         var status,
           total = 0,
@@ -441,7 +516,10 @@
         return status;
       },
 
-      //Animate open/closed the node
+      /**
+       * Changes a node's selected status to its opposite form.
+       * @param {jQuery[]} node - a jQuery-wrapped element reference to a tree node.
+       */
       toggleNode: function(node) {
         var next = node.next(),
           self = this;
