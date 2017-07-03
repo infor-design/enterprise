@@ -1,6 +1,6 @@
-# Toast Component
+# Toast Component [Learn More](https://soho.infor.com/index.php?p=component/toast-messages)
 
-The Toast Component provides a whole schlew of shit.
+The Toast Component displays important messages in an area that sits above your application screen.
 
 {{api-details}}
 
@@ -14,8 +14,6 @@ The Toast Component provides a whole schlew of shit.
 - This component is used to read out the error messages for validation as well
 
 ## Code Example
-
-### Toast (Slide-In) Messages
 
 The Toast component is a JS-based component that lets you send a quick feedback message to the user. The message will display and timeout after 6s, showing a progress bar with an option to immediately dismiss. To show a test message, call the toast function on the body element passing in the title and message content.
 
