@@ -44,18 +44,19 @@ It's also possible to configure the timepicker with a custom time format.  This 
 
 <div class="field">
   <label for="timepicker-24hrs" class="label">Time Field (24-hour)</label>
-  <input id="timepicker-24hrs" class="timepicker" type="text" data-options='{ "timeFormat": "HH:mm" };' />'>
+  <input id="timepicker-24hrs" class="timepicker" type="text" data-options='{ "timeFormat": "HH:mm" };' />
 </div>
 
 
 ```
 
+In [another configuration](/components/timepicker/example-intervals), it's also possible to pass the Timepicker settings that control the intervals of minutes and seconds available for picking, as well as if the Timepicker will allow "off-timing"-intervals to be entered manually with a keyboard.
 
 ```html
 
 <div class="field">
- <label for="time-field-disabled" class="label">Time Field (Disabled)</label>
- <input id="time-field-disabled" class="timepicker" disabled name="time-field-disabled" type="text">
+  <label for="twentyfour-time-field" class="label">Time Field (24-hour)</label>
+  <input id="twentyfour-time-field" class="timepicker" name="twentyfour-time-field" type="text" data-options='{ "minuteInterval": "10", "roundToInterval": "true"}' />
 </div>
 
 

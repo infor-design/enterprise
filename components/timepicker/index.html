@@ -1,5 +1,5 @@
 <h1 id="timepicker-component-learn-more">Timepicker Component <a href="#">Learn More</a></h1>
-<p>{{api-details}}</p>
+<h3 id="functions">Functions</h3>
 <h2 id="configuration-options">Configuration Options</h2>
 <ol>
 <li><a href="/components/timepicker/example-index">Default Example</a><br /></li>
@@ -31,12 +31,13 @@
 <pre class="sourceCode html"><code class="sourceCode html">
 <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
   <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;timepicker-24hrs&quot;</span><span class="ot"> class=</span><span class="st">&quot;label&quot;</span><span class="kw">&gt;</span>Time Field (24-hour)<span class="kw">&lt;/label&gt;</span>
-  <span class="kw">&lt;input</span><span class="ot"> id=</span><span class="st">&quot;timepicker-24hrs&quot;</span><span class="ot"> class=</span><span class="st">&quot;timepicker&quot;</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> data-options=</span><span class="st">&#39;{ &quot;timeFormat&quot;: &quot;HH:mm&quot; };&#39;</span> <span class="kw">/&gt;</span>&#39;&gt;
+  <span class="kw">&lt;input</span><span class="ot"> id=</span><span class="st">&quot;timepicker-24hrs&quot;</span><span class="ot"> class=</span><span class="st">&quot;timepicker&quot;</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> data-options=</span><span class="st">&#39;{ &quot;timeFormat&quot;: &quot;HH:mm&quot; };&#39;</span> <span class="kw">/&gt;</span>
 <span class="kw">&lt;/div&gt;</span>
 </code></pre>
+<p>In <a href="/components/timepicker/example-intervals">another configuration</a>, it's also possible to pass the Timepicker settings that control the intervals of minutes and seconds available for picking, as well as if the Timepicker will allow &quot;off-timing&quot;-intervals to be entered manually with a keyboard.</p>
 <pre class="sourceCode html"><code class="sourceCode html">
 <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
- <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;time-field-disabled&quot;</span><span class="ot"> class=</span><span class="st">&quot;label&quot;</span><span class="kw">&gt;</span>Time Field (Disabled)<span class="kw">&lt;/label&gt;</span>
- <span class="kw">&lt;input</span><span class="ot"> id=</span><span class="st">&quot;time-field-disabled&quot;</span><span class="ot"> class=</span><span class="st">&quot;timepicker&quot;</span><span class="ot"> disabled name=</span><span class="st">&quot;time-field-disabled&quot;</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;twentyfour-time-field&quot;</span><span class="ot"> class=</span><span class="st">&quot;label&quot;</span><span class="kw">&gt;</span>Time Field (24-hour)<span class="kw">&lt;/label&gt;</span>
+  <span class="kw">&lt;input</span><span class="ot"> id=</span><span class="st">&quot;twentyfour-time-field&quot;</span><span class="ot"> class=</span><span class="st">&quot;timepicker&quot;</span><span class="ot"> name=</span><span class="st">&quot;twentyfour-time-field&quot;</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> data-options=</span><span class="st">&#39;{ &quot;minuteInterval&quot;: &quot;10&quot;, &quot;roundToInterval&quot;: &quot;true&quot;}&#39;</span> <span class="kw">/&gt;</span>
 <span class="kw">&lt;/div&gt;</span>
 </code></pre>
