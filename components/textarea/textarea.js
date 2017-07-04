@@ -61,7 +61,15 @@
         this.update(this);
       },
 
-      // Attach Events
+      /**
+       *  This component fires the following events.
+       *
+       * @fires Autocomplete#events
+       * @param {Object} keyup  &nbsp;-&nbsp; Fires when the button is clicked (if enabled).
+       * @param {Object} focus  &nbsp;-&nbsp; Fires when the menu is focused.
+       * @param {Object} keypress  &nbsp;-&nbsp;
+       * @param {Object} blur  &nbsp;-&nbsp;
+       */
       handleEvents: function() {
         var self = this;
         this.element.on('keyup.textarea', function () {
@@ -96,6 +104,10 @@
         });
       },
 
+      /**
+       * @private
+       */
+      // TODO: What does this do?
       isSelected: function (input) {
         if (typeof input.selectionStart === 'number') {
           return input.selectionStart === 0 && input.selectionEnd === input.value.length;
@@ -105,6 +117,11 @@
         }
       },
 
+      /**
+       * Checks a keycode value and determines if it belongs to a printable character.
+       * @param {Number} keycode - a number representing an ASCII keycode value
+       * @returns {boolean}
+       */
       isPrintable: function(keycode) {
         var valid =
           (keycode > 47 && keycode < 58)   || // number keys
@@ -115,11 +132,20 @@
         return valid;
       },
 
-      // Counts characters
+      /**
+       * Counts the number of line breaks in a string
+       * @param {String} s
+       * @returns {Number}
+       */
       countLinebreaks: function(s) {
         return (s.match(/\n/g) || []).length;
       },
 
+      /**
+       * Updates the descriptive markup (counter, etc) to notify the user how many characters can be typed.
+       * @private
+       * @param {TextArea} self
+       */
       update: function (self) {
         var value = self.element.val(),
           isExtraLinebreaks = this.isChrome || this.isSafari,
@@ -148,19 +174,30 @@
         }
       },
 
+      /**
+       * Enables this component instance.
+       */
       enable: function () {
         this.element.prop('disable', false).prop('readonly', false);
       },
 
+      /**
+       * Disables this component instance.
+       */
       disable: function () {
         this.element.prop('disable', true);
       },
 
+      /**
+       * Sets this component instance to "readonly"
+       */
       readonly: function () {
         this.element.prop('readonly', true);
       },
 
-      // Teardown
+      /**
+       * Destroys this component instance and unlinks it from its element.
+       */
       destroy: function() {
         $.removeData(this.element[0], pluginName);
         if (this.printarea && this.printarea.length) {
