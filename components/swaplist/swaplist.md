@@ -5,10 +5,11 @@
 ## Configuration options
 
 1. [Main Swaplist Example](/components/swaplist/example-index.html)
+2. [Swaplist with Selected Items](/components/swaplist/example-selected.html)
 
 ## Behavior Guidelines
 
--   The swap list supports touch devices.
+- The swap list supports touch devices.
 
 ## Code Example
 
