@@ -1,4 +1,4 @@
-# Swaplist Component [Learn More](#)
+# Swaplist Component [Learn More](https://soho.infor.com/index.php?p=component/swaplist)
 
 {{api-details}}
 
@@ -116,23 +116,23 @@ Initialize the component by calling .swaplist() on the element and passing a Jso
 
 ## Accessibility
 
--   This component is keyboard accessible but not entirely tested for WAI-ARIA and Screen reader support.
+- This component is keyboard accessible but not entirely tested for WAI-ARIA and Screen reader support.
 
 ## Keyboard Shortcuts
 
--   **Tab** Tabs in and out of the list boxes and the between the buttons on the Toolbars and the adjacent objects.
--   **Arrow up / Down** - Moves up and down the currently focused list
--   **Enter/Space** - Toggles selection if a list item is focused
--   **CTRL+M** - Moves the currently selected items in one list to the next list. If in the middle list focus will be on the toolbar and you can choose which ones to go to.
+- **Tab** Tabs in and out of the list boxes and the between the buttons on the Toolbars and the adjacent objects.
+- **Arrow up / Down** - Moves up and down the currently focused list
+- **Enter/Space** - Toggles selection if a list item is focused
+- **CTRL+M** - Moves the currently selected items in one list to the next list. If in the middle list focus will be on the toolbar and you can choose which ones to go to.
 
 ## States and Variations
 
 The individual components (list boxes, move/reorganize controls) take the following stakes:
 
--   Hover
--   Focus
--   Disabled (when nothing is selected to move)
--   There is an edge case where the entire swap list will be disabled.
+- Hover
+- Focus
+- Disabled (when nothing is selected to move)
+- There is an edge case where the entire swap list will be disabled.
 
 ## Responsive Guidelines
 

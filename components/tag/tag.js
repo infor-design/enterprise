@@ -37,12 +37,42 @@
     // Tag Methods
     Tag.prototype = {
 
+      /**
+       * @private
+       */
       init: function() {
         this.element.hideFocus();
         this.handleEvents();
       },
 
-      // Handle Events
+      /**
+       * Remove the tag from the DOM
+       */
+      remove: function(event, el) {
+        el = el instanceof jQuery ? el : $(el);
+        var parent = el.parent();
+        this.element.triggerHandler('beforetagremove', {event: event, element: el});
+        el.remove();
+        parent.triggerHandler('aftertagremove', {event: event});
+      },
+
+      /**
+       * Destroy this component instance and remove the link from its base element.
+       */
+      destroy: function() {
+        this.element.off('keydown.tag');
+        $('.dismissable-btn, .dismissible-btn', this.element).off('click.tag').remove();
+
+        $.removeData(this.element[0], pluginName);
+      },
+
+      /**
+       *  This component fires the following events.
+       *
+       * @fires Tag#events
+       * @param {Object} click  &nbsp;-&nbsp; Fires when the tag is clicked (if enabled).
+       * @param {Object} keydown  &nbsp;-&nbsp; Fires when the tag is focused.
+       */
       handleEvents: function() {
         var self = this,
           btnDismissable = $(
@@ -68,26 +98,7 @@
               self.remove(event, this);
             }
           });
-
         }
-
-      }, // END: Handle Events ---------------------------------------------------------------------
-
-      // Remove from DOM
-      remove: function(event, el) {
-        el = el instanceof jQuery ? el : $(el);
-        var parent = el.parent();
-        this.element.triggerHandler('beforetagremove', {event: event, element: el});
-        el.remove();
-        parent.triggerHandler('aftertagremove', {event: event});
-      },
-
-      // Teardown
-      destroy: function() {
-        this.element.off('keydown.tag');
-        $('.dismissable-btn, .dismissible-btn', this.element).off('click.tag').remove();
-
-        $.removeData(this.element[0], pluginName);
       }
     };
 

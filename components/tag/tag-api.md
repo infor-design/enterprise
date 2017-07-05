@@ -3,9 +3,34 @@
 ### Table of Contents
 
 -   [Tag](#tag)
+    -   [remove](#remove)
+    -   [destroy](#destroy)
+    -   [handleEvents](#handleevents)
 
 ## Tag
 
 **Parameters**
 
 -   `element` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+### remove
+
+Remove the tag from the DOM
+
+**Parameters**
+
+-   `event`  
+-   `el`  
+
+### destroy
+
+Destroy this component instance and remove the link from its base element.
+
+### handleEvents
+
+This component fires the following events.
+
+**Parameters**
+
+-   `click` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when the tag is clicked (if enabled).
+-   `keydown` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when the tag is focused.
