@@ -109,10 +109,10 @@ $('body').one('initialized', function () {
     elem.listbuilder({ dataset: ds, template: $('#listbuilder-tmpl').html() });
 
     // On updated =============================================================
-    elem.on('updated', function (e, args) {
+    elem.on('updated.listbuilder', function (e, args) {
      console.log('updated: ', args);
     });
-    
+
   });
 });
 </script>
