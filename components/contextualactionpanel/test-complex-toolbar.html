@@ -1,0 +1,30 @@
+<div class="row top-padding">
+  <div class="six columns">
+    <h2>Toolbar Test: Complex Toolbar</h2>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <button id="cap-trigger" class="btn-primary contextual-action-panel-trigger" data-options='{ "id": "cap-content", "title": "Potato Salad" }'>
+      <span>Show Me Potato Salad</span>
+    </button>
+    <div id="cap-content" class="hidden">
+      <div class="toolbar">
+        <div class="title">Potato Salad</div>
+        <div class="buttonset">
+          <label for="cap-searchfield">Search</label>
+          <input id="cap-searchfield" class="searchfield" />
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+
+  });
+</script>
