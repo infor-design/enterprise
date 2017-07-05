@@ -18,16 +18,21 @@
     // Settings and Options
     var pluginName = 'textarea',
         defaults = {
-          characterCounter: true, //But needs a maxlength
-          printable: true,  //If the text area can be printed
+          characterCounter: true,
+          printable: true,
           charRemainingText: null,
           charMaxText: null
         },
         settings = $.extend({}, defaults, options);
 
     /**
-     * @constructor
-     * @param {Object} element
+     * The Textarea Component wraps a standard HTML Textarea element and provides additional features.
+     *
+     * @class Textarea
+     * @param {boolean} characterCounter &nbsp;-&nbsp; Displays a counter that counts down from the maximum length allowed.
+     * @param {boolean} printable &nbsp;-&nbsp; Determines whether or not the text area can be displayed on a printed page.
+     * @param {null|String} charRemainingText  &nbsp;-&nbsp; Text that will be used in place of the "remaining" text.
+     * @param {null|String} charMaxText  &nbsp;-&nbsp; Text that will be used in place of the "Max" text.
      */
     function Textarea(element) {
       this.element = $(element);
@@ -39,6 +44,9 @@
     // Plugin Methods
     Textarea.prototype = {
 
+      /**
+       * @private
+       */
       init: function() {
         this.isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
         this.isSafari = (
@@ -59,49 +67,6 @@
         }
         this.handleEvents();
         this.update(this);
-      },
-
-      /**
-       *  This component fires the following events.
-       *
-       * @fires Autocomplete#events
-       * @param {Object} keyup  &nbsp;-&nbsp; Fires when the button is clicked (if enabled).
-       * @param {Object} focus  &nbsp;-&nbsp; Fires when the menu is focused.
-       * @param {Object} keypress  &nbsp;-&nbsp;
-       * @param {Object} blur  &nbsp;-&nbsp;
-       */
-      handleEvents: function() {
-        var self = this;
-        this.element.on('keyup.textarea', function () {
-          self.update(self);
-        }).on('focus.textarea', function () {
-          if (self.counter) {
-            self.counter.addClass('focus');
-          }
-        }).on('keypress.textarea', function (e) {
-          var length = self.element.val().length,
-          max = self.element.attr('maxlength');
-
-          if ([97, 99, 118, 120].indexOf(e.which) > -1 && (e.metaKey || e.ctrlKey)) {
-            self.update(self);
-            return;
-          }
-
-          if (!self.isPrintable(e.which)) {
-            return;
-          }
-
-          if (length >= max && !self.isSelected(this)) {
-            e.preventDefault();
-          }
-
-        })
-        .on('blur.textarea', function () {
-          self.update(self);
-          if (self.counter) {
-            self.counter.removeClass('focus');
-          }
-        });
       },
 
       /**
@@ -207,6 +172,49 @@
           this.counter.remove();
         }
         this.element.off('keyup.textarea');
+      },
+
+      /**
+       *  This component fires the following events.
+       *
+       * @fires Textarea#events
+       * @param {Object} keyup  &nbsp;-&nbsp; Fires when the button is clicked (if enabled).
+       * @param {Object} focus  &nbsp;-&nbsp; Fires when the menu is focused.
+       * @param {Object} keypress  &nbsp;-&nbsp;
+       * @param {Object} blur  &nbsp;-&nbsp;
+       */
+      handleEvents: function() {
+        var self = this;
+        this.element.on('keyup.textarea', function () {
+          self.update(self);
+        }).on('focus.textarea', function () {
+          if (self.counter) {
+            self.counter.addClass('focus');
+          }
+        }).on('keypress.textarea', function (e) {
+          var length = self.element.val().length,
+          max = self.element.attr('maxlength');
+
+          if ([97, 99, 118, 120].indexOf(e.which) > -1 && (e.metaKey || e.ctrlKey)) {
+            self.update(self);
+            return;
+          }
+
+          if (!self.isPrintable(e.which)) {
+            return;
+          }
+
+          if (length >= max && !self.isSelected(this)) {
+            e.preventDefault();
+          }
+
+        })
+        .on('blur.textarea', function () {
+          self.update(self);
+          if (self.counter) {
+            self.counter.removeClass('focus');
+          }
+        });
       }
     };
 

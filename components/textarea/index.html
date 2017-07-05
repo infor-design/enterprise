@@ -4,17 +4,13 @@
 
 <h2 id="api-details">Api Details</h2>
 <h3 id="settings">Settings</h3>
-<p><strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong></p>
-<h3 id="functions">Functions</h3>
-<h3 id="events">Events</h3>
-<p>This component fires the following events.</p>
-<p><strong>Parameters</strong></p>
 <ul>
-<li><code>keyup</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires when the button is clicked (if enabled).<br /></li>
-<li><code>focus</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires when the menu is focused.<br /></li>
-<li><code>keypress</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  - <br /></li>
-<li><code>blur</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  - </li>
+<li><code>characterCounter</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong>  -  Displays a counter that counts down from the maximum length allowed.<br /></li>
+<li><code>printable</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong>  -  Determines whether or not the text area can be displayed on a printed page.<br /></li>
+<li><code>charRemainingText</code> <strong>(null | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</strong>  -  Text that will be used in place of the &quot;remaining&quot; text.<br /></li>
+<li><code>charMaxText</code> <strong>(null | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</strong>  -  Text that will be used in place of the &quot;Max&quot; text.</li>
 </ul>
+<h3 id="functions">Functions</h3>
 <h4 id="isprintable">isPrintable</h4>
 <p>Checks a keycode value and determines if it belongs to a printable character.</p>
 <p><strong>Parameters</strong></p>
@@ -37,6 +33,15 @@
 <p>Sets this component instance to &quot;readonly&quot;</p>
 <h4 id="destroy">destroy</h4>
 <p>Destroys this component instance and unlinks it from its element.</p>
+<h3 id="events">Events</h3>
+<p>This component fires the following events.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>keyup</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires when the button is clicked (if enabled).<br /></li>
+<li><code>focus</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires when the menu is focused.<br /></li>
+<li><code>keypress</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  - <br /></li>
+<li><code>blur</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  - </li>
+</ul>
 <h2 id="behavior-guidelines">Behavior Guidelines</h2>
 <ul>
 <li>Text Areas can either have a fixed height, in which case a vertical scrollbar appears when the content exceeds the available space, or the height can expand to accommodate the amount of text.<br /></li>

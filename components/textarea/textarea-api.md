@@ -3,30 +3,25 @@
 ### Table of Contents
 
 -   [Textarea](#textarea)
-    -   [handleEvents](#handleevents)
     -   [isPrintable](#isprintable)
     -   [countLinebreaks](#countlinebreaks)
     -   [enable](#enable)
     -   [disable](#disable)
     -   [readonly](#readonly)
     -   [destroy](#destroy)
+    -   [handleEvents](#handleevents)
 
 ## Textarea
 
-**Parameters**
-
--   `element` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
-
-### handleEvents
-
-This component fires the following events.
+The Textarea Component wraps a standard HTML Textarea element and provides additional features.
 
 **Parameters**
 
--   `keyup` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when the button is clicked (if enabled).
--   `focus` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when the menu is focused.
--   `keypress` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  - 
--   `blur` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  - 
+-   `element`  
+-   `characterCounter` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Displays a counter that counts down from the maximum length allowed.
+-   `printable` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Determines whether or not the text area can be displayed on a printed page.
+-   `charRemainingText` **(null | [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))**  -  Text that will be used in place of the "remaining" text.
+-   `charMaxText` **(null | [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))**  -  Text that will be used in place of the "Max" text.
 
 ### isPrintable
 
@@ -63,3 +58,14 @@ Sets this component instance to "readonly"
 ### destroy
 
 Destroys this component instance and unlinks it from its element.
+
+### handleEvents
+
+This component fires the following events.
+
+**Parameters**
+
+-   `keyup` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when the button is clicked (if enabled).
+-   `focus` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when the menu is focused.
+-   `keypress` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  - 
+-   `blur` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  - 
