@@ -1980,7 +1980,7 @@
       // Removes a tab from the list and cleans up properly
       // NOTE: Does not take advantage of _activatePreviousTab()_ due to specific needs of selecting certain
       // Tabs/Anchors at certain times.
-      remove: function(tabId, enableBeforeClose = true) {
+      remove: function(tabId, disableBeforeClose) {
         var self = this,
           targetLi = this.doGetTab(null, tabId);
 
@@ -1995,7 +1995,7 @@
           notATab = '.application-menu-trigger, .separator, .is-disabled, :hidden',
           prevLi = targetLi.prev();
 
-        if (enableBeforeClose) {
+        if (!disableBeforeClose) {
           var canClose = this.element.triggerHandler('beforeclose', [targetLi]);
           if (canClose === false) {
             return false;
