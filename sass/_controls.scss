@@ -1,5 +1,5 @@
 @import 'controls/icons';
-@import 'controls/typography';
+@import 'components/typography/typography';
 @import 'controls/layouts';
 @import 'components/visibility/visibility';
 
@@ -14,19 +14,19 @@
 @import 'controls/compositeform';
 @import 'components/checkboxes/checkboxes';
 @import 'controls/radios';
-@import 'controls/switch';
+@import 'components/switch/switch';
 @import 'components/tabs/tabs';
 @import 'components/dropdown/dropdown';
 @import 'controls/modal';
 @import 'controls/slider';
 @import 'controls/popupmenu';
-@import 'controls/tooltip';
+@import 'components/tooltip/tooltip';
 @import 'controls/masthead';
 @import 'components/tree/tree';
 @import 'controls/rating';
 @import 'controls/listview';
 @import 'controls/listbuilder';
-@import 'controls/swaplist';
+@import 'components/swaplist/swaplist';
 @import 'components/badges/badges';
 @import 'components/circlepager/circlepager';
 @import 'controls/pager';
@@ -38,9 +38,9 @@
 @import 'components/datepicker/datepicker';
 @import 'components/drag/drag';
 @import 'components/colorpicker/colorpicker';
-@import 'controls/timepicker';
+@import 'components/timepicker/timepicker';
 @import 'components/busyindicator/busyindicator';
-@import 'controls/toast';
+@import 'components/toast/toast';
 @import 'components/charts/charts';
 @import 'components/searchfield/searchfield';
 @import 'components/toolbar/toolbar';
@@ -49,7 +49,7 @@
 @import 'controls/fileupload';
 @import 'controls/progress';
 @import 'controls/processindicator';
-@import 'controls/timeline';
+@import 'components/timeline/timeline';
 @import 'controls/blockgrid';
 @import 'components/about/about';
 @import 'components/accordion/accordion';
