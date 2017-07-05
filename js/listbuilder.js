@@ -211,6 +211,11 @@
             self.element.triggerHandler('selected', [data]);
           });
 
+        self.updatedEventsStr = 'arrangeupdate.listbuilder aftergoup.listbuilder aftergodown.listbuilder exiteditmode.listbuilder';
+        self.element.on(self.updatedEventsStr, function(e, data) {
+          self.element.triggerHandler('updated', [data]);
+        });
+
         return this;
       }, // END: Handle Events ---------------------------------------------------------------------
 
@@ -522,6 +527,7 @@
 
       // Unbind all events
       unbind: function() {
+        this.element.off(this.updatedEventsStr);
         $('.listview', this.element).off('selected.listbuilder');
 
         $('li '+ this.arrangeApi.handle, this.ul)
