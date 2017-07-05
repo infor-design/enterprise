@@ -1,0 +1,137 @@
+
+<div class="page-container scrollable" role="main">
+  <div class="row">
+    <div class="columns four">
+
+      <div class="listbuilder" id="example-listbuilder" data-init="false">
+        <div class="toolbar formatter-toolbar">
+          <div class="buttonset">
+
+            <button type="button" class="btn" title="Add New" data-action="add">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-add"></use>
+              </svg>
+              <span class="audible">Add New</span>
+            </button>
+
+            <div class="separator"></div>
+
+            <button type="button" class="btn" title="Go Up" data-action="goup">
+               <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-up-arrow"></use>
+               </svg>
+               <span class="audible">Go Up</span>
+            </button>
+            <button type="button" class="btn" title="Go Down" data-action="godown">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-down-arrow"></use>
+              </svg>
+              <span class="audible">Go Down</span>
+            </button>
+
+            <div class="separator"></div>
+
+            <button type="button" class="btn" title="Edit" data-action="edit">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-edit"></use>
+              </svg>
+              <span class="audible">Edit</span>
+            </button>
+            <button type="button" class="btn" title="Delete" data-action="delete">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-delete"></use>
+              </svg>
+              <span class="audible">Delete</span>
+            </button>
+
+          </div>
+        </div>
+        <div class="listbuilder-content">
+          <div class="listview"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+
+<!--This is only needed because it renders first on the server on the first one-->
+{{={{{ }}}=}}
+
+<script id="listbuilder-tmpl" type="text/html">
+  <ul data-arrange-handle=".handle">
+    {{#dataset}}
+    {{#text}}
+      <li
+      {{#value}}
+        data-value="{{value}}"
+      {{/value}}
+      {{#selected}}
+        selected="selected"
+      {{/selected}}
+      {{#disabled}}
+        class="is-disabled"
+      {{/disabled}}
+      >
+        <span class="handle" focusable="false" aria-hidden="true" role="presentation">&#8286;</span>
+        <div class="item-content">
+          <p>{{text}}</p>
+        </div>
+      </li>
+    {{/text}}
+    {{/dataset}}
+  </ul>
+</script>
+
+
+<script>
+$('body').one('initialized', function () {
+  $(function () {
+    var ds = [];
+
+    ds.push({id: 1, value: 'opt-1', text: 'Argentina'});
+    ds.push({id: 2, value: 'opt-2', text: 'Belize'});
+    ds.push({id: 3, value: 'opt-3', text: 'Colombia'});
+    // Make selected thru dataset (selected: true)
+    ds.push({id: 4, value: 'opt-4', text: 'Dominican Republic', selected: true});
+    ds.push({id: 5, value: 'opt-5', text: 'Ecuador', disabled: true});
+    ds.push({id: 6, value: 'opt-6', text: 'France'});
+    ds.push({id: 7, value: 'opt-7', text: 'Germany'});
+    ds.push({id: 8, value: 'opt-8', text: 'Hong Kong'});
+    ds.push({id: 9, value: 'opt-9', text: 'India'});
+    ds.push({id: 10, value: 'opt-10', text: 'Japan'});
+    ds.push({id: 11, value: 'opt-11', text: 'Kuwait'});
+    ds.push({id: 12, value: 'opt-12', text: 'Libya'});
+
+    var elem = $('#example-listbuilder');
+    elem.listbuilder({ dataset: ds, template: $('#listbuilder-tmpl').html() });
+
+    // On updated =============================================================
+    elem.on('updated', function (e, args) {
+     console.log('updated: ', args);
+    });
+
+    // // Get api
+    // var api = elem.data('listbuilder');
+    //
+    // // Make selected after every one second (1000 milliseconds) ================
+    // // Select first item
+    // setTimeout(function() {
+    //   api.select('first');
+    // }, 1000);
+    //
+    // // Select last item
+    // setTimeout(function() {
+    //   api.select('last');
+    // }, 2000);
+    //
+    // // Select third item (zero based index)
+    // setTimeout(function() {
+    //   api.select(2);
+    // }, 3000);
+
+  });
+});
+</script>
