@@ -1,0 +1,45 @@
+<h1 id="splitter-component-learn-more">Splitter Component <a href="#">Learn More</a></h1>
+<h3 id="functions">Functions</h3>
+<h2 id="configuration-examples">Configuration Examples</h2>
+<ol>
+<li><a href="/components/splitter/example-index.html">Main Example</a></li>
+</ol>
+<h2 id="code-example">Code Example</h2>
+<p>The splitter component is integrated into several page patterns that contain side bars. It will not work presently in every situation but new situations can be requested. In this example it is integrated in a two-column fixed layout. Fixed means the page is 100% so all inner content panes are also set to 100%.</p>
+<p>We add the class splitter-container which will cause all elements with content on them to be 100% height. Each inner content pane may be scrollable.</p>
+<p>A div with the class of splitter will become the split handle.</p>
+<pre class="sourceCode html"><code class="sourceCode html">
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;page-container two-column fixed splitter-container&quot;</span><span class="kw">&gt;</span>
+
+  <span class="kw">&lt;section</span><span class="ot"> class=</span><span class="st">&quot;main&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;content scrollable&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+  <span class="kw">&lt;/section&gt;</span>
+
+  <span class="kw">&lt;nav</span><span class="ot"> class=</span><span class="st">&quot;sidebar scrollable&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;content&quot;</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;splitter&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+  <span class="kw">&lt;/nav&gt;</span>
+
+<span class="kw">&lt;/div&gt;</span>
+</code></pre>
+<h2 id="accessibility">Accessibility</h2>
+<ul>
+<li>This is a presentation only element</li>
+</ul>
+<h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
+<ul>
+<li>This is an open item</li>
+</ul>
+<h2 id="states-and-variations">States and Variations</h2>
+<ul>
+<li>Normal<br /></li>
+<li>Hover<br /></li>
+<li>Dragging</li>
+</ul>
+<h2 id="responsive-guidelines">Responsive Guidelines</h2>
+<ul>
+<li>At smaller breakpoints the vertical splitter will be hidden and the sides will stack at 100%<br /></li>
+<li>Horizontal splitter will also be hidden at smaller breakpoints</li>
+</ul>
