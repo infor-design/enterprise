@@ -12,7 +12,7 @@
 
 This example shows how to invoke the about dialog on demand, passing in some content, version info and the product name and product line.
 
-```html
+```javascript
 
 $('body').about({
   appName: 'My App Name',

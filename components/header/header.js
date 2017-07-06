@@ -20,22 +20,31 @@
     // Tab Settings and Options
     var pluginName = 'header',
         defaults = {
-          demoOptions: true, // Used to enable/disable default SoHo Xi options for demo purposes
-          useBackButton: true, // If true, displays a back button next to the title in the header toolbar
-          useBreadcrumb: false, // If true, displays a breadcrumb on drilldown
-          usePopupmenu: false, // If true, changes the Header Title into a popupmenu that can change the current page
-          tabs: null, // If defined as an array of Tab objects, displays a series of tabs that represent application sections
-          wizardTicks: null, // If defined as an array of Wizard Ticks, displays a Wizard Control that represents steps in a process
-          useAlternate: false, // If true, use alternate background/text color for sub-navigation areas
-          addScrollClass: false //If true a class will be added as the page scrolls up and down to the header for manipulation. Eg: Docs Page.
+          demoOptions: true,
+          useBackButton: true,
+          useBreadcrumb: false,
+          usePopupmenu: false,
+          tabs: null,
+          wizardTicks: null,
+          useAlternate: false,
+          addScrollClass: false
         },
         settings = $.extend({}, defaults, options);
 
     /**
-     * Special Toolbar at the top of the page used to faciliate SoHo Xi Nav Patterns
-     * @constructor
-     * @param {Object} element
-     */
+    * Special Toolbar at the top of the page used to faciliate SoHo Xi Nav Patterns
+    *
+    * @class Header
+    * @param {Boolean} demoOptions  &nbsp;-&nbsp; Used to enable/disable default SoHo Xi options for demo purposes
+    * @param {Boolean} useBackButton  &nbsp;-&nbsp; If true, displays a back button next to the title in the header toolbar
+    * @param {Boolean} useBreadcrumb  &nbsp;-&nbsp; If true, displays a breadcrumb on drilldown
+    * @param {Boolean} usePopupmenu  &nbsp;-&nbsp; f true, changes the Header Title into a popupmenu that can change the current page
+    * @param {Array} tabs  &nbsp;-&nbsp; If defined as an array of Tab objects, displays a series of tabs that represent application sections
+    * @param {Array} wizardTicks  &nbsp;-&nbsp; If defined as an array of Wizard Ticks, displays a Wizard Control that represents steps in a process
+    * @param {Boolean} useAlternate  &nbsp;-&nbsp; If true, use alternate background/text color for sub-navigation areas
+    * @param {Boolean} addScrollClass  &nbsp;-&nbsp; If true a class will be added as the page scrolls up and down to the header for manipulation. Eg: Docs Page.
+    *
+    */
     function Header(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -415,6 +424,9 @@
         this.element.trigger('drillTop');
       },
 
+      /**
+      * Reset the toolbar to its default removing the drilled in patterns.
+      */
       reset: function() {
         while (this.levelsDeep.length > 1) {
           this.levelsDeep.pop();
@@ -566,6 +578,9 @@
         return this;
       },
 
+      /**
+      * Sync up the ui with settings.
+      */
       updated: function() {
         this
           .reset()
@@ -573,6 +588,9 @@
           .init();
       },
 
+      /**
+      * Tear down and destroy the menu and events.
+      */
       destroy: function() {
         this.unbind();
         if (this.hasTitleButton) {
