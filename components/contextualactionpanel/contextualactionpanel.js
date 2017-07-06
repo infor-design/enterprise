@@ -250,7 +250,10 @@
         });
 
         //self.panel.detach().insertAfter(self.element);
-        self.toolbar.data('toolbar').destroy();
+        var toolbar = self.toolbar.data('toolbar');
+        if (toolbar) {
+          toolbar.destroy();
+        }
 
         if (self.header){
           self.header.remove();
