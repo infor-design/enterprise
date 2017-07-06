@@ -1,3 +1,8 @@
+## 4.3.1
+
+### Breaking Changes
+- Listview - since it was confusing about `selected` event, now `selected` and `unselected` events will fire when selecting or de-selecting an item in list. It used to be fire only `selected` event when any selection gets changed selecting or de-selecting.
+
 ## 4.3.0
 Release Date: 2017-05-09
 
