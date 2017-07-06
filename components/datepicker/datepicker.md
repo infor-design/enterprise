@@ -4,18 +4,18 @@
 
 ## Configuration Options
 
-1. Simple Date Picker Example [View Example]( /components/datepicker/example-index)
-2. Anniversary Format (Month, Year) [View Example]( /components/datepicker/example-anniversay-format)
-3. Date Picker With Time [View Example]( /components/datepicker/example-with-time)
-4. Date Picker With Legend [View Example]( /components/datepicker/example-legend)
-5. Set Value Api [View Example]( /components/datepicker/example-set-value)
-6. Date Picker With Time Custom Format[View Example]( /components/datepicker/example-timeformat.html)
-7. Disabling Calendar Days [View Example]( /components/datepicker/example-disabled-dates.html)
-8. In a modal [View Example]( /components/datepicker/example-modal.html)
-9. Various Sizes [View Example]( /components/datepicker/example-sizes.html)
-10. In a Form [View Example]( /components/datepicker/example-form.html)
-11. State Api [View Example]( /components/datepicker/example-state-methods.html)
-12. Islamic Umalqura Calendar [View Example]( /components/datepicker/example-umalqura.html?locale=ar-SA)
+1. Simple Date Picker Example [View Example]( ../components/datepicker/example-index)
+2. Anniversary Format (Month, Year) [View Example]( ../components/datepicker/example-anniversay-format)
+3. Date Picker With Time [View Example]( ../components/datepicker/example-with-time)
+4. Date Picker With Legend [View Example]( ../components/datepicker/example-legend)
+5. Set Value Api [View Example]( ../components/datepicker/example-set-value)
+6. Date Picker With Time Custom Format[View Example]( ../components/datepicker/example-timeformat.html)
+7. Disabling Calendar Days [View Example]( ../components/datepicker/example-disabled-dates.html)
+8. In a modal [View Example]( ../components/datepicker/example-modal.html)
+9. Various Sizes [View Example]( ../components/datepicker/example-sizes.html)
+10. In a Form [View Example]( ../components/datepicker/example-form.html)
+11. State Api [View Example]( ../components/datepicker/example-state-methods.html)
+12. Islamic Umalqura Calendar [View Example]( ../components/datepicker/example-umalqura.html?locale=ar-SA)
 
 ## Code Example
 

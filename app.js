@@ -554,9 +554,9 @@ var express = require('express'),
 
     for (var i = 0; i < layoutFileNames.length; i++) {
       layoutPath = '/components/' + component + '/' + layoutFileNames[i];
-      if (is('file', layoutPath)) {
+      if (fs.exists(layoutPath)) {
         opts.layout = stripHtml('' + component + '/' + layoutFileNames[i]);
-        console.log('layout for this folder changed to "' + opts.layout + '".');
+        //console.log('layout for this folder changed to "' + opts.layout + '".');
       }
     }
 
@@ -635,7 +635,6 @@ var express = require('express'),
     opts = addDefaultFolderLayout(opts, componentName);
 
     if (componentName === 'applicationmenu' && (exampleName.indexOf('example-') > -1 || exampleName.indexOf('test-') > -1)) {
-      console.log(req.params.component, req.params.example);
       opts.layout = null;
     }
 

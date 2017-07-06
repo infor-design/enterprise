@@ -5,16 +5,16 @@
 
 ## Configuration Options
 
-1. Default About Example [View Example]( /components/applicationmenu/example-index)
-2. Different Header Types Event Demo [View Example]( /components/applicationmenu/example-different-header-types)
-3. As Shown on the Soho Site [View Example]( /components/applicationmenu/example-soho-site)
-4. Showing Top Level Buttons [View Example]( /components/applicationmenu/example-top-level-buttons)
+1. Default About Example [View Example]( ../components/applicationmenu/example-index)
+2. Different Header Types Event Demo [View Example]( ../components/applicationmenu/example-different-header-types)
+3. As Shown on the Soho Site [View Example]( ../components/applicationmenu/example-soho-site)
+4. Showing Top Level Buttons [View Example]( ../components/applicationmenu/example-top-level-buttons)
 
 ## Additional Test Case Pages
 
-1. No Errors on an Empty Menu [View Example]( /components/applicationmenu/test-empty)
-2. Six Levels Deep (Bad Idea) Event Demo [View Example]( /components/applicationmenu/test-six-levels)
-3. Six Levels Deep with Icons (Equally Bad Idea) [View Example]( /components/applicationmenu/test-six-levels-icons)
+1. No Errors on an Empty Menu [View Example]( ../components/applicationmenu/test-empty)
+2. Six Levels Deep (Bad Idea) Event Demo [View Example]( ../components/applicationmenu/test-six-levels)
+3. Six Levels Deep with Icons (Equally Bad Idea) [View Example]( ../components/applicationmenu/test-six-levels-icons)
 
 ## Behavior Guidelines
 

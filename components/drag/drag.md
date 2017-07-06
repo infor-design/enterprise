@@ -6,7 +6,7 @@
 
 ## Configuration Options
 
-1. Drag Examples [View Example]( /components/drag/example-index)
+1. Drag Examples [View Example]( ../components/drag/example-index)
 
 ## Code Example
 

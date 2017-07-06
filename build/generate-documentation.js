@@ -31,34 +31,39 @@ glob('components/*/', function(err, components) {
     console.log('Generating Docs for :', componentName);
 
     // Read the md file and Generate the Pandoc / Html file for it
-    var mdData = fs.readFileSync(componentPath + componentName + '.md', 'utf8');
+    if (fs.existsSync(componentPath + componentName + '.md')) {
 
-    if (fs.existsSync(componentPath + componentName + '.js')) {
-      //Write the file out
-      c.execSync('documentation build '+ componentPath + componentName + '.js' +' -f md -o ' + componentPath + componentName + '-api.md');
+      var mdData = fs.readFileSync(componentPath + componentName + '.md', 'utf8');
 
-      //Read it back in
-      var apiData = fs.readFileSync(componentPath + componentName + '-api.md', 'utf8');
+      if (fs.existsSync(componentPath + componentName + '.js')) {
+        //Write the file out
+        c.execSync('documentation build '+ componentPath + componentName + '.js' +' -f md -o ' + componentPath + componentName + '-api.md');
 
-      //Some Scrubbing that document.js cant handle
-      apiData = apiData.substr(0, apiData.indexOf('### Table')) + apiData.substr(apiData.indexOf('**Parameters**'));
-      apiData = apiData.replace(/### /g, '#### ');
+        //Read it back in
+        var apiData = fs.readFileSync(componentPath + componentName + '-api.md', 'utf8');
 
-      // Add Section Titles
-      apiData = apiData.substr(0, apiData.indexOf('####')) + '\n### Functions \n' + apiData.substr(apiData.indexOf('####'));
-      apiData = apiData.replace('**Parameters**', '## Api Details \n### Settings');
-      apiData = apiData.replace('#### handleEvents', '### Events');
-      apiData = apiData.replace('### handleEvents', '### Events');
+        //Some Scrubbing that document.js cant handle
+        if ((apiData.match(/Parameters/g) || []).length > 0) {
+          apiData = apiData.substr(0, apiData.indexOf('### Table')) + apiData.substr(apiData.indexOf('**Parameters**'));
+        }
+        apiData = apiData.replace(/### /g, '#### ');
 
-      // More Fixes
-      apiData = apiData.replace('-   `element`', '');
+        // Add Section Titles
+        apiData = apiData.substr(0, apiData.indexOf('####')) + '\n### Functions \n' + apiData.substr(apiData.indexOf('####'));
+        apiData = apiData.replace('**Parameters**', '## Api Details \n### Settings');
+        apiData = apiData.replace('#### handleEvents', '### Events');
+        apiData = apiData.replace('### handleEvents', '### Events');
 
-      var fullData = mdData.replace('{{api-details}}', '\r\n'+apiData+'\r\n');
+        // More Fixes
+        apiData = apiData.replace('-   `element`', '');
+        var fullData = mdData.replace('{{api-details}}', '\r\n'+apiData+'\r\n');
 
-      runPandoc(fullData, componentPath);
+        runPandoc(fullData, componentPath);
 
-    } else {
-      runPandoc(mdData, componentPath);
+      } else {
+        runPandoc(mdData, componentPath);
+      }
+
     }
 
   }

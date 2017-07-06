@@ -5,7 +5,7 @@
 
 ## Configuration Options
 
-1. Default Arrange Example [View Example]( /components/arrange/example-index)
+1. Default Arrange Example [View Example]( ../components/arrange/example-index)
 
 ## Code Example
 

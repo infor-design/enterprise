@@ -3,8 +3,8 @@
 
 ## Configuration Options
 
-1. Bubble Chart Example [View Example]( /components/bubble/example-index)
-2. Defaulting a selected bubble [View Example]( /components/bubble/example-selected)
+1. Bubble Chart Example [View Example]( ../components/bubble/example-index)
+2. Defaulting a selected bubble [View Example]( ../components/bubble/example-selected)
 
 ## Code Example
 

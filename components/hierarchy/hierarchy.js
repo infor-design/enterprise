@@ -31,7 +31,7 @@
           rightClickTarget: '',
           leafHeight: null,
           leafWidth: null,
-          beforeExpand: null  // A callback that fires before node expansion of a node.
+          beforeExpand: null
         },
         settings = $.extend({}, defaults, options);
 
@@ -68,10 +68,18 @@
     };
 
     /**
-     * For Org Charts and Trees ect...
-     * @constructor
-     * @param {Object} element
-     */
+    * The displays custimizable hierarchical data such as an org chart.
+    *
+    * @class Hierarchy
+    * @param {String} legend  &nbsp;-&nbsp; Pass in custom markdown for the legend structure.
+    * @param {String} legendKey  &nbsp;-&nbsp; Key to use for the legend matching
+    * @param {String} dataset  &nbsp;-&nbsp; Hierarchical Data to display
+    * @param {Boolean} newData  &nbsp;-&nbsp; Id to the Html Template
+    * @param {String} templateId  &nbsp;-&nbsp; Additional product name information to display
+    * @param {Boolean} mobileView  &nbsp;-&nbsp; If true will only show mobile view, by default using device info to determine.
+    * @param {String} beforeExpand  &nbsp;-&nbsp; A callback that fires before node expansion of a node.
+    *
+    */
     function Hierarchy(element) {
       this.element = $(element);
       Soho.logTimeStart(pluginName);
@@ -282,7 +290,9 @@
         return nodeData[0];
       },
 
-      // Add data as children for the given nodeId.
+      /**
+      * Add data as children for the given nodeId.
+      */
       add: function (nodeId, currentDataObject, newDataObject) {
         var self            = this;
         var id              = currentDataObject.id !== undefined ? currentDataObject.id : nodeId;
@@ -312,7 +322,9 @@
         }
       },
 
-      // Expand the nodes until nodeId is displayed on the page.
+      /**
+      * Expand the nodes until nodeId is displayed on the page.
+      */
       expand: function(event, nodeData, domObject) {
         var self = this,
           node = domObject.leaf,
@@ -333,7 +345,9 @@
         self.setButtonState(node, nodeData);
       },
 
-      // Collapse the passed in nodeId.
+      /**
+      * Collapse the passed in nodeId.
+      */
       collapse: function(event, nodeData, domObject) {
         var self = this,
           node = domObject.leaf,
@@ -637,7 +651,9 @@
         leafObject.data  = nodeData;
       },
 
-      // Return whether or not a particular node is a leaf
+      /**
+      * Return whether or not a particular node is a leaf
+      */
       isLeaf: function(dataNode) {
 
         if (dataNode.children === undefined) {

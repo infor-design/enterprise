@@ -3,15 +3,15 @@
 
 ## Configuration Options
 
-1. Bar Chart Main Example [View Example]( /components/bar/example-index)
-2. Another Example with More Elements and Longer Text [View Example]( /components/bar/example-alignment)
-3. Example showing how to set Colors [View Example]( /components/bar/example-colors)
-4. Example showing the formatter [View Example]( /components/bar/example-formatter)
-5. Example showing the option to hide the formatter [View Example]( /components/bar/example-hide-legend)
-4. Example showing an edge case of longer text [View Example]( /components/bar/example-long-text)
-4. Example showing with negative values [View Example]( /components/bar/example-negative-values)
-4. Example showing color patterns [View Example]( /components/bar/example-patterns)
-4. Example showing defaulting a selected value  [View Example]( /components/bar/example-selected)
+1. Bar Chart Main Example [View Example]( ../components/bar/example-index)
+2. Another Example with More Elements and Longer Text [View Example]( ../components/bar/example-alignment)
+3. Example showing how to set Colors [View Example]( ../components/bar/example-colors)
+4. Example showing the formatter [View Example]( ../components/bar/example-formatter)
+5. Example showing the option to hide the formatter [View Example]( ../components/bar/example-hide-legend)
+4. Example showing an edge case of longer text [View Example]( ../components/bar/example-long-text)
+4. Example showing with negative values [View Example]( ../components/bar/example-negative-values)
+4. Example showing color patterns [View Example]( ../components/bar/example-patterns)
+4. Example showing defaulting a selected value  [View Example]( ../components/bar/example-selected)
 
 ## Code Example
 

@@ -19,10 +19,10 @@
 
 ## Configuration Options
 
-1. Full Color Palette [View Example]( /components/colors/example-index)
-2. Color Variables (Badges) [View Example]( /components/colors/example-color-vars)
+1. Full Color Palette [View Example]( ../components/colors/example-index)
+2. Color Variables (Badges) [View Example]( ../components/colors/example-color-vars)
 
 ## Accessibility
 
 * Do not use color alone to indicate state. Meaning if you use a color then also use an icon or text to explain the meaning in case someone is color blind.
-* Some of the colors in the palette need either a light or dark color for proper color contrast. This can be seen in the [palette example]( /components/colors/example-index)
+* Some of the colors in the palette need either a light or dark color for proper color contrast. This can be seen in the [palette example]( ../components/colors/example-index)

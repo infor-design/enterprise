@@ -13,9 +13,9 @@
 
 ## Configuration Options
 
-1. Stacked Column Chart Example [View Example]( /components/column-stacked/example-index)
-2. Defaulting Selected Stacks [View Example]( /components/column-stacked/example-selected)
-3. Single Column Chart [View Example]( /components/column-stacked/example-singular)
+1. Stacked Column Chart Example [View Example]( ../components/column-stacked/example-index)
+2. Defaulting Selected Stacks [View Example]( ../components/column-stacked/example-selected)
+3. Single Column Chart [View Example]( ../components/column-stacked/example-singular)
 
 ## Code Example
 
