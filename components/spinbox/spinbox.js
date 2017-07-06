@@ -26,9 +26,13 @@
         settings = $.extend({}, defaults, options);
 
     /**
-     * @constructor
-     * @param {Object} element
-     */
+    * The Spinbox component provides easy access to modification of a numeric input field.
+    *
+    * @class Spinbox
+    * @param {null|Number} min &nbsp;-&nbsp; if defined, provides a minimum numeric limit
+    * @param {null|Number} max  &nbsp;-&nbsp; if defined, provides a maximum numeric limit
+    * @param {null|Number} step  &nbsp;-&nbsp; if defined, increases or decreases the spinbox value by a specific interval whenever the control buttons are used.
+    */
     function Spinbox(element) {
       this.element = $(element);
       Soho.logTimeStart(pluginName);
@@ -39,6 +43,9 @@
     // Plugin Methods
     Spinbox.prototype = {
 
+      /**
+       * @private
+       */
       init: function() {
         this.settings = $.extend({}, settings);
         this.inlineLabel = this.element.closest('label');
@@ -53,6 +60,10 @@
           .setWidth();
       },
 
+      /**
+       * Sets the width of the spinbox input field.
+       * @returns {this}
+       */
       setWidth: function() {
         var style = this.element[0].style;
 
@@ -64,7 +75,10 @@
         return this;
       },
 
-      // Sanitize the initial value of the input field.
+      /**
+       * Sanitize the initial value of the input field.
+       * @returns {this}
+       */
       setInitialValue: function() {
         var self = this,
           val = self.checkForNumeric(self.element.val());
@@ -96,6 +110,10 @@
         return this;
       },
 
+      /**
+       * Appends extra control markup to a Spinbox field.
+       * @returns {this}
+       */
       addMarkup: function() {
         var self = this;
         if (this.isInlineLabel) {
@@ -220,6 +238,333 @@
       },
 
       /**
+       * Enables Long Pressing one of the Spinbox control buttons.
+       * @param {jQuery.Event} e
+       * @param {Spinbox} self
+       */
+      enableLongPress: function(e, self) {
+        self.addButtonStyle(e);
+        self.longPressInterval = setInterval(function() {
+          if ($(e.currentTarget).is(':hover')) {
+            self.handleClick(e);
+          }
+        }, 140);
+      },
+
+      /**
+       * Disables Long Pressing one of the Spinbox control buttons.
+       * @param {jQuery.Event} e
+       * @param {Spinbox} self
+       */
+      disableLongPress: function(e, self) {
+        self.removeButtonStyle(e);
+        clearInterval(self.longPressInterval);
+        self.longPressInterval = null;
+      },
+
+      /**
+       * Event handler for 'click' events
+       * @param {jQuery.Event} e
+       */
+      handleClick: function(e) {
+        if (this.isDisabled() || e.which !== 1) {
+          return;
+        }
+        var target = $(e.currentTarget);
+        if (target.hasClass('up')) {
+          this.increaseValue();
+        } else {
+          this.decreaseValue();
+        }
+
+        if (!this.isTouch) {
+          this.element.focus();
+        } else {
+          target.focus();
+        }
+      },
+
+      /**
+       * Event handler for 'keydown' events
+       * @param {jQuery.Event} e
+       * @param {Spinbox} self
+       */
+      handleKeyDown: function(e, self) {
+        var key = e.which,
+          validKeycodes = [35, 36, 37, 38, 39, 40];
+
+        if ($.inArray(key, validKeycodes) === -1) {
+          return;
+        }
+
+        // If the keycode got this far, it's an arrow key, HOME, or END.
+        switch(key) {
+          case 35: // End key sets the spinbox to its minimum value
+            if (self.element.attr('min')) { self.element.val(self.element.attr('min')); }
+            break;
+          case 36: // Home key sets the spinbox to its maximum value
+            if (self.element.attr('max')) { self.element.val(self.element.attr('max')); }
+            break;
+          case 38: case 39: // Right and Up increase the spinbox value
+            if (Locale.isRTL() && key === 39) {
+              self.addButtonStyle(self.buttons.down);
+              self.decreaseValue();
+            } else {
+              self.addButtonStyle(self.buttons.up);
+              self.increaseValue();
+            }
+            break;
+          case 37: case 40: // Left and Down decrease the spinbox value
+            if (Locale.isRTL() && key === 37) {
+              self.addButtonStyle(self.buttons.up);
+              self.increaseValue();
+            } else {
+              self.addButtonStyle(self.buttons.down);
+              self.decreaseValue();
+            }
+            break;
+        }
+      },
+
+      /**
+       * Event handler for 'keypress' events
+       * @param {jQuery.Event} e
+       * @param {Spinbox} self
+       */
+      handleKeyPress: function(e, self) {
+        if (self.isDisabled()) {
+          return;
+        }
+        var key = e.which;
+
+        // NOTE:
+        if (key < 48 || (key > 57 && key < 96) || key > 105) {
+          return;
+        }
+
+        // If the key is a number, pre-calculate the value of the number to see if it would be
+        // greater than the maximum, or less than the minimum.  If it's fine, let it through.
+        // Doing this check here prevents visual jitter.
+        var num = Number(this.checkForNumeric(this.element.val())), // if using Numlock, subtract 48 to get the correct value from String.fromCharCode()
+          min = self.element.attr('min'),
+          max = self.element.attr('max');
+
+        if (num < min) {
+          e.preventDefault();
+          return self.updateVal(min);
+        }
+        if (num > max) {
+          e.preventDefault();
+          return self.updateVal(max);
+        }
+      },
+
+      /**
+       * Event handler for 'keyup' events
+       * @param {jQuery.Event} e
+       * @param {Spinbox} self
+       */
+      handleKeyup: function(e, self) {
+        if (self.isDisabled()) {
+          return;
+        }
+        var key = e.which;
+
+        // Spinbox Control Button styles are added/removed on keyup.
+        switch (key) {
+          case 38: case 39:
+            if (Locale.isRTL() && key === 39) {
+              self.removeButtonStyle(self.buttons.down);
+            } else {
+              self.removeButtonStyle(self.buttons.up);
+            }
+            break;
+          case 37: case 40:
+            if (Locale.isRTL() && key === 39) {
+              self.removeButtonStyle(self.buttons.up);
+            } else {
+              self.removeButtonStyle(self.buttons.down);
+            }
+            break;
+        }
+
+        self.updateAria(self.element.val());
+      },
+
+      /**
+       * Change a newly pasted value to this element's min or max values, if the pasted value goes
+       * beyond either of those limits.  Listens to an event emitted by the Mask plugin after pasted content
+       * is handled.
+       * @param {Spinbox} self
+       */
+      handleAfterPaste: function(self) {
+        var min = Number(self.element.attr('min')),
+          max = Number(self.element.attr('max')),
+          val = Number(self.element.val());
+
+        val = (val < min ? min : (val > max ? max : val));
+        self.updateVal(val);
+      },
+
+      /**
+       * Increases the value of the Spinbox field, constrained by the step interval and maximum limit.
+       */
+      increaseValue: function() {
+        var val = this.checkForNumeric(this.element.val()) + Number(this.element.attr('step') || 1);
+        if (this.element.attr('max') && val > this.element.attr('max')) {
+          return;
+        }
+        this.updateVal(val);
+      },
+
+      /**
+       * Decreases the value of the Spinbox field, constrained by the step interval and minimum limit.
+       */
+      decreaseValue: function() {
+        var val = this.checkForNumeric(this.element.val()) - Number(this.element.attr('step') || 1);
+        if (this.element.attr('min') && val < this.element.attr('min')) {
+          return;
+        }
+        this.updateVal(val);
+      },
+
+      /**
+       * Sets a new spinbox value and focuses the spinbox.
+       * @param {Number|String} newVal
+       */
+      updateVal: function(newVal) {
+        this.element.val(newVal);
+        this.updateAria(newVal);
+        this.element.focus();
+      },
+
+      /**
+       * Sanitizes the value of the input field to an integer if it isn't already established.
+       * @param {Number|String} val - will be converted to a number if it's a string.
+       * @returns {Number}
+       */
+      checkForNumeric: function(val) {
+        // Allow for NULL
+        if (val === '') {
+          return val;
+        }
+        if ($.isNumeric(val)) {
+          return Number(val);
+        }
+        val = parseInt(val);
+        if ($.isNumeric(val)) {
+          return Number(val);
+        }
+        // Zero out the value if a number can't be made out of it.
+        return 0;
+      },
+
+      /**
+       * Updates the "aria-valuenow" property on the spinbox element if the value is currently set
+       */
+      updateAria: function(val) {
+        var min = this.element.attr('min'),
+          max = this.element.attr('max');
+
+        val = this.checkForNumeric(val);
+        this.element.attr('aria-valuenow', (val !== '' ? val : ''));
+
+        // Tougle min/max buttons
+        this.setIsDisabled(this.buttons.up, (val !== '' && max && val >= max) ? 'disable' : 'enable');
+        this.setIsDisabled(this.buttons.down, (val !== '' && min && val <= min) ? 'disable' : 'enable');
+      },
+
+      /**
+       * adds a "pressed-in" styling for one of the spinner buttons
+       */
+      addButtonStyle: function(e) {
+        if (this.isDisabled()) {
+          return;
+        }
+        var target = e;
+        if (e.currentTarget) {
+          target = $(e.currentTarget);
+        }
+        target.addClass('is-active');
+      },
+
+      /**
+       * Removes "pressed-in" styling for one of the spinner buttons
+       */
+      removeButtonStyle: function(e) {
+        if (this.isDisabled()) {
+          return;
+        }
+        var target = e;
+        if (e.currentTarget) {
+          target = $(e.currentTarget);
+        }
+        target.removeClass('is-active');
+      },
+
+      /**
+       * Enables the Spinbox
+       */
+      enable: function() {
+        this.element.prop('disabled', false);
+        this.element.parent('.spinbox-wrapper').removeClass('is-disabled');
+      },
+
+      /**
+       * Disables the Spinbox
+       */
+      disable: function() {
+        this.element.prop('disabled', true);
+        this.element.parent('.spinbox-wrapper').addClass('is-disabled');
+      },
+
+      /**
+       * Determines whether or not the spinbox is disabled.
+       * @returns {boolean}
+       */
+      isDisabled: function() {
+        return this.element.prop('disabled');
+      },
+
+      /**
+       * Toggle whther or not the component is disabled.
+       * @param {jQuery[]} button
+       * @param {booelan} isDisabled
+       */
+      setIsDisabled: function(button, isDisabled) {
+        isDisabled = isDisabled === undefined ? true :
+          (!isDisabled || isDisabled === 'enable') ? false : true;
+
+        button[isDisabled ? 'addClass' : 'removeClass']('is-disabled');
+      },
+
+      /**
+       * Teardown
+       */
+      destroy: function() {
+        var mask = this.element.data('mask');
+        if (mask && typeof mask.destroy === 'function') {
+          mask.destroy();
+        }
+
+        for (var button in this.buttons) {
+          var buttonAPI = $(button).data('button');
+
+          if (buttonAPI) {
+            buttonAPI.destroy();
+          }
+        }
+
+        this.buttons.up.off('click.spinbox mousedown.spinbox');
+        this.buttons.up.remove();
+        this.buttons.down.off('click.spinbox mousedown.spinbox');
+        this.buttons.down.remove();
+        this.element.off('focus.spinbox blur.spinbox keydown.spinbox keyup.spinbox');
+        this.element.unwrap();
+        $.removeData(this.element[0], pluginName);
+      },
+
+      /**
        * Sets up event handlers for this control and its sub-elements
        *
        * @listens Spinbox#events
@@ -283,265 +628,6 @@
         });
 
         return this;
-      },
-
-      enableLongPress: function(e, self) {
-        self.addButtonStyle(e);
-        self.longPressInterval = setInterval(function() {
-          if ($(e.currentTarget).is(':hover')) {
-            self.handleClick(e);
-          }
-        }, 140);
-      },
-
-      disableLongPress: function(e, self) {
-        self.removeButtonStyle(e);
-        clearInterval(self.longPressInterval);
-        self.longPressInterval = null;
-      },
-
-      // Sets up the click/long press
-      handleClick: function(e) {
-        if (this.isDisabled() || e.which !== 1) {
-          return;
-        }
-        var target = $(e.currentTarget);
-        if (target.hasClass('up')) {
-          this.increaseValue();
-        } else {
-          this.decreaseValue();
-        }
-
-        if (!this.isTouch) {
-          this.element.focus();
-        } else {
-          target.focus();
-        }
-      },
-
-      handleKeyDown: function(e, self) {
-        var key = e.which,
-          validKeycodes = [35, 36, 37, 38, 39, 40];
-
-        if ($.inArray(key, validKeycodes) === -1) {
-          return;
-        }
-
-        // If the keycode got this far, it's an arrow key, HOME, or END.
-        switch(key) {
-          case 35: // End key sets the spinbox to its minimum value
-            if (self.element.attr('min')) { self.element.val(self.element.attr('min')); }
-            break;
-          case 36: // Home key sets the spinbox to its maximum value
-            if (self.element.attr('max')) { self.element.val(self.element.attr('max')); }
-            break;
-          case 38: case 39: // Right and Up increase the spinbox value
-            if (Locale.isRTL() && key === 39) {
-              self.addButtonStyle(self.buttons.down);
-              self.decreaseValue();
-            } else {
-              self.addButtonStyle(self.buttons.up);
-              self.increaseValue();
-            }
-            break;
-          case 37: case 40: // Left and Down decrease the spinbox value
-            if (Locale.isRTL() && key === 37) {
-              self.addButtonStyle(self.buttons.up);
-              self.increaseValue();
-            } else {
-              self.addButtonStyle(self.buttons.down);
-              self.decreaseValue();
-            }
-            break;
-        }
-      },
-
-      handleKeyPress: function(e, self) {
-        if (self.isDisabled()) {
-          return;
-        }
-        var key = e.which;
-
-        // NOTE:
-        if (key < 48 || (key > 57 && key < 96) || key > 105) {
-          return;
-        }
-
-        // If the key is a number, pre-calculate the value of the number to see if it would be
-        // greater than the maximum, or less than the minimum.  If it's fine, let it through.
-        // Doing this check here prevents visual jitter.
-        var num = Number(this.checkForNumeric(this.element.val())), // if using Numlock, subtract 48 to get the correct value from String.fromCharCode()
-          min = self.element.attr('min'),
-          max = self.element.attr('max');
-
-        if (num < min) {
-          e.preventDefault();
-          return self.updateVal(min);
-        }
-        if (num > max) {
-          e.preventDefault();
-          return self.updateVal(max);
-        }
-      },
-
-      handleKeyup: function(e, self) {
-        if (self.isDisabled()) {
-          return;
-        }
-        var key = e.which;
-
-        // Spinbox Control Button styles are added/removed on keyup.
-        switch (key) {
-          case 38: case 39:
-            if (Locale.isRTL() && key === 39) {
-              self.removeButtonStyle(self.buttons.down);
-            } else {
-              self.removeButtonStyle(self.buttons.up);
-            }
-            break;
-          case 37: case 40:
-            if (Locale.isRTL() && key === 39) {
-              self.removeButtonStyle(self.buttons.up);
-            } else {
-              self.removeButtonStyle(self.buttons.down);
-            }
-            break;
-        }
-
-        self.updateAria(self.element.val());
-      },
-
-      // Change a newly pasted value to this element's min or max values, if the pasted value goes
-      // beyond either of those limits.  Listens to an event emitted by the Mask plugin after pasted content
-      // is handled.
-      handleAfterPaste: function(self) {
-        var min = Number(self.element.attr('min')),
-          max = Number(self.element.attr('max')),
-          val = Number(self.element.val());
-
-        val = (val < min ? min : (val > max ? max : val));
-        self.updateVal(val);
-      },
-
-      increaseValue: function() {
-        var val = this.checkForNumeric(this.element.val()) + Number(this.element.attr('step') || 1);
-        if (this.element.attr('max') && val > this.element.attr('max')) {
-          return;
-        }
-        this.updateVal(val);
-      },
-
-      decreaseValue: function() {
-        var val = this.checkForNumeric(this.element.val()) - Number(this.element.attr('step') || 1);
-        if (this.element.attr('min') && val < this.element.attr('min')) {
-          return;
-        }
-        this.updateVal(val);
-      },
-
-      updateVal: function(newVal) {
-        this.element.val(newVal);
-        this.updateAria(newVal);
-        this.element.focus();
-      },
-
-      // Sanitizes the value of the input field to an integer if it isn't already established.
-      checkForNumeric: function(val) {
-        // Allow for NULL
-        if (val === '') {
-          return val;
-        }
-        if ($.isNumeric(val)) {
-          return Number(val);
-        }
-        val = parseInt(val);
-        if ($.isNumeric(val)) {
-          return Number(val);
-        }
-        // Zero out the value if a number can't be made out of it.
-        return 0;
-      },
-
-      // Updates the "aria-valuenow" property on the spinbox element if the value is currently set
-      updateAria: function(val) {
-        var min = this.element.attr('min'),
-          max = this.element.attr('max');
-
-        val = this.checkForNumeric(val);
-        this.element.attr('aria-valuenow', (val !== '' ? val : ''));
-
-        // Tougle min/max buttons
-        this.setIsDisabled(this.buttons.up, (val !== '' && max && val >= max) ? 'disable' : 'enable');
-        this.setIsDisabled(this.buttons.down, (val !== '' && min && val <= min) ? 'disable' : 'enable');
-      },
-
-      // adds a "pressed-in" styling for one of the spinner buttons
-      addButtonStyle: function(e) {
-        if (this.isDisabled()) {
-          return;
-        }
-        var target = e;
-        if (e.currentTarget) {
-          target = $(e.currentTarget);
-        }
-        target.addClass('is-active');
-      },
-
-      // removes "pressed-in" styling for one of the spinner buttons
-      removeButtonStyle: function(e) {
-        if (this.isDisabled()) {
-          return;
-        }
-        var target = e;
-        if (e.currentTarget) {
-          target = $(e.currentTarget);
-        }
-        target.removeClass('is-active');
-      },
-
-      enable: function() {
-        this.element.prop('disabled', false);
-        this.element.parent('.spinbox-wrapper').removeClass('is-disabled');
-      },
-
-      disable: function() {
-        this.element.prop('disabled', true);
-        this.element.parent('.spinbox-wrapper').addClass('is-disabled');
-      },
-
-      isDisabled: function() {
-        return this.element.prop('disabled');
-      },
-
-      setIsDisabled: function(button, isDisabled) {
-        isDisabled = isDisabled === undefined ? true :
-          (!isDisabled || isDisabled === 'enable') ? false : true;
-
-        button[isDisabled ? 'addClass' : 'removeClass']('is-disabled');
-      },
-
-      // Teardown
-      destroy: function() {
-        var mask = this.element.data('mask');
-        if (mask && typeof mask.destroy === 'function') {
-          mask.destroy();
-        }
-
-        for (var button in this.buttons) {
-          var buttonAPI = $(button).data('button');
-
-          if (buttonAPI) {
-            buttonAPI.destroy();
-          }
-        }
-
-        this.buttons.up.off('click.spinbox mousedown.spinbox');
-        this.buttons.up.remove();
-        this.buttons.down.off('click.spinbox mousedown.spinbox');
-        this.buttons.down.remove();
-        this.element.off('focus.spinbox blur.spinbox keydown.spinbox keyup.spinbox');
-        this.element.unwrap();
-        $.removeData(this.element[0], pluginName);
       }
     };
 

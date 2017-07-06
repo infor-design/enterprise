@@ -4,8 +4,119 @@
 
 <h2 id="api-details">Api Details</h2>
 <h3 id="settings">Settings</h3>
-<p><strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong></p>
+<ul>
+<li><code>min</code> <strong>(null | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</strong>  -  if defined, provides a minimum numeric limit<br /></li>
+<li><code>max</code> <strong>(null | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</strong>  -  if defined, provides a maximum numeric limit<br /></li>
+<li><code>step</code> <strong>(null | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</strong>  -  if defined, increases or decreases the spinbox value by a specific interval whenever the control buttons are used.</li>
+</ul>
 <h3 id="functions">Functions</h3>
+<h4 id="setwidth">setWidth</h4>
+<p>Sets the width of the spinbox input field.</p>
+<p>Returns <strong>this</strong></p>
+<h4 id="setinitialvalue">setInitialValue</h4>
+<p>Sanitize the initial value of the input field.</p>
+<p>Returns <strong>this</strong></p>
+<h4 id="addmarkup">addMarkup</h4>
+<p>Appends extra control markup to a Spinbox field.</p>
+<p>Returns <strong>this</strong></p>
+<h4 id="enablelongpress">enableLongPress</h4>
+<p>Enables Long Pressing one of the Spinbox control buttons.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>e</code> <strong>jQuery.Event</strong><br /></li>
+<li><code>self</code> <strong><a href="#spinbox">Spinbox</a></strong></li>
+</ul>
+<h4 id="disablelongpress">disableLongPress</h4>
+<p>Disables Long Pressing one of the Spinbox control buttons.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>e</code> <strong>jQuery.Event</strong><br /></li>
+<li><code>self</code> <strong><a href="#spinbox">Spinbox</a></strong></li>
+</ul>
+<h4 id="handleclick">handleClick</h4>
+<p>Event handler for 'click' events</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>e</code> <strong>jQuery.Event</strong></li>
+</ul>
+<h4 id="handlekeydown">handleKeyDown</h4>
+<p>Event handler for 'keydown' events</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>e</code> <strong>jQuery.Event</strong><br /></li>
+<li><code>self</code> <strong><a href="#spinbox">Spinbox</a></strong></li>
+</ul>
+<h4 id="handlekeypress">handleKeyPress</h4>
+<p>Event handler for 'keypress' events</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>e</code> <strong>jQuery.Event</strong><br /></li>
+<li><code>self</code> <strong><a href="#spinbox">Spinbox</a></strong></li>
+</ul>
+<h4 id="handlekeyup">handleKeyup</h4>
+<p>Event handler for 'keyup' events</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>e</code> <strong>jQuery.Event</strong><br /></li>
+<li><code>self</code> <strong><a href="#spinbox">Spinbox</a></strong></li>
+</ul>
+<h4 id="handleafterpaste">handleAfterPaste</h4>
+<p>Change a newly pasted value to this element's min or max values, if the pasted value goes<br />beyond either of those limits. Listens to an event emitted by the Mask plugin after pasted content<br />is handled.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>self</code> <strong><a href="#spinbox">Spinbox</a></strong></li>
+</ul>
+<h4 id="increasevalue">increaseValue</h4>
+<p>Increases the value of the Spinbox field, constrained by the step interval and maximum limit.</p>
+<h4 id="decreasevalue">decreaseValue</h4>
+<p>Decreases the value of the Spinbox field, constrained by the step interval and minimum limit.</p>
+<h4 id="updateval">updateVal</h4>
+<p>Sets a new spinbox value and focuses the spinbox.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>newVal</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</strong></li>
+</ul>
+<h4 id="checkfornumeric">checkForNumeric</h4>
+<p>Sanitizes the value of the input field to an integer if it isn't already established.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>val</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</strong> will be converted to a number if it's a string.</li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong></p>
+<h4 id="updatearia">updateAria</h4>
+<p>Updates the &quot;aria-valuenow&quot; property on the spinbox element if the value is currently set</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>val</code></li>
+</ul>
+<h4 id="addbuttonstyle">addButtonStyle</h4>
+<p>adds a &quot;pressed-in&quot; styling for one of the spinner buttons</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>e</code></li>
+</ul>
+<h4 id="removebuttonstyle">removeButtonStyle</h4>
+<p>Removes &quot;pressed-in&quot; styling for one of the spinner buttons</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>e</code></li>
+</ul>
+<h4 id="enable">enable</h4>
+<p>Enables the Spinbox</p>
+<h4 id="disable">disable</h4>
+<p>Disables the Spinbox</p>
+<h4 id="isdisabled">isDisabled</h4>
+<p>Determines whether or not the spinbox is disabled.</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h4 id="setisdisabled">setIsDisabled</h4>
+<p>Toggle whther or not the component is disabled.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>button</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong><br /></li>
+<li><code>isDisabled</code> <strong>booelan</strong></li>
+</ul>
+<h4 id="destroy">destroy</h4>
+<p>Teardown</p>
 <h4 id="bindevents">bindEvents</h4>
 <p>Sets up event handlers for this control and its sub-elements</p>
 <p><strong>Parameters</strong></p>
@@ -26,3 +137,49 @@
 <li>Disabled Spinbox <a href="../components/spinbox/example-disabled">View Example</a><br /></li>
 <li>Spinbox with Required Validation <a href="../components/spinbox/example-validation">View Example</a></li>
 </ol>
+<h2 id="behavior-guidelines">Behavior Guidelines</h2>
+<p>Using the arrows, the user can move through the range of values. Depending on the exact use case, users can also type one of the supported values directly in the field.</p>
+<h2 id="code-example">Code Example</h2>
+<p>A Spinbox is created from a standard type=&quot;text&quot; input field by adding the class=&quot;spinbox&quot;. The initializer will initialize this control using the attributes of a spinbox.</p>
+<ul>
+<li>Attribute min - Determines the lowest value this can be set to<br /></li>
+<li>Attribute max - Determines the highest value this can be set to<br /></li>
+<li>Attribute value - Denotes current value. This can be serialized with the form as normal<br /></li>
+<li>Attribute step - Denotes how many steps an increase should take</li>
+</ul>
+<p>Touch and mobile keyboard are supported.</p>
+<pre class="sourceCode html"><code class="sourceCode html">
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;stepped-spinbox&quot;</span><span class="kw">&gt;</span>Spinbox (init 0, min -99, max 99, step 3)<span class="kw">&lt;/label&gt;</span>
+  <span class="kw">&lt;input</span><span class="ot"> id=</span><span class="st">&quot;stepped-spinbox&quot;</span><span class="ot"> name=</span><span class="st">&quot;stepped-spinbox&quot;</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> class=</span><span class="st">&quot;spinbox&quot;</span><span class="ot"> min=</span><span class="st">&quot;-99&quot;</span><span class="ot"> max=</span><span class="st">&quot;99&quot;</span><span class="ot"> value=</span><span class="st">&quot;0&quot;</span><span class="ot"> step=</span><span class="st">&quot;3&quot;</span><span class="kw">/&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+</code></pre>
+<h2 id="implementation-tips">Implementation Tips</h2>
+<ul>
+<li>Localization for right to left languages may wish to reverse the left and right arrows.</li>
+</ul>
+<h2 id="accessibility">Accessibility</h2>
+<ul>
+<li>Focus should remain on the edit field</li>
+</ul>
+<h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
+<ul>
+<li><strong>Right and Up Arrows</strong> increase the value.<br /></li>
+<li><strong>Left and Down Arrows</strong> decrease the value.<br /></li>
+<li><strong>Home and End key</strong> move to the maximum or minimum values<br /></li>
+<li><strong>Optional Page Up and Page Down</strong> incrementally increase or decrease the value<br /></li>
+<li><strong>Tab key</strong> moves into and out of the widget</li>
+</ul>
+<h2 id="states-and-variations">States and Variations</h2>
+<p>The Spinner takes the same states as any trigger field. See the Text Box for more information.</p>
+<h2 id="responsive-guidelines">Responsive Guidelines</h2>
+<ul>
+<li>Its size is always less than mobile (150px) small size. From guidelines apply</li>
+</ul>
+<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
+<ul>
+<li>Replaces inforSpinner<br /></li>
+<li>Label class inforLabel should now be label<br /></li>
+<li>Spin Box Class inforSpinner should now be spinbox<br /></li>
+<li>type should be text not number (for mobile support)</li>
+</ul>
