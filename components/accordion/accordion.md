@@ -5,8 +5,8 @@
 
 ## Configuration Options
 
-1. Basic Accordion [View Example]( /components/accordion/example-index)
-2. Accordion Panels [View Example]( /components/accordion/example-accordion-panels)
+1. Basic Accordion [View Example]( ../components/accordion/example-index)
+2. Accordion Panels [View Example]( ../components/accordion/example-accordion-panels)
 
 ## Code Example
 

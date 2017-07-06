@@ -4,12 +4,12 @@
 
 ## Configuration Options
 
-1. Default Autocomplete [View Example]( /components/autocomplete/example-index)
-2. Ajax Autocomplete [View Example]( /components/autocomplete/example-ajax)
-3. Ajax as a Function Autocomplete  [View Example]( /components/autocomplete/example-ajax-as-function)
-4. Autocomplete Contains Search [View Example]( /components/autocomplete/example-contains)
-5. Autocomplete Disable Search/Filter [View Example]( /components/autocomplete/example-no-filtering)
-6. Autocomplete List Templates [View Example]( /components/autocomplete/example-templates)
+1. Default Autocomplete [View Example]( ../components/autocomplete/example-index)
+2. Ajax Autocomplete [View Example]( ../components/autocomplete/example-ajax)
+3. Ajax as a Function Autocomplete  [View Example]( ../components/autocomplete/example-ajax-as-function)
+4. Autocomplete Contains Search [View Example]( ../components/autocomplete/example-contains)
+5. Autocomplete Disable Search/Filter [View Example]( ../components/autocomplete/example-no-filtering)
+6. Autocomplete List Templates [View Example]( ../components/autocomplete/example-templates)
 
 ## Code Example
 
@@ -53,8 +53,8 @@ This example shows how to invoke the autocomplete and its starting markup. Remem
 
 ## Test Pages
 
-1. Test Autocomplete on a long scrolling page [View Example]( /components/autocomplete/test-longpage-modal)
-2. Test Autocomplete on a modal dialog [View Example]( /components/autocomplete/test-modal-autocomplete)
-3. Test Autocomplete Selected Event Fires  [View Example]( /components/autocomplete/test-selected-event)
-4. Test Turkish Keyboard Works [View Example]( /components/autocomplete/test-turkish-filters)
-5. Test Xss is prevented [View Example]( /components/autocomplete/test-xss-security)
+1. Test Autocomplete on a long scrolling page [View Example]( ../components/autocomplete/test-longpage-modal)
+2. Test Autocomplete on a modal dialog [View Example]( ../components/autocomplete/test-modal-autocomplete)
+3. Test Autocomplete Selected Event Fires  [View Example]( ../components/autocomplete/test-selected-event)
+4. Test Turkish Keyboard Works [View Example]( ../components/autocomplete/test-turkish-filters)
+5. Test Xss is prevented [View Example]( ../components/autocomplete/test-xss-security)

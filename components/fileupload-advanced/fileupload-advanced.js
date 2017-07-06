@@ -19,7 +19,7 @@
     // Settings and Options
     var pluginName = 'fileuploadadvanced',
         defaults = {
-          isStandalone: true, // on page -or- on modal [for some visual style only]
+          isStandalone: true, //
           standaloneClass: 'standalone', // css class if on page
           allowedTypes: '*', // restrict file types(ie. 'jpg|png|gif') ['*' all types]
           maxFilesInProcess: 99999, // max files can be upload
@@ -40,9 +40,16 @@
         settings = $.extend({}, defaults, options);
 
     /**
-     * @constructor
-     * @param {Object} element
-     */
+    * A trigger field for uploading a single file.
+    *
+    * @class FileUploadAdvanced
+    * @param {Boolean} isStandalone  &nbsp;-&nbsp; On page(true) -or- on modal (false) , this is used for some visual style only.
+    * @param {Boolean} allowedTypes  &nbsp;-&nbsp; Restrict file types(ie. 'jpg|png|gif') ['*' all types]
+    * @param {Boolean} maxFilesInProcess  &nbsp;-&nbsp; Max number of files can be uploaded
+    * @param {Boolean} maxFileSize  &nbsp;-&nbsp; Max file size in bytes, -1 for unlimited
+    * @param {Boolean} fileName  &nbsp;-&nbsp; Variable name to read from server
+    *
+    */
     function FileUploadAdvanced(element) {
       this.element = $(element);
       this.settings = settings;
@@ -130,7 +137,10 @@
 
       },
 
-      // Read the file contents using HTML5 FormData()
+      /**
+      * Read the file contents using HTML5 FormData()
+      * @param {Object} files &nbsp;-&nbsp; File object containing uploaded files.
+      */
       handleFileUpload: function (files) {
         var fileName = this.settings.fileName.replace('[]', '');
 
@@ -242,7 +252,12 @@
         };
       },
 
-      // For ui testing only
+      /**
+      * Function you can implement to send data to the server.
+      * @param {Object} formData - Contains the form data / file data.
+      * @param {Object} status - Status of the upload operation
+      *
+      */
       sendFileToServer: function (formData, status) {
         var jqXHR = { abort: function() {} },
           tempData = { remove: function() {} },
@@ -357,7 +372,6 @@
           return true;
         },
 
-
       // Helper function that formats the file sizes
       formatFileSize: function (bytes) {
         var scale = {
@@ -377,7 +391,9 @@
         return (bytes / scale.KB).toFixed(2) +' KB';
       },
 
-      // Teardown
+      /**
+      * Teardown - Remove added markup and events
+      */
       destroy: function() {
         this.dropArea.off('dragenter.fileuploadadvanced dragover.fileuploadadvanced drop.fileuploadadvanced');
         $(document).off('dragenter.fileuploadadvanced dragover.fileuploadadvanced drop.fileuploadadvanced');

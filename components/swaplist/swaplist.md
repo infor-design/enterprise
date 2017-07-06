@@ -13,104 +13,30 @@
 
 ## Code Example
 
-The swap list uses the underlying [listview component](https://soho.infor.com/index.php?p=component/basic-list). Like the listview a list template is needed. This template can either by dynamic or static. In the example below a template with a basic list value and support for drag and drop and disabled is shown in *id="swaplist-tmpl"* section.
+The swap list uses the underlying [listview component](https://soho.infor.com/index.php?p=component/basic-list). Like the listview a list template is needed. This template can either by dynamic or static. In the example below a template with a basic list value and support for drag and drop and disabled is shown in `id="swaplist-tmpl"`* section.
 
-The markup sturcture of the component itself is made up of a parent container that has an available and selected div section. Each of these has a title, buttons for moving and a div in which the list template will be generated.
+The markup stucture of the component itself is made up of a parent container that has an available and selected div section. Each of these has a title, buttons for moving and a div in which the list template will be generated.
 
 Initialize the component by calling .swaplist() on the element and passing a Json Array for the available, selected sides and reference to the template. (Not the the template can also be passed here as a string instead of being in the DOM.
 
-```html
+```javascript
 
-  <script id="swaplist-tmpl" type="text/html">
-      <ul data-swap-handle=".handle">
-        {{#dataset}}
-        {{#text}}
-          <li
-          {{#value}}
-            data-value="{{value}}"
-          {{/value}}
-          {{#selected}}
-            selected="selected"
-          {{/selected}}
-          {{#disabled}}
-            class="is-disabled"
-          {{/disabled}}
-          >
-            <span class="handle" focusable="false" aria-hidden="true" role="presentation">&#8286;</span>
-            <div class="swaplist-item-content">
-              <p>{{text}}</p>
-            </div>
-          </li>
-        {{/text}}
-        {{/dataset}}
-      </ul>
-  </script>
+var available = [], selected = [];
 
-  <div class="row">
-    <div class="columns six">
+available.push({id: 1, value: 'opt-1', text: 'Option A'});
+available.push({id: 2, value: 'opt-2', text: 'Option B'});
+available.push({id: 3, value: 'opt-3', text: 'Option C'});
+available.push({id: 4, value: 'opt-4', text: 'Option D'});
+available.push({id: 5, value: 'opt-5', text: 'Option E', disabled: true});
+available.push({id: 6, value: 'opt-6', text: 'Option F'});
+available.push({id: 7, value: 'opt-7', text: 'Option G'});
+available.push({id: 8, value: 'opt-8', text: 'Option H'});
+available.push({id: 9, value: 'opt-9', text: 'Option I'});
 
-      <div class="swaplist" data-init="false" id="example-swaplist-1">
-        <div class="card available">
-          <div class="card-header">
-            <h2 class="card-title">Available</h2>
-            <div class="buttons">
-              <button class="btn btn-moveto-selected" type="button">
-                <span class="audible">Select</span>
-                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                  <use xlink:href="#icon-right-arrow"></use>
-                </svg>
-              </button>
-            </div>
-          </div>
-          <div class="card-content">
-            <div class="listview"></div>
-          </div>
-        </div>
-        <div class="card selected">
-          <div class="card-header">
-            <h2 class="card-title">Selected</h2>
-            <div class="buttons">
-              <button class="btn btn-moveto-left" type="button">
-                <span class="audible">Move to left</span>
-                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                  <use xlink:href="#icon-left-arrow"></use>
-                </svg>
-              </button>
-            </div>
-          </div>
-          <div class="card-content">
-            <div class="listview"></div>
-          </div>
-        </div>
-      </div>
+selected.push({id: 10, value: 'opt-10', text: 'Option J'});
+selected.push({id: 11, value: 'opt-11', text: 'Option K'});
 
-    </div>
-  </div>
-
-<script>
-
-  // Initialize all SoHo Xi Controls and set the locale
-  $(function () {
-
-   var available = [], selected = [];
-
-    available.push({id: 1, value: 'opt-1', text: 'Option A'});
-    available.push({id: 2, value: 'opt-2', text: 'Option B'});
-    available.push({id: 3, value: 'opt-3', text: 'Option C'});
-    available.push({id: 4, value: 'opt-4', text: 'Option D'});
-    available.push({id: 5, value: 'opt-5', text: 'Option E', disabled: true});
-    available.push({id: 6, value: 'opt-6', text: 'Option F'});
-    available.push({id: 7, value: 'opt-7', text: 'Option G'});
-    available.push({id: 8, value: 'opt-8', text: 'Option H'});
-    available.push({id: 9, value: 'opt-9', text: 'Option I'});
-
-    selected.push({id: 10, value: 'opt-10', text: 'Option J'});
-    selected.push({id: 11, value: 'opt-11', text: 'Option K'});
-
-    $('#example-swaplist-1').swaplist({available: available, selected: selected, template: $('#swaplist-tmpl').html()});
-
-  });
-</script>
+$('#example-swaplist-1').swaplist({available: available, selected: selected, template: $('#swaplist-tmpl').html()});
 
 
 ```

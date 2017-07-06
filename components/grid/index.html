@@ -1,0 +1,43 @@
+<h1 id="grid-learn-more">Grid <a href="#">Learn More</a></h1>
+<h2 id="configuration-options">Configuration Options</h2>
+<ol>
+<li>12 Column Responsive Grid <a href="../components/grid/example-index">View Example</a><br /></li>
+<li>Simplified Responsive Grid <a href="../components/grid/example-simplified">View Example</a><br /></li>
+<li>Inputs in the Responsive Grid <a href="../components/form/example-inputs">View Example</a><br /></li>
+<li>Inputs in the Responsive Simplified Grid <a href="../components/form/example-inputs-simple">View Example</a></li>
+</ol>
+<h2 id="code-example">Code Example</h2>
+<p>Soho uses a 12 column grid for most designs. For the 12 column grid define a row element. Then define the columns you want in that row.<br />They should always add to 12. For example in this example we have a 2 column and 10 column element.</p>
+<pre class="sourceCode html"><code class="sourceCode html">
+
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;row&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;two columns&quot;</span><span class="kw">&gt;</span>Content<span class="kw">&lt;/div&gt;</span>
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;ten columns&quot;</span><span class="kw">&gt;</span>Content<span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+</code></pre>
+<p>The simplified grid handles the basic 1,2,3,4 column layouts in a more semantic way. This example is the same as a six by six grid but uses the classes on-half ect. The following are supported <code>full, full-width, one-half, one-third, two-thirds, one-fourth, one-fifth</code>.</p>
+<p>You can also add class <code>one-half-mobile</code> and at the lowest breakpoint the grid will break down to two column instead of one.</p>
+<pre class="sourceCode html"><code class="sourceCode html">
+
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;row&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;one-half column&quot;</span><span class="kw">&gt;</span>
+    Content
+  <span class="kw">&lt;/div&gt;</span>
+
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;one-half column&quot;</span><span class="kw">&gt;</span>
+    Content
+  <span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+</code></pre>
+<h2 id="accessibility">Accessibility</h2>
+<ul>
+<li>No special requirements. But watch for tab order.</li>
+</ul>
+<h2 id="code-tips">Code Tips</h2>
+<ul>
+<li>Uses form guidelines</li>
+</ul>
+<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
+<ul>
+<li>Did not exist</li>
+</ul>

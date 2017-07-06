@@ -10,9 +10,9 @@
 
 ## Configuration Options
 
-1. Alerts (Icons) [View Example]( /components/alerts/example-index)
-2. Alerts (Badges) [View Example]( /components/alerts/example-badges)
-3. More Badge Examples [View Example]( /components/alerts/example-additional-badges)
+1. Alerts (Icons) [View Example]( ../components/alerts/example-index)
+2. Alerts (Badges) [View Example]( ../components/alerts/example-badges)
+3. More Badge Examples [View Example]( ../components/alerts/example-additional-badges)
 
 ## Code Example
 

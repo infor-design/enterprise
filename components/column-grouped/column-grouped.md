@@ -3,9 +3,9 @@
 
 ## Configuration Options
 
-1. Example Grouped Column Chart [View Example]( /components/column-grouped/example-index)
-2. Default a Selected Group [View Example]( /components/column-grouped/example-selected)
-3. Handle Negative Values [View Example]( /components/column-grouped/example-negative-value)
+1. Example Grouped Column Chart [View Example]( ../components/column-grouped/example-index)
+2. Default a Selected Group [View Example]( ../components/column-grouped/example-selected)
+3. Handle Negative Values [View Example]( ../components/column-grouped/example-negative-value)
 
 ## Code Example
 

@@ -13,17 +13,8 @@
 }(function($) {
 /* end-amd-strip-block */
 
-/**
- * The jQuery plugin namespace.
- * @external "jQuery.fn"
- * @see {@link http://learn.jquery.com/plugins/|jQuery Plugins}
- * @private
- */
-
- /**
-  * Make something disabled
-  * @private
-  * @function external:"jQuery.fn".disable
+  /**
+  * Make elements in the jQuery selector disabled if they support the prop disabled. Or has a disable method.
   */
   $.fn.disable = function() {
     $.each(this.data(), function(index, value) {
@@ -39,10 +30,8 @@
     return this;
   };
 
- /**
-  * Make something enabled
-  * @private
-  * @function external:"jQuery.fn".enabled
+  /**
+  * Make elements in the jQuery selector enabled if they support the prop disabled. Or has a enable method.
   */
   $.fn.enable = function() {
     $.each(this.data(), function(index, value) {
@@ -58,10 +47,8 @@
     return this;
   };
 
- /**
-  * Make something readonly
-  * @private
-  * @function external:"jQuery.fn".readonly
+  /**
+  * Make elements in the jQuery selector readonly if they support the prop readonly. Or has a readonly method.
   */
   $.fn.readonly = function() {
     $.each(this.data(), function(index, value) {
@@ -77,10 +64,8 @@
     return this;
   };
 
- /**
-  * Track Input is changed from last submit
-  * @private
-  * @function external:"jQuery.fn".trackdirty
+  /**
+  * Track changes on the inputs passed in the jQuery selector and show a dirty indicator.
   */
   $.fn.trackdirty = function() {
       this.each(function () {

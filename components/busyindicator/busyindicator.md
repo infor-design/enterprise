@@ -5,19 +5,19 @@
 
 ## Configuration Options
 
-1. Busy Form Example [View Example]( /components/busyindicator/example-index)
-2. Busy Input Elements [View Example]( /components/busyindicator/example-inputs)
-3. Non Blocking Busy Indicator [View Example]( /components/busyindicator/example-non-blocking)
-4. Smaller Size [View Example]( /components/busyindicator/example-small)
-5. On the Page Body [View Example]( /components/busyindicator/example-body)
-6. Customize Loading Text [View Example]( /components/busyindicator/example-custom-loading-text.html)
-7. Nested Busy Indicators [View Example]( /components/busyindicator/example-nested.html)
-8. transparent Overlay [View Example]( /components/busyindicator/example-transparent-overlay.html)
-9. Ajax Calls [View Test]( /components/busyindicator/test-ajax-calls)
-10. Block Entire UI [View Test]( /components/busyindicator/test-ajax-calls)
-11. Block Specific Area [View Test]( /components/busyindicator/test-ajax-calls)
-12. In Font-size Zero [View Test]( /components/busyindicator/test-contained-in-font-size-0)
-13. Delay before Display [View Test]( /components/busyindicator/test-delayed-display.html)
+1. Busy Form Example [View Example]( ../components/busyindicator/example-index)
+2. Busy Input Elements [View Example]( ../components/busyindicator/example-inputs)
+3. Non Blocking Busy Indicator [View Example]( ../components/busyindicator/example-non-blocking)
+4. Smaller Size [View Example]( ../components/busyindicator/example-small)
+5. On the Page Body [View Example]( ../components/busyindicator/example-body)
+6. Customize Loading Text [View Example]( ../components/busyindicator/example-custom-loading-text.html)
+7. Nested Busy Indicators [View Example]( ../components/busyindicator/example-nested.html)
+8. transparent Overlay [View Example]( ../components/busyindicator/example-transparent-overlay.html)
+9. Ajax Calls [View Test]( ../components/busyindicator/test-ajax-calls)
+10. Block Entire UI [View Test]( ../components/busyindicator/test-ajax-calls)
+11. Block Specific Area [View Test]( ../components/busyindicator/test-ajax-calls)
+12. In Font-size Zero [View Test]( ../components/busyindicator/test-contained-in-font-size-0)
+13. Delay before Display [View Test]( ../components/busyindicator/test-delayed-display.html)
 
 ## Code Example
 

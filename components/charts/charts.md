@@ -5,14 +5,14 @@ All of the charts are documented separately by type. See the respective pages fo
 
 ## Chart Types
 
-1. Default About Example [View Example]( /components/about/example-index)
-2. Close Event Demo [View Example]( /components/about/test-close-event)
+1. Default About Example [View Example]( ../components/about/example-index)
+2. Close Event Demo [View Example]( ../components/about/test-close-event)
 
 ## Basic Chart Use Cases
 
-1. Using Patterns on Chart Colors [View Example]( /components/charts/example-chart-patterns.html)
-2. How to Hide / Show a Chart [View Example]( /components/charts/example-hide-show.html)
-3. How to Change Chart Type [View Example]( /components/charts/example-change-type.html	)
+1. Using Patterns on Chart Colors [View Example]( ../components/charts/example-chart-patterns.html)
+2. How to Hide / Show a Chart [View Example]( ../components/charts/example-hide-show.html)
+3. How to Change Chart Type [View Example]( ../components/charts/example-change-type.html	)
 
 ## Code Example
 

@@ -25,7 +25,7 @@ module.exports = [
   'temp/amd/expandablearea.js',
   'temp/amd/form.js',
   'temp/amd/fileupload.js',
-  'temp/amd/fileuploadadvanced.js',
+  'temp/amd/fileupload-advanced.js',
   'temp/amd/header.js',
   'temp/amd/hierarchy.js',
   'temp/amd/highlight.js',

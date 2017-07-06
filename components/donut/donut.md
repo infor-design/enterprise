@@ -3,10 +3,10 @@
 
 ## Configuration Options
 
-1. Donut Chart Main Example [View Example]( /components/donut/example-index)
-2. Showing Slices as Alerts [View Example]( /components/donut/example-alerts)
-3. With a Right Click Menu [View Example]( /components/donut/example-rightclick)
-4. Longer and Zero Labels [View Example]( /components/donut/example-values)
+1. Donut Chart Main Example [View Example]( ../components/donut/example-index)
+2. Showing Slices as Alerts [View Example]( ../components/donut/example-alerts)
+3. With a Right Click Menu [View Example]( ../components/donut/example-rightclick)
+4. Longer and Zero Labels [View Example]( ../components/donut/example-values)
 
 ## Code Example
 
