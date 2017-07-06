@@ -3,9 +3,23 @@
 ### Table of Contents
 
 -   [Spinbox](#spinbox)
+    -   [bindEvents](#bindevents)
 
 ## Spinbox
 
 **Parameters**
 
 -   `element` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+### bindEvents
+
+Sets up event handlers for this control and its sub-elements
+
+**Parameters**
+
+-   `focus` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  - 
+-   `blur` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  - 
+-   `keydown` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  - 
+-   `keypress` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  - 
+-   `keyup` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  - 
+-   `afterpaste` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  - 

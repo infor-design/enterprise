@@ -219,6 +219,17 @@
         return this;
       },
 
+      /**
+       * Sets up event handlers for this control and its sub-elements
+       *
+       * @listens Spinbox#events
+       * @param {Object} focus  &nbsp;-&nbsp;
+       * @param {Object} blur  &nbsp;-&nbsp;
+       * @param {Object} keydown  &nbsp;-&nbsp;
+       * @param {Object} keypress  &nbsp;-&nbsp;
+       * @param {Object} keyup  &nbsp;-&nbsp;
+       * @param {Object} afterpaste  &nbsp;-&nbsp;
+       */
       bindEvents: function() {
         var self = this,
           preventClick = false;
