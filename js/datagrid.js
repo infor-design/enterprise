@@ -2095,6 +2095,7 @@ $.fn.datagrid = function(options) {
           render('does-not-start-with', 'DoesNotStartWith');
       }
 
+
       btnMarkup += '</ul>';
       return btnMarkup ;
     },
@@ -2106,6 +2107,8 @@ $.fn.datagrid = function(options) {
         this.headerRow.find('.is-filterable').removeClass('is-filterable');
         this.headerRow.find('.datagrid-filter-wrapper').hide();
         this.settings.filterable = false;
+
+        this.element.removeClass('has-filterable-columns');
       } else {
         this.settings.filterable = true;
 
@@ -2113,11 +2116,12 @@ $.fn.datagrid = function(options) {
           this.renderFilterRow();
         }
 
+        this.element.addClass('has-filterable-columns');
+
         this.headerRow.addClass('is-filterable');
         this.headerRow.find('.is-filterable').addClass('is-filterable');
         this.headerRow.find('.datagrid-filter-wrapper').show();
       }
-
     },
 
     //Except conditions from outside or pull from filter row
@@ -2179,13 +2183,13 @@ $.fn.datagrid = function(options) {
               }
               conditionValue = conditionValue.getTime();
 		    }
-			
+
             if (rowValue instanceof Date) {
               rowValue = rowValue.getTime();
             }
             else if (typeof rowValue === 'string' && rowValue) {
               if (!columnDef.sourceFormat) {
-                rowValue = Locale.parseDate(rowValue, {pattern: conditions[i].format});	
+                rowValue = Locale.parseDate(rowValue, {pattern: conditions[i].format});
               } else {
                 rowValue = Locale.parseDate(rowValue, (typeof columnDef.sourceFormat === 'string' ? {pattern: columnDef.sourceFormat}: columnDef.sourceFormat));
               }
@@ -2199,7 +2203,7 @@ $.fn.datagrid = function(options) {
                 }
                 rowValue = rowValue.getTime();
               }
-            }			
+            }
 		  }
 
           if (typeof rowValue === 'number') {
@@ -2393,7 +2397,7 @@ $.fn.datagrid = function(options) {
           }
           condition.format = format;
         }
-		
+
 		if (input.data('timepicker')) {
           format = input.data('timepicker').settings.timeFormat;
           condition.format = format;

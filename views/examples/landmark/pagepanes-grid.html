@@ -157,6 +157,42 @@
       var datagrid = $(this).closest(".has-toolbar").next().data('datagrid');
       datagrid.toggleFilterRow();
     });
+
+
+    $('.toolbar').find('[data-option="row-short"],[data-option="row-medium"],[data-option="row-normal"]').on('click', function(e) {
+      var datagrid = $(this).closest(".has-toolbar").next().data('datagrid');
+      var $toolbar = $(this).closest('.toolbar');
+
+      // datagrid.settings.rowHeight = $(this).data().option.substring(4);
+      // datagrid.renderRows();
+      datagrid.rowHeight($(this).data().option.substring(4));
+
+      refreshSelectedRowHeight(datagrid, $toolbar);
+    });
+
+    function refreshSelectedRowHeight(datagrid, $toolbar) {
+      var short = $toolbar.find('[data-option="row-short"]'),
+          med = $toolbar.find('[data-option="row-medium"]'),
+          normal = $toolbar.find('[data-option="row-normal"]');
+
+      if (datagrid.settings.rowHeight === 'short') {
+        short.parent().addClass('is-checked');
+        med.parent().removeClass('is-checked');
+        normal.parent().removeClass('is-checked');
+      }
+
+      if (datagrid.settings.rowHeight === 'medium') {
+        short.parent().removeClass('is-checked');
+        med.parent().addClass('is-checked');
+        normal.parent().removeClass('is-checked');
+      }
+
+      if (datagrid.settings.rowHeight === 'normal') {
+        short.parent().removeClass('is-checked');
+        med.parent().removeClass('is-checked');
+        normal.parent().addClass('is-checked');
+      }
+    }
   }
 
   $(function() {
