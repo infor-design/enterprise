@@ -31,8 +31,8 @@
 @import 'components/circlepager/circlepager';
 @import 'controls/pager';
 @import 'components/datagrid/datagrid';
-@import 'controls/header';
-@import 'controls/spinbox';
+@import 'components/header/header';
+@import 'components/spinbox/spinbox';
 @import 'components/autocomplete/autocomplete';
 @import 'controls/mask';
 @import 'components/datepicker/datepicker';
@@ -57,14 +57,13 @@
 @import 'components/contextualactionpanel/contextualactionpanel';
 @import 'components/expandablearea/expandablearea';
 @import 'components/fieldset/fieldset';
-@import 'controls/modalsearch';
 @import 'controls/lookup';
 @import 'components/wizard/wizard';
 @import 'controls/popdown';
 @import 'components/hierarchy/hierarchy';
 @import 'components/toolbarsearchfield/toolbarsearchfield';
 @import 'controls/instance-count';
-@import 'controls/splitter';
+@import 'components/splitter/splitter';
 @import 'components/form/form';
 
 // Core Patterns

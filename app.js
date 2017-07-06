@@ -553,10 +553,10 @@ var express = require('express'),
       layoutPath;
 
     for (var i = 0; i < layoutFileNames.length; i++) {
-      layoutPath = '/components/' + component + '/' + layoutFileNames[i];
-      if (fs.exists(layoutPath)) {
+      layoutPath = 'components/' + component + '/' + layoutFileNames[i];
+      if (fs.existsSync(layoutPath)) {
         opts.layout = stripHtml('' + component + '/' + layoutFileNames[i]);
-        //console.log('layout for this folder changed to "' + opts.layout + '".');
+        console.log('layout for this folder changed to "' + opts.layout + '".');
       }
     }
 
@@ -633,6 +633,7 @@ var express = require('express'),
 
     // Double check this folder for an alternative layout file.
     opts = addDefaultFolderLayout(opts, componentName);
+    console.log(opts);
 
     if (componentName === 'applicationmenu' && (exampleName.indexOf('example-') > -1 || exampleName.indexOf('test-') > -1)) {
       opts.layout = null;
@@ -722,9 +723,7 @@ var express = require('express'),
       opts.layout = null; // No layout for this one on purpose.
       opts.subtitle = 'AMD Tests';
     }
-    if (directory.match(/tests\/header/)) {
-      opts.layout = 'tests/header/layout';
-    }
+
     if (directory.match(/tests\/datagrid-fixed-header/)) {
       opts.layout = 'tests/layout-noscroll';
     }

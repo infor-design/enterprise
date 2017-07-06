@@ -55,9 +55,21 @@
         settings = $.extend({}, defaults, options);
 
     /**
-     * @constructor
-     * @param {Object} element
-     */
+    * The SwapList Component creates a list of options that can be picked and organized.
+    *
+    * @class SwapList
+    * @param {?} available &nbsp;-&nbsp;
+    * @param {?} selected  &nbsp;-&nbsp;
+    * @param {?} additional  &nbsp;-&nbsp;
+    * @param {?} availableClass  &nbsp;-&nbsp;
+    * @param {?} selectedClass  &nbsp;-&nbsp;
+    * @param {?} additionalClass &nbsp;-&nbsp;
+    * @param {?} availableBtn &nbsp;-&nbsp;
+    * @param {?} selectedBtnLeft &nbsp;-&nbsp;
+    * @param {?} selectedBtnRight &nbsp;-&nbsp;
+    * @param {?} additionalBtn &nbsp;-&nbsp;
+    * @param {?} template &nbsp;-&nbsp;
+    */
     function SwapList(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -69,6 +81,9 @@
     // SwapList Methods
     SwapList.prototype = {
 
+      /**
+       * @private
+       */
       init: function() {
         var self = this,
           s = self.settings;
@@ -91,7 +106,610 @@
         }, 0);
       },
 
-      // Handle Events
+      /**
+       * Load listview
+       */
+      loadListview: function() {
+        var i, l, lv, c,
+          self = this,
+          s = self.settings,
+          containers = [
+            { dataset: s.available, class: s.availableClass },
+            { dataset: s.selected, class: s.selectedClass },
+            { dataset: s.additional, class: s.additionalClass }
+          ];
+
+        for (i=0,l=containers.length; i<l; i++) {
+          c = containers[i];
+          lv = $(c.class +' .listview', self.element);
+          if (!c.dataset && lv.length && $('li', lv).length) {
+            lv.listview({ selectable: 'multiple' });
+          }
+          else if (lv.length) {
+            lv.listview({ dataset: (c.dataset || []), template: s.template, selectable: 'multiple' });
+          }
+        }
+      },
+
+
+      /**
+       * Set elements
+       */
+      setElements: function() {
+        this.offset = null;
+
+        this.containers = $(
+          this.settings.availableClass +','+
+          this.settings.selectedClass +','+
+          this.settings.additionalClass, this.element);
+
+        this.actionButtons = $(
+          this.settings.availableBtn +','+
+          this.settings.additionalBtn +','+
+          this.settings.selectedBtnLeft +','+
+          this.settings.selectedBtnRight, this.element);
+
+        this.selectedButtons = $(
+          this.settings.selectedBtnLeft +','+
+          this.settings.selectedBtnRight, this.element);
+
+        this.tabButtonsStr = ''+
+          this.settings.availableBtn +' '+
+          this.settings.additionalBtn +' '+
+          (this.selectedButtons.length > 1 ?
+            this.settings.selectedBtnRight : this.settings.selectedBtnLeft);
+
+        this.dragElements = 'ul, li:not(.is-disabled)';
+        this.dragStart = 'dragstart.swaplist touchstart.swaplist gesturestart.swaplist';
+        this.dragEnterWhileDragging = 'dragenter.swaplist';
+        this.dragOverWhileDragging = 'dragover.swaplist touchmove.swaplist gesturechange.swaplist';
+        this.dragEnd = 'dragend.swaplist touchend.swaplist touchcancel.swaplist gestureend.swaplist';
+
+        this.selections = {
+          'items': [],
+          'owner': null,
+          'related': null,
+          'droptarget': null,
+          'isInSelection': null,
+          'isHandle': null,
+          'placeholder': null,
+          'placeholderTouch': null,
+          'dragged': null,
+          'draggedIndex': null
+        };
+
+        // Dragging time placeholder
+        this.settings.numOfSelectionsClass = 'num-of-selections';
+        this.settings.itemContentClass = 'swaplist-item-content';
+        this.settings.itemContentTempl = $(
+          '<div><p><span class="'+ this.settings.numOfSelectionsClass +'">###</span> '+
+            Locale.translate('ItemsSelected') +'</p><div/>'
+        );
+      },
+
+      /**
+       * When list is Empty force to add css class "is-muliselect"
+       */
+      isMultiSelectClass: function() {
+        var i, l, lv,
+          s = this.settings,
+          containers = [s.availableClass, s.selectedClass, s.additionalClass];
+
+        for (i=0,l=containers.length; i<l; i++) {
+          lv = $(containers[i] +' .listview', this.element);
+          if (!$('li', lv).length) {
+            lv.addClass('is-muliselect');
+          }
+        }
+      },
+
+      /**
+       * Initialize pre selected items
+       * @param {jQuery|HTMLElement} container
+       */
+      initSelected: function(container) {
+        var list;
+        container = this.isjQuery(container) ? container : $(container, this.element);
+        if (container.length) {
+          list = $('.listview', container).data('listview');
+          $('li[selected]', container).each(function() {
+            $(this).removeAttr('selected');
+            list.select($(this));// Select this item
+          });
+          this.moveElements(container, this.settings.selectedClass);
+          $(this.settings.selectedClass +' li:last-child', this.element).blur();
+        }
+      },
+
+      /**
+       * Move Elements
+       * @param {jQuery[]|HTMLElement} from
+       * @param {jQuery[]|HTMLElement} to
+       */
+      moveElements: function(from, to) {
+        var ul, size, currentSize,
+          self = this, list;
+
+        from = (typeof from !== 'string') ? from : $(from, self.element);
+        to = (typeof to !== 'string') ? to : $(to, self.element);
+        list = $('.listview', from).data('listview');
+
+        self.clearSelections();
+        self.selections.owner = from;
+        self.selections.droptarget = to;
+
+        if (self.isTouch) {
+          $.each(list.selectedItems, function(index, val) {
+            self.selections.items[index] = val.closest('li');
+          });
+        } else {
+          self.selections.items = list.selectedItems;
+        }
+
+        self.setSelectionsItems(self.selections.owner);
+        self.unselectElements(list);
+
+        if (self.selections.items.length) {
+          self.element.triggerHandler('beforeswap', [self.selections.itemsData]);
+
+          ul = $('ul', to);
+          currentSize = $('li', ul).length;
+          size = self.selections.items.length + currentSize;
+
+          $.each(self.selections.items, function(index, val) {
+            val = $(val);
+            val.attr({ 'aria-posinset': currentSize + index + 1, 'aria-setsize': size });
+            ul.append(val);
+            val.focus();
+          });
+
+          self.afterUpdate($('.listview', to).data('listview'));
+        }
+      },
+
+      /**
+       * Un-select Elements
+       * @param {jQuery|HTMLElement} list
+       */
+      unselectElements: function(list) {
+        $.each(list.selectedItems, function(index, val) {
+          list.select(val);
+        });
+      },
+
+      /**
+       * Detect browser support for drag-n-drop
+       * @returns {boolean}
+       */
+      isDragAndDropSupports: function() {
+        var div = document.createElement('div');
+        return ('draggable' in div) || ('ondragstart' in div && 'ondrop' in div);
+      },
+
+      /**
+       * Detect browser support for match-media
+       * @returns {boolean}
+       */
+      isMatchMediaSupports: function() {
+        return (typeof window.matchMedia !== 'undefined' || typeof window.msMatchMedia !== 'undefined');
+      },
+
+      /**
+       * Detect browser viewport
+       * @returns {Object}
+       */
+      viewport: function() {
+        var e = window, a = 'inner';
+        if (!('innerWidth' in window)) {
+          a = 'client';
+          e = document.documentElement || document.body;
+        }
+        return { width : e[a+'Width'] , height : e[a+'Height'] };
+      },
+
+      /**
+       * Check given [max-width] is true/false
+       * @returns {boolean}
+       */
+      isMaxWidth: function(w) {
+        return ((this.isMatchMediaSupports() && window.matchMedia('(max-width: '+ w +'px)').matches) || this.viewport().width <= w);
+      },
+
+      /**
+       * Make Draggable
+       */
+      makeDraggable: function() {
+        var self = this,
+          ul = $('ul', self.element);
+
+        if (self.isDragAndDropSupports) {
+          // Use Handle if available
+          self.handle = ul.first().attr('data-swap-handle');
+          self.handle = $(self.handle, ul).length > 0 ? self.handle : null;
+          // self.handle = (!self.isTouch && $(self.handle, ul).length > 0) ? self.handle : null;
+          $(self.handle, ul).addClass('draggable')
+            .off('mousedown.swaplist touchstart.swaplist')
+            .on('mousedown.swaplist touchstart.swaplist', function() { self.selections.isHandle = true; })
+            .off('mouseup.swaplist touchend.swaplist')
+            .on('mouseup.swaplist touchend.swaplist', function() { self.selections.isHandle = false; });
+
+          self.targets = ul.attr({'aria-dropeffect': 'none'});
+
+          self.items = $('li:not(.is-disabled)', self.element)
+            .not('a[href], img')
+              .off('selectstart.swaplist')
+              .on('selectstart.swaplist', function() {
+              if (this.dragDrop) { this.dragDrop(); } //ie9
+              return false;
+            }).end()
+            .attr({'draggable': true})
+            .addClass(self.handle ? '' : 'draggable');
+        }
+      },
+
+      /**
+       * Get Element By Touch In List
+       * @param {jQuery|HTMLElement} list
+       * @param {Number} x
+       * @param {Number} y
+       */
+      getElementByTouchInList: function(list, x, y) {
+        var returns = false;
+        $(list).each(function() {
+          var item = $(this), offset = item.offset();
+          if (!(x <= offset.left || x >= offset.left + item.outerWidth() ||
+                y <= offset.top  || y >= offset.top + item.outerHeight())) {
+            returns = item;
+          }
+        });
+        return returns;
+      },
+
+      /**
+       * Dragg touch element
+       * @param {jQuery.Event} e
+       * @param {jQuery[]} elm
+       */
+      draggTouchElement: function(e, elm) {
+        var orig = e.originalEvent.changedTouches[0];
+        elm[0].style.top = (orig.pageY - this.offset.y) + 'px';
+        elm[0].style.left = (orig.pageX - this.offset.x) + 'px';
+      },
+
+      /**
+       * Shorctut for testing whether a modifier is pressed
+       * @returns {boolean}
+       */
+      hasModifier: function(e) {
+        return (e.ctrlKey || e.metaKey || e.shiftKey);
+      },
+
+      /**
+       * Applying dropeffect to the target containers
+       */
+      addDropeffects: function() {
+        this.targets.each(function() {
+          $(this).attr({'aria-dropeffect': 'move', 'tabindex': 0});
+        });
+        $.each(this.selections.items, function(index, val) {
+          $(val).attr({'aria-grabbed': true, 'tabindex': 0});
+        });
+      },
+
+      /**
+       * Removing dropeffect from the target containers
+       */
+      clearDropeffects: function() {
+        this.targets.attr({'aria-dropeffect': 'none'}).removeAttr('tabindex');
+        $.each(this.selections.items, function(index, val) {
+          val = $(val);
+          val.removeAttr('aria-grabbed' + (!val.is(':focus') ? ' tabindex' : ''));
+        });
+      },
+
+      /**
+       * Clear selections
+       */
+      clearSelections: function() {
+        this.selections.items = [];
+        this.selections.itemsData = [];
+        this.selections.owner = null;
+        this.selections.related = null;
+        this.selections.droptarget = null;
+        this.selections.isInSelection = null;
+        this.selections.dragged = null;
+        this.selections.placeholder = null;
+        this.selections.placeholderTouch = null;
+        $('ul, li', this.element).removeClass('over');
+        $('#sl-placeholder-container, #sl-placeholder-touch, #sl-placeholder-touch2, #sl-placeholder').remove();
+      },
+
+      /**
+       * Set selections items
+       * @param {jQuery[]|HTMLElement} container
+       */
+      setSelectionsItems: function(container) {
+        container = this.isjQuery(container) ? container : $(container, this.element);
+        var nodes = $('.listview li', container),
+          dataList = this.getDataList(container);
+        for (var i=0,l=nodes.length; i<l; i++) {
+          var li = $(nodes[i]);
+          if (li.is('.is-selected')) {
+            this.selections.itemsData.push(dataList[i]);
+          }
+        }
+      },
+
+      /**
+       * Init dataset
+       */
+      initDataset: function() {
+        var s = this.settings,
+          containers = [
+            {type: 'available', dataset: s.available, class: s.availableClass},
+            {type: 'selected', dataset: s.selected, class: s.selectedClass},
+            {type: 'additional', dataset: s.additional, class: s.additionalClass}
+          ];
+
+        this.dataset = {'available': [], 'selected': []};
+        if (this.isAdditional) {
+          this.dataset.additional = [];
+        }
+
+        for (var i=0,l=containers.length; i<l; i++) {
+          var c = containers[i],
+            nodes = $(c.class +' .listview li', this.element);
+          for (var nodeIndex=0,l2=nodes.length; nodeIndex<l2; nodeIndex++) {
+            var data, value,
+              li = $(nodes[nodeIndex]);
+            if (c.dataset) {
+              // Make sure it's not reference pointer to data object, make copy of data
+              data = JSON.parse(JSON.stringify(c.dataset[nodeIndex]));
+              delete data.selected;
+            }
+            else {
+              data = {text: $.trim($('.swaplist-item-content', li).text())};
+              value = li.attr('data-value');
+              if (value) {
+                data.value = value;
+              }
+            }
+            if (this.dataset[c.type]) {
+              data.node = li;
+              this.dataset[c.type].push(data);
+            }
+          }
+        }
+      },
+
+      /**
+       * Get data list
+       * @param {jQuery[]|HTMLElement} container
+       * @returns {Object}
+       */
+      getDataList: function(container) {
+        var s = this.settings,
+          d = this.dataset;
+        container = this.isjQuery(container) ? container : $(container, this.element);
+        return container.is(s.additionalClass) ? d.additional :
+          (container.is(s.selectedClass) ? d.selected :
+            (container.is(s.availableClass) ? d.available : []));
+      },
+
+      /**
+       * Move an array element position
+       * @param {Array} arr
+       * @param {Number} from
+       * @param {Number} to
+       */
+      arrayIndexMove: function(arr, from, to) {
+        arr.splice(to, 0, arr.splice(from, 1)[0]);
+      },
+
+      /**
+       * Sync dataset
+       * @param {} owner
+       * @param {jQuery[]} droptarget
+       */
+      syncDataset: function(owner, droptarget) {
+        var droptargetNodes = $('.listview li', droptarget),
+          ownerDataList = this.getDataList(owner),
+          dtDataList = this.getDataList(droptarget);
+
+        for (var i=0,l=this.selections.items.length; i<l; i++) {
+          var item = this.selections.items[i];
+          for (var dtIndex=0,l2=droptargetNodes.length; dtIndex<l2; dtIndex++) {
+            if ($(droptargetNodes[dtIndex]).is(item)) {
+              for (var ownerIndex=0,l3=ownerDataList.length; ownerIndex<l3; ownerIndex++) {
+                var ownerItem = ownerDataList[ownerIndex];
+                if (ownerItem.node && ownerItem.node.is(item)) {
+                  dtDataList.push(ownerItem);
+                  ownerDataList.splice(ownerIndex, 1);
+                  this.arrayIndexMove(dtDataList, dtDataList.length-1, dtIndex);
+                  break;
+                }
+              }
+            }
+          }
+        }
+      },
+
+      /**
+       * Check if a object is jQuery object
+       * @param {Object} obj - the object being checked
+       */
+      isjQuery: function (obj) {
+        return (obj && (obj instanceof jQuery || obj.constructor.prototype.jquery));
+      },
+
+      /**
+       * Update attributes
+       * @param {jQuery[]} list
+       */
+      updateAttributes: function(list) {
+        var items = $('li', list),
+          size = items.length;
+
+        items.each(function(i) {
+          $(this).attr({ 'aria-posinset': i+1, 'aria-setsize': size });
+        });
+      },
+
+      /**
+       * After update
+       * @param {jQuery[]} list
+       */
+      afterUpdate: function(list) {
+        var self = this;
+
+        setTimeout(function() {
+          if (list) {
+            if (self.selections.placeholder) {
+              list.select(self.selections.placeholder);
+              self.selections.placeholder.focus();
+            }
+            self.unselectElements(list);
+            self.syncDataset(self.selections.owner, self.selections.droptarget);
+            self.updateAttributes($('.listview', self.selections.owner));
+            self.updateAttributes($('.listview', self.selections.droptarget));
+            if (self.selections.items.length) {
+              self.element.triggerHandler('swapupdate', [self.selections.itemsData]);
+            }
+          }
+          self.clearDropeffects();
+          self.clearSelections();
+          self.items.removeClass('is-dragging is-dragging-touch');
+        }, 100);
+      },
+
+      /**
+       * Get items from provided container
+       * @param {jQuery[]|HTMLElement} container
+       * @returns {Object}
+       */
+      getItems: function(container) {
+        container = this.isjQuery(container) ? container : $(container, this.element);
+        return this.getDataList(container);
+      },
+
+      /**
+       * Get available dataset
+       * @returns {Object}
+       */
+      getAvailable: function() {
+        return this.getDataList(this.settings.availableClass);
+      },
+
+      /**
+       * Get selected dataset
+       * @returns {Object}
+       */
+      getSelected: function() {
+        return this.getDataList(this.settings.selectedClass);
+      },
+
+      /**
+       * Gets additional dataset
+       * @returns {?}
+       */
+      getAdditional: function() {
+        return this.getDataList(this.settings.additionalClass);
+      },
+
+      /**
+       * Make selected if dragged element was not selected
+       * @param {Object} list
+       * @param {jQuery[]} target
+       */
+      draggedMakeSelected: function(list, target) {
+        var self = this, isInSelection = false;
+        if (!self.selections.isInSelection) {
+          // Check if dragged element was selected or not
+          $.each(list.selectedItems, function(index, val) {
+            if (target[0] === val[0]) {
+              isInSelection = true;
+              return false;
+            }
+          });
+          if (!isInSelection) {
+            list.select(target); // Make selected
+            self.selections.isInSelection = true;
+          }
+        }
+      },
+
+      /**
+       * Updates the swaplist dataset
+       * @param {Object} ds
+       */
+      updateDataset: function(ds) {
+        var i, l, lv, c, api,
+          self = this,
+          s = self.settings,
+          containers = [
+            { type: 'available', dataset: ds.available, class: s.availableClass },
+            { type: 'selected', dataset: ds.selected, class: s.selectedClass },
+            { type: 'additional', dataset: ds.additional, class: s.additionalClass }
+          ];
+
+        for (i = 0, l = containers.length; i < l; i++) {
+          c = containers[i];
+          lv = $(c.class +' .listview', self.element);
+          api = lv.data('listview');
+
+          if (api) {
+            api.unselectRowsBetweenIndexes([0, $('li', lv).length - 1]);
+            s[c.type] = c.dataset || [];
+            api.loadData(s[c.type]);
+          }
+        }
+
+        self.initDataset();
+        self.makeDraggable();
+        self.initSelected(s.availableClass);
+        self.initSelected(s.additionalClass);
+      },
+
+      /**
+       * Removes event bindings from the swaplist instance.
+       * @returns {this}
+       */
+      unbind: function() {
+        this.actionButtons.off('click.swaplist');
+        this.containers.off('keydown.swaplist');
+        this.selectedButtons.off('keydown.swaplist');
+        this.element.off(this.dragStart+' '+this.dragEnterWhileDragging +' '+this.dragOverWhileDragging +' '+this.dragEnd, this.dragElements);
+
+        $('#sl-placeholder-container, #sl-placeholder-touch, #sl-placeholder-touch2, #sl-placeholder').remove();
+        return this;
+      },
+
+      /**
+       * Updates this instance of the swaplist component with new settings.
+       * @returns {this}
+       */
+      updated: function() {
+        return this
+          .unbind()
+          .init();
+      },
+
+      /**
+       * Destroys this instance of the swaplist component and removes its link to its base element.
+       */
+      destroy: function() {
+        this.unbind();
+        $.removeData(this.element[0], pluginName);
+      },
+
+      /**
+       * Sets up event handlers for this control and its sub-elements
+       *
+       * @fires Swaplist#events
+       * @param {Object} click  &nbsp;-&nbsp; Fires when the component's action buttons are clicked.
+       * @param {Object} keydown  &nbsp;-&nbsp; Fires when a key is pressed while the component is focused.
+       * @param {Object} mousedown  &nbsp;-&nbsp; Fires when any mousebutton is pressed.
+       */
       handleEvents: function() {
         var self = this,
           settings = self.settings,
@@ -374,499 +992,8 @@
           e.preventDefault();
           e.stopPropagation();
         });
-      }, // END: Handle Events ---------------------------------------------------------------------
+      } // END: Handle Events ---------------------------------------------------------------------
 
-
-      // Load listview
-      loadListview: function() {
-        var i, l, lv, c,
-          self = this,
-          s = self.settings,
-          containers = [
-            { dataset: s.available, class: s.availableClass },
-            { dataset: s.selected, class: s.selectedClass },
-            { dataset: s.additional, class: s.additionalClass }
-          ];
-
-        for (i=0,l=containers.length; i<l; i++) {
-          c = containers[i];
-          lv = $(c.class +' .listview', self.element);
-          if (!c.dataset && lv.length && $('li', lv).length) {
-            lv.listview({ selectable: 'multiple' });
-          }
-          else if (lv.length) {
-            lv.listview({ dataset: (c.dataset || []), template: s.template, selectable: 'multiple' });
-          }
-        }
-      },
-
-
-      // Set elements
-      setElements: function() {
-        this.offset = null;
-
-        this.containers = $(
-          this.settings.availableClass +','+
-          this.settings.selectedClass +','+
-          this.settings.additionalClass, this.element);
-
-        this.actionButtons = $(
-          this.settings.availableBtn +','+
-          this.settings.additionalBtn +','+
-          this.settings.selectedBtnLeft +','+
-          this.settings.selectedBtnRight, this.element);
-
-        this.selectedButtons = $(
-          this.settings.selectedBtnLeft +','+
-          this.settings.selectedBtnRight, this.element);
-
-        this.tabButtonsStr = ''+
-          this.settings.availableBtn +' '+
-          this.settings.additionalBtn +' '+
-          (this.selectedButtons.length > 1 ?
-            this.settings.selectedBtnRight : this.settings.selectedBtnLeft);
-
-        this.dragElements = 'ul, li:not(.is-disabled)';
-        this.dragStart = 'dragstart.swaplist touchstart.swaplist gesturestart.swaplist';
-        this.dragEnterWhileDragging = 'dragenter.swaplist';
-        this.dragOverWhileDragging = 'dragover.swaplist touchmove.swaplist gesturechange.swaplist';
-        this.dragEnd = 'dragend.swaplist touchend.swaplist touchcancel.swaplist gestureend.swaplist';
-
-        this.selections = {
-          'items': [],
-          'owner': null,
-          'related': null,
-          'droptarget': null,
-          'isInSelection': null,
-          'isHandle': null,
-          'placeholder': null,
-          'placeholderTouch': null,
-          'dragged': null,
-          'draggedIndex': null
-        };
-
-        // Dragging time placeholder
-        this.settings.numOfSelectionsClass = 'num-of-selections';
-        this.settings.itemContentClass = 'swaplist-item-content';
-        this.settings.itemContentTempl = $(
-          '<div><p><span class="'+ this.settings.numOfSelectionsClass +'">###</span> '+
-            Locale.translate('ItemsSelected') +'</p><div/>'
-        );
-      },
-
-      // When list is Empty force to add css class "is-muliselect"
-      isMultiSelectClass: function() {
-        var i, l, lv,
-          s = this.settings,
-          containers = [s.availableClass, s.selectedClass, s.additionalClass];
-
-        for (i=0,l=containers.length; i<l; i++) {
-          lv = $(containers[i] +' .listview', this.element);
-          if (!$('li', lv).length) {
-            lv.addClass('is-muliselect');
-          }
-        }
-      },
-
-      // Initialize pre selected items
-      initSelected: function(container) {
-        var list;
-        container = this.isjQuery(container) ? container : $(container, this.element);
-        if (container.length) {
-          list = $('.listview', container).data('listview');
-          $('li[selected]', container).each(function() {
-            $(this).removeAttr('selected');
-            list.select($(this));// Select this item
-          });
-          this.moveElements(container, this.settings.selectedClass);
-          $(this.settings.selectedClass +' li:last-child', this.element).blur();
-        }
-      },
-
-      // Move Elements
-      moveElements: function(from, to) {
-        var ul, size, currentSize,
-          self = this, list;
-
-        from = (typeof from !== 'string') ? from : $(from, self.element);
-        to = (typeof to !== 'string') ? to : $(to, self.element);
-        list = $('.listview', from).data('listview');
-
-        self.clearSelections();
-        self.selections.owner = from;
-        self.selections.droptarget = to;
-
-        if (self.isTouch) {
-          $.each(list.selectedItems, function(index, val) {
-            self.selections.items[index] = val.closest('li');
-          });
-        } else {
-          self.selections.items = list.selectedItems;
-        }
-
-        self.setSelectionsItems(self.selections.owner);
-        self.unselectElements(list);
-
-        if (self.selections.items.length) {
-          self.element.triggerHandler('beforeswap', [self.selections.itemsData]);
-
-          ul = $('ul', to);
-          currentSize = $('li', ul).length;
-          size = self.selections.items.length + currentSize;
-
-          $.each(self.selections.items, function(index, val) {
-            val = $(val);
-            val.attr({ 'aria-posinset': currentSize + index + 1, 'aria-setsize': size });
-            ul.append(val);
-            val.focus();
-          });
-
-          self.afterUpdate($('.listview', to).data('listview'));
-        }
-      },
-
-      // Un-select Elements
-      unselectElements: function(list) {
-        $.each(list.selectedItems, function(index, val) {
-          list.select(val);
-        });
-      },
-
-      // Detect browser support for drag-n-drop
-      isDragAndDropSupports: function() {
-        var div = document.createElement('div');
-        return ('draggable' in div) || ('ondragstart' in div && 'ondrop' in div);
-      },
-
-      // Detect browser support for match-media
-      isMatchMediaSupports: function() {
-        return (typeof window.matchMedia !== 'undefined' || typeof window.msMatchMedia !== 'undefined');
-      },
-
-      // Detect browser viewport
-      viewport: function() {
-        var e = window, a = 'inner';
-        if (!('innerWidth' in window)) {
-          a = 'client';
-          e = document.documentElement || document.body;
-        }
-        return { width : e[a+'Width'] , height : e[a+'Height'] };
-      },
-
-      // Check given [max-width] is true/false
-      isMaxWidth: function(w) {
-        return ((this.isMatchMediaSupports() && window.matchMedia('(max-width: '+ w +'px)').matches) || this.viewport().width <= w);
-      },
-
-      // Make Draggable
-      makeDraggable: function() {
-        var self = this,
-          ul = $('ul', self.element);
-
-        if (self.isDragAndDropSupports) {
-          // Use Handle if available
-          self.handle = ul.first().attr('data-swap-handle');
-          self.handle = $(self.handle, ul).length > 0 ? self.handle : null;
-          // self.handle = (!self.isTouch && $(self.handle, ul).length > 0) ? self.handle : null;
-          $(self.handle, ul).addClass('draggable')
-            .off('mousedown.swaplist touchstart.swaplist')
-            .on('mousedown.swaplist touchstart.swaplist', function() { self.selections.isHandle = true; })
-            .off('mouseup.swaplist touchend.swaplist')
-            .on('mouseup.swaplist touchend.swaplist', function() { self.selections.isHandle = false; });
-
-          self.targets = ul.attr({'aria-dropeffect': 'none'});
-
-          self.items = $('li:not(.is-disabled)', self.element)
-            .not('a[href], img')
-              .off('selectstart.swaplist')
-              .on('selectstart.swaplist', function() {
-              if (this.dragDrop) { this.dragDrop(); } //ie9
-              return false;
-            }).end()
-            .attr({'draggable': true})
-            .addClass(self.handle ? '' : 'draggable');
-        }
-      },
-
-      // Get Element By Touch In List
-      getElementByTouchInList: function(list, x, y) {
-        var returns = false;
-        $(list).each(function() {
-          var item = $(this), offset = item.offset();
-          if (!(x <= offset.left || x >= offset.left + item.outerWidth() ||
-                y <= offset.top  || y >= offset.top + item.outerHeight())) {
-            returns = item;
-          }
-        });
-        return returns;
-      },
-
-      // Dragg touch element
-      draggTouchElement: function(e, elm) {
-        var orig = e.originalEvent.changedTouches[0];
-        elm[0].style.top = (orig.pageY - this.offset.y) + 'px';
-        elm[0].style.left = (orig.pageX - this.offset.x) + 'px';
-      },
-
-      // Shorctut for testing whether a modifier is pressed
-      hasModifier: function(e) {
-        return (e.ctrlKey || e.metaKey || e.shiftKey);
-      },
-
-      // Applying dropeffect to the target containers
-      addDropeffects: function() {
-        this.targets.each(function() {
-          $(this).attr({'aria-dropeffect': 'move', 'tabindex': 0});
-        });
-        $.each(this.selections.items, function(index, val) {
-          $(val).attr({'aria-grabbed': true, 'tabindex': 0});
-        });
-      },
-
-      // Removing dropeffect from the target containers
-      clearDropeffects: function() {
-        this.targets.attr({'aria-dropeffect': 'none'}).removeAttr('tabindex');
-        $.each(this.selections.items, function(index, val) {
-          val = $(val);
-          val.removeAttr('aria-grabbed' + (!val.is(':focus') ? ' tabindex' : ''));
-        });
-      },
-
-      // Clear selections
-      clearSelections: function() {
-        this.selections.items = [];
-        this.selections.itemsData = [];
-        this.selections.owner = null;
-        this.selections.related = null;
-        this.selections.droptarget = null;
-        this.selections.isInSelection = null;
-        this.selections.dragged = null;
-        this.selections.placeholder = null;
-        this.selections.placeholderTouch = null;
-        $('ul, li', this.element).removeClass('over');
-        $('#sl-placeholder-container, #sl-placeholder-touch, #sl-placeholder-touch2, #sl-placeholder').remove();
-      },
-
-      // Set selections items
-      setSelectionsItems: function(container) {
-        container = this.isjQuery(container) ? container : $(container, this.element);
-        var nodes = $('.listview li', container),
-          dataList = this.getDataList(container);
-        for (var i=0,l=nodes.length; i<l; i++) {
-          var li = $(nodes[i]);
-          if (li.is('.is-selected')) {
-            this.selections.itemsData.push(dataList[i]);
-          }
-        }
-      },
-
-      // Init dataset
-      initDataset: function() {
-        var s = this.settings,
-          containers = [
-            {type: 'available', dataset: s.available, class: s.availableClass},
-            {type: 'selected', dataset: s.selected, class: s.selectedClass},
-            {type: 'additional', dataset: s.additional, class: s.additionalClass}
-          ];
-
-        this.dataset = {'available': [], 'selected': []};
-        if (this.isAdditional) {
-          this.dataset.additional = [];
-        }
-
-        for (var i=0,l=containers.length; i<l; i++) {
-          var c = containers[i],
-            nodes = $(c.class +' .listview li', this.element);
-          for (var nodeIndex=0,l2=nodes.length; nodeIndex<l2; nodeIndex++) {
-            var data, value,
-              li = $(nodes[nodeIndex]);
-            if (c.dataset) {
-              // Make sure it's not reference pointer to data object, make copy of data
-              data = JSON.parse(JSON.stringify(c.dataset[nodeIndex]));
-              delete data.selected;
-            }
-            else {
-              data = {text: $.trim($('.swaplist-item-content', li).text())};
-              value = li.attr('data-value');
-              if (value) {
-                data.value = value;
-              }
-            }
-            if (this.dataset[c.type]) {
-              data.node = li;
-              this.dataset[c.type].push(data);
-            }
-          }
-        }
-      },
-
-      // Get data list
-      getDataList: function(container) {
-        var s = this.settings,
-          d = this.dataset;
-        container = this.isjQuery(container) ? container : $(container, this.element);
-        return container.is(s.additionalClass) ? d.additional :
-          (container.is(s.selectedClass) ? d.selected :
-            (container.is(s.availableClass) ? d.available : []));
-      },
-
-      // Move an array element position
-      arrayIndexMove: function(arr, from, to) {
-        arr.splice(to, 0, arr.splice(from, 1)[0]);
-      },
-
-      // Sync dataset
-      syncDataset: function(owner, droptarget) {
-        var droptargetNodes = $('.listview li', droptarget),
-          ownerDataList = this.getDataList(owner),
-          dtDataList = this.getDataList(droptarget);
-
-        for (var i=0,l=this.selections.items.length; i<l; i++) {
-          var item = this.selections.items[i];
-          for (var dtIndex=0,l2=droptargetNodes.length; dtIndex<l2; dtIndex++) {
-            if ($(droptargetNodes[dtIndex]).is(item)) {
-              for (var ownerIndex=0,l3=ownerDataList.length; ownerIndex<l3; ownerIndex++) {
-                var ownerItem = ownerDataList[ownerIndex];
-                if (ownerItem.node && ownerItem.node.is(item)) {
-                  dtDataList.push(ownerItem);
-                  ownerDataList.splice(ownerIndex, 1);
-                  this.arrayIndexMove(dtDataList, dtDataList.length-1, dtIndex);
-                  break;
-                }
-              }
-            }
-          }
-        }
-      },
-
-      // Check if a object is jQuery object
-      isjQuery: function (obj) {
-        return (obj && (obj instanceof jQuery || obj.constructor.prototype.jquery));
-      },
-
-      // Update attributes
-      updateAttributes: function(list) {
-        var items = $('li', list),
-          size = items.length;
-
-        items.each(function(i) {
-          $(this).attr({ 'aria-posinset': i+1, 'aria-setsize': size });
-        });
-      },
-
-      // After update
-      afterUpdate: function(list) {
-        var self = this;
-
-        setTimeout(function() {
-          if (list) {
-            if (self.selections.placeholder) {
-              list.select(self.selections.placeholder);
-              self.selections.placeholder.focus();
-            }
-            self.unselectElements(list);
-            self.syncDataset(self.selections.owner, self.selections.droptarget);
-            self.updateAttributes($('.listview', self.selections.owner));
-            self.updateAttributes($('.listview', self.selections.droptarget));
-            if (self.selections.items.length) {
-              self.element.triggerHandler('swapupdate', [self.selections.itemsData]);
-            }
-          }
-          self.clearDropeffects();
-          self.clearSelections();
-          self.items.removeClass('is-dragging is-dragging-touch');
-        }, 100);
-      },
-
-      // Get items from provided container
-      getItems: function(container) {
-        container = this.isjQuery(container) ? container : $(container, this.element);
-        return this.getDataList(container);
-      },
-
-      // Get available dataset
-      getAvailable: function() {
-        return this.getDataList(this.settings.availableClass);
-      },
-
-      // Get selected dataset
-      getSelected: function() {
-        return this.getDataList(this.settings.selectedClass);
-      },
-
-      // Get additional dataset
-      getAdditional: function() {
-        return this.getDataList(this.settings.additionalClass);
-      },
-
-      // Make selected if dragged element was not selected
-      draggedMakeSelected: function(list, target) {
-        var self = this, isInSelection = false;
-        if (!self.selections.isInSelection) {
-          // Check if dragged element was selected or not
-          $.each(list.selectedItems, function(index, val) {
-            if (target[0] === val[0]) {
-              isInSelection = true;
-              return false;
-            }
-          });
-          if (!isInSelection) {
-            list.select(target); // Make selected
-            self.selections.isInSelection = true;
-          }
-        }
-      },
-
-      // Update dataset
-      updateDataset: function(ds) {
-        var i, l, lv, c, api,
-          self = this,
-          s = self.settings,
-          containers = [
-            { type: 'available', dataset: ds.available, class: s.availableClass },
-            { type: 'selected', dataset: ds.selected, class: s.selectedClass },
-            { type: 'additional', dataset: ds.additional, class: s.additionalClass }
-          ];
-
-        for (i = 0, l = containers.length; i < l; i++) {
-          c = containers[i];
-          lv = $(c.class +' .listview', self.element);
-          api = lv.data('listview');
-
-          if (api) {
-            api.unselectRowsBetweenIndexes([0, $('li', lv).length - 1]);
-            s[c.type] = c.dataset || [];
-            api.loadData(s[c.type]);
-          }
-        }
-
-        self.initDataset();
-        self.makeDraggable();
-        self.initSelected(s.availableClass);
-        self.initSelected(s.additionalClass);
-      },
-
-      unbind: function() {
-        this.actionButtons.off('click.swaplist');
-        this.containers.off('keydown.swaplist');
-        this.selectedButtons.off('keydown.swaplist');
-        this.element.off(this.dragStart+' '+this.dragEnterWhileDragging +' '+this.dragOverWhileDragging +' '+this.dragEnd, this.dragElements);
-
-        $('#sl-placeholder-container, #sl-placeholder-touch, #sl-placeholder-touch2, #sl-placeholder').remove();
-        return this;
-      },
-
-      updated: function() {
-        return this
-          .unbind()
-          .init();
-      },
-
-      // Teardown
-      destroy: function() {
-        this.unbind();
-        $.removeData(this.element[0], pluginName);
-      }
     };
 
     // Initialize the plugin (Once)

@@ -5,6 +5,7 @@
 
 @import 'config';
 @import 'components/grid/grid';
+@import 'components/visibility/visibility';
 
 // Variables for this page
 $color-font-lighter: #484a51;
@@ -55,16 +56,35 @@ html {
 }
 
 // Letters on the Home Page
-.fieldset-title.l-center {
-  @include font-size(14);
-  color: $color-main-blue;
+.doc-index {
+
+  // Change Letter Color and Size
+  .fieldset-title {
+    @include font-size(14);
+    color: $color-font-lighter;
+  }
+
+   // Align the Letter columns
+  .columns {
+    text-align: center;
+
+    .link-list {
+      text-align: left;
+    }
+  }
+
+}
+
+@include respond-to(phabletdown) {
+  .doc-index .columns {
+    text-align: left;
+  }
 }
 
 // Typography
 h1 {
   @include font-size(50);
   color: $color-main-blue;
-  font-family: 'Lato', sans-serif;
   font-weight: lighter;
   line-height: 60px;
 }

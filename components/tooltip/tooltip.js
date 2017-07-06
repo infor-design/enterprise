@@ -609,6 +609,8 @@
       teardown: function() {
         this.description.remove();
         this.descriptionId = undefined;
+        this.activeElement = undefined;
+
         this.element.removeAttr('aria-describedby').removeAttr('aria-haspopup');
         if (!this.tooltip.hasClass('is-hidden')) {
           this.hide();
