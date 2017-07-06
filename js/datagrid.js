@@ -2095,7 +2095,6 @@ $.fn.datagrid = function(options) {
           render('does-not-start-with', 'DoesNotStartWith');
       }
 
-
       btnMarkup += '</ul>';
       return btnMarkup ;
     },
