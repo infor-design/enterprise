@@ -798,6 +798,7 @@
 
         // Dragstart - initiate dragging
         .on(self.dragStart, self.dragElements, function(e) {
+          e.stopImmediatePropagation();
           if (self.handle && !selections.isHandle) {
             e.stopPropagation();
             return;

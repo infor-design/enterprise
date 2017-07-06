@@ -868,10 +868,18 @@
 
         var self = this;
 
+        function getMoreOrLast() {
+          if (self.hasNoMoreButton() || !self.element.hasClass('has-more-button')) {
+            return self.getLastVisibleButton();
+          }
+
+          return self.more;
+        }
+
         function getActiveButton() {
           // Menu items simply set the "More Actions" button as active
           if (activeButton.is('a')) {
-            return self.more;
+            return getMoreOrLast();
           }
 
           // If it's the more button, hide the tooltip and set it as active
@@ -880,13 +888,13 @@
             if (tooltip && tooltip.tooltip.is(':not(.hidden)')) {
               tooltip.hide();
             }
-            return self.more;
+            return getMoreOrLast();
           }
 
           // Overflowed items also set
           if (self.isItemOverflowed(activeButton)) {
             if (!activeButton.is('.searchfield')) {
-              return self.more;
+              return getMoreOrLast();
             }
           }
 

@@ -5,14 +5,14 @@
 
 ## Configuration Options
 
-1. Simple Card Example [View Example]( /components/cards/example-index)
-2. Expandable Card [View Example]( /components/cards/example-expandable)
-3. Full Page of Cards [View Example]( /components/cards/example-full-page)
-4. A group action toolbar area [View Example]( /components/cards/example-group-action)
-5. Menu Button in the Header [View Example]( /components/cards/example-menubutton)
-6. Datagrid In a Card (Bad Practice) [View Test]( /components/cards/test-datagrid)
-7. Datagrid With Pager (Bad Practice) [View Test]( /components/cards/test-paging-datagrid)
-8. Toolbar In The Header [View Test]( /components/cards/test-toolbar-header)
+1. Simple Card Example [View Example]( ../components/cards/example-index)
+2. Expandable Card [View Example]( ../components/cards/example-expandable)
+3. Full Page of Cards [View Example]( ../components/cards/example-full-page)
+4. A group action toolbar area [View Example]( ../components/cards/example-group-action)
+5. Menu Button in the Header [View Example]( ../components/cards/example-menubutton)
+6. Datagrid In a Card (Bad Practice) [View Test]( ../components/cards/test-datagrid)
+7. Datagrid With Pager (Bad Practice) [View Test]( ../components/cards/test-paging-datagrid)
+8. Toolbar In The Header [View Test]( ../components/cards/test-toolbar-header)
 
 ## Code Example
 

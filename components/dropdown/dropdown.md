@@ -5,16 +5,16 @@
 
 ## Configuration Options
 
-1. Default Dropdown Example [View Example]( /components/dropdown/example-index)
-2. Clearable Dropdown [View Example]( /components/dropdown/example-clearable.html)
-3. Updating the Contents [View Example]( /components/dropdown/example-updating.html)
-4. Ajax Conents on Open [View Example]( /components/dropdown/example-ajax.html)
-5. Section / Groups [View Example]( /components/dropdown/example-groups.html)
-6. Disable Search [View Example]( /components/dropdown/example-no-search.html)
-7. States [View Example]( /components/dropdown/example-states.htm)
-8. Validation [View Example]( /components/dropdown/example-validation.html)
-9. Widths [View Example]( /components/dropdown/example-widths.html)
-10. Data Attributes [View Example]( /components/dropdown/example-with-data-attribute.html)
+1. Default Dropdown Example [View Example]( ../components/dropdown/example-index)
+2. Clearable Dropdown [View Example]( ../components/dropdown/example-clearable.html)
+3. Updating the Contents [View Example]( ../components/dropdown/example-updating.html)
+4. Ajax Conents on Open [View Example]( ../components/dropdown/example-ajax.html)
+5. Section / Groups [View Example]( ../components/dropdown/example-groups.html)
+6. Disable Search [View Example]( ../components/dropdown/example-no-search.html)
+7. States [View Example]( ../components/dropdown/example-states.htm)
+8. Validation [View Example]( ../components/dropdown/example-validation.html)
+9. Widths [View Example]( ../components/dropdown/example-widths.html)
+10. Data Attributes [View Example]( ../components/dropdown/example-with-data-attribute.html)
 
 ## Behavior Guidelines
 

@@ -3,11 +3,11 @@
 
 ## Api Details
 
-[See popup menu]( /components/popupmenu)
+[See popup menu]( ../components/popupmenu)
 
 ## Configuration Options
 
-1. Context Menu on an Input [View Example]( /components/contextmenu/example-index)
+1. Context Menu on an Input [View Example]( ../components/contextmenu/example-index)
 
 ## Code Example
 

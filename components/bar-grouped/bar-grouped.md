@@ -3,10 +3,10 @@
 
 ## Configuration Options
 
-1. Grouped bar chart example [View Example]( /components/bar-grouped/example-index)
-2. Default a selected Group [View Example]( /components/bar-grouped/example-selected)
-3. Handle Negative Values [View Example]( /components/bar-grouped/example-negative)
-4. Adapts to handle a large number of groups [View Example]( /components/bar-grouped/test-many-groups)
+1. Grouped bar chart example [View Example]( ../components/bar-grouped/example-index)
+2. Default a selected Group [View Example]( ../components/bar-grouped/example-selected)
+3. Handle Negative Values [View Example]( ../components/bar-grouped/example-negative)
+4. Adapts to handle a large number of groups [View Example]( ../components/bar-grouped/test-many-groups)
 
 ## Code Example
 

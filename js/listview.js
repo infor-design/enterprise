@@ -759,7 +759,8 @@
 
         li.attr('aria-selected', !isChecked);
         if (!noTrigger) {
-          this.element.triggerHandler('selected', {selectedItems: this.selectedItems, elem: li});
+          var triggerStr = isChecked ? 'unselected' : 'selected';
+          this.element.triggerHandler(triggerStr, {selectedItems: this.selectedItems, elem: li});
         }
 
         var toolbar, toolbarControl,

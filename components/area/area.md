@@ -3,9 +3,9 @@
 
 ## Configuration Options
 
-1. Area Chart Example [View Example]( /components/area/example-index)
-2. Make the Tooltip Formatted (Currency) [View Example]( /components/area/example-formatter)
-3. Make a slice selected by default [View Example]( /components/area/example-selected)
+1. Area Chart Example [View Example]( ../components/area/example-index)
+2. Make the Tooltip Formatted (Currency) [View Example]( ../components/area/example-formatter)
+3. Make a slice selected by default [View Example]( ../components/area/example-selected)
 
 ## Code Example
 

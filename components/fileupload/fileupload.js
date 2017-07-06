@@ -21,9 +21,11 @@
     var pluginName = 'fileupload';
 
     /**
-     * @constructor
-     * @param {Object} element
-     */
+    * A trigger field for uploading a single file.
+    *
+    * @class FileUpload
+    * @param {Boolean} none  &nbsp;-&nbsp; No options
+    */
     function FileUpload(element) {
       this.element = $(element);
       Soho.logTimeStart(pluginName);
@@ -79,7 +81,9 @@
         });
       },
 
-      // Teardown - Remove added markup and events
+      /**
+      * Teardown - Remove added markup and events
+      */
       destroy: function() {
         this.fileInput.removeAttr('tabindex').off('change.fileupload');
         this.textInput.off('keypress.fileupload');
@@ -90,16 +94,25 @@
         $.removeData(this.element[0], pluginName);
       },
 
+      /**
+      * Disable the input and button.
+      */
       disable: function() {
         this.textInput.prop('disabled', true);
         this.fileInput.prop('disabled', true);
       },
 
+      /**
+      * Enable the input and button.
+      */
       enable: function() {
         this.textInput.prop('disabled', false).prop('readonly', false);
         this.fileInput.removeAttr('disabled');
       },
 
+      /**
+      * Make the input readonly and disable the button.
+      */
       readonly: function() {
         this.textInput.prop('readonly', true);
         this.fileInput.prop('disabled', true);

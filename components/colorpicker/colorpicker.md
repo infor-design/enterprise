@@ -3,11 +3,11 @@
 
 ## Configuration Options
 
-1. Color Picker Example [View Example]( /components/colorpicker/example-index)
-2. Showing Custom Colors [View Example]( /components/colorpicker/example-custom-labels)
-2. Select the label not the Hex [View Example]( /components/colorpicker/example-show-label)
-4. Test States [View Test]( /components/colorpicker/test-states)
-5. Test it works on a Modal [View Test]( /components/colorpicker/test-modal)
+1. Color Picker Example [View Example]( ../components/colorpicker/example-index)
+2. Showing Custom Colors [View Example]( ../components/colorpicker/example-custom-labels)
+2. Select the label not the Hex [View Example]( ../components/colorpicker/example-show-label)
+4. Test States [View Test]( ../components/colorpicker/test-states)
+5. Test it works on a Modal [View Test]( ../components/colorpicker/test-modal)
 
 ## Code Example
 
