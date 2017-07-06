@@ -2398,6 +2398,11 @@ $.fn.datagrid = function(options) {
 
     //Get filter conditions in array form from the UI
     filterConditions: function () {
+      // Do not modify keyword search filter expr
+      if (this.filterExpr && this.filterExpr.length === 1 && this.filterExpr[0].column === 'all') {
+        return this.filterExpr;
+      }
+
       var self = this;
       this.filterExpr = [];
 
@@ -2409,7 +2414,7 @@ $.fn.datagrid = function(options) {
           isDropdown = input.is('select'),
           svg = btn.find('.icon-dropdown:first'),
           op,
-		  format;
+		      format;
 
         if (!btn.length && !isDropdown) {
           return;
@@ -4726,11 +4731,16 @@ $.fn.datagrid = function(options) {
         toolbar.toolbar(opts);
       }
 
-      toolbar.find('.searchfield').off('keypress.datagrid').on('keypress.datagrid', function (e) {
+      var thisSearch = toolbar.find('.searchfield'),
+        xIcon = thisSearch.parent().find('.close.icon');
+      thisSearch.off('keypress.datagrid').on('keypress.datagrid', function (e) {
         if (e.keyCode === 13 || e.type==='change') {
           e.preventDefault();
-          self.keywordSearch($(this).val());
+          self.keywordSearch(thisSearch.val());
         }
+      });
+      xIcon.off('click.datagrid').on('click.datagrid', function () {
+        self.keywordSearch(thisSearch.val());
       });
 
       this.toolbar = toolbar;
@@ -4776,22 +4786,24 @@ $.fn.datagrid = function(options) {
         cell.text(text.replace('<i>','').replace('</i>',''));
       });
 
-      if (!term || term.length === 0) {
-        this.displayCounts();
-
-        if (this.pager) {
-          this.resetPager('sorted');
-        }
-
-        return;
-      }
-
-      term = term.toLowerCase();
+      term = (term || '').toLowerCase();
       this.filterExpr.push({column: 'all', operator: 'contains', value: term});
 
       this.filterKeywordSearch();
       this.renderRows();
       this.resetPager('searched');
+
+      // Set active page
+      if (this.pager && this.filterExpr.length === 1) {
+        if (this.filterExpr[0].value !== '') {
+          this.pager.searchActivePage = this.pager.activePage;
+          this.pager.setActivePage(1, true);
+        }
+        else if (this.filterExpr[0].value === '' && this.pager.searchActivePage > -1) {
+          this.pager.setActivePage(this.pager.searchActivePage, true);
+          delete this.pager.searchActivePage;
+        }
+      }
     },
 
     // Filter to keyword search
@@ -4839,14 +4851,14 @@ $.fn.datagrid = function(options) {
       if (self.settings.treeGrid) {
         dataset = self.settings.treeDepth;
         for (i = 0, len = dataset.length; i < len; i++) {
-          isFiltered = !checkRow(dataset[i].node);
+          isFiltered = filterExpr.value === '' ? false : !checkRow(dataset[i].node);
           dataset[i].node.isFiltered = isFiltered;
         }
       }
       else {
         dataset = self.settings.dataset;
         for (i = 0, len = dataset.length; i < len; i++) {
-          isFiltered = !checkRow(dataset[i]);
+          isFiltered = filterExpr.value === '' ? false : !checkRow(dataset[i]);
           dataset[i].isFiltered = isFiltered;
         }
       }
