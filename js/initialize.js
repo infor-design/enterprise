@@ -246,8 +246,6 @@
 
             ['expandablearea', '.expandable-area'],
 
-            ['modalsearch', '.modal-search'],
-
             ['signin'],
 
             ['homepage'],
