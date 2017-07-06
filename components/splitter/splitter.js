@@ -199,33 +199,6 @@
         return this;
       },
 
-      // Sets up event handlers for this control and its sub-elements
-      handleEvents: function() {
-        var self = this;
-
-        this.element
-          .on('updated.' + pluginName, function() {
-            self.updated();
-          })
-          .on('keydown.' + pluginName, function(e) {
-            //Space will toggle selection
-            if (e.which === 32) {
-              self.toggleSelection();
-              e.preventDefault();
-            }
-
-            if (e.which === 37) {
-              self.splitTo(self.split - 15, self.parentHeight);
-            }
-
-            if (e.which === 39) {
-              self.splitTo(self.split + 15, self.parentHeight);
-            }
-          });
-
-        return this;
-      },
-
       toggleSelection: function () {
         this.element.toggleClass('is-dragging');
       },
@@ -304,7 +277,41 @@
       destroy: function() {
         this.teardown();
         $.removeData(this.element[0], pluginName);
+      },
+
+      /**
+       * Sets up event handlers for this control and its sub-elements
+       *
+       * @fires Splitter#events
+       * @param {Object} updated  &nbsp;-&nbsp; Fires when the component updates.
+       * @param {Object} keydown  &nbsp;-&nbsp; Fires when a key is pressed while the component is focused.
+       */
+      handleEvents: function() {
+        var self = this;
+
+        this.element
+          .on('updated.' + pluginName, function() {
+            self.updated();
+          })
+          .on('keydown.' + pluginName, function(e) {
+            //Space will toggle selection
+            if (e.which === 32) {
+              self.toggleSelection();
+              e.preventDefault();
+            }
+
+            if (e.which === 37) {
+              self.splitTo(self.split - 15, self.parentHeight);
+            }
+
+            if (e.which === 39) {
+              self.splitTo(self.split + 15, self.parentHeight);
+            }
+          });
+
+        return this;
       }
+
     };
 
     // Initialize the plugin (Once)
