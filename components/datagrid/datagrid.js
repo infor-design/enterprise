@@ -4726,11 +4726,16 @@ $.fn.datagrid = function(options) {
         toolbar.toolbar(opts);
       }
 
-      toolbar.find('.searchfield').off('keypress.datagrid').on('keypress.datagrid', function (e) {
+      var thisSearch = toolbar.find('.searchfield'),
+        xIcon = thisSearch.parent().find('.close.icon');
+      thisSearch.off('keypress.datagrid').on('keypress.datagrid', function (e) {
         if (e.keyCode === 13 || e.type==='change') {
           e.preventDefault();
-          self.keywordSearch($(this).val());
+          self.keywordSearch(thisSearch.val());
         }
+      });
+      xIcon.off('click.datagrid').on('click.datagrid', function () {
+        self.keywordSearch(thisSearch.val());
       });
 
       this.toolbar = toolbar;
@@ -4776,17 +4781,7 @@ $.fn.datagrid = function(options) {
         cell.text(text.replace('<i>','').replace('</i>',''));
       });
 
-      if (!term || term.length === 0) {
-        this.displayCounts();
-
-        if (this.pager) {
-          this.resetPager('sorted');
-        }
-
-        return;
-      }
-
-      term = term.toLowerCase();
+      term = (term || '').toLowerCase();
       this.filterExpr.push({column: 'all', operator: 'contains', value: term});
 
       this.filterKeywordSearch();
@@ -4839,14 +4834,14 @@ $.fn.datagrid = function(options) {
       if (self.settings.treeGrid) {
         dataset = self.settings.treeDepth;
         for (i = 0, len = dataset.length; i < len; i++) {
-          isFiltered = !checkRow(dataset[i].node);
+          isFiltered = filterExpr.value === '' ? false : !checkRow(dataset[i].node);
           dataset[i].node.isFiltered = isFiltered;
         }
       }
       else {
         dataset = self.settings.dataset;
         for (i = 0, len = dataset.length; i < len; i++) {
-          isFiltered = !checkRow(dataset[i]);
+          isFiltered = filterExpr.value === '' ? false : !checkRow(dataset[i]);
           dataset[i].isFiltered = isFiltered;
         }
       }
