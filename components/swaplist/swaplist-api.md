@@ -3,9 +3,303 @@
 ### Table of Contents
 
 -   [SwapList](#swaplist)
+    -   [loadListview](#loadlistview)
+    -   [setElements](#setelements)
+    -   [isMultiSelectClass](#ismultiselectclass)
+    -   [initSelected](#initselected)
+    -   [moveElements](#moveelements)
+    -   [unselectElements](#unselectelements)
+    -   [isDragAndDropSupports](#isdraganddropsupports)
+    -   [isMatchMediaSupports](#ismatchmediasupports)
+    -   [viewport](#viewport)
+    -   [isMaxWidth](#ismaxwidth)
+    -   [makeDraggable](#makedraggable)
+    -   [getElementByTouchInList](#getelementbytouchinlist)
+    -   [draggTouchElement](#draggtouchelement)
+    -   [hasModifier](#hasmodifier)
+    -   [addDropeffects](#adddropeffects)
+    -   [clearDropeffects](#cleardropeffects)
+    -   [clearSelections](#clearselections)
+    -   [setSelectionsItems](#setselectionsitems)
+    -   [initDataset](#initdataset)
+    -   [getDataList](#getdatalist)
+    -   [arrayIndexMove](#arrayindexmove)
+    -   [syncDataset](#syncdataset)
+    -   [isjQuery](#isjquery)
+    -   [updateAttributes](#updateattributes)
+    -   [afterUpdate](#afterupdate)
+    -   [getItems](#getitems)
+    -   [getAvailable](#getavailable)
+    -   [getSelected](#getselected)
+    -   [getAdditional](#getadditional)
+    -   [draggedMakeSelected](#draggedmakeselected)
+    -   [updateDataset](#updatedataset)
+    -   [unbind](#unbind)
+    -   [updated](#updated)
+    -   [destroy](#destroy)
+    -   [handleEvents](#handleevents)
 
 ## SwapList
 
+The SwapList Component creates a list of options that can be picked and organized.
+
 **Parameters**
 
--   `element` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+-   `element`  
+-   `available` **?**  - 
+-   `selected` **?**  - 
+-   `additional` **?**  - 
+-   `availableClass` **?**  - 
+-   `selectedClass` **?**  - 
+-   `additionalClass` **?**  - 
+-   `availableBtn` **?**  - 
+-   `selectedBtnLeft` **?**  - 
+-   `selectedBtnRight` **?**  - 
+-   `additionalBtn` **?**  - 
+-   `template` **?**  - 
+
+### loadListview
+
+Load listview
+
+### setElements
+
+Set elements
+
+### isMultiSelectClass
+
+When list is Empty force to add css class "is-muliselect"
+
+### initSelected
+
+Initialize pre selected items
+
+**Parameters**
+
+-   `container` **(jQuery | [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element))** 
+
+### moveElements
+
+Move Elements
+
+**Parameters**
+
+-   `from` **([Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery> | [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element))** 
+-   `to` **([Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery> | [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element))** 
+
+### unselectElements
+
+Un-select Elements
+
+**Parameters**
+
+-   `list` **(jQuery | [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element))** 
+
+### isDragAndDropSupports
+
+Detect browser support for drag-n-drop
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### isMatchMediaSupports
+
+Detect browser support for match-media
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### viewport
+
+Detect browser viewport
+
+Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+### isMaxWidth
+
+Check given [max-width] is true/false
+
+**Parameters**
+
+-   `w`  
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### makeDraggable
+
+Make Draggable
+
+### getElementByTouchInList
+
+Get Element By Touch In List
+
+**Parameters**
+
+-   `list` **(jQuery | [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element))** 
+-   `x` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+-   `y` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+
+### draggTouchElement
+
+Dragg touch element
+
+**Parameters**
+
+-   `e` **jQuery.Event** 
+-   `elm` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** 
+
+### hasModifier
+
+Shorctut for testing whether a modifier is pressed
+
+**Parameters**
+
+-   `e`  
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### addDropeffects
+
+Applying dropeffect to the target containers
+
+### clearDropeffects
+
+Removing dropeffect from the target containers
+
+### clearSelections
+
+Clear selections
+
+### setSelectionsItems
+
+Set selections items
+
+**Parameters**
+
+-   `container` **([Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery> | [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element))** 
+
+### initDataset
+
+Init dataset
+
+### getDataList
+
+Get data list
+
+**Parameters**
+
+-   `container` **([Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery> | [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element))** 
+
+Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+### arrayIndexMove
+
+Move an array element position
+
+**Parameters**
+
+-   `arr` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** 
+-   `from` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+-   `to` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+
+### syncDataset
+
+Sync dataset
+
+**Parameters**
+
+-   `owner`  
+-   `droptarget` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** 
+
+### isjQuery
+
+Check if a object is jQuery object
+
+**Parameters**
+
+-   `obj` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** the object being checked
+
+### updateAttributes
+
+Update attributes
+
+**Parameters**
+
+-   `list` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** 
+
+### afterUpdate
+
+After update
+
+**Parameters**
+
+-   `list` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** 
+
+### getItems
+
+Get items from provided container
+
+**Parameters**
+
+-   `container` **([Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery> | [HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element))** 
+
+Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+### getAvailable
+
+Get available dataset
+
+Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+### getSelected
+
+Get selected dataset
+
+Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+### getAdditional
+
+Gets additional dataset
+
+Returns **?** 
+
+### draggedMakeSelected
+
+Make selected if dragged element was not selected
+
+**Parameters**
+
+-   `list` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+-   `target` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** 
+
+### updateDataset
+
+Updates the swaplist dataset
+
+**Parameters**
+
+-   `ds` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+### unbind
+
+Removes event bindings from the swaplist instance.
+
+Returns **this** 
+
+### updated
+
+Updates this instance of the swaplist component with new settings.
+
+Returns **this** 
+
+### destroy
+
+Destroys this instance of the swaplist component and removes its link to its base element.
+
+### handleEvents
+
+Sets up event handlers for this control and its sub-elements
+
+**Parameters**
+
+-   `click` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when the component's action buttons are clicked.
+-   `keydown` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when a key is pressed while the component is focused.
+-   `mousedown` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when any mousebutton is pressed.

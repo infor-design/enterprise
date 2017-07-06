@@ -4,7 +4,9 @@
 
 ## Configuration Examples
 
-1. [Main Example](/components/splitter/example-index.html)
+1. Main [View Example](../components/splitter/example-index.html)
+2. Events [View Example](../components/splitter/example-events.html)
+
 
 ## Code Example
 

@@ -3,9 +3,19 @@
 ### Table of Contents
 
 -   [Splitter](#splitter)
+    -   [handleEvents](#handleevents)
 
 ## Splitter
 
 **Parameters**
 
 -   `element` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+### handleEvents
+
+Sets up event handlers for this control and its sub-elements
+
+**Parameters**
+
+-   `updated` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when the component updates.
+-   `keydown` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when a key is pressed while the component is focused.
