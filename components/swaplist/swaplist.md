@@ -4,8 +4,8 @@
 
 ## Configuration options
 
-1. [Main Swaplist Example](/components/swaplist/example-index.html)
-2. [Swaplist with Selected Items](/components/swaplist/example-selected.html)
+1. [Main Swaplist Example](../components/swaplist/example-index.html)
+2. [Swaplist with Selected Items](../components/swaplist/example-selected.html)
 
 ## Behavior Guidelines
 
@@ -141,6 +141,6 @@ The individual components (list boxes, move/reorganize controls) take the follow
 
 ## Upgrading from 3.X
 
--   Replace .inforSwapList() with .swaplist() in the js
+-   Replace `.inforSwapList()` with `.swaplist()` in the js
 -   The available and selected options are the same
 -   You must now pass markup as a template and place the markup in the DOM
