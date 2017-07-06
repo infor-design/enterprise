@@ -2398,6 +2398,11 @@ $.fn.datagrid = function(options) {
 
     //Get filter conditions in array form from the UI
     filterConditions: function () {
+      // Do not modify keyword search filter expr
+      if (this.filterExpr && this.filterExpr.length === 1 && this.filterExpr[0].column === 'all') {
+        return this.filterExpr;
+      }
+
       var self = this;
       this.filterExpr = [];
 
@@ -2409,7 +2414,7 @@ $.fn.datagrid = function(options) {
           isDropdown = input.is('select'),
           svg = btn.find('.icon-dropdown:first'),
           op,
-		  format;
+		      format;
 
         if (!btn.length && !isDropdown) {
           return;
@@ -4787,6 +4792,18 @@ $.fn.datagrid = function(options) {
       this.filterKeywordSearch();
       this.renderRows();
       this.resetPager('searched');
+
+      // Set active page
+      if (this.pager && this.filterExpr.length === 1) {
+        if (this.filterExpr[0].value !== '') {
+          this.pager.searchActivePage = this.pager.activePage;
+          this.pager.setActivePage(1, true);
+        }
+        else if (this.filterExpr[0].value === '' && this.pager.searchActivePage > -1) {
+          this.pager.setActivePage(this.pager.searchActivePage, true);
+          delete this.pager.searchActivePage;
+        }
+      }
     },
 
     // Filter to keyword search
