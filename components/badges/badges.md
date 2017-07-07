@@ -1,6 +1,6 @@
 # Badges  [Learn More](#)
 
-## Api Details
+## API Details
 
 ### Settings
 

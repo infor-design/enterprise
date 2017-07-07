@@ -26,7 +26,7 @@ $('body').about({
 
 ## Accessibility
 
--   [Modal](/component/modal/docs) guidelines apply as this is essentially a specific modal dialog.
+-   [Modal](../components/modal) guidelines apply as this is essentially a specific modal dialog.
 
 ## Code Tips
 

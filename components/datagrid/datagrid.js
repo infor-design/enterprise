@@ -4815,12 +4815,20 @@ $.fn.datagrid = function(options) {
         dataset, isFiltered, i, len,
         filterExpr = self.filterExpr,
 
-        checkRow = function (data) {
+        checkRow = function (data, row) {
           var isMatch = false,
 
             checkColumn = function (columnId) {
               var column = self.columnById(columnId)[0],
-                value = (self.fieldValue(data, column.field)).toString().toLowerCase();
+                fieldValue = self.fieldValue(data, column.field),
+                value, cell = self.settings.columns.indexOf(column);
+
+              // Use the formatted value (what the user sees in the cells) since it's a more reliable match
+              value = self.formatValue(column.formatter, row, cell, fieldValue, column, data, self).toLowerCase();
+
+              // Strip any html markup that might be in the formatted value
+              value = value.replace(/(<([^>]+)>)|(&lt;([^>]+)&gt;)/ig, '');
+
               return value.indexOf(filterExpr.value) > -1;
             };
 
@@ -4854,14 +4862,14 @@ $.fn.datagrid = function(options) {
       if (self.settings.treeGrid) {
         dataset = self.settings.treeDepth;
         for (i = 0, len = dataset.length; i < len; i++) {
-          isFiltered = filterExpr.value === '' ? false : !checkRow(dataset[i].node);
+          isFiltered = filterExpr.value === '' ? false : !checkRow(dataset[i].node, i);
           dataset[i].node.isFiltered = isFiltered;
         }
       }
       else {
         dataset = self.settings.dataset;
         for (i = 0, len = dataset.length; i < len; i++) {
-          isFiltered = filterExpr.value === '' ? false : !checkRow(dataset[i]);
+          isFiltered = filterExpr.value === '' ? false : !checkRow(dataset[i], i);
           dataset[i].isFiltered = isFiltered;
         }
       }

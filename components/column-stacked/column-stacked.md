@@ -1,7 +1,7 @@
 
 # Column Chart (Stacked)  [Learn More](#)
 
-## Api Details
+## API Details
 
 ### Dataset Settings
 

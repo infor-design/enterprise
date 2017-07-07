@@ -5,7 +5,7 @@
 
 The forms plugins are a set of form related small utils and functionality contained in `forms.js`. This page outlines the functionality contained in that plugin and shows some from related examples for layout from other areas.
 
-## Api Details
+## API Details
 
 
 {{api-details}}

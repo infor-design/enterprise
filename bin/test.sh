@@ -95,7 +95,7 @@ fi
 echo "Starting Intern Test Suite with arguments ${INTERN_ARGS}..."
 
 # run intern, wait til it finishes.
-# config=test2/intern.local.functional
+# config=test/intern.local.functional
 # kill the servers when we're done.
 ./node_modules/.bin/intern-${1} ${INTERN_ARGS} && killServers
 
