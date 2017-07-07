@@ -4,8 +4,9 @@
 
 ## Configuration Examples
 
-1. Main [View Example](../components/splitter/example-index.html)
-2. Events [View Example](../components/splitter/example-events.html)
+1. Main [View Example](../components/splitter/example-index)
+2. Splitter Element in Left Pane [View Example](../components/splitter/example-splitter-left)
+3. Events [View Example](../components/splitter/example-events)
 
 
 ## Code Example
