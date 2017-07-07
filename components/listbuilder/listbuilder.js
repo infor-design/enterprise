@@ -58,9 +58,18 @@
         settings = $.extend({}, defaults, options);
 
     /**
-     * @constructor
-     * @param {Object} element
-     */
+    * A list of items with add/remove/delete and sort functionality.
+    *
+    * @class ListBuilder
+    * @param {Object} dataset  &nbsp;-&nbsp; The array of data
+    * @param {String} btnAdd  &nbsp;-&nbsp; The attribute to match the add button in the toolbar (ie. data-action="add")
+    * @param {String} btnEdit  &nbsp;-&nbsp; The attribute to match the edit button in the toolbar (ie. data-action="edit")
+    * @param {Boolean} btnDelete  &nbsp;-&nbsp; The attribute to match the delete button in the toolbar (ie. data-action="delete")
+    * @param {String} btnGoUp  &nbsp;-&nbsp; The attribute to match the move up button in the toolbar (ie. data-action="goup")
+    * @param {Boolean} btnGoDown  &nbsp;-&nbsp; The attribute to match the move up button in the toolbar (ie. data-action="dodown")
+    * @param {String} template  &nbsp;-&nbsp; The list view markdown / template.
+    * @param {String} templateItemContent  &nbsp;-&nbsp; The markdown for editing an item
+    */
     function ListBuilder(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -219,7 +228,9 @@
         return this;
       }, // END: Handle Events ---------------------------------------------------------------------
 
-      // Add new item
+      /**
+      * Add an item into edit node.
+      */
       addItem: function() {
         var self = this,
           s = self.settings;
@@ -253,7 +264,9 @@
         });
       },
 
-      // Move item up
+      /**
+      * Move the currently selected item up.
+      */
       moveItemUp: function() {
         var self = this,
           node = self.listApi.selectedItems[0];
@@ -273,7 +286,9 @@
         }
       },
 
-      // Move item down
+      /**
+      * Move the currently selected item down.
+      */
       moveItemDown: function() {
         var self = this,
           node = self.listApi.selectedItems[0];
@@ -293,7 +308,10 @@
         }
       },
 
-      // Edit item
+      /**
+      * Edit the selected item
+      * @param {Boolean} isNewItem  &nbsp;-&nbsp; Is it a new item?
+      */
       editItem: function(isNewItem) {
         var node = this.listApi.selectedItems[0];
         if (node && node.length > 0) {
@@ -305,7 +323,11 @@
         }
       },
 
-      // Make item editable
+      /**
+      * Make the node editable
+      * @param {jQuery} node  &nbsp;-&nbsp; The node to edit
+      * @param {Boolean} isNewItem  &nbsp;-&nbsp; Is it a new item?
+      */
       makeEditable: function(node, isNewItem) {
         var self = this,
           data = self.getDataByNode(node),
@@ -340,7 +362,11 @@
         }
       },
 
-      // Commit editable item
+      /**
+      * Delete the selected item.
+      * @param {jQuery} node  &nbsp;-&nbsp; The node to delete
+      * @param {Boolean} isNewItem  &nbsp;-&nbsp; Is it a new item?
+      */
       commitEdit: function(node, isNewItem) {
         var self = this,
           s = this.settings,
@@ -358,7 +384,9 @@
         self.element.triggerHandler('exiteditmode', [data]);
       },
 
-      // Delete item
+      /**
+      * Delete the selected item.
+      */
       deleteItem: function() {
         var self = this,
           node = self.listApi.selectedItems[0];
@@ -375,7 +403,10 @@
         }
       },
 
-      // Get data from dataset by node
+      /**
+      * Get data from dataset by node
+      * @returns {Object}
+      */
       getDataByNode: function(node) {
         var data = {};
         for (var i = 0,l = this.dataset.length; i < l; i++) {
