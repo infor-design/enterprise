@@ -19,21 +19,25 @@
     var pluginName = 'homepage',
 
         defaults = {
-          gutterSize: 20,
-          widgetWidth: 360,
-          widgetHeight: 370,
+          gutterSize: 20, //Private
+          widgetWidth: 360, //Private
+          widgetHeight: 370, //Private
           animate: true,
-          timeout: 100,
+          timeout: 100, //Private
           columns: 3,
-          easing: 'blockslide'
+          easing: 'blockslide' //Private
         },
         settings = $.extend({}, defaults, options);
 
 
     /**
-     * @constructor
-     * @param {Object} element
-     */
+    * The Homepage handles card layout at multiple breakpoints.
+    *
+    * @class Homepage
+    * @param {Boolean} animate  &nbsp;-&nbsp; Disable animation during resize
+    * @param {Number} columns  &nbsp;-&nbsp; Display in 3 (default) or 4 column layout
+    *
+    */
     function Homepage(element) {
       this.element = $(element);
       Soho.logTimeStart(pluginName);
@@ -48,7 +52,7 @@
         this.settings = settings;
         this.isTransitionsSupports = this.supportsTransitions();
         this.initHeroWidget();
-        this.attachEvents();
+        this.handleEvents();
 
         //Initial Sizing
         this.resize(this, false);
@@ -213,18 +217,6 @@
         arr.splice(to, 0, arr.splice(from, 1)[0]);
       },
 
-      attachEvents: function () {
-        var self = this;
-
-        $('body').on('resize.homepage', function() {
-          self.resize(self, self.settings.animate);
-        });
-
-        $('.application-menu').on('applicationmenuopen.homepage applicationmenuclose.homepage', function () {
-          self.resize(self, self.settings.animate);
-        });
-      },
-
       // Resize Method
       resize: function(self, animate) {
         //Sizes of "breakpoints" is  320, 660, 1000 , 1340 (for 320)
@@ -375,11 +367,33 @@
         $('.application-menu').off('applicationmenuopen.homepage applicationmenuclose.homepage');
       },
 
-      // Teardown - Remove added markup and events
+      /**
+      * Teardown - Remove added markup and events
+      */
       destroy: function() {
         this.detachEvents();
         $.removeData(this.element[0], pluginName);
+      },
+
+      /**
+       *  This component fires the following events.
+       *
+       * @fires Homepage#events
+       * @param {Object} resize  &nbsp;-&nbsp; Fires after the page is resized and layout is set. Can be used for any special adjustments.
+       *
+       */
+      handleEvents: function () {
+        var self = this;
+
+        $('body').on('resize.homepage', function() {
+          self.resize(self, self.settings.animate);
+        });
+
+        $('.application-menu').on('applicationmenuopen.homepage applicationmenuclose.homepage', function () {
+          self.resize(self, self.settings.animate);
+        });
       }
+
     };
 
     // Initialize the plugin (Once)

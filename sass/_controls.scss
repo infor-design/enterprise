@@ -1,8 +1,10 @@
+// Required
 @import 'components/icons/icons';
 @import 'components/typography/typography';
 @import 'controls/layouts';
 @import 'components/visibility/visibility';
 
+// Each Component
 @import 'controls/placeable';
 @import 'components/breadcrumb/breadcrumb';
 @import 'components/button/button';
@@ -25,7 +27,7 @@
 @import 'components/tree/tree';
 @import 'controls/rating';
 @import 'controls/listview';
-@import 'controls/listbuilder';
+@import 'components/listbuilder/listbuilder';
 @import 'components/swaplist/swaplist';
 @import 'components/badges/badges';
 @import 'components/circlepager/circlepager';
@@ -66,8 +68,8 @@
 @import 'components/splitter/splitter';
 @import 'components/form/form';
 
-// Core Patterns
-@import 'patterns/homepage';
+// Patterns
+@import 'components/homepage/homepage';
 @import 'patterns/signin';
 @import 'patterns/builder';
 @import 'patterns/commonnav';
@@ -79,12 +81,12 @@
 @import 'patterns/card-deck';
 @import 'patterns/master-detail';
 
-// Core Layouts
+// Layouts
 @import 'layouts/object-summary';
 @import 'layouts/panes';
 @import 'layouts/scrollable-flex';
 @import 'layouts/summary-form';
 @import 'layouts/top-bottom-anchored';
 
-// These controls come last
+// These controls must come last
 @import 'components/colors/colors';
