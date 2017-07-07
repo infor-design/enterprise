@@ -99,8 +99,7 @@ module.exports = function(grunt) {
     'cssmin',
     'copy:main',
     'compress',
-    'usebanner',
-    'run:documentation'
+    'usebanner'
   ]);
 
   grunt.registerTask('js', [
