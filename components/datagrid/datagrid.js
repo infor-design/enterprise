@@ -2152,6 +2152,8 @@ $.fn.datagrid = function(options) {
         this.headerRow.find('.is-filterable').removeClass('is-filterable');
         this.headerRow.find('.datagrid-filter-wrapper').hide();
         this.settings.filterable = false;
+
+        this.element.removeClass('has-filterable-columns');
       } else {
         this.settings.filterable = true;
 
@@ -2159,11 +2161,12 @@ $.fn.datagrid = function(options) {
           this.renderFilterRow();
         }
 
+        this.element.addClass('has-filterable-columns');
+
         this.headerRow.addClass('is-filterable');
         this.headerRow.find('.is-filterable').addClass('is-filterable');
         this.headerRow.find('.datagrid-filter-wrapper').show();
       }
-
     },
 
 

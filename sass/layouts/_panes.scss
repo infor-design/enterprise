@@ -22,6 +22,12 @@
     &.paginated {
       height: calc(100% - 58px);
     }
+
+    &.has-filterable-columns {
+      .datagrid-body {
+        height: calc(100% - 59px);
+      }
+    }
   }
 
   .toolbar + .datagrid-container,
