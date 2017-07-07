@@ -14,34 +14,27 @@ define({
   // https://saucelabs.com/docs/additional-config#desired-capabilities for Sauce Labs capabilities.
   // Note that the `build` capability will be filled in with the current commit ID from the Travis CI environment
   // automatically
-  capabilities: {
-    'selenium-version': '2.53.0'
-  },
+  capabilities: {},
 
   // Browsers to run integration testing against. Note that version numbers must be strings if used with Sauce
   // OnDemand. Options that will be permutated are browserName, version, platform, and platformVersion; any other
   // capabilities options specified for an environment will be copied as-is
+  /*
   environments: [
-    //{ browserName: 'internet explorer', version: '11', platform: 'Windows 8.1' },
-    //{ browserName: 'internet explorer', version: '10', platform: 'Windows 8' },
-    //{ browserName: 'internet explorer', version: '9', platform: 'Windows 7' },
-    //{ browserName: 'firefox', version: '28', platform: [ 'OS X 10.9', 'Windows 7', 'Linux' ] },
-    //{ browserName: 'chrome', version: '34', platform: [ 'OS X 10.9', 'Windows 7', 'Linux' ] },
-    //{ browserName: 'safari', version: '6', platform: 'OS X 10.8' },
-    //{ browserName: 'safari', version: '7', platform: 'OS X 10.9' }
-    { browserName: 'firefox' }
-  ],
-
-  // Maximum number of simultaneous integration tests that should be executed on the remote WebDriver service
-  maxConcurrency: 3,
+    { browserName: 'internet explorer', version: '11', platform: 'Windows 8.1' },
+    { browserName: 'internet explorer', version: '10', platform: 'Windows 8' },
+    { browserName: 'internet explorer', version: '9', platform: 'Windows 7' },
+    { browserName: 'firefox', version: '28', platform: [ 'OS X 10.9', 'Windows 7', 'Linux' ] },
+    { browserName: 'chrome', version: '34', platform: [ 'OS X 10.9', 'Windows 7', 'Linux' ] },
+    { browserName: 'safari', version: '6', platform: 'OS X 10.8' },
+    { browserName: 'safari', version: '7', platform: 'OS X 10.9' }
+  ],*/
 
   // Name of the tunnel class to use for WebDriver tests
-  // NOTE: For local Selenium tests, we are expecting that an instance of Selenium Standalone server is already running
-  //
   tunnel: 'NullTunnel',
   tunnelOptions: {
-    hostname: 'localhost',
-    port: 4444
+      username: 'tmcconechy',
+      accessKey: 'ffbed6ba-df11-4bc3-9110-a5ba478e8b41'
   },
 
   // Configuration options for the module loader; any AMD configuration options supported by the specified AMD loader
@@ -51,29 +44,25 @@ define({
     'host-browser': 'node_modules/requirejs/require.js'
   },
   loaderOptions: {
-    basePath: './',
-    //baseUrl: '/',
     // Packages that should be registered with the loader in each testing environment
     packages: [
       { name: 'controls', location: '.' },
       { name: 'colors', location: './node_modules/colors' },
-      { name: 'jsdom', location: './node_modules/jsdom/lib' },
+      { name: 'jsdom', location: './node_modules/jsdom/lib' }
     ]
   },
 
   reporters: [
-    { 'id': 'JUnit', 'filename': 'junit-functional.xml' },
-    { 'id': 'Pretty'}
+    { 'id': 'JUnit', 'filename': 'junit-unit.xml' },
+    { 'id': 'Pretty' }
   ],
 
   // Non-functional test suite(s) to run in each browser
-  suites: [],
+  suites: ['test/unit/_all'],
 
   // Functional test suite(s) to run in each browser once non-functional tests are completed
-  functionalSuites: [
-    'test2/functional/_all'
-  ],
+  functionalSuites: [],
 
   // A regular expression matching URLs to files that should not be included in code coverage analysis
-  excludeInstrumentation: /^(?:tests|test2|node_modules|_all)\//
+  excludeInstrumentation: /^(?:tests|test|node_modules|_all)\//
 });

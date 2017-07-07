@@ -1,7 +1,7 @@
 
 # Alerts  [Learn More](https://soho.infor.com/index.php?p=component/accordion)
 
-## Api Details
+## API Details
 
 ### Settings
 

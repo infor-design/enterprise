@@ -24,56 +24,46 @@ define({
   environments: [
     //{ browserName: 'internet explorer', version: '11', platform: 'Windows 8.1' },
     //{ browserName: 'internet explorer', version: '10', platform: 'Windows 8' },
-    //{ browserName: 'internet explorer', version: '9', platform: 'Windows 7' },
+    { browserName: 'internet explorer', version: '9', platform: 'Windows 7' },
     //{ browserName: 'firefox', version: '28', platform: [ 'OS X 10.9', 'Windows 7', 'Linux' ] },
     //{ browserName: 'chrome', version: '34', platform: [ 'OS X 10.9', 'Windows 7', 'Linux' ] },
     //{ browserName: 'safari', version: '6', platform: 'OS X 10.8' },
     //{ browserName: 'safari', version: '7', platform: 'OS X 10.9' }
-    { browserName: 'firefox' }
   ],
 
   // Maximum number of simultaneous integration tests that should be executed on the remote WebDriver service
   maxConcurrency: 3,
 
   // Name of the tunnel class to use for WebDriver tests
-  // NOTE: For local Selenium tests, we are expecting that an instance of Selenium Standalone server is already running
-  //
-  tunnel: 'NullTunnel',
+  tunnel: 'BrowserStackTunnel',
   tunnelOptions: {
-    hostname: 'localhost',
-    port: 4444
+    username: 'cindymercadoreye1', // or use env var BROWSERSTACK_USERNAME
+    accessKey: '8ZsGupHqQUkrK8y87TJz' // or use env var BROWSERSTACK_ACCESS_KEY
+  },
+
+  // The desired AMD loader to use when running unit tests (client.html/client.js). Omit to use the default Dojo
+  // loader
+  useLoader: {
+    'host-node': 'dojo/dojo',
+    'host-browser': 'node_modules/dojo/dojo.js'
   },
 
   // Configuration options for the module loader; any AMD configuration options supported by the specified AMD loader
   // can be used here
-  loaders: {
-    'host-node': 'requirejs',
-    'host-browser': 'node_modules/requirejs/require.js'
-  },
-  loaderOptions: {
-    basePath: './',
-    //baseUrl: '/',
+  loader: {
     // Packages that should be registered with the loader in each testing environment
-    packages: [
-      { name: 'controls', location: '.' },
-      { name: 'colors', location: './node_modules/colors' },
-      { name: 'jsdom', location: './node_modules/jsdom/lib' },
-    ]
+    packages: [ { name: 'controls', location: '.' } ],
+    map: {
+      'jquery' : 'controls/js/vendor/jquery-2.1.3.min'
+    }
   },
-
-  reporters: [
-    { 'id': 'JUnit', 'filename': 'junit-functional.xml' },
-    { 'id': 'Console' }
-  ],
 
   // Non-functional test suite(s) to run in each browser
   suites: [],
 
   // Functional test suite(s) to run in each browser once non-functional tests are completed
-  functionalSuites: [
-    'test2/functional/_all'
-  ],
+  functionalSuites: [ 'test/functional/_all' ],
 
   // A regular expression matching URLs to files that should not be included in code coverage analysis
-  excludeInstrumentation: /^(?:tests|test2|node_modules|_all)\//
+  excludeInstrumentation: /^(?:tests|node_modules)\//
 });
