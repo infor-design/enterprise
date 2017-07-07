@@ -71,9 +71,9 @@ define({
 
   // Functional test suite(s) to run in each browser once non-functional tests are completed
   functionalSuites: [
-    'test2/functional/_all'
+    'test/functional/_all'
   ],
 
   // A regular expression matching URLs to files that should not be included in code coverage analysis
-  excludeInstrumentation: /^(?:tests|test2|node_modules|_all)\//
+  excludeInstrumentation: /^(?:tests|test|node_modules|_all)\//
 });

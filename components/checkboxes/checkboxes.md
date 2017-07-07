@@ -1,6 +1,6 @@
 # Checboxes  [Learn More](#)
 
-## Api Details
+## API Details
 
 ### Attributes and Clases
 

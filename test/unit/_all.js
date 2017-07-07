@@ -1,8 +1,8 @@
 define([
   'intern!object',
   'intern/chai!expect',
-  //'test2/unit/_sanity',
-  'test2/unit/locale/common'
+  //'test/unit/_sanity',
+  'test/unit/locale/common'
 ], function() {
 
   'use strict';

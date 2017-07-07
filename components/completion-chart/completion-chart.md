@@ -1,7 +1,7 @@
 
 # Completion Chart  [Learn More](#)
 
-## Api Details
+## API Details
 
 ### Dataset Settings
 

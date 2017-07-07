@@ -2,7 +2,7 @@ define([
     'intern!object',
     'intern/chai!expect',
     'intern/dojo/node!../../../node_modules/leadfoot/keys',
-    'test2/support/helpers',
+    'test/support/helpers',
     'require'
 ], function (registerSuite, expect, k, helpers, require) {
 

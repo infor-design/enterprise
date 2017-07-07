@@ -1,6 +1,6 @@
 # Color Palette Info [Learn More](#)
 
-## Api Details
+## API Details
 
 ### Settings
 

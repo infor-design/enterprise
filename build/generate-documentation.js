@@ -50,7 +50,7 @@ glob('components/*/', function(err, components) {
 
         // Add Section Titles
         apiData = apiData.substr(0, apiData.indexOf('####')) + '\n### Functions \n' + apiData.substr(apiData.indexOf('####'));
-        apiData = apiData.replace('**Parameters**', '## Api Details \n### Settings');
+        apiData = apiData.replace('**Parameters**', '## API Details \n### Settings');
         apiData = apiData.replace('#### handleEvents', '### Events');
         apiData = apiData.replace('### handleEvents', '### Events');
 

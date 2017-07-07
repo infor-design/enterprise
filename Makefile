@@ -84,7 +84,7 @@ pull :
 up : pull
 	rm -rf node_modules
 	docker-compose up -d
-	@echo "[Info] Building SoHo XI..." 
+	@echo "[Info] Building SoHo XI..."
 	@echo "[Info] Can take up to 5 mins to start. Check http://localhost:4000"
 	@echo "[Info] Run make down to stop containers."
 
@@ -93,7 +93,7 @@ down :
 	docker-compose down
 
 restart :
-	docker-compose restart	
+	docker-compose restart
 
 reset : down
 	make up
@@ -109,5 +109,5 @@ watch :
 	@echo "[Info] ctrl-c to stop grunt watch"
 
 unit-tests :
-	docker exec -ti $(SOHO_CONTAINER) /bin/bash -c "./node_modules/.bin/intern-client config=test2/intern.local.unit"
+	docker exec -ti $(SOHO_CONTAINER) /bin/bash -c "./node_modules/.bin/intern-client config=test/intern.local.unit"
 	@echo "[Info] Running unit-tests..."

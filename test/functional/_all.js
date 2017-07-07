@@ -1,14 +1,14 @@
 define([
-  'test2/functional/dropdown/common',
-  'test2/functional/dropdown/expected-functions',
-  'test2/functional/input/common',
-  //'test2/functional/mask/common-patterns',
-  //'test2/functional/mask/copy-paste-text',
-  'test2/functional/mask/process-on-init',
-  'test2/functional/textarea/common',
-  'test2/functional/tabs/common',
-  'test2/functional/tabs/expected-functions',
-  'test2/functional/toolbar/common'
+  'test/functional/dropdown/common',
+  'test/functional/dropdown/expected-functions',
+  'test/functional/input/common',
+  //'test/functional/mask/common-patterns',
+  //'test/functional/mask/copy-paste-text',
+  'test/functional/mask/process-on-init',
+  'test/functional/textarea/common',
+  'test/functional/tabs/common',
+  'test/functional/tabs/expected-functions',
+  'test/functional/toolbar/common'
 ], function() {
 
   // Simple AMD Loader for all Functional Tests
