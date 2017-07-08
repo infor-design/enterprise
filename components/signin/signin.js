@@ -22,6 +22,7 @@
         settings = $.extend({}, defaults, options);
 
     /**
+     * @class {SignIn}
      * @constructor
      * @param {Object} element
      */
@@ -35,11 +36,48 @@
     // Plugin Methods
     SignIn.prototype = {
 
+      /**
+       * @private
+       */
       init: function() {
         this.settings = settings;
         this.handleKeys();
       },
 
+      /**
+       * Checks a keyboard event for a CAPS LOCK modifier.
+       * @param {jQuery.Event} e
+       * @returns {boolean}
+       */
+      isCapslock: function(e) {
+        e = (e) ? e : window.event;
+        var charCode = (e.which) ? e.which : ((e.keyCode) ? e.keyCode : false),
+         shifton = (e.shiftKey) ? e.shiftKey : ((e.modifiers) ? (!!(e.modifiers & 4)) : false);
+
+        if (charCode >= 97 && charCode <= 122 && shifton) {
+          return true;
+        }
+        if (charCode >= 65 && charCode <= 90 && !shifton) {
+          return true;
+        }
+        return false;
+      },
+
+      /**
+       * Teardown - Remove added markup and events
+       */
+      destroy: function() {
+        $.removeData(this.element[0], pluginName);
+        $('body').off('keypress.signin blur.signin change.signin');
+      },
+
+      /**
+       * @fires SignIn#events
+       * @param {Object} keypress
+       * @param {Object} blur
+       * @param {Object} change
+       *
+       */
       handleKeys: function() {
         var self = this,
           cssIcon = $.createIconElement({ classes: 'icon-capslock', icon: 'capslock' });
@@ -80,26 +118,6 @@
           }, 150);
 
         });
-      },
-
-      isCapslock: function(e) {
-        e = (e) ? e : window.event;
-        var charCode = (e.which) ? e.which : ((e.keyCode) ? e.keyCode : false),
-         shifton = (e.shiftKey) ? e.shiftKey : ((e.modifiers) ? (!!(e.modifiers & 4)) : false);
-
-        if (charCode >= 97 && charCode <= 122 && shifton) {
-          return true;
-        }
-        if (charCode >= 65 && charCode <= 90 && !shifton) {
-          return true;
-        }
-        return false;
-      },
-
-      // Teardown - Remove added markup and events
-      destroy: function() {
-        $.removeData(this.element[0], pluginName);
-        $('body').off('keypress.signin blur.signin change.signin');
       }
     };
 

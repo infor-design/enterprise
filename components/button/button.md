@@ -9,6 +9,7 @@
 3. Button on an <a> tag  [View Example]( ../components/button/example-as-link)
 4. Form Call to Action Button [View Example]( ../components/button/example-secondary-border)
 5. Button with Icons [View Example]( ../components/button/example-with-icons)
+6. Toggle Buttons [View Example]( ../components/button/example-toggle-button)
 
 ## Code Example
 

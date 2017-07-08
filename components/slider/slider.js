@@ -31,8 +31,15 @@
 
     /**
      * Touch Enabled/Responsive and Accessible Slider Control
-     * @constructor
-     * @param {Object} element
+     * @class {Slider}
+     * @param {Array} value
+     * @param {Number} min
+     * @param {Number} max
+     * @param {boolean} range
+     * @param {undefined|Number} step
+     * @param {Array} ticks
+     * @param {undefined|Array} tooltipContent
+     * @param {boolean} persistTooltip
      */
     function Slider(element) {
       this.settings = $.extend({}, defaults, options);
@@ -69,6 +76,10 @@
     // Actual Plugin Code
     Slider.prototype = {
 
+      /**
+       * @private
+       * @returns {this}
+       */
       init: function() {
         return this
           .buildSettings()
@@ -76,6 +87,11 @@
           .bindEvents();
       },
 
+      /**
+       * Handles Data Attribute settings, some markup settings
+       * @private
+       * @returns {this}
+       */
       buildSettings: function() {
         var self = this;
 
@@ -216,6 +232,11 @@
         return this;
       },
 
+      /**
+       * Adds pseudo-markup that helps build the component
+       * @private
+       * @returns {this}
+       */
       addMarkup: function() {
         var self = this,
           isVertical = false;
@@ -336,43 +357,10 @@
         return self;
       },
 
-      bindEvents: function() {
-        var self = this;
-
-        $.each(self.handles, function (i, handle) {
-          handle.on('mousedown.slider', function () {
-            if (self.isDisabled()) {
-              return;
-            }
-            $(this).focus();
-          })
-          .on('click.slider', function (e) {
-            e.preventDefault(); //Prevent from jumping to top.
-          })
-          .on('keydown.slider', function(e) {
-            self.activateHandle(handle);
-            self.handleKeys(e, self);
-          })
-          .on('keyup.slider blur.slider', function() {
-            self.deactivateHandle(handle);
-          });
-
-          self.enableHandleDrag(handle);
-        });
-
-        self.wrapper.on('click.slider touchend.slider touchcancel.slider', function(e) {
-          self.handleRangeClick(e);
-        });
-
-        // Slider Control listens to 'updated' trigger on its base element to update values
-        self.element.on('updated.slider', function() {
-          self.updated();
-        });
-
-        return self;
-      },
-
-      // User is interacting with the Slider Range (not the handle or ticks)
+      /**
+       * User is interacting with the Slider Range (not the handle or ticks)
+       * @param {jQuery.Event} e
+       */
       handleRangeClick: function(e) {
           e.preventDefault();
           if (this.isDisabled()) {
@@ -445,14 +433,26 @@
           }
       },
 
+      /**
+       * Activates one of the slider handles
+       * @param {jQuery[]} handle
+       */
       activateHandle: function(handle) {
         handle.addClass('is-active');
       },
 
+      /**
+       * Deactivates one of the slider handles
+       * @param {jQuery[]} handle
+       */
       deactivateHandle: function(handle) {
         handle.removeClass('is-active');
       },
 
+      /**
+       * Enables the ability to drag one of the slider handles.
+       * @param {jQuery[]} handle
+       */
       enableHandleDrag: function(handle) {
         if (this.isDisabled()) {
           return;
@@ -528,6 +528,10 @@
         });
       },
 
+      /**
+       * Disables the dragging of a handle.
+       * @param {jQuery[]} handle
+       */
       disableHandleDrag: function(handle) {
         handle.off('drag.slider dragstart dragend');
 
@@ -540,16 +544,29 @@
         }
       },
 
+      /**
+       * @private
+       * @param {Number} value
+       * @returns {Number}
+       */
       convertValueToPercentage: function(value) {
         return (((value - this.settings.min) / (this.settings.max - this.settings.min)) * 100);
       },
 
+      /**
+       * @private
+       * @param {Number} percentage
+       * @returns {Number}
+       */
       convertPercentageToValue: function(percentage) {
         var val = (percentage / 100) * (this.settings.max - this.settings.min) + this.settings.min;
         return this.isRtlHorizontal ? (this.settings.max - val + this.settings.min) : val;
       },
 
-      // Gets a 10% increment/decrement as a value within the range of minimum and maximum values.
+      /**
+       * Gets a 10% increment/decrement as a value within the range of minimum and maximum values.
+       * @returns {Number}
+       */
       getIncrement: function() {
         var increment = 0.1 * (this.settings.max - this.settings.min);
         if (this.settings.step !== undefined && increment <= this.settings.step) {
@@ -558,6 +575,11 @@
         return increment;
       },
 
+      /**
+       * Handles Slider Component's keystrokes
+       * @param {jQuery.Event} e
+       * @param {this} self
+       */
       handleKeys: function(e, self) {
         if (self.isDisabled()) {
           return;
@@ -599,6 +621,14 @@
         }
       },
 
+      /**
+       * Increases the value of one of the slider handles, accounting for step value, percentage, etc.
+       * Also visually updates the handle on the visual part of the slider.
+       * @param {jQuery.Event} e
+       * @param {jQuery[]} handle
+       * @param {Number} [value] - target value - will be automatically determined if not passed.
+       * @param {Number} [increment] - an integer that will be used as the amount to increment.
+       */
       increaseValue: function(e, handle, value, increment) {
         e.preventDefault();
         clearTimeout(handle.data('animationTimeout'));
@@ -628,6 +658,14 @@
         this.updateTooltip(handle);
       },
 
+      /**
+       * Decreases the value of one of the slider handles, accounting for step value, percentage, etc.
+       * Also visually updates the handle on the visual part of the slider.
+       * @param {jQuery.Event} e
+       * @param {jQuery[]} handle
+       * @param {Number} [value] - target value - will be automatically determined if not passed.
+       * @param {Number} [decrement] - an integer that will be used as the amount to decrement.
+       */
       decreaseValue: function(e, handle, value, decrement) {
         e.preventDefault();
         clearTimeout(handle.data('animationTimeout'));
@@ -657,7 +695,9 @@
         this.updateTooltip(handle);
       },
 
-      // Changes the position of the bar and handles based on their values.
+      /**
+       * Changes the position of the bar and handles based on their values.
+       */
       updateRange: function() {
         var self = this,
           newVal = this.value(),
@@ -748,8 +788,12 @@
         }
       },
 
-      // Allows a handle to animate to a new position if the difference in value is greater
-      // than 3% of the size of the range.
+      /**
+       * Allows a handle to animate to a new position if the difference in value is greater than 3% of the size of the range.
+       * @param {jQuery[]} handle
+       * @param {Number} originalVal
+       * @param {Number} updatedVal
+       */
       checkHandleDifference: function(handle, originalVal, updatedVal) {
         // IE9 doesn't support animation so return immediately.
         if ($('html').hasClass('ie9')) {
@@ -764,6 +808,11 @@
         }
       },
 
+      /**
+       * If tooltips are active, updates the current placement and content of the Tooltip.
+       * If no handle argument is passed, this method simply hides both handles' tooltips.
+       * @param {jQuery[]} [handle]
+       */
       updateTooltip: function(handle) {
         if (!this.settings.tooltip) {
           return;
@@ -805,6 +854,10 @@
         }
       },
 
+      /**
+       * Gets a string-based hex value for the closest tick's defined color.
+       * @returns {string}
+       */
       getColorClosestToValue: function() {
         var currentTheme = Soho.theme,
           preColors = {
@@ -852,9 +905,13 @@
         return highestTickColor;
       },
 
-      // External Facing Function to set the value
-      // works as percent for now but need it on ticks
-      // NOTE:  Does not visually update the range.  Use setValue() to do both in one swoop.
+      /**
+       * External Facing Function to set the value. Works as percent for now but need it on ticks.
+       * NOTE:  Does not visually update the range.  Use _setValue()_ to do both in one swoop.
+       * @param {Number} minVal
+       * @param {Number} [maxVal]
+       * @returns {Array}
+       */
       value: function(minVal, maxVal) {
         var self = this;
 
@@ -902,8 +959,12 @@
         return self._value;
       },
 
-      // Returns a value with prefixed/suffixed text content.
-      // Used by the tooltip and default ticks to get potential identifiers like $ and %.
+      /**
+       * Returns a value with prefixed/suffixed text content.
+       * Used by the tooltip and default ticks to get potential identifiers like $ and %.
+       * @param {string} content
+       * @returns {string}
+       */
       getModifiedTextValue: function(content) {
         if (!this.settings.tooltip) {
           return content;
@@ -911,6 +972,10 @@
         return this.settings.tooltip[0] + content + this.settings.tooltip[1];
       },
 
+      /**
+       * Enables the slider instance.
+       * @returns {this}
+       */
       enable: function() {
         this.element.prop('disabled', false);
         this.wrapper.removeClass('is-disabled');
@@ -923,6 +988,10 @@
         return this;
       },
 
+      /**
+       * Disables the slider instance.
+       * @returns {this}
+       */
       disable: function() {
         this.element.prop('disabled', true);
         this.wrapper.addClass('is-disabled');
@@ -935,16 +1004,28 @@
         return this;
       },
 
+      /**
+       * Detects whether or not this slider is disabled
+       * @returns {boolean}
+       */
       isDisabled: function() {
         return this.element.prop('disabled');
       },
 
+      /**
+       * Detects whether or not this slider is vertical
+       * @returns {boolean}
+       */
       isVertical: function() {
         return this.wrapper.hasClass('vertical');
       },
 
-      // Externally-facing function that updates the current values and correctly animates the
-      // range handles, if applicable.
+      /**
+       * Externally-facing function that updates the current values and correctly animates the range handles, if applicable.
+       * @param {Number} lowVal
+       * @param {Number} [highVal]
+       * @returns {Array}
+       */
       setValue: function(lowVal, highVal) {
         var newLowVal = lowVal || undefined,
           newHighVal = highVal || undefined,
@@ -964,12 +1045,20 @@
 
       // NOTE: refresh() has been deprecated in Xi Controls v4.2 - has been replaced with setValue().
       // This method will be completely removed in v4.3 and v5.x.  Please update your code.
+      /**
+       * @private
+       * @returns {Array}
+       */
       refresh: function(lowVal, highVal) {
         return this.setValue(lowVal, highVal);
       },
 
-      // Settings and markup are complicated in the slider so we just destroy and re-invoke it
-      // with fresh settings.
+      /**
+       * Updates the slider instance after a settings change.
+       * Settings and markup are complicated in the slider so we just destroy and re-invoke it
+       * with fresh settings.
+       * @returns {this}
+       */
       updated: function() {
         this.element.removeAttr('value');
         return this
@@ -977,6 +1066,10 @@
           .init();
       },
 
+      /**
+       * Removes the events and pseudo-markup created by the slider
+       * @returns {this}
+       */
       teardown: function() {
         var self = this;
         $.each(self.handles, function (i, handle) {
@@ -989,9 +1082,59 @@
         return this;
       },
 
+      /**
+       * Destroys the slider component instance and unlinks it from its base element.
+       */
       destroy: function() {
         this.teardown();
         $.removeData(this.element[0], pluginName);
+      },
+
+      /**
+       * @fires Slider#events
+       * @param {Object} mousedown
+       * @param {Object} click
+       * @param {Object} keydown
+       * @param {Object} keyup
+       * @param {Object} touchend
+       * @param {Object} touchcancel
+       * @param {Object} updated
+       * @returns {this}
+       */
+      bindEvents: function() {
+        var self = this;
+
+        $.each(self.handles, function (i, handle) {
+          handle.on('mousedown.slider', function () {
+            if (self.isDisabled()) {
+              return;
+            }
+            $(this).focus();
+          })
+          .on('click.slider', function (e) {
+            e.preventDefault(); //Prevent from jumping to top.
+          })
+          .on('keydown.slider', function(e) {
+            self.activateHandle(handle);
+            self.handleKeys(e, self);
+          })
+          .on('keyup.slider blur.slider', function() {
+            self.deactivateHandle(handle);
+          });
+
+          self.enableHandleDrag(handle);
+        });
+
+        self.wrapper.on('click.slider touchend.slider touchcancel.slider', function(e) {
+          self.handleRangeClick(e);
+        });
+
+        // Slider Control listens to 'updated' trigger on its base element to update values
+        self.element.on('updated.slider', function() {
+          self.updated();
+        });
+
+        return self;
       }
     };
 

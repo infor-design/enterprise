@@ -20,7 +20,7 @@
 @import 'components/tabs/tabs';
 @import 'components/dropdown/dropdown';
 @import 'controls/modal';
-@import 'controls/slider';
+@import 'components/slider/slider';
 @import 'controls/popupmenu';
 @import 'components/tooltip/tooltip';
 @import 'controls/masthead';
@@ -47,7 +47,7 @@
 @import 'components/searchfield/searchfield';
 @import 'components/toolbar/toolbar';
 @import 'components/editor/editor';
-@import 'controls/skiplink';
+@import 'components/skiplink/skiplink';
 @import 'components/fileupload/fileupload';
 @import 'controls/progress';
 @import 'controls/processindicator';
@@ -70,7 +70,7 @@
 
 // Patterns
 @import 'components/homepage/homepage';
-@import 'patterns/signin';
+@import 'components/signin/signin';
 @import 'patterns/builder';
 @import 'patterns/commonnav';
 @import 'patterns/full-width';
