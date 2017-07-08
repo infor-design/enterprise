@@ -1420,6 +1420,7 @@ $.fn.datagrid = function(options) {
         paging: false,
         pagesize: 25,
         pagesizes: [10, 25, 50, 75],
+        showPageSizeSelector: true, // Will show page size selector
         indeterminate: false, //removed ability to go to a specific page.
         source: null, //callback for paging
         hidePagerOnOnePage: false, //If true, hides the pager if there's only one page worth of results.
@@ -3601,6 +3602,7 @@ $.fn.datagrid = function(options) {
         columns: this.settings.columns,
         sortOrder: this.sortColumn,
         pagesize: this.settings.pagesize,
+        showPageSizeSelector: this.settings.showPageSizeSelector,
         activePage: this.pager ? this.pager.activePage : 1,
         filter: this.filterConditions()}]);
 
@@ -3628,6 +3630,11 @@ $.fn.datagrid = function(options) {
       // Save Page Size
       if (options.pagesize) {
         localStorage[this.uniqueId('usersettings-pagesize')] = this.settings.pagesize;
+      }
+
+      // Save Show Page Size Selector
+      if (options.showPageSizeSelector) {
+        localStorage[this.uniqueId('usersettings-show-pagesize-selector')] = this.settings.showPageSizeSelector;
       }
 
       // Save Page Num
@@ -3734,6 +3741,11 @@ $.fn.datagrid = function(options) {
           this.pager.setActivePage(1, true);
         }
 
+        if (settings.showPageSizeSelector) {
+          this.settings.showPageSizeSelector = settings.showPageSizeSelector;
+          this.pager.showPageSizeSelector(settings.showPageSizeSelector);
+        }
+
         if (settings.activePage) {
           this.pager.setActivePage(parseInt(settings.activePage), true);
         }
@@ -3777,6 +3789,15 @@ $.fn.datagrid = function(options) {
         var savedPagesize = localStorage[this.uniqueId('usersettings-pagesize')];
         if (savedPagesize) {
           this.settings.pagesize = parseInt(savedPagesize);
+        }
+      }
+
+      // Restore Show Page Size Selector
+      if (options.showPageSizeSelector) {
+        var savedShowPageSizeSelector = localStorage[this.uniqueId('usersettings-show-pagesize-selector')];
+        savedShowPageSizeSelector = (savedShowPageSizeSelector + '').toLowerCase() === 'true';
+        if (savedShowPageSizeSelector) {
+          this.settings.showPageSizeSelector = savedShowPageSizeSelector;
         }
       }
 
@@ -6715,6 +6736,7 @@ $.fn.datagrid = function(options) {
         indeterminate: this.settings.indeterminate,
         rowTemplate: this.settings.rowTemplate,
         pagesizes: this.settings.pagesizes,
+        showPageSizeSelector: this.settings.showPageSizeSelector,
         activePage: this.restoreActivePage ? parseInt(this.savedActivePage) : 1
       });
 

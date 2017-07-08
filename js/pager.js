@@ -26,6 +26,7 @@
           source: null,  //Call Back Function for Pager Data Source
           pagesize: 15, //Can be calculate or a specific number
           pagesizes: [15, 25, 50, 75],
+          showPageSizeSelector: true, // Will show page size selector
           indeterminate: false // Will not show anything that lets you go to a specific page
         },
         settings = $.extend({}, defaults, options);
@@ -260,6 +261,18 @@
         });
       },
 
+      //Show page size selector
+      showPageSizeSelector: function(toggleOption) {
+        toggleOption = (toggleOption + '').toLowerCase() === 'true';
+        this.settings.showPageSizeSelector = toggleOption;
+        if (toggleOption) {
+          this.isShowPageSizeSelectorCall = toggleOption;
+          this.pageCount();
+        } else {
+          this.pagerBar.find('.pager-pagesize').remove();
+        }
+      },
+
       //Set or Get Current Page
       setActivePage: function(pagingInfo, force, op) {
         var lis = this.pagerBar.find(PAGER_NON_NUMBER_BUTTON_SELECTOR),
@@ -317,13 +330,17 @@
 
       //Get/Set Total Number of pages
       pageCount: function(pages) {
-        var self = this;
+        var self = this,
+          isShowPageSizeSelectorCall = this.isShowPageSizeSelectorCall;
+
+        // Remove call, after cached
+        delete this.isShowPageSizeSelectorCall;
 
         if (pages === undefined && this.settings.indeterminate) {
           this._pageCount = this.settings.pagesize;
         }
 
-        if (pages === undefined && !this.settings.source) {
+        if (pages === undefined && !this.settings.source && !isShowPageSizeSelectorCall) {
           return this._pageCount;
         }
 
@@ -377,7 +394,7 @@
         }
 
         //Add functionality to change page size.
-        if (this.isTable && this.pagerBar.find('.btn-menu').length === 0) {
+        if (this.isTable && this.pagerBar.find('.btn-menu').length === 0 && self.settings.showPageSizeSelector) {
           var pageSize = $('<li class="pager-pagesize"></li>'),
             pageSizeButton = $('<button type="button" class="btn-menu">' +
               '<span>' + Locale.translate('RecordsPerPage').replace('{0}', this.settings.pagesize) + '</span> ' +
