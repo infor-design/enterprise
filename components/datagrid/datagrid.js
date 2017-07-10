@@ -2363,6 +2363,7 @@ $.fn.datagrid = function(options) {
       }
       this.renderRows();
       this.resetPager('filtered');
+      this.setSearchActivePage();
       this.element.trigger('filtered', {op: 'apply', conditions: conditions});
       this.saveUserSettings();
     },
@@ -2403,7 +2404,8 @@ $.fn.datagrid = function(options) {
     //Get filter conditions in array form from the UI
     filterConditions: function () {
       // Do not modify keyword search filter expr
-      if (this.filterExpr && this.filterExpr.length === 1 && this.filterExpr[0].column === 'all') {
+      if (this.filterExpr && this.filterExpr.length === 1 && this.filterExpr[0].keywordSearch) {
+        delete this.filterExpr[0].keywordSearch;
         return this.filterExpr;
       }
 
@@ -4811,22 +4813,31 @@ $.fn.datagrid = function(options) {
       });
 
       term = (term || '').toLowerCase();
-      this.filterExpr.push({column: 'all', operator: 'contains', value: term});
+      this.filterExpr.push({column: 'all', operator: 'contains', value: term, keywordSearch: true});
 
       this.filterKeywordSearch();
       this.renderRows();
       this.resetPager('searched');
+      this.setSearchActivePage();
+    },
 
-      // Set active page
+    // Set search active page
+    setSearchActivePage: function () {
       if (this.pager && this.filterExpr.length === 1) {
         if (this.filterExpr[0].value !== '') {
-          this.pager.searchActivePage = this.pager.activePage;
+          if (this.pager.searchActivePage === undefined) {
+            this.pager.searchActivePage = this.pager.activePage;
+          }
           this.pager.setActivePage(1, true);
         }
         else if (this.filterExpr[0].value === '' && this.pager.searchActivePage > -1) {
           this.pager.setActivePage(this.pager.searchActivePage, true);
           delete this.pager.searchActivePage;
         }
+      }
+      else if (this.pager && this.pager.searchActivePage > -1) {
+        this.pager.setActivePage(this.pager.searchActivePage, true);
+        delete this.pager.searchActivePage;
       }
     },
 
