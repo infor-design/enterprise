@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Timepicker Example: States</h2>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="six columns">
+
+    <div class="field">
+      <label for="timepicker-test" class="label">Timepicker</label>
+      <input id="timepicker-test" class="timepicker" type="text" value="12:30 PM" />
+    </div>
+    <button type="button" id="btn-readonly" class="btn-secondary">Readonly</button>
+    <button type="button" id="btn-disable" class="btn-secondary">Disable</button>
+    <button type="button" id="btn-enable" class="btn-secondary">Enable</button>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+    var elem = $('#timepicker-test'),
+    api = elem.data('timepicker');
+
+    $('#btn-readonly').on('click.test', function() {
+      api.readonly();
+    });
+    $('#btn-disable').on('click.test', function() {
+      api.disable();
+    });
+    $('#btn-enable').on('click.test', function() {
+      api.enable();
+    });
+
+  });
+</script>

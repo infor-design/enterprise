@@ -819,18 +819,25 @@
 
       /**
        * Enables the Timepicker
-       * @returns {boolean}
        */
       enable: function() {
-        this.element.prop('disabled', false);
+        this.element.removeAttr('disabled readonly').closest('.field').removeClass('is-disabled');
+      },
+
+      /**
+      * Set input to readonly.
+      */
+      readonly: function() {
+        this.enable();
+        this.element.attr('readonly', 'readonly');
       },
 
       /**
        * Disables the Timepicker
-       * @returns {boolean}
        */
       disable: function() {
-        this.element.prop('disabled', true);
+        this.enable();
+        this.element.attr('disabled', 'disabled').closest('.field').addClass('is-disabled');
       },
 
       /**
