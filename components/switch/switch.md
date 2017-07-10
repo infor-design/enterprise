@@ -6,13 +6,13 @@ The Switch Component is a CSS-only component, and has no specific Javascript API
 
 ## Configuration Options
 
-1. [Main Switch Example](/components/switch/example-index)
-2. [Alternate Alignment](/components/switch/example-alignment)
-3. [Two Column Layout](/components/switch/example-two-columns)
+1. [Main Switch Example]( ../components/switch/example-index)
+2. [Alternate Alignment]( ../components/switch/example-alignment)
+3. [Two Column Layout]( ../components/switch/example-two-columns)
 
 ## Code Example
 
-A Switch element is essentially a specially-styled [checkbox element](/components/checkboxes). Create an input element with `type="checkbox"` and `class="switch"`. Also create a label which is linked, and accurately describes the setting of the checkbox. Consider using a checkbox for most form layouts; Switch is primary for settings.
+A Switch element is essentially a specially-styled [checkbox element]( ../components/checkboxes). Create an input element with `type="checkbox"` and `class="switch"`. Also create a label which is linked, and accurately describes the setting of the checkbox. Consider using a checkbox for most form layouts; Switch is primary for settings.
 
 ```html
 

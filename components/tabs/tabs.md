@@ -4,13 +4,12 @@
 
 ## Configuration Options
 
-1. [Common Configuration](/components/tabs/example-index)
-2. [Tabs With Counts](/components/tabs/example-counts)
-3. [Dismissible Tabs](/components/tabs/example-dismissible-tabs)
-4. [Dropdown Tabs](/components/tabs/example-dropdown-tabs)
-5. [`updateCount()` Demo](/components/tabs/example-update-count-api)
-6. [`changeTabOnHashChange` Setting with Callback Demo](/components/tabs/example-url-hash-change)
-
+1. [Common Configuration]( ../components/tabs/example-index)
+2. [Tabs With Counts]( ../components/tabs/example-counts)
+3. [Dismissible Tabs]( ../components/tabs/example-dismissible-tabs)
+4. [Dropdown Tabs]( ../components/tabs/example-dropdown-tabs)
+5. [`updateCount()` Demo]( ../components/tabs/example-update-count-api)
+6. [`changeTabOnHashChange` Setting with Callback Demo]( ../components/tabs/example-url-hash-change)
 
 ## Code Examples
 
@@ -216,6 +215,6 @@ In-Page/Horizontal tabs can be placed on a white background.  In these cases, th
 Soho currently supports four major types of Tabs.
 
 - **In-Page (Horizontal) Tabs** - This is the default type of tabset that will exist inside of pages/forms, and has a minimal style.  These will be used for switching between groups of content or form components that are related, but not necessarily important to show all at once.
-- [**Header Tabs**](/components/tabs-header) - This tabset is inside of [Header Components](/components/header) to define a tab list that will appear to sit adjacently to a Page Container.  These will generally be used for Contextual Navigation of a major feature in your application.
-- [**Vertical Tabs**](/components/tabs-vertical) - This tabset serves a similar purpose to Header Tabs, but instead displays the tab list vertically on the left edge of the tab content.
-- [**Module Tabs**](/components/tabs-module) - Module Tabs are another similar construct that are styled in a way that suits them for top-level application navigation.  Module Tabs are built to contain a toolbar.
+- [**Header Tabs**]( ../components/tabs-header) - This tabset is inside of [Header Components]( ../components/header) to define a tab list that will appear to sit adjacently to a Page Container.  These will generally be used for Contextual Navigation of a major feature in your application.
+- [**Vertical Tabs**]( ../components/tabs-vertical) - This tabset serves a similar purpose to Header Tabs, but instead displays the tab list vertically on the left edge of the tab content.
+- [**Module Tabs**]( ../components/tabs-module) - Module Tabs are another similar construct that are styled in a way that suits them for top-level application navigation.  Module Tabs are built to contain a toolbar.

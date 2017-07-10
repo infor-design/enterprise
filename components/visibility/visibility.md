@@ -4,5 +4,5 @@ The Soho visibility classes allow elements to become conditionally visible or hi
 
 ## Configuration Examples
 
-1. [All Examples](/components/visibility/example-index)
-2. [Multiple classes at once](/components/visibility/example-multiple-visibility-classes)
+1. [All Examples]( ../components/visibility/example-index)
+2. [Multiple classes at once]( ../components/visibility/example-multiple-visibility-classes)

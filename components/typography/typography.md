@@ -6,4 +6,4 @@ Typography styles in Soho do not have a Javascript API.
 
 ## Examples
 
-1. [Main Example Page](/components/typography/example-index)
+1. [Main Example Page]( ../components/typography/example-index)

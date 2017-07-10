@@ -2,9 +2,9 @@
 
 {{api-details}}
 
-1. [Common Configuration](/components/wizard/example-index)
-2. [Disabled Tick Clicks](/components/wizard/example-in-page)
-3. [Programmatic Tick Selection](/components/wizard/example-set-selected)
+1. [Common Configuration]( ../components/wizard/example-index)
+2. [Disabled Tick Clicks]( ../components/wizard/example-in-page)
+3. [Programmatic Tick Selection]( ../components/wizard/example-set-selected)
 
 ## Code Example
 

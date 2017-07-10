@@ -6,8 +6,8 @@ The Toast Component displays important messages in an area that sits above your 
 
 ## Configuration Options
 
-1. [Common Configuration](/components/toast/example-index)
-1. [Demo of all Positions](/components/toast/example-positions)
+1. [Common Configuration]( ../components/toast/example-index)
+1. [Demo of all Positions]( ../components/toast/example-positions)
 
 ## Behavior Guidelines
 

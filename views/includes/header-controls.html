@@ -21,14 +21,10 @@
   </div>
 
   <script>
-    var isIndex = window.location.href.indexOf('{{basepath}}controls') === window.location.href.length -9;
 
     $('#button1').button().on('click', function (e) {
-      if (isIndex) {
-        return;
-      }
+      window.location.href= '.';
 
-      window.location.href= '{{basepath}}controls';
       e.preventDefault();
       return false;
     });

@@ -2,16 +2,16 @@
 
 ## API Details
 
-This component shares a common API with the [Tooltip](/components/tooltip) Component.  When a Soho Popover component is invoked, any methods and events used by the Tooltip will also be available in the Popover.  For more details on this component's API, please see the [Tooltip Documentation](/components/tooltip).
+This component shares a common API with the [Tooltip]( ../components/tooltip) Component.  When a Soho Popover component is invoked, any methods and events used by the Tooltip will also be available in the Popover.  For more details on this component's API, please see the [Tooltip Documentation]( ../components/tooltip).
 
 ## Configuration Options
 
-1. [Common Configuration](/components/popover/example-index)
-2. [Simple Popover Content](/components/popover/example-simple)
-3. [Complex Form Layout Inside Popover](/components/popover/example-complex-content)
-4. [Attached To Textbox's Info Icon](/components/popover/example-attached-to-textbox)
-5. [Alternate (Flipped) Positioning](/components/popover/example-alternate-positions)
-6. [Demo of `extraCssClass` Setting](/components/popover/example-extra-css-class)
+1. [Common Configuration]( ../components/popover/example-index)
+2. [Simple Popover Content]( ../components/popover/example-simple)
+3. [Complex Form Layout Inside Popover]( ../components/popover/example-complex-content)
+4. [Attached To Textbox's Info Icon]( ../components/popover/example-attached-to-textbox)
+5. [Alternate (Flipped) Positioning]( ../components/popover/example-alternate-positions)
+6. [Demo of `extraCssClass` Setting]( ../components/popover/example-extra-css-class)
 
 
 ## Code Example

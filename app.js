@@ -647,8 +647,18 @@ var express = require('express'),
     next();
   }
 
+  function reDirectSlashRoute(req, res, next) {
+    if (req.url.substr(-1) === '/' && req.url.length > 1) {
+       console.log(req.params);
+       res.redirect(301, req.url.slice(0, -1));
+       next();
+    }
+  }
+
   router.get('/components/:component', componentRoute);
+  router.get('/components/:component/', reDirectSlashRoute);
   router.get('/components/:component/:example', componentRoute);
+  router.get('/components/:component/:example/', reDirectSlashRoute);
   router.get('/components/', defaultDocsRoute);
 
   // ======================================

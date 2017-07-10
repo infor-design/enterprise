@@ -4,4 +4,4 @@
 
 ## Configuration Options
 
-1. Common Configuration [View Example](/components/tree/example-index)
+1. Common Configuration [View Example]( ../components/tree/example-index)

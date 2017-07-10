@@ -2,19 +2,19 @@
 
 ## Important Notes
 
-This is a specific component wrapper for searchfield components that reside inside of [Toolbars](/components/toolbar/) entitled Toolbar Searchfield.  These components are very different from regular searchfields and have an expanded API.  There is an alternate API documentation for the main [Searchfield](/components/searchfield) component.
+This is a specific component wrapper for searchfield components that reside inside of [Toolbars]( ../components/toolbar/) entitled Toolbar Searchfield.  These components are very different from regular searchfields and have an expanded API.  There is an alternate API documentation for the main [Searchfield]( ../components/searchfield) component.
 
 {{api-details}}
 
 ## Configuration Options
 
-1. [Common Configuration](/components/toolbarsearchfield/example-index.html)
-2. [Alternate In-Page Style](/components/toolbarsearchfield/example-alternate-style.html)
-3. [`collapsibleOnMobile` Setting Demo](/components/toolbarsearchfield/example-collapsible-on-mobile.html)
+1. [Common Configuration]( ../components/toolbarsearchfield/example-index.html)
+2. [Alternate In-Page Style]( ../components/toolbarsearchfield/example-alternate-style.html)
+3. [`collapsibleOnMobile` Setting Demo]( ../components/toolbarsearchfield/example-collapsible-on-mobile.html)
 
 ## Code Example
 
-*NOTE:* Toolbar Searchfields can only exist when a searchfield becomes invoked inside of a Toolbar element.  The minimum amount of markup for building a toolbar is present in the code sample below.  For more information about how to define and configure the Toolbar component, please see the [Toolbar API page](/components/toolbar/).
+*NOTE:* Toolbar Searchfields can only exist when a searchfield becomes invoked inside of a Toolbar element.  The minimum amount of markup for building a toolbar is present in the code sample below.  For more information about how to define and configure the Toolbar component, please see the [Toolbar API page]( ../components/toolbar/).
 
 ```html
 
@@ -39,7 +39,7 @@ This is a specific component wrapper for searchfield components that reside insi
 
 ## Keyboard Shortcuts
 
-- *Shift+left/up arrows* or *Shift+right/down arrows* - When focused on a Toolbar Searchfield, the focused element is wrapped inside of a [Toolbar](/components/toolbar) element, which has its own rules that govern navigation with the arrow keys.  These shortcuts help the user navigate a toolbar while leaving movement of the text cursor to be controlled with the arrow keys.
+- *Shift+left/up arrows* or *Shift+right/down arrows* - When focused on a Toolbar Searchfield, the focused element is wrapped inside of a [Toolbar]( ../components/toolbar) element, which has its own rules that govern navigation with the arrow keys.  These shortcuts help the user navigate a toolbar while leaving movement of the text cursor to be controlled with the arrow keys.
 - *Alt+Del* - On a `clearable` searchfield, pressing this will clear its contents.
 
 
@@ -53,10 +53,10 @@ This is a specific component wrapper for searchfield components that reside insi
 
 There are several scenarios where the background, border, and text color of a Toolbar Searchfield can change based on how it's used:
 
-- There is an [Alternate In-Page Style](/components/toolbarsearchfield/example-alternate-style) for Toolbar Searchfields that can be used when content is displayed over a gray background.
-- [Inside Contextual Action Panels](/components/toolbarsearchfield/example-inside-contextual-panel.html), the background and border colors change to match the header.
-- In any example of a [Header](/components/header), the Toolbar Searchfield's background color becomes semi-transparent black, and the text/border change to stand out better on the darker colors defined in the Header's background.
-- Inside of [Mastheads](/components/masthead), the Toolbar Searchfield will change to a dark graphite/slate to match the background color of the Masthead.
+- There is an [Alternate In-Page Style]( ../components/toolbarsearchfield/example-alternate-style) for Toolbar Searchfields that can be used when content is displayed over a gray background.
+- [Inside Contextual Action Panels]( ../components/toolbarsearchfield/example-inside-contextual-panel.html), the background and border colors change to match the header.
+- In any example of a [Header]( ../components/header), the Toolbar Searchfield's background color becomes semi-transparent black, and the text/border change to stand out better on the darker colors defined in the Header's background.
+- Inside of [Mastheads]( ../components/masthead), the Toolbar Searchfield will change to a dark graphite/slate to match the background color of the Masthead.
 
 ### Size Settings
 
