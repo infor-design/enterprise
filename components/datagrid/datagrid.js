@@ -226,10 +226,13 @@ window.Formatters = {
       isChecked = (value == undefined ? false : value == true); // jshint ignore:line
     }
 
+    // We add hidden Yes/No text so that the exported excel spreadsheet shows this text in checkbox columns
+    var hiddenText = '<span class="hidden">' + Locale.translate(isChecked ? 'Yes' : 'No') + '</span>';
+
     var animate = api.wasJustUpdated;
     api.wasJustUpdated = false;
     return '<div class="datagrid-checkbox-wrapper"><span role="checkbox" aria-label="'+ col.name +'" class="datagrid-checkbox ' +
-     (isChecked ? 'is-checked ' + (!animate ? ' no-animation' : ' ') : '') +'" aria-checked="'+isChecked+'"></span></div>';
+     (isChecked ? 'is-checked ' + (!animate ? ' no-animation' : ' ') : '') +'" aria-checked="'+isChecked+'"></span>' + hiddenText + '</div>';
   },
 
   SelectionCheckbox: function (row, cell, value, col) {
