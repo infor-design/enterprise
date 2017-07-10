@@ -6,6 +6,7 @@
 @import 'config';
 @import 'components/grid/grid';
 @import 'components/visibility/visibility';
+@import 'controls/blockgrid';
 
 // Variables for this page
 $color-font-lighter: #484a51;
@@ -71,6 +72,11 @@ html {
     .link-list {
       text-align: left;
     }
+  }
+
+  .row {
+    max-width: 100%;
+    width: 100%;
   }
 
 }
@@ -167,9 +173,21 @@ p strong {
 
 .doc-header {
   height: 100px;
-  margin: -20px 0 50px;
+  margin: -19px 0 20px;
   padding: 0;
   vertical-align: middle;
+
+  .row {
+    max-width: 100%;
+    padding-left: 37px;
+    padding-right: 40px;
+    width: 100%;
+
+    > * {
+      display: inline-block;
+      float: left;
+    }
+  }
 
   .doc-logo {
     display: inline-block;
@@ -182,14 +200,18 @@ p strong {
     }
   }
 
+  .doc-header-logo {
+    margin-right: 128px;
+  }
+
   .doc-header-link {
     @include font-size(16);
     border-bottom: 2px solid transparent;
     color: $black;
     display: inline-block;
     font-weight: lighter;
-    margin: 25px 20px;
-    padding: 16px 5px 2px;
+    margin: 29px 18px 29px 18.5px;
+    padding: 15px 5px 1px;
     text-decoration: none;
 
     &.is-active {
@@ -198,13 +220,18 @@ p strong {
     }
   }
 
+  .doc-header-secondary-links {
+    float: right;
+    margin-right: 2px;
+  }
+
   .doc-header-secondary-link {
     @include font-size(16);
     color: $color-header-grey;
     display: inline-block;
     font-weight: lighter;
-    margin: 25px 20px;
-    padding: 16px 5px 2px;
+    margin: 29px 18px 29px 18.5px;
+    padding: 15px 5px 1px;
     text-decoration: none;
   }
 
@@ -217,6 +244,18 @@ p strong {
   }
 
 }
+
+.doc-main-index {
+  margin: 0 40px;
+  max-width: 100%;
+  width: 100%;
+
+  .link-list {
+    text-align: left;
+  }
+
+}
+
 
 // Pandoc code highlight styles - customized
 // https://github.com/jgm/highlighting-kate/blob/master/css/hk-pyg.css

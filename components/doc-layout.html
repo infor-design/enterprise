@@ -39,8 +39,7 @@
 
   <header class="doc-header">
     <div class="row">
-      <div class="three columns">
-
+      <div class="doc-header-logo">
         <a href="{{basepath}}components" class="doc-logo">
           <svg width="149px" height="48px" viewBox="0 0 149 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
               <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -63,16 +62,15 @@
               </g>
           </svg>
         </a>
-
       </div>
 
-      <div class="six columns">
+      <div class="doc-header-links">
         <a href="/learn/" class="doc-header-link">Learn</a>
         <a href="{{basepath}}components" class="doc-header-link is-active">Build</a>
         <a href="/foundation/0.4-rc/" class="doc-header-link">Foundations</a>
       </div>
 
-      <div class="three columns">
+      <div class="doc-header-secondary-links">
         <a href="http://git.infor.com/projects/SOHO/repos/controls/browse/CHANGELOG.md" class="doc-header-secondary-link">change log</a>
         <a href="http://jira/secure/CreateIssue!default.jspa?project=SOHO" class="doc-header-secondary-link">contact</a>
         <a href="#" class="doc-header-search hidden" >
@@ -83,7 +81,7 @@
   </header>
 
   <div class="page-container scrollable" id="maincontent" role="main">
-    <div class="row">
+    <div class="row doc-main-index">
       <div class="full column">
 
         <div class="field">
@@ -93,6 +91,7 @@
             <option value="4.2.6">4.2.6</option>
           </select><br>
         </div>
+
         {{> content}}
       </div>
     </div>

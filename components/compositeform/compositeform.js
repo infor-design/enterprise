@@ -28,10 +28,14 @@
         settings = $.extend({}, defaults, options);
 
     /**
-     * Composite Form Control
-     * @constructor
-     * @param {Object} element
-     */
+    * The About Dialog Component is displays information regarding the application.
+    *
+    * @class CompositeForm
+    * @param {String} trigger  &nbsp;-&nbsp; Expandable area trigger selector. Passed to expandable area.
+    * @param {String} expandedText  &nbsp;-&nbsp; Text to use for the expand button (Default localized)
+    * @param {String} collapsedText  &nbsp;-&nbsp; Text to use for the collapse button (Default localized)
+    *
+    */
     function CompositeForm(element, settings) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
