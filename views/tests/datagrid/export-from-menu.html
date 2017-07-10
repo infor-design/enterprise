@@ -77,6 +77,7 @@
       columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal});
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
       columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Text});
+      columns.push({ id: 'available', name: 'Available', field: 'status', formatter: Formatters.Checkbox, isChecked: function (status) { return status === 'OK'; }});
       columns.push({ id: 'action', name: 'Action Item', field: 'action'});
       columns.push({ id: 'ex', name: 'Extra', field: 'ex'});
 
