@@ -30,8 +30,21 @@
     <span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;btn-primary&quot;</span><span class="ot"> type=</span><span class="st">&quot;submit&quot;</span><span class="kw">&gt;</span>Submit<span class="kw">&lt;/button&gt;</span>
   <span class="kw">&lt;/fieldset&gt;</span>
 <span class="kw">&lt;/form&gt;</span>
-
 </code></pre>
+<h2 id="code-tip">Code Tip</h2>
+<p>There are some added classes to style sections like field sets for cases you semantically don't require a fieldset. The <code>fieldset-title</code> element will make a text header, you should use a H element for this in the structure of your page. Then you can add a <code>&lt;hr class=&quot;fieldset-hr&quot;&gt;</code> element at the top of each subsequent section for a divider. This would be laid out like this example:</p>
+<pre class="sourceCode html"><code class="sourceCode html">
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;row&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;twelve columns&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;h2</span><span class="ot"> class=</span><span class="st">&quot;fieldset-title&quot;</span><span class="kw">&gt;</span>Section One<span class="kw">&lt;/h2&gt;</span>
+    <span class="co">&lt;!-- Content Section One--&gt;</span>
+
+    <span class="kw">&lt;hr</span><span class="ot"> class=</span><span class="st">&quot;fieldset-hr&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;h2</span><span class="ot"> class=</span><span class="st">&quot;fieldset-title&quot;</span><span class="kw">&gt;</span>Section Two<span class="kw">&lt;/h1&gt;</span>
+    <span class="co">&lt;!-- Content Section Two--&gt;</span>
+
+  <span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;/div&gt;</span></code></pre>
 <h2 id="accessibility">Accessibility</h2>
 <ul>
 <li>Normal rules for content inside apply</li>

@@ -7,7 +7,6 @@
 
 ## Code Example
 
-
 A field set uses the standard html field set and legend element and simply adds css to style the legend element text. A field set is not expandable but you could use an expandable area element as well.
 
 ```html
@@ -37,6 +36,25 @@ A field set uses the standard html field set and legend element and simply adds 
 </form>
 
 
+```
+
+## Code Tip
+
+There are some added classes to style sections like field sets for cases you semantically don't require a fieldset. The `fieldset-title` element will make a text header, you should use a H element for this in the structure of your page. Then you can add a `<hr class="fieldset-hr">` element at the top of each subsequent section for a divider. This would be laid out like this example:
+
+```html
+
+<div class="row">
+  <div class="twelve columns">
+    <h2 class="fieldset-title">Section One</h2>
+    <!-- Content Section One-->
+
+    <hr class="fieldset-hr">
+    <h2 class="fieldset-title">Section Two</h1>
+    <!-- Content Section Two-->
+
+  </div>
+</div>
 
 ```
 

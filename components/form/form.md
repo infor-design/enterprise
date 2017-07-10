@@ -16,3 +16,4 @@ The forms plugins are a set of form related small utils and functionality contai
 1. Form Inputs in the Responsive Grid [View Example]( ../components/form/example-inputs)
 2. Form Inputs in the Responsive Simplified Grid [View Example]( ../components/form/example-inputs-simple)
 3. Dirty Fields [View Example](#)
+4. Form Layouts [View Example]( ../components/form/example-form-layouts)
