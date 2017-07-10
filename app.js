@@ -315,9 +315,11 @@ var express = require('express'),
     /footer\.html/,
     /_header\.html/,
     /_layout\.html/,
+    /(api.md$)/,
     /layout/,
     /\.DS_Store/
   ];
+
 
   /**
    * @private
@@ -491,7 +493,8 @@ var express = require('express'),
     var opts = extend({}, res.opts, controlOpts);
     opts.subtitle = 'Full Index';
 
-    res.render('controls/index', opts);
+    //res.render('controls/index', opts);
+    res.redirect(BASE_PATH + 'components/');
     next();
   }
 
@@ -633,22 +636,30 @@ var express = require('express'),
 
     // Double check this folder for an alternative layout file.
     opts = addDefaultFolderLayout(opts, componentName);
-    console.log(opts);
 
     if (componentName === 'applicationmenu' && (exampleName.indexOf('example-') > -1 || exampleName.indexOf('test-') > -1)) {
       opts.layout = null;
     }
 
-    res.render('' + componentName + '/' +  req.params.example, opts);
+    if (req.params.example !== undefined) {
+      res.render('' + componentName + '/' +  req.params.example, opts);
+    }
     next();
   }
 
+  function reDirectSlashRoute(req, res, next) {
+    if (req.url.substr(-1) === '/' && req.url.length > 1) {
+       console.log(req.params);
+       res.redirect(301, req.url.slice(0, -1));
+       next();
+    }
+  }
+
   router.get('/components/:component', componentRoute);
-  router.get('/components/:component/', componentRoute);
+  router.get('/components/:component/', reDirectSlashRoute);
   router.get('/components/:component/:example', componentRoute);
-  router.get('/components/:component/:example/', componentRoute);
+  router.get('/components/:component/:example/', reDirectSlashRoute);
   router.get('/components/', defaultDocsRoute);
-  router.get('/components', defaultDocsRoute);
 
   // ======================================
   //  Patterns Section

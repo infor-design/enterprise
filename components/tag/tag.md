@@ -4,7 +4,7 @@
 
 ## Configuration Details
 
-1. [Common Tag Examples](/components/tag/example-index)
+1. [Common Tag Examples]( ../components/tag/example-index)
 
 ## Code Example
 

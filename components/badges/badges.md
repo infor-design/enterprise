@@ -6,6 +6,11 @@
 
 * Icon Types - error, info or alert associate the element with a status by color. In addition any of the classes from the color-pallette can be used.
 
+## Configuration Options
+
+1. Default Badge Example [View Example]( ../components/badges/example-index)
+2. Additional Badges [View Example]( ../components/badges/example-additional-badges)
+
 ## Code Example
 
 
