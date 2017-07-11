@@ -549,7 +549,7 @@
 
       /**
       * Deselect the given list item.
-      * @param {jQuery|Number} (li  &nbsp;-&nbsp; Either the actually jQuery list element or a zero based index
+      * @param {jQuery|Number} li  &nbsp;-&nbsp; Either the actually jQuery list element or a zero based index
       */
       unselect: function (li) {
         if (typeof li === 'number') {
@@ -725,7 +725,7 @@
           if ((key === 40 || key === 38) && !metaKey) {// move down or up
             var newItem = e.keyCode === 40 ? item.nextAll(':not(.is-disabled):visible:first') : item.prevAll(':not(.is-disabled):visible:first');
 
-            if ($(e.target).is(item) || e.shiftKey) {
+            if (newItem.length && ($(e.target).is(item) || e.shiftKey)) {
               self.focus(newItem);
             }
             e.preventDefault();

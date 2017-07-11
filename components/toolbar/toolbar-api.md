@@ -3,7 +3,10 @@
 ### Table of Contents
 
 -   [Toolbar](#toolbar)
+    -   [buildMoreActionsMenuItem](#buildmoreactionsmenuitem)
+    -   [refreshMoreActionsMenu](#refreshmoreactionsmenu)
     -   [getItemText](#getitemtext)
+    -   [handleTransferToMenuButtonItem](#handletransfertomenubuttonitem)
     -   [handleResize](#handleresize)
     -   [navigate](#navigate)
     -   [getLastVisibleButton](#getlastvisiblebutton)
@@ -18,6 +21,7 @@
     -   [enable](#enable)
     -   [disable](#disable)
     -   [teardown](#teardown)
+    -   [teardownMoreActionsMenuItem](#teardownmoreactionsmenuitem)
     -   [destroy](#destroy)
 
 ## Toolbar
@@ -34,6 +38,28 @@ category or section header, and the second level provides the associated options
 -   `resizeContainers` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true, uses Javascript to size the Title and Buttonset elements in a way that shows as much of the Title area as possible.
 -   `favorButtonset` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If "resizeContainers" is true, setting this to true will try to display as many buttons as possible while resizing the toolbar.  Setting to false attempts to show the entire title instead.
 
+### buildMoreActionsMenuItem
+
+Builds a single "More Actions Menu" item from a source toolbar item.
+Also sets up linkage between the menu item and the original toolbar item to allow events/properties
+to propagate when the More Actions item is acted upon.
+
+**Parameters**
+
+-   `item` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the source item from the toolbar.
+
+Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** a jQuery-wrapped <li> representing a More Actions menu implementation of the toolbar item.
+
+### refreshMoreActionsMenu
+
+Refreshes the More Actions Menu items' text content, icons, states, and submenu content
+based on changes made directly to their counterpart elements in the Toolbar.  Can also
+optionally refresh only part of the menu.
+
+**Parameters**
+
+-   `menu` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the menu/submenu to be refreshed.
+
 ### getItemText
 
 Gets the complete text contnts of a Toolbar Item, in order to create its corresponding "more actions" menu item.
@@ -48,6 +74,16 @@ Order of operations for populating the List Item text:
 -   `item` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the item being evaluated.
 
 Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** the complete text representation.
+
+### handleTransferToMenuButtonItem
+
+Event Handler for the Soho Popupmenu's custom 'show-submenu' event, specifically for
+the case of a menu button that's been spilled over into this Toolbar's More Actions menu.
+
+**Parameters**
+
+-   `e` **jQuery.Event** 
+-   `li` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the `li.submenu` element.
 
 ### handleResize
 
@@ -163,6 +199,15 @@ Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Re
 Returns the Toolbar's internal markup to its original state.
 
 Returns **this** 
+
+### teardownMoreActionsMenuItem
+
+Tears down a More Actions Menu item.
+
+**Parameters**
+
+-   `item` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the existing <li> from inside the More Actions menu.
+-   `doRemove` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if defined, causes the list item to be removed from the more actions menu.
 
 ### destroy
 

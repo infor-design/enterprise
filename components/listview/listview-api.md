@@ -71,8 +71,7 @@ Deselect the given list item.
 
 **Parameters**
 
--   `li`  
--   `null` **(jQuery | [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))** (li   -  Either the actually jQuery list element or a zero based index
+-   `li` **(jQuery | [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))**  -  Either the actually jQuery list element or a zero based index
 
 ### select
 

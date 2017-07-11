@@ -535,6 +535,23 @@
       },
 
       /**
+       * Expands all accordion headers, if possible.
+       */
+      expandAll: function() {
+        if (this.settings.allowOnePane === true) {
+          return;
+        }
+
+        var self = this;
+        this.headers.each(function() {
+          var h = $(this);
+          if (!self.isExpanded(h)) {
+            self.expand(h);
+          }
+        });
+      },
+
+      /**
       * Collapse the given Panel on the Accordion.
       * @param {Object} header &nbsp;-&nbsp; the jquery header element
       */
@@ -569,6 +586,19 @@
           pane[0].style.display = 'none';
           self.element.trigger('aftercollapse', [a]);
         }).animateClosed();
+      },
+
+      /**
+       * Collapses all accordion headers.
+       */
+      collapseAll: function() {
+        var self = this;
+        this.headers.each(function() {
+          var h = $(this);
+          if (self.isExpanded(h)) {
+            self.collapse(h);
+          }
+        });
       },
 
       // Uses a function (this.settings.source()) to call out to an external API to fill the
