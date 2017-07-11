@@ -714,4 +714,10 @@ html[lang^='fr-'] {
   [class^="btn"] {
     line-height: 34px;
   }
+
+  .field-short {
+    [class^="btn"] {
+      line-height: 25px;
+    }
+  }
 }

@@ -14,17 +14,24 @@
 /* end-amd-strip-block */
 
   var defaults = {
-      caseSensitive: false, // Set to true if searches ARE case sensitive
-      filterMode: 'startsWith', // see "filterModes" var for possible values
-      highlightMatchedText: false, // inserts markup that appears to highlight text
-      highlightCallback: null // if defined, will execute this code for highlighting text instead of the built-in highlighting code
+      caseSensitive: false,
+      filterMode: 'startsWith',
+      highlightMatchedText: false,
+      highlightCallback: null
     },
     filterModes = ['startsWith', 'contains'];
 
+
   /**
-   * Abstracted search/filter for use in other controls
-   * @constructor
-   */
+  * Abstracted search/filter for use in other controls
+  *
+  * @class ListFilter
+  * @param {Boolean} caseSensitive  &nbsp;-&nbsp; Set to true if searches ARE case sensitive
+  * @param {String} filterMode  &nbsp;-&nbsp; Type of search can current be either 'startsWith' or 'contains'
+  * @param {Boolean} highlightMatchedText  &nbsp;-&nbsp; Inserts markup that appears to highlight text
+  * @param {Boolean} highlightCallback  &nbsp;-&nbsp; If defined, will execute this code for highlighting text instead of the built-in highlighting code
+  *
+  */
   function ListFilter(settings) {
     this.settings = $.extend({}, defaults, settings);
     Soho.logTimeStart('ListFilter');
@@ -53,6 +60,12 @@
       return this;
     },
 
+    /**
+    * Run the filter on the list for the given sreach term.
+    * @param {Array} list  &nbsp;-&nbsp; The array to search.
+    * @param {String} term  &nbsp;-&nbsp; The term to look for.
+    * @returns {Array}
+    */
     filter: function(list, term) {
       if (!list) {
         return false;

@@ -570,6 +570,11 @@ var express = require('express'),
     var opts = extend({}, res.opts, componentOpts);
     opts.layout = 'doc-layout';
 
+    if (req.url.substr(-1) !== '/' && req.url.length > 1) {
+      res.redirect(301, req.url + '/');
+      next();
+    }
+
     res.render('index', opts);
     next();
   }
@@ -649,7 +654,6 @@ var express = require('express'),
 
   function reDirectSlashRoute(req, res, next) {
     if (req.url.substr(-1) === '/' && req.url.length > 1) {
-       console.log(req.params);
        res.redirect(301, req.url.slice(0, -1));
        next();
     }
@@ -660,6 +664,7 @@ var express = require('express'),
   router.get('/components/:component/:example', componentRoute);
   router.get('/components/:component/:example/', reDirectSlashRoute);
   router.get('/components/', defaultDocsRoute);
+  router.get('/components', defaultDocsRoute);
 
   // ======================================
   //  Patterns Section
