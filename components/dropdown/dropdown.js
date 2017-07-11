@@ -84,6 +84,9 @@
 
         // convert <select> tag's size css classes for the pseudo element
         var elemClassList = this.element[0].classList;
+        if (elemClassList.length === 0) {
+          this.element[0].classList = 'dropdown';
+        }
         var pseudoClassString = elemClassList.contains('dropdown-xs') ? 'dropdown input-xs' :
             elemClassList.contains('dropdown-sm') ? 'dropdown input-sm' :
             elemClassList.contains('dropdown-lg') ? 'dropdown input-lg' : 'dropdown';
