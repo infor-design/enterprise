@@ -544,17 +544,10 @@
 
         var self = this;
         this.headers.each(function() {
-          self.expand($(this));
-        });
-      },
-
-      /**
-       * Collapses all accordion headers.
-       */
-      collapseAll: function() {
-        var self = this;
-        this.headers.each(function() {
-          self.collapse($(this));
+          var h = $(this);
+          if (!self.isExpanded(h)) {
+            self.expand(h);
+          }
         });
       },
 
@@ -593,6 +586,19 @@
           pane[0].style.display = 'none';
           self.element.trigger('aftercollapse', [a]);
         }).animateClosed();
+      },
+
+      /**
+       * Collapses all accordion headers.
+       */
+      collapseAll: function() {
+        var self = this;
+        this.headers.each(function() {
+          var h = $(this);
+          if (self.isExpanded(h)) {
+            self.collapse(h);
+          }
+        });
       },
 
       // Uses a function (this.settings.source()) to call out to an external API to fill the
