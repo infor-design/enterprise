@@ -4399,7 +4399,7 @@ $.fn.datagrid = function(options) {
         }
 
         self.lastClicked = target;
-        self.makeCellEditable(self.activeCell.dataRow, self.activeCell.cell, e);
+        var isEditable = self.makeCellEditable(self.activeCell.dataRow, self.activeCell.cell, e);
 
         //Handle Cell Click Event
         var elem = $(this).closest('td'),
@@ -4438,7 +4438,7 @@ $.fn.datagrid = function(options) {
         }
 
         // Apply Quick Edit Mode
-        if (self.isCellEditable(dataRowIdx, cell)) {
+        if (isEditable) {
           setTimeout(function() {
             if ($('textarea, input', elem).length &&
                 (!$('.dropdown,' +
@@ -5775,6 +5775,7 @@ $.fn.datagrid = function(options) {
     editor: null,
 
     isCellEditable: function(row, cell) {
+
       if (!this.settings.editable) {
         return false;
       }
@@ -5819,7 +5820,7 @@ $.fn.datagrid = function(options) {
         if (event.keyCode === 32 && !$(event.currentTarget).find('.datagrid-selection-checkbox').length) {
           this.toggleRowSelection(this.activeCell.node.closest('tr'));
         }
-        return;
+        return false;
       }
 
       var dataRowIndex = this.dataRowIndex(this.dataRowNode(row)),
@@ -5838,7 +5839,7 @@ $.fn.datagrid = function(options) {
       }
 
       if (!this.isCellEditable(dataRowIndex, cell)) {
-        return;
+        return false;
       }
 
       if (cellParent.hasClass('is-editing') || cellParent.hasClass('is-editing-inline')) {
@@ -5871,6 +5872,8 @@ $.fn.datagrid = function(options) {
       this.editor.val(cellValue);
       this.editor.focus();
       this.element.triggerHandler('entereditmode', [{editor: this.editor}]);
+
+      return true;
     },
 
     commitCellEdit: function(input) {
