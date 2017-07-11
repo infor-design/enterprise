@@ -7,7 +7,9 @@
     -   [isExpanded](#isexpanded)
     -   [toggle](#toggle)
     -   [expand](#expand)
+    -   [expandAll](#expandall)
     -   [collapse](#collapse)
+    -   [collapseAll](#collapseall)
     -   [disable](#disable)
     -   [enable](#enable)
     -   [destroy](#destroy)
@@ -63,6 +65,10 @@ Expand the given Panel on the Accordion.
 
 -   `header` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  the jquery header element
 
+### expandAll
+
+Expands all accordion headers, if possible.
+
 ### collapse
 
 Collapse the given Panel on the Accordion.
@@ -70,6 +76,10 @@ Collapse the given Panel on the Accordion.
 **Parameters**
 
 -   `header` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  the jquery header element
+
+### collapseAll
+
+Collapses all accordion headers.
 
 ### disable
 
