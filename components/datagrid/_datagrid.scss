@@ -154,75 +154,77 @@ $datagrid-short-row-height: 23px;
       background-color: transparent;
     }
 
-    .datagrid-header {
-      background-color: $datagrid-list-header-bg-color;
-    }
-
     tr td {
       border-left: 0;
       border-right: 0;
     }
 
     //Filter Row
-    .datagrid-filter-wrapper {
-      input,
-      div.dropdown {
+    .datagrid-header {
+      background-color: $datagrid-list-header-bg-color;
+
+      .is-filterable .datagrid-filter-wrapper {
+        input,
+        div.dropdown {
+          // scss-lint:disable ImportantRule
+          border-color: $datagrid-list-filter-border-color !important;
+          color: $datagrid-list-filter-color;
+          -webkit-text-fill-color: $datagrid-list-filter-color;
+
+          // scss-lint:disable NestingDepth
+          &:disabled,
+          &.is-disabled {
+            border-color: $datagrid-list-filter-disabled-color !important;
+
+            + .icon {
+              fill: $datagrid-list-filter-disabled-color !important;
+            }
+          }
+          // scss-lint:enable NestingDepth
+
+          &:focus {
+            border-color: $datagrid-list-filter-focus-color !important;
+          }
+
+          &:hover:not(:disabled):not(:focus) {
+            border-color: $datagrid-list-filter-hover-border-color !important;
+          }
+          // scss-lint:enable ImportantRule
+        }
+
         // scss-lint:disable ImportantRule
-        border-color: $datagrid-list-filter-border-color !important;
-        color: $datagrid-list-filter-color;
-        -webkit-text-fill-color: $datagrid-list-filter-color;
+        .btn-filter {
+          .icon,
+          .icon-dropdown {
+            fill: $datagrid-list-filter-icon-color !important;
+          }
 
-        &:disabled,
-        &.is-disabled {
-          border-color: $datagrid-list-filter-disabled-color !important;
+          &:hover:not(.is-open):not(:disabled) .icon,
+          &:hover:not(.is-open):not(:disabled) .icon-dropdown {
+            fill: $datagrid-list-filter-hover-color !important;
+          }
 
-          + .icon {
+          &:disabled .icon {
             fill: $datagrid-list-filter-disabled-color !important;
+          }
+
+          &.is-open .icon {
+            fill: $datagrid-list-filter-active-color !important;
           }
         }
 
-        &:focus {
-          border-color: $datagrid-list-filter-focus-color !important;
-        }
+        .datepicker,
+        .dropdown {
+          + .icon {
+            fill: $datagrid-list-filter-icon-color !important;
+          }
 
-        &:hover:not(:disabled):not(:focus) {
-          border-color: $datagrid-list-filter-hover-border-color !important;
+          &:hover:not(:disabled) + .icon {
+            fill: $datagrid-list-filter-hover-color !important;
+          }
         }
         // scss-lint:enable ImportantRule
       }
-
-      // scss-lint:disable ImportantRule
-      .btn-filter {
-        .icon,
-        .icon-dropdown {
-          fill: $datagrid-list-filter-icon-color !important;
-        }
-
-        &:hover:not(.is-open):not(:disabled) .icon,
-        &:hover:not(.is-open):not(:disabled) .icon-dropdown {
-          fill: $datagrid-list-filter-hover-color !important;
-        }
-
-        &:disabled .icon {
-          fill: $datagrid-list-filter-disabled-color !important;
-        }
-
-        &.is-open .icon {
-          fill: $datagrid-list-filter-active-color !important;
-        }
-      }
-
-      .datepicker,
-      .dropdown {
-        + .icon {
-          fill: $datagrid-list-filter-icon-color !important;
-        }
-
-        &:hover:not(:disabled) + .icon {
-          fill: $datagrid-list-filter-hover-color !important;
-        }
-      }
-      // scss-lint:enable ImportantRule
     }
   }
 
@@ -240,15 +242,16 @@ $datagrid-short-row-height: 23px;
 
     &.has-toolbar {
       height: calc(100% - 45px);
+
+      &.paginated {
+        height: calc(100% - 103px);
+      }
     }
 
     &.paginated {
       height: calc(100% - 45px);
     }
 
-    &.has-toolbar.paginated {
-      height: calc(100% - 103px);
-    }
 
     //Resize Drag Arrows
     .drag-target-arrows {
@@ -1650,7 +1653,7 @@ $datagrid-short-row-height: 23px;
         }
       }
 
-	  .timepicker,
+      .timepicker,
       .datepicker,
       .dropdown {
         + .icon {
