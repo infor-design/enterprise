@@ -2,7 +2,7 @@
 <div class="page-container builder">
 
    <div class="sidebar scrollable" role="complementary">
-      <div class="listview" id="task-listview" data-tmpl="task-tmpl" data-dataset="demoTasks"></div>
+      <div class="listview" id="task-listview"  data-options="{'template': 'task-tmpl', 'source': '{{basepath}}api/inventory-tasks'}"></div>
    </div>
 
    <div class="main scrollable builder-pane" role="main">
@@ -146,7 +146,7 @@
    <!-- #maincontent.main.scrollable.builder-pane -->
 
    <!-- Layout Template for Listview -->
-
+   {{={{{ }}}=}}
    <script id="task-tmpl" type="text/html">
       <ul>
          {{#dataset}}

@@ -19,7 +19,7 @@
         <input class="searchfield" placeholder="Search Tasks" name="list-detail-sidebar-search" id="list-detail-sidebar-search">
       </div>
 
-      <div class="paginated listview scrollable" id="task-listview" data-options="{ template: 'task-tmpl', dataset: 'demoTasks', paging: true, pagesize: 10, searchable: true }"></div>
+      <div class="paginated listview scrollable" id="task-listview" data-init="false"></div>
     </div>
 
     <div class="main no-scroll" role="main">
@@ -50,6 +50,28 @@
     </div>
   </div>
 
+
+<script>
+  $('body').on('initialized', function() {
+
+    var path = '{{basepath}}api/inventory-tasks';
+    $('#task-listview').listview({
+      template: $('#task-tmpl').html(),
+      source: function(req, response) {
+        $.getJSON(path, function(res) {
+          req.total = res.length;
+          req.firstPage = req.activePage === 1;
+          req.lastPage  = (req.activePage * req.pagesize) >= res.total;
+          response(res, req);
+        });
+      },
+      pagesize: 5,
+      paging: true,
+      searchable: true});
+
+  });
+</script>
+
 {{={{{ }}}=}}
 
 <script id="task-tmpl" type="text/html">
@@ -67,13 +89,4 @@
       </li>
     {{/dataset}}
   </ul>
-</script>
-
-<!-- Change Colors -->
-<script type="text/javascript">
-  $('body').on('initialized', function() {
-    $(this).personalize({
-      startingColor: '#2578A9' // Azure07
-    });
-  });
 </script>

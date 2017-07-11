@@ -241,7 +241,7 @@
 
       // Load Data from an external API
       loadData: function (ds, pagerInfo) {
-        var ajaxDs = false;
+        var ajaxDs = false, self = this;
 
         ds = ds || this.settings.dataset;
         pagerInfo = pagerInfo || {};
@@ -252,11 +252,10 @@
 
         function done(response, pagingInfo) {
           ds = response;
-          this.render(ds, pagingInfo);
+          self.render(ds, pagingInfo);
         }
 
-        var self = this,
-          s = this.settings.source;
+        var s = this.settings.source;
 
         if (typeof ds === 'string' && (ds.indexOf('http') === 0 || ds.indexOf('/') === 0)) {
           s = ds;
@@ -265,7 +264,7 @@
 
         // If paging is not active, and a source is present, attempt to retrieve information from the datasource
         // TODO: Potentially abstract this datasource concept out for use elsewhere
-        if ((!this.settings.paging && s) || ajaxDs) {
+        if ((s) || ajaxDs) {
           switch (typeof s) {
             case 'function':
               return s(pagerInfo, done);
