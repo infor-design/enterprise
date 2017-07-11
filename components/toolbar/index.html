@@ -11,6 +11,19 @@
 <li><code>favorButtonset</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong>  -  If &quot;resizeContainers&quot; is true, setting this to true will try to display as many buttons as possible while resizing the toolbar. Setting to false attempts to show the entire title instead.</li>
 </ul>
 <h3 id="functions">Functions</h3>
+<h4 id="buildmoreactionsmenuitem">buildMoreActionsMenuItem</h4>
+<p>Builds a single &quot;More Actions Menu&quot; item from a source toolbar item.<br />Also sets up linkage between the menu item and the original toolbar item to allow events/properties<br />to propagate when the More Actions item is acted upon.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>item</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong> the source item from the toolbar.</li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong> a jQuery-wrapped <li> representing a More Actions menu implementation of the toolbar item.</p>
+<h4 id="refreshmoreactionsmenu">refreshMoreActionsMenu</h4>
+<p>Refreshes the More Actions Menu items' text content, icons, states, and submenu content<br />based on changes made directly to their counterpart elements in the Toolbar. Can also<br />optionally refresh only part of the menu.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>menu</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong> the menu/submenu to be refreshed.</li>
+</ul>
 <h4 id="getitemtext">getItemText</h4>
 <p>Gets the complete text contnts of a Toolbar Item, in order to create its corresponding &quot;more actions&quot; menu item.</p>
 <p>Order of operations for populating the List Item text:<br />1. span contents (.audible), then<br />2. button title attribute, then<br />3. tooltip text (if applicable)</p>
@@ -19,6 +32,13 @@
 <li><code>item</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong> the item being evaluated.</li>
 </ul>
 <p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong> the complete text representation.</p>
+<h4 id="handletransfertomenubuttonitem">handleTransferToMenuButtonItem</h4>
+<p>Event Handler for the Soho Popupmenu's custom 'show-submenu' event, specifically for<br />the case of a menu button that's been spilled over into this Toolbar's More Actions menu.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>e</code> <strong>jQuery.Event</strong><br /></li>
+<li><code>li</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong> the <code>li.submenu</code> element.</li>
+</ul>
 <h4 id="handleresize">handleResize</h4>
 <p>Re-renders the toolbar element and adjusts all internal parts to account for the new size.</p>
 <p><strong>Parameters</strong></p>
@@ -94,6 +114,13 @@
 <h4 id="teardown">teardown</h4>
 <p>Returns the Toolbar's internal markup to its original state.</p>
 <p>Returns <strong>this</strong></p>
+<h4 id="teardownmoreactionsmenuitem">teardownMoreActionsMenuItem</h4>
+<p>Tears down a More Actions Menu item.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>item</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong> the existing <li> from inside the More Actions menu.<br /></li>
+<li><code>doRemove</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong> if defined, causes the list item to be removed from the more actions menu.</li>
+</ul>
 <h4 id="destroy">destroy</h4>
 <p>Destroys this Toolbar Component instance and completely disassociates it from its corresponding DOM Element.</p>
 <p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></strong></p>

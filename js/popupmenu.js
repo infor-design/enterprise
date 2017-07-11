@@ -795,6 +795,39 @@
         return placementObj;
       },
 
+      /**
+       * Calls an external source.
+       * @param {jQuery.Event} e
+       * @param {boolean} doOpen - if defined, causes the menu to open
+       */
+      callSource: function (e, doOpen) {
+        if (typeof this.settings.beforeOpen !== 'function') {
+          return;
+        }
+
+        var self = this;
+        var response = function(content) {
+          if (self.ajaxContent instanceof $) {
+            self.ajaxContent.off().remove();
+          }
+          self.ajaxContent = $(content);
+          self.menu.append(self.ajaxContent);
+          self.markupItems();
+
+          if (doOpen) {
+            self.open(e, true);
+          }
+        };
+
+        if (typeof this.settings.beforeOpen === 'string') {
+          window[this.settings.beforeOpen](response);
+          return;
+        }
+
+        this.settings.beforeOpen(response);
+        return;
+      },
+
       open: function(e, ajaxReturn) {
         var self = this;
 
@@ -803,24 +836,9 @@
           return;
         }
 
-        if (this.settings.beforeOpen && !ajaxReturn) {
-          var response = function(content) {
-            if (self.ajaxContent instanceof $) {
-              self.ajaxContent.off().remove();
-            }
-            self.ajaxContent = $(content);
-            self.menu.append(self.ajaxContent);
-            self.markupItems();
-            self.open(e, true);
-          };
-
-          if (typeof this.settings.beforeOpen === 'string') {
-            window[this.settings.beforeOpen](response);
-            return;
-          }
-
-          this.settings.beforeOpen(response);
-          return;
+        // Check external AJAX source, if applicable
+        if (!ajaxReturn) {
+          this.callSource(e, true);
         }
 
         var otherMenus = $('.popupmenu.is-open').filter(function() {
@@ -962,6 +980,9 @@
         if (Soho.DOM.classNameHas(li[0].className, 'is-disabled') || li[0].disabled) {
           return;
         }
+
+        // Trigger an event so other components can listen to this element as a popupmenu trigger.
+        this.element.triggerHandler('show-submenu', [li]);
 
         var wrapper = li.children('.wrapper').filter(':first');
 
@@ -1107,7 +1128,6 @@
       },
 
       detach: function () {
-
         $(document).off('touchend.popupmenu.' + this.id +' click.popupmenu.' + this.id +' keydown.popupmenu');
         $(window).off('scroll.popupmenu orientationchange.popupmenu');
         $('body').off('resize.popupmenu');
