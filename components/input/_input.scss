@@ -497,6 +497,13 @@ label,
   width: $field-md;
 }
 
+.input-mm,
+.input-mm.datepicker,
+.field-short .input-mm {  //Default
+  width: $field-mm;
+}
+
+
 .input-sm,
 .field-short .input-sm {
   width: $field-sm;
@@ -642,6 +649,11 @@ label,
 
     &.input-sm {
       max-width: $field-sm;
+      width: calc(100% - 40px);
+    }
+
+    &.input-mm {
+      max-width: $field-mm;
       width: calc(100% - 40px);
     }
 
