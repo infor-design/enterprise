@@ -535,6 +535,30 @@
       },
 
       /**
+       * Expands all accordion headers, if possible.
+       */
+      expandAll: function() {
+        if (this.settings.allowOnePane === true) {
+          return;
+        }
+
+        var self = this;
+        this.headers.each(function() {
+          self.expand($(this));
+        });
+      },
+
+      /**
+       * Collapses all accordion headers.
+       */
+      collapseAll: function() {
+        var self = this;
+        this.headers.each(function() {
+          self.collapse($(this));
+        });
+      },
+
+      /**
       * Collapse the given Panel on the Accordion.
       * @param {Object} header &nbsp;-&nbsp; the jquery header element
       */

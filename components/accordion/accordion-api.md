@@ -7,6 +7,8 @@
     -   [isExpanded](#isexpanded)
     -   [toggle](#toggle)
     -   [expand](#expand)
+    -   [expandAll](#expandall)
+    -   [collapseAll](#collapseall)
     -   [collapse](#collapse)
     -   [disable](#disable)
     -   [enable](#enable)
@@ -62,6 +64,14 @@ Expand the given Panel on the Accordion.
 **Parameters**
 
 -   `header` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  the jquery header element
+
+### expandAll
+
+Expands all accordion headers, if possible.
+
+### collapseAll
+
+Collapses all accordion headers.
 
 ### collapse
 
