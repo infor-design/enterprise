@@ -28,27 +28,23 @@
       </div>
     </div>
 
-    {{={{{ }}}=}}
-    <script id="task-tmpl" type="text/html">
-      <ul>
-        {{#dataset}}
-          {{#disabled}}
-            <li class="is-disabled">
-          {{/disabled}}
-          {{^disabled}}
-            <li>
-          {{/disabled}}
-            <p class="listview-heading">Task #{{task}}</p>
-            <p class="listview-subheading">{{desc}} </p>
-            <p class="listview-micro">Due: {{date}}</p>
-          </li>
-        {{/dataset}}
-      </ul>
-    </script>
-
   </div>
 </div>
 
-<script type="text/javascript">
-  $('#task-listview').on('selected', console.log.bind(console))
+{{={{{ }}}=}}
+<script id="task-tmpl" type="text/html">
+  <ul>
+    {{#dataset}}
+      {{#disabled}}
+        <li class="is-disabled">
+      {{/disabled}}
+      {{^disabled}}
+        <li>
+      {{/disabled}}
+        <p class="listview-heading">Task #{{task}}</p>
+        <p class="listview-subheading">{{desc}} </p>
+        <p class="listview-micro">Due: {{date}}</p>
+      </li>
+    {{/dataset}}
+  </ul>
 </script>

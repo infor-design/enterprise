@@ -22,23 +22,35 @@
     // Settings and Options
     var pluginName = 'listview',
       defaults = {
-        dataset: [], // Array of data
-        template: null,  //Html Template String
-        description: null,  //Audible Label (or use parent title)
-        paging: false, // If true, activates paging
-        pagesize: 10, // If paging is activated, sets the number of listview items available per page
-        searchable: false, // If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
-        selectable: 'single', //false, 'single' or 'multiple'
-        selectOnFocus: true, //true or false
-        hoverable: true, //true or false - can disable hover state
-        source: null, // External function that can be used to provide a datasource
+        dataset: [],
+        template: null,
+        description: null,
+        paging: false,
+        pagesize: 10,
+        searchable: false,
+        selectable: 'single',
+        selectOnFocus: true,
+        hoverable: true,
+        source: null
       },
       settings = $.extend({}, defaults, options);
 
     /**
-     * @constructor
-     * @param {Object} element
-     */
+    * The About Dialog Component is displays information regarding the application.
+    *
+    * @class ListView
+    * @param {Array} dataset  &nbsp;-&nbsp; Array of data to feed the template
+    * @param {String} content  &nbsp;-&nbsp; Html Template String
+    * @param {String} description  &nbsp;-&nbsp; Audible Label (or use parent title)
+    * @param {Boolean} paging  &nbsp;-&nbsp; If true, activates paging
+    * @param {Number} pagesize  &nbsp;-&nbsp; If paging is activated, sets the number of listview items available per page
+    * @param {Boolean} searchable  &nbsp;-&nbsp; If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
+    * @param {String|Boolean} selectable  &nbsp;-&nbsp;  //Can be false, 'single' or 'multiple'
+    * @param {Boolean} selectOnFocus  &nbsp;-&nbsp;  //Can be false, 'single' or 'multiple'
+    * @param {Boolean} hoverable  &nbsp;-&nbsp;  //Can be false, 'single' or 'multiple'
+    * @param {Function|String} source  &nbsp;-&nbsp; //If it is a string then it serves as the url for an ajax call that returns the dataset. If its a function it is a call back for getting the data asyncronously.
+    *
+    */
     function ListView(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -148,6 +160,12 @@
         return totals;
       },
 
+      /**
+      * Render the template against the dataset.
+      *
+      * @param {Array} dataset  &nbsp;-&nbsp; The data to use
+      * @param {Object} pagerInfo  &nbsp;-&nbsp; Pager instructions
+      */
       render: function(dataset, pagerInfo) {
         var self = this,
           totals = {};
@@ -291,7 +309,9 @@
         this.render(ds, pagerInfo);
       },
 
-      // Toggle all
+      /**
+      * Toggle all rows from selected to unselected. (Multiselect)
+      */
       toggleAll: function() {
         this[this.isSelectedAll ?
           'unselectRowsBetweenIndexes' :
@@ -323,7 +343,6 @@
         }
       },
 
-      // Clear Selection
       clearSelection: function() {
         if (window.getSelection) {
           window.getSelection().removeAllRanges();
@@ -332,7 +351,338 @@
         }
       },
 
-      // Handle Keyboard / Navigation Ect
+      // Handle Resize
+      handleResize: function () {
+        var items = $('li .listview-heading, tr .listview-heading', this.element),
+          item1 = items.eq(1),
+          item1W = item1.width();
+
+        if (item1.length && item1W) {
+          items[0].style.width = item1W + 'px';
+        }
+
+        this.setChildIconsValign();
+
+        if (this.element.data('pager')) {
+          this.element.data('pager').renderBar();
+        }
+      },
+
+      // For instances of Listview that are paired with a Searchfield
+      // NOTE: Search functionality is called from "js/listfilter.js"
+      handleSearch: function(e, searchfield) {
+        var list = this.element.find('li, tbody > tr'),
+            term = searchfield.val(),
+            results;
+
+        this.resetSearch(list);
+
+        if (term && term.length) {
+          results = this.listfilter.filter(list, term);
+        }
+
+        if (!results || !results.length && !term) {
+          return;
+        }
+
+        list.not(results).addClass('hidden');
+        list.filter(results).each(function(i) {
+          var li = $(this);
+          li.attr('tabindex', i === 0 ? '0' : '-1');
+          li.highlight(term);
+        });
+
+        this.renderPager();
+      },
+
+      resetSearch: function(list) {
+        list.removeClass('hidden').each(function() {
+          $(this).unhighlight();
+        });
+      },
+
+      // Fix: for vertical-align to icons and buttons
+      setChildIconsValign: function() {
+        $('li > .icon, li > button', this.element).each(function() {
+          var item = $(this),
+          itemHeihgt = item.is('button') ? 42 : 22,
+          row = item.closest('li'),
+          padding = parseInt(row[0].style.paddingTop, 10) + parseInt(row[0].style.paddingBottom, 10),
+          rowHeight = row.outerHeight() - padding;
+
+          this.style.top = ((rowHeight - itemHeihgt)/2) +'px';
+        });
+      },
+
+      focus: function (item) {
+        if (item.is(':hidden') || item.is('.is-disabled')) {
+          return;
+        }
+
+        item.siblings().removeAttr('tabindex');
+        item.attr('tabindex', 0).focus();
+
+        if (this.settings.selectOnFocus && (this.settings.selectable !== 'multiple')) {
+          this.select(item);
+        }
+      },
+
+      /**
+      * Remove the given list item.
+      *
+      * @param {jQuery|Number} li  &nbsp;-&nbsp; Either the actually jQuery list element or a zero based index
+      */
+      remove: function (li) {
+        if (typeof li === 'number') {
+          li = $(this.element.children()[0]).children().eq(li);
+        }
+        // Un-select selected item
+        // and donot trigger selected event, sinnce we removeing
+        if (li.is('.is-selected')) {
+          this.select(li, true);
+        }
+        li.remove();
+      },
+
+      /**
+      * Remove all list items.
+      */
+      clear: function () {
+        var root = $(this.element.children()[0]);
+        root.empty();
+      },
+
+      /**
+      * Remove all selected rows entirely from the list..
+      */
+      removeAllSelected: function () {
+        var self = this;
+        $.each(this.selectedItems, function(index, selected) {
+          self.remove(selected);
+        });
+      },
+
+      /**
+      * Deselect all selected rows.
+      */
+      clearAllSelected: function () {
+        var self = this;
+        $.each(this.selectedItems, function(index, selected) {
+          // Un-select selected item
+          self.select(selected);
+        });
+      },
+
+      // Initialize sortlist
+      sortInit: function(control, onEvent, attr){
+        if(!attr || $.trim(attr) === '') {
+          return;
+        }
+        $('['+ attr +']').each(function() {
+          var elment = $(this),
+            options = $.fn.parseOptions(elment, attr);
+
+          elment.on(onEvent, function(e) {
+            $(options.list).data(control).setSortColumn(options);
+            e.preventDefault();
+          });
+        });
+      },
+
+      // Consider this deprecated
+      setSortColumn: function(options) {
+        var sort,
+        field = options.orderBy || this.list.sort.field,
+        reverse = options.order;
+
+        if (!this.list.data && !field) {
+          return;
+        }
+
+        reverse = reverse ?
+          (reverse === 'desc') :
+          (this.list.sort && this.list.sort[field] && this.list.sort[field].reverse) ? false : true;
+
+        //reload data
+        if (options.reloadApi || options.reloadApiNoSort) {
+          this.loadData();
+        }
+
+        //reload data but no sort change
+        if (options.reloadApiNoSort) {
+          field = this.list.sort.field;
+          reverse = this.list.sort[field].reverse;
+        }
+
+        sort = this.sortFunction(field, reverse);
+        this.list.data.sort(sort);
+        this.render(this.list.data);
+
+        this.list.sort = {field: field};
+        this.list.sort[field] = {reverse: reverse};
+
+        this.element.trigger('sorted', [this.element, this.list.sort]);
+      },
+
+      //Overridable function to conduct sorting
+      sortFunction: function(field, reverse, primer) {
+        var key;
+        if (!primer) {
+          primer = function(a) {
+            a = (a === undefined || a === null ? '' : a);
+            if (typeof a === 'string') {
+              a = a.toUpperCase();
+
+              if (!isNaN(parseFloat(a))) {
+                a = parseFloat(a);
+              }
+            }
+            return a;
+          };
+        }
+        key = primer ? function(x) { return primer(x[field]); } : function(x) { return x[field]; };
+        reverse = !reverse ? 1 : -1;
+        return function (a, b) {
+           return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+        };
+      },
+
+      /**
+      * Deselect the given list item.
+      * @param {jQuery|Number} (li  &nbsp;-&nbsp; Either the actually jQuery list element or a zero based index
+      */
+      unselect: function (li) {
+        if (typeof li === 'number') {
+          li = $(this.element.children()[0]).children().eq(li);
+        }
+        if (li.is('.is-selected')) {
+          this.select(li);
+        }
+      },
+
+      /**
+      * Deselect the given list item.
+      * @param {jQuery|Number} li &nbsp;-&nbsp; Either the actually jQuery list element or a zero based index
+      * @param {Boolean} noTrigger &nbsp;-&nbsp; Do not trigger the selected event.
+      */
+      select: function (li, noTrigger) {
+        var self = this,
+          isChecked = false;
+
+        self.selectedItems = [];
+        if (typeof li === 'number') {
+          li = $(this.element.children()[0]).children().eq(li);
+        }
+
+        isChecked = li.hasClass('is-selected');
+
+        //focus
+        if (!li.is('[tabindex="0"]')) {
+          li.siblings().removeAttr('tabindex');
+          li.attr('tabindex', 0);
+        }
+
+        if (this.settings.selectable === false || this.settings.selectable === 'false') {
+          return;
+        }
+
+        //Select
+        if (this.settings.selectable !== 'multiple') {
+          li.parent().children().removeAttr('aria-selected');
+          li.parent().find('.is-selected').removeClass('is-selected');
+          self.selectedItems[0] = $(this);
+        }
+
+        if (isChecked) {
+          self.selectedItems = [];
+          li.removeClass('is-selected');
+        } else {
+          if (this.settings.selectable) {
+            li.addClass('is-selected');
+            self.lastSelectedRow = li.index();// Rember index to use shift key
+          }
+        }
+
+        li.parent().find('.is-selected').each(function (i) {
+          self.selectedItems[i] = $(this);
+        });
+
+        li.attr('aria-selected', !isChecked);
+        if (!noTrigger) {
+          var triggerStr = isChecked ? 'unselected' : 'selected';
+          this.element.triggerHandler(triggerStr, {selectedItems: this.selectedItems, elem: li});
+        }
+
+        var toolbar, toolbarControl,
+          parent = this.element.closest('.card, .widget');
+
+        if (!parent.length) {
+          parent = this.element.parent();
+        }
+        toolbar = parent.find('.listview-toolbar, .contextual-toolbar');
+
+        toolbarControl = toolbar.data('toolbar');
+
+        if (self.selectedItems.length > 0) {
+          if (toolbarControl) {
+            toolbarControl.toggleMoreMenu();
+          }
+          // Order of operations: set up event, change display prop, animate, toggle menu.
+          // Menu toggle takes place after the animation starts
+          toolbar.one('animateopencomplete', function() {
+            self.element.addClass('is-toolbar-open');
+            toolbar.trigger('recalculate-buttons').removeClass('is-hidden');
+          });
+          if (toolbar[0]) {
+            toolbar[0].style.display = 'block';
+          }
+          // toolbar.animateOpen({distance: 52});
+          toolbar.animateOpen({distance: 40});
+
+          var title = toolbar.find('.title, .selection-count');
+          if (!title || !title.length) {
+            title = $('<div class="title selection-count"></div>');
+            toolbar.prepend(title);
+          }
+          title.text(self.selectedItems.length + ' ' + Locale.translate('Selected'));
+
+        } else {
+          toolbar.addClass('is-hidden').one('animateclosedcomplete', function(e) {
+            e.stopPropagation();
+            this.style.display = 'none';
+          }).animateClosed();
+
+        }
+      },
+
+      updated: function() {
+        this.refresh();
+        return this;
+      },
+
+      teardown: function() {
+        $('body').off('resize.listview');
+        this.element.off('focus.listview click.listview touchend.listview keydown.listview change.selectable-listview afterpaging.listview').empty();
+        return this;
+      },
+
+      /**
+      * Detatch all events and tear down.
+      */
+      destroy: function() {
+        this.teardown();
+        this.element.removeData(pluginName);
+      },
+
+      /**
+       *  This component fires the following events.
+       *
+       * @fires ListBox#events
+       * @param {Object} selected  &nbsp;-&nbsp; Fires when a row is selected
+       * @param {Object} unselected  &nbsp;-&nbsp; Fires when a row is deselected
+       * @param {Object} rendered  &nbsp;-&nbsp; Fires after the listbox is fully rendered
+       *
+       */
       handleEvents: function () {
         var self = this,
           isSelect = false,
@@ -515,310 +865,8 @@
           }
         });
 
-      },
-
-      // Handle Resize
-      handleResize: function () {
-        var items = $('li .listview-heading, tr .listview-heading', this.element),
-          item1 = items.eq(1),
-          item1W = item1.width();
-
-        if (item1.length && item1W) {
-          items[0].style.width = item1W + 'px';
-        }
-
-        this.setChildIconsValign();
-
-        if (this.element.data('pager')) {
-          this.element.data('pager').renderBar();
-        }
-      },
-
-      // For instances of Listview that are paired with a Searchfield
-      // NOTE: Search functionality is called from "js/listfilter.js"
-      handleSearch: function(e, searchfield) {
-        var list = this.element.find('li, tbody > tr'),
-            term = searchfield.val(),
-            results;
-
-        this.resetSearch(list);
-
-        if (term && term.length) {
-          results = this.listfilter.filter(list, term);
-        }
-
-        if (!results || !results.length && !term) {
-          return;
-        }
-
-        list.not(results).addClass('hidden');
-        list.filter(results).each(function(i) {
-          var li = $(this);
-          li.attr('tabindex', i === 0 ? '0' : '-1');
-          li.highlight(term);
-        });
-
-        this.renderPager();
-      },
-
-      resetSearch: function(list) {
-        list.removeClass('hidden').each(function() {
-          $(this).unhighlight();
-        });
-      },
-
-      // Fix: for vertical-align to icons and buttons
-      setChildIconsValign: function() {
-        $('li > .icon, li > button', this.element).each(function() {
-          var item = $(this),
-          itemHeihgt = item.is('button') ? 42 : 22,
-          row = item.closest('li'),
-          padding = parseInt(row[0].style.paddingTop, 10) + parseInt(row[0].style.paddingBottom, 10),
-          rowHeight = row.outerHeight() - padding;
-
-          this.style.top = ((rowHeight - itemHeihgt)/2) +'px';
-        });
-      },
-
-      focus: function (item) {
-        if (item.is(':hidden') || item.is('.is-disabled')) {
-          return;
-        }
-
-        item.siblings().removeAttr('tabindex');
-        item.attr('tabindex', 0).focus();
-
-        if (this.settings.selectOnFocus && (this.settings.selectable !== 'multiple')) {
-          this.select(item);
-        }
-      },
-
-      // Remove Either the list element or index
-      remove: function (li) {
-        if (typeof li === 'number') {
-          li = $(this.element.children()[0]).children().eq(li);
-        }
-        // Un-select selected item
-        // and donot trigger selected event, sinnce we removeing
-        if (li.is('.is-selected')) {
-          this.select(li, true);
-        }
-        li.remove();
-      },
-
-      // Remove All
-      clear: function () {
-        var root = $(this.element.children()[0]);
-        root.empty();
-      },
-
-      // Remove all selected
-      removeAllSelected: function () {
-        var self = this;
-        $.each(this.selectedItems, function(index, selected) {
-          self.remove(selected);
-        });
-      },
-
-      // Clear all selected
-      clearAllSelected: function () {
-        var self = this;
-        $.each(this.selectedItems, function(index, selected) {
-          // Un-select selected item
-          self.select(selected);
-        });
-      },
-
-      // Initialize sortlist
-      sortInit: function(control, onEvent, attr){
-        if(!attr || $.trim(attr) === '') {
-          return;
-        }
-        $('['+ attr +']').each(function() {
-          var elment = $(this),
-            options = $.fn.parseOptions(elment, attr);
-
-          elment.on(onEvent, function(e) {
-            $(options.list).data(control).setSortColumn(options);
-            e.preventDefault();
-          });
-        });
-      },
-
-      // Sort data set
-      setSortColumn: function(options) {
-        var sort,
-        field = options.orderBy || this.list.sort.field,
-        reverse = options.order;
-
-        if (!this.list.data && !field) {
-          return;
-        }
-
-        reverse = reverse ?
-          (reverse === 'desc') :
-          (this.list.sort && this.list.sort[field] && this.list.sort[field].reverse) ? false : true;
-
-        //reload data
-        if (options.reloadApi || options.reloadApiNoSort) {
-          this.loadData();
-        }
-
-        //reload data but no sort change
-        if (options.reloadApiNoSort) {
-          field = this.list.sort.field;
-          reverse = this.list.sort[field].reverse;
-        }
-
-        sort = this.sortFunction(field, reverse);
-        this.list.data.sort(sort);
-        this.render(this.list.data);
-
-        this.list.sort = {field: field};
-        this.list.sort[field] = {reverse: reverse};
-
-        this.element.trigger('sorted', [this.element, this.list.sort]);
-      },
-
-      //Overridable function to conduct sorting
-      sortFunction: function(field, reverse, primer) {
-        var key;
-        if (!primer) {
-          primer = function(a) {
-            a = (a === undefined || a === null ? '' : a);
-            if (typeof a === 'string') {
-              a = a.toUpperCase();
-
-              if (!isNaN(parseFloat(a))) {
-                a = parseFloat(a);
-              }
-            }
-            return a;
-          };
-        }
-        key = primer ? function(x) { return primer(x[field]); } : function(x) { return x[field]; };
-        reverse = !reverse ? 1 : -1;
-        return function (a, b) {
-           return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
-        };
-      },
-
-      // Un-select selected item
-      unselect: function (li) {
-        if (typeof li === 'number') {
-          li = $(this.element.children()[0]).children().eq(li);
-        }
-        if (li.is('.is-selected')) {
-          this.select(li);
-        }
-      },
-
-      // Handle Selecting the List Element
-      select: function (li, noTrigger) {
-        var self = this,
-          isChecked = false;
-
-        self.selectedItems = [];
-        if (typeof li === 'number') {
-          li = $(this.element.children()[0]).children().eq(li);
-        }
-
-        isChecked = li.hasClass('is-selected');
-
-        //focus
-        if (!li.is('[tabindex="0"]')) {
-          li.siblings().removeAttr('tabindex');
-          li.attr('tabindex', 0);
-        }
-
-        if (this.settings.selectable === false || this.settings.selectable === 'false') {
-          return;
-        }
-
-        //Select
-        if (this.settings.selectable !== 'multiple') {
-          li.parent().children().removeAttr('aria-selected');
-          li.parent().find('.is-selected').removeClass('is-selected');
-          self.selectedItems[0] = $(this);
-        }
-
-        if (isChecked) {
-          self.selectedItems = [];
-          li.removeClass('is-selected');
-        } else {
-          if (this.settings.selectable) {
-            li.addClass('is-selected');
-            self.lastSelectedRow = li.index();// Rember index to use shift key
-          }
-        }
-
-        li.parent().find('.is-selected').each(function (i) {
-          self.selectedItems[i] = $(this);
-        });
-
-        li.attr('aria-selected', !isChecked);
-        if (!noTrigger) {
-          var triggerStr = isChecked ? 'unselected' : 'selected';
-          this.element.triggerHandler(triggerStr, {selectedItems: this.selectedItems, elem: li});
-        }
-
-        var toolbar, toolbarControl,
-          parent = this.element.closest('.card, .widget');
-
-        if (!parent.length) {
-          parent = this.element.parent();
-        }
-        toolbar = parent.find('.listview-toolbar, .contextual-toolbar');
-
-        toolbarControl = toolbar.data('toolbar');
-
-        if (self.selectedItems.length > 0) {
-          if (toolbarControl) {
-            toolbarControl.toggleMoreMenu();
-          }
-          // Order of operations: set up event, change display prop, animate, toggle menu.
-          // Menu toggle takes place after the animation starts
-          toolbar.one('animateopencomplete', function() {
-            self.element.addClass('is-toolbar-open');
-            toolbar.trigger('recalculate-buttons').removeClass('is-hidden');
-          });
-          if (toolbar[0]) {
-            toolbar[0].style.display = 'block';
-          }
-          // toolbar.animateOpen({distance: 52});
-          toolbar.animateOpen({distance: 40});
-
-          var title = toolbar.find('.title, .selection-count');
-          if (!title || !title.length) {
-            title = $('<div class="title selection-count"></div>');
-            toolbar.prepend(title);
-          }
-          title.text(self.selectedItems.length + ' ' + Locale.translate('Selected'));
-
-        } else {
-          toolbar.addClass('is-hidden').one('animateclosedcomplete', function(e) {
-            e.stopPropagation();
-            this.style.display = 'none';
-          }).animateClosed();
-
-        }
-      },
-
-      updated: function() {
-        this.refresh();
-        return this;
-      },
-
-      teardown: function() {
-        $('body').off('resize.listview');
-        this.element.off('focus.listview click.listview touchend.listview keydown.listview change.selectable-listview afterpaging.listview').empty();
-        return this;
-      },
-
-      destroy: function() {
-        this.teardown();
-        this.element.removeData(pluginName);
       }
+
     };
 
     // Initializing the Control Once or Call Methods.

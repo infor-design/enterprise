@@ -57,7 +57,6 @@ $(function($) {
     $('body').toast({title: 'Sample Message ' + cnt, message: 'This is a Toast message'});
   });
 
-
   // Autocomplete.html View Specifics
   // Setup an alternate source for the templated Autocomplete.
   $('#auto-template').autocomplete({
