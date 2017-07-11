@@ -278,8 +278,7 @@
        * @returns {jQuery[]} - a jQuery-wrapped <li> representing a More Actions menu implementation of the toolbar item.
        */
       buildMoreActionsMenuItem: function(item) {
-        var isSplitButton = false,
-          self = this;
+        var isSplitButton = false;
 
         // If this item should be skipped, just return out
         if (item.data('skipit') === true) {
