@@ -331,6 +331,17 @@
 
       &:not(.last-child) {
         margin-right: 10px;
+
+        &.is-error {
+          a[role="tab"] {
+            padding: 12px 17px 12px 5px;
+          }
+
+          .icon-error {
+            right: 0;
+            top: 10px;
+          }
+        }
       }
 
       &::before {

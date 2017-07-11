@@ -327,7 +327,7 @@
     setErrorOnParent: function (field) {
       var errorIcon = $.createIcon({ classes: ['icon-error'], icon: 'error' }),
         parent = field.closest('.tab-panel, .expandable-pane'),
-        parentContainer = field.closest('.tab-container, .expandable-area'),
+        parentContainer = field.closest('.tab-container, .tab-panel-container, .expandable-area'),
         iconTarget = parent.attr('id'),
         iconContainer,
         dropdown,
@@ -335,6 +335,9 @@
         menuitem;
 
       //Tabs
+      if (parentContainer.is('.tab-panel-container')) {
+        parentContainer = parentContainer.prev('.tab-container');
+      }
       if (parentContainer.is('.tab-container')) {
         //Default Tabs
         iconContainer = $('.tab-list a[href="#'+ iconTarget +'"]', parentContainer).closest('.tab');
