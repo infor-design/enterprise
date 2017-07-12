@@ -909,8 +909,7 @@
        */
       handleEvents: function() {
         var self = this,
-          headerWhereMouseDown = null,
-          linkFollowedByTouch = null;
+          headerWhereMouseDown = null;
 
         // Returns "Header", "Anchor", or "Expander" based on the element's tag
         function getElementType(element) {
@@ -924,33 +923,14 @@
           return elementType;
         }
 
-        // Intercepts a 'touchend' event in order to either prevent a link from being followed,
-        // or allows it to continue.
-        function touchendInterceptor(e, element) {
-          linkFollowedByTouch = true;
-          var type = getElementType(element),
-            result = self['handle' + type + 'Click'](e, element);
-
-          if (!result) {
-            e.preventDefault();
-          }
-          return result;
-        }
-
         // Intercepts a 'click' event in order to either prevent a link from being followed,
         // or allows it to continue.
         function clickInterceptor(e, element) {
           var type = getElementType(element);
-          if (linkFollowedByTouch) {
-            linkFollowedByTouch = null;
-            return false;
-          }
           return self['handle' + type + 'Click'](e, element);
         }
 
-        this.headers.on('touchend.accordion', function(e) {
-          return touchendInterceptor(e, $(this));
-        }).on('click.accordion', function(e) {
+        this.headers.on('click.accordion', function(e) {
           return clickInterceptor(e, $(this));
         }).on('focusin.accordion', function(e) {
           var target = $(e.target);
@@ -975,16 +955,11 @@
           headerWhereMouseDown = null;
         });
 
-        this.anchors.on('touchend.accordion', function(e) {
-          return touchendInterceptor(e, $(this));
-        }).on('click.accordion', function(e) {
+        this.anchors.on('click.accordion', function(e) {
           return clickInterceptor(e, $(this));
         });
 
         this.headers.children('[class^="btn"]')
-          .on('touchend.accordion', function(e) {
-            return touchendInterceptor(e, $(this));
-          })
           .on('click.accordion', function(e) {
             return clickInterceptor(e, $(this));
           }).on('keydown.accordion', function(e) {
