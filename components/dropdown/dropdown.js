@@ -489,9 +489,11 @@
       setValue: function () {
         var opts = this.element.find('option:selected'),
           text = this.getOptionText(opts);
-          if (opts.attr('value') === 'clear') {
-            text = '';
-          }
+
+        if (opts.attr('value') === 'clear') {
+          text = '';
+        }
+
         if (this.settings.empty && opts.length === 0) {
           this.pseudoElem.find('span').text('');
           return;
@@ -1527,12 +1529,12 @@
         }
 
         var value = option.val();
-        if (!value) {
-          return value;
+        if (!option) {
+          return;
         }
 
-        if (!li) {
-          li = this.listUl.find('li[data-val="'+ option.val().replace('"', '/quot/') +'"]');
+        if (!li && value) {
+          li = this.listUl.find('li[data-val="'+ value.replace('"', '/quot/') +'"]');
         }
 
         if (option.hasClass('is-disabled') || option.is(':disabled')) {
@@ -1547,7 +1549,7 @@
           clearSelection = false,
           isAdded = true; // Sets to false if the option is being removed from a multi-select instead of added
 
-        if (option.val() === 'clear') {
+        if (option.val() === 'clear' || code === '') {
           clearSelection = true;
         }
 
