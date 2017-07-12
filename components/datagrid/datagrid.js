@@ -5872,7 +5872,7 @@ $.fn.datagrid = function(options) {
       }
       this.editor.val(cellValue);
       this.editor.focus();
-      this.element.triggerHandler('entereditmode', [{editor: this.editor}]);
+      this.element.triggerHandler('entereditmode', [{row: dataRowIndex, cell: cell, item: rowData, target: cellNode, value: cellValue, column: col, editor: this.editor}]);
 
       return true;
     },
@@ -5911,9 +5911,15 @@ $.fn.datagrid = function(options) {
         rowIndex = this.dataRowIndex(cellNode.parent());
       }
 
+      var cell = cellNode.index();
+      var col = this.columnSettings(cell);
+      var rowData = this.settings.treeGrid ? this.settings.treeDepth[rowIndex].node : this.settings.dataset[rowIndex];
+      var oldValue = this.fieldValue(rowData, col.field);
+
       //Save the Cell Edit back to the data set
-      this.updateCellNode(rowIndex, cellNode.index(), newValue, false, isInline);
-      this.element.triggerHandler('exiteditmode', [{editor: this.editor}]);
+      this.updateCellNode(rowIndex, cell, newValue, false, isInline);
+      var value = this.fieldValue(rowData, col.field);
+      this.element.triggerHandler('exiteditmode', [{row: rowIndex, cell: cell, item: rowData, target: cellNode, value: value, oldValue: oldValue, column: col, editor: this.editor}]);
     },
 
     //Validate a particular cell if it has validation on the column and its visible
