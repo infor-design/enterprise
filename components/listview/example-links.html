@@ -26,7 +26,7 @@
       </div>
 
       <div class="card-content">
-        <div class="listview" id="task-listview" data-options="{'hoverable': 'false', 'selectable': 'false', 'source': '{{basepath}}api/inventory-tasks', 'template': 'task-tmpl'}"></div>
+        <div class="listview" id="task-listview" data-options="{'selectOnFocus': false, 'hoverable': false, 'selectable': false, 'source': '{{basepath}}api/inventory-tasks', 'template': 'task-tmpl'}"></div>
       </div>
     </div>
 
@@ -42,7 +42,7 @@
           {{/disabled}}
             <p class="listview-heading">Task #{{task}}</p>
             <p class="listview-subheading">
-              <a class="hyperlink">{{desc}}</a>
+              <a class="hyperlink" href="http://www.google.com" target="_blank">{{desc}}</a>
             </p>
             <p class="listview-micro">Due: {{date}}</p>
           </li>
