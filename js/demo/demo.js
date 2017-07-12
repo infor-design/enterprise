@@ -1,28 +1,3 @@
-// Code used in Samples and Demo Pages
-
-// Public Variable with some sample data
-
-var demoBuilderItems = [];
-demoBuilderItems.push({ id: 1, orderId: '4231212-3', items: 0, companyName: 'John Smith Construction', total: '$0.00' });
-demoBuilderItems.push({ id: 2, orderId: '1092212-3', items: 4, companyName: 'Top Grade Construction', total: '$10,000.00' });
-demoBuilderItems.push({ id: 3, orderId: '6721212-3', items: 0, companyName: 'Riverhead Building Supply', total: '$0.00' });
-demoBuilderItems.push({ id: 4, orderId: '6731212-3', items: 37, companyName: 'United Starwars Construction', total: '$22,509.99' });
-demoBuilderItems.push({ id: 5, orderId: '5343890-3', items: 8, companyName: 'United Construction', total: '$1,550.00' });
-demoBuilderItems.push({ id: 6, orderId: '4989943-3', items: 156, companyName: 'Top Grade-A Construction', total: '$800.00' });
-demoBuilderItems.push({ id: 7, orderId: '8972384-3', items: 10, companyName: 'Top Grade Construction', total: '$1,300.00' });
-demoBuilderItems.push({ id: 8, orderId: '2903866-3', items: 96, companyName: 'Top Grade-A Construction', total: '$1,900.00' });
-demoBuilderItems = demoBuilderItems.concat(demoBuilderItems); // Duplicate it
-
-var demoSwaplist = [];
-demoSwaplist.push({id: 1, value: 'opt-1', text: 'Option A'});
-demoSwaplist.push({id: 2, value: 'opt-2', text: 'Option B'});
-demoSwaplist.push({id: 3, value: 'opt-3', text: 'Option C'});
-demoSwaplist.push({id: 4, value: 'opt-4', text: 'Option D'});
-demoSwaplist.push({id: 5, value: 'opt-5', text: 'Option E', disabled: true});
-demoSwaplist.push({id: 6, value: 'opt-6', text: 'Option F'});
-demoSwaplist.push({id: 7, value: 'opt-7', text: 'Option G'/*, selected: true*/});
-demoSwaplist.push({id: 8, value: 'opt-8', text: 'Option H'});
-demoSwaplist.push({id: 9, value: 'opt-9', text: 'Option I'});
 
 // Execute Page Code for Demo Page
 $(function($) {
@@ -143,32 +118,6 @@ $(function($) {
       $(this).text((Math.floor(Math.random() * (20 - 0)) + 0) + ' ');
     });
 
-    //----------------------------------------------------------
-    //  Tests: Validation
-    //----------------------------------------------------------
-
-    // duplicates the "required" value checker
-    function requiredCheck(value) {
-      if (typeof value === 'string' && $.trim(value).length === 0) {
-        return false;
-      }
-      return (value ? true : false);
-    }
-
-    // This test adds an additional validation rule.
-    $.fn.validation.rules['also-required'] = {
-      check: function() {
-        return false;
-      },
-      message: 'This is a custom validation rule that duplicates the functionality of the "required" rule built into the validator, but has this really long message instead.  This is testing the size of error message tooltips, as well as testing that custom rules work properly.', //TODO - Localize
-      async: false
-    };
-
-    $.fn.validation.rules['dd-required'] = {
-      check: requiredCheck,
-      message: 'This dropdown is required.  Please select an option from the Dropdown.',
-      async: false
-    };
 
   });
 

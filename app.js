@@ -1577,6 +1577,10 @@ var express = require('express'),
     sendJSONFile('companies', req, res, next);
   });
 
+  router.get('/api/construction', function(req, res, next) {
+    sendJSONFile('construction', req, res, next);
+  });
+
   router.get('/api/deployments', function(req, res, next) {
     sendJSONFile('deployments', req, res, next);
   });
