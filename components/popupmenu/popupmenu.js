@@ -18,32 +18,43 @@
     // Settings and Options
     var pluginName = 'popupmenu',
       defaults = {
-        menu: null,  //Menu's ID Selector, or a jQuery object representing a menu
-        trigger: 'click',  //click, rightClick, immediate ect
+        menu: null,
+        trigger: 'click',
         autoFocus: true,
         mouseFocus: true,
         attachToBody: false,
-        beforeOpen: null, //Ajax callback for open event
-        ariaListbox: false,   //Switches aria to use listbox construct instead of menu construct (internal)
-        useCoordsForClick: false, //By default, menus open up underneath their target element.  Set this to true to use mouse coordinates for positioning a menu inside of its target element.
-        eventObj: undefined,  //Can pass in the event object so you can do a right click with immediate,
-        placementOpts: { // Gets passed to this control's Place behavior
+        beforeOpen: null,
+        ariaListbox: false,
+        useCoordsForClick: false,
+        eventObj: undefined,
+        placementOpts: {
           containerOffsetX: 10,
           containerOffsetY: 10,
           strategies: ['flip', 'shrink']
         },
         offset: {
           x: 0,
-          y: 0,
+          y: 0
         }
       },
       settings = $.extend({}, defaults, options);
 
+
     /**
-     * Responsive Popup Menu Control (Context)
-     * @constructor
-     * @param {Object} element
-     */
+    * Responsive Popup Menu Control aka Context Menu when doing a right click action.
+    *
+    * @class PopupMenu
+    * @param {String} menu  &nbsp;-&nbsp; Menu's ID Selector, or a jQuery object representing a menu
+    * @param {String} trigger  &nbsp;-&nbsp; Action on which to trigger a menu can be: click, rightClick, immediate ect
+    * @param {Boolean} autoFocus  &nbsp;-&nbsp; If false the focus will not focus the first list element. (At the cost of accessibility)
+    * @param {Boolean} attachToBody  &nbsp;-&nbsp; If true the menu will be moved out to the body. To be used in certin overflow situations.
+    * @param {String} ariaListbox  &nbsp;-&nbsp;  Switches aria to use listbox construct instead of menu construct (internal)
+    * @param {Boolean} useCoordsForClick  &nbsp;-&nbsp;  By default, menus open up underneath their target element.  Set this to true to use mouse coordinates for positioning a menu inside of its target element.
+    * @param {String} eventObj  &nbsp;-&nbsp; Can pass in the event object so you can do a right click with immediate
+    * @param {Object} placementOpts  &nbsp;-&nbsp; Gets passed to this control's Place behavior
+    * @param {Object} offset  &nbsp;-&nbsp; Can tweak the menu position in the x and y direction. Takes an object of form: `{x: 0, y: 0}`
+    *
+    */
     function PopupMenu(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -255,15 +266,16 @@
             }
 
             // disabled menu items, by prop and by className
-            if (Soho.DOM.classNameHas(li.className, 'is-disabled')) {
-              a.setAttribute('aria-disabled', 'true');
-              a.disabled = true;
-            }
+            var $a = $(a),
+              $li = $(li);
 
-            if (a.hasAttribute('disabled')) {
+            if (a.hasAttribute('disabled') || $li.hasClass('is-disabled')) {
               Soho.DOM.addClass(li, 'is-disabled');
               a.setAttribute('aria-disabled', 'true');
               a.disabled = true;
+            } else {
+              $li.removeClass('is-disabled');
+              $a.prop('disabled', false).removeAttr('aria-disabled');
             }
 
             // menu items that contain submenus
@@ -271,7 +283,6 @@
               li.className += (Soho.DOM.classNameExists(li) ? ' ' : '') + 'submenu';
             }
             if (Soho.DOM.classNameHas(li.className, 'submenu')) {
-              var $a = $(a);
 
               // Add a span
               if (!span) {
@@ -547,8 +558,7 @@
 
       /**
        * Handles the action of clicking items in the popupmenu.
-       * @param {$.Event} [e] - The jQuery Event object.
-       * @return undefined;
+       * @private
        */
       handleItemClick: function(e, anchor) {
         var href = anchor.attr('href'),
@@ -797,8 +807,7 @@
 
       /**
        * Calls an external source.
-       * @param {jQuery.Event} e
-       * @param {boolean} doOpen - if defined, causes the menu to open
+       * @private
        */
       callSource: function (e, doOpen) {
         if (typeof this.settings.beforeOpen !== 'function') {
@@ -1149,6 +1158,11 @@
         });
       },
 
+      /**
+       * Close the open menu
+       * @param {Boolean} isCancelled  &nbsp;-&nbsp; Internally set option used if the operation is a cancel. Wont matter for manual api call.
+       * @param {Boolean} noFocus  &nbsp;-&nbsp; Do not return focus to the calling element (fx a button)
+       */
       close: function (isCancelled, noFocus) {
         if (!isCancelled || isCancelled === undefined) {
           isCancelled = false;
@@ -1267,6 +1281,9 @@
         this.teardown().init();
       },
 
+      /**
+       * Teardown markup and detach all events.
+       */
       destroy: function() {
         this.teardown();
         this.menu.trigger('destroy');
