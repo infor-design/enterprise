@@ -58,17 +58,17 @@
     * The SwapList Component creates a list of options that can be picked and organized.
     *
     * @class SwapList
-    * @param {?} available &nbsp;-&nbsp;
-    * @param {?} selected  &nbsp;-&nbsp;
-    * @param {?} additional  &nbsp;-&nbsp;
-    * @param {?} availableClass  &nbsp;-&nbsp;
-    * @param {?} selectedClass  &nbsp;-&nbsp;
-    * @param {?} additionalClass &nbsp;-&nbsp;
-    * @param {?} availableBtn &nbsp;-&nbsp;
-    * @param {?} selectedBtnLeft &nbsp;-&nbsp;
-    * @param {?} selectedBtnRight &nbsp;-&nbsp;
-    * @param {?} additionalBtn &nbsp;-&nbsp;
-    * @param {?} template &nbsp;-&nbsp;
+    * @param {Array} available &nbsp;-&nbsp; An array containing items for the available bucket.
+    * @param {Array} selected  &nbsp;-&nbsp;  An array containing items for the selected bucket.
+    * @param {Array} additional  &nbsp;-&nbsp;  An array containing items for the additional bucket.
+    * @param {String} availableClass  &nbsp;-&nbsp; A class name linking the available root element.
+    * @param {String} selectedClass  &nbsp;-&nbsp; A class name linking the selected root element.
+    * @param {String} additionalClass &nbsp;-&nbsp; A class name linking the additional root element.
+    * @param {String} availableBtn &nbsp;-&nbsp; A class name linking the available button element.
+    * @param {String} selectedBtnLeft &nbsp;-&nbsp;  A class name linking the move left button element.
+    * @param {String} selectedBtnRight &nbsp;-&nbsp;  A class name linking the move right button element.
+    * @param {String} additionalBtn &nbsp;-&nbsp;  A class name linking the additional button element.
+    * @param {String} template &nbsp;-&nbsp; An Html String with the mustache template for the view.
     */
     function SwapList(element) {
       this.settings = $.extend({}, settings);
@@ -81,9 +81,6 @@
     // SwapList Methods
     SwapList.prototype = {
 
-      /**
-       * @private
-       */
       init: function() {
         var self = this,
           s = self.settings;
@@ -108,6 +105,7 @@
 
       /**
        * Load listview
+       * @private
        */
       loadListview: function() {
         var i, l, lv, c,
@@ -134,6 +132,7 @@
 
       /**
        * Set elements
+       * @private
        */
       setElements: function() {
         this.offset = null;
@@ -189,6 +188,7 @@
 
       /**
        * When list is Empty force to add css class "is-muliselect"
+       * @private
        */
       isMultiSelectClass: function() {
         var i, l, lv,
@@ -205,6 +205,7 @@
 
       /**
        * Initialize pre selected items
+       * @private
        * @param {jQuery|HTMLElement} container
        */
       initSelected: function(container) {
@@ -223,6 +224,7 @@
 
       /**
        * Move Elements
+       * @private
        * @param {jQuery[]|HTMLElement} from
        * @param {jQuery[]|HTMLElement} to
        */
@@ -269,6 +271,7 @@
 
       /**
        * Un-select Elements
+       * @private
        * @param {jQuery|HTMLElement} list
        */
       unselectElements: function(list) {
@@ -279,6 +282,7 @@
 
       /**
        * Detect browser support for drag-n-drop
+       * @private
        * @returns {boolean}
        */
       isDragAndDropSupports: function() {
@@ -288,6 +292,7 @@
 
       /**
        * Detect browser support for match-media
+       * @private
        * @returns {boolean}
        */
       isMatchMediaSupports: function() {
@@ -296,6 +301,7 @@
 
       /**
        * Detect browser viewport
+       * @private
        * @returns {Object}
        */
       viewport: function() {
@@ -309,6 +315,7 @@
 
       /**
        * Check given [max-width] is true/false
+       * @private
        * @returns {boolean}
        */
       isMaxWidth: function(w) {
@@ -317,6 +324,7 @@
 
       /**
        * Make Draggable
+       * @private
        */
       makeDraggable: function() {
         var self = this,
@@ -349,6 +357,7 @@
 
       /**
        * Get Element By Touch In List
+       * @private
        * @param {jQuery|HTMLElement} list
        * @param {Number} x
        * @param {Number} y
@@ -366,7 +375,8 @@
       },
 
       /**
-       * Dragg touch element
+       * Drag touch element
+       * @private
        * @param {jQuery.Event} e
        * @param {jQuery[]} elm
        */
@@ -378,6 +388,7 @@
 
       /**
        * Shorctut for testing whether a modifier is pressed
+       * @private
        * @returns {boolean}
        */
       hasModifier: function(e) {
@@ -386,6 +397,7 @@
 
       /**
        * Applying dropeffect to the target containers
+       * @private
        */
       addDropeffects: function() {
         this.targets.each(function() {
@@ -398,6 +410,7 @@
 
       /**
        * Removing dropeffect from the target containers
+       * @private
        */
       clearDropeffects: function() {
         this.targets.attr({'aria-dropeffect': 'none'}).removeAttr('tabindex');
@@ -409,6 +422,7 @@
 
       /**
        * Clear selections
+       * @private
        */
       clearSelections: function() {
         this.selections.items = [];
@@ -426,6 +440,7 @@
 
       /**
        * Set selections items
+       * @private
        * @param {jQuery[]|HTMLElement} container
        */
       setSelectionsItems: function(container) {
@@ -442,6 +457,7 @@
 
       /**
        * Init dataset
+       * @private
        */
       initDataset: function() {
         var s = this.settings,
@@ -484,6 +500,7 @@
 
       /**
        * Get data list
+       * @private
        * @param {jQuery[]|HTMLElement} container
        * @returns {Object}
        */
@@ -498,6 +515,7 @@
 
       /**
        * Move an array element position
+       * @private
        * @param {Array} arr
        * @param {Number} from
        * @param {Number} to
@@ -508,6 +526,7 @@
 
       /**
        * Sync dataset
+       * @private
        * @param {} owner
        * @param {jQuery[]} droptarget
        */
@@ -536,6 +555,7 @@
 
       /**
        * Check if a object is jQuery object
+       * @private
        * @param {Object} obj - the object being checked
        */
       isjQuery: function (obj) {
@@ -544,6 +564,7 @@
 
       /**
        * Update attributes
+       * @private
        * @param {jQuery[]} list
        */
       updateAttributes: function(list) {
@@ -557,6 +578,7 @@
 
       /**
        * After update
+       * @private
        * @param {jQuery[]} list
        */
       afterUpdate: function(list) {
@@ -584,6 +606,7 @@
 
       /**
        * Get items from provided container
+       * @private
        * @param {jQuery[]|HTMLElement} container
        * @returns {Object}
        */
@@ -593,24 +616,21 @@
       },
 
       /**
-       * Get available dataset
-       * @returns {Object}
+        * Get the current representative dataset with only the available elements in it.
        */
       getAvailable: function() {
         return this.getDataList(this.settings.availableClass);
       },
 
       /**
-       * Get selected dataset
-       * @returns {Object}
+       * Get the current representative dataset with only the selected elements in it.
        */
       getSelected: function() {
         return this.getDataList(this.settings.selectedClass);
       },
 
       /**
-       * Gets additional dataset
-       * @returns {?}
+       * Get the current representative dataset with only the additional elements in it.
        */
       getAdditional: function() {
         return this.getDataList(this.settings.additionalClass);
@@ -618,6 +638,7 @@
 
       /**
        * Make selected if dragged element was not selected
+       * @private
        * @param {Object} list
        * @param {jQuery[]} target
        */
@@ -639,8 +660,8 @@
       },
 
       /**
-       * Updates the swaplist dataset
-       * @param {Object} ds
+       * Updates the internal datasets and refresh the ui.
+       * @param {Object} ds &nbsp;-&nbsp; The updated dataset(s) of the form `{available: [], selected: [], additional: []}`
        */
       updateDataset: function(ds) {
         var i, l, lv, c, api,
@@ -672,6 +693,7 @@
 
       /**
        * Removes event bindings from the swaplist instance.
+       * @private
        * @returns {this}
        */
       unbind: function() {
@@ -686,6 +708,7 @@
 
       /**
        * Updates this instance of the swaplist component with new settings.
+       * @private
        * @returns {this}
        */
       updated: function() {
@@ -706,9 +729,7 @@
        * Sets up event handlers for this control and its sub-elements
        *
        * @fires Swaplist#events
-       * @param {Object} click  &nbsp;-&nbsp; Fires when the component's action buttons are clicked.
-       * @param {Object} keydown  &nbsp;-&nbsp; Fires when a key is pressed while the component is focused.
-       * @param {Object} mousedown  &nbsp;-&nbsp; Fires when any mousebutton is pressed.
+      * @param {Object} swapupdate &nbsp;-&nbsp; Fires when any bucket has its content changed.
        */
       handleEvents: function() {
         var self = this,

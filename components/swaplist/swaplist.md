@@ -13,11 +13,11 @@
 
 ## Code Example
 
-The swap list uses the underlying [listview component](https://soho.infor.com/index.php?p=component/basic-list). Like the listview a list template is needed. This template can either by dynamic or static. In the example below a template with a basic list value and support for drag and drop and disabled is shown in `id="swaplist-tmpl"`* section.
+The swap list uses the underlying [listview component](https://soho.infor.com/index.php?p=component/basic-list). Like the listview a list template is needed. This template can either by dynamic or static. In the example below a template with a basic list value and support for drag and drop and disabled is shown in `id="swaplist-tmpl"` section.
 
-The markup stucture of the component itself is made up of a parent container that has an available and selected div section. Each of these has a title, buttons for moving and a div in which the list template will be generated.
+The markup structure of the component itself is made up of a parent container that has an available and selected div section. Each of these has a title, buttons for moving and a div in which the list template will be generated.
 
-Initialize the component by calling .swaplist() on the element and passing a Json Array for the available, selected sides and reference to the template. (Not the the template can also be passed here as a string instead of being in the DOM.
+Initialize the component by calling .swaplist() on the element and passing a JSON Array for the available, selected sides and reference to the template. (Not the the template can also be passed here as a string instead of being in the DOM.
 
 ```javascript
 

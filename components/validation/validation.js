@@ -49,6 +49,7 @@
 
     /**
      * Gets a list of events
+     * @private
      */
     extractEvents: function (events) {
       if (events.indexOf('{') > -1) {
@@ -70,7 +71,7 @@
     },
 
     /**
-     *
+     * @private
      */
     filterValidations: function (events, type) {
       var validations = [];
@@ -95,7 +96,7 @@
     },
 
     /**
-     *
+     * @private
      */
     attachEvents: function () {
       var self = this,
@@ -200,7 +201,7 @@
     },
 
     /**
-     *
+     * @private
      */
     validateForm: function (callback) {
       var self = this,
@@ -232,6 +233,7 @@
 
     /**
      * Set disable/enable primary button in modal
+     * @private
      */
     setModalPrimaryBtn: function(field, modalBtn, isValid) {
       var modal = field.closest('.modal'),
@@ -267,6 +269,7 @@
 
     /**
      * Gets the current value of a field
+     * @private
      * @param {jQuery[]} field
      * @returns {?}
      */
@@ -282,6 +285,7 @@
 
     /**
      *
+     * @private
      * @param {jQuery[]}
      * @param {jQuery.Event} e
      * @returns {Array}
@@ -321,6 +325,7 @@
 
     /**
      * Set Error icon on parent tabs/expandable
+     * @private
      * @param {jQuery[]} field
      * @returns {undefined}
      */
@@ -408,6 +413,7 @@
 
     /**
      *
+     * @private
      * @param {jQuery[]} field
      * @param {boolean} showTooltip
      * @param {jQuery.Event} e
@@ -485,6 +491,7 @@
 
     /**
      * Retrive the actionble element that should have an error class/icon appended to it.
+     * @private
      * @param {jQuery[]} field
      * @returns {jQuery[]}
      */
@@ -496,6 +503,8 @@
     },
 
     /**
+     * Returns true if the given object has an error
+     *
      * @param {jQuery[]} field
      * @returns {boolean}
      */
@@ -505,6 +514,7 @@
 
     /**
      * Adds an error message/icon to a form field.
+     *
      * @param {jQuery[]} field
      * @param {String} message
      * @param {boolean} inline
@@ -543,6 +553,8 @@
 
     /**
      * Shows an error icon
+     *
+     * @private
      * @param {jQuery[]} field
      * @returns {jQuery[]}
      */
@@ -584,6 +596,8 @@
 
     /**
      * Shows an tooltip error
+     *
+     * @private
      * @param {jQuery[]} field
      * @param {string} message
      * @param {boolean} showTooltip
@@ -665,6 +679,8 @@
 
     /**
      * Shows an tooltip error
+     *
+     * @private
      * @param {jQuery[]} field
      * @param {string} message
      * @param {HTMLElement} markup
@@ -693,6 +709,8 @@
 
     /**
      * Shows an inline error message on a field
+     * @private
+     *
      * @param {jQuery[]} field
      * @param {string} message
      */
@@ -718,6 +736,8 @@
 
     /**
      * Shows an inline error message on a field
+     *
+     * @private
      * @param {jQuery[]} field
      */
     addPositive: function(field) {
@@ -730,6 +750,8 @@
 
     /**
      * Shows an inline error message on a field
+     *
+     * @private
      * @param {jQuery[]} field
      */
     removeError: function(field) {
@@ -800,6 +822,8 @@
 
     /**
      * Shows an inline error message on a field
+     *
+     * @private
      * @param {jQuery[]} field
      */
     removePositive: function(field) {

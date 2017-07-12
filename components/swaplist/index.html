@@ -5,182 +5,38 @@
 <h2 id="api-details">API Details</h2>
 <h3 id="settings">Settings</h3>
 <ul>
-<li><code>available</code> <strong>?</strong>  - <br /></li>
-<li><code>selected</code> <strong>?</strong>  - <br /></li>
-<li><code>additional</code> <strong>?</strong>  - <br /></li>
-<li><code>availableClass</code> <strong>?</strong>  - <br /></li>
-<li><code>selectedClass</code> <strong>?</strong>  - <br /></li>
-<li><code>additionalClass</code> <strong>?</strong>  - <br /></li>
-<li><code>availableBtn</code> <strong>?</strong>  - <br /></li>
-<li><code>selectedBtnLeft</code> <strong>?</strong>  - <br /></li>
-<li><code>selectedBtnRight</code> <strong>?</strong>  - <br /></li>
-<li><code>additionalBtn</code> <strong>?</strong>  - <br /></li>
-<li><code>template</code> <strong>?</strong>  - </li>
+<li><code>available</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></strong>  -  An array containing items for the available bucket.<br /></li>
+<li><code>selected</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></strong>  -  An array containing items for the selected bucket.<br /></li>
+<li><code>additional</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></strong>  -  An array containing items for the additional bucket.<br /></li>
+<li><code>availableClass</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  A class name linking the available root element.<br /></li>
+<li><code>selectedClass</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  A class name linking the selected root element.<br /></li>
+<li><code>additionalClass</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  A class name linking the additional root element.<br /></li>
+<li><code>availableBtn</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  A class name linking the available button element.<br /></li>
+<li><code>selectedBtnLeft</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  A class name linking the move left button element.<br /></li>
+<li><code>selectedBtnRight</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  A class name linking the move right button element.<br /></li>
+<li><code>additionalBtn</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  A class name linking the additional button element.<br /></li>
+<li><code>template</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  An Html String with the mustache template for the view.</li>
 </ul>
 <h3 id="functions">Functions</h3>
-<h4 id="loadlistview">loadListview</h4>
-<p>Load listview</p>
-<h4 id="setelements">setElements</h4>
-<p>Set elements</p>
-<h4 id="ismultiselectclass">isMultiSelectClass</h4>
-<p>When list is Empty force to add css class &quot;is-muliselect&quot;</p>
-<h4 id="initselected">initSelected</h4>
-<p>Initialize pre selected items</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>container</code> <strong>(jQuery | <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">HTMLElement</a>)</strong></li>
-</ul>
-<h4 id="moveelements">moveElements</h4>
-<p>Move Elements</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>from</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt; | <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">HTMLElement</a>)</strong><br /></li>
-<li><code>to</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt; | <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">HTMLElement</a>)</strong></li>
-</ul>
-<h4 id="unselectelements">unselectElements</h4>
-<p>Un-select Elements</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>list</code> <strong>(jQuery | <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">HTMLElement</a>)</strong></li>
-</ul>
-<h4 id="isdraganddropsupports">isDragAndDropSupports</h4>
-<p>Detect browser support for drag-n-drop</p>
-<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
-<h4 id="ismatchmediasupports">isMatchMediaSupports</h4>
-<p>Detect browser support for match-media</p>
-<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
-<h4 id="viewport">viewport</h4>
-<p>Detect browser viewport</p>
-<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong></p>
-<h4 id="ismaxwidth">isMaxWidth</h4>
-<p>Check given [max-width] is true/false</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>w</code></li>
-</ul>
-<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
-<h4 id="makedraggable">makeDraggable</h4>
-<p>Make Draggable</p>
-<h4 id="getelementbytouchinlist">getElementByTouchInList</h4>
-<p>Get Element By Touch In List</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>list</code> <strong>(jQuery | <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">HTMLElement</a>)</strong><br /></li>
-<li><code>x</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong><br /></li>
-<li><code>y</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong></li>
-</ul>
-<h4 id="draggtouchelement">draggTouchElement</h4>
-<p>Dragg touch element</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>e</code> <strong>jQuery.Event</strong><br /></li>
-<li><code>elm</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong></li>
-</ul>
-<h4 id="hasmodifier">hasModifier</h4>
-<p>Shorctut for testing whether a modifier is pressed</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>e</code></li>
-</ul>
-<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
-<h4 id="adddropeffects">addDropeffects</h4>
-<p>Applying dropeffect to the target containers</p>
-<h4 id="cleardropeffects">clearDropeffects</h4>
-<p>Removing dropeffect from the target containers</p>
-<h4 id="clearselections">clearSelections</h4>
-<p>Clear selections</p>
-<h4 id="setselectionsitems">setSelectionsItems</h4>
-<p>Set selections items</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>container</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt; | <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">HTMLElement</a>)</strong></li>
-</ul>
-<h4 id="initdataset">initDataset</h4>
-<p>Init dataset</p>
-<h4 id="getdatalist">getDataList</h4>
-<p>Get data list</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>container</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt; | <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">HTMLElement</a>)</strong></li>
-</ul>
-<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong></p>
-<h4 id="arrayindexmove">arrayIndexMove</h4>
-<p>Move an array element position</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>arr</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></strong><br /></li>
-<li><code>from</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong><br /></li>
-<li><code>to</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong></li>
-</ul>
-<h4 id="syncdataset">syncDataset</h4>
-<p>Sync dataset</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>owner</code><br /></li>
-<li><code>droptarget</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong></li>
-</ul>
-<h4 id="isjquery">isjQuery</h4>
-<p>Check if a object is jQuery object</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>obj</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong> the object being checked</li>
-</ul>
-<h4 id="updateattributes">updateAttributes</h4>
-<p>Update attributes</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>list</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong></li>
-</ul>
-<h4 id="afterupdate">afterUpdate</h4>
-<p>After update</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>list</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong></li>
-</ul>
-<h4 id="getitems">getItems</h4>
-<p>Get items from provided container</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>container</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt; | <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">HTMLElement</a>)</strong></li>
-</ul>
-<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong></p>
 <h4 id="getavailable">getAvailable</h4>
-<p>Get available dataset</p>
-<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong></p>
+<p>Get the current representative dataset with only the available elements in it.</p>
 <h4 id="getselected">getSelected</h4>
-<p>Get selected dataset</p>
-<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong></p>
+<p>Get the current representative dataset with only the selected elements in it.</p>
 <h4 id="getadditional">getAdditional</h4>
-<p>Gets additional dataset</p>
-<p>Returns <strong>?</strong></p>
-<h4 id="draggedmakeselected">draggedMakeSelected</h4>
-<p>Make selected if dragged element was not selected</p>
-<p><strong>Parameters</strong></p>
-<ul>
-<li><code>list</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong><br /></li>
-<li><code>target</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong></li>
-</ul>
+<p>Get the current representative dataset with only the additional elements in it.</p>
 <h4 id="updatedataset">updateDataset</h4>
-<p>Updates the swaplist dataset</p>
+<p>Updates the internal datasets and refresh the ui.</p>
 <p><strong>Parameters</strong></p>
 <ul>
-<li><code>ds</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong></li>
+<li><code>ds</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  The updated dataset(s) of the form <code>{available: [], selected: [], additional: []}</code></li>
 </ul>
-<h4 id="unbind">unbind</h4>
-<p>Removes event bindings from the swaplist instance.</p>
-<p>Returns <strong>this</strong></p>
-<h4 id="updated">updated</h4>
-<p>Updates this instance of the swaplist component with new settings.</p>
-<p>Returns <strong>this</strong></p>
 <h4 id="destroy">destroy</h4>
 <p>Destroys this instance of the swaplist component and removes its link to its base element.</p>
 <h3 id="events">Events</h3>
 <p>Sets up event handlers for this control and its sub-elements</p>
 <p><strong>Parameters</strong></p>
 <ul>
-<li><code>click</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires when the component's action buttons are clicked.<br /></li>
-<li><code>keydown</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires when a key is pressed while the component is focused.<br /></li>
-<li><code>mousedown</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires when any mousebutton is pressed.</li>
+<li><code>swapupdate</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires when any bucket has its content changed.</li>
 </ul>
 <h2 id="configuration-options">Configuration options</h2>
 <ol>
@@ -192,9 +48,9 @@
 <li>The swap list supports touch devices.</li>
 </ul>
 <h2 id="code-example">Code Example</h2>
-<p>The swap list uses the underlying <a href="https://soho.infor.com/index.php?p=component/basic-list">listview component</a>. Like the listview a list template is needed. This template can either by dynamic or static. In the example below a template with a basic list value and support for drag and drop and disabled is shown in <code>id=&quot;swaplist-tmpl&quot;</code>* section.</p>
-<p>The markup stucture of the component itself is made up of a parent container that has an available and selected div section. Each of these has a title, buttons for moving and a div in which the list template will be generated.</p>
-<p>Initialize the component by calling .swaplist() on the element and passing a Json Array for the available, selected sides and reference to the template. (Not the the template can also be passed here as a string instead of being in the DOM.</p>
+<p>The swap list uses the underlying <a href="https://soho.infor.com/index.php?p=component/basic-list">listview component</a>. Like the listview a list template is needed. This template can either by dynamic or static. In the example below a template with a basic list value and support for drag and drop and disabled is shown in <code>id=&quot;swaplist-tmpl&quot;</code> section.</p>
+<p>The markup structure of the component itself is made up of a parent container that has an available and selected div section. Each of these has a title, buttons for moving and a div in which the list template will be generated.</p>
+<p>Initialize the component by calling .swaplist() on the element and passing a JSON Array for the available, selected sides and reference to the template. (Not the the template can also be passed here as a string instead of being in the DOM.</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript">
 <span class="kw">var</span> available = [], selected = [];
 
