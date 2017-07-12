@@ -25,19 +25,22 @@ $horizontal-tabs-height: 40px;
   }
 
   &.alternate {
+    background-color: $tab-alt-bg-color;
+    border-bottom-color: $tab-alt-border-color;
+
     &::before {
       background-image: linear-gradient(
         to right,
-        rgba($inverse-color, 1),
-        rgba($inverse-color, 0)
+        rgba($tab-alt-bg-color, 1),
+        rgba($tab-alt-bg-color, 0)
       );
     }
 
     &::after {
       background-image: linear-gradient(
         to right,
-        rgba($inverse-color, 0),
-        rgba($inverse-color, 1)
+        rgba($tab-alt-bg-color, 0),
+        rgba($tab-alt-bg-color, 1)
       );
     }
   }
@@ -191,16 +194,16 @@ html[dir='rtl'] {
       &::before {
         background-image: linear-gradient(
           to left,
-          rgba($inverse-color, 1),
-          rgba($inverse-color, 0)
+          rgba($tab-alt-bg-color, 1),
+          rgba($tab-alt-bg-color, 0)
         );
       }
 
       &::after {
         background-image: linear-gradient(
           to left,
-          rgba($inverse-color, 0),
-          rgba($inverse-color, 1)
+          rgba($tab-alt-bg-color, 0),
+          rgba($tab-alt-bg-color, 1)
         );
       }
     }
