@@ -1,0 +1,39 @@
+{{> includes/head}}
+
+<body class="no-scroll">
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+  {{> includes/svg-inline-refs}}
+
+  <!-- BEGIN App Menu -->
+  <nav id="application-menu" class="application-menu" data-open-on-large="true">
+    <div class="accordion panel inverse">
+      <div class="accordion-header">
+        <a href="#"><span>Header 1</span></a>
+      </div>
+      <div class="accordion-header">
+        <a href="#"><span>Header 2</span></a>
+      </div>
+      <div class="accordion-header">
+        <a href="#"><span>Header 3</span></a>
+      </div>
+    </div>
+  </nav>
+  <!-- End App Menu -->
+
+  <!-- BEGIN Content Area -->
+  <div class="page-container no-scroll">
+    {{> includes/header}}
+    <div class="page-container scrollable">
+      <div class="row">
+        <div class="six columns">
+          <h2>Application Menu Example: Open On Large</h2>
+          <p><a class="hyperlink" href="https://jira.infor.com/browse/SOHO-6193" target="_blank">Related JIRA Ticket</a>.  The <span class="code">openOnLarge</span> setting causes the Application Menu to automatically open when a large breakpoint is reached.  Resize this page to a size larger than 1200px.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- END Content Area -->
+
+
+  {{> includes/footer}}
+</body>
