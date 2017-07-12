@@ -123,10 +123,10 @@
 
         if (this.settings.deviceSpecs) {
           var specs = this.getDeviceSpecs(),
-            text = '<span class="browser">Browser: ' + specs.browser + '</span><br>' +
-              '<span class="platform">Platform: ' + specs.os + '</span><br>' +
-              '<span class="locale">Locale: ' + specs.locale + '</span><br>' +
-              '<span class="cookiesEnabled">Cookies Enabled: ' + specs.cookiesEnabled + '</span><br>';
+            text = '<span class="browser">' + Locale.translate('Browser') + ' : ' + specs.browser + '</span><br>' +
+              '<span class="platform">' + Locale.translate('Platform') + ' : ' + specs.os + '</span><br>' +
+              '<span class="locale">' + Locale.translate('Locale') + ' : ' + specs.locale + '</span><br>' +
+              '<span class="cookiesEnabled">' + Locale.translate('CookiesEnabled') + ' : ' +  specs.cookiesEnabled + '</span><br>';
           $('<p></p>').html(text).appendTo(body);
         }
 

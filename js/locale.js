@@ -124,6 +124,19 @@
         });
       }
 
+      if (locale && !this.cultures['en-US']) {
+        //fetch the local and cache it
+        $.ajax({
+          url: this.getCulturesPath() + 'en-US.js',
+          dataType: 'script',
+          error: function () {
+            self.dff.reject();
+          }
+        }).done(function () {
+          self.addCulture(locale, self.currentLocale.data);
+        });
+      }
+
       if (locale && self.currentLocale.data && self.currentLocale.dataName === locale) {
         self.dff.resolve(self.currentLocale.name);
       }
@@ -443,7 +456,7 @@
             }
             dateObj.ss = value;
             break;
-			
+
 	      case 'SSS':
             dateObj.ms = value;
             break;
