@@ -3,7 +3,7 @@
 
 ## API Details
 
-[See popup menu]( ../components/popupmenu)
+For all api information [See the popup menu]( ../components/popupmenu) as this component is used to make a contextmenu via its option `trigger: 'right-click'`.
 
 ## Configuration Options
 
@@ -59,51 +59,4 @@ This page focus on the right click popup menu (Context Menu).
 -   The Context Menu should not be used as a navigation method
 -   A shortcut/right-click menu should never be the only method of performing specific actions, as such actions are not easily discoverable by the user
 
-## Accessibility
-
--   Make sure to always focus the triggering element when closing
--   Add aria-hidden when menu is in closed/invisible state
--   Uses role = application for correct modality
--   Elements with a popup get aria-haspopup and aria-owns = id
--   li elements get role = presentation for groups and seperators
--   Checked items get aria-checked
--   Set aria-expanded when open
--   Can role = menu (usually role menu for popup menu, list box is for dropdown cases.
--   Anchor elements get role = menuitem
-
-## Keyboard Shortcuts
-
--   **Shift F10**
-    -   Posts the Popup Menu Widget When it is used as a [Contextual Menu](http://en.wikipedia.org/wiki/Context_menu)
-    -   Place input focus on the first available menuitem in the Popup Menu
-    -   **Note:** The Browser's Contextual Menu pops up if the element with input focus does not have a Popup Menu attached
--   **ESC**
-    -   Causes no menu action and dismisses Popup Menu
-    -   Input focus is returned to the element from which the Popup Menu was called
--   **Up/Down Arrow**
-    -   Moves input focus vertically between each menuitem
-    -   Input focus wraps from the last to the first menuitem on a Down key press and vice-versa when the Up key is pressed.
--   **Right/Left Arrow**
-    -   Where applicable, causes a sub-menu to post or un-post
-    -   Causes no action if there is no sub-menu
--   **Enter**
-    -   Opens the menu if on an element with click linkage. If open, then enter will select the focused menu item.
-
-## States and Variations
-
-The values within the Context Menu take the following states:
-
--   Focus
--   Hover
--   Disabled
-
-## Responsive Guidelines
-
--   Should always fit on the screen and scroll inside if necessary.
-
-## Upgrading from 3.X
-
--   Is relatively backwards compatible except inforContextMenu should be replaced with popupmenu in the api call and class name
--   Remove class divider it is deprecated
--   Checkbox construct is simplified
--   Group replaced with heading
+For all additional information [See the popup menu]( ../components/popupmenu) as this component is used to make a contextmenu via its option `trigger: 'right-click'`.

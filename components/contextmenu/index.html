@@ -1,6 +1,6 @@
 <h1 id="context-menu-learn-more">Context Menu <a href="https://soho.infor.com/index.php?p=component/about-dialog">Learn More</a></h1>
 <h2 id="api-details">API Details</h2>
-<p><a href="../components/popupmenu">See popup menu</a></p>
+<p>For all api information <a href="../components/popupmenu">See the popup menu</a> as this component is used to make a contextmenu via its option <code>trigger: 'right-click'</code>.</p>
 <h2 id="configuration-options">Configuration Options</h2>
 <ol>
 <li>Context Menu on an Input <a href="../components/contextmenu/example-index">View Example</a></li>
@@ -45,61 +45,4 @@
 <li>The Context Menu should not be used as a navigation method<br /></li>
 <li>A shortcut/right-click menu should never be the only method of performing specific actions, as such actions are not easily discoverable by the user</li>
 </ul>
-<h2 id="accessibility">Accessibility</h2>
-<ul>
-<li>Make sure to always focus the triggering element when closing<br /></li>
-<li>Add aria-hidden when menu is in closed/invisible state<br /></li>
-<li>Uses role = application for correct modality<br /></li>
-<li>Elements with a popup get aria-haspopup and aria-owns = id<br /></li>
-<li>li elements get role = presentation for groups and seperators<br /></li>
-<li>Checked items get aria-checked<br /></li>
-<li>Set aria-expanded when open<br /></li>
-<li>Can role = menu (usually role menu for popup menu, list box is for dropdown cases.<br /></li>
-<li>Anchor elements get role = menuitem</li>
-</ul>
-<h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
-<ul>
-<li><p><strong>Shift F10</strong></p>
-<ul>
-<li>Posts the Popup Menu Widget When it is used as a <a href="http://en.wikipedia.org/wiki/Context_menu">Contextual Menu</a><br /></li>
-<li>Place input focus on the first available menuitem in the Popup Menu<br /></li>
-<li><strong>Note:</strong> The Browser's Contextual Menu pops up if the element with input focus does not have a Popup Menu attached<br /></li>
-</ul></li>
-<li><p><strong>ESC</strong></p>
-<ul>
-<li>Causes no menu action and dismisses Popup Menu<br /></li>
-<li>Input focus is returned to the element from which the Popup Menu was called<br /></li>
-</ul></li>
-<li><p><strong>Up/Down Arrow</strong></p>
-<ul>
-<li>Moves input focus vertically between each menuitem<br /></li>
-<li>Input focus wraps from the last to the first menuitem on a Down key press and vice-versa when the Up key is pressed.<br /></li>
-</ul></li>
-<li><p><strong>Right/Left Arrow</strong></p>
-<ul>
-<li>Where applicable, causes a sub-menu to post or un-post<br /></li>
-<li>Causes no action if there is no sub-menu<br /></li>
-</ul></li>
-<li><p><strong>Enter</strong></p>
-<ul>
-<li>Opens the menu if on an element with click linkage. If open, then enter will select the focused menu item.</li>
-</ul></li>
-</ul>
-<h2 id="states-and-variations">States and Variations</h2>
-<p>The values within the Context Menu take the following states:</p>
-<ul>
-<li>Focus<br /></li>
-<li>Hover<br /></li>
-<li>Disabled</li>
-</ul>
-<h2 id="responsive-guidelines">Responsive Guidelines</h2>
-<ul>
-<li>Should always fit on the screen and scroll inside if necessary.</li>
-</ul>
-<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
-<ul>
-<li>Is relatively backwards compatible except inforContextMenu should be replaced with popupmenu in the api call and class name<br /></li>
-<li>Remove class divider it is deprecated<br /></li>
-<li>Checkbox construct is simplified<br /></li>
-<li>Group replaced with heading</li>
-</ul>
+<p>For all additional information <a href="../components/popupmenu">See the popup menu</a> as this component is used to make a contextmenu via its option <code>trigger: 'right-click'</code>.</p>
