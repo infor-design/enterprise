@@ -497,6 +497,13 @@ label,
   width: $field-md;
 }
 
+.input-mm,
+.input-mm.datepicker,
+.field-short .input-mm {  //Default
+  width: $field-mm;
+}
+
+
 .input-sm,
 .field-short .input-sm {
   width: $field-sm;
@@ -518,7 +525,7 @@ label,
   display: block;
   line-height: 1.2rem;
   margin-bottom: 12px;
-  margin-top: -8px;
+  margin-top: 7px;
   max-width: 300px;
   min-height: 35px;
   position: relative;
@@ -533,6 +540,10 @@ label,
 
   .icon-info-field {
     position: static;
+  }
+
+  + .error-message {
+    margin-top: -12px;
   }
 
   .message-text {
@@ -638,6 +649,11 @@ label,
 
     &.input-sm {
       max-width: $field-sm;
+      width: calc(100% - 40px);
+    }
+
+    &.input-mm {
+      max-width: $field-mm;
       width: calc(100% - 40px);
     }
 

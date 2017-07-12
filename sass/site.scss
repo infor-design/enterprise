@@ -150,6 +150,8 @@ pre {
   border-radius: 2px;
   letter-spacing: 1.17px;
   line-height: 24px;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 //Hide Table Of Contents (for now)
@@ -209,7 +211,6 @@ p strong {
     border-bottom: 2px solid transparent;
     color: $black;
     display: inline-block;
-    font-weight: lighter;
     margin: 29px 18px 29px 18.5px;
     padding: 15px 5px 1px;
     text-decoration: none;
@@ -229,7 +230,6 @@ p strong {
     @include font-size(16);
     color: $color-header-grey;
     display: inline-block;
-    font-weight: lighter;
     margin: 29px 18px 29px 18.5px;
     padding: 15px 5px 1px;
     text-decoration: none;
@@ -246,7 +246,7 @@ p strong {
 }
 
 .doc-main-index {
-  margin: 0 40px;
+  margin: 0;
   max-width: 100%;
   width: 100%;
 

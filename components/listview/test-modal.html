@@ -4,9 +4,6 @@
   </div>
 </div>
 
-<!--This is only needed because it renders first on the server on the first one-->
-{{={{{ }}}=}}
-
 <div class="row">
   <div class="twelve columns">
 
@@ -16,29 +13,12 @@
     <!-- List of Tasks -->
     <div id="modal-list-tasks" style="display: none;">
 
-      <script id="tmpl-task" type="text/html">
-        <ul>
-          {{#dataset}}
-            {{#disabled}}
-              <li class="is-disabled">
-            {{/disabled}}
-            {{^disabled}}
-              <li>
-            {{/disabled}}
-              <p class="listview-heading">Task #{{task}}</p>
-              <p class="listview-subheading">{{desc}}</p>
-              <p class="listview-micro">Due: {{date}}</p>
-            </li>
-          {{/dataset}}
-        </ul>
-      </script>
-
       <div class="listview-search alternate-bg">
         <label class="audible" for="search-task">Search</label>
         <input class="searchfield" placeholder="Search for a task" name="search-task" id="search-task" data-options="{clearable: true}">
       </div>
 
-      <div class="listview" id="listview-task" data-options="{'dataset': 'demoTasks', 'template': 'tmpl-task', searchable: true}"></div>
+      <div class="listview" id="listview-task" data-options="{'source': '{{basepath}}api/inventory-tasks', 'template': 'tmpl-task', 'searchable': 'true'}"></div>
 
     </div>
 
@@ -112,4 +92,22 @@ var modals = {
   $('#list-tasks, #list-companies').on('click', function () {
     setModal(modals[this.id]);
   });
+</script>
+
+{{={{{ }}}=}}
+<script id="tmpl-task" type="text/html">
+  <ul>
+    {{#dataset}}
+      {{#disabled}}
+        <li class="is-disabled">
+      {{/disabled}}
+      {{^disabled}}
+        <li>
+      {{/disabled}}
+        <p class="listview-heading">Task #{{task}}</p>
+        <p class="listview-subheading">{{desc}}</p>
+        <p class="listview-micro">Due: {{date}}</p>
+      </li>
+    {{/dataset}}
+  </ul>
 </script>
