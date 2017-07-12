@@ -126,18 +126,11 @@
   clear: both;
   display: inline-block;
   margin-right: 15px;
-  vertical-align: top;
+  vertical-align: baseline;
 
-  input[type="checkbox"] + label {
-    margin-top: 32px;
-
-    &::after {
-      top: 6px;
-    }
-
-    &::before {
-      margin-top: -3px;
-    }
+  &.field-checkbox label {
+    line-height: 20px;
+    margin-bottom: -1px;
   }
 }
 
@@ -197,7 +190,7 @@
   }
 
   .field:not(.field-checkbox) + &.field-checkbox {
-    margin-bottom: 18px;
+    margin-bottom: 17px;
   }
 
   &.l-pull-left {
