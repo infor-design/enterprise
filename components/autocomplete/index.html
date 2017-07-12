@@ -56,26 +56,20 @@
 </code></pre>
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
 <ul>
-<li>With focus in an empty textbox, press <strong>Arrow Down, Arrow Up, Alt+Arrow Down or Alt+Arrow Up</strong> to display the entire list of choices – focus remains in the textbox and no choice is highlighted. Press the down arrow to highlight the first choice in the list. Press the up and down arrow keys to highlight the desired choice in the list. Note that the arrows will wrap through the textbox when the top or bottom of the list is reached. For example, pressing the down arrow when the last choice is highlighted will move focus back to the textbox, pressing down again will move focus to the first item in the list. Likewise, with focus in the textbox and the list displayed, pressing up arrow will move focus to the last item in the list. When a choice is highlighted using the arrow keys, the highlighted choice is displayed in the textbox. Press enter or click on the highlighted choice to select it and close the drop-down list. This mimics the behavior of the HTML select element.<br /></li>
-<li>With the drop-down list of choices displayed, move the mouse pointer over an item in the list to highlight it. The textbox value is not modified when the mouse is used to highlight a choice. Clicking on the highlighted choice will close the drop-down and update the textbox with the selected choice. This mimics the behavior of the HTML select element.<br /></li>
-<li>With focus in an empty textbox, type <strong>Any Letter</strong> If any of the available choices begin with the letter typed, those choices are displayed in a drop down. Keyboard and mouse behavior in the drop-down matches that described above. If the letter typed does not match any of the available choices the drop-down list is not displayed.<br /></li>
-<li>With focus in textbox with an existing value type <strong>Additional Letters.</strong>As the user types letters the list of choices is filtered so that only those that begin with the typed letters are displayed. Until the user presses the arrow keys to highlight a particular choice, only the typed letters are displayed in the textbox. In an editable auto-complete, If there are no choices that match the letter(s) typed, the drop down list of choices is closed. In a non-editable auto-complete any letters which do not result in a match from the list are ignored, the drop down list of choices remains static until the user presses escape to clear the text field, backspaces to remove some of the letters previously typed, or types an additional letter that results in a valid list of choices. Navigation through the list of choices and display of the highlighted choice in the textbox works as described above.<em>Optional: When a choice is highlighted via arrow key navigation, the input cursor is left at the end of the typed entry and the highlighted choice is displayed in the textbox with the characters after the input cursor selected. Typing an additional character will remove the auto-completed portion and append the newly typed character to the end of the previously typed characters. The list will be filtered based on the additional character(s) typed.</em><br /></li>
-<li><p>With focus in a textbox, type <strong>Escape</strong></p>
-<ul>
-<li>If there is no text in the textbox, pressing escape closes the drop-down if it is displayed.<br /></li>
-<li>For an editable autocomplete that has text in the textbox that was both typed by the user and auto-completed by highlighting a choice using the keyboard, the auto-completed portion of the text is cleared and the user typed characters remain in the textbox. The drop-down list is closed. To completely clear the textbox contents the user must use the backspace key to remove the typed characters. This is how the Google search box in the Firefox UI works. <em>Recommend that (unlike the Google example), pressing the escape key again completely clears the textbox rather than relying on only the backspace key.</em><br /></li>
-<li>For a non editable auto-complete that has text in the textbox that was both typed by the user and auto-completed by highlighting a choice using the keyboard, pressing escape closes the drop-down list and leaves the current choice in the textbox.<br /></li>
-<li>For an editable or non-editable auto complete with text in the textbox that was typed by the user and the mouse is highlighting a choice in the drop down (keyboard navigation was NOT used), pressing escape closes the drop down and leaves the typed text displayed in the text box. Need to consider if pressing escape again should clear the typed text. The user must press the down arrow or alt+down arrow or click the associated icon to invoke the drop-down list of choices again.<br /></li>
-</ul></li>
-<li>Moving focus out of an empty auto complete field where a value is required should either invoke an error or if a default value was initially assigned, reset the value to the default value.<br /></li>
-<li><p>Moving focus out of an auto complete field that does not contain a valid entry should either invoke an error or if a default value was initially assigned, reset the value to the default value.</p></li>
+<li><strong>Arrow Down</strong> When closed will display the list of choices, if open will move down to the next item in the last. At the bottom it should wrap around to the top again.<br /></li>
+<li><strong>Arrow Up</strong> If open will move down to the previous item in the last. At the top it should wrap around to the top again.<br /></li>
+<li><strong>Enter</strong> selects the highlighted choice<br /></li>
+<li><strong>Any Letter</strong> After a typehead delay all of these choices should be shown. The focus should stay in the field for additional typing. NOTE: Only valid alpha numeric characters will open the list.<br /></li>
+<li><strong>Escape</strong> Closes the drop down list and restores the last value (if any)<br /></li>
+<li><strong>Tab</strong> Goes to the next tabbable item. If the list is open the currently highlighted one will be selected</li>
 </ul>
 <h2 id="states-and-variations">States and Variations</h2>
 <ul>
 <li>Normal<br /></li>
-<li>Focused<br /></li>
+<li>Focus<br /></li>
 <li>Active (Popup Menu is present)<br /></li>
-<li>Disabled</li>
+<li>Disabled<br /></li>
+<li>Readonly</li>
 </ul>
 <h2 id="test-pages">Test Pages</h2>
 <ol>
