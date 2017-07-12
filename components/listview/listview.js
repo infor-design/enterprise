@@ -204,6 +204,11 @@
         //Set Initial Tab Index
         first.attr('tabindex', 0);
 
+        //Let the link be focus'd
+        if (!this.settings.selectable && first.find('a').length === 1) {
+          first.removeAttr('tabindex');
+        }
+
         items.each(function (i) {
           var row = $(this);
 
@@ -421,6 +426,11 @@
 
         item.siblings().removeAttr('tabindex');
         item.attr('tabindex', 0).focus();
+
+        if (!this.settings.selectable && item.find('a').length === 1) {
+          item.find('a').focus();
+          item.removeAttr('tabindex');
+        }
 
         if (this.settings.selectOnFocus && (this.settings.selectable !== 'multiple')) {
           this.select(item);
@@ -695,7 +705,8 @@
           // First element if disabled
           if (item.is(':first-child') && item.hasClass('is-disabled')) {
             var e = $.Event('keydown.listview');
-              e.keyCode= 40; // move down
+
+            e.keyCode= 40; // move down
             isSelect = true;
             item.trigger(e);
           }
@@ -712,9 +723,10 @@
         });
 
         // Key Board
-        this.element.on('keydown.listview', 'li, tr', function (e) {
-          var item = $(this),
-            list = item.parent(),
+        this.element.on('keydown.listview', 'li, tr, a', function (e) {
+          var elem = $(this),
+            item = elem.is('a') ? elem.closest('li') : $(this),
+            list = item.is('a') ? item.closest('ul') : item.parent(),
             key = e.keyCode || e.charCode || 0,
             metaKey = e.metaKey;
 
@@ -725,7 +737,7 @@
           if ((key === 40 || key === 38) && !metaKey) {// move down or up
             var newItem = e.keyCode === 40 ? item.nextAll(':not(.is-disabled):visible:first') : item.prevAll(':not(.is-disabled):visible:first');
 
-            if (newItem.length && ($(e.target).is(item) || e.shiftKey)) {
+            if (newItem.length && ($(e.target).is(item) || e.shiftKey || elem.is('a'))) {
               self.focus(newItem);
             }
             e.preventDefault();
@@ -782,12 +794,6 @@
             e.stopImmediatePropagation();
             e.preventDefault();
             return false;
-          });
-
-          this.element
-          .off('click.listview', 'a')
-          .on('click.listview', 'a', function () {
-            $(this).closest('li').click();
           });
 
           this.element
