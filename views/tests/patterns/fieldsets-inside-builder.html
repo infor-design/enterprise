@@ -1,7 +1,7 @@
 <div class="page-container builder" initialize>
 
    <div class="sidebar scrollable" role="complementary">
-      <div class="listview" id="task-listview" data-tmpl="task-tmpl" data-dataset="demoTasks"></div>
+      <div class="listview" id="task-listview" data-options="{'source': '{{basepath}}api/inventory-tasks', 'template': 'task-tmpl'}"></div>
    </div>
 
    <div id="maincontent" class="main scrollable builder-pane" role="main">

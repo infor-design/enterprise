@@ -1,8 +1,4 @@
 
-<!--This is only needed because it renders first on the server on the first one-->
-{{={{{ }}}=}}
-
-
 <div class="row">
   <div class="twelve columns">
     <h2>Remove rows and clear Selection</h2>
@@ -11,32 +7,19 @@
 
 <div class="row">
   <div class="five columns">
-    <script id="multiselect-tmpl" type="text/html">
-      <ul>
-        {{#dataset}}
-          {{#disabled}}
-            <li class="is-disabled">
-          {{/disabled}}
-          {{^disabled}}
-            <li>
-          {{/disabled}}
-            <p>{{desc}}</p>
-          </li>
-        {{/dataset}}
-      </ul>
-    </script>
+
     <div class="card">
       <div class="card-header" style="padding-top: 0;">
         <div class="toolbar" role="toolbar">
           <div class="title">My Tasks</div>
-          <div class="buttonset">          
+          <div class="buttonset">
             <button class="btn-tertiary" id="remove" title="Remove Selected Items" type="button">Remove</button>
             <button class="btn-tertiary" id="clear" title="Clear Selected Items" type="button">Clear</button>
           </div>
         </div>
       </div>
       <div class="card-content">
-        <div class="listview" id="multiselect-listview" data-options="{template: 'multiselect-tmpl', selectable: 'multiple', dataset: 'demoTasks'}"></div>
+        <div class="listview" id="multiselect-listview" data-options="{'source': '{{basepath}}api/inventory-tasks', 'template': 'multiselect-tmpl', 'selectable': 'multiple'}"></div>
       </div>
     </div>
   </div>
@@ -107,7 +90,7 @@
 
       msgHtml = selectedItemsLength ?
         '<span style="font-weight: bold;">'+ selectedItemsLength +'</span> ' +
-        '<span>selected item'+ (selectedItemsLength > 1 ? 's' : '') +' removed</span>' : 
+        '<span>selected item'+ (selectedItemsLength > 1 ? 's' : '') +' removed</span>' :
         'None of the item removed';
 
       // Use "removeAllSelected"
@@ -127,7 +110,7 @@
 
       msgHtml = selectedItemsLength ?
         '<span style="font-weight: bold;">'+ selectedItemsLength +'</span> ' +
-        '<span>item'+ (selectedItemsLength > 1 ? 's' : '') +' cleared</span>' : 
+        '<span>item'+ (selectedItemsLength > 1 ? 's' : '') +' cleared</span>' :
         'None of the item was selected';
 
       // Use "clearAllSelected"
@@ -143,4 +126,20 @@
 
 
   });// End: body-on-initialized
+</script>
+
+{{={{{ }}}=}}
+<script id="multiselect-tmpl" type="text/html">
+  <ul>
+    {{#dataset}}
+      {{#disabled}}
+        <li class="is-disabled">
+      {{/disabled}}
+      {{^disabled}}
+        <li>
+      {{/disabled}}
+        <p>{{desc}}</p>
+      </li>
+    {{/dataset}}
+  </ul>
 </script>

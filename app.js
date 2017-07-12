@@ -1596,6 +1596,10 @@ var express = require('express'),
     sendJSONFile('incidents', req, res, next);
   });
 
+  router.get('/api/inventory-tasks', function(req, res, next) {
+    sendJSONFile('inventory-tasks', req, res, next);
+  });
+
   router.get('/api/jobs', function(req, res, next) {
     sendJSONFile('jobs', req, res, next);
   });
