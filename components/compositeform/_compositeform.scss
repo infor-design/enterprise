@@ -11,7 +11,13 @@
     overflow-y: hidden;
 
     > .tab-container {
-      height: inherit;
+      &.horizontal {
+        padding: 0 0 0 20px;
+      }
+
+      &.vertical-tabs {
+        height: inherit;
+      }
 
       > .tab-list-container {
         height: calc(100% - 20px);
@@ -61,10 +67,6 @@
         }
       }
     }
-
-    .tab-panel {
-      margin: 20px;
-    }
   }
 
   .expandable-pane {
@@ -76,5 +78,15 @@
     margin-bottom: 12px !important;
     margin-right: 18px;
     margin-left: 18px;
+  }
+}
+
+html[dir='rtl'] {
+  .composite-form {
+    > .scrollable-flex-content {
+      > .tab-container.horizontal {
+        padding: 0 20px 0 0;
+      }
+    }
   }
 }
