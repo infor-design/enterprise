@@ -227,7 +227,7 @@ window.Formatters = {
     }
 
     // We add hidden Yes/No text so that the exported excel spreadsheet shows this text in checkbox columns
-    var hiddenText = '<span class="hidden">' + Locale.translate(isChecked ? 'Yes' : 'No') + '</span>';
+    var hiddenText = '<span class="hidden" aria-hidden="true" role="presentation">' + Locale.translate(isChecked ? 'Yes' : 'No') + '</span>';
 
     var animate = api.wasJustUpdated;
     api.wasJustUpdated = false;
@@ -720,6 +720,7 @@ window.Editors = {
 
     this.name = 'checkbox';
     this.originalValue = value;
+    this.useValue = true; //use the data set value not cell value
 
     this.init = function () {
 
