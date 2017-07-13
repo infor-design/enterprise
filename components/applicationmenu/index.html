@@ -7,13 +7,41 @@
 <ul>
 <li><code>breakpoint</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Can be 'tablet' (+720), 'phablet (+968), ' 'desktop' +(1024), or 'large' (+1280). Default is phablet (968)<br /></li>
 <li><code>openOnLarge</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  If true, will automatically open the Application Menu when a large screen-width breakpoint is met.<br /></li>
-<li><code>triggers</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  An Array of jQuery-wrapped elements that are able to open/close this nav menu.<br /></li>
-<li><code>deviceSpecs</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  Determines whether or not to display device information (Browser, Platform, Locale, Cookies Enabled)<br /></li>
-<li><code>productName</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Additional product name information to display<br /></li>
-<li><code>useDefaultCopyright</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  Add the Legal Approved Infor Copy Right Text<br /></li>
-<li><code>version</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Semantic Version Number for example (4.0.0)</li>
+<li><code>triggers</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  An Array of jQuery-wrapped elements that are able to open/close this nav menu.</li>
 </ul>
 <h3 id="functions">Functions</h3>
+<h4 id="isopen">isOpen</h4>
+<p>Detects whether or not the application menu is open</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h4 id="testwidth">testWidth</h4>
+<p>Detects a change in breakpoint size that can cause the Application Menu's state to change.</p>
+<h4 id="openmenu">openMenu</h4>
+<p>Opens the Application Menu</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>noFocus</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong> If true, sets focus on the first item in the application menu.<br /></li>
+<li><code>userOpened</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong> If true, notifies the component that the menu was manually opened by the user.</li>
+</ul>
+<h4 id="closemenu">closeMenu</h4>
+<p>Closes the Application Menu</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>userClosed</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong> if true, sets a flag notifying the component that the user was responsible for closing.</li>
+</ul>
+<h4 id="hastriggers">hasTriggers</h4>
+<p>Detects whether or not the Application Menu has external trigger buttons setup to control it.</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h4 id="modifytriggers">modifyTriggers</h4>
+<p>Externally Facing function that can be used to add/remove application nav menu triggers.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>triggers</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&gt;</strong> an array of HTMLElements or jQuery-wrapped elements that will be used as triggers.<br /></li>
+<li><code>remove</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>?</strong> if defined, triggers that are defined will be removed internally instead of added.<br /></li>
+<li><code>norebuild</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>?</strong> if defined, this control's events won't automatically be rebound to include the new triggers.</li>
+</ul>
+<h4 id="teardown">teardown</h4>
+<p>Unbinds event listeners and removes extraneous markup from the Application Menu.</p>
+<p>Returns <strong>this</strong></p>
 <h4 id="updated">updated</h4>
 <p>Triggers a UI Resync.</p>
 <h4 id="destroy">destroy</h4>

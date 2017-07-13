@@ -3,6 +3,13 @@
 ### Table of Contents
 
 -   [ApplicationMenu](#applicationmenu)
+    -   [isOpen](#isopen)
+    -   [testWidth](#testwidth)
+    -   [openMenu](#openmenu)
+    -   [closeMenu](#closemenu)
+    -   [hasTriggers](#hastriggers)
+    -   [modifyTriggers](#modifytriggers)
+    -   [teardown](#teardown)
     -   [updated](#updated)
     -   [destroy](#destroy)
     -   [handleEvents](#handleevents)
@@ -17,10 +24,55 @@ The Application Menu provides access to all the functions, pages, and forms in a
 -   `breakpoint` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Can be 'tablet' (+720), 'phablet (+968), ' 'desktop' +(1024), or 'large' (+1280). Default is phablet (968)
 -   `openOnLarge` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  If true, will automatically open the Application Menu when a large screen-width breakpoint is met.
 -   `triggers` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  An Array of jQuery-wrapped elements that are able to open/close this nav menu.
--   `deviceSpecs` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Determines whether or not to display device information (Browser, Platform, Locale, Cookies Enabled)
--   `productName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Additional product name information to display
--   `useDefaultCopyright` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Add the Legal Approved Infor Copy Right Text
--   `version` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Semantic Version Number for example (4.0.0)
+
+### isOpen
+
+Detects whether or not the application menu is open
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### testWidth
+
+Detects a change in breakpoint size that can cause the Application Menu's state to change.
+
+### openMenu
+
+Opens the Application Menu
+
+**Parameters**
+
+-   `noFocus` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, sets focus on the first item in the application menu.
+-   `userOpened` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** If true, notifies the component that the menu was manually opened by the user.
+
+### closeMenu
+
+Closes the Application Menu
+
+**Parameters**
+
+-   `userClosed` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if true, sets a flag notifying the component that the user was responsible for closing.
+
+### hasTriggers
+
+Detects whether or not the Application Menu has external trigger buttons setup to control it.
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### modifyTriggers
+
+Externally Facing function that can be used to add/remove application nav menu triggers.
+
+**Parameters**
+
+-   `triggers` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)>** an array of HTMLElements or jQuery-wrapped elements that will be used as triggers.
+-   `remove` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** if defined, triggers that are defined will be removed internally instead of added.
+-   `norebuild` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** if defined, this control's events won't automatically be rebound to include the new triggers.
+
+### teardown
+
+Unbinds event listeners and removes extraneous markup from the Application Menu.
+
+Returns **this** 
 
 ### updated
 
