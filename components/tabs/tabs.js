@@ -2288,6 +2288,7 @@
 
         var tab = this.doGetTab(e, tabId),
           hasCounts = this.settings.tabCounts,
+          hasTooltip = this.settings.moduleTabsTooltips,
           anchor = tab.children('a'),
           count;
 
@@ -2299,6 +2300,10 @@
 
         if (hasCounts) {
           anchor.prepend(count);
+        }
+
+        if (hasTooltip) {
+          anchor.data('tooltip').setContent(name.trim());
         }
 
         var doesTabExist = this.tablist.children('li').length < 2 ? tab : undefined;
