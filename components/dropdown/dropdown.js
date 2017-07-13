@@ -337,7 +337,7 @@
             cssClasses = option.className;
 
           var trueValue = value && value.value ? value.value : text;
-          if (trueValue === 'clear') {
+          if (cssClasses.indexOf('clear') > -1) {
             if (text === '') {
               text = Locale.translate('ClearSelection');
             }
@@ -371,7 +371,7 @@
                         ' tabindex="' + (index && index === 0 ? 0 : -1) + '">' +
                         (title ? '" title="' + title.value + '"' : '') +
                         '<a role="option" href="#" class="' +
-                        (trueValue === 'clear' ? ' clear-selection' : '' ) + '"' +
+                        (cssClasses.indexOf('clear') > -1 ? ' clear-selection' : '' ) + '"' +
                         'id="list-option'+ index +'">' +
                           text +
                         '</a>' +
@@ -490,7 +490,7 @@
         var opts = this.element.find('option:selected'),
           text = this.getOptionText(opts);
 
-        if (opts.attr('value') === 'clear') {
+        if (opts.hasClass('clear')) {
           text = '';
         }
 
@@ -1456,7 +1456,7 @@
 
         if (this.isOpen()) {
           this.list.find('.is-focused').removeClass('is-focused').attr({'tabindex':'-1'});
-          if (option.val() !== 'clear') {
+          if (!option.hasClass('clear')) {
             listOption.addClass('is-focused').attr({'tabindex': '0'});
           }
 
@@ -1549,7 +1549,7 @@
           clearSelection = false,
           isAdded = true; // Sets to false if the option is being removed from a multi-select instead of added
 
-        if (option.val() === 'clear' || code === '') {
+        if (option.hasClass('clear') || code === '') {
           clearSelection = true;
         }
 

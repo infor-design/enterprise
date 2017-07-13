@@ -2,6 +2,7 @@
 
 ### Breaking Changes
 - Listview - since it was confusing about `selected` event, now `selected` and `unselected` events will fire when selecting or de-selecting an item in list. It used to be fire only `selected` event when any selection gets changed selecting or de-selecting.
+- Dropdown - Instead of using the clear option as a value, the clear option is done as a class. Change `<option value="clear"></option>` to `<option class="clear"></option>`.
 
 ## 4.3.0
 Release Date: 2017-05-09
