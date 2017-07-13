@@ -54,6 +54,12 @@ $datagrid-short-row-height: 23px;
     }
   }
 
+  &.has-toolbar.has-filterable-columns {
+    .datagrid-body {
+      height: calc(100% - 61px);
+    }
+  }
+
   td:last-child {
     border-right-color: transparent;
   }

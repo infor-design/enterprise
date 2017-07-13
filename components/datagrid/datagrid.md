@@ -23,6 +23,14 @@
 18. Datagrid List Styling [View Example]( ../components/datagrid/example-list.html)
 19. Tree Grid [View Example]( ../components/datagrid/example-tree.html)
 20. Using Nested Objects [View Example]( ../components/datagrid/example-nested-objects.html)
+21. Making a custom toolbar [View Example]( ../components/datagrid/example-custom-toolbar.html)
+22. Comments Grid (Flexible Row Size)  [View Example]( ../components/datagrid/example-comments.html)
+23. Fixed Header   [View Example]( ../components/datagrid/example-fixed-header.html)
+24. Datagrid Grouping [View Example]( ../components/datagrid/example-grouping.html)
+25. Datagrid Grouping (Totals) [View Example]( ../components/datagrid/example-grouping-totals.html)
+26. Selection (Mixed)  [View Example]( ../components/datagrid/example-mixed-selection.html)
+27. Summary Row  [View Example]( ../components/datagrid/example-summary-row.html)
+28. Export to Excel [View Example]( ../components/datagrid/example-export-from-button.html)
 
 ## Code Example
 
