@@ -213,23 +213,6 @@
        * Detects a change in breakpoint size that can cause the Application Menu's state to change.
        */
       testWidth: function() {
-        /*
-        if (this.isLargerThanBreakpoint()) {
-          this.menu.addClass('show-shadow');
-          if (this.userClosed || !this.settings.openOnLarge || this.menu.hasClass('is-open') || this.isAnimating === true) {
-            return;
-          }
-
-          this.openMenu(true);
-          return;
-        }
-
-        this.menu.addClass('show-shadow');
-        if (!this.element.find(document.activeElement).length && this.menu.is('.is-open') && this.isAnimating === false) {
-          this.closeMenu();
-        }
-        */
-
         if (this.isOpen()) {
           if (Soho.breakpoints.isAbove(this.settings.breakpoint)) {
             return;
