@@ -20,7 +20,7 @@
     // Settings and Options
     var pluginName = 'applicationmenu',
         defaults = {
-          breakpoint: 'phablet',
+          breakpoint: 'phone-to-tablet',
           openOnLarge: false,
           triggers: []
         },
@@ -33,11 +33,6 @@
     * @param {String} breakpoint  &nbsp;-&nbsp; Can be 'tablet' (+720), 'phablet (+968), ' 'desktop' +(1024), or 'large' (+1280). Default is phablet (968)
     * @param {String} openOnLarge  &nbsp;-&nbsp; If true, will automatically open the Application Menu when a large screen-width breakpoint is met.
     * @param {String} triggers  &nbsp;-&nbsp; An Array of jQuery-wrapped elements that are able to open/close this nav menu.
-    * @param {Boolean} deviceSpecs  &nbsp;-&nbsp; Determines whether or not to display device information (Browser, Platform, Locale, Cookies Enabled)
-    * @param {String} productName  &nbsp;-&nbsp; Additional product name information to display
-    * @param {Boolean} useDefaultCopyright  &nbsp;-&nbsp; Add the Legal Approved Infor Copy Right Text
-    * @param {String} version  &nbsp;-&nbsp; Semantic Version Number for example (4.0.0)
-    *
     */
     function ApplicationMenu(element) {
       this.settings = $.extend({}, settings);
@@ -50,12 +45,20 @@
     // Plugin Methods
     ApplicationMenu.prototype = {
 
+      /**
+       * @private
+       * @returns {this}
+       */
       init: function() {
         this
           .setup()
           .handleEvents();
       },
 
+      /**
+       * @private
+       * @returns {this}
+       */
       setup: function() {
         this.hasTrigger = false;
         this.isAnimating = false;
@@ -69,15 +72,9 @@
         var openOnLarge = this.element.attr('data-open-on-large');
         this.settings.openOnLarge = openOnLarge !== undefined ? openOnLarge === 'true' : this.settings.openOnLarge;
 
-        var breakpoints = {
-          'tablet': 767,
-          'phablet': 968,
-          'desktop': 1024,
-          'large': 1280
-        },
+        var breakpoints = Soho.breakpoints,
         dataBreakpoint = this.element.attr('data-breakpoint');
         this.settings.breakpoint = breakpoints[dataBreakpoint] !== undefined ? dataBreakpoint : this.settings.breakpoint;
-        this.breakpoint = breakpoints[this.settings.breakpoint];
 
         // Pull in the list of Nav Menu trigger elements and store them internally.
         this.modifyTriggers(this.settings.triggers, false, true);
@@ -126,9 +123,9 @@
 
           var isOpen = self.menu.hasClass('is-open');
           if (!isOpen) {
-            self.openMenu();
+            self.openMenu(undefined, true);
           } else {
-            self.closeMenu();
+            self.closeMenu(true);
           }
           return true;
         }
@@ -180,6 +177,10 @@
         return tag;
       },
 
+      /**
+       * Adjusts the application menu's height to fit the page.
+       * @private
+       */
       adjustHeight: function() {
         var isSticky = this.scrollTarget.is('.is-sticky'),
           totalHeight = this.scrollTarget.outerHeight(true),
@@ -192,25 +193,73 @@
         this.menu[0].style.height = offset > 0 ? ('calc(100% - ' + offset + 'px)') : '100%';
       },
 
+      /**
+       * Checks the window size against the defined breakpoint.
+       * @private
+       */
       isLargerThanBreakpoint: function() {
-        return $(window).width() > this.breakpoint;
+        return Soho.breakpoints.isAbove(this.settings.breakpoint);
       },
 
+      /**
+       * Detects whether or not the application menu is open
+       * @returns {boolean}
+       */
+      isOpen: function() {
+        return this.menu[0].classList.contains('is-open');
+      },
+
+      /**
+       * Detects a change in breakpoint size that can cause the Application Menu's state to change.
+       */
       testWidth: function() {
+        /*
         if (this.isLargerThanBreakpoint()) {
-          this.menu.removeClass('show-shadow');
-          if (this.settings.openOnLarge && !this.menu.hasClass('is-open') && this.isAnimating === false) {
-            this.openMenu(true);
-          }
-        } else {
           this.menu.addClass('show-shadow');
-          if (!this.element.find(document.activeElement).length && this.menu.is('.is-open') && this.isAnimating === false) {
-            this.closeMenu();
+          if (this.userClosed || !this.settings.openOnLarge || this.menu.hasClass('is-open') || this.isAnimating === true) {
+            return;
           }
+
+          this.openMenu(true);
+          return;
         }
+
+        this.menu.addClass('show-shadow');
+        if (!this.element.find(document.activeElement).length && this.menu.is('.is-open') && this.isAnimating === false) {
+          this.closeMenu();
+        }
+        */
+
+        if (this.isOpen()) {
+          if (Soho.breakpoints.isAbove(this.settings.breakpoint)) {
+            return;
+          }
+          if (this.element.find(document.activeElement).length || this.isAnimating) {
+            return;
+          }
+
+          this.closeMenu();
+          return;
+        }
+
+        if (Soho.breakpoints.isBelow(this.settings.breakpoint)) {
+          return;
+        }
+
+        if (this.userClosed || !this.settings.openOnLarge || this.isAnimating) {
+          return;
+        }
+
+        this.openMenu(true);
+
       },
 
-      openMenu: function(noFocus) {
+      /**
+       * Opens the Application Menu
+       * @param {boolean} noFocus - If true, sets focus on the first item in the application menu.
+       * @param {boolean} userOpened - If true, notifies the component that the menu was manually opened by the user.
+       */
+      openMenu: function(noFocus, userOpened) {
         if (this.isAnimating === true) {
           return;
         }
@@ -229,6 +278,12 @@
 
           self.isAnimating = false;
           self.element.trigger('applicationmenuopen');
+
+          if (userOpened) {
+            self.userOpened = true;
+            self.userClosed = undefined;
+          }
+
           self.menu.removeClass('no-transition');
           $('.page-container').removeClass('no-transition');
         }
@@ -262,12 +317,9 @@
         // Events that will close the nav menu
         // On a timer to prevent conflicts with the Trigger button's click events
         setTimeout(function() {
-          $(document).on('touchend.applicationmenu touchcancel.applicationmenu', function(e) {
-            e.preventDefault();
-            $(e.target).click();
-          }).on('click.applicationmenu', function(e) {
+          $(document).on('click.applicationmenu', function(e) {
             if ($(e.target).parents('.application-menu').length < 1 && !self.isLargerThanBreakpoint()) {
-              self.closeMenu($(e.target).hasClass('application-menu-trigger'));
+              self.closeMenu(true);
             }
           }).on('keydown.applicationmenu', function(e) {
             self.handleKeyDown(e);
@@ -275,7 +327,11 @@
         }, 0);
       },
 
-      closeMenu: function() {
+      /**
+       * Closes the Application Menu
+       * @param {boolean} userClosed - if true, sets a flag notifying the component that the user was responsible for closing.
+       */
+      closeMenu: function(userClosed) {
         if (this.isAnimating === true) {
           return;
         }
@@ -294,6 +350,12 @@
           self.menu.off(transitionEnd + '.applicationmenu');
           self.menu[0].style.display = 'none';
           self.isAnimating = false;
+
+          if (userClosed) {
+            self.userOpened = undefined;
+            self.userClosed = true;
+          }
+
           self.element.trigger('applicationmenuclose');
         }
 
@@ -309,17 +371,23 @@
         this.timeout = setTimeout(close, 300);
 
         this.menu.removeClass('is-open').find('[tabindex]');
-        $(document).off('touchend.applicationmenu touchcancel.applicationmenu click.applicationmenu keydown.applicationmenu');
+        $(document).off('click.applicationmenu keydown.applicationmenu');
       },
 
+      /**
+       * Detects whether or not the Application Menu has external trigger buttons setup to control it.
+       * @returns {boolean}
+       */
       hasTriggers: function() {
         return (this.triggers !== undefined && this.triggers instanceof $ && this.triggers.length);
       },
 
-      // Externally Facing function that can be used to add/remove application nav menu triggers.
-      // If the 'remove' argument is defined, triggers that are defined will be removed internally instead of added.
-      // If the 'norebuild' argument is defined, this control's events won't automatically be rebound to include
-      // the new triggers.
+      /**
+       * Externally Facing function that can be used to add/remove application nav menu triggers.
+       * @param {Array[]} triggers - an array of HTMLElements or jQuery-wrapped elements that will be used as triggers.
+       * @param {boolean} [remove] - if defined, triggers that are defined will be removed internally instead of added.
+       * @param {boolean} [norebuild] - if defined, this control's events won't automatically be rebound to include the new triggers.
+       */
       modifyTriggers: function(triggers, remove, norebuild) {
         if (!triggers || !triggers.length) {
           return;
@@ -340,12 +408,17 @@
         this.updated();
       },
 
+      /**
+       * Unbinds event listeners and removes extraneous markup from the Application Menu.
+       * @returns {this}
+       */
       teardown: function() {
         var api;
         this.accordion.off('blur.applicationmenu');
         this.menu.off('animateopencomplete animateclosedcomplete');
         $(window).off('scroll.applicationmenu');
-        $(document).off('touchend.applicationmenu touchcancel.applicationmenu click.applicationmenu open-applicationmenu close-applicationmenu');
+        $('body').off('resize.applicationmenu');
+        $(document).off('click.applicationmenu open-applicationmenu close-applicationmenu');
 
         api = this.accordion ? this.accordion.data('accordion') : null;
         if (api && api.destroy) {
@@ -413,7 +486,9 @@
 
         $(window).on('scroll.applicationmenu', function() {
           self.adjustHeight();
-        }).on('resize.applicationmenu', function() {
+        });
+
+        $('body').on('resize.applicationmenu', function() {
           self.testWidth();
         });
 
