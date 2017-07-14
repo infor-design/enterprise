@@ -3171,6 +3171,10 @@ $.fn.datagrid = function(options) {
           cssClass += ' ' + col.cssClass(this.recordCount, j, cellValue, col, rowData);
         }
 
+        if (col.cssClass && typeof col.cssClass === 'string') {
+          cssClass += ' ' + col.cssClass;
+        }
+
         cssClass += (col.focusable ? ' is-focusable' : '');
 
         var rowspan = this.calculateRowspan(cellValue, dataRowIdx, col);
@@ -6536,8 +6540,10 @@ $.fn.datagrid = function(options) {
         var isExpanded = !expandRow.hasClass('is-expanded'),
           actionButton = expandRow.prev().find(isExpanded ? '.btn-secondary' : '.btn-primary');
 
-        if (parentRow && actionButton) {
-          actionButton.attr('class', actionButton.attr('class').replace(isExpanded ? 'btn-secondary' : 'btn-primary',
+        if (actionButton.length > 0 && parentRow && actionButton) {
+          var currentClass = actionButton.attr('class') || '';
+
+          actionButton.attr('class', currentClass.replace(isExpanded ? 'btn-secondary' : 'btn-primary',
               isExpanded ? 'btn-primary' : 'btn-secondary') );
         }
       }

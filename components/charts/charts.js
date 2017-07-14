@@ -42,7 +42,7 @@ window.Chart = function(container) {
         return '#80ce4d';
       }
       if (specColor ==='neutral' ) {
-        return '#dbdbdb';
+        return '#bdbdbd';
       }
       if (specColor && specColor.indexOf('#') === 0) {
         return data.color;
@@ -105,7 +105,7 @@ window.Chart = function(container) {
       return;
     }
     var isTwoColumn = series[0].display && series[0].display === 'twocolumn',
-      legend = isTwoColumn ? $('<div class="chart-legend" style="margin: 2em auto auto; border-top: 1px solid #ccc; padding-top: 1em;"></div>') : $('<div class="chart-legend"></div>');
+      legend = isTwoColumn ? $('<div class="chart-legend" style="margin: 2em auto auto; border-top: 1px solid #ccc;  padding-bottom: 1em; padding-top: 1em;"></div>') : $('<div class="chart-legend"></div>');
 
     // Legend width
     var width = 0,
@@ -795,8 +795,13 @@ window.Chart = function(container) {
     var total = d3.sum(chartData, function(d) { return d.value; });
 
     chartData = chartData.map(function (d) {
-      return { data: d, elm: d, name: d.name, color: d.color, value: d.value, percent:d3.round(100*(d.value/total)) };
+      return { data: d, elm: d, name: d.name, color: d.color, value: d.value, percent: d3.round(100*(d.value/total)) };
     });
+
+    if (total === 0) {
+      // Handle zero based pies
+      chartData.push({data: {}, color: '#BDBDBD', name: 'Empty-Pie', value: 100, percent: 100});
+    }
 
     var svg = d3.select(container).append('svg'),
       arcs = svg.append('g').attr('class','arcs'),
@@ -820,10 +825,12 @@ window.Chart = function(container) {
     dims.height = dims.height > dims.widgetheight ? dims.widgetheight : dims.height;
     dims.height = isSmall && !lb.hideLabels ? dims.width : dims.height;
 
+    var donutWidth = 30;
+
     dims.outerRadius = ((Math.min(dims.width, dims.height) / 2) - 40);
-    dims.innerRadius = isDonut ? dims.outerRadius - (!lb.hideLabels ? 50 : 30) : 0;
-    dims.labelRadius = dims.outerRadius + 20;
-    dims.center = { x: dims.width / 2, y: dims.height / 2 };
+    dims.innerRadius = isDonut ? dims.outerRadius - (donutWidth + 5) : 0;
+    dims.labelRadius = dims.outerRadius + (donutWidth - 10);
+    dims.center = { x: (dims.width / 2) + 7, y: dims.height / 2 };
 
     svg.attr({
       'width': '100%',
@@ -946,7 +953,7 @@ window.Chart = function(container) {
         charts.hideTooltip();
       })
       .style('fill', function(d, i) {return charts.chartColor(self.isRTL ? chartData.length-i-1 : i, 'pie', d.data); })
-      .transition().duration(750)
+      .transition().duration(350)
       .attrTween('d', function(d) {
         var i = d3.interpolate(d.startAngle + 0.1, d.endAngle);
         return function(t) { d.endAngle = i(t); return pieArcs(d); };
@@ -1030,10 +1037,11 @@ window.Chart = function(container) {
       },
 
       setEvenRoundPercentage = function() {
+
         var arr = [];
         for (var i = 0, l = chartData.length; i < l; i++) {
           var d = chartData[i],
-            v = d.value / total,
+            v = (total === 0 ? 0 : d.value / total),
             f1 = d3.format('0.0%'),
             f2 = d3.format('0.3%'),
             r1 = f1(v),
@@ -1041,6 +1049,7 @@ window.Chart = function(container) {
           perRound.push(+(r1.replace('%','')));
           arr.push(+(r2.replace('%','')));
         }
+
         perEvenRound = evenRound(arr, 100);
         perRoundTotal = perRound.reduce(function(a, b) { return a + b; });
       },
@@ -1050,7 +1059,7 @@ window.Chart = function(container) {
         var r,
           format = d3.format(formatterString || ''),
           percentage = format(d.value / total),
-          name = isShortName ? (d.data.shortName || d.data.name.substring(0, 6) +'...') : d.data.name,
+          name = isShortName ? (d.data.shortName || d.data.name.substring(0, 9) + (d.data.name.length > 9 ? '...' : '')) : d.data.name,
           value = formatterString && formatterString !== '0.0%' ? format(d.value) : d.value;
 
         if (/percentage/i.test(context) && perRoundTotal !== 100) {
@@ -1087,10 +1096,12 @@ window.Chart = function(container) {
               return labelsContextFormatter(d, lb.contentsTop, lb.formatterTop, isShortName, i);
             })
             .style({
-              'font-weight': lb.isTwoline ? 'bold' : 'normal',
-              'font-size': lb.isTwoline ? (dims.width > 450 ? '1.3em' : '1.1em') : '1em',
+              'font-weight': lb.isTwoline ? 'normal' : 'normal',
+              'font-size': lb.isTwoline ? (dims.width > 450 ? '1.8em' : '1.1em') : '1em',
               'fill': function() {
-                return labelsColorFormatter(d, i, lb.colorTop);
+                var color = labelsColorFormatter(d, i, lb.colorTop);
+                color = color === '#bdbdbd' ? '#868686' : color;
+                return color;
               }
             });
         });
@@ -1121,6 +1132,7 @@ window.Chart = function(container) {
       },
 
       addLabels = function () {
+
         svg.selectAll('.labels').remove();
 
         var labels = svg.append('g').attr('class','labels'),
@@ -1159,8 +1171,7 @@ window.Chart = function(container) {
               labelX = x + (1 * sign);
 
             textLabelsLength++;
-
-            textX.push(labelX);
+            textX.push(x);
             return labelX;
           },
           'y': function (d) {
@@ -1187,8 +1198,11 @@ window.Chart = function(container) {
         if (lb.isTwoline) {
           textLabels.append('tspan')
             .attr({'class': 'lb-bottom',
-              'x': function(d, i) { return textX[i]-2; },
-              'dy': '18'
+              'x': function(d, i) {
+                  var x = textX[i];
+                  return x;
+              },
+              'dy': '17'
             });
         }
 
@@ -1381,8 +1395,13 @@ window.Chart = function(container) {
 
     //Get the Legend Series'
     var series = chartData.map(function (d) {
-      var name = d.name +' ('+ d.percent +'%)';
-      return {name:name, display:'twocolumn', color: d.color};
+      var name = d.name +' ('+ (isNaN(d.percent) ? 0 : d.percent) +'%)';
+
+      if (d.name === 'Empty-Pie') {
+        name= '';
+      }
+      return {name: name, display:'twocolumn', color: d.color};
+
     });
 
     // Add Legends
@@ -3692,6 +3711,11 @@ window.Chart = function(container) {
 
       // Pie
       else if (isTypePie) {
+        //Unselect selected ones
+        svg.selectAll('.arc')
+          .style({'stroke': '', 'stroke-width': ''})
+          .attr('transform', '');
+
         var color = charts.chartColor(o.i, 'pie', o.d.data);
         selector.classed('is-selected', true)
           .style({'stroke': color, 'stroke-width': 0})
@@ -3704,7 +3728,7 @@ window.Chart = function(container) {
       pnPositiveText.style('font-weight', 'bolder');
       pnNegativeText.style('font-weight', 'bolder');
 
-      if(isTypePie) {
+      if (isTypePie) {
         selector.classed('is-selected', false)
           .style('stroke', '#fff')
           .style('stroke-width', '1px')

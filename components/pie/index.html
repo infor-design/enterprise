@@ -1,4 +1,4 @@
-<h1 id="donut-chart-learn-more">Donut Chart <a href="#">Learn More</a></h1>
+<h1 id="pie-chart-learn-more">Pie Chart <a href="#">Learn More</a></h1>
 <h2 id="api-details">API Details</h2>
 <h3 id="settings">Settings</h3>
 <ul>
@@ -18,39 +18,46 @@
 </ul>
 <h2 id="configuration-options">Configuration Options</h2>
 <ol>
-<li>Donut Chart Main Example <a href="../components/donut/example-index">View Example</a><br /></li>
-<li>Showing Slices as Alerts <a href="../components/donut/example-alerts">View Example</a><br /></li>
-<li>With a Right Click Menu <a href="../components/donut/example-rightclick">View Example</a><br /></li>
-<li>Longer and Zero Labels <a href="../components/donut/example-values">View Example</a></li>
+<li>Pie Chart Main Example <a href="../components/pie/example-index">View Example</a><br /></li>
+<li>Hcm Example <a href="../components/pie/example-hcm">View Example</a><br /></li>
+<li>Tooltips <a href="../components/pie/example-tooltip">View Example</a><br /></li>
+<li>Donut Chart <a href="../components/donut/example-index">View Example</a></li>
 </ol>
 <h2 id="code-example">Code Example</h2>
-<p>This example shows how to invoke a dount bar chart with a dataset controlling the values.</p>
+<p>This example shows how to invoke a pie bar chart with a dataset controlling the values.</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript">
-  <span class="kw">var</span> donutData = [{
-    <span class="dt">data</span>: [{
-        <span class="dt">name</span>: <span class="st">&#39;Component A&#39;</span>,
-        <span class="dt">value</span>: <span class="dv">30</span>
-    }, {
-        <span class="dt">name</span>: <span class="st">&#39;Component B&#39;</span>,
-        <span class="dt">value</span>: <span class="dv">40</span>
-    }],
-    <span class="dt">centerLabel</span>: <span class="st">&#39;Donut Chart&#39;</span>
-  }];
+  <span class="kw">var</span> pieData = [{
+      <span class="dt">data</span>: [{
+          <span class="dt">name</span>: <span class="st">&#39;Component A&#39;</span>,
+          <span class="dt">value</span>: <span class="fl">10.1</span>,
+          <span class="dt">id</span>: <span class="st">&#39;A&#39;</span>,
+          <span class="dt">tooltip</span>: <span class="st">&#39;Component A &lt;b&gt;{{percent}}&lt;/b&gt;&#39;</span>
+      }, {
+          <span class="dt">name</span>: <span class="st">&#39;Component B&#39;</span>,
+          <span class="dt">value</span>: <span class="fl">12.2</span>,
+          <span class="dt">id</span>: <span class="st">&#39;B&#39;</span>,
+          <span class="dt">tooltip</span>: <span class="st">&#39;Component B &lt;b&gt;{{percent}}&lt;/b&gt;&#39;</span>
+      }, {
+          <span class="dt">name</span>: <span class="st">&#39;Component C&#39;</span>,
+          <span class="dt">value</span>: <span class="fl">14.35</span>,
+          <span class="dt">id</span>: <span class="st">&#39;C&#39;</span>,
+          <span class="dt">tooltip</span>: <span class="st">&#39;Component C Is Very Cool&lt;b&gt;{{percent}}&lt;/b&gt;&#39;</span>
+      }]
+    }];
 
-  <span class="fu">$</span>(<span class="st">&#39;#pie-donut-example&#39;</span>).<span class="fu">chart</span>({<span class="dt">type</span>: <span class="st">&#39;donut&#39;</span>, <span class="dt">dataset</span>: donutData}).<span class="fu">on</span>(<span class="st">&#39;selected&#39;</span>, <span class="kw">function</span> (e, elem, args) {
-    <span class="ot">console</span>.<span class="fu">log</span>(e, elem, args);
-  });
-</code></pre>
+  <span class="fu">$</span>(<span class="st">&#39;#pie-chart-example&#39;</span>).<span class="fu">chart</span>({<span class="dt">type</span>: <span class="st">&#39;pie&#39;</span>, <span class="dt">dataset</span>: pieData});</code></pre>
 <h2 id="accessibility">Accessibility</h2>
 <ul>
-<li>The contrast and actual colors can be a concern for visibility impaired and color blind people. However, you can customize the color by passing higher contrast colors.</li>
+<li>The contrast and actual colors can be a concern for visibility impaired and color blind people. However, you can customize the color by passing different contrast colors.</li>
 </ul>
 <h2 id="code-tips">Code Tips</h2>
-<p>You can control the size of the donut chart by setting the size of the parent element the donut lives in.<br />This may include possibly using an inset margin in some cases.</p>
-<p>See also pie chart</p>
+<p>You can control the size of the donut chart by setting the size of the parent element the pie chart lives in.<br />This may include possibly using an inset margin in some cases.</p>
+<p>See also <a href="../components/donut/example-index">Donut Chart Example</a></p>
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
-<p>None</p>
+<ul>
+<li>None</li>
+</ul>
 <h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
 <ul>
-<li>The donut chart was added in 3.6. From 3.6 the api is mostly compatible.</li>
+<li>The pie chart and dount chart was added in 3.6; so 3.6 the api is mostly compatible.</li>
 </ul>

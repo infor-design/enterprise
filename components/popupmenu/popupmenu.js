@@ -657,15 +657,36 @@
         }
       },
 
+      // Get the event position, handling browser cases (IE,FF) as well as SVG
+      getPositionFromEvent: function (e) {
+        var x = 0, y = 0;
+
+        if (!e) {
+          e = window.event;
+        }
+
+        if (e.pageX || e.pageY) {
+          x = e.pageX;
+          y = e.pageY;
+        } else if (e.clientX || e.clientY) {
+          x = e.clientX + document.body.scrollLeft +
+                             document.documentElement.scrollLeft;
+          y = e.clientY + document.body.scrollTop +
+                             document.documentElement.scrollTop;
+        }
+
+        return {
+          x: x,
+          y: y
+        };
+      },
+
       position: function(e) {
         var self = this,
           target = this.element,
           isRTL = this.isRTL(),
           wrapper = this.menu.parent('.popupmenu-wrapper'),
-          mouse =  {
-            x: e && e.clientX ? e.clientX : (window.event && window.event.clientX) ? window.event.clientX : 0,
-            y: e && e.clientY ? e.clientY : (window.event && window.event.clientY) ? window.event.clientY : 0
-          },
+          mouse =  this.getPositionFromEvent(e),
           menuDimensions = {
             width: this.menu.outerWidth(),
             height: this.menu.outerHeight()

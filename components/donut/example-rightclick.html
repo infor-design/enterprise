@@ -38,12 +38,12 @@ $('body').on('initialized', function () {
 
   $('#pie-donut-example').chart({type: 'donut', dataset: donutData})
     .on('contextmenu', function(e, ui, d) {
-      console.log(d, e);
+      console.log(e.pageX, e.pageY);
 
       $(this).popupmenu({trigger: 'immediate', menu: 'action-popupmenu', eventObj: e})
       .off('selected')
       .on('selected', function (e, anchor) {
-         console.log('selected:', e, anchor);
+         //console.log('selected:', e, anchor);
       });
 
     });
