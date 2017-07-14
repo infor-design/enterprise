@@ -1,5 +1,5 @@
 
-# Donut Chart  [Learn More](#)
+# Pie Chart  [Learn More](#)
 
 ## API Details
 
@@ -23,50 +23,55 @@
 
 ## Configuration Options
 
-1. Donut Chart Main Example [View Example]( ../components/donut/example-index)
-2. Showing Slices as Alerts [View Example]( ../components/donut/example-alerts)
-3. With a Right Click Menu [View Example]( ../components/donut/example-rightclick)
-4. Longer and Zero Labels [View Example]( ../components/donut/example-values)
+1. Pie Chart Main Example [View Example]( ../components/pie/example-index)
+2. Hcm Example [View Example]( ../components/pie/example-hcm)
+3. Tooltips [View Example]( ../components/pie/example-tooltip)
+4. Donut Chart [View Example]( ../components/donut/example-index)
 
 ## Code Example
 
-This example shows how to invoke a dount bar chart with a dataset controlling the values.
+This example shows how to invoke a pie bar chart with a dataset controlling the values.
 
 ```javascript
 
-  var donutData = [{
-    data: [{
-        name: 'Component A',
-        value: 30
-    }, {
-        name: 'Component B',
-        value: 40
-    }],
-    centerLabel: 'Donut Chart'
-  }];
+  var pieData = [{
+      data: [{
+          name: 'Component A',
+          value: 10.1,
+          id: 'A',
+          tooltip: 'Component A <b>{{percent}}</b>'
+      }, {
+          name: 'Component B',
+          value: 12.2,
+          id: 'B',
+          tooltip: 'Component B <b>{{percent}}</b>'
+      }, {
+          name: 'Component C',
+          value: 14.35,
+          id: 'C',
+          tooltip: 'Component C Is Very Cool<b>{{percent}}</b>'
+      }]
+    }];
 
-  $('#pie-donut-example').chart({type: 'donut', dataset: donutData}).on('selected', function (e, elem, args) {
-    console.log(e, elem, args);
-  });
-
+  $('#pie-chart-example').chart({type: 'pie', dataset: pieData});
 
 ```
 
 ## Accessibility
 
-- The contrast and actual colors can be a concern for visibility impaired and color blind people. However, you can customize the color by passing higher contrast colors.
+- The contrast and actual colors can be a concern for visibility impaired and color blind people. However, you can customize the color by passing different contrast colors.
 
 ## Code Tips
 
-You can control the size of the donut chart by setting the size of the parent element the donut lives in.
+You can control the size of the donut chart by setting the size of the parent element the pie chart lives in.
 This may include possibly using an inset margin in some cases.
 
-See also pie chart
+See also [Donut Chart Example]( ../components/donut/example-index)
 
 ## Keyboard Shortcuts
 
-None
+- None
 
 ## Upgrading from 3.X
 
--   The donut chart was added in 3.6. From 3.6 the api is mostly compatible.
+-   The pie chart and dount chart was added in 3.6; so 3.6 the api is mostly compatible.
