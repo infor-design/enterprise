@@ -854,8 +854,8 @@
         //lead days
         var firstDayOfMonth = this.firstDayOfMonth(year, month),
           leadDays = (firstDayOfMonth - (Locale.calendar().firstDayofWeek || 0) + 7) % 7,
-          lastMonthDays = this.daysInMonth(year, month+1),
-          thisMonthDays = this.daysInMonth(year, month+0),
+          lastMonthDays = this.daysInMonth(year, month + (this.isIslamic ? 1 : 0)),
+          thisMonthDays = this.daysInMonth(year, month+ (this.isIslamic ? 0 : 1)),
           dayCnt = 1, nextMonthDayCnt = 1, exYear, exMonth, exDay;
 
         this.days.find('td').each(function (i) {
