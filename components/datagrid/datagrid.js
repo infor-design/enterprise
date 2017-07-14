@@ -1440,7 +1440,8 @@ $.fn.datagrid = function(options) {
         allowOneExpandedRow: true, //Only allows one expandable row at a time
         enableTooltips: false,  //Process tooltip logic at a cost of performance
         disableRowDeactivation: false, // If a row is activated the user should not be able to deactivate it by clicking on the activated row
-        sizeColumnsEqually: false //If true make all the columns equal width
+        sizeColumnsEqually: false, //If true make all the columns equal width
+        expandableRow: false // Supply an empty expandable row template
       },
       settings = $.extend({}, defaults, options);
 
@@ -1483,6 +1484,7 @@ $.fn.datagrid = function(options) {
   * @param {Boolean} enableTooltips &nbsp;-&nbsp Process tooltip logic at a cost of performance
   * @param {Boolean} disableRowDeactivation &nbsp;-&nbsp if a row is activated the user should not be able to deactivate it by clicking on the activated row
   * @param {Boolean} sizeColumnsEqually &nbsp;-&nbsp If true make all the columns equal width
+  * @param {Boolean} expandableRow &nbsp;-&nbsp If true we append an expandable row area without the rowTemplate feature being needed.
   *
   */
   function Datagrid(element) {
@@ -3223,6 +3225,12 @@ $.fn.datagrid = function(options) {
 
         rowHtml += '<tr class="datagrid-expandable-row"><td colspan="'+ this.visibleColumns().length +'">' +
           '<div class="datagrid-row-detail"><div class="datagrid-row-detail-padding">'+ renderedTmpl + '</div></div>' +
+          '</td></tr>';
+      }
+
+      if (self.settings.expandableRow) {
+        rowHtml += '<tr class="datagrid-expandable-row"><td colspan="'+ this.visibleColumns().length +'">' +
+          '<div class="datagrid-row-detail"><div class="datagrid-row-detail-padding"></div></div>' +
           '</td></tr>';
       }
 
