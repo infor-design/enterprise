@@ -644,7 +644,8 @@
         //Fire Events
         self.element.trigger('close', self.isCancelled);
 
-        if (this.oldActive && $(this.oldActive).is('button:visible')) {
+        // Restore focus
+        if (this.oldActive && $(this.oldActive).is('a:visible, button:visible, input:visible, textarea:visible')) {
           this.oldActive.focus();
           this.oldActive = null;
         } else if (this.trigger.parents('.toolbar, .formatter-toolbar').length < 1) {
