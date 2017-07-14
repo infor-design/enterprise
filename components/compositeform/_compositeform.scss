@@ -10,20 +10,6 @@
     height: inherit;
     overflow-y: hidden;
 
-    > .tab-container {
-      &.horizontal {
-        padding: 0 0 0 20px;
-      }
-
-      &.vertical-tabs {
-        height: inherit;
-      }
-
-      > .tab-list-container {
-        height: calc(100% - 20px);
-      }
-    }
-
     > .tab-panel-container {
       height: inherit;
 
@@ -31,6 +17,29 @@
       &.scrollable-x,
       &.scrollable-y {
         height: 100%;
+      }
+    }
+
+    > .tab-container {
+      &.horizontal {
+        padding: 0 0 0 20px;
+
+        + .tab-panel-container {
+          &.scrollable,
+          &.scrollable-x,
+          &.scrollable-y {
+            height: calc(100% - 40px);
+          }
+        }
+      }
+
+      &.vertical {
+        height: 100%;
+        min-height: 0;
+      }
+
+      > .tab-list-container {
+        height: calc(100% - 20px);
       }
     }
   }
