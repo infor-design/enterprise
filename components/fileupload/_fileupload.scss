@@ -106,6 +106,8 @@ html[dir='rtl'] {
 //Allows fileupload to be readonly without textarea readonly styling
 input.fileupload-background-transparent {
   background-color: transparent;
+  padding-right: 40px;
+  text-overflow: ellipsis;
 }
 
 // File Upload Advanced
