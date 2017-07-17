@@ -15,7 +15,7 @@
 @import 'components/grid/grid';
 @import 'components/compositeform/compositeform';
 @import 'components/checkboxes/checkboxes';
-@import 'controls/radios';
+@import 'components/radios/radios';
 @import 'components/switch/switch';
 @import 'components/tabs/tabs';
 @import 'components/dropdown/dropdown';
@@ -23,9 +23,9 @@
 @import 'components/slider/slider';
 @import 'components/popupmenu/popupmenu';
 @import 'components/tooltip/tooltip';
-@import 'controls/masthead';
+@import 'components/masthead/masthead';
 @import 'components/tree/tree';
-@import 'controls/rating';
+@import 'components/rating/rating';
 @import 'components/listview/listview';
 @import 'components/listbuilder/listbuilder';
 @import 'components/swaplist/swaplist';
@@ -36,7 +36,7 @@
 @import 'components/header/header';
 @import 'components/spinbox/spinbox';
 @import 'components/autocomplete/autocomplete';
-@import 'controls/mask';
+@import 'components/mask/mask';
 @import 'components/datepicker/datepicker';
 @import 'components/drag/drag';
 @import 'components/colorpicker/colorpicker';
@@ -59,7 +59,7 @@
 @import 'components/contextualactionpanel/contextualactionpanel';
 @import 'components/expandablearea/expandablearea';
 @import 'components/fieldset/fieldset';
-@import 'controls/lookup';
+@import 'components/lookup/lookup';
 @import 'components/wizard/wizard';
 @import 'controls/popdown';
 @import 'components/hierarchy/hierarchy';

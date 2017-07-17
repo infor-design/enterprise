@@ -1,0 +1,115 @@
+<section class="masthead">
+  <div class="toolbar no-actions-button" data-options="{ maxVisibleButtons: 9 }">
+    <div class="title">
+      <button type="button" class="masthead-icon">
+        <svg class="icon icon-logo" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-logo"></use>
+        </svg>
+         <span class="audible">Go To Home</span>
+      </button>
+      <h1 class="masthead-appname">Infor Application</h1>
+
+      <button id="status-button" type="button" class="btn btn-menu">
+        <span>Status</span>
+      </button>
+      <ul class="popupmenu is-selectable">
+        <li><a href="#">New</a></li>
+        <li class="is-selected"><a href="#">Active</a></li>
+        <li><a href="#">Processing</a></li>
+      </ul>
+    </div>
+
+    <div class="buttonset">
+      <input class="searchfield" />
+
+      <button id="icon-only" type="button" class="btn">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-star-outlined"></use>
+        </svg>
+      </button>
+
+      <button id="long-text-button" type="button" class="btn">
+        <span>Long Text Button</span>
+      </button>
+
+      <button id="text-then-icon" type="button" class="btn">
+        <span>Delete</span>
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-delete"></use>
+        </svg>
+      </button>
+
+      <button id="icon-then-text" type="button" class="btn">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-settings"></use>
+        </svg>
+        <span>Settings</span>
+      </button>
+
+      <button id="dropdown-icon-only" type="button" class="btn-menu">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-settings"></use>
+        </svg>
+        <span class="audible">Settings</span>
+      </button>
+      <ul class="popupmenu has-icons">
+        <li><a href="#">Option 1</a></li>
+        <li><a href="#">Option 2</a></li>
+        <li><a href="#">Option 3</a></li>
+        <li><a href="#">Option 4</a></li>
+        <li class="submenu">
+          <a href="#">Option 5</a>
+          <ul class="popupmenu">
+            <li><a href="#">Sub-Option 1</a></li>
+            <li><a href="#">Sub-Option 2</a></li>
+            <li><a href="#">Sub-Option 3</a></li>
+            <li><a href="#">Sub-Option 4</a></li>
+            <li><a href="#">Sub-Option 5</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <button id="dropdown-text-then-icon" type="button" class="btn-menu">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-settings"></use>
+        </svg>
+        <span>Settings</span>
+      </button>
+      <ul class="popupmenu has-icons">
+        <li><a href="#">Option 1</a></li>
+        <li><a href="#">Option 2</a></li>
+        <li><a href="#">Option 3</a></li>
+        <li><a href="#">Option 4</a></li>
+        <li class="submenu">
+          <a href="#">Option 5</a>
+          <ul class="popupmenu">
+            <li><a href="#">Sub-Option 1</a></li>
+            <li><a href="#">Sub-Option 2</a></li>
+            <li><a href="#">Sub-Option 3</a></li>
+            <li><a href="#">Sub-Option 4</a></li>
+            <li><a href="#">Sub-Option 5</a></li>
+          </ul>
+        </li>
+      </ul>
+
+
+    </div>
+  </div>
+</section>
+
+<div class="page-container scrollable">
+
+  <div class="row">
+    <div class="six columns">
+      <h2>Masthead Test: Different Button Types</h2>
+      <p>The masthead above contains different button types that should all be aligned and styled correctly.</p>
+    </div>
+  </div>
+
+</div>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+    $('#status-button').button().popupmenu();
+  });
+</script>
