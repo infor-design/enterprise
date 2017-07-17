@@ -23,7 +23,8 @@
           text: null,
           displayDelay: 1000,
           timeToComplete: 0,
-          transparentOverlay: false
+          transparentOverlay: false,
+          overlayOnly: false
         },
         settings = $.extend({}, defaults, options);
 
@@ -66,7 +67,9 @@
           completionTime = this.element.attr('data-completion-time');
 
         this.blockUI = blockUI !== undefined ? blockUI : this.settings.blockUI;
-        this.loadingText = this.settings.text ? this.settings.text : Locale.translate('Loading');
+        if (!this.settings.overlayOnly) {
+          this.loadingText = this.settings.text ? this.settings.text : Locale.translate('Loading');
+        }
         this.delay = delay !== undefined && !isNaN(delay) && parseInt(delay, 10) > 20 ? delay : !isNaN(this.settings.displayDelay) && this.settings.displayDelay >= 20 ? this.settings.displayDelay : 20;
         this.completionTime = completionTime !== undefined && !isNaN(completionTime) ? parseInt(completionTime, 10) : this.settings.timeToComplete;
 
@@ -85,10 +88,12 @@
             clearTimeout(self.closeTimeout);
           }
           this.label.remove();
-          this.label = $('<span>' + this.loadingText + '</span>').appendTo(this.container);
+          if (!this.settings.overlayOnly) {
+            this.label = $('<span>' + this.loadingText + '</span>').appendTo(this.container);
 
-          if (this.element.is('input, .dropdown, .multiselect, .busy-xs, .busy-sm')) {
-            this.label.addClass('audible');
+            if (this.element.is('input, .dropdown, .multiselect, .busy-xs, .busy-sm')) {
+              this.label.addClass('audible');
+            }
           }
 
           this.container
@@ -104,13 +109,15 @@
         });
         this.loader = $('<div class="busy-indicator active"></div>').appendTo(this.container);
 
-        $('<div class="bar one"></div>' +
-          '<div class="bar two"></div>' +
-          '<div class="bar three"></div>' +
-          '<div class="bar four"></div>' +
-          '<div class="bar five"></div>').appendTo(this.loader);
+        if (!this.settings.overlayOnly) {
+          $('<div class="bar one"></div>' +
+            '<div class="bar two"></div>' +
+            '<div class="bar three"></div>' +
+            '<div class="bar four"></div>' +
+            '<div class="bar five"></div>').appendTo(this.loader);
 
-        this.label = $('<span>'+ this.loadingText +'</span>').appendTo(this.container);
+          this.label = $('<span>'+ this.loadingText +'</span>').appendTo(this.container);
+        }
 
         var transparency = '';
 
@@ -125,7 +132,7 @@
           this.container.addClass('blocked-ui');
         }
 
-        if (this.element.is('.busy-xs, .busy-sm')) {
+        if (this.label && this.element.is('.busy-xs, .busy-sm')) {
           this.label.addClass('audible');
         }
 
@@ -136,7 +143,10 @@
           if (this.blockUI) {
             this.element.addClass('is-blocked');
           }
-          this.label.addClass('audible');
+          if (this.label) {
+            this.label.addClass('audible');
+          }
+
 
           var target;
 
