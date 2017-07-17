@@ -104,6 +104,11 @@
         if (!this.id) {
           this.id = (parseInt($('.popupmenu-wrapper').length, 10)+1).toString();
         }
+
+        // Fix - with ios, popup menu was hiding behind the application menu
+        if (this.element.is('.btn-actions') && Soho.env.os.name === 'ios') {
+          this.settings.attachToBody = true;
+        }
       },
 
       //Add markip including Aria
@@ -1014,7 +1019,9 @@
         // Trigger an event so other components can listen to this element as a popupmenu trigger.
         this.element.triggerHandler('show-submenu', [li]);
 
-        var wrapper = li.children('.wrapper').filter(':first');
+        var wrapper = li.children('.wrapper').filter(':first'),
+          isRTL = this.isRTL(),
+          rtlPadding = 30;
 
         // Wrap if not wrapped (dynamic menu situation)
         if (wrapper.length === 0) {
@@ -1024,29 +1031,41 @@
         }
 
         var menu = wrapper.children('.popupmenu'),
-          mainWrapperOffset = li.parents('.popupmenu-wrapper:first').offset().top;
+          mainWrapperOffset = li.parents('.popupmenu-wrapper:first').offset().top,
+          wrapperLeft = li.position().left + li.outerWidth();
         li.parent().find('.popupmenu').removeClass('is-open').removeAttr('style');
 
-        wrapper[0].style.left = (li.position().left + li.outerWidth()) + 'px';
+        if (isRTL) {
+          wrapperLeft = li.position().left - li.outerWidth() + rtlPadding;
+        }
+        wrapper[0].style.left = wrapperLeft + 'px';
         wrapper[0].style.top = (parseInt(li.position().top) - 5) + 'px';
 
         wrapper.children('.popupmenu').addClass('is-open');
 
         //Handle Case where the menu is off to the right
         var menuWidth = menu.outerWidth();
-        if ((wrapper.offset().left + menuWidth) > ($(window).width() + $(document).scrollLeft())) {
+        if ((wrapper.offset().left + menuWidth) > ($(window).width() + $(document).scrollLeft()) || (isRTL && wrapper.offset().left < 0)) {
           wrapper[0].style.left = '-9999px';
           menuWidth = menu.outerWidth();
-          wrapper[0].style.left = (li.position().left - menuWidth) + 'px';
+          wrapperLeft = li.position().left - menuWidth;
+          if (isRTL) {
+            wrapperLeft = li.position().left + menuWidth + rtlPadding;
+          }
+          wrapper[0].style.left = wrapperLeft + 'px';
           //Did it fit?
-          if (wrapper.offset().left < 0) {
+          if (wrapper.offset().left < 0 || (isRTL && (wrapper.offset().left + menuWidth) > ($(window).width() + $(document).scrollLeft()))) {
             //No. Push the menu's left offset onto the screen.
-            wrapper[0].style.left = (li.position().left - menuWidth + Math.abs(wrapper.offset().left) + 40) + 'px';
+            wrapperLeft = li.position().left - menuWidth + Math.abs(wrapper.offset().left) + 40;
+            if (isRTL) {
+              wrapperLeft = li.position().left - menuWidth - rtlPadding - 40;
+            }
+            wrapper[0].style.left = wrapperLeft + 'px';
             menuWidth = menu.outerWidth();
           }
           // Do one more check to see if the right edge bleeds off the screen.
           // If it does, shrink the menu's X size.
-          if ((wrapper.offset().left + menuWidth) > ($(window).width() + $(document).scrollLeft())) {
+          if ((wrapper.offset().left + menuWidth) > ($(window).width() + $(document).scrollLeft()) || (isRTL && wrapper.offset().left < 0)) {
             var differenceY = (wrapper.offset().left + menuWidth) - ($(window).width() + $(document).scrollLeft());
             menuWidth = menuWidth - differenceY;
             menu[0].style.width = menuWidth + 'px';
