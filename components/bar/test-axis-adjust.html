@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget double-height">
+        <div class="widget-header">
+          <h2 class="widget-title">Bar Chart</h2>
+        </div>
+        <div class="widget-content">
+          <div id="bar-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+
+ var dataset = [{
+    data:  [
+    //  {'name': 'Lee Hogan', 'value': 1101061117},
+      {'name': 'Dan Barret', 'value': 1105272},
+      {'name': 'Ed Martinez', 'value': 773456},
+      {'name': 'Linda Walsh', 'value': 752648},
+      {'name': 'Cathy Hughes', 'value': 274582},
+      {'name': 'Kim Lee', 'value': 143623},
+      {'name': 'Derek Murray', 'value': 91783},
+      {'name': 'Manuel Fuentes', 'value': 79700},
+      {'name': 'Georgine Ekels', 'value': 79594},
+      {'name': 'Hans Stichler', 'value': 68719},
+      {'name': 'Rajeev Mitra', 'value': 41814},
+      {'name': 'Jean Grant', 'value': 14153},
+      {'name': 'Agnes Kumer', 'value': 11612},
+      {'name': 'Administrator', 'value': 10330},
+      {'name': 'Brian McNulty', 'value': 3812},
+      {'name': 'Ken Dryden', 'value': 0},
+      {'name': 'Lou Pizzutti', 'value': 0},
+      {'name': 'John Smith', 'value': 0}
+    ],
+    name:  'Sales By Employee'
+  }];
+
+  $('#bar-example').chart({
+      type:  'bar',
+      dataset:  dataset,
+      showLegend:  false,
+      showLines: true, //or true with false
+      useLogScale: true});
+
+});
+</script>
