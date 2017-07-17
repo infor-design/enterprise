@@ -389,10 +389,18 @@ window.Chart = function(container) {
     //Width of the bar minus the margin
     var barWith = w - textWidth - margins.left;
 
-    xScale = d3.scale.linear()
-      .domain([(xMin < 0 ? xMin : 0), xMax])
-      .nice()
-      .range([0, barWith]).nice();
+    if (settings.useLogScale) {
+      xScale = d3.scale.log()
+        .domain([(xMin > 0 ? xMin : 1), xMax])
+        .nice()
+        .range([1, barWith]).nice();
+
+    } else {
+      xScale = d3.scale.linear()
+        .domain([(xMin < 0 ? xMin : 0), xMax])
+        .nice()
+        .range([0, barWith]).nice();
+    }
 
     if (isStacked) {
       yMap = dataset[0].map(function (d) {
@@ -446,6 +454,14 @@ window.Chart = function(container) {
 
     if (isStacked && isNormalized) {
       xAxis.tickFormat(function(d) { return d + '%'; });
+    }
+
+    if (settings.useLogScale) {
+      xAxis.ticks(10, ',.1s');
+      if (settings.showLines === false) {
+        xAxis.tickSize(0);
+      }
+
     }
 
     yAxis = d3.svg.axis()
@@ -517,6 +533,9 @@ window.Chart = function(container) {
       }
     })
     .attr('x', function (d) {
+      if (settings.useLogScale) {
+        return 0;
+      }
       return (isStacked && !isSingle) ? xScale(d.x0) : xScale(0);
     })
     .attr('y', function (d) {
@@ -663,9 +682,23 @@ window.Chart = function(container) {
     svg.selectAll('.bar')
       .transition().duration(1000)
       .attr('width', function (d) {
-        return Math.abs(xScale(d.x) - xScale(0));
+        var scale = xScale(d.x),
+          scale0 = xScale(0);
+
+        if (isNaN(scale)) {
+          scale = 0;
+        }
+
+        if (isNaN(scale0)) {
+          scale0 = 0;
+        }
+
+        return Math.abs(scale - scale0);
       })
       .attr('x', function (d) {
+        if (settings.useLogScale) {
+          return 0;
+        }
         return (isStacked && !isSingle) ? xScale(d.x0) : (d.x < 0 ? xScale(d.x) : xScale(0));
       });
 

@@ -1,6 +1,20 @@
 
 # Bar Chart  [Learn More](#)
 
+## API Details
+
+### Dataset Settings
+
+* `name` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** - The name to show on the y axis for the bar
+* `value` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** - The raw data value for the bar.
+* `tooltip`**[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  - The custom tooltip to show.
+
+### Extra Chart Settings
+
+* `formatterString` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** - the d3 formatter string to show
+* `showLines` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** - Hide the lines going north south across the x axis
+* `useLogScale` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** - Use a logarithmic scale on the x axis. This can be used for skewed data.
+
 ## Configuration Options
 
 1. Bar Chart Main Example [View Example]( ../components/bar/example-index)
