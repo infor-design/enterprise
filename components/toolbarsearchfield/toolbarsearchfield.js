@@ -191,6 +191,10 @@
       handleOutsideClick: function(e) {
         var target = $(e.target);
 
+        if (Soho.env.os.name === 'ios') {
+          $('head').triggerHandler('disable-zoom');
+        }
+
         // Don't close if we're focused on an element inside the wrapper
         if ($.contains(this.inputWrapper[0], e.target) || target.is(this.element) || target.is(this.inputWrapper)) {
           return;
@@ -564,6 +568,9 @@
           // See http://jira/browse/SOHO-6347
           self.inputWrapper.one($.fn.transitionEndName(), function() {
             self.toolbarParent.triggerHandler('recalculate-buttons');
+            if (Soho.env.os.name === 'ios') {
+              $('head').triggerHandler('enable-zoom');
+            }
           });
         }
 
