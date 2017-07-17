@@ -21,7 +21,7 @@
 
 The setup for a datepicker only involves creating and input with the class datepicker. You can optionally set a placeholder to the fields, format. This will get adjusted by the plugin based on the current locale. Remember to always associate a label with the input field.
 
-This plugin works around the Locale plugin which provides data for the calendar, including calendar format for [all supported locales](http://git.infor.com/projects/SOHO/repos/controls/browse/js/cultures).
+This plugin works around the Locale plugin which provides data for the calendar, including calendar format for [all supported locales](../components/locale).
 
 ```html
 

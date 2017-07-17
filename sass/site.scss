@@ -173,9 +173,10 @@ p strong {
   }
 }
 
+// Main Header Area
 .doc-header {
   height: 100px;
-  margin: -19px 0 20px;
+  margin: -19px 0 5px;
   padding: 0;
   vertical-align: middle;
 
@@ -254,6 +255,35 @@ p strong {
     text-align: left;
   }
 
+  .full.column {
+    margin-left: 40px;
+    width: calc(100% - 60px);
+  }
+
+}
+
+// Media Queries for Header Area
+@media (min-width: 0) and (max-width: $breakpoint-wide-tablet - 1) {
+
+  .doc-header .doc-header-secondary-links {
+    clear: both;
+    display: block;
+    float: none;
+    margin: 0 0 0 -21px;
+    position: relative;
+    top: -55px;
+  }
+
+  .doc-version-ddl {
+    margin-top: 15px;
+  }
+
+}
+
+@media (min-width: 0) and (max-width: $breakpoint-slim - 1) {
+  .doc-header {
+    background-color: orange;
+  }
 }
 
 

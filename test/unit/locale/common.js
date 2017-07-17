@@ -9,28 +9,28 @@ define([
   window = document.defaultView;  // jshint ignore:line
 
   //Load the Locale.js we are testing
-  require('../../../js/locale.js');
+  require('components/locale/locale.js');
   Locale = window.Locale; // jshint ignore:line
 
   //Load the Locales because Ajax doesnt work
-  require('../../../js/cultures/en-US.js');
-  require('../../../js/cultures/ar-SA.js');
-  require('../../../js/cultures/de-DE.js');
-  require('../../../js/cultures/nb-NO.js');
-  require('../../../js/cultures/no-NO.js');
-  require('../../../js/cultures/es-ES.js');
-  require('../../../js/cultures/bg-BG.js');
-  require('../../../js/cultures/ar-EG.js');
-  require('../../../js/cultures/fi-FI.js');
-  require('../../../js/cultures/lt-LT.js');
-  require('../../../js/cultures/vi-VN.js');
-  require('../../../js/cultures/tr-TR.js');
-  require('../../../js/cultures/it-IT.js');
-  require('../../../js/cultures/sv-SE.js');
-  require('../../../js/cultures/cs-CZ.js');
-  require('../../../js/cultures/hu-HU.js');
-  require('../../../js/cultures/ja-JP.js');
-  require('../../../js/cultures/ru-RU.js');
+  require('components/locale/cultures/en-US.js');
+  require('components/locale/cultures/ar-SA.js');
+  require('components/locale/cultures/de-DE.js');
+  require('components/locale/cultures/nb-NO.js');
+  require('components/locale/cultures/no-NO.js');
+  require('components/locale/cultures/es-ES.js');
+  require('components/locale/cultures/bg-BG.js');
+  require('components/locale/cultures/ar-EG.js');
+  require('components/locale/cultures/fi-FI.js');
+  require('components/locale/cultures/lt-LT.js');
+  require('components/locale/cultures/vi-VN.js');
+  require('components/locale/cultures/tr-TR.js');
+  require('components/locale/cultures/it-IT.js');
+  require('components/locale/cultures/sv-SE.js');
+  require('components/locale/cultures/cs-CZ.js');
+  require('components/locale/cultures/hu-HU.js');
+  require('components/locale/cultures/ja-JP.js');
+  require('components/locale/cultures/ru-RU.js');
 
   registerSuite({
 
