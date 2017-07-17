@@ -2793,7 +2793,9 @@ $.fn.datagrid = function(options) {
 
           if (activePage > 1 && !((i - this.filteredCount) >= pagesize*(activePage-1) && (i - this.filteredCount) < pagesize*activePage)) {
             if (!dataset[i].isFiltered) {
-              this.recordCount++;
+              if (this.filteredCount) {
+                this.recordCount++;
+              }
             } else {
               this.filteredCount++;
             }
@@ -4989,6 +4991,24 @@ $.fn.datagrid = function(options) {
       this.element.triggerHandler('selected', [this._selectedRows, 'deselectall']);
     },
 
+    //Check if exists in array of objects with callback
+    inArrayObjects: function (arr, fn) {
+      for(var i = 0, l = arr.length; i < l; i++) {
+        if (fn(arr[i])) {
+          return i;
+        }
+      }
+      return -1;
+    },
+
+    //Check if node index is exists in selected nodes
+    isNodeSelected: function (index) {
+      var isSelection = this.inArrayObjects(this._selectedRows, function (v) {
+        return v.idx === index;
+      });
+      return isSelection !== -1;
+    },
+
     //Toggle selection on a single row
     selectRow: function (idx, selectAll) {
       var rowNode, dataRowIndex,
@@ -5019,6 +5039,10 @@ $.fn.datagrid = function(options) {
         var rowData,
           // Select it
           selectNode = function(elem, index, data) {
+            // do not add if already exists in selected
+            if (self.isNodeSelected(index)) {
+              return;
+            }
             checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox'));
             elem.addClass('is-selected' + (self.settings.selectable === 'mixed' ? ' hide-selected-color' : '')).attr('aria-selected', 'true')
               .find('td').attr('aria-selected', 'true');
@@ -5166,7 +5190,7 @@ $.fn.datagrid = function(options) {
     toggleRowSelection: function (idx) {
       var row = (typeof idx === 'number' ? this.tableBody.find('tr[aria-rowindex="'+ (idx + 1) +'"]') : idx),
         isSingle = this.settings.selectable === 'single',
-        rowIndex = (typeof idx === 'number' ? idx : this.actualArrayIndex(row));
+        rowIndex = (typeof idx === 'number' ? idx : this.settings.treeGrid ? this.dataRowIndex(row) : this.actualArrayIndex(row));
 
       if (this.settings.selectable === false) {
         return;
