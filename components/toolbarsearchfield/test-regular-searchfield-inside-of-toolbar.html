@@ -1,0 +1,39 @@
+<div class="row top-padding">
+  <div class="six columns">
+    <h2>Toolbar Searchfield Test:  Invoked as Regular Searchfield inside of a Toolbar</h2>
+    <p><a class="hyperlink" href="https://jira.infor.com/browse/SOHO-6448" target="_blank">Related JIRA Ticket</a>.  Prior to version 4.3.1, in cases where the initialization component of the Soho library isn't used, Searchfield components were not aware of their existence inside of a toolbar parent.  When used inside of a Toolbar, a searchfield should be invoked as a Toolbar Searchfield instead of a normal Searchfield.  This test demonstrates functionality added to the regular Searchfield component that allows it to detect a toolbar parent, and pre-emptively invoke itself as a Toolbar Searchfield instead.</p>
+    <p>When this test completes, use a developer tools console and run this code: <span class="code">$('#test-searchfield').data('toolbarsearchfield');</span> - it should return an instance of a ToolbarSearchfield and not be undefined.</p>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <div id="test-toolbar" class="toolbar" data-init="false">
+      <div class="title">
+        Test Toolbar
+      </div>
+      <div class="buttonset">
+        <label for="test-searchfield">Test Searchfield</label>
+        <input id="test-searchfield" class="searchfield" data-init="false"/>
+
+        <button id="test-button" class="btn">
+          <span>Test Button</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  // NOTE: No `$('body').on('initialized')` in this test on purpose, since we're simulating a situation where
+  // The initialize script is not running.
+  $('#test-searchfield').searchfield();
+
+  // NOTE: This is for the purpose of testing only.
+  // DO NOT NORMALLY INVOKE A TOOLBAR IN A SETTIMEOUT THIS WAY.
+  setTimeout(function() {
+    $('#test-toolbar').toolbar();
+  }, 10);
+</script>
