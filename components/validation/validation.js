@@ -237,7 +237,7 @@
      */
     setModalPrimaryBtn: function(field, modalBtn, isValid) {
       var modal = field.closest('.modal'),
-        modalFields = modal.find('[data-validate]:visible'),
+        modalFields = modal.find('[data-validate]:visible').add('select[data-validate], :checkbox[data-validate]'),
         allValid = true;
 
       if (modalFields.length > 0) {
@@ -249,11 +249,11 @@
           }
           var isVisible = modalField[0].offsetParent !== null;
           if (modalField.is('.required')) {
-            if (isVisible && !modalField.val()) {
+            if ((isVisible || modalField.is('select, :checkbox'))  && !modalField.val()) {
               allValid = false;
             }
           } else {
-            if (isVisible && !modalField.isValid()) {
+            if ((isVisible  || modalField.is('select, :checkbox')) && !modalField.isValid()) {
               allValid = false;
             }
           }
@@ -784,6 +784,7 @@
 
       if (field.hasClass('dropdown') || field.hasClass('multiselect')) {
         field.next().next().removeClass('error'); // #shdo
+        field.next().find('div.dropdown').removeClass('error').removeData('data-errormessage');
         field.parent().find('.dropdown-wrapper > .icon-error').off('click.validate').remove(); // SVG Error Icon
       }
 
