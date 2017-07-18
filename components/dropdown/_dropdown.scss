@@ -45,7 +45,7 @@ div.multiselect {
   color: $dropdown-color;
   cursor: pointer;
   overflow: hidden;
-  padding: 7px 32px 8px 10px;
+  padding: 8px 32px 8px 10px;
   -webkit-text-fill-color: $dropdown-color;
   text-overflow: ellipsis;
   vertical-align: middle;
@@ -64,7 +64,7 @@ div.multiselect {
     max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
-    vertical-align: middle;
+    vertical-align: top;
     width: inhert;
   }
 
@@ -503,9 +503,11 @@ input.dropdown.error:focus {
       right: auto;
     }
 
+    /*
     > span {
       min-height: 14px;
     }
+    */
   }
 
 }
@@ -542,7 +544,6 @@ div.dropdown-xs,
 .dropdown-list.dropdown-short {
   input {
     @include font-size(12);
-    height: 26px;
     padding: 5px 32px 5px 5px;
   }
 
@@ -610,9 +611,6 @@ div.dropdown-xs,
 
 // Firefox needs a nudge on the list items
 .is-firefox {
-  div.dropdown {
-    padding-top: 8px;
-  }
 
   .dropdown-list {
     &.multiple li {
@@ -628,12 +626,7 @@ div.dropdown-xs,
     &.dropdown-short {
       input {
         @include font-size(12);
-        height: 25px;
         padding: 5px 32px 5px 5px;
-
-        &:empty {
-          height: 25px;
-        }
       }
     }
   }
