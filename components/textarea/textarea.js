@@ -35,6 +35,7 @@
      * @param {null|String} charMaxText  &nbsp;-&nbsp; Text that will be used in place of the "Max" text.
      */
     function Textarea(element) {
+      this.settings = $.extend({}, settings);
       this.element = $(element);
       Soho.logTimeStart(pluginName);
       this.init();
@@ -59,14 +60,14 @@
             this.element.is('.textarea-sm') ? 'input-sm' :
             this.element.is('.textarea-lg') ? 'input-lg' : '');
 
-        if (settings.characterCounter && this.element.attr('maxlength')) {
+        if (this.settings.characterCounter && this.element.attr('maxlength')) {
           this.counter = $('<span class="textarea-wordcount">Chars Left..</span>').insertAfter(this.element);
         }
-        if (settings.printable) {
+        if (this.settings.printable) {
           this.printarea = $('<span class="textarea-print"></span>').insertBefore(this.element);
         }
         this.handleEvents();
-        this.update(this);
+        this.updateCounter(this);
       },
 
       /**
@@ -111,17 +112,17 @@
        * @private
        * @param {TextArea} self
        */
-      update: function (self) {
+      updateCounter: function (self) {
         var value = self.element.val(),
           isExtraLinebreaks = this.isChrome || this.isSafari,
           length = value.length + (isExtraLinebreaks ? this.countLinebreaks(value) : 0),
           max = self.element.attr('maxlength'),
           remaining = (parseInt(max)-length),
-          text = (settings.charRemainingText ? settings.charRemainingText : (Locale.translate('CharactersLeft') === 'CharactersLeft' ? 'Characters Left' : Locale.translate('CharactersLeft'))).replace('{0}', remaining.toString());
+          text = (self.settings.charRemainingText ? self.settings.charRemainingText : (Locale.translate('CharactersLeft') === 'CharactersLeft' ? 'Characters Left' : Locale.translate('CharactersLeft'))).replace('{0}', remaining.toString());
 
         if (self.counter) {
           if (length === 0) {
-            text = (settings.charMaxText ? settings.charMaxText : Locale.translate('CharactersMax')) + max;
+            text = (self.settings.charMaxText ? self.settings.charMaxText : Locale.translate('CharactersMax')) + max;
             self.counter.text(text);
             self.counter.removeClass('almost-empty');
           } else {
@@ -143,14 +144,21 @@
        * Enables this component instance.
        */
       enable: function () {
-        this.element.prop('disable', false).prop('readonly', false);
+        this.element.prop('disabled', false).prop('readonly', false);
       },
 
       /**
        * Disables this component instance.
        */
       disable: function () {
-        this.element.prop('disable', true);
+        this.element.prop('disabled', true);
+      },
+
+      /**
+      * Returns true if the texarea is disabled.
+      */
+      isDisabled: function() {
+        return this.element.prop('disabled');
       },
 
       /**
@@ -158,6 +166,14 @@
        */
       readonly: function () {
         this.element.prop('readonly', true);
+      },
+
+      /**
+       * Call whenever the plugin's settings are changed
+       */
+      updated: function () {
+        this.destroy();
+        this.init();
       },
 
       /**
@@ -171,7 +187,7 @@
         if (this.counter && this.counter.length) {
           this.counter.remove();
         }
-        this.element.off('keyup.textarea');
+        this.element.off('keyup.textarea, focus.textarea, updated.dropdown, keypress.textarea, blur.textarea');
       },
 
       /**
@@ -185,18 +201,21 @@
        */
       handleEvents: function() {
         var self = this;
+
         this.element.on('keyup.textarea', function () {
-          self.update(self);
+          self.updateCounter(self);
         }).on('focus.textarea', function () {
           if (self.counter) {
             self.counter.addClass('focus');
           }
+        }).on('updated.dropdown', function () {
+          self.updated();
         }).on('keypress.textarea', function (e) {
           var length = self.element.val().length,
           max = self.element.attr('maxlength');
 
           if ([97, 99, 118, 120].indexOf(e.which) > -1 && (e.metaKey || e.ctrlKey)) {
-            self.update(self);
+            self.updateCounter(self);
             return;
           }
 
@@ -210,7 +229,7 @@
 
         })
         .on('blur.textarea', function () {
-          self.update(self);
+          self.updateCounter(self);
           if (self.counter) {
             self.counter.removeClass('focus');
           }

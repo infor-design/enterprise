@@ -1814,6 +1814,13 @@
       },
 
       /**
+      * Returns true if the dropdown is disabled.
+      */
+      isDisabled: function() {
+        return this.element.prop('disabled');
+      },
+
+      /**
        * Enable the input element.
        */
       enable: function() {
