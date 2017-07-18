@@ -1027,16 +1027,14 @@
        * @returns {Array}
        */
       setValue: function(lowVal, highVal) {
-        var newLowVal = lowVal || undefined,
-          newHighVal = highVal || undefined,
-          oldVals = this.value();
+        var oldVals = this.value();
 
-        this.checkHandleDifference(this.handles[0], oldVals[0], newLowVal);
+        this.checkHandleDifference(this.handles[0], oldVals[0], lowVal);
         if (this.handles[1]) {
-          this.checkHandleDifference(this.handles[1], oldVals[1], newHighVal);
+            this.checkHandleDifference(this.handles[1], oldVals[1], highVal);
         }
 
-        var vals = this.value(newLowVal, newHighVal);
+        var vals = this.value(lowVal, highVal);
         this.updateRange();
         this.updateTooltip();
 
