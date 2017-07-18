@@ -22,10 +22,11 @@
         settings = $.extend({}, defaults, options);
 
     /**
-     * Progress Indicator Control
-     * @constructor
-     * @param {Object} element
-     */
+    * The Progress Component displays loading information.
+    *
+    * @class Progress
+    * @param None
+    */
     function Progress(element) {
       this.element = $(element);
       this.settings = settings;
@@ -58,6 +59,11 @@
         }
       },
 
+      /**
+      * Update the progress bar.
+      *
+      * @param {String} value  &nbsp;-&nbsp; The percent value to use to fill. 0-100
+      */
       update: function (value) {
 
         var perc = this.element.attr('data-value');
@@ -71,7 +77,9 @@
         this.updateAria(perc);
       },
 
-      //Teardown
+      /**
+      * Teardown and remove any added markup and events.
+      */
       destroy: function() {
         $.removeData(this.element[0], pluginName);
         this.element.off('updated.progress');
