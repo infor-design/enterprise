@@ -7,7 +7,9 @@
     -   [countLinebreaks](#countlinebreaks)
     -   [enable](#enable)
     -   [disable](#disable)
+    -   [isDisabled](#isdisabled)
     -   [readonly](#readonly)
+    -   [updated](#updated)
     -   [destroy](#destroy)
     -   [handleEvents](#handleevents)
 
@@ -51,9 +53,17 @@ Enables this component instance.
 
 Disables this component instance.
 
+### isDisabled
+
+Returns true if the texarea is disabled.
+
 ### readonly
 
 Sets this component instance to "readonly"
+
+### updated
+
+Call whenever the plugin's settings are changed
 
 ### destroy
 

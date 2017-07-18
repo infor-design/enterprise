@@ -8,6 +8,7 @@
     -   [selectOption](#selectoption)
     -   [setCode](#setcode)
     -   [disable](#disable)
+    -   [isDisabled](#isdisabled)
     -   [enable](#enable)
     -   [readonly](#readonly)
     -   [destroy](#destroy)
@@ -71,6 +72,10 @@ External Facing function to set value by code - Depricated set on select and tri
 ### disable
 
 Disable the input element.
+
+### isDisabled
+
+Returns true if the dropdown is disabled.
 
 ### enable
 
