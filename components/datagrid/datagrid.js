@@ -6565,7 +6565,9 @@ $.fn.datagrid = function(options) {
           });
 
           var prevActionBtn = prevExpandRow.prev().find('.btn-primary');
-          prevActionBtn.attr('class', prevActionBtn.attr('class').replace('btn-primary','btn-secondary'));
+          if (prevActionBtn.length) {
+            prevActionBtn.attr('class', prevActionBtn.attr('class').replace('btn-primary','btn-secondary'));
+          }
         }
 
         //Toggle the button to make it primary
