@@ -135,8 +135,8 @@
         });
       }
 
-      if (locale && !this.cultures['en-US']) {
-        //fetch the local and cache it
+      if (locale && locale !== 'en-US' && !this.cultures['en-US']) {
+        //fetch the english local and cache it from translation defaults
         $.ajax({
           url: this.getCulturesPath() + 'en-US.js',
           dataType: 'script',

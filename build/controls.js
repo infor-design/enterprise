@@ -46,7 +46,6 @@ module.exports = [
   'temp/amd/message.js',
   'temp/amd/modal.js',
   'temp/amd/rating.js',
-  'temp/amd/resize.js',
   'temp/amd/searchfield.js',
   'temp/amd/signin.js',
   'temp/amd/slider.js',
