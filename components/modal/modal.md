@@ -23,6 +23,7 @@ To create an Input Dialog, use the modal plugin. To provide content for the moda
 When the modal is invoked, it animates and centers itself in the page using the content provided. It will expand to the content no bigger than the page plus some padding.\
 
 ```html
+
    <button class="btn" type="button" data-modal="modal-1">Add Context</button>
     <div class="modal" id="modal-1">
       <div class="modal-content">
@@ -34,7 +35,7 @@ When the modal is invoked, it animates and centers itself in the page using the 
         <div class="modal-body">
           <div class="field">
             <label for="context-type">Type</label>
-            <select class="dropdown" id="context-type" name="type>
+            <select class="dropdown" id="context-type" name="type">
               <option value="1">Context #1</option>
               <option value="2">Context #2</option>
               <option value="3">Context #3</option>
@@ -77,8 +78,6 @@ When the modal is invoked, it animates and centers itself in the page using the 
 -   aria-modal can be added but this is a forward thinking approach, since aria-modal isn't actually supported by browsers or ATs yet.
 -   When the dialog is closed or cancelled focus should return to the element in the application which had focus before the dialog is invoked. This is usually the control which opened the dialog.
 -   When a modal dialog opens focus goes to the first focusable item in the dialog. Determining the first focusable item must take into account elements which receive focus by default (form fields and links) as well as items which may have a tabindex attribute with a positive value. If there is no focusable item in the dialog, focus is placed on the dialog container element.
-
-\
 
 ## Keyboard Shortcuts
 
