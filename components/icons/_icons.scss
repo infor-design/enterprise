@@ -51,8 +51,9 @@ svg.icon-dirty,
   .icon-error,
   .icon-confirm {
     height: 14px;
-    margin-left: -27px;
-    margin-top: 10px;
+    position: absolute;
+    right: 5px;
+    top: 24px;
     width: 18px;
   }
 
