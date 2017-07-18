@@ -15,7 +15,9 @@
 
 <div class="row">
   <div class="twelve columns">
-    <div id="datagrid" class="busy" data-options="{ 'displayDelay': 100, 'overlayOnly': true }"></div>
+    <div id="overlay" class="busy" data-options="{ 'displayDelay': 100, 'overlayOnly': true }">
+      <div id="datagrid"></div>
+    </div>
   </div>
 </div>
 
@@ -55,11 +57,11 @@
 
       $('#disable-datagrid').click(function(e) {
         e.preventDefault();
-        $('#datagrid').trigger('start.busyindicator');
+        $('#overlay').trigger('start.busyindicator');
       });
       $('#enable-datagrid').click(function(e) {
         e.preventDefault();
-        $('#datagrid').trigger('complete.busyindicator');
+        $('#overlay').trigger('complete.busyindicator');
       });
 
     });
