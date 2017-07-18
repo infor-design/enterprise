@@ -16,7 +16,8 @@
 <h3 id="input-dialog">Input Dialog</h3>
 <p>To create an Input Dialog, use the modal plugin. To provide content for the modal dialog you can either append it directly in the page and access it by ID, or pass it as a string to the modal plugin. This example demonstrates both ways. You can also invoke the modal in a few ways: a) by linking it to a button or trigger action b) immediately on demand.</p>
 <p>When the modal is invoked, it animates and centers itself in the page using the content provided. It will expand to the content no bigger than the page plus some padding.\</p>
-<pre class="sourceCode html"><code class="sourceCode html">   <span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;btn&quot;</span><span class="ot"> type=</span><span class="st">&quot;button&quot;</span><span class="ot"> data-modal=</span><span class="st">&quot;modal-1&quot;</span><span class="kw">&gt;</span>Add Context<span class="kw">&lt;/button&gt;</span>
+<pre class="sourceCode html"><code class="sourceCode html">
+   <span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;btn&quot;</span><span class="ot"> type=</span><span class="st">&quot;button&quot;</span><span class="ot"> data-modal=</span><span class="st">&quot;modal-1&quot;</span><span class="kw">&gt;</span>Add Context<span class="kw">&lt;/button&gt;</span>
     <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;modal&quot;</span><span class="ot"> id=</span><span class="st">&quot;modal-1&quot;</span><span class="kw">&gt;</span>
       <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;modal-content&quot;</span><span class="kw">&gt;</span>
 
@@ -27,8 +28,8 @@
         <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;modal-body&quot;</span><span class="kw">&gt;</span>
           <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
             <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;context-type&quot;</span><span class="kw">&gt;</span>Type<span class="kw">&lt;/label&gt;</span>
-            <span class="kw">&lt;select</span><span class="ot"> class=</span><span class="st">&quot;dropdown&quot;</span><span class="ot"> id=</span><span class="st">&quot;context-type&quot;</span><span class="ot"> name=</span><span class="st">&quot;type&gt;</span>
-<span class="st">              </span><span class="er">&lt;</span><span class="st">option value=&quot;</span><span class="er">1&quot;</span><span class="kw">&gt;</span>Context #1<span class="kw">&lt;/option&gt;</span>
+            <span class="kw">&lt;select</span><span class="ot"> class=</span><span class="st">&quot;dropdown&quot;</span><span class="ot"> id=</span><span class="st">&quot;context-type&quot;</span><span class="ot"> name=</span><span class="st">&quot;type&quot;</span><span class="kw">&gt;</span>
+              <span class="kw">&lt;option</span><span class="ot"> value=</span><span class="st">&quot;1&quot;</span><span class="kw">&gt;</span>Context #1<span class="kw">&lt;/option&gt;</span>
               <span class="kw">&lt;option</span><span class="ot"> value=</span><span class="st">&quot;2&quot;</span><span class="kw">&gt;</span>Context #2<span class="kw">&lt;/option&gt;</span>
               <span class="kw">&lt;option</span><span class="ot"> value=</span><span class="st">&quot;3&quot;</span><span class="kw">&gt;</span>Context #3<span class="kw">&lt;/option&gt;</span>
               <span class="kw">&lt;option</span><span class="ot"> value=</span><span class="st">&quot;4&quot;</span><span class="kw">&gt;</span>Context #4<span class="kw">&lt;/option&gt;</span>
@@ -68,7 +69,6 @@
 <li>When the dialog is closed or cancelled focus should return to the element in the application which had focus before the dialog is invoked. This is usually the control which opened the dialog.<br /></li>
 <li>When a modal dialog opens focus goes to the first focusable item in the dialog. Determining the first focusable item must take into account elements which receive focus by default (form fields and links) as well as items which may have a tabindex attribute with a positive value. If there is no focusable item in the dialog, focus is placed on the dialog container element.</li>
 </ul>
-<p>\</p>
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
 <ul>
 <li><strong>Enter</strong> The dialog will execute the primary button action.<br /></li>

@@ -493,6 +493,19 @@
             });
           }
 
+          // Hide on Page scroll
+          $('body').on('scroll.tooltip', function() {
+            self.hide();
+          });
+
+          self.element.closest('.modal-body-wrapper').on('scroll.tooltip', function() {
+            self.hide();
+          });
+
+          self.element.closest('.scrollable').on('scroll.tooltip', function() {
+            self.hide();
+          });
+
           // Click to close
           if (self.settings.isError) {
             self.tooltip.on('click.tooltip', function () {
@@ -618,7 +631,9 @@
 
         this.element.off('mouseenter.tooltip mouseleave.tooltip mousedown.tooltip click.tooltip mouseup.tooltip updated.tooltip focus.tooltip blur.tooltip');
         $(document).off('mouseup.tooltip');
-        $('body').off('resize.tooltip');
+        $('body').off('resize.tooltip scroll.tooltip');
+        this.element.closest('.modal-body-wrapper').off('scroll.tooltip');
+        this.element.closest('.scrollable').off('scroll.tooltip');
 
         if (this.matchMedia) {
           this.matchMedia.removeListener(this.mediaQueryListener);
