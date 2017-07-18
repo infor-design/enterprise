@@ -62,17 +62,23 @@
           classList.add('composite-form');
         }
 
-        // Get expandable area reference
-        this.expandableArea = this.element.find('.expandable-area');
-        this.expandableAreaAPI = this.expandableArea.data('expandablearea');
-        if (!this.expandableAreaAPI) {
-          this.expandableArea.expandablearea({ trigger: this.settings.trigger });
+        // Get expandable area reference, if applicable
+        var expandableArea = this.element.find('.expandable-area');
+        if (expandableArea.length) {
+          this.hasSummary = true;
+          this.expandableArea = expandableArea;
           this.expandableAreaAPI = this.expandableArea.data('expandablearea');
-        }
+          if (!this.expandableAreaAPI) {
+            this.expandableArea.expandablearea({ trigger: this.settings.trigger });
+            this.expandableAreaAPI = this.expandableArea.data('expandablearea');
+          }
 
-        // Get expandable trigger
-        this.expander = this.expandableAreaAPI.expander;
-        this.setExpanderText(this.settings.expandedText);
+          // Get expandable trigger
+          this.expander = this.expandableAreaAPI.expander;
+          this.setExpanderText(this.settings.expandedText);
+        } else {
+          this.hasSummary = false;
+        }
 
         // Check size and append class, if necessary
         this.checkResponsive();
@@ -101,9 +107,11 @@
           self.setExpanderText(self.settings[isExpanded ? 'expandedText' : 'collapsedText']);
         }
 
-        this.expandableArea
-          .on('expand.' + pluginName, changeExpanderText)
-          .on('collapse.' + pluginName, changeExpanderText);
+        if (this.hasSummary) {
+          this.expandableArea
+            .on('expand.' + pluginName, changeExpanderText)
+            .on('collapse.' + pluginName, changeExpanderText);
+        }
 
         return this;
       },
@@ -128,6 +136,10 @@
        * @returns {undefined}
        */
       setExpanderText: function(expanderText) {
+        if (!this.hasSummary) {
+          return;
+        }
+
         if (!(expanderText instanceof String) || !expanderText.length) {
           return;
         }
@@ -156,7 +168,11 @@
       teardown: function() {
         $('body').off('resize.' + pluginName);
         this.element.off('updated.' + pluginName);
-        this.expandableArea.off('expand.' + pluginName + ' collapse.' + pluginName);
+
+        if (this.hasSummary) {
+          this.expandableArea.off('expand.' + pluginName + ' collapse.' + pluginName);
+        }
+
         return this;
       },
 
