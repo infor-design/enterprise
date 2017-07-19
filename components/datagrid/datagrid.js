@@ -6470,10 +6470,9 @@ $.fn.datagrid = function(options) {
       var self = this,
         rowElement = this.visualRowNode(dataRowIndex),
         expandButton = rowElement.find('.datagrid-expand-btn'),
-        level = rowElement.attr('aria-level'),
-        children = rowElement.nextUntil('[aria-level="1"]'),
+        level = parseInt(rowElement.attr('aria-level'), 10),
+        children = rowElement.nextUntil('[aria-level="'+ level +'"]'),
         isExpanded = expandButton.hasClass('is-expanded'),
-        restCollapsed = false,
         args = [{grid: self, row: dataRowIndex, item: rowElement, children: children}];
 
       if (self.settings.treeDepth[dataRowIndex]) {
@@ -6489,7 +6488,7 @@ $.fn.datagrid = function(options) {
       var toggleExpanded = function() {
         rowElement = self.visualRowNode(dataRowIndex);
         expandButton = rowElement.find('.datagrid-expand-btn');
-        children = rowElement.nextUntil('[aria-level="1"]');
+        children = rowElement.nextUntil('[aria-level="'+ level +'"]');
 
         if (isExpanded) {
           rowElement.attr('aria-expanded', false);
@@ -6502,29 +6501,30 @@ $.fn.datagrid = function(options) {
         }
         self.setExpandedInDataset(dataRowIndex, !isExpanded);
 
-        children.each(function () {
-          var node = $(this);
+        var setChildren = function (rowElement, level, isExpanded) {
+          var nodes = rowElement.nextUntil('[aria-level="'+ level +'"]');
 
-          if (node.hasClass('datagrid-tree-parent') &&
-            node.attr('aria-level') > level) {
-            restCollapsed = node.find('.datagrid-expand-btn.is-expanded').length === 0;
-            node[isExpanded ? 'addClass' : 'removeClass']('is-hidden');
-            return true;
+          if (isExpanded) {
+            nodes.addClass('is-hidden');
           }
+          else {
+            nodes.each(function () {
+              var node = $(this),
+                nodeLevel = parseInt(node.attr('aria-level'), 10);
+              if (nodeLevel === (level + 1)) {
+                node.removeClass('is-hidden');
 
-          if (restCollapsed && node.attr('aria-level') > level) {
-            node.addClass('is-hidden');
-            return true;
+                if (node.is('.datagrid-tree-parent')) {
+                  var nodeIsExpanded = node.find('.datagrid-expand-btn.is-expanded').length > 0;
+                  if (nodeIsExpanded) {
+                    setChildren(node, nodeLevel, !nodeIsExpanded);
+                  }
+                }
+              }
+            });
           }
-
-          if (node.attr('aria-level') > level) {
-            node[isExpanded ? 'addClass' : 'removeClass']('is-hidden');
-          }
-
-          if (node.attr('aria-level') === level) {
-            return false;
-          }
-        });
+        };
+        setChildren(rowElement, level, isExpanded);
         self.setAlternateRowShading();
       };
 
