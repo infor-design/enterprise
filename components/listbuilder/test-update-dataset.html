@@ -52,7 +52,7 @@
       </div>
 
       <br>
-      <button class="btn" type="button" id="btn1">Update dataset</button>
+      <button class="btn-secondary" type="button" id="btn1">Update dataset</button>
     </div>
   </div>
 
@@ -119,6 +119,12 @@ $('body').one('initialized', function () {
       ds2.push({value: 'opt-updated-3', text: 'Updated item 3'});
 
       api.updateDataset(ds2);
+      console.log('Dataset updated', ds2);
+    });
+
+    // On updated =============================================================
+    elem.on('updated.listbuilder', function (e, args) {
+     console.log('updated: ', args);
     });
 
   });

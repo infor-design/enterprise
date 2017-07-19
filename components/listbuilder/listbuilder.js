@@ -221,9 +221,11 @@
           });
 
         self.updatedEventsStr = 'arrangeupdate.listbuilder aftergoup.listbuilder aftergodown.listbuilder exiteditmode.listbuilder';
-        self.element.on(self.updatedEventsStr, function(e, data) {
-          self.element.triggerHandler('updated', [data]);
-        });
+        self.element
+          .off(self.updatedEventsStr)
+          .on(self.updatedEventsStr, function(e, data) {
+            self.element.triggerHandler('updated', [data]);
+          });
 
         return this;
       }, // END: Handle Events ---------------------------------------------------------------------
