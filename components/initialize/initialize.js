@@ -363,9 +363,10 @@
           if ($.fn.toolbar) {
             matchedItems('.toolbar:not('+ noinitExcludes +')').each(function() {
               var t = $(this);
-              // Don't re-invoke toolbars that are part of the page/section headers.
+              // Don't re-invoke toolbars that are part of the page/section headers or cap header.
               // header.js manually invokes these toolbars during its setup process.
-              if (t.parents('.header').length || t.parents('.contextual-action-panel').length) {
+              // However, if initialize is specifically being called on the toolbar element, then allow it to happen.
+              if (t.parents('.header, .contextual-action-panel .modal-header').length && !self.element.is('.toolbar')) {
                 return;
               }
 
