@@ -16,6 +16,10 @@
   $.fn.searchfield = function(options) {
     'use strict';
 
+    if (!options) {
+      options = {};
+    }
+
     // Settings and Options
     var pluginName = 'searchfield',
         defaults = {
@@ -784,6 +788,22 @@
 
     // Initialize the plugin (Once)
     return this.each(function() {
+
+      // Detect if we're inside of a Toolbar and invoke Toolbar Searchfield first, if applicable.
+      // Added for SOHO-6448.
+      // NOTE: If we merge the searchfield/toolbarsearchfield apis, revisit this solution.
+      var sf = $(this),
+        toolbarParent = sf.parents('.toolbar');
+      if (toolbarParent.length && !options.noToolbarSearchfieldInvoke) {
+        var tbsf = sf.data('toolbarsearchfield');
+        if (!tbsf) {
+          return sf.toolbarsearchfield(options);
+        } else {
+          tbsf.updated();
+        }
+      }
+
+      // Normal invoke setup
       var instance = $.data(this, pluginName);
       if (instance) {
         instance.settings = $.extend({}, instance.settings, options);

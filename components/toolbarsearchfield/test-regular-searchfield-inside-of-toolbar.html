@@ -26,14 +26,30 @@
   </div>
 </div>
 
+<div class="row top-padding">
+  <div class="six columns">
+    <button id="update" class="btn-secondary">
+      <span>Re-invoke Searchfield</em></span>
+    </button>
+  </div>
+</div>
+
 <script type="text/javascript">
+  var tb = $('#test-toolbar'),
+    sf = $('#test-searchfield');
+
   // NOTE: No `$('body').on('initialized')` in this test on purpose, since we're simulating a situation where
   // The initialize script is not running.
-  $('#test-searchfield').searchfield();
+  sf.searchfield();
 
   // NOTE: This is for the purpose of testing only.
   // DO NOT NORMALLY INVOKE A TOOLBAR IN A SETTIMEOUT THIS WAY.
   setTimeout(function() {
-    $('#test-toolbar').toolbar();
+    tb.toolbar();
   }, 10);
+
+  var updateBtn = $('#update');
+  updateBtn.on('click.test', function() {
+    sf.searchfield();
+  });
 </script>
