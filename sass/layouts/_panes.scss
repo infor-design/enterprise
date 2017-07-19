@@ -145,7 +145,7 @@
   }
 }
 
-@include respond-to(tabletdown) {
+@include respond-to(phabletdown) {
 
   .pane.top,
   .pane.bottom,
