@@ -24,8 +24,8 @@
           cssClass: null,
           filterMode: 'contains',
           maxSelected: undefined, //If in multiple mode, sets a limit on the number of items that can be selected
-          moveSelected: 'none', //If set to "all" When the menu is opened, displays all selected options at the top of the list.  If set to "group", move each section to the top of it's designated optgroup
-          moveSelectedToTop: undefined, //(Deprecated - see the 'moveSelected' setting)
+          moveSelected: 'none',
+          moveSelectedToTop: undefined,
           multiple: false, //Turns the dropdown into a multiple selection box
           noSearch: false,
           showEmptyGroupHeaders: false,

@@ -15,7 +15,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="version" content="{{version}}">
   <meta name="commit" content="{{commit}}">
-  
+
   <!-- Style Sheets -->
   <link rel="stylesheet" id="stylesheet" href="{{basepath}}stylesheets/light-theme.css" type="text/css">
   <link rel="stylesheet" href="{{basepath}}stylesheets/demo.css" type="text/css">
@@ -39,17 +39,6 @@
       '{{basepath}}js/d3.min.js',
       '{{basepath}}js/sohoxi.js'
     ], function() {
-      //demo.js needs to be after jquery loads, so we're nesting this in the first require's callback
-      require(['{{basepath}}js/demo.js'], function() {
-        //wait till dom ready to actually do the initializing functions
-        $(function () {
-          $('body').initialize();
-
-          if (typeof loadDone === 'function') {
-            loadDone();
-          }
-        })
-      });
     });
   </script>
   {{/amd}}
@@ -60,7 +49,6 @@
   <script src="{{basepath}}js/jquery-3.1.1.min.js"></script>
   <script src="{{basepath}}js/d3.min.js"></script>
   <script src="{{basepath}}js/sohoxi.js"></script>
-  <script src="{{basepath}}js/demo.js"></script>
   {{/amd}}
 
 </head>

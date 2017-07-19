@@ -670,6 +670,10 @@
           e = window.event;
         }
 
+        if (!e) {
+          return {};
+        }
+
         if (e.pageX || e.pageY) {
           x = e.pageX;
           y = e.pageY;
