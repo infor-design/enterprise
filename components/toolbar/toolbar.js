@@ -481,7 +481,7 @@
         var span = item.find('.audible'),
           title = item.attr('title'),
           tooltip = item.data('tooltip'),
-          tooltipText = tooltip ? tooltip.content : undefined;
+          tooltipText = tooltip && typeof tooltip.content === 'string' ? tooltip.content : undefined;
 
         var popupLiText = span.length ? span.text() :
           title !== '' && title !== undefined ? item.attr('title') :
