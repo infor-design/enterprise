@@ -1,0 +1,206 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+    <br><br><br>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+      var grid, data,
+        columns = [];
+
+      data = [
+        {
+          "id":1,
+          "escalated":3,
+          "depth":1,
+          "expanded":true,
+          "NAME":"Alphabets",
+          "desc":"",
+          "comments":null,
+          "orderDate":"2015-01-08T00:00:00.000Z",
+          "time":"",
+          "children":[
+            {
+              "id":4,
+              "escalated":0,
+              "depth":2,
+              "expanded":true,
+              "NAME":"A",
+              "desc":"Contact sales representative with the updated purchase order.",
+              "comments":2,
+              "orderDate":"2014-07-08T00:00:00.000Z",
+              "time":"22:10 PM",
+              "portable":true,
+              "children":[
+                {
+                  "id":5,
+                  "escalated":0,
+                  "depth":3,
+                  "NAME":"B",
+                  "desc":"Contact sales representative.",
+                  "comments":2,
+                  "orderDate":"2014-06-02T00:00:00.000Z",
+                  "time":"22:10 PM"
+                },
+                {
+                  "id":6,
+                  "escalated":0,
+                  "depth":3,
+                  "NAME":"C",
+                  "desc":"Contact sales representative.",
+                  "comments":2,
+                  "orderDate":"2014-07-09T00:00:00.000Z",
+                  "time":"22:10 PM"
+                }
+              ]
+            },
+            {
+              "id":2,
+              "escalated":2,
+              "depth":2,
+              "expanded":false,
+              "NAME":"D",
+              "desc":"",
+              "comments":null,
+              "orderDate":"2015-01-08T00:00:00.000Z",
+              "time":"",
+              "children":[
+                {
+                  "id":3,
+                  "escalated":0,
+                  "depth":3,
+                  "NAME":"E",
+                  "desc":"Update pending quotes and send out again to customers.",
+                  "comments":3,
+                  "orderDate":"2015-08-03T00:00:00.000Z",
+                  "time":"7:10 AM"
+                }
+              ]
+            },
+            {
+              "id":2,
+              "escalated":2,
+              "depth":2,
+              "expanded":false,
+              "NAME":"F",
+              "desc":"",
+              "comments":null,
+              "orderDate":"2015-01-08T00:00:00.000Z",
+              "time":"",
+              "children":[
+                {
+                  "id":3,
+                  "escalated":0,
+                  "depth":3,
+                  "NAME":"G",
+                  "desc":"Update pending quotes and send out again to customers.",
+                  "comments":3,
+                  "orderDate":"2015-08-03T00:00:00.000Z",
+                  "time":"7:10 AM"
+                }
+              ]
+            },
+            {
+              "id":3,
+              "escalated":0,
+              "depth":2,
+              "NAME":"H",
+              "desc":"Update pending quotes and send out again to customers.",
+              "comments":3,
+              "orderDate":"2015-08-03T00:00:00.000Z",
+              "time":"7:10 AM"
+            },
+            {
+              "id":3,
+              "escalated":0,
+              "depth":2,
+              "NAME":"I",
+              "desc":"Update pending quotes and send out again to customers.",
+              "comments":3,
+              "orderDate":"2015-08-03T00:00:00.000Z",
+              "time":"7:10 AM"
+            }
+          ]
+        },
+        {
+          "id":10,
+          "escalated":0,
+          "depth":1,
+          "expanded":true,
+          "NAME":"Numbers",
+          "desc":"Contact sales representative.",
+          "comments":2,
+          "orderDate":"2014-03-08T00:00:00.000Z",
+          "time":"7:04 AM",
+          "children":[
+            {
+              "id":11,
+              "escalated":0,
+              "depth":2,
+              "expanded":true,
+              "NAME":"1",
+              "desc":"Contact sales representative.",
+              "comments":2,
+              "orderDate":"2015-11-18T00:00:00.000Z",
+              "time":"14:10 PM",
+              "portable":true,
+              "children":[
+                {
+                  "id":4,
+      					  "escalated":0,
+      					  "depth":3,
+      					  "expanded":true,
+      					  "NAME":"2",
+      					  "desc":"Contact sales representative with the updated purchase order.",
+      					  "comments":2,
+      					  "orderDate":"2014-07-08T00:00:00.000Z",
+      					  "time":"22:10 PM",
+      					  "portable":true,
+                  "children":[
+                    {
+                      "id":5,
+                      "escalated":0,
+                      "depth":4,
+                      "NAME":"3",
+                      "desc":"Contact sales representative.",
+                      "comments":2,
+                      "orderDate":"2014-06-02T00:00:00.000Z",
+                      "time":"22:10 PM"
+                    },
+                    {
+                      "id":6,
+        							"escalated":0,
+        							"depth":4,
+        							"NAME":"4",
+        							"desc":"Contact sales representative.",
+        							"comments":2,
+        							"orderDate":"2014-07-09T00:00:00.000Z",
+        							"time":"22:10 PM"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ];
+
+    //Define Columns for the Grid.
+    columns.push({ id: 'NAME', name: 'Name', field: 'NAME',expanded: 'expanded', formatter: Formatters.Tree, editor: Editors.Input, width: 250 });
+
+    $('#datagrid').datagrid({
+      columns: columns,
+      dataset: data,
+      treeGrid: true,
+      toolbar: {title: 'Tasks (Hierarchical)', results: true, personalize: true}
+    }).on('selected', function (e, args) {
+      console.log(args);
+    });
+
+  });
+</script>
