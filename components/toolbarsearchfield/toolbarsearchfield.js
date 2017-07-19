@@ -81,7 +81,7 @@
         });
 
         // Invoke Searchfield, pass settings on
-        var sfSettings = $.extend({}, this.settings, $.fn.parseOptions(this.input[0]));
+        var sfSettings = $.extend({ 'noToolbarSearchfieldInvoke': true }, this.settings, $.fn.parseOptions(this.input[0]));
         this.input.searchfield(sfSettings);
         this.inputWrapper = this.input.parent();
         this.inputWrapper.addClass('toolbar-searchfield-wrapper');
