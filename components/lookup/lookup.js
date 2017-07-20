@@ -268,10 +268,11 @@
           content: content,
           buttons: buttons,
           cssClass: 'lookup-modal' + (!hasKeywordSearch ? ' lookup-no-search' : '')
-        }).off('open').on('open', function () {
+        }).off('open.lookup').on('open.lookup', function () {
           self.createGrid();
-        }).off('close').on('close', function () {
+        }).off('close.lookup').on('close.lookup', function () {
           self.element.focus();
+          self.element.triggerHandler('close', [self.modal, self.grid]);
         });
 
         self.modal = $('body').data('modal');
