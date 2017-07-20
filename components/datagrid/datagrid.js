@@ -2159,7 +2159,7 @@ $.fn.datagrid = function(options) {
         this.headerRow.find('.is-filterable').removeClass('is-filterable');
         this.headerRow.find('.datagrid-filter-wrapper').hide();
         this.settings.filterable = false;
-
+        this.filterRowRendered = false;
         this.element.removeClass('has-filterable-columns');
       } else {
         this.settings.filterable = true;
@@ -3601,6 +3601,7 @@ $.fn.datagrid = function(options) {
       this.element.trigger('columnchange', [{type: 'updatecolumns', columns: this.settings.columns}]);
       this.saveColumns();
       this.saveUserSettings();
+
     },
 
     saveColumns: function () {
