@@ -592,7 +592,7 @@
 
       if (isDateTime) {
         if (isUTC) {
-          if (dateObj.h) {
+          if (dateObj.h !== undefined) {
             dateObj.return = new Date(Date.UTC(dateObj.year, dateObj.month, dateObj.day, dateObj.h, dateObj.mm));
           }
           if (dateObj.ss !== undefined) {
@@ -604,7 +604,7 @@
         }
         else
         {
-          if (dateObj.h) {
+          if (dateObj.h !== undefined) {
             dateObj.return = new Date(dateObj.year, dateObj.month, dateObj.day, dateObj.h, dateObj.mm);
           }
           if (dateObj.ss !== undefined) {

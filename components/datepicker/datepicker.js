@@ -494,6 +494,14 @@
 
         // Set timepicker
         if (this.settings.showTime) {
+
+          //Set to 12:00
+          if (this.element.val() === '') {
+            this.currentDate.setHours(0);
+            this.currentDate.setMinutes(0);
+            this.currentDate.setSeconds(0);
+          }
+
           timeOptions.parentElement = this.timepickerContainer;
           this.time = self.getTimeString(this.currentDate, self.show24Hours);
           this.timepicker = this.timepickerContainer.timepicker(timeOptions).data('timepicker');
@@ -1055,6 +1063,11 @@
         if (typeof this.currentDate === 'string') {
           this.currentDate = Locale.parseDate(this.currentDate, this.pattern, false);
         }
+
+        if (this.currentDate === undefined) {
+          this.currentDate = Locale.parseDate(gregorianValue, this.pattern, false);
+        }
+
         this.currentDate = this.currentDate || new Date();
         this.currentMonth = this.currentDate.getMonth();
         this.currentYear = this.currentDate.getFullYear();
@@ -1096,6 +1109,24 @@
       */
       setToday: function() {
         this.currentDate = new Date();
+
+        if (this.element.val() === '') {
+          this.currentDate.setHours(0);
+          this.currentDate.setMinutes(0);
+          this.currentDate.setSeconds(0);
+        } else {
+          if (this.timepicker && this.timepicker.hourSelect) {
+            this.currentDate.setHours(this.timepicker.hourSelect.val());
+          }
+
+          if (this.timepicker && this.timepicker.minuteSelect) {
+            this.currentDate.setMinutes(this.timepicker.minuteSelect.val());
+          }
+
+          if (this.timepicker && this.timepicker.secondSelect) {
+            this.currentDate.setSeconds(this.timepicker.secondSelect.val());
+          }
+        }
 
         if (this.isIslamic) {
           this.currentDateIslamic = this.conversions.fromGregorian(this.currentDate);
