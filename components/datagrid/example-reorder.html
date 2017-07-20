@@ -27,12 +27,21 @@
           <li><a data-option="personalize-columns" href="#">Personalize Columns</a></li>
           <li><a data-option="reset-layout" href="#">Reset to Default</a></li>
           <li class="separator"></li>
-          <li><a data-option="export-to-excel" href="#">Export to Excel</a></li>
+
+          <li class="heading">Filter</li>
+          <li class="is-checked is-toggleable"><a data-option="show-filter-row">Show Filter Row</a></li>
+          <li class="is-indented"><a data-option="run-filter">Run Filter</a></li>
+          <li class="is-indented"><a data-option="clear-filter">Clear Filter</a></li>
+
           <li class="separator single-selectable-section"></li>
           <li class="heading">Row Height</li>
           <li class="is-selectable"><a data-option="row-short" href="#">Short</a></li>
           <li class="is-selectable"><a data-option="row-medium" href="#">Medium</a></li>
           <li class="is-selectable is-checked"><a data-option="row-normal" href="#">Normal</a></li>
+
+          <li class="heading">Filter</li>
+          <li class="is-indented"><a data-option="export-to-excel" href="#">Export to Excel</a></li>
+
         </ul>
       </div>
     </div>
@@ -41,6 +50,7 @@
 
   </div>
 </div>
+  toolbar: {title: 'Filterable Datagrid', filterRow: true, results: true, dateFilter: false ,keywordFilter: false, actions: true, views: false, rowHeight: true, collapsibleFilter: false}
 
 <script>
   $(function() {
