@@ -1,0 +1,50 @@
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="product-lookup" class="label">Products</label>
+      <input id="product-lookup" data-init="false" class="lookup" name="product-lookup" type="text">
+    </div>
+
+    <button class="btn-secondary" type="btn" id="block">Block Opening</button>
+
+  </div>
+</div>
+
+<script>
+    var lookup,
+      isBlocked = false;
+
+    //In this Test we have an Ajax call that returns the columns and lookup data
+    lookup = $('#product-lookup').lookup({
+        field: 'productId',
+        beforeShow: function (api, response) {
+          if (isBlocked) {
+            return false;
+          }
+
+          var url = '{{basepath}}api/lookupInfo';
+
+          $.getJSON(url, function(data) {
+            api.settings.options.columns = data[0].columns;
+            api.settings.options.dataset = data[0].dataset;
+            response();
+          });
+        },
+        options: {
+          selectable: 'single', //multiple or single
+          toolbar: {title: 'Products', results: true, collapsibleFilter: false, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true , rowHeight: true}
+        }
+    }).on('close', function () {
+      isBlocked = false;
+      $('#block').text('Block Opening');
+      console.log('Close Fired');
+    });
+
+    $('#block').on('click', function () {
+      isBlocked = !isBlocked;
+      $(this).text(isBlocked ? 'Un-Block Opening' : 'Block Opening');
+    });
+
+</script>
