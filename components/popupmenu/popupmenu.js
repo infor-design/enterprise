@@ -25,7 +25,6 @@
         attachToBody: false,
         beforeOpen: null,
         ariaListbox: false,
-        useCoordsForClick: false,
         eventObj: undefined,
         placementOpts: {
           containerOffsetX: 10,
@@ -49,7 +48,6 @@
     * @param {Boolean} autoFocus  &nbsp;-&nbsp; If false the focus will not focus the first list element. (At the cost of accessibility)
     * @param {Boolean} attachToBody  &nbsp;-&nbsp; If true the menu will be moved out to the body. To be used in certin overflow situations.
     * @param {String} ariaListbox  &nbsp;-&nbsp;  Switches aria to use listbox construct instead of menu construct (internal)
-    * @param {Boolean} useCoordsForClick  &nbsp;-&nbsp;  By default, menus open up underneath their target element.  Set this to true to use mouse coordinates for positioning a menu inside of its target element.
     * @param {String} eventObj  &nbsp;-&nbsp; Can pass in the event object so you can do a right click with immediate
     * @param {Object} placementOpts  &nbsp;-&nbsp; Gets passed to this control's Place behavior
     * @param {Object} offset  &nbsp;-&nbsp; Can tweak the menu position in the x and y direction. Takes an object of form: `{x: 0, y: 0}`
@@ -247,6 +245,11 @@
           //PressShiftF10
           this.element.attr('aria-describedby', audibleSpanId);
         }
+
+        // Unhide the menu markup, if hidden
+        if (this.menu.is('.hidden')) {
+          this.menu.removeClass('hidden');
+        }
       },
 
       markupItems: function () {
@@ -347,26 +350,35 @@
           }
         }
 
-        if (leftClick && !immediate) {
-          this.element
-            .on('mousedown.popupmenu', function (e) {
-              if (e.button > 0 || self.element.is(':disabled')) {
-                return;
-              }
-              doOpen(e);
-          });
+        function contextMenuHandler(e, isLeftClick) {
+          e.preventDefault();
+
+          var btn = isLeftClick === true ? 0 : 2;
+          if (e.button > btn || self.element.is(':disabled')) {
+            return;
+          }
+
+          doOpen(e);
         }
 
-        //settings.trigger
-        if (!leftClick) {
-          this.menu.parent().on('contextmenu.popupmenu', disableBrowserContextMenu);
-          this.element
-            .on('contextmenu.popupmenu', disableBrowserContextMenu)
-            .on('mousedown.popupmenu', function (e) {
-              if (e.button === 2 || (e.button === 0 & e.ctrlKey)) {
-                doOpen(e);
-              }
-            });
+        if (!immediate) {
+          // Left-Click activation
+          if (leftClick) {
+            this.element
+              .on('click.popupmenu', function (e) {
+                contextMenuHandler(e, true);
+              });
+          }
+
+          // Right-Click activation
+          if (!leftClick) {
+            this.menu.parent().on('contextmenu.popupmenu', disableBrowserContextMenu);
+            this.element
+              .on('contextmenu.popupmenu', function(e) {
+                disableBrowserContextMenu(e);
+                contextMenuHandler(e);
+              });
+          }
         }
 
         // Setup these next events no matter what trigger type is
@@ -1316,7 +1328,7 @@
         this.element
           .removeAttr('aria-controls')
           .removeAttr('aria-haspopup')
-          .off('touchend.popupmenu touchcancel.popupmenu click.popupmenu keypress.popupmenu contextmenu.popupmenu mousedown.popupmenu');
+          .off('touchend.popupmenu touchcancel.popupmenu click.popupmenu keypress.popupmenu contextmenu.popupmenu');
 
         return this;
       },

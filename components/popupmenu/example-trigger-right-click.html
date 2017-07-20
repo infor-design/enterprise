@@ -1,0 +1,76 @@
+<div class="row top-padding">
+  <div class="six columns">
+    <h2>Popupmenu configured to trigger by right-click</h2>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="six columns">
+
+    <div class="field">
+      <button id="popup-trigger" class="btn-primary">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-launch"></use>
+        </svg>
+        <span>Open Popupmenu</span>
+      </button>
+      <ul class="popupmenu hidden" id="menu" style="min-width: 250px;">
+        <li>
+          <a href="#">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-filter"></use>
+            </svg>
+            <span>Filtering...</span>
+          </a>
+        </li>
+        <li class="separator"></li>
+        <li>
+          <a href="#">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-like"></use>
+            </svg>
+            <span>Like</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-like"></use>
+            </svg>
+            <span>Dislike</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-new"></use>
+            </svg>
+            <span>Favorite</span>
+          </a>
+        </li>
+        <li class="separator"></li>
+        <li>
+          <a href="#">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-settings"></use>
+            </svg>
+            <span>Settings</span>
+          </a>
+        </li>
+      </ul>
+
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  var trigger = $('#popup-trigger'),
+    target = $('#target'),
+    menu = $('#menu');
+
+  trigger.popupmenu({
+    trigger: 'rightClick',
+    menu: menu
+  });
+</script>
