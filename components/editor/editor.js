@@ -50,24 +50,9 @@
       settings = $.extend({}, defaults, options);
 
     /**
-    * The About Dialog Component is displays information regarding the application.
+    * The Editor Component is displays and edits markdown.
     *
     * @class Editor
-    * @param {String} appName  &nbsp;-&nbsp; Customize the list of buttons that can be shown in each group.  `buttons: {
-      editor: [
-        'header1', 'header2',
-        'separator', 'bold', 'italic', 'underline', 'strikethrough',
-        'separator', 'foreColor', 'backColor',
-        'separator', 'justifyLeft', 'justifyCenter', 'justifyRight',
-        'separator', 'quote', 'orderedlist', 'unorderedlist',
-        'separator', 'anchor',
-        'separator', 'image',
-        'separator', 'source'
-      ],
-      source: [
-        'visual'
-      ]
-    }`
     * @param {String} firstHeader  &nbsp;-&nbsp; Allows you to set if the first header inserted is a h3 or h4 element. You should set this to match the structure of the parent page for accessibility
     * @param {Boolean} secondHeader  &nbsp;-&nbsp; Allows you to set if the second header inserted is a h3 or h4 element. You should set this to match the structure of the parent page for accessibility
     * @param {String} productName  &nbsp;-&nbsp; Additional product name information to display
