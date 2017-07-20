@@ -98,8 +98,8 @@
         }
 
         var titleAttr = this.element.attr('title');
-        if (titleAttr && titleAttr.length) {
-          this.settings.content = titleAttr;
+        if ((!this.settings.popover && titleAttr && titleAttr.length) || (!this.settings.popover && this.settings.title)) {
+          this.settings.content = this.settings.title ? this.settings.title : titleAttr;
           this.element.removeAttr('title');
         }
 
@@ -366,15 +366,18 @@
         if (extraClass) {
           classes += ' ' + extraClass;
         }
-        content[0].classList.remove('hidden');
+
         this.tooltip[0].setAttribute('class', classes);
 
         if (typeof content === 'string') {
           content = $(content);
+          contentArea.html(content);
+          contentArea.find('.hidden').removeClass('hidden');
         } else {
           contentArea.html(content);
         }
 
+        content[0].classList.remove('hidden');
         contentArea[0].firstElementChild.classList.remove('hidden');
 
         if (this.settings.title !== null) {
