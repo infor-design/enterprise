@@ -4,7 +4,7 @@
     <!-- Fill out all the information about this test page below, in plain English -->
     <h2>Mask Test: No Process On Initialize</h2>
 
-    <p><a class="hyperlink" href="http://jira/browse/HFC-3511" target="_blank">Related JIRA Ticket</a>. This test demonstrates a field with the setting <em>processOnInitialize</em> set to false.  This causes a masked input field with a pre-set value not to be run through the mask's processor.</p>
+    <p><a class="hyperlink" href="http://jira.infor.com/browse/HFC-3511" target="_blank">Related JIRA Ticket</a>. This test demonstrates a field with the setting <em>processOnInitialize</em> set to false.  This causes a masked input field with a pre-set value not to be run through the mask's processor.</p>
 
     <p>It should be noted that this setting can cause the Mask control to display odd results if it's used in a case where the initial value that is placed inside the field does not closely resemble a value that would have otherwise been placed in the field by the Mask Control.  For example, if you place 0000000000 in the field below [instead of (000) 000-0000], and attempt to key new values in the middle of it, the masking will appear to only work halfway. This is not a normal case and should not be used unless you plan to properly format these values in your backend before they make it to the client.</p>
 
