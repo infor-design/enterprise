@@ -1,0 +1,211 @@
+<div id="maincontent" class="two-column page-container scrollable" role="main">
+
+  <nav class="sidebar scrollable-y" role="complementary">
+    <div class="content darker">
+
+      <br>
+      <button class="btn-secondary btn-menu" type="button" id="btn-enable">Enable</button>
+      <ul class="popupmenu">
+      </ul>
+
+      <button class="btn-secondary btn-menu" type="button" id="btn-disable">Disable</button>
+      <ul class="popupmenu">
+      </ul>
+      <br>
+
+      <ul role="tree" aria-label="Asset Types" class="tree" id="test-tree">
+        <li>
+            <a href="#" data-value="home">Home</a>
+        </li>
+        <li><a href="#" data-value="about">About Us</a></li>
+        <li class="is-open">
+            <a href="#" data-value="public">Public Folders</a>
+            <ul class="is-open root">
+              <li class="is-open">
+                  <a href="#" data-value="leadership">Leadership</a>
+                  <ul class="is-open">
+                    <li>
+                      <a href="#" data-value="definition">Definition</a>
+                    </li>
+                    <li>
+                      <a href="#" data-value="organization">Organization</a>
+                    </li>
+                    <li>
+                      <a href="#" data-value="wisdom">Wisdom</a>
+                    </li>
+                  </ul>
+              </li>
+              <li><a href="#" data-value="history">History</a></li>
+              <li><a href="#" class="is-disabled" data-value="careers">Careers</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" data-value="icons">Icons</a>
+            <ul class="root">
+              <li>
+                <a href="#" class="icon-tree-audio" data-value="audio">Audio</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-avi" data-value="avi">Avi</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-bmp" data-value="bmp">Bmp</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-chart" data-value="chart">Chart</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-code" data-value="code">Code</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-csv" data-value="csv">Csv</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-doc" data-value="doc">Doc</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-excel" data-value="excel">Excel</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-expenses" data-value="expenses">Expenses</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-gif" data-value="gif">Gif</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-image" data-value="image">Image</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-jpg" data-value="jpg">Jpg</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-link" data-value="link">Link</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-mail" data-value="mail">Mail</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-mp3" data-value="mp3">Mp3</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-msg" data-value="msg">Msg</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-pdf" data-value="pdf">Pdf</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-png" data-value="png">Png</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-ppt" data-value="ppt">Ppt</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-prj" data-value="prj">Prj</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-psd" data-value="psd">Psd</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-pub" data-value="pub">Pub</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-rar" data-value="rar">Rar</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-text" data-value="text">Text</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-tif" data-value="tif">Tif</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-video" data-value="video">Video</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-vis" data-value="vis">Vis</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-word" data-value="word">Word</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-xls" data-value="xls">Xls</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-xml" data-value="xml">Xml</a>
+              </li>
+              <li>
+                <a href="#" class="icon-tree-zip" data-value="zip">Zip</a>
+              </li>
+              <li>
+                <a href="#" class="icon-screen" data-value="screen">Zip Screen</a>
+              </li>
+            </ul>
+        </li>
+
+        <li>
+          <a href="#" data-value="blog">Blog</a>
+        </li>
+
+        <li>
+          <a href="#" data-value="contact">Contact</a>
+        </li>
+      </ul>
+
+    </div>
+  </nav>
+
+  <section class="main scrollable-y" role="main">
+    <div class="content">
+    </div>
+  </section>
+
+</div>
+
+<script type="text/javascript">
+  $('body').one('initialized', function () {
+
+    var elem = $('#test-tree'),
+      api = elem.data('tree'),
+
+      // Build and return html for popupmenu list
+      getListHtml = function(elements) {
+        var i, l, node, html = '';
+        for (i = 0, l = elements.length; i < l; i++) {
+          node = $(elements[i]);
+          html += '<li><a href="#" data-value="'+ node.attr('data-value') +'">'+ node.text() +'</a></li>';
+        }
+        return html;
+      },
+
+      // Set popupmenu list
+      setMenuButtonList = function(menu, selectorStr) {
+        menu.html( getListHtml(elem.find(selectorStr)) );
+      },
+
+      // Find and returns subject node
+      getNode = function(item) {
+        var value = item.attr('data-value');
+        return elem.find('a[data-value="'+ value +'"]');
+      };
+
+    // Make enabled ===========================================================
+    $('#btn-enable')
+      .on('beforeopen', function (e, menu) {
+        setMenuButtonList($(menu[0]), 'a.is-disabled:not(ul.is-disabled a)');
+      })
+      .on('selected', function (e, item) {
+        // Enabled subject tree node
+        api.updateNode({ node: getNode($(item[0])), enabled: true });
+      });
+
+    // Make disabled ==========================================================
+    $('#btn-disable')
+      .on('beforeopen', function (e, menu) {
+        setMenuButtonList($(menu[0]), 'a:not(.is-disabled)');
+      })
+      .on('selected', function (e, item) {
+        // Disabled subject tree node
+        api.updateNode({ node: getNode($(item[0])), disabled: true });
+      });
+
+  });
+</script>

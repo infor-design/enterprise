@@ -1129,6 +1129,16 @@
         }
       },
 
+      // Check for true value
+      isTrue: function(v) {
+        return (typeof v !== 'undefined' && v !== null && ((typeof v === 'boolean' && v === true) || (typeof v === 'string' && v.toLowerCase() === 'true')));
+      },
+
+      // Check for false value
+      isFalse: function(v) {
+        return (typeof v !== 'undefined' && v !== null && ((typeof v === 'boolean' && v === false) || (typeof v === 'string' && v.toLowerCase() === 'false')));
+      },
+
       //Update fx rename a node
       updateNode: function (nodeData) {
         //Find the node in the dataset and ui and sync it
@@ -1143,6 +1153,10 @@
         if (!elem) {
           return;
         }
+
+        var parent = elem.node.parent(),
+          isDisabled = this.isTrue(nodeData.disabled) || this.isFalse(nodeData.enabled),
+          isEnabled = this.isTrue(nodeData.enabled) || this.isFalse(nodeData.disabled);
 
         // Update badge
         if (nodeData.badge) {
@@ -1197,13 +1211,23 @@
           elem.icon = nodeData.icon;
         }
 
-        if (nodeData.disabled) {
-          elem.node.addClass('is-disabled');
-          elem.node.attr('aria-disabled','true');
+        if (isDisabled) {
+          elem.node.addClass('is-disabled').attr('aria-disabled','true');
 
-          var parent = elem.node.parent();
           if (parent.is('.folder.is-open')) {
-            $('a', parent).addClass('is-disabled').attr('aria-disabled','true');
+            $('a, ul[role=group]', parent).addClass('is-disabled').attr('aria-disabled','true');
+          }
+        }
+
+        if (isEnabled) {
+          var isParentsDisabled = elem.node.parentsUntil(this.element, 'ul[role=group].is-disabled').length > 0;
+
+          if (!isParentsDisabled) {
+            elem.node.removeClass('is-disabled').removeAttr('aria-disabled');
+
+            if (parent.is('.folder.is-open')) {
+              $('a, ul[role=group]', parent).removeClass('is-disabled').removeAttr('aria-disabled');
+            }
           }
         }
 
@@ -1213,10 +1237,10 @@
 
         if (nodeData.children) {
           if (nodeData.children.length) {
-            this.addChildNodes(nodeData, elem.node.parent());
+            this.addChildNodes(nodeData, parent);
           }
           else {
-            this.removeChildren(nodeData, elem.node.parent());
+            this.removeChildren(nodeData, parent);
           }
         }
 
