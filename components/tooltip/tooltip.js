@@ -509,6 +509,10 @@
             self.hide();
           });
 
+          self.element.closest('.datagrid-body').on('scroll.tooltip', function() {
+            self.hide();
+          });
+
           // Click to close
           if (self.settings.isError) {
             self.tooltip.on('click.tooltip', function () {
@@ -598,7 +602,7 @@
         this.tooltip[0].style.top = '';
         this.tooltip.find('.arrow').removeAttr('style');
 
-        this.tooltip.off('click.tooltip');
+        this.detachOpenEvents();
 
         if ($('.popover').not('.is-hidden').length === 0) {
           $(document).off('mouseup.tooltip keydown.tooltip');
@@ -622,6 +626,17 @@
         return this;
       },
 
+      detachOpenEvents: function () {
+
+        this.tooltip.off('click.tooltip');
+        $(document).off('mouseup.tooltip');
+        $('body').off('resize.tooltip scroll.tooltip');
+        this.element.closest('.modal-body-wrapper').off('scroll.tooltip');
+        this.element.closest('.scrollable').off('scroll.tooltip');
+        this.element.closest('.datagrid-body').off('scroll.tooltip');
+
+      },
+
       teardown: function() {
         this.description.remove();
         this.descriptionId = undefined;
@@ -633,10 +648,7 @@
         }
 
         this.element.off('mouseenter.tooltip mouseleave.tooltip mousedown.tooltip click.tooltip mouseup.tooltip updated.tooltip focus.tooltip blur.tooltip');
-        $(document).off('mouseup.tooltip');
-        $('body').off('resize.tooltip scroll.tooltip');
-        this.element.closest('.modal-body-wrapper').off('scroll.tooltip');
-        this.element.closest('.scrollable').off('scroll.tooltip');
+        this.detachOpenEvents();
 
         if (this.matchMedia) {
           this.matchMedia.removeListener(this.mediaQueryListener);
