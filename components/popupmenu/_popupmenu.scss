@@ -376,16 +376,17 @@
 
     &.has-icons {
       > li a {
-        padding-left: 25px;
+        padding-left: 26px;
       }
     }
 
-    i {
+    li {
       &.is-checked,
       &.is-checked.is-selected {
         > a::before {
           height: 11px;
-          left: 8px;
+          left: 10px;
+          margin-top: 3px;
           width: 5px;
         }
       }
@@ -405,22 +406,22 @@
       &::before,
       &.is-focused::before {
         @include checkbox-unchecked-before-style;
-        margin-left: 12px;
+        margin-left: 7px;
         margin-top: 0;
-        top: 9px;
+        top: 5px;
       }
 
       &.is-checked::before {
         @include checkbox-checked-before-style;
-        margin-left: 12px;
+        margin-left: 7px;
         margin-top: 0;
-        top: 9px;
+        top: 5px;
       }
 
       &.is-checked::after {
         @include checkbox-checked-after-style;
-        left: 17px;
-        margin-top: 7px;
+        left: 12px;
+        margin-top: 4px;
         top: 2px;
       }
 

@@ -717,6 +717,12 @@
           return;
         }
 
+        var elemWidth = this.element.outerWidth();
+        if (elemWidth > menuDimensions.width) {
+          this.menu.width(elemWidth);
+        }
+
+
         if (target.is('svg, .icon') && target.closest('.tab').length) {
           target = target.closest('.tab');
         }
