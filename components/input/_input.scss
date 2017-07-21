@@ -121,21 +121,28 @@
 }
 
 // Two Connected Fields
-.compound-field > .field,
-.compound-field > .field-short {
-  clear: both;
-  display: inline-block;
-  margin-right: 15px;
-  vertical-align: baseline;
+.compound-field {
 
-  &.field-checkbox label {
-    line-height: 20px;
-    margin-bottom: -1px;
+  > .field,
+  > .field-short {
+    clear: both;
+    display: inline-block;
+    margin-right: 15px;
+
+    &.field-checkbox label {
+      line-height: 20px;
+      margin-bottom: -1px;
+    }
   }
-}
 
-.compound-field > .field-short {
-  margin-right: 10px;
+  > .field {
+    vertical-align: baseline;
+  }
+
+  > .field-short {
+    margin-right: 10px;
+    vertical-align: top;
+  }
 }
 
 //Move a field up closer - two line fields
@@ -461,10 +468,7 @@ label,
     width: $field-sm;
 
     ~ .error-message {
-      .message-text,
-      .icon {
-        left: $field-sm;
-      }
+      left: $field-sm;
     }
   }
 
