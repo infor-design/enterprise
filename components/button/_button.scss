@@ -598,6 +598,8 @@ a.btn-menu {
 
     > .icon:not(.icon-dropdown) {
       height: 14px;
+      margin: 0;
+      vertical-align: middle;
 
       + span:not(.audible) {
         display: inline-block;
@@ -710,7 +712,7 @@ html[lang^='fr-'] {
   width: 45px;
 }
 
-.is-firefox {
+.is-mac.is-firefox {
   [class^="btn"] {
     line-height: 34px;
   }
