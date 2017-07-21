@@ -18,6 +18,7 @@
     -   [toggleTimePopup](#toggletimepopup)
     -   [value](#value)
     -   [enable](#enable)
+    -   [readonly](#readonly)
     -   [disable](#disable)
     -   [isDisabled](#isdisabled)
     -   [getBoolean](#getboolean)
@@ -138,13 +139,13 @@ Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refer
 
 Enables the Timepicker
 
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+### readonly
+
+Set input to readonly.
 
 ### disable
 
 Disables the Timepicker
-
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 ### isDisabled
 
