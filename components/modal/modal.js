@@ -370,6 +370,13 @@
           if (modal.data('modal') && modal.data('modal').overlay) {
             modal.data('modal').overlay[0].style.zIndex = (1020 + i).toString();
           }
+
+          if (!modal.data('modal')) {
+            var overlay = modal.closest('.modal-page-container').next('.overlay');
+            if (overlay) {
+              overlay[0].style.zIndex = (1020 + i).toString();
+            }
+          }
         });
 
         $('body > *').not(this.element).not('.modal, .overlay, .modal-page-container').attr('aria-hidden', 'true');
