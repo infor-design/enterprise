@@ -326,6 +326,9 @@
        * @returns {undefined}
        */
       setAsActive: function() {
+        return;
+
+        /*
         if (this.element.hasClass('active')) {
           return;
         }
@@ -366,6 +369,7 @@
           });
         }, 100);
         this.recalculateParent();
+        */
       },
 
       /**

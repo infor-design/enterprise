@@ -122,6 +122,8 @@
           self.fastExpand = true;
         }).on('focusin.toolbarsearchfield', function(e) {
           self.handleFocus(e);
+        }).on('keydown.toolbarsearchfield', function(e) {
+          self.handleKeydown(e);
         }).on('collapse.toolbarsearchfield', function() {
           self.collapse();
         });
@@ -131,6 +133,12 @@
             return self.handlePopupBeforeOpen(e, menu);
           });
         }
+
+        this.toolbarParent.on('navigate.toolbarsearchfield', function() {
+          if (!self.hasFocus()) {
+            self.collapse();
+          }
+        });
 
         // Used to determine if the "Tab" key was involved in switching focus to the searchfield.
         $(document).on('keydown.' + this.id, function(e) {
@@ -144,16 +152,51 @@
         return this;
       },
 
+      /**
+       * TODO: Deprecate in 4.4.0
+       * @private
+       */
       handleDeactivationEvents: function() {
-        var self = this,
-          arr = ['click', 'touchend', 'touchcancel'].map(function(v) {
+        return this.addDocumentDeactivationEvents();
+      },
+
+      /**
+       * @private
+       * Sets up event listeners that need to be handled at the global (document) level, since they deal
+       * with general keystrokes.
+       */
+      addDocumentDeactivationEvents: function() {
+        var self = this;
+
+        if (!this.handleOutsideStr) {
+          var arr = ['click'].map(function(v) {
             return v +'.'+ self.id;
           });
-        self.handleOutsideStr = arr.join(' ');
+          this.handleOutsideStr = arr.join(' ');
+        }
 
         $(document).on(self.handleOutsideStr, function(e) {
           self.handleOutsideClick(e);
         });
+      },
+
+      /**
+       * @private
+       * Removes global (document) level event handlers.
+       */
+      removeDocumentDeactivationEvents: function() {
+        var self = this;
+        $(document).off(this.handleOutsideStr, function(e) {
+          self.handleOutsideClick(e);
+        });
+      },
+
+      /**
+       * Detects whether or not the Toolbar Searchfield has focus.
+       * @returns {boolean}
+       */
+      hasFocus: function() {
+        return $.contains(this.inputWrapper[0], document.activeElement);
       },
 
       handleFocus: function() {
@@ -179,10 +222,12 @@
         clearTimeout(this.focusTimer);
 
         function searchfieldCollapseTimer() {
-          if (!$.contains(self.inputWrapper[0], document.activeElement) && self.inputWrapper.hasClass('active')) {
+          /*
+          if (self.hasFocus() && self.isActive()) {
             self.focusElem = document.activeElement;
-            self.collapse();
           }
+          */
+          self.collapse();
         }
 
         this.focusTimer = setTimeout(searchfieldCollapseTimer, 100);
@@ -210,6 +255,17 @@
 
         $(document).off(this.outsideEventStr);
         this.collapse();
+      },
+
+      /**
+       * Handles Keydown Events
+       */
+      handleKeydown: function(e) {
+        var key = e.which;
+
+        if (key === 9) { // Tab
+          return this.handleFakeBlur();
+        }
       },
 
       handleOutsideKeydown: function(e) {
@@ -403,24 +459,46 @@
       },
 
       isActive: function() {
-        return this.inputWrapper.hasClass('is-active');
+        return this.inputWrapper.hasClass('active');
       },
 
       adjustOnBreakpoint: function() {
-        var isFullWidth = this.shouldBeFullWidth(),
-          hasStyleAttr = this.inputWrapper.attr('style');
+        // On smaller form-factor (tablet/phone)
+        if (this.shouldBeFullWidth()) {
 
-        if (this.isActive()) {
-          this.collapse();
+          if (this.hasFocus()) {
+            this.appendToParent();
+
+            this.calculateOpenWidth();
+            this.setOpenWidth();
+
+            if (this.isExpanded) {
+              return;
+            }
+
+            this.expand(true);
+          } else {
+            if (this.settings.collapsibleOnMobile === true && this.isExpanded) {
+              this.collapse();
+            }
+          }
+
+          return;
         }
 
-        if (!isFullWidth && !hasStyleAttr) {
-          this.calculateOpenWidth();
+        // On larger form-factor (desktop)
+        this.appendToButtonset();
 
-          if (this.settings.collapsible === false) {
-            this.expand(true);
+        if (this.hasFocus()) {
+          this.calculateOpenWidth();
+          this.setOpenWidth();
+        } else {
+          if (this.settings.collapsible === true && this.isExpanded) {
+            this.collapse();
           }
         }
+
+        return;
       },
 
       // Angular may not be able to get these elements on demand so we need to be
@@ -436,7 +514,7 @@
         var self = this,
           notFullWidth = !this.shouldBeFullWidth();
 
-        if (this.inputWrapper.hasClass('active')) {
+        if (this.isActive()) {
           return;
         }
 
@@ -474,13 +552,12 @@
 
           self.toolbarParent.triggerHandler('recalculate-buttons', eventArgs);
           self.inputWrapper.triggerHandler('expanded');
+          self.isExpanded = true;
         }
 
         // Places the input wrapper into the toolbar on smaller breakpoints
         if (!notFullWidth) {
-          this.elemBeforeWrapper = this.inputWrapper.prev();
-          this.inputWrapper.detach().prependTo(this.containmentParent);
-          Soho.utils.fixSVGIcons(this.inputWrapper);
+          this.appendToParent();
         } else {
 
           // Re-adjust the size of the buttonset element if the expanded searchfield would be
@@ -520,17 +597,7 @@
         }
 
         this.inputWrapper.addClass('active');
-        this.handleDeactivationEvents();
-
-        /*
-        // Return out without collapsing or handling callbacks for the `collapse` event if:
-        // Searchfield is not collapsible in general -OR-
-        // Searchfield is only collapsible on mobile, and we aren't below the mobile breakpoint
-        if ((self.settings.collapsible === false && self.settings.collapsibleOnMobile === false) ||
-           (self.settings.collapsible === false && self.settings.collapsibleOnMobile === true && !self.shouldBeFullWidth())) {
-          return;
-        }
-        */
+        this.addDocumentDeactivationEvents();
 
         if (this.shouldExpandOnMobile()) {
           expandCallback();
@@ -553,7 +620,6 @@
         }
 
         function collapseCallback() {
-          self.inputWrapper.removeClass('is-open');
           self.fastExpand = false;
 
           closeWidth();
@@ -562,7 +628,13 @@
             self.button.data('popupmenu').close(false, true);
           }
 
-          self.inputWrapper.triggerHandler('collapsed');
+          self.inputWrapper
+            .removeClass('is-open')
+            .triggerHandler('collapsed');
+
+          self.removeDocumentDeactivationEvents();
+
+          self.isExpanded = false;
 
           // TODO: Make this process more solid, without FOUC/jumpiness and better focus handling (EPC)
           // See http://jira/browse/SOHO-6347
@@ -575,18 +647,7 @@
         }
 
         // Puts the input wrapper back where it should be if it's been moved due to small form factors.
-        if (this.inputWrapper.parent().is(this.containmentParent)) {
-          if (!(this.elemBeforeWrapper instanceof $) || !this.elemBeforeWrapper.length) {
-            this.inputWrapper.prependTo(this.toolbarParent.children('.buttonset'));
-          } else {
-            this.inputWrapper.detach().insertAfter(this.elemBeforeWrapper);
-          }
-          self.handleDeactivationEvents();
-          self.toolbarParent.triggerHandler('scrollup');
-          Soho.utils.fixSVGIcons(this.inputWrapper);
-
-          this.elemBeforeWrapper = null;
-        }
+        this.appendToButtonset();
 
         if (this.input.val().trim() !== '') {
           textMethod = 'addClass';
@@ -597,7 +658,10 @@
           clearTimeout(this.animationTimer);
         }
 
-        self.inputWrapper.removeClass('active has-focus');
+        self.inputWrapper.removeClass('active');
+        if (!self.hasFocus()) {
+          self.inputWrapper.removeClass('has-focus');
+        }
 
         // Return out without collapsing or handling callbacks for the `collapse` event if:
         // Searchfield is not collapsible in general -OR-
@@ -616,6 +680,76 @@
       },
 
       /**
+       * If focused, we need to store a reference to the element with focus (searchfield, internal buttons, etc)
+       * because once the element becomes removed from the DOM, focus is lost.
+       * @private
+       */
+      saveFocus: function() {
+        if (!this.hasFocus()) {
+          return;
+        }
+        this.focusElem = document.activeElement;
+      },
+
+      /**
+       * Restores focus to an element reference that was previously focused.
+       * @private
+       */
+      restoreFocus: function() {
+        if (!this.focusElem) {
+          return;
+        }
+
+        this.focusElem.focus();
+        this.focusElem = undefined;
+      },
+
+      /**
+       * Appends this searchfield to the `containmentParent` element
+       * Used when the small-form-factor searchfield needs to be established.
+       * @private
+       */
+      appendToParent: function() {
+        if (this.inputWrapper.parent().is(this.containmentParent)) {
+          return;
+        }
+
+        this.saveFocus();
+
+        this.elemBeforeWrapper = this.inputWrapper.prev();
+        this.inputWrapper.detach().prependTo(this.containmentParent);
+        Soho.utils.fixSVGIcons(this.inputWrapper);
+
+        this.restoreFocus();
+      },
+
+      /**
+       * Removes this searchfield from the `containmentParent` element, and places it back into the buttonset.
+       * Used when the small-form-factor searchfield needs to be established.
+       * @private
+       */
+      appendToButtonset: function() {
+        if (!this.inputWrapper.parent().is(this.containmentParent)) {
+          return;
+        }
+
+        this.saveFocus();
+
+        if (!(this.elemBeforeWrapper instanceof $) || !this.elemBeforeWrapper.length) {
+          this.inputWrapper.prependTo(this.toolbarParent.children('.buttonset'));
+        } else {
+          this.inputWrapper.detach().insertAfter(this.elemBeforeWrapper);
+          this.elemBeforeWrapper = null;
+        }
+
+        this.removeDocumentDeactivationEvents();
+        this.toolbarParent.triggerHandler('scrollup');
+        Soho.utils.fixSVGIcons(this.inputWrapper);
+
+        this.restoreFocus();
+      },
+
+      /**
        * Determines whether or not the full-size Searchfield should open over top of its sibling Toolbar elements.
        * @private
        * @returns {boolean}
@@ -625,7 +759,7 @@
           headerCondition = false;
 
         if (header.length) {
-          headerCondition = header.width() < 320;
+          headerCondition = header.width() < Soho.breakpoints.phone;
         }
 
         return headerCondition || Soho.breakpoints.isBelow('phone-to-tablet');
@@ -666,9 +800,11 @@
 
       // Tears down events, properties, etc. and resets the control to "factory" state
       teardown: function() {
-        this.inputWrapper.off('mousedown.toolbarsearchfield focusin.toolbarsearchfield collapse.toolbarsearchfield');
+        this.inputWrapper.off('mousedown.toolbarsearchfield focusin.toolbarsearchfield keydown.toolbarsearchfield collapse.toolbarsearchfield');
         this.inputWrapper.find('.icon').remove();
         $(document).off(this.outsideEventStr);
+
+        this.toolbarParent.off('navigate.toolbarsearchfield');
 
         if (this.xButton && this.xButton.length) {
           this.xButton.remove();

@@ -3,6 +3,8 @@
 ### Table of Contents
 
 -   [ToolbarSearchfield](#toolbarsearchfield)
+    -   [hasFocus](#hasfocus)
+    -   [handleKeydown](#handlekeydown)
 
 ## ToolbarSearchfield
 
@@ -11,3 +13,17 @@ Depends on both a Toolbar control and Searchfield control to be present
 **Parameters**
 
 -   `element` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+### hasFocus
+
+Detects whether or not the Toolbar Searchfield has focus.
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### handleKeydown
+
+Handles Keydown Events
+
+**Parameters**
+
+-   `e`  
