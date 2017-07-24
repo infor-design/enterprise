@@ -54,7 +54,7 @@ define({
     // Packages that should be registered with the loader in each testing environment
     packages: [ { name: 'controls', location: '.' } ],
     map: {
-      'jquery' : 'controls/js/vendor/jquery-2.1.3.min'
+      'jquery' : 'components/vendor/jquery-3.1.1.js.min'
     }
   },
 

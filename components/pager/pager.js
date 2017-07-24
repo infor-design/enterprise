@@ -18,25 +18,37 @@
     // Settings and Options
     var pluginName = 'pager',
         defaults = {
-          componentAPI: undefined, // If defined, becomes the definitive way to call methods on parent component.
-          type: 'list', //Different types of pagers: list, table and more
-          position: 'bottom',  //Can be on top as well.
-          activePage: 1, //Start on this page
-          hideOnOnePage: false, // If true, hides the pager if there is only one page worth of results.
-          source: null,  //Call Back Function for Pager Data Source
-          pagesize: 15, //Can be calculate or a specific number
+          componentAPI: undefined,
+          type: 'list',
+          position: 'bottom',
+          activePage: 1,
+          hideOnOnePage: false,
+          source: null,
+          pagesize: 15,
           pagesizes: [15, 25, 50, 75],
-          showPageSizeSelector: true, // Will show page size selector
-          indeterminate: false // Will not show anything that lets you go to a specific page
+          showPageSizeSelector: true,
+          indeterminate: false
         },
         settings = $.extend({}, defaults, options);
 
     var PAGER_NON_NUMBER_BUTTON_SELECTOR = 'li:not(.pager-prev):not(.pager-next):not(.pager-first):not(.pager-last)';
 
     /**
-     * @constructor
-     * @param {Object} element
-     */
+    * The Pager Component supports paging on lists.
+    *
+    * @class Pager
+    * @param {String} componentAPI  &nbsp;-&nbsp; If defined, becomes the definitive way to call methods on parent component.
+    * @param {String} type  &nbsp;-&nbsp; Different types of pagers: list, table and more
+    * @param {String} position  &nbsp;-&nbsp; Can be on 'bottom' or 'top'.
+    * @param {Number} activePage  &nbsp;-&nbsp; Start on this page
+    * @param {Boolean} hideOnOnePage  &nbsp;-&nbsp; If true, hides the pager if there is only one page worth of results.
+    * @param {Function} source  &nbsp;-&nbsp; Call Back Function for Pager Data Source
+    * @param {Number} pagesize  &nbsp;-&nbsp; Can be calculated or a specific number
+    * @param {Array} pagesizes  &nbsp;-&nbsp; Array of numbers of the page size selector
+    * @param {Boolean} showPageSizeSelector  &nbsp;-&nbsp; If false will not show page size selector
+    * @param {Boolean} indeterminate  &nbsp;-&nbsp; If true will not show anything that lets you go to a specific page
+    *
+    */
     function Pager(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -696,7 +708,9 @@
         this.renderBar(pagingInfo);
       },
 
-      //Teardown
+      /**
+       * Tear down and detatch all events
+       */
       destroy: function() {
         $.removeData(this.element[0], pluginName);
       }

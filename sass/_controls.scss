@@ -5,7 +5,7 @@
 @import 'components/visibility/visibility';
 
 // Each Component
-@import 'controls/placeable';
+@import 'components/place/place';
 @import 'components/breadcrumb/breadcrumb';
 @import 'components/button/button';
 @import 'components/hyperlinks/hyperlinks';
@@ -31,7 +31,7 @@
 @import 'components/swaplist/swaplist';
 @import 'components/badges/badges';
 @import 'components/circlepager/circlepager';
-@import 'controls/pager';
+@import 'components/pager/pager';
 @import 'components/datagrid/datagrid';
 @import 'components/header/header';
 @import 'components/spinbox/spinbox';
@@ -61,7 +61,7 @@
 @import 'components/fieldset/fieldset';
 @import 'components/lookup/lookup';
 @import 'components/wizard/wizard';
-@import 'controls/popdown';
+@import 'components/popdown/popdown';
 @import 'components/hierarchy/hierarchy';
 @import 'components/toolbarsearchfield/toolbarsearchfield';
 @import 'components/counts/counts';

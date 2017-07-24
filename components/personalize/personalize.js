@@ -27,10 +27,13 @@
         settings = $.extend({}, defaults, options);
 
     /**
-     * Personalize Control
-     * @constructor
-     * @param {Object} element
-     */
+    * The personalization routines for setting custom company colors.
+    *
+    * @class Personalize
+    * @param {String} colors  &nbsp;-&nbsp; The list of colors
+    * @param {String} theme  &nbsp;-&nbsp; The theme name (light, dark or high-contrast)
+    *
+    */
     function Personalize(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -162,23 +165,25 @@
         Soho.colors.hover = this.validateHex(Soho.colors.hover || this.getLuminousColorShade(Soho.colors.header, -0.5));
 
         //not that the sheet is appended in backwards
-        var cssRules = '.tab-container.module-tabs.is-personalizable { border-top: 1px solid '+ Soho.colors.horizontalBorder +'; border-bottom: 1px solid ' + Soho.colors.horizontalBorder + '}' +
-        ' .module-tabs.is-personalizable .tab:not(:first-child) { border-left: 1px solid '+ Soho.colors.verticalBorder +'}'  +
-        ' .module-tabs.is-personalizable { background-color: '+ Soho.colors.inactive +'}'  +
-        ' .module-tabs.is-personalizable .tab.is-selected { background-color: '+ Soho.colors.header +'}'  +
+        var cssRules = '.tab-container.module-tabs.is-personalizable { border-top: 1px solid '+ Soho.colors.horizontalBorder +' !important; border-bottom: 1px solid ' + Soho.colors.horizontalBorder + ' !important}' +
+        ' .module-tabs.is-personalizable .tab:not(:first-child) { border-left: 1px solid '+ Soho.colors.verticalBorder +' !important}'  +
+        ' .module-tabs.is-personalizable { background-color: '+ Soho.colors.inactive +' !important}'  +
+        ' .module-tabs.is-personalizable .tab.is-selected { background-color: '+ Soho.colors.header +' !important}'  +
+        ' .accordion.panel .accordion-header.is-selected { background-color: '+ Soho.colors.subheader +' !important; color: '+ Soho.colors.text +' !important}'  +
         ' .builder-header.is-personalizable{ background-color: '+ Soho.colors.subheader +'}'  +
         ' .header.is-personalizable { background-color: '+ Soho.colors.header +'}' +
         ' .header.is-personalizable .title { color: '+ Soho.colors.text +'}' +
         ' .header.is-personalizable h1 { color: '+ Soho.colors.text +'}' +
-        ' .module-tabs.is-personalizable .tab-more { border-left: '+ Soho.colors.verticalBorder +' }' +
-        ' .module-tabs.is-personalizable .tab-more:hover { background-color: '+ Soho.colors.hover +' }' +
-        ' .module-tabs.is-personalizable .tab-more.is-open { background-color: '+ Soho.colors.hover +' }' +
-        ' .module-tabs.is-personalizable .tab-more.is-selected { background-color: '+ Soho.colors.header +' }' +
-        ' .subheader.is-personalizable { background-color: '+ Soho.colors.subheader +'}' +
-        ' .builder .sidebar .header {border-right: 1px solid '+ Soho.colors.verticalBorder +'}' +
-        ' .module-tabs.is-personalizable .tab:hover { background-color: '+ Soho.colors.hover +'}' +
-        ' .module-tabs.has-toolbar.is-personalizable .tab-list-container + .toolbar { border-left: '+ Soho.colors.verticalBorder +' }' +
-        ' .module-tabs.is-personalizable [class^="btn"] { background-color: '+ Soho.colors.inactive +' }' +
+        ' .module-tabs.is-personalizable .tab-more { border-left: '+ Soho.colors.verticalBorder +' !important}' +
+        ' .module-tabs.is-personalizable .tab-more:hover { background-color: '+ Soho.colors.hover +' !important}' +
+        ' .module-tabs.is-personalizable .tab-more.is-open { background-color: '+ Soho.colors.hover +' !important}' +
+        ' .module-tabs.is-personalizable .tab-more.is-selected { background-color: '+ Soho.colors.header +' !important}' +
+        ' .header .toolbar > .toolbar-searchfield-wrapper.active .searchfield { background-color: '+ Soho.colors.hover +' !important; border-bottom-color: ' + Soho.colors.hover  +' !important}' +
+        ' .subheader.is-personalizable { background-color: '+ Soho.colors.subheader +' !important}' +
+        ' .builder .sidebar .header {border-right: 1px solid '+ Soho.colors.hover +' !important}' +
+        ' .module-tabs.is-personalizable .tab:hover { background-color: '+ Soho.colors.hover +' !important}' +
+        ' .module-tabs.has-toolbar.is-personalizable .tab-list-container + .toolbar { border-left: '+ Soho.colors.verticalBorder +' !important}' +
+        ' .module-tabs.is-personalizable [class^="btn"] { background-color: '+ Soho.colors.inactive +' !important}' +
         ' .hero-widget.is-personalizable { background-color: '+ Soho.colors.subheader +' }' +
         ' .hero-widget.is-personalizable .hero-bottom { background-color: '+ Soho.colors.header +' }' +
         ' .hero-widget.is-personalizable .hero-footer .hero-footer-nav li::before { color: '+ Soho.colors.verticalBorder +' }' +
@@ -190,8 +195,11 @@
         return cssRules;
       },
 
-      // Changes all personalizable elements inside this element to match the personalization scheme provided.
-      // The original hex color as a string or an object with all the Colors
+      /**
+      * Sets the personalization color(s)
+      *
+      * @param {Array} colors  &nbsp;-&nbsp; The original hex color as a string or an object with all the Colors
+      */
       setColors: function(colors) {
         if (!colors) {
           return;
@@ -201,10 +209,12 @@
         return this;
       },
 
-      // Takes a color and performs a change in luminosity of that color programatically.
-      // @param {String} hex: The original Hexadecimal base color.
-      // @param {Number} lum: A percentage used to set luminosity change on the base color:  -0.1 would be 10% darker, 0.2 would be 20% brighter
-      // @returns {String} hexadecimal color.
+      /**
+      * Takes a color and performs a change in luminosity of that color programatically.
+      * @param {String} hex  &nbsp;-&nbsp; The original Hexadecimal base color.
+      * @param {String} lum  &nbsp;-&nbsp; A percentage used to set luminosity change on the base color:  -0.1 would be 10% darker, 0.2 would be 20% brighter
+      * @returns {String} hexadecimal color.
+      */
       getLuminousColorShade: function(hex, lum) {
         // validate hex string
         hex = this.validateHex(hex).substr(1);
@@ -227,7 +237,11 @@
         'high-contrast'
       ],
 
-      // @param {String} theme: Represents the file name of a color scheme
+      /**
+      * Sets the current theme, blocking the ui during the change.
+      *
+      * @param {String} theme  &nbsp;-&nbsp; Represents the file name of a color scheme (can be dark, light or high-contrast)
+      */
       setTheme: function(theme) {
         if (Soho.theme === theme) {
           return;
