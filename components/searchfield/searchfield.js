@@ -323,17 +323,14 @@
        * Activates a toolbar-based searchfield and keeps it "open".  Instead of closing it on blur, sets up
        * an explicit, out-of-bounds click/tap that will serve to close it when the user acts.
        * @private
+       * @param {boolean} force - ignore any attempt to return out first
+       * @param {boolean} doFocus - focus the searchfield element.
        * @returns {undefined}
        */
-      setAsActive: function() {
-        return;
-
-        /*
-        if (this.element.hasClass('active')) {
+      setAsActive: function(force, doFocus) {
+        if (!force && this.element.hasClass('active')) {
           return;
         }
-
-        var self = this;
 
         // Activate
         this.element.addClass('active');
@@ -347,29 +344,33 @@
           this.wrapper.addClass('has-focus');
         }
 
-        setTimeout(function() {
-          function deactivate(e) {
-            var target = $(e.target),
-              elems = self.element.add(self.element.parent('.searchfield-wrapper'));
-            if (target.is(elems)) {
-              return;
-            }
+        if (doFocus === true) {
+          this.element.focus();
+        }
 
-            //self.element.removeClass('active').blur();
-            toolbar.removeClass('searchfield-active');
-            $(document).offTouchClick('searchfield').off('click.searchfield');
-          }
-
-          $(document).onTouchClick('searchfield', '.searchfield').on('click.searchfield', function(e) {
-            deactivate(e);
-          });
-
-          self.element.one('blur.searchfield', function(e) {
-            deactivate(e);
-          });
-        }, 100);
         this.recalculateParent();
-        */
+      },
+
+      /**
+       * Detects whether or not the Searchfield has focus.
+       * @returns {boolean}
+       */
+      hasFocus: function() {
+        var active = document.activeElement;
+
+        if ($.contains(this.wrapper[0], active)) {
+          return true;
+        }
+
+        // Don't close if a category is being selected from a category menu
+        if (this.button && this.button.length) {
+          var menu = this.button.data('popupmenu').menu;
+          if (menu.has(active).length) {
+            return true;
+          }
+        }
+
+        return false;
       },
 
       /**
@@ -387,14 +388,13 @@
        * @returns {undefined}
        */
       handleBlur: function() {
-        var self = this;
         this.recalculateParent();
 
-        if (!this.isToolbarSearchfield()) {
-          setTimeout(function() {
-            self.wrapper.removeClass('has-focus');
-          }, 10);
+        if (!this.hasFocus()) {
+          return;
         }
+
+        this.wrapper.removeClass('has-focus');
       },
 
       /**
@@ -516,7 +516,9 @@
           return;
         }
 
-        this.wrapper.addClass('has-focus');
+        this.wrapper
+          .removeClass('active')
+          .addClass('has-focus');
       },
 
       /**
@@ -676,7 +678,7 @@
        * @returns {function}
        */
       handlePopupClose: function() {
-        return this.setAsActive();
+        return this.setAsActive(true, true);
       },
 
       /**

@@ -57,10 +57,6 @@ Triggers an artificial "blur" of the searchfield, resulting in a time-delayed co
 
 Event Handler for dealing with global (document) level clicks.
 
-**Parameters**
-
--   `e` **jQuery.Event** jQuery-wrapped Click event on a `$(document)` object.
-
 ### handleKeydown
 
 Handles Keydown Events

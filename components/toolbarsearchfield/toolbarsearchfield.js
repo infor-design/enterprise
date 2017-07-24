@@ -169,7 +169,7 @@
        * @returns {boolean}
        */
       hasFocus: function() {
-        return $.contains(this.inputWrapper[0], document.activeElement);
+        return this.element.data('searchfield').hasFocus();
       },
 
       /**
@@ -209,26 +209,14 @@
 
       /**
        * Event Handler for dealing with global (document) level clicks.
-       * @param {jQuery.Event} e - jQuery-wrapped Click event on a `$(document)` object.
        */
-      handleOutsideClick: function(e) {
-        var target = $(e.target);
-
+      handleOutsideClick: function() {
         if (Soho.env.os.name === 'ios') {
           $('head').triggerHandler('disable-zoom');
         }
 
-        // Don't close if we're focused on an element inside the wrapper
-        if ($.contains(this.inputWrapper[0], e.target) || target.is(this.element) || target.is(this.inputWrapper)) {
+        if (this.hasFocus()) {
           return;
-        }
-
-        // Don't close if a category is being selected from a category menu
-        if (this.button && this.button.length) {
-          var menu = this.button.data('popupmenu').menu;
-          if (menu.has(target).length) {
-            return;
-          }
         }
 
         $(document).off(this.outsideEventStr);
@@ -276,8 +264,8 @@
           return false;
         }
 
-        if (!menu.is('.is-open')) {
-          this.input.focus();
+        if (!this.inputWrapper.is('.is-open')) {
+          this.button.focus();
           return false;
         }
 
