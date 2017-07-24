@@ -291,6 +291,7 @@
 
       // Teardown - Remove added markup and events
       destroy: function() {
+        this.teardown();
         this.panel.data('modal').destroy();
         $.removeData(this.element[0], pluginName);
       }
