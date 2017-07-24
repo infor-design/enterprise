@@ -3,16 +3,41 @@
 ### Table of Contents
 
 -   [ToolbarSearchfield](#toolbarsearchfield)
+    -   [build](#build)
     -   [hasFocus](#hasfocus)
+    -   [handleFocus](#handlefocus)
+    -   [handleFakeBlur](#handlefakeblur)
+    -   [handleOutsideClick](#handleoutsideclick)
     -   [handleKeydown](#handlekeydown)
+    -   [handleOutsideKeydown](#handleoutsidekeydown)
+    -   [handlePopupBeforeOpen](#handlepopupbeforeopen)
+    -   [getFillSize](#getfillsize)
+    -   [adjustOnBreakpoint](#adjustonbreakpoint)
+    -   [expand](#expand)
+    -   [collapse](#collapse)
+    -   [updated](#updated)
+    -   [enable](#enable)
+    -   [disable](#disable)
+    -   [teardown](#teardown)
+    -   [destroy](#destroy)
+    -   [handleEvents](#handleevents)
 
 ## ToolbarSearchfield
 
-Depends on both a Toolbar control and Searchfield control to be present
+Searchfield Component Wrapper that extends normal Searchfield functionality and provides collapse/expand behavior.  For use inside of Toolbars.
 
 **Parameters**
 
--   `element` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+-   `element`  
+-   `clearable` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -   If "true", provides an "x" button on the right edge that clears the field
+-   `collapsible` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -   If "true", allows the field to expand/collapse on larger breakpoints when focused/blurred respectively
+-   `collapsibleOnMobile` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -   If true, overrides `collapsible` only on mobile settings.
+
+### build
+
+Creates and manages any markup the control needs to function.
+
+Returns **this** 
 
 ### hasFocus
 
@@ -20,10 +45,113 @@ Detects whether or not the Toolbar Searchfield has focus.
 
 Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
+### handleFocus
+
+Handles the focus of the searchfield, expanding it on time delay.
+
+### handleFakeBlur
+
+Triggers an artificial "blur" of the searchfield, resulting in a time-delayed collapse.
+
+### handleOutsideClick
+
+Event Handler for dealing with global (document) level clicks.
+
+**Parameters**
+
+-   `e` **jQuery.Event** jQuery-wrapped Click event on a `$(document)` object.
+
 ### handleKeydown
 
 Handles Keydown Events
 
 **Parameters**
 
--   `e`  
+-   `e` **jQuery.Event** jQuery-wrapped Keydown event.
+
+### handleOutsideKeydown
+
+Handles global (document) level keydown events that are established to help
+collapse/de-highlight searchfields on a timer.
+
+**Parameters**
+
+-   `e` **jQuery.Event** jQuery-wrapped Keydown event
+
+### handlePopupBeforeOpen
+
+Event Handler for the Popupmenu Component's custom `beforeopen` event.
+
+**Parameters**
+
+-   `e` **jQuery.Event** jQuery-wrapped `beforeopen` Event
+-   `menu`  
+
+### getFillSize
+
+Retrieves the distance between a left and right boundary.
+Used on controls like Lookup, Contextual Panel, etc. to fill the space remaining in a toolbar.
+
+**Parameters**
+
+-   `leftBoundary` **([Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** 
+-   `rightBoundary` **([Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** 
+
+Returns **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+
+### adjustOnBreakpoint
+
+Makes necessary adjustments to the DOM surrounding the Searchfield element to accommodate
+breakpoint changes.
+
+### expand
+
+Expands the Searchfield
+
+**Parameters**
+
+-   `noFocus`  
+
+### collapse
+
+Collapses the Searchfield
+
+### updated
+
+Used when the control has its settings or structural markup changed.  Rebuilds key parts of the control that
+otherwise wouldn't automatically update.
+
+Returns **this** 
+
+### enable
+
+Enables the Searchfield
+
+### disable
+
+Disables the Searchfield
+
+### teardown
+
+Tears down events, properties, etc. and resets the control to "factory" state
+
+Returns **this** 
+
+### destroy
+
+Removes the entire control from the DOM and from this element's internal data
+
+### handleEvents
+
+This component fires the following events.
+
+**Parameters**
+
+-   `mousedown` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when the searchfield is clicked (if enabled).
+-   `focusin` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when the searchfield is focused.
+-   `keydown` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when a key is pressed inside of the searchfield.
+-   `collapse` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when a `collapse` event is triggered externally on the searchfield.
+-   `beforeopen` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when a `beforeopen` event is triggered on the searchfield's optional categories menubutton.
+-   `navigate` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when a `navigate` event is triggered on the searchfield's parent toolbar.
+-   `keydown` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when a `keydown` event is triggered at the `document` level.
+-   `resize` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when a `resize` event is triggered at the `body` level.

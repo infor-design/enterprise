@@ -23,16 +23,20 @@
     // Settings and Options
     var pluginName = 'toolbarsearchfield',
         defaults = {
-          clearable: true,  // If "true", provides an "x" button on the right edge that clears the field
-          collapsible: true, // If "true", allows the field to expand/collapse on larger breakpoints when focused/blurred respectively
-          collapsibleOnMobile: true // If true, overrides `collapsible` only on mobile settings.
+          clearable: true,
+          collapsible: true,
+          collapsibleOnMobile: true
         },
         settings = $.extend({}, defaults, options);
 
     /**
-     * Depends on both a Toolbar control and Searchfield control to be present
-     * @constructor
-     * @param {Object} element
+     * Searchfield Component Wrapper that extends normal Searchfield functionality and provides collapse/expand behavior.  For use inside of Toolbars.
+     *
+     * @class ToolbarSearchfield
+     *
+     * @param {boolean} clearable  &nbsp;-&nbsp;  If "true", provides an "x" button on the right edge that clears the field
+     * @param {boolean} collapsible  &nbsp;-&nbsp;  If "true", allows the field to expand/collapse on larger breakpoints when focused/blurred respectively
+     * @param {boolean} collapsibleOnMobile &nbsp;-&nbsp;  If true, overrides `collapsible` only on mobile settings.
      */
     function ToolbarSearchfield(element) {
       this.settings = $.extend({}, settings);
@@ -45,13 +49,20 @@
     // Plugin Methods
     ToolbarSearchfield.prototype = {
 
+      /**
+       * @private
+       * @returns {this}
+       */
       init: function() {
         return this
           .build()
           .handleEvents();
       },
 
-      // Creates and manages any markup the control needs to function.
+      /**
+       * Creates and manages any markup the control needs to function.
+       * @returns {this}
+       */
       build: function() {
         // Used for managing events that are bound to $(document)
         if (!this.id) {
@@ -114,44 +125,6 @@
         return this;
       },
 
-      // Main entry point for setting up event handlers.
-      handleEvents: function() {
-        var self = this;
-
-        this.inputWrapper.on('mousedown.toolbarsearchfield', function() {
-          self.fastExpand = true;
-        }).on('focusin.toolbarsearchfield', function(e) {
-          self.handleFocus(e);
-        }).on('keydown.toolbarsearchfield', function(e) {
-          self.handleKeydown(e);
-        }).on('collapse.toolbarsearchfield', function() {
-          self.collapse();
-        });
-
-        if (this.button && this.button.length) {
-          this.button.on('beforeopen.toolbarsearchfield', function(e, menu) {
-            return self.handlePopupBeforeOpen(e, menu);
-          });
-        }
-
-        this.toolbarParent.on('navigate.toolbarsearchfield', function() {
-          if (!self.hasFocus()) {
-            self.collapse();
-          }
-        });
-
-        // Used to determine if the "Tab" key was involved in switching focus to the searchfield.
-        $(document).on('keydown.' + this.id, function(e) {
-          self.handleOutsideKeydown(e);
-        });
-
-        $('body').on('resize.' + this.id, function() {
-          self.adjustOnBreakpoint();
-        });
-
-        return this;
-      },
-
       /**
        * TODO: Deprecate in 4.4.0
        * @private
@@ -199,6 +172,9 @@
         return $.contains(this.inputWrapper[0], document.activeElement);
       },
 
+      /**
+       * Handles the focus of the searchfield, expanding it on time delay.
+       */
       handleFocus: function() {
         var self = this;
         clearTimeout(this.focusTimer);
@@ -217,22 +193,24 @@
         this.focusTimer = setTimeout(searchfieldActivationTimer, 0);
       },
 
+      /**
+       * Triggers an artificial "blur" of the searchfield, resulting in a time-delayed collapse.
+       */
       handleFakeBlur: function() {
         var self = this;
         clearTimeout(this.focusTimer);
 
         function searchfieldCollapseTimer() {
-          /*
-          if (self.hasFocus() && self.isActive()) {
-            self.focusElem = document.activeElement;
-          }
-          */
           self.collapse();
         }
 
         this.focusTimer = setTimeout(searchfieldCollapseTimer, 100);
       },
 
+      /**
+       * Event Handler for dealing with global (document) level clicks.
+       * @param {jQuery.Event} e - jQuery-wrapped Click event on a `$(document)` object.
+       */
       handleOutsideClick: function(e) {
         var target = $(e.target);
 
@@ -259,6 +237,7 @@
 
       /**
        * Handles Keydown Events
+       * @param {jQuery.Event} e - jQuery-wrapped Keydown event.
        */
       handleKeydown: function(e) {
         var key = e.which;
@@ -268,6 +247,11 @@
         }
       },
 
+      /**
+       * Handles global (document) level keydown events that are established to help
+       * collapse/de-highlight searchfields on a timer.
+       * @param {jQuery.Event} e - jQuery-wrapped Keydown event
+       */
       handleOutsideKeydown: function(e) {
         var key = e.which;
 
@@ -283,12 +267,16 @@
         }
       },
 
+      /**
+       * Event Handler for the Popupmenu Component's custom `beforeopen` event.
+       * @param {jQuery.Event} e - jQuery-wrapped `beforeopen` Event
+       */
       handlePopupBeforeOpen: function(e, menu) {
         if (!menu) {
           return false;
         }
 
-        if (!this.inputWrapper.is('.is-open')) {
+        if (!menu.is('.is-open')) {
           this.input.focus();
           return false;
         }
@@ -296,8 +284,13 @@
         return true;
       },
 
-      // Retrieves the distance between a left and right boundary.
-      // Used on controls like Lookup, Contextual Panel, etc. to fill the space remaining in a toolbar.
+      /**
+       * Retrieves the distance between a left and right boundary.
+       * Used on controls like Lookup, Contextual Panel, etc. to fill the space remaining in a toolbar.
+       * @param {Number|jQuery[]} leftBoundary
+       * @param {Number|jQuery[]} rightBoundary
+       * @returns {Number}
+       */
       getFillSize: function(leftBoundary, rightBoundary) {
         var leftBoundaryNum = 0,
           rightBoundaryNum = 0;
@@ -381,6 +374,9 @@
         return distance;
       },
 
+      /**
+       * @private
+       */
       setClosedWidth: function() {
         // If the searchfield category button exists, change the width of the
         // input field on the inside to provide space for the (variable) size of the currently-selected
@@ -396,6 +392,9 @@
         }
       },
 
+      /**
+       * @private
+       */
       setOpenWidth: function() {
         if (this.inputWrapper[0]) {
           this.inputWrapper[0].style.width = this.openWidth;
@@ -415,6 +414,9 @@
         }
       },
 
+      /**
+       * @private
+       */
       calculateOpenWidth: function() {
         var buttonset = this.element.parents('.toolbar').children('.buttonset'),
           nextElem = this.inputWrapper.next(),
@@ -462,6 +464,10 @@
         return this.inputWrapper.hasClass('active');
       },
 
+      /**
+       * Makes necessary adjustments to the DOM surrounding the Searchfield element to accommodate
+       * breakpoint changes.
+       */
       adjustOnBreakpoint: function() {
         // On smaller form-factor (tablet/phone)
         if (this.shouldBeFullWidth()) {
@@ -497,12 +503,13 @@
             this.collapse();
           }
         }
-
-        return;
       },
 
-      // Angular may not be able to get these elements on demand so we need to be
-      // able to call this during the expand method.
+      /**
+       * Angular may not be able to get these elements on demand so we need to be
+       * able to call this during the expand method.
+       * @private
+       */
       getToolbarElements: function() {
         this.buttonsetElem = this.toolbarParent.children('.buttonset')[0];
         if (this.toolbarParent.children('.title').length) {
@@ -510,6 +517,9 @@
         }
       },
 
+      /**
+       * Expands the Searchfield
+       */
       expand: function(noFocus) {
         var self = this,
           notFullWidth = !this.shouldBeFullWidth();
@@ -607,6 +617,9 @@
         this.animationTimer = setTimeout(expandCallback, 0);
       },
 
+      /**
+       * Collapses the Searchfield
+       */
       collapse: function() {
         var self = this,
           textMethod = 'removeClass';
@@ -780,25 +793,37 @@
         return this.shouldBeFullWidth();
       },
 
-      // Used when the control has its settings or structural markup changed.  Rebuilds key parts of the control that
-      // otherwise wouldn't automatically update.
+      /**
+       * Used when the control has its settings or structural markup changed.  Rebuilds key parts of the control that
+       * otherwise wouldn't automatically update.
+       * @returns {this}
+       */
       updated: function() {
         return this
           .teardown()
           .init();
       },
 
+      /**
+       * Enables the Searchfield
+       */
       enable: function() {
         this.inputWrapper.addClass('is-disabled');
         this.input.prop('disabled', true);
       },
 
+      /**
+       * Disables the Searchfield
+       */
       disable: function() {
         this.inputWrapper.removeClass('is-disabled');
         this.input.prop('disabled', false);
       },
 
-      // Tears down events, properties, etc. and resets the control to "factory" state
+      /**
+       * Tears down events, properties, etc. and resets the control to "factory" state
+       * @returns {this}
+       */
       teardown: function() {
         this.inputWrapper.off('mousedown.toolbarsearchfield focusin.toolbarsearchfield keydown.toolbarsearchfield collapse.toolbarsearchfield');
         this.inputWrapper.find('.icon').remove();
@@ -817,10 +842,65 @@
         return this;
       },
 
-      // Removes the entire control from the DOM and from this element's internal data
+      /**
+       * Removes the entire control from the DOM and from this element's internal data
+       */
       destroy: function() {
         this.teardown();
         $.removeData(this.element[0], pluginName);
+      },
+
+      /**
+       *  This component fires the following events.
+       *
+       * @fires ToolbarSearchfield#events
+       * @param {Object} mousedown  &nbsp;-&nbsp; Fires when the searchfield is clicked (if enabled).
+       * @param {Object} focusin  &nbsp;-&nbsp; Fires when the searchfield is focused.
+       * @param {Object} keydown  &nbsp;-&nbsp; Fires when a key is pressed inside of the searchfield.
+       * @param {Object} collapse  &nbsp;-&nbsp; Fires when a `collapse` event is triggered externally on the searchfield.
+       *
+       * @param {Object} beforeopen  &nbsp;-&nbsp; Fires when a `beforeopen` event is triggered on the searchfield's optional categories menubutton.
+       *
+       * @param {Object} navigate  &nbsp;-&nbsp; Fires when a `navigate` event is triggered on the searchfield's parent toolbar.
+       *
+       * @param {Object} keydown  &nbsp;-&nbsp; Fires when a `keydown` event is triggered at the `document` level.
+       * @param {Object} resize  &nbsp;-&nbsp; Fires when a `resize` event is triggered at the `body` level.
+       */
+      handleEvents: function() {
+        var self = this;
+
+        this.inputWrapper.on('mousedown.toolbarsearchfield', function() {
+          self.fastExpand = true;
+        }).on('focusin.toolbarsearchfield', function(e) {
+          self.handleFocus(e);
+        }).on('keydown.toolbarsearchfield', function(e) {
+          self.handleKeydown(e);
+        }).on('collapse.toolbarsearchfield', function() {
+          self.collapse();
+        });
+
+        if (this.button && this.button.length) {
+          this.button.on('beforeopen.toolbarsearchfield', function(e, menu) {
+            return self.handlePopupBeforeOpen(e, menu);
+          });
+        }
+
+        this.toolbarParent.on('navigate.toolbarsearchfield', function() {
+          if (!self.hasFocus()) {
+            self.collapse();
+          }
+        });
+
+        // Used to determine if the "Tab" key was involved in switching focus to the searchfield.
+        $(document).on('keydown.' + this.id, function(e) {
+          self.handleOutsideKeydown(e);
+        });
+
+        $('body').on('resize.' + this.id, function() {
+          self.adjustOnBreakpoint();
+        });
+
+        return this;
       }
     };
 
