@@ -5,6 +5,7 @@
 -   [SearchField](#searchfield)
     -   [init](#init)
     -   [hasCategories](#hascategories)
+    -   [hasFocus](#hasfocus)
     -   [setCategoryButtonText](#setcategorybuttontext)
     -   [isToolbarSearchfield](#istoolbarsearchfield)
     -   [getCategories](#getcategories)
@@ -36,6 +37,12 @@ Returns **this**
 ### hasCategories
 
 Reveals whether or not categories are active on this searchfield
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### hasFocus
+
+Detects whether or not the Searchfield has focus.
 
 Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 

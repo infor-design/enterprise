@@ -981,6 +981,7 @@
 
         if (!noFocus) {
           this.activeButton[0].focus();
+          this.element.triggerHandler('navigate', [this.activeButton]);
         }
       },
 

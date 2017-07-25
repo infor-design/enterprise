@@ -1230,6 +1230,10 @@
           isCancelled = false;
         }
 
+        if (!this.menu.hasClass('is-open')) {
+          return;
+        }
+
         var self = this,
           wrapper = this.menu.parent('.popupmenu-wrapper'),
           menu = this.menu.find('.popupmenu');
