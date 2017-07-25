@@ -1432,6 +1432,7 @@ $datagrid-short-row-height: 23px;
       @include font-size(12);
       @include no-select();
       color: $datagrid-header-color;
+      direction: ltr;
       display: table-cell;
       font-weight: bold;
       text-align: left;
@@ -2350,6 +2351,10 @@ html[dir='rtl'] {
     padding-right: 10px;
   }
 
+  .datagrid-header th .datagrid-header-text {
+    direction: rtl;
+  }
+
   //Contextual toolbar
   .datagrid-contextual-toolbar.contextual-toolbar {
     &.toolbar {
@@ -2564,7 +2569,7 @@ html[dir='rtl'] {
   }
 
   .listview-search {
-    width: 360px;
+    min-width: 360px;
   }
 
 }

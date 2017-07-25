@@ -676,7 +676,7 @@
         }, 300); // should match the length of time needed for the overlay to fade out
       },
 
-      // NOTE: Destroy method needs to function as a callback because it's
+      // NOTE: Destroy method needs to function as a callback to be cancellable
       destroy: function() {
         var self = this,
           canDestroy = this.element.trigger('beforedestroy');
