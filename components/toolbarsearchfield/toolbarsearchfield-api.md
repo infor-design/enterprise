@@ -12,6 +12,8 @@
     -   [handleOutsideKeydown](#handleoutsidekeydown)
     -   [handlePopupBeforeOpen](#handlepopupbeforeopen)
     -   [getFillSize](#getfillsize)
+    -   [isActive](#isactive)
+    -   [isOpen](#isopen)
     -   [adjustOnBreakpoint](#adjustonbreakpoint)
     -   [expand](#expand)
     -   [collapse](#collapse)
@@ -94,6 +96,18 @@ Used on controls like Lookup, Contextual Panel, etc. to fill the space remaining
 -   `rightBoundary` **([Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** 
 
 Returns **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+
+### isActive
+
+Detects whether or not one of the components inside of this searchfield is the document's "active" element.
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### isOpen
+
+Detects whether or not this searchfield instance is currently expanded.
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 ### adjustOnBreakpoint
 
