@@ -32,4 +32,9 @@
   .datagrid-container {
     height: 100%;
   }
+
+  .toolbar + .datagrid-container.has-toolbar {
+    height: calc(100% - 50px);
+  }
+
 }
