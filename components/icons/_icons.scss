@@ -493,13 +493,6 @@ svg.icon-dirty {
   transform: scaleX(-1);
 }
 
-// Safari fixes
-.is-safari {
-  .field-fileupload .icon-dirty {
-    margin-top: 9px;
-  }
-}
-
 //RTL Styles
 html[dir='rtl'] {
   .field {
