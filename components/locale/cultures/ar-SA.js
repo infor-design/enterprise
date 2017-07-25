@@ -285,6 +285,7 @@
     //numbers/symbols-numberSystem-latn
     numbers: {
       percentSign: '٪',
+      percentFormat: '#,##0 ٪',
       minusSign: '-',
       decimal: '٫',
       group: '٬'

@@ -725,7 +725,7 @@ var express = require('express'),
     }
 
     // Custom configurations for some test folders
-    if (directory.match(/tests\/base-tag/)) {
+    if (directory.match(/components\/base-tag/)) {
       opts.usebasehref = true;
     }
     if (directory.match(/tests\/composite-form/)) {
