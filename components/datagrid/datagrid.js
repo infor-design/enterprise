@@ -2473,7 +2473,7 @@ $.fn.datagrid = function(options) {
     // Create draggable columns
     createDraggableColumns: function () {
       var self = this,
-        headers = self.headerNodes().not('[data-column-id="selectionCheckbox"]').not('[data-reorder="false"]'),
+        headers = self.headerNodes().not('[data-column-id="selectionCheckbox"]'),
         showTarget = $('.drag-target-arrows', self.element);
 
       if (!showTarget.length) {
@@ -2481,7 +2481,8 @@ $.fn.datagrid = function(options) {
         showTarget = $('.drag-target-arrows', self.element);
       }
 
-      headers.prepend('<span class="is-draggable-target"></span><span class="handle">&#8286;</span>');
+      headers.not('[data-reorder="false"]').prepend('</span><span class="handle">&#8286;</span>');
+      headers.prepend('<span class="is-draggable-target"></span>');
       headers.last().append('<span class="is-draggable-target last"></span>');
       self.element.addClass('has-draggable-columns');
 
@@ -2567,7 +2568,6 @@ $.fn.datagrid = function(options) {
               if (self.draggableStatus.endIndex !== -1) {
                 if (self.draggableStatus.startIndex !== self.draggableStatus.endIndex) {
                   target = self.draggableColumnTargets[index];
-
 
                   //Swap columns
                   for (i=0, l=self.settings.columns.length; i < l; i++) {
