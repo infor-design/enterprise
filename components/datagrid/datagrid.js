@@ -4776,17 +4776,23 @@ $.fn.datagrid = function(options) {
         toolbar.toolbar(opts);
       }
 
-      var thisSearch = toolbar.find('.searchfield'),
-        xIcon = thisSearch.parent().find('.close.icon');
-      thisSearch.off('keypress.datagrid').on('keypress.datagrid', function (e) {
-        if (e.keyCode === 13 || e.type==='change') {
-          e.preventDefault();
+      if (settings.toolbar && settings.toolbar.keywordFilter) {
+
+        var thisSearch = toolbar.find('.searchfield'),
+          xIcon = thisSearch.parent().find('.close.icon');
+
+        thisSearch.off('keypress.datagrid').on('keypress.datagrid', function (e) {
+          if (e.keyCode === 13 || e.type==='change') {
+            e.preventDefault();
+            self.keywordSearch(thisSearch.val());
+          }
+        });
+
+        xIcon.off('click.datagrid').on('click.datagrid', function () {
           self.keywordSearch(thisSearch.val());
-        }
-      });
-      xIcon.off('click.datagrid').on('click.datagrid', function () {
-        self.keywordSearch(thisSearch.val());
-      });
+        });
+
+      }
 
       this.toolbar = toolbar;
       this.element.addClass('has-toolbar');
