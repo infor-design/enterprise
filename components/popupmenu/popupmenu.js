@@ -353,6 +353,11 @@
         function contextMenuHandler(e, isLeftClick) {
           e.preventDefault();
 
+          if (self.keydownThenClick) {
+            self.keydownThenClick = undefined;
+            return;
+          }
+
           var btn = isLeftClick === true ? 0 : 2;
           if (e.button > btn || self.element.is(':disabled')) {
             return;
@@ -388,6 +393,7 @@
               case 13:
               case 32:
                 if (self.settings.trigger === 'click') {
+                  self.keydownThenClick = true;
                   self.open(e);
                 }
                 break;
@@ -437,140 +443,142 @@
           });
         }
 
-        $(document).off('keydown.popupmenu.' + this.id).on('keydown.popupmenu.' + this.id, function (e) {
-          var key = e.which,
-            focus;
+        setTimeout(function() {
+          $(document).off('keydown.popupmenu.' + this.id).on('keydown.popupmenu.' + this.id, function (e) {
+            var key = e.which,
+              focus;
 
-          //Close on escape
-          if (key === 27) {
-            e.stopPropagation();
-            e.stopImmediatePropagation();
-            self.close(true);
-            return false;
-          }
-
-          //Close on tab
-          if (key === 9) {
-            e.stopPropagation();
-            self.close(true);
-          }
-
-          //Select Checkboxes
-          if (key === 32) {
-            e.stopPropagation();
-
-            var target = $(e.target),
-              checkbox = target.find('input:checkbox');
-            if (checkbox.length) {
-              checkbox.trigger('click');
-              return;
+            //Close on escape
+            if (key === 27) {
+              e.stopPropagation();
+              e.stopImmediatePropagation();
+              self.close(true);
+              return false;
             }
 
-            var a = $();
+            //Close on tab
+            if (key === 9) {
+              e.stopPropagation();
+              self.close(true);
+            }
 
-            // Return here and let Tabs control handle the spacebar
-            if (target.is('.tab') || target.parent().is('.tab') || target.is('.tab-more')) {
-              // Spacebar acts like Enter if there aren't any checkboxes (trigger links, etc)
+            //Select Checkboxes
+            if (key === 32) {
+              e.stopPropagation();
+
+              var target = $(e.target),
+                checkbox = target.find('input:checkbox');
+              if (checkbox.length) {
+                checkbox.trigger('click');
+                return;
+              }
+
+              var a = $();
+
+              // Return here and let Tabs control handle the spacebar
+              if (target.is('.tab') || target.parent().is('.tab') || target.is('.tab-more')) {
+                // Spacebar acts like Enter if there aren't any checkboxes (trigger links, etc)
+                e.preventDefault();
+                return;
+              }
+
+              if (target.is('li')) {
+                a = target.children('a');
+              }
+
+              if (target.is('a')) {
+                a = target;
+              }
+
+              if (a.length) {
+                a.trigger('click');
+                return;
+              }
+            }
+
+            focus = self.menu.find(':focus');
+
+            var isPicker = (self.settings.menu === 'colorpicker-menu'),
+              isAutocomplete = self.element.is('.autocomplete');
+
+            // Close Submenu
+            if (key === 37 && !isAutocomplete) {
+              e.stopPropagation();
               e.preventDefault();
-              return;
-            }
 
-            if (target.is('li')) {
-              a = target.children('a');
-            }
-
-            if (target.is('a')) {
-              a = target;
-            }
-
-            if (a.length) {
-              a.trigger('click');
-              return;
-            }
-          }
-
-          focus = self.menu.find(':focus');
-
-          var isPicker = (self.settings.menu === 'colorpicker-menu'),
-            isAutocomplete = self.element.is('.autocomplete');
-
-          // Close Submenu
-          if (key === 37 && !isAutocomplete) {
-            e.stopPropagation();
-            e.preventDefault();
-
-            if (focus.closest('.popupmenu')[0] !== self.menu[0] && focus.closest('.popupmenu').length > 0) {
-              focus.closest('.popupmenu').removeClass('is-open').parent().parent().removeClass('is-submenu-open');
-              self.highlight(focus.closest('.popupmenu').parent().prev('a'));
-            }
-          }
-
-          //Up on Up
-          if ((!isPicker && key === 38) || (isPicker && key === 37)) {
-             e.stopPropagation();
-             e.preventDefault();
-
-            //Go back to Top on the last one
-            if (focus.parent().prevAll(excludes).length === 0) {
-              if (focus.length === 0) {
-                self.highlight(self.menu.children(excludes).last().find('a'));
-              } else {
-                self.highlight(focus.closest('.popupmenu').children(excludes).last().find('a'));
+              if (focus.closest('.popupmenu')[0] !== self.menu[0] && focus.closest('.popupmenu').length > 0) {
+                focus.closest('.popupmenu').removeClass('is-open').parent().parent().removeClass('is-submenu-open');
+                self.highlight(focus.closest('.popupmenu').parent().prev('a'));
               }
-              return;
             }
-            self.highlight(focus.parent().prevAll(excludes).first().find('a'));
-          }
 
-          //Up a square
-          if (isPicker && key === 38) {
-            e.stopPropagation();
-            e.preventDefault();
+            //Up on Up
+            if ((!isPicker && key === 38) || (isPicker && key === 37)) {
+               e.stopPropagation();
+               e.preventDefault();
 
-            if (focus.parent().prevAll(excludes).length > 0) {
-              self.highlight($(focus.parent().prevAll(excludes)[9]).find('a'));
-            }
-          }
-
-          //Right Open Submenu
-          if (key === 39  && !isAutocomplete) {
-            e.stopPropagation();
-            e.preventDefault();
-
-            if (focus.parent().hasClass('submenu')) {
-              self.showSubmenu(focus.parent());
-              self.highlight(focus.parent().find('.popupmenu a:first'));
-            }
-          }
-
-          //Down
-          if ((!isPicker && key === 40) || (isPicker && key === 39 && !isAutocomplete)) {
-            e.stopPropagation();
-            e.preventDefault();
-
-            //Go back to Top on the last one
-            if (focus.parent().nextAll(excludes).length === 0) {
-              if (focus.length === 0) {
-                self.highlight(self.menu.children(excludes).first().find('a'));
-              } else {
-                self.highlight(focus.closest('.popupmenu').children(excludes).first().find('a'));
+              //Go back to Top on the last one
+              if (focus.parent().prevAll(excludes).length === 0) {
+                if (focus.length === 0) {
+                  self.highlight(self.menu.children(excludes).last().find('a'));
+                } else {
+                  self.highlight(focus.closest('.popupmenu').children(excludes).last().find('a'));
+                }
+                return;
               }
-              return;
+              self.highlight(focus.parent().prevAll(excludes).first().find('a'));
             }
-            self.highlight(focus.parent().nextAll(excludes).first().find('a'));
-          }
 
-          //Down a square
-          if ((isPicker && key === 40)) {
-            e.stopPropagation();
-            e.preventDefault();
+            //Up a square
+            if (isPicker && key === 38) {
+              e.stopPropagation();
+              e.preventDefault();
 
-            if (focus.parent().nextAll(excludes).length > 0) {
-              self.highlight($(focus.parent().nextAll(excludes)[9]).find('a'));
+              if (focus.parent().prevAll(excludes).length > 0) {
+                self.highlight($(focus.parent().prevAll(excludes)[9]).find('a'));
+              }
             }
-          }
 
-        });
+            //Right Open Submenu
+            if (key === 39  && !isAutocomplete) {
+              e.stopPropagation();
+              e.preventDefault();
+
+              if (focus.parent().hasClass('submenu')) {
+                self.showSubmenu(focus.parent());
+                self.highlight(focus.parent().find('.popupmenu a:first'));
+              }
+            }
+
+            //Down
+            if ((!isPicker && key === 40) || (isPicker && key === 39 && !isAutocomplete)) {
+              e.stopPropagation();
+              e.preventDefault();
+
+              //Go back to Top on the last one
+              if (focus.parent().nextAll(excludes).length === 0) {
+                if (focus.length === 0) {
+                  self.highlight(self.menu.children(excludes).first().find('a'));
+                } else {
+                  self.highlight(focus.closest('.popupmenu').children(excludes).first().find('a'));
+                }
+                return;
+              }
+              self.highlight(focus.parent().nextAll(excludes).first().find('a'));
+            }
+
+            //Down a square
+            if ((isPicker && key === 40)) {
+              e.stopPropagation();
+              e.preventDefault();
+
+              if (focus.parent().nextAll(excludes).length > 0) {
+                self.highlight($(focus.parent().nextAll(excludes)[9]).find('a'));
+              }
+            }
+
+          });
+        }, 1);
       },
 
       /**
