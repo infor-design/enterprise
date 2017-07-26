@@ -353,6 +353,11 @@
         function contextMenuHandler(e, isLeftClick) {
           e.preventDefault();
 
+          if (self.keydownThenClick) {
+            self.keydownThenClick = undefined;
+            return;
+          }
+
           var btn = isLeftClick === true ? 0 : 2;
           if (e.button > btn || self.element.is(':disabled')) {
             return;
@@ -388,6 +393,7 @@
               case 13:
               case 32:
                 if (self.settings.trigger === 'click') {
+                  self.keydownThenClick = true;
                   self.open(e);
                 }
                 break;
