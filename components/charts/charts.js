@@ -449,7 +449,7 @@ window.Chart = function(container) {
       .orient('middle');
 
     if (isViewSmall) {
-      xAxis.ticks(textWidth < 100 ? 5 : 3);
+      xAxis.ticks(textWidth < 100 ? 5 : 2);
     }
 
     if (isStacked && isNormalized) {
@@ -458,10 +458,10 @@ window.Chart = function(container) {
 
     if (settings.useLogScale) {
       xAxis.ticks(10, ',.1s');
+
       if (settings.showLines === false) {
         xAxis.tickSize(0);
       }
-
     }
 
     yAxis = d3.svg.axis()
@@ -676,6 +676,25 @@ window.Chart = function(container) {
     if (charts.isRTL && charts.isIE) {
       svg.selectAll('text').attr('transform', 'scale(-1, 1)');
       svg.selectAll('.y.axis text').style('text-anchor', 'start');
+    }
+
+    if (isViewSmall && settings.useLogScale) {
+      var ticks = d3.selectAll('.x .tick text'),
+        foundMid = false;
+
+      //At small breakpoint hide the last ones
+      ticks.attr('class', function(d, i){
+          var middleTick = Math.round(ticks.size()/2);
+
+          if (i >= middleTick && !foundMid && d.toString().startsWith('1')) {
+            foundMid =  true;
+            middleTick = d;
+          }
+
+          if (i !==0 && i !== ticks.size() -1 && (settings.useLogScale ? d !== middleTick : i !== middleTick )) {
+            d3.select(this).remove();
+          }
+      });
     }
 
     //Animate the Bars In
