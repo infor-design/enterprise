@@ -156,10 +156,14 @@
           this.setCategoryButtonText();
         }
 
-        // Swap icon position to in-front if we have an "alternate" class.
+        // Swap icon position to in-front if we have "context/has-categories" CSS class.
         if (this.wrapper.hasClass('context') || this.wrapper.hasClass('has-categories') ) {
           icon.insertBefore(this.element);
         }
+
+        // Hoist the 'alternate' CSS class to the wrapper, if applicable
+        var isAlternate = this.element.hasClass('alternate');
+        this.wrapper[isAlternate ? 'addClass' : 'removeClass']('alternate');
 
         if (this.settings.clearable) {
           this.element.clearable();
