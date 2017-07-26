@@ -1,0 +1,34 @@
+<div class="row">
+  <div class="twelve columns">
+    <br />
+    <h3>Grid Example: Grouping</h3>
+    <p>
+    Shows using the Datagrid Group By API object, all results in the console (for browsers that support console.table)
+    </p>
+  </div>
+</div>
+
+<script>
+
+  var data = [
+    {Phase: 'Phase 1', Step: 'Step 1', Task: 'Task 1', Value: '5'},
+    {Phase: 'Phase 1', Step: 'Step 1', Task: 'Task 2', Value: '10'},
+    {Phase: 'Phase 1', Step: 'Step 2', Task: 'Task 1', Value: '15'},
+    {Phase: 'Phase 1', Step: 'Step 2', Task: 'Task 2', Value: '20'},
+    {Phase: 'Phase 2', Step: 'Step 1', Task: 'Task 1', Value: '25'},
+    {Phase: 'Phase 2', Step: 'Step 1', Task: 'Task 2', Value: '30'},
+    {Phase: 'Phase 2', Step: 'Step 2', Task: 'Task 1', Value: '35'},
+    {Phase: 'Phase 2', Step: 'Step 2', Task: 'Task 2', Value: '40'}
+  ];
+
+//  console.table(GroupBy.sum(data, ['Phase', 'Step'], 'Value'));
+//  console.table(GroupBy.list(data, ['Phase'], 'Task'));
+//  console.table(GroupBy.list(data, ['Phase', 'Step'], 'Task'));
+  console.table(GroupBy.max(data, ['Phase'], 'Value'));
+  console.table(GroupBy.max(data, ['Phase', 'Step'], 'Value'));
+  console.table(GroupBy.list(data, ['Phase'], {list: ['Task']}));
+  console.table(GroupBy.list(data, ['Phase', 'Step'], {list: ['Task']}));
+  console.table(GroupBy(data, ['Phase']));
+  console.table(GroupBy(data, ['Phase', 'Step']));
+
+</script>
