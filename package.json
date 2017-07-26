@@ -16,7 +16,7 @@
   "scripts": {
     "start": "node server.js",
     "stop": "./bin/stop.sh",
-    "jshint": "jshint gruntfile.js app.js js/*.js components/**/*.js",
+    "jshint": "jshint gruntfile.js app.js components/**/*.js",
     "eslint": "eslint src",
     "build": "grunt",
     "install-test-deps": "npm install selenium-standalone@latest && npm run install-drivers",

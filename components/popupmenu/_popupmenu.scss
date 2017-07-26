@@ -391,6 +391,20 @@
         }
       }
     }
+
+    &.is-multiselectable {
+      li {
+        &::before,
+        &.is-focused::before,
+        &.is-checked::before {
+          top: 5px;
+        }
+
+        &.is-checked::after {
+          top: 2px;
+        }
+      }
+    }
   }
 
   &.is-multiselectable {
@@ -408,21 +422,21 @@
         @include checkbox-unchecked-before-style;
         margin-left: 7px;
         margin-top: 0;
-        top: 5px;
+        top: 8px;
       }
 
       &.is-checked::before {
         @include checkbox-checked-before-style;
         margin-left: 7px;
         margin-top: 0;
-        top: 5px;
+        top: 8px;
       }
 
       &.is-checked::after {
         @include checkbox-checked-after-style;
         left: 12px;
         margin-top: 4px;
-        top: 2px;
+        top: 5px;
       }
 
       &.is-disabled {

@@ -351,6 +351,10 @@
         }
 
         var distance = rightBoundaryNum - leftBoundaryNum;
+
+        // TODO: Remove this once we figure out how to definitively fix the searchfield sizing.
+        // Toolbar Searchfield needs a way to demand that the parent toolbar increase the size of its buttonset
+        // and decrease the size of its title under this condition -- currently there is no way.
         if (distance <= TOOLBARSEARCHFIELD_EXPAND_SIZE) {
           return TOOLBARSEARCHFIELD_EXPAND_SIZE;
         }
@@ -437,19 +441,31 @@
         // +10 on the left boundary reduces the likelyhood that the toolbar pushes other elements
         // into the spillover menu whenever the searchfield opens.
         var leftBoundary = buttonset.offset().left + 10;
-        var rightBoundary = this.inputWrapper.next();
+        var rightBoundary = nextElem;
 
         // If the search input sits alone, just use the other side of the buttonset to measure
         if (!rightBoundary.length) {
-          rightBoundary = buttonset.offset().left + buttonset.outerWidth(true);
+          rightBoundary = buttonset.offset().left + 10 + buttonset.outerWidth(true);
         }
 
         width = this.getFillSize(leftBoundary, rightBoundary);
         this.openWidth = width + 'px';
       },
 
+      /**
+       * Detects whether or not one of the components inside of this searchfield is the document's "active" element.
+       * @returns {boolean}
+       */
       isActive: function() {
         return this.inputWrapper.hasClass('active');
+      },
+
+      /**
+       * Detects whether or not this searchfield instance is currently expanded.
+       * @returns {boolean}
+       */
+      isOpen: function() {
+        return this.inputWrapper.hasClass('is-open');
       },
 
       /**
@@ -534,9 +550,12 @@
         }
 
         function expandCallback() {
-          self.inputWrapper.addClass('is-open');
-          self.calculateOpenWidth();
-          self.setOpenWidth();
+
+          if (!self.isOpen()) {
+            self.inputWrapper.addClass('is-open');
+            self.calculateOpenWidth();
+            self.setOpenWidth();
+          }
 
           var iOS = /(iPad|iPhone|iPod)/g.test( navigator.userAgent );
           if (!noFocus || iOS) {
