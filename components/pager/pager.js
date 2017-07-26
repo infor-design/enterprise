@@ -603,7 +603,7 @@
             return;
           }
 
-          if (self.settings.source) {
+          if (self.settings.source && op) {
             var response;
 
             response = function(data, pagingInfo) {

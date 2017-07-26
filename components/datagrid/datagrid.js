@@ -2038,7 +2038,7 @@ $.fn.datagrid = function(options) {
               filterMarkup += '</select>';
 
               break;
-			case 'time':
+			      case 'time':
               filterMarkup += '<input ' + (col.filterDisabled ? ' disabled' : '') + ' type="text" class="timepicker" id="'+ filterId +'"/>';
               break;
             default:
@@ -2052,7 +2052,7 @@ $.fn.datagrid = function(options) {
           header.find('select.dropdown').dropdown(col.editorOptions);
           header.find('.multiselect').multiselect(col.editorOptions);
           header.find('[data-mask]').mask(col.maskOptions);
-		  header.find('.timepicker').timepicker(col.editorOptions ? col.editorOptions : {timeFormat: col.timeFormat});
+		      header.find('.timepicker').timepicker(col.editorOptions ? col.editorOptions : {timeFormat: col.timeFormat});
         }
       }
 
@@ -2064,7 +2064,7 @@ $.fn.datagrid = function(options) {
         self.applyFilter();
       });
 
-      this.headerRow.on('keydown.datagrid', '.datagrid-filter-wrapper input', function (e) {
+      this.headerRow.off('keydown.datagrid').on('keydown.datagrid', '.datagrid-filter-wrapper input', function (e) {
         e.stopPropagation();
 
         if (e.which === 13) {
@@ -2072,7 +2072,7 @@ $.fn.datagrid = function(options) {
           $(this).trigger('change');
         }
 
-      }).on('change.datagrid', '.datagrid-filter-wrapper input', function () {
+      }).off('change.datagrid').on('change.datagrid', '.datagrid-filter-wrapper input', function () {
         self.applyFilter();
       });
 

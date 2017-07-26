@@ -79,6 +79,23 @@
           paging: true,
           pagesize: 10,
           pagesizes: [5, 10, 15],
+          source: function(req, response) {
+            var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
+
+            if (req.sortId) {
+              url += '&sortId=' + req.sortId + '&sortAsc=' + req.sortAsc;
+            }
+
+            if (req.filterExpr && req.filterExpr[0]) {
+              url += '&filter=' + req.filterExpr[0].value;
+            }
+
+            //Get Page Based on info in Req, return results into response;
+            $.getJSON(url, function(res) {
+              req.total = res.total;
+              response(res.data, req);
+            });
+          },
           filterable: true,
           toolbar: {personalize: true, filterRow: true, results: true, resetLayout: true}
         }).on('settingschanged', function (e, args) {
