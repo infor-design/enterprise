@@ -449,7 +449,7 @@ window.Chart = function(container) {
       .orient('middle');
 
     if (isViewSmall) {
-      xAxis.ticks(textWidth < 100 ? 5 : 2);
+      xAxis.ticks(textWidth < 100 ? 5 : 3);
     }
 
     if (isStacked && isNormalized) {
