@@ -877,6 +877,8 @@
           }
           self.ajaxContent = $(content);
           self.menu.append(self.ajaxContent);
+
+          self.wrapper.removeAttr('style');
           self.markupItems();
 
           if (doOpen) {
