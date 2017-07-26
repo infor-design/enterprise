@@ -2920,7 +2920,7 @@ $.fn.datagrid = function(options) {
 
         //Update Selected Rows Across Page
         if (self.settings.paging && self.settings.source) {
-          self._selectedRows = [];
+          self.updateSelected();
           self.syncSelectedUI();
         }
 
@@ -3082,9 +3082,6 @@ $.fn.datagrid = function(options) {
       }
 
       var ariaRowindex = ((dataRowIdx + 1) + (self.settings.source  ? ((activePage-1) * pagesize) : 0));
-      if (this.settings.indeterminate) {
-        ariaRowindex = (dataRowIdx + 1);
-      }
 
       isEven = (this.recordCount % 2 === 0);
 
@@ -6757,19 +6754,24 @@ $.fn.datagrid = function(options) {
 
     // Update Selection
     updateSelected: function() {
-      var self = this;
+      var self = this,
+        s = self.settings;
 
       $('tr[role="row"]', self.tableBody).each(function() {
         var row = $(this),
           newIdx = self.dataRowIndex(row),
           checkbox = self.cellNode(row, self.columnIdxById('selectionCheckbox'));
 
+        if (s.paging && s.source && self.pager) {
+          newIdx = (newIdx - ((self.pager.activePage - 1) * s.pagesize));
+        }
+
         $.each(self._selectedRows, function(index, val) {
-          if (self.isEquals(val.data, self.settings.dataset[newIdx])) {
+          if (self.isEquals(val.data, s.dataset[newIdx])) {
             val.idx = newIdx;
             val.elem = row;
             checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox').addClass('is-checked').attr('aria-checked', 'true');
-            row.addClass('is-selected' + (self.settings.selectable === 'mixed' ? ' hide-selected-color' : '')).attr('aria-selected', 'true').find('td').attr('aria-selected', 'true');
+            row.addClass('is-selected' + (s.selectable === 'mixed' ? ' hide-selected-color' : '')).attr('aria-selected', 'true').find('td').attr('aria-selected', 'true');
             return false;
           }
         });
