@@ -211,10 +211,6 @@
        * Event Handler for dealing with global (document) level clicks.
        */
       handleOutsideClick: function() {
-        if (Soho.env.os.name === 'ios') {
-          $('head').triggerHandler('disable-zoom');
-        }
-
         if (this.hasFocus()) {
           return;
         }
@@ -656,13 +652,14 @@
 
           self.isExpanded = false;
 
+          if (Soho.env.os.name === 'ios') {
+            $('head').triggerHandler('enable-zoom');
+          }
+
           // TODO: Make this process more solid, without FOUC/jumpiness and better focus handling (EPC)
           // See http://jira/browse/SOHO-6347
           self.inputWrapper.one($.fn.transitionEndName(), function() {
             self.toolbarParent.triggerHandler('recalculate-buttons');
-            if (Soho.env.os.name === 'ios') {
-              $('head').triggerHandler('enable-zoom');
-            }
           });
         }
 
@@ -837,6 +834,7 @@
         $(document).off(this.outsideEventStr);
 
         this.toolbarParent.off('navigate.toolbarsearchfield');
+        this.element.off('blur.toolbarsearchfield');
 
         if (this.xButton && this.xButton.length) {
           this.xButton.remove();
@@ -906,6 +904,12 @@
         $('body').on('resize.' + this.id, function() {
           self.adjustOnBreakpoint();
         });
+
+        if (Soho.env.os.name === 'ios') {
+          this.element.on('blur.toolbarsearchfield', function() {
+            $('head').triggerHandler('disable-zoom');
+          });
+        }
 
         return this;
       }
