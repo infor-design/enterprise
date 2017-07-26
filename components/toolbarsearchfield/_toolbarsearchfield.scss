@@ -37,10 +37,6 @@ $toolbarsearchfield-category-empty-width: 54px;
     text-overflow: ellipsis;
     width: 100%;
 
-    &.alternate {
-      background-color: $panel-bg-color !important;
-    }
-
     &::-webkit-input-placeholder {
       @include font-size(12);
       color: $searchfield-text-color;
@@ -146,6 +142,19 @@ $toolbarsearchfield-category-empty-width: 54px;
       }
     }
 
+    .btn {
+      background-color: rgba($searchfield-bg-color, 1);
+      border-bottom-color: rgba($searchfield-border-color, 1);
+    }
+
+    &.alternate {
+      .searchfield,
+      .btn {
+        background-color: rgba($searchfield-alt-bg-color, 1);
+        border-bottom-color: rgba($searchfield-alt-border-color, 1);
+      }
+    }
+
     .icon {
       &:not(.close) {
         left: 8px;
@@ -156,11 +165,6 @@ $toolbarsearchfield-category-empty-width: 54px;
         right: 5px;
         @include transition(fill 300ms cubic-bezier(.17, .04, .03, .94));
       }
-    }
-
-    .btn {
-      background-color: rgba($searchfield-bg-color, 1);
-      border-bottom-color: rgba($searchfield-border-color, 1);
     }
 
     // Once the field is open, color and font size change to match other Searchfields.

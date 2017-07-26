@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Toolbar Searchfield Example: Alternate Style</h2>
+    <p><a class="hyperlink" href="https://jira.infor.com/browse/SOHO-6442" target="_blank">Related JIRA Ticket</a>.</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="toolbar no-actions-button left-aligned">
+      <div class="title">
+        Look over there
+      </div>
+      <div class="buttonset">
+
+        <!-- Begin Toolbar Searchfield Component Part -->
+        <div class="searchfield-wrapper toolbar-searchfield-wrapper">
+          <label for="example-toolbar-searchfield">Alternate Example</label>
+          <input id="example-toolbar-searchfield" class="searchfield alternate" placeholder="Search..." data-init="false"/>
+        </div>
+        <!-- End Toolbar Searchfield Component Part -->
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('#example-toolbar-searchfield').toolbarsearchfield({
+    categories: [
+      {name: 'Animals', id: 'animals', value: 'an', checked: true},
+      {name: 'Baby', id: 'baby', value: 'ba', checked: false},
+      {name: 'Clothing', id: 'clothing', value: 'cl', checked: true},
+      {name: 'Images', id: 'images', value: 'im', checked: true},
+      {name: 'People', id: 'people', value: 'pe', checked: false},
+      {name: 'Places', id: 'places', value: 'pl', checked: false}
+    ],
+    categoryMultiselect: true
+  });
+</script>
