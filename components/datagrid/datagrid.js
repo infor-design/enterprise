@@ -1773,10 +1773,6 @@ $.fn.datagrid = function(options) {
     loadData: function (dataset, pagerInfo, isResponse) {
       this.settings.dataset = dataset;
 
-      if (this.pager) {
-        this.pager.settings.dataset = dataset;
-      }
-
       if (!pagerInfo) {
         pagerInfo = {};
       }
@@ -1786,6 +1782,11 @@ $.fn.datagrid = function(options) {
         pagerInfo.pagesize = this.settings.pagesize;
         pagerInfo.total = -1;
         pagerInfo.type = 'initial';
+      }
+
+      if (this.pager) {
+        this.pager.activePage = pagerInfo.activePage;
+        this.pager.settings.dataset = dataset;
       }
 
       //Update Paging and Clear Rows
@@ -4842,6 +4843,10 @@ $.fn.datagrid = function(options) {
       this.renderRows();
       this.resetPager('searched');
       this.setSearchActivePage();
+
+      if (!this.settings.paging) {
+        this.highlightSearchRows(term);
+      }
     },
 
     // Set search active page

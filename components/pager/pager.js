@@ -607,6 +607,11 @@
             var response;
 
             response = function(data, pagingInfo) {
+
+              if (pagingInfo && pagingInfo.activePage) {
+                self.activePage = pagingInfo.activePage;
+              }
+
               //Render Data
               pagingInfo.preserveSelected = true;
 
