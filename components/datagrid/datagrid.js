@@ -1773,10 +1773,6 @@ $.fn.datagrid = function(options) {
     loadData: function (dataset, pagerInfo, isResponse) {
       this.settings.dataset = dataset;
 
-      if (this.pager) {
-        this.pager.settings.dataset = dataset;
-      }
-
       if (!pagerInfo) {
         pagerInfo = {};
       }
@@ -1786,6 +1782,11 @@ $.fn.datagrid = function(options) {
         pagerInfo.pagesize = this.settings.pagesize;
         pagerInfo.total = -1;
         pagerInfo.type = 'initial';
+      }
+
+      if (this.pager) {
+        this.pager.activePage = pagerInfo.activePage;
+        this.pager.settings.dataset = dataset;
       }
 
       //Update Paging and Clear Rows

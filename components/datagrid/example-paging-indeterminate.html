@@ -44,10 +44,10 @@
 
           //Load a specific page and set the page - simulating a page state
           //Then we call load data with that.
-          // if (req.type === 'initial') {
-          //   //req.activePage = 2;
-          //   return; //Or can ignore and call loadData
-          // }
+          if (req.type === 'initial') {
+            //req.activePage = 2;
+            return; //Or can ignore and call loadData
+          }
 
           var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
 
@@ -69,12 +69,12 @@
         toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true}
       });
 
-      // // Option 2: Bi-Pass Source Function
-      // var url = '{{basepath}}api/compressors?pageNum='+ 2 +'&pageSize='+ pageSize;
-      // $.getJSON(url, function(res) {
-      //   var pageInfo = {total: res.total, activePage: 2, pagesize: pageSize, firstPage: false, lastPage: false};
-      //   grid.data('datagrid').loadData(res.data, pageInfo);
-      // });
+      // Option 2: Bi-Pass Source Function
+      var url = '{{basepath}}api/compressors?pageNum='+ 2 +'&pageSize='+ pageSize;
+      $.getJSON(url, function(res) {
+        var pageInfo = {total: res.total, activePage: 2, pagesize: pageSize, firstPage: false, lastPage: false};
+        grid.data('datagrid').loadData(res.data, pageInfo);
+      });
 
   });
 </script>
