@@ -4842,6 +4842,10 @@ $.fn.datagrid = function(options) {
       this.renderRows();
       this.resetPager('searched');
       this.setSearchActivePage();
+
+      if (!this.settings.paging) {
+        this.highlightSearchRows(term);
+      }
     },
 
     // Set search active page
