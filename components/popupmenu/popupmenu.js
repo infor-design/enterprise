@@ -746,9 +746,11 @@
         var opts = $.extend({}, this.settings.placementOpts),
           strategies = ['flip'];
 
+        /*
         if (!target.is('.autocomplete, .searchfield')) {
           strategies.push('nudge');
         }
+        */
         strategies.push('shrink-y');
 
         // If right-click or immediate (with an incoming event object), use coordinates from the event
@@ -830,6 +832,13 @@
 
         if (target.parents('.masthead').length > 0) {
           shiftDown();
+        }
+
+        // If inside a "page-container" element, constrain the popupmenu to that element
+        // (fixes SOHO-6223)
+        var container = this.element.parents('.page-container');
+        if (container.length) {
+          opts.container = container.first();
         }
 
         //=======================================================
