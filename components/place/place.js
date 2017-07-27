@@ -399,6 +399,47 @@
         return placementObj;
       },
 
+      /**
+       * Detects for elements with fixed positioning, or an absolutely-positioned containment.
+       * If either condition is true, this placement should not account for container scrolling.
+       * @private
+       */
+      _accountForScrolling: function(placementObj) {
+        var container = placementObj.container,
+          containerStyle,
+          pos = window.getComputedStyle(this.element[0]).position;
+
+        // fixed-positoned, placed elements don't account for scrolling
+        if (pos === 'fixed') {
+          return false;
+        }
+
+        // Check the container element. If we can't find a valid container element, do account for scrolling.
+        if (!container || !container.length) {
+          container = this.element.parents().filter(function() {
+            var pos = window.getComputedStyle(this).position;
+            return pos === 'absolute' || pos === 'fixed';
+          });
+        }
+        if (!container || !container.length) {
+          return true;
+        }
+
+        if (container[0] === document.body) {
+          return false;
+        }
+
+        containerStyle = window.getComputedStyle(container[0]);
+        pos = containerStyle.position;
+        if (pos === 'fixed') {
+          return false;
+        }
+        if (pos === 'absolute' && containerStyle.overflow === 'hidden') {
+          return false;
+        }
+        return true;
+      },
+
       // Gets a parent container element.
       getContainer: function(placementObj) {
         if (placementObj.container instanceof $ && placementObj.container.length) {
@@ -545,7 +586,8 @@
           return placementObj;
         }
 
-        var isXCoord = ['left', 'right'].indexOf(placementObj.placement) > -1,
+        var accountForScrolling = this._accountForScrolling(placementObj),
+          isXCoord = ['left', 'right'].indexOf(placementObj.placement) > -1,
           containerBleed = this.settings.bleedFromContainer,
           container = this.getContainer(placementObj),
           containerIsBody = container.length && container[0] === document.body,
@@ -577,16 +619,16 @@
 
           switch (dir) {
             case 'left':
-              d = (containerBleed ? 0 : containerRect.left) - (!containerIsBody ? scrollX : 0) - parentRect.left + placementObj.containerOffsetX;
+              d = (containerBleed ? 0 : containerRect.left) - (accountForScrolling ? scrollX : 0) - parentRect.left + placementObj.containerOffsetX;
               break;
             case 'right':
-              d = ((containerBleed ? windowW : containerRect.right) - (!containerIsBody ? scrollX : 0)) - parentRect.right - placementObj.containerOffsetX;
+              d = ((containerBleed ? windowW : containerRect.right) - (accountForScrolling ? scrollX : 0)) - parentRect.right - placementObj.containerOffsetX;
               break;
             case 'top':
-              d = (containerBleed ? 0 : containerRect.top) - (!containerIsBody ? scrollY : 0) - parentRect.top + placementObj.containerOffsetY;
+              d = (containerBleed ? 0 : containerRect.top) - (accountForScrolling ? scrollY : 0) - parentRect.top + placementObj.containerOffsetY;
               break;
             default: // bottom
-              d = ((containerBleed ? windowH : containerRect.bottom) - (!containerIsBody ? scrollY : 0)) - parentRect.bottom - placementObj.containerOffsetY;
+              d = ((containerBleed ? windowH : containerRect.bottom) - (accountForScrolling ? scrollY : 0)) - parentRect.bottom - placementObj.containerOffsetY;
               break;
           }
 
@@ -647,7 +689,8 @@
 
       // If element height/width is greater than window height/width, shrink to fit
       shrink: function(placementObj, dimension) {
-        var containerBleed = this.settings.bleedFromContainer,
+        var accountForScrolling = this._accountForScrolling(placementObj),
+          containerBleed = this.settings.bleedFromContainer,
           container = this.getContainer(placementObj),
           containerRect = container ? container[0].getBoundingClientRect() : {},
           containerIsBody = container.length && container[0] === document.body,
@@ -660,10 +703,10 @@
           scrollY = containerIsBody ? $(window).scrollTop() : container.scrollTop(),
           windowH = Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
           windowW = Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
-          leftViewportEdge = (containerBleed ? 0 : containerRect.left + placementObj.containerOffsetX) + scrollX,
-          topViewportEdge = (containerBleed ? 0 : containerRect.top + placementObj.containerOffsetY) + scrollY,
-          rightViewportEdge = (containerBleed ? windowW : containerRect.right - placementObj.containerOffsetX) + scrollX,
-          bottomViewportEdge = (containerBleed ? windowH : containerRect.bottom - placementObj.containerOffsetY) + scrollY,
+          leftViewportEdge = (accountForScrolling ? scrollX: 0) + (containerBleed ? 0 : containerRect.left) + placementObj.containerOffsetX,
+          topViewportEdge = (accountForScrolling ? scrollY : 0) + (containerBleed ? 0 : containerRect.top) + placementObj.containerOffsetY,
+          rightViewportEdge = (accountForScrolling ? scrollX : 0) + (containerBleed ? windowW : containerRect.right) - placementObj.containerOffsetX,
+          bottomViewportEdge = (accountForScrolling ? scrollY : 0) + (containerBleed ? windowH : containerRect.bottom) - placementObj.containerOffsetY,
           d;
 
         // Shrink in each direction.

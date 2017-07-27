@@ -102,11 +102,6 @@
         if (!this.id) {
           this.id = (parseInt($('.popupmenu-wrapper').length, 10)+1).toString();
         }
-
-        // Fix - with ios, popup menu was hiding behind the application menu
-        if (this.element.is('.btn-actions') && Soho.env.os.name === 'ios') {
-          this.settings.attachToBody = true;
-        }
       },
 
       //Add markip including Aria
@@ -746,9 +741,11 @@
         var opts = $.extend({}, this.settings.placementOpts),
           strategies = ['flip'];
 
+        /*
         if (!target.is('.autocomplete, .searchfield')) {
           strategies.push('nudge');
         }
+        */
         strategies.push('shrink-y');
 
         // If right-click or immediate (with an incoming event object), use coordinates from the event
@@ -830,6 +827,13 @@
 
         if (target.parents('.masthead').length > 0) {
           shiftDown();
+        }
+
+        // If inside a "page-container" element, constrain the popupmenu to that element
+        // (fixes SOHO-6223)
+        var container = this.element.parents('.page-container');
+        if (container.length) {
+          opts.container = container.first();
         }
 
         //=======================================================
