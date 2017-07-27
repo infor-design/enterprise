@@ -102,11 +102,6 @@
         if (!this.id) {
           this.id = (parseInt($('.popupmenu-wrapper').length, 10)+1).toString();
         }
-
-        // Fix - with ios, popup menu was hiding behind the application menu
-        if (this.element.is('.btn-actions') && Soho.env.os.name === 'ios') {
-          this.settings.attachToBody = true;
-        }
       },
 
       //Add markip including Aria
