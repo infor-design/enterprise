@@ -493,8 +493,7 @@ var express = require('express'),
     var opts = extend({}, res.opts, controlOpts);
     opts.subtitle = 'Full Index';
 
-    //res.render('controls/index', opts);
-    res.redirect(BASE_PATH + 'components/');
+    res.render('components/index', opts);
     next();
   }
 
@@ -569,11 +568,6 @@ var express = require('express'),
   function defaultDocsRoute(req, res, next) {
     var opts = extend({}, res.opts, componentOpts);
     opts.layout = 'doc-layout';
-
-    if (req.url.substr(-1) !== '/' && req.url.length > 1) {
-      res.redirect(301, req.url + '/');
-      next();
-    }
 
     res.render('index', opts);
     next();

@@ -32,13 +32,13 @@
     * The About Dialog Component is displays information regarding the application.
     *
     * @class About
-    * @param {String} appName  &nbsp;-&nbsp; The Main Application Name to display in the heading
-    * @param {String} content  &nbsp;-&nbsp; Additional Text content to display at the top.
-    * @param {String} copyrightYear  &nbsp;-&nbsp; The year displayed in the copyright, defaults to current year.
-    * @param {Boolean} deviceSpecs  &nbsp;-&nbsp; Determines whether or not to display device information (Browser, Platform, Locale, Cookies Enabled)
-    * @param {String} productName  &nbsp;-&nbsp; Additional product name information to display
-    * @param {Boolean} useDefaultCopyright  &nbsp;-&nbsp; Add the Legal Approved Infor Copy Right Text
-    * @param {String} version  &nbsp;-&nbsp; Semantic Version Number for example (4.0.0)
+    * @param {String} appName The Main Application Name to display in the header.
+    * @param {String} content Additional Text content to display at the top.
+    * @param {String} copyrightYear The year displayed in the copyright, defaults to current year.
+    * @param {Boolean} deviceSpecs Determines whether or not to display device information (Browser, Platform, Locale, Cookies Enabled)
+    * @param {String} productName Additional product name information to display.
+    * @param {Boolean} useDefaultCopyright Add the Legal Approved Infor Copy Right Text.
+    * @param {String} version Semantic Version Number for example (4.0.0).
     *
     */
     function About(element) {
@@ -216,14 +216,32 @@
       },
 
       /**
-       *  This component fires the following events.
+      * Fires before the dialog is closing. You can return false syncronously to delay closing.
+      *
+      * @event beforeclose
+      * @type {object} fires
+      * @property {Object} event - The jquery event object.
+      * @property {Object} ui - The dialog object
+      */
+
+      /**
+      * Fires as the dialog is closing
+      *
+      * @event close
+      * @type {object} fires
+      * @property {Object} event - The jquery event object.
+      * @property {Object} ui - The dialog object
+      */
+
+      /**
+       *Fires after the dialog has closed in the DOM entirely.
        *
-       * @fires About#events
-       * @param {Object} beforeclose  &nbsp;-&nbsp; Fires before the dialog is closing. You can return false asyncronously to delay closing.
-       * @param {Object} close  &nbsp;-&nbsp; Fires as the dialog is closing
-       * @param {Object} afterclose  &nbsp;-&nbsp; Fires after the dialog has closed in the DOM entirely
-       *
+       * @event afterclose
+       * @type {object} fires
+       * @property {Object} event - The jquery event object.
+       * @property {Object} ui - The dialog object
        */
+
       handleEvents: function() {
         var self = this;
 

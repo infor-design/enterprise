@@ -6,7 +6,6 @@
     -   [getDeviceSpecs](#getdevicespecs)
     -   [close](#close)
     -   [destroy](#destroy)
-    -   [handleEvents](#handleevents)
 
 ## About
 
@@ -14,14 +13,14 @@ The About Dialog Component is displays information regarding the application.
 
 **Parameters**
 
+-   `appName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The Main Application Name to display in the header.
+-   `content` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Additional Text content to display at the top.
+-   `copyrightYear` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The year displayed in the copyright, defaults to current year.
+-   `deviceSpecs` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Determines whether or not to display device information (Browser, Platform, Locale, Cookies Enabled)
+-   `productName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Additional product name information to display.
+-   `useDefaultCopyright` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Add the Legal Approved Infor Copy Right Text.
+-   `version` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Semantic Version Number for example (4.0.0).
 -   `element`  
--   `appName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The Main Application Name to display in the heading
--   `content` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Additional Text content to display at the top.
--   `copyrightYear` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The year displayed in the copyright, defaults to current year.
--   `deviceSpecs` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Determines whether or not to display device information (Browser, Platform, Locale, Cookies Enabled)
--   `productName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Additional product name information to display
--   `useDefaultCopyright` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Add the Legal Approved Infor Copy Right Text
--   `version` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Semantic Version Number for example (4.0.0)
 
 ### getDeviceSpecs
 
@@ -36,13 +35,3 @@ Progamatically Close the About Dialog.
 ### destroy
 
 Teardown and remove any added markup and events.
-
-### handleEvents
-
-This component fires the following events.
-
-**Parameters**
-
--   `beforeclose` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires before the dialog is closing. You can return false asyncronously to delay closing.
--   `close` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires as the dialog is closing
--   `afterclose` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires after the dialog has closed in the DOM entirely

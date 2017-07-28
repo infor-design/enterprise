@@ -40,11 +40,11 @@
         data.push({ id: 7, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', portable: true, quantity: 41, price: 123.99, status: 'OK', state:'Idaho', orderDate: new Date(2014, 6, 9), action: 'oh'});
 
         //Define Columns for the Grid.
-        columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center', width: 65});
+        columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, filterType: 'checkbox', align: 'center', width: 65});
         columns.push({ id: 'productId', name: 'ProductId Id ', field: 'productId'});
-        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date, width: 200, editorOptions: {showTime: true, dateFormat: 'M/d/yyyy HH:mm:ss'}, dateFormat: 'M/d/yyyy HH:mm:ss'});
-        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date, width: 200, editorOptions: {showTime: true, dateFormat: Locale.calendar().dateFormat.datetime}, dateFormat: Locale.calendar().dateFormat.datetime});
-        columns.push({ id: 'productName', name: 'Row Id', field: 'productName'});
+        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date, filterType: 'date', width: 200, editorOptions: {secondInterval: 1, minuteInterval: 1, showTime: true, dateFormat: 'M/d/yyyy HH:mm:ss'}, dateFormat: 'M/d/yyyy HH:mm:ss'});
+        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, editor: Editors.Date, filterType: 'date', width: 200, editorOptions: {showTime: true, dateFormat: Locale.calendar().dateFormat.datetime}, dateFormat: Locale.calendar().dateFormat.datetime});
+        columns.push({ id: 'productName', name: 'Row Id', field: 'productName', filterType: 'text'});
 
 
         //Init and get the api for the grid
@@ -52,6 +52,7 @@
           columns: columns,
           dataset: data,
           editable: true,
+          filterable: true,
           clickToSelect: false,
           selectable: 'multiple',
           toolbar: {title: 'Compressors', results: true, actions: true, rowHeight: true}
