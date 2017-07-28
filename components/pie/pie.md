@@ -5,7 +5,8 @@
 
 ### Settings
 
--   `redrawOnResize` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true chart will not resize / update when resizing the page.
+-   `redrawOnResize` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
+-   `animate` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If false chart will not animate when rendering
 -   `labels` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  An object with options to configure the labels of form `labels : {hideLabels: true}`
 - `labels: {hideLabels}` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** - Do not show labels
 - `labels: {isTwoline}` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** - Show the labels on two different lines
