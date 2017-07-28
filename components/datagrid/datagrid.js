@@ -6515,7 +6515,13 @@ $.fn.datagrid = function(options) {
           var nodes = rowElement.nextUntil('[aria-level="'+ level +'"]');
 
           if (isExpanded) {
-            nodes.addClass('is-hidden');
+            nodes.each(function () {
+              var node = $(this),
+              nodeLevel = parseInt(node.attr('aria-level'), 10);
+              if (nodeLevel > level) {
+                node.addClass('is-hidden');
+              }
+            });
           }
           else {
             nodes.each(function () {
