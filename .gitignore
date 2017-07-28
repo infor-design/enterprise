@@ -34,6 +34,7 @@ xunit.xml
 *.iml
 views/docs/changelog-contents.html
 config.json
+docs/api
 
 # OS generated files #
 ############
