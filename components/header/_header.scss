@@ -31,17 +31,15 @@ $subheader-height: 60px;
     @include font-size(18);
     @include transition(transform 150ms cubic-bezier(.17, .04, .03, .94));
     color: $header-text-color;
-    display: inline-block;
+    display: inline;
     font-weight: normal;
     margin-bottom: 0;
     text-overflow: ellipsis;
     width: calc(100% - 1px);
 
     span {
-      display: block;
+      display: inherit;
       height: inherit;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
   }
 
@@ -128,9 +126,13 @@ $subheader-height: 60px;
       color: $header-text-color;
       height: $header-height;
       left: 8px;
-      overflow: visible;
+      overflow: hidden;
       position: absolute;
-      text-overflow: clip;
+      text-overflow: ellipsis;
+
+      > h1 {
+        display: inline;
+      }
 
       .btn-menu {
         text-transform: none;
@@ -465,17 +467,6 @@ html[dir='rtl'] {
     }
   }
 
-}
-
-//Hide text behind an ellipsis when on smaller breaks
-@media (max-width: $breakpoint-phone-to-tablet - 1) {
-  .header {
-    h1 {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-  }
 }
 
 // Print Style Sheet

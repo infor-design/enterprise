@@ -1,0 +1,271 @@
+<header id="customizable-header" class="header">
+  <div class="toolbar">
+    <div class="title">
+      <button id="app-menu-trigger" class="btn-icon application-menu-trigger" type="button">
+        <span class="audible">Show navigation</span>
+        <span class="icon app-header">
+          <span class="one"></span>
+          <span class="two"></span>
+          <span class="three"></span>
+        </span>
+      </button>
+      <h1 id="title-text-elem">Header Toolbar Gauntlet</h1>
+    </div>
+
+    <div class="buttonset">
+      <div id="header-searchfield-wrapper" class="searchfield-wrapper toolbar-searchfield-wrapper">
+        <label for="header-searchfield" class="audible">Search</label>
+        <input id="header-searchfield" class="searchfield" name="header-searchfield" />
+      </div>
+
+      <button id="settings-button" class="btn">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-settings"></use>
+        </svg>
+        <span>Settings</span>
+      </button>
+
+      <button id="delete-button" class="btn">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-delete"></use>
+        </svg>
+        <span>Delete</span>
+      </button>
+
+      <button id="filter-button" class="btn">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-filter"></use>
+        </svg>
+        <span>Filter</span>
+      </button>
+    </div>
+
+    <div id="more-button" class="more">
+      <button class="btn-actions" type="button">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-more"></use>
+        </svg>
+        <span class="audible" data-translate="text">More</span>
+      </button>
+    </div>
+
+  </div>
+</header>
+<div id="maincontent" class="page-container scrollable" role="main">
+  <div class="row">
+    <div class="six columns">
+      <h2>Header Test: Gauntlet</h2>
+      <p><a class="hyperlink" href="https://jira.infor.com/browse/SOHO-6434" target="_blank">Related JIRA Ticket</a>. This test demonstrates various configurations of a component header.  Use the controls below to customize the header above.</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="six columns">
+
+      <div class="field">
+        <label for="title-name">Header Title Text</label>
+        <input id="title-name" type="text" value="Header Toolbar Gauntlet"/>
+        <button class="btn-icon" id="update-title-name">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-refresh"></use>
+          </svg>
+          <span class="audible">Update Title Text</span>
+        </button>
+      </div>
+
+      <div class="row">
+        <div class="six columns">
+
+          <fieldset class="radio-group">
+            <legend>Title Button</legend>
+            <input type="radio" class="radio" name="title-button-toggle" id="title-button-hide" value="false" />
+            <label for="title-button-hide" class="radio-label">Hide</label>
+            <br>
+            <input type="radio" class="radio" name="title-button-toggle" id="title-button-show" value="true" checked />
+            <label for="title-button-show" class="radio-label">Show</label>
+          </fieldset>
+
+        </div>
+        <div class="six columns">
+
+          <fieldset class="radio-group">
+            <legend>Searchfield</legend>
+            <input type="radio" class="radio" name="searchfield-toggle" id="searchfield-hide" value="false" />
+            <label for="searchfield-hide" class="radio-label">Hide</label>
+            <br>
+            <input type="radio" class="radio" name="searchfield-toggle" id="searchfield-show" value="true" checked />
+            <label for="searchfield-show" class="radio-label">Show</label>
+          </fieldset>
+
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="six columns">
+
+          <fieldset class="radio-group">
+            <legend>More Button</legend>
+            <input type="radio" class="radio" name="more-button-toggle" id="more-button-hide" value="false" />
+            <label for="more-button-hide" class="radio-label">Hide</label>
+            <br>
+            <input type="radio" class="radio" name="more-button-toggle" id="more-button-show" value="true" checked />
+            <label for="more-button-show" class="radio-label">Show</label>
+          </fieldset>
+
+        </div>
+        <div class="six columns">
+
+          <input type="checkbox" class="checkbox" name="settings-toggle" id="settings-toggle" checked/>
+          <label for="settings-toggle" class="radio-label">Toggle "Settings" Button</label>
+          <br />
+          <input type="checkbox" class="checkbox" name="delete-toggle" id="delete-toggle" checked/>
+          <label for="delete-toggle" class="radio-label">Toggle "Delete" Button</label>
+          <br />
+          <input type="checkbox" class="checkbox" name="filter-toggle" id="filter-toggle" checked/>
+          <label for="filter-toggle" class="radio-label">Toggle "Filter" Button</label>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  var headerElem = $('#customizable-header'),
+    toolbarElem = headerElem.children('.toolbar'),
+    titleTextElem = $('#title-text-elem'),
+    textField = $('#title-name'),
+    textBtn = $('#update-title-name'),
+    titleButtonToggles = $('[name="title-button-toggle"]'),
+    searchfieldToggles = $('[name="searchfield-toggle"]'),
+    moreButtonToggles = $('[name="more-button-toggle"]'),
+    settingsToggle = $('#settings-toggle'),
+    filterToggle = $('#filter-toggle'),
+    deleteToggle = $('#delete-toggle'),
+    appMenuTrigger = $('#app-menu-trigger'),
+    moreButtonElem = $('#more-button'),
+    headerSearchfieldWrapper = $('#header-searchfield-wrapper'),
+    settingsBtn = $('#settings-button'),
+    filterBtn = $('#filter-button'),
+    deleteBtn = $('#delete-button');
+
+  function updateHeaderText(text) {
+    titleTextElem.text(text);
+    toolbarElem.triggerHandler('recalculate-buttons');
+  }
+
+  function createTitleButton() {
+    var btn = $('<button id="app-menu-trigger" class="btn-icon application-menu-trigger" type="button">' +
+      '<span class="audible">Show navigation</span>' +
+      '<span class="icon app-header">' +
+        '<span class="one"></span>' +
+        '<span class="two"></span>' +
+        '<span class="three"></span>' +
+      '</span>' +
+    '</button>').insertBefore(titleTextElem);
+
+    toolbarElem.triggerHandler('updated');
+    return btn;
+  }
+
+  function destroyTitleButton() {
+    if (!appMenuTrigger) {
+      return;
+    }
+
+    appMenuTrigger.off().remove();
+    toolbarElem.triggerHandler('updated');
+    appMenuTrigger = undefined;
+  }
+
+  function updateTitleButton() {
+    var showElem = $('#title-button-show');
+
+    if (showElem.prop('checked')) {
+      if (!appMenuTrigger) {
+        appMenuTrigger = createTitleButton();
+      }
+      return;
+    }
+
+    destroyTitleButton();
+  }
+
+  function updateSearchfield() {
+    var showElem = $('#searchfield-show');
+    if (showElem.prop('checked')) {
+      headerSearchfieldWrapper.removeClass('hidden');
+      toolbarElem.trigger('updated');
+      return;
+    }
+
+    headerSearchfieldWrapper.addClass('hidden');
+    toolbarElem.trigger('updated');
+  }
+
+  function updateMoreButton() {
+    var showElem = $('#more-button-show');
+
+    if (showElem.prop('checked')) {
+      toolbarElem.removeClass('no-actions-button');
+      toolbarElem.trigger('updated');
+      return;
+    }
+
+    toolbarElem.addClass('no-actions-button');
+    toolbarElem.trigger('updated');
+  }
+
+  $('body').on('initialized', function() {
+    textBtn.on('click.test', function() {
+      updateHeaderText(textField.val());
+    });
+
+    titleButtonToggles.on('change.test', function() {
+      updateTitleButton();
+    });
+
+    searchfieldToggles.on('change.test', function() {
+      updateSearchfield();
+    });
+
+    moreButtonToggles.on('change.test', function() {
+      updateMoreButton();
+    });
+
+    settingsToggle.on('change.test', function() {
+      if (settingsToggle.prop('checked')) {
+        settingsBtn.removeClass('hidden');
+        toolbarElem.trigger('updated');
+        return;
+      }
+
+      settingsBtn.addClass('hidden');
+      toolbarElem.trigger('updated');
+    });
+
+    filterToggle.on('change.test', function() {
+      if (filterToggle.prop('checked')) {
+        filterBtn.removeClass('hidden');
+        toolbarElem.trigger('updated');
+        return;
+      }
+
+      filterBtn.addClass('hidden');
+      toolbarElem.trigger('updated');
+    });
+
+    deleteToggle.on('change.test', function() {
+      if (deleteToggle.prop('checked')) {
+        deleteBtn.removeClass('hidden');
+        toolbarElem.trigger('updated');
+        return;
+      }
+
+      deleteBtn.addClass('hidden');
+      toolbarElem.trigger('updated');
+    });
+
+  });
+</script>
