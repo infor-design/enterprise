@@ -280,6 +280,10 @@
           self.modal.element.find('.modal-title').append(' <span class="datagrid-result-count"></span>');
         }
 
+        self.modal.element.off('beforeclose.lookup').on('beforeclose.lookup', function () {
+          self.closeTearDown();
+        });
+
         // Wait until search field available
         setTimeout(function () {
           $('.modal.is-visible .searchfield').on('keypress.lookup', function (e) {
@@ -288,6 +292,23 @@
             }
           });
         }, 300);
+      },
+
+      closeTearDown: function () {
+        var search = $('.modal.is-visible .searchfield').off('keypress.lookup');
+        if (search.data() && search.data('searchfield')) {
+          search.data('searchfield').destroy();
+        }
+
+        if (search.data() && search.data('toolbarsearchfield')) {
+          search.data('toolbarsearchfield').destroy();
+          search.removeData();
+        }
+        search = null;
+
+        if (!this.grid) {
+          this.grid.destroy();
+        }
       },
 
       //Overridable Function in which we create the grid on the current ui dialog.
