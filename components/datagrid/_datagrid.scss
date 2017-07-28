@@ -642,8 +642,9 @@ $datagrid-short-row-height: 23px;
 
         .row-btn {
           height: 26px;
+          line-height: 32px;
           min-width: 80px;
-          top: -2px;
+          top: -10px;
           vertical-align: middle;
 
           span {
@@ -655,17 +656,21 @@ $datagrid-short-row-height: 23px;
             margin-bottom: -20px;
             min-width: 20px;
           }
-        }
-
-        a.row-btn {
-          // scss-lint:disable ImportantRule
-          top: -3px;
-          // scss-lint:disable ImportantRule
 
           .icon {
-            margin: 0;
+            margin-top: -3px;
           }
         }
+
+        // a.row-btn {
+        //   // scss-lint:disable ImportantRule
+        //   top: -3px;
+        //   // scss-lint:disable ImportantRule
+        //
+        //   .icon {
+        //     margin: 0;
+        //   }
+        // }
 
         &.datagrid-trigger-cell {
           .icon {
