@@ -1,0 +1,87 @@
+
+<% if (section.params) { %>
+  <h3 id="settings">Settings</h3>
+  <table class="doc-table-view">
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+    <% section.params.forEach(function(param) { %>
+    <% if (param.name !== 'element') { %>
+    <tr>
+      <td><%- param.name%> <span><%= formatType(param.type) %></span> </td>
+      <td><%= md(param.description, true) %></td>
+    </tr>
+    <% } %>
+    <% }) %>
+  </table>
+
+<% } %>
+
+<% if (section.properties) { %>
+  <h3 id="properties">Properties</h3>
+  <div>
+    <% section.properties.forEach(function(property) { %>
+      <div class='space-bottom0'>
+        <span class='code bold'><%- property.name%></span> <code class='quiet'>(<%= formatType(property.type) %>)</code>
+        <% if (property.default) { %>
+          (default <code><%- property.default %></code>)
+        <% } %><% if (property.description) {
+    %>: <%= md(property.description, true) %><%
+  } %>
+        <% if (property.properties) { %>
+          <ul>
+            <% property.properties.forEach(function(property) { %>
+              <li><code><%- property.name %></code> <%= formatType(property.type) %>
+                <% if (property.default) { %>
+                  (default <code><%- property.default %></code>)
+                <% } %>
+                <%= md(property.description) %></li>
+            <% }) %>
+          </ul>
+        <% } %>
+      </div>
+    <% }) %>
+  </div>
+<% } %>
+
+<% if (section.returns) { %>
+  <% section.returns.forEach(function(ret) { %>
+    <div class='py1 quiet mt1 prose-big'>Returns</div>
+    <code><%= formatType(ret.type) %></code><% if (ret.description) { %>:
+      <%= md(ret.description, true) %>
+    <% }%>
+  <% }) %>
+<% } %>
+
+<% if (section.throws) { %>
+  <div class='py1 quiet mt1 prose-big'>Throws</div>
+  <ul>
+    <% section.throws.forEach(function(throws) { %>
+      <li><%= formatType(throws.type) %>: <%= md(throws.description, true) %></li>
+    <% }); %>
+  </ul>
+<% } %>
+
+<% if (section.examples) { %>
+  <h3 id="examples">Examples</h3>
+  <% section.examples.forEach(function(example) { %>
+    <% if (example.caption) { %><p><%= md(example.caption) %></p><% } %>
+    <pre><%= highlight(example.description) %></pre>
+  <% }) %>
+<% } %>
+
+<% if (section.members.static && section.members.static.length) { %>
+  <h3 id="static">Static Members</h3>
+  <%= renderSectionList({ members: section.members.static, renderSection: renderSection, noun: 'Static Member' }) %>
+<% } %>
+
+<% if (section.members.instance && section.members.instance.length) { %>
+  <h3 id="functions">Functions</h3>
+  <%= renderSectionList({ members: section.members.instance, renderSection: renderSection, noun: 'Instance Member' }) %>
+<% } %>
+
+<% if (section.members.events && section.members.events.length) { %>
+  <h3 id="events">Events</h3>
+  <%= renderSectionList({ members: section.members.events, renderSection: renderSection, noun: 'Event' }) %>
+<% } %>

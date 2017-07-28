@@ -2,6 +2,7 @@
 //================================================== //
 
 .full-width {
+  @include font-size(12);
   padding: 20px;
   width: 100%;
 

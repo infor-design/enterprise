@@ -1441,7 +1441,8 @@ $.fn.datagrid = function(options) {
         enableTooltips: false,  //Process tooltip logic at a cost of performance
         disableRowDeactivation: false, // If a row is activated the user should not be able to deactivate it by clicking on the activated row
         sizeColumnsEqually: false, //If true make all the columns equal width
-        expandableRow: false // Supply an empty expandable row template
+        expandableRow: false, // Supply an empty expandable row template
+        redrawOnResize: true //Run column redraw logic on resize
       },
       settings = $.extend({}, defaults, options);
 
@@ -1485,7 +1486,7 @@ $.fn.datagrid = function(options) {
   * @param {Boolean} disableRowDeactivation &nbsp;-&nbsp if a row is activated the user should not be able to deactivate it by clicking on the activated row
   * @param {Boolean} sizeColumnsEqually &nbsp;-&nbsp If true make all the columns equal width
   * @param {Boolean} expandableRow &nbsp;-&nbsp If true we append an expandable row area without the rowTemplate feature being needed.
-  *
+  * @param {Boolean} redrawOnResize &nbsp;-&nbsp If set to false we skip redraw logic on the resize of the page.
   */
   function Datagrid(element) {
     this.element = $(element);
@@ -3342,6 +3343,11 @@ $.fn.datagrid = function(options) {
       var visibleColumns, colPercWidth;
       visibleColumns = this.visibleColumns(true);
 
+      var lastColumn = (index === this.lastColumnIdx());
+      if (lastColumn && col.isStretched) {
+        col.width = null;
+      }
+
       if (!this.elemWidth) {
         this.elemWidth = this.element.outerWidth();
 
@@ -3356,7 +3362,7 @@ $.fn.datagrid = function(options) {
         this.widthPixel = false;
       }
 
-        // use cache
+      // use cache
       if (this.headerWidths[index]) {
         var cacheWidths = this.headerWidths[index];
 
@@ -3394,7 +3400,7 @@ $.fn.datagrid = function(options) {
         colWidth = Math.max(textWidth, colWidth || 0);
       }
 
-      var lastColumn = index === this.lastColumnIdx() && this.totalWidth !== colWidth;
+      lastColumn = index === this.lastColumnIdx() && this.totalWidth !== colWidth;
 
       // Simulate Auto Width Algorithm
       if ((!this.widthSpecified || col.width === undefined) && this.settings.sizeColumnsEqually &&
@@ -3439,11 +3445,12 @@ $.fn.datagrid = function(options) {
       if (lastColumn) {
         var diff = this.elemWidth - this.totalWidth;
 
-        if ((diff > 0) && diff  > colWidth && !this.widthPercent && !this.headerRow) {
+        if ((diff > 0) && (diff  > colWidth) && !this.widthPercent) {
           colWidth = diff - (this.isIe ? 19: 2);
 
           this.headerWidths[index] = {id: col.id, width: colWidth, widthPercent: this.widthPercent};
           col.width = colWidth;
+          col.isStretched = true;
           this.totalWidth =  this.elemWidth - (this.isIe ? 19: 2);
         }
 
@@ -4295,6 +4302,13 @@ $.fn.datagrid = function(options) {
 
     },
 
+    handleResize: function () {
+      var self = this;
+      self.clearHeaderCache();
+      self.renderRows();
+      self.renderHeader();
+    },
+
     // Attach All relevant events
     handleEvents: function() {
       var self = this,
@@ -4321,20 +4335,20 @@ $.fn.datagrid = function(options) {
       if (this.settings.virtualized) {
         var oldScroll = 0, oldHeight = 0;
 
-      self.contentContainer
-        .on('scroll.vtable', Soho.utils.debounce(function () {
+        self.contentContainer
+          .on('scroll.vtable', Soho.utils.debounce(function () {
 
-          var scrollTop = this.scrollTop,
-            buffer = 25,
-            hitBottom = scrollTop > (self.virtualRange.bottom - self.virtualRange.bodyHeight - buffer),
-            hitTop = scrollTop < (self.virtualRange.top + buffer);
+            var scrollTop = this.scrollTop,
+              buffer = 25,
+              hitBottom = scrollTop > (self.virtualRange.bottom - self.virtualRange.bodyHeight - buffer),
+              hitTop = scrollTop < (self.virtualRange.top + buffer);
 
-          if (scrollTop !== oldScroll && (hitTop || hitBottom)) {
-            oldScroll = this.scrollTop;
-            self.renderRows();
-            return;
-          }
-        }, 0));
+            if (scrollTop !== oldScroll && (hitTop || hitBottom)) {
+              oldScroll = this.scrollTop;
+              self.renderRows();
+              return;
+            }
+          }, 0));
 
         $('body').on('resize.vtable', function () {
           var height = this.offsetHeight;
@@ -4344,6 +4358,19 @@ $.fn.datagrid = function(options) {
             self.renderRows();
           }
 
+        });
+      }
+
+      // Handle Resize - Re do the columns
+      if (self.settings.redrawOnResize) {
+        var oldWidth = 0;
+
+        $('body').on('resize.datagrid', function () {
+          var width = this.offsetWidth;
+          if (width !== oldWidth) {
+            oldWidth = width;
+            self.handleResize();
+          }
         });
       }
 
@@ -6893,8 +6920,7 @@ $.fn.datagrid = function(options) {
       //TODO Test Memory Leaks in Chrome - null out fx this.table
       $(document).off('touchstart.datagrid touchend.datagrid touchcancel.datagrid click.datagrid touchmove.datagrid');
       this.contentContainer.off().remove();
-      $('body').off('resize.vtable');
-
+      $('body').off('resize.vtable resize.datagrid');
     }
 
   };
