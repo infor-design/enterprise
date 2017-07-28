@@ -429,7 +429,7 @@ div.multiselect {
   color: $dropdown-color;
   padding: 8px 32px 8px 10px;
   text-overflow: ellipsis;
-  width: 100%;
+  width: auto;
 
   &.text-align-reverse {
     text-align: right;
