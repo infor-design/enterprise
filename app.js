@@ -9,7 +9,7 @@ var express = require('express'),
   fs = require('fs'),
   http = require('http'),
   git = require('git-rev-sync'),
-  BASE_PATH = process.env.BASEPATH || '/',
+  BASE_PATH = process.env.BASEPATH || '/',  //'Full Url: ' + req.headers.host + '/' + req.url
   getJSONFile = require(path.resolve(__dirname, 'demoapp', 'js', 'getJSONFile')),
   packageJSON = getJSONFile(path.resolve('package.json'));
 

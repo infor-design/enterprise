@@ -373,7 +373,7 @@
 
           if (!modal.data('modal')) {
             var overlay = modal.closest('.modal-page-container').next('.overlay');
-            if (overlay) {
+            if (overlay && overlay[0]) {
               overlay[0].style.zIndex = (1020 + i).toString();
             }
           }
