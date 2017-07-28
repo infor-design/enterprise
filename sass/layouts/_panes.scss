@@ -50,6 +50,18 @@
   // scss-lint:enable ImportantRule
   //
   //Directional Panes
+  &.single {
+    display: inline-block;
+    height: calc(100% - 30px);
+    left: 0;
+    margin: 20px 20px 10px 20px;
+    min-height: 0;
+    overflow: auto;
+    position: absolute;
+    top: 0;
+    width: calc(100% - 40px);
+  }
+
   &.top-left {
     display: inline-block;
     height: calc(50% - 30px);
@@ -147,6 +159,7 @@
 
 @include respond-to(phabletdown) {
 
+  .pane.single,
   .pane.top,
   .pane.bottom,
   .pane.left,
