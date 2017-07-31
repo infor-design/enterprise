@@ -3648,6 +3648,7 @@ window.Chart = function(container) {
   // Make bars to be Selected or Unselected
   this.setSelectedElement = function (o) {
     var s = charts.settings,
+      dataset = s.dataset,
       isPositiveNegative = s.type === 'column-positive-negative',
       isTypeHorizontalBar = s.chartType === 'HorizontalBar',
       isTypeColumn = s.chartType === 'Column',
@@ -3668,8 +3669,14 @@ window.Chart = function(container) {
       pnNegativeText = svg.selectAll('.bartext.negative, .target-bartext.negative'),
       thisGroup = d3.select(o.selector.parentNode),
       thisGroupId = parseInt((thisGroup.node() ? thisGroup.attr('data-group-id') : 0), 10),
-      triggerData = [selector[0], o.d, (isGrouped ? thisGroupId : o.i)],
+      triggerData = [],
       selectedBars = [];
+
+    if (isStacked || isTypePie) {
+      dataset = dataset || null;
+    } else {
+      dataset = (dataset && dataset[thisGroupId]) ? dataset[thisGroupId].data : null;
+    }
 
     ticksX.style('font-weight', 'normal');
     ticksY.style('font-weight', 'normal');
@@ -3682,7 +3689,7 @@ window.Chart = function(container) {
       svg.selectAll('.bar, .target-bar').style('opacity', 0.6);
 
       // By legends only
-      if (s.isByLegends) {
+      if (s.isByLegends && !isTypePie) {
         if (isPositiveNegative) {
           s.svg.selectAll(isPositive ?
             '.bar.positive, .target-bar.positive': '.bar.negative, .target-bar.negative')
@@ -3690,24 +3697,32 @@ window.Chart = function(container) {
 
           (isPositive ? pnPositiveText : pnNegativeText).style('font-weight', 'bolder');
 
-          svg.selectAll('.bar.is-selected').each(function(d, i) {
-            selectedBars.push([d3.select(this)[0], d, i]);
+          svg.selectAll('.bar').each(function(d, i) {
+            var bar = d3.select(this);
+            if (bar.classed('is-selected')) {
+              selectedBars.push({elem: bar[0], data: (dataset ? dataset[i] : d)});
+            }
           });
-          triggerData.push(selectedBars);
+          triggerData = selectedBars;
         }
         // Grouped and stacked only -NOT singular-
         else if (isTypeColumn || isTypeHorizontalBar) {
           if (isGrouped || isSingular) {
             s.svg.selectAll('.series-'+ o.i).classed('is-selected', true).style('opacity', 1);
-          }
-          else {
+          } else {
             thisGroup.classed('is-selected', true)
               .selectAll('.bar').classed('is-selected', true).style('opacity', 1);
           }
+
+          var thisData;
           svg.selectAll('.bar.is-selected').each(function(d, i) {
-            selectedBars.push([d3.select(this)[0], d, i]);
+            var bar = d3.select(this);
+
+            thisData = s.dataset;
+            thisData = thisData ? (isStacked ? thisData[o.i].data[i] : thisData[i].data[o.i]) : d;
+            selectedBars.push({elem: bar[0], data: thisData});
           });
-          triggerData.push(selectedBars);
+          triggerData = selectedBars;
         }
       }
 
@@ -3732,10 +3747,17 @@ window.Chart = function(container) {
               .selectAll('.bar').classed('is-selected', true).style('opacity', 1);
           }
 
-          svg.selectAll('.bar.is-selected').each(function(d, i) {
-            selectedBars.push([d3.select(this)[0], d, i]);
+          thisGroup.selectAll('.bar').each(function(d, i) {
+            var bar = d3.select(this);
+            if (bar.classed('is-selected')) {
+              selectedBars.push({elem: bar[0], data: (dataset ? dataset[i] : d)});
+            }
           });
-          triggerData.push(selectedBars, thisGroup[0]);
+          if (isGrouped) {
+            triggerData.push({groupIndex: thisGroupId, groupElem: thisGroup[0], groupItems: selectedBars});
+          } else {
+            triggerData = selectedBars;
+          }
         }
       }
 
@@ -3748,9 +3770,10 @@ window.Chart = function(container) {
           .classed('is-selected', true).style('opacity', 1);
 
         svg.selectAll('.bar.is-selected').each(function(d, i) {
-          selectedBars.push([d3.select(this)[0], d, i]);
+          var bar = d3.select(this);
+          selectedBars.push({elem: bar[0], data: (dataset ? dataset[i].data[o.i] : d)});
         });
-        triggerData.push(selectedBars);
+        triggerData = selectedBars;
       }
 
       // Pie
@@ -3760,10 +3783,12 @@ window.Chart = function(container) {
           .style({'stroke': '', 'stroke-width': ''})
           .attr('transform', '');
 
-        var color = charts.chartColor(o.i, 'pie', o.d.data);
+        var color = charts.chartColor(o.i, 'pie', o.d.data),
+          thisArcData = dataset && dataset[0] && dataset[0].data ? dataset[0].data[o.i] : (o.d ? o.d.data : o.d);
         selector.classed('is-selected', true)
           .style({'stroke': color, 'stroke-width': 0})
           .attr('transform', 'scale(1.025, 1.025)');
+        triggerData.push({elem: selector[0], data: thisArcData, index: o.i});
       }
     }
     // Task make unselected
@@ -3784,8 +3809,10 @@ window.Chart = function(container) {
       s.isByLegends = false;
     }
 
+    this._selected = triggerData;
+
     if (o.isTrigger) {
-      $(o.container).triggerHandler((taskSelected ? 'selected' : 'unselected'), triggerData);
+      $(o.container).triggerHandler((taskSelected ? 'selected' : 'unselected'), [triggerData]);
     }
   };
 
@@ -3904,6 +3931,10 @@ $.fn.chart = function(options) {
     chartInst = new Chart(this, options);
     instance = $.data(this, 'chart', chartInst);
     instance.settings = options;
+    instance._selected = [];
+    instance.getSelected = function() {
+      return this._selected;
+    };
 
     if ($.isEmptyObject(chartInst)) {
      return;

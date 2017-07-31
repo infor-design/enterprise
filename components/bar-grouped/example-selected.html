@@ -66,9 +66,9 @@ $('body').on('initialized', function () {
       }];
 
   $('#bar-grouped-example').chart({type: 'bar-grouped', dataset: dataset})
-    .on('selected', function (e, bar, d, i, selectedBars, group) {
-      console.log(e, bar, d, i, selectedBars, group);
-    });
+  .on('selected', function (e, args) {
+    console.log('args', args);
+   });
 
 });
 </script>
