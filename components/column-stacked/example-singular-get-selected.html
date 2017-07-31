@@ -13,6 +13,12 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="two-thirds column">
+      <button class="btn-secondary" type="button" id="btn-get-selected">Get selected</button>
+  </div>
+</div>
+
 <script>
 $('body').on('initialized', function () {
 
@@ -55,9 +61,16 @@ $('body').on('initialized', function () {
             }]
           }];
 
-    $('#column-bar-example').chart({type: 'column-stacked', dataset: dataset})
+    var elem = $('#column-bar-example');
+
+    elem.chart({type: 'column-stacked', dataset: dataset})
     .on('selected', function (e, args) {
-      console.log(args);
+      // console.log(args);
+    });
+
+    $('#btn-get-selected').on('click', function() {
+      var api = elem.data('chart');
+      console.log(api.getSelected());
     });
 
 });
