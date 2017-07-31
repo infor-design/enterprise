@@ -12,6 +12,12 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="two-thirds column">
+      <button class="btn-secondary" type="button" id="btn-get-selected">Get selected</button>
+  </div>
+</div>
+
 {{={{{ }}}=}}
 
 <script>
@@ -84,14 +90,20 @@ var dataset = [{
     }
   }];
 
-    $('#positive-negative-example').chart({
-      type: 'column-positive-negative',
-      dataset: dataset,
-      formatterString: 's'
-    })
-    .on('selected', function (e, args) {
-      console.log(args);
-    });
+  var elem =   $('#positive-negative-example');
+  elem.chart({
+    type: 'column-positive-negative',
+    dataset: dataset,
+    formatterString: 's'
+  })
+  .on('selected', function (e, args) {
+    // console.log(args);
+  });
+
+  $('#btn-get-selected').on('click', function() {
+    var api = elem.data('chart');
+    console.log(api.getSelected());
+  });
 
 });
 </script>

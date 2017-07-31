@@ -15,6 +15,13 @@
   </div>
 </div>
 
+<div class="row">
+  <div class="two-thirds column">
+      <button class="btn-secondary" type="button" id="btn-get-selected">Get selected</button>
+  </div>
+</div>
+
+
 {{={{{ }}}=}}
 
 <script>
@@ -33,8 +40,7 @@ $('body').on('initialized', function () {
         shortName: 'After-tax',
         value: 11,
         tooltip: 'After-tax Deductions {{percent}}',
-        id: 2,
-        selected: true
+        id: 2
       }, {
         name: 'Pre-tax Deductions',
         shortName: 'Pre-tax',
@@ -46,8 +52,7 @@ $('body').on('initialized', function () {
         shortName: 'Af-tax',
         value: 17,
         tooltip: 'Taxes %percent%',
-        id: 4,
-        selected: true
+        id: 4
       }, {
         name: 'Wages',
         shortName: 'Wages',
@@ -57,19 +62,22 @@ $('body').on('initialized', function () {
       }]
     }];
 
-  $('#pie-chart-example').chart({
+  var elem = $('#pie-chart-example');
+
+  elem.chart({
     type: 'donut',
     dataset: pieData,
     labels: {
       hideLabels: false
     }
   }).on('selected', function (e, args) {
-    if (args[0] && args[0].data) {
-      console.log('Save this id: '+ args[0].data.id);
-    }
+    // console.log(args);
   });
 
-  console.log($('#pie-chart-example').data());
+  $('#btn-get-selected').on('click', function() {
+    var api = elem.data('chart');
+    console.log(api.getSelected());
+  });
 
 });
 </script>
