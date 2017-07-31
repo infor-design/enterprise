@@ -49,7 +49,7 @@ window.Chart = function(container) {
       }
     }
 
-    if (chartType === 'pie') {
+    if (chartType === 'pie' || chartType === 'donut') {
       return this.colorRange[i];
     }
     if (chartType === 'bar-single' || chartType === 'column-single') {
@@ -98,7 +98,7 @@ window.Chart = function(container) {
     }
   };
 
-  this.addLegend = function(series) {
+  this.addLegend = function(series, chartType) {
     var i, s = charts.settings;
 
     if (series.length === 0) {
@@ -134,7 +134,7 @@ window.Chart = function(container) {
       }
 
       var seriesLine = '<span class="chart-legend-item'+ extraClass +'" tabindex="0"></span>',
-        hexColor = charts.chartColor(i, (series.length === 1 ? 'bar-single' : 'bar'), series[i]);
+        hexColor = charts.chartColor(i, chartType ? chartType : (series.length === 1 ? 'bar-single' : 'bar'), series[i]);
 
       var color = $('<span class="chart-legend-color" style="background-color: '+ (series[i].pattern ? 'transparent' : hexColor) +'"></span>'),
         textBlock = $('<span class="chart-legend-item-text">'+ series[i].name + '</span>');
@@ -1450,7 +1450,7 @@ window.Chart = function(container) {
 
     // Add Legends
     if (showLegend || charts.legendformatter) {
-      charts[charts.legendformatter ? 'renderLegend' : 'addLegend'](series);
+      charts[charts.legendformatter ? 'renderLegend' : 'addLegend'](series, 'donut');
     }
 
     // Set initial selected
