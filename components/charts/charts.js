@@ -464,6 +464,10 @@ window.Chart = function(container) {
       }
     }
 
+    if (settings.ticks) {
+      xAxis.ticks(settings.ticks.number, settings.ticks.format);
+    }
+
     yAxis = d3.svg.axis()
       .scale(yScale)
       .tickSize(0)
