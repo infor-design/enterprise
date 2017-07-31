@@ -108,6 +108,7 @@
         this.xButton = this.inputWrapper.children('.icon.close');
 
         // Open the searchfield once on intialize if it's a "non-collapsible" searchfield
+        /*
         if (this.settings.collapsible === false ) {
           this.inputWrapper.addClass('no-transition').one('expanded.' + this.id, function() {
             $(this).removeClass('no-transition');
@@ -121,6 +122,8 @@
             this.setClosedWidth();
           }
         }
+        */
+        this.adjustOnBreakpoint();
 
         return this;
       },
@@ -482,7 +485,7 @@
               return;
             }
 
-            this.expand(true);
+            this.expand();
           } else {
             if (this.settings.collapsibleOnMobile === true && this.isExpanded) {
               this.collapse();
@@ -495,13 +498,17 @@
         // On larger form-factor (desktop)
         this.appendToButtonset();
 
-        if (this.hasFocus()) {
+        if (!this.settings.collapsible) {
           this.calculateOpenWidth();
           this.setOpenWidth();
-        } else {
-          if (this.settings.collapsible === true && this.isExpanded) {
-            this.collapse();
+
+          if (!this.isExpanded) {
+            this.expand();
           }
+        }
+
+        if (!this.hasFocus() && this.settings.collapsible === true && this.isExpanded) {
+          this.collapse();
         }
       },
 
@@ -904,6 +911,7 @@
         $('body').on('resize.' + this.id, function() {
           self.adjustOnBreakpoint();
         });
+        self.adjustOnBreakpoint();
 
         if (Soho.env.os.name === 'ios') {
           this.element.on('blur.toolbarsearchfield', function() {
