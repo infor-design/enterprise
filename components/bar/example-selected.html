@@ -40,9 +40,9 @@ $('body').on('initialized', function () {
     }];
 
   $('#bar-example').chart({type: 'bar', dataset: dataset})
-    .on('selected', function (e, bar, d, i) {
-      console.log(e, bar, d, i);
-    });
+  .on('selected', function (e, args) {
+    console.log('args', args);
+   });
 
 });
 </script>

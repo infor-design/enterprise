@@ -141,11 +141,11 @@ $('body').on('initialized', function () {
 			]
 		}];
 
-  $('#pie-donut-example1').chart({type: 'donut', dataset: donutData}).on('selected', function (e, elem, args) {
-    console.log(e, elem, args);
+  $('#pie-donut-example1').chart({type: 'donut', dataset: donutData}).on('selected', function (e, args) {
+    console.log(args);
   });
-  $('#pie-donut-example11').chart({type: 'donut', dataset: donutData}).on('selected', function (e, elem, args) {
-    console.log(e, elem, args);
+  $('#pie-donut-example11').chart({type: 'donut', dataset: donutData}).on('selected', function (e, args) {
+    console.log(args);
   });
 
 

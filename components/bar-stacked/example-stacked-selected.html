@@ -44,9 +44,9 @@ $('body').on('initialized', function () {
   }];
 
   $('#bar-stacked-example').chart({type: 'bar-stacked', dataset: dataset})
-    .on('selected', function (e, bar, d, i, selectedBars) {
-      console.log(e, bar, d, i, selectedBars);
-    });
+    .on('selected', function (e, args) {
+      console.log('args', args);
+     });
 
 });
 </script>

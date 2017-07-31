@@ -34,8 +34,9 @@ $('body').on('initialized', function () {
       name: ''  //Can be optionally passed in makes less sense with one: Group 1
     }];
 
-  $('#bar-example').chart({type: 'bar', dataset: dataset}).on('selected', function(e, ui, data) {
-    console.log(e, ui, data);
+  $('#bar-example').chart({type: 'bar', dataset: dataset})
+  .on('selected', function (e, args) {
+    console.log('args', args);
    });
 
 
