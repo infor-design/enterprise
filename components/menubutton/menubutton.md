@@ -2,7 +2,7 @@
 
 ## Configuration Options
 
-1. Simple Menu Button [View Example]( ../components/menubutton/example-menubutton)
+1. Simple Menu Button [View Example]( ../components/menubutton/example-index)
 2. Menu Button Events [View Example]( ../components/menubutton/example-events)
 3. Submenus [View Example]( ../components/menubutton/example-submenu.htm)
 4. Submenu With Icons [View Example]( ../components/menubutton/example-submenu-icons.htm)

@@ -25,7 +25,6 @@
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>href</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></strong> string representing the target tab to load content under.<br /></li>
-<li><code>isURL</code><br /></li>
 <li><code>callback</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a></strong> method that fires after a successful source call.</li>
 </ul>
 <p>Returns <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a> | $.Deferred)</strong> true if source call was successful, false for failure/ignore, or a promise object that will fire callbacks in either &quot;success&quot; or &quot;failure&quot; scenarios.</p>
@@ -200,6 +199,10 @@
 <p>Shift + Tab works similarly to the strategy for the Tab key, but moves focus backwards instead of forwards.</p>
 <p><strong>NOTE:</strong> For tabs to work correctly on mac you need to go to apple &gt;&gt; keyboard shortcuts, then click the checkbox at the bottom of the page at the bottom that says full keyboard access - all controls. This way the system can tab into any elements (this is a mac setting).</p>
 <p>If using Safari on a Mac, you also need to go into Safari &gt;&gt; Preferences... then click the checkbox near the top that says Press Tab to Highlight Each Option on a webpage. This allows hyperlinks to be focusable by default (without having to press Option + Tab).</p>
+<h3 id="altbackspace-altdelete">** Alt+backspace / Alt+Delete**</h3>
+<ul>
+<li>If the tab is dismissible that tab will be closed. We use the alt combination because backspace can be used to go back a page.</li>
+</ul>
 <h2 id="states-and-variations">States and Variations</h2>
 <p>The Tabs Control itself can be either completely active, or completely disabled.</p>
 <p>Each Individual Tab has the following states:</p>

@@ -10,6 +10,10 @@ var express = require('express'),
   http = require('http'),
   git = require('git-rev-sync'),
   BASE_PATH = process.env.BASEPATH || '/',
+  fullBasePath = function (req) {
+    var fullPath = (req.protocol + '://' + req.headers.host.replace('/', '') + BASE_PATH);
+    return fullPath;
+  },
   getJSONFile = require(path.resolve(__dirname, 'demoapp', 'js', 'getJSONFile')),
   packageJSON = getJSONFile(path.resolve('package.json'));
 
@@ -56,10 +60,7 @@ var express = require('express'),
 
     // Normally we will use an external file for loading SVG Icons and Patterns.
     // Setting 'inlineSVG' to true will use the deprecated method of using SVG icons, which was to bake them into the HTML markup.
-    // if (req.query.inlineSVG && req.query.inlineSVG.length > 0) {
-      res.opts.inlineSVG = true;
-      //console.log('Inlining SVG Elements...');
-    // }
+    res.opts.inlineSVG = true;
 
     // Global settings for forcing a 'no frills' layout for test pages.
     // This means no header with page title, hamburger, theme swap settings, etc.
@@ -317,6 +318,7 @@ var express = require('express'),
     /_layout\.html/,
     /(api.md$)/,
     /layout/,
+    /partial/,
     /\.DS_Store/
   ];
 
@@ -458,27 +460,18 @@ var express = require('express'),
   // ======================================
 
   router.get('/', function(req, res, next) {
+    var opts = res.opts;
+    opts.basepath = fullBasePath(req);
     res.redirect(BASE_PATH + 'kitchen-sink');
     next();
   });
 
   router.get('/kitchen-sink', function(req, res, next) {
+    var opts = res.opts;
+    opts.basepath = fullBasePath(req);
     res.render('kitchen-sink', res.opts);
     next();
   });
-
-  router.get('/partials*', function(req, res) {
-    var end = req.url.replace('/partials/',''),
-      partialsOpts = {
-        enableLiveReload: false,
-        layout: '',
-        locale: 'en-US',
-        title: '',
-      };
-
-    res.render('partials/' + end, partialsOpts);
-  });
-
 
   // ======================================
   //  Controls Section
@@ -493,8 +486,7 @@ var express = require('express'),
     var opts = extend({}, res.opts, controlOpts);
     opts.subtitle = 'Full Index';
 
-    //res.render('controls/index', opts);
-    res.redirect(BASE_PATH + 'components/');
+    res.render('components/index', opts);
     next();
   }
 
@@ -569,11 +561,7 @@ var express = require('express'),
   function defaultDocsRoute(req, res, next) {
     var opts = extend({}, res.opts, componentOpts);
     opts.layout = 'doc-layout';
-
-    if (req.url.substr(-1) !== '/' && req.url.length > 1) {
-      res.redirect(301, req.url + '/');
-      next();
-    }
+    opts.basepath = fullBasePath(req);
 
     res.render('index', opts);
     next();
@@ -584,6 +572,7 @@ var express = require('express'),
     var opts = extend({}, res.opts, componentOpts);
     opts.subtitle = 'Doc Style Guide';
     opts.layout = 'doc-layout';
+    opts.basepath = fullBasePath(req);
 
     res.render('doc-styleguide', opts);
     next();
@@ -593,6 +582,7 @@ var express = require('express'),
     var opts = extend({}, res.opts, componentOpts);
     opts.subtitle = 'Documentation';
     opts.layout = 'doc-layout';
+    opts.basepath = fullBasePath(req);
 
     var componentName = stripHtml(req.params.component);
     opts.subtitle = toTitleCase(componentName.charAt(0).toUpperCase() + componentName.slice(1).replace('-',' '));
@@ -608,6 +598,8 @@ var express = require('express'),
     var componentName = '',
       exampleName = '',
       opts = extend({}, res.opts, componentOpts);
+
+    opts.basepath = fullBasePath(req);
 
     if (!req.params.component) {
       return defaultDocsRoute(req, res, next);
@@ -630,6 +622,14 @@ var express = require('express'),
     }
 
     exampleName = req.params.example;
+
+    if (req.params.example !== undefined && exampleName.substr(0, 7) === 'partial') {
+      opts.layout = '';
+    }
+
+    if (exampleName && exampleName.substr() === 'doc' || exampleName === 'docs') {
+      return docsRoute(req, res, next);
+    }
 
     // Some specific text content will change the route
     if (exampleName === 'doc' || exampleName === 'docs') {

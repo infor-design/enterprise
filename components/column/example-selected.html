@@ -61,8 +61,8 @@ $('body').on('initialized', function () {
           }];
 
     $('#column-bar-example').chart({type: 'column', dataset: dataset})
-      .on('selected', function (e, bar, d, i) {
-        console.log(e, bar, d, i);
+      .on('selected', function (e, args) {
+        console.log(args);
       });
 
 });

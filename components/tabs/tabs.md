@@ -194,6 +194,10 @@ Shift + Tab works similarly to the strategy for the Tab key, but moves focus bac
 
 If using Safari on a Mac, you also need to go into Safari \>\> Preferences... then click the checkbox near the top that says Press Tab to Highlight Each Option on a webpage. This allows hyperlinks to be focusable by default (without having to press Option + Tab).
 
+### ** Alt+backspace / Alt+Delete**
+
+-  If the tab is dismissible that tab will be closed. We use the alt combination because backspace can be used to go back a page.
+
 ## States and Variations
 
 The Tabs Control itself can be either completely active, or completely disabled.

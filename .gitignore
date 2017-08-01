@@ -10,7 +10,6 @@ public/svg/
 public/js/
 public/stylesheets/
 temp/
-docs/
 views/docs
 publish/dist
 publish/sass
@@ -35,6 +34,7 @@ xunit.xml
 *.iml
 views/docs/changelog-contents.html
 config.json
+docs/api
 
 # OS generated files #
 ############

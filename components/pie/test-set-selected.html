@@ -63,9 +63,10 @@ $('body').on('initialized', function () {
     labels: {
       hideLabels: false
     }
-  }).on('selected', function (e, args, d, i) {
-    var data = d.data || {}
-    console.log('Save this id: '+ data.id);
+  }).on('selected', function (e, args) {
+    if (args[0] && args[0].data) {
+      console.log('Save this id: '+ args[0].data.id);
+    }
   });
 
   console.log($('#pie-chart-example').data());

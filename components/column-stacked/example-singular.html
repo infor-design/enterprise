@@ -55,7 +55,10 @@ $('body').on('initialized', function () {
             }]
           }];
 
-    $('#column-bar-example').chart({type: 'column-stacked', dataset: dataset});
+    $('#column-bar-example').chart({type: 'column-stacked', dataset: dataset})
+    .on('selected', function (e, args) {
+      console.log(args);
+    });
 
 });
 </script>
