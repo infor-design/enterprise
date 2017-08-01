@@ -13,6 +13,7 @@
         columns = [];
 
       //Define Columns for the Grid.
+      columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, width: 50, formatter: Formatters.SelectionCheckbox, align: 'center' }),
       columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Text});
       columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink});
       columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity'});
@@ -29,7 +30,7 @@
         $('#datagrid').datagrid({
           columns: columns,
           dataset: res.data,
-          selectable: 'single',
+          selectable: 'multiple',
           paging: true,
           pagesize: 15,
           toolbar: {title: 'Requests', results: true, dateFilter: false , keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true}
@@ -38,7 +39,7 @@
           });
 
           $('#datagrid tbody').on('paging', function(e, args) {
-           console.log(args);
+          //  console.log(args);
           });
 
       });

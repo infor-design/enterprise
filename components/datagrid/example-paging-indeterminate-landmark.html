@@ -25,11 +25,13 @@
       if (args && args.length > 1) {
         var indexString = "";
         for (var i = 0; i < args.length; i++) {
-          indexString += args[i].idx + (i < args.length - 1 ? ', ' : '');
+          indexString += args[i].data.id + (i < args.length - 1 ? ', ' : '');
+          // indexString += args[i].idx + (i < args.length - 1 ? ', ' : '');
         }
         console.log('selected row indexes', indexString);
       } else if (args && args.length > 0) {
-        console.log('selected row index', args[0].idx);
+        console.log('selected row index', args[0].data.id);
+        // console.log('selected row index', args[0].idx);
       }
     })
     .on('rowactivated', function(e, args) {
