@@ -58,12 +58,9 @@ var express = require('express'),
       console.log('Changing Route Parameter "locale" to be "' + res.opts.locale + '".');
     }
 
-    // Normally we will use an external file for loading  Icons and Patterns.
-    // Setting 'inline' to true will use the deprecated method of using  icons, which was to bake them into the HTML markup.
-    // if (req.query.inline && req.query.inline.length > 0) {
-      res.opts.inline = true;
-      //console.log('Inlining SVG Elements...');
-    // }
+    // Normally we will use an external file for loading SVG Icons and Patterns.
+    // Setting 'inlineSVG' to true will use the deprecated method of using SVG icons, which was to bake them into the HTML markup.
+    res.opts.inlineSVG = true;
 
     // Global settings for forcing a 'no frills' layout for test pages.
     // This means no header with page title, hamburger, theme swap settings, etc.
@@ -321,6 +318,7 @@ var express = require('express'),
     /_layout\.html/,
     /(api.md$)/,
     /layout/,
+    /partial/,
     /\.DS_Store/
   ];
 
@@ -475,19 +473,6 @@ var express = require('express'),
     next();
   });
 
-  router.get('/partials*', function(req, res) {
-    var end = req.url.replace('/partials/',''),
-      partialsOpts = {
-        enableLiveReload: false,
-        layout: '',
-        locale: 'en-US',
-        title: '',
-      };
-
-    res.render('partials/' + end, partialsOpts);
-  });
-
-
   // ======================================
   //  Controls Section
   // ======================================
@@ -637,6 +622,14 @@ var express = require('express'),
     }
 
     exampleName = req.params.example;
+
+    if (req.params.example !== undefined && exampleName.substr(0, 7) === 'partial') {
+      opts.layout = '';
+    }
+
+    if (exampleName && exampleName.substr() === 'doc' || exampleName === 'docs') {
+      return docsRoute(req, res, next);
+    }
 
     // Some specific text content will change the route
     if (exampleName === 'doc' || exampleName === 'docs') {

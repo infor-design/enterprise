@@ -615,6 +615,7 @@ div.dropdown-xs,
   .dropdown-list {
     &.multiple li {
       &::before {
+        margin-left: -28px;
         top: 3px;
       }
 
