@@ -1,0 +1,89 @@
+
+
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Line Chart Title</h2>
+        </div>
+        <div class="widget-content">
+          <div id="line-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+
+    var dataset = [{
+      data: [{
+          name: 'January',
+          value: 12,
+          depth: 4
+      }, {
+          name: 'Febuary',
+          value: 11
+      }, {
+          name: 'March',
+          value: 14
+      }, {
+          name: 'April',
+          value: 10
+      }, {
+          name: 'May',
+          value: 14
+      }, {
+          name: 'June',
+          value: 8
+      }],
+      name: 'Component A'
+    }, {
+      data: [{
+          name: 'January',
+          value: 22
+      }, {
+          name: 'Febuary',
+          value: 21
+      }, {
+          name: 'March',
+          value: 24
+      }, {
+          name: 'April',
+          value: 20
+      }, {
+          name: 'May',
+          value: 24
+      }, {
+          name: 'June',
+          value: 28
+      }],
+      name: 'Component B'
+    }, {
+      data: [{
+          name: 'January',
+          value: 32
+      }, {
+          name: 'Febuary',
+          value: 31
+      }, {
+          name: 'March',
+          value: 34
+      }, {
+          name: 'April',
+          value: 30
+      }, {
+          name: 'May',
+          value: 34
+      }, {
+          name: 'June',
+          value: 38
+      }],
+      name: 'Component C'
+    }];
+
+  $('#line-example').chart({type: 'line', dataset: dataset, xAxis: {rotate: '-65'} });
+
+});
+</script>

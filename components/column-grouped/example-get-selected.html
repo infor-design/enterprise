@@ -3,13 +3,19 @@
   <div class="two-thirds column">
       <div class="widget">
         <div class="widget-header">
-          <h2 class="widget-title">Stacked Column Chart Title</h2>
+          <h2 class="widget-title">Grouped Column Chart</h2>
         </div>
         <div class="widget-content">
-          <div id="column-bar-stacked-example" class="chart-container">
+          <div id="column-grouped-example" class="chart-container">
           </div>
         </div>
       </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two-thirds column">
+      <button class="btn-secondary" type="button" id="btn-get-selected">Get selected</button>
   </div>
 </div>
 
@@ -19,7 +25,7 @@ $('body').on('initialized', function () {
     var dataset = [{
         data: [{
             name: 'Jan',
-            value: 12,
+            value: 12
         }, {
             name: 'Feb',
             value: 11
@@ -35,25 +41,6 @@ $('body').on('initialized', function () {
         }, {
             name: 'Jun',
             value: 8
-        }, {
-            name: 'Jul',
-            value: 7
-        }, {
-            name: 'AUG',
-            value: 10
-        }, {
-            name: 'SEP',
-            value: 9
-        }, {
-            name: 'OCT',
-            value: 8
-        }, {
-            name: 'NOV',
-            value: 10
-        }, {
-            name: 'DEC',
-            value: 6,
-            selected: true
         }],
         name: 'Component A'
       }, {
@@ -75,25 +62,6 @@ $('body').on('initialized', function () {
         }, {
             name: 'Jun',
             value: 28
-        }, {
-            name: 'Jul',
-            value: 27
-        }, {
-            name: 'AUG',
-            value: 20
-        }, {
-            name: 'SEP',
-            value: 29
-        }, {
-            name: 'OCT',
-            value: 28
-        }, {
-            name: 'NOV',
-            value: 20
-        }, {
-            name: 'DEC',
-            value: 26,
-            selected: true
         }],
         name: 'Component B'
       }, {
@@ -115,33 +83,21 @@ $('body').on('initialized', function () {
         }, {
             name: 'Jun',
             value: 38
-        }, {
-            name: 'Jul',
-            value: 37
-        }, {
-            name: 'AUG',
-            value: 30
-        }, {
-            name: 'SEP',
-            value: 39
-        }, {
-            name: 'OCT',
-            value: 38
-        }, {
-            name: 'NOV',
-            value: 30
-        }, {
-            name: 'DEC',
-            value: 36,
-            selected: true
         }],
         name: 'Component C'
       }];
 
-    $('#column-bar-stacked-example').chart({type: 'column-stacked', dataset: dataset})
-    .on('selected', function (e, args) {
-      console.log(args);
-    });
+  var elem = $('#column-grouped-example');
+
+  elem.chart({type: 'column-grouped', dataset: dataset})
+  .on('selected', function (e, args) {
+    // console.log(args);
+  });
+
+  $('#btn-get-selected').on('click', function() {
+    var api = elem.data('chart');
+    console.log(api.getSelected());
+  });
 
 });
 </script>

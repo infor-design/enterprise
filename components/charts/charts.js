@@ -49,7 +49,7 @@ window.Chart = function(container) {
       }
     }
 
-    if (chartType === 'pie') {
+    if (chartType === 'pie' || chartType === 'donut') {
       return this.colorRange[i];
     }
     if (chartType === 'bar-single' || chartType === 'column-single') {
@@ -98,7 +98,7 @@ window.Chart = function(container) {
     }
   };
 
-  this.addLegend = function(series) {
+  this.addLegend = function(series, chartType) {
     var i, s = charts.settings;
 
     if (series.length === 0) {
@@ -134,7 +134,7 @@ window.Chart = function(container) {
       }
 
       var seriesLine = '<span class="chart-legend-item'+ extraClass +'" tabindex="0"></span>',
-        hexColor = charts.chartColor(i, (series.length === 1 ? 'bar-single' : 'bar'), series[i]);
+        hexColor = charts.chartColor(i, chartType ? chartType : (series.length === 1 ? 'bar-single' : 'bar'), series[i]);
 
       var color = $('<span class="chart-legend-color" style="background-color: '+ (series[i].pattern ? 'transparent' : hexColor) +'"></span>'),
         textBlock = $('<span class="chart-legend-item-text">'+ series[i].name + '</span>');
@@ -1450,7 +1450,7 @@ window.Chart = function(container) {
 
     // Add Legends
     if (showLegend || charts.legendformatter) {
-      charts[charts.legendformatter ? 'renderLegend' : 'addLegend'](series);
+      charts[charts.legendformatter ? 'renderLegend' : 'addLegend'](series, 'donut');
     }
 
     // Set initial selected
@@ -3670,7 +3670,8 @@ window.Chart = function(container) {
       thisGroup = d3.select(o.selector.parentNode),
       thisGroupId = parseInt((thisGroup.node() ? thisGroup.attr('data-group-id') : 0), 10),
       triggerData = [],
-      selectedBars = [];
+      selectedBars = [],
+      thisData;
 
     if (isStacked || isTypePie) {
       dataset = dataset || null;
@@ -3714,12 +3715,11 @@ window.Chart = function(container) {
               .selectAll('.bar').classed('is-selected', true).style('opacity', 1);
           }
 
-          var thisData;
           svg.selectAll('.bar.is-selected').each(function(d, i) {
             var bar = d3.select(this);
 
             thisData = s.dataset;
-            thisData = thisData ? (isStacked ? thisData[o.i].data[i] : thisData[i].data[o.i]) : d;
+            thisData = thisData ? (isStacked ? isSingular ? (thisData[0].data[o.i]) : (thisData[o.i].data[i]) : thisData[i].data[o.i]) : d;
             selectedBars.push({elem: bar[0], data: thisData});
           });
           triggerData = selectedBars;
@@ -3728,7 +3728,9 @@ window.Chart = function(container) {
 
       // Single and stacked only -NOT grouped-
       else if (isSingular && isStacked && isTypeColumn) {
+        thisData = dataset[0] && dataset[0].data ? dataset[0].data : o.d;
         selector.classed('is-selected', true).style('opacity', 1);
+        triggerData.push({elem: selector[0], data: thisData[o.i]});
       }
 
       // Single or groups only -NOT stacked-
@@ -3741,8 +3743,8 @@ window.Chart = function(container) {
         d3.select(svg.selectAll('.bartext')[0][o.i]).style('font-weight', 'bolder');
         d3.select(svg.selectAll('.target-bartext')[0][o.i]).style('font-weight', 'bolder');
 
-        if (isGrouped || isPositiveNegative) {
-          if (!isPositiveNegative) {
+        if (isGrouped || isPositiveNegative || isTypeColumn) {
+          if (!isPositiveNegative && !isTypeColumn || (isTypeColumn && isGrouped)) {
             thisGroup.classed('is-selected', true)
               .selectAll('.bar').classed('is-selected', true).style('opacity', 1);
           }

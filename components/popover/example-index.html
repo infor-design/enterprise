@@ -1,7 +1,6 @@
 <div class="row">
   <div class="six columns">
-    <h2>Popover Test: Simple Example Content</h2>
-    <p>Common configuration for popupmenus attached to buttons.</p>
+    <h2>Popover Example</h2>
   </div>
 </div>
 
@@ -9,7 +8,7 @@
   <div class="twelve columns">
 
     <div class="field">
-      <button id="popover-trigger" class="btn-primary" type="button">
+      <button id="popover-trigger" class="btn-secondary" type="button">
         <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
           <use xlink:href="#icon-upload"></use>
         </svg>
@@ -51,7 +50,8 @@
     closebutton: true,
     content: $('#popover-contents'),
     extraClass: 'alternate',
-    placement: 'bottom',
+    placement: 'right',
+    popover: true,
     offset: {
       y: 10
     },

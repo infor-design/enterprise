@@ -1786,7 +1786,9 @@ $.fn.datagrid = function(options) {
       }
 
       if (this.pager) {
-        this.pager.activePage = pagerInfo.activePage;
+        if (pagerInfo.activePage > -1) {
+          this.pager.activePage = pagerInfo.activePage;
+        }
         this.pager.settings.dataset = dataset;
       }
 
@@ -5114,7 +5116,8 @@ $.fn.datagrid = function(options) {
           self.setNodeStatus(rowNode);
         }
         else {
-          rowData = s.dataset[self.pager && s.source ? rowNode.index() : dataRowIndex];
+          dataRowIndex = self.pager && s.source ? rowNode.index() : dataRowIndex;
+          rowData = s.dataset[dataRowIndex];
           selectNode(rowNode, dataRowIndex, rowData);
           self.lastSelectedRow = idx;// Rememeber index to use shift key
         }
@@ -6859,7 +6862,14 @@ $.fn.datagrid = function(options) {
 
       this.pager = pagerElem.data('pager');
 
-      pagerElem.on('afterpaging', function (e, args) {
+      pagerElem
+      .on('beforepaging', function () {
+        // Selection support only for current page
+        if (self.pager && self.settings.source) {
+          self._selectedRows = [];          
+        }
+      })
+      .on('afterpaging', function (e, args) {
 
         self.displayCounts(args.total);
 
