@@ -36,10 +36,8 @@ $subheader-height: 60px;
     margin-bottom: 0;
     text-overflow: ellipsis;
     vertical-align: middle;
-    //width: calc(100% - 1px);
 
     span {
-      //display: block;
       height: inherit;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -133,7 +131,7 @@ $subheader-height: 60px;
 
       h1 {
         display: inline-block;
-        max-width: calc(100% - 40px);
+        max-width: 100%;
         overflow: hidden;
         text-overflow: ellipsis;
 
@@ -146,17 +144,9 @@ $subheader-height: 60px;
         }
       }
 
-      /*
-      h1 {
-        width: calc(100% - 30px);
+      [class^="btn"] + h1 {
+        max-width: calc(100% - 40px);
       }
-
-      .btn, .btn-icon, .btn-menu, .btn-tertiary {
-        + h1 {
-          width: calc(100% - 46px);
-        }
-      }
-      */
 
       .btn-menu {
         text-transform: none;

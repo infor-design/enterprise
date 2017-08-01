@@ -92,15 +92,6 @@ $toolbar-buttonset-height: 40px;
       @include vertical-alignment-spacer;
     }
 
-    /*
-    > * {
-      display: inline-block;
-      margin: auto 0;
-      vertical-align: middle;
-      white-space: nowrap;
-    }
-    */
-
     + .buttonset {
       text-align: right;
       width: calc(55% - 1px); // -1px for the spacer in the ::after pseudo on the toolbar elem.
