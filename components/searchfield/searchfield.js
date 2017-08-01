@@ -104,20 +104,28 @@
         }
 
         // Add Icon
-        var icon = this.wrapper.find('.icon:not(.icon-dropdown)');
+        var icon = this.wrapper.find('.icon:not(.icon-dropdown)'),
+          insertIconInFront = this.wrapper.hasClass('context') || this.wrapper.hasClass('has-categories');
+
         if (!icon || !icon.length) {
-          icon = $.createIconElement('search').insertAfter(this.element).icon();
+          icon = $.createIconElement('search');
         }
+
+        // Swap icon position to in-front if we have "context/has-categories" CSS class.
+        icon[insertIconInFront ? 'insertBefore' : 'insertAfter'](this.element).icon();
 
         // Change icon to a trigger button if we're dealing with categories
         if (this.hasCategories()) {
           this.wrapper.addClass('has-categories');
 
-          this.button = icon.parent('.searchfield-category-button');
+          this.button = this.wrapper.find('.btn, .searchfield-category-button');
           if (!this.button.length) {
-            this.button = icon.wrap('<button type="button" class="btn searchfield-category-button"></button>').parent();
+            this.button = $('<button type="button" class="btn searchfield-category-button"></button>');
           }
+          icon.appendTo(this.button);
           icon = this.button;
+
+          this.button.insertBefore(this.element);
 
           if (this.settings.showCategoryText) {
             this.wrapper.addClass('show-category');
@@ -129,36 +137,37 @@
           }
           ddIcon.appendTo(icon);
 
-          this.list = this.wrapper.find('ul.popupmenu');
-          if (!this.list || !this.list.length) {
-            this.list = $('<ul class="popupmenu"></ul>');
-          }
-
-          // Handle Single vs Multi-Selectable Lists
-          var categoryListType = this.settings.categoryMultiselect ? 'is-multiselectable' : 'is-selectable';
-          this.list.addClass(categoryListType);
-          var removeListType = 'is-selectable';
-          if (!this.settings.categoryMultiselect) {
-            removeListType = 'is-multiselectable';
-          }
-          this.list.removeClass(removeListType);
-
-          this.setCategories(this.settings.categories);
-
-          this.list.insertAfter(this.button);
-          this.button.popupmenu({
-            menu: this.list,
-            offset: {
-              y: 10
+          var popupAPI = this.button.data('popupmenu');
+          if (!popupAPI) {
+            this.list = this.wrapper.find('ul.popupmenu');
+            if (!this.list || !this.list.length) {
+              this.list = $('<ul class="popupmenu"></ul>');
             }
-          });
+
+            // Handle Single vs Multi-Selectable Lists
+            var categoryListType = this.settings.categoryMultiselect ? 'is-multiselectable' : 'is-selectable';
+            this.list.addClass(categoryListType);
+            var removeListType = 'is-selectable';
+            if (!this.settings.categoryMultiselect) {
+              removeListType = 'is-multiselectable';
+            }
+            this.list.removeClass(removeListType);
+
+            this.setCategories(this.settings.categories);
+
+            this.list.insertAfter(this.element);
+            this.button.popupmenu({
+              menu: this.list,
+              offset: {
+                y: 10
+              }
+            });
+
+          } else {
+            this.setCategories(this.settings.categories);
+          }
 
           this.setCategoryButtonText();
-        }
-
-        // Swap icon position to in-front if we have "context/has-categories" CSS class.
-        if (this.wrapper.hasClass('context') || this.wrapper.hasClass('has-categories') ) {
-          icon.insertBefore(this.element);
         }
 
         // Hoist the 'alternate' CSS class to the wrapper, if applicable

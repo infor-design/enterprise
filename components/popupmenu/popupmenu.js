@@ -1307,7 +1307,14 @@
         if (this.originalParent) {
           this.menu.appendTo(this.originalParent);
         } else {
-          this.menu.insertAfter(this.element);
+          // TODO: Fix when we have time - shouldn't be referencing other controls here
+          var insertTarget = this.element,
+            searchfield = this.element.parent().children('.searchfield');
+          if (searchfield.length) {
+            insertTarget = searchfield.first();
+          }
+
+          this.menu.insertAfter(insertTarget);
         }
 
         this.menu.find('.submenu').children('a').each(function(i, item) {
@@ -1317,10 +1324,6 @@
         });
 
         function unwrapPopup(menu) {
-          if (!this.preExistingWrapper) {
-            return;
-          }
-
           var wrapper = menu.parent();
           if (wrapper.is('.popupmenu-wrapper, .wrapper')) {
             if (wrapper.data('place')) {
@@ -1330,14 +1333,10 @@
           }
         }
 
-        //unwrapPopup(this.menu);
+        // Unwrap submenus
         this.menu.find('.popupmenu').each(function() {
           unwrapPopup($(this));
         });
-
-        if (this.menu[0]) {
-          $.removeData(this.menu[0], 'trigger');
-        }
 
         if (wrapper.data('place')) {
           wrapper.data('place').destroy();
@@ -1346,6 +1345,10 @@
 
         if (this.matchMedia) {
           this.matchMedia.removeListener(this.mediaQueryListener);
+        }
+
+        if (this.menu[0]) {
+          $.removeData(this.menu[0], 'trigger');
         }
 
         this.detach();
