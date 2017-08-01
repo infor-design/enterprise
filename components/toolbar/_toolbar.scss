@@ -92,20 +92,14 @@ $toolbar-buttonset-height: 40px;
       @include vertical-alignment-spacer;
     }
 
+    /*
     > * {
       display: inline-block;
       margin: auto 0;
       vertical-align: middle;
       white-space: nowrap;
     }
-
-    > h1 {
-      text-overflow: ellipsis;
-
-      + [class^="btn"] {
-        margin-left: 5px;
-      }
-    }
+    */
 
     + .buttonset {
       text-align: right;
@@ -173,6 +167,27 @@ $toolbar-buttonset-height: 40px;
       // scss-lint:disable ImportantRule
       display: inline-block !important;
       // scss-lint:enable ImportantRule
+    }
+  }
+
+  // Force no display of the "More Actions" button
+  &.no-actions-button {
+    &.has-more-button {
+      .more {
+        // scss-lint:disable ImportantRule
+        display: none !important;
+        // scss-lint:enable ImportantRule
+      }
+
+      .buttonset {
+        width: calc(100% - 1px);
+      }
+
+      &.has-title {
+        .buttonset {
+          width: calc(55% - 1px);
+        }
+      }
     }
   }
 

@@ -9,7 +9,9 @@
           <span class="three"></span>
         </span>
       </button>
-      <h1 id="title-text-elem">Header Toolbar Gauntlet</h1>
+      <h1 id="title-text-elem">
+        <span class="page-title">Header Toolbar Gauntlet</span>
+      </h1>
     </div>
 
     <div class="buttonset">
@@ -73,59 +75,38 @@
         </button>
       </div>
 
-      <div class="row">
-        <div class="six columns">
-
-          <fieldset class="radio-group">
-            <legend>Title Button</legend>
-            <input type="radio" class="radio" name="title-button-toggle" id="title-button-hide" value="false" />
-            <label for="title-button-hide" class="radio-label">Hide</label>
-            <br>
-            <input type="radio" class="radio" name="title-button-toggle" id="title-button-show" value="true" checked />
-            <label for="title-button-show" class="radio-label">Show</label>
-          </fieldset>
-
-        </div>
-        <div class="six columns">
-
-          <fieldset class="radio-group">
-            <legend>Searchfield</legend>
-            <input type="radio" class="radio" name="searchfield-toggle" id="searchfield-hide" value="false" />
-            <label for="searchfield-hide" class="radio-label">Hide</label>
-            <br>
-            <input type="radio" class="radio" name="searchfield-toggle" id="searchfield-show" value="true" checked />
-            <label for="searchfield-show" class="radio-label">Show</label>
-          </fieldset>
-
-        </div>
+      <div class="field">
+        <input type="checkbox" class="checkbox" name="eyebrow-toggle" id="eyebrow-toggle"/>
+        <label for="eyebrow-toggle" class="radio-label">Toggle "Eyebrow" Header Text</label>
       </div>
 
-      <div class="row">
-        <div class="six columns">
+      <div class="field">
+        <label for="eyebrow-text">Eyebrow Text</label>
+        <input id="eyebrow-text" type="text" value="Extra Info" disabled/>
+      </div>
 
-          <fieldset class="radio-group">
-            <legend>More Button</legend>
-            <input type="radio" class="radio" name="more-button-toggle" id="more-button-hide" value="false" />
-            <label for="more-button-hide" class="radio-label">Hide</label>
-            <br>
-            <input type="radio" class="radio" name="more-button-toggle" id="more-button-show" value="true" checked />
-            <label for="more-button-show" class="radio-label">Show</label>
-          </fieldset>
+          <input type="checkbox" class="checkbox" name="title-button-toggle" id="title-button-toggle" checked/>
+          <label for="title-button-toggle" class="radio-label">Toggle App Menu (Title) Button</label>
+          <br />
 
-        </div>
-        <div class="six columns">
+          <input type="checkbox" class="checkbox" name="searchfield-toggle" id="searchfield-toggle" checked/>
+          <label for="searchfield-toggle" class="radio-label">Toggle Searchfield</label>
+          <br />
+
+          <input type="checkbox" class="checkbox" name="more-button-toggle" id="more-button-toggle" checked/>
+          <label for="more-button-toggle" class="radio-label">Toggle "More Actions" Button</label>
+          <br />
 
           <input type="checkbox" class="checkbox" name="settings-toggle" id="settings-toggle" checked/>
-          <label for="settings-toggle" class="radio-label">Toggle "Settings" Button</label>
+          <label for="settings-toggle" class="radio-label">Toggle "Settings" Toolbar Button</label>
           <br />
-          <input type="checkbox" class="checkbox" name="delete-toggle" id="delete-toggle" checked/>
-          <label for="delete-toggle" class="radio-label">Toggle "Delete" Button</label>
-          <br />
-          <input type="checkbox" class="checkbox" name="filter-toggle" id="filter-toggle" checked/>
-          <label for="filter-toggle" class="radio-label">Toggle "Filter" Button</label>
 
-        </div>
-      </div>
+          <input type="checkbox" class="checkbox" name="delete-toggle" id="delete-toggle" checked/>
+          <label for="delete-toggle" class="radio-label">Toggle "Delete" Toolbar Button</label>
+          <br />
+
+          <input type="checkbox" class="checkbox" name="filter-toggle" id="filter-toggle" checked/>
+          <label for="filter-toggle" class="radio-label">Toggle "Filter" Toolbar Button</label>
 
     </div>
   </div>
@@ -137,9 +118,11 @@
     titleTextElem = $('#title-text-elem'),
     textField = $('#title-name'),
     textBtn = $('#update-title-name'),
-    titleButtonToggles = $('[name="title-button-toggle"]'),
-    searchfieldToggles = $('[name="searchfield-toggle"]'),
-    moreButtonToggles = $('[name="more-button-toggle"]'),
+    eyebrowField = $('#eyebrow-text'),
+    titleButtonToggle = $('#title-button-toggle'),
+    searchfieldToggle = $('#searchfield-toggle'),
+    moreButtonToggle = $('#more-button-toggle'),
+    eyebrowToggle = $('#eyebrow-toggle'),
     settingsToggle = $('#settings-toggle'),
     filterToggle = $('#filter-toggle'),
     deleteToggle = $('#delete-toggle'),
@@ -150,8 +133,16 @@
     filterBtn = $('#filter-button'),
     deleteBtn = $('#delete-button');
 
-  function updateHeaderText(text) {
-    titleTextElem.text(text);
+  function updateHeaderText() {
+    var h1Contents = '';
+
+    if (eyebrowToggle.prop('checked')) {
+      h1Contents += '<span class="section-title">'+ eyebrowField.val() +'</span>';
+    }
+
+    h1Contents += '<span class="page-title">'+ textField.val() +'</span>';
+
+    titleTextElem.html(h1Contents);
     toolbarElem.triggerHandler('recalculate-buttons');
   }
 
@@ -180,9 +171,7 @@
   }
 
   function updateTitleButton() {
-    var showElem = $('#title-button-show');
-
-    if (showElem.prop('checked')) {
+    if (titleButtonToggle.prop('checked')) {
       if (!appMenuTrigger) {
         appMenuTrigger = createTitleButton();
       }
@@ -193,8 +182,7 @@
   }
 
   function updateSearchfield() {
-    var showElem = $('#searchfield-show');
-    if (showElem.prop('checked')) {
+    if (searchfieldToggle.prop('checked')) {
       headerSearchfieldWrapper.removeClass('hidden');
       toolbarElem.trigger('updated');
       return;
@@ -205,32 +193,35 @@
   }
 
   function updateMoreButton() {
-    var showElem = $('#more-button-show');
-
-    if (showElem.prop('checked')) {
-      toolbarElem.removeClass('no-actions-button');
-      toolbarElem.trigger('updated');
-      return;
-    }
-
-    toolbarElem.addClass('no-actions-button');
+    var isChecked = moreButtonToggle.prop('checked');
+    toolbarElem[isChecked ? 'removeClass' : 'addClass']('no-actions-button');
     toolbarElem.trigger('updated');
   }
 
   $('body').on('initialized', function() {
     textBtn.on('click.test', function() {
-      updateHeaderText(textField.val());
+      updateHeaderText();
     });
 
-    titleButtonToggles.on('change.test', function() {
+    eyebrowToggle.on('change.test', function() {
+      if ($(this).prop('checked')) {
+        eyebrowField.prop('disabled', false);
+      } else {
+        eyebrowField.prop('disabled', true);
+      }
+
+      updateHeaderText();
+    });
+
+    titleButtonToggle.on('change.test', function() {
       updateTitleButton();
     });
 
-    searchfieldToggles.on('change.test', function() {
+    searchfieldToggle.on('change.test', function() {
       updateSearchfield();
     });
 
-    moreButtonToggles.on('change.test', function() {
+    moreButtonToggle.on('change.test', function() {
       updateMoreButton();
     });
 

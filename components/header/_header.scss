@@ -35,11 +35,14 @@ $subheader-height: 60px;
     font-weight: normal;
     margin-bottom: 0;
     text-overflow: ellipsis;
-    width: calc(100% - 1px);
+    vertical-align: middle;
+    //width: calc(100% - 1px);
 
     span {
-      display: inherit;
+      //display: block;
       height: inherit;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 
@@ -76,7 +79,6 @@ $subheader-height: 60px;
   .page-title {
     @include font-size(18);
     color: $header-text-color;
-    display: block;
     margin-top: 3px;
 
     .alert .icon {
@@ -90,7 +92,6 @@ $subheader-height: 60px;
   .section-title {
     @include font-size(14);
     color: $header-text-color;
-    display: block;
     margin-top: 2px;
     padding: 0;
     text-transform: capitalize;
@@ -130,9 +131,32 @@ $subheader-height: 60px;
       position: absolute;
       text-overflow: ellipsis;
 
-      > h1 {
-        display: inline;
+      h1 {
+        display: inline-block;
+        max-width: calc(100% - 30px);
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        + [class^="btn"] {
+          margin-left: 5px;
+        }
+
+        span {
+          display: block;
+        }
       }
+
+      /*
+      h1 {
+        width: calc(100% - 30px);
+      }
+
+      .btn, .btn-icon, .btn-menu, .btn-tertiary {
+        + h1 {
+          width: calc(100% - 46px);
+        }
+      }
+      */
 
       .btn-menu {
         text-transform: none;
