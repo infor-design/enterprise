@@ -5212,7 +5212,7 @@ $.fn.datagrid = function(options) {
 
     toggleRowActivation: function (idx) {
       var row = (typeof idx === 'number' ? this.tableBody.find('tr[aria-rowindex="'+ (idx + 1) +'"]') : idx),
-        rowIndex = (typeof idx === 'number' ? idx : this.dataRowIndex(row)),
+        rowIndex = (typeof idx === 'number' ? idx : ((this.pager && this.settings.source) ? this.actualArrayIndex(row) : this.dataRowIndex(row))),
         isActivated = row.hasClass('is-rowactivated');
 
       if (isActivated) {
@@ -6866,7 +6866,7 @@ $.fn.datagrid = function(options) {
       .on('beforepaging', function () {
         // Selection support only for current page
         if (self.pager && self.settings.source) {
-          self._selectedRows = [];          
+          self._selectedRows = [];
         }
       })
       .on('afterpaging', function (e, args) {
