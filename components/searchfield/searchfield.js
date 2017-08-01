@@ -104,10 +104,15 @@
         }
 
         // Add Icon
-        var icon = this.wrapper.find('.icon:not(.icon-dropdown)');
+        var icon = this.wrapper.find('.icon:not(.icon-dropdown)'),
+          insertIconInFront = this.wrapper.hasClass('context') || this.wrapper.hasClass('has-categories');
+
         if (!icon || !icon.length) {
-          icon = $.createIconElement('search').insertAfter(this.element).icon();
+          icon = $.createIconElement('search');
         }
+
+        // Swap icon position to in-front if we have "context/has-categories" CSS class.
+        icon[insertIconInFront ? 'insertBefore' : 'insertAfter'](this.element).icon();
 
         // Change icon to a trigger button if we're dealing with categories
         if (this.hasCategories()) {
@@ -119,6 +124,8 @@
           }
           icon.appendTo(this.button);
           icon = this.button;
+
+          this.button.insertBefore(this.element);
 
           if (this.settings.showCategoryText) {
             this.wrapper.addClass('show-category');
@@ -148,7 +155,7 @@
 
             this.setCategories(this.settings.categories);
 
-            this.list.insertAfter(this.button);
+            this.list.insertAfter(this.element);
             this.button.popupmenu({
               menu: this.list,
               offset: {
@@ -161,11 +168,6 @@
           }
 
           this.setCategoryButtonText();
-        }
-
-        // Swap icon position to in-front if we have "context/has-categories" CSS class.
-        if (this.wrapper.hasClass('context') || this.wrapper.hasClass('has-categories') ) {
-          icon.insertBefore(this.element);
         }
 
         // Hoist the 'alternate' CSS class to the wrapper, if applicable
