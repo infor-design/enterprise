@@ -113,10 +113,11 @@
         if (this.hasCategories()) {
           this.wrapper.addClass('has-categories');
 
-          this.button = icon.parent('.searchfield-category-button');
+          this.button = this.wrapper.find('.btn, .searchfield-category-button');
           if (!this.button.length) {
-            this.button = icon.wrap('<button type="button" class="btn searchfield-category-button"></button>').parent();
+            this.button = $('<button type="button" class="btn searchfield-category-button"></button>');
           }
+          icon.appendTo(this.button);
           icon = this.button;
 
           if (this.settings.showCategoryText) {
@@ -129,29 +130,35 @@
           }
           ddIcon.appendTo(icon);
 
-          this.list = this.wrapper.find('ul.popupmenu');
-          if (!this.list || !this.list.length) {
-            this.list = $('<ul class="popupmenu"></ul>');
-          }
-
-          // Handle Single vs Multi-Selectable Lists
-          var categoryListType = this.settings.categoryMultiselect ? 'is-multiselectable' : 'is-selectable';
-          this.list.addClass(categoryListType);
-          var removeListType = 'is-selectable';
-          if (!this.settings.categoryMultiselect) {
-            removeListType = 'is-multiselectable';
-          }
-          this.list.removeClass(removeListType);
-
-          this.setCategories(this.settings.categories);
-
-          this.list.insertAfter(this.button);
-          this.button.popupmenu({
-            menu: this.list,
-            offset: {
-              y: 10
+          var popupAPI = this.button.data('popupmenu');
+          if (!popupAPI) {
+            this.list = this.wrapper.find('ul.popupmenu');
+            if (!this.list || !this.list.length) {
+              this.list = $('<ul class="popupmenu"></ul>');
             }
-          });
+
+            // Handle Single vs Multi-Selectable Lists
+            var categoryListType = this.settings.categoryMultiselect ? 'is-multiselectable' : 'is-selectable';
+            this.list.addClass(categoryListType);
+            var removeListType = 'is-selectable';
+            if (!this.settings.categoryMultiselect) {
+              removeListType = 'is-multiselectable';
+            }
+            this.list.removeClass(removeListType);
+
+            this.setCategories(this.settings.categories);
+
+            this.list.insertAfter(this.button);
+            this.button.popupmenu({
+              menu: this.list,
+              offset: {
+                y: 10
+              }
+            });
+
+          } else {
+            this.setCategories(this.settings.categories);
+          }
 
           this.setCategoryButtonText();
         }

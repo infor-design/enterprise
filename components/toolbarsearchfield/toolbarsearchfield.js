@@ -448,7 +448,7 @@
         }
 
         width = this.getFillSize(leftBoundary, rightBoundary);
-        this.openWidth = width + 'px';
+        this.openWidth = (width - 1) + 'px';
       },
 
       /**
