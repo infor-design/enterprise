@@ -607,9 +607,10 @@
             var response;
 
             response = function(data, pagingInfo) {
-
               if (pagingInfo && pagingInfo.activePage) {
-                self.activePage = pagingInfo.activePage;
+                if (pagingInfo.activePage > -1) {
+                  self.activePage = pagingInfo.activePage;
+                }
               }
 
               //Render Data
