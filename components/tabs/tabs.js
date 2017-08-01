@@ -1014,26 +1014,28 @@
             break;
         }
 
-        var isAddTabButton = targetLi.is('.add-tab-button'),
-          focusStateTarget = isAddTabButton ? targetLi : targetLi.children('a');
+        if (targetLi) {
+          var isAddTabButton = targetLi.is('.add-tab-button'),
+            focusStateTarget = isAddTabButton ? targetLi : targetLi.children('a');
 
-        // Use the matching option in the popup menu if the target is hidden by overflow.
-        if (this.isTabOverflowed(targetLi)) {
-          return openMenu(targetLi.children('a').attr('href'));
-        }
+          // Use the matching option in the popup menu if the target is hidden by overflow.
+          if (this.isTabOverflowed(targetLi)) {
+            return openMenu(targetLi.children('a').attr('href'));
+          }
 
-        if (!isAddTabButton) {
-          focusStateTarget.focus();
-        } else {
-          self.addTabButton.focus();
-        }
+          if (!isAddTabButton) {
+            focusStateTarget.focus();
+          } else {
+            self.addTabButton.focus();
+          }
 
-        if (this.isScrollableTabs()) {
-          this.scrollTabList(focusStateTarget);
-        }
+          if (this.isScrollableTabs()) {
+            this.scrollTabList(focusStateTarget);
+          }
 
-        if (self.hasSquareFocusState()) {
-          self.positionFocusState(focusStateTarget, true);
+          if (self.hasSquareFocusState()) {
+            self.positionFocusState(focusStateTarget, true);
+          }
         }
       },
 
