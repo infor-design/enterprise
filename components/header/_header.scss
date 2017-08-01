@@ -129,11 +129,11 @@ $subheader-height: 60px;
       left: 8px;
       overflow: hidden;
       position: absolute;
-      text-overflow: ellipsis;
+      text-overflow: clip;
 
       h1 {
         display: inline-block;
-        max-width: calc(100% - 30px);
+        max-width: calc(100% - 40px);
         overflow: hidden;
         text-overflow: ellipsis;
 
