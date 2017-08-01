@@ -646,6 +646,12 @@ var express = require('express'),
       opts.layout = null;
     }
 
+    if (componentName === 'header') {
+      if (exampleName.indexOf('test-header-gauntlet') > -1) {
+        opts.layout = 'header/layout-header-gauntlet';
+      }
+    }
+
     if (req.params.example !== undefined) {
       res.render('' + componentName + '/' +  req.params.example, opts);
     }
