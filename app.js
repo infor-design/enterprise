@@ -9,7 +9,11 @@ var express = require('express'),
   fs = require('fs'),
   http = require('http'),
   git = require('git-rev-sync'),
-  BASE_PATH = process.env.BASEPATH || '/',  //'Full Url: ' + req.headers.host + '/' + req.url
+  BASE_PATH = process.env.BASEPATH || '/',
+  fullBasePath = function (req) {
+    var fullPath = (req.protocol + '://' + req.headers.host.replace('/', '') + BASE_PATH);
+    return fullPath;
+  },
   getJSONFile = require(path.resolve(__dirname, 'demoapp', 'js', 'getJSONFile')),
   packageJSON = getJSONFile(path.resolve('package.json'));
 
@@ -54,10 +58,10 @@ var express = require('express'),
       console.log('Changing Route Parameter "locale" to be "' + res.opts.locale + '".');
     }
 
-    // Normally we will use an external file for loading SVG Icons and Patterns.
-    // Setting 'inlineSVG' to true will use the deprecated method of using SVG icons, which was to bake them into the HTML markup.
-    // if (req.query.inlineSVG && req.query.inlineSVG.length > 0) {
-      res.opts.inlineSVG = true;
+    // Normally we will use an external file for loading  Icons and Patterns.
+    // Setting 'inline' to true will use the deprecated method of using  icons, which was to bake them into the HTML markup.
+    // if (req.query.inline && req.query.inline.length > 0) {
+      res.opts.inline = true;
       //console.log('Inlining SVG Elements...');
     // }
 
@@ -458,11 +462,15 @@ var express = require('express'),
   // ======================================
 
   router.get('/', function(req, res, next) {
+    var opts = res.opts;
+    opts.basepath = fullBasePath(req);
     res.redirect(BASE_PATH + 'kitchen-sink');
     next();
   });
 
   router.get('/kitchen-sink', function(req, res, next) {
+    var opts = res.opts;
+    opts.basepath = fullBasePath(req);
     res.render('kitchen-sink', res.opts);
     next();
   });
@@ -568,6 +576,7 @@ var express = require('express'),
   function defaultDocsRoute(req, res, next) {
     var opts = extend({}, res.opts, componentOpts);
     opts.layout = 'doc-layout';
+    opts.basepath = fullBasePath(req);
 
     res.render('index', opts);
     next();
@@ -578,6 +587,7 @@ var express = require('express'),
     var opts = extend({}, res.opts, componentOpts);
     opts.subtitle = 'Doc Style Guide';
     opts.layout = 'doc-layout';
+    opts.basepath = fullBasePath(req);
 
     res.render('doc-styleguide', opts);
     next();
@@ -587,6 +597,7 @@ var express = require('express'),
     var opts = extend({}, res.opts, componentOpts);
     opts.subtitle = 'Documentation';
     opts.layout = 'doc-layout';
+    opts.basepath = fullBasePath(req);
 
     var componentName = stripHtml(req.params.component);
     opts.subtitle = toTitleCase(componentName.charAt(0).toUpperCase() + componentName.slice(1).replace('-',' '));
@@ -602,6 +613,8 @@ var express = require('express'),
     var componentName = '',
       exampleName = '',
       opts = extend({}, res.opts, componentOpts);
+
+    opts.basepath = fullBasePath(req);
 
     if (!req.params.component) {
       return defaultDocsRoute(req, res, next);

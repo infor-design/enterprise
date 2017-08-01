@@ -1,0 +1,53 @@
+<h1 id="sparklines-learn-more">Sparklines <a href="#">Learn More</a></h1>
+<h2 id="configuration-options">Configuration Options</h2>
+<ol>
+<li>Sparklines Main Example <a href="../components/sparkline/example-index">View Example</a></li>
+</ol>
+<h2 id="api-details">API Details</h2>
+<h3 id="dataset-settings">Dataset Settings</h3>
+<ul>
+<li><code>data</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">Array</a></strong> - An array of data to structure the sparklines.<br /></li>
+<li><code>name</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">String</a></strong> - The name of the data used in the accessibility label and tooltip.</li>
+</ul>
+<h3 id="spark-line-types">Spark Line Types</h3>
+<ul>
+<li><code>sparkline-dots-n-peak</code> - Shows dots for each datapoint and highlights the top value as &quot;peak&quot;.<br /></li>
+<li><code>sparkline-peak</code> - Shows a continuous line changing at each datapoint and highlights the top value as &quot;peak&quot;.<br /></li>
+<li><code>sparkline-medianrange-n-peak</code> - Shows a continuous line changing at each datapoint and highlights the top value as &quot;peak&quot; and adds a median range display.<br /></li>
+<li><code>sparkline-minmax</code> - Shows a continuous line changing at each datapoint and the min and max value.<br /></li>
+<li><code>sparkline</code> - Shows just the line changing at each datapoint.</li>
+</ul>
+<h2 id="code-example">Code Example</h2>
+<p>This example shows how to invoke a simple single line sparkline. Multiple lines can be shown by passing multiple data points.</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">
+<span class="kw">var</span> singleLine = [{
+  <span class="dt">data</span>: [<span class="dv">25</span>, <span class="dv">20</span>, <span class="dv">55</span>, <span class="dv">28</span>, <span class="dv">41</span>, <span class="dv">30</span>, <span class="dv">50</span>, <span class="dv">22</span>, <span class="dv">16</span>, <span class="dv">27</span>],
+  <span class="dt">name</span>: <span class="st">&#39;Inventory&#39;</span>
+}];
+
+<span class="kw">var</span> twoLines = [{
+    <span class="dt">data</span>: [<span class="dv">25</span>, <span class="dv">20</span>, <span class="dv">55</span>, <span class="dv">28</span>, <span class="dv">41</span>, <span class="dv">30</span>, <span class="dv">50</span>, <span class="dv">27</span>, <span class="dv">24</span>, <span class="dv">27</span>],
+    <span class="dt">name</span>: <span class="st">&#39;Inventory&#39;</span>
+}, {
+    <span class="dt">data</span>: [<span class="dv">40</span>, <span class="dv">30</span>, <span class="dv">40</span>, <span class="dv">16</span>, <span class="dv">50</span>, <span class="dv">17</span>, <span class="dv">15</span>, <span class="dv">39</span>, <span class="dv">15</span>, <span class="dv">18</span>],
+    <span class="dt">name</span>: <span class="st">&#39;Demand&#39;</span>
+}];
+
+<span class="fu">$</span>(<span class="st">&#39;#sparkline-chart-example-1&#39;</span>).<span class="fu">chart</span>({<span class="dt">type</span>: <span class="st">&#39;sparkline-dots-n-peak&#39;</span>, <span class="dt">dataset</span>: singleLine});
+</code></pre>
+<h2 id="accessibility">Accessibility</h2>
+<ul>
+<li>Alternate information should be available for the screen reader user.</li>
+</ul>
+<h2 id="future">Future</h2>
+<ul>
+<li>A datagrid formatter for showing this data in lists</li>
+</ul>
+<h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
+<ul>
+<li>None</li>
+</ul>
+<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
+<ul>
+<li>This component is new in 4.x</li>
+</ul>
