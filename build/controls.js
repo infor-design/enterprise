@@ -6,6 +6,8 @@ module.exports = [
   'temp/amd/environment.js',
   'temp/amd/animations.js',
   'temp/amd/locale.js',
+  'temp/amd/mask-api.js',
+  'temp/amd/masked-input.js',
   'temp/amd/listfilter.js',
   'temp/amd/about.js',
   'temp/amd/accordion.js',

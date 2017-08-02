@@ -184,6 +184,7 @@
             ['progress', '.progress-bar'],
 
             //Format
+            ['maskedinput', '.new-mask'],
             ['mask', 'input[data-mask]'],
 
             //Auto Complete
