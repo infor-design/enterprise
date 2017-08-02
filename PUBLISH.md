@@ -88,13 +88,27 @@ http://bamboo.infor.com/browse/SOHO-NGV-16
 * Notify - On Slack, By Email ect
 
 ## Git Operations
-* Merge 4.2.6-rc (the rc branch) back onto the 4.2.x (masterish branch) - PR or Git Merge
+* Edit version in package.json and publish package.json (from 4.3.1-rc to 4.3.1 as an example)
+* Push last PR
+* Check for Last PR's http://git.infor.com/projects/SOHO/repos/angular-components/pull-requests and http://git.infor.com/projects/SOHO/repos/controls/pull-requests and make sure all merged
+* Merge  4.3.1-rc (the rc branch) back onto the 4.3.x (masterish branch) - Using a PR or Git Merge
+* Git Tag the release from the 4.3.x branch
+```bash
+ git tag 4.3.1
+ git push origin --tags
+```
 * Delete the 4.2.6-rc branch and all feature/bug fix branches http://git.infor.com/projects/SOHO/repos/controls/branches
-* Edit version in package.json and publish package.json
-* Check for Last PR's http://git.infor.com/projects/SOHO/repos/angular-components/pull-requests and http://git.infor.com/projects/SOHO/repos/controls/pull-requests
+* Make the new branch off 4.3.x for the new version (4.3.2-rc)
+  * In git http://git.infor.com/projects/SOHO/repos/controls/settings set the 4.3.2-rc branch as the default
+  * set branch permissions
 
 ## Build Operations
-* Once pushed and built
+* Change the v-Next build http://bamboo.infor.com/build/admin/edit/editBuildTasks.action?buildKey=SOHO-NEXT-JOB1
+  * change the name to 4.3.2 (v next)
+  * change the repo it points to
+* Change the current build http://bamboo.infor.com/build/admin/edit/editBuildTasks.action?buildKey=SOHO-R43X-JOB1
+  * change the versions
+
 * Label the build Release/426
 * Delete the 4.3.1-rc build
 * Check there is a build (Plan name , Plan key make same fx CUR  === SOHO-CUR)
@@ -104,11 +118,7 @@ http://bamboo.infor.com/browse/SOHO-NGV-16
 
 ## Npm Operations
 * Test Npm packages and rebuild if you got it wrong
-* Git Tag
-```bash
- git tag 4.2.6
- git push origin --tags
-```
+
 
 ## Deploy Site Operations
 

@@ -1,6 +1,6 @@
 {
   "name": "@infor/sohoxi",
-  "version": "4.3.1",
+  "version": "4.3.2-rc",
   "shortName": "sohoxi",
   "description": "Hook & Loop - SoHo XI Controls",
   "author": "Hook & Loop",
