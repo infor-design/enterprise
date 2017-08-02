@@ -79,32 +79,43 @@ http://bamboo.infor.com/browse/SOHO-NGV-16
 - Update dev53
 - add label to successful build
 
-# How To Make Release (4.3.0)
+# How To Make Release (4.3.1)
 
-* Check Change Log is updated
-* Create Release Email Template (Jonathan)
+## Info
+* Check ChangeLog.md is updated this info is distributed by email
+* Create new version in Jira and mark current as released https://jira/plugins/servlet/project-config/SOHO/versions
+* Generate Release Notes http://bit.ly/2w6X8Xw
+* Notify - On Slack, By Email ect
+
+## Git Operations
 * Merge 4.2.6-rc (the rc branch) back onto the 4.2.x (masterish branch) - PR or Git Merge
-* Enable the npm publish task on the build.
+* Delete the 4.2.6-rc branch and all feature/bug fix branches http://git.infor.com/projects/SOHO/repos/controls/branches
+* Edit version in package.json and publish package.json
+* Check for Last PR's http://git.infor.com/projects/SOHO/repos/angular-components/pull-requests and http://git.infor.com/projects/SOHO/repos/controls/pull-requests
+
+## Build Operations
+* Once pushed and built
 * Label the build Release/426
-* Delete the 4.2.6-rc branch
+* Delete the 4.3.1-rc build
 * Check there is a build (Plan name , Plan key make same fx CUR  === SOHO-CUR)
 * Enable the publish task for one build.
 * Make sure there is branches for 4.3.X and 4.3.0-rc
 * Make 4.3.0-rc default branch
-* Test Npm packages
+
+## Npm Operations
+* Test Npm packages and rebuild if you got it wrong
 * Git Tag
 ```bash
  git tag 4.2.6
  git push origin --tags
 ```
-* Create new version in Jira
-* Generate Release Notes
-* Make sure all new examples on the index page are updated
-* Update Staging (Below)
-* Delete the rs from pool server usalvlhlpool1
+
+## Deploy Site Operations
+
+* Delete the old version from pool server usalvlhlpool1
 ```bash
 curl -u hookandloop:hookandloop http://usalvlhlpool1/swarm/get_endpoints
-curl -X DELETE -H "Content-Type: application/json"     -u hookandloop:n98Y-uhPb-llGa-LdUl     http://usalvlhlpool1.infor.com/swarmproxy/rm_service     -d '{"name":"sohoxi-4-2-6-rc"}'
+curl -X DELETE -H "Content-Type: application/json"     -u hookandloop:n98Y-uhPb-llGa-LdUl     http://usalvlhlpool1.infor.com/swarmproxy/rm_service     -d '{"name":"sohoxi-4-3-1-rc"}'
 
 sudo docker ps -a
 docker stop 6410bbcfd5e2
@@ -113,7 +124,8 @@ docker rm 6410bbcfd5e2
 docker images | grep <name>
 docker rmi PID
 ```
-### Update version in @infor/sohoxi-angular
+
+## Update version in @infor/sohoxi-angular
 * Clone repo
 ```bash
 $ git clone ssh://git@git.infor.com:7999/soho/angular-components.git
@@ -121,11 +133,6 @@ $ git clone ssh://git@git.infor.com:7999/soho/angular-components.git
 * Bump version in package.json to match new version of `@infor/sohoxi`
 * Bump `@infor/sohoxi's verion` under dependencies to match new version (i.e "^4.2.3-develop")
 * Commit, tag and push changes
-
-Later
-* Send Email to team
-* Announce to Slack
-* Release Email
 
 # How To Sync SoHo Staging Site to prod
 

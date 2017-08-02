@@ -12,8 +12,8 @@ The Progress Component displays loading information.
 
 **Parameters**
 
--   `element`  
 -   `None`  
+-   `element`  
 
 ### update
 

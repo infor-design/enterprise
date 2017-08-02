@@ -1,11 +1,11 @@
 
 # Hierarchy  [Learn More](#)
 
-{{api-details}}
-
 ## Configuration Options
 
 1. Org Chart Example [View Example]( ../components/hierarchy/example-index)
+
+{{api-details}}
 
 ## Code Example
 

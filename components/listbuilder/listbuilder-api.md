@@ -18,7 +18,6 @@ A list of items with add/remove/delete and sort functionality.
 
 **Parameters**
 
--   `element`  
 -   `dataset` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  The array of data
 -   `btnAdd` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The attribute to match the add button in the toolbar (ie. data-action="add")
 -   `btnEdit` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The attribute to match the edit button in the toolbar (ie. data-action="edit")
@@ -27,6 +26,7 @@ A list of items with add/remove/delete and sort functionality.
 -   `btnGoDown` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  The attribute to match the move up button in the toolbar (ie. data-action="dodown")
 -   `template` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The list view markdown / template.
 -   `templateItemContent` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The markdown for editing an item
+-   `element`  
 
 ### addItem
 
@@ -73,9 +73,5 @@ Delete the selected item.
 ### getDataByNode
 
 Get data from dataset by node
-
-**Parameters**
-
--   `node`  
 
 Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 

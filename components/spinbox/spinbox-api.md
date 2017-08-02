@@ -33,10 +33,10 @@ The Spinbox component provides easy access to modification of a numeric input fi
 
 **Parameters**
 
--   `element`  
 -   `min` **(null | [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))**  -  if defined, provides a minimum numeric limit
 -   `max` **(null | [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))**  -  if defined, provides a maximum numeric limit
 -   `step` **(null | [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))**  -  if defined, increases or decreases the spinbox value by a specific interval whenever the control buttons are used.
+-   `element`  
 
 ### setWidth
 
@@ -149,25 +149,13 @@ Returns **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refer
 
 Updates the "aria-valuenow" property on the spinbox element if the value is currently set
 
-**Parameters**
-
--   `val`  
-
 ### addButtonStyle
 
 adds a "pressed-in" styling for one of the spinner buttons
 
-**Parameters**
-
--   `e`  
-
 ### removeButtonStyle
 
 Removes "pressed-in" styling for one of the spinner buttons
-
-**Parameters**
-
--   `e`  
 
 ### enable
 

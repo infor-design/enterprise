@@ -1,7 +1,5 @@
 # Icons  [Learn More](#)
 
-{{api-details}}
-
 ## Configuration Options
 
 1. Basic Icons [View Example]( ../components/icons/example-index)
@@ -14,6 +12,8 @@
 8. Animated Pseudo Elements (Hamburger / Back) / SoHo Logos [View Example]( ../components/icons/example-pseudo-elements)
 9. Tree Icons [View Example]( ../components/icons/example-tree)
 10. Grid Filter Drop Down Menu [View Example]( ../components/icons/example-filter-dropdown)
+
+{{api-details}}
 
 ## Code Example
 

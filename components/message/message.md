@@ -1,11 +1,11 @@
 
 # Message  [Learn More](#)
 
-{{api-details}}
-
 ## Configuration Options
 
 1. Message Examples [View Example]( ../components/message/example-index)
+
+{{api-details}}
 
 ## Code Example
 

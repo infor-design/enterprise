@@ -1,13 +1,11 @@
 
 # List Filter  [Learn More](#)
 
-
-{{api-details}}
-
-
 ## Configuration Options
 
 1. Multiselect Filter Types [View Example]( ../components/multiselect/example-filter-types)
+
+{{api-details}}
 
 ## Code Example
 

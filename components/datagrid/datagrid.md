@@ -1,8 +1,6 @@
 
 # Datagrid [Learn More](https://soho.infor.com/index.php?p=component/about-dialog)
 
-{{api-details}}
-
 ## Configuration Options
 
 1. Simple Datagrid Example [View Example]( ../components/datagrid/example-index)
@@ -31,6 +29,8 @@
 26. Selection (Mixed)  [View Example]( ../components/datagrid/example-mixed-selection.html)
 27. Summary Row  [View Example]( ../components/datagrid/example-summary-row.html)
 28. Export to Excel [View Example]( ../components/datagrid/example-export-from-button.html)
+
+{{api-details}}
 
 ## Code Example
 

@@ -1,7 +1,5 @@
 # Validation  [Learn More](https://soho.infor.com/index.php?p=component/about-dialog)
 
-## API Details
-
 ### Functions and Utilities
 
 ## Configuration Options
@@ -13,6 +11,7 @@
 5. Manually adding an Error [View Example]( ../components/validation/example-standalone-error)
 6. Validating on Form Submit [View Example]( ../components/validation/example-validation-form)
 
+## API Details
 
 ## Code Example - Auto
 

@@ -2660,16 +2660,34 @@ window.Chart = function(container) {
     }
 
     //Append the SVG in the parent area.
-    var dataset = chartData,
-      hideDots = (options.hideDots),
+    var longestLabel = '',
+      longestLabelLength = 0,
+      dataset = chartData,
+      isAxisXRotate = (settings.xAxis && settings.xAxis.rotate !== undefined),
+      getMaxes = function (d, option) {
+        return d3.max(d.data, function(d) {
+          return option ? d.value[option] : d.value;
+        });
+      };
+
+    if (isAxisXRotate) {
+      //get the longeset label
+      dataset[0].data.map(function (d) {
+        if (d.name.length > longestLabel.length) {
+          longestLabel = d.name;
+        }
+      });
+      longestLabelLength = longestLabel.length;
+    }
+
+    var hideDots = (options.hideDots),
       parent = $(container).parent(),
       isCardAction = !!$('.widget-chart-action', parent).length,
-      isAxisXRotate = !!(!!settings.xAxis && settings.xAxis.rotate !== undefined),
       isViewSmall = parent.width() < 450,
       margin = {
         top: (isAxisLabels.top ? (isCardAction ? 15 : 40) : (isCardAction ? 5 : 30)),
         right: (isAxisLabels.right ? (isViewSmall ? 45 : 65) : (isViewSmall ? 45 : 55)),
-        bottom: (isAxisLabels.bottom ? (isAxisXRotate ? 60 : 50) : (isAxisXRotate ? 45 : 35)),
+        bottom: (isAxisLabels.bottom ? (isAxisXRotate ? 60 : 50) : (isAxisXRotate ? (longestLabelLength * 5) + 35 : 35)),
         left: (isAxisLabels.right ? (isViewSmall ? 55 : 75) : (isViewSmall ? 45 : 65))
       },
       width = parent.width() - margin.left - margin.right,
@@ -2715,12 +2733,7 @@ window.Chart = function(container) {
     var maxes,
       x = ((!!settings.xAxis && !!settings.xAxis.scale) ? (settings.xAxis.scale) : (d3.scale.linear())).range([0, width]),
       y = d3.scale.linear().range([height, 0]),
-      z = d3.scale.linear().range([1, 25]),
-      getMaxes = function (d, option) {
-        return d3.max(d.data, function(d) {
-          return option ? d.value[option] : d.value;
-        });
-      };
+      z = d3.scale.linear().range([1, 25]);
 
     if (isBubble) {
       maxes = {
@@ -2755,6 +2768,19 @@ window.Chart = function(container) {
       .tickSize(-(width + 20))
       .tickPadding(isRTL ? -18 : 20)
       .orient('left');
+
+    if (settings.yAxis && settings.yAxis.formatter) {
+      yAxis.tickFormat(function (d, i) {
+        if (typeof settings.yAxis.formatter === 'function') {
+          return settings.yAxis.formatter(d, i);
+        }
+        return d;
+      });
+    }
+
+    if (settings.yAxis && settings.yAxis.ticks) {
+      yAxis.ticks(settings.yAxis.ticks.number, settings.yAxis.ticks.format);
+    }
 
     //Append The Axis Labels
     if (isAxisLabels.atLeastOne) {
@@ -2819,9 +2845,13 @@ window.Chart = function(container) {
 
     if (isAxisXRotate) {
       svg.selectAll('.x.axis .tick text')  // select all the text for the xaxis
-      .attr('transform', function() {
-         return 'translate(' + this.getBBox().height*-2 + ', '+ this.getBBox().height + ')rotate('+ settings.xAxis.rotate +')';
-     });
+      .attr('y', 0)
+      .attr('x', function () {
+        return -(this.getBBox().width + 10);
+      })
+      .attr('dy', '1em')
+      .attr('transform', 'rotate(' + settings.xAxis.rotate + ')')
+      .style('text-anchor', 'start');
     }
 
     // Create the line generator

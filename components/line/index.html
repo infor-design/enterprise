@@ -5,8 +5,26 @@
 <li>Labels on Axis <a href="../components/line/example-axis-labels">View Example</a><br /></li>
 <li>Ticks Adjustment (Less ticks than data points) <a href="../components/line/example-axis-ticks">View Example</a><br /></li>
 <li>Customize Tooltip <a href="../components/line/example-custom-tooltip">View Example</a><br /></li>
-<li>Customize Dot Size <a href="../components/line/example-custom-dots">View Example</a></li>
+<li>Customize Dot Size <a href="../components/line/example-custom-dots">View Example</a><br /></li>
+<li>Rotate Bottom Labels <a href="../components/line/test-rotate">View Example</a></li>
 </ol>
+<h2 id="api-details">API Details</h2>
+<h3 id="dataset-settings">Dataset Settings</h3>
+<ul>
+<li><code>name</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> - The name to show on the y axis for the line chart<br /></li>
+<li><code>value</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong> - The raw data value.<br /></li>
+<li><code>tooltip</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> - The custom tooltip to show.</li>
+</ul>
+<h3 id="extra-chart-settings">Extra Chart Settings</h3>
+<ul>
+<li><code>hideDots</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong> - Hide the dots in the line chart<br /></li>
+<li><code>axisLabels</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Object</a></strong> - Option to a label to one of the four sides. Example <code>axisLabels: {left: 'Left axis label', top: 'Top axis label', right: 'Right axis label', bottom: 'Bottom axis label'}</code> <a href="../components/line/example-axis-labels">See Example</a><br /></li>
+<li><code>dots</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Object</a></strong> - Option to customize the dot behavior. You can set the dot size (radius), the size on hover and stroke or even add a custom class. Example <code>dots: { radius: 3, radiusOnHover: 4, strokeWidth: 0, class: 'custom-dots'}</code> <a href="../components/line/example-custom-dots">See Example</a><br /></li>
+<li><code>xAxis</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">Object</a></strong> - A series of options for the xAxis<br /></li>
+<li><code>xAxis.rotate</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">Number</a></strong> - Rotate the elements on the x axis. Recommend -65 deg but this can be tweaked depending on look.<br /></li>
+<li><code>yAxis</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">Object</a></strong> - A series of options for the yAxis<br /></li>
+<li><code>xAxis.ticks</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">Object</a></strong> Data to control the number of ticks and y axis format. Options for example <code>{number: 5, format: ',.1s'}</code> would show only 5 yaxis points and format the data to show 1K, 1M, 1G ect.. This uses the d3 formatter.</li>
+</ul>
 <h2 id="code-example">Code Example</h2>
 <p>This example shows how to invoke the line chart option in the charts component. In this example we pass a dataset with x and y axis values for three lines.</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript">

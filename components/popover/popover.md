@@ -1,9 +1,5 @@
 # Popover Component [Learn More](https://soho.infor.com/index.php?p=component/popover)
 
-## API Details
-
-This component shares a common API with the [Tooltip]( ../components/tooltip) Component.  When a Soho Popover component is invoked, any methods and events used by the Tooltip will also be available in the Popover.  For more details on this component's API, please see the [Tooltip Documentation]( ../components/tooltip).
-
 ## Configuration Options
 
 1. [Common Configuration]( ../components/popover/example-index)
@@ -13,6 +9,9 @@ This component shares a common API with the [Tooltip]( ../components/tooltip) Co
 5. [Alternate (Flipped) Positioning]( ../components/popover/example-alternate-positions)
 6. [Demo of `extraCssClass` Setting]( ../components/popover/example-extra-css-class)
 
+## API Details
+
+This component shares a common API with the [Tooltip]( ../components/tooltip) Component.  When a Soho Popover component is invoked, any methods and events used by the Tooltip will also be available in the Popover.  For more details on this component's API, please see the [Tooltip Documentation]( ../components/tooltip).
 
 ## Code Example
 

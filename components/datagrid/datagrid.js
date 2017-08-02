@@ -6920,9 +6920,25 @@ $.fn.datagrid = function(options) {
     destroy: function() {
       //Remove the toolbar, clean the div out and remove the pager
       this.element.off().empty().removeClass('datagrid-container');
+      var toolbar = this.element.prev('.toolbar');
+
+      if (this.removeToolbarOnDestroy && settings.toolbar && settings.toolbar.keywordFilter) {
+        var searchfield = toolbar.find('.searchfield');
+        if (searchfield.data('searchfield')) {
+          searchfield.data('searchfield').destroy();
+        }
+        if (searchfield.data('toolbarsearchfield')) {
+          searchfield.data('toolbarsearchfield').destroy();
+        }
+        searchfield.removeData('options');
+      }
+
       if (this.removeToolbarOnDestroy) {
         // only remove toolbar if it was created by this datagrid
-        this.element.prev('.toolbar').remove();
+        if (toolbar.data('toolbar')) {
+          toolbar.data('toolbar').destroy();
+        }
+        toolbar.remove();
       }
       this.element.next('.pager-toolbar').remove();
       $.removeData(this.element[0], pluginName);

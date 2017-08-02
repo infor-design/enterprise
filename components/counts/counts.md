@@ -1,17 +1,17 @@
 
 # Counts  [Learn More](#)
 
+## Configuration Options
+
+1. Counts - Of an Instance [View Example]( ../components/counts/example-instance-count)
+2. Counts - Of an Object [View Example]( ../components/counts/example-object-count)
+
 ## API Details
 
 ### Settings
 
 * Icon Types - icon-alert, icon-confirm, icon-dirty, icon-error, icon-info, icon-pending, icon-new, icon-in-progress, icon-info-field
 * Icon Colors - This is done automatically by the type (alert, error ect)
-
-## Configuration Options
-
-1. Counts - Of an Instance [View Example]( ../components/counts/example-instance-count)
-2. Counts - Of an Object [View Example]( ../components/counts/example-object-count)
 
 ## Code Example
 

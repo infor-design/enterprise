@@ -18,9 +18,9 @@ The About Dialog Component is displays information regarding the application.
 
 **Parameters**
 
--   `element`  
 -   `trigger` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Id of some other button to use as a trigger
 -   `bottomBorder` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Change the border to bottom vs top (for some cases)
+-   `element`  
 
 ### isDisabled
 

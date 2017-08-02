@@ -1,8 +1,6 @@
 
 # Header  [Learn More](#)
 
-{{api-details}}
-
 ## Configuration Options
 
 1. Default Header Example [View Example]( ../components/header/example-index)
@@ -12,6 +10,8 @@
 5. No Title Button [View Example]( ../components/header/example-no-title-button)
 6. Non Collapsible Search Field [View Example]( ../components/header/example-non-collapsible-searchfield)
 7. Record ID [View Example]( ../components/header/example-record-id)
+
+{{api-details}}
 
 ## Code Example
 

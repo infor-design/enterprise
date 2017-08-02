@@ -1,6 +1,12 @@
 
 # Column Chart (Stacked)  [Learn More](#)
 
+## Configuration Options
+
+1. Stacked Column Chart Example [View Example]( ../components/column-stacked/example-index)
+2. Defaulting Selected Stacks [View Example]( ../components/column-stacked/example-selected)
+3. Single Column Chart [View Example]( ../components/column-stacked/example-singular)
+
 ## API Details
 
 ### Dataset Settings
@@ -10,12 +16,6 @@
 * tooltip - the custom tooltip. you can pass {{value}} to have the formatted value inserted
 * value - the value to use across all lines to domain the axis
 * selected - if true this band will be marked as selected. you may need to set this on each element in the series in the same position.
-
-## Configuration Options
-
-1. Stacked Column Chart Example [View Example]( ../components/column-stacked/example-index)
-2. Defaulting Selected Stacks [View Example]( ../components/column-stacked/example-selected)
-3. Single Column Chart [View Example]( ../components/column-stacked/example-singular)
 
 ## Code Example
 

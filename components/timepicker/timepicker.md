@@ -1,7 +1,5 @@
 # Timepicker Component [Learn More](#)
 
-{{api-details}}
-
 ## Configuration Options
 
 1. [Default Example]( ../components/timepicker/example-index)
@@ -11,6 +9,8 @@
 5. [Disabled Timepicker]( ../components/timepicker/example-disabled)
 6. [Timepicker with a Seconds Picker]( ../components/timepicker/example-seconds-picker)
 6. [Timepicker with Required Validation]( ../components/timepicker/example-with-validation)
+
+{{api-details}}
 
 ## Behavior Guidelines
 
