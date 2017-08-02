@@ -2660,16 +2660,23 @@ window.Chart = function(container) {
     }
 
     //Append the SVG in the parent area.
+    var longestLabel = 0,
+      isAxisXRotate = (settings.xAxis && settings.xAxis.rotate !== undefined);
+
+    if (isAxisXRotate) {
+      //get the longeset label
+      //console.log(isAxisLabels, isAxisXRotate)
+    }
+
     var dataset = chartData,
       hideDots = (options.hideDots),
       parent = $(container).parent(),
       isCardAction = !!$('.widget-chart-action', parent).length,
-      isAxisXRotate = !!(!!settings.xAxis && settings.xAxis.rotate !== undefined),
       isViewSmall = parent.width() < 450,
       margin = {
         top: (isAxisLabels.top ? (isCardAction ? 15 : 40) : (isCardAction ? 5 : 30)),
         right: (isAxisLabels.right ? (isViewSmall ? 45 : 65) : (isViewSmall ? 45 : 55)),
-        bottom: (isAxisLabels.bottom ? (isAxisXRotate ? 60 : 50) : (isAxisXRotate ? 45 : 35)),
+        bottom: (isAxisLabels.bottom ? (isAxisXRotate ? 60 : 50) : (isAxisXRotate ? 69 + 25 : 35)),
         left: (isAxisLabels.right ? (isViewSmall ? 55 : 75) : (isViewSmall ? 45 : 65))
       },
       width = parent.width() - margin.left - margin.right,
@@ -2756,6 +2763,19 @@ window.Chart = function(container) {
       .tickPadding(isRTL ? -18 : 20)
       .orient('left');
 
+    if (settings.yAxis && settings.yAxis.formatter) {
+      yAxis.tickFormat(function (d, i) {
+        if (typeof settings.yAxis.formatter === 'function') {
+          return settings.yAxis.formatter(d, i);
+        }
+        return d;
+      });
+    }
+
+    if (settings.yAxis && settings.yAxis.ticks) {
+      yAxis.ticks(settings.yAxis.ticks.number, settings.yAxis.ticks.format);
+    }
+
     //Append The Axis Labels
     if (isAxisLabels.atLeastOne) {
       var axisLabelsGroup = svg.append('g').attr('class', 'axis-labels'),
@@ -2819,9 +2839,18 @@ window.Chart = function(container) {
 
     if (isAxisXRotate) {
       svg.selectAll('.x.axis .tick text')  // select all the text for the xaxis
-      .attr('transform', function() {
-         return 'translate(' + this.getBBox().height*-2 + ', '+ this.getBBox().height + ')rotate('+ settings.xAxis.rotate +')';
-     });
+      .attr('y', 0)
+      .attr('x', function () {
+        console.log(this.getBBox().height, this.getBBox().width, this.text);
+        return -(this.getBBox().width + 15);
+      })
+      .attr('dy', '.35em')
+      .attr('transform', 'rotate(' + settings.xAxis.rotate + ')')
+      .style('text-anchor', 'start');
+
+    /*.attr('transform', function() {
+        return 'translate(' + this.getBBox().height*-2 + ', '+ this.getBBox().height + ')rotate('+ settings.xAxis.rotate +')';
+     });*/
     }
 
     // Create the line generator
