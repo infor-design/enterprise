@@ -1,10 +1,12 @@
 # Wizard Component [Learn More](https://soho.infor.com/index.php?p=component/wizard)
 
-{{api-details}}
+## Configuration Examples
 
 1. [Common Configuration]( ../components/wizard/example-index)
 2. [Disabled Tick Clicks]( ../components/wizard/example-in-page)
 3. [Programmatic Tick Selection]( ../components/wizard/example-set-selected)
+
+{{api-details}}
 
 ## Code Example
 

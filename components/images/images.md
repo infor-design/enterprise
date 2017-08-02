@@ -1,15 +1,15 @@
 
 # Images  [Learn More](#)
 
-## API Details
-
-The image component is a css only component to handle placeholder / empty images. And the various sizes of images that can appear in an application.
-Placeholder images can be in sizes image-lg. image-md, image-sm
-
 ## Configuration Options
 
 1. Image Sizes and Placeholders [View Example]( ../components/images/example-index)
 2. A Pattern showing a toolbar over a list of Images [View Example]( ../components/images/example-image-list)
+
+## API Details
+
+The image component is a css only component to handle placeholder / empty images. And the various sizes of images that can appear in an application.
+Placeholder images can be in sizes image-lg. image-md, image-sm
 
 ## Code Example
 

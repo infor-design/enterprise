@@ -1,7 +1,5 @@
 # Autocomplete  [Learn More](https://soho.infor.com/index.php?p=component/autocomplete)
 
-{{api-details}}
-
 ## Configuration Options
 
 1. Default Autocomplete [View Example]( ../components/autocomplete/example-index)
@@ -10,6 +8,8 @@
 4. Autocomplete Contains Search [View Example]( ../components/autocomplete/example-contains)
 5. Autocomplete Disable Search/Filter [View Example]( ../components/autocomplete/example-no-filtering)
 6. Autocomplete List Templates [View Example]( ../components/autocomplete/example-templates)
+
+{{api-details}}
 
 ## Code Example
 

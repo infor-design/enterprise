@@ -1,12 +1,12 @@
 # File Upload  [Learn More](#)
 
-{{api-details}}
-
 ## Configuration Options
 
 1. Default File Upload Example [View Example]( ../components/fileupload/example-index)
 2. Advanced File Upload Example [View Example]( ../components/fileupload-advanced/example-index)
 3. Limit File Types [View Example]( ../components/fileupload-advanced/example-limit-types)
+
+{{api-details}}
 
 ## Code Example
 

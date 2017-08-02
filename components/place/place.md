@@ -1,11 +1,12 @@
 
 # Place  [Learn More](#)
 
-{{api-details}}
-
 ## Configuration Options
 
 1. Test List [View Example]( ../components/place/list)
+
+{{api-details}}
+
 
 ## Description
 

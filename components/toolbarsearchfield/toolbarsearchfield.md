@@ -4,13 +4,13 @@
 
 This is a specific component wrapper for searchfield components that reside inside of [Toolbars]( ../components/toolbar/) entitled Toolbar Searchfield.  These components are very different from regular searchfields and have an expanded API.  There is an alternate API documentation for the main [Searchfield]( ../components/searchfield) component.
 
-{{api-details}}
-
 ## Configuration Options
 
 1. [Common Configuration]( ../components/toolbarsearchfield/example-index.html)
 2. [Alternate In-Page Style]( ../components/toolbarsearchfield/example-alternate-style.html)
 3. [`collapsibleOnMobile` Setting Demo]( ../components/toolbarsearchfield/example-collapsible-on-mobile.html)
+
+{{api-details}}
 
 ## Code Example
 

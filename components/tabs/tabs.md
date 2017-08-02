@@ -1,7 +1,5 @@
 # Tabs Component [Learn More](https://soho.infor.com/index.php?p=component/tabs)
 
-{{api-details}}
-
 ## Configuration Options
 
 1. [Common Configuration]( ../components/tabs/example-index)
@@ -10,6 +8,8 @@
 4. [Dropdown Tabs]( ../components/tabs/example-dropdown-tabs)
 5. [`updateCount()` Demo]( ../components/tabs/example-update-count-api)
 6. [`changeTabOnHashChange` Setting with Callback Demo]( ../components/tabs/example-url-hash-change)
+
+{{api-details}}
 
 ## Code Examples
 

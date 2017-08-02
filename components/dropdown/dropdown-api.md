@@ -20,7 +20,6 @@ The Dropdown allows users to select from a list. Like an Html Select.
 
 **Parameters**
 
--   `element`  
 -   `closeOnSelect` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  When an option is selected, the list will close if set to "true".  List stays open if "false".
 -   `cssClass` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Append an optional css class to dropdown-list
 -   `filterMode` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Search mode to use between 'startsWith' and 'contains', false will not allow client side filter
@@ -32,14 +31,11 @@ The Dropdown allows users to select from a list. Like an Html Select.
 -   `reloadSourceOnOpen` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If set to true, will always perform an ajax call whenever the list is opened.  If false, the first AJAX call's results are cached.
 -   `empty` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Initialize Empty Value
 -   `delay` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Typing Buffer Delay in ms
+-   `element`  
 
 ### activate
 
 Focus the input Element
-
-**Parameters**
-
--   `useSearchInput`  
 
 ### selectOptions
 
@@ -48,7 +44,6 @@ Accepts an array or jQuery selector containing valid list options and selects/de
 
 **Parameters**
 
--   `options`  
 -   `noTrigger` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if true, causes the 'selected' and 'change' events not to fire on each list item.
 
 ### selectOption

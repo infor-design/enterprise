@@ -1,8 +1,6 @@
 
 # Cards  [Learn More](#)
 
-{{api-details}}
-
 ## Configuration Options
 
 1. Simple Card Example [View Example]( ../components/cards/example-index)
@@ -13,6 +11,8 @@
 6. Datagrid In a Card (Bad Practice) [View Test]( ../components/cards/test-datagrid)
 7. Datagrid With Pager (Bad Practice) [View Test]( ../components/cards/test-paging-datagrid)
 8. Toolbar In The Header [View Test]( ../components/cards/test-toolbar-header)
+
+{{api-details}}
 
 ## Code Example
 

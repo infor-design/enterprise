@@ -4,8 +4,6 @@
 
 Described below is the general API that is present in all searchfields.  There is a specific component wrapper for searchfield components that reside inside of [Toolbars]( ../components/toolbar/) entitled [Toolbar Searchfield]( ../components/toolbar-searchfield).  These components are very different from regular searchfields and have an expanded API.
 
-{{api-details}}
-
 ## Configuration Options
 
 1. [Common Configuration]( ../components/searchfield/example-index.html)
@@ -16,6 +14,8 @@ Described below is the general API that is present in all searchfields.  There i
 6. [No "All Results For `x`" Link]( ../components/searchfield/example-no-all-results-link.html)
 7. [Categories (Compact Size)]( ../components/searchfield/example-categories-short.html)
 8. [Categories (Full Size)]( ../components/searchfield/example-categories-full.html)
+
+{{api-details}}
 
 ## Code Example
 

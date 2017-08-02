@@ -14,13 +14,13 @@ The MultiSelect Component allows selecting multiple items from a list
 
 **Parameters**
 
--   `element`  
 -   `filterMode` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The search mode to use, can be 'contains' or 'startsWith'
 -   `maxSelected` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**  -  The max number of items which can be selected
 -   `moveSelected` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -   Move selected options in each group to just underneath their corresponding group headers.
 -   `showEmptyGroupHeaders` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true groups with no items will still show the empty group header.
 -   `showSelectAll` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Show the select all text/option.
 -   `source` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)**  -  The calback for ajax.
+-   `element`  
 
 ### enable
 

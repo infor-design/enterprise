@@ -1,13 +1,11 @@
 # Toast Component [Learn More](https://soho.infor.com/index.php?p=component/toast-messages)
 
-The Toast Component displays important messages in an area that sits above your application screen.
-
-{{api-details}}
-
 ## Configuration Options
 
 1. [Common Configuration]( ../components/toast/example-index)
 1. [Demo of all Positions]( ../components/toast/example-positions)
+
+{{api-details}}
 
 ## Behavior Guidelines
 

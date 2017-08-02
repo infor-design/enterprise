@@ -1,5 +1,10 @@
 # Color Palette Info [Learn More](#)
 
+## Configuration Options
+
+1. Full Color Palette [View Example]( ../components/colors/example-index)
+2. Color Variables (Badges) [View Example]( ../components/colors/example-color-vars)
+
 ## API Details
 
 ### Settings
@@ -16,11 +21,6 @@
 
 
 ```
-
-## Configuration Options
-
-1. Full Color Palette [View Example]( ../components/colors/example-index)
-2. Color Variables (Badges) [View Example]( ../components/colors/example-color-vars)
 
 ## Accessibility
 

@@ -1,7 +1,5 @@
 # Text Input  [Learn More](#)
 
-{{api-details}}
-
 ## Configuration Options
 
 1. Text Input Examples [View Example]( ../components/input/example-index)
@@ -12,6 +10,8 @@
 6. Text Area [View Example]( ../components/textarea)
 7. Clearable Input (With an X) [View Example]( ../components/input/example-clearable)
 8. Input with Right Click Context Menu [View Example]( ../components/input/example-contextmenu)
+
+{{api-details}}
 
 ## Behavior Guidelines
 

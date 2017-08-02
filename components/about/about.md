@@ -1,12 +1,12 @@
 
 # About  [Learn More](https://soho.infor.com/index.php?p=component/about-dialog)
 
-{{api-details}}
-
 ## Configuration Options
 
 1. Default About Example [View Example]( ../components/about/example-index)
 2. Close Event Demo [View Example]( ../components/about/test-close-event)
+
+{{api-details}}
 
 ## Code Example
 

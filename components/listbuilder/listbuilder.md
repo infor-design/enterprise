@@ -1,12 +1,11 @@
 
 # ListBuilder  [Learn More](#)
 
-{{api-details}}
-
 ## Configuration Options
 
 1. Default List Builder Example [View Example]( ../components/listbuilder/example-index)
 
+{{api-details}}
 
 ## Code Example
 

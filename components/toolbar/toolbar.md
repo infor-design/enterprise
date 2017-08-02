@@ -1,7 +1,5 @@
 # Toolbar  [Learn More](https://soho.infor.com/index.php?p=component/toolbar)
 
-{{api-details}}
-
 ## Configuration Options
 
 1. [Common Configuration]( ../components/toolbar/example-index)
@@ -14,6 +12,8 @@
 8. [`MaxVisibleButtons` Defined as "6" Instead of "3"]( ../components/toolbar/example-more-than-three-buttons)
 9. [Additional Examples of `MaxVisibleButtons` Behavior]( ../components/toolbar/example-overflow)
 10. [`selected` Event Behavior]( ../components/toolbar/example-selected-event)
+
+{{api-details}}
 
 ## Code Example
 

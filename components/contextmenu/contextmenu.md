@@ -1,13 +1,13 @@
 
 # Context Menu [Learn More](https://soho.infor.com/index.php?p=component/about-dialog)
 
-## API Details
-
-For all api information [See the popup menu]( ../components/popupmenu) as this component is used to make a contextmenu via its option `trigger: 'right-click'`.
-
 ## Configuration Options
 
 1. Context Menu on an Input [View Example]( ../components/contextmenu/example-index)
+
+## API Details
+
+For all api information [See the popup menu]( ../components/popupmenu) as this component is used to make a contextmenu via its option `trigger: 'right-click'`.
 
 ## Code Example
 

@@ -2660,23 +2660,34 @@ window.Chart = function(container) {
     }
 
     //Append the SVG in the parent area.
-    var longestLabel = 0,
-      isAxisXRotate = (settings.xAxis && settings.xAxis.rotate !== undefined);
+    var longestLabel = '',
+      longestLabelLength = 0,
+      dataset = chartData,
+      isAxisXRotate = (settings.xAxis && settings.xAxis.rotate !== undefined),
+      getMaxes = function (d, option) {
+        return d3.max(d.data, function(d) {
+          return option ? d.value[option] : d.value;
+        });
+      };
 
     if (isAxisXRotate) {
       //get the longeset label
-      //console.log(isAxisLabels, isAxisXRotate)
+      dataset[0].data.map(function (d) {
+        if (d.name.length > longestLabel.length) {
+          longestLabel = d.name;
+        }
+      });
+      longestLabelLength = longestLabel.length;
     }
 
-    var dataset = chartData,
-      hideDots = (options.hideDots),
+    var hideDots = (options.hideDots),
       parent = $(container).parent(),
       isCardAction = !!$('.widget-chart-action', parent).length,
       isViewSmall = parent.width() < 450,
       margin = {
         top: (isAxisLabels.top ? (isCardAction ? 15 : 40) : (isCardAction ? 5 : 30)),
         right: (isAxisLabels.right ? (isViewSmall ? 45 : 65) : (isViewSmall ? 45 : 55)),
-        bottom: (isAxisLabels.bottom ? (isAxisXRotate ? 60 : 50) : (isAxisXRotate ? 69 + 25 : 35)),
+        bottom: (isAxisLabels.bottom ? (isAxisXRotate ? 60 : 50) : (isAxisXRotate ? (longestLabelLength * 5) + 35 : 35)),
         left: (isAxisLabels.right ? (isViewSmall ? 55 : 75) : (isViewSmall ? 45 : 65))
       },
       width = parent.width() - margin.left - margin.right,
@@ -2722,12 +2733,7 @@ window.Chart = function(container) {
     var maxes,
       x = ((!!settings.xAxis && !!settings.xAxis.scale) ? (settings.xAxis.scale) : (d3.scale.linear())).range([0, width]),
       y = d3.scale.linear().range([height, 0]),
-      z = d3.scale.linear().range([1, 25]),
-      getMaxes = function (d, option) {
-        return d3.max(d.data, function(d) {
-          return option ? d.value[option] : d.value;
-        });
-      };
+      z = d3.scale.linear().range([1, 25]);
 
     if (isBubble) {
       maxes = {
@@ -2841,16 +2847,11 @@ window.Chart = function(container) {
       svg.selectAll('.x.axis .tick text')  // select all the text for the xaxis
       .attr('y', 0)
       .attr('x', function () {
-        console.log(this.getBBox().height, this.getBBox().width, this.text);
-        return -(this.getBBox().width + 15);
+        return -(this.getBBox().width + 10);
       })
-      .attr('dy', '.35em')
+      .attr('dy', '1em')
       .attr('transform', 'rotate(' + settings.xAxis.rotate + ')')
       .style('text-anchor', 'start');
-
-    /*.attr('transform', function() {
-        return 'translate(' + this.getBBox().height*-2 + ', '+ this.getBBox().height + ')rotate('+ settings.xAxis.rotate +')';
-     });*/
     }
 
     // Create the line generator

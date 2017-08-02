@@ -1,7 +1,5 @@
 # Pager  [Learn More](#)
 
-{{api-details}}
-
 ## Configuration Options
 
 1. Paging a List (Ul) [View Example]( ../components/pager/example-index)
@@ -9,8 +7,9 @@
 3. Paging on the Datagrid Component [View Example]( ../components/datagrid/example-paging)
 4. Circle Pager Component [View Example]( ../components/circlepager/example-index)
 
-## Code Example
+{{api-details}}
 
+## Code Example
 
 The auto initializer will search for ul elements with a `paginated` class and add a pager to them. You can add the option `data-options="{'pagesize': 10}"` to set the page size desired. For listview and datagrid this is built in to those components.
 

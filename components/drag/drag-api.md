@@ -12,7 +12,6 @@ Drag/Drop functions with touch support.
 
 **Parameters**
 
--   `element`  
 -   `axis` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Constrains dragging to either axis. Possible values: null, 'x', 'y'
 -   `clone` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -   Set to true to clone the object to drag. In many situations this is needed to break out of layout.
 -   `cloneCssClass` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Css class added to clone element (defaults to is-clone)
@@ -21,6 +20,7 @@ Drag/Drop functions with touch support.
 -   `containment` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Constrains dragging to within the bounds of the specified element or region. Possible values: "parent", "document", "window".
 -   `obstacle` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  jQuery Selector of object(s) that you cannot drag into,
 -   `containmentOffset` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  How close to the containment object should we be allowed to drag in position form. `{left: 0, top: 0}`
+-   `element`  
 
 ### destroy
 

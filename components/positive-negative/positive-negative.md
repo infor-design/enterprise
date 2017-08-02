@@ -1,6 +1,11 @@
 
 # Positive-Negative Chart  [Learn More](#)
 
+## Configuration Options
+
+1. Positive / Negative Example [View Example]( ../components/positive-negative/example-index)
+2. Example showing color patterns [View Example]( ../components/positive-negative/example-patterns)
+
 ## API Details
 
 ### Dataset Settings
@@ -13,11 +18,6 @@
 ### Extra Chart Settings
 
 * `formatterString` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** - the d3 formatter string to show
-
-## Configuration Options
-
-1. Positive / Negative Example [View Example]( ../components/positive-negative/example-index)
-2. Example showing color patterns [View Example]( ../components/positive-negative/example-patterns)
 
 ## Code Example
 

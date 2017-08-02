@@ -1,6 +1,13 @@
 
 # Donut Chart  [Learn More](#)
 
+## Configuration Options
+
+1. Donut Chart Main Example [View Example]( ../components/donut/example-index)
+2. Showing Slices as Alerts [View Example]( ../components/donut/example-alerts)
+3. With a Right Click Menu [View Example]( ../components/donut/example-rightclick)
+4. Longer and Zero Labels [View Example]( ../components/donut/example-values)
+
 ## API Details
 
 ### Settings
@@ -20,13 +27,6 @@
 - `labels: {lineColor}` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** - How to colorize the line links can be one of `'default'|'color-as-arc'|'#000000'|'black'`
 - `labels: {lineWidth}` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** - How many pixels should the line be (default 2)
 - `labels: {linehideWhenMoreThanPercentage}` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** - If the percentage is less than this (default 10), hide the line.
-
-## Configuration Options
-
-1. Donut Chart Main Example [View Example]( ../components/donut/example-index)
-2. Showing Slices as Alerts [View Example]( ../components/donut/example-alerts)
-3. With a Right Click Menu [View Example]( ../components/donut/example-rightclick)
-4. Longer and Zero Labels [View Example]( ../components/donut/example-values)
 
 ## Code Example
 

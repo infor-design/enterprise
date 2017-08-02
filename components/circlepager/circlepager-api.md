@@ -15,10 +15,10 @@ The Circle Pager Displays content in a sliding carousel and has paging buttons.
 
 **Parameters**
 
--   `element`  
 -   `slidesToShow` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The number of slides to show in one view / pane
 -   `startingSlide` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  First showing slide/group, an 0-based integer
 -   `loop` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -   Setting loop: true will loop back after next/previous reached to end
+-   `element`  
 
 ### show
 

@@ -1,13 +1,13 @@
 
 # Editor (Rich Text)  [Learn More](https://soho.infor.com/index.php?p=component/about-dialog)
 
-{{api-details}}
-
 ## Configuration Options
 
 1. Default Rick Text Editor Example [View Example]( ../components/editor/example-index)
 2. Customize Buttons [View Example]( ../components/editor/example-customize-buttons)
 3. Back Color Button (Experimental - Limited Browser Support) [View Example]( ../components/editor/example-with-backcolor)
+
+{{api-details}}
 
 ## Code Example
 

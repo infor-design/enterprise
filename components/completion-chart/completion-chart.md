@@ -1,6 +1,11 @@
 
 # Completion Chart  [Learn More](#)
 
+## Configuration Options
+
+1. Simple Completion Chart Example [View Example]( ../components/completion-chart/example-index)
+2. All Completion Chart Examples [View Example]( ../components/completion-chart/example-variations)
+
 ## API Details
 
 ### Dataset Settings
@@ -11,11 +16,6 @@
 * total - data for the total section `{value: 95000, format: '$,.0f'}`
 
 Format used the [D3 formatter (v3)](https://github.com/d3/d3-3.x-api-reference/blob/master/Formatting.md#d3_format)
-
-## Configuration Options
-
-1. Simple Completion Chart Example [View Example]( ../components/completion-chart/example-index)
-2. All Completion Chart Examples [View Example]( ../components/completion-chart/example-variations)
 
 ## Code Example
 
