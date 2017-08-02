@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+
+  <title>
+    {{#subtitle}}
+      {{subtitle}} |
+    {{/subtitle}}
+    {{title}}
+  </title>
+
+  <!-- Meta Info -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="version" content="{{version}}">
+  <meta name="commit" content="{{commit}}">
+
+  <script src="{{basepath}}js/jquery-3.1.1.js"></script>
+  <script src="{{basepath}}js/d3.js"></script>
+  <script src="{{basepath}}js/sohoxi.js"></script>
+  <!-- Supplying the culture in the head is supported
+  <script src="{{basepath}}js/sohoxi.js?v=MTIuMC4wLjAuMQ"></script>
+  <script src="../js/cultures/{{locale}}.js"></script>-->
+
+  <script>
+    var colors;
+    {{#colors}}
+    colors = '{{colors}}'.split(',');
+    console.log(colors);
+
+    colors = {header: colors[0],
+             subheader: colors[1],
+             text: colors[2],
+             verticalBorder: colors[3],
+             horizontalBorder: colors[4],
+             inactive: colors[5],
+             hover: colors[6]};
+
+    {{/colors}}
+
+    //If Initialize isnt called need to defer this
+    $('html').personalize({colors: colors});
+  </script>
+  <link rel="stylesheet" id="sohoxi-stylesheet" href="../stylesheets/{{theme}}-theme.css" type="text/css">
+
+  <!-- Style Sheets -->
+  <link rel="stylesheet" href="../stylesheets/demo.css" type="text/css">
+
+</head>

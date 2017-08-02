@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Multiselect Test: Remove OptGroup Tags On All Selected.</h2>
+    <p><a class="hyperlink" href="http://jira.infor.com/browse/SOHO-5911" target="_blank">Related JIRA Ticket</a>. When selecting all child options of an optgroup in a Multiselect with the option <span class="code">moveSelectedToTop</span> set to true (which is default), the empty optgroup should no longer be rendered by the Multiselect.  Once one of its options becomes deselected, it should be re-rendered the next time the list opens.</p>
+    <p>By selecting all of the options in either the "fruits" or "vegetables" sections of the below Multiselect, the corresponding group header will longer render until one of those options once again becomes deselected.</p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+
+    <div class="field">
+      <label for="healthy-foods">Healthy Foods</label>
+      <select id="healthy-foods" name="healthy-foods" class="multiselect" multiple>
+        <optgroup label="Fruits">
+          <option value="apples">Apples</option>
+          <option value="oranges">Oranges</option>
+          <option value="bananas">Bananas</option>
+          <option value="grapes">Grapes</option>
+          <option value="kiwi">Kiwi</option>
+        </optgroup>
+        <optgroup label="Vegetables">
+          <option value="broccoli">Broccoli</option>
+          <option value="carrots">Carrots</option>
+          <option value="lettuce">Lettuce</option>
+          <option value="kale">Kale</option>
+          <option value="peppers">Peppers</option>
+          <option value="spinach">Spinach</option>
+        </optgroup>
+      </select>
+    </div>
+
+  </div>
+</div>

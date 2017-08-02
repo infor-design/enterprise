@@ -1,0 +1,54 @@
+
+<div class="row">
+  <div class="twelve columns">
+      <h2 class="fieldset-title">ListView  - Links / No Hover</h2>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="one-third column">
+
+    <div class="card" >
+      <div class="card-header">
+        <h2 class="card-title">Tasks</h2>
+        <button class="btn-actions" type="button">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Add new action item</a></li>
+          <li><a href="#">Regular action</a></li>
+          <li><a href="#">Individual Action</a></li>
+        </ul>
+      </div>
+
+      <div class="card-content">
+        <div class="listview" id="task-listview" data-options="{'selectOnFocus': false, 'hoverable': false, 'selectable': false, 'source': '{{basepath}}api/inventory-tasks', 'template': 'task-tmpl'}"></div>
+      </div>
+    </div>
+
+    {{={{{ }}}=}}
+    <script id="task-tmpl" type="text/html">
+      <ul>
+        {{#dataset}}
+          {{#disabled}}
+            <li class="is-disabled">
+          {{/disabled}}
+          {{^disabled}}
+            <li>
+          {{/disabled}}
+            <p class="listview-heading">Task #{{task}}</p>
+            <p class="listview-subheading">
+              <a class="hyperlink" href="http://www.google.com" target="_blank">{{desc}}</a>
+            </p>
+            <p class="listview-micro">Due: {{date}}</p>
+          </li>
+        {{/dataset}}
+      </ul>
+    </script>
+
+  </div>
+</div>

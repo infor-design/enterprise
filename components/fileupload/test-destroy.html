@@ -1,0 +1,30 @@
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label class="fileupload" id="destroy-test">
+        <span class="audible">Upload a File</span>
+        <input type="file" name="file-input" />
+      </label>
+    </div>
+
+    <button type="button" id="btn-destroy" class="btn-primary">
+      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+        <use xlink:href="#icon-delete"></use>
+      </svg>
+      <span>Destroy</span>
+    </button>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+
+    $('#btn-destroy').on('click.test', function() {
+      $('#destroy-test').destroy();
+    });
+
+  });
+</script>

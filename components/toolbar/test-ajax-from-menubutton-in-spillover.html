@@ -1,7 +1,7 @@
 <div class="row">
   <div class="six columns">
     <h2>Toolbar Test: AJAX from Menu Button in Spillover</h2>
-    <p><a class="hyperlink" href="http://jira/browse/SOHO-5142" target="_blank">Related JIRA Ticket</a>.</p>
+    <p><a class="hyperlink" href="http://jira.infor.com/browse/SOHO-5142" target="_blank">Related JIRA Ticket</a>.</p>
     <p></p>
   </div>
 </div>
@@ -9,8 +9,8 @@
 <div class="row">
   <div class="twelve columns">
 
-    <div id="ajax-toolbar" class="toolbar" data-options="{ maxVisibleButtons: 2 }">
-      <div class="title">Ajax-ified Toolbar</div>
+    <div id="ajax-toolbar" class="toolbar" data-options='{ "maxVisibleButtons": 4, "favorButtonset": false }'>
+      <div class="title">Ajax-ified Toolbar (This title is long on purpose in order to help push buttons around)</div>
       <div class="buttonset">
 
         <button id="print-button" class="btn">
@@ -65,7 +65,7 @@
 <script type="text/javascript">
   // Populate the menu with some fake content for the sake of testing the AJAX call.
   function popupmenuBeforeOpen(response) {
-    var content = $('<li><a href="#">AJAX Option #1</a></li><li><a href="#">AJAX Option #2</a></li><li><a href="#">AJAX Option #3</a></li>');
+    var content = $('<li><a id="ajax-content-option-1" href="#">AJAX Option #1</a></li><li><a id="ajax-content-option-2" href="#">AJAX Option #2</a></li><li><a id="ajax-content-option-3" href="#">AJAX Option #3</a></li>');
     return response(content);
   }
 
@@ -75,11 +75,18 @@
 
     if (api) {
       api.settings.beforeOpen = popupmenuBeforeOpen;
-      api.updated();
+      //api.updated();
     } else {
       menuButton.popupmenu({
         beforeOpen: popupmenuBeforeOpen
       });
     }
+
+    menuButton.on('selected', function(e, a) {
+      $('body').toast({
+        'title': 'AJAX Option Selected!',
+        'message': 'The Menu Button AJAX option with id <b>#'+ a.attr('id') +'</b> was selected.'
+      });
+    });
   });
 </script>

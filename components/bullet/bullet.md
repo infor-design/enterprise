@@ -1,12 +1,12 @@
 
-# Bullet Chart Component Implementation Detail [Learn More](#)
+# Bullet Chart  [Learn More](#)
 
 ## Configuration Options
 
-1. Bullet chart example [View Example]( /components/bullet/example-index)
-2. Shows Grouping a Series of Related Bullet Charts [View Example]( /components/bullet/example-data-group)
-2. Shows a Bullet Chart with Positive and Negative Values [View Example]( /components/bullet/example-negative-positive-value)
-2. Shows a bullet with a negative value [View Example]( /components/bullet/example-negative-value)
+1. Standard Bullet Chart [View Example]( ../components/bullet/example-index)
+2. Shows Grouping a Series of Related Bullet Charts [View Example]( ../components/bullet/example-data-group)
+2. Shows a Bullet Chart with Positive and Negative Values [View Example]( ../components/bullet/example-negative-positive-value)
+2. Shows a bullet with a negative value [View Example]( ../components/bullet/example-negative-value)
 
 ## Code Example
 

@@ -10,6 +10,10 @@ var express = require('express'),
   http = require('http'),
   git = require('git-rev-sync'),
   BASE_PATH = process.env.BASEPATH || '/',
+  fullBasePath = function (req) {
+    var fullPath = (req.protocol + '://' + req.headers.host.replace('/', '') + BASE_PATH);
+    return fullPath;
+  },
   getJSONFile = require(path.resolve(__dirname, 'demoapp', 'js', 'getJSONFile')),
   packageJSON = getJSONFile(path.resolve('package.json'));
 
@@ -56,10 +60,7 @@ var express = require('express'),
 
     // Normally we will use an external file for loading SVG Icons and Patterns.
     // Setting 'inlineSVG' to true will use the deprecated method of using SVG icons, which was to bake them into the HTML markup.
-    // if (req.query.inlineSVG && req.query.inlineSVG.length > 0) {
-      res.opts.inlineSVG = true;
-      //console.log('Inlining SVG Elements...');
-    // }
+    res.opts.inlineSVG = true;
 
     // Global settings for forcing a 'no frills' layout for test pages.
     // This means no header with page title, hamburger, theme swap settings, etc.
@@ -155,14 +156,23 @@ var express = require('express'),
     return noHtml;
   }
 
+  function setHtml(routeParam) {
+    return stripHtml(routeParam) + '.html';
+  }
+
   function toTitleCase(str){
     return str.replace(/\w\S*/g, function(txt){
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
   }
 
-  // Checks the target file path for its type (is it a file, a directory, etc)
-  // http://stackoverflow.com/questions/15630770/node-js-check-if-path-is-file-or-directory
+  /**
+   * Checks the target file path for its type (is it a file, a directory, etc)
+   * http://stackoverflow.com/questions/15630770/node-js-check-if-path-is-file-or-directory
+   * @param {string} type - 'file' or 'folder'
+   * @param {string} filePath - a string representing the relative path of the item to be checked
+   * @returns {boolean}
+   */
   function is(type, filePath) {
     var types = ['file', 'folder'],
       defaultType = types[0],
@@ -182,7 +192,12 @@ var express = require('express'),
       return false;
     }
 
-    var targetPath = './views/' + filePath,
+    // Add beginning slash if it doesn't exist
+    if (filePath.indexOf('/') !== 0) {
+      filePath = '/' + filePath;
+    }
+
+    var targetPath = __dirname + filePath,
       methodName = mappings[type].methodName;
 
     try {
@@ -194,6 +209,11 @@ var express = require('express'),
     }
   }
 
+  /**
+   * Checks a path to see if it has a trailing slash.
+   * @param {string} path
+   * @returns {boolean}
+   */
   function hasTrailingSlash(path) {
     if (!path || typeof path !== 'string') {
       return false;
@@ -216,11 +236,10 @@ var express = require('express'),
 
     pathDefs.forEach(function pathIterator(pathDef) {
       pathDef.link = pathDef.link.replace(/\/\//g, '/');
-      console.log('Checking path: "' + pathDef.link + '"');
+      //console.log('Checking path: "' + pathDef.link + '"');
 
       var match = false;
       excludes.forEach(function(exclude) {
-        console.log(pathDef.link, exclude, pathDef.link.match(exclude));
         if (pathDef.link.match(exclude)) {
           match = true;
           return;
@@ -297,22 +316,25 @@ var express = require('express'),
     /footer\.html/,
     /_header\.html/,
     /_layout\.html/,
+    /(api.md$)/,
     /layout/,
+    /partial/,
     /\.DS_Store/
   ];
+
 
   /**
    * @private
    * @param {String} type
    */
-  function getFolderContents(type, dir, folderName) {
+  function getFolderContents(type, dir) { //type, dir, folderName
     var paths = [];
     try {
       paths = fs.readdirSync(dir);
     } catch(e) {
       // Handle 'No Directory' errors
       if (e.code === 'ENOENT') {
-        console.log('No '+ folderName +' Folder found for "' + type + '');
+        //console.log('No '+ folderName +' Folder found for "' + type + '');
         paths = [];
       } else {
         throw e;
@@ -342,7 +364,7 @@ var express = require('express'),
     // Add Component-specific file name filters
     extraExcludes = extraExcludes.concat([
       new RegExp(type + '\\.html'),
-      new RegExp('_' + type + '\\.scss'),
+      new RegExp('(\d|\w|\s|-)*?\.(scss)'),
       new RegExp(type + '\\.js'),
       new RegExp(type + '\\.md')
     ]);
@@ -355,7 +377,7 @@ var express = require('express'),
     // Search the "/components/<type>" folder for all tests/examples located here
     componentPaths = getFolderContents(type, 'components/' + type + '/', 'Components');
     componentPaths.forEach(function(path, i) {
-      var isTest = path.substr(0, 4) === 'test-';
+      var isTest = path.substr(0, 5) === 'test-';
 
       componentPaths[i] = {
         text: componentTextFormatter(path),
@@ -376,7 +398,7 @@ var express = require('express'),
         text: formatPath(path),
         link: 'tests/' + type + '/' + path,
         type: 'test',
-        labelColor: 'azure07'
+        labelColor: 'amber07'
       };
     });
     testPaths = filterUnusablePaths(testPaths, GENERAL_LISTING_EXCLUDES.concat(extraExcludes));
@@ -408,7 +430,7 @@ var express = require('express'),
 
     fs.readdir('./views/' + directory, function(err, paths) {
       if (err) {
-        console.log(err);
+        //console.log(err);
         res.render(err);
         return next();
       }
@@ -438,27 +460,18 @@ var express = require('express'),
   // ======================================
 
   router.get('/', function(req, res, next) {
+    var opts = res.opts;
+    opts.basepath = fullBasePath(req);
     res.redirect(BASE_PATH + 'kitchen-sink');
     next();
   });
 
   router.get('/kitchen-sink', function(req, res, next) {
+    var opts = res.opts;
+    opts.basepath = fullBasePath(req);
     res.render('kitchen-sink', res.opts);
     next();
   });
-
-  router.get('/partials*', function(req, res) {
-    var end = req.url.replace('/partials/',''),
-      partialsOpts = {
-        enableLiveReload: false,
-        layout: '',
-        locale: 'en-US',
-        title: '',
-      };
-
-    res.render('partials/' + end, partialsOpts);
-  });
-
 
   // ======================================
   //  Controls Section
@@ -473,7 +486,7 @@ var express = require('express'),
     var opts = extend({}, res.opts, controlOpts);
     opts.subtitle = 'Full Index';
 
-    res.render('controls/index', opts);
+    res.render('components/index', opts);
     next();
   }
 
@@ -523,10 +536,32 @@ var express = require('express'),
     'subtitle': 'Style',
   };
 
+  /**
+   * Detects the existence of a layout file inside of a subfolder that should be used
+   * instead of the default layout file in the root.
+   * @param {Object} opts - Express's res.opts
+   * @param {string} component - the name of the component
+   * @returns {Object}
+   */
+  function addDefaultFolderLayout(opts, component) {
+    let layoutFileNames = ['_layout.html', 'layout.html'],
+      layoutPath;
+
+    for (var i = 0; i < layoutFileNames.length; i++) {
+      layoutPath = 'components/' + component + '/' + layoutFileNames[i];
+      if (fs.existsSync(layoutPath)) {
+        opts.layout = stripHtml('' + component + '/' + layoutFileNames[i]);
+        console.log('layout for this folder changed to "' + opts.layout + '".');
+      }
+    }
+
+    return opts;
+  }
+
   function defaultDocsRoute(req, res, next) {
     var opts = extend({}, res.opts, componentOpts);
     opts.layout = 'doc-layout';
-    opts.showbacklink = false;
+    opts.basepath = fullBasePath(req);
 
     res.render('index', opts);
     next();
@@ -537,6 +572,7 @@ var express = require('express'),
     var opts = extend({}, res.opts, componentOpts);
     opts.subtitle = 'Doc Style Guide';
     opts.layout = 'doc-layout';
+    opts.basepath = fullBasePath(req);
 
     res.render('doc-styleguide', opts);
     next();
@@ -546,6 +582,7 @@ var express = require('express'),
     var opts = extend({}, res.opts, componentOpts);
     opts.subtitle = 'Documentation';
     opts.layout = 'doc-layout';
+    opts.basepath = fullBasePath(req);
 
     var componentName = stripHtml(req.params.component);
     opts.subtitle = toTitleCase(componentName.charAt(0).toUpperCase() + componentName.slice(1).replace('-',' '));
@@ -554,9 +591,15 @@ var express = require('express'),
     next();
   }
 
-  router.get('/components/:component', function(req, res, next) {
+  /**
+   * Handles routing to the Components/Docs section.
+   */
+  function componentRoute(req, res, next) {
     var componentName = '',
+      exampleName = '',
       opts = extend({}, res.opts, componentOpts);
+
+    opts.basepath = fullBasePath(req);
 
     if (!req.params.component) {
       return defaultDocsRoute(req, res, next);
@@ -565,45 +608,67 @@ var express = require('express'),
     componentName = stripHtml(req.params.component);
     opts.subtitle = toTitleCase(componentName.charAt(0).toUpperCase() + componentName.slice(1).replace('-',' '));
 
-    opts.showbacklink = true;
-    opts.layout = 'doc-layout';
+    // If no example, end on the main component docs page.
+    if (!req.params.example) {
+      opts.showbacklink = true;
+      opts.layout = 'doc-layout';
 
-    if (req.params.component === 'doc-styleguide') {
-      return docsStyleGuideRoute(req, res, next);
+      if (req.params.component === 'doc-styleguide') {
+        return docsStyleGuideRoute(req, res, next);
+      }
+
+      res.render(componentName, opts);
+      next();
     }
 
-    res.render(componentName, opts);
-    next();
-  });
+    exampleName = req.params.example;
 
-  router.get('/components/:component/:example', function(req, res, next) {
-    var componentName = '',
-      opts = extend({}, res.opts, componentOpts);
-
-    if (!req.params.component && !req.params.example) {
-      return defaultDocsRoute(req, res, next);
+    if (req.params.example !== undefined && exampleName.substr(0, 7) === 'partial') {
+      opts.layout = '';
     }
 
-    componentName = stripHtml(req.params.component);
-    opts.subtitle = toTitleCase(componentName.charAt(0).toUpperCase() + componentName.slice(1).replace('-',' '));
-
-    if (req.params.example === 'doc' || req.params.example === 'docs') {
+    if (exampleName && exampleName.substr() === 'doc' || exampleName === 'docs') {
       return docsRoute(req, res, next);
     }
 
-    if (req.params.example === 'list') {
+    // Some specific text content will change the route
+    if (exampleName === 'doc' || exampleName === 'docs') {
+      return docsRoute(req, res, next);
+    }
+    if (exampleName === 'list') {
       return getFullListing(componentName, req, res, next);
     }
 
-    if (req.params.component === 'applicationmenu' && (req.params.example.indexOf('example-') > -1 || req.params.example.indexOf('test-') > -1)) {
-      console.log(req.params.component, req.params.example);
+    // Double check this folder for an alternative layout file.
+    opts = addDefaultFolderLayout(opts, componentName);
+
+    if (componentName === 'applicationmenu' && (exampleName.indexOf('example-') > -1 || exampleName.indexOf('test-') > -1)) {
       opts.layout = null;
     }
 
-    res.render(componentName + '/' +  req.params.example, opts);
-    next();
-  });
+    if (componentName === 'header') {
+      if (exampleName.indexOf('test-header-gauntlet') > -1) {
+        opts.layout = 'header/layout-header-gauntlet';
+      }
+    }
 
+    if (req.params.example !== undefined) {
+      res.render('' + componentName + '/' +  req.params.example, opts);
+    }
+    next();
+  }
+
+  function reDirectSlashRoute(req, res, next) {
+    if (req.url.substr(-1) === '/' && req.url.length > 1) {
+       res.redirect(301, req.url.slice(0, -1));
+       next();
+    }
+  }
+
+  router.get('/components/:component', componentRoute);
+  router.get('/components/:component/', reDirectSlashRoute);
+  router.get('/components/:component/:example', componentRoute);
+  router.get('/components/:component/:example/', reDirectSlashRoute);
   router.get('/components/', defaultDocsRoute);
   router.get('/components', defaultDocsRoute);
 
@@ -657,7 +722,7 @@ var express = require('express'),
 
     var directory = 'tests/' + end;
     if (hasTrailingSlash(directory)) {
-      if (is('directory', directory) ) {
+      if (is('directory', '/views/' + directory) ) {
         getDirectoryListing(directory, req, res, next);
         return;
       }
@@ -666,8 +731,7 @@ var express = require('express'),
     }
 
     // Custom configurations for some test folders
-
-    if (directory.match(/tests\/base-tag/)) {
+    if (directory.match(/components\/base-tag/)) {
       opts.usebasehref = true;
     }
     if (directory.match(/tests\/composite-form/)) {
@@ -681,9 +745,7 @@ var express = require('express'),
       opts.layout = null; // No layout for this one on purpose.
       opts.subtitle = 'AMD Tests';
     }
-    if (directory.match(/tests\/header/)) {
-      opts.layout = 'tests/header/layout';
-    }
+
     if (directory.match(/tests\/datagrid-fixed-header/)) {
       opts.layout = 'tests/layout-noscroll';
     }
@@ -715,8 +777,8 @@ var express = require('express'),
     }
 
     // No trailing slash.  Check for an index file.  If no index file, do directory listing
-    if (is('directory', directory)) {
-      if (is('file', directory + '/index')) {
+    if (is('directory', '/views/' + directory)) {
+      if (is('file', '/views/' + directory + '/index')) {
         res.render(directory + '/index', opts);
         return next();
       }
@@ -730,14 +792,14 @@ var express = require('express'),
       example = req.params.example;
 
     if (example && component) {
-      var path = 'components/' + component + '/example-' + example.replace('.html', '')  + '.html';
+      var path = 'components/' + component + '/example-' + setHtml(example);
       if (fs.existsSync(path)) {
         res.redirect(BASE_PATH + path);
         next();
         return;
       }
 
-      path = 'components/' + component + '/test-' + example.replace('.html', '') + '.html';
+      path = 'components/' + component + '/test-' + setHtml(example);
       if (fs.existsSync(path)) {
         res.redirect(BASE_PATH + path);
         next();
@@ -751,8 +813,8 @@ var express = require('express'),
 
   //Tests Index Page and controls sub pages
   router.get('/tests/:component/:example', testsRouteHandler);
-  router.get('/tests/:component', testsRouteHandler);
   router.get('/tests/:component/', testsRouteHandler);
+  router.get('/tests/:component', testsRouteHandler);
   router.get('/tests/', testsRouteHandler);
   router.get('/tests', testsRouteHandler);
 
@@ -1521,6 +1583,10 @@ var express = require('express'),
     sendJSONFile('companies', req, res, next);
   });
 
+  router.get('/api/construction', function(req, res, next) {
+    sendJSONFile('construction', req, res, next);
+  });
+
   router.get('/api/deployments', function(req, res, next) {
     sendJSONFile('deployments', req, res, next);
   });
@@ -1538,6 +1604,10 @@ var express = require('express'),
 
   router.get('/api/incidents', function(req, res, next) {
     sendJSONFile('incidents', req, res, next);
+  });
+
+  router.get('/api/inventory-tasks', function(req, res, next) {
+    sendJSONFile('inventory-tasks', req, res, next);
   });
 
   router.get('/api/jobs', function(req, res, next) {

@@ -1,0 +1,74 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Slider Example: Vertical</h2>
+    <p>All Slider types can be converted to a vertical style.</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+
+    <div class="field">
+      <label for="slider-vertical-regular">Regular</label>
+      <input id="slider-vertical-regular" name="slider-vertical-regular" class="slider vertical" type="range" data-tooltip-content='[""]' data-tooltip-persist="true" />
+    </div>
+
+  </div>
+  <div class="two columns">
+
+    <div class="field">
+      <label for="slider-vertical-quality">Ticks &amp; Colors</label>
+      <input id="slider-vertical-quality" name="slider-vertical-quality" class="slider vertical" type="range" min="0" max="5" value="2" step="1" data-ticks='[
+        {"value": 0, "description": "Very Poor", "color": "very-poor"},
+        {"value": 1, "description": "Poor", "color": "poor"},
+        {"value": 2, "description": "Adequate", "color": "adequate"},
+        {"value": 3, "description": "Good", "color": "good"},
+        {"value": 4, "description": "Very Good", "color": "very-good"},
+        {"value": 5, "description": "Superior", "color": "superior"}
+      ]'/>
+    </div>
+
+  </div>
+  <div class="two columns">
+
+    <div class="field">
+      <label for="slider-vertical-range">Range</label>
+      <input id="slider-vertical-range" name="slider-vertical-range" class="slider vertical" type="range" min="-150" max="150" value="-150" data-range="true" data-tooltip-content='[""]' data-tooltip-persist="true" />
+    </div>
+
+  </div>
+  <div class="two columns">
+
+    <div class="field">
+      <label for="slider-vertical-stepped">Stepped</label>
+      <!-- <span class="label">(min 0, max 100, step 10)</span> -->
+      <input id="slider-vertical-stepped" name="slider-vertical-stepped" class="slider vertical" type="range" step="10" data-ticks='[
+        {"value": 0, "description": "Min"},
+        {"value": 100, "description": "Max"}
+      ]'/>
+    </div>
+
+  </div>
+  <div class="two columns">
+
+    <div class="field">
+      <label for="slider-vertical-disabled">Disabled</label>
+      <input id="slider-vertical-disabled" name="slider-vertical-disabled" class="slider vertical" type="range" disabled/>
+    </div>
+
+  </div>
+  <div class="two columns">
+
+    <div class="field">
+      <label for="slider-vertical-tooltip">Modified Tooltipped</label>
+      <input id="slider-vertical-tooltip" name="slider-vertical-tooltip" class="slider vertical" type="range" min="0" max="100" value="30,100" data-range="true" data-ticks='[
+        {"value": 0, "description": "$0"},
+        {"value": 25, "description": "$25"},
+        {"value": 50, "description": "$50"},
+        {"value": 75, "description": "$75"},
+        {"value": 100, "description": "$100"}
+      ]' data-tooltip-content='["$"]' />
+    </div>
+
+  </div>
+</div>

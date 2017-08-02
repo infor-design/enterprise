@@ -1,0 +1,72 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Dropdown Test: Mobile Scrolling</h2>
+    <p>
+      <a class="hyperlink" href="http://jira.infor.com/browse/SOHO-5579" target="_blank">Related JIRA Ticket</a>.  Run this test on Android/iOS.  This test demonstrates Dropdown's functionality that will scroll its open list properly into view on Mobile devices when their software keyboards are opened/closed.
+    </p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+
+    <div class="field" style="margin-bottom: 2rem;">
+      <button id="open-modal" class="btn-secondary">
+        <span>Show Scrollable Modal Form</span>
+      </button>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Card Example</h3>
+      </div>
+      <div class="card-content" style="padding: 1rem;">
+        <p>Scroll this card down all the way to see a dropdown.</p>
+        <div style="height: 500px;">&nbsp;</div>
+
+        <label for="dropdown-in-card">States</label>
+        <select id="dropdown-in-card" class="dropdown" data-options='{ "source" : "{{basepath}}api/states"  }'></select>
+
+        <div style="height: 100px;">&nbsp;</div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="junk-input-1">Unused Input #1</label>
+      <input type="text" id="junk-input-1" />
+    </div>
+
+    <div class="field">
+      <label for="junk-input-2">Unused Input #2</label>
+      <input type="text" id="junk-input-2" />
+    </div>
+
+    <div class="field">
+      <label for="junk-input-3">Unused Input #3</label>
+      <input type="text" id="junk-input-3" />
+    </div>
+
+    <div class="field">
+      <label for="dropdown-on-page">States</label>
+      <select id="dropdown-on-page" class="dropdown" data-options='{ "source" : "{{basepath}}api/states"  }'></select>
+    </div>
+
+    <div class="field">
+      <label for="junk-input-4">Unused Input #4</label>
+      <input type="text" id="junk-input-4" />
+    </div>
+
+    <div class="field">
+      <label for="junk-input-5">Unused Input #5</label>
+      <input type="text" id="junk-input-5" />
+    </div>
+
+    <div class="field">
+      <label for="junk-input-6">Unused Input #6</label>
+      <input type="text" id="junk-input-6" />
+    </div>
+
+  </div>
+</div>

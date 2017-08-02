@@ -1,0 +1,269 @@
+//  Responsive 12 Column Grid loosely
+//  loosely based bootstrap/
+//================================================== //
+
+$gutter-size: 20px;
+$gutter-neg-size: -20px;
+
+//$breakpoint-phone: 320px;
+//$breakpoint-phone-to-tablet: 768px;
+//$breakpoint-tablet-to-desktop: 1160px;
+//$breakpoint-desktop-to-extralarge: 1440px;
+.row {
+  @include font-size(12);
+  clear: both;
+  margin: 0 auto;
+  max-width: $breakpoint-tablet-to-desktop;
+  width: 100%;
+
+  &.full-width {
+    margin-top: 20px;
+    max-width: 100%;
+  }
+
+  &:last-child {
+    margin-bottom: 30px;
+  }
+
+  &.offset-two {
+    max-width: 1160px;
+    padding-left: 40px;
+  }
+
+  &.align-to-title {
+    padding: 0 1rem;
+  }
+
+  &.top-padding {
+    padding-top: 30px;
+  }
+
+  &.bottom-padding {
+    padding-bottom: 20px;
+  }
+
+  &.bottom-space {
+    // scss-lint:disable ImportantRule
+    padding-bottom: 10px !important;
+    // scss-lint:enable ImportantRule
+  }
+
+  &.full-height {
+    height: 100%;
+    margin: 0 auto;
+  }
+
+}
+
+.row::after {
+  clear: both;
+  content: '';
+  display: table;
+}
+
+.homepage .row {
+  clear: none;
+}
+
+// For this App Space out the Header
+.header + .svg-icons + div {
+  margin-top: 10px;
+}
+
+.column,
+.columns {
+  float: left;
+  padding: 0 20px;
+  width: 100%;
+
+  &.l-center {
+    .field {
+      text-align: center;
+
+      label {
+        text-align: left;
+      }
+    }
+  }
+
+  &.full-height {
+    height: 100%;
+    margin: 0;
+
+    .datagrid-body {
+      height: calc(100% - 85px);
+    }
+
+    .has-toolbar .datagrid-body {
+      height: calc(100% - 40px);
+    }
+
+  }
+
+}
+
+@include respond-to(phabletdown) {
+  .one-half-mobile {
+    margin-left: 0;
+    width: 50%;
+
+    + .one-half-mobile {
+      padding-left: 20px;
+    }
+
+  }
+}
+
+// For tabledevices larger than 550px
+@media (min-width: $breakpoint-phone-to-tablet) {
+  .row {
+    padding-right: 20px;
+  }
+
+  .column,
+  .columns {
+    padding: 0;
+  }
+
+  .one.column,
+  .one.columns {
+    margin-left: $gutter-size;
+    width: calc(8.33333333333% - 20px);
+  }
+
+  .two.columns {
+    margin-left: $gutter-size;
+    width: calc(16.6666666666% - 20px);
+  }
+
+  .three.columns {
+    margin-left: $gutter-size;
+    width: calc(25% - 20px);
+  }
+
+  .four.columns {
+    margin-left: $gutter-size;
+    width: calc(33.3333333333% - 20px);
+  }
+
+  .five.columns {
+    margin-left: $gutter-size;
+    width: calc(41.6666666666% - 20px);
+  }
+
+  .six.columns {
+    margin-left: $gutter-size;
+    width: calc(50% - 20px);
+  }
+
+  .seven.columns {
+    margin-left: $gutter-size;
+    width: calc(58.3333333333% - 20px);
+  }
+
+  .eight.columns {
+    margin-left: $gutter-size;
+    width: calc(66.6666666666% - 20px);
+  }
+
+  .nine.columns {
+    margin-left: $gutter-size;
+    width: calc(75% - 20px);
+  }
+
+  .ten.columns {
+    margin-left: $gutter-size;
+    width: calc(83.3333333333% - 20px);
+  }
+
+  .eleven.columns {
+    margin-left: $gutter-size;
+    width: calc(91.6666666666% - 20px);
+  }
+
+  .twelve.columns,
+  .full.column {
+    margin-left: $gutter-size;
+    width: calc(100% - 20px);
+
+    &.center {
+      display: block;
+      min-width: 300px;
+      text-align: center;
+    }
+  }
+
+  .one-fifth.column {
+    margin-left: $gutter-size;
+    width: calc(20% - 20px);
+  }
+
+  .one-fourth.column {
+    margin-left: $gutter-size;
+    width: calc(25% - 20px);
+  }
+
+  .one-third.column {
+    margin-left: $gutter-size;
+    width: calc(33.3333333% - 20px);
+  }
+
+  .two-thirds.column {
+    margin-left: $gutter-size;
+    width: calc(66.6666666666% - 20px);
+  }
+
+  .one-half.column {
+    margin-left: $gutter-size;
+    width: calc(50% - 20px);
+  }
+
+}
+
+
+//RTL Styles
+html[dir='rtl'] {
+
+  .column,
+  .columns {
+    float: right;
+
+    &.l-center {
+      .field {
+        label {
+          text-align: right;
+        }
+      }
+    }
+  }
+
+  // For tabledevices larger than 550px
+  @media (min-width: $breakpoint-phone-to-tablet) {
+    .row {
+      padding-left: 20px;
+      padding-right: inherit;
+    }
+
+    .one.column,
+    .one.columns,
+    .two.columns,
+    .three.columns,
+    .four.columns,
+    .five.columns,
+    .six.columns,
+    .seven.columns,
+    .eight.columns,
+    .nine.columns,
+    .ten.columns,
+    .eleven.columns,
+    .twelve.columns,
+    .full.column,
+    .one-third.column,
+    .two-thirds.column,
+    .one-half.column {
+      margin-left: inherit;
+      margin-right: $gutter-size;
+    }
+  }
+
+}

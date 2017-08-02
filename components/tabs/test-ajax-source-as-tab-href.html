@@ -1,0 +1,46 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Tabs Test: AJAX Source as Tab href</h2>
+    <p><a class="hyperlink" href="http://jira.infor.com/browse/SOHO-5526" target="_blank">Related JIRA Ticket</a>.</p>
+    <p>This test demonstrates loading content from an external source by making each Tab's "href" a full URL.  Content is generated from the URL in the tab, and the "href" is replaced with an auto-generated Tab ID.  No tab panels exist in the base markup, but the markup is generated the first time each tab is activated.  On subsequent activations, the existing tab markup is used instead of making a new AJAX call.</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div id="ajaxified-tabs" class="tab-container" data-init="false">
+      <ul class="tab-list">
+        <li id="example-tab-one" class="tab"><a href="">Tab One</a></li>
+        <li id="example-tab-two" class="tab"><a href="">Tab Two</a></li>
+        <li id="example-tab-three" class="tab"><a href="">Tab Three</a></li>
+        <li id="example-tab-four" class="tab"><a href="">Tab Four</a></li>
+        <li id="example-tab-five" class="tab"><a href="">Tab Five</a></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  function getURL() {
+    var host = window.location.hostname,
+      port = window.location.port;
+
+    // number of paragraphs
+    var p = Math.floor(Math.random() * (7 - 4 + 1)) + 4;
+
+    // size of paragraphs
+    var s = Math.floor(Math.random() * (75 - 25 + 1)) + 25;
+
+    return 'http://' + host + ':' + port + '/api/garbage?return=html&paragraphs='+ p +'&size='+ s;
+  }
+
+  $('body').on('initialized', function() {
+    var ids = ['#example-tab-one', '#example-tab-two', '#example-tab-three', '#example-tab-four', '#example-tab-five'].join(', ');
+    $(ids).children('a').each(function(i) {
+      $(this).attr('href', getURL());
+    });
+    $('#ajaxified-tabs').tabs();
+  });
+</script>

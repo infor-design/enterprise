@@ -1,0 +1,106 @@
+<div class="row">
+  <div class="twelve columns">
+
+    <h2 class="fieldset-title">Tooltip tests</h2>
+    <form id="test" autocomplete="off" data-validate-on="submit">
+
+      <div class="field-short">
+        <label for="email-address-ok">Email Address</label>
+        <input type="text" id="email-address-ok" name="email-address-ok">
+      </div>
+
+      <div class="field-short">
+        <label for="firstlastname">First and Last Name</label>
+        <input type="text" id="firstlastname" name="firstlastname">
+
+        <button class="btn-secondary" type="button" id="fbutton">
+          <span>tooltip here</span>
+        </button>
+      </div>
+
+      <div class="field-short">
+        <label for="credit-card">Credit Card</label>
+        <input type="text" id="credit-card" name="credit-card" value="xxxx-xxxx-xxxx-xxxx"  >
+      </div>
+
+      <div class="field-short">
+        <label for="credit-code">Code</label>
+        <input type="text" id="credit-code" class="input-sm" name="credit-code" data-mask-mode="number"  >
+      </div>
+
+      <div class="field-short">
+        <label for="credit-code2">Code</label>
+        <input type="text" id="credit-code2" class="input-xs lookup" name="credit-code2"  data-mask-mode="number" >
+      </div>
+
+      <div class="field-short">
+        <label for="states" class="label">States</label>
+        <select id="states" name="states" class="dropdown" >
+          <option value="" selected>&nbsp;</option>
+          <option value="AL" >Alabama</option>
+          <option value="DE">Delaware</option>
+          <option value="DC">District Of Columbia</option>
+          <option value="FL">Florida</option>
+          <option value="GA">Georgia</option>
+          <option value="HI">Hawaii</option>
+          <option value="ID">Idaho</option>
+          <option value="OK">Oklahoma</option>
+          <option value="OR">Oregon</option>
+          <option value="PA">Pennsylvania</option>
+          <option value="RI">Rhode Island</option>
+          <option value="SC">South Carolina</option>
+        </select>
+      </div>
+
+      <div class="field-short">
+        <span class="label">Editor</span>
+        <div class="editor" ></div>
+      </div>
+
+      <button type="submit" id = 'test1' class="btn-primary">Submit</button>
+    </form>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+    $('#email-address-ok').tooltip({
+      content: 'Enter an email address',
+      trigger: 'hover',
+    });
+
+    $('#firstlastname').tooltip({
+      title: 'Enter your name',
+      content: 'Enter your name',
+      trigger: 'hover',
+      parentElement: $('#fbutton')
+    });
+
+    $('#credit-card').tooltip({
+      content: 'Enter a credit card number',
+      trigger: 'hover',
+    });
+
+    $('#credit-code').tooltip({
+      content: 'Enter a credit code',
+      trigger: 'hover',
+    });
+
+    $('#credit-code2').tooltip({
+      content: 'Look up a credit code',
+      trigger: 'hover',
+    });
+
+    $('#states').tooltip({
+      content: 'Select a state',
+      trigger: 'hover',
+    });
+
+    $('.editor').tooltip({
+      content: 'Enter some rich text',
+      trigger: 'hover',
+    });
+  });
+
+</script>

@@ -1,0 +1,61 @@
+<h1 id="field-set-learn-more">Field Set <a href="#">Learn More</a></h1>
+<h2 id="configuration-options">Configuration Options</h2>
+<ol>
+<li>Default Fieldset Example <a href="../components/fieldset/example-index">View Example</a><br /></li>
+<li>50/50 Fieldset Example <a href="../components/fieldset/example-50-50">View Example</a></li>
+</ol>
+<h2 id="code-example">Code Example</h2>
+<p>A field set uses the standard html field set and legend element and simply adds css to style the legend element text. A field set is not expandable but you could use an expandable area element as well.</p>
+<pre class="sourceCode html"><code class="sourceCode html">
+
+<span class="kw">&lt;form</span><span class="ot"> action=</span><span class="st">&quot;#&quot;</span><span class="ot"> method=</span><span class="st">&quot;post&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;fieldset&gt;</span>
+    <span class="kw">&lt;legend&gt;</span>Company Information<span class="kw">&lt;/legend&gt;</span>
+
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;example-fs-company-name&quot;</span><span class="kw">&gt;</span>Company Name<span class="kw">&lt;/label&gt;</span>
+      <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> id=</span><span class="st">&quot;example-fs-company-name&quot;</span><span class="ot"> name=</span><span class="st">&quot;example-fs-company-name&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;example-fs-company-type&quot;</span><span class="kw">&gt;</span>Company Type<span class="kw">&lt;/label&gt;</span>
+      <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;password&quot;</span><span class="ot"> id=</span><span class="st">&quot;example-fs-company-type&quot;</span><span class="ot"> name=</span><span class="st">&quot;example-fs-company-type&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+
+    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
+      <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;example-fs-company-address&quot;</span><span class="kw">&gt;</span>Company Address<span class="kw">&lt;/label&gt;</span>
+      <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;password&quot;</span><span class="ot"> id=</span><span class="st">&quot;example-fs-company-address&quot;</span><span class="ot"> name=</span><span class="st">&quot;example-fs-company-address&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;/div&gt;</span>
+
+    <span class="kw">&lt;button</span><span class="ot"> class=</span><span class="st">&quot;btn-primary&quot;</span><span class="ot"> type=</span><span class="st">&quot;submit&quot;</span><span class="kw">&gt;</span>Submit<span class="kw">&lt;/button&gt;</span>
+  <span class="kw">&lt;/fieldset&gt;</span>
+<span class="kw">&lt;/form&gt;</span>
+</code></pre>
+<h2 id="code-tip">Code Tip</h2>
+<p>There are some added classes to style sections like field sets for cases you semantically don't require a fieldset. The <code>fieldset-title</code> element will make a text header, you should use a H element for this in the structure of your page. Then you can add a <code>&lt;hr class=&quot;fieldset-hr&quot;&gt;</code> element at the top of each subsequent section for a divider. This would be laid out like this example:</p>
+<pre class="sourceCode html"><code class="sourceCode html">
+<span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;row&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;twelve columns&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;h2</span><span class="ot"> class=</span><span class="st">&quot;fieldset-title&quot;</span><span class="kw">&gt;</span>Section One<span class="kw">&lt;/h2&gt;</span>
+    <span class="co">&lt;!-- Content Section One--&gt;</span>
+
+    <span class="kw">&lt;hr</span><span class="ot"> class=</span><span class="st">&quot;fieldset-hr&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;h2</span><span class="ot"> class=</span><span class="st">&quot;fieldset-title&quot;</span><span class="kw">&gt;</span>Section Two<span class="kw">&lt;/h1&gt;</span>
+    <span class="co">&lt;!-- Content Section Two--&gt;</span>
+
+  <span class="kw">&lt;/div&gt;</span>
+<span class="kw">&lt;/div&gt;</span></code></pre>
+<h2 id="accessibility">Accessibility</h2>
+<ul>
+<li>Normal rules for content inside apply</li>
+</ul>
+<h2 id="responsive-guidelines">Responsive Guidelines</h2>
+<ul>
+<li>Uses form guidelines</li>
+</ul>
+<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
+<ul>
+<li>Remove expand/collapse button<br /></li>
+<li>Move div content to field setup body (optional)<br /></li>
+<li>Remove class inforFieldSetLabel and inforFieldSet</li>
+</ul>

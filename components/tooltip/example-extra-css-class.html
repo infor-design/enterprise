@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Tooltip Test: Extra CSS Class</h2>
+    <p><a href="http://jira.infor.com/browse/SOHO-">Related JIRA Ticket</a>.  This demonstrates adding extra CSS classes to the tooltip markup by passing a setting through its constructor, `extraClass`.</p>
+  </div>
+</div>
+
+<style id="special-test-rules">
+  .TEST-green {
+    background-color: #488421; /* Emerald09 */
+    border: 1px solid #488421;
+  }
+
+  .TEST-green.top .arrow::after {
+    border-top-color: #488421; /* Emerald09 */
+  }
+
+  .TEST-green.bottom .arrow::after {
+    border-bottom-color: #488421; /* Emerald09 */
+  }
+
+  .TEST-green.right .arrow::after {
+    border-right-color: #488421; /* Emerald09 */
+  }
+
+  .TEST-green.left .arrow::after {
+    border-left-color: #488421; /* Emerald09 */
+  }
+
+  .TEST-big p {
+    font-size: 21px;
+  }
+</style>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <button id="tooltip-btn" class="btn-secondary">
+        <span>Click Me</span>
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  var TOOLTIP_OPTIONS = {
+    trigger: 'immediate',
+    content: '<span>Top \'o the mornin to ya!</span>',
+    extraClass: 'TEST-green TEST-big',
+    placement: 'right',
+    offset: {
+      x: 10
+    }
+  };
+
+  $('#tooltip-btn').on('click', function () {
+    $('#tooltip-btn').tooltip(TOOLTIP_OPTIONS);
+  });
+</script>

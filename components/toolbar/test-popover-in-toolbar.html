@@ -1,0 +1,71 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Toolbar Test: Popover In Toolbar</h2>
+    <p><a class="hyperlink" href="#" target="_blank">Related JIRA Ticket</a>. Popovers should be correctly handled by the Toolbar.</p>
+    <p><b>NOTE:</b> As of version 4.3.1, this functionality is not fully supported.  Do not allow the Popover component trigger to spill over into the more menu.</p>
+  </div>
+</div>
+
+<!-- Popover Contents -->
+<div id="popover-contents" class="hidden">
+  <p>Purchase <strong>2</strong> more to save <a href="#" class="hyperlink"><strong>$100</strong></a> total</p>
+  <div style="width: 315px; margin: 7px auto;">
+    <table role="grid" style="width: 210px" class="l-pull-left">
+      <thead>
+        <tr>
+          <th scope="col" role="columnheader">Quantity</th>
+          <th scope="col" role="columnheader">Unit Price</th>
+          <th scope="col" role="columnheader">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>50</td>
+          <td>$18.00</td>
+          <td><strong>$900.00</strong></td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn-primary" type="button">Apply</button>
+  </div>
+  <div class="modal-buttonset">
+    <button type="button" class="btn-modal-primary">View more</button>
+  </div>
+</div>
+
+<!-- Toolbar -->
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <div class="toolbar" data-options='{ "maxVisibleButtons": 3, "favorButtonset": false }'>
+      <div class="title">
+        Toolbar with Popover
+      </div>
+      <div class="buttonset">
+        <button id="btn-one" class="btn">
+          <span>Button One</span>
+        </button>
+
+        <button id="btn-two" class="btn">
+          <span>Button Two</span>
+        </button>
+
+        <button id="btn-popover" class="btn" data-popover="popover-contents">
+          <span>Button With Popover</span>
+        </button>
+      </div>
+      <div class="more">
+        <button id="more-actions" class="btn-actions">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+          <span class="audible">More Actions</span>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Pre-Exising Option #1</a></li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>

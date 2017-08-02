@@ -1,0 +1,83 @@
+<div class="full-height full-width">
+
+  <div class="toolbar" role="toolbar">
+    <div class="title">
+      Compressors
+      <span class="datagrid-result-count">(N Results)</span>
+    </div>
+    <div class="buttonset">
+
+
+      <label class="audible" for="common-toolbar-searchfield">Keyword Search</label>
+      <input id="common-toolbar-searchfield" name="common-toolbar-searchfield" class="searchfield" />
+
+      <button type="button" class="btn">
+        <span>Add All</span>
+      </button>
+    </div>
+
+    <div class="more">
+      <button class="btn-actions" type="button">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-more"></use>
+        </svg>
+        <span class="audible">More Actions</span>
+      </button>
+      <ul class="popupmenu">
+        <li><a href="#">Option One</a></li>
+        <li><a href="#">Option Two</a></li>
+        <li><a href="#">Option Three</a></li>
+        <li class="separator single-selectable-section"></li>
+        <li><a data-option="personalize-columns" href="#" data-translate="text">PersonalizeColumns</a></li>
+        <li><a data-option="reset-layout" href="#" data-translate="text">ResetDefault</a></li>
+        <li class="separator"></li>
+        <li><a data-option="export-to-excel" href="#" data-translate="text">ExportToExcel</a></li>
+        <li class="separator single-selectable-section"></li>
+        <li class="heading">Row Height</li>
+        <li class="is-selectable"><a data-option="row-short" href="#" data-translate="text">Short</a></li>
+        <li class="is-selectable"><a data-option="row-medium" href="#" data-translate="text">Medium</a></li>
+        <li class="is-selectable is-checked"><a data-option="row-normal" href="#" data-translate="text">Normal</a></li>
+      </ul>
+
+    </div>
+  </div>
+
+  <div id="datagrid" class="datagrid">
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+    //Locale.set('en-US').done(function () {
+      var grid,
+        columns = [],
+        data = [];
+
+      var url = '{{basepath}}api/compressors?pageNum=1&pageSize=100';
+      $.getJSON(url, function(res) {
+        data = res.data;
+
+        //Define Columns for the Grid.
+        columns.push({id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Text, filterType: 'text'});
+        columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink});
+        columns.push({ hidden: true, name: 'Activity', field: 'activity'});
+        columns.push({ id: 'quantity', hidden: true, name: 'Quantity', field: 'quantity'});
+        columns.push({ id: 'price', align: 'right', name: 'Actual Price', field: 'price', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+        columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+        columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Text});
+        columns.push({ id: 'action', name: 'Action Item', field: 'action'});
+
+        //Init and get the api for the grid
+        $('#datagrid').datagrid({
+          columns: columns,
+          dataset: data,
+          filterable: true,
+          toolbar: {title: 'Compressors', actions: true, rowHeight: true, results: true }
+        });
+
+      });
+
+
+ });
+</script>

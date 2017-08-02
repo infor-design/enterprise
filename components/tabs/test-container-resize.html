@@ -1,0 +1,117 @@
+<div class="row">
+  <div class="six columns">
+
+    <!-- Fill out all the information about this test page below, in plain English -->
+    <h2>Tabs Test: Resizable Tab Containers</h2>
+
+    <p>A <a class="hyperlink" href="http://jira.infor.com/browse/HFC-3707" target="_blank">bug was reported</a> where the Tabs Control would not re-evaluate its number of overflowed tabs when an element containing the Tab Container was resized.  This test attempts to demonstrate that this functionality works as intended.</p>
+
+    <p>Use the slider control below to adjust the width of the Tab Container.  If it's working properly, the spillover menu should always show the correct number of invisible tabs.</p>
+
+    <p></p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+
+    <div class="field">
+      <label for="container-width">Container Width</label>
+      <input id="container-width" name="container-width" class="slider" type="range" min="20" max="100" value="100" />
+    </div>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <!-- Tabs Container -->
+    <div id="sizeable-tabs" class="tab-container">
+      <ul class="tab-list">
+        <li class="tab is-selected"><a href="#first-tab">First Tab</a></li>
+        <li class="tab"><a href="#second-tab">Second Tab</a></li>
+        <li class="tab"><a href="#third-tab">Third Tab</a></li>
+        <li class="tab"><a href="#fourth-tab">Fourth Tab</a></li>
+        <li class="tab"><a href="#fifth-tab">Fifth Tab</a></li>
+        <li class="tab"><a href="#sixth-really-longish-tab">Sixth Really Longish Tab</a></li>
+        <li class="tab"><a href="#seventh-tab">Seventh Tab</a></li>
+        <li class="tab"><a href="#eighth-tab">Eighth Tab</a></li>
+      </ul>
+
+      <div id="first-tab" class="tab-panel ruby01">
+        <h3>First Tab</h3>
+        <p>Paragraph</p>
+        <p>Paragraph</p>
+        <p>Paragraph</p>
+      </div>
+
+      <div id="second-tab" class="tab-panel ruby01">
+        <h3>Second Tab</h3>
+        <p>Paragraph</p>
+        <p>Paragraph</p>
+        <p>Paragraph</p>
+      </div>
+
+      <div id="third-tab" class="tab-panel ruby01">
+        <h3>Third Tab</h3>
+        <p>Paragraph</p>
+        <p>Paragraph</p>
+        <p>Paragraph</p>
+      </div>
+
+      <div id="fourth-tab" class="tab-panel ruby01">
+        <h3>Fourth Tab</h3>
+        <p>Paragraph</p>
+        <p>Paragraph</p>
+        <p>Paragraph</p>
+      </div>
+
+      <div id="fifth-tab" class="tab-panel ruby01">
+        <h3>Fifth Tab</h3>
+        <p>Paragraph</p>
+        <p>Paragraph</p>
+        <p>Paragraph</p>
+      </div>
+
+      <div id="sixth-really-longish-tab" class="tab-panel ruby01">
+        <h3>Sixth Really Longish Tab</h3>
+        <p>Paragraph</p>
+        <p>Paragraph</p>
+        <p>Paragraph</p>
+      </div>
+
+      <div id="seventh-tab" class="tab-panel ruby01">
+        <h3>Seventh Tab</h3>
+        <p>Paragraph</p>
+        <p>Paragraph</p>
+        <p>Paragraph</p>
+      </div>
+
+      <div id="eighth-tab" class="tab-panel ruby01">
+        <h3>Eighth Tab</h3>
+        <p>Paragraph</p>
+        <p>Paragraph</p>
+        <p>Paragraph</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+    var tabset = $('#sizeable-tabs'),
+      slider = $('#container-width');
+
+    // Change the width of the tabset whenever the slider is adjusted.
+    slider.on('change.test', function() {
+      var api = $(this).data('slider'),
+        val = api.value();
+
+      tabset.css('width', val[0] + '%');
+      $('body').triggerHandler('resize');
+    });
+  });
+</script>

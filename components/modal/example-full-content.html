@@ -1,0 +1,57 @@
+
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <button class="btn-secondary" type="button" id="show">Show Modal</button>
+
+    <div id="modal" class="modal">
+       <div class="modal-content">
+
+          <div class="modal-header">
+            <h1 class="modal-title" >Add Comment</h1>
+          </div>
+
+          <div class="modal-body-wrapper">
+            <div class="modal-body">
+              <div class="field">
+                <label for="context-type">Type</label>
+                <select class="dropdown" id="context-type" name="type">
+                  <option value="1">Context #1</option>
+                  <option value="2">Context #2</option>
+                  <option value="3">Context #3</option>
+                  <option value="4">Context #4</option>
+                  <option value="5">Context #5</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="context-name" class="required">Name</label>
+                <input id="context-name"  aria-required="true" name="context-name" type="text">
+              </div>
+
+              <div class="field">
+               <label for="context-desc" class="required">Page Title</label>
+               <textarea id="context-desc" aria-required="true" name="context-desc" maxlength="50"></textarea>
+              </div>
+
+              <div class="modal-buttonset">
+                <button type="button" class="btn-modal">Cancel</button>
+                <button type="button" id="submit" class="btn-modal-primary">Submit</button>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('#show').on('click', function () {
+
+    $('body').modal({
+      content: $('#modal')
+    });
+
+  });
+</script>

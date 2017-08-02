@@ -1,0 +1,77 @@
+<h1 id="checboxes-learn-more">Checboxes <a href="#">Learn More</a></h1>
+<h2 id="api-details">API Details</h2>
+<h3 id="attributes-and-clases">Attributes and Clases</h3>
+<ul>
+<li>checked - If added the checkbox will show as checked<br /></li>
+<li>disabled - If added the checkbox will show as disabled, and have no interaction.<br /></li>
+<li>data-trackdirty=&quot;true&quot; - If added the checkbox will show indication if the value is checked (required trackDirty() plugin to be called)</li>
+</ul>
+<h2 id="code-example">Code Example</h2>
+<p>The checkbox is a css only control. So principals of the input type=&quot;checkbox&quot; apply. The label is used to style the checkbox so is required (and its also needed for accessibility too). The checkbox can have a disabled attribute or checked attribute and can be set in any way supported in JS or your framework.</p>
+<pre class="sourceCode html"><code class="sourceCode html">  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;checkbox&quot;</span><span class="ot"> class=</span><span class="st">&quot;checkbox&quot;</span><span class="ot"> id=</span><span class="st">&quot;checkbox1&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;checkbox1&quot;</span><span class="ot"> class=</span><span class="st">&quot;checkbox-label&quot;</span><span class="kw">&gt;</span>Unchecked<span class="kw">&lt;/label&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;checkbox&quot;</span><span class="ot"> class=</span><span class="st">&quot;checkbox&quot;</span><span class="ot"> id=</span><span class="st">&quot;checkbox2&quot;</span><span class="ot"> checked</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;checkbox2&quot;</span><span class="ot"> class=</span><span class="st">&quot;checkbox-label&quot;</span> <span class="kw">&gt;</span>Checked<span class="kw">&lt;/label&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;checkbox&quot;</span><span class="ot"> data-trackdirty=</span><span class="st">&quot;true&quot;</span><span class="ot"> class=</span><span class="st">&quot;checkbox&quot;</span><span class="ot"> id=</span><span class="st">&quot;checkbox3&quot;</span> <span class="kw">&gt;</span>
+    <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;checkbox3&quot;</span><span class="ot"> class=</span><span class="st">&quot;checkbox-label&quot;</span><span class="kw">&gt;</span>Dirty Tracking<span class="kw">&lt;/label&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;checkbox&quot;</span><span class="ot"> class=</span><span class="st">&quot;checkbox&quot;</span><span class="ot"> id=</span><span class="st">&quot;checkbox4&quot;</span><span class="ot"> disabled</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;checkbox4&quot;</span><span class="ot"> class=</span><span class="st">&quot;checkbox-label&quot;</span> <span class="kw">&gt;</span>Disabled and Unchecked<span class="kw">&lt;/label&gt;</span>
+  <span class="kw">&lt;/div&gt;</span>
+
+  <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;checkbox&quot;</span><span class="ot"> class=</span><span class="st">&quot;checkbox&quot;</span><span class="ot"> id=</span><span class="st">&quot;checkbox5&quot;</span><span class="ot"> disabled checked</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;label</span><span class="ot"> for=</span><span class="st">&quot;checkbox5&quot;</span><span class="ot"> class=</span><span class="st">&quot;checkbox-label&quot;</span><span class="kw">&gt;</span>Disabled and Checked<span class="kw">&lt;/label&gt;</span>
+  <span class="kw">&lt;/div&gt;</span></code></pre>
+<h2 id="implementation-tips">Implementation Tips</h2>
+<ul>
+<li>The label element is used to style the Checkbox while the element is offscreen.<br /></li>
+<li>Checkboxes are used when there is a small set of values, generally with a minimum of 3 and maximum of 10 values.<br /></li>
+<li>Users should be able to select/deselect an option by clicking either the Checkbox itself or anywhere within the associated label.</li>
+</ul>
+<h2 id="accessibility">Accessibility</h2>
+<ul>
+<li>Make sure you have matching for and id values to associate the label with the appropriate form control. Make sure id's are unique on each page and only one label can be associated to each unique form element.</li>
+</ul>
+<h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
+<ul>
+<li><p>Two-State Checkbox</p>
+<ul>
+<li><strong>Space Bar</strong> key toggles the selection, checking or unchecking the box.<br /></li>
+</ul></li>
+<li><p>Three-State Checkbox</p>
+<ul>
+<li>If not checked, <strong>space</strong> checks the Checkbox<br /></li>
+<li>If checked, <strong>space</strong> unchecks the Checkbox<br /></li>
+<li>If partially checked, <strong>space</strong> unchecks the Checkbox.</li>
+</ul></li>
+</ul>
+<h2 id="states-and-variations">States and Variations</h2>
+<p>A Checkbox can take the following states:</p>
+<ul>
+<li>Selected/Not Selected<br /></li>
+<li>Hover<br /></li>
+<li>Focus<br /></li>
+<li>Disabled (generally, the entire set of values will be disabled)<br /></li>
+<li>Dirty</li>
+</ul>
+<p>By their nature, Checkboxes should not be made not required.</p>
+<h2 id="responsive-guidelines">Responsive Guidelines</h2>
+<ul>
+<li>Follows with responsive form guidelines</li>
+</ul>
+<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
+<ul>
+<li>Wrap the input in a field element<br /></li>
+<li>Change class inforCheckbox to checkbox<br /></li>
+<li>Change class inforCheckboxLabel to checkbox-label</li>
+</ul>

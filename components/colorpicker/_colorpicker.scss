@@ -1,0 +1,212 @@
+// Color Picker
+//================================================== //
+
+.colorpicker-container {
+  background-color: $input-bg-color;
+  border: 1px solid $input-border-color;
+  border-radius: 2px;
+  display: inline-block;
+  overflow: hidden;
+  width: 150px;
+
+  &.is-focused {
+    border-color: $input-focus-border-color;
+  }
+
+  &:hover:not(.is-focused):not(.is-open):not(.is-disabled) {
+    border-color: $input-hover-border-color;
+  }
+
+  &.is-disabled {
+    background-color: $input-disabled-bg-color;
+    border-color: $input-disabled-border-color;
+
+    &:hover {
+      border-color: $input-disabled-border-color;
+    }
+
+    .icon:not(.icon-error),
+    .icon:hover {
+      cursor: default;
+      fill: $trigger-disabled-color;
+    }
+  }
+
+  &.is-open {
+    border-color: $input-focus-border-color;
+  }
+
+  .trigger {
+    cursor: pointer;
+    display: inline-block;
+    height: 34px;
+    margin-left: -5px;
+    vertical-align: top;
+    width: 31px;
+  }
+
+  .icon:not(.icon-error) {
+    fill: $trigger-icon-fill-color;
+    height: 16px;
+    left: 9px;
+    position: relative;
+    top: 9px;
+    width: 16px;
+
+    &:hover {
+      fill: $trigger-hover-color;
+    }
+  }
+
+  .icon-error {
+    margin-left: -43px;
+  }
+
+  // Color Piece
+  .swatch {
+    background-color: $colorpicker-initial-bg-color;
+    border-radius: 2px;
+    display: inline-block;
+    height: 32px;
+    left: 1px;
+    position: relative;
+    top: 1px;
+    vertical-align: top;
+    width: 32px;
+
+    // Trigger Button
+    .icon:not(.icon-error) {
+      background-color: transparent;
+      height: 16px;
+      left: 46px;
+      top: 9px;
+      width: 16px;
+    }
+
+    &:hover:not(:disabled) .icon {
+      fill: $primary-color;
+    }
+
+    &:active .icon {
+      fill: $primary-color;
+    }
+  }
+
+  .colorpicker {
+    border: 0;
+    max-height: 34px;
+    padding: 9px 10px 8px;
+    width: 90px; //Small Size
+
+    &::-ms-clear {
+      display: none;
+    }
+
+    &:focus {
+      box-shadow: none;
+    }
+
+    &:disabled + .swatch {
+      cursor: default;
+      opacity: .6;
+    }
+
+  }
+}
+
+.popupmenu.colorpicker {
+  background-color: $colorpicker-popup-bg-color;
+  border-color: $colorpicker-popup-border-color;
+
+  margin-left: -33px;
+  max-width: 340px;
+  min-height: 50px;
+  min-width: 200px;
+  padding: 18px;
+
+  li {
+    display: inline-block;
+    height: 20px;
+    margin: 4px;
+    width: 22px;
+
+    a {
+      border: 1px solid $popupmenu-bg-color;
+      padding: 0;
+
+      &:focus {
+        outline: 1px solid $primary-color;
+      }
+
+      &.is-selected {
+
+        &::after {
+          @include css3(transform, scaleX(-1) rotate(135deg));
+          // border-color: $white $white $white transparent;
+          border-style: solid;
+          border-width: 2px 2px 0 0;
+          content: '';
+          height: 10px;
+          left: 7px;
+          margin-top: -17px;
+          position: absolute;
+          width: 4px;
+          z-index: 1;
+        }
+
+        &.checkmark-one::after {
+          border-color: $colorpicker-checkmark-one-color $colorpicker-checkmark-one-color $colorpicker-checkmark-one-color transparent;
+        }
+
+        &.checkmark-two::after {
+          border-color: $colorpicker-checkmark-two-color $colorpicker-checkmark-two-color $colorpicker-checkmark-two-color transparent;
+        }
+      }
+    }
+  }
+
+  .swatch {
+    background-color: $graphite04;
+    display: block;
+    height: 20px;
+    width: 20px;
+
+    &.is-border {
+      border: 1px solid $colorpicker-swatch-border-color;
+    }
+  }
+
+  + .arrow {
+    left: 44px;
+  }
+
+}
+
+.inline.colorpicker-container {
+  .colorpicker {
+    width: 80px;
+  }
+
+  .label-text {
+    position: absolute;
+    top: -18px;
+  }
+}
+
+//RTL Styles
+html[dir='rtl'] {
+
+  .colorpicker-container {
+
+    // Color Piece
+    .swatch {
+      left: 0;
+      right: 1px;
+    }
+
+    .icon {
+      left: 0;
+    }
+  }
+
+}

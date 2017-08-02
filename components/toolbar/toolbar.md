@@ -1,10 +1,19 @@
-# Toolbar Component Implementation Detail [Learn More](https://soho.infor.com/index.php?p=component/toolbar)
-
-{{api-details}}
+# Toolbar  [Learn More](https://soho.infor.com/index.php?p=component/toolbar)
 
 ## Configuration Options
 
-1. Toolbar [View Example]( /components/toolbar/example-index)
+1. [Common Configuration]( ../components/toolbar/example-index)
+2. [Title + All Icon Buttons]( ../components/toolbar/example-all-icon-buttons)
+3. [Title + All Text-Only Buttons]( ../components/toolbar/example-all-text-buttons)
+4. [No Title + Searchfield + Icon/Text Buttons]( ../components/toolbar/example-no-title-icon-buttons)
+5. [No title + Text-Only Buttons]( ../components/toolbar/example-no-title-text-buttons)
+6. [Standalone Toolbar Style]( ../components/toolbar/example-standalone-style)
+7. [No "More Actions" Button]( ../components/toolbar/example-no-action-button)
+8. [`MaxVisibleButtons` Defined as "6" Instead of "3"]( ../components/toolbar/example-more-than-three-buttons)
+9. [Additional Examples of `MaxVisibleButtons` Behavior]( ../components/toolbar/example-overflow)
+10. [`selected` Event Behavior]( ../components/toolbar/example-selected-event)
+
+{{api-details}}
 
 ## Code Example
 
@@ -50,13 +59,14 @@
 
 ## Accessibility
 
--
+- The Soho Toolbar automatically appends the WAI-ARIA role "toolbar" to its base element.
+- There is only ever one element inside of a Toolbar at a time that can receive focus.  The Soho Toolbar allows for navigation among all of its buttons with the arrow keys.
 
 ## Keyboard Shortcuts
 
--   **Tab** moves focus to the first enabled toolbar item
--   **Tab Again** moves focus out of the toolbar
--   **Left and Right Arrow** keys navigate among the enabled items in the toolbar.
+- **Tab** moves focus to the first enabled toolbar item
+- **Tab Again** moves focus out of the toolbar
+- **Left and Right Arrow** keys navigate among the enabled items in the toolbar.
 
 ## States and Variations
 
@@ -73,7 +83,3 @@ The Toolbar Component will automatically flip the orientation of its title, butt
 ## Responsive Guidelines
 
 When there are too many buttons, inputs, or other items present on the toolbar to fit on one line, items that would normally wrap to a second line are hidden. The hidden items will move to an overflow [action button.](https://soho.infor.com/index.php?p=component/actions-menu-button)
-
-## Upgrading from 3.X
-
--

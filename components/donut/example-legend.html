@@ -1,0 +1,49 @@
+
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget  auto-height">
+        <div class="widget-header">
+          <h2 class="widget-title">Pie Chart</h2>
+        </div>
+        <div class="widget-content">
+          <div id="pie-chart-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+
+  var pieData = [{
+  centerLabel: '<tspan  x="0" dy="-0.4em">Total Value</tspan> <tspan x="0" dy="1.4em">$0.0</tspan>',
+  data: [{
+      name: 'Company Deductions Really Long Description',
+      shortName: 'CD',
+      value: 0,
+      tooltip: 'Company Deductions {{percent}}',
+      color: '#000000'
+    }, {
+      name: 'After-tax Deductions',
+      shortName: 'After-tax',
+      value: 0,
+      tooltip: 'After-tax Deductions {{percent}}'
+    }, {
+      name: 'Pre-tax Deductions',
+      shortName: 'Pre-tax',
+      value: 0,
+      tooltip: 'Pre-tax Deductions {{percent}}'
+    }]
+  }];
+
+  $('#pie-chart-example').chart({
+    type: 'donut',
+    dataset: pieData,
+    labels: {
+      hideLabels: false
+    }
+  });
+
+});
+</script>

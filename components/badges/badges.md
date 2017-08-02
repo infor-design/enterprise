@@ -1,6 +1,11 @@
-# Badge Component Implementation Detail [Learn More](#)
+# Badges  [Learn More](#)
 
-## Api Details
+## Configuration Options
+
+1. Default Badge Example [View Example]( ../components/badges/example-index)
+2. Additional Badges [View Example]( ../components/badges/example-additional-badges)
+
+## API Details
 
 ### Settings
 

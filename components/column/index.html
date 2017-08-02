@@ -1,0 +1,81 @@
+<h1 id="column-chart-learn-more">Column Chart <a href="#">Learn More</a></h1>
+<h2 id="configuration-options">Configuration Options</h2>
+<ol>
+<li>Column Chart Main Example <a href="../components/column/example-index">View Example</a><br /></li>
+<li>Column Chart with Legend <a href="../components/column/example-legend">View Example</a><br /></li>
+<li>Balance Widget <a href="../components/column/example-balance">View Example</a><br /></li>
+<li>Changing Colors <a href="../components/column/example-colors">View Example</a><br /></li>
+<li>Changing the Y Domain <a href="../components/column/example-domain-change">View Example</a><br /></li>
+<li>Formatting the Values (Tooltip) <a href="../components/column/example-formatter">View Example</a><br /></li>
+<li>Negative Values <a href="../components/column/example-negative-value">View Example</a><br /></li>
+<li>Pattern Colors <a href="../components/column/example-patterns">View Example</a><br /></li>
+<li>Selecting a Section Colors <a href="../components/column/example-selected">View Example</a><br /></li>
+<li>Testing Date Values <a href="../components/column/test-by-date">View Test</a></li>
+</ol>
+<h2 id="api-details">API Details</h2>
+<h3 id="dataset-settings">Dataset Settings</h3>
+<ul>
+<li>name - this value will be on the axis<br /></li>
+<li>shortName - this value will be used if the name wont fit on the axis<br /></li>
+<li>abbrName - this value will be used if the name and shortName wont fit on the axis (fx a phone sized widget)<br /></li>
+<li>tooltip - the custom tooltip. you can pass {{value}} to have the formatted value inserted<br /></li>
+<li>value - the value to use across all lines to domain the axis</li>
+</ul>
+<h2 id="code-example">Code Example</h2>
+<p>This example shows how to invoke a simple column chart with a dataset swith a value for each column. You can pass in a tooltip with a custom value, and also pass in 3 labels that are used at the various break points (L,M, S)</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">
+<span class="kw">var</span> dataset = [{
+        <span class="dt">data</span>: [{
+            <span class="dt">name</span>: <span class="st">&#39;Automotive&#39;</span>,
+            <span class="dt">shortName</span>: <span class="st">&#39;Auto&#39;</span>,
+            <span class="dt">abbrName</span>: <span class="st">&#39;A&#39;</span>,
+            <span class="dt">value</span>: <span class="dv">7</span>,
+            <span class="dt">tooltip</span>: <span class="st">&#39;Custom Tooltip - {{value}}&#39;</span>
+        }, {
+            <span class="dt">name</span>: <span class="st">&#39;Distribution&#39;</span>,
+            <span class="dt">shortName</span>: <span class="st">&#39;Dist&#39;</span>,
+            <span class="dt">abbrName</span>: <span class="st">&#39;D&#39;</span>,
+            <span class="dt">value</span>: <span class="dv">10</span>
+        }, {
+            <span class="dt">name</span>: <span class="st">&#39;Equipment&#39;</span>,
+            <span class="dt">shortName</span>: <span class="st">&#39;Equip&#39;</span>,
+            <span class="dt">abbrName</span>: <span class="st">&#39;E&#39;</span>,
+            <span class="dt">value</span>: <span class="dv">14</span>
+        }, {
+            <span class="dt">name</span>: <span class="st">&#39;Fashion&#39;</span>,
+            <span class="dt">shortName</span>: <span class="st">&#39;Fash&#39;</span>,
+            <span class="dt">abbrName</span>: <span class="st">&#39;F&#39;</span>,
+            <span class="dt">value</span>: <span class="dv">10</span>
+        }, {
+            <span class="dt">name</span>: <span class="st">&#39;Food&#39;</span>,
+            <span class="dt">shortName</span>: <span class="st">&#39;Food&#39;</span>,
+            <span class="dt">abbrName</span>: <span class="st">&#39;F&#39;</span>,
+            <span class="dt">value</span>: <span class="dv">14</span>
+        }, {
+            <span class="dt">name</span>: <span class="st">&#39;Healthcare&#39;</span>,
+            <span class="dt">shortName</span>: <span class="st">&#39;Health&#39;</span>,
+            <span class="dt">abbrName</span>: <span class="st">&#39;H&#39;</span>,
+            <span class="dt">value</span>: <span class="dv">8</span>
+        }, {
+            <span class="dt">name</span>: <span class="st">&#39;Other&#39;</span>,
+            <span class="dt">shortName</span>: <span class="st">&#39;Other&#39;</span>,
+            <span class="dt">abbrName</span>: <span class="st">&#39;O&#39;</span>,
+            <span class="dt">value</span>: <span class="dv">7</span>
+        }]
+      }];
+
+<span class="fu">$</span>(<span class="st">&#39;#column-bar-example&#39;</span>).<span class="fu">chart</span>({<span class="dt">type</span>: <span class="st">&#39;column&#39;</span>, <span class="dt">dataset</span>: dataset});
+</code></pre>
+<h2 id="accessibility">Accessibility</h2>
+<ul>
+<li>The contrast and actual colors can be a concern for visibility impaired and color blind people. However, you can customize the color by passing higher contrast colors.</li>
+</ul>
+<h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
+<ul>
+<li><strong>Tab:</strong> You can tab into the chart area and through the legend values as each has a focus state.<br /></li>
+<li><strong>Enter/Space:</strong> Will select the bar group the corresponds with the focus'd legend item.</li>
+</ul>
+<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
+<ul>
+<li>The bar chart was added in 3.6. From 3.6 the api is mostly compatible.</li>
+</ul>

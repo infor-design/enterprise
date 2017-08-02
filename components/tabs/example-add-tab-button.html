@@ -1,0 +1,198 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Tabs Test: Add Tab Button</h2>
+
+    <p><a class="hyperlink" href="http://jira.infor.com/browse/HFC-2986" target="_blank">Related JIRA Ticket</a>.</p>
+
+    <p>Activating Tabs with the "addTabButton" option set to true causes an extra tab at the end of the stack to exist.  This can add a new empty tab and panel to the list.</p>
+
+    <p></p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div id="add-capable-tabs" class="tab-container" data-options="{ addTabButton: true }">
+      <ul class="tab-list">
+        <li clas="tab"><a href="#tab1">New Tab Settings</a></li>
+        <li class="tab dismissible"><a href="#tab2">Tab #2</a></li>
+        <li class="tab dismissible"><a href="#tab3">Tab #3</a></li>
+      </ul>
+      <div id="tab1" class="tab-panel">
+        <h2>New Tab Settings</h2>
+
+        <p>These settings will be filled into the Tab during the "before-tab-added" event.  If you leave the title and/or content fields blank, the Add Tab button will insert its normal defaults (this is what will happen when using the control normaly).</p>
+
+        <div class="row">
+          <div class="six columns">
+
+            <div class="field">
+              <label for="tab-name">Tab Name</label>
+              <input id="tab-name" />
+            </div>
+
+            <div class="field">
+              <label for="tab-content">Tab Content</label>
+              <textarea id="tab-content"></textarea>
+            </div>
+
+            <div class="field">
+              <label for="tab-index">Tab Index</label>
+              <input id="tab-index" />
+            </div>
+
+            <div class="field">
+              <input id="dismissible" type="checkbox" class="checkbox" checked>
+              <label for="dismissible" class="checkbox-label">Dismissible</label>
+            </div>
+
+          </div>
+          <div class="six columns">
+
+            <h3>How should we add new tabs?</h3>
+
+            <div class="radio-group">
+              <input type="radio" class="radio" name="add-tab-method" id="add-tab-method-1" checked/>
+              <label for="add-tab-method-1" class="radio-label">Use the <em>before-tab-added</em> event to modify the New Tab using the default methods on the Tabs API</label>
+              <br>
+              <input type="radio" class="radio" name="add-tab-method" id="add-tab-method-2"/>
+              <label for="add-tab-method-2" class="radio-label">Use the <em>addTabButtonCallback</em> property on the Tabs Control API to supply a callback for the Add Tab Button</label>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+      <div id="tab2" class="tab-panel">
+        <h2>Tab #2</h2>
+        <p>Extend distributed; content. Widgets tag, dynamic interactive reintermediate cross-media, synthesize. Eyeballs empower networkeffects innovate user-centric infomediaries portals drive scalable brand integrateAJAX-enabled users deliver networks platforms empower productize.</p>
+      </div>
+      <div id="tab3" class="tab-panel">
+        <h2>Tab #3</h2>
+        <p>Relationships benchmark niches best-of-breed innovate integrate plug-and-play life-hacks enhance user-centred; social seamless, B2C; mission-critical global. Revolutionary harness next-generation users--supply-chains, turn-key rich paradigms, bandwidth vertical; Cluetrain customized reinvent visualize, benchmark A-list, "networking, deliver ubiquitous transform mesh 24/365 platforms."</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+    var body = $(this),
+      tabsAPI = $('#add-capable-tabs').data('tabs');
+
+    function makeId(name) {
+      if (!name) {
+        console.warn('No name for a new tab was provided.');
+        name = '';
+      }
+
+      var stringName = name.toLowerCase().replace(/[^a-z\d\s]/g, '').split(' ').join('-');
+
+      var existing = $('[id^="'+ stringName +'"]');
+      if (!existing.length) {
+        return stringName + '-0';
+      }
+
+      return stringName + '-' + existing.length;
+    }
+
+    // NOTE:
+    // For the purposes of this visual test, the arguments on addTabsCallback() are only used when the New Tab
+    // is added via the "before-tab-added" event listener.  When used directly as a callback, the arguments are ignored.
+    function addTabsCallback(e, tabId, tabSettings, tabIndex) {
+      var formName = $('#tab-name').val(),
+        formContent = $('#tab-content').val(),
+        formIndex = Number($('#tab-index').val()),
+        formIsDismissible = $('#dismissible').prop('checked'),
+        id = makeId(formName),
+        tabsLength = tabsAPI.tablist.children('li:not(.separator)').length - 1;
+
+      if (!formName || !formName.length || !formContent || !formContent.length) {
+        return;
+      }
+
+      if (formIndex === undefined || isNaN(formIndex) || formIndex > tabsLength) {
+        formIndex = tabsLength;
+      }
+
+      if (formIndex < 0) {
+        formIndex = 0;
+      }
+
+      var settingsObj = {
+        name: formName,
+        content: formContent,
+        isDismissible: formIsDismissible
+      };
+
+      // If an event's present, this method is being triggred by an 'before-tabs-added' event
+      if (e) {
+        e.preventDefault();
+
+        body.toast({
+          'title': '<span style="font-weight: bold; color: #aa3333">before-tab-added</span> Event was utilized!',
+          'message': 'Content from the "New Tab Settings" Tab was used to generate your New Tab!  The Event Listener was used.'
+        });
+
+        return {
+          newId: id,
+          settings: settingsObj,
+          newIndex: formIndex
+        };
+      }
+
+      // If no event is present, simply trigger the tabs API manually
+
+      body.toast({
+        'title': '<span style="font-weight: bold; color: #33aa33">addTabButtonCallback</span> Method was utilized!',
+        'message': 'Content from the "New Tab Settings" Tab was used to generate your New Tab!  The Callback was used.'
+      });
+
+      tabsAPI.add(id, settingsObj, formIndex);
+      return id;
+    }
+
+    // Set up the event for triggering toasts whenever a tab is added
+    $('#add-capable-tabs').on('tab-added.test', function(e, anchor) {
+      var href = anchor.attr('href').replace(/#/g, '');
+
+      body.toast({
+        'title': 'New Tab Added!',
+        'message': 'A new tab with the id <b>' + href + '</b> was added to the tabset!'
+      });
+    });
+
+    // Tabs Control will be modified each time the Radio Buttons for changing the "add" method is changed.
+    function changeTabSettings() {
+      var addTabMethod = $('#add-tab-method-1').prop('checked');
+
+      // When the first radio is checked
+      if (addTabMethod) {
+        $('#add-capable-tabs').on('before-tab-added.test', addTabsCallback).tabs({
+          addTabButton: true,
+          addTabButtonCallback: null
+        });
+        return;
+      }
+
+      // When the second radio is checked
+      $('#add-capable-tabs').off('before-tab-added.test').tabs({
+        addTabButton: true,
+        addTabButtonCallback: addTabsCallback
+      });
+      return;
+    }
+
+    // Run "changeTabSettings()" any time the radio group changes
+    $('[name="add-tab-method"]').on('change.test', function() {
+      changeTabSettings();
+    });
+
+    // Run "changeTabSettings()" one time on intialization to invoke with defaults
+    changeTabSettings();
+  });
+</script>

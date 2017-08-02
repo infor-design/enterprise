@@ -1,0 +1,772 @@
+// Chart - Svg and Css
+//==================================================//
+
+// Alternate Text message
+.chart-message {
+  background-color: $ruby01;
+  color: $font-color-highcontrast;
+  padding: 20px;
+  text-align: center;
+}
+
+// SVG Chart Styles
+.chart-container {
+  overflow: hidden;
+
+  // Center
+  svg {
+    display: block;
+    margin: 0 auto;
+  }
+
+  // Line Colors - and Visibility
+  .axis path,
+  .axis line {
+    fill: none;
+    shape-rendering: crispEdges;
+    stroke: $chart-line-color;
+  }
+
+  .axis.x .domain {
+    stroke: transparent;
+  }
+
+  // Text Color
+  text {
+    @include font-size(12);
+    @include antialiased();
+    fill: $chart-font-color;
+  }
+
+  .inverse {
+    fill: $chart-font-color-inverse;
+  }
+
+  .chart-donut-text {
+    @include font-size(18);
+  }
+
+  .label-line {
+    stroke: $chart-line-color;
+  }
+
+  .label-circle {
+    fill: $chart-line-color;
+  }
+
+  // Bar Chart Style
+  .bar,
+  .arc {
+    cursor: pointer;
+  }
+
+  .arc {
+    stroke: $inverse-color;
+  }
+
+  .bar {
+    cursor: pointer;
+    stroke: $inverse-color;
+    stroke-width: 1px;
+  }
+
+  //Bar Grouped Style
+  &.column-chart {
+    .domain {
+      stroke: transparent;
+    }
+
+    .tick {
+      line {
+        stroke: $chart-line-color;
+      }
+
+      &.is-selected {
+        font-weight: bold;
+      }
+    }
+
+    rect {
+      cursor: pointer;
+
+      &.is-not-selected {
+        opacity: .35;
+      }
+    }
+  }
+
+  //Line Chart Style
+  &.line-chart {
+    .domain {
+      stroke: transparent;
+    }
+
+    .dot {
+      cursor: pointer;
+      stroke: $white;
+    }
+
+    .line-group .line {
+      cursor: pointer;
+    }
+
+    .area {
+      opacity: .2;
+      pointer-events: none;
+    }
+
+    .is-not-selected {
+      opacity: .35;
+    }
+  }
+
+  // Svg Hidden
+  .is-hidden {
+    @include opacity(0);
+  }
+
+  // Pie Chart
+  .pie path {
+    stroke: $inverse-color;
+    stroke-width: 1px;
+  }
+
+  &.completion-chart {
+    margin: 30px;
+  }
+
+}
+
+// Tooltip Swatch
+.chart-swatch {
+  display: table;
+
+  .swatch-caption {
+    display: table-caption;
+    margin-bottom: .7em;
+    text-align: center;
+
+    .indicator-box {
+      display: inline-block;
+      height: 14px;
+      margin-right: 10px;
+      width: 14px;
+    }
+  }
+
+  .swatch-row {
+    display: table-row;
+    height: 25px;
+
+    div {
+      border-bottom: 9px solid $tooltip-bg-color;
+      display: table-cell;
+      height: 14px;
+      width: 14px;
+    }
+
+    span,
+    b {
+      color: $tooltip-color;
+      display: table-cell;
+      line-height: 12px;
+      padding: 0 10px;
+    }
+
+    b {
+      padding: 0;
+    }
+
+    br {
+      display: block;
+      margin: 5px 0;
+    }
+  }
+
+}
+
+.chart-tooltip-total {
+  color: $tooltip-color;
+  display: block;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+// Legend Styling
+.chart-legend {
+  margin-left: 55px;
+  margin-top: -7px;
+
+  .chart-legend-item {
+    border: 1px solid transparent;
+    float: left;
+    margin-right: 10px;
+    outline: none;
+    padding: 7px 6px 4px;
+
+    &:focus {
+      border-color: $input-focus-border-color;
+      // Removed box shadow to match current style
+      // box-shadow: 0 0 5px rgba(8, 150, 233, .2);
+      outline: none;
+    }
+  }
+
+  .chart-legend-color {
+    display: inline-block;
+    height: 12px;
+    margin-right: 10px;
+    position: relative;
+    top: 1px;
+    width: 12px;
+  }
+
+  .chart-legend-item-text {
+    @include ellipsis;
+    @include font-size(12);
+    color: $chart-font-color;
+    width: auto;
+  }
+
+  .lg {
+    .chart-legend-color {
+      height: 20px;
+      width: 20px;
+    }
+
+    .chart-legend-item-text {
+      vertical-align: super;
+    }
+  }
+
+}
+
+// Spark Line Charts
+.sparkline {
+  // height: 70px;
+  // margin: 50px auto;
+  // position: relative;
+  // width: 200px;
+
+  path {
+    fill: none;
+    stroke-width: 2px;
+  }
+
+  svg {
+    // position: absolute;
+  }
+
+  .bar-rect {
+    fill: transparent;
+    stroke-width: 0;
+  }
+
+  .point {
+    stroke-width: 2;
+  }
+}
+
+// Pie Charts
+.chart-pie {
+  padding: 20px 0 0 2px;
+  width: inherit;
+
+  .tspan {
+    fill: $chart-font-color;
+  }
+
+  .label-text {
+    @include font-size(14);
+  }
+
+  .label-line {
+    fill: none;
+    stroke-width: 2px;
+  }
+}
+
+.chart-vertical-bar {
+  text {
+    text-align: left;
+  }
+}
+
+// Progess Bar Charts
+.chart-completion-target,
+.chart-completion {
+  background-color: $chart-progressbar-bg-color;
+  height: 10px;
+  margin-bottom: 70px;
+  width: 100%;
+
+  &.chart-completion {
+    margin-bottom: 25px;
+
+    .completed {
+      background-color: $turquoise06;
+
+      &.error {
+        background-color: $alert-red;
+      }
+
+      &::after {
+        width: 0;
+      }
+    }
+  }
+
+  span:not(.audible) {
+    @include font-size(12);
+    position: absolute;
+    right: 2px;
+    text-align: right;
+    top: 34px;
+
+    &.completed-label,
+    &.completed-label span {
+      position: static;
+      text-align: left;
+      width: 100%;
+    }
+  }
+
+  .chart-targeted-text {
+    left: 50%;
+    margin-top: -38px;
+    position: relative;
+  }
+
+  .completed {
+    background-color: $chart-progressbar-completed-fill;
+    border-right: 1px solid $chart-progressbar-bg-color;
+    height: 10px;
+    margin-top: -10px;
+    position: relative;
+    transition: width .5s ease 0s;
+    width: 50%;
+
+    span {
+      color: $chart-progressbar-completed-fill;
+      font-weight: bold;
+
+      &.value,
+      &.text {
+        position: static;
+      }
+    }
+
+    &.error {
+      background-color: $alert-red;
+
+      span {
+        color: $alert-red;
+      }
+    }
+
+    &.primary {
+      background-color: $chart-progressbar-primary-fill;
+
+      span {
+        color: $chart-progressbar-primary-fill;
+      }
+    }
+
+    &.dark {
+      background-color: $chart-progressbar-dark-fill;
+
+      span {
+        color: $chart-progressbar-dark-fill;
+      }
+    }
+
+    &::after {
+      background-color: inherit;
+      content: '';
+      height: 30px;
+      left: 100%;
+      position: absolute;
+      width: 2px;
+    }
+  }
+
+  .target {
+    background-color: $chart-progressbar-target-fill;
+    height: 10px;
+    position: relative;
+    transition: width .5s ease 0s;
+    width: 60%;
+
+    span {
+      @include font-size(12);
+      color: $font-color;
+      position: absolute;
+      right: -2px;
+      text-align: right;
+      top: 34px;
+
+      &.value,
+      &.text {
+        position: static;
+      }
+    }
+
+    &::after {
+      background-color: inherit;
+      content: '';
+      height: 30px;
+      left: 100%;
+      position: absolute;
+      width: 2px;
+    }
+
+    &.overlap {
+      span {
+        top: 70px;
+        transition: top .5s ease 0s;
+      }
+
+      &::after {
+        height: 65px;
+        transition: height .5s ease 0s;
+      }
+    }
+  }
+
+  .target-line {
+    background-color: $amethyst07;
+    border-radius: 1px;
+    color: transparent;
+    height: 20px;
+    left: 45px;
+    margin-top: -15px;
+    position: relative;
+    width: 5px;
+    z-index: 1;
+  }
+
+  &.overlap {
+    margin-bottom: 100px;
+    transition: margin .5s ease 0s;
+  }
+
+  .total,
+  .remaining,
+  .completed,
+  .target-line {
+
+    &.bar {
+      &.error {
+        background-color: $error-color;
+      }
+
+      &.dark {
+        background-color: $chart-progressbar-dark-fill;
+      }
+
+      &.good {
+        background-color: $confirm-icon-fill;
+      }
+
+      &.primary {
+        background-color: $chart-progressbar-primary-fill;
+      }
+    }
+
+    .text,
+    .value {
+      &.error {
+        color: $alert-red;
+      }
+
+      &.dark {
+        color: $chart-progressbar-dark-fill;
+      }
+
+      &.good {
+        color: $confirm-icon-fill;
+      }
+
+      &.primary {
+        color: $chart-progressbar-primary-fill;
+      }
+    }
+  }
+
+}
+
+.completion-chart {
+  .info {
+    .value {
+      font-weight: bold;
+    }
+
+    .error {
+      color: $alert-red;
+    }
+
+    .dark {
+      color: $chart-progressbar-dark-fill;
+    }
+
+    .good {
+      color: $confirm-icon-fill;
+    }
+
+    .primary {
+      color: $chart-progressbar-primary-fill;
+    }
+  }
+
+}
+
+.chart-targeted-achievement {
+  // scss-lint:disable ImportantRule
+  margin-bottom: 17px !important;
+  // scss-lint:enable ImportantRule
+
+  .label {
+    @include font-size(14);
+    margin-top: 2px;
+  }
+
+  .bar {
+    background-color: $chart-targeted-achievement-bg-color;
+    cursor: default;
+    height: 25px;
+
+    &.completed {
+      margin-bottom: 5px;
+      margin-top: -25px;
+    }
+  }
+
+  .target::after,
+  .completed::after {
+    content: none;
+  }
+
+  .remaining {
+    background: repeating-linear-gradient(
+      150deg,
+      $azure04,
+      $azure04 1px,
+      $azure02 1px,
+      $azure02 10px
+    );
+  }
+
+  //Labels
+  .completed {
+    .value {
+      display: none;
+    }
+
+    span {
+      @include font-size(14);
+      // scss-lint:disable ImportantRule
+      color: $font-color !important;
+      // scss-lint:enable ImportantRule
+      font-weight: normal;
+      right: unset;
+      top: 20px;
+    }
+  }
+
+  .target .value {
+    display: none;
+  }
+
+  .icon-error {
+    display: inline-block;
+    height: 16px;
+    margin-right: 6px;
+    position: relative;
+    top: -1px;
+    vertical-align: middle;
+    width: 16px;
+  }
+
+}
+
+.colored.label {
+  color: $turquoise06;
+
+  &.amethyst07 {
+    background-color: transparent;
+    color: $amethyst07;
+
+    .value {
+      color: $amethyst07;
+    }
+  }
+
+  span {
+    color: $font-color;
+  }
+
+  .value {
+    color: $turquoise06;
+  }
+}
+
+.svg-patterns {
+  position: fixed;
+  top: -9999999px;
+}
+
+//Bullet Chart
+.bullet-chart {
+  @include font-size(12);
+  .range {
+    cursor: pointer;
+  }
+
+  .marker {
+    stroke: $primary-color;
+    stroke-width: 2px;
+  }
+
+  .tick line {
+    stroke: $font-color;
+    stroke-width: .5px;
+  }
+
+  .title {
+    @include font-size(12);
+    font-weight: bold;
+  }
+
+  .subtitle {
+    font-weight: normal;
+    text-transform: none;
+  }
+
+  //Handles max 3 ranges
+
+}
+
+.bullet {
+  .range.s0 {fill: $slate01;};
+  .range.s1 {fill: $slate02;};
+  .range.s2 {fill: $slate03;};
+  .measure.s0 {fill: $azure02;};
+  .measure.s1 {fill: $azure04;};
+  .measure.s2 {fill: $azure06;};
+  .measure.s3 {fill: $azure08;};
+  .measure.s4 {fill: $azure10;};
+}
+
+// Temporary fix for SVG Tooltips
+// scss-lint:disable IdSelector
+#svg-tooltip.tooltip {
+  &.top,
+  &.bottom {
+    .arrow {
+      left: calc(50% - 6px);
+    }
+  }
+
+  &.left,
+  &.right {
+    .arrow {
+      top: calc(50% - 6px);
+    }
+  }
+}
+// scss-lint:enable IdSelector
+
+//RTL Styles
+html[dir='rtl'] {
+  .chart-legend {
+    margin-left: inherit;
+    margin-right: 55px;
+
+    .chart-legend-color {
+      margin-left: 10px;
+      margin-right: inherit;
+    }
+
+    .chart-legend-item {
+      float: right;
+      margin-left: 10px;
+      margin-right: 0;
+    }
+  }
+
+  // Progess Bar Charts
+  .chart-completion-target,
+  .chart-completion {
+
+    span:not(.audible) {
+      left: 2px;
+      right: auto;
+      text-align: left;
+    }
+
+    .completed {
+      border-left: 1px solid $chart-progressbar-bg-color;
+      border-right: 0 solid $chart-progressbar-bg-color;
+
+      &::after {
+        left: auto;
+        right: 100%;
+      }
+    }
+
+    .target {
+      span:not(.audible) {
+        left: -2px;
+        right: auto;
+        text-align: right;
+      }
+
+      &::after {
+        left: auto;
+        right: 100%;
+      }
+    }
+
+    .target-line {
+      left: auto;
+      right: 45px;
+    }
+  }
+
+  .sparkline,
+  .chart-container.line-chart,
+  .chart-container.bullet-chart,
+  .chart-container.column-chart,
+  .chart-container.chart-vertical-bar {
+    svg {
+      @include css3(transform, scale(-1, 1));
+
+      text {
+        @include css3(transform, scale(-1, 1));
+
+        &.dir-ltr,
+        &.negative,
+        &.negative-value {
+          direction: ltr;
+        }
+      }
+
+      tspan {
+        unicode-bidi: embed;
+      }
+
+      .axis.y {
+        text {
+          text-anchor: start;
+        }
+      }
+
+      .axis-labels {
+        text {
+          @include css3(transform, inherit);
+        }
+      }
+
+    }
+  }
+}

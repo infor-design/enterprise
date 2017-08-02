@@ -1,0 +1,75 @@
+
+<div class="row top-padding">
+  <div class="two-thirds column">
+
+      <div class="widget auto-height">
+        <div class="widget-header">
+          <h2 class="widget-title">Taxes and Deductions</h2>
+        </div>
+        <div class="widget-content">
+          <div id="pie-chart-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+
+  </div>
+</div>
+
+{{={{{ }}}=}}
+
+<script>
+$('body').on('initialized', function () {
+
+  var pieData = [{
+    data: [{
+        name: 'Company Deductions Really Long Description',
+        shortName: 'CD',
+        value: 8,
+        tooltip: 'Company Deductions {{percent}}',
+        color: '#000000',
+        id: 1
+      }, {
+        name: 'After-tax Deductions',
+        shortName: 'After-tax',
+        value: 11,
+        tooltip: 'After-tax Deductions {{percent}}',
+        id: 2,
+        selected: true
+      }, {
+        name: 'Pre-tax Deductions',
+        shortName: 'Pre-tax',
+        value: 12,
+        tooltip: 'Pre-tax Deductions {{percent}}',
+        id: 3
+      }, {
+        name: 'Taxes',
+        shortName: 'Af-tax',
+        value: 17,
+        tooltip: 'Taxes %percent%',
+        id: 4,
+        selected: true
+      }, {
+        name: 'Wages',
+        shortName: 'Wages',
+        value: 52,
+        tooltip: 'Wages %percent%',
+        id: 5
+      }]
+    }];
+
+  $('#pie-chart-example').chart({
+    type: 'donut',
+    dataset: pieData,
+    labels: {
+      hideLabels: false
+    }
+  }).on('selected', function (e, args) {
+    if (args[0] && args[0].data) {
+      console.log('Save this id: '+ args[0].data.id);
+    }
+  });
+
+  console.log($('#pie-chart-example').data());
+
+});
+</script>

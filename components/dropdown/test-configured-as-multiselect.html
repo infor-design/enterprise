@@ -1,0 +1,66 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Dropdown Test: Configured as Multiselect</h2>
+    <p><a class="hyperlink" href="http://jira.infor.com/browse/SOHO-5911" target="_blank">Related JIRA Ticket</a>.  All of the following examples are Dropdown components configured the same way that a multiselect would be, without using the multiselect component wrapper.  This is how the Angular SohoXi components create multiselects.</p>
+
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+    <h2 class="fieldset-title">Common Dropdown Config</h2>
+
+    <label for="common">Bytes:</label>
+    <select id="common" multiple class="dropdown">
+      <option selected>0</option>
+      <option>1</option>
+      <option>2</option>
+      <option>4</option>
+      <option>8</option>
+      <option>16</option>
+      <option>32</option>
+      <option>64</option>
+      <option>128</option>
+      <option>256</option>
+    </select>
+  </div>
+  <div class="six columns">
+    <h2 class="fieldset-title">Configured like Multiselect</h2>
+
+    <label for="config-like-multi">Bytes:</label>
+    <select id="config-like-multi" multiple class="dropdown" data-options='{ "closeOnSelect": false, "empty": true, "moveSelected": "all", "multiple": true }'>
+      <option selected>0</option>
+      <option>1</option>
+      <option>2</option>
+      <option>4</option>
+      <option>8</option>
+      <option>16</option>
+      <option>32</option>
+      <option>64</option>
+      <option>128</option>
+      <option>256</option>
+    </select>
+  </div>
+
+</div>
+<div class="row">
+  <div class="six columns">
+    <h2 class="fielset-title">Legacy MoveSelectedToTop</h2>
+
+    <label for="config-like-multi">Bytes:</label>
+    <select id="config-like-multi" multiple class="dropdown" data-options='{ "closeOnSelect": false, "empty": true, "multiple": true }' data-move-selected="true">
+      <option selected>0</option>
+      <option>1</option>
+      <option>2</option>
+      <option>4</option>
+      <option>8</option>
+      <option>16</option>
+      <option>32</option>
+      <option>64</option>
+      <option>128</option>
+      <option>256</option>
+    </select>
+  </div>
+</div>

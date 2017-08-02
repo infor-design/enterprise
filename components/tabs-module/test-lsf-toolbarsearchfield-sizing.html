@@ -1,0 +1,71 @@
+<body class="no-scroll">
+
+<a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+{{> includes/svg-inline-refs}}
+
+<!-- Masthead -->
+{{> includes/masthead}}
+
+<!-- Module Tabs -->
+<section id="module-tabs-example" class="tab-container module-tabs"
+         data-options='{ "containerElement": "#module-tabs-container" }'>
+  <div class="tab-list-container">
+    <ul class="tab-list">
+    </ul>
+  </div>
+  <div class="toolbar">
+    <div class="buttonset">
+      <input type="text" id="awb" class="searchfield" spellcheck="false" placeholder="Search..." autofocus/>
+    </div>
+    {{> includes/header-actionbutton}}
+  </div>
+</section>
+
+{{> includes/applicationmenu}}
+
+<!-- Page Container -->
+<div id="module-tabs-container" class="page-container no-scroll"></div>
+
+<script type="text/javascript">
+
+  $('#awb').toolbarsearchfield({
+    collapsible: false,
+    showCategoryText: false,
+    categories: [{
+      checked: true,
+      name: "Lawson Applications",
+      id: "/servlet/LawSearch?PDL=APPS100&TYPE=Programs.token;Bookmarks;Programs.syscode;Programs.name&ROF=Programs.token&q=",
+      value: "LAW_SEARCH"
+    }, {
+      checked: false,
+      name: "Bookmarks",
+      id: "/servlet/LawSearch?PDL=APPS100&TYPE=bookmarks&q=",
+      value: "LAW_SEARCH"
+    }
+    ]
+  });
+
+  $('body').on('initialized', function() {
+    const $tabs = $('#module-tabs-example').tabs({
+        containerElement: '#module-tabs-container',
+        addTabButton: true,
+        moduleTabsTooltips: true
+      }),
+      control = $tabs.data('tabs');
+
+    control.add('tab1', {
+      name: 'This is a really really really really really really long title',
+      content: '<button class="btn-secondary" style="margin:2em;">Rename</button>'
+    });
+
+    control.select('tab1');
+
+    control.getPanel('tab1').find('.btn').click(function() {
+      control.rename('tab1', 'Now this text is even longer longer longer longer longer longer longer longer longer longer longer');
+    });
+
+    $('#awb').toolbarsearchfield();
+  });
+</script>
+
+</body>

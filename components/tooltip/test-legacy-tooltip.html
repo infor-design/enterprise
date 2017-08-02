@@ -1,0 +1,55 @@
+<div class="row">
+  <div class="twelve columns">
+
+    <h2 class="fieldset-title">Validation tests</h2>
+    <form id="test" autocomplete="off" data-validate-on="submit">
+
+       <div class="field-short">
+        <label class="required" for="email-address-ok">Email Address <span class="audible">Required</span></label>
+        <input type="text" id="email-address-ok" name="email-address-ok" data-validate="required" data-error-type="tooltip">
+      </div>
+
+      <div class="field-short">
+        <label class="required" for="credit-card">Credit Card <span class="audible">Required</span></label>
+        <input type="text" id="credit-card" name="credit-card" data-validate="required" value="xxxx-xxxx-xxxx-xxxx" data-error-type="tooltip" >
+      </div>
+
+      <div class="field-short">
+        <label for="credit-code">Code <span class="audible">Required</span></label>
+        <input type="text" id="credit-code" class="input-sm" name="credit-code" data-mask-mode="number" data-error-type="tooltip" >
+      </div>
+
+      <div class="field-short">
+        <label class="required" for="credit-code2">Code <span class="audible">Required</span></label>
+        <input type="text" id="credit-code2" class="input-xs lookup" name="credit-code2" data-validate="required" data-mask-mode="number" data-error-type="tooltip" >
+      </div>
+
+      <div class="field-short">
+        <label class="required" for="states" class="label">States</label>
+        <select id="states" data-validate="required" name="states" class="dropdown" data-error-type="tooltip" >
+          <option value="" selected>&nbsp;</option>
+          <option value="AL" >Alabama</option>
+          <option value="DE">Delaware</option>
+          <option value="DC">District Of Columbia</option>
+          <option value="FL">Florida</option>
+          <option value="GA">Georgia</option>
+          <option value="HI">Hawaii</option>
+          <option value="ID">Idaho</option>
+          <option value="OK">Oklahoma</option>
+          <option value="OR">Oregon</option>
+          <option value="PA">Pennsylvania</option>
+          <option value="RI">Rhode Island</option>
+          <option value="SC">South Carolina</option>
+          </select>
+      </div>
+
+      <div class="field-short">
+        <span class="label required">Editor <span class="audible">Required</span></span>
+        <div class="editor" data-validate="required" data-error-type="tooltip"></div>
+      </div>
+
+      <button type="submit" id = 'test1' class="btn-primary">Submit</button>
+    </form>
+
+  </div>
+</div>

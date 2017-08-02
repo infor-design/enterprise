@@ -1,0 +1,180 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Intializer Test: Run on Containers</h2>
+
+    <p>The <a class="hyperlink" href="http://jira.infor.com/browse/HFC-3049" target="_blank">Initializer was improved</a> to run the element its called on as part of the initialization process.  Previous the Initializer would only run its children elements through each plugin mapping, because it was meant to run on containers.  This change allows the parent to run as well.</p>
+
+    <p></p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div id="controls-container" class="twelve columns">
+
+    <div class="field">
+      <button type="button" id="add-controls" class="btn-primary">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-add"></use>
+        </svg>
+        <span>Add Controls and Invoke</span>
+      </button>
+    </div>
+
+    <!--
+
+    <div class="field">
+      <label for="dropdown" />Test Dropdown</label>
+      <select id="dropdown" class="dropdown">
+        <option id="option1" selected>Option #1</option>
+        <option id="option2">Option #2</option>
+        <option id="option3">Option #3</option>
+        <option id="option4">Option #4</option>
+        <option id="option5">Option #5</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="slider">Test Slider</label>
+      <input id="slider" name="slider" class="slider" type="range" min="0" max="5" value="2" step="1" data-ticks='[
+        {"value": 0, "description": "Very Poor", "color": "#ed1c24"},
+        {"value": 1, "description": "Poor", "color": "#ed1c24"},
+        {"value": 2, "description": "Adequate", "color": "#faa719"},
+        {"value": 3, "description": "Good", "color": "#4fb521"},
+        {"value": 4, "description": "Very Good", "color": "#4fb521"},
+        {"value": 5, "description": "Superior", "color": "#157a13"}
+      ]'/>
+    </div>
+
+    <span class="label" for="tabs">Test Tabs Container</span>
+    <div id="tabs" class="tab-container">
+      <ul class="tab-list">
+        <li class="tab is-selected"><a href="#awesome">Awesome</a></li>
+        <li class="tab"><a href="#groovy">Groovy</a></li>
+        <li class="tab"><a href="#radical">Radical</a></li>
+        <li class="tab"><a href="#schway">Schway</a></li>
+        <li class="tab"><a href="#fabulous">Fabulous</a></li>
+        <li class="tab"><a href="#amazing">Amazing</a></li>
+      </ul>
+      <div id="awesome" class="tab-panel">
+        <h3>Awesome</h3>
+        <p>Rich web-enabled rich-clientAPIs bricks-and-clicks user-contributed mashups strategic niches next-generation back-end B2B, "maximize extend, extensible; experiences!" Partnerships customized e-markets, synergize matrix web services aggregate syndicate, bricks-and-clicks; reintermediate envisioneer enhance. Deploy. Eyeballs synthesize networks expedite design convergence global. Niches viral peer-to-peer dynamic, platforms mesh eyeballs harness transition, "wikis supply-chains ecologies collaborative customized mesh."</p>
+      </div>
+      <div id="groovy" class="tab-panel">
+        <h3>Groovy</h3>
+        <p>Plug-and-play engineer user-centred unleash, enterprise expedite customized next-generation implement. Life-hacks mindshare enable deliver next-generation, "enterprise integrated." Generate social 24/7 out-of-the-box Cluetrain mission-critical engineer networking niches embrace, paradigms e-commerce efficient tagclouds aggregate share engineer. Markets empower mission-critical technologies global, "data-driven authentic cross-platform user-centric eyeballs dynamic mashups widgets, vortals embrace long-tail benchmark sticky," solutions one-to-one: action-items, networks. Grow, "e-commerce: e-business ROI networkeffects," e-business plug-and-play aggregate intuitive facilitate share?</p>
+      </div>
+      <div id="radical" class="tab-panel">
+        <h3>Radical</h3>
+        <p>A-list harness productize platforms networks; strategic revolutionize back-end integrateAJAX-enabled matrix whiteboard channels reintermediate integrate content: paradigms citizen-media, "benchmark," synergize user-centric, incentivize harness dynamic engage disintermediate scale whiteboard.</p>
+      </div>
+      <div id="schway" class="tab-panel">
+        <h3>Schway</h3>
+        <p>Vertical, e-tailers enterprise cross-media out-of-the-box redefine strategic integrate Cluetrain widgets cutting-edge iterate. Tag scalable innovative global models viral, platforms dot-com frictionless, value bandwidth semantic exploit impactful, web services. User-contributed optimize, mashups, optimize platforms, applications vertical aggregate tagclouds web-readiness, synergistic integrate. Action-items, "scalable revolutionary: platforms back-end; feeds expedite models e-business," e-services eyeballs. Feeds weblogs deliverables transparent dynamic niches; social e-commerce channels enable web-enabled users vortals facilitate.</p>
+      </div>
+      <div id="fabulous" class="tab-panel">
+        <h3>Fabulous</h3>
+        <p>Utilize web services facilitate platforms target synergize user-centric, schemas platforms revolutionize tagclouds eyeballs B2C, mindshare; strategize, social. B2C matrix long-tail long-tail markets supply-chains visionary visionary cross-media grow, deliverables dynamic. Authentic customized networking facilitate. Enhance empower?"</p>
+      </div>
+      <div id="amazing" class="tab-panel">
+        <h3>Amazing</h3>
+        <p>Enable collaborative B2B bandwidth brand podcasts create brand content embrace: niches. Remix folksonomies, networking folksonomies share engage content vertical efficient, implement, authentic real-time. Synergies ROI bricks-and-clicks. Deploy metrics impactful facilitate synergies out-of-the-box integrated, widgets architect leading-edge life-hacks disintermediate; one-to-one vertical reinvent? Harness, cross-platform capture engage unleash, "architectures podcasting integrateAJAX-enabled expedite synergize mashups communities platforms markets eyeballs widgets paradigms 24/7; frictionless." </p>
+      </div>
+    </div>
+
+    -->
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+    $('body').toast({
+      title: 'Main Intializer Complete',
+      message: 'The primary initializer process has completed.'
+    });
+
+    function alertInvoked(elem) {
+      $('body').toast({
+        title: 'New Control Initialized!',
+        message: 'A new control, <span class="font-weight: bold; color: #933;">'+ $(elem).attr('id') +'</span> was initialized! process has completed.'
+      });
+    }
+
+    var items = ['dropdown', 'slider', 'tabs'],
+      swapper = 0,
+      counter = 0;
+
+    $('#add-controls').on('click.test', function() {
+      var html = $();
+
+      switch(items[counter]) {
+        case 'dropdown':
+          html = $('<select aria-label="Dropdown '+ counter +'" id="dropdown-' + counter + '" class="dropdown">').html('<select id="dropdown" class="dropdown">' +
+            '<option id="option1-'+ counter +'" selected>Option #1</option>' +
+            '<option id="option2-'+ counter +'">Option #2</option>' +
+            '<option id="option3-'+ counter +'">Option #3</option>' +
+            '<option id="option4-'+ counter +'">Option #4</option>' +
+            '<option id="option5-'+ counter +'">Option #5</option>' +
+          '</select>');
+          break;
+        case 'slider':
+          html = $('<input id="slider-'+ counter +'" name="slider" class="slider" type="range" min="0" max="5" value="2" step="1" data-ticks=\'[' +
+            '{"value": 0, "description": "Very Poor", "color": "#ed1c24"},' +
+            '{"value": 1, "description": "Poor", "color": "#ed1c24"},' +
+            '{"value": 2, "description": "Adequate", "color": "#faa719"},' +
+            '{"value": 3, "description": "Good", "color": "#4fb521"},' +
+            '{"value": 4, "description": "Very Good", "color": "#4fb521"},' +
+            '{"value": 5, "description": "Superior", "color": "#157a13"}' +
+          ']\'/>');
+          break;
+        case 'tabs':
+          html = $('<div id="tabs-'+ counter +'" class="tab-container"></div>').html('<ul class="tab-list">' +
+            '<li class="tab is-selected"><a href="#awesome-'+ counter +'">Awesome</a></li>' +
+            '<li class="tab"><a href="#groovy-'+ counter +'">Groovy</a></li>' +
+            '<li class="tab"><a href="#radical-'+ counter +'">Radical</a></li>' +
+            '<li class="tab"><a href="#schway-'+ counter +'">Schway</a></li>' +
+            '<li class="tab"><a href="#fabulous-'+ counter +'">Fabulous</a></li>' +
+            '<li class="tab"><a href="#amazing-'+ counter +'">Amazing</a></li>' +
+          '</ul>' +
+          '<div id="awesome-'+ counter +'" class="tab-panel">' +
+            '<h3>Awesome</h3>' +
+            '<p>Rich web-enabled rich-clientAPIs bricks-and-clicks user-contributed mashups strategic niches next-generation back-end B2B, "maximize extend, extensible; experiences!" Partnerships customized e-markets, synergize matrix web services aggregate syndicate, bricks-and-clicks; reintermediate envisioneer enhance. Deploy. Eyeballs synthesize networks expedite design convergence global. Niches viral peer-to-peer dynamic, platforms mesh eyeballs harness transition, "wikis supply-chains ecologies collaborative customized mesh."</p>' +
+          '</div>' +
+          '<div id="groovy-'+ counter +'" class="tab-panel">' +
+            '<h3>Groovy</h3>' +
+            '<p>Plug-and-play engineer user-centred unleash, enterprise expedite customized next-generation implement. Life-hacks mindshare enable deliver next-generation, "enterprise integrated." Generate social 24/7 out-of-the-box Cluetrain mission-critical engineer networking niches embrace, paradigms e-commerce efficient tagclouds aggregate share engineer. Markets empower mission-critical technologies global, "data-driven authentic cross-platform user-centric eyeballs dynamic mashups widgets, vortals embrace long-tail benchmark sticky," solutions one-to-one: action-items, networks. Grow, "e-commerce: e-business ROI networkeffects," e-business plug-and-play aggregate intuitive facilitate share?</p>' +
+          '</div>' +
+          '<div id="radical-'+ counter +'" class="tab-panel">' +
+            '<h3>Radical</h3>' +
+            '<p>A-list harness productize platforms networks; strategic revolutionize back-end integrateAJAX-enabled matrix whiteboard channels reintermediate integrate content: paradigms citizen-media, "benchmark," synergize user-centric, incentivize harness dynamic engage disintermediate scale whiteboard.</p>' +
+          '</div>' +
+          '<div id="schway-'+ counter +'" class="tab-panel">' +
+            '<h3>Schway</h3>' +
+            '<p>Vertical, e-tailers enterprise cross-media out-of-the-box redefine strategic integrate Cluetrain widgets cutting-edge iterate. Tag scalable innovative global models viral, platforms dot-com frictionless, value bandwidth semantic exploit impactful, web services. User-contributed optimize, mashups, optimize platforms, applications vertical aggregate tagclouds web-readiness, synergistic integrate. Action-items, "scalable revolutionary: platforms back-end; feeds expedite models e-business," e-services eyeballs. Feeds weblogs deliverables transparent dynamic niches; social e-commerce channels enable web-enabled users vortals facilitate.</p>' +
+          '</div>' +
+          '<div id="fabulous-'+ counter +'" class="tab-panel">' +
+            '<h3>Fabulous</h3>' +
+            '<p>Utilize web services facilitate platforms target synergize user-centric, schemas platforms revolutionize tagclouds eyeballs B2C, mindshare; strategize, social. B2C matrix long-tail long-tail markets supply-chains visionary visionary cross-media grow, deliverables dynamic. Authentic customized networking facilitate. Enhance empower?"</p>' +
+          '</div>' +
+          '<div id="amazing-'+ counter +'" class="tab-panel">' +
+            '<h3>Amazing</h3>' +
+            '<p>Enable collaborative B2B bandwidth brand podcasts create brand content embrace: niches. Remix folksonomies, networking folksonomies share engage content vertical efficient, implement, authentic real-time. Synergies ROI bricks-and-clicks. Deploy metrics impactful facilitate synergies out-of-the-box integrated, widgets architect leading-edge life-hacks disintermediate; one-to-one vertical reinvent? Harness, cross-platform capture engage unleash, "architectures podcasting integrateAJAX-enabled expedite synergize mashups communities platforms markets eyeballs widgets paradigms 24/7; frictionless." </p>' +
+          '</div>');
+          break;
+      }
+
+      html.wrap('<div class="field"></div>').appendTo('#controls-container');
+      html.on('initialized.test', function() {
+        alertInvoked(this);
+      }).initialize();
+
+      counter++;
+      swapper++;
+      if (swapper > (items.length - 1)) {
+        swapper = 0;
+      }
+    });
+  });
+</script>

@@ -4,12 +4,23 @@
 @import 'mixins';
 
 @import 'config';
-@import 'controls/grid';
+@import 'components/grid/grid';
+@import 'components/visibility/visibility';
+@import 'components/blockgrid/blockgrid';
 
 // Variables for this page
-$color-font-dark: #222427;
 $color-font-lighter: #484a51;
-$color-hyperlink: #007576;
+
+$color-accent-green: #007567;
+$color-accent-blue: #007567;
+$color-accent-magenta: #9d1ca1;
+$color-accent-green-dark-bg: #1ad1d1;
+$color-accent-blue-dark-bg: #5eadff;
+$color-accent-magenta-dark-bg: #ec53f1;
+$color-main-blue: #0060d4;
+$color-header-grey: #727272;
+$color-code-bg: #f9fafc;
+$color-code-border: #e9e9e9;
 
 // scss-lint:disable VendorPrefix
 * {
@@ -33,7 +44,7 @@ html {
 
   body {
     background-color: $white;
-    color: $color-font-dark;
+    color: $color-font-lighter;
     font-family: $font-family;
     font-size: 1rem;
     margin: 20px 0;
@@ -45,21 +56,63 @@ html {
   display: none;
 }
 
+// Letters on the Home Page
+.doc-index {
+
+  // Change Letter Color and Size
+  .fieldset-title {
+    @include font-size(14);
+    color: $color-font-lighter;
+  }
+
+   // Align the Letter columns
+  .columns {
+    text-align: center;
+
+    .link-list {
+      text-align: left;
+    }
+  }
+
+  .row {
+    max-width: 100%;
+    width: 100%;
+  }
+
+}
+
+@include respond-to(phabletdown) {
+  .doc-index .columns {
+    text-align: left;
+  }
+}
+
 // Typography
 h1 {
-  @include font-size(36);
+  @include font-size(50);
+  color: $color-main-blue;
+  font-weight: lighter;
+  line-height: 60px;
 }
 
 h2 {
   @include font-size(28);
+  color: $black;
+  font-weight: lighter;
+  line-height: 42px;
 }
 
 h3 {
-  @include font-size(20);
+  @include font-size(14);
+  color: $black;
+  letter-spacing: 1.17px;
+  line-height: 16px;
+  text-transform: uppercase;
 }
 
 h4 {
-  @include font-size(16);
+  @include font-size(14);
+  color: $black;
 }
 
 p,
@@ -69,16 +122,19 @@ code {
   @include font-size(16);
   color: $color-font-lighter;
   font-family: $font-family;
-  line-height: 2rem;
+  font-weight: 400;
+  line-height: 2.4rem;
 }
+
 
 a {
   @include font-size(16);
-  color: $color-hyperlink;
-  font-weight: bold;
+  color: $color-main-blue;
+  font-weight: normal;
+  text-decoration: none;
 
   svg {
-    fill: $color-hyperlink;
+    fill: $color-main-blue;
     height: 14px;
     left: 3px;
     position: relative;
@@ -89,7 +145,13 @@ a {
 
 // Style the Code Block
 pre {
-  background-color: $graphite01;
+  background-color: $color-code-bg;
+  border: 1px solid $color-code-border;
+  border-radius: 2px;
+  letter-spacing: 1.17px;
+  line-height: 24px;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 //Hide Table Of Contents (for now)
@@ -110,6 +172,120 @@ p strong {
     content: ':';
   }
 }
+
+// Main Header Area
+.doc-header {
+  height: 100px;
+  margin: -19px 0 5px;
+  padding: 0;
+  vertical-align: middle;
+
+  .row {
+    max-width: 100%;
+    padding-left: 37px;
+    padding-right: 40px;
+    width: 100%;
+
+    > * {
+      display: inline-block;
+      float: left;
+    }
+  }
+
+  .doc-logo {
+    display: inline-block;
+    margin-top: 22px;
+    padding-right: 7px;
+
+    svg {
+      height: 48px;
+      width: 149px;
+    }
+  }
+
+  .doc-header-logo {
+    margin-right: 128px;
+  }
+
+  .doc-header-link {
+    @include font-size(16);
+    border-bottom: 2px solid transparent;
+    color: $black;
+    display: inline-block;
+    margin: 29px 18px 29px 18.5px;
+    padding: 15px 5px 1px;
+    text-decoration: none;
+
+    &.is-active {
+      border-bottom: 2px solid $color-main-blue;
+      color: $color-main-blue;
+    }
+  }
+
+  .doc-header-secondary-links {
+    float: right;
+    margin-right: 2px;
+  }
+
+  .doc-header-secondary-link {
+    @include font-size(16);
+    color: $color-header-grey;
+    display: inline-block;
+    margin: 29px 18px 29px 18.5px;
+    padding: 15px 5px 1px;
+    text-decoration: none;
+  }
+
+  .doc-header-search {
+    margin: 25px 20px;
+
+    svg {
+      fill: $color-header-grey;
+    }
+  }
+
+}
+
+.doc-main-index {
+  margin: 0;
+  max-width: 100%;
+  width: 100%;
+
+  .link-list {
+    text-align: left;
+  }
+
+  .full.column {
+    margin-left: 40px;
+    width: calc(100% - 60px);
+  }
+
+}
+
+// Media Queries for Header Area
+@media (min-width: 0) and (max-width: $breakpoint-wide-tablet - 1) {
+
+  .doc-header .doc-header-secondary-links {
+    clear: both;
+    display: block;
+    float: none;
+    margin: 0 0 0 -21px;
+    position: relative;
+    top: -55px;
+  }
+
+  .doc-version-ddl {
+    margin-top: 15px;
+  }
+
+}
+
+@media (min-width: 0) and (max-width: $breakpoint-slim - 1) {
+  .doc-header {
+    //background-color: orange;
+  }
+}
+
 
 // Pandoc code highlight styles - customized
 // https://github.com/jgm/highlighting-kate/blob/master/css/hk-pyg.css
@@ -192,9 +368,11 @@ code.sourceCode span.er {
 
 // scss-lint:disable MergeableSelector
 code {
-  background-color: #f0f0f0;
-  color: #d44950;
-  padding: 2px;
+  background-color: $color-code-bg;
+  border-radius: 2px;
+  font-size: 16px;
+  letter-spacing: 1.17px;
+  line-height: 24px;
 }
 // scss-lint:enable MergeableSelector
 

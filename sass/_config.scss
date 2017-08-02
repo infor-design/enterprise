@@ -1,7 +1,7 @@
 // Variables
 //================================================== //
 
-@import 'colorpalette';
+@import 'components/colors/colorpalette';
 
 // Form Background Color
 $body-bg-color:  $graphite01;
@@ -456,9 +456,9 @@ $modal-border-color: $graphite03;
 $modal-box-shadow: 0 2px 5px $drop-shadow-depth;
 $modal-btn-color: $graphite06;
 $modal-btn-border-color: $graphite03;
-$modal-btn-hover-color: $graphite08;
+$modal-btn-hover-color: $graphite10;
 $modal-btn-primary-color: $primary-color;
-$modal-btn-primary-hover-color: $azure07;
+$modal-btn-primary-hover-color: $azure08;
 $modal-btn-primary-disabled-color: $azure07;
 $modal-btn-disabled-color: $graphite06;
 $modal-btn-disabled-opacity: .5;
@@ -531,6 +531,9 @@ $tab-text-color: $font-color;
 $tab-selected-color: $primary-color;
 $tab-border-color: $graphite03;
 $tab-hover-color: $font-color-extrahighcontrast;
+
+$tab-alt-bg-color: $white;
+$tab-alt-border-color: $graphite03;
 
 // Vertical Tabs
 $vertical-tab-text-color: $font-color-extrahighcontrast;
@@ -676,6 +679,9 @@ $searchfield-lighter-bg-color: $graphite01;
 $searchfield-lighter-text-color: $graphite04;
 $searchfield-active-icon-color: $azure07;
 
+$searchfield-alt-bg-color: $white;
+$searchfield-alt-border-color: $graphite01;
+
 $searchfield-context-bg: $graphite01;
 $searchfield-context-alt-bg: $white;
 $searchfield-context-border-color: $graphite03;
@@ -775,6 +781,7 @@ $breakpoint-desktop-to-extralarge: 1600px;
 //Field Sizes
 $field-xs: 75px;
 $field-sm: 150px;
+$field-mm: 225px;
 $field-md: 300px;
 $field-lg: 400px;
 $field-full: 100%;

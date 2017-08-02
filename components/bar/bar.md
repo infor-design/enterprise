@@ -1,21 +1,35 @@
 
-# Bar Chart Component Implementation Detail [Learn More](#)
+# Bar Chart  [Learn More](#)
 
 ## Configuration Options
 
-1. Bar Chart Main Example [View Example]( /components/bar/example-index)
-2. Another Example with More Elements and Longer Text [View Example]( /components/bar/example-alignment)
-3. Example showing how to set Colors [View Example]( /components/bar/example-colors)
-4. Example showing the formatter [View Example]( /components/bar/example-formatter)
-5. Example showing the option to hide the formatter [View Example]( /components/bar/example-hide-legend)
-4. Example showing an edge case of longer text [View Example]( /components/bar/example-long-text)
-4. Example showing with negative values [View Example]( /components/bar/example-negative-values)
-4. Example showing color patterns [View Example]( /components/bar/example-patterns)
-4. Example showing defaulting a selected value  [View Example]( /components/bar/example-selected)
+1. Bar Chart Main Example [View Example]( ../components/bar/example-index)
+2. Another Example with More Elements and Longer Text [View Example]( ../components/bar/example-alignment)
+3. Example showing how to set Colors [View Example]( ../components/bar/example-colors)
+4. Example showing the formatter [View Example]( ../components/bar/example-formatter)
+5. Example showing the option to hide the formatter [View Example]( ../components/bar/example-hide-legend)
+4. Example showing an edge case of longer text [View Example]( ../components/bar/example-long-text)
+4. Example showing with negative values [View Example]( ../components/bar/example-negative-values)
+4. Example showing color patterns [View Example]( ../components/bar/example-patterns)
+4. Example showing defaulting a selected value  [View Example]( ../components/bar/example-selected)
+
+## API Details
+
+### Dataset Settings
+
+* `name` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** - The name to show on the y axis for the bar
+* `value` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** - The raw data value for the bar.
+* `tooltip`**[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  - The custom tooltip to show.
+
+### Extra Chart Settings
+
+* `formatterString` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** - the d3 formatter string to show
+* `showLines` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** - Hide the lines going north south across the x axis
+* `useLogScale` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** - Use a logarithmic scale on the x axis. This can be used for skewed data.
 
 ## Code Example
 
-This example shows how to invoke a simple bar chart with a dataset showing the value.
+This example shows how to invoke a simple bar chart with a dataset controlling the values.
 
 ```javascript
 

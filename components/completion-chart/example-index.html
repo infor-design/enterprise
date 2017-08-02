@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="one-third column">
+    <div id="example-1" class="chart-container"></div>
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+
+  var dataset1 = [{
+    data: [{
+      name: {text: 'Available Credit'},
+      completed: {text: 'Spent', value: 50000, format: '$,.0f'},
+      remaining: {text: 'Pending', value: 10000, format: '$,.0f'},
+      total: {value: 95000, format: '$,.0f'},
+    }]
+  }];
+
+  $('#example-1').chart({dataset: dataset1, type: 'completion-target'}).data('chart');
+
+});
+</script>

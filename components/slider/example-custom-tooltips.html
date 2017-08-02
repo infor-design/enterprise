@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Slider example: Custom Tooltips</h2>
+    <p>It's possible to define custom prefixes and suffixes to Tooltip content on the slider handles.  In this case, we've added a dollar sign to the end of the tooltip.</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="slider-tooltip">Modified Tooltips</label>
+      <input id="slider-tooltip" name="slider-tooltip" class="slider" type="range" min="0" max="100" value="30,100" data-range="true" data-ticks='[
+        {"value": 0, "description": "$0"},
+        {"value": 25, "description": "$25"},
+        {"value": 50, "description": "$50"},
+        {"value": 75, "description": "$75"},
+        {"value": 100, "description": "$100"}
+      ]' data-tooltip-content='["$"]' />
+    </div>
+
+  </div>
+</div>

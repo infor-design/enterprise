@@ -32,13 +32,13 @@
     * The About Dialog Component is displays information regarding the application.
     *
     * @class About
-    * @param {String} appName  &nbsp;-&nbsp; The Main Application Name to display in the heading
-    * @param {String} content  &nbsp;-&nbsp; Additional Text content to display at the top.
-    * @param {String} copyrightYear  &nbsp;-&nbsp; The year displayed in the copyright, defaults to current year.
-    * @param {Boolean} deviceSpecs  &nbsp;-&nbsp; Determines whether or not to display device information (Browser, Platform, Locale, Cookies Enabled)
-    * @param {String} productName  &nbsp;-&nbsp; Additional product name information to display
-    * @param {Boolean} useDefaultCopyright  &nbsp;-&nbsp; Add the Legal Approved Infor Copy Right Text
-    * @param {String} version  &nbsp;-&nbsp; Semantic Version Number for example (4.0.0)
+    * @param {String} appName The Main Application Name to display in the header.
+    * @param {String} content Additional Text content to display at the top.
+    * @param {String} copyrightYear The year displayed in the copyright, defaults to current year.
+    * @param {Boolean} deviceSpecs Determines whether or not to display device information (Browser, Platform, Locale, Cookies Enabled)
+    * @param {String} productName Additional product name information to display.
+    * @param {Boolean} useDefaultCopyright Add the Legal Approved Infor Copy Right Text.
+    * @param {String} version Semantic Version Number for example (4.0.0).
     *
     */
     function About(element) {
@@ -123,10 +123,10 @@
 
         if (this.settings.deviceSpecs) {
           var specs = this.getDeviceSpecs(),
-            text = '<span class="browser">Browser: ' + specs.browser + '</span><br>' +
-              '<span class="platform">Platform: ' + specs.os + '</span><br>' +
-              '<span class="locale">Locale: ' + specs.locale + '</span><br>' +
-              '<span class="cookiesEnabled">Cookies Enabled: ' + specs.cookiesEnabled + '</span><br>';
+            text = '<span class="browser">' + Locale.translate('Browser') + ' : ' + specs.browser + '</span><br>' +
+              '<span class="platform">' + Locale.translate('Platform') + ' : ' + specs.os + '</span><br>' +
+              '<span class="locale">' + Locale.translate('Locale') + ' : ' + specs.locale + '</span><br>' +
+              '<span class="cookiesEnabled">' + Locale.translate('CookiesEnabled') + ' : ' +  specs.cookiesEnabled + '</span><br>';
           $('<p></p>').html(text).appendTo(body);
         }
 
@@ -151,26 +151,30 @@
       * @returns {String}
       */
       getDeviceSpecs: function() {
+
         var locale = navigator.appName === 'Microsoft Internet Explorer' ? navigator.userLanguage : navigator.language,
           browser = (function(){
             var ua= navigator.userAgent, tem,
             M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+
             if (/trident/i.test(M[1])){
               tem=  /\brv[ :]+(\d+)/g.exec(ua) || [];
               return 'IE '+(tem[1] || '');
             }
+
             if (M[1]=== 'Chrome'){
-              tem= ua.match(/\bOPR\/(\d+)/);
-              if (tem !== null) {
-                return 'Opera '+tem[1];
+              tem= ua.match(/\b(OPR|Edge)\/(\d+)/);
+              if (tem!= null) {
+                return tem.slice(1).join(' ').replace('OPR', 'Opera');
               }
             }
+
             M= M[2]? [M[1], M[2]]: [navigator.appName, navigator.appVersion, '-?'];
-            if((tem= ua.match(/version\/(\d+)/i)) !== null) {
+            if ((tem= ua.match(/version\/(\d+)/i))!= null) {
               M.splice(1, 1, tem[1]);
             }
             return M.join(' ');
-          })();
+        })();
 
         return {
           browser: browser,
@@ -212,14 +216,32 @@
       },
 
       /**
-       *  This component fires the following events.
+      * Fires before the dialog is closing. You can return false syncronously to delay closing.
+      *
+      * @event beforeclose
+      * @type {object} fires
+      * @property {Object} event - The jquery event object.
+      * @property {Object} ui - The dialog object
+      */
+
+      /**
+      * Fires as the dialog is closing
+      *
+      * @event close
+      * @type {object} fires
+      * @property {Object} event - The jquery event object.
+      * @property {Object} ui - The dialog object
+      */
+
+      /**
+       *Fires after the dialog has closed in the DOM entirely.
        *
-       * @fires About#events
-       * @param {Object} beforeclose  &nbsp;-&nbsp; Fires before the dialog is closing. You can return false asyncronously to delay closing.
-       * @param {Object} close  &nbsp;-&nbsp; Fires as the dialog is closing
-       * @param {Object} afterclose  &nbsp;-&nbsp; Fires after the dialog has closed in the DOM entirely
-       *
+       * @event afterclose
+       * @type {object} fires
+       * @property {Object} event - The jquery event object.
+       * @property {Object} ui - The dialog object
        */
+
       handleEvents: function() {
         var self = this;
 

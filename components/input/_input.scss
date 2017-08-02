@@ -1,0 +1,786 @@
+// User Input - TextBox, Textarea
+//================================================== //
+
+@mixin input-style() {
+  @include css3(transition, border 300ms ease 0s, box-shadow 300ms ease 0s);
+  @include antialiased();
+  @include font-size(14);
+  -webkit-appearance: none;
+  background-color: $input-bg-color;
+  border: 1px solid $input-border-color;
+  border-collapse: separate;
+  border-radius: 2px;
+  color: $input-color;
+  display: inline-block;
+  max-width: 100%;
+  padding: 8px 10px;
+  resize: none;
+  text-align: left;
+  width: 300px;
+
+  &:hover {
+    border-color: $input-hover-border-color;
+  }
+
+  &[disabled] {
+    background-color: $input-disabled-bg-color;
+    border: solid 1px $input-disabled-border-color;
+    color: $input-disabled-color;
+    -webkit-text-fill-color: $input-disabled-color;
+  }
+
+  &[readonly] {
+    background-color: $input-readonly-bg-color;
+    border-color: $input-readonly-border-color;
+    color: $input-readonly-color;
+    -webkit-text-fill-color: $input-readonly-color;
+  }
+
+
+  &.is-placeholder {
+    color: $input-placeholder-color;
+
+    &.error {
+      color: $error-color;
+    }
+  }
+
+  &:focus {
+    @include focus-state();
+  }
+
+  &.error {
+    border-color: $error-color;
+
+    &:focus {
+      // Needed for printing
+      // scss-lint:disable ImportantRule
+      border-color: $error-color !important;
+      color: $input-color !important;
+    }
+  }
+}
+
+// Required Indicator
+@mixin required-indicator() {
+  @include font-size(18);
+  color: $error-color;
+  content: '*';
+  display: inline-block;
+  left: 3px;
+  line-height: 0;
+  position: relative;
+  top: 2px;
+}
+
+// Labels without the "for" attribute
+@mixin inline-control-label($controls) {
+  @each $control in $controls {
+    &.inline-#{$control} {
+      .label-text {
+        margin-bottom: 8px;
+      }
+    }
+  }
+}
+
+@mixin inline-control($controls) {
+  $exclude-controls: '';
+  @each $control in $controls {
+    $exclude-controls: $exclude-controls + ':not(.#{$control})';
+  }
+
+  input {
+    &#{$exclude-controls} {
+      margin: 5px 0 15px;
+    }
+  }
+
+  textarea {
+    &#{$exclude-controls} {
+      margin: 5px 0 12px;
+    }
+  }
+
+}
+
+
+// Field Style
+.field .checkbox-label,
+.field .checkbox > label {
+  @include font-size(14);
+  color: $checkbox-label-color;
+  display: inline-block;
+  margin-top: 1px;
+  margin-bottom: 0;
+}
+
+.field > input,
+.field > textarea {
+  margin-bottom: 0;
+}
+
+// Two Connected Fields
+.compound-field {
+
+  > .field,
+  > .field-short {
+    clear: both;
+    display: inline-block;
+    margin-right: 15px;
+
+    &.field-checkbox label {
+      line-height: 20px;
+      margin-bottom: -1px;
+    }
+  }
+
+  > .field {
+    vertical-align: baseline;
+  }
+
+  > .field-short {
+    margin-right: 10px;
+    vertical-align: top;
+  }
+}
+
+//Move a field up closer - two line fields
+.attach-up {
+  margin-top: -10px;
+}
+
+.field {
+  margin-bottom: 20px;
+  position: relative;
+
+  textarea + .btn-actions {
+    margin-left: 4px;
+    position: absolute;
+    top: calc(50% - 14px);
+  }
+
+  //Input Actions Button - controls/input-actions
+  .btn-actions {
+    border-radius: 50%;
+    height: 30px;
+    min-height: 30px;
+    min-width: 30px;
+    position: relative;
+    top: 0;
+    width: 30px;
+
+    .icon {
+      height: 16px;
+      margin-left: 0;
+      width: 16px;
+    }
+  }
+
+  > .textarea-wordcount {
+    color: $font-color-muted;
+    margin-bottom: 14px;
+  }
+
+  &.field-radio {
+    margin-bottom: 10px;
+  }
+
+  &.field-checkbox {
+    margin-bottom: 12px;
+
+    .inline-checkbox .label-text {
+      // scss-lint:disable ImportantRule
+      margin-bottom: 1px !important;
+      // scss-lint:enable ImportantRule
+    }
+  }
+
+  .field:not(.field-checkbox) + &.field-checkbox {
+    margin-bottom: 17px;
+  }
+
+  &.l-pull-left {
+    margin-right: 20px;
+  }
+
+  &.percent,
+  &.currency {
+
+    &::before,
+    &::after {
+      @include font-size(14);
+      display: inline-block;
+      position: absolute;
+      top: 32px;
+    }
+  }
+
+  &.currency::before {
+    content: attr(data-currency-symbol);
+    left: 10px;
+  }
+
+  &.percent::before {
+    content: attr(data-currency-symbol);
+    left: 10px;
+  }
+
+  &.top-padding {
+    margin-top: 3rem;
+  }
+
+}
+
+//Clearable input fx on search or input/clearable
+.icon.close {
+  cursor: pointer;
+  fill: $trigger-icon-fill-color;
+  height: 14px;
+  right: 29px;
+  top: 3px;
+
+  &:hover {
+    fill: $trigger-hover-color;
+  }
+
+  &.is-empty {
+    display: none;
+  }
+}
+
+.is-disabled {
+  .icon.close {
+    cursor: default;
+    opacity: .5;
+  }
+}
+
+// Input Style
+input,
+textarea {
+  @include input-style();
+}
+
+// Text Area
+textarea {
+  @include rem(line-height, 2rem);
+  min-height: 90px;
+  overflow: auto;
+  padding: 10px;
+  width: 362px;
+
+  &.resizable {
+    resize: vertical;
+  }
+
+  .almost-empty {
+    border-color: $error-color;
+  }
+
+  &.error {
+    padding: 10px 25px 10px 10px;
+  }
+
+  &[readonly],
+  &[disabled] {
+    + .textarea-wordcount {
+      display: none;
+    }
+  }
+}
+
+.textarea-wordcount {
+  @include font-size(12);
+  @include rem(line-height, 2rem);
+
+  display: block;
+  min-height: auto;
+  width: 362px;
+
+  &.almost-empty {
+    color: $error-color;
+  }
+}
+
+.textarea-print {
+  display: none;
+  white-space: pre-line;
+}
+
+// Print Style Sheet
+@media print {
+  // Needed for printing
+  // scss-lint:disable ImportantRule
+
+  textarea,
+  .textarea-wordcount {
+    display: none !important;
+  }
+
+  .textarea-print {
+    display: inline-block !important;
+    height: auto;
+    width: 362px;
+  }
+}
+
+.inline {
+  $controls: ('busy', 'colorpicker', 'datepicker', 'switch', 'lookup', 'searchfield', 'timepicker, radio');
+  @include inline-control-label($controls);
+  @include inline-control($controls);
+
+  .label-text {
+    display: block;
+  }
+
+  &.inline-switch .label-text {
+    &::before,
+    &::after {
+      margin-left: -40px;
+    }
+  }
+}
+
+// Required Indicator
+label,
+.label {
+
+  &.required {
+    &:not(.inline)::after {
+      @include required-indicator();
+    }
+
+    .label-text::after {
+      @include required-indicator();
+    }
+  }
+
+}
+
+// Placeholder - Inline help
+::-webkit-input-placeholder {
+  @include font-size(14);
+  color: $input-placeholder-color;
+  font-weight: normal;
+  line-height: 16px;
+  opacity: 1;
+}
+
+// scss-lint:disable VendorPrefix
+::-moz-placeholder {
+  @include font-size(14);
+  color: $input-placeholder-color;
+  font-weight: normal;
+  line-height: 16px;
+  opacity: 1;
+}
+
+:-ms-input-placeholder {
+  @include font-size(14);
+  color: $input-placeholder-color;
+  font-weight: normal;
+  line-height: 16px;
+  opacity: 1;
+}
+
+::-ms-clear {
+  display: none;
+}
+
+// Error States
+.error,
+.error-message,
+.error-message p {
+  color: $error-color;
+}
+
+.error::-webkit-input-placeholder {
+  color: $error-color;
+  opacity: 1;
+}
+
+.error::-moz-placeholder {
+  color: $error-color;
+  opacity: 1;
+}
+
+.error:-ms-input-placeholder {
+  color: $error-color;
+  opacity: 1;
+}
+
+// Text Selection
+::selection {
+  background: $primary-color;
+  color: $inverse-color;
+  -webkit-text-fill-color: $inverse-color;
+}
+
+::-moz-selection {
+  background: $primary-color;
+  color: $inverse-color;
+  -webkit-text-fill-color: $inverse-color;
+}
+
+// Mask Control Adjustment Classes
+.is-number-mask {
+  text-align: right;
+}
+
+// Shorter/Legacy Inputs
+.field-short {
+  font-size: 0;
+  margin-bottom: 10px;
+  position: relative;
+
+  &:last-child:not(:only-child) {
+    margin-bottom: 0;
+  }
+
+  input {
+    @include font-size(12);
+    margin-bottom: 0;
+    padding: 5px;
+    resize: none;
+    text-align: left;
+    width: $field-sm;
+
+    &::-webkit-input-placeholder {
+      @include font-size(12);
+    }
+
+    &::-moz-placeholder {
+      @include font-size(12);
+    }
+
+    &:-ms-input-placeholder {
+      @include font-size(12);
+    }
+  }
+
+  label {
+    display: inline-block;
+    padding-right: 10px;
+    padding-top: 5px;
+    text-align: right;
+    vertical-align: top;
+    width: $field-sm;
+
+    ~ .error-message {
+      left: $field-sm;
+    }
+  }
+
+  .icon-error,
+  .icon-confirm {
+    height: 14px;
+    margin-left: -27px;
+    margin-top: 6px;
+    top: auto;
+    width: 18px;
+  }
+}
+
+// Field Sizes
+.input-lg,
+.field-short .input-lg {
+  width: $field-lg;
+}
+
+.input-md,
+.input-md.datepicker,
+.field-short .input-md {  //Default
+  width: $field-md;
+}
+
+.input-mm,
+.input-mm.datepicker,
+.field-short .input-mm {  //Default
+  width: $field-mm;
+}
+
+
+.input-sm,
+.field-short .input-sm {
+  width: $field-sm;
+}
+
+.input-xs,
+.field-short .input-xs {
+  width: $field-xs;
+}
+
+.input-full {
+  width: $field-full;
+}
+
+//Info Field
+.field-info {
+  $icon-width: 15px;
+  @include font-size(12);
+  display: block;
+  line-height: 1.2rem;
+  margin-bottom: 12px;
+  margin-top: 7px;
+  max-width: 300px;
+  min-height: 35px;
+  position: relative;
+
+  .icon {
+    height: 15px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: $icon-width;
+  }
+
+  .icon-info-field {
+    position: static;
+  }
+
+  + .error-message {
+    margin-top: -12px;
+  }
+
+  .message-text {
+    font-size: inherit;
+    line-height: 14px;
+    margin-bottom: 16px;
+    margin-top: -2px;
+    max-width: 267px;
+    padding-left: $icon-width + 5;
+  }
+}
+
+//Error Field
+.error-message {
+  $icon-width: 14px;
+
+  @include font-size(12);
+  color: $error-color;
+  display: block;
+  line-height: 1.2rem;
+  margin-top: 7px;
+  max-width: 300px;
+  position: relative;
+
+  .icon {
+    height: $icon-width;
+    left: 0;
+    margin-left: 0;
+    margin-top: 0;
+    position: absolute;
+    top: 0;
+    width: $icon-width;
+  }
+
+  .message-text {
+    font-size: inherit;
+    line-height: 15px;
+    max-width: 280px;
+    padding-left: $icon-width + 5;
+  }
+}
+
+.dropdown-wrapper .icon + .error-message,
+.lookup-wrapper .icon + .error-message {
+  margin-bottom: -10px;
+  margin-top: 4px;
+
+  .icon-error {
+    position: relative;
+    right: initial;
+  }
+}
+
+.column,
+.columns {
+  input.has-actions:not(.datepicker),
+  textarea.has-actions {
+    max-width: $field-md;
+    width: calc(100% - 40px);
+
+    &.textarea {
+      max-width: 362px;
+
+      ~ .btn-tertiary {
+        margin-left: 2px;
+        position: absolute;
+        top: calc(50% - 14px);
+      }
+    }
+
+    &.input-xs {
+      max-width: $field-xs;
+    }
+
+    &.input-sm {
+      max-width: $field-sm;
+    }
+
+    &.input-lg {
+      max-width: $field-lg;
+    }
+
+    &.input-full {
+      max-width: calc(100% - 40px);
+    }
+
+    ~ .btn-tertiary {
+      min-width: 30px;
+      width: 30px;
+    }
+
+    ~ a.btn-tertiary {
+      display: inline;
+      padding: 0 5px;
+    }
+  }
+
+  input.has-actions.datepicker {
+    &.input-xs {
+      max-width: $field-xs;
+      width: calc(100% - 40px);
+    }
+
+    &.input-sm {
+      max-width: $field-sm;
+      width: calc(100% - 40px);
+    }
+
+    &.input-mm {
+      max-width: $field-mm;
+      width: calc(100% - 40px);
+    }
+
+    &.input-md {
+      max-width: $field-md;
+      width: calc(100% - 40px);
+    }
+
+    &.input-lg {
+      max-width: $field-lg;
+      width: calc(100% - 40px);
+    }
+
+    &.input-full {
+      max-width: calc(100% - 40px);
+      width: calc(100% - 40px);
+    }
+
+    ~ a.btn-tertiary {
+      display: inline;
+      padding: 0 5px;
+    }
+  }
+}
+
+.has-actions-wrapper {
+  margin-right: -40px;
+  width: $field-md + 40;
+
+  &.xs {
+    width: $field-xs + 40;
+  }
+
+  &.sm {
+    width: $field-sm + 40;
+  }
+
+  &.lg {
+    width: $field-lg + 40;
+  }
+
+  ~ a.btn-tertiary {
+    display: inline;
+    padding: 0 5px;
+  }
+}
+
+//RTL Styles
+html[dir='rtl'] {
+  .field-info,
+  .error-message {
+    .icon {
+      left: auto;
+    }
+
+    .message-text {
+      padding-left: inherit;
+      padding-right: 19px;
+    }
+  }
+
+  .field .checkbox-label,
+  .field .checkbox > label {
+    margin-left: inherit;
+    margin-right: -5px;
+  }
+
+  input,
+  textarea {
+    text-align: right;
+
+    &.error {
+      padding-right: 10px;
+    }
+  }
+
+  // Required Indicator
+  label.required::after,
+  .label.required::after {
+    left: auto;
+    right: 3px;
+  }
+
+  // Mask Control Adjustment Classes
+  .is-number-mask {
+    text-align: left;
+  }
+
+  [data-mask-mode="number"].spinbox {
+    text-align: center;
+  }
+
+  .field-short {
+    .icon-error,
+    .icon-confirm {
+      height: 14px;
+      margin-left: inherit;
+      right: 0;
+      top: auto;
+      width: 18px;
+    }
+
+    label {
+      padding-left: 10px;
+      padding-right: inherit;
+      text-align: left;
+
+      ~ .error-message {
+        .icon,
+        .message-text {
+          left: auto;
+          right: $field-sm;
+        }
+      }
+    }
+  }
+
+  .inline.inline-switch .label-text {
+    &::before,
+    &::after {
+      margin-left: inherit;
+      margin-right: -40px;
+    }
+  }
+}
+
+//When on smaller form factors make 400px fields go down to medium size
+@include respond-to(phone) {
+  .input-lg,
+  .field-short .input-lg {
+    width: $field-md;
+  }
+}

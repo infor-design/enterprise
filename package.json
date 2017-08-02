@@ -1,11 +1,14 @@
 {
   "name": "@infor/sohoxi",
-  "version": "4.3.0",
+  "version": "4.3.1",
   "shortName": "sohoxi",
   "description": "Hook & Loop - SoHo XI Controls",
   "author": "Hook & Loop",
   "license": "UNLICENSED",
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "git://git.infor.com/scm/soho/controls.git"
+  },
   "publishConfig": {
     "scope": "@infor",
     "registry": "http://npm.infor.com:4873/"
@@ -13,7 +16,7 @@
   "scripts": {
     "start": "node server.js",
     "stop": "./bin/stop.sh",
-    "jshint": "jshint gruntfile.js app.js js/*.js",
+    "jshint": "jshint gruntfile.js app.js components/**/*.js",
     "eslint": "eslint src",
     "build": "grunt",
     "install-test-deps": "npm install selenium-standalone@latest && npm run install-drivers",
@@ -21,8 +24,8 @@
     "selenium": "selenium-standalone start",
     "watch": "grunt watch",
     "test": "./bin/test-build.sh",
-    "test:functional": "./bin/test.sh runner config=test2/intern.local.functional",
-    "test:unit": "./bin/test.sh client config=test2/intern.local.unit",
+    "test:functional": "./bin/test.sh runner config=test/intern.local.functional",
+    "test:unit": "./bin/test.sh client config=test/intern.local.unit",
     "develop-tag": "./bin/add-npm-tag.js develop",
     "bump-version": "./bin/bump-version.js",
     "publish-dev": "grunt publish && npm publish publish --tag dev --force",
@@ -32,6 +35,7 @@
   },
   "dependencies": {
     "d3": "^3.4.6",
+    "intern": "^3.4.5",
     "jquery": "^3.1.1"
   },
   "main": "dist/js/sohoxi",
@@ -44,7 +48,7 @@
     "chalk": "^1.1.3",
     "colors": "^1.1.2",
     "connect-multiparty": "^2.0.0",
-    "documentation": "^4.0.0-beta13",
+    "documentation": "^4.0.0-beta.18",
     "eslint": "^3.14.1",
     "express": "^4.13.4",
     "express-slash": "^2.0.1",

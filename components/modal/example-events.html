@@ -1,0 +1,134 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Modal Test: Events</h2>
+    <p>
+      <a class="hyperlink" href="http://jira.infor.com/browse/SOHO-5992">Related JIRA Ticket</a>.  This test demonstrates how lifecycle events work on the Modal component.  Lifecycle events include <span class="code">beforeopen</span>, <span class="code">open</span>, <span class="code">afteropen</span>, <span class="code">beforeclose</span>, <span class="code">close</span>, and <span class="code">afterclose</span>. The two modal triggers below display the order and timing in which these events fire.
+    </p>
+    <p>
+      The "Show Modal" trigger button creates a modal that has its opening cancelled by using <span class="code">return false;</span> from inside its beforeopen event. Doing this causes rendering of the modal to stop, so it won't show.
+    </p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <button class="btn-secondary" type="button" id="show">Show Modal</button>
+      <button class="btn-secondary" type="button" id="show2">Show Modal 2</button>
+    </div>
+
+    <div id="modal-1" style="display: none;">
+      <div class="field">
+        <label for="context-name" class="required">Name</label>
+        <input id="context-name" aria-required="true" data-validate="required" name="context-name" type="text">
+      </div>
+
+      <div class="field">
+        <label for="context-desc" class="required">Page Title</label>
+        <textarea id="context-desc" aria-required="true" data-validate="required" name="context-desc" maxlength="50"></textarea>
+      </div>
+
+      <div class="field">
+        <label for="context-type">Type</label>
+        <select class="dropdown" id="context-type" name="context-type">
+          <option value="1">Context #1</option>
+          <option value="2">Context #2</option>
+          <option value="3">Context #3</option>
+          <option value="4">Context #4</option>
+          <option value="5">Context #5</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="modal-2" style="display: none;">
+      <div class="field">
+        <label for="context-name" class="required">Name</label>
+        <input id="context-name" aria-required="true" data-validate="required" name="context-name" type="text">
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  var customContent = {
+    modal1: {
+      title: "Add Content",
+      content: $('#modal-1')
+    },
+    modal2: {
+      title: "Modal 2",
+      content: $('#modal-2')
+    }
+  };
+
+  function toast(message) {
+    $('body').toast({
+      title: '',
+      message: message,
+      timeout: 3000
+    });
+  }
+
+  function createModal(modalName) {
+    var modal = $('body').modal({
+      title: customContent[modalName].title,
+      content: customContent[modalName].content,
+      buttons: [{
+        text: 'Cancel',
+        click: function(e, modal) {
+          modal.close();
+        }
+      }, {
+        text: 'Submit',
+        click: function(e, modal) {
+          modal.close();
+        },
+        validate: false,
+        isDefault: true
+      }]
+    });
+
+    return modal.data('modal').element;
+  }
+
+  function handleSimilarEvents(id, modalElement) {
+    var modalName = customContent[id].title
+
+    return modalElement.one('open', function () {
+      toast(modalName + ': open');
+    }).one('afteropen', function () {
+      toast(modalName + ': afteropen');
+    }).one('beforeclose', function() {
+      toast(modalName + ': beforeclose');
+    }).one('close', function() {
+      toast(modalName + ': close');
+    }).one('afterclose', function() {
+      toast(modalName + ': afterclose');
+    });
+  }
+
+  // Modal #1 doesn't display due to a 'return false;' on its `beforeopen` event
+  $('#show').on('click.test', function () {
+    var thisModal = createModal('modal1');
+    thisModal = handleSimilarEvents('modal1', thisModal);
+
+    thisModal.one('beforeopen', function () {
+      toast('Add Content: beforeopen');
+      return false;
+    });
+  });
+
+  // Modal #2 should display all the time, and fire all lifecycle events
+  $('#show2').on('click.test', function() {
+    var thisModal = createModal('modal2');
+    thisModal = handleSimilarEvents('modal2', thisModal);
+
+    thisModal.one('beforeopen', function() {
+      toast('Modal 2: beforeopen');
+    });
+  });
+</script>

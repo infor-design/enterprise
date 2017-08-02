@@ -1,13 +1,134 @@
+## 4.3.1
+Release Date: 2017-08-02
+
+### Download Build Assets:
+Build Server: http://bamboo.infor.com/browse/label/release-431
+Npm: http://npm.infor.com
+Full Jira Release Notes: http://bit.ly/2w6X8Xw
+
+### Demo Site
+http://usalvlhlpool1.infor.com/4.3.1/components
+
+### Key New Features
+- More Angular Wrappers (About, Color Picker, Accordion, Popover)
+- Line Chart - Added options to rotate axis for longer labels
+- Card/List - Added new group action area toolbar
+- 128 Bugs and Enhancements
+- Toolbar / Search - Further stability Enhancements
+
+### Breaking Changes
+- Listview - since it was confusing about `selected` event, now `selected` and `unselected` events will fire when selecting or de-selecting an item in list. It used to be fire only `selected` event when any selection gets changed selecting or de-selecting.
+- Dropdown - Instead of using the clear option as a value, the clear option is done as a class. Change `<option value="clear"></option>` to `<option class="clear"></option>`.
+
+### Behavior Changes
+- Datepicker - When using date picker with time, if you open the field blank the time will be 12:00 not current time. Same with selecting today (unless the time is changed)
+
+### Improvements
+
+- Accordion - Added expand/collapse all api method
+- Angular - About - Added about wrapper
+- Angular - Color Picker - Added color picker wrapper
+- Angular - Accordion - Added accordion wrapper
+- Angular - Textarea - Added validation support
+- Angular - Editor - Added validation support to change buttons
+- Angular - Popover - Added popover support
+- Angular - Datagrid - Added template cell support
+- Angular - Datagrid - Fixed styling issues on fixed header scrolling
+- Angular - Home Page - Added home page component wrapper
+- Angular - Mask - Fixed issues using mask with required fields, model was not updated.
+- Card/List - Added new group action area toolbar [View Example](http://usalvlhlpool1.infor.com/4.3.1/components/cards/example-group-action.html)
+- Color picker - Added option to use color name for display
+- Datagrid - improved data on entereditmode and exiteditmode events
+- Datagrid - Added option to re run column layouts on resize
+- Angular - Empty Widgets - Added icons and examples for empty widgets
+- General - Added inline documentation and better docs and better organization. This is ongoing work as we continue to add more docs. If you see something missing you want to see, let us know.
+- Line Chart - Added options to better format axises
+- Line Chart - Added options to rotate axis for longer labels
+- Lookup - Added option to prevent opening (temporarily for ajax requests)
+- Lookup - Readonly mode will now allow the modal to open for viewing.
+- Pie - Updated pie width and label styling, fixed ios rendering
+
+### Bug Fixes
+- Build Mapper - Improved Speed and fixed bug with multiple files open, update to new path structure
+- About - Fixed wrong browser reoported in Edge
+- About - Fixed missing translations (Translations pending for translation team)
+- Angular - CAP - Fixed memory leaking due to not calling destroy
+- Angular - Fileupload - Fixed text bleeding onto the icon
+- Angular - Modal - Fixed modal nesting issue
+- Application Menu - Fixed issue that caused menu to reopen on page resize
+- Application Menu - Made selection color respect the personalization color
+- Autocomplete - Fixed focus trap issue
+- Busy indicator - Smoothed out jarring when closing out the animation, fixed positional issues in some layouts
+- Cap - Fixed errors when destroying with no toolbar
+- Composite Form - Added ability to use without a form section
+- Compound Field - Fixed checkbox and switch to work in this layout
+- Donut - Fixed WCAG AAA contrast on high contrast theme
+- Dirty Tracking - Added orginal reset method.
+- Datagrid - Fixed bug working with toolbar search and multiselect
+- Datagrid - Fixed wrong data on double click event in the select event
+- Datagrid - Fixed issues with using paging and selection on non-first pages
+- Datagrid - Fixed a bug dragging the last grid column
+- Datagrid - Allow rowTemplate to be omitted on expandable grid (you can pass in the event the row contents)
+- Datagrid - Fixed excel export not showing checkbox data
+- Datagrid - Fixed multiple source ajax calls for filtering and paging
+- Datagrid - Fixed missing seconds setting on datepicker time
+- Datagrid - Fixed issue where zero was shown as blank string
+- Datagrid - Made it possible to disable toolbar search. Note that you must set toolbar.keywordFilter for search to work.
+- Datagrid - Fixed error on expanded row
+- Datagrid - Fixed issue where filter row did not appear after restoring to default
+- Datepicker - Fixed issue where number of days in the month were off
+- Datepicker - Fixed czech and polish translations
+- Datepicker - Fixed lookup validation style bug
+- Datepicker - Fixed intermittant selection issues
+- Datepicker - Fixed time section selection issues and display issues
+- Datagrid - Fixed issue with tooltip that hung around when scrolling
+- Datagrid - Fixed left/right position of special characters
+- Datagrid - Fixed missing args on isEditable api function
+- Dropdown - Fixed bug selecting blank elements (since near clearable logic was added)
+- Fileupload - Added file type support and example
+- Fileupload - Fixed styling of dirty indicator
+- Input - Fixed bugs in short field layouts
+- Listview - Fixed bug clicking link elements
+- Modal - Fixed validation issues (primary button)
+- Modal - Fixed dropdown validation not being called
+- Modal - Added flag to facilitate close dialogs on closing tabs.
+- Modal - Fix to allow focus back to more elements than buttons
+- Module Tabs - Fixed all issues with search field / category search
+- Module Tabs - Fixed issues causing personalization color to not be applied
+- Module Tabs - Fixed issue that caused tooltips to not update on tab rename
+- Popupmenu - Fixed overlapping menu items in RTL mode
+- Popupmenu - Fixed missing scrolling on longer menus
+- Popupmenu - Fixed zindex issue on IOS
+- Popupmenu/Menubutton - Fixed keyboard issues when used on CAP and modal
+- Popupmenu - Fixed bug causing them not to open with the app menu active
+- Pie - Fixed bug causing selection to not select only one slice
+- Pie - Fixed bug causing legend to show NaN with some values
+- Searchfield - Fixed destroy issues
+- Searchfield - Fixed not working clear on mobile
+- Slider - Fixed bug with update api when setting to 0
+- Spinbox - Fixed issue that allowed more than max or min to be pasted in
+- Swaplist - Fixed dragging bug on 2 column layouts
+- Switch - Fixed bug when used in compound fields
+- Tabs - Fixed error hitting random function keys when on a tab
+- TextArea - Added enable and disable API call
+- Toolbar - More improvements to search field and title layouts
+- Toolbar - Fixed styling issue on search field when on alternate styles
+- Tooltip - Fixed destroy / memory leak
+- Timepicker - Fixed issues with drop down widths
+- Vertical Tabs - Fixed issues routing tab links
+
+(128 Jira Issues Solved, Backlog Still 442)
+
 ## 4.3.0
 Release Date: 2017-05-09
 
 ### Download Build Assets:
-Build Server: http://bamboo.infor.com/browse/SOHO-NEXT
+Build Server: http://bamboo.infor.com/browse/label/release-430
 Npm: http://npm.infor.com
-Full Jira Release Notes: http://bit.ly/2mWAmjY
+Full Jira Release Notes: http://bit.ly/2tk0hVy
 
 ### Demo Site
-http://usalvlhlpool1.infor.com/4.3.0-rc/controls
+http://usalvlhlpool1.infor.com/4.3.0/controls
 
 ### Key New Features
 - Hijri (Umm Al Qura) - Arabic Calendar Support
@@ -15,12 +136,12 @@ http://usalvlhlpool1.infor.com/4.3.0-rc/controls
 - Datagrid - Now Saves all user based settings (by option)
 - Datagrid - Added ability to save filter, page, pagesize, rowheight and column widths in local storage
 - Vertical Tabs - Now Responsive
-- Targetted Achivement Chart Added View Example](http://usalvlhlpool1.infor.com/4.3.0-rc/controls/targeted-achievement)
+- Targetted Achivement Chart Added View Example](http://usalvlhlpool1.infor.com/4.3.0/controls/targeted-achievement)
 - "New Tabs" - New Visual Design and functionality for In-Page and Header Tabs
 - Soho.infor.com - Now has widget guidelines
-- Added an Image Slider Control [View Example](http://usalvlhlpool1.infor.com/4.3.0-rc/tests/circlepager/on-form.html)
-- New Example Composite Form shows form layout and behaviors [View Example](http://usalvlhlpool1.infor.com/4.3.0-rc/tests/composite-form/index.html)
-- Added Search Form Example [View Example](http://usalvlhlpool1.infor.com/4.3.0-rc/examples/landmark/search-form)
+- Added an Image Slider Control [View Example](http://usalvlhlpool1.infor.com/4.3.0/tests/circlepager/on-form.html)
+- New Example Composite Form shows form layout and behaviors [View Example](http://usalvlhlpool1.infor.com/4.3.0/tests/composite-form/index.html)
+- Added Search Form Example [View Example](http://usalvlhlpool1.infor.com/4.3.0/examples/landmark/search-form)
 
 ### Improvements
 - Badge - Can now format decimals
@@ -33,15 +154,15 @@ http://usalvlhlpool1.infor.com/4.3.0-rc/controls
 - Datagrid - Added reorderable: false option to disable dragging of a particular column
 - Datagrid - Added option to disable row activation
 - Datagrid - Added option to close other expanded rows so only one is opened
-- Cards - Added Group action area [View Example](http://usalvlhlpool1.infor.com/4.3.0-rc/tests/cards/cards-group-action.html)
-- Cards - Added pager to Cards [View Example](http://usalvlhlpool1.infor.com/4.3.0-rc/tests/circlepager/more-than-one-slides-with-tabs.html)
-- Cards - Added collapsible card [View Example](http://usalvlhlpool1.infor.com/4.3.0-rc/tests/cards/expandable.html)
+- Cards - Added Group action area [View Example](http://usalvlhlpool1.infor.com/4.3.0/tests/cards/cards-group-action.html)
+- Cards - Added pager to Cards [View Example](http://usalvlhlpool1.infor.com/4.3.0/tests/circlepager/more-than-one-slides-with-tabs.html)
+- Cards - Added collapsible card [View Example](http://usalvlhlpool1.infor.com/4.3.0/tests/cards/expandable.html)
 - Charts - Added options to line chart to better format the x axis
 - Charts - Added options to set the dot radius size
 - Colors - Exposed Classes color-error, color-warning, color-good,color-info
 - Dropdown - Added ability to set text on blank items on (Clear Selection)
 - Dropdown - Added ability to use data- attributes on items
-- Examples - [Product Search page example | http://usalvlhlpool1.infor.com/4.3.0-rc/examples/saleshub/product-search.html
+- Examples - [Product Search page example | http://usalvlhlpool1.infor.com/4.3.0/examples/saleshub/product-search.html
 ], shows an editable listview.
 - Editor - Improved Paste support from external applictaions
 - Locale - Added new set of translated strings for 37 languages / 49 locales

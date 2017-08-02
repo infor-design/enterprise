@@ -19,7 +19,7 @@
           </div>
         </header>
 
-        <div class="paginated listview scrollable" id="task-listview" data-tmpl="task-tmpl" data-dataset="demoTasks" data-pagesize="10"></div>
+        <div class="paginated listview scrollable" id="task-listview" data-options="{'template': 'task-tmpl', 'source': '{{basepath}}api/inventory-tasks', 'pagesize': 10}"></div>
     </div>
 
     <div class="main scrollable" role="main">

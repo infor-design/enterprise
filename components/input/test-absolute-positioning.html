@@ -1,0 +1,45 @@
+
+<div class="row">
+  <div class="twelve columns">
+
+    <label class="pos-1" for="positioned-big-input">Big Input</label>
+    <div class="field pos-1">
+      <input id="positioned-big-input" type="input"/>
+    </div>
+
+    <label class="pos-2" for="positioned-small-input">Small Input</label>
+    <div class="field-short pos-2">
+      <input id="positioned-small-input" type="input"/>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  label.pos-1,
+  .field.pos-1,
+  label.pos-2,
+  .field-short.pos-2 {
+    position: absolute !important;
+  }
+
+  label.pos-1 {
+    top: 100px;
+    left: 100px;
+  }
+
+  .field.pos-1 {
+    top: 100px;
+    left: 300px;
+  }
+
+  label.pos-2 {
+    top: 200px;
+    left: 100px;
+  }
+
+  .field-short.pos-2 {
+    top: 200px;
+    left: 300px;
+  }
+</style>

@@ -1,11 +1,11 @@
 
-# Arrange Component Implementation Detail [Learn More](#)
-
-{{api-details}}
+# Arrange  [Learn More](#)
 
 ## Configuration Options
 
-1. Default Arrange Example [View Example]( /components/arrange/example-index)
+1. Default Arrange Example [View Example]( ../components/arrange/example-index)
+
+{{api-details}}
 
 ## Code Example
 

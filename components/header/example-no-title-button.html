@@ -1,0 +1,25 @@
+<header class="header is-personalizable">
+
+  <div id="test-toolbar" class="toolbar">
+     <div class="title">
+      <h1>
+      {{#subtitle}}
+        <span class="page-title">{{title}}</span>
+        <span class="section-title">{{subtitle}}</span>
+      {{/subtitle}}
+
+      {{^subtitle}}
+        {{title}}
+      {{/subtitle}}
+      </h1>
+    </div>
+
+    <div class="buttonset">
+      <label class="audible" for="test-searchfield">Keyword Search</label>
+      <input id="test-searchfield" name="test-searchfield" class="searchfield"  />
+  </div>
+
+    {{> includes/header-actionbutton}}
+  </div>
+
+</header>

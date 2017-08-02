@@ -1,0 +1,34 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Validation Test: Manual Validation Triggers</h2>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+     <div class="field">
+      <label class="required" for="email-address">Email Address <span class="audible">Required</span></label>
+      <input type="text" id="email-address" class="lookup" name="email-address" value="someone@someplace.com"  data-validate="required" >
+    </div>
+
+    <div class="field">
+      <label for="username-display">Username</label>
+      <input class="lookup" name="username-display" id="username-display" autocomplete="off" data-validate="required"  />
+    </div>
+
+    <div class="field">
+      <button class="btn-secondary" type="button" id="show">Show Error</button>
+      <button class="btn-secondary" type="button" id="hide">Hide Error</button>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('button').button().on('click', function () {
+    $('#username-display').removeError().addError({message: 'I have an Error.', showTooltip: true}).addError({message: 'I have another Error.', showTooltip: true});
+  });
+
+  $('#hide').button().on('click', function () {
+    $('#username-display').removeError();
+  });
+</script>

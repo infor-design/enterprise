@@ -1,0 +1,52 @@
+
+<div class="row">
+  <div class="one-third column">
+
+   <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">My Tasks</h2>
+        <button class="btn-actions" type="button">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Action One</a></li>
+          <li><a href="#">Action Two</a></li>
+        </ul>
+      </div>
+      <div class="card-content">
+        <div class="listview" id="example-listview" data-options="{'source': '{{basepath}}api/inventory-tasks', 'template': 'example-tmpl', 'selectable': 'multiple'}"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function() {
+    $('#example-listview')
+    .on('selected', function (e, args) {
+     console.log('selected: ', args);
+   })
+   .on('unselected', function (e, args) {
+     console.log('unselected: ', args);
+    });
+  });
+</script>
+
+{{={{{ }}}=}}
+<script id="example-tmpl" type="text/html">
+  <ul>
+    {{#dataset}}
+      {{#disabled}}
+        <li class="is-disabled">
+      {{/disabled}}
+      {{^disabled}}
+        <li>
+      {{/disabled}}
+        <p>{{desc}}</p>
+      </li>
+    {{/dataset}}
+  </ul>
+</script>

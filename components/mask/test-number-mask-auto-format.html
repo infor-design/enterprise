@@ -1,0 +1,30 @@
+<div class="row top-padding">
+  <div class="six columns">
+
+    <h2>Mask Test: Number Auto Formatting</h2>
+    <p><a class="hyperlink" href="http://jira.infor.com/browse/HFC-3919" target="_blank">Related JIRA Ticket</a>.</p>
+    <p></p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="input-masked-number">Number</label>
+      <input id="input-masked-number" inputmode="numeric" data-mask data-options="{ pattern: '#,###.00', mode: 'number' }" placeholder="#,###.00"/>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+    $('#input-masked-number').on('focusout.test', function() {
+      var val = $(this).val();
+      val = Locale.formatNumber(val, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+      $(this).val(val);
+    });
+  });
+</script>

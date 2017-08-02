@@ -1,0 +1,44 @@
+<h1 id="validation-learn-more">Validation <a href="https://soho.infor.com/index.php?p=component/about-dialog">Learn More</a></h1>
+<h3 id="functions-and-utilities">Functions and Utilities</h3>
+<h2 id="configuration-options">Configuration Options</h2>
+<ol>
+<li>Validation Example <a href="../components/validation/example-index">View Example</a><br /></li>
+<li>Disabled Form <a href="../components/validation/example-form-disabled">View Example</a><br /></li>
+<li>Multiple Validation Errors on a Field <a href="../components/validation/example-multiple-errors">View Example</a><br /></li>
+<li>Legacy Short Fields <a href="../components/validation/example-short-fields">View Example</a><br /></li>
+<li>Manually adding an Error <a href="../components/validation/example-standalone-error">View Example</a><br /></li>
+<li>Validating on Form Submit <a href="../components/validation/example-validation-form">View Example</a></li>
+</ol>
+<h2 id="api-details">API Details</h2>
+<h2 id="code-example---auto">Code Example - Auto</h2>
+<p>This example shows how to manually link validation automatically on fields. Use the <code>data-validate</code> attribute to indicate a space separated list of validation rules to use out of the validation object.</p>
+<pre class="sourceCode html"><code class="sourceCode html">
+ <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;field&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;label</span><span class="ot"> class=</span><span class="st">&quot;required&quot;</span><span class="ot"> for=</span><span class="st">&quot;email-address-ok&quot;</span><span class="kw">&gt;</span>Email Address <span class="kw">&lt;span</span><span class="ot"> class=</span><span class="st">&quot;audible&quot;</span><span class="kw">&gt;</span>Required<span class="kw">&lt;/span&gt;&lt;/label&gt;</span>
+  <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> id=</span><span class="st">&quot;email-address-ok&quot;</span><span class="ot"> name=</span><span class="st">&quot;email-address-ok&quot;</span><span class="ot"> data-validate=</span><span class="st">&quot;required customRule&quot;</span> <span class="kw">&gt;</span>
+<span class="kw">&lt;/div&gt;</span>
+</code></pre>
+<h2 id="code-example---manual">Code Example - Manual</h2>
+<p>This example shows how to manually invoke an error message on a field. The function is chainable so you can add several errors.</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">
+<span class="fu">$</span>(<span class="st">&#39;#username-field&#39;</span>)
+  .<span class="fu">addError</span>({<span class="dt">message</span>: <span class="st">&#39;I have an Error.&#39;</span>})
+  .<span class="fu">addError</span>({<span class="dt">message</span>: <span class="st">&#39;I have another Error.&#39;</span>});
+
+<span class="co">//Later on</span>
+<span class="fu">$</span>(<span class="st">&#39;#username-field&#39;</span>).<span class="fu">removeError</span>()
+</code></pre>
+<h2 id="accessibility">Accessibility</h2>
+<ul>
+<li>On required fields always add an audible label for example</li>
+</ul>
+<p>```html</p>
+<p><label class="required" for="email-address-ok"><br /> Email Address <span class="audible">Required</span><br /></label></p>
+<p>```html</p>
+<ul>
+<li>Errors will be read audibly by the API using an aria-alert (polite)</li>
+</ul>
+<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
+<ul>
+<li>This api is backwards compatible.</li>
+</ul>

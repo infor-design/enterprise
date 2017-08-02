@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Mask Test: Date with Validation</h2>
+
+    <p><a class="hyperlink" href="http://jira.infor.com/browse/SOHO-3840" target="_blank">Related JIRA Ticket</a>.</p>
+    <p></p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="date">Date Input - Error Handling</label>
+      <input id="date" name="date" type="text" placeholder="M/d/yyyy" data-mask data-options="{ pattern: '##/##/####', mode: 'date' }" data-validate="date"/>
+    </div>
+
+    <div class="field">
+      <label for="junk-field">Focusable Field (use for tabbing out)</label>
+      <input id="junk-field" name="junk-field" type="text"/>
+    </div>
+
+  </div>
+</div>

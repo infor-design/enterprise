@@ -1,12 +1,12 @@
 
-# Breadcrumb Component Implementation Detail [Learn More](#)
-
-{{api-details}}
+# Breadcrumb  [Learn More](#)
 
 ## Configuration Options
 
-1. Default Breadcrumb Example [View Example]( /components/breadcrumb/example-index)
-3. Breadcrumb with current item a link [View Example]( /components/breadcrumb/example-current-as-link)
+1. Default Breadcrumb Example [View Example]( ../components/breadcrumb/example-index)
+3. Breadcrumb with current item a link [View Example]( ../components/breadcrumb/example-current-as-link)
+
+{{api-details}}
 
 ## Code Example
 

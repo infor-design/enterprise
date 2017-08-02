@@ -1,0 +1,82 @@
+<body class="no-scroll">
+
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+  {{> includes/svg-inline-refs}}
+
+  <!-- Module Tabs -->
+  <section id="module-tabs-example" class="tab-container module-tabs" data-options='{ "containerElement": "#module-tabs-container", "addTabButton": true, "moduleTabsTooltips": true }'>
+    <div class="tab-list-container">
+      <ul class="tab-list">
+        <li><a href="#tab-one">This is a really really really really really really long tab title</a></li>
+        <li><a href="#tab-two">Not as long</a></li>
+        <li><a href="#tab-three">Somewhere in the middle</a></li>
+      </ul>
+    </div>
+  </section>
+
+  {{> includes/applicationmenu}}
+
+  <!-- Page Container -->
+  <div id="module-tabs-container" class="page-container no-scroll">
+
+    <!-- Tab One -->
+    <div id="tab-one" class="tab-panel">
+      <div class="row top-padding">
+        <div class="six columns">
+          <h2>Module Tabs Test: Renaming a tab and propagating the change to its tooltip.</h2>
+          <p><a class="hyperlink" href="https://jira.infor.com/browse/SOHO-5966" target="_blank">Related JIRA Ticket</a>.</p>
+          <p>Use the text field below to change the text contents of this tab.  The text should also propagate to the Tab's "cutoff" tooltip.  Be sure to use text that's long enough to ensure that the tooltip will display.</p>
+        </div>
+      </div>
+      <div class="row top-padding">
+        <div class="six columns">
+          <div class="field">
+            <label for="tab-text-content">Tab Text Content</label>
+            <input id="tab-text-content" type="text" value="This is a really really really really really really long tab title"/>
+            <button id="rename-button" class="btn-primary">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-edit"></use>
+              </svg>
+              <span>Rename</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab Two -->
+    <div id="tab-two" class="tab-panel">
+      <div class="row top-padding">
+        <div class="six columns">
+          <h2>Just for Show</h2>
+          <p>Use Tab One for the actual test.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab Three -->
+    <div id="tab-three" class="tab-panel">
+      <div class="row top-padding">
+        <div class="six columns">
+          <h2>Just for Show</h2>
+          <p>Use Tab One for the actual test.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script type="text/javascript">
+    var tabsAPI,
+      renameTxt = $('#tab-text-content'),
+      renameBtn = $('#rename-button');
+
+    $('body').on('initialized', function() {
+      tabsAPI = $('#module-tabs-example').data('tabs');
+      renameBtn.on('click.test', function(e) {
+        tabsAPI.rename(undefined, 'tab-one', renameTxt.val());
+      });
+    });
+  </script>
+
+</body>

@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="one-third column">
+   <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">My Tasks</h2>
+        <button class="btn-actions" type="button">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Action One</a></li>
+          <li><a href="#">Action Two</a></li>
+        </ul>
+      </div>
+      <div class="card-content">
+        <div class="contextual-toolbar toolbar is-hidden">
+          <div class="buttonset">
+            <button class="btn-tertiary" title="Assign Selected Items" type="button">Assign</button>
+            <button class="btn-tertiary" id="remove" title="Remove Selected Items" type="button">Remove</button>
+          </div>
+        </div>
+        <div class="listview" id="multiselect-listview" data-options="{ 'template': 'multiselect-tmpl', 'selectable': 'multiple', 'source': '{{basepath}}api/inventory-tasks' }"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{={{{ }}}=}}
+<script id="multiselect-tmpl" type="text/html">
+  <ul>
+    {{#dataset}}
+      {{#disabled}}
+        <li class="is-disabled">
+      {{/disabled}}
+      {{^disabled}}
+        <li>
+      {{/disabled}}
+        <p>{{desc}}</p>
+      </li>
+    {{/dataset}}
+  </ul>
+</script>
+
+<script>
+  $('body').on('initialized', function() {
+    $('#multiselect-listview').on('selected', function (e, args) {
+     console.log(args);
+    });
+  });
+</script>

@@ -1,0 +1,54 @@
+<h1 id="completion-chart-learn-more">Completion Chart <a href="#">Learn More</a></h1>
+<h2 id="configuration-options">Configuration Options</h2>
+<ol>
+<li>Simple Completion Chart Example <a href="../components/completion-chart/example-index">View Example</a><br /></li>
+<li>All Completion Chart Examples <a href="../components/completion-chart/example-variations">View Example</a></li>
+</ol>
+<h2 id="api-details">API Details</h2>
+<h3 id="dataset-settings">Dataset Settings</h3>
+<ul>
+<li>name - an object with the attribute text <code>{text: 'Available Credit'}</code><br /></li>
+<li>completed - data for the complete section <code>{text: 'Spent', value: 50000, format: '$,.0f'}</code><br /></li>
+<li>remaining - data for the remaining section <code>{text: 'Pending', value: 10000, format: '$,.0f'}</code><br /></li>
+<li>total - data for the total section <code>{value: 95000, format: '$,.0f'}</code></li>
+</ul>
+<p>Format used the <a href="https://github.com/d3/d3-3.x-api-reference/blob/master/Formatting.md#d3_format">D3 formatter (v3)</a></p>
+<h2 id="code-example">Code Example</h2>
+<p>Completion Chart is another chart out of the charts package. Create a div in which to host the chart.<br />The chart will size to the width of this div.</p>
+<pre class="sourceCode html"><code class="sourceCode html">
+<span class="kw">&lt;div</span><span class="ot"> id=</span><span class="st">&quot;example-2&quot;</span><span class="ot"> class=</span><span class="st">&quot;chart-container&quot;</span><span class="kw">&gt;&lt;/div&gt;</span>
+</code></pre>
+<p>Init the Completion Chart out of the charts package with <code>type: 'completion-target'</code>. Pass in objects for the sections such as the text , completed area and remaining bar.</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">
+<span class="kw">var</span> dataset1 = [{
+  <span class="dt">data</span>: [{
+    <span class="dt">name</span>: {<span class="dt">text</span>: <span class="st">&#39;Available Credit&#39;</span>},
+    <span class="dt">completed</span>: {<span class="dt">text</span>: <span class="st">&#39;Spent&#39;</span>, <span class="dt">value</span>: <span class="dv">50000</span>, <span class="dt">format</span>: <span class="st">&#39;$,.0f&#39;</span>},
+    <span class="dt">remaining</span>: {<span class="dt">text</span>: <span class="st">&#39;Pending&#39;</span>, <span class="dt">value</span>: <span class="dv">10000</span>, <span class="dt">format</span>: <span class="st">&#39;$,.0f&#39;</span>},
+    <span class="dt">total</span>: {<span class="dt">value</span>: <span class="dv">95000</span>, <span class="dt">format</span>: <span class="st">&#39;$,.0f&#39;</span>},
+  }]
+}];
+
+<span class="fu">$</span>(<span class="st">&#39;#example-1&#39;</span>).<span class="fu">chart</span>({<span class="dt">dataset</span>: dataset1, <span class="dt">type</span>: <span class="st">&#39;completion-target&#39;</span>}).<span class="fu">data</span>(<span class="st">&#39;chart&#39;</span>);</code></pre>
+<h2 id="accessibility">Accessibility</h2>
+<p>Accessibility work is needed on this component.</p>
+<ul>
+<li>An aria label should be added so that with a screen reader the user can get the jest of the display.<br /></li>
+<li>Color along cannot be used as the sole means of displaying status. So with the colors include a text such as: Error, Good ect</li>
+</ul>
+<h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
+<ul>
+<li>This is a visual only component.</li>
+</ul>
+<h2 id="states-and-variations">States and Variations</h2>
+<ul>
+<li>None - but a tooltip may be used</li>
+</ul>
+<h2 id="responsive-guidelines">Responsive Guidelines</h2>
+<ul>
+<li>Will size to the parent's withd</li>
+</ul>
+<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
+<ul>
+<li>This did not exist but may be confused with the progress bar in 3.6</li>
+</ul>

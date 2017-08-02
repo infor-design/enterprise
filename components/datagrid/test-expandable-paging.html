@@ -1,0 +1,74 @@
+<div class="row">
+  <div class="six columns">&nbsp;</div>
+  <div class="six columns">
+    <h3>Grid Unit Test</h3>
+    <p>A visual test for <a href="http://jira.infor.com/browse/SOHO-3889">SOHO-3889</a> where the paging + expandable rows caused problems in the expand events.
+       This example is working if you go to the second page then expand any row.
+       The row should show the current productId in the expandable area.
+    </p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="datagrid">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+      var grid,
+        columns = [],
+        data = [];
+
+      //Define Columns for the Grid.
+      columns.push({ id: 'expander', field: 'expander', formatter: Formatters.Expander});
+      columns.push({ id: 'id', name: 'Id', field: 'id'});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', width: 140});
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', width: 150, formatter: Formatters.Hyperlink, editor: Editors.Input});
+      columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', width: 125, editor: Editors.Input});
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 125});
+      columns.push({ id: 'price', name: 'Price', field: 'price', width: 125, formatter: Formatters.Decimal});
+      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+
+      var rowTemplate = '<div class="datagrid-cell-layout"><div class="img-placeholder"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-camera"></use></svg></div></div>'+
+                        '<div class="datagrid-cell-layout"><p class="datagrid-row-heading">Expandable Content Area</p>' +
+                        '<p class="datagrid-row-micro-text">{{sku}}</p>'+
+                        '<span class="datagrid-wrapped-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only...</span>';
+
+      //Init and get the api for the grid
+      grid = $('#datagrid').datagrid({
+        columns: columns,
+        selectable: 'multiple',
+        paging: true,
+        rowTemplate: rowTemplate,
+        editable: true,
+        pagesize: 10,
+        source: function(req, response) {
+          var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
+
+          if (req.sortId) {
+            url += '&sortId=' + req.sortId + '&sortAsc=' + req.sortAsc;
+          }
+
+          if (req.filterExpr && req.filterExpr[0]) {
+            url += '&filter=' + req.filterExpr[0].value;
+          }
+
+          //Get Page Based on info in Req, return results into response;
+          $.getJSON(url, function(res) {
+            req.total = res.total;
+            response(res.data, req);
+          });
+        },
+        toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true, collapsibleFilter: true}
+      });
+
+      grid.on('expandrow', function (e, args) {
+        var container = $(args.detail).find('.datagrid-row-heading').text('More Info on Product ID ' + args.item.productId);
+      });
+
+  });
+</script>

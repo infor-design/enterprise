@@ -17,19 +17,6 @@
   $.fn.toolbar = function(options) {
     'use strict';
 
-    /**
-     * The Toolbar Component manages various levels of application navigation.  It contains a group of buttons that functionally
-     * related content. Each panel consists of two levels: the top level identifies the
-     * category or section header, and the second level provides the associated options.
-     *
-     * @class Toolbar
-     *
-     * @param {HTMLElement|SVGElement|jQuery[]} element   &nbsp;-&nbsp; The element that will serve as the base for this Toolbar component.
-     * @param {boolean} rightAligned   &nbsp;-&nbsp; Will always attempt to right-align the contents of the toolbar.
-     * @param {Number} maxVisibleButtons   &nbsp;-&nbsp; Total amount of buttons that can be present, not including the More button.
-     * @param {boolean} resizeContainers   &nbsp;-&nbsp; If true, uses Javascript to size the Title and Buttonset elements in a way that shows as much of the Title area as possible.
-     * @param {boolean} favorButtonset   &nbsp;-&nbsp; If "resizeContainers" is true, setting this to true will try to display as many buttons as possible while resizing the toolbar.  Setting to false attempts to show the entire title instead.
-     */
     var pluginName = 'toolbar',
         defaults = {
           rightAligned: false,
@@ -39,6 +26,18 @@
         },
         settings = $.extend({}, defaults, options);
 
+    /**
+     * The Toolbar Component manages various levels of application navigation.  It contains a group of buttons that functionally
+     * related content. Each panel consists of two levels: the top level identifies the
+     * category or section header, and the second level provides the associated options.
+     *
+     * @class Toolbar
+     *
+     * @param {boolean} rightAligned   &nbsp;-&nbsp; Will always attempt to right-align the contents of the toolbar.
+     * @param {Number} maxVisibleButtons   &nbsp;-&nbsp; Total amount of buttons that can be present, not including the More button.
+     * @param {boolean} resizeContainers   &nbsp;-&nbsp; If true, uses Javascript to size the Title and Buttonset elements in a way that shows as much of the Title area as possible.
+     * @param {boolean} favorButtonset   &nbsp;-&nbsp; If "resizeContainers" is true, setting this to true will try to display as many buttons as possible while resizing the toolbar.  Setting to false attempts to show the entire title instead.
+     */
     function Toolbar(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -202,115 +201,10 @@
         }
 
         var menuItems = [];
-        function buildMenuItem() {
-          /*jshint validthis:true */
-          var item = $(this),
-            isSplitButton = false;
+        this.items.not(this.more).filter(menuItemFilter).each(function() {
+          menuItems.push(self.buildMoreActionsMenuItem($(this)));
+        });
 
-          // If this item should be skipped, just return out
-          if (item.data('skipit') === true) {
-            item.data('skipit', undefined);
-            return;
-          }
-
-          var popupLi = $('<li></li>'),
-            a = $('<a href="#"></a>').appendTo(popupLi);
-
-          if (item.is(':hidden')) {
-            popupLi.addClass('hidden');
-          }
-          if (item.is(':disabled')) {
-            popupLi.addClass('is-disabled');
-          } else {
-            popupLi.removeClass('is-disabled');
-          }
-
-          a.text(self.getItemText(item));
-
-          // Pass along any icons except for the dropdown (which is added as part of the submenu design)
-          var submenuDesignIcon = $.getBaseURL('#icon-dropdown');
-          var icon = item.children('.icon').filter(function() {
-            var iconName = $(this).getIconName();
-            return iconName && iconName !== submenuDesignIcon && iconName.indexOf('dropdown') === -1;
-          });
-
-          if (icon && icon.length) {
-            a.html('<span>' + a.text() + '</span>');
-            icon.clone().detach().prependTo(a);
-          }
-
-          var linkspan = popupLi.find('b');
-          if (linkspan.length) {
-            self.moreMenu.addClass('has-icons');
-            linkspan.detach().prependTo(popupLi);
-          }
-
-          function addItemLinksRecursively(menu, diffMenu, parentItem) {
-            var children = menu.children('li'),
-              id = diffMenu.attr('id');
-
-            diffMenu.children('li').each(function(i, diffMenuItem) {
-              var dmi = $(diffMenuItem), // "Diffed" Menu Item
-                omi = children.eq(i), // Corresponding "Original" menu item
-                dmiA = dmi.children('a'), // Anchor inside of "Diffed" menu item
-                omiA = omi.children('a'), // Anchor inside of "Original" menu item
-                dmiID = dmi.attr('id'),
-                dmiAID = dmiA.attr('id');
-
-              // replace menu item ids with spillover-menu specific ids.
-              if (dmiID) {
-                dmi.removeAttr('id').attr('data-original-menu-item', dmiID);
-              }
-              if (dmiAID) {
-                dmiA.removeAttr('id').attr('data-original-menu-anchor', dmiAID);
-              }
-
-              omiA.data('action-button-link', dmiA);
-              dmiA.data('original-button', omiA);
-
-              var omiSubMenu = omi.children('.wrapper').children('.popupmenu'),
-                dmiSubMenu = dmi.children('.wrapper').children('.popupmenu');
-
-              if (omiSubMenu.length && dmiSubMenu.length) {
-                addItemLinksRecursively(omiSubMenu, dmiSubMenu, dmi);
-              }
-
-              if (isSplitButton) {
-                dmi.removeClass('is-checked');
-              }
-            });
-
-            diffMenu.removeAttr('id').attr('data-original-menu', id);
-            parentItem.addClass('submenu');
-
-            if (parentItem.is(popupLi)) {
-              diffMenu.wrap($('<div class="wrapper"></div>'));
-              parentItem.append(diffMenu);
-            }
-          }
-
-          if (item.is('.btn-menu')) {
-            if (!item.data('popupmenu')) {
-              item.popupmenu();
-            }
-
-            var menu = item.data('popupmenu').menu,
-              diffMenu = menu.clone();
-
-            addItemLinksRecursively(menu, diffMenu, popupLi);
-          }
-
-          if (item.is('[data-popdown]')) {
-            item.popdown();
-          }
-
-          // Setup data links between the buttons and their corresponding list items
-          item.data('action-button-link', a);
-          popupLi.children('a').data('original-button', item);
-          menuItems.push(popupLi);
-        }
-
-        this.items.not(this.more).filter(menuItemFilter).each(buildMenuItem);
         menuItems.reverse();
         $.each(menuItems, function(i, item) {
           if (item.text() !== '') {
@@ -318,59 +212,12 @@
           }
         });
 
-        //Refresh Text and Disabled
-        function refreshTextAndDisabled(menu) {
-          $('li > a', menu).each(function () {
-            var a = $(this),
-                li = a.parent(),
-                item = a.data('originalButton'),
-                itemParent,
-                text = self.getItemText(item),
-                submenu;
-
-            if (item) {
-              if (a.find('span').length) {
-                a.find('span').text(text.trim());
-              } else {
-                a.text(text.trim());
-              }
-
-              if (item.is('.hidden') || item.parent().is('.hidden')) {
-                li.addClass('hidden');
-              } else {
-                li.removeClass('hidden');
-              }
-
-              if (item.parent().is('.is-disabled') || item.is(':disabled')) { // if it's disabled menu item, OR a disabled menu-button
-                li.addClass('is-disabled');
-                a.attr('tabindex', '-1');
-              } else {
-                li.removeClass('is-disabled');
-                a.removeAttr('disabled');
-              }
-
-              if (item.is('a')) {
-                itemParent = item.parent('li');
-
-                if (itemParent.is('.is-checked')) {
-                  li.addClass('is-checked');
-                } else {
-                  li.removeClass('is-checked');
-                }
-              }
-
-              if (item.is('.btn-menu')) {
-                submenu = a.parent().find('.popupmenu').first();
-                refreshTextAndDisabled(submenu);
-              }
-            }
-          });
-        }
-
+        // Setup an Event Listener that will refresh the contents of the More Actions
+        // Menu's items each time the menu is opened.
         if (popupMenuInstance) {
           this.more
             .on('beforeopen.toolbar', function() {
-              refreshTextAndDisabled(self.moreMenu);
+              self.refreshMoreActionsMenu(self.moreMenu);
             })
             .triggerHandler('updated');
         } else {
@@ -380,10 +227,9 @@
             trigger: 'click',
             menu: this.moreMenu
           })).on('beforeopen.toolbar', function() {
-            refreshTextAndDisabled(self.moreMenu);
+            self.refreshMoreActionsMenu(self.moreMenu);
           });
         }
-
 
         // Setup the tabindexes of all items in the toolbar and set the starting active button.
         function setActiveToolbarItem() {
@@ -425,6 +271,200 @@
       },
 
       /**
+       * Builds a single "More Actions Menu" item from a source toolbar item.
+       * Also sets up linkage between the menu item and the original toolbar item to allow events/properties
+       * to propagate when the More Actions item is acted upon.
+       * @param {jQuery[]} item - the source item from the toolbar.
+       * @returns {jQuery[]} - a jQuery-wrapped <li> representing a More Actions menu implementation of the toolbar item.
+       */
+      buildMoreActionsMenuItem: function(item) {
+        var isSplitButton = false;
+
+        // If this item should be skipped, just return out
+        if (item.data('skipit') === true) {
+          item.data('skipit', undefined);
+          return;
+        }
+
+        // Attempt to re-use an existing <li>, if possible.
+        // If a new one is created, setup the linkage between the original element and its
+        // "More Actions" menu counterpart.
+        var a = item.data('action-button-link'),
+          popupLi;
+
+        if (!a || !a.length) {
+          popupLi = $('<li></li>');
+          a = $('<a href="#"></a>').appendTo(popupLi);
+
+          // Setup data links between the buttons and their corresponding list items
+          item.data('action-button-link', a);
+          a.data('original-button', item);
+        } else {
+          popupLi = a.parent();
+        }
+
+        // Refresh states
+        if (item.hasClass('hidden')) {
+          popupLi.addClass('hidden');
+        }
+        if (item.is(':disabled')) {
+          popupLi.addClass('is-disabled');
+        } else {
+          popupLi.removeClass('is-disabled');
+        }
+
+        // Refresh Text
+        a.text(this.getItemText(item));
+
+        // Pass along any icons except for the dropdown (which is added as part of the submenu design)
+        var submenuDesignIcon = $.getBaseURL('#icon-dropdown');
+        var icon = item.children('.icon').filter(function() {
+          var iconName = $(this).getIconName();
+          return iconName && iconName !== submenuDesignIcon && iconName.indexOf('dropdown') === -1;
+        });
+
+        if (icon && icon.length) {
+          a.html('<span>' + a.text() + '</span>');
+          icon.clone().detach().prependTo(a);
+        }
+
+        var linkspan = popupLi.find('b');
+        if (linkspan.length) {
+          this.moreMenu.addClass('has-icons');
+          linkspan.detach().prependTo(popupLi);
+        }
+
+        function addItemLinksRecursively(menu, diffMenu, parentItem) {
+          var children = menu.children('li'),
+            id = diffMenu.attr('id');
+
+          diffMenu.children('li').each(function(i, diffMenuItem) {
+            var dmi = $(diffMenuItem), // "Diffed" Menu Item
+              omi = children.eq(i), // Corresponding "Original" menu item
+              dmiA = dmi.children('a'), // Anchor inside of "Diffed" menu item
+              omiA = omi.children('a'), // Anchor inside of "Original" menu item
+              dmiID = dmi.attr('id'),
+              dmiAID = dmiA.attr('id');
+
+            // replace menu item ids with spillover-menu specific ids.
+            if (dmiID) {
+              dmi.removeAttr('id').attr('data-original-menu-item', dmiID);
+            }
+            if (dmiAID) {
+              dmiA.removeAttr('id').attr('data-original-menu-anchor', dmiAID);
+            }
+
+            omiA.data('action-button-link', dmiA);
+            dmiA.data('original-button', omiA);
+
+            var omiSubMenu = omi.children('.wrapper').children('.popupmenu'),
+              dmiSubMenu = dmi.children('.wrapper').children('.popupmenu');
+
+            if (omiSubMenu.length && dmiSubMenu.length) {
+              addItemLinksRecursively(omiSubMenu, dmiSubMenu, dmi);
+            }
+
+            if (isSplitButton) {
+              dmi.removeClass('is-checked');
+            }
+          });
+
+          diffMenu.removeAttr('id').attr('data-original-menu', id);
+          parentItem.addClass('submenu');
+
+          var appendTarget;
+          if (parentItem.is(popupLi)) {
+            appendTarget = parentItem.children('.wrapper');
+            if (!appendTarget || !appendTarget.length) {
+              appendTarget = $('<div class="wrapper"></div>');
+            }
+            appendTarget.html(diffMenu);
+            parentItem.append(appendTarget);
+          }
+        }
+
+        if (item.is('.btn-menu')) {
+          if (!item.data('popupmenu')) {
+            item.popupmenu();
+          } else {
+            if (!a.children('.icon.arrow').length) {
+              a.append($.createIcon({
+                classes: 'icon arrow icon-dropdown',
+                icon: 'dropdown'
+              }));
+            }
+          }
+
+          var menu = item.data('popupmenu').menu,
+            diffMenu = menu.clone();
+
+          addItemLinksRecursively(menu, diffMenu, popupLi);
+        }
+
+        if (item.is('[data-popdown]')) {
+          item.popdown();
+        }
+
+        return popupLi;
+      },
+
+      /**
+       * Refreshes the More Actions Menu items' text content, icons, states, and submenu content
+       * based on changes made directly to their counterpart elements in the Toolbar.  Can also
+       * optionally refresh only part of the menu.
+       * @param {jQuery[]} menu - the menu/submenu to be refreshed.
+       */
+      refreshMoreActionsMenu: function(menu) {
+        var self = this;
+
+        $('li > a', menu).each(function () {
+          var a = $(this),
+              li = a.parent(),
+              item = a.data('originalButton'),
+              itemParent,
+              text = self.getItemText(item),
+              submenu;
+
+          if (item) {
+            if (a.find('span').length) {
+              a.find('span').text(text.trim());
+            } else {
+              a.text(text.trim());
+            }
+
+            if (item.is('.hidden') || item.parent().is('.hidden')) {
+              li.addClass('hidden');
+            } else {
+              li.removeClass('hidden');
+            }
+
+            if (item.parent().is('.is-disabled') || item.is(':disabled')) { // if it's disabled menu item, OR a disabled menu-button
+              li.addClass('is-disabled');
+              a.attr('tabindex', '-1');
+            } else {
+              li.removeClass('is-disabled');
+              a.removeAttr('disabled');
+            }
+
+            if (item.is('a')) {
+              itemParent = item.parent('li');
+
+              if (itemParent.is('.is-checked')) {
+                li.addClass('is-checked');
+              } else {
+                li.removeClass('is-checked');
+              }
+            }
+
+            if (item.is('.btn-menu')) {
+              submenu = a.parent().find('.popupmenu').first();
+              self.refreshMoreActionsMenu(submenu);
+            }
+          }
+        });
+      },
+
+      /**
        * Gets the complete text contnts of a Toolbar Item, in order to create its corresponding "more actions" menu item.
        *
        * Order of operations for populating the List Item text:
@@ -441,7 +481,7 @@
         var span = item.find('.audible'),
           title = item.attr('title'),
           tooltip = item.data('tooltip'),
-          tooltipText = tooltip ? tooltip.content : undefined;
+          tooltipText = tooltip && typeof tooltip.content === 'string' ? tooltip.content : undefined;
 
         var popupLiText = span.length ? span.text() :
           title !== '' && title !== undefined ? item.attr('title') :
@@ -497,6 +537,15 @@
           self.handleSelected(e, anchor);
         });
 
+        // Handle possible AJAX calls on Toolbar Menu buttons
+        // TODO: Need to handle mouseenter/touchstart/keydown events that will cause this to trigger,
+        // instead of directly handling this itself.
+        this.more
+          .off('show-submenu.toolbar')
+          .on('show-submenu.toolbar', function(e, li) {
+          self.handleTransferToMenuButtonItem(e, li);
+        });
+
         this.element.off('updated.toolbar').on('updated.toolbar', function(e) {
           e.stopPropagation();
           self.updated();
@@ -513,7 +562,33 @@
           self.handleResize();
         });
 
+        // Trigger _handleResize()_ once to fix container sizes.
+        this.handleResize();
+
         return this;
+      },
+
+      /**
+       * Event Handler for the Soho Popupmenu's custom 'show-submenu' event, specifically for
+       * the case of a menu button that's been spilled over into this Toolbar's More Actions menu.
+       * @param {jQuery.Event} e
+       * @param {jQuery[]} li - the `li.submenu` element.
+       */
+      handleTransferToMenuButtonItem: function(e, li) {
+        var originalMenuButton = li.children('a').data('original-button');
+        if (!originalMenuButton) {
+          return;
+        }
+
+        var popupAPI = originalMenuButton.data('popupmenu');
+        if (!popupAPI || typeof popupAPI.settings.beforeOpen !== 'function') {
+          return;
+        }
+
+        // Call out to the MenuButton's AJAX source, get its contents, and populate
+        // the corresponding More Actions menu sub-item.
+        popupAPI.callSource(e);
+        this.buildMoreActionsMenuItem(originalMenuButton);
       },
 
       /**
@@ -869,10 +944,18 @@
 
         var self = this;
 
+        function getMoreOrLast() {
+          if (self.hasNoMoreButton() || !self.element.hasClass('has-more-button')) {
+            return self.getLastVisibleButton();
+          }
+
+          return self.more;
+        }
+
         function getActiveButton() {
           // Menu items simply set the "More Actions" button as active
           if (activeButton.is('a')) {
-            return self.more;
+            return getMoreOrLast();
           }
 
           // If it's the more button, hide the tooltip and set it as active
@@ -881,13 +964,13 @@
             if (tooltip && tooltip.tooltip.is(':not(.hidden)')) {
               tooltip.hide();
             }
-            return self.more;
+            return getMoreOrLast();
           }
 
           // Overflowed items also set
           if (self.isItemOverflowed(activeButton)) {
             if (!activeButton.is('.searchfield')) {
-              return self.more;
+              return getMoreOrLast();
             }
           }
 
@@ -901,6 +984,7 @@
 
         if (!noFocus) {
           this.activeButton[0].focus();
+          this.element.triggerHandler('navigate', [this.activeButton]);
         }
       },
 
@@ -1213,41 +1297,7 @@
        * @returns {this}
        */
       teardown: function() {
-        function deconstructMenuItem(i, item) {
-          var li = $(item),
-            a = li.children('a'),
-            itemLink = a.data('original-button');
-
-          a.off('updated.toolbar mousedown.toolbar click.toolbar touchend.toolbar touchcancel.toolbar recalculate-buttons.toolbar');
-
-          var icons = li.find('.icon');
-          if (icons.length) {
-            icons.remove();
-          }
-
-          var submenuContainer;
-          if (li.is('.submenu')) {
-            submenuContainer = li.children('.wrapper').children('.popupmenu');
-            submenuContainer.children('li').each(deconstructMenuItem);
-          }
-
-          if (itemLink && itemLink.length) {
-            $.removeData(a[0], 'original-button');
-            $.removeData(itemLink[0], 'action-button-link');
-            a.remove();
-
-            if (submenuContainer) {
-              submenuContainer
-                .off()
-              .parent('.wrapper')
-                .off()
-                .remove();
-            }
-
-            li.remove();
-          }
-
-        }
+        var self = this;
 
         if (this.title && this.title.length) {
           var dataTooltip = this.title.off('beforeshow.toolbar').data('tooltip');
@@ -1256,8 +1306,55 @@
           }
         }
 
-        this.moreMenu.children('li').each(deconstructMenuItem);
+        this.moreMenu.children('li').each(function() {
+          self.teardownMoreActionsMenuItem($(this), true);
+        });
         return this;
+      },
+
+      /**
+       * Tears down a More Actions Menu item.
+       * @param {jQuery[]} item - the existing <li> from inside the More Actions menu.
+       * @param {boolean} doRemove - if defined, causes the list item to be removed from the more actions menu.
+       */
+      teardownMoreActionsMenuItem: function(item, doRemove) {
+        var self = this,
+          li = $(item),
+          a = li.children('a'),
+          itemLink = a.data('original-button');
+
+        a.off('updated.toolbar mousedown.toolbar click.toolbar touchend.toolbar touchcancel.toolbar recalculate-buttons.toolbar');
+
+        var icons = li.find('.icon');
+        if (icons.length) {
+          icons.remove();
+        }
+
+        var submenuContainer;
+        if (li.is('.submenu')) {
+          submenuContainer = li.children('.wrapper').children('.popupmenu');
+          submenuContainer.children('li').each(function(){
+            self.teardownMoreActionsMenuItem($(this), true);
+          });
+        }
+
+        if (itemLink && itemLink.length) {
+          $.removeData(a[0], 'original-button');
+          $.removeData(itemLink[0], 'action-button-link');
+          a.remove();
+
+          if (submenuContainer) {
+            submenuContainer
+              .off()
+            .parent('.wrapper')
+              .off()
+              .remove();
+          }
+
+          if (doRemove) {
+            li.remove();
+          }
+        }
       },
 
       /**

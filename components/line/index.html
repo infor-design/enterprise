@@ -1,0 +1,106 @@
+<h1 id="line-learn-more">Line <a href="#">Learn More</a></h1>
+<h2 id="configuration-options">Configuration Options</h2>
+<ol>
+<li>Line Chart Example <a href="../components/line/example-index">View Example</a><br /></li>
+<li>Labels on Axis <a href="../components/line/example-axis-labels">View Example</a><br /></li>
+<li>Ticks Adjustment (Less ticks than data points) <a href="../components/line/example-axis-ticks">View Example</a><br /></li>
+<li>Customize Tooltip <a href="../components/line/example-custom-tooltip">View Example</a><br /></li>
+<li>Customize Dot Size <a href="../components/line/example-custom-dots">View Example</a><br /></li>
+<li>Rotate Bottom Labels <a href="../components/line/test-rotate">View Example</a></li>
+</ol>
+<h2 id="api-details">API Details</h2>
+<h3 id="dataset-settings">Dataset Settings</h3>
+<ul>
+<li><code>name</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> - The name to show on the y axis for the line chart<br /></li>
+<li><code>value</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a></strong> - The raw data value.<br /></li>
+<li><code>tooltip</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong> - The custom tooltip to show.</li>
+</ul>
+<h3 id="extra-chart-settings">Extra Chart Settings</h3>
+<ul>
+<li><code>hideDots</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong> - Hide the dots in the line chart<br /></li>
+<li><code>axisLabels</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Object</a></strong> - Option to a label to one of the four sides. Example <code>axisLabels: {left: 'Left axis label', top: 'Top axis label', right: 'Right axis label', bottom: 'Bottom axis label'}</code> <a href="../components/line/example-axis-labels">See Example</a><br /></li>
+<li><code>dots</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Object</a></strong> - Option to customize the dot behavior. You can set the dot size (radius), the size on hover and stroke or even add a custom class. Example <code>dots: { radius: 3, radiusOnHover: 4, strokeWidth: 0, class: 'custom-dots'}</code> <a href="../components/line/example-custom-dots">See Example</a><br /></li>
+<li><code>xAxis</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">Object</a></strong> - A series of options for the xAxis<br /></li>
+<li><code>xAxis.rotate</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">Number</a></strong> - Rotate the elements on the x axis. Recommend -65 deg but this can be tweaked depending on look.<br /></li>
+<li><code>yAxis</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">Object</a></strong> - A series of options for the yAxis<br /></li>
+<li><code>xAxis.ticks</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">Object</a></strong> Data to control the number of ticks and y axis format. Options for example <code>{number: 5, format: ',.1s'}</code> would show only 5 yaxis points and format the data to show 1K, 1M, 1G ect.. This uses the d3 formatter.</li>
+</ul>
+<h2 id="code-example">Code Example</h2>
+<p>This example shows how to invoke the line chart option in the charts component. In this example we pass a dataset with x and y axis values for three lines.</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript">
+<span class="kw">var</span> dataset = [{
+  <span class="dt">data</span>: [{
+      <span class="dt">name</span>: <span class="st">&#39;Jan&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">12</span>
+  }, {
+      <span class="dt">name</span>: <span class="st">&#39;Feb&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">11</span>
+  }, {
+      <span class="dt">name</span>: <span class="st">&#39;Mar&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">14</span>
+  }, {
+      <span class="dt">name</span>: <span class="st">&#39;Apr&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">10</span>
+  }, {
+      <span class="dt">name</span>: <span class="st">&#39;May&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">14</span>
+  }, {
+      <span class="dt">name</span>: <span class="st">&#39;Jun&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">8</span>
+  }],
+  <span class="dt">name</span>: <span class="st">&#39;Component A&#39;</span>
+}, {
+  <span class="dt">data</span>: [{
+      <span class="dt">name</span>: <span class="st">&#39;Jan&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">22</span>
+  }, {
+      <span class="dt">name</span>: <span class="st">&#39;Feb&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">21</span>
+  }, {
+      <span class="dt">name</span>: <span class="st">&#39;Mar&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">24</span>
+  }, {
+      <span class="dt">name</span>: <span class="st">&#39;Apr&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">20</span>
+  }, {
+      <span class="dt">name</span>: <span class="st">&#39;May&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">24</span>
+  }, {
+      <span class="dt">name</span>: <span class="st">&#39;Jun&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">28</span>
+  }],
+  <span class="dt">name</span>: <span class="st">&#39;Component B&#39;</span>
+}, {
+  <span class="dt">data</span>: [{
+      <span class="dt">name</span>: <span class="st">&#39;Jan&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">32</span>
+  }, {
+      <span class="dt">name</span>: <span class="st">&#39;Feb&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">31</span>
+  }, {
+      <span class="dt">name</span>: <span class="st">&#39;Mar&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">34</span>
+  }, {
+      <span class="dt">name</span>: <span class="st">&#39;Apr&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">30</span>
+  }, {
+      <span class="dt">name</span>: <span class="st">&#39;May&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">34</span>
+  }, {
+      <span class="dt">name</span>: <span class="st">&#39;Jun&#39;</span>,
+      <span class="dt">value</span>: <span class="dv">38</span>
+  }],
+  <span class="dt">name</span>: <span class="st">&#39;Component C&#39;</span>
+}];
+
+<span class="fu">$</span>(<span class="st">&#39;#area-example&#39;</span>).<span class="fu">chart</span>({<span class="dt">type</span>: <span class="st">&#39;line&#39;</span>, <span class="dt">dataset</span>: dataset});
+</code></pre>
+<h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
+<ul>
+<li><strong>Tab:</strong> You can tab into the chart area and through the legend values as each has a focus state.<br /></li>
+<li><strong>Enter/Space:</strong> Will select the area the corresponds with the focus'd legend item.</li>
+</ul>
+<h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
+<ul>
+<li>The line chart was added after version 3.6</li>
+</ul>

@@ -1,14 +1,15 @@
-# Button Component Implementation Detail [Learn More](https://soho.infor.com/index.php?p=component/buttons)
-
-{{api-details}}
+# Button  [Learn More](https://soho.infor.com/index.php?p=component/buttons)
 
 ## Configuration Options
 
-1. Form Buttons [View Example]( /components/button/example-index)
-2. 100% Width Button [View Example]( /components/button/example-100-percent)
-3. Button on an <a> tag  [View Example]( /components/button/example-as-link)
-4. Form Call to Action Button [View Example]( /components/button/example-secondary-border)
-5. Button with Icons [View Example]( /components/button/example-with-icons)
+1. Form Buttons [View Example]( ../components/button/example-index)
+2. 100% Width Button [View Example]( ../components/button/example-100-percent)
+3. Button on an <a> tag  [View Example]( ../components/button/example-as-link)
+4. Form Call to Action Button [View Example]( ../components/button/example-secondary-border)
+5. Button with Icons [View Example]( ../components/button/example-with-icons)
+6. Toggle Buttons [View Example]( ../components/button/example-toggle-button)
+
+{{api-details}}
 
 ## Code Example
 

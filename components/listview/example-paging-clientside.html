@@ -1,0 +1,84 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Listview Test:  Paging</h2>
+
+    <p><a class="hyperlink" href="http://jira.infor.com/browse/HFC-3121" target="_blank">Related JIRA Ticket</a>.</p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="four columns">
+
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">Pagable Listview</h2>
+      </div>
+      <div class="card-content">
+        <div class="paginated listview scrollable" data-init="false" id="projects-listview" data-tmpl="project-tmpl" data-dataset="testData"></div>
+      </div>
+      <div class="card-footer">
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  var statusCodes = $.get({url: '{{basepath}}api/general/status-codes'}),
+    myProjects = $.get({url: '{{basepath}}api/my-projects'}),
+    testData;
+
+  function replaceStatus(dataObj) {
+    var code = dataObj.status,
+      codeContents = $.map(statusCodes.responseJSON, function(statusObj) {
+        if (statusObj.id !== code) {
+          return;
+        }
+        return statusObj;
+      });
+    return codeContents[0];
+  }
+
+  // Quick relation change for demo purposes
+  $.when( statusCodes, myProjects ).then(function() {
+    testData = myProjects.responseJSON;
+
+    for (var i = 0; i < testData.length; i++) {
+      testData[i].status = replaceStatus(testData[i]);
+    }
+
+    $('#projects-listview').listview({
+      dataset: testData,
+      paging: true,
+      pagesize: 10,
+      template: $('#project-tmpl').html()
+    })
+  });
+</script>
+
+{{={{{ }}}=}}
+<script id="project-tmpl" type="text/html">
+  <ul>
+    {{#dataset}}
+      {{#disabled}}
+        <li class="is-disabled" style="position: relative;">
+      {{/disabled}}
+      {{^disabled}}
+        <li style="position: relative;">
+      {{/disabled}}
+        <p class="listview-heading">{{name}}</p>
+        <p class="listview-subheading">{{client}}</p>
+        {{#status}}
+        <span class="tag {{status.color}}" style="position: absolute; top: calc(50% - 13px); right: 25px; text-align: center; min-width: 80px;">
+          {{status.name}}
+        </span>
+        {{/status}}
+        {{^status}}
+        {{/status}}
+      </li>
+    {{/dataset}}
+  </ul>
+</script>

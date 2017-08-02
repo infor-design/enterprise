@@ -43,7 +43,7 @@
 
   <div class="page-container builder">
     <div class="sidebar scrollable" role="complementary">
-      <div class="listview" id="task-listview" data-tmpl="open-orders-tpl" data-dataset="demoBuilderItems"></div>
+      <div class="listview" id="task-listview" data-options="{ 'template': 'open-orders-tpl', 'source': '{{basepath}}api/construction' }"></div>
     </div>
     <div id="maincontent" class="main scrollable builder-pane">
       <div class="builder-header header subheader is-personalizable">

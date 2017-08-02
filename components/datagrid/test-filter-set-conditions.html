@@ -1,0 +1,75 @@
+<div class="page-container scrollable" id="maincontent" role="main">
+
+   <div class="row">
+      <div class="twelve columns">
+         <div id="datagrid"></div>
+      </div>
+   </div>
+
+   <script>
+      $('body').one('initialized', function () {
+         var grid,
+            columns = [],
+            data = [];
+
+         // Define Some Sample Data
+         data.push({ id: 1, productId: 2142201, productName: 'Compressor', inStock: true, activity:  'Assemble Paint', binLoc: '0101001001', phone: 1112223333, quantity: 1, price: 210.99, status: 'a', orderDate: new Date(2014, 12, 8), action: 'Action'});
+         data.push({ id: 2, productId: 2241202, productName: '1 Different Compressor', inStock: true, activity:  'Inspect and Repair', binLoc: '0101001002', phone: 1234567890, quantity: 2, price: 210.99, status: '', orderDate: new Date(2015, 7, 3), action: 'On Hold'});
+         data.push({ id: 3, productId: 2342203, productName: 'Compressor', inStock: true, activity:  'Inspect and Repair', binLoc: '0000001001', phone: null, quantity: 1, price: 120.99, status: 'i', orderDate: new Date(2014, 6, 3), action: 'Action'});
+         data.push({ id: 4, productId: 2445204, productName: '1 Another Compressor', inStock: false, activity:  'Assemble Paint', binLoc: '1111111001', phone: null, quantity: 3, price: 210.99, status: 'a', orderDate: new Date(2015, 3, 3), action: 'Action'});
+         data.push({ id: 5, productId: 2542205, productName: 'I Love Compressors', inStock: true, activity:  'Inspect and Repair', binLoc: '2222222001', phone: 2221230000, quantity: 4, price: 210.99, status: 'i', orderDate: new Date(2015, 5, 5), action: 'On Hold'});
+         data.push({ id: 6, productId: 2642206, productName: 'Air Compressors', inStock: false, activity:  'Inspect and Repair', binLoc: '2222222002', phone: null, quantity: 41, price: 120.99, status: 'i', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+         data.push({ id: 7, productId: 2642207, productName: 'Some Compressor', inStock: true, activity:  'inspect and Repair', binLoc: '3333333333', phone: 5557779999, quantity: 41, price: 123.99, status: 'a', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+         data.push({ id: 8, productId: 2642208, productName: null, activity:  null, binLoc: '', phone: null, quantity: null, price: null, status: 'a', orderDate: null, action: 'Blank Row'});
+         data.push({ id: 9, productId: 2642209, productName: 'Some Compressor 2', inStock: true, activity:  'inspect and Repair', binLoc: '', phone: null, quantity: 0, price: 150.99, status: 'i', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+         data.push({ id: 10, productId: 2642210, productName: 'Some Compressor 3', inStock: true, activity:  'inspect and Repair', binLoc: '0303003003', phone: null, quantity: 1, price: null, status: 'i', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+         data.push({ id: 11, productId: 2642211, productName: 'Some Compressor 4', inStock: true, activity:  'inspect and Repair', binLoc: '4444444444', phone: 5551234567, quantity: 0, price: null, status: 'a', orderDate: new Date(2014, 6, 9), action: 'On Hold'});
+
+         var activities = [{id: 'Assemble Paint', value:'Assemble Paint', label: 'Assemble Paint'},
+            {id: 'Inspect and Repair', value:'Inspect and Repair', label: 'Inspect and Repair'}];
+
+         //Define Columns for the Grid.
+         columns.push({ id: 'selectionCheckbox', name: '', width: 50, formatter: Formatters.SelectionCheckbox, align: 'center', resizable: false, sortable: false});
+         columns.push({ id: 'productId', name: 'Product Id', field: 'productId', filterType: 'text'});
+         columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, filterType: 'text'});
+         columns.push({ id: 'activity', name: 'Activity', field: 'activity', filterType: 'contents', options: activities});
+         columns.push({ id: 'binLoc', name: 'Bin Location', field: 'binLoc', filterType: 'text'});
+         columns.push({ id: 'phone', name: 'Phone #', field: 'phone', filterType: 'text'});
+         columns.push({ id: 'quantity', name: 'Accuml. Quantity', field: 'quantity', align: 'right', filterType: 'integer'});
+         columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'MM/dd/yyyy', filterType: 'date'});
+         columns.push({ id: 'inStock', name: 'In Stock', field: 'inStock', width: 125, formatter: Formatters.Checkbox, align: 'center', filterType: 'checkbox'});
+         columns.push({ id: 'status', name: 'Active Status', field: 'status', formatter: Formatters.Checkbox, align: 'center', filterType: 'checkbox'});
+         columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal, filterType: 'decimal', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '####.000'});
+
+         //Init and get the api for the grid
+         var api = $('#datagrid').datagrid({
+            columns: columns,
+            dataset: data,
+            filterable: true,
+            selectable: 'multiple',
+            paging: true,
+            pagesize: 5,
+            pagesizes: [5, 10, 25],
+            toolbar: {title: 'Filterable Datagrid w/ Set Conditions', filterRow: true, results: true, dateFilter: false, keywordFilter: true, actions: true, views: false, rowHeight: true, collapsibleFilter: true}
+         }).on('filtered', function (e, args) {
+            console.log(args);
+         }).data('datagrid');
+
+         /* Other Examples:
+          var filter = [{columnId: 'productId', operator: 'equals', value: '2142201'}]; // Text Type
+
+          var filter = [{columnId: 'productName', operator: 'is-empty', value: ''}];  /// Empty
+          var filter = [{columnId: 'productName', operator: 'is-not-empty', value: ''}, // Multiple Conditions
+             {columnId: 'activity', operator: 'equals', value: ['Assemble Paint']}];
+          var filter = [{columnId: 'quantity', operator: 'greater-than', value: 1}]; //Integer Type
+          var filter = [{columnId: 'orderDate', operator: 'greater-than', value: '07/09/2014', format: 'MM/dd/yyyy'}]; //Date Type Format may not be required
+          var filter = [{columnId: 'inStock', operator: 'selected'}]; //Checkbox Type
+          var filter = [{columnId: 'price', operator: 'equals', value: 210.99}]; //Decimal Type
+        */
+        var filter = [{columnId: 'productId', operator: 'equals', value: '2142201'}]; // Text Type
+        api.applyFilter(filter)
+
+      });
+
+   </script>
+</div>

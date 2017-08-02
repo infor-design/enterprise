@@ -1,19 +1,18 @@
 
-# Alert Component Implementation Detail [Learn More](https://soho.infor.com/index.php?p=component/accordion)
-
-## Api Details
-
-### Settings
-
-
-* Icon Types - icon-alert, icon-confirm, icon-dirty, icon-error, icon-info, icon-pending, icon-new, icon-in-progress, icon-info-field
-* Icon Colors - This is done automatically by the type (alert, error ect)
+# Alerts  [Learn More](https://soho.infor.com/index.php?p=component/accordion)
 
 ## Configuration Options
 
-1. Alerts (Icons) [View Example]( /components/alerts/example-index)
-2. Alerts (Badges) [View Example]( /components/alerts/example-badges)
-3. More Badge Examples [View Example]( /components/alerts/example-additional-badges)
+1. Alerts (Icons) [View Example]( ../components/alerts/example-index)
+2. Alerts (Badges) [View Example]( ../components/alerts/example-badges)
+3. More Badge Examples [View Example]( ../components/alerts/example-additional-badges)
+
+## API Details
+
+### Settings
+
+* Icon Types - icon-alert, icon-confirm, icon-dirty, icon-error, icon-info, icon-pending, icon-new, icon-in-progress, icon-info-field
+* Icon Colors - This is done automatically by the type (alert, error ect)
 
 ## Code Example
 
@@ -21,8 +20,8 @@ Alerts are just specially classed icons. You can added alert icons by adding an 
 
 ```html
 
-<!-- Substitute icon-alert with any of the above icon types -->
 <svg class="icon icon-alert" focusable="false" aria-hidden="true" role="presentation">
+  <!-- Substitute icon-alert with any of the above icon types -->
   <use xlink:href="#icon-alert"></use>
 </svg>
 <span class="audible">Alert</span>

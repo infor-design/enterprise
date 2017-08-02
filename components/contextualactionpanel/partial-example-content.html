@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <link rel="stylesheet" href="/stylesheets/light-theme.css" type="text/css">
+  <script src="/js/jquery-3.1.1.js"></script>
+  <script src="/js/sohoxi.js"></script>
+
+  <style>
+    body {
+      background-color: transparent !important;
+      height: 100%;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .contextual-action-panel.modal.is-visible {
+      left: 0;
+      position: absolute;
+      top: 0;
+      max-height: 100%;
+      transform: none;
+
+      min-width: 500px;
+      max-width: 500px;
+      width: 500px;
+      height: 600px;
+      min-height: 500px;
+      max-height: 500px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="svg-icons">
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="svg-icons">
+      <symbol id="icon-dropdown" viewBox="-4 -6 30 30">
+        <path d="M0,4l9,10.8L18,4H0"></path>
+      </symbol>
+      <symbol id="icon-save" viewBox="0 0 18 18">
+        <path d="M13 9.99c0-.547-.443-.99-.99-.99h-6.02c-.547 0-.99.443-.99.99v.02c0 .547.443.99.99.99h6.02c.547 0 .99-.443.99-.99v-.02zm0 3c0-.547-.443-.99-.99-.99h-6.02c-.547 0-.99.443-.99.99v.02c0 .547.443.99.99.99h6.02c.547 0 .99-.443.99-.99v-.02zm-7.5-9.99h5c.276 0 .5-.224.5-.5v-2c0-.276-.224-.5-.5-.5h-5c-.276 0-.5.224-.5.5v2c0 .276.224.5.5.5zm11.942 1.322l-3.442-3.736c-.29-.29-.653-.478-1.047-.55.028.15.047.305.047.464v2c0 1.379-1.122 2.5-2.5 2.5h-4.901c-1.379 0-2.599-1.121-2.599-2.5v-2c0-.171.116-.339.149-.5h-.649c-1.378 0-2.5 1.121-2.5 2.5v13c0 1.379 1.122 2.5 2.5 2.5h13c1.378 0 2.5-1.121 2.5-2.5v-9.793c0-.534-.208-1.036-.558-1.385zm-1.442 11.178c0 .275-.224.5-.5.5h-13c-.276 0-.5-.225-.5-.5v-8.5h14v8.5z"></path>
+      </symbol>
+      <symbol id="icon-close" viewBox="0 0 18 18">
+        <path d="M10.414 9l5.293-5.293c.391-.391.391-1.023 0-1.414s-1.023-.391-1.414 0l-5.293 5.293-5.293-5.293c-.391-.391-1.023-.391-1.414 0s-.391 1.023 0 1.414l5.293 5.293-5.293 5.293c-.391.391-.391 1.023 0 1.414.195.195.451.293.707.293.256 0 .512-.098.707-.293l5.293-5.293 5.293 5.293c.195.195.451.293.707.293.256 0 .512-.098.707-.293.391-.391.391-1.023 0-1.414l-5.293-5.293"></path>
+      </symbol>
+    </svg>
+  </div>
+
+  <div class="contextual-action-panel modal is-visible">
+    <div class="modal-content">
+       <div class="modal-header">
+         <div class="toolbar">
+            <div class="title">Company Information</div>
+            <div class="buttonset">
+               <button class="btn" type="button">
+                  <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                     <use xlink:href="#icon-save"></use>
+                  </svg>
+                  <span>Save</span>
+               </button>
+               <div class="separator"></div>
+               <button name="close" class="btn-close" type="button">
+                  <svg class="icon icon-close" focusable="false" aria-hidden="true" role="presentation">
+                     <use xlink:href="#icon-close"></use>
+                  </svg>
+                  <span>Close</span>
+               </button>
+            </div>
+         </div>
+      </div>
+       <div class="modal-body-wrapper">
+         <div class="modal-body">
+           <div class="row">
+            <div class="six columns">
+
+               <div class="field">
+                  <label for="company-name">Company Name</label>
+                  <select id="company-name" name="company-name" class="dropdown">
+                     <option value=""></option>
+                     <option value="jawbone" selected>Jawbone, Inc.</option>
+                     <option value="infor">Infor</option>
+                  </select>
+               </div>
+
+            </div>
+            <div class="six columns">
+
+               <div class="field">
+                  <label for="ship-terms">Ship Terms</label>
+                  <select id="ship-terms" name="ship-terms" class="dropdown">
+                     <option value=""></option>
+                     <option value="default" selected>Default</option>
+                     <option value="alternate">Alternate</option>
+                  </select>
+               </div>
+
+            </div>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+  </div>
+
+  <script>
+    $(function() {
+      $('.modal-content').initialize('en-US'); //Cannot initialize Body
+    });
+  </script>
+</body>
+</html>

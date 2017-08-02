@@ -1,0 +1,61 @@
+
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <ul role="tree" aria-label="Asset Types" class="tree" data-init="false" id="json-tree">
+    </ul>
+
+  </div>
+</div>
+
+<script>
+  var sampleData;
+
+  /* jshint ignore:start */
+  sampleData = [{
+    "id": "node1",
+    "text": "Node One",
+    "open": false,
+    "selected": false,
+    "href": '/somelink/'
+  }, {
+    "id": "node2",
+    "text": "Node Two",
+    "open": true,
+    "selected": true,
+    "focus": true,
+    "open": "true",
+    "children": [{
+        "id": "node3",
+        "text": "Node 2.1"
+      }, {
+        "id": "node4",
+        "text": "Node 2.2",
+        "open": "true",
+        "children": [{
+          "id": "node5",
+          "text": "Node 2.2.1",
+          "icon": "icon-tree-chart",
+          "open": "true",
+          "children": [{
+            "id": "node6",
+            "text": "Node 2.2.1.1",
+            "icon": "icon-delete"
+          },{
+            "id": "node7",
+            "text": "Node 2.2.1.2",
+            "icon": "icon-tree-doc"
+          }]
+        }]
+      }]
+  }];
+
+  /* jshint ignore:end */
+
+  //Can refer to the data set here
+  var elem = $('#json-tree').tree({dataset: sampleData}),
+    api = elem.data('tree');
+
+  console.log(api.settings.dataset);
+
+</script>

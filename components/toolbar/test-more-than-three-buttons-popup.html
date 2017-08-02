@@ -1,0 +1,49 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Toolbar Test: More Than 3 Buttons (With a popup)</h2>
+    <p><a class="hyperlink" href="https://jira.infor.com/browse/SOHO-5863" target="_blank">Related JIRA Ticket</a>.  SoHo Xi Controls Guidelines state that there should be very few buttons present in the Toolbar Control, ideally no more than three including the spillover button.  However, in some cases this guideline needs to be bent.  This test makes sure the option that allows for this works properly.</p>
+
+    <p></p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div id="five-item-toolbar" class="toolbar" data-options="{maxVisibleButtons: 5}">
+      <div class="title">Five Button Toolbar</div>
+      <div class="buttonset">
+
+        <div class="searchfield-wrapper">
+          <label for="toolbar-example-searchfield" class="hidden">Keyword Search</label>
+	        <input class="searchfield" placeholder="keyword" id="toolbar-example-searchfield" name="toolbar-example-searchfield" />
+        </div>
+
+        <button type="button" type="button" id="button-one" class="btn">
+          <span>Button One</span>
+        </button>
+
+        <button class="btn-menu">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-settings"></use>
+          </svg>
+          <span>Options</span>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Option #1</a></li>
+          <li><a href="#">Option #2</a></li>
+          <li><a href="#">Option #3</a></li>
+          <li><a href="#">Option #4</a></li>
+          <li><a href="#">Option #5</a></li>
+        </ul>
+
+        <button type="button" id="button-seven" class="btn">
+          <span>Button Seven</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>

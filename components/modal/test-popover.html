@@ -1,0 +1,81 @@
+<div class="row">
+	<div class="twelve columns">
+
+		<button class="btn-secondary" type="button" id="add-comment">Open Modal</button>
+
+		<div id="modal-add-comment" style="display: none; height: 400px;">
+
+			<!-- Conents Popover -->
+			a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />
+			a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />
+			<button class="btn-tertiary" data-popover="popover-contents-click" data-title="ABC Engine Company" data-trigger="click" type="button"
+				data-closebutton="true" data-extra-class="alternate">Open Popover</button>
+				<br />
+      a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />
+			a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />
+
+			<div id="popover-contents-click" class="hidden">
+				<p>Purchase <strong>2</strong> more to save <a href="#" class="hyperlink"><strong>$100</strong></a> total</p>
+				<div style="width: 315px; margin: 7px auto;">
+					<table role="grid" style="width: 210px" class="l-pull-left">
+						<thead>
+							<tr>
+								<th scope="col" role="columnheader">Quantity</th>
+								<th scope="col" role="columnheader">Unit Price</th>
+								<th scope="col" role="columnheader">Total</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>50</td>
+								<td>$18.00</td>
+								<td><strong>$900.00</strong></td>
+							</tr>
+						</tbody>
+					</table>
+					<button class="btn-primary" type="button">Apply</button>
+				</div>
+				<div class="modal-buttonset">
+					<button type="button" class="btn-modal-primary">View more</button>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+</div>
+
+
+<script>
+var modals = {
+    'add-comment': {
+      'title': 'Add a Comment',
+      'content': $('#modal-add-comment')
+    }
+  },
+
+  setModal = function (opt) {
+    opt = $.extend({
+      buttons: [{
+        text: 'Cancel',
+        click: function(e, modal) {
+          modal.close();
+        }
+      }, {
+        text: 'Save',
+        click: function(e, modal) {
+          modal.close();
+        },
+        validate: false,
+        isDefault: true
+      }]
+    }, opt);
+
+    $('body').modal(opt);
+  };
+
+  $('#add-comment').on('click', function () {
+    setModal(modals[this.id]);
+  });
+
+</script>

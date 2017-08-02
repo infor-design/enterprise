@@ -1,0 +1,155 @@
+<body class="no-scroll">
+<a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+{{> includes/svg-inline-refs}}
+
+<div id="maincontent" class="two-column page-container fixed list-detail">
+  <header class="header is-personalizable">
+    <div class="toolbar">
+      <div class="title">
+        <button class="btn-icon application-menu-trigger" type="button">
+          <span class="audible">Show navigation</span>
+          <span class="icon app-header">
+          <span class="one"></span>
+          <span class="two"></span>
+          <span class="three"></span>
+        </span>
+        </button>
+
+        <h1>Datagrid Detail Example</h1>
+      </div>
+
+      <div class="buttonset">
+        <button type="button" class="btn-tertiary">
+          <span>Action One</span>
+        </button>
+        <button type="button" class="btn-tertiary">
+          <span>Action Two</span>
+        </button>
+        <button type="button" class="btn-tertiary">
+          <span>Action Three</span>
+        </button>
+        <button type="button" class="btn-tertiary">
+          <span>Action Four</span>
+        </button>
+      </div>
+
+      <div class="more">
+        <button class="btn-actions" type="button">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+          <span class="audible" data-translate="text">More</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <div class="page-container two-column fixed" role="main">
+
+    <nav class="sidebar">
+      <div class="content">
+        <div class="toolbar">
+          <div class="title">
+            <h1>Employee List</h1>
+          </div>
+
+          <div class="buttonset">
+            <button type="button" class="btn-tertiary">
+              <span>Open</span>
+            </button>
+            <button type="button" class="btn-tertiary">
+              <span>Update</span>
+            </button>
+            <button type="button" class="btn-tertiary">
+              <span>Delete</span>
+            </button>
+          </div>
+
+          <div class="more">
+            <button class="btn-actions" type="button">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-more"></use>
+              </svg>
+              <span class="audible" data-translate="text">More</span>
+            </button>
+          </div>
+
+        </div>
+        <div id="datagrid"></div>
+      </div>
+    </nav>
+
+    <section class="main" role="main">
+      <div class="content">
+        <form id="example-mulitcolumn-form">
+          <div class="row top-padding">
+            <div class="full column">
+              <div class="compound-field">
+                <div class="field">
+                  <label for="example-mulitcolumn-first">First Name</label>
+                  <input type="text" id="example-mulitcolumn-first" name="first-name" value="Garik" readonly>
+                </div>
+                <div class="field">
+                  <label for="example-mulitcolumn-last">Last Name</label>
+                  <input type="text" id="example-mulitcolumn-last" class="input-sm" name="last-name" value="MacCaughen" readonly>
+                </div>
+              </div>
+              <div class="compound-field">
+                <div class="field">
+                  <label for="example-mulitcolumn-phone" class="required">Phone</label>
+                  <input type="text" aria-required="true" data-validate="required" id="example-mulitcolumn-phone" class="input-sm" name="phone" readonly>
+                </div>
+
+                <div class="field">
+                  <label for="example-mulitcolumn-ext">Ext</label>
+                  <input type="text" id="example-mulitcolumn-ext" class="input-xs" name="ext" readonly>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<style>
+  .two-column .content {
+    height: calc(100% - 35px);
+  }
+</style>
+
+<script>
+  $('body').one('initialized', function () {
+    var grid,
+        columns = [],
+        data = [],
+        names = [
+          "Garik MacCaughen", "Tatiana Bowne", "Payton Southorn", "Forrest McKiddin", "Valentine Astle", "Lyman Figgess", "Allix Ferreira",
+          "Halie Deehan", "Blinni Filshin", "Danny Phinn", "Garik MacCaughen", "Tatiana Bowne", "Payton Southorn", "Valentine Astle", "Lyman Figgess",
+          "Garik MacCaughen", "Tatiana Bowne", "Payton Southorn", "Forrest McKiddin", "Valentine Astle", "Lyman Figgess", "Allix Ferreira"
+        ]
+
+    // Some Sample Data
+    for (var i = 0, l = names.length; i < l; i++) {
+      data.push({ id: 1, empName: names[i]});
+    }
+
+
+    //Define Columns for the Grid.
+    columns.push({ id: 'empName', name: 'Employee', field: 'empName', formatter: Formatters.Text, filterType: 'text'});
+
+    grid = $('#datagrid').datagrid({
+      columns: columns,
+      editable: false,
+      isList: false,
+      pagesize: 10,
+      paging: true,
+      dataset: data
+    });
+
+  });
+</script>

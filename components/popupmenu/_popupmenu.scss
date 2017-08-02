@@ -1,0 +1,584 @@
+// Popup Menu
+// ==================================================
+
+// Contains the main popupmenu UL for positioning.
+.popupmenu-wrapper {
+  display: inline-block;
+  left: -9999px;
+  position: fixed;
+  z-index: 4000;
+
+  .arrow,
+  .arrow::after {
+    border-width: 8px;
+  }
+
+  &.top {
+    .arrow {
+      border-top-color: $popupmenu-border-color;
+    }
+
+    .arrow::after {
+      border-top-color: $popupmenu-bg-color;
+    }
+  }
+
+  &.bottom {
+    .arrow {
+      border-bottom-color: $popupmenu-border-color;
+      //left: auto;
+      //right: 10px;
+      top: -7px;
+    }
+
+    .arrow::after {
+      border-bottom-color: $popupmenu-bg-color;
+      left: -8px;
+      top: 1px;
+    }
+
+    &.left-align-arrow {
+      .arrow {
+        left: 10px;
+        right: auto;
+      }
+    }
+
+    &.right-align-arrow {
+      .arrow {
+        left: auto;
+        right: 10px;
+      }
+    }
+  }
+
+  &.right {
+    .arrow {
+      border-right-color: $popupmenu-border-color;
+    }
+
+    .arrow::after {
+      border-right-color: $popupmenu-bg-color;
+    }
+  }
+
+  &.left {
+    .arrow {
+      border-left-color: $popupmenu-border-color;
+    }
+
+    .arrow::after {
+      border-left-color: $popupmenu-bg-color;
+    }
+  }
+
+  // Alternate Popup-menu Colors (used for UI toolbars, etc)
+  &.alternate {
+    .popupmenu {
+      background-color: $popupmenu-alternate-bg-color;
+      border: 1px solid $popupmenu-alternate-border-color;
+      color: $popupmenu-alternate-color;
+
+      a {
+        color: $popupmenu-alternate-color;
+      }
+
+      li {
+        &.is-submenu-open,
+        &.is-focused {
+          background-color: $popupmenu-alternate-hover-color;
+        }
+      }
+
+      .icon {
+        fill: $popupmenu-alternate-color;
+      }
+    }
+
+    &.top {
+      .arrow {
+        border-top-color: $popupmenu-alternate-border-color;
+      }
+
+      .arrow::after {
+        border-top-color: $popupmenu-alternate-bg-color;
+      }
+    }
+
+    &.bottom {
+      .arrow {
+        border-bottom-color: $popupmenu-alternate-border-color;
+      }
+
+      .arrow::after {
+        border-bottom-color: $popupmenu-alternate-bg-color;
+      }
+    }
+
+    &.right {
+      .arrow {
+        border-right-color: $popupmenu-alternate-border-color;
+      }
+
+      .arrow::after {
+        border-right-color: $popupmenu-alternate-bg-color;
+      }
+    }
+
+    &.left {
+      .arrow {
+        border-left-color: $popupmenu-alternate-border-color;
+      }
+
+      .arrow::after {
+        border-left-color: $popupmenu-alternate-bg-color;
+      }
+    }
+  }
+}
+
+.popupmenu {
+  background-color: $popupmenu-bg-color;
+  border: 1px solid $popupmenu-border-color;
+  border-radius: 3px;
+  box-shadow: $popupmenu-box-shadow;
+  color: $popupmenu-color;
+  display: none;
+  list-style: none;
+  margin: 0;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 5px 0;
+  text-align: left;
+
+  //Icon Positioning
+  .icon,
+  b {
+    fill: $popupmenu-icon-color;
+    height: 18px;
+  }
+
+  &.is-selectable,
+  &.is-multiselectable {
+    a {
+      padding-left: 40px;
+    }
+  }
+
+  &.has-icons {
+    a {
+      padding-left: 40px;
+    }
+
+    &.is-selectable {
+      a {
+        padding-left: 57px;
+      }
+
+      .icon {
+        left: 58px;
+      }
+    }
+
+    .icon {
+      &:not(.arrow) {
+        height: 16px;
+        margin-left: -30px;
+        margin-top: 8.5px;
+        pointer-events: none;
+        position: absolute;
+      }
+    }
+  }
+
+  &.is-open {
+    display: block;
+  }
+
+  .heading {
+    @include font-size(12);
+    color: $popupmenu-heading-color;
+    font-weight: bold;
+    line-height: 25px;
+    padding: 0 10px;
+  }
+
+  li {
+    cursor: pointer;
+    line-height: normal;
+    padding: 0;
+    position: static;
+    white-space: nowrap;
+
+    &.is-submenu-open,
+    &.is-focused {
+      background-color: $popupmenu-hover-color;
+    }
+
+    &.disabled > a:focus {
+      box-shadow: none;
+    }
+
+    // Selected
+    &.is-checked > a::before,
+    &.is-checked.is-selected > a::before {
+      @include css3(transform, rotate(45deg));
+      border-color: $popupmenu-checked-color $popupmenu-checked-color $popupmenu-checked-color transparent;
+      border-style: solid;
+      border-width: 0 2px 2px 0;
+      content: '';
+      height: 11px;
+      left: 13px;
+      margin-top: 7px;
+      position: absolute;
+      width: 5px;
+    }
+
+    &.is-selectable,
+    &.is-indented,
+    &.is-toggleable {
+      > a {
+        padding-left: 35px;
+      }
+    }
+  }
+
+  a {
+    @include no-select();
+    @include antialiased();
+    @include font-size(14);
+    border: 1px solid transparent;
+    color: $popupmenu-color;
+    display: block;
+    line-height: 32px;
+    padding: 0 30px 0 10px;
+    position: relative;
+    text-decoration: none;
+    white-space: nowrap;
+
+    span {
+      color: inherit;
+      font-weight: inherit;
+      line-height: 33px;
+    }
+
+    small {
+      @include font-size(11);
+      display: block;
+      line-height: normal;
+      margin-bottom: 8px;
+      margin-top: -3px;
+    }
+
+    &[disabled] {
+      color: $disabled-color;
+      pointer-events: none;
+    }
+  }
+
+  span {
+    @include font-size(14);
+    color: $font-color-highcontrast;
+  }
+
+  //Text Underline on Terms
+  i {
+    color: $font-color-extrahighcontrast;
+    font-style: normal;
+    font-weight: bold;
+    letter-spacing: -.1;
+  }
+
+  b {
+    text-overflow: ellipsis;
+  }
+
+  // Disabled
+  li.is-disabled,
+  li.disabled {
+    cursor: default;
+    // scss-lint:disable ImportantRule
+    a {
+      background-color: transparent;
+      color: $disabled-color !important;
+      cursor: default;
+    }
+
+    .icon {
+      fill: $disabled-color !important;
+    }
+    // scss-lint:enable ImportantRule
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+
+  .submenu {
+    .wrapper {
+      display: block;
+      height: auto;
+      position: absolute;
+      z-index: 4000;
+    }
+
+    .popupmenu.is-open {
+      display: block;
+      visibility: visible;
+    }
+
+    .icon {
+      &:not(.arrow) {
+        margin-left: -30px;
+        margin-top: 6.5px;
+      }
+    }
+
+    > a {
+      padding-right: 48px;
+
+      > .icon.icon-dropdown {
+        @include css3(transform, rotate(-90deg));
+        border-width: 0;
+        height: 24px;
+        left: auto;
+        pointer-events: none;
+        position: absolute;
+        right: 4px;
+        top: 3px;
+        width: 16px;
+      }
+    }
+  }
+
+  .icon-close {
+    height: 22px;
+  }
+
+  // separator
+  .separator {
+    border-bottom: 1px solid $popupmenu-border-color;
+    margin: 5px 0;
+
+    &:first-child {
+      border: medium none;
+      margin: 0;
+    }
+  }
+
+  // Short fields
+  // Some javascript in "popupmenu.js" that facilitates this.
+  &.popupmenu-short {
+    a {
+      line-height: 24px;
+      padding: 0 25px 0 10px;
+    }
+
+    &.has-icons {
+      > li a {
+        padding-left: 26px;
+      }
+    }
+
+    li {
+      &.is-checked,
+      &.is-checked.is-selected {
+        > a::before {
+          height: 11px;
+          left: 10px;
+          margin-top: 3px;
+          width: 5px;
+        }
+      }
+    }
+
+    &.is-multiselectable {
+      li {
+        &::before,
+        &.is-focused::before,
+        &.is-checked::before {
+          top: 5px;
+        }
+
+        &.is-checked::after {
+          top: 2px;
+        }
+      }
+    }
+  }
+
+  &.is-multiselectable {
+    li {
+      position: relative;
+
+      a {
+        &::before {
+          display: none;
+        }
+      }
+
+      &::before,
+      &.is-focused::before {
+        @include checkbox-unchecked-before-style;
+        margin-left: 7px;
+        margin-top: 0;
+        top: 8px;
+      }
+
+      &.is-checked::before {
+        @include checkbox-checked-before-style;
+        margin-left: 7px;
+        margin-top: 0;
+        top: 8px;
+      }
+
+      &.is-checked::after {
+        @include checkbox-checked-after-style;
+        left: 12px;
+        margin-top: 4px;
+        top: 5px;
+      }
+
+      &.is-disabled {
+        &::before {
+          @include checkbox-unchecked-disabled-before-style;
+          margin-left: 12px;
+          margin-top: 0;
+          top: 9px;
+        }
+
+        &.is-checked {
+          &::before {
+            @include checkbox-checked-disabled-before-style;
+          }
+
+          &::after {
+            @include checkbox-checked-disabled-after-style;
+            left: 21px;
+            margin-top: 8px;
+          }
+        }
+      }
+
+    }
+
+  }
+}
+
+//Footer Buttons
+.popup-footer {
+  border-top: 1px solid $popover-separator-color;
+  height: 50px;
+  margin-top: 10px;
+
+  button {
+    @include css3(transition, color .3s ease 0s);
+    @include font-size(14);
+    border: 1px solid transparent;
+    border-left: 1px solid $popover-separator-color;
+    border-radius: 0;
+    color: $modal-btn-color;
+    float: left;
+    font-weight: bold;
+    height: 50px;
+    line-height: 50px;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    width: 50%;
+
+    &:hover {
+      color: $modal-btn-hover-color;
+    }
+
+    &:nth-child(1) {
+      border-left: 1px solid transparent;
+    }
+
+    &.btn-primary {
+      background-color: $popover-bg-color;
+      color: $primary-color;
+
+      &:hover {
+        border: 1px solid transparent;
+        border-left: 1px solid $popover-separator-color;
+      }
+    }
+  }
+}
+
+//IOS
+.ios {
+  .has-submenu {
+    overflow: hidden;
+  }
+}
+
+
+//RTL Styles
+html[dir='rtl'] {
+
+  .popupmenu {
+    text-align: right;
+
+    a {
+      padding: 0 10px;
+    }
+
+    &.has-icons,
+    &.is-selectable {
+      > li a {
+        padding-left: 35px;
+        padding-right: 35px;
+      }
+
+      .icon {
+        left: auto;
+        right: 1px;
+
+        &:not(.arrow) {
+          margin-right: -13px;
+          margin-right: 8px;
+        }
+      }
+    }
+
+    .submenu > a {
+      padding-left: 40px !important;
+      padding-right: 10px;
+
+      > .icon.icon-dropdown {
+        @include css3(transform, rotate(90deg));
+        left: 0;
+        right: auto;
+        top: 5px;
+      }
+    }
+
+    li {
+
+      // Selected
+      &.is-checked > a::before,
+      &.is-checked.is-selected > a::before {
+        left: auto;
+        right: 13px;
+      }
+
+      // Selectable
+      &.is-selectable {
+        > a {
+          padding-left: 10px;
+          padding-right: 35px;
+        }
+      }
+    }
+  }
+
+  .popup-footer {
+    button {
+      margin-left: inherit;
+    }
+  }
+}

@@ -1,0 +1,88 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Slider Example: SetValue() API Method</h2>
+
+    <p>Checks out the <em>setValue()</em> method on the Slider Control to make sure it's peachy.  This API method is what can be used by outside code, or by the SoHo Xi <a class="hyperlink" href="{{basepath}}angular/slider">Slider Angular Directive</a> to set new values on the slider and update the visual positions of each of its handles.</p>
+
+    <p><b>NOTE:</b> this used to demonstrate the <em>refresh()</em> method on the Slider Control.  The <em>refresh()</em> method has since been deprecated as of Xi Controls v4.2, and will be removed in future versions.  In v4.2 the <em>refresh()</em> method exists for backwards compatibility, and simply points <em>setValue()</em>.  Please upgrade your code.</p>
+
+    <p></p>
+
+  </div>
+</div>
+
+<div class="row">
+
+  <div class="twelve columns">
+    <div class="field">
+      <label for="slider-single">Single</label>
+      <input id="slider-single" name="slider-single" class="slider" type="range" min="-150" max="150" value="-150" data-tooltip-content='[""]' data-tooltip-persist="true" />
+    </div>
+
+    <div class="field">
+      <label class="audible" for="single-spinbox">Value</label>
+      <input id="single-spinbox" name="single-spinbox" type="text" class="spinbox" min="-150" max="150" value="-150" />
+
+      <button type="button" id="single-set" class="btn-secondary">
+        <span>Set value on Single Slider</span>
+      </button>
+    </div>
+
+    <div class="field">
+      <label for="slider-range">Range</label>
+      <input id="slider-range" name="slider-range" class="slider" type="range" min="-150" max="150" value="-150" data-range="true" data-tooltip-content='[""]' data-tooltip-persist="true" />
+    </div>
+
+    <div class="field">
+      <label class="audible" for="range-lower-spinbox">Lower Value</label>
+      <input id="range-lower-spinbox" name="range-lower-spinbox" type="text" class="spinbox" min="-150" max="150" value="-150" />
+
+      <label class="audible" for="range-higher-spinbox">Higher Value</label>
+      <input id="range-higher-spinbox" name="range-higher-spinbox" type="text" class="spinbox" min="-150" max="150" value="150" />
+
+      <button type="button" id="range-set" class="btn-secondary">
+        <span>Set value on Range Slider</span>
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+    var singleAPI = $('#slider-single').data('slider'),
+      rangeAPI = $('#slider-range').data('slider'),
+      singleHandle = $('#single-spinbox'),
+      rangeLowerHandle = $('#range-lower-spinbox'),
+      rangeHigherHandle = $('#range-higher-spinbox');
+
+    $('#single-set').on('click.test', function() {
+      var val = singleHandle.val() || undefined;
+
+      if (!val) {
+        console.info('No value defined for #single-spinbox');
+        return;
+      }
+
+      var newVals = singleAPI.setValue(val);
+      if (console) {
+        console.info('New Values: ' + newVals);
+      }
+    });
+
+    $('#range-set').on('click.test', function() {
+      var l = rangeLowerHandle.val() || undefined,
+        h = rangeHigherHandle.val() || undefined;
+
+      if (!l && !h) {
+        return;
+      }
+
+      var newVals = rangeAPI.setValue(l, h);
+      if (console) {
+        console.info('New Values: ' + newVals);
+      }
+    });
+  });
+</script>

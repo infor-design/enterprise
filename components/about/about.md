@@ -1,18 +1,18 @@
 
-# About Component Implementation Detail [Learn More](https://soho.infor.com/index.php?p=component/about-dialog)
-
-{{api-details}}
+# About  [Learn More](https://soho.infor.com/index.php?p=component/about-dialog)
 
 ## Configuration Options
 
-1. Default About Example [View Example]( /components/about/example-index)
-2. Close Event Demo [View Example]( /components/about/test-close-event)
+1. Default About Example [View Example]( ../components/about/example-index)
+2. Close Event Demo [View Example]( ../components/about/test-close-event)
+
+{{api-details}}
 
 ## Code Example
 
 This example shows how to invoke the about dialog on demand, passing in some content, version info and the product name and product line.
 
-```html
+```javascript
 
 $('body').about({
   appName: 'My App Name',
@@ -26,7 +26,7 @@ $('body').about({
 
 ## Accessibility
 
--   [Modal](/component/modal/docs) guidelines apply as this is essentially a specific modal dialog.
+-   [Modal](../components/modal) guidelines apply as this is essentially a specific modal dialog.
 
 ## Code Tips
 

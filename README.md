@@ -96,12 +96,12 @@ Mac and IOS (not windows) (R-1)
 
 ### Running The Unit Tests
 
-* Run the command: `./node_modules/.bin/intern-client config=test2/intern.local.unit`
+* Run the command: `./node_modules/.bin/intern-client config=test/intern.local.unit`
 
 ### Running The Functional Tests
 * Make sure selenium-standalone is installed by running `selenium-standalone start` once
 * Make sure selenium-standalone is started by running `selenium-standalone start`
-* Run the command: `./node_modules/.bin/intern-runner config=test2/intern.local.functional`
+* Run the command: `./node_modules/.bin/intern-runner config=test/intern.local.functional`
 * NOTE `make` and `grunt` tasks are in the works....
 
 # Getting the Code into your project

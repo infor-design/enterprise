@@ -1,0 +1,782 @@
+// Select (DropDown)
+//================================================== //
+
+select.dropdown,
+select.multiselect,
+select.dropdown-lg,
+select.dropdown-md,
+select.dropdown-sm,
+select.dropdown-xs {
+  display: none;
+  font-size: 50px;
+}
+
+.dropdown-wrapper {
+  display: inline-block;
+  margin-bottom: 20px;
+  max-width: 100%;
+  position: relative;
+
+  .icon-error,
+  .icon-confirm,
+  .icon-alert,
+  .icon-info,
+  .icon-pending {
+    right: 25px;
+    top: 1px;
+  }
+
+  .badge {
+    display: inline-block;
+    position: absolute;
+    right: 28px;
+    top: 6px;
+  }
+}
+
+div.dropdown,
+div.multiselect {
+  @include input-style();
+  @include css3(touch-callout, none);
+  @include css3(user-select, none);
+  @include transition(background-color .2s ease);
+  background-color: $input-bg-color;
+  border-color: $input-border-color;
+  color: $dropdown-color;
+  cursor: pointer;
+  overflow: hidden;
+  padding: 8px 32px 8px 10px;
+  -webkit-text-fill-color: $dropdown-color;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  white-space: nowrap;
+
+  &.text-align-reverse {
+    text-align: right;
+  }
+
+  &.text-align-center {
+    text-align: center;
+  }
+
+  > span {
+    display: inline-block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: top;
+    width: inhert;
+  }
+
+  &:empty {
+    min-height: 34px;
+  }
+
+  &[disabled],
+  &.is-disabled {
+    background-color: $input-disabled-bg-color;
+    border-color: $input-disabled-border-color;
+    color: $input-disabled-color;
+    cursor: default;
+    pointer-events: none;
+    -webkit-text-fill-color: $input-disabled-color;
+
+    + .icon {
+      background-color: $input-disabled-bg-color;
+      cursor: default;
+      fill: $trigger-disabled-color;
+    }
+  }
+
+  &:active:not([disabled]):not(.is-disabled):not(.is-readonly) {
+    border-color: $trigger-active-color;
+
+    + .icon {
+      fill: $trigger-active-color;
+    }
+  }
+
+  &:hover:not([disabled]):not(.is-disabled):not(.is-readonly) {
+    border-color: $trigger-hover-color;
+
+    + .icon {
+      fill: $trigger-hover-color;
+    }
+  }
+
+  &.is-open {
+    border-color: transparent;
+    color: transparent;
+
+    + .icon {
+      display: none;
+    }
+  }
+
+  // Icon States
+  + .icon {
+    background-color: inherit;
+    border-radius: 1px;
+    cursor: pointer;
+    display: inline-block;
+    fill: $trigger-icon-fill-color;
+    height: 32px;
+    margin-left: -33px;
+    pointer-events: none;
+    position: absolute;
+    right: 6px;
+    top: 1px;
+    width: 18px;
+  }
+
+  &.is-readonly {
+    background-color: $input-readonly-bg-color;
+    border-color: $input-readonly-border-color;
+    color: $input-readonly-color;
+    cursor: text;
+    -webkit-text-fill-color: $input-readonly-color;
+  }
+
+  &:focus {
+    // scss-lint:disable ImportantRule
+    border-color: $input-focus-border-color !important;
+    // scss-lint:enable ImportantRule
+  }
+}
+
+// The List
+.dropdown-list {
+  @include unselectable();
+  background-color: transparent;
+  border: 1px solid $dropdown-menu-border-color;
+  border-radius: 3px;
+  box-shadow: $dropdown-box-shadow;
+  max-height: 300px;
+  min-height: 30px;
+  overflow: hidden;
+  -webkit-overflow-scrolling: touch;
+  position: absolute;
+  white-space: nowrap;
+  width: auto;
+  z-index: 4501;
+
+  &.text-align-reverse {
+    text-align: right;
+  }
+
+  &.text-align-center {
+    text-align: center;
+  }
+
+  &:active {
+    outline: 0;
+  }
+
+  // Enables certain mobile-specific settings
+  &.mobile {
+    background-color: $body-bg-color;
+  }
+
+  &.is-ontop {
+    box-shadow: $dropdown-box-shadow-top;
+  }
+
+  ul {
+    @include font-size(14);
+    background-color: $popupmenu-bg-color;
+    color: $popupmenu-color;
+    height: auto;
+    line-height: 32px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 5px 0;
+    position: relative;
+    text-indent: 10px;
+  }
+
+  li {
+    min-height: 32px;
+    padding-left: 5px;
+    padding-right: 5px;
+    position: relative;
+
+    i {
+      color: $dropdown-filter-color;
+      font-style: normal;
+      text-decoration: none;
+    }
+
+    .clear-selection {
+      color: $label-disabled-color;
+    }
+
+    &:hover,
+    &.hover {
+      background-color: $popupmenu-hover-color;
+      cursor: pointer;
+      outline: none;
+    }
+
+    &.is-disabled {
+      > a {
+        color: $disabled-color;
+      }
+
+      &:hover,
+      &.hover {
+        background-color: transparent;
+        cursor: default;
+      }
+    }
+
+    &:focus {
+      background-color: $popupmenu-hover-color;
+      cursor: pointer;
+      outline: none;
+    }
+
+    &.is-focused {
+      background-color: $dropdown-selected-bg-color;
+
+      a {
+        color: $dropdown-selected-color;
+      }
+
+      &::before {
+        @include checkbox-checked-before-style;
+        border-color: $inverse-color;
+      }
+
+      &.is-selected {
+        background-color: $dropdown-selected-bg-color;
+
+        a {
+          color: $inverse-color;
+        }
+      }
+    }
+
+    // Badge Support
+    .badge {
+      display: inline-block;
+      float: right;
+      margin-left: -40px;
+      margin-top: 4px;
+      position: relative;
+      right: 8px;
+      text-indent: 0;
+    }
+
+    &.is-focused .badge.info {
+      background-color: $inverse-color;
+      color: $primary-color;
+    }
+  }
+
+  a {
+    @include css3(touch-callout, none);
+    @include css3(user-select, none);
+    color: $popupmenu-color;
+    text-decoration: none;
+  }
+
+  // Added to the dropdown list when doing a search
+  &.search-mode {
+
+    li {
+      i {
+        color: $font-color-extrahighcontrast;
+        font-weight: bold;
+        letter-spacing: -.2;
+      }
+
+      &.is-disabled {
+        a {
+          color: $disabled-color;
+        }
+      }
+
+      &.is-focused {
+        i {
+          color: $inverse-color;
+        }
+      }
+    }
+
+  }
+
+  &.multiple {
+
+    ul {
+      text-indent: 33px;
+    }
+
+    li::before {
+      @include checkbox-unchecked-before-style;
+      margin-left: -27px;
+      top: 4px;
+    }
+
+    li.is-disabled::before {
+      @include checkbox-unchecked-disabled-before-style;
+    }
+
+    li.is-focused {
+      background-color: $popupmenu-hover-color;
+
+      > a {
+        color: $font-color-highcontrast;
+      }
+    }
+
+    li.is-selected::before {
+      @include checkbox-checked-before-style;
+    }
+
+    li.is-selected::after {
+      @include checkbox-checked-after-style;
+      left: 15px;
+      margin-top: 0;
+      top: 9px;
+    }
+
+    li.is-disabled.is-selected::before {
+      @include checkbox-checked-disabled-before-style;
+    }
+
+    li.is-disabled.is-selected::after {
+      @include checkbox-checked-disabled-after-style;
+    }
+
+    li.group-label,
+    li.separator {
+      &::before,
+      &::after {
+        content: none;
+      }
+    }
+
+    a {
+      color: $font-color-highcontrast;
+    }
+
+    &.search-mode {
+      a {
+        i {
+          color: $font-color-highcontrast;
+        }
+      }
+    }
+  }
+
+  .group-label {
+    @include css3(user-select, none);
+    @include font-size(12);
+    color: $dropdown-group-label-color;
+    font-weight: bold;
+    line-height: 20px;
+    min-height: 20px;
+    padding: 6px 0 4px;
+    text-indent: 10px;
+
+    &:not(:first-child) {
+      border-top: 1px solid $dropdown-menu-separator-border-color;
+      margin-top: 10px;
+    }
+
+    &:hover {
+      background-color: transparent;
+      cursor: default;
+    }
+  }
+
+  > .trigger {
+    cursor: pointer;
+    height: 32px;
+    margin-left: -26px;
+    position: absolute;
+    width: 26px;
+    z-index: 1;
+
+    .icon {
+      @include css3(transform, rotate(180deg));
+      background-color: rgba($white, 0);
+      fill: $trigger-icon-fill-color;
+      height: 32px;
+      width: 18px;
+
+      &.search {
+        @include css3(transform, rotate(0deg));
+        height: 18px;
+        margin-top: 7px;
+        width: 16px;
+      }
+
+      &.close {
+        right: -2px;
+        top: 3px;
+        width: 14px;
+      }
+    }
+  }
+}
+
+.dropdown-search {
+  background-color: $body-bg-color;
+  border: 0;
+  border-bottom: 1px solid $dropdown-menu-separator-border-color;
+  border-radius: 0;
+  color: $dropdown-color;
+  padding: 8px 32px 8px 10px;
+  text-overflow: ellipsis;
+  width: inherit;
+
+  &.text-align-reverse {
+    text-align: right;
+  }
+
+  &.text-align-center {
+    text-align: center;
+  }
+
+  &::-ms-clear {
+    display: none;
+  }
+
+  &:focus {
+    border: 0;
+    border-bottom: 1px solid $dropdown-menu-separator-color;
+    box-shadow: none;
+    outline: none;
+  }
+}
+
+.modal-engaged .dropdown-search {
+  background-color: $modal-bg-color;
+}
+
+.is-ontop .dropdown-search {
+  border-bottom: 0;
+  border-top: 1px solid $dropdown-menu-separator-border-color;
+}
+
+.dropdown.error {
+  border-color: $error-color;
+
+  &::-webkit-input-placeholder {
+    color: $error-color;
+  }
+}
+
+input.dropdown.error:focus {
+  border-color: $error-color;
+  color: $input-color;
+}
+
+.field,
+.field-short {
+  .dropdown-wrapper {
+    margin-bottom: 0;
+  }
+}
+
+//Shorter Field Size
+.field-short {
+
+  div.dropdown {
+    @include font-size(12);
+    margin-bottom: 0;
+    padding: 5px 18px 5px 5px;
+  }
+
+  div.dropdown,
+  div.multiselect {
+    + .icon {
+      height: 30px;
+      right: 4px;
+      top: -2px;
+      width: 16px;
+    }
+
+    ~ .icon-error {
+      margin-left: -38px;
+      right: auto;
+    }
+
+    /*
+    > span {
+      min-height: 14px;
+    }
+    */
+  }
+
+}
+
+// Different Width Dropdowns
+.dropdown-lg,
+.field-short .dropdown-lg {
+  width: 400px;
+}
+
+div.dropdown-lg {
+  width: 400px;
+}
+
+.dropdown-md,
+div.dropdown-md,
+.field-short .dropdown-md {
+  width: 300px;
+}
+
+.dropdown-sm,
+div.dropdown-sm,
+.field-short .dropdown-sm {
+  width: 150px;
+}
+
+.dropdown-xs,
+div.dropdown-xs,
+.field-short .dropdown-xs {
+  width: 75px;
+}
+
+// Shorter Drop Down Lists
+.dropdown-list.dropdown-short {
+  input {
+    @include font-size(12);
+    padding: 5px 32px 5px 5px;
+  }
+
+  ul {
+    @include font-size(12);
+    text-indent: 5px;
+  }
+
+  li > a {
+    line-height: 25px;
+  }
+
+  &.is-ontop {
+    margin-top: 7px;
+  }
+
+  > .icon {
+    height: 24px;
+    margin-left: -21px;
+    margin-top: 0;
+    width: 16px;
+  }
+
+  .trigger .icon {
+    height: 24px;
+    right: -4px;
+
+    &.icon.search {
+      height: 14px;
+      right: -6px;
+      top: -2px;
+    }
+  }
+
+  // Multiple
+  &.multiple {
+    li {
+      &::before {
+        margin-left: 0;
+        top: 4px;
+      }
+
+      &::after {
+        margin-top: 0;
+      }
+
+      &.is-focused {
+        &::before {
+          margin-left: 0;
+        }
+
+        &::after {
+          margin-top: 0;
+        }
+      }
+
+      a {
+        display: inline-block;
+        padding-left: 18px;
+        padding-top: 1px;
+      }
+    }
+  }
+}
+
+// Firefox needs a nudge on the list items
+.is-firefox {
+
+  .dropdown-list {
+    &.multiple li {
+      &::before {
+        margin-left: -28px;
+        top: 3px;
+      }
+
+      &.is-selected::after {
+        top: 8px;
+      }
+    }
+
+    &.dropdown-short {
+      input {
+        @include font-size(12);
+        padding: 5px 32px 5px 5px;
+      }
+    }
+  }
+}
+
+// iOS needs a nudge too
+.ios {
+  .dropdown-list.multiple li {
+    &::before {
+      top: 6px;
+    }
+
+    &.is-selected::after {
+      top: 11px;
+    }
+  }
+}
+
+//RTL Styles
+html[dir='rtl'] {
+
+  .dropdown,
+  .multiselect,
+  input.dropdown,
+  input.multiselect {
+    padding: 9px 10px 8px 32px;
+    text-align: right;
+
+    &.text-align-reverse {
+      text-align: left;
+    }
+
+    &.text-align-center {
+      text-align: center;
+    }
+
+    // Icon States
+    + .icon {
+      left: 6px;
+      margin-left: inherit;
+      margin-right: -33px;
+      // scss-lint:disable ImportantRule
+      right: auto !important;
+      // scss-lint:enable ImportantRule
+    }
+  }
+
+  // The List
+  .dropdown-list {
+
+    &.multiple {
+
+      li::before {
+        margin-left: inherit;
+        margin-right: -27px;
+      }
+
+      li.is-selected::after {
+        left: inherit;
+        right: 15px;
+      }
+
+      li.is-disabled.is-selected::after {
+        left: inherit;
+        right: 21px;
+      }
+    }
+
+    > .icon {
+      margin-left: inherit;
+      margin-right: -26px;
+
+      &.search {
+        margin-left: inherit;
+        margin-right: -26px;
+      }
+    }
+
+    >.trigger {
+      .icon {
+        margin-right: -15px;
+      }
+    }
+  }
+
+  .dropdown-search {
+    padding: 9px 10px 8px 32px;
+
+    &.text-align-reverse {
+      text-align: left;
+    }
+
+    &.text-align-center {
+      text-align: center;
+    }
+  }
+
+  .dropdown-wrapper {
+    .icon-error,
+    .icon-confirm,
+    .icon-alert,
+    .icon-info,
+    .icon-pending {
+      left: 21px;
+      right: auto;
+    }
+  }
+
+  .field-short {
+    .dropdown,
+    .multiselect,
+    input.dropdown,
+    input.multiselect {
+      padding: 5px 5px 5px 18px;
+
+      ~ .icon-error {
+        margin-left: inherit;
+        // scss-lint:disable ImportantRule
+        margin-right: -38px !important;
+        // scss-lint:enable ImportantRule
+      }
+    }
+  }
+
+  .trigger .icon {
+    left: 6px;
+  }
+
+  .dropdown-short {
+    &.multiple {
+      li {
+        a {
+          padding-left: 0;
+          padding-right: 18px;
+        }
+
+        &::before {
+          margin-left: inherit;
+          margin-right: inherit;
+        }
+
+        &.is-selected::after {
+          left: inherit;
+        }
+      }
+    }
+
+    .trigger .icon {
+      right: auto;
+    }
+  }
+}

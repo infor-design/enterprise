@@ -1,0 +1,145 @@
+
+<div class="row">
+  <div class="twelve columns">
+    <h2>Remove rows and clear Selection</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="five columns">
+
+    <div class="card">
+      <div class="card-header" style="padding-top: 0;">
+        <div class="toolbar" role="toolbar">
+          <div class="title">My Tasks</div>
+          <div class="buttonset">
+            <button class="btn-tertiary" id="remove" title="Remove Selected Items" type="button">Remove</button>
+            <button class="btn-tertiary" id="clear" title="Clear Selected Items" type="button">Clear</button>
+          </div>
+        </div>
+      </div>
+      <div class="card-content">
+        <div class="listview" id="multiselect-listview" data-options="{'source': '{{basepath}}api/inventory-tasks', 'template': 'multiselect-tmpl', 'selectable': 'multiple'}"></div>
+      </div>
+    </div>
+  </div>
+  <div class="three columns">
+    <div class="card">
+      <div class="card-header">
+        <p style="font-size: 1.6rem; font-weight: bold;">Status</p>
+      </div>
+      <div class="card-content" id="output" style="padding: 13px 20px;">
+        <p class="msg"></p>
+        <p class="status">
+          <span class="selected" style="font-weight: bold;"></span>
+          <span class="text"> of </span>
+          <span class="total" style="font-weight: bold;"></span>
+          <span class="text">items selected</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function() {
+
+    var list = $('#multiselect-listview'),
+      listApi = list.data('listview'),
+      output = $('#output'),
+      text = $('.text', output),
+      msg = $('.msg', output),
+      msgHtml = '',
+      status = $('.status', output),
+      statusSelected = $('.selected', status),
+      statusTotal = $('.total', status),
+      statusText = $('.text', status),
+
+      // Show selected items status
+      showStatus = function(selected) {
+        statusSelected.html(selected);
+        statusTotal.html($('li', list).length);
+        statusText.show();
+      },
+
+      // Clear display
+      clearDisplay = function() {
+        msg.html('');
+        text.hide();
+      },
+
+      // Show display
+      showDisplay = function() {
+        clearDisplay();
+        msg.html(msgHtml);
+        showStatus(listApi.selectedItems.length);
+      };
+
+    // Init display
+    showDisplay();
+
+    // On selection ============================================================
+    listApi.element.on('selected', function (e, args) {
+      clearDisplay();
+      showStatus(args.length);
+    });
+
+    // Remove selected items from list ========================================
+    $('#remove').on('click', function () {
+      var selectedItemsLength = listApi.selectedItems.length;
+
+      msgHtml = selectedItemsLength ?
+        '<span style="font-weight: bold;">'+ selectedItemsLength +'</span> ' +
+        '<span>selected item'+ (selectedItemsLength > 1 ? 's' : '') +' removed</span>' :
+        'None of the item removed';
+
+      // Use "removeAllSelected"
+      listApi.removeAllSelected();
+
+      // Or one-by-one
+      // $.each(listApi.selectedItems, function(index, selected) {
+      //   listApi.remove(selected);
+      // });
+
+      showDisplay();
+    });
+
+    // Clear selected items in list ==========================================
+    $('#clear').on('click', function () {
+      var selectedItemsLength = listApi.selectedItems.length;
+
+      msgHtml = selectedItemsLength ?
+        '<span style="font-weight: bold;">'+ selectedItemsLength +'</span> ' +
+        '<span>item'+ (selectedItemsLength > 1 ? 's' : '') +' cleared</span>' :
+        'None of the item was selected';
+
+      // Use "clearAllSelected"
+      listApi.clearAllSelected();
+
+      // Or one-by-one
+      // $.each(listApi.selectedItems, function(index, selected) {
+      //   listApi.unselect(selected);
+      // });
+
+      showDisplay();
+    });
+
+
+  });// End: body-on-initialized
+</script>
+
+{{={{{ }}}=}}
+<script id="multiselect-tmpl" type="text/html">
+  <ul>
+    {{#dataset}}
+      {{#disabled}}
+        <li class="is-disabled">
+      {{/disabled}}
+      {{^disabled}}
+        <li>
+      {{/disabled}}
+        <p>{{desc}}</p>
+      </li>
+    {{/dataset}}
+  </ul>
+</script>

@@ -420,9 +420,9 @@ $modal-box-shadow: 0 2px 5px rgba(0, 0, 0, .3);
 $modal-btn-color: $graphite08;
 $modal-color: $graphite09;
 $modal-btn-border-color: $graphite06;
-$modal-btn-hover-color: $graphite06;
+$modal-btn-hover-color: $graphite05;
 $modal-btn-primary-color: $azure09;
-$modal-btn-primary-hover-color: $azure07;
+$modal-btn-primary-hover-color: $azure09;
 $modal-btn-disabled-color: $graphite08;
 $modal-btn-disabled-opacity: .5;
 $modal-primary-color: $black;
@@ -627,6 +627,9 @@ $searchfield-lighter-bg-color: $graphite02;
 $searchfield-lighter-text-color: $graphite05;
 $searchfield-active-icon-color: $azure09;
 
+$searchfield-alt-bg-color: $white;
+$searchfield-alt-border-color: $graphite05;
+
 $searchfield-context-bg: $graphite01;
 $searchfield-context-alt-bg: $white;
 $searchfield-context-border-color: $graphite03;
@@ -698,7 +701,7 @@ $module-tabs-disabled-y-border-color: $azure07;
 $module-tabs-disabled-text-color: $azure04;
 
 // Composite Tabs
-$composite-tabs-panel-bg-color: $slate10;
+$composite-tabs-panel-bg-color: $white;
 
 // Splitter
 $splitter-grip-bg-color: $graphite09;
