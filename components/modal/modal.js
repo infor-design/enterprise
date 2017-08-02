@@ -48,7 +48,6 @@
     Modal.prototype = {
       init: function() {
         var self = this;
-        this.isIeOrEdge = /ie|edge/i.test(Soho.env.browser.name);
 
         // Used for tracking events tied to the Window object
         this.id = (parseInt($('.modal').length, 10)+1);
@@ -534,10 +533,6 @@
         this.element.find('.modal-contents').css('width', '');
 
         if (wrapper.length) {
-          // FIX: IE extra padding made modal width jump
-          if (this.isIeOrEdge) {
-            wrapper[0].style.width = wrapper.width() + 60 +'px';
-          }
           wrapper[0].style.maxHeight = calcHeight + 'px';
           wrapper[0].style.maxWidth = calcWidth + 'px';
         }
