@@ -95,7 +95,7 @@
           }
         }
 
-        this.element.attr({'tabindex': '-1'});
+        this.element.attr({'tabindex': '-1', 'x-ms-format-detection': 'none'});
 
         // Configure Paging
         if (this.element.is('.paginated') || this.settings.paging === true) {
