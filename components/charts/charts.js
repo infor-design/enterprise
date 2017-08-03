@@ -1676,7 +1676,7 @@ window.Chart = function(container) {
         g.append('path')
          .attr('d', line(set.data))
          .attr('stroke', options.isMinMax ? '#999999' : charts.sparklineColors(i))
-         .attr('class', 'team');
+         .attr('class', 'team connected-line');
     }
 
 
@@ -1753,7 +1753,64 @@ window.Chart = function(container) {
           charts.hideTooltip();
           d3.select(this).attr('r', (options.isMinMax && max === d ||
             options.isMinMax && min === d) ? (dotsize+1) : dotsize);
+        })
+        .on('click', function(d, i) {
+          var data = {value: d, index: i, name: chartData[0].name};
+
+          if (options.isMinMax && max === d) {
+            data.isHighest = true;
+          }
+          if (options.isMinMax && min === d) {
+            data.isLowest = true;
+          }
+          if (options.isPeakDot && max === d) {
+            data.isPeakDot = true;
+          }
+
+          charts.selectElement(d3.select(this), svg.selectAll('.point, .connected-line'), data);
         });
+
+    // Set initial selected
+    (function () {
+      var selected = 0,
+        selector,
+        selectorData,
+        d = chartData[0],
+
+        setSelected = function (d, i) {
+
+          var elem = svg.selectAll('.point:nth-child('+ (i+2) +')'),
+            isSelected = elem.node() && elem.classed('is-selected');
+
+          if (!isSelected) {
+            var data = {value: d, index: i, name: chartData[0].name};
+
+            if (options.isMinMax && max === d) {
+              data.isHighest = true;
+            }
+            if (options.isMinMax && min === d) {
+              data.isLowest = true;
+            }
+            if (options.isPeakDot && max === d) {
+              data.isPeakDot = true;
+            }
+
+            selected++;
+            selector = elem;
+            selectorData = data;
+          }
+        };
+
+        if (d && d.data && typeof d.selected === 'number' && d.selected > -1) {
+          if (d.data[d.selected]) {
+            setSelected(d.data[d.selected], d.selected);
+          }
+        }
+
+      if (selected > 0) {
+        charts.selectElement(selector, svg.selectAll('.point, .connected-line'), selectorData);
+      }
+    })();
 
     $(container).trigger('rendered');
 
@@ -3662,17 +3719,19 @@ window.Chart = function(container) {
 
   //Select the element and fire the event, make the inverse selector opace
   this.selectElement = function(elem, inverse, data) {
-    var isSelected = elem.node() && elem.classed('is-selected');
+    var isSelected = elem.node() && elem.classed('is-selected'),
+      triggerData = [{elem: elem, data: (!isSelected ? data : {})}];
 
-    inverse.classed('is-not-selected', false)
-      .classed('is-selected', false)
+    inverse.classed('is-selected', false)
       .classed('is-not-selected', !isSelected);
 
-     elem.classed('is-not-selected', false)
-        .classed('is-selected', !isSelected);
+    elem.classed('is-not-selected', false)
+      .classed('is-selected', !isSelected);
+
+    this._selected = $.isEmptyObject(triggerData[0].data) ? [] : triggerData;
 
     //Fire Events
-     $(container).triggerHandler('selected', [elem, (!isSelected ? data : {})]);
+     $(container).triggerHandler('selected', [triggerData]);
   };
 
   // Make bars to be Selected or Unselected
