@@ -267,6 +267,7 @@
             self.swatch[0].style.backgroundColor = '#' + item.data('value');
           }
           self.element.focus();
+          self.element.trigger('change');
         });
 
         //Append Buttons
@@ -382,6 +383,14 @@
       disable: function() {
         this.element.prop('disabled', true);
         this.element.parent().addClass('is-disabled');
+      },
+
+      /**
+      * Make the color picker readonly
+      */
+      readonly: function() {
+        this.enable();
+        this.element.attr('readonly', 'readonly');
       },
 
       /**
