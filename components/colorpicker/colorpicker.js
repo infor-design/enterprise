@@ -310,17 +310,17 @@
           menu = $('<ul id="colorpicker-menu" class="popupmenu colorpicker"></ul>'),
           currentTheme = Soho.theme;
 
-        var isBorderAll = (settings.themes[currentTheme].border === 'all'),
-          checkmark = settings.themes[currentTheme].checkmark,
+        var isBorderAll = (self.settings.themes[currentTheme].border === 'all'),
+          checkmark = self.settings.themes[currentTheme].checkmark,
           checkmarkClass = '';
 
-        for (var i = 0, l = settings.colors.length; i < l; i++) {
+        for (var i = 0, l = self.settings.colors.length; i < l; i++) {
           var li = $('<li></li>'),
             a = $('<a href="#"><span class="swatch"></span></a>').appendTo(li),
-            number = settings.colors[i].number,
+            number = self.settings.colors[i].number,
             num = parseInt(number, 10),
-            text = (Locale.translate(settings.colors[i].label) || settings.colors[i].label) + (settings.colors[i].number || ''),
-            value = settings.colors[i].value,
+            text = (Locale.translate(self.settings.colors[i].label) || self.settings.colors[i].label) + (settings.colors[i].number || ''),
+            value = self.settings.colors[i].value,
             isBorder = false,
             regexp = new RegExp('\\b'+ currentTheme +'\\b'),
             elemValue = this.isEditor ? this.element.attr('data-value') : this.element.val();
@@ -330,7 +330,7 @@
           }
 
           // Set border to this swatch
-          if (isBorderAll || regexp.test(settings.colors[i].border)) {
+          if (isBorderAll || regexp.test(self.settings.colors[i].border)) {
             isBorder = true;
           }
 
@@ -447,7 +447,11 @@
         this.swatch.remove();
         this.container.find('.trigger').remove();
         var input = this.container.find('.colorpicker');
-        input.data('mask').destroy();
+
+        if (input.data('mask')) {
+          input.data('mask').destroy();
+        }
+
         input.unwrap();
         input.removeAttr('data-mask role aria-autocomplete');
       },
