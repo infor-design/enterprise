@@ -428,13 +428,33 @@
       },
 
       /**
+       * Updates the component instance.  Can be used after being passed new settings.
+       * @returns {this}
+       */
+      updated: function() {
+        return this
+          .destroy()
+          .init();
+      },
+
+      teardown: function() {
+        this.element.off('keypress.colorpicker');
+        this.swatch.off('click.colorpicker');
+        this.swatch.remove();
+        this.container.find('.trigger').remove();
+        var input = this.container.find('.colorpicker');
+        input.data('mask').destroy();
+        input.unwrap();
+        input.removeAttr('data-mask role aria-autocomplete');
+      },
+
+      /**
       * Detach events and restore DOM to default.
       */
       destroy: function() {
-        this.swatch.remove();
-        this.element.off('keypress.colorpicker');
-        this.swatch.off('click.colorpicker');
+        this.teardown();
         $.removeData(this.element[0], pluginName);
+        return this;
       },
 
     /**

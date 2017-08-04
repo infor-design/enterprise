@@ -8,6 +8,7 @@
     -   [disable](#disable)
     -   [readonly](#readonly)
     -   [isDisabled](#isdisabled)
+    -   [updated](#updated)
     -   [destroy](#destroy)
     -   [handleEvents](#handleevents)
 
@@ -45,6 +46,12 @@ Make the color picker readonly
 ### isDisabled
 
 Returns true if the color picker is disabled.
+
+### updated
+
+Updates the component instance.  Can be used after being passed new settings.
+
+Returns **this** 
 
 ### destroy
 
