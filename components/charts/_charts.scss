@@ -265,6 +265,10 @@
   .point {
     stroke-width: 2;
   }
+
+  .is-not-selected {
+    opacity: .35;
+  }
 }
 
 // Pie Charts
