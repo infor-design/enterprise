@@ -7,7 +7,7 @@
           <h2 class="widget-title">Bubble Chart Title</h2>
         </div>
         <div class="widget-content">
-          <div id="line-example" class="chart-container">
+          <div id="bubble-example" class="chart-container">
           </div>
         </div>
       </div>
@@ -207,9 +207,9 @@ var dataset = [{
   name: 'Series 02'
 }];
 
-$('#line-example').chart({type: 'bubble', dataset: dataset})
-  .on('selected', function (e, elem, data) {
-    console.log(e, elem, data);
+$('#bubble-example').chart({type: 'bubble', dataset: dataset})
+  .on('selected', function (e, args) {
+    console.log(args);
   });
 
 });

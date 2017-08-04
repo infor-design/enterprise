@@ -189,6 +189,9 @@
           this.disable();
         }
 
+        if (this.element.prop('readonly')) {
+          this.readonly();
+        }
         this.addAria();
       },
 
@@ -215,7 +218,7 @@
         var self = this,
           menu =  $('#colorpicker-menu');
 
-        if (self.element.is(':disabled')) {
+        if (self.element.is(':disabled') || this.element.prop('readonly')) {
           return;
         }
 
@@ -374,7 +377,7 @@
       */
       enable: function() {
         this.element.prop('disabled', false);
-        this.element.parent().removeClass('is-disabled');
+        this.element.parent().removeClass('is-disabled is-readonly');
       },
 
       /**
@@ -391,6 +394,7 @@
       readonly: function() {
         this.enable();
         this.element.attr('readonly', 'readonly');
+        this.element.parent().addClass('is-readonly');
       },
 
       /**

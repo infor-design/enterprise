@@ -1565,7 +1565,7 @@ $.fn.datagrid = function(options) {
 
       } else {
         self.table = $('<table></table>').addClass('datagrid').attr('role', this.settings.treeGrid ? 'treegrid' : 'grid').appendTo(self.contentContainer);
-        this.element.addClass('datagrid-container');
+        this.element.addClass('datagrid-container').attr('x-ms-format-detection','none');
       }
 
       if (this.isWindows) {
