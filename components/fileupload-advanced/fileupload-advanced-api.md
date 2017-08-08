@@ -5,6 +5,9 @@
 -   [FileUploadAdvanced](#fileuploadadvanced)
     -   [handleFileUpload](#handlefileupload)
     -   [sendFileToServer](#sendfiletoserver)
+    -   [enable](#enable)
+    -   [disable](#disable)
+    -   [teardown](#teardown)
     -   [destroy](#destroy)
 
 ## FileUploadAdvanced
@@ -13,12 +16,12 @@ A trigger field for uploading a single file.
 
 **Parameters**
 
+-   `element`  
 -   `isStandalone` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  On page(true) -or- on modal (false) , this is used for some visual style only.
 -   `allowedTypes` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Restrict file types(ie. 'jpg|png|gif') ['*' all types]
 -   `maxFilesInProcess` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Max number of files can be uploaded
 -   `maxFileSize` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Max file size in bytes, -1 for unlimited
 -   `fileName` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Variable name to read from server
--   `element`  
 
 ### handleFileUpload
 
@@ -37,6 +40,18 @@ Function you can implement to send data to the server.
 -   `formData` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** Contains the form data / file data.
 -   `status` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** Status of the upload operation
 
+### enable
+
+Set input to enabled.
+
+### disable
+
+Set input to disabled.
+
+### teardown
+
+Teardown - Remove added events
+
 ### destroy
 
-Teardown - Remove added markup and events
+Destroy - Remove added markup and events
