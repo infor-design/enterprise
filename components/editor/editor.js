@@ -1239,7 +1239,7 @@
               pastedData =  e.originalEvent.clipboardData.getData('text/html');
             }
           } else {
-            paste = window.clipboardData.getData('Text');
+            paste = window.clipboardData ? window.clipboardData.getData('Text') : '';
             paragraphs = paste.split(/[\r\n]/g);
             pastedData = '';
             for (p = 0; p < paragraphs.length; p += 1) {
