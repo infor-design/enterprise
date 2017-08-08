@@ -22,6 +22,9 @@ A trigger field for uploading a single file.
 -   `maxFilesInProcess` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Max number of files can be uploaded
 -   `maxFileSize` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Max file size in bytes, -1 for unlimited
 -   `fileName` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Variable name to read from server
+-   `isDisabled` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Make control disabled
+-   `isBrowse` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Add way to browse files to upload
+-   `send` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)**  -  Method for send file to upload
 
 ### handleFileUpload
 

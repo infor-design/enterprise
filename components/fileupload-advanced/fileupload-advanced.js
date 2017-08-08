@@ -52,6 +52,9 @@
     * @param {Boolean} maxFilesInProcess  &nbsp;-&nbsp; Max number of files can be uploaded
     * @param {Boolean} maxFileSize  &nbsp;-&nbsp; Max file size in bytes, -1 for unlimited
     * @param {Boolean} fileName  &nbsp;-&nbsp; Variable name to read from server
+    * @param {Boolean} isDisabled  &nbsp;-&nbsp; Make control disabled
+    * @param {Boolean} isBrowse  &nbsp;-&nbsp; Add way to browse files to upload
+    * @param {Function} send  &nbsp;-&nbsp; Method for send file to upload
     *
     */
     function FileUploadAdvanced(element) {
