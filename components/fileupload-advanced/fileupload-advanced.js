@@ -26,15 +26,15 @@
           maxFileSize: -1, // max file size in bytes, -1 for unlimited
           fileName: 'myfile', // variable name to read from server
           isDisabled: false, // Disabled
-          isBrowse: false, // Browse files to upload
+          showBrowseButton: true, // Browse files to upload
           send: null, // Function to send files to server
 
           // Text strings
-          textDropArea: 'Drag and drop files to upload',
-          textDropAreaWithBrowse: 'Drag and drop or <span class="hyperlink">select files</span> to upload',
-          textBtnCancel: 'Cancel uploading this file',
-          textBtnCloseError: 'Close this error',
-          textBtnRemove: 'Remove from server this file',
+          textDropArea: Locale.translate('TextDropArea'),
+          textDropAreaWithBrowse: Locale.translate('TextDropAreaWithBrowse'),
+          textBtnCancel: Locale.translate('TextBtnCancel'),
+          textBtnCloseError: Locale.translate('TextBtnCloseError'),
+          textBtnRemove: Locale.translate('TextBtnRemove'),
 
           // Error strings
           errorAllowedTypes: '<em>'+ Locale.translate('Error') +'</em>: '+ Locale.translate('ErrorAllowedTypes'),
@@ -53,13 +53,13 @@
     * @param {Boolean} maxFileSize  &nbsp;-&nbsp; Max file size in bytes, -1 for unlimited
     * @param {Boolean} fileName  &nbsp;-&nbsp; Variable name to read from server
     * @param {Boolean} isDisabled  &nbsp;-&nbsp; Make control disabled
-    * @param {Boolean} isBrowse  &nbsp;-&nbsp; Add way to browse files to upload
+    * @param {Boolean} showBrowseButton  &nbsp;-&nbsp; Add way to browse files to upload
     * @param {Function} send  &nbsp;-&nbsp; Method for send file to upload
-    * @param {Srting} textDropArea  &nbsp;-&nbsp; Text to show in drop area
-    * @param {Srting} textDropAreaWithBrowse  &nbsp;-&nbsp; Text to show in drop area when browse option true
-    * @param {Srting} textBtnCancel  &nbsp;-&nbsp; Hidden text for cancel button
-    * @param {Srting} textBtnCloseError  &nbsp;-&nbsp; Hidden text for error close button
-    * @param {Srting} textBtnRemove  &nbsp;-&nbsp; Hidden text for remove button
+    * @param {String} textDropArea  &nbsp;-&nbsp; Text to show in drop area
+    * @param {String} textDropAreaWithBrowse  &nbsp;-&nbsp; Text to show in drop area when browse option true
+    * @param {String} textBtnCancel  &nbsp;-&nbsp; Hidden text for cancel button
+    * @param {String} textBtnCloseError  &nbsp;-&nbsp; Hidden text for error close button
+    * @param {String} textBtnRemove  &nbsp;-&nbsp; Hidden text for remove button
     *
     */
     function FileUploadAdvanced(element) {
@@ -93,7 +93,7 @@
         }
 
         // Browse files option
-        if (s.isBrowse) {
+        if (s.showBrowseButton) {
           types = '';
           id = $.fn.uniqueId('fileupload-adv-');
           fileExtensions = s.allowedTypes.split(/[\s|]+/g);
@@ -186,7 +186,7 @@
           self.handleFileUpload(files);
         });
 
-        if (s.isBrowse && !s.isDisabled) {
+        if (s.showBrowseButton && !s.isDisabled) {
           var input = self.dropArea.find('.fileupload-adv-browse-lbl input[type="file"]');
 
           input.hideFocus();
@@ -254,7 +254,7 @@
           }
         }
 
-        if (s.isBrowse) {
+        if (s.showBrowseButton) {
           // Clear browse file input
           this.dropArea.find('.fileupload-adv-browse-lbl input[type="file"]').val('');
         }

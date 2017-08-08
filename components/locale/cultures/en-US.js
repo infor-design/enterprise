@@ -305,6 +305,11 @@
       'Tall': {id: 'Tall', value: 'Tall', comment: 'Describes a Taller Row Height in a grid/list'},
       'Target': {id: 'Target', value: 'Target', comment: 'Label for an input to enter a Target (Url Attribute)'},
       'TextColor': {id: 'TextColor', value: 'Text color', comment: 'add or edit text color in the editor'},
+      'TextDropArea': {id: 'DropArea', value: 'Drag and Drop Files to Upload', comment: 'text for drop area for advanced fileupload'},
+      'TextDropAreaWithBrowse': {id: 'TextDropAreaWithBrowse', value: 'Drag and Drop or <span class="hyperlink">Select Files</span> to Upload', comment: 'text for drop area with browse for advanced fileupload'},
+      'TextBtnCancel': {id: 'TextBtnCancel', value: 'Cancel uploading this file', comment: 'text for cancel button for advanced fileupload'},
+      'TextBtnCloseError': {id: 'TextBtnCloseError', value: 'Close this error', comment: 'text for error close button for advanced fileupload'},
+      'TextBtnRemove': {id: 'TextBtnRemove', value: 'Close this error', comment: 'text for remove button for advanced fileupload'},
 
       'Timer': {id: 'Timer', value: 'Timer', comment: 'Timer tooltip'},
       'Today': {id: 'Today', value: 'Today', comment: 'refering to today on a calendar'},
