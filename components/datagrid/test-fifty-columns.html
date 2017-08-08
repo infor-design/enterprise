@@ -45,7 +45,7 @@
       data = [];
 
       // Some Sample Data
-      for (var j = 0; j < 100; j++) {
+      for (var j = 0; j < 100; j++) { //50
         var colName = 'column'+j;
           columnObj = {};
 
@@ -64,6 +64,7 @@
         columnReorder: true,
         dataset: data,
         filterable: true,
+        //virtualized: true,
         toolbar: {personalize: true, results: true}
       });
     });
