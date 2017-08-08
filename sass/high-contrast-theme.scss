@@ -307,6 +307,10 @@ $fileupload-droparea-hover-color: $graphite05;
 $fileupload-droparea-hover-bg-color: $azure02;
 $fileupload-cancel-bg-color: $graphite05;
 $fileupload-cancel-hover-bg-color: darken($graphite05, 15%);
+$fileupload-droparea-bg-color: rgba($graphite01, .5);
+$fileupload-droparea-hover-bg-color: $graphite01;
+$fileupload-droparea-dd-hover-bg-color: rgba(200, 233, 244, .80);
+$fileupload-droparea-dd-hover-border-color: $primary-color;
 
 //Spinbox
 $spinbox-active-color: $font-color-extrahighcontrast;
