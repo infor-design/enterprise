@@ -25,6 +25,11 @@ A trigger field for uploading a single file.
 -   `isDisabled` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Make control disabled
 -   `isBrowse` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Add way to browse files to upload
 -   `send` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)**  -  Method for send file to upload
+-   `textDropArea` **Srting**  -  Text to show in drop area
+-   `textDropAreaWithBrowse` **Srting**  -  Text to show in drop area when browse option true
+-   `textBtnCancel` **Srting**  -  Hidden text for cancel button
+-   `textBtnCloseError` **Srting**  -  Hidden text for error close button
+-   `textBtnRemove` **Srting**  -  Hidden text for remove button
 
 ### handleFileUpload
 

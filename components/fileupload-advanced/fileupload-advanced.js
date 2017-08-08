@@ -55,6 +55,11 @@
     * @param {Boolean} isDisabled  &nbsp;-&nbsp; Make control disabled
     * @param {Boolean} isBrowse  &nbsp;-&nbsp; Add way to browse files to upload
     * @param {Function} send  &nbsp;-&nbsp; Method for send file to upload
+    * @param {Srting} textDropArea  &nbsp;-&nbsp; Text to show in drop area
+    * @param {Srting} textDropAreaWithBrowse  &nbsp;-&nbsp; Text to show in drop area when browse option true
+    * @param {Srting} textBtnCancel  &nbsp;-&nbsp; Hidden text for cancel button
+    * @param {Srting} textBtnCloseError  &nbsp;-&nbsp; Hidden text for error close button
+    * @param {Srting} textBtnRemove  &nbsp;-&nbsp; Hidden text for remove button
     *
     */
     function FileUploadAdvanced(element) {
