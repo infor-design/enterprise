@@ -265,7 +265,7 @@
                    'month': 'dd MMMM',
                    'year': 'MMMM yyyy',
                    'timestamp': 'h:mm:ss a',
-                   'datetime': 'd/MM//yyyy h:mm a'}, //Infered short + short gregorian/dateTimeFormats
+                   'datetime': 'd/MM/yyyy h:mm a'}, //Infered short + short gregorian/dateTimeFormats
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
         wide: ['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'],
