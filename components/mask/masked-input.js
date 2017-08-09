@@ -17,8 +17,12 @@
    * Default Masked Input field options
    */
   const DEFAULT_MASKED_INPUT_OPTIONS = {
+    guide: false,
     maskAPI: window.Soho.Mask,
-    pattern: undefined
+    keepCharacterPositions: false,
+    pattern: undefined,
+    placeholderChar: '_',
+    pipe: undefined
   };
 
   /**
@@ -43,6 +47,11 @@
       this.settings = $.extend({}, this.settings, options);
     }
 
+    this.mask = new this.settings.maskAPI();
+    this.state = {
+      previousMaskResult: ''
+    };
+
     this.handleEvents();
 
     return this;
@@ -57,19 +66,19 @@
     handleEvents: function() {
       var self = this;
 
-      this.element.addEventListener('keypress', function(e) {
-        return self.handleKeypress(e);
+      this.element.addEventListener('input', function(e) {
+        return self.handleInput(e);
       });
 
     },
 
     /**
-     * Handler for masked input `keypress` events
-     * @param {Event} e - keypress event
-     * @listens module:this~event:keypress
+     * Handler for masked input `input` events
+     * @param {Event} e - input event
+     * @listens module:this~event:input
      * @returns {boolean}
      */
-    handleKeypress: function(e) {
+    handleInput: function(e) {
       if (false) {
         e.preventDefault();
         return false;
@@ -81,20 +90,31 @@
       }
 
       // Get a reference to the desired Mask API (by default, the one setup during Soho initialization).
-      var api = this.settings.maskAPI;
-      if (api.pattern !== this.settings.pattern) {
+      var api = this.mask;
+      if (!api.pattern) {
         api.configure({
           pattern: this.settings.pattern
         });
       }
 
       // Get all necessary bits of data from the input field.
-      var typedChar = this._convertCharacterFromEvent(e),
-        str = this.element.value,
-        posBegin = this.element.selectionStart,
+      var rawValue = this.element.value;
+
+      // Don't continue if there was no change to the input field's value
+      if (rawValue === this.state.previousMaskResult) {
+        return false;
+      }
+
+      // Attempt to make the raw value safe to use.  If it's not in a viable format this will throw an error.
+      rawValue = this._getSafeRawValue(rawValue);
+
+      var posBegin = this.element.selectionStart,
         posEnd = this.element.selectionEnd,
         opts = {
-          typedChar: typedChar,
+          guide: this.settings.guide,
+          keepCharacterPositions: this.settings.keepCharacterPositions,
+          placeholderChar: this.settings.placeholderChar,
+          previousMaskResult: this.state.previousMaskResult,
           selection: {
             start: posBegin,
             end: posEnd
@@ -102,39 +122,70 @@
         };
 
       if (posBegin !== posEnd) {
-        opts.selection.contents = str.substring(posBegin, posEnd);
+        opts.selection.contents = rawValue.substring(posBegin, posEnd);
       }
-
-      debugger;
+      if (typeof this.settings.pipe === 'function') {
+        opts.pipe = this.settings.pipe;
+      }
 
       // Perform the mask processing.
-      var processed = api.process(str, opts);
+      var processed = api.process(rawValue, opts);
 
-      // Final catch that allows for string returns from the processing algorithm to be considered true.
-      if (typeof processed === 'string') {
-        processed = {
-          str: processed,
-          result: true
-        };
+      // Use the piped value, if applicable.
+      var finalValue = processed.pipedValue ? processed.pipedValue : processed.conformedValue;
+
+      // Setup values for getting corrected caret position
+      // TODO: Improve this by eliminating the need for an extra settings object.
+      var adjustCaretOpts = {
+        previousMaskResult: this.state.previousMaskResult || '',
+        previousPlaceholder: this.state.previousPlaceholder || '',
+        conformedValue: finalValue,
+        placeholder: processed.placeholder,
+        rawValue: rawValue,
+        caretPos: processed.caretPos,
+        placeholderChar: this.settings.placeholderChar
+      };
+      if (processed.pipedCharIndexes) {
+        adjustCaretOpts.indexesOfPipedChars = processed.pipedCharIndexes;
+      }
+      if (processed.caretTrapIndexes) {
+        adjustCaretOpts.caretTrapIndexes = processed.caretTrapIndexes;
       }
 
-      // Prevent the event if masking failed for some reason.
-      if (!processed.result) {
-        e.preventDefault();
-      }
+      // Get a corrected caret position.
+      processed.caretPos = api.adjustCaretPosition(adjustCaretOpts);
+
+      // Set the internal component state
+      this.state.previousMaskResult = finalValue;
+      this.state.previousPlaceholder = processed.placeholder;
+
+      // Set state of the input field
+      this.element.value = finalValue;
+      Soho.utils.safeSetSelection(this.element, processed.caretPos);
 
       // return event handler true/false
       return processed.result;
     },
 
     /**
-     * Converts ASCII keycodes from an event object into Character Codes.
+     * Gets the safe raw value of an input field
      * @private
-     * @param {Event} e
+     * @param {?} inputValue
      * @returns {String}
      */
-    _convertCharacterFromEvent: function(e) {
-      return Soho.utils.actualChar(e);
+    _getSafeRawValue: function getSafeRawValue(inputValue) {
+      if (Soho.utils.isString(inputValue)) {
+        return inputValue;
+      } else if (Soho.utils.isNumber(inputValue)) {
+        return String(inputValue);
+      } else if (inputValue === undefined || inputValue === null) {
+        return '';
+      } else {
+        throw new Error(
+          'The "value" provided to the Masked Input needs to be a string or a number. The value ' +
+          'received was:\n\n' + JSON.stringify(inputValue)
+        );
+      }
     },
 
   };

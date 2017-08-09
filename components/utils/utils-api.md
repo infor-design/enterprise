@@ -7,11 +7,16 @@
 -   [isElement](#iselement)
 -   [getDimensions](#getdimensions)
 -   [splice](#splice)
+-   [extend](#extend)
 -   [fixSVGIcons](#fixsvgicons)
 -   [getViewportSize](#getviewportsize)
 -   [getContainerScrollDistance](#getcontainerscrolldistance)
 -   [getHiddenSize](#gethiddensize-1)
+-   [isString](#isstring)
+-   [isNumber](#isnumber)
+-   [safeSetSelection](#safesetselection)
 -   [smoothScrollTo](#smoothscrollto)
+-   [defer](#defer)
 -   [isAbove](#isabove)
 -   [isBelow](#isbelow)
 
@@ -71,6 +76,12 @@ characters and/or adding new characters.
 
 Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** A new string with the spliced substring.
 
+## extend
+
+Object deep copy
+For now, alias jQuery.extend
+Eventually we'll replace this with a non-jQuery extend method.
+
 ## fixSVGIcons
 
 Hack for IE11 and SVGs that get moved around/appended at inconvenient times.
@@ -110,6 +121,38 @@ Takes an element that is currently hidden by some means (FX: "display: none;") a
 
 Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
+## isString
+
+Checks if a specific input is a String
+
+**Parameters**
+
+-   `value` **?** 
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+## isNumber
+
+Checks if a specific input is a Number
+
+**Parameters**
+
+-   `value` **?** 
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+## safeSetSelection
+
+Safely changes the position of a text caret inside of an editable element.
+In most cases, will call "setSelectionRange" on an editable element immediately, but in some
+cases, will be deferred with `requestAnimationFrame` or `setTimeout`.
+
+**Parameters**
+
+-   `element` **[HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)** 
+-   `startPos` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+-   `endPos` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+
 ## smoothScrollTo
 
 Allows for the smooth scrolling of an element's content area.
@@ -121,6 +164,17 @@ Allows for the smooth scrolling of an element's content area.
 -   `duration` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** the time that will be needed for the scrolling to complete.
 
 Returns **$.Deferred** 
+
+## defer
+
+Uses 'requestAnimationFrame' or 'setTimeout' to defer a function
+
+**Parameters**
+
+-   `callback`  
+-   `timer`  
+
+Returns **([requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) \| [setTimeout](https://developer.mozilla.org/en-US/docs/Web/API/WindowTimers/setTimeout))** 
 
 ## isAbove
 

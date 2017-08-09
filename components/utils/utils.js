@@ -678,6 +678,16 @@
     return str.slice(0, start) + newSubStr + str.slice(start + Math.abs(delCount));
   };
 
+
+
+  /**
+   * Object deep copy
+   * For now, alias jQuery.extend
+   * Eventually we'll replace this with a non-jQuery extend method.
+   */
+  window.Soho.utils.extend = $.extend;
+
+
   /**
    * Hack for IE11 and SVGs that get moved around/appended at inconvenient times.
    * The action of changing the xlink:href attribute to something else and back will fix the problem.
@@ -852,6 +862,29 @@
     return window.Soho.utils.getHiddenSize(this, options);
   };
 
+
+  /**
+   * Checks if a specific input is a String
+   * @param {?} value
+   * @returns {boolean}
+   */
+  window.Soho.utils.isString = function isString(value) {
+    return typeof value === 'string' || value instanceof String;
+  };
+
+
+  /**
+   * Checks if a specific input is a Number
+   * @param {?} value
+   * @returns {boolean}
+   */
+  window.Soho.utils.isNumber = function isNumber(value) {
+    return typeof value === 'number' && value.length === undefined && !isNaN(value);
+  };
+
+
+
+
   //==================================================================
   // Simple Behaviors
   //==================================================================
@@ -963,6 +996,42 @@
    */
   $.fn.smoothScroll = function(target, duration) {
     return window.Soho.behaviors.smoothScrollTo(this, target, duration);
+  };
+
+
+  /**
+   * Uses 'requestAnimationFrame' or 'setTimeout' to defer a function
+   * @returns {requestAnimationFrame|setTimeout}
+   */
+  window.Soho.behaviors.defer = function defer(callback, timer) {
+    var deferMethod = typeof window.requestAnimationFrame !== 'undefined' ? window.requestAnimationFrame : setTimeout;
+    return deferMethod(callback, timer);
+  };
+
+
+
+  /**
+   * Safely changes the position of a text caret inside of an editable element.
+   * In most cases, will call "setSelectionRange" on an editable element immediately, but in some
+   * cases, will be deferred with `requestAnimationFrame` or `setTimeout`.
+   * @param {HTMLElement} element
+   * @param {Number} startPos
+   * @param {Number} endPos
+   */
+  window.Soho.utils.safeSetSelection = function safeSetSelection(element, startPos, endPos) {
+    if (startPos && endPos === undefined) {
+      endPos = startPos;
+    }
+
+    if (document.activeElement === element) {
+      if (Soho.env.os.name === 'android') {
+        Soho.behaviors.defer(function() {
+          element.setSelectionRange(startPos, endPos, 'none');
+        }, 0);
+      } else {
+        element.setSelectionRange(startPos, endPos, 'none');
+      }
+    }
   };
 
   //==================================================================
