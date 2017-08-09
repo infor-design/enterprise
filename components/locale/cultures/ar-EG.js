@@ -27,12 +27,14 @@
     //ca-gregorian
     calendars: [{
       name: 'islamic-umalqura',
+      // Note the format here is sort of dd/MM/yyyy
+      // but this file is ltr and we display this in rtl so its inverted
       dateFormat: {'separator': '/', //Infered
-                   'short': 'dd/MM/yyyy', //use four digit year
-                   'medium': 'dd MMM، y',
-                   'long': 'd MMMM، yyyy',
-                   'full': 'EEEE، dd MMMM، yyyy',
-                   'datetime': 'dd/MM/yyyy h:mm a'}, //Infered short + short gregorian/dateTimeFormats
+                   'short': 'yyyy/MM/dd', //use four digit year
+                   'medium': 'y MMM، dd',
+                   'long': 'yyyy MMMM، dd',
+                   'full': 'EEEE، yyyy MMMM، dd',
+                   'datetime': 'yyyy/MM/dd h:mm a'}, //Infered short + short gregorian/dateTimeFormats
       days: {
          wide: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],
          abbreviated: ['ح', 'ن', 'ث', 'ر', 'خ', 'ج', 'س']
@@ -252,17 +254,19 @@
     },
     {
       name: 'gregorian',
+      // Note the format here is sort of dd/MM/yyyy
+      // but this file is ltr and we display this in rtl so its inverted
       //ca-gregorian/main/dates/calendars/gregorian/dateFormats/
       dateFormat: {'separator': '/', //Infered
                    'timeSeparator': ':',
-                   'short': 'd/M/yyyy', //use four digit year
-                   'medium': 'dd/MM/yyyy',
-                   'long': 'd MMMM، yyyy',
-                   'full': 'EEEE، d MMMM، yyyy',
-                   'month': 'dd MMMM',
-                   'year': 'MMMM yyyy',
+                   'short': 'yyyy/M/d', //use four digit year
+                   'medium': 'yyyy/MM/dd',
+                   'long': 'yyyy MMMM، d',
+                   'full': 'EEEE، yyyy MMMM، d',
+                   'month': 'MMMM dd',
+                   'year': 'yyyy MMMM',
                    'timestamp': 'h:mm:ss a',
-                   'datetime': 'd/MM//yyyy h:mm a'}, //Infered short + short gregorian/dateTimeFormats
+                   'datetime': 'yyyy/MM/d h:mm a'}, //Infered short + short gregorian/dateTimeFormats
       //ca-gregorian/main/dates/calendars/gregorian/days/format/short or abbreviated (2 digit)
       days: {
          wide: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'لسبت'],
