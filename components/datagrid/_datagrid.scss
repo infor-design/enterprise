@@ -1562,7 +1562,6 @@ $datagrid-short-row-height: 23px;
     height: 35px;
     padding: 0 20px;
     position: relative;
-    top: -13px;
     vertical-align: top;
 
     &.l-right-text {
@@ -1578,11 +1577,8 @@ $datagrid-short-row-height: 23px;
 
   //Datagrid filterrow
   .is-filterable {
-    height: 59px;
 
     .datagrid-column-wrapper {
-      position: relative;
-      top: -3px;
 
       &.l-right-text {
         + .datagrid-filter-wrapper {
@@ -1595,9 +1591,10 @@ $datagrid-short-row-height: 23px;
       display: block;
       height: 22px;
       line-height: 30px;
+      margin-bottom: 3px;
       max-width: calc(100% - 20px);
       position: relative;
-      top: -9px;
+      top: -7px;
       width: calc(100% - 20px);
 
       input {

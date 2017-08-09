@@ -2003,7 +2003,7 @@ $.fn.datagrid = function(options) {
             // header = this.headerRow.find('#' + id),
             filterId = self.uniqueId('-header-filter-' + idx);
 
-            filterMarkup = '<div class="datagrid-filter-wrapper">'+ this.filterButtonHtml(col) +'<label class="audible" for="'+ filterId +'">' +
+            filterMarkup = '<div class="datagrid-filter-wrapper" '+ (!self.settings.filterable ? ' style="display:none"' : '') +'>'+ this.filterButtonHtml(col) +'<label class="audible" for="'+ filterId +'">' +
               col.name + '</label>';
 
           switch (col.filterType) {
