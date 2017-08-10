@@ -3507,12 +3507,12 @@ $.fn.datagrid = function(options) {
         var diff = this.elemWidth - this.totalWidth;
 
         if ((diff > 0) && (diff  > colWidth) && !this.widthPercent) {
-          colWidth = diff - (this.isIe ? 19: 2);
+          colWidth = diff - 2;
 
           this.headerWidths[index] = {id: col.id, width: colWidth, widthPercent: this.widthPercent};
           col.width = colWidth;
           col.isStretched = true;
-          this.totalWidth =  this.elemWidth - (this.isIe ? 19: 2);
+          this.totalWidth =  this.elemWidth - 2;
         }
 
         if (this.widthPercent) {
