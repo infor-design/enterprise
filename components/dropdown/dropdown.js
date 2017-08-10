@@ -1341,10 +1341,10 @@
         positionOpts.useParentWidth = useParentWidth;
 
         // use negative height of the pseudoElem to get the Dropdown list to overlap the input.
-        positionOpts.y = parseInt(parentElementStyle.height + parentElementStyle.borderTopWidth + parentElementStyle.borderBottomWidth) * -1;
-        if (Soho.env.browser.name === 'ie' && Soho.env.browser.version === '11') {
-          positionOpts.y = (positionOpts.y * 2);
-        }
+        var isShort = this.element.closest('.field-short').length > 0;
+        positionOpts.y = isShort ? -26 : -34;
+        positionOpts.x = isShort ? 0 : -1;
+        //parseInt(parentElementStyle.height) +  parseInt(parentElementStyle.borderTopWidth) +  parseInt(parentElementStyle.borderBottomWidth) * -1;
 
         this.list.one('afterplace.dropdown', dropdownAfterPlaceCallback).place(positionOpts);
         this.list.data('place').place(positionOpts);
