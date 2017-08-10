@@ -258,7 +258,6 @@ $datagrid-short-row-height: 23px;
       height: calc(100% - 45px);
     }
 
-
     //Resize Drag Arrows
     .drag-target-arrows {
       font-size: 1.5em;
@@ -287,6 +286,7 @@ $datagrid-short-row-height: 23px;
 
     .datagrid-column-wrapper {
       padding: 0 10px;
+      top: -12px;
 
       &.l-right-text {
         .datagrid-header-text {
@@ -300,6 +300,35 @@ $datagrid-short-row-height: 23px;
 
       .datagrid-checkbox {
         top: -13px;
+      }
+    }
+
+    .is-filterable {
+      .datagrid-column-wrapper {
+        top: 0;
+
+      }
+
+      .datagrid-filter-wrapper {
+
+        .btn-filter {
+          left: 6px;
+        }
+
+        input {
+          left: 6px;
+          width: calc(100% - 39px);
+        }
+
+        .timepicker + .icon,
+        .datepicker + .icon,
+        .dropdown + .icon {
+          margin-left: -12px;
+        }
+      }
+
+      &.l-center-text .btn-filter {
+        left: 18px;
       }
     }
 
@@ -317,7 +346,8 @@ $datagrid-short-row-height: 23px;
     }
 
     .is-filterable .datagrid-filter-wrapper {
-      top: -4px;
+      margin-bottom: 5px;
+      top: -3px;
     }
 
     .arrange-placeholder {
@@ -353,6 +383,7 @@ $datagrid-short-row-height: 23px;
 
     .datagrid-column-wrapper {
       padding: 0 15px;
+      top: -12px;
 
       &.l-right-text {
         .datagrid-header-text {
@@ -369,8 +400,26 @@ $datagrid-short-row-height: 23px;
       margin: 1px 0 0 4px;
     }
 
-    .is-filterable .datagrid-filter-wrapper {
-      top: -6px;
+
+    .is-filterable {
+      .datagrid-column-wrapper {
+        top: -2px;
+      }
+
+      .datagrid-filter-wrapper {
+        margin-bottom: 3px;
+        top: -6px;
+
+        .btn-filter {
+          left: 11px;
+        }
+
+        input {
+          left: 11px;
+          width: calc(100% - 45px);
+        }
+      }
+
     }
 
     .arrange-placeholder {
@@ -1510,8 +1559,10 @@ $datagrid-short-row-height: 23px;
   //Column Resize
   .datagrid-column-wrapper {
     display: table;
-    height: 40px;
+    height: 35px;
     padding: 0 20px;
+    position: relative;
+    vertical-align: top;
 
     &.l-right-text {
       direction: rtl;
@@ -1526,30 +1577,24 @@ $datagrid-short-row-height: 23px;
 
   //Datagrid filterrow
   .is-filterable {
-    th {
-      height: 59px;
 
-      .datagrid-column-wrapper {
-        position: relative;
-        top: -2px;
+    .datagrid-column-wrapper {
 
-        &.l-right-text {
-
-          + .datagrid-filter-wrapper {
-            clear: both;
-          }
+      &.l-right-text {
+        + .datagrid-filter-wrapper {
+          clear: both;
         }
       }
-
     }
 
     .datagrid-filter-wrapper {
       display: block;
+      height: 22px;
       line-height: 30px;
-      max-height: 22px;
+      margin-bottom: 3px;
       max-width: calc(100% - 20px);
       position: relative;
-      top: -9px;
+      top: -7px;
       width: calc(100% - 20px);
 
       input {
@@ -1561,7 +1606,7 @@ $datagrid-short-row-height: 23px;
         padding: 3px 0 2px 5px;
         position: relative;
         vertical-align: top;
-        width: calc(100% - 44px);
+        width: calc(100% - 46px);
 
         &.datepicker {
           padding: 3px 24px 2px 5px;
@@ -1589,7 +1634,7 @@ $datagrid-short-row-height: 23px;
         color: $datagrid-filter-color;
         height: 24px;
         line-height: 21px;
-        padding: 0 0 0 5px;
+        padding: 3px 0 0 5px;
         -webkit-text-fill-color: $datagrid-filter-color;
         vertical-align: top;
         width: calc(100% - 5px);
@@ -1776,7 +1821,7 @@ $datagrid-short-row-height: 23px;
 // Sorting
 .sort-indicator {
   display: inline-block;
-  margin: 5px 1px 0;
+  margin: 3px 0 0;
   vertical-align: top;
 
   .icon {
@@ -2081,19 +2126,22 @@ td .btn-actions {
 }
 
 .is-firefox {
-
+  // scss-lint:disable ImportantRule
   .is-inline.dropdown-wrapper {
     .icon {
-      // scss-lint:disable ImportantRule
       top: 5px !important;
-      // scss-lint:enable ImportantRule
     }
+  }
+
+  .datagrid-filter-wrapper .dropdown {
+    padding: 5px 0 2px 5px  !important;
   }
 
   .short-rowheight th .datagrid-checkbox {
     top: -2px;
   }
-
+  // scss-lint:enable ImportantRule
+  //
   .datagrid {
     td.is-editing {
 

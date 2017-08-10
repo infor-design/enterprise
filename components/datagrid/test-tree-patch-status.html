@@ -6,6 +6,8 @@
   </div>
 </div>
 
+{{={{{ }}}=}}
+
 <script>
   $('body').one('initialized', function () {
 
@@ -13,15 +15,15 @@
         columns = [];
 
       //Define Columns for the Grid.
-      columns.push({ id: 'operation', name: 'Operation', field: 'operation', sortable: false, formatter: Formatters.Tree, width: 40});
-      columns.push({ id: 'status', name: 'Status', sortable: false, field: 'status', width: 30, formatter: Formatters.Alert, ranges:[{'value':'OK', 'classes':'confirm', },{'value':'FAILED', 'classes':'error', },{'value':'TENANT_FAILED', 'classes':'error', },{'value':'RUNNING', 'classes':'pending', },{'value':'WARNING', 'classes':'alert', }], filterType:'select', options: []});
-      columns.push({ id: 'severity', name: 'Severity', sortable: false, field: 'severity', width: 15});
-      columns.push({ id: 'message', name: 'Message', sortable: false, field: 'message', width: 50, formatter: Formatters.Template, template:"<div style='padding:0; margin:0; line-height:normal; white-space: normal; vertical-align:middle; display:inline-block'>{{message}}</div>"});
-      columns.push({ id: 'startTime', name: 'Started', sortable: false, field: 'startTime', width: 30, formatter: Formatters.Date, dateFormat: 'yyyy-MM-dd HH:mm:ss,SSS', filterType: 'date'});
-      columns.push({ id: 'stopTime', name: 'Ended', sortable: false, field: 'stopTime', width: 30, formatter: Formatters.Date, dateFormat: 'yyyy-MM-dd HH:mm:ss,SSS', filterType: 'date'});
-      columns.push({ id: 'space', name: 'Space', sortable: false, field: 'space', width: 20});
-      columns.push({ id: 'patch', name: 'Patch', sortable: false, field: 'patchName', width: 40});
-      columns.push({ id: 'logs', name: 'Logs', sortable: false, field: 'logUrls', width: 20, formatter: Formatters.HyperlinkArray, href: '{{value}}', text:'log'});
+      columns.push({ id: 'operation', name: 'Operation', field: 'operation', sortable: false, formatter: Formatters.Tree, width: 50});
+      columns.push({ id: 'status', name: 'Status', sortable: false, field: 'status', formatter: Formatters.Alert, ranges:[{'value':'OK', 'classes':'confirm', },{'value':'FAILED', 'classes':'error', },{'value':'TENANT_FAILED', 'classes':'error', },{'value':'RUNNING', 'classes':'pending', },{'value':'WARNING', 'classes':'alert', }], filterType:'select', options: []});
+      columns.push({ id: 'severity', name: 'Severity', sortable: false, field: 'severity'});
+      columns.push({ id: 'message', name: 'Message', sortable: false, field: 'message', width: 100, formatter: Formatters.Template, template:"<div>{{message}}</div>"});
+      columns.push({ id: 'startTime', name: 'Started', sortable: false, field: 'startTime', formatter: Formatters.Date, dateFormat: 'yyyy-MM-dd HH:mm:ss,SSS', filterType: 'date'});
+      columns.push({ id: 'stopTime', name: 'Ended', sortable: false, field: 'stopTime', formatter: Formatters.Date, dateFormat: 'yyyy-MM-dd HH:mm:ss,SSS', filterType: 'date'});
+      columns.push({ id: 'space', name: 'Space', sortable: false, field: 'space'});
+      columns.push({ id: 'patch', name: 'Patch', sortable: false, field: 'patchName'});
+      columns.push({ id: 'logs', name: 'Logs', sortable: false, field: 'logUrls', formatter: Formatters.HyperlinkArray, href: '{{value}}', text:'log'});
 
       var url = 'https://gist.githubusercontent.com/tmcconechy/d5c83255912cf71de457fc4ff391e7f7/raw/b65e000d14bf59112a278cd3e6026823ff3adcbb/BigAss.JSON';
       $.getJSON(url, function(res) {
