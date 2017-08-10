@@ -1940,6 +1940,10 @@ td .btn-actions {
     top: 1px;
   }
 
+  &.is-checked.no-animate::after {
+    animation: none;
+  }
+
   &.is-partial {
     @include no-animation();
   }
