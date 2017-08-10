@@ -5883,7 +5883,11 @@ $.fn.datagrid = function(options) {
 
     // Invoked in three cases: 1) a row click, 2) keyboard and enter, 3) In actionable mode and tabbing
     makeCellEditable: function(row, cell, event) {
-      if (this.editor && this.editor.input) {
+      if (this.activeCell.node.closest('tr').hasClass('datagrid-summary-row')) {
+        return;
+      }
+	  
+	  if (this.editor && this.editor.input) {
         if (this.editor.input.is('.timepicker, .datepicker, .lookup, .spinbox') && !$(event.target).prev().is(this.editor.input)) {
           this.commitCellEdit(this.editor.input);
         }
