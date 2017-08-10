@@ -104,15 +104,6 @@ div.multiselect {
     }
   }
 
-  &.is-open {
-    border-color: transparent;
-    color: transparent;
-
-    + .icon {
-      display: none;
-    }
-  }
-
   // Icon States
   + .icon {
     background-color: inherit;
@@ -557,7 +548,7 @@ div.dropdown-xs,
   }
 
   &.is-ontop {
-    margin-top: 7px;
+    margin-top: 8px;
   }
 
   > .icon {
