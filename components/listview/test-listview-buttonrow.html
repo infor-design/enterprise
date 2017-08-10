@@ -1,0 +1,63 @@
+  <div class="page-container two-column fixed" role="main">
+    <div class="sidebar">
+      <div class="content">
+        <div class="toolbar has-more-button" data-options="{'resizeContainers': 'false'}">
+          <div class="title">
+            <h1>Tasks</h1>
+          </div>
+
+          <div class="buttonset">
+            <button type="button" class="btn-tertiary">
+              <span>Open</span>
+            </button>
+            <button type="button" class="btn-tertiary">
+              <span>Update</span>
+            </button>
+            <button type="button" class="btn-tertiary">
+              <span>Delete</span>
+            </button>
+
+            <button type="button" class="btn-tertiary">
+              <span>One</span>
+            </button>
+            <button type="button" class="btn-tertiary">
+              <span>Two</span>
+            </button>
+            <button type="button" class="btn-tertiary">
+              <span>Three</span>
+            </button>
+          </div>
+        </div>
+        <div class="listview" id="task-listview" data-options="{'source': '{{basepath}}api/inventory-tasks', 'template': 'task-tmpl', 'selectable': 'false'}"></div>
+      </div>
+    </div>
+    <section class="main" role="main"></section>
+  </div>
+
+
+{{={{{ }}}=}}
+<script id="task-tmpl" type="text/html">
+  <ul>
+    {{#dataset}}
+    {{#disabled}}
+    <li class="is-disabled">
+      {{/disabled}}
+      {{^disabled}}
+    <li>
+      {{/disabled}}
+      <p class="listview-heading">Task #{{task}}</p>
+      <p class="listview-subheading">{{desc}} </p>
+      <p class="listview-micro">Due: {{date}}</p>
+      <div class="toolbar has-more-button">
+        <div class='buttonset'>
+          <button class='btn'><span>Complete</span></button>
+          <button class='btn'><span>Save</span></button>
+          <button class='btn'><span>Delete</span></button>
+          <button class='btn'><span>Update</span></button>
+        </div>
+      </div>
+    </div>
+    </li>
+    {{/dataset}}
+  </ul>
+</script>
