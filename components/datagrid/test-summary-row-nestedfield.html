@@ -30,7 +30,7 @@
       columns.push({ id: 'lifotin.reference_n', name: 'Registration', field: 'lifotin.reference_n', filterType: 'text', sortable: false, maxLength:'50', align: 'left',         formatter: Formatters.Readonly });
       columns.push({ id: 'lifotin.ofncdate', name: 'Offence Date', field: 'lifotin.ofncdate', filterType: 'date', sortable: false,  align: 'left',    sourceFormat: 'yyyy-MM-ddTHH:mm:ss.SSS',    formatter: Formatters.Date });
       columns.push({ id: 'lifotin.offtpdtls_n', name: 'Offence Type', field: 'lifotin.offtpdtls_n',  filterType: 'text', sortable: false, maxLength:'50', align: 'left',         formatter: Formatters.Readonly });
-      columns.push({ id: 'lifotin.balance', name: 'Balance', field: 'lifotin.balance', filterType: 'decimal', sortable: false,  align: 'right',      numberFormat: { minimumFractionDigits: 2 , maximumFractionDigits: 2 },  mask: '-#,###,###,###.00', maskMode: 'number',  summaryRowFormatter: Formatters.SummaryRow, aggregator: 'sum',   formatter: Formatters.Decimal });
+      columns.push({ id: 'lifotin.balance', name: 'Balance', field: 'lifotin.balance', filterType: 'decimal', sortable: false,  align: 'right',      numberFormat: { minimumFractionDigits: 2 , maximumFractionDigits: 2 },  mask: '-#,###,###,###.00', maskMode: 'number',  summaryRowFormatter: Formatters.SummaryRow, aggregator: 'sum',  editor: Editors.Input, formatter: Formatters.Decimal });
 
       
 
@@ -38,6 +38,7 @@
         columns: columns,
         dataset: data,
         summaryRow: true,
+		editable: true,
         toolbar: {title: 'Offences', results: true, personalize: true, rowHeight: true}
       });
       
