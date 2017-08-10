@@ -21,9 +21,12 @@
     maskAPI: window.Soho.Mask,
     keepCharacterPositions: false,
     pattern: undefined,
+    patternOptions: {},
     placeholderChar: '_',
-    pipe: undefined
+    pipe: undefined,
+    process: undefined
   };
+
 
   /**
    * @class {SohoMaskedInput}
@@ -45,6 +48,26 @@
       this.settings = $.extend({}, DEFAULT_MASKED_INPUT_OPTIONS, options);
     } else {
       this.settings = $.extend({}, this.settings, options);
+    }
+
+    // TODO: Deprecate legacy settings in v4.4.0, remove in v4.5.0
+    this._replaceLegacySettings();
+
+    var styleClasses = ['is-number-mask'];
+
+    // If the 'process' setting is defined, connect a pre-defined Soho Mask/Pattern
+    if (typeof this.settings.process === 'string') {
+      switch(this.settings.process) {
+        case 'number': {
+          this.settings.pattern = window.Soho.masks.numberMask;
+          this.element.classList.add('is-number-mask');
+          break;
+        }
+        default: {
+          this.element.classList.remove(styleClasses.join(' '));
+          break;
+        }
+      }
     }
 
     this.mask = new this.settings.maskAPI();
@@ -93,7 +116,8 @@
       var api = this.mask;
       if (!api.pattern) {
         api.configure({
-          pattern: this.settings.pattern
+          pattern: this.settings.pattern,
+          patternOptions: this.settings.patternOptions
         });
       }
 
@@ -113,6 +137,7 @@
         opts = {
           guide: this.settings.guide,
           keepCharacterPositions: this.settings.keepCharacterPositions,
+          patternOptions: this.settings.patternOptions,
           placeholderChar: this.settings.placeholderChar,
           previousMaskResult: this.state.previousMaskResult,
           selection: {
@@ -185,6 +210,29 @@
           'The "value" provided to the Masked Input needs to be a string or a number. The value ' +
           'received was:\n\n' + JSON.stringify(inputValue)
         );
+      }
+    },
+
+    /**
+     * Changes a bunch of "legacy" setting definitions into more apt names
+     * @private
+     */
+    _replaceLegacySettings: function() {
+      var modes = ['group', 'number', 'date', 'time'];
+
+      // map "mode" to "process"
+      if (this.settings.mode) {
+        if (modes.indexOf(this.settings.mode) === -1) {
+          delete this.settings.mode;
+        }
+
+        if (this.settings.mode === 'group') {
+          this.settings.process = undefined;
+        } else {
+          this.settings.process = this.settings.mode;
+        }
+
+        delete this.settings.mode;
       }
     },
 

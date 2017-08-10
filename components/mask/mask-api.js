@@ -1,4 +1,5 @@
 window.Soho = window.Soho || {};
+window.Soho.masks = window.Soho.masks || {};
 
 /**
  * String constants
@@ -13,6 +14,7 @@ var EMPTY_STRING = '',
 var DEFAULT_MASK_API_OPTIONS = {
   locale: 'en-US',
   pattern: undefined,
+  pipe: undefined
 };
 
 /**
@@ -70,6 +72,10 @@ SohoMaskAPI.prototype = {
       }
     }
 
+    if (options.patternOptions) {
+      this.patternOptions = options.patternOptions;
+    }
+
     return this;
   },
 
@@ -90,10 +96,18 @@ SohoMaskAPI.prototype = {
 
     // Setup the pattern if it's a function.
     if (typeof this.pattern === 'function') {
-      providedMask = this.pattern(rawValue, {
+      if (!opts.patternOptions) {
+        opts.patternOptions = {};
+      }
+
+      // Merge incom
+      var maskOpts = Soho.utils.extend({}, this.patternOptions, opts.patternOptions, {
         caretPos: opts.selection.start,
         previousMaskResult: opts.previousMaskResult
       });
+
+      // Get a processed mask pattern from the function
+      providedMask = this.pattern(rawValue, maskOpts);
 
       // mask functions can setup caret traps to have some control over how the caret moves. We need to process
       // the mask for any caret traps. `processCaretTraps` will remove the caret traps from the mask and return
@@ -160,7 +174,6 @@ SohoMaskAPI.prototype = {
    * @param {Object} options - options for parsing
    */
   _conformToMask: function(rawValue, mask, options) {
-    console.log('attempting to process "' + rawValue + '" against mask pattern "'+ this.pattern +'"');
 
     // Set default options
     var DEFAULT_CONFORM_OPTIONS = {
@@ -255,7 +268,7 @@ SohoMaskAPI.prototype = {
 
 
 
-    // Ok, so first we loop through the placeholder looking for placeholder characters to fill up.
+    // Loop through the placeholder string to find characters that need to be filled.
     placeholderLoop:
     for (var l = 0; l < placeholderLength; l++) {
       var charInPlaceholder = options.placeholder[l];
@@ -409,10 +422,11 @@ SohoMaskAPI.prototype = {
   _processCaretTraps: function(mask) {
     var indexes = [],
       indexOfCaretTrap = mask.indexOf(CARET_TRAP);
-
+    
     while(indexOfCaretTrap !== -1) {
       indexes.push(indexOfCaretTrap);
       mask = mask.splice(indexOfCaretTrap, 1);
+      indexOfCaretTrap = mask.indexOf(CARET_TRAP);
     }
 
     return {
