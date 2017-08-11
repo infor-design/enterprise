@@ -404,10 +404,10 @@
         this.recalculateParent();
 
         if (!this.hasFocus()) {
+          this.wrapper.removeClass('has-focus active');
           return;
         }
 
-        this.wrapper.removeClass('has-focus');
       },
 
       /**

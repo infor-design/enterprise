@@ -33,6 +33,17 @@
     height: 100%;
   }
 
+  // Support for list-detail-popup-search-no-split-header
+  &.listview {
+    // scss-lint:disable ImportantRule
+    height: 100% !important;
+    // scss-lint:enable ImportantRule
+
+    + .pager-toolbar {
+      height: 100%;
+    }
+  }
+
   .toolbar + .datagrid-container.has-toolbar {
     height: calc(100% - 50px);
   }
