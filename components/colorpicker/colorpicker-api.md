@@ -6,7 +6,9 @@
     -   [setColor](#setcolor)
     -   [enable](#enable)
     -   [disable](#disable)
+    -   [readonly](#readonly)
     -   [isDisabled](#isdisabled)
+    -   [updated](#updated)
     -   [destroy](#destroy)
     -   [handleEvents](#handleevents)
 
@@ -16,9 +18,9 @@ The ColorPicker Component is a trigger field with a listing colors that can be s
 
 **Parameters**
 
--   `element`  
 -   `colors` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  An array of objects of the form {label: 'Azure', number: '01', value: 'CBEBF4'} that can be used to populate the color grid.
 -   `showLabel` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Show the label if true vs the hex value if false.
+-   `element`  
 
 ### setColor
 
@@ -37,9 +39,19 @@ Change the color picker from enabled to disabled.
 
 Make the color picker disabled
 
+### readonly
+
+Make the color picker readonly
+
 ### isDisabled
 
 Returns true if the color picker is disabled.
+
+### updated
+
+Updates the component instance.  Can be used after being passed new settings.
+
+Returns **this** 
 
 ### destroy
 

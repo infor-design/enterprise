@@ -104,15 +104,6 @@ div.multiselect {
     }
   }
 
-  &.is-open {
-    border-color: transparent;
-    color: transparent;
-
-    + .icon {
-      display: none;
-    }
-  }
-
   // Icon States
   + .icon {
     background-color: inherit;
@@ -196,7 +187,7 @@ div.multiselect {
 
   li {
     min-height: 32px;
-    padding-left: 5px;
+    padding-left: 4px;
     padding-right: 5px;
     position: relative;
 
@@ -429,7 +420,7 @@ div.multiselect {
   color: $dropdown-color;
   padding: 8px 32px 8px 10px;
   text-overflow: ellipsis;
-  width: auto;
+  width: inherit;
 
   &.text-align-reverse {
     text-align: right;
@@ -557,7 +548,7 @@ div.dropdown-xs,
   }
 
   &.is-ontop {
-    margin-top: 7px;
+    margin-top: 8px;
   }
 
   > .icon {
@@ -615,6 +606,7 @@ div.dropdown-xs,
   .dropdown-list {
     &.multiple li {
       &::before {
+        margin-left: -28px;
         top: 3px;
       }
 

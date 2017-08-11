@@ -5,6 +5,9 @@
 -   [FileUploadAdvanced](#fileuploadadvanced)
     -   [handleFileUpload](#handlefileupload)
     -   [sendFileToServer](#sendfiletoserver)
+    -   [enable](#enable)
+    -   [disable](#disable)
+    -   [teardown](#teardown)
     -   [destroy](#destroy)
 
 ## FileUploadAdvanced
@@ -19,6 +22,14 @@ A trigger field for uploading a single file.
 -   `maxFilesInProcess` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Max number of files can be uploaded
 -   `maxFileSize` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Max file size in bytes, -1 for unlimited
 -   `fileName` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Variable name to read from server
+-   `isDisabled` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Make control disabled
+-   `showBrowseButton` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Add way to browse files to upload
+-   `send` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)**  -  Method for send file to upload
+-   `textDropArea` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Text to show in drop area
+-   `textDropAreaWithBrowse` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Text to show in drop area when browse option true
+-   `textBtnCancel` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Hidden text for cancel button
+-   `textBtnCloseError` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Hidden text for error close button
+-   `textBtnRemove` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Hidden text for remove button
 
 ### handleFileUpload
 
@@ -37,6 +48,18 @@ Function you can implement to send data to the server.
 -   `formData` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** Contains the form data / file data.
 -   `status` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** Status of the upload operation
 
+### enable
+
+Set input to enabled.
+
+### disable
+
+Set input to disabled.
+
+### teardown
+
+Teardown - Remove added events
+
 ### destroy
 
-Teardown - Remove added markup and events
+Destroy - Remove added markup and events

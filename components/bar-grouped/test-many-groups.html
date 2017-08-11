@@ -23,7 +23,10 @@ $('body').on('initialized', function () {
       { name: 'Previous Metrics', value: 2, url: '#'}],
       name: 'Schedule Adherence By Date'}, {data: [{name: 'Current Metrics', value: 4, url: '/metrics/viewSingleSupplierReportCard?histPk=10026&supPk=11001&buySupPk=10002&viewChart=false&selectedDate=10026'}, { name: 'Previous Metrics', value: 2, url: '#'}], name: 'Receiving Accuracy'},{data: [{name: 'Current Metrics', value: 4, url: '/metrics/viewSingleSupplierReportCard?histPk=10026&supPk=11001&buySupPk=10002&viewChart=false&selectedDate=10026'}, { name: 'Previous Metrics', value: 2, url: '#'}], name: 'Overall Rating'}];
 
-  $('#bar-grouped-example').chart({type: 'bar-grouped', dataset: dataset});
+  $('#bar-grouped-example').chart({type: 'bar-grouped', dataset: dataset})
+  .on('selected', function (e, args) {
+    console.log('args', args);
+   });
 
 });
 </script>

@@ -49,7 +49,7 @@ window.Chart = function(container) {
       }
     }
 
-    if (chartType === 'pie') {
+    if (chartType === 'pie' || chartType === 'donut') {
       return this.colorRange[i];
     }
     if (chartType === 'bar-single' || chartType === 'column-single') {
@@ -98,7 +98,7 @@ window.Chart = function(container) {
     }
   };
 
-  this.addLegend = function(series) {
+  this.addLegend = function(series, chartType) {
     var i, s = charts.settings;
 
     if (series.length === 0) {
@@ -134,7 +134,7 @@ window.Chart = function(container) {
       }
 
       var seriesLine = '<span class="chart-legend-item'+ extraClass +'" tabindex="0"></span>',
-        hexColor = charts.chartColor(i, (series.length === 1 ? 'bar-single' : 'bar'), series[i]);
+        hexColor = charts.chartColor(i, chartType ? chartType : (series.length === 1 ? 'bar-single' : 'bar'), series[i]);
 
       var color = $('<span class="chart-legend-color" style="background-color: '+ (series[i].pattern ? 'transparent' : hexColor) +'"></span>'),
         textBlock = $('<span class="chart-legend-item-text">'+ series[i].name + '</span>');
@@ -462,6 +462,10 @@ window.Chart = function(container) {
       if (settings.showLines === false) {
         xAxis.tickSize(0);
       }
+    }
+
+    if (settings.ticks) {
+      xAxis.ticks(settings.ticks.number, settings.ticks.format);
     }
 
     yAxis = d3.svg.axis()
@@ -866,7 +870,6 @@ window.Chart = function(container) {
       return d.value;
     }).sort(null);
 
-
     // Store our chart dimensions
     var dims = {
       height: parseInt(parent.height()),  //header + 20 px padding
@@ -1005,7 +1008,7 @@ window.Chart = function(container) {
         charts.hideTooltip();
       })
       .style('fill', function(d, i) {return charts.chartColor(self.isRTL ? chartData.length-i-1 : i, 'pie', d.data); })
-      .transition().duration(350)
+      .transition().duration(settings.animate === false ? 0 : 350)
       .attrTween('d', function(d) {
         var i = d3.interpolate(d.startAngle + 0.1, d.endAngle);
         return function(t) { d.endAngle = i(t); return pieArcs(d); };
@@ -1303,145 +1306,134 @@ window.Chart = function(container) {
           spacing = 35;
 
         // Resolve label positioning collisions
-        (function () {
-          // Record org x, y position
-          orgLabelPos = textLabels[0].map(function(d) {
-            d = d3.select(d);
-            return { x: +d.attr('x'), y: +d.attr('y') };
-          });
 
-          // Fix y position
-          function relax() {
-            var again = false;
-            maxRunning--;
-            textLabels.each(function (d, i) {
-              var a = this,
-                da = d3.select(a),
-                y1 = +da.attr('y');
+        // Record org x, y position
+        orgLabelPos = textLabels[0].map(function(d) {
+          d = d3.select(d);
+          return { x: +d.attr('x'), y: +d.attr('y') };
+        });
 
-              textLabels.each(function (d2, i2) {
-                if (i2 > i) {
-                  var deltaY,
-                    b = this,
-                    db = d3.select(b),
-                    y2 = +db.attr('y');
+        // Fix y position
+        var relax = function () {
+          var again = false;
+          maxRunning--;
+          textLabels.each(function (d, i) {
+            var a = this,
+              da = d3.select(a),
+              y1 = +da.attr('y');
 
-                  if (da.attr('text-anchor') === db.attr('text-anchor') && (a === textLabels[0][i2-1])) {
-                    deltaY = Math.round(Math.abs(y1 - y2));
-                    if (deltaY < spacing) {
-                      deltaY += 1;
-                      var newY = y2 > 0 ? y2-(deltaY/2) : y2+(deltaY/2)+1;
-                      again = true;
-                      db.attr('y', newY); //padding
+            textLabels.each(function (d2, i2) {
+              if (i2 > i) {
+                var deltaY,
+                  b = this,
+                  db = d3.select(b),
+                  y2 = +db.attr('y');
 
-                      if (Math.round(Math.abs(newY)) < 2) {
-                        again = false;
-                        newY = y2 > 0 ? y2-(spacing) : y2+(spacing/2);
-                        db.attr('y', newY);
-                      }
+                if (da.attr('text-anchor') === db.attr('text-anchor') && (a === textLabels[0][i2-1])) {
+                  deltaY = Math.round(Math.abs(y1 - y2));
+                  if (deltaY < spacing) {
+                    deltaY += 1;
+                    var newY = y2 > 0 ? y2-(deltaY/2) : y2+(deltaY/2)+1;
+                    again = true;
+                    db.attr('y', newY); //padding
+
+                    if (Math.round(Math.abs(newY)) < 2) {
+                      again = false;
+                      newY = y2 > 0 ? y2-(spacing) : y2+(spacing/2);
+                      db.attr('y', newY);
                     }
                   }
                 }
-              });
+              }
             });
+          });
 
-            if(again && maxRunning > 0) {
-              setTimeout(function() {
-                relax();
-              }, 0);
-            } else {
-              isRunning = false;
-            }
+          if (again && maxRunning > 0) {
+            relax();
+          } else {
+            isRunning = false;
           }
-          relax();
-        })();
+        };
+
+        relax();
 
         // Draw lines and set short name
-        var intervalId = setInterval(function() {
-          if (isRunning) {
-            return;
-          }
-          clearInterval(intervalId);
+        // Fix x position
+        var labelCircles = svg.selectAll('.label-circle');
+        spacing *=  -1;
+        textLabels.each(function(d, i) {
+          var x,
+            label = d3.select(this),
+            x1 = +label.attr('x'),
+            y1 = +label.attr('y'),
+            sign = (x1 > 0 ? 1 : -1);
 
-          // Fix x position
-          var labelCircles = svg.selectAll('.label-circle');
-          spacing *=  -1;
-          textLabels.each(function(d, i) {
-            var x,
-              label = d3.select(this),
-              x1 = +label.attr('x'),
-              y1 = +label.attr('y'),
-              sign = (x1 > 0 ? 1 : -1);
+            x = isRTL ?
+              ((dims.labelRadius - Math.abs(y1) + Math.abs(orgLabelPos[i].x - (spacing * 1.5))) * sign):
+              ((dims.labelRadius - Math.abs(y1) + Math.abs(orgLabelPos[i].x + (spacing * 1.5))) * sign);
 
-              x = isRTL ?
-                ((dims.labelRadius - Math.abs(y1) + Math.abs(orgLabelPos[i].x - (spacing * 2.5))) * sign):
-                ((dims.labelRadius - Math.abs(y1) + Math.abs(orgLabelPos[i].x + (spacing * 2.5))) * sign);
+          if (orgLabelPos[i].y !== y1 || (i === 0 && chartData[i].percent < 10)) {
+            x += chartData[i].percent <= 10 ? Math.ceil(x1/2) : Math.ceil(x1-x)- (spacing/2);
+            label.attr('x', x);
 
-            if (orgLabelPos[i].y !== y1 || (i === 0 && chartData[i].percent < 10)) {
-              x += chartData[i].percent <= 10 ? Math.ceil(x1/2) : Math.ceil(x1-x)- (spacing/2);
-              label.attr('x', x);
+            if (lb.isTwoline) {
+              label.select('.lb-bottom').attr('x', x);
+            }
 
+            var t = d3.transform(d3.select(labelCircles[0][i]).attr('transform')),
+              tx = t.translate[0] + (t.translate[0] > 0 ? 10 : -10);
+
+            if (x < tx || Math.abs(x) > dims.center.x) {
+              label.attr('x', tx);
               if (lb.isTwoline) {
-                label.select('.lb-bottom').attr('x', x);
-              }
-
-              var t = d3.transform(d3.select(labelCircles[0][i]).attr('transform')),
-                tx = t.translate[0] + (t.translate[0] > 0 ? 10 : -10);
-
-              if (x < tx || Math.abs(x) > dims.center.x) {
-                label.attr('x', tx);
-                if (lb.isTwoline) {
-                  label.select('.lb-bottom').attr('x', tx);
-                }
+                label.select('.lb-bottom').attr('x', tx);
               }
             }
-          });
+          }
+        });
 
-          var lineFunction = d3.svg.line()
-            .x(function(d) { return d.x; })
-            .y(function(d) { return d.y; })
-            .interpolate('basis');
+        var lineFunction = d3.svg.line()
+          .x(function(d) { return d.x; })
+          .y(function(d) { return d.y; })
+          .interpolate('basis');
 
-          var labels = svg.selectAll('.label');
+        var labels = svg.selectAll('.label');
 
-          svg.selectAll('.label-text tspan').each(function() {
-            if (d3.select(this).text().substring(5) === '...') {
-              showLegend = true;
+        svg.selectAll('.label-text tspan').each(function() {
+          if (d3.select(this).text().substring(5) === '...') {
+            showLegend = true;
+          }
+        });
+
+        // Collect source and targets [x, y] position
+        labels.each(function(d, i) {
+          var label = d3.select(this),
+            pieCircle = label.select('.pie-circle'),
+            labelCircle = label.select('.label-circle'),
+            text = label.select('.label-text'),
+            ct = d3.transform(pieCircle.attr('transform')),
+            ct2 = d3.transform(labelCircle.attr('transform')),
+            points = [
+              { x:Number(ct.translate[0]), y:Number(ct.translate[1]) },
+              { x:Number(ct2.translate[0]), y:Number(ct2.translate[1]) },
+              { x:Number(text.attr('x')), y:Number(text.attr('y')) + (lb.isTwoline ? 5 : 0) }
+            ];
+
+          // Draw line from center of arc to label
+          if (lb.linehideWhenMoreThanPercentage > chartData[i].percent) {
+            lines.append('path')
+              .attr({
+                'class': 'label-line',
+                'd': lineFunction(points)
+              })
+              .style({
+                'stroke-width': lb.lineWidth,
+                'stroke': function() { return labelsColorFormatter(d, i, lb.lineColor); }
+              });
             }
-          });
+        });
 
-          // Collect source and targets [x, y] position
-          labels.each(function(d, i) {
-            var label = d3.select(this),
-              pieCircle = label.select('.pie-circle'),
-              labelCircle = label.select('.label-circle'),
-              text = label.select('.label-text'),
-              ct = d3.transform(pieCircle.attr('transform')),
-              ct2 = d3.transform(labelCircle.attr('transform')),
-              points = [
-                { x:Number(ct.translate[0]), y:Number(ct.translate[1]) },
-                { x:Number(ct2.translate[0]), y:Number(ct2.translate[1]) },
-                { x:Number(text.attr('x')), y:Number(text.attr('y')) + (lb.isTwoline ? 5 : 0) }
-              ];
-
-            // Draw line from center of arc to label
-            if (lb.linehideWhenMoreThanPercentage > chartData[i].percent) {
-              lines.append('path')
-                .attr({
-                  'class': 'label-line',
-                  'd': lineFunction(points)
-                })
-                .style({
-                  'stroke-width': lb.lineWidth,
-                  'stroke': function() { return labelsColorFormatter(d, i, lb.lineColor); }
-                });
-              }
-          });
-
-        }, 1);
-
-      } // END: lb.hideLabels
-      else {
+      } else {
         showLegend = true;
       }
 
@@ -1458,7 +1450,7 @@ window.Chart = function(container) {
 
     // Add Legends
     if (showLegend || charts.legendformatter) {
-      charts[charts.legendformatter ? 'renderLegend' : 'addLegend'](series);
+      charts[charts.legendformatter ? 'renderLegend' : 'addLegend'](series, 'donut');
     }
 
     // Set initial selected
@@ -1684,7 +1676,7 @@ window.Chart = function(container) {
         g.append('path')
          .attr('d', line(set.data))
          .attr('stroke', options.isMinMax ? '#999999' : charts.sparklineColors(i))
-         .attr('class', 'team');
+         .attr('class', 'team connected-line');
     }
 
 
@@ -1761,7 +1753,64 @@ window.Chart = function(container) {
           charts.hideTooltip();
           d3.select(this).attr('r', (options.isMinMax && max === d ||
             options.isMinMax && min === d) ? (dotsize+1) : dotsize);
+        })
+        .on('click', function(d, i) {
+          var data = {value: d, index: i, name: chartData[0].name};
+
+          if (options.isMinMax && max === d) {
+            data.isHighest = true;
+          }
+          if (options.isMinMax && min === d) {
+            data.isLowest = true;
+          }
+          if (options.isPeakDot && max === d) {
+            data.isPeakDot = true;
+          }
+
+          charts.selectElement(d3.select(this), svg.selectAll('.point, .connected-line'), data);
         });
+
+    // Set initial selected
+    (function () {
+      var selected = 0,
+        selector,
+        selectorData,
+        d = chartData[0],
+
+        setSelected = function (d, i) {
+
+          var elem = svg.selectAll('.point:nth-child('+ (i+2) +')'),
+            isSelected = elem.node() && elem.classed('is-selected');
+
+          if (!isSelected) {
+            var data = {value: d, index: i, name: chartData[0].name};
+
+            if (options.isMinMax && max === d) {
+              data.isHighest = true;
+            }
+            if (options.isMinMax && min === d) {
+              data.isLowest = true;
+            }
+            if (options.isPeakDot && max === d) {
+              data.isPeakDot = true;
+            }
+
+            selected++;
+            selector = elem;
+            selectorData = data;
+          }
+        };
+
+        if (d && d.data && typeof d.selected === 'number' && d.selected > -1) {
+          if (d.data[d.selected]) {
+            setSelected(d.data[d.selected], d.selected);
+          }
+        }
+
+      if (selected > 0) {
+        charts.selectElement(selector, svg.selectAll('.point, .connected-line'), selectorData);
+      }
+    })();
 
     $(container).trigger('rendered');
 
@@ -2668,16 +2717,34 @@ window.Chart = function(container) {
     }
 
     //Append the SVG in the parent area.
-    var dataset = chartData,
-      hideDots = (options.hideDots),
+    var longestLabel = '',
+      longestLabelLength = 0,
+      dataset = chartData,
+      isAxisXRotate = (settings.xAxis && settings.xAxis.rotate !== undefined),
+      getMaxes = function (d, option) {
+        return d3.max(d.data, function(d) {
+          return option ? d.value[option] : d.value;
+        });
+      };
+
+    if (isAxisXRotate) {
+      //get the longeset label
+      dataset[0].data.map(function (d) {
+        if (d.name.length > longestLabel.length) {
+          longestLabel = d.name;
+        }
+      });
+      longestLabelLength = longestLabel.length;
+    }
+
+    var hideDots = (options.hideDots),
       parent = $(container).parent(),
       isCardAction = !!$('.widget-chart-action', parent).length,
-      isAxisXRotate = !!(!!settings.xAxis && settings.xAxis.rotate !== undefined),
       isViewSmall = parent.width() < 450,
       margin = {
         top: (isAxisLabels.top ? (isCardAction ? 15 : 40) : (isCardAction ? 5 : 30)),
         right: (isAxisLabels.right ? (isViewSmall ? 45 : 65) : (isViewSmall ? 45 : 55)),
-        bottom: (isAxisLabels.bottom ? (isAxisXRotate ? 60 : 50) : (isAxisXRotate ? 45 : 35)),
+        bottom: (isAxisLabels.bottom ? (isAxisXRotate ? 60 : 50) : (isAxisXRotate ? (longestLabelLength * 5) + 35 : 35)),
         left: (isAxisLabels.right ? (isViewSmall ? 55 : 75) : (isViewSmall ? 45 : 65))
       },
       width = parent.width() - margin.left - margin.right,
@@ -2723,12 +2790,7 @@ window.Chart = function(container) {
     var maxes,
       x = ((!!settings.xAxis && !!settings.xAxis.scale) ? (settings.xAxis.scale) : (d3.scale.linear())).range([0, width]),
       y = d3.scale.linear().range([height, 0]),
-      z = d3.scale.linear().range([1, 25]),
-      getMaxes = function (d, option) {
-        return d3.max(d.data, function(d) {
-          return option ? d.value[option] : d.value;
-        });
-      };
+      z = d3.scale.linear().range([1, 25]);
 
     if (isBubble) {
       maxes = {
@@ -2763,6 +2825,19 @@ window.Chart = function(container) {
       .tickSize(-(width + 20))
       .tickPadding(isRTL ? -18 : 20)
       .orient('left');
+
+    if (settings.yAxis && settings.yAxis.formatter) {
+      yAxis.tickFormat(function (d, i) {
+        if (typeof settings.yAxis.formatter === 'function') {
+          return settings.yAxis.formatter(d, i);
+        }
+        return d;
+      });
+    }
+
+    if (settings.yAxis && settings.yAxis.ticks) {
+      yAxis.ticks(settings.yAxis.ticks.number, settings.yAxis.ticks.format);
+    }
 
     //Append The Axis Labels
     if (isAxisLabels.atLeastOne) {
@@ -2827,9 +2902,13 @@ window.Chart = function(container) {
 
     if (isAxisXRotate) {
       svg.selectAll('.x.axis .tick text')  // select all the text for the xaxis
-      .attr('transform', function() {
-         return 'translate(' + this.getBBox().height*-2 + ', '+ this.getBBox().height + ')rotate('+ settings.xAxis.rotate +')';
-     });
+      .attr('y', 0)
+      .attr('x', function () {
+        return -(this.getBBox().width + 10);
+      })
+      .attr('dy', '1em')
+      .attr('transform', 'rotate(' + settings.xAxis.rotate + ')')
+      .style('text-anchor', 'start');
     }
 
     // Create the line generator
@@ -3640,22 +3719,25 @@ window.Chart = function(container) {
 
   //Select the element and fire the event, make the inverse selector opace
   this.selectElement = function(elem, inverse, data) {
-    var isSelected = elem.node() && elem.classed('is-selected');
+    var isSelected = elem.node() && elem.classed('is-selected'),
+      triggerData = [{elem: elem, data: (!isSelected ? data : {})}];
 
-    inverse.classed('is-not-selected', false)
-      .classed('is-selected', false)
+    inverse.classed('is-selected', false)
       .classed('is-not-selected', !isSelected);
 
-     elem.classed('is-not-selected', false)
-        .classed('is-selected', !isSelected);
+    elem.classed('is-not-selected', false)
+      .classed('is-selected', !isSelected);
+
+    this._selected = $.isEmptyObject(triggerData[0].data) ? [] : triggerData;
 
     //Fire Events
-     $(container).triggerHandler('selected', [elem, (!isSelected ? data : {})]);
+     $(container).triggerHandler('selected', [triggerData]);
   };
 
   // Make bars to be Selected or Unselected
   this.setSelectedElement = function (o) {
     var s = charts.settings,
+      dataset = s.dataset,
       isPositiveNegative = s.type === 'column-positive-negative',
       isTypeHorizontalBar = s.chartType === 'HorizontalBar',
       isTypeColumn = s.chartType === 'Column',
@@ -3676,8 +3758,15 @@ window.Chart = function(container) {
       pnNegativeText = svg.selectAll('.bartext.negative, .target-bartext.negative'),
       thisGroup = d3.select(o.selector.parentNode),
       thisGroupId = parseInt((thisGroup.node() ? thisGroup.attr('data-group-id') : 0), 10),
-      triggerData = [selector[0], o.d, (isGrouped ? thisGroupId : o.i)],
-      selectedBars = [];
+      triggerData = [],
+      selectedBars = [],
+      thisData;
+
+    if (isStacked || isTypePie) {
+      dataset = dataset || null;
+    } else {
+      dataset = (dataset && dataset[thisGroupId]) ? dataset[thisGroupId].data : null;
+    }
 
     ticksX.style('font-weight', 'normal');
     ticksY.style('font-weight', 'normal');
@@ -3690,7 +3779,7 @@ window.Chart = function(container) {
       svg.selectAll('.bar, .target-bar').style('opacity', 0.6);
 
       // By legends only
-      if (s.isByLegends) {
+      if (s.isByLegends && !isTypePie) {
         if (isPositiveNegative) {
           s.svg.selectAll(isPositive ?
             '.bar.positive, .target-bar.positive': '.bar.negative, .target-bar.negative')
@@ -3698,30 +3787,39 @@ window.Chart = function(container) {
 
           (isPositive ? pnPositiveText : pnNegativeText).style('font-weight', 'bolder');
 
-          svg.selectAll('.bar.is-selected').each(function(d, i) {
-            selectedBars.push([d3.select(this)[0], d, i]);
+          svg.selectAll('.bar').each(function(d, i) {
+            var bar = d3.select(this);
+            if (bar.classed('is-selected')) {
+              selectedBars.push({elem: bar[0], data: (dataset ? dataset[i] : d)});
+            }
           });
-          triggerData.push(selectedBars);
+          triggerData = selectedBars;
         }
         // Grouped and stacked only -NOT singular-
         else if (isTypeColumn || isTypeHorizontalBar) {
           if (isGrouped || isSingular) {
             s.svg.selectAll('.series-'+ o.i).classed('is-selected', true).style('opacity', 1);
-          }
-          else {
+          } else {
             thisGroup.classed('is-selected', true)
               .selectAll('.bar').classed('is-selected', true).style('opacity', 1);
           }
+
           svg.selectAll('.bar.is-selected').each(function(d, i) {
-            selectedBars.push([d3.select(this)[0], d, i]);
+            var bar = d3.select(this);
+
+            thisData = s.dataset;
+            thisData = thisData ? (isStacked ? isSingular ? (thisData[0].data[o.i]) : (thisData[o.i].data[i]) : thisData[i].data[o.i]) : d;
+            selectedBars.push({elem: bar[0], data: thisData});
           });
-          triggerData.push(selectedBars);
+          triggerData = selectedBars;
         }
       }
 
       // Single and stacked only -NOT grouped-
       else if (isSingular && isStacked && isTypeColumn) {
+        thisData = dataset[0] && dataset[0].data ? dataset[0].data : o.d;
         selector.classed('is-selected', true).style('opacity', 1);
+        triggerData.push({elem: selector[0], data: thisData[o.i]});
       }
 
       // Single or groups only -NOT stacked-
@@ -3734,16 +3832,23 @@ window.Chart = function(container) {
         d3.select(svg.selectAll('.bartext')[0][o.i]).style('font-weight', 'bolder');
         d3.select(svg.selectAll('.target-bartext')[0][o.i]).style('font-weight', 'bolder');
 
-        if (isGrouped || isPositiveNegative) {
-          if (!isPositiveNegative) {
+        if (isGrouped || isPositiveNegative || isTypeColumn) {
+          if (!isPositiveNegative && !isTypeColumn || (isTypeColumn && isGrouped)) {
             thisGroup.classed('is-selected', true)
               .selectAll('.bar').classed('is-selected', true).style('opacity', 1);
           }
 
-          svg.selectAll('.bar.is-selected').each(function(d, i) {
-            selectedBars.push([d3.select(this)[0], d, i]);
+          thisGroup.selectAll('.bar').each(function(d, i) {
+            var bar = d3.select(this);
+            if (bar.classed('is-selected')) {
+              selectedBars.push({elem: bar[0], data: (dataset ? dataset[i] : d)});
+            }
           });
-          triggerData.push(selectedBars, thisGroup[0]);
+          if (isGrouped) {
+            triggerData.push({groupIndex: thisGroupId, groupElem: thisGroup[0], groupItems: selectedBars});
+          } else {
+            triggerData = selectedBars;
+          }
         }
       }
 
@@ -3756,9 +3861,10 @@ window.Chart = function(container) {
           .classed('is-selected', true).style('opacity', 1);
 
         svg.selectAll('.bar.is-selected').each(function(d, i) {
-          selectedBars.push([d3.select(this)[0], d, i]);
+          var bar = d3.select(this);
+          selectedBars.push({elem: bar[0], data: (dataset ? dataset[i].data[o.i] : d)});
         });
-        triggerData.push(selectedBars);
+        triggerData = selectedBars;
       }
 
       // Pie
@@ -3768,10 +3874,12 @@ window.Chart = function(container) {
           .style({'stroke': '', 'stroke-width': ''})
           .attr('transform', '');
 
-        var color = charts.chartColor(o.i, 'pie', o.d.data);
+        var color = charts.chartColor(o.i, 'pie', o.d.data),
+          thisArcData = dataset && dataset[0] && dataset[0].data ? dataset[0].data[o.i] : (o.d ? o.d.data : o.d);
         selector.classed('is-selected', true)
           .style({'stroke': color, 'stroke-width': 0})
           .attr('transform', 'scale(1.025, 1.025)');
+        triggerData.push({elem: selector[0], data: thisArcData, index: o.i});
       }
     }
     // Task make unselected
@@ -3792,8 +3900,10 @@ window.Chart = function(container) {
       s.isByLegends = false;
     }
 
+    this._selected = triggerData;
+
     if (o.isTrigger) {
-      $(o.container).triggerHandler((taskSelected ? 'selected' : 'unselected'), triggerData);
+      $(o.container).triggerHandler((taskSelected ? 'selected' : 'unselected'), [triggerData]);
     }
   };
 
@@ -3912,6 +4022,10 @@ $.fn.chart = function(options) {
     chartInst = new Chart(this, options);
     instance = $.data(this, 'chart', chartInst);
     instance.settings = options;
+    instance._selected = [];
+    instance.getSelected = function() {
+      return this._selected;
+    };
 
     if ($.isEmptyObject(chartInst)) {
      return;

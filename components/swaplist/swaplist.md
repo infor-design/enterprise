@@ -1,11 +1,11 @@
 # Swaplist Component [Learn More](https://soho.infor.com/index.php?p=component/swaplist)
 
-{{api-details}}
-
 ## Configuration options
 
 1. [Main Swaplist Example](../components/swaplist/example-index.html)
 2. [Swaplist with Selected Items](../components/swaplist/example-selected.html)
+
+{{api-details}}
 
 ## Behavior Guidelines
 

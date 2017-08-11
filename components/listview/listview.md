@@ -1,8 +1,6 @@
 
 # Listview  [Learn More](#)
 
-{{api-details}}
-
 ## Configuration Options
 
 1. Default Listview Example [View Example]( ../components/listview/example-index)
@@ -12,6 +10,8 @@
 5. Paging Client Side [View Example]( ../components/listview/example-paging-clientside)
 6. Single Select [View Example]( ../components/listview/example-singleselect.html)
 7. Status Indicators [View Example]( ../components/listview/example-status)
+
+{{api-details}}
 
 ## Behavior Guidelines
 

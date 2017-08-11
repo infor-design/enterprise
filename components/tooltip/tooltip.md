@@ -1,7 +1,5 @@
 # Tooltip Component [Learn More](https://soho.infor.com/index.php?p=component/tooltip)
 
-{{api-details}}
-
 ## Important Notes
 
 The [Popover]( ../components/popover) component shares a common API with the Tooltip Component.  When a Soho Popover component is invoked, any methods and events used by the Tooltip will also be available in the Popover.
@@ -18,6 +16,8 @@ The [Popover]( ../components/popover) component shares a common API with the Too
 8. [Demo of AJAX-powered Tooltip Content]( ../components/tooltip/example-ajax-tooltip)
 9. [Using the `keepOpen` setting]( ../components/tooltip/example-keep-open)
 
+{{api-details}}
+
 ## Behavior Guidelines
 
 - For accessibility the tooltip should be shown when you keyboard onto an element after a short delay (Open Task)
@@ -26,7 +26,7 @@ The [Popover]( ../components/popover) component shares a common API with the Too
 
 ### Simple Tooltips
 
-If using the [Soho Initializer]( ../components/initialize), any elements with a `title` attribute will be picked up and turned into a Soho Tooltip when the element becomes hovered (or tapped in a mobile scenario). It may be needed to [reinitialize a component](https://soho.infor.com/index.php?p=component/getting-started) or page section which has been added.  
+If using the [Soho Initializer]( ../components/initialize), any elements with a `title` attribute will be picked up and turned into a Soho Tooltip when the element becomes hovered (or tapped in a mobile scenario). It may be needed to [reinitialize a component](https://soho.infor.com/index.php?p=component/getting-started) or page section which has been added.
 
 ```html
 

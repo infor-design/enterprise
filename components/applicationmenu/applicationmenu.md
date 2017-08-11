@@ -1,14 +1,14 @@
 
 # Application Menu  [Learn More](https://soho.infor.com/index.php?p=component/application-menu)
 
-{{api-details}}
-
 ## Configuration Options
 
 1. Default About Example [View Example]( ../components/applicationmenu/example-index)
 2. Different Header Types Event Demo [View Example]( ../components/applicationmenu/example-different-header-types)
 3. As Shown on the Soho Site [View Example]( ../components/applicationmenu/example-soho-site)
 4. Showing Top Level Buttons [View Example]( ../components/applicationmenu/example-top-level-buttons)
+
+{{api-details}}
 
 ## Additional Test Case Pages
 

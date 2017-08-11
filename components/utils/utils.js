@@ -405,46 +405,52 @@
         label = label.next();
       }
       element.addClass('hide-focus')
-        .on('focusin.hide-focus', function() {
+        .on('focusin.hide-focus', function(e) {
           if (!isClick && !isFocused && !labelClicked) {
             element.removeClass('hide-focus');
+            element.triggerHandler('hidefocusremove', [e]);
           }
           isClick = false;
           isFocused = true;
           labelClicked = false;
         })
-        .on('focusout.hide-focus', function() {
+        .on('focusout.hide-focus', function(e) {
           element.addClass('hide-focus');
           labelClicked = label.is(labelClicked);
           isClick = false;
           isFocused = false;
+          element.triggerHandler('hidefocusadd', [e]);
         });
 
-      label.on('mousedown.hide-focus', function() {
+      label.on('mousedown.hide-focus', function(e) {
         labelClicked = this;
         isClick = true;
         element.addClass('hide-focus');
+        element.triggerHandler('hidefocusadd', [e]);
       });
     }
 
     // All other elements (ie. Hyperlinks)
     else {
       element.addClass('hide-focus')
-        .on('mousedown.hide-focus touchstart.hide-focus', function() {
+        .on('mousedown.hide-focus touchstart.hide-focus', function(e) {
           isClick = true;
           element.addClass('hide-focus');
+          element.triggerHandler('hidefocusadd', [e]);
         })
-        .on('focusin.hide-focus', function() {
+        .on('focusin.hide-focus', function(e) {
           if (!isClick && !isFocused) {
             element.removeClass('hide-focus');
+            element.triggerHandler('hidefocusremove', [e]);
           }
           isClick = false;
           isFocused = true;
         })
-        .on('focusout.hide-focus', function() {
+        .on('focusout.hide-focus', function(e) {
           element.addClass('hide-focus');
           isClick = false;
           isFocused = false;
+          element.triggerHandler('hidefocusadd', [e]);
         });
     }
   };

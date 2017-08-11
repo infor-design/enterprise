@@ -1,7 +1,5 @@
 # Slider Component [Learn More](#)
 
-{{api-details}}
-
 ## Configuration Details
 
 1. Main Example [View Example](../components/slider/example-index)
@@ -11,6 +9,8 @@
 5. Vertical Sliders [View Example](../components/slider/example-vertical)
 6. Custom Tooltip Decorators [View Example](../components/slider/example-custom-tooltips)
 7. `setValue()` API Demo [View Example](../components/slider/example-set-value-api)
+
+{{api-details}}
 
 ## Code Example
 

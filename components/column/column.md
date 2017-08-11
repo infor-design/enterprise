@@ -1,16 +1,6 @@
 
 # Column Chart  [Learn More](#)
 
-## API Details
-
-### Dataset Settings
-
-* name - this value will be on the axis
-* shortName - this value will be used if the name wont fit on the axis
-* abbrName - this value will be used if the name and shortName wont fit on the axis (fx a phone sized widget)
-* tooltip - the custom tooltip. you can pass {{value}} to have the formatted value inserted
-* value - the value to use across all lines to domain the axis
-
 ## Configuration Options
 
 1. Column Chart Main Example [View Example]( ../components/column/example-index)
@@ -23,6 +13,16 @@
 8. Pattern Colors [View Example]( ../components/column/example-patterns)
 9. Selecting a Section Colors [View Example]( ../components/column/example-selected)
 10. Testing Date Values [View Test]( ../components/column/test-by-date)
+
+## API Details
+
+### Dataset Settings
+
+* name - this value will be on the axis
+* shortName - this value will be used if the name wont fit on the axis
+* abbrName - this value will be used if the name and shortName wont fit on the axis (fx a phone sized widget)
+* tooltip - the custom tooltip. you can pass {{value}} to have the formatted value inserted
+* value - the value to use across all lines to domain the axis
 
 ## Code Example
 

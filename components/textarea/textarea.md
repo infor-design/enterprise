@@ -1,5 +1,9 @@
 # Textarea Component [Learn More](#)
 
+## Configuration Details
+
+1. [Text Area  Examples]( ../components/textarea/example-index)
+
 {{api-details}}
 
 ## Behavior Guidelines

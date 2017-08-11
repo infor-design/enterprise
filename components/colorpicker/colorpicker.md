@@ -9,13 +9,13 @@
 4. Test States [View Test]( ../components/colorpicker/test-states)
 5. Test it works on a Modal [View Test]( ../components/colorpicker/test-modal)
 
+{{api-details}}
+
 ## Code Example
 
-
-The color picker is made from a text input with class="colorpicker". It can be initialized manually or via the page initializer. Once initiallized it functions similar to a dropdown except that the list is showing colors in a pallette / swatch. A tooltip shows the hex code to be inserted. After selecting the hex code is inserted.
+The color picker is made from a text input with class="colorpicker". It can be initialized manually or via the page initializer. Once initialized it functions similar to a dropdown except that the list is showing colors in a pallette / swatch. A tooltip shows the hex code to be inserted. After selecting the hex code is inserted.
 
 ```html
-
 
 <div class="field">
   <label for="background-color">Color Picker</label>
@@ -24,7 +24,6 @@ The color picker is made from a text input with class="colorpicker". It can be i
 
 
 ```
-
 
 ## Behavior Guidelines
 
@@ -38,7 +37,7 @@ The color picker is made from a text input with class="colorpicker". It can be i
 ## Keyboard Shortcuts
 
 -   **Tab** moves focus into the edit field.
--   **Down Arrow** opens the drop-down list and moves focus to the selected option. (If nothing is selected, then focus moves to the first option in the list). If the combobox is not editable, then the space bar may also be used to open the drop-down list.
+-   **Down Arrow** opens the color list and moves focus to the selected color. (If nothing is selected, then focus moves to the first color in the list).
 -   **Up and Down Arrow** moves focus up and down the list of colors.
 -   **Enter** selects the color on the list and updates the combo then closes the drop down and returns to the edit field.
 -   **Escape key** closes the list, returns focus to the edit field, and does not change the current selection.

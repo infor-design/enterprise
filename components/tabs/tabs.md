@@ -1,7 +1,5 @@
 # Tabs Component [Learn More](https://soho.infor.com/index.php?p=component/tabs)
 
-{{api-details}}
-
 ## Configuration Options
 
 1. [Common Configuration]( ../components/tabs/example-index)
@@ -10,6 +8,8 @@
 4. [Dropdown Tabs]( ../components/tabs/example-dropdown-tabs)
 5. [`updateCount()` Demo]( ../components/tabs/example-update-count-api)
 6. [`changeTabOnHashChange` Setting with Callback Demo]( ../components/tabs/example-url-hash-change)
+
+{{api-details}}
 
 ## Code Examples
 
@@ -193,6 +193,10 @@ Shift + Tab works similarly to the strategy for the Tab key, but moves focus bac
 **NOTE:** For tabs to work correctly on mac you need to go to apple \>\> keyboard shortcuts, then click the checkbox at the bottom of the page at the bottom that says full keyboard access - all controls. This way the system can tab into any elements (this is a mac setting).
 
 If using Safari on a Mac, you also need to go into Safari \>\> Preferences... then click the checkbox near the top that says Press Tab to Highlight Each Option on a webpage. This allows hyperlinks to be focusable by default (without having to press Option + Tab).
+
+### ** Alt+backspace / Alt+Delete**
+
+-  If the tab is dismissible that tab will be closed. We use the alt combination because backspace can be used to go back a page.
 
 ## States and Variations
 

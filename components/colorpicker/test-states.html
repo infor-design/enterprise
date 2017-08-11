@@ -12,6 +12,11 @@
     </div>
 
     <div class="field">
+      <label for="readonly-color">Readonly</label>
+      <input class="colorpicker" readonly id="readonly-color" type="text" value="#0896e9"/>
+    </div>
+
+    <div class="field">
       <label for="dirty-color">Dirty Tracking</label>
       <input class="colorpicker" data-trackdirty="true"  id="dirty-color" type="text"/>
     </div>
@@ -23,3 +28,9 @@
 
   </div>
 </div>
+
+<script>
+  $('#background-color').on('change', function () {
+    console.log('Change Fired');
+  });
+</script>

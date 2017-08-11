@@ -71,7 +71,9 @@
 
 //Breadcrumb on a toolbar (see grid example)
 .toolbar .breadcrumb {
-  padding-top: 6px;
+  display: inline-block;
+  padding-top: 8px;
+  vertical-align: top;
 
   a,
   span {

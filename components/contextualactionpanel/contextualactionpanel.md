@@ -1,8 +1,6 @@
 
 # Contextual Action Panel  [Learn More](#)
 
-{{api-details}}
-
 ## Configuration Options
 
 1. Default CAP Example [View Example]( ../components/contextualactionpanel/example-index)
@@ -17,6 +15,7 @@
 9. Open on Grid Rows [View Test]( ../components/contextualactionpanel/test-trigger-immediate)
 10. Search Field / Keyboard Test [View Test]( ../components/contextualactionpanel/test-searchfield)
 
+{{api-details}}
 
 ## Code Example
 

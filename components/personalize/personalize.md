@@ -1,14 +1,14 @@
 
 # Personalize  [Learn More](#)
 
-{{api-details}}
-
 ## Configuration Options
 
 1. Themes Example [View Example]( ../components/personalize/example-index?colors=800000)
 2. Module Tabs [View Example]( ../patterns/module-tabs?colors=800000)
 3. Sub Headers/Header [View Example](../patterns/builder?colors=800000)
 4. Property Page  [View Example]( ../components/personalize/example-settings-page)
+
+{{api-details}}
 
 ## Code Example
 

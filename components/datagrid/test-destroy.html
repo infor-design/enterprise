@@ -9,7 +9,7 @@
 
 <div class="row">
   <div class="twelve columns">
-
+<!--
     <div class="toolbar" role="toolbar">
       <div class="title">
         Compressors
@@ -46,7 +46,7 @@
 
       </div>
     </div>
-
+-->
     <div id="datagrid">
     </div>
   </div>
@@ -85,7 +85,7 @@
                 selectable: 'single',
                 paging: true,
                 pagesize: 25,
-                toolbar: {keyword: true, results: true}
+                toolbar: {title: 'Products', results: true, collapsibleFilter: false, dateFilter: false ,keywordFilter: true, advancedFilter: true, actions: true, views: true , rowHeight: true}
             });
 
             var secs = 0, end,

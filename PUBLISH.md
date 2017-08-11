@@ -79,32 +79,49 @@ http://bamboo.infor.com/browse/SOHO-NGV-16
 - Update dev53
 - add label to successful build
 
-# How To Make Release (4.3.0)
+# How To Make Release (4.3.1)
 
-* Check Change Log is updated
-* Create Release Email Template (Jonathan)
-* Merge 4.2.6-rc (the rc branch) back onto the 4.2.x (masterish branch) - PR or Git Merge
-* Enable the npm publish task on the build.
-* Label the build Release/426
-* Delete the 4.2.6-rc branch
-* Check there is a build (Plan name , Plan key make same fx CUR  === SOHO-CUR)
-* Enable the publish task for one build.
-* Make sure there is branches for 4.3.X and 4.3.0-rc
-* Make 4.3.0-rc default branch
-* Test Npm packages
-* Git Tag
+## Info
+* Check ChangeLog.md is updated this info is distributed by email
+* Create new version in Jira and mark current as released https://jira/plugins/servlet/project-config/SOHO/versions
+* Generate Release Notes http://bit.ly/2w6X8Xw
+* Notify - On Slack, By Email ect
+
+## Git Operations
+* Edit version in package.json and publish package.json (from 4.3.1-rc to 4.3.1 as an example)
+* Push last PR
+* Check for Last PR's http://git.infor.com/projects/SOHO/repos/angular-components/pull-requests and http://git.infor.com/projects/SOHO/repos/controls/pull-requests and make sure all merged
+* Merge  4.3.1-rc (the rc branch) back onto the 4.3.x (masterish branch) - Using a PR or Git Merge
+* Git Tag the release from the 4.3.x branch
 ```bash
- git tag 4.2.6
+ git tag 4.3.1
  git push origin --tags
 ```
-* Create new version in Jira
-* Generate Release Notes
-* Make sure all new examples on the index page are updated
-* Update Staging (Below)
-* Delete the rs from pool server usalvlhlpool1
+* Delete the 4.2.6-rc branch and all feature/bug fix branches http://git.infor.com/projects/SOHO/repos/controls/branches
+* Make the new branch off 4.3.x for the new version (4.3.2-rc)
+  * In git http://git.infor.com/projects/SOHO/repos/controls/settings set the 4.3.2-rc branch as the default
+  * set branch permissions
+
+## Build Operations
+* Change the v-Next build http://bamboo.infor.com/build/admin/edit/editBuildTasks.action?buildKey=SOHO-NEXT-JOB1
+  * change the name to 4.3.2 (v next)
+  * change the repo it points to
+* Change the current build http://bamboo.infor.com/build/admin/edit/editBuildTasks.action?buildKey=SOHO-R43X-JOB1
+  * change the versions in the build config
+  * Label the build release-431 for example http://bamboo.infor.com/browse/label/release-431
+
+## Test Out Operations
+* Test Npm packages and rebuild if you got it wrong
+* New and old links for example:
+http://usalvlhlpool1.infor.com/4.3.1/components/
+http://usalvlhlpool1.infor.com/4.3.2-rc/components/
+
+## Deploy Site Operations
+
+* Delete the old version from pool server usalvlhlpool1
 ```bash
 curl -u hookandloop:hookandloop http://usalvlhlpool1/swarm/get_endpoints
-curl -X DELETE -H "Content-Type: application/json"     -u hookandloop:n98Y-uhPb-llGa-LdUl     http://usalvlhlpool1.infor.com/swarmproxy/rm_service     -d '{"name":"sohoxi-4-2-6-rc"}'
+curl -X DELETE -H "Content-Type: application/json"     -u hookandloop:n98Y-uhPb-llGa-LdUl     http://usalvlhlpool1.infor.com/swarmproxy/rm_service     -d '{"name":"sohoxi-4-3-1-rc"}'
 
 sudo docker ps -a
 docker stop 6410bbcfd5e2
@@ -113,7 +130,8 @@ docker rm 6410bbcfd5e2
 docker images | grep <name>
 docker rmi PID
 ```
-### Update version in @infor/sohoxi-angular
+
+## Update version in @infor/sohoxi-angular
 * Clone repo
 ```bash
 $ git clone ssh://git@git.infor.com:7999/soho/angular-components.git
@@ -121,11 +139,6 @@ $ git clone ssh://git@git.infor.com:7999/soho/angular-components.git
 * Bump version in package.json to match new version of `@infor/sohoxi`
 * Bump `@infor/sohoxi's verion` under dependencies to match new version (i.e "^4.2.3-develop")
 * Commit, tag and push changes
-
-Later
-* Send Email to team
-* Announce to Slack
-* Release Email
 
 # How To Sync SoHo Staging Site to prod
 

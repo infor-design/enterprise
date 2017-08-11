@@ -336,13 +336,23 @@ $fileupload-error-hover-color: darken($alert01, 15%);
 $fileupload-error-border-color: $alert02;
 $fileupload-border-color: $graphite05;
 $fileupload-droparea-color: $graphite05;
-$fileupload-droparea-hover-color: $graphite05;
-$fileupload-droparea-hover-border-color: $primary-color;
-$fileupload-droparea-hover-bg-color: rgba(200, 233, 244, .30);
+$fileupload-droparea-bg-color: rgba($graphite02, .5);
+$fileupload-droparea-hover-color: $graphite10;
+$fileupload-droparea-hover-bg-color: $graphite02;
+$fileupload-droparea-hover-border-color: $graphite06;
+$fileupload-droparea-hover-icon-color: $graphite05;
+$fileupload-droparea-dd-hover-color: $graphite05;
+$fileupload-droparea-dd-hover-border-color: $primary-color;
+$fileupload-droparea-dd-hover-bg-color: rgba(200, 233, 244, .30);
 $fileupload-status-color: $white;
 $fileupload-status-hover-color: $white;
 $fileupload-cancel-bg-color: $graphite06;
 $fileupload-cancel-hover-bg-color: $graphite10;
+$fileupload-disabled-icon-color: $graphite04;
+$fileupload-disabled-border-color: $graphite03;
+$fileupload-disabled-bg-color: $graphite01;
+$fileupload-disabled-color: $graphite03;
+
 
 //Spinbox
 $spinbox-active-color: $font-color-extrahighcontrast;
@@ -456,9 +466,9 @@ $modal-border-color: $graphite03;
 $modal-box-shadow: 0 2px 5px $drop-shadow-depth;
 $modal-btn-color: $graphite06;
 $modal-btn-border-color: $graphite03;
-$modal-btn-hover-color: $graphite08;
+$modal-btn-hover-color: $graphite10;
 $modal-btn-primary-color: $primary-color;
-$modal-btn-primary-hover-color: $azure07;
+$modal-btn-primary-hover-color: $azure08;
 $modal-btn-primary-disabled-color: $azure07;
 $modal-btn-disabled-color: $graphite06;
 $modal-btn-disabled-opacity: .5;

@@ -1,11 +1,19 @@
 
 # Pie Chart  [Learn More](#)
 
+## Configuration Options
+
+1. Pie Chart Main Example [View Example]( ../components/pie/example-index)
+2. Hcm Example [View Example]( ../components/pie/example-hcm)
+3. Tooltips [View Example]( ../components/pie/example-tooltip)
+4. Donut Chart [View Example]( ../components/donut/example-index)
+
 ## API Details
 
 ### Settings
 
--   `redrawOnResize` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true chart will not resize / update when resizing the page.
+-   `redrawOnResize` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
+-   `animate` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If false chart will not animate when rendering
 -   `labels` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  An object with options to configure the labels of form `labels : {hideLabels: true}`
 - `labels: {hideLabels}` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** - Do not show labels
 - `labels: {isTwoline}` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** - Show the labels on two different lines
@@ -20,13 +28,6 @@
 - `labels: {lineColor}` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** - How to colorize the line links can be one of `'default'|'color-as-arc'|'#000000'|'black'`
 - `labels: {lineWidth}` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** - How many pixels should the line be (default 2)
 - `labels: {linehideWhenMoreThanPercentage}` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** - If the percentage is less than this (default 10), hide the line.
-
-## Configuration Options
-
-1. Pie Chart Main Example [View Example]( ../components/pie/example-index)
-2. Hcm Example [View Example]( ../components/pie/example-hcm)
-3. Tooltips [View Example]( ../components/pie/example-tooltip)
-4. Donut Chart [View Example]( ../components/donut/example-index)
 
 ## Code Example
 

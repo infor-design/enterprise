@@ -1,13 +1,12 @@
 # Splitter Component [Learn More](#)
 
-{{api-details}}
-
 ## Configuration Examples
 
 1. Main [View Example](../components/splitter/example-index)
 2. Splitter Element in Left Pane [View Example](../components/splitter/example-splitter-left)
 3. Events [View Example](../components/splitter/example-events)
 
+{{api-details}}
 
 ## Code Example
 

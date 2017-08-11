@@ -1,9 +1,16 @@
 # Popupmenu Component [Learn More](#)
 
+## Configuration Options
+
+1. Popupmenu as a Menu Button [View Example]( ../components/popupmenu/example-menubutton)
+2. Popupmenu with multiselect [View Example]( ../components/popupmenu/example-selectable-multiple)
+3. Popupmenu with single select [View Example]( ../components/popupmenu/example-selectable)
+4. Popupmenu with disabled submenus [View Example]( ../components/popupmenu/example-disabled-submenus)
+5. Popupmenu with dicons [View Example]( ../components/popupmenu/example-icons)
+
 {{api-details}}
 
 ## Code Example
-
 
 Popupmenu can be invoked in several ways. As a right click action menu fx on an input field or grid or list row (also known as a [ Context Menu]( ../components/contextmenu)). Via a click action menu for example on a menu or actions button. Or manually `trigger='immediate'` as needed via the popupmenu api.
 
@@ -29,15 +36,6 @@ Here is an example of a menu button using a popupmenu. This is also described on
 
 
 ```
-{{api-details}}
-
-## Configuration Options
-
-1. Popupmenu as a Menu Button [View Example]( ../components/popupmenu/example-menubutton)
-2. Popupmenu with multiselect [View Example]( ../components/popupmenu/example-selectable-multiple)
-3. Popupmenu with single select [View Example]( ../components/popupmenu/example-selectable)
-4. Popupmenu with disabled submenus [View Example]( ../components/popupmenu/example-disabled-submenus)
-5. Popupmenu with dicons [View Example]( ../components/popupmenu/example-icons)
 
 ## Accessibility
 

@@ -1,12 +1,12 @@
 
 # Expandable Area [Learn More](#)
 
-{{api-details}}
-
 ## Configuration Options
 
 1. Default Expandable Area Example [View Example]( ../components/expandablearea/example-index)
 2. Custom Link Text Demo [View Example]( ../components/expandablearea/example-custom-text)
+
+{{api-details}}
 
 ## Code Example
 

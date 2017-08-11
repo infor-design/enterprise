@@ -300,10 +300,13 @@
 
     &[disabled],
     &[disabled]:hover {
-      color: $modal-btn-disabled-color;
+      color: rgba($modal-btn-disabled-color, $modal-btn-disabled-opacity);
       cursor: default;
-      opacity: $modal-btn-disabled-opacity;
       text-decoration: none;
+
+      &.btn-modal-primary {
+        color: rgba($modal-btn-primary-disabled-color, $modal-btn-disabled-opacity);
+      }
     }
 
     &[disabled]:focus {
@@ -317,11 +320,6 @@
 
   .btn-modal-primary {
     color: $modal-btn-primary-color;
-
-    &[disabled] {
-      color: $modal-btn-primary-disabled-color;
-      opacity: $modal-btn-disabled-opacity;
-    }
 
     &:hover {
       color: $modal-btn-primary-hover-color;

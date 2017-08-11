@@ -1,11 +1,11 @@
 
 # Locale  [Learn More](#)
 
-{{api-details}}
-
 ## Configuration Options
 
 1. Simple Number Example [View Example]( ../components/locale/example-index)
+
+{{api-details}}
 
 ## Code Example - Initializing
 

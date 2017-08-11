@@ -16,7 +16,6 @@ The SwapList Component creates a list of options that can be picked and organize
 
 **Parameters**
 
--   `element`  
 -   `available` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)**  -  An array containing items for the available bucket.
 -   `selected` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)**  -   An array containing items for the selected bucket.
 -   `additional` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)**  -   An array containing items for the additional bucket.
@@ -28,6 +27,7 @@ The SwapList Component creates a list of options that can be picked and organize
 -   `selectedBtnRight` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -   A class name linking the move right button element.
 -   `additionalBtn` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -   A class name linking the additional button element.
 -   `template` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  An Html String with the mustache template for the view.
+-   `element`  
 
 ### getAvailable
 

@@ -2,11 +2,11 @@
 
 # Drag Behavior  [Learn More](#)
 
-{{api-details}}
-
 ## Configuration Options
 
 1. Drag Examples [View Example]( ../components/drag/example-index)
+
+{{api-details}}
 
 ## Code Example
 

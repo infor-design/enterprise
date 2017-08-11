@@ -1,7 +1,5 @@
 # Datepicker  [Learn More](https://soho.infor.com/index.php?p=component/buttons)
 
-{{api-details}}
-
 ## Configuration Options
 
 1. Simple Date Picker Example [View Example]( ../components/datepicker/example-index)
@@ -16,6 +14,8 @@
 10. In a Form [View Example]( ../components/datepicker/example-form.html)
 11. State Api [View Example]( ../components/datepicker/example-state-methods.html)
 12. Islamic Umalqura Calendar [View Example]( ../components/datepicker/example-umalqura.html?locale=ar-SA)
+
+{{api-details}}
 
 ## Code Example
 

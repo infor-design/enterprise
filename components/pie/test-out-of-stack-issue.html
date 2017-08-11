@@ -61,8 +61,10 @@ $('body').on('initialized', function () {
       }]
     }];
 
-  $('#pie-chart-example').chart({type: 'pie', dataset: pieData}).on('selected', function(e, elem, info) {
-    window.location = info.data.url;
+  $('#pie-chart-example').chart({type: 'pie', dataset: pieData}).on('selected', function(e, args) {
+    if (args[0] && args[0].data && args[0].data.url) {
+      window.location = args[0].data.url;
+    }
   });
 
 });

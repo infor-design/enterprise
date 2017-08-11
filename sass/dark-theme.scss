@@ -280,6 +280,10 @@ $fileupload-hover-color: $slate02;
 $fileupload-droparea-color: $slate04;
 $fileupload-droparea-hover-color: $slate04;
 $fileupload-droparea-hover-bg-color: $azure09;
+$fileupload-droparea-bg-color: rgba($slate07, .5);
+$fileupload-droparea-hover-bg-color: $slate07;
+$fileupload-droparea-dd-hover-border-color: $primary-color;
+$fileupload-droparea-dd-hover-bg-color: rgba($slate10, .30);
 
 //Spinbox
 $spinbox-active-color: $font-color-extrahighcontrast;
@@ -404,7 +408,7 @@ $modal-color: $white;
 $modal-btn-border-color: $slate05;
 $modal-btn-hover-color: $white;
 $modal-btn-primary-color: $azure04;
-$modal-btn-primary-hover-color: $azure05;
+$modal-btn-primary-hover-color: $azure03;
 $modal-btn-disabled-color: $white;
 $modal-btn-disabled-opacity: .3;
 $modal-primary-color: $white;

@@ -1,6 +1,6 @@
 {
   "name": "@infor/sohoxi",
-  "version": "4.3.1-rc",
+  "version": "4.3.2-rc",
   "shortName": "sohoxi",
   "description": "Hook & Loop - SoHo XI Controls",
   "author": "Hook & Loop",
@@ -48,7 +48,7 @@
     "chalk": "^1.1.3",
     "colors": "^1.1.2",
     "connect-multiparty": "^2.0.0",
-    "documentation": "^4.0.0-beta13",
+    "documentation": "^4.0.0-beta.18",
     "eslint": "^3.14.1",
     "express": "^4.13.4",
     "express-slash": "^2.0.1",

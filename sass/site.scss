@@ -282,7 +282,7 @@ p strong {
 
 @media (min-width: 0) and (max-width: $breakpoint-slim - 1) {
   .doc-header {
-    background-color: orange;
+    //background-color: orange;
   }
 }
 
@@ -370,6 +370,7 @@ code.sourceCode span.er {
 code {
   background-color: $color-code-bg;
   border-radius: 2px;
+  font-size: 16px;
   letter-spacing: 1.17px;
   line-height: 24px;
 }

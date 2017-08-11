@@ -1,8 +1,6 @@
 
 # Lookup  [Learn More](#)
 
-{{api-details}}
-
 ## Configuration Options
 
 1. Default Lookup  [View Example]( ../components/lookup/example-index)
@@ -14,6 +12,7 @@
 7. Custom Toolbar [View Example]( ../components/lookup/example-custom-toolbar)
 8. Custom Buttons [View Example]( ../components/lookup/example-custom-buttons)
 
+{{api-details}}
 
 ## Behavior Guidelines
 

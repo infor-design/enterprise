@@ -66,16 +66,16 @@
       columns.push({ id: 'status', name: 'Status', field: 'status', width: 150, formatter: Formatters.Alert, filterType: 'select', options: statuses, ranges: [{'value':'Confirmed', 'classes': 'confirm', text: 'Confirmed'}, {'value':'Error', 'classes': 'error', text: 'Error'}]});
       columns.push({ id: 'price', name: 'Price', field: 'price', width: 145, formatter: Formatters.Decimal, filterType: 'decimal', numberFormat: {minimumFractionDigits: 3, maximumFractionDigits: 3}, editor: Editors.Input, mask: '####.000'});
 
-      //Supported Filter Types: text, integer, date, select, decimal, checkbox, contents (FUTURE: lookup, percent)
+      // Supported Filter Types: text, integer, date, select, decimal, checkbox, contents (FUTURE: lookup, percent)
 
-      //Init and get the api for the grid
+      // Init and get the api for the grid
       $('#datagrid').datagrid({
         columns: columns,
         dataset: data,
         filterable: true,
         selectable: 'multiple',
         alternateRowShading: true,
-        toolbar: {title: 'Filterable Datagrid', filterRow: true, results: true, dateFilter: false ,keywordFilter: false, actions: true, views: false, rowHeight: true, collapsibleFilter: false}
+        toolbar: {title: 'Filterable Datagrid', filterRow: true, results: true, dateFilter: false ,keywordFilter: true, actions: true, views: false, rowHeight: true, collapsibleFilter: false}
       }).on('selected', function (e, args) {
         console.log(args);
       });

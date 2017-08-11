@@ -1,11 +1,11 @@
 # File Upload Advanced  [Learn More](#)
 
-{{api-details}}
-
 ## Configuration Options
 
 1. Advanced File Upload Example [View Example]( ../components/fileupload-advanced/example-index)
 2. Default File Upload Example [View Example]( ../components/fileupload/example-index)
+
+{{api-details}}
 
 ## Code Example
 

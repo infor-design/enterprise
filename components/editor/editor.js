@@ -73,10 +73,11 @@
     Editor.prototype = {
 
       init: function() {
-        this.isIE = $('html').is('.ie');
-        this.isMac = $('html').is('.is-mac');
-        this.isIeEdge = $('html').is('.ie-edge');
-        this.isFirefox = $('html').is('.is-firefox');
+        this.isIE = Soho.env.browser.name === 'ie';
+        this.isMac = Soho.env.os.name === 'Mac OS X';
+        this.isIeEdge = Soho.env.browser.name === 'edge';
+        this.isFirefox = Soho.env.browser.name === 'firefox';
+
         this.parentElements = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre'];
         this.id = $('.editor-toolbar').length + 1;
         this.container = this.element.parent('.field, .field-short').addClass('editor-container');
@@ -1236,10 +1237,14 @@
             if ((types instanceof DOMStringList && types.contains('text/html')) ||
                 (types.indexOf && types.indexOf('text/html') !== -1)) {
             // jshint undef:true
-              pastedData =  e.originalEvent.clipboardData.getData('text/html');
+              if (self.isIeEdge) {
+                pastedData =  e.originalEvent.clipboardData.getData();
+              } else {
+                pastedData =  e.originalEvent.clipboardData.getData('text/html');
+              }
             }
           } else {
-            paste = window.clipboardData.getData('Text');
+            paste = window.clipboardData ? window.clipboardData.getData('Text') : '';
             paragraphs = paste.split(/[\r\n]/g);
             pastedData = '';
             for (p = 0; p < paragraphs.length; p += 1) {

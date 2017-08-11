@@ -189,6 +189,9 @@
           this.disable();
         }
 
+        if (this.element.prop('readonly')) {
+          this.readonly();
+        }
         this.addAria();
       },
 
@@ -215,7 +218,7 @@
         var self = this,
           menu =  $('#colorpicker-menu');
 
-        if (self.element.is(':disabled')) {
+        if (self.element.is(':disabled') || this.element.prop('readonly')) {
           return;
         }
 
@@ -267,6 +270,7 @@
             self.swatch[0].style.backgroundColor = '#' + item.data('value');
           }
           self.element.focus();
+          self.element.trigger('change');
         });
 
         //Append Buttons
@@ -306,17 +310,17 @@
           menu = $('<ul id="colorpicker-menu" class="popupmenu colorpicker"></ul>'),
           currentTheme = Soho.theme;
 
-        var isBorderAll = (settings.themes[currentTheme].border === 'all'),
-          checkmark = settings.themes[currentTheme].checkmark,
+        var isBorderAll = (self.settings.themes[currentTheme].border === 'all'),
+          checkmark = self.settings.themes[currentTheme].checkmark,
           checkmarkClass = '';
 
-        for (var i = 0, l = settings.colors.length; i < l; i++) {
+        for (var i = 0, l = self.settings.colors.length; i < l; i++) {
           var li = $('<li></li>'),
             a = $('<a href="#"><span class="swatch"></span></a>').appendTo(li),
-            number = settings.colors[i].number,
+            number = self.settings.colors[i].number,
             num = parseInt(number, 10),
-            text = (Locale.translate(settings.colors[i].label) || settings.colors[i].label) + (settings.colors[i].number || ''),
-            value = settings.colors[i].value,
+            text = (Locale.translate(self.settings.colors[i].label) || self.settings.colors[i].label) + (settings.colors[i].number || ''),
+            value = self.settings.colors[i].value,
             isBorder = false,
             regexp = new RegExp('\\b'+ currentTheme +'\\b'),
             elemValue = this.isEditor ? this.element.attr('data-value') : this.element.val();
@@ -326,7 +330,7 @@
           }
 
           // Set border to this swatch
-          if (isBorderAll || regexp.test(settings.colors[i].border)) {
+          if (isBorderAll || regexp.test(self.settings.colors[i].border)) {
             isBorder = true;
           }
 
@@ -373,7 +377,7 @@
       */
       enable: function() {
         this.element.prop('disabled', false);
-        this.element.parent().removeClass('is-disabled');
+        this.element.parent().removeClass('is-disabled is-readonly');
       },
 
       /**
@@ -382,6 +386,15 @@
       disable: function() {
         this.element.prop('disabled', true);
         this.element.parent().addClass('is-disabled');
+      },
+
+      /**
+      * Make the color picker readonly
+      */
+      readonly: function() {
+        this.enable();
+        this.element.attr('readonly', 'readonly');
+        this.element.parent().addClass('is-readonly');
       },
 
       /**
@@ -419,13 +432,37 @@
       },
 
       /**
+       * Updates the component instance.  Can be used after being passed new settings.
+       * @returns {this}
+       */
+      updated: function() {
+        return this
+          .destroy()
+          .init();
+      },
+
+      teardown: function() {
+        this.element.off('keypress.colorpicker');
+        this.swatch.off('click.colorpicker');
+        this.swatch.remove();
+        this.container.find('.trigger').remove();
+        var input = this.container.find('.colorpicker');
+
+        if (input.data('mask')) {
+          input.data('mask').destroy();
+        }
+
+        input.unwrap();
+        input.removeAttr('data-mask role aria-autocomplete');
+      },
+
+      /**
       * Detach events and restore DOM to default.
       */
       destroy: function() {
-        this.swatch.remove();
-        this.element.off('keypress.colorpicker');
-        this.swatch.off('click.colorpicker');
+        this.teardown();
         $.removeData(this.element[0], pluginName);
+        return this;
       },
 
     /**

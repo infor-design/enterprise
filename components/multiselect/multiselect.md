@@ -1,14 +1,14 @@
 
 # About  [Learn More](https://soho.infor.com/index.php?p=component/about-dialog)
 
-{{api-details}}
-
 ## Configuration Options
 
 1. Multiselect [View Example]( ../components/multiselect/example-index)
 2. Clear All [View Example]( ../components/multiselect/example-clear-all)
 3. Ajax [View Example]( ../components/multiselect/example-ajax)
 4. States [View Example]( ../components/multiselect/example-states)
+
+{{api-details}}
 
 ## Code Example
 

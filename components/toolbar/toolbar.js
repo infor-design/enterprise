@@ -562,6 +562,9 @@
           self.handleResize();
         });
 
+        // Trigger _handleResize()_ once to fix container sizes.
+        this.handleResize();
+
         return this;
       },
 

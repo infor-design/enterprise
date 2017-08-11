@@ -123,8 +123,42 @@ input.fileupload-background-transparent {
     padding: 25px 20px;
   }
 
+  &.is-disabled {
+    .container {
+      border: 1px dashed $fileupload-disabled-border-color;
+
+      &.drop-area {
+        background-color: $fileupload-disabled-bg-color;
+        color: $fileupload-disabled-color;
+
+        .hyperlink,
+        .fileupload-adv-browse-lbl {
+          color: $fileupload-disabled-color;
+          cursor: default;
+        }
+
+        .icon {
+          cursor: default;
+          fill: $fileupload-disabled-icon-color;
+        }
+
+        &:hover {
+          background-color: $fileupload-disabled-bg-color;
+          border: 1px dashed $fileupload-disabled-border-color;
+          color: $fileupload-disabled-color;
+
+          .icon {
+            cursor: default;
+            fill: $fileupload-disabled-icon-color;
+          }
+        }
+      }
+    }
+
+  }
+
   .container {
-    border: 1px dotted $fileupload-border-color;
+    border: 1px dashed $fileupload-border-color;
     border-radius: 2px;
     margin-bottom: 10px;
 
@@ -157,15 +191,34 @@ input.fileupload-background-transparent {
     }
 
     &.drop-area {
+      background-color: $fileupload-droparea-bg-color;
       color: $fileupload-droparea-color;
       padding: 25px 30px;
+      text-align: center;
+
+      .fileupload-adv-browse-lbl {
+        color: $fileupload-primary-color;
+
+        span {
+          @include font-size(14);
+          padding-top: 5px;
+        }
+
+        input[type="file"] {
+          height: .1px;
+          opacity: 0;
+          overflow: hidden;
+          width: .1px;
+          z-index: -1;
+        }
+      }
+
+      &.is-focus {
+        border: 1px solid $fileupload-droparea-dd-hover-border-color;
+      }
 
       .icon {
         fill: $fileupload-droparea-color;
-        float: left;
-        height: 25px;
-        margin-right: 10px;
-        width: 35px;
       }
 
       p {
@@ -173,13 +226,23 @@ input.fileupload-background-transparent {
         padding-top: 5px;
       }
 
-      &.hover {
+      &:hover {
         background-color: $fileupload-droparea-hover-bg-color;
         border-color: $fileupload-droparea-hover-border-color;
         color: $fileupload-droparea-hover-color;
 
         .icon {
-          fill: $fileupload-droparea-hover-color;
+          fill: $fileupload-droparea-hover-icon-color;
+        }
+      }
+
+      &.hover {
+        background-color: $fileupload-droparea-dd-hover-bg-color;
+        border-color: $fileupload-droparea-dd-hover-border-color;
+        color: $fileupload-droparea-dd-hover-color;
+
+        .icon {
+          fill: $fileupload-droparea-dd-hover-color;
         }
       }
     }

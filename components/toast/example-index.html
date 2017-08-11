@@ -3,3 +3,12 @@
     <button class="btn-secondary" type="button" id="show-toast-message">Show Toast Message</button>
   </div>
 </div>
+
+
+<script>
+
+  $('#show-toast-message').on('click', function() {
+    $('body').toast({title: 'Application Offline', message: 'This is a Toast message.'});
+  });
+
+</script>

@@ -82,7 +82,10 @@ $('body').on('initialized', function () {
       name: 'Component C'
     }];
 
-  $('#area-example').chart({type: 'area', dataset: dataset});
+  $('#area-example').chart({type: 'area', dataset: dataset})
+  .on('selected', function (e, args) {
+    console.log(args);
+  });
 
 });
 </script>

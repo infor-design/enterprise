@@ -1,7 +1,5 @@
 # Text Input  [Learn More](#)
 
-{{api-details}}
-
 ## Configuration Options
 
 1. Text Input Examples [View Example]( ../components/input/example-index)
@@ -9,9 +7,11 @@
 3. Inputs with Info message under [View Example]( ../components/input/example-info)
 4. Inputs with Placeholders [View Example]( ../components/input/example-placeholder)
 5. Input Widths (Sm, Md, Lg) [View Example]( ../components/input/example-sizes)
-6. Text Area [View Example]( ../components/textarea)  
-7. Clearable Input (With an X) [View Example]( ../components/example-clearable)  
-8. Input with Right Click Context Menu [View Example]( ../components/example-contextmenu)  
+6. Text Area [View Example]( ../components/textarea)
+7. Clearable Input (With an X) [View Example]( ../components/input/example-clearable)
+8. Input with Right Click Context Menu [View Example]( ../components/input/example-contextmenu)
+
+{{api-details}}
 
 ## Behavior Guidelines
 

@@ -84,9 +84,9 @@ $('body').on('initialized', function () {
       }];
 
   $('#column-grouped-example').chart({type: 'column-grouped', dataset: dataset})
-    .on('selected', function (e, bar, d, i, selectedBars, group) {
-      console.log(e, bar, d, i, selectedBars, group);
-    });
+  .on('selected', function (e, args) {
+    console.log(args);
+  });
 
 });
 </script>

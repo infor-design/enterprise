@@ -1,18 +1,18 @@
 
 # Alerts  [Learn More](https://soho.infor.com/index.php?p=component/accordion)
 
+## Configuration Options
+
+1. Alerts (Icons) [View Example]( ../components/alerts/example-index)
+2. Alerts (Badges) [View Example]( ../components/alerts/example-badges)
+3. More Badge Examples [View Example]( ../components/alerts/example-additional-badges)
+
 ## API Details
 
 ### Settings
 
 * Icon Types - icon-alert, icon-confirm, icon-dirty, icon-error, icon-info, icon-pending, icon-new, icon-in-progress, icon-info-field
 * Icon Colors - This is done automatically by the type (alert, error ect)
-
-## Configuration Options
-
-1. Alerts (Icons) [View Example]( ../components/alerts/example-index)
-2. Alerts (Badges) [View Example]( ../components/alerts/example-badges)
-3. More Badge Examples [View Example]( ../components/alerts/example-additional-badges)
 
 ## Code Example
 

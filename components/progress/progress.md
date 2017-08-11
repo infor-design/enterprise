@@ -1,14 +1,13 @@
 
 # Progress Indicator  [Learn More](#)
 
-{{api-details}}
-
 ## Configuration Options
 
 1. Default Progress Indicator Example [View Example]( ../components/progress/example-index)
 
-## Code Example
+{{api-details}}
 
+## Code Example
 
 Insert a block element such as a div in the dom with class progess-bar. Set the data-value attribute to set the current progress. Always include a visible label and set aria-labelledby to point to that label.
 

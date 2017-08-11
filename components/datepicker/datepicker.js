@@ -22,6 +22,7 @@
           showTime: false,
           timeFormat: undefined,
           minuteInterval: undefined,
+          secondInterval: undefined,
           mode: undefined,
           roundToInterval: undefined,
           dateFormat: 'locale', //or can be a specific format like 'yyyy-MM-dd' iso8601 format
@@ -424,6 +425,9 @@
           }
           if (this.settings.minuteInterval !== undefined) {
             timeOptions.minuteInterval = this.settings.minuteInterval;
+          }
+          if (this.settings.secondInterval !== undefined) {
+            timeOptions.secondInterval = this.settings.minuteInterval;
           }
           if (this.settings.mode !== undefined) {
             timeOptions.mode = this.settings.mode;
