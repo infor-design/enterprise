@@ -150,19 +150,6 @@
 
         });
 
-        //TODO: Are we using this?
-        self.element.onTouchClick('click', '.' + constants.back).on('click', '.' + constants.back, function() {
-          var nodeId     = $(this).parent().find('.' + constants.leaf).attr('id');
-          var nodeData   = self.data(nodeId, settings.dataset, settings.newData);
-          var domObject  = {
-            branch: $(this).closest('li'),
-            leaf: $(this).closest('.' + constants.leaf),
-            button: $(this)
-          };
-
-          self.collapse(event, nodeData, domObject);
-        });
-
         self.element.on('keypress', '.' + constants.leaf, function(event) {
           var nodeId     = $(this).attr('id');
           var nodeData   = self.data(nodeId, settings.dataset, settings.newData);
@@ -179,46 +166,35 @@
         // Select
         self.element.on('mousedown', '.' + constants.leaf, function(event) {
           var nodeData = $(this).data();
-          var element = {target: event.target, pageX: event.pageX, pageY: event.pageY};
+          var targetInfo = {target: event.target, pageX: event.pageX, pageY: event.pageY};
+          var eventType = 'selected';
 
           $('.is-' + constants.selected).removeClass('is-'+constants.selected);
           $('#' + nodeData.id).addClass('is-'+constants.selected);
 
-          $(this).trigger('selected', nodeData, element);
-        });
-
-        // Right Click
-        var rightClickTarget = settings.rightClickTarget === '' ? '.' + constants.leaf : settings.rightClickTarget;
-        self.element.on('mousedown', rightClickTarget, function(event) {
-          var nodeData = $(this).data();
-          var element = {target: event.target, pageX: event.pageX, pageY: event.pageY};
-          if (event.which === 1) {
-            $(this).trigger('click');
+          // Is collapse event
+          if ( $(event.target).is('button') && $(event.target).hasClass('btn-expand')) {
+            eventType = 'collapse';
           }
+
+          // Is expand event
+          if ( $(event.target).is('button') && $(event.target).hasClass('btn-collapse')) {
+            eventType = 'expand';
+          }
+
+          // Is right click event
           if (event.which === 3) {
-            $(this).trigger('rightClick', [nodeData, element]);
+            eventType = 'rightClick';
           }
+
+          var eventInfo = {
+            data: nodeData,
+            targetInfo: targetInfo,
+            eventType: eventType
+          };
+
+          $(this).trigger('selected', eventInfo);
         });
-
-        // Mouseenter
-        var mouseEnterTarget = settings.mouseEnterTarget === '' ? '.' + constants.leaf : settings.mouseEnterTarget;
-        self.element.on('mouseenter', mouseEnterTarget, function(event) {
-          var nodeData = $(this).data();
-          var element = {target: event.target, pageX: event.pageX, pageY: event.pageY};
-
-          if (event.which !== 3) {
-            $(this).trigger('mouseEnter', [nodeData, element]);
-          }
-        });
-
-        // Double Click
-        self.element.on('dblclick', '.' + constants.leaf, function(event) {
-          var nodeData  = $(this).data();
-          var element = {target: event.target, clientX: event.clientX, clientY: event.clientY};
-
-          $(this).trigger('doubleClick', nodeData, element);
-        });
-
       },
 
       // Process data attached through jquery data
