@@ -1,6 +1,4 @@
-var dollarSign = '$';
 var emptyString = '';
-var comma = ',';
 var period = '.';
 var minus = '-';
 var minusRegExp = /-/;
@@ -14,8 +12,15 @@ var caretTrap = '[]';
 var DEFAULT_NUMBER_MASK_OPTIONS = {
   prefix: emptyString,
   suffix: emptyString,
-  includeThousandsSeparator: true,
-  thousandsSeparatorSymbol: comma,
+  allowThousandsSeparator: true,
+  symbols: {
+    currency: '$',
+    decimal: '.',
+    negative: '-',
+    thousands: ','
+  },
+
+
   allowDecimal: true,
   decimalSymbol: period,
   decimalLimit: 2,
@@ -61,8 +66,8 @@ window.Soho.masks.numberMask = function sohoNumberMask(rawValue, options) {
 
   var PREFIX = options.prefix,
     SUFFIX = options.suffix,
-    DECIMAL = options.decimalSymbol,
-    THOUSANDS = options.thousandsSeparatorSymbol,
+    DECIMAL = options.symbols.decimal,
+    THOUSANDS = options.symbols.thousands,
     prefixLength = PREFIX && PREFIX.length || 0,
     suffixLength = SUFFIX && SUFFIX.length || 0,
     thousandsSeparatorSymbolLength = THOUSANDS && THOUSANDS.length || 0;
@@ -114,7 +119,7 @@ window.Soho.masks.numberMask = function sohoNumberMask(rawValue, options) {
       var thousandsSeparatorRegex = THOUSANDS === '.' ? '[.]' : '' + THOUSANDS;
       var numberOfThousandSeparators = (integer.match(new RegExp(thousandsSeparatorRegex, 'g')) || []).length;
 
-      integer = integer.slice(0, options.integerLimit + (numberOfThousandSeparators * thousandsSeparatorSymbolLength));
+      integer = integer.slice(0, options.integerLimit + (isNegative ? 1 : 0) + (numberOfThousandSeparators * thousandsSeparatorSymbolLength));
     }
 
     integer = integer.replace(nonDigitsRegExp, emptyString);
@@ -123,7 +128,7 @@ window.Soho.masks.numberMask = function sohoNumberMask(rawValue, options) {
       integer = integer.replace(/^0+(0$|[^0])/, '$1');
     }
 
-    integer = (options.includeThousandsSeparator) ? addThousandsSeparator(integer, THOUSANDS) : integer;
+    integer = (options.allowThousandsSeparator) ? addThousandsSeparator(integer, THOUSANDS) : integer;
 
     mask = convertToMask(integer);
 

@@ -422,10 +422,10 @@ SohoMaskAPI.prototype = {
   _processCaretTraps: function(mask) {
     var indexes = [],
       indexOfCaretTrap = mask.indexOf(CARET_TRAP);
-    
+
     while(indexOfCaretTrap !== -1) {
       indexes.push(indexOfCaretTrap);
-      mask = mask.splice(indexOfCaretTrap, 1);
+      mask.splice(indexOfCaretTrap, 1);
       indexOfCaretTrap = mask.indexOf(CARET_TRAP);
     }
 
@@ -770,6 +770,9 @@ SohoMaskAPI.prototype = {
     for (var i = 0; i < pattern.length; i++) {
       arr.push(getRegex(pattern[i]));
     }
+
+    // TODO: Attach an object here that contains an analysis of the original mask
+    // that can be used to configure the new API accordingly.
 
     return arr;
   }
