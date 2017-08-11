@@ -731,6 +731,96 @@ window.Chart = function(container) {
     }
     charts.appendTooltip();
 
+    charts.setSelected = function (o, isToggle) {
+      if (!o) {
+        return;
+      }
+      var selected = 0,
+        equals = window.Soho.utils.equals,
+        legendsNode = svg.node().parentNode.nextSibling,
+        legends = d3.select(legendsNode),
+        isLegends = legends.node() && legends.classed('chart-legend'),
+        barIndex, selector, isStackedGroup, xGroup,
+
+        setSelectedBar = function (g) {
+          var isGroup = !!g;
+          g = isGroup ? d3.select(g) : svg;
+          g.selectAll('.bar').each(function(d, i) {
+            if (!d) {
+              return;
+            }
+            if (selected < 1) {
+              if ((typeof o.fieldName !== 'undefined' &&
+                    typeof o.fieldValue !== 'undefined' &&
+                      o.fieldValue === d[o.fieldName]) ||
+                  (typeof o.index !== 'undefined' && o.index === i) ||
+                  (o.data && equals(o.data, chartData[d.index].data[i])) ||
+                  (o.elem && $(this).is(o.elem))) {
+                selected++;
+                selector = d3.select(this);
+                barIndex = i;
+                if (isGroup && !isStacked) {
+                  isStackedGroup = true;
+                }
+              }
+            }
+          });
+        },
+
+        setSelectedGroup = function () {
+          var groups = svg.selectAll('.series-group');
+          if (groups[0].length) {
+            groups.each(function() {
+              setSelectedBar(this);
+            });
+          }
+        };
+
+      if (isGrouped || (isStacked && !isSingle)) {
+        chartData.forEach(function(d, i) {
+          if (selected < 1) {
+            xGroup = $(svg.select('[data-group-id="'+ i +'"]').node());
+            if ((typeof o.groupName !== 'undefined' &&
+                  typeof o.groupValue !== 'undefined' &&
+                    o.groupValue === d[o.groupName]) ||
+                (typeof o.groupIndex !== 'undefined' && o.groupIndex === i) ||
+                (o.data && equals(o.data, d)) ||
+                (o.elem && (xGroup.is(o.elem)))) {
+
+              if (typeof o.fieldName === 'undefined' &&
+                    typeof o.fieldValue === 'undefined' &&
+                      typeof o.index === 'undefined') {
+                selected++;
+                selector = svg.select('[data-group-id="'+ i +'"]').select('.bar');
+                barIndex = i;
+                if (isStacked && !isGrouped) {
+                  isStackedGroup = true;
+                }
+              }
+            }
+          }
+        });
+        if (selected < 1) {
+          setSelectedGroup();
+        }
+      }
+      else {
+        setSelectedBar();
+      }
+
+      if (selected > 0 && (isToggle || !selector.classed('is-selected'))) {
+        if (isStackedGroup) {
+          if (isLegends) {
+            $(legends.selectAll('.chart-legend-item')[0][barIndex]).trigger('click.chart');
+          }
+        }
+        else {
+          selector.on('click').call(selector.node(), selector.datum(), barIndex);
+        }
+      }
+
+    };
+
     // Set initial selected
     (function () {
       var selected = 0,
@@ -4022,6 +4112,10 @@ $.fn.chart = function(options) {
     chartInst = new Chart(this, options);
     instance = $.data(this, 'chart', chartInst);
     instance.settings = options;
+    instance.setSelected = function() {};
+    instance.toggleSelected = function(o) {
+      this.setSelected(o, true);
+    };
     instance._selected = [];
     instance.getSelected = function() {
       return this._selected;
