@@ -1,17 +1,9 @@
-var emptyString = '';
-var period = '.';
-var minus = '-';
-var minusRegExp = /-/;
-var nonDigitsRegExp = /\D+/g;
-var digitRegExp = /\d/;
-var caretTrap = '[]';
-
 /**
  * Default Number Mask Options
  */
 var DEFAULT_NUMBER_MASK_OPTIONS = {
-  prefix: emptyString,
-  suffix: emptyString,
+  prefix: Soho.masks.EMPTY_STRING,
+  suffix: Soho.masks.EMPTY_STRING,
   allowThousandsSeparator: true,
   symbols: {
     currency: '$',
@@ -19,10 +11,7 @@ var DEFAULT_NUMBER_MASK_OPTIONS = {
     negative: '-',
     thousands: ','
   },
-
-
   allowDecimal: true,
-  decimalSymbol: period,
   decimalLimit: 2,
   requireDecimal: false,
   allowNegative: false,
@@ -37,9 +26,9 @@ var DEFAULT_NUMBER_MASK_OPTIONS = {
  */
 function convertToMask(strNumber) {
   return strNumber
-    .split(emptyString)
+    .split(Soho.masks.EMPTY_STRING)
     .map(function(char) {
-      return digitRegExp.test(char) ? digitRegExp : char;
+      return Soho.masks.DIGITS_REGEX.test(char) ? Soho.masks.DIGITS_REGEX : char;
     });
 }
 
@@ -74,25 +63,25 @@ window.Soho.masks.numberMask = function sohoNumberMask(rawValue, options) {
 
   function numberMask(rawValue) {
     if (typeof rawValue !== 'string') {
-      rawValue = emptyString;
+      rawValue = Soho.masks.EMPTY_STRING;
     }
 
     var rawValueLength = rawValue.length;
 
     if (
-      rawValue === emptyString ||
+      rawValue === Soho.masks.EMPTY_STRING ||
       (rawValue[0] === PREFIX[0] && rawValueLength === 1)
     ) {
-      return PREFIX.split(emptyString).concat([digitRegExp]).concat(SUFFIX.split(emptyString));
+      return PREFIX.split(Soho.masks.EMPTY_STRING).concat([Soho.masks.DIGITS_REGEX]).concat(SUFFIX.split(Soho.masks.EMPTY_STRING));
     } else if(
       rawValue === DECIMAL && options.allowDecimal
     ) {
-      return PREFIX.split(emptyString).concat(['0', DECIMAL, digitRegExp]).concat(SUFFIX.split(emptyString));
+      return PREFIX.split(Soho.masks.EMPTY_STRING).concat(['0', DECIMAL, Soho.masks.DIGITS_REGEX]).concat(SUFFIX.split(Soho.masks.EMPTY_STRING));
     }
 
     var indexOfLastDecimal = rawValue.lastIndexOf(DECIMAL),
       hasDecimal = indexOfLastDecimal !== -1,
-      isNegative = (rawValue[0] === minus) && options.allowNegative,
+      isNegative = (rawValue[0] === options.symbols.negative) && options.allowNegative,
       integer,
       fraction,
       mask;
@@ -106,7 +95,7 @@ window.Soho.masks.numberMask = function sohoNumberMask(rawValue, options) {
       integer = rawValue.slice(rawValue.slice(0, prefixLength) === PREFIX ? prefixLength : 0, indexOfLastDecimal);
 
       fraction = rawValue.slice(indexOfLastDecimal + 1, rawValueLength);
-      fraction = convertToMask(fraction.replace(nonDigitsRegExp, emptyString));
+      fraction = convertToMask(fraction.replace(Soho.masks.NON_DIGITS_REGEX, Soho.masks.EMPTY_STRING));
     } else {
       if (rawValue.slice(0, prefixLength) === PREFIX) {
         integer = rawValue.slice(prefixLength);
@@ -122,7 +111,7 @@ window.Soho.masks.numberMask = function sohoNumberMask(rawValue, options) {
       integer = integer.slice(0, options.integerLimit + (isNegative ? 1 : 0) + (numberOfThousandSeparators * thousandsSeparatorSymbolLength));
     }
 
-    integer = integer.replace(nonDigitsRegExp, emptyString);
+    integer = integer.replace(Soho.masks.NON_DIGITS_REGEX, Soho.masks.EMPTY_STRING);
 
     if (!options.allowLeadingZeroes) {
       integer = integer.replace(/^0+(0$|[^0])/, '$1');
@@ -134,10 +123,10 @@ window.Soho.masks.numberMask = function sohoNumberMask(rawValue, options) {
 
     if ((hasDecimal && options.allowDecimal) || options.requireDecimal === true) {
       if (rawValue[indexOfLastDecimal - 1] !== DECIMAL) {
-        mask.push(caretTrap);
+        mask.push(Soho.masks.CARET_TRAP);
       }
 
-      mask.push(DECIMAL, caretTrap);
+      mask.push(DECIMAL, Soho.masks.CARET_TRAP);
 
       if (fraction) {
         if (typeof options.decimalLimit === 'number') {
@@ -148,25 +137,25 @@ window.Soho.masks.numberMask = function sohoNumberMask(rawValue, options) {
       }
 
       if (options.requireDecimal === true && rawValue[indexOfLastDecimal - 1] === DECIMAL) {
-        mask.push(digitRegExp);
+        mask.push(Soho.masks.DIGITS_REGEX);
       }
     }
 
     if (prefixLength > 0) {
-      mask = PREFIX.split(emptyString).concat(mask);
+      mask = PREFIX.split(Soho.masks.EMPTY_STRING).concat(mask);
     }
 
     if (isNegative) {
       // If user is entering a negative number, add a mask placeholder spot to attract the caret to it.
       if (mask.length === prefixLength) {
-        mask.push(digitRegExp);
+        mask.push(Soho.masks.DIGITS_REGEX);
       }
 
-      mask = [minusRegExp].concat(mask);
+      mask = [/-/].concat(mask);
     }
 
     if (SUFFIX.length > 0) {
-      mask = mask.concat(SUFFIX.split(emptyString));
+      mask = mask.concat(SUFFIX.split(Soho.masks.EMPTY_STRING));
     }
 
     return mask;

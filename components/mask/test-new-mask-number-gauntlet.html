@@ -21,13 +21,13 @@
   <div class="three columns">
     <div class="field">
       <label for="number">Number (1000)</label>
-      <input id="number" inputmode="numeric" class="new-mask" data-options='{ "pattern": "####", "process": "number", "patternOptions": { "allowThousandsSeparator": false, "integerLimit": 4 } }' placeholder="####"/>
+      <input id="number" inputmode="numeric" class="new-mask" data-options='{ "pattern": "####", "process": "number", "patternOptions": { "allowDecimal": false, "allowThousandsSeparator": false, "integerLimit": 4 } }' placeholder="####"/>
     </div>
   </div>
   <div class="three columns">
     <div class="field">
       <label for="neg-number">Negative Number (-1000)</label>
-      <input id="neg-number" inputmode="numeric" class="new-mask" data-options='{ "pattern": "####", "process": "number", "patternOptions": { "allowNegative": true, "allowThousandsSeparator": false, "integerLimit": 4 } }' placeholder="-####"/>
+      <input id="neg-number" inputmode="numeric" class="new-mask" data-options='{ "pattern": "####", "process": "number", "patternOptions": { "allowDecimal": false, "allowNegative": true, "allowThousandsSeparator": false, "integerLimit": 4 } }' placeholder="-####"/>
     </div>
   </div>
 </div>
@@ -48,13 +48,13 @@
   <div class="three columns">
     <div class="field">
       <label for="number-thousands">Number (1,000)</label>
-      <input id="number-thousands" inputmode="numeric" class="new-mask" data-options='{ "pattern": "#,###", "process": "number", "patternOptions": { "allowThousandsSeparator": true, "integerLimit": 4 } }' placeholder="#,###"/>
+      <input id="number-thousands" inputmode="numeric" class="new-mask" data-options='{ "pattern": "#,###", "process": "number", "patternOptions": { "allowDecimal": false, "allowThousandsSeparator": true, "integerLimit": 4 } }' placeholder="#,###"/>
     </div>
   </div>
   <div class="three columns">
     <div class="field">
       <label for="neg-number-thousands">Negative Number (-1,000)</label>
-      <input id="neg-number-thousands" inputmode="numeric" class="new-mask" data-options='{ "pattern": "-#,###", "process": "number", "patternOptions": { "allowNegative": true, "allowThousandsSeparator": true, "integerLimit": 4 } }' placeholder="-#,###"/>
+      <input id="neg-number-thousands" inputmode="numeric" class="new-mask" data-options='{ "pattern": "-#,###", "process": "number", "patternOptions": { "allowDecimal": false, "allowNegative": true, "allowThousandsSeparator": true, "integerLimit": 4 } }' placeholder="-#,###"/>
     </div>
   </div>
 </div>

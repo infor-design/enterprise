@@ -16,13 +16,13 @@
   /**
    * Default Masked Input field options
    */
-  const DEFAULT_MASKED_INPUT_OPTIONS = {
+  var DEFAULT_MASKED_INPUT_OPTIONS = {
     guide: false,
     maskAPI: window.Soho.Mask,
     keepCharacterPositions: false,
     pattern: undefined,
     patternOptions: {},
-    placeholderChar: '_',
+    placeholderChar: window.Soho.masks.PLACEHOLDER_CHAR,
     pipe: undefined,
     process: undefined
   };

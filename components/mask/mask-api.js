@@ -1,35 +1,42 @@
 window.Soho = window.Soho || {};
-window.Soho.masks = window.Soho.masks || {};
-
-/**
- * String constants
- */
-var EMPTY_STRING = '',
-  PLACEHOLDER_CHAR = '_',
-  CARET_TRAP = '[]';
-
-/**
- * Default Mask API Options
- */
-var DEFAULT_MASK_API_OPTIONS = {
-  locale: 'en-US',
-  pattern: undefined,
-  pipe: undefined
+window.Soho.masks = window.Soho.masks || {
+  EMPTY_STRING: '',
+  PLACEHOLDER_CHAR: '_',
+  CARET_TRAP: '[]',
+  NON_DIGITS_REGEX: /\D+/g,
+  DIGITS_REGEX: /\d/,
+  DEFAULT_API_OPTIONS: {
+    locale: 'en-US',
+    pattern: undefined,
+    pipe: undefined
+  },
+  LEGACY_DEFS: {
+    '#': /[0-9]/,
+    '0': /[0-9]/,
+    'x': /[\u00C0-\u017Fa-zA-Z]/,
+    '*': /[\u00C0-\u017Fa-zA-Z0-9]/,
+    '?': /./,
+    '~': /[-0-9]/,
+    'a': /[APap]/,
+    'm': /[Mm]/
+  }
 };
 
 /**
- * Legacy Mask Pattern Definitions
+ * Options that get passed for the _conformToMask()_ method.
  */
-var LEGACY_INPUT_MASK_DEFS = {
-  '#': /[0-9]/,
-  '0': /[0-9]/,
-  'x': /[\u00C0-\u017Fa-zA-Z]/,
-  '*': /[\u00C0-\u017Fa-zA-Z0-9]/,
-  '?': /./,
-  '~': /[-0-9]/,
-  'a': /[APap]/,
-  'm': /[Mm]/
+window.Soho.masks.DEFAULT_CONFORM_OPTIONS = {
+  caretTrapIndexes: [],
+  guide: true,
+  previousMaskResult: Soho.masks.EMPTY_STRING,
+  placeholderChar: Soho.masks.PLACEHOLDER_CHAR,
+  placeholder: Soho.masks.EMPTY_STRING,
+  selection: {
+    start: 0
+  },
+  keepCharacterPositions: true
 };
+
 
 /**
  * @class {SohoMaskAPI}
@@ -176,18 +183,7 @@ SohoMaskAPI.prototype = {
   _conformToMask: function(rawValue, mask, options) {
 
     // Set default options
-    var DEFAULT_CONFORM_OPTIONS = {
-      caretTrapIndexes: [],
-      guide: true,
-      previousMaskResult: EMPTY_STRING,
-      placeholderChar: PLACEHOLDER_CHAR,
-      placeholder: EMPTY_STRING,
-      selection: {
-        start: 0
-      },
-      keepCharacterPositions: true
-    };
-    options = Soho.utils.extend({}, DEFAULT_CONFORM_OPTIONS, options);
+    options = Soho.utils.extend({}, Soho.masks.DEFAULT_CONFORM_OPTIONS, options);
 
     // Setup the placeholder version of the mask
     options.placeholder = this._convertMaskToPlaceholder(mask, options.placeholderChar);
@@ -201,7 +197,7 @@ SohoMaskAPI.prototype = {
       placeholderLength = options.placeholder.length,
       placeholderChar = options.placeholderChar,
       caretPos = options.selection.start,
-      resultStr = EMPTY_STRING;
+      resultStr = Soho.masks.EMPTY_STRING;
 
     var editDistance = rawValueLength - prevMaskResultLength,
       isAddition = editDistance > 0,
@@ -219,7 +215,7 @@ SohoMaskAPI.prototype = {
     // To do this, we want to compensate for all characters that were deleted
     if (options.keepCharacterPositions === true && !isAddition) {
       // We will be storing the new placeholder characters in this variable.
-      var compensatingPlaceholderChars = EMPTY_STRING;
+      var compensatingPlaceholderChars = Soho.masks.EMPTY_STRING;
 
       // For every character that was deleted from a placeholder position, we add a placeholder char
       for (var i = indexOfFirstChange; i < indexOfLastChange; i++) {
@@ -247,7 +243,7 @@ SohoMaskAPI.prototype = {
         isNew: j >= indexOfFirstChange && j < indexOfLastChange
       };
     }
-    var rawValueArr = rawValue.split(EMPTY_STRING).map(markAddedChars);
+    var rawValueArr = rawValue.split(Soho.masks.EMPTY_STRING).map(markAddedChars);
 
     // The loop below removes masking characters from user input. For example, for mask
     // `00 (111)`, the placeholder would be `00 (___)`. If user input is `00 (234)`, the loop below
@@ -302,7 +298,7 @@ SohoMaskAPI.prototype = {
               if (
                 options.keepCharacterPositions !== true ||
                 rawValueChar.isNew === false ||
-                options.previousMaskResult === EMPTY_STRING ||
+                options.previousMaskResult === Soho.masks.EMPTY_STRING ||
                 options.guide === false ||
                 !isAddition
               ) {
@@ -399,7 +395,7 @@ SohoMaskAPI.prototype = {
       } else {
         // If we couldn't find `indexOfLastFilledPlaceholderChar` that means the user deleted
         // the first character in the mask. So we return an empty string.
-        resultStr = EMPTY_STRING;
+        resultStr = Soho.masks.EMPTY_STRING;
       }
     }
 
@@ -421,12 +417,12 @@ SohoMaskAPI.prototype = {
    */
   _processCaretTraps: function(mask) {
     var indexes = [],
-      indexOfCaretTrap = mask.indexOf(CARET_TRAP);
+      indexOfCaretTrap = mask.indexOf(Soho.masks.CARET_TRAP);
 
     while(indexOfCaretTrap !== -1) {
       indexes.push(indexOfCaretTrap);
       mask.splice(indexOfCaretTrap, 1);
-      indexOfCaretTrap = mask.indexOf(CARET_TRAP);
+      indexOfCaretTrap = mask.indexOf(Soho.masks.CARET_TRAP);
     }
 
     return {
@@ -447,7 +443,7 @@ SohoMaskAPI.prototype = {
       mask = [];
     }
     if (!placeholderChar) {
-      placeholderChar = PLACEHOLDER_CHAR;
+      placeholderChar = Soho.masks.PLACEHOLDER_CHAR;
     }
 
     if (mask.indexOf(placeholderChar) !== -1) {
@@ -461,7 +457,7 @@ SohoMaskAPI.prototype = {
 
     var ret = mask.map(function(char) {
       return (char instanceof RegExp) ? placeholderChar : char;
-    }).join(EMPTY_STRING);
+    }).join(Soho.masks.EMPTY_STRING);
 
     return ret;
   },
@@ -539,7 +535,7 @@ SohoMaskAPI.prototype = {
       var normalizedRawValue = opts.rawValue.toLowerCase();
 
       // Then we take all characters that come before where the caret currently is.
-      var leftHalfChars = normalizedRawValue.substr(0, opts.caretPos).split(EMPTY_STRING);
+      var leftHalfChars = normalizedRawValue.substr(0, opts.caretPos).split(Soho.masks.EMPTY_STRING);
 
       // Now we find all the characters in the left half that exist in the conformed input
       // This step ensures that we don't look for a character that was filtered out or rejected by `conformToMask`.
@@ -555,7 +551,7 @@ SohoMaskAPI.prototype = {
       // from the start of the string up to the place where the caret is
       var previousLeftMaskChars = opts.previousPlaceholder
         .substr(0, intersection.length)
-        .split(EMPTY_STRING)
+        .split(Soho.masks.EMPTY_STRING)
         .filter(nonPlaceholderFilter)
         .length;
 
@@ -563,7 +559,7 @@ SohoMaskAPI.prototype = {
       // from the start of the string up to the place where the caret is
       var leftMaskChars = opts.placeholder
         .substr(0, intersection.length)
-        .split(EMPTY_STRING)
+        .split(Soho.masks.EMPTY_STRING)
         .filter(nonPlaceholderFilter)
         .length;
 
@@ -622,7 +618,7 @@ SohoMaskAPI.prototype = {
       // our `targetChar`, so we don't select one of those by mistake.
       var countTargetCharInPlaceholder = opts.placeholder
         .substr(0, opts.placeholder.indexOf(opts.placeholderChar))
-        .split(EMPTY_STRING)
+        .split(Soho.masks.EMPTY_STRING)
         .filter(function(char, index) {
           // Check if `char` is the same as our `targetChar`, so we account for it
           return char === targetChar &&
@@ -756,13 +752,13 @@ SohoMaskAPI.prototype = {
    */
   _convertPatternFromString: function(pattern) {
     var arr = [],
-      legacyKeys = Object.keys(LEGACY_INPUT_MASK_DEFS);
+      legacyKeys = Object.keys(Soho.masks.LEGACY_DEFS);
 
     function getRegex(char) {
       var idx = legacyKeys.indexOf(char);
 
       if (idx > -1) {
-        char = LEGACY_INPUT_MASK_DEFS[legacyKeys[idx]];
+        char = Soho.masks.LEGACY_DEFS[legacyKeys[idx]];
       }
       return char;
     }
