@@ -7,8 +7,10 @@
 2. 100% Stacked Bar Chart [View Example]( ../components/bar-stacked/example-stacked-100)
 3. Changing Bar Colors [View Example]( ../components/bar-stacked/example-stacked-colors)
 4. Formatting Tooltip Data [View Example]( ../components/bar-stacked/example-stacked-formatter-string)
-4. Patterns [View Example]( ../components/bar-stacked/example-stacked-patterns)
-4. Defaulting Selected [View Example]( ../components/bar-stacked/example-stacked-selected)
+5. Patterns [View Example]( ../components/bar-stacked/example-stacked-patterns)
+6. Defaulting Selected [View Example]( ../components/bar-stacked/example-stacked-selected)
+7. Example showing get selected value [View Example]( ../components/bar-stacked/example-get-selected)
+8. Example showing set selected value [View Example]( ../components/bar-stacked/example-set-selected)
 
 ## Code Example
 

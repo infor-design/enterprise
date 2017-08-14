@@ -6,6 +6,7 @@
 1. Area Chart Example [View Example]( ../components/area/example-index)
 2. Make the Tooltip Formatted (Currency) [View Example]( ../components/area/example-formatter)
 3. Make a slice selected by default [View Example]( ../components/area/example-selected)
+4. Example showing get selected value [View Example]( ../components/area/example-get-selected)
 
 ## Code Example
 
