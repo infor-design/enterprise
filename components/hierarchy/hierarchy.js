@@ -169,12 +169,12 @@
           $('#' + nodeData.id).addClass('is-'+constants.selected);
 
           // Is collapse event
-          if ( $(event.target).is('button') && $(event.target).hasClass('btn-expand')) {
+          if ( $(event.target).is('button') && $(event.target).find('use').prop('href').baseVal === '#icon-caret-up') {
             eventType = 'collapse';
           }
 
           // Is expand event
-          if ( $(event.target).is('button') && $(event.target).hasClass('btn-collapse')) {
+          if ( $(event.target).is('button') && $(event.target).find('use').prop('href').baseVal === '#icon-caret-down') {
             eventType = 'expand';
           }
 
