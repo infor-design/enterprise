@@ -8,7 +8,8 @@
 3. Ticks Adjustment (Less ticks than data points) [View Example]( ../components/line/example-axis-ticks)
 4. Customize Tooltip [View Example]( ../components/line/example-custom-tooltip)
 5. Customize Dot Size [View Example]( ../components/line/example-custom-dots)
-5. Rotate Bottom Labels [View Example]( ../components/line/test-rotate)
+6. Rotate Bottom Labels [View Example]( ../components/line/test-rotate)
+7. Example showing get selected value [View Example]( ../components/line/example-get-selected)
 
 ## API Details
 

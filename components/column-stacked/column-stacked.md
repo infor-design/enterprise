@@ -6,6 +6,8 @@
 1. Stacked Column Chart Example [View Example]( ../components/column-stacked/example-index)
 2. Defaulting Selected Stacks [View Example]( ../components/column-stacked/example-selected)
 3. Single Column Chart [View Example]( ../components/column-stacked/example-singular)
+4. Example showing get selected value [View Example]( ../components/column-stacked/example-get-selected)
+5. Example showing singular get selected value [View Example]( ../components/column-stacked/example-singular-get-selected)
 
 ## API Details
 

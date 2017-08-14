@@ -271,7 +271,8 @@
   }
 
   //Call to action button
-  + .btn.go-button {
+  + .btn.go-button,
+  + .btn-secondary.go-button {
     margin-left: 10px;
     margin-top: 0;
     min-width: 0;

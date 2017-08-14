@@ -14,6 +14,7 @@ The displays custimizable hierarchical data such as an org chart.
 
 **Parameters**
 
+-   `element`  
 -   `legend` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Pass in custom markdown for the legend structure.
 -   `legendKey` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Key to use for the legend matching
 -   `dataset` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Hierarchical Data to display
@@ -21,20 +22,41 @@ The displays custimizable hierarchical data such as an org chart.
 -   `templateId` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Additional product name information to display
 -   `mobileView` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true will only show mobile view, by default using device info to determine.
 -   `beforeExpand` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  A callback that fires before node expansion of a node.
--   `element`  
 
 ### add
 
 Add data as children for the given nodeId.
 
+**Parameters**
+
+-   `nodeId`  
+-   `currentDataObject`  
+-   `newDataObject`  
+
 ### expand
 
 Expand the nodes until nodeId is displayed on the page.
+
+**Parameters**
+
+-   `event`  
+-   `nodeData`  
+-   `domObject`  
 
 ### collapse
 
 Collapse the passed in nodeId.
 
+**Parameters**
+
+-   `event`  
+-   `nodeData`  
+-   `domObject`  
+
 ### isLeaf
 
 Return whether or not a particular node is a leaf
+
+**Parameters**
+
+-   `dataNode`  
