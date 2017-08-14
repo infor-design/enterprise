@@ -1112,7 +1112,14 @@
           toggleClass(items.hidden[i], false);
         }
 
-        if (this.moreMenu.find('.icon').length) {
+        var numIcons = 0;
+        this.moreMenu.find('.icon').each(function () {
+          if (!$(this).parent().parent().hasClass('hidden')) {
+            numIcons ++;
+          }
+        });
+
+        if (numIcons > 0) {
           iconDisplay = 'addClass';
         }
 

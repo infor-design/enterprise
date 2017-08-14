@@ -474,7 +474,7 @@ var express = require('express'),
   });
 
   // ======================================
-  //  Controls Section
+  //  Controls Section -> Now just in as a redirect
   // ======================================
 
   var controlOpts = {
