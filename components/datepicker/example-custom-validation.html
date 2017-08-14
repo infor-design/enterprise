@@ -1,0 +1,39 @@
+
+<div class="row">
+  <div class="twelve columns">
+
+    <h2>
+       Custom Validation Example
+    </h2>
+    <p>
+       Shows adding a custom validation rule and not using any of the internally supplied validation.
+    </p>
+    <br>
+
+    <div class="field">
+      <label for="date-field-1" class="label">Uses No Validation</label>
+      <input id="date-field-1" class="datepicker" name="date-field-1" type="text" data-options="{'customValidation': 'true'}">
+    </div>
+
+    <div class="field">
+      <label for="date-field-2" class="label">Uses Custom Validation</label>
+      <input id="date-field-2" class="datepicker" name="date-field-2" type="text" data-validate="customRule" data-options="{'customValidation': 'true'}">
+    </div>
+
+  </div>
+</div>
+
+
+<script>
+
+  $('body').one('initialized', function () {
+
+      $.fn.validation.rules.customRule = {
+      	check: function (value, field, grid) {
+      		return false;
+      	},
+      	message: 'Test Error - Anything you enter will be wrong'
+      };
+
+  });
+</script>

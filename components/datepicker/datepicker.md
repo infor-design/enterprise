@@ -14,6 +14,7 @@
 10. In a Form [View Example]( ../components/datepicker/example-form.html)
 11. State Api [View Example]( ../components/datepicker/example-state-methods.html)
 12. Islamic Umalqura Calendar [View Example]( ../components/datepicker/example-umalqura.html?locale=ar-SA)
+13. Customizing Validation [View Example]( ../components/datepicker/example-custom-validation.html)
 
 {{api-details}}
 
