@@ -46,6 +46,7 @@
           },
           showLegend: false,
           customValidation: false,
+          showMonthYearPicker: false,
           legend: [
             //Legend Build up example
             //Color in level 6 - http://usmvvwdev53:424/controls/colors
@@ -71,6 +72,7 @@
       'dayOfWeek' : [],
       'isEnable' : false
     }`
+    * @param {Boolean} showMonthYearPicker  &nbsp;-&nbsp; If true the month and year will render as dropdowns.
     * @param {Boolean} customValidation  &nbsp;-&nbsp; If true the internal validation is disabled.
     * @param {Boolean} showLegend  &nbsp;-&nbsp; If true a legend is show to associate dates.
     * @param {Array} legend  &nbsp;-&nbsp; Legend Build up for example `[{name: 'Public Holiday', color: '#76B051', dates: []}, {name: 'Weekends', color: '#EFA836', dayOfWeek: []}]`
@@ -870,6 +872,8 @@
           this.header.find('.year').insertBefore(this.header.find('.month'));
         }
 
+        this.appendMonthYearPicker(month, year);
+
         //Adjust days of the week
         //lead days
         var firstDayOfMonth = this.firstDayOfMonth(year, month),
@@ -949,6 +953,38 @@
 
         //Add Legend
         self.addLegend();
+      },
+
+      appendMonthYearPicker: function (month, year) {
+
+        if (!this.settings.showMonthYearPicker) {
+          return;
+        }
+
+        var monthDropdown = '<label for="month-dropdown" class="audible">'+ Locale.translate('Month') +'</label>'+
+          '<select id="month-dropdown" class="dropdown">';
+
+        var wideMonths = Locale.calendar().months.wide;
+        wideMonths.map(function (month, i) {
+          monthDropdown += '<option '+ (i===month ? ' selected ' : '') + ' value="'+ i +'">'+ month +'</option>';
+        });
+        monthDropdown +='</select>';
+
+        var monthSpan = this.header.find('.month').empty().append(monthDropdown);
+        monthSpan.find('select.dropdown').dropdown();
+
+        var yearDropdown = '<label for="year-dropdown" class="audible">'+ Locale.translate('Year') +'</label>'+
+          '<select id="year-dropdown" class="dropdown">';
+
+        var years = [year-1, year-2, year-3, year-4, year-5, year+1, year+2, year+3, year+4, year+5];
+        years.map(function (yearMap) {
+          yearDropdown += '<option '+ (year===yearMap ? ' selected ' : '') + ' value="'+ yearMap +'">'+ yearMap +'</option>';
+        });
+        yearDropdown +='</select>';
+
+        var yearSpan = this.header.find('.year').empty().append(yearDropdown);
+        yearSpan.find('select.dropdown').dropdown();
+
       },
 
       // Put the date in the field and select on the calendar
