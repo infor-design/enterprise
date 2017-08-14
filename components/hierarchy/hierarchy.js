@@ -373,6 +373,7 @@
 
           $(rootNodeHTML[0]).addClass(constants.root).appendTo(chart);
           this.setNodeData(data);
+          this.setButtonState($('.leaf.root'), data);
         }
 
         if (!hasTopLevel) {
@@ -642,7 +643,7 @@
           data.isExpanded = false;
         }
 
-        if (data.isLeaf) {
+        if (data.isLeaf || data.isRootNode) {
           btn.addClass('btn-hidden');
         }
       }
