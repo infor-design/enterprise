@@ -45,6 +45,7 @@
             'isEnable' : false
           },
           showLegend: false,
+          customValidation: false,
           legend: [
             //Legend Build up example
             //Color in level 6 - http://usmvvwdev53:424/controls/colors
@@ -70,6 +71,7 @@
       'dayOfWeek' : [],
       'isEnable' : false
     }`
+    * @param {Boolean} customValidation  &nbsp;-&nbsp; If true the internal validation is disabled.
     * @param {Boolean} showLegend  &nbsp;-&nbsp; If true a legend is show to associate dates.
     * @param {Array} legend  &nbsp;-&nbsp; Legend Build up for example `[{name: 'Public Holiday', color: '#76B051', dates: []}, {name: 'Weekends', color: '#EFA836', dayOfWeek: []}]`
     *
@@ -353,10 +355,16 @@
         this.element
           .attr({
             'data-mask': mask,
-            'data-validate': validation,
-            'data-validation-events': JSON.stringify(events),
             'data-mask-mode': 'date'
-          }).mask().validate();
+          }).mask();
+
+        if (!this.settings.customValidation) {
+          this.element
+            .attr({
+              'data-validate': validation,
+              'data-validation-events': JSON.stringify(events)
+            }).validate();
+        }
 
         if (this.settings.placeholder && (!this.element.attr('placeholder') ||  this.element.attr('placeholder') === 'M / D / YYYY')) {
           this.element.attr('placeholder', this.pattern);
