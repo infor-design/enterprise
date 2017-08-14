@@ -141,13 +141,18 @@ $hierarchy-line-width: 1px;
       position: relative;
       top: -16px;
     }
+
+    .btn-hidden {
+      display: none;
+    }
   }
 
   //Adjust size for buttons
   ul > li > .leaf {
     width: 315px;
 
-    .btn-expand {
+    .btn-expand,
+    .btn-collapse {
       left: -12px;
       top: 17px;
 

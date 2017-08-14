@@ -48,16 +48,12 @@
       sublist         : 'sublist',
       button          : 'btn-expand',
       leaf            : 'leaf',
-      inner           : 'inner',
       multiRoot       : 'multi-root',
       root            : 'root',
-      back            : 'back',
-      activeBranch    : 'active-branch',
       branchExpanded  : 'branch-expanded',
       branchCollapsed : 'branch-collapsed',
-      collapsedLeaf   : 'collapsed-leaf',
-      expanded        : 'expanded',
-      collapsed       : 'collapsed',
+      expanded        : 'expand',
+      collapsed       : 'collapse',
       close           : 'close',
       open            : 'open',
       shadow          : 'shadow',
@@ -74,7 +70,7 @@
     * @param {String} legend  &nbsp;-&nbsp; Pass in custom markdown for the legend structure.
     * @param {String} legendKey  &nbsp;-&nbsp; Key to use for the legend matching
     * @param {String} dataset  &nbsp;-&nbsp; Hierarchical Data to display
-    * @param {Boolean} newData  &nbsp;-&nbsp; Id to the Html Template
+    * @param {Boolean} newData  &nbsp;-&nbsp; New data to be appended into dataset
     * @param {String} templateId  &nbsp;-&nbsp; Additional product name information to display
     * @param {Boolean} mobileView  &nbsp;-&nbsp; If true will only show mobile view, by default using device info to determine.
     * @param {String} beforeExpand  &nbsp;-&nbsp; A callback that fires before node expansion of a node.
@@ -314,7 +310,10 @@
           nodeTopLevel.animateOpen();
         }
 
+        // update flags for state and template
         nodeData.isExpanded = true;
+        nodeData.displayClass = constants.expanded;
+
         self.setNodeData(nodeData);
 
         node.parent().removeClass(constants.branchCollapsed).addClass(constants.branchExpanded);
@@ -338,7 +337,10 @@
           nodeTopLevel.animateClosed();
         }
 
+        // update flags for state and template
         nodeData.isExpanded = false;
+        nodeData.displayClass = constants.collapsed;
+
         self.setNodeData(nodeData);
         node.parent().removeClass(constants.branchExpanded).addClass(constants.branchCollapsed);
         self.setButtonState(node, nodeData);
@@ -563,6 +565,8 @@
               var childleaf = leafTemplate.render({dataset: nodeData.children[j]});
               var c = $(childleaf);
 
+              self.setButtonState(c, nodeData.children[j]);
+
               $(c).append('<span class=\'horizontal-line\'></span>');
 
               if (j === nodeData.children.length - 1) {
@@ -652,10 +656,10 @@
       setButtonState: function (leaf, data) {
         var btn = leaf.find('.'+ constants.button);
 
-        if (data.isExpanded || data.isExpanded === undefined) {
+        if (data.isExpanded || data.displayClass === constants.expanded) {
           btn.find('svg.icon').changeIcon('caret-up');
         } else {
-          btn.find('svg.icon').changeIcon('caret-up');
+          btn.find('svg.icon').changeIcon('caret-down');
         }
 
         if (data.isExpanded === undefined) {
@@ -668,8 +672,8 @@
 
         if (data.isLeaf) {
           data.displayClass = constants.hide;
-        } else {
-          data.displayClass = constants.show;
+        } else if (!data.isLeaf && (!data.isExpanded || data.isExpanded === undefined)) {
+          data.displayClass = constants.collapsed;
         }
 
         if (data.isRootNode) {
