@@ -782,7 +782,7 @@
         if (this.settings.selectable) {
 
           this.element.addClass('is-selectable');
-          var trigger = $('.list-detail-back-button').find('.app-header'),
+          var trigger = $('.list-detail-back-button, .list-detail-button').find('.app-header'),
             pattern = $(this.element).closest('.list-detail, .builder');
 
           trigger.parent().onTouchClick('listview').on('click.listview', function (e) {

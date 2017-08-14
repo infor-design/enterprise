@@ -79,7 +79,11 @@
   h3,
   h4 {
     color: $white;
+    display: inline-block;
     margin-bottom: 0;
+    position: relative;
+    top: 10px;
+    vertical-align: top;
   }
 
   .panel-subhead {

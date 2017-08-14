@@ -2,46 +2,40 @@
   <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
   {{> includes/svg-inline-refs}}
 
+  {{> includes/applicationmenu}}
   <div id="maincontent" class="two-column page-container fixed list-detail">
 
-    <div class="sidebar no-scroll" role="complementary">
-      <header class="header is-personalizable">
-        <div class="toolbar no-actions-button">
-          <div class="title">
-            <h1>Deployments</h1>
-          </div>
-          <div class="buttonset"></div>
-        </div>
-      </header>
+    <header class="header is-personalizable">
+      <div class="toolbar">
+        <div class="title">
+          <button id="button1" type="button" class="btn-icon application-menu-trigger list-detail-button hide-focus" tabindex="0">
+            <span class="audible">Show navigation</span>
+            <span class="icon app-header">
+              <span class="one"></span>
+              <span class="two"></span>
+              <span class="three"></span>
+            </span>
+          </button>
 
+          <h1>
+            <span class="section-title">Category</span>
+            <span class="page-title">Record Name #431231</span>
+          </h1>
+        </div>
+
+        {{> includes/header-actionbutton}}
+      </div>
+    </header>
+
+    <div class="sidebar no-scroll" role="complementary">
       <div class="listview-search">
         <label class="audible" for="list-detail-sidebar-search">Search Tasks</label>
         <input class="searchfield" placeholder="Search Tasks" name="list-detail-sidebar-search" id="list-detail-sidebar-search">
       </div>
-
       <div class="paginated listview scrollable" id="task-listview" data-init="false"></div>
     </div>
 
     <div class="main no-scroll" role="main">
-
-      <header class="header is-personalizable">
-        <div class="toolbar">
-          <div class="title">
-            <button class="btn-icon list-detail-back-button go-back" type="button">
-              <span class="audible">Show navigation</span>
-              <span class="icon app-header">
-                <span class="one"></span>
-                <span class="two"></span>
-                <span class="three"></span>
-              </span>
-            </button>
-
-            <span>Auto Suite - PRD</span>
-          </div>
-
-          {{> includes/header-actionbutton}}
-        </div>
-      </header>
 
       <div class="page-container scrollable">
         <div class="content" style="height: 1000px;"></div>
@@ -49,7 +43,6 @@
 
     </div>
   </div>
-
 
 <script>
   $('body').on('initialized', function() {
