@@ -46,7 +46,6 @@
       sublevel        : 'sub-level',
       noSublevel      : 'no-sublevel',
       sublist         : 'sublist',
-      button          : 'btn-expand',
       leaf            : 'leaf',
       multiRoot       : 'multi-root',
       root            : 'root',
@@ -56,11 +55,8 @@
       collapsed       : 'collapse',
       close           : 'close',
       open            : 'open',
-      shadow          : 'shadow',
       line            : 'line',
-      selected        : 'selected',
-      show            : 'show',
-      hide            : 'hidden'
+      selected        : 'selected'
     };
 
     /**
@@ -124,7 +120,7 @@
         var self = this;
 
         // Expand or Collapse
-        self.element.onTouchClick('hierarchy', '.' + constants.button).on('click.hierarchy', '.' + constants.button, function(event) {
+        self.element.onTouchClick('hierarchy', '.btn').on('click.hierarchy', '.btn', function(event) {
 
           if (settings.newData.length > 0) {
             settings.newData = [];
@@ -226,12 +222,7 @@
           for (var prop in obj) {
             if (prop === 'id' && nodeId === obj.id) {
               if (!obj.isLoaded && !obj.isRootNode) {
-                if (params.updateDisplay) {
-                  obj.displayClass = constants.hide + ' ' + constants.collapsed;
-                }
-                else {
-                  addChildrenToObject(obj, params);
-                }
+                addChildrenToObject(obj, params);
               }
               nodeData.push(obj);
             }
@@ -244,8 +235,6 @@
         function addChildrenToObject(obj, params) { //jshint ignore:line
           if (params.insert) {
             delete obj.isLeaf;
-            delete obj.displayClass;
-            obj.displayClass = constants.expanded;
             obj.isExpanded = true;
           }
           if (newDataObject.length !== 0 && params.insert) {
@@ -310,9 +299,7 @@
           nodeTopLevel.animateOpen();
         }
 
-        // update flags for state and template
         nodeData.isExpanded = true;
-        nodeData.displayClass = constants.expanded;
 
         self.setNodeData(nodeData);
 
@@ -337,9 +324,7 @@
           nodeTopLevel.animateClosed();
         }
 
-        // update flags for state and template
         nodeData.isExpanded = false;
-        nodeData.displayClass = constants.collapsed;
 
         self.setNodeData(nodeData);
         node.parent().removeClass(constants.branchExpanded).addClass(constants.branchCollapsed);
@@ -371,7 +356,6 @@
 
         // Create root node
         this.setColor(data);
-        this.displayButton(data);
 
         if (data.isMultiRoot) {
           var multiRootHTML = '<div class=\'' + constants.leaf + ' ' + constants.multiRoot + '\'><div class=\'' +
@@ -514,11 +498,9 @@
 
         function processDataForleaf(nodeData, isLast) {
           self.setColor(nodeData);
-          self.displayButton(nodeData);
 
           var leafTemplate = Tmpl.compile('{{#dataset}}' + $('#' + settings.templateId).html() + '{{/dataset}}');
           var leaf = leafTemplate.render({dataset: nodeData});
-          var animateParam = nodeData.isExpanded || nodeData.isExpanded === undefined ? 'expand' : 'collapse';
           var parent       = el.length === 1 ? el : container;
           var lineHtml     = '';
 
@@ -550,7 +532,7 @@
             var childrenNodes = '';
             nodeData.isLoaded = true;
 
-            if (nodeData.displayClass === constants.expanded || nodeData.isExpanded) {
+            if (nodeData.isExpanded) {
               nodeData.isExpanded = true;
               $('#' + nodeData.id).data(nodeData);
             }
@@ -560,7 +542,6 @@
 
             for (var j = 0, l = nodeData.children.length; j < l; j++) {
               self.setColor(nodeData.children[j]);
-              self.displayButton(nodeData.children[j]);
 
               var childleaf = leafTemplate.render({dataset: nodeData.children[j]});
               var c = $(childleaf);
@@ -583,11 +564,6 @@
             var childLength = nodeData.children.length;
             while (childLength--) {
               self.setNodeData(nodeData.children[childLength]);
-            }
-
-            //TODO: Test case with data loading collapsed nodes
-            if (!nodeData.isExpanded && !nodeData.isLeaf) {
-              self.animateExpandCollapse($('#' + nodeData.id).parent(), animateParam);
             }
           }
         }
@@ -654,45 +630,23 @@
 
       //set the classes and svg on the button
       setButtonState: function (leaf, data) {
-        var btn = leaf.find('.'+ constants.button);
+        var btn = leaf.find('.btn');
 
-        if (data.isExpanded || data.displayClass === constants.expanded) {
+        if (data.isExpanded || data.isExpanded === undefined && !data.isLeaf) {
           btn.find('svg.icon').changeIcon('caret-up');
+          btn.addClass('btn-expand').removeClass('btn-collapse')
+          data.isExpanded = true;
         } else {
           btn.find('svg.icon').changeIcon('caret-down');
+          btn.addClass('btn-collapse').removeClass('btn-expand');
+          data.isExpanded = false;
         }
-
-        if (data.isExpanded === undefined) {
-          btn.button();
-        }
-      },
-
-      // Determine the state of the expand collapse button and show it
-      displayButton: function(data) {
 
         if (data.isLeaf) {
-          data.displayClass = constants.hide;
-        } else if (!data.isLeaf && (!data.isExpanded || data.isExpanded === undefined)) {
-          data.displayClass = constants.collapsed;
+          btn.addClass('btn-hidden');
         }
-
-        if (data.isRootNode) {
-          data.displayClass = constants.hide;
-        }
-
-        if (data.isExpanded) {
-          data.displayClass += ' ' + constants.expanded;
-        } else {
-          data.displayClass += ' ' + constants.collapsed;
-        }
-
-        if (data.isExpanded === undefined) {
-          if (!data.isLeaf && data.children && !data.isRootNode) {
-            data.displayClass = constants.expanded;
-          }
-        }
-
       }
+
     };
 
     // Initialize the plugin (Once)
