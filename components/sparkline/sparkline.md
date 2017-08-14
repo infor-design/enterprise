@@ -4,6 +4,7 @@
 ## Configuration Options
 
 1. Sparklines Main Example [View Example]( ../components/sparkline/example-index)
+2. Example showing get selected value [View Example]( ../components/sparkline/example-get-selected)
 
 ## API Details
 
