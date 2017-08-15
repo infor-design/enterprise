@@ -243,7 +243,7 @@ $datagrid-short-row-height: 23px;
     }
 
     &.has-filterable-columns .datagrid-body {
-      height: calc(100% - 60px);
+      height: calc(100% - 54px);
     }
 
     &.has-toolbar {
@@ -286,7 +286,7 @@ $datagrid-short-row-height: 23px;
 
     .datagrid-column-wrapper {
       padding: 0 10px;
-      top: -12px;
+      top: 0;
 
       &.l-right-text {
         .datagrid-header-text {
@@ -383,7 +383,7 @@ $datagrid-short-row-height: 23px;
 
     .datagrid-column-wrapper {
       padding: 0 15px;
-      top: -12px;
+      top: 0;
 
       &.l-right-text {
         .datagrid-header-text {
