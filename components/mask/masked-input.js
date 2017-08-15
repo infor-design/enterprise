@@ -63,6 +63,12 @@
           this.element.classList.add('is-number-mask');
           break;
         }
+        case 'date': {
+          if (this.settings.autocorrect === true) {
+            this.settings.pipe = window.Soho.masks.autocorrectedDatePipe;
+          }
+          break;
+        }
         default: {
           this.element.classList.remove(styleClasses.join(' '));
           break;

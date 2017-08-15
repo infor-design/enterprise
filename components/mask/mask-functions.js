@@ -165,3 +165,55 @@ window.Soho.masks.numberMask = function sohoNumberMask(rawValue, options) {
 
   return numberMask(rawValue);
 };
+
+
+
+/**
+ * Generates a pipe function that can be applied to a Mask API that will correct
+ * shorthand dates.
+ */
+window.Soho.masks.autocorrectedDatePipe = function createAutoCorrectedDatePipe(processResult, options) {
+  if (!options.dateFormat) {
+    options.dateFormat = Locale.calendar().dateFormat.short;
+  }
+
+  var indexesOfPipedChars = [],
+    dateFormatArray = options.dateFormat.split(/[^dMy]+/),
+    maxValue = {'d': 31, 'M': 12, 'yy': 99, 'yyyy': 9999},
+    minValue = {'d': 1, 'M': 1, 'yy': 0, 'yyyy': 1},
+    conformedValueArr = processResult.conformedValue.split('');
+
+  // Check first digit
+  dateFormatArray.forEach(function(format) {
+    var position = options.dateFormat.indexOf(format);
+    var maxFirstDigit = parseInt(maxValue[format].toString().substr(0, 1), 10);
+
+    if (parseInt(conformedValueArr[position], 10) > maxFirstDigit) {
+      conformedValueArr[position + 1] = conformedValueArr[position];
+      conformedValueArr[position] = 0;
+      indexesOfPipedChars.push(position);
+    }
+  });
+
+  var placeholderRegex = new RegExp('[^'+ processResult.placeholderChar +']'),
+    maskPieces = processResult.placeholder.split(placeholderRegex),
+    conformedPieces = processResult.conformedValue.split(/\D/g);
+
+  // Check for invalid date
+  var isInvalid = dateFormatArray.some(function(format, i) {
+    var length = maskPieces[i].length > format.length ? maskPieces[i].length : format.length,
+      textValue = conformedPieces[i] || '',
+      value = parseInt(textValue, 10);
+
+    return value > maxValue[format] || (textValue.length === length && value < minValue[format]);
+  });
+
+  if (isInvalid) {
+    return false;
+  }
+
+  return {
+    value: conformedValueArr.join(''),
+    characterIndexes: indexesOfPipedChars
+  };
+};

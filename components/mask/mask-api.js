@@ -158,6 +158,7 @@ SohoMaskAPI.prototype = {
       if (pipeResult === false) {
         // If the `pipe` rejects `conformedValue`, we use the `previousConformedValue`, and set `rejected` to `true`.
         processResult.pipeResult = false;
+        processResult.pipedValue = opts.previousMaskResult;
       } else if (Soho.utils.isString(pipeResult)) {
         processResult.pipeResult = true;
         processResult.pipedValue = pipeResult;
