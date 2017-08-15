@@ -1,0 +1,79 @@
+<div class="row">
+  <div class="twelve columns">
+
+    <button class="btn-secondary" type="button" id="add-comment">Add a Comment</button><br><br>
+
+    <!-- "Comment" Example -->
+    <div id="modal-add-comment" style="display: none;">
+
+      <div class="field">
+        <label for="input-menu">Label</label>
+        <div data-options="{ useCoordsForClick: true }" data-popupmenu="action-popupmenu" style="width: 500px; margin-bottom: 10px; height: 100px; background: #f8e09c;" tabindex="0">
+          <p>Some stuff...</p>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="input-menu2">Label2</label>
+        <input type="text" data-options="{trigger:'rightClick'}" data-popupmenu="action-popupmenu" value="Right Click Me" id="input-menu2">
+      </div>
+
+      <ul id="action-popupmenu" class="popupmenu">
+        <li><a href="#">Cut</a></li>
+        <li><a href="#">Copy</a></li>
+        <li><a href="#">Paste</a></li>
+        <li>
+          <a href="#">Paste Special</a>
+          <ul class="popupmenu">
+            <li><a href="#">Sub Menu 1</a></li>
+            <li><a href="#">Sub Menu 2</a></li>
+          </ul>
+        </li>
+        <li class="separator"></li>
+        <li><a href="#">Name and project range</a></li>
+        <li><a id='x' href="#" disabled>Insert comment</a></li>
+        <li><a href="#" disabled>Insert note</a></li>
+        <li><a href="#">Clear notes</a></li>
+        <li class="separator single-selectable-section"></li>
+        <li class="heading">Additional Options</li>
+        <li class="is-selectable is-checked"><a href="#">Conditional formatting</a></li>
+        <li class="is-selectable"><a href="#">Data validation</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<script>
+var modals = {
+    'add-comment': {
+      'title': 'Add a Comment',
+      'content': $('#modal-add-comment')
+    }
+  },
+
+  setModal = function (opt) {
+    opt = $.extend({
+      buttons: [{
+        text: 'Cancel',
+        click: function(e, modal) {
+          modal.close();
+        }
+      }, {
+        text: 'Save',
+        click: function(e, modal) {
+          modal.close();
+        },
+        validate: false,
+        isDefault: true
+      }]
+    }, opt);
+
+    $('body').modal(opt);
+  };
+
+  $('#add-comment, #add-context, #search-project').on('click', function () {
+    setModal(modals[this.id]);
+  });
+
+</script>
