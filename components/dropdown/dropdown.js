@@ -1536,7 +1536,7 @@
           return;
         }
 
-        if (!li && value) {
+        if (!li && typeof value === 'string') {
           li = this.listUl.find('li[data-val="'+ value.replace('"', '/quot/') +'"]');
         }
 
@@ -1552,7 +1552,7 @@
           clearSelection = false,
           isAdded = true; // Sets to false if the option is being removed from a multi-select instead of added
 
-        if (option.hasClass('clear') || code === '') {
+        if (option.hasClass('clear') || !li) {
           clearSelection = true;
         }
 
