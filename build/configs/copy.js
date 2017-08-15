@@ -19,8 +19,10 @@ module.exports = {
         {expand: true, flatten: true, src: ['components/vendor/d3.*'], dest: 'dist/js/', filter: 'isFile'},
         {expand: true, flatten: true, src: ['components/locale/cultures/*.*'], dest: 'public/js/cultures/', filter: 'isFile'},
         {expand: true, flatten: true, src: ['components/locale/cultures/*.*'], dest: 'dist/js/cultures/', filter: 'isFile'},
-        {expand: true, flatten: true, src: ['views/controls/svg*.html'], dest: 'dist/svg/', filter: 'isFile'},
-        {expand: true, flatten: true, src: ['views/controls/svg*.html'], dest: 'public/svg/', filter: 'isFile'},
+        {expand: true, flatten: true, src: ['components/empty-widgets/svg-empty.html'], dest: 'dist/svg/', filter: 'isFile'},
+        {expand: true, flatten: true, src: ['components/empty-widgets/svg-empty.html'], dest: 'public/svg/', filter: 'isFile'},
+        {expand: true, flatten: true, src: ['components/charts/svg-patterns.html'], dest: 'dist/svg/', filter: 'isFile'},
+        {expand: true, flatten: true, src: ['components/charts/svg-patterns.html'], dest: 'public/svg/', filter: 'isFile'},
         {expand: true, flatten: true, src: ['components/icons/svg*.html'], dest: 'dist/svg/', filter: 'isFile'},
         {expand: true, flatten: true, src: ['components/icons/svg*.html'], dest: 'public/svg/', filter: 'isFile'},
         {expand: true, flatten: true, src: ['demoapp/js/*site.js'], dest: 'public/js/', filter: 'isFile'}

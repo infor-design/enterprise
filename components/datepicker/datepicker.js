@@ -251,6 +251,11 @@
                 month = parseInt(self.header.find('.month').attr('data-month')),
                 day = parseInt(focused.text());
 
+              if (self.settings.showMonthYearPicker) {
+                month = parseInt(self.header.find('.month select').val());
+                year = parseInt(self.header.find('.year select').val());
+              }
+
               if (focused.hasClass('prev-month')) {
                 if(month === 0) {
                   month = 11;
@@ -560,6 +565,11 @@
               year = parseInt(self.header.find('.year').text()),
               month = parseInt(self.header.find('.month').attr('data-month')),
               day = parseInt(cell.addClass('is-selected').attr('aria-selected', 'true').text());
+
+            if (self.settings.showMonthYearPicker) {
+              year = parseInt(self.header.find('.year select').val());
+              month = parseInt(self.header.find('.month select').val());
+            }
 
             if (cell.hasClass('prev-month')) {
               if(month === 0) {
@@ -956,6 +966,7 @@
       },
 
       appendMonthYearPicker: function (month, year) {
+        var self = this;
 
         if (!this.settings.showMonthYearPicker) {
           return;
@@ -965,26 +976,42 @@
           '<select id="month-dropdown" class="dropdown">';
 
         var wideMonths = Locale.calendar().months.wide;
-        wideMonths.map(function (month, i) {
-          monthDropdown += '<option '+ (i===month ? ' selected ' : '') + ' value="'+ i +'">'+ month +'</option>';
+        wideMonths.map(function (monthMap, i) {
+          monthDropdown += '<option '+ (i===month ? ' selected ' : '') + ' value="'+ i +'">'+ monthMap +'</option>';
         });
         monthDropdown +='</select>';
 
         var monthSpan = this.header.find('.month').empty().append(monthDropdown);
-        monthSpan.find('select.dropdown').dropdown();
+        monthSpan.find('select.dropdown').dropdown().off('change.datepicker')
+          .on('change.datepicker', function () {
+            self.currentMonth = parseInt($(this).val());
+
+            self.showMonth(self.currentMonth, self.currentYear);
+          });
 
         var yearDropdown = '<label for="year-dropdown" class="audible">'+ Locale.translate('Year') +'</label>'+
-          '<select id="year-dropdown" class="dropdown">';
+          '<select id="year-dropdown" class="dropdown year">';
 
-        var years = [year-1, year-2, year-3, year-4, year-5, year+1, year+2, year+3, year+4, year+5];
+        var years = [parseInt(year)-5, parseInt(year)-4, parseInt(year)-3, parseInt(year)-2, parseInt(year)-1, parseInt(year),
+          parseInt(year)+1, parseInt(year)+2, parseInt(year)+3, parseInt(year)+4, parseInt(year)+5];
+
         years.map(function (yearMap) {
           yearDropdown += '<option '+ (year===yearMap ? ' selected ' : '') + ' value="'+ yearMap +'">'+ yearMap +'</option>';
         });
         yearDropdown +='</select>';
 
         var yearSpan = this.header.find('.year').empty().append(yearDropdown);
-        yearSpan.find('select.dropdown').dropdown();
+        yearSpan.find('select.dropdown').dropdown().off('change.datepicker')
+          .on('change.datepicker', function () {
+            self.currentYear = parseInt($(this).val());
 
+            self.showMonth(self.currentMonth, self.currentYear);
+          });
+
+        if (this.yearFist) {
+          yearSpan.find('.dropdown-wrapper').css('left', '0');
+          monthSpan.find('.dropdown-wrapper').css('left', '10px');
+        }
       },
 
       // Put the date in the field and select on the calendar

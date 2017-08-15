@@ -1342,8 +1342,8 @@
 
         // use negative height of the pseudoElem to get the Dropdown list to overlap the input.
         var isShort = this.element.closest('.field-short').length > 0;
-        positionOpts.y = isShort ? -26 : -34;
-        positionOpts.x = isShort ? 0 : -1;
+        positionOpts.y = isShort ? -26 : Soho.env.browser.name === 'firefox' ? -33.5 : -35;
+        positionOpts.x = 0;
         //parseInt(parentElementStyle.height) +  parseInt(parentElementStyle.borderTopWidth) +  parseInt(parentElementStyle.borderBottomWidth) * -1;
 
         this.list.one('afterplace.dropdown', dropdownAfterPlaceCallback).place(positionOpts);
