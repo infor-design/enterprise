@@ -293,6 +293,16 @@
     @include font-size(18);
     color: $datepicker-month-year-color;
   }
+
+  .dropdown-wrapper {
+    text-indent: 0;
+    width: 120px;
+  }
+
+  #year-dropdown + .dropdown-wrapper {
+    left: 10px;
+    width: 80px;
+  }
 }
 
 //Calendar legend
@@ -367,8 +377,17 @@ html[dir='rtl'] {
 
   // Header Area of Calendar
   .calendar-header {
-    padding-right: 15px;
+    padding-right: 0;
     text-align: right;
+
+    .month {
+      padding-left: 5px;
+    }
+
+    #year-dropdown + .dropdown-wrapper {
+      left: 0;
+      right: 5px;
+    }
 
     button {
       left: 0;

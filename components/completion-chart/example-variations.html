@@ -1,0 +1,140 @@
+<div class="row">
+  <div class="one-third column">
+    <div id="example-1" class="chart-container"></div>
+    <button type="button" class="btn-secondary" id="example-1-update-value">Update</button>
+    <br><br><br><br><br>
+
+    <div id="example-2" class="chart-container"></div>
+    <div id="example-3" class="chart-container"></div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+    <div id="example-4" class="chart-container"></div>
+    <div id="example-5" class="chart-container"></div>
+    <div id="example-6" class="chart-container"></div>
+    <div id="example-7" class="chart-container"></div>
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+
+  var dataset1 = [{
+    data: [{
+      name: {text: 'Available Credit'},
+      completed: {text: 'Spent', value: 50000, format: '$,.0f'},
+      remaining: {text: 'Pending', value: 10000, format: '$,.0f'},
+      total: {value: 95000, format: '$,.0f'},
+    }]
+  }];
+
+  var dataset2 = [{
+    data: [{
+      name: {text: 'Procurement'},
+      completed: {value: '50%', format: '.0%', color: 'primary'},
+      remaining: {value: '16%', format: '.0%'},
+      total: {value: 49000, format: '$,.0f'},
+    }]
+  }];
+
+  var dataset3 = [{
+    data: [{
+      name: {text: 'Construction'},
+      completed: {value: '50%', format: '.0%', color: 'dark'},
+      remaining: {value: '50%', format: '.0%'},
+      total: {value: 19000, format: '$,.0f'},
+    }]
+  }];
+
+  var dataset4 = [{
+    data: [{
+      name: {text: 'Russell Dunn'},
+      info: {value: '-22h', color: 'error'},
+      completed: {value: 50, color: 'error'},
+    }]
+  }];
+
+  var dataset5 = [{
+    data: [{
+      name: {text: 'Ronald Reynolds'},
+      info: {value: '13h', color: 'FFD726'},
+      completed: {value: 13},
+    }]
+  }];
+
+  var dataset6 = [{
+    data: [{
+      name: {text: 'Lei Ju'},
+      info: {value: '-22h', text: 'Approaching max.*'},
+      completed: {value: 90},
+    }]
+  }];
+
+  var dataset7 = [{
+    data: [{
+      name: {text: 'Behavior 1'},
+      info: {text: '/100'},
+      completed: {value: 84, color: 'amethyst07'},
+      targetline: {text: 'target', value: '87%'},
+    }]
+  }];
+
+  var api1 = $('#example-1').chart({dataset: dataset1, type: 'completion-target'}).data('chart');
+  var api2 = $('#example-2').chart({dataset: dataset2, type: 'completion-target'}).data('chart');
+  var api3 = $('#example-3').chart({dataset: dataset3, type: 'completion-target'}).data('chart');
+  var api4 = $('#example-4').chart({dataset: dataset4, type: 'completion'}).data('chart');
+  var api5 = $('#example-5').chart({dataset: dataset5, type: 'completion'}).data('chart');
+  var api6 = $('#example-6').chart({dataset: dataset6, type: 'completion'}).data('chart');
+  var api7 = $('#example-7').chart({dataset: dataset7, type: 'completion'}).data('chart');
+
+  $('#example-1-update-value').on('click', function () {
+    api1.update({
+      type: 'completed',
+      data: {value: '100%'}
+    });
+  });
+
+setTimeout(function() {
+
+  // Update name text & color
+  // api1.update({
+  //   type: 'name',
+  //   data: {text: 'Red text', color: 'error'}
+  // });
+
+  // Update total value & color
+  // api1.update({
+  //   type: 'total',
+  //   data: {value: 97000, color: 'error'}
+  // });
+
+  // Update remaining value & color
+  // api1.update({
+  //   type: 'remaining',
+  //   data: {value: 22000, color: 'error'}
+  // });
+
+  // Update completed text, value and color
+  // api1.update({
+  //   type: 'completed',
+  //   data: {text: 'New', value: 43000, color: 'error'}
+  // });
+
+// Update info value, text and color
+  // api7.update({
+  //   type: 'info',
+  //   data: {value: 'new value', text: 'new text', color: 'error'}
+  // });
+
+// Update targetline value & color
+  // api7.update({
+  //   type: 'targetline',
+  //   data: {value: 15, color: 'error'}
+  // });
+
+}, 0);
+
+});
+</script>

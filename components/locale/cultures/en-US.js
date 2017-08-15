@@ -217,6 +217,7 @@
       'Minimize': {id: 'Minimize', value: 'Minimize', comment: 'Minimize tooltip'},
       'Minus': {id: 'Minus', value: 'Minus', comment: 'Minus tooltip'},
       'Mobile': {id: 'Mobile', value: 'Mobile', comment: 'Indicates a mobile device (phone tablet ect)'},
+      'Month': {id: 'Month', value: 'Month', comment: 'As in a date month'},
       'More': {id: 'More', value: 'More...', comment: 'Text Indicating More Buttons or form content'},
       'MoreActions': {id: 'MoreActions', value: 'More Actions', comment: 'Text on the More Actions button indictating hidden functions'},
       'MsgDirty': {id: 'MsgDirty', value: ', Modified', comment: 'for modified form fields'},
@@ -310,7 +311,6 @@
       'TextBtnCancel': {id: 'TextBtnCancel', value: 'Cancel uploading this file', comment: 'text for cancel button for advanced fileupload'},
       'TextBtnCloseError': {id: 'TextBtnCloseError', value: 'Close this error', comment: 'text for error close button for advanced fileupload'},
       'TextBtnRemove': {id: 'TextBtnRemove', value: 'Close this error', comment: 'text for remove button for advanced fileupload'},
-
       'Timer': {id: 'Timer', value: 'Timer', comment: 'Timer tooltip'},
       'Today': {id: 'Today', value: 'Today', comment: 'refering to today on a calendar'},
       'ToggleBold': {id: 'ToggleBold', value: 'Toggle Bold Text', comment: 'turn on and off bold in text editor (like word)'},
@@ -341,6 +341,7 @@
       'VerticalMiddleAlign': {id: 'VerticalMiddleAlign', value: 'Vertical Align Center', comment: 'Vertical Align tooltip'},
       'ViewSource': {id: 'ViewSource', value: 'View Source', comment: 'Toggle the source view in the editor'},
       'ViewVisual': {id: 'ViewVisual', value: 'View Visual', comment: 'Toggle the visual view in the editor'},
+      'Year': {id: 'Year', value: 'Year', comment: 'As in a date year'},
       'Yes': {id: 'Yes', value: 'Yes', comment: 'On a dialog button'}
     }
   });
