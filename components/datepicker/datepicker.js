@@ -26,7 +26,7 @@
           mode: undefined,
           roundToInterval: undefined,
           dateFormat: 'locale', //or can be a specific format like 'yyyy-MM-dd' iso8601 format
-          firstDayOfWeek: Locale.calendar().firstDayofWeek,
+          firstDayOfWeek: Locale ? Locale.calendar().firstDayofWeek : 0,
           placeholder: false,
           /*  Disabling of dates
           **    dates: 'M/d/yyyy' or
