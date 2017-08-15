@@ -635,7 +635,7 @@
 
         if (data.isExpanded || data.isExpanded === undefined && !data.isLeaf) {
           btn.find('svg.icon').changeIcon('caret-up');
-          btn.addClass('btn-expand').removeClass('btn-collapse')
+          btn.addClass('btn-expand').removeClass('btn-collapse');
           data.isExpanded = true;
         } else {
           btn.find('svg.icon').changeIcon('caret-down');
