@@ -1,0 +1,84 @@
+
+<div class="row">
+  <div class="twelve columns">
+
+    <button class="btn-secondary" type="button" id="add-comment">Add a Comment</button><br><br>
+
+    <!-- "Comment" Example -->
+    <div id="modal-add-comment" style="display: none">
+
+        <small class="alert-text">Escalated (2X)</small>
+        <h2>Follow up action with HMM Global</h2>
+        <p>Contact sales representative with the updated purchase order <br>before submission to corporate.</p>
+
+      <button type="button" id="test" class="btn-menu">
+        <span>Add Item</span>
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-dropdown"></use>
+        </svg>
+      </button>
+      <ul class="popupmenu has-icons">
+        <li><a href="#">Create a form</a></li>
+        <li class="separator"></li>
+        <li><a href="#">Spelling...</a></li>
+        <li><a href="#" disabled onclick="alert('Should not be Allowed')" aria-disabled="true">Solver...</a></li>
+        <li class="separator"></li>
+        <li class="is-checked"><a href="#">Enable Autocomplete</a></li>
+        <li><a href="#">Notification Rules</a></li>
+        <li><a href="#">Protect Sheet Rules</a></li>
+      </ul>
+
+      <button type="button" class="btn-menu">
+        <span>Add Item</span>
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-dropdown"></use>
+        </svg>
+      </button>
+      <ul class="popupmenu has-icons">
+        <li><a href="#">Create a form</a></li>
+        <li class="separator"></li>
+        <li><a href="#">Spelling...</a></li>
+        <li><a href="#" disabled onclick="alert('Should not be Allowed')" aria-disabled="true">Solver...</a></li>
+        <li class="separator"></li>
+        <li class="is-checked"><a href="#">Enable Autocomplete</a></li>
+        <li><a href="#">Notification Rules</a></li>
+        <li><a href="#">Protect Sheet Rules</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<script>
+var modals = {
+    'add-comment': {
+      'title': 'Add a Comment',
+      'content': $('#modal-add-comment')
+    }
+  },
+
+  setModal = function (opt) {
+    opt = $.extend({
+      buttons: [{
+        text: 'Cancel',
+        click: function(e, modal) {
+          modal.close();
+        }
+      }, {
+        text: 'Save',
+        click: function(e, modal) {
+          modal.close();
+        },
+        validate: false,
+        isDefault: true
+      }]
+    }, opt);
+
+    $('body').modal(opt);
+  };
+
+  $('#add-comment, #add-context, #search-project').on('click', function () {
+    setModal(modals[this.id]);
+  });
+
+</script>
