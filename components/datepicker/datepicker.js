@@ -26,6 +26,7 @@
           mode: undefined,
           roundToInterval: undefined,
           dateFormat: 'locale', //or can be a specific format like 'yyyy-MM-dd' iso8601 format
+          firstDayOfWeek: Locale ? Locale.calendar().firstDayofWeek : 0,
           placeholder: false,
           /*  Disabling of dates
           **    dates: 'M/d/yyyy' or
@@ -864,7 +865,7 @@
         this.currentYear = year;
 
         // Set the Days of the week
-        var firstDayofWeek = (Locale.calendar().firstDayofWeek || 0);
+        var firstDayofWeek = (this.settings.firstDayOfWeek || 0);
         this.dayNames.find('th').each(function (i) {
           $(this).text(days[(i + firstDayofWeek) % 7]);
         });
