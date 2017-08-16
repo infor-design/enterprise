@@ -13,7 +13,8 @@
 8. Pattern Colors [View Example]( ../components/column/example-patterns)
 9. Selecting a Section Colors [View Example]( ../components/column/example-selected)
 10. Testing Date Values [View Test]( ../components/column/test-by-date)
-11. Example showing get selected value [View Test]( ../components/column/example-get-selected)
+11. Example showing Get Selected value [View Test]( ../components/column/example-get-selected)
+12. Example showing Set Selected value [View Test]( ../components/column/example-set-selected)
 
 ## API Details
 

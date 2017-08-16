@@ -7,6 +7,8 @@
 2. Showing Slices as Alerts [View Example]( ../components/donut/example-alerts)
 3. With a Right Click Menu [View Example]( ../components/donut/example-rightclick)
 4. Longer and Zero Labels [View Example]( ../components/donut/example-values)
+5. Example showing Get Selected value [View Example]( ../components/donut/example-get-selected)
+6. Example showing Set Selected value [View Example]( ../components/donut/example-set-selected)
 
 ## API Details
 

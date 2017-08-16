@@ -1543,6 +1543,33 @@ window.Chart = function(container) {
       charts[charts.legendformatter ? 'renderLegend' : 'addLegend'](series, 'donut');
     }
 
+    charts.setSelected = function (o, isToggle) {
+      var selector, arcIndex,
+        selected = 0,
+        equals = window.Soho.utils.equals;
+      arcs.selectAll('.arc').each(function(d, i) {
+        if (!d || !d.data || !d.data.data) {
+          return;
+        }
+        if (selected < 1) {
+          if ((typeof o.fieldName !== 'undefined' &&
+                typeof o.fieldValue !== 'undefined' &&
+                  o.fieldValue === d.data.data[o.fieldName]) ||
+              (typeof o.index !== 'undefined' && o.index === i) ||
+              (o.data && equals(o.data, chartData[i].data)) ||
+              (o.elem && $(this).is(o.elem))) {
+            selected++;
+            selector = d3.select(this);
+            arcIndex = i;
+          }
+        }
+      });
+
+      if (selected > 0 && (isToggle || !selector.classed('is-selected'))) {
+        selector.on('click').call(selector.node(), selector.datum(), arcIndex);
+      }
+    };
+
     // Set initial selected
     (function () {
       var selected = 0,
@@ -1860,21 +1887,71 @@ window.Chart = function(container) {
           charts.selectElement(d3.select(this), svg.selectAll('.point, .connected-line'), data);
         });
 
+    charts.setSelected = function (o, isToggle) {
+      var selected = 0,
+        selector,
+        selectorData,
+        dataset = chartData,
+
+        setSelected = function (d, i, groupIdx) {
+          groupIdx = groupIdx > -1 ? groupIdx : 0;
+          var elem = svg.selectAll('.point:nth-child('+ (i+2) +')'),
+            data = {value: d, index: i, name: dataset[groupIdx].name};
+
+          if (options.isMinMax && max === d) {
+            data.isHighest = true;
+          }
+          if (options.isMinMax && min === d) {
+            data.isLowest = true;
+          }
+          if (options.isPeakDot && max === d) {
+            data.isPeakDot = true;
+          }
+
+          selected++;
+          selector = elem;
+          selectorData = data;
+        };
+
+      dataset.forEach(function(d, i) {
+        if (selected < 1) {
+          if (d && d.data && (typeof o.groupName !== 'undefined' &&
+            typeof o.groupValue !== 'undefined' &&
+            typeof o.index === 'number' &&
+            o.groupValue === d[o.groupName] &&
+            o.index > -1 && d.data[o.index])) {
+              setSelected(d.data[o.index], o.index, i);
+          }
+        }
+        if (selected < 1) {
+          if (d && d.data && (typeof o.groupName === 'undefined' &&
+            typeof o.groupValue === 'undefined' &&
+            typeof o.index === 'number' &&
+            o.index > -1 && d.data[o.index])) {
+              setSelected(d.data[o.index], o.index, i);
+          }
+        }
+      });
+
+      if (selected > 0 && (isToggle || !selector.classed('is-selected'))) {
+        charts.selectElement(selector, svg.selectAll('.point, .connected-line'), selectorData);
+      }
+    };
+
     // Set initial selected
     (function () {
       var selected = 0,
         selector,
         selectorData,
-        d = chartData[0],
+        dataset = chartData,
 
-        setSelected = function (d, i) {
-
+        setSelected = function (d, i, groupIdx) {
+          groupIdx = groupIdx > -1 ? groupIdx : 0;
           var elem = svg.selectAll('.point:nth-child('+ (i+2) +')'),
-            isSelected = elem.node() && elem.classed('is-selected');
+            isSelected = elem.node() && elem.classed('is-selected'),
+            data = {value: d, index: i, name: dataset[groupIdx].name};
 
           if (!isSelected) {
-            var data = {value: d, index: i, name: chartData[0].name};
-
             if (options.isMinMax && max === d) {
               data.isHighest = true;
             }
@@ -1884,18 +1961,21 @@ window.Chart = function(container) {
             if (options.isPeakDot && max === d) {
               data.isPeakDot = true;
             }
-
             selected++;
             selector = elem;
             selectorData = data;
           }
         };
 
-        if (d && d.data && typeof d.selected === 'number' && d.selected > -1) {
-          if (d.data[d.selected]) {
-            setSelected(d.data[d.selected], d.selected);
+      dataset.forEach(function(d, i) {
+        if (selected < 1) {
+          if (d && d.data && typeof d.selected === 'number' && d.selected > -1) {
+            if (d.data[d.selected]) {
+              setSelected(d.data[d.selected], d.selected, i);
+            }
           }
         }
+      });
 
       if (selected > 0) {
         charts.selectElement(selector, svg.selectAll('.point, .connected-line'), selectorData);
@@ -2636,6 +2716,93 @@ window.Chart = function(container) {
       }
     }
 
+    charts.setSelected = function (o, isToggle) {
+      var selected = 0,
+        equals = window.Soho.utils.equals,
+        legendsNode = svg.node().parentNode.nextSibling,
+        legends = d3.select(legendsNode),
+        isLegends = legends.node() && legends.classed('chart-legend'),
+        barIndex, selector, isStackedGroup, xGroup,
+
+        setSelectedBar = function (g, gIdx) {
+          var isGroup = !!g;
+          g = isGroup ? d3.select(g) : svg;
+          gIdx = typeof gIdx !== 'undefined' ? gIdx : 0;
+          g.selectAll('.bar').each(function(d, i) {
+            if (!d) {
+              return;
+            }
+            if (selected < 1) {
+              if ((typeof o.fieldName !== 'undefined' &&
+                    typeof o.fieldValue !== 'undefined' &&
+                      o.fieldValue === (isSingular && isStacked ? d[0][o.fieldName] : d[o.fieldName])) ||
+                  (typeof o.index !== 'undefined' && o.index === i) ||
+                  (o.data && equals(o.data, chartData[gIdx].data[i])) ||
+                  (o.elem && $(this).is(o.elem))) {
+                selected++;
+                selector = d3.select(this);
+                barIndex = i;
+                if (isGroup && !isStacked) {
+                  isStackedGroup = true;
+                }
+              }
+            }
+          });
+        },
+
+        setSelectedGroup = function () {
+          var groups = svg.selectAll('.series-group');
+          if (groups[0].length) {
+            groups.each(function(d, i) {
+              setSelectedBar(this, i);
+            });
+          }
+        };
+
+      if (isGrouped || (isStacked && !isSingular && !isGrouped)) {
+        chartData.forEach(function(d, i) {
+          if (selected < 1) {
+            xGroup = $(svg.select('[data-group-id="'+ i +'"]').node());
+            if ((typeof o.groupName !== 'undefined' &&
+                  typeof o.groupValue !== 'undefined' &&
+                    o.groupValue === d[o.groupName]) ||
+                (typeof o.groupIndex !== 'undefined' && o.groupIndex === i) ||
+                (o.data && equals(o.data, d)) ||
+                (o.elem && (xGroup.is(o.elem)))) {
+
+              if (typeof o.fieldName === 'undefined' &&
+                    typeof o.fieldValue === 'undefined' &&
+                      typeof o.index === 'undefined') {
+                selected++;
+                selector = svg.select('[data-group-id="'+ i +'"]').select('.bar');
+                barIndex = i;
+                if (isStacked && !isGrouped) {
+                  isStackedGroup = true;
+                }
+              }
+            }
+          }
+        });
+        if (selected < 1) {
+          setSelectedGroup();
+        }
+      }
+      else {
+        setSelectedBar();
+      }
+
+      if (selected > 0 && (isToggle || !selector.classed('is-selected'))) {
+        if (isStackedGroup) {
+          if (isLegends) {
+            $(legends.selectAll('.chart-legend-item')[0][barIndex]).trigger('click.chart');
+          }
+        }
+        else {
+          selector.on('click').call(selector.node(), selector.datum(), barIndex);
+        }
+      }
+    };
+
     // Set initial selected
     (function () {
       var selected = 0,
@@ -2746,7 +2913,7 @@ window.Chart = function(container) {
     var ticks = selector ? svg.selectAll(selector) : svg.selectAll('.x text');
 
     ticks.each(function(d, i) {
-      var text = dataArray[i][elem];
+      var text = dataArray[i] ? dataArray[i][elem] : '';
 
       text = text || (isNoEclipse ?
         ((d3.select(this).text().substring(0, 1))) : (d3.select(this).text().substring(0, 6) +'...'));
@@ -3181,6 +3348,64 @@ window.Chart = function(container) {
       charts.addLegend(series);
     }
     charts.appendTooltip();
+
+    charts.setSelected = function (o, isToggle) {
+      var selected = 0,
+        equals = window.Soho.utils.equals,
+        selector, selectorData, elem,
+
+        setSelected = function(d, i, d2, i2) {
+          if (d2) {
+            elem = svg.select('[data-group-id="'+ i +'"]')
+                      .select('.dot:nth-child('+ (i2+2) +')');
+            if ((typeof o.groupIndex === 'number' &&
+                  typeof o.fieldName !== 'undefined' &&
+                    typeof o.fieldValue !== 'undefined' &&
+                      o.groupIndex === i &&
+                        o.fieldValue === d2[o.fieldName]) ||
+                (typeof o.index !== 'undefined' &&
+                  typeof o.groupIndex === 'number' &&
+                    o.groupIndex === i && o.index === i2) ||
+                (o.elem && $(elem.node()).is(o.elem)) ||
+                (o.data && equals(o.data, d2))) {
+              selected++;
+              selectorData = d2;
+              selector = svg.select('[data-group-id="'+ i +'"]');
+            }
+          }
+          else {
+            elem = svg.select('[data-group-id="'+ i +'"]');
+            if ((typeof o.groupName !== 'undefined' &&
+                  typeof o.groupValue !== 'undefined' &&
+                    o.groupValue === d[o.groupName]) ||
+                (typeof o.groupIndex !== 'undefined' &&
+                  o.groupIndex === i) ||
+                (o.elem && $(elem.node()).is(o.elem)) ||
+                (o.data && equals(o.data, d))) {
+              selected++;
+              selectorData = d;
+              selector = elem;
+            }
+          }
+        };
+
+      dataset.forEach(function(d, i) {
+        if (selected < 1 && d && d.data) {
+          d.data.forEach(function(d2, i2) {
+            if (selected < 1 && d2) {
+              setSelected(d, i, d2, i2);
+            }
+          });
+          if (selected < 1) {
+            setSelected(d, i);
+          }
+        }
+      });
+
+      if (selected > 0 && (isToggle || !selector.classed('is-selected'))) {
+        charts.selectElement(selector, svg.selectAll('.line-group'), selectorData);
+      }
+    };
 
     // Set initial selected
     (function () {

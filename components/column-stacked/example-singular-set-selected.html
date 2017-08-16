@@ -4,10 +4,10 @@
   <div class="two-thirds column">
       <div class="widget">
         <div class="widget-header">
-          <h2 tabindex="0" class="widget-title">Stacked Bar Chart Title</h2>
+          <h2 class="widget-title">Stacked Singular Column Chart</h2>
         </div>
         <div class="widget-content">
-          <div id="bar-stacked-example" class="chart-container">
+          <div id="column-bar-example" class="chart-container">
           </div>
         </div>
       </div>
@@ -29,33 +29,46 @@ $('body').on('initialized', function () {
 
   var dataset = [{
     data: [{
-        name: '2008',
-        value: 123
+        name: 'Automotive',
+        shortName: 'Auto',
+        abbrName: 'A',
+        value: 7
     }, {
-        name: '2009',
-        value: 234
+        name: 'Distribution',
+        shortName: 'Dist',
+        abbrName: 'D',
+        value: 10
     }, {
-        name: '2010',
-        value: 345,
-    }],
-    name: 'Series 1'
-  }, {
-    data: [{
-        name: '2008',
-        value: 235
+        name: 'Equipment',
+        shortName: 'Equip',
+        abbrName: 'E',
+        value: 14
     }, {
-        name: '2009',
-        value: 267
+        name: 'Fashion',
+        shortName: 'Fash',
+        abbrName: 'F',
+        value: 10
     }, {
-        name: '2010',
-        value: 573
-    }],
-    name: 'Series 2'
+        name: 'Food & Beverage',
+        shortName: 'Food',
+        abbrName: 'F&B',
+        value: 14
+    }, {
+        name: 'Healthcare',
+        shortName: 'Health',
+        abbrName: 'H',
+        value: 8
+    }, {
+        name: 'Other',
+        shortName: 'Other',
+        abbrName: 'O',
+        value: 7
+    }]
   }];
 
-  var elem = $('#bar-stacked-example');
+  var elem = $('#column-bar-example');
 
-  elem.chart({type: 'bar-stacked', dataset: dataset})
+  elem.chart({type: 'column-stacked', dataset: dataset})
   .on('selected', function (e, args) {
     console.log(args);
   });
@@ -63,32 +76,22 @@ $('body').on('initialized', function () {
   var options,
     api = elem.data('chart'),
     setOptions = function() {
-      // Use group "name" to select
-      // options = {
-      //   groupName: 'name',
-      //   groupValue: 'Series 1'
-      // };
-
-      // Use field "name" to select
+      /// Use field "name" to select
       options = {
         fieldName: 'name',
-        fieldValue: '2009'
+        fieldValue: 'Automotive'
       };
 
-      // Use group index to select
-      // options = { groupIndex: 0 };
-
-      // Use bar index to select
+      // Use index to select
       // options = { index: 1 };
 
       // Use jQuery object to select
-      // options = { elem: elem.find('[data-group-id="0"]') };
-      // options = { elem: elem.find('[data-group-id="0"] .bar:eq(1)') };
+      // options = { elem: elem.find('.bar:eq(2)') };
 
       // Use data to select
-      // options = { data: dataset[0] };
-      // options = { data: dataset[1].data[1] };
+      // options = { data: dataset[0].data[2] };
     };
+
 
   // Set selected
   $('#btn-set-selected').on('click', function() {

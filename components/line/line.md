@@ -9,7 +9,8 @@
 4. Customize Tooltip [View Example]( ../components/line/example-custom-tooltip)
 5. Customize Dot Size [View Example]( ../components/line/example-custom-dots)
 6. Rotate Bottom Labels [View Example]( ../components/line/test-rotate)
-7. Example showing get selected value [View Example]( ../components/line/example-get-selected)
+7. Example showing Get Selected value [View Example]( ../components/line/example-get-selected)
+8. Example showing Set Selected value [View Example]( ../components/line/example-set-selected)
 
 ## API Details
 
