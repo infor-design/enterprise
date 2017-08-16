@@ -7,8 +7,8 @@
 2. Default a selected Group [View Example]( ../components/bar-grouped/example-selected)
 3. Handle Negative Values [View Example]( ../components/bar-grouped/example-negative)
 4. Adapts to handle a large number of groups [View Example]( ../components/bar-grouped/test-many-groups)
-5. Example showing get selected value [View Example]( ../components/bar-grouped/example-get-selected)
-6. Example showing set selected value [View Example]( ../components/bar-grouped/example-set-selected)
+5. Example showing Get Selected value [View Example]( ../components/bar-grouped/example-get-selected)
+6. Example showing Set Selected value [View Example]( ../components/bar-grouped/example-set-selected)
 
 ## Code Example
 

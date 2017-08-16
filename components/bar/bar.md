@@ -12,8 +12,8 @@
 7. Example showing with negative values [View Example]( ../components/bar/example-negative-values)
 8. Example showing color patterns [View Example]( ../components/bar/example-patterns)
 9. Example showing defaulting a selected value  [View Example]( ../components/bar/example-selected)
-10. Example showing get selected value [View Example]( ../components/bar/example-get-selected)
-11. Example showing set selected value [View Example]( ../components/bar/example-set-selected)
+10. Example showing Get Selected value [View Example]( ../components/bar/example-get-selected)
+11. Example showing Set Selected value [View Example]( ../components/bar/example-set-selected)
 
 ## API Details
 

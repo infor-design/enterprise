@@ -5,7 +5,8 @@
 
 1. Bubble Chart Example [View Example]( ../components/bubble/example-index)
 2. Defaulting a selected bubble [View Example]( ../components/bubble/example-selected)
-2. Example showing get selected value [View Example]( ../components/bubble/example-get-selected)
+3. Example showing Get Selected value [View Example]( ../components/bubble/example-get-selected)
+4. Example showing Set Selected value [View Example]( ../components/bubble/example-set-selected)
 
 ## Code Example
 

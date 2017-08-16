@@ -4,10 +4,10 @@
   <div class="two-thirds column">
       <div class="widget">
         <div class="widget-header">
-          <h2 tabindex="0" class="widget-title">Stacked Bar Chart Title</h2>
+          <h2 class="widget-title">Donut Chart Title</h2>
         </div>
         <div class="widget-content">
-          <div id="bar-stacked-example" class="chart-container">
+          <div id="pie-donut-example" class="chart-container">
           </div>
         </div>
       </div>
@@ -24,38 +24,28 @@
   </div>
 </div>
 
+{{={{{ }}}=}}
+
 <script>
 $('body').on('initialized', function () {
 
-  var dataset = [{
+  var donutData = [{
     data: [{
-        name: '2008',
-        value: 123
+        name: 'Component A',
+        value: 16
     }, {
-        name: '2009',
-        value: 234
+        name: 'Component B',
+        value: 12
     }, {
-        name: '2010',
-        value: 345,
+        name: 'Component C',
+        value: 14
     }],
-    name: 'Series 1'
-  }, {
-    data: [{
-        name: '2008',
-        value: 235
-    }, {
-        name: '2009',
-        value: 267
-    }, {
-        name: '2010',
-        value: 573
-    }],
-    name: 'Series 2'
+    centerLabel: 'Donut Chart'
   }];
 
-  var elem = $('#bar-stacked-example');
+  var elem = $('#pie-donut-example');
 
-  elem.chart({type: 'bar-stacked', dataset: dataset})
+  elem.chart({type: 'donut', dataset: donutData})
   .on('selected', function (e, args) {
     console.log(args);
   });
@@ -63,32 +53,22 @@ $('body').on('initialized', function () {
   var options,
     api = elem.data('chart'),
     setOptions = function() {
-      // Use group "name" to select
-      // options = {
-      //   groupName: 'name',
-      //   groupValue: 'Series 1'
-      // };
-
       // Use field "name" to select
       options = {
         fieldName: 'name',
-        fieldValue: '2009'
+        fieldValue: 'Component B'
       };
 
-      // Use group index to select
-      // options = { groupIndex: 0 };
-
-      // Use bar index to select
-      // options = { index: 1 };
+      // Use index to select
+      // options = { index: 2 };
 
       // Use jQuery object to select
-      // options = { elem: elem.find('[data-group-id="0"]') };
-      // options = { elem: elem.find('[data-group-id="0"] .bar:eq(1)') };
+      // options = { elem: elem.find('.arc:eq(1)') };
 
       // Use data to select
-      // options = { data: dataset[0] };
-      // options = { data: dataset[1].data[1] };
+      // options = { data: donutData[0].data[0] };
     };
+
 
   // Set selected
   $('#btn-set-selected').on('click', function() {
