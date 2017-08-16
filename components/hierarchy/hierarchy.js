@@ -625,10 +625,10 @@
 
         if (data.isExpanded) {
           btn.find('svg.icon').changeIcon('caret-up');
-          btn.addClass('btn-collapse').removeClass('btn-expand');
+          btn.addClass('btn-expand').removeClass('btn-collapse');
         } else {
           btn.find('svg.icon').changeIcon('caret-down');
-          btn.addClass('btn-expand').removeClass('btn-collapse');
+          btn.addClass('btn-collapse').removeClass('btn-expand');
         }
 
         if (data.isLeaf || data.isRootNode) {
