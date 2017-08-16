@@ -11,7 +11,12 @@
 <ul id="grid-actions-menu" class="popupmenu">
   <li><a href="#">Action One</a></li>
   <li><a href="#">Action Two</a></li>
-  <li><a href="#">Action Three</a></li>
+  <li><a href="#">Action Three</a>
+    <ul class="popupmenu">
+      <li><a href="#">Action Four</a></li>
+      <li><a href="#">Action Five</a></li>
+    </ul>
+  </li>
 </ul>
 
 <script>
@@ -62,6 +67,10 @@
       }).on('contextmenu', function (e, args) {
         console.log('contextmenu fired', args);
       });
+
+      $('.popupmenu').on('selected', function(e, args) {
+        console.log('contextmenu item selected', args);
+      })
     });
 
 </script>
