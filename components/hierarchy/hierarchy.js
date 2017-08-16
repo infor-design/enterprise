@@ -471,17 +471,6 @@
           }
         }
 
-        if (nodeData.length) {
-          for (var i = 0, l = nodeData.length; i < l; i++) {
-            var isLast = i === nodeData.length -1;
-            processDataForLeaf(nodeData[i], isLast);
-            self.updateState($('#' + nodeData[i].id), false, nodeData[i]);
-          }
-        } else {
-          processDataForLeaf(nodeData, true);
-          self.updateState($('#' + nodeData.id), false, nodeData);
-        }
-
         function processDataForLeaf(nodeData, isLast) {
           self.setColor(nodeData);
 
@@ -535,6 +524,17 @@
               self.updateState($('#' + nodeData.children[childLength].id), false, nodeData.children[childLength]);
             }
           }
+        }
+
+        if (nodeData.length) {
+          for (var i = 0, l = nodeData.length; i < l; i++) {
+            var isLast = i === nodeData.length -1;
+            processDataForLeaf(nodeData[i], isLast);
+            self.updateState($('#' + nodeData[i].id), false, nodeData[i]);
+          }
+        } else {
+          processDataForLeaf(nodeData, true);
+          self.updateState($('#' + nodeData.id), false, nodeData);
         }
       },
 
@@ -615,9 +615,6 @@
         }
 
         if ((data.isExpanded === undefined && data.children) || eventType === 'expand') {
-        if (data.isExpanded || data.isExpanded === undefined && !data.isLeaf) {
-          btn.find('svg.icon').changeIcon('caret-up');
-          btn.addClass('btn-expand').removeClass('btn-collapse');
           data.isExpanded = true;
         }
 
