@@ -267,7 +267,6 @@
       }
 
       if (this.settings.process === 'number') {
-
         // map deprecated "thousandsSeparator" to "patternOptions.allowThousandsSeparator"
         if (this.settings.thousandsSeparator) {
           this.settings.patternOptions.allowThousandsSeparator = this.settings.thousandsSeparator;
@@ -300,34 +299,51 @@
         this.settings.mustComplete = html5DataMustComplete;
       }
 
-      // TODO: translate the old currency/percent settings into prefixes/suffixes
-      /*
-      // If 'showCurrency' is defined and the mask mode is 'number', a span will be drawn that will show the
-      // localized currency symbol.
-      var symbolType = this.settings.showSymbol,
+      // Backwards compat with the old "data-show-currency"
+      var html5DataCurrency = this.element.getAttribute('data-show-currency');
+      if (html5DataCurrency) {
+        this.settings.showSymbol = 'currency';
+      }
+
+      // Handle the currency/percent symbols automatically
+      var symbolSetting = this.settings.showSymbol,
+        symbolTypes = ['currency', 'percent'],
         symbol;
 
-      // Backwards compat with the old "data-show-currency"
-      if (symbolType === true) {
-        symbolType = 'currency';
-      }
+      if (symbolTypes.indexOf(symbolSetting) > -1) {
+        symbol = (function(s) {
+          if (s === 'currency') {
+            return {
+              char: Locale.currentLocale.data.currencySign,
+              format: Locale.currentLocale.data.currencyFormat
+            };
+          }
+          if (s === 'percent') {
+            return {
+              char: Locale.currentLocale.data.numbers.percentSign,
+              format: Locale.currentLocale.data.numbers.percentFormat
+            };
+          }
+        })(this.settings.showSymbol);
 
-      if (symbolType && symbolType !== undefined && symbols.indexOf(symbolType) !== -1 && this.settings.mode === 'number') {
-        switch(symbolType) {
-          case 'currency':
-            symbol = (Locale.currentLocale.data ? Locale.currentLocale.data.currencySign : '$');
-            break;
-          case 'percent':
-            symbol = '%';
-            break;
+        // derive the location of the symbol
+        var detectableSymbol = (symbolSetting === 'currency' ? '¤' : symbol.char),
+          symbolRegex = new RegExp(detectableSymbol, 'g'),
+          symbolWhitespaceRegex = new RegExp('[\s' + detectableSymbol + ']', 'g'),
+          match = symbolWhitespaceRegex.exec(symbol.format),
+          index = -1,
+          placementType;
+
+        if (match.length) {
+          index = symbol.format.indexOf(match[0]);
+          if (index === 0) {
+            placementType = 'prefix';
+          } else if (index > 0) {
+            placementType = 'suffix';
+          }
+          this.settings.patternOptions[placementType] = match[0].replace(symbolRegex, symbol.char);
         }
-
-        $('<span class="audible ' + symbolType + '"></span>').text(' ' + symbol).appendTo(self.element.prev('label'));
-        this.element.parent('.field, .datagrid-filter-wrapper')
-          .attr('data-currency-symbol', '' + symbol)
-          .addClass(symbolType);
       }
-      */
     },
 
   };
