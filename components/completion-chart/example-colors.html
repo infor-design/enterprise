@@ -1,0 +1,177 @@
+
+<div class="row">
+  <div class="two columns">
+    <div class="field">
+      <div id="example-1" class="chart-container"></div>
+    </div>
+    <div class="field">
+      <div id="example-2" class="chart-container"></div>
+    </div>
+    <div class="field">
+      <div id="example-3" class="chart-container"></div>
+    </div>
+    <div class="field">
+      <div id="example-4" class="chart-container"></div>
+    </div>
+    <div class="field">
+      <div id="example-5" class="chart-container"></div>
+    </div>
+    <div class="field">
+      <div id="example-6" class="chart-container"></div>
+    </div>
+    <div class="field">
+      <div id="example-7" class="chart-container"></div>
+    </div>
+    <div class="field">
+      <div id="example-8" class="chart-container"></div>
+    </div>
+  </div>
+  <div class="two columns">
+    <div class="field">
+      <div id="example-1b" class="chart-container"></div>
+    </div>
+    <div class="field">
+      <div id="example-2b" class="chart-container"></div>
+    </div>
+    <div class="field">
+      <div id="example-3b" class="chart-container"></div>
+    </div>
+    <div class="field">
+      <div id="example-4b" class="chart-container"></div>
+    </div>
+    <div class="field">
+      <div id="example-5b" class="chart-container"></div>
+    </div>
+    <div class="field">
+      <div id="example-6b" class="chart-container"></div>
+    </div>
+    <div class="field">
+      <div id="example-7b" class="chart-container"></div>
+    </div>
+    <div class="field">
+      <div id="example-8b" class="chart-container"></div>
+    </div>
+  </div>
+  <div class="two columns">
+    <div class="field">
+      <div id="example-1c" class="chart-container"></div>
+    </div>
+    <div class="field">
+      <div id="example-2c" class="chart-container"></div>
+    </div>
+    <div class="field">
+      <div id="example-3c" class="chart-container"></div>
+    </div>
+    <div class="field">
+      <div id="example-4c" class="chart-container"></div>
+    </div>
+    <div class="field">
+      <div id="example-5c" class="chart-container"></div>
+    </div>
+    <div class="field">
+      <div id="example-6c" class="chart-container"></div>
+    </div>
+    <div class="field">
+      <div id="example-7c" class="chart-container"></div>
+    </div>
+    <div class="field">
+      <div id="example-8c" class="chart-container"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+
+    var dataset1 = [{
+      data: [{
+        name: {text: 'dark'},
+        info: {value: '13h'},
+        completed: {value: 13, color: 'dark'},
+      }]
+    }];
+
+    var dataset2 = [{
+      data: [{
+        name: {text: 'error'},
+        info: {value: '13h'},
+        completed: {value: 13, color: 'error'},
+      }]
+    }];
+
+    var dataset3 = [{
+      data: [{
+        name: {text: 'good'},
+        info: {value: '13h'},
+        completed: {value: 13, color: 'good'},
+      }]
+    }];
+
+    var dataset4 = [{
+      data: [{
+        name: {text: 'primary'},
+        info: {value: '13h'},
+        completed: {value: 13, color: 'primary'},
+      }]
+    }];
+
+    var dataset5 = [{
+      data: [{
+        name: {text: '#880e0e'},
+        info: {value: '13h'},
+        completed: {value: 13, color: '#880e0e'},
+      }]
+    }];
+
+    var dataset6 = [{
+      data: [{
+        name: {text: 'empty'},
+        info: {value: '13h'},
+        completed: {value: 13},
+      }]
+    }];
+
+    var dataset7 = [{
+      data: [{
+        name: {text: 'alert'},
+        info: {value: '13h'},
+        completed: {value: 13, color: 'alert'},
+      }]
+    }];
+
+    var dataset8 = [{
+      data: [{
+        name: {text: 'alert-yellow'},
+        info: {value: '13h'},
+        completed: {value: 13, color: 'alert-yellow'},
+      }]
+    }];
+
+    var api1 = $('#example-1').chart({dataset: dataset1, type: 'targeted-achievement'}).data('chart');
+    var api2 = $('#example-2').chart({dataset: dataset2, type: 'targeted-achievement'}).data('chart');
+    var api3 = $('#example-3').chart({dataset: dataset3, type: 'targeted-achievement'}).data('chart');
+    var api4 = $('#example-4').chart({dataset: dataset4, type: 'targeted-achievement'}).data('chart');
+    var api5 = $('#example-5').chart({dataset: dataset5, type: 'targeted-achievement'}).data('chart');
+    var api6 = $('#example-6').chart({dataset: dataset6, type: 'targeted-achievement'}).data('chart');
+    var api7 = $('#example-7').chart({dataset: dataset7, type: 'targeted-achievement'}).data('chart');
+    var api8 = $('#example-8').chart({dataset: dataset8, type: 'targeted-achievement'}).data('chart');
+
+    var api1b = $('#example-1b').chart({dataset: dataset1, type: 'completion'}).data('chart');
+    var api2b = $('#example-2b').chart({dataset: dataset2, type: 'completion'}).data('chart');
+    var api3b = $('#example-3b').chart({dataset: dataset3, type: 'completion'}).data('chart');
+    var api4b = $('#example-4b').chart({dataset: dataset4, type: 'completion'}).data('chart');
+    var api5b = $('#example-5b').chart({dataset: dataset5, type: 'completion'}).data('chart');
+    var api6b = $('#example-6b').chart({dataset: dataset6, type: 'completion'}).data('chart');
+    var api7b = $('#example-7b').chart({dataset: dataset7, type: 'completion'}).data('chart');
+    var api8b = $('#example-8b').chart({dataset: dataset8, type: 'completion'}).data('chart');
+
+    var api1c = $('#example-1c').chart({dataset: dataset1, type: 'completion-target'}).data('chart');
+    var api2c = $('#example-2c').chart({dataset: dataset2, type: 'completion-target'}).data('chart');
+    var api3c = $('#example-3c').chart({dataset: dataset3, type: 'completion-target'}).data('chart');
+    var api4c = $('#example-4c').chart({dataset: dataset4, type: 'completion-target'}).data('chart');
+    var api5c = $('#example-5c').chart({dataset: dataset5, type: 'completion-target'}).data('chart');
+    var api6c = $('#example-6c').chart({dataset: dataset6, type: 'completion-target'}).data('chart');
+    var api7c = $('#example-7c').chart({dataset: dataset7, type: 'completion-target'}).data('chart');
+    var api8c = $('#example-8c').chart({dataset: dataset8, type: 'completion-target'}).data('chart');
+  });
+</script>
