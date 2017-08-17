@@ -199,12 +199,9 @@
     }
 
     &:focus {
+      border-color: $datepicker-focus-border-color;
       outline: none;
       -moz-outline-style: none;
-
-      &:not(.is-selected) {
-        border-color: $datepicker-focus-border-color;
-      }
     }
 
     // &:focus:not(.is-selected) {

@@ -9,12 +9,13 @@
 5. Set Value Api [View Example]( ../components/datepicker/example-set-value)
 6. Date Picker With Time Custom Format[View Example]( ../components/datepicker/example-timeformat.html)
 7. Disabling Calendar Days [View Example]( ../components/datepicker/example-disabled-dates.html)
-8. In a modal [View Example]( ../components/datepicker/example-modal.html)
+8. In a Modal [View Example]( ../components/datepicker/example-modal.html)
 9. Various Sizes [View Example]( ../components/datepicker/example-sizes.html)
 10. In a Form [View Example]( ../components/datepicker/example-form.html)
 11. State Api [View Example]( ../components/datepicker/example-state-methods.html)
 12. Islamic Umalqura Calendar [View Example]( ../components/datepicker/example-umalqura.html?locale=ar-SA)
 13. Customizing Validation [View Example]( ../components/datepicker/example-custom-validation.html)
+13. Month/Year Picker [View Example]( ../components/datepicker/example-month-year-picker.html)
 
 {{api-details}}
 
@@ -47,6 +48,7 @@ The Date Picker is a very complex control to code accessibly.
 -   Add aria-selected=true to selected day
 -   Add instructional information "use down arrow to select" to the input as an audible label
 -   Each calendar item should have an audible label to announce the day of week will arrowing through days
+- One other similar (ish) example for comparison http://oaa-accessibility.org/example/15/
 
 ## Keyboard Shortcuts
 

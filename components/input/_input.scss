@@ -135,6 +135,11 @@
     }
   }
 
+  .btn-primary,
+  .btn-secondary {
+    top: 2px;
+  }
+
   > .field {
     vertical-align: baseline;
   }

@@ -47,6 +47,7 @@
           showLegend: false,
           customValidation: false,
           showMonthYearPicker: false,
+          advanceMonths: 5,
           legend: [
             //Legend Build up example
             //Color in level 6 - http://usmvvwdev53:424/controls/colors
@@ -74,6 +75,7 @@
     }`
     * @param {Boolean} showMonthYearPicker  &nbsp;-&nbsp; If true the month and year will render as dropdowns.
     * @param {Boolean} customValidation  &nbsp;-&nbsp; If true the internal validation is disabled.
+    * @param {Boolean} advanceMonths  &nbsp;-&nbsp; The number of months in each direction to show in the dropdown for months (when initially opening)
     * @param {Boolean} showLegend  &nbsp;-&nbsp; If true a legend is show to associate dates.
     * @param {Array} legend  &nbsp;-&nbsp; Legend Build up for example `[{name: 'Public Holiday', color: '#76B051', dates: []}, {name: 'Weekends', color: '#EFA836', dayOfWeek: []}]`
     *
@@ -119,6 +121,7 @@
       handleKeys: function (elem) {
         var self = this;
 
+        // Handle Keys while popup is open
         if (elem.is('#calendar-popup')) {
           elem.off('keydown.datepicker').on('keydown.datepicker', '.calendar-table', function (e) {
             var handled = false,
@@ -208,12 +211,10 @@
               handled = true;
             }
 
-            // Tab closes Date Picker and goes to next field
+            // Tab closes Date Picker and goes to next field on the modal
             if (key === 9) {
-              if (!self.settings.showTime) {
-                self.element.focus();
-                self.closeCalendar();
-              }
+              self.containFocus(e);
+              handled = true;
             }
 
             // Esc closes Date Picker and goes back to field
@@ -229,19 +230,31 @@
             }
 
           });
+
+          elem.off('keydown.datepicker-tab').on('keydown.datepicker-tab', 'td, input, button', function (e) {
+            var key = e.keyCode || e.charCode || 0;
+
+            // Tab closes Date Picker and goes to next field on the modal
+            if (key === 9) {
+
+              self.containFocus(e);
+              e.stopPropagation();
+              e.preventDefault();
+              return false;
+            }
+          });
+
+          return;
         }
-        else {
-          elem.off('keydown.datepicker').on('keydown.datepicker', function (e) {
+
+        //Handle input keys
+        elem.off('keydown.datepicker').on('keydown.datepicker', function (e) {
             var handled = false,
               key = e.keyCode || e.charCode || 0,
               focused = $(':focus'),
               focusedlabel = focused.attr('aria-label');
 
-            // Focus did not auto move from readonly
-            if (key === 9 && self.element.is('[readonly]')) { //tab
-              self.setFocusOnFocusableElement(self.element, (e.shiftKey ? 'prev' : 'next'));
-              return;
-            }
+            // TODO: With new mask the code around key === 9 should not be needed.
 
             if (focusedlabel) {
               var focusedDate = new Date(focusedlabel);
@@ -299,8 +312,22 @@
             }
 
           });
-        }
 
+      },
+
+      // Focus the next prev focusable element on the form
+      containFocus: function (e) {
+        var reverse = e.shiftKey;
+
+        // Set focus on (opt: next|prev) focusable element
+        var focusables = this.popup.find(':focusable'),
+          index = focusables.index($(':focus'));
+
+        index = (!reverse) ?
+          ((index+1) >= focusables.length ? 0 : (index+1)) :
+          ((index-1) < 0 ? focusables.length : (index-1));
+
+        focusables.eq(index).focus();
       },
 
       //Parse the Date Format Options
@@ -829,7 +856,7 @@
       },
 
       // Update the calendar to show the month (month is zero based)
-      showMonth: function (month, year) {
+      showMonth: function (month, year, skipYear) {
         var self = this;
 
         var elementDate = this.currentDate.getDate() ?
@@ -857,32 +884,34 @@
           this.header.find('.year').text(' ' + year);
         }
 
-        var days = Locale.calendar().days.narrow || Locale.calendar().days.narrow || Locale.calendar().days.abbreviated,
-          monthName = Locale.calendar().months.wide[month];
+        if (!skipYear) {
+          var days = Locale.calendar().days.narrow || Locale.calendar().days.narrow || Locale.calendar().days.abbreviated,
+            monthName = Locale.calendar().months.wide[month];
 
-        this.currentMonth = month;
-        this.currentYear = year;
+          this.currentMonth = month;
+          this.currentYear = year;
 
-        // Set the Days of the week
-        var firstDayofWeek = (Locale.calendar().firstDayofWeek || 0);
-        this.dayNames.find('th').each(function (i) {
-          $(this).text(days[(i + firstDayofWeek) % 7]);
-        });
+          // Set the Days of the week
+          var firstDayofWeek = (Locale.calendar().firstDayofWeek || 0);
+          this.dayNames.find('th').each(function (i) {
+            $(this).text(days[(i + firstDayofWeek) % 7]);
+          });
 
-        //Localize Month Name
-        this.yearFist = Locale.calendar().dateFormat.year && Locale.calendar().dateFormat.year.substr(1, 1) === 'y';
-        this.header.find('.month').attr('data-month', month).text(monthName + ' ');
-        this.header.find('.year').text(' ' + year);
+          //Localize Month Name
+          this.yearFist = Locale.calendar().dateFormat.year && Locale.calendar().dateFormat.year.substr(1, 1) === 'y';
+          this.header.find('.month').attr('data-month', month).text(monthName + ' ');
+          this.header.find('.year').text(' ' + year);
 
-        if (this.yearFist) {
-          var translation = Locale.formatDate(elementDate, {date: 'year'}),
-            justYear = translation.split(' ')[0];
+          if (this.yearFist) {
+            var translation = Locale.formatDate(elementDate, {date: 'year'}),
+              justYear = translation.split(' ')[0];
 
-          this.header.find('.year').text(justYear + ' ');
-          this.header.find('.year').insertBefore(this.header.find('.month'));
+            this.header.find('.year').text(justYear + ' ');
+            this.header.find('.year').insertBefore(this.header.find('.month'));
+          }
+
+          this.appendMonthYearPicker(month, year);
         }
-
-        this.appendMonthYearPicker(month, year);
 
         //Adjust days of the week
         //lead days
@@ -984,16 +1013,23 @@
         var monthSpan = this.header.find('.month').empty().append(monthDropdown);
         monthSpan.find('select.dropdown').dropdown().off('change.datepicker')
           .on('change.datepicker', function () {
-            self.currentMonth = parseInt($(this).val());
-
-            self.showMonth(self.currentMonth, self.currentYear);
+            var elem = $(this);
+            self.currentMonth = parseInt(elem.val());
+            self.showMonth(self.currentMonth, self.currentYear, true);
           });
 
         var yearDropdown = '<label for="year-dropdown" class="audible">'+ Locale.translate('Year') +'</label>'+
           '<select id="year-dropdown" class="dropdown year">';
 
-        var years = [parseInt(year)-5, parseInt(year)-4, parseInt(year)-3, parseInt(year)-2, parseInt(year)-1, parseInt(year),
-          parseInt(year)+1, parseInt(year)+2, parseInt(year)+3, parseInt(year)+4, parseInt(year)+5];
+        var years = [];
+
+        for (var i = this.settings.advanceMonths; i >= 1; i--) {
+          years.push(parseInt(year) - i);
+        }
+        years.push(year);
+        for (var j = 1; j <= this.settings.advanceMonths; j++) {
+          years.push(parseInt(year) + j);
+        }
 
         years.map(function (yearMap) {
           yearDropdown += '<option '+ (year===yearMap ? ' selected ' : '') + ' value="'+ yearMap +'">'+ yearMap +'</option>';
@@ -1003,15 +1039,16 @@
         var yearSpan = this.header.find('.year').empty().append(yearDropdown);
         yearSpan.find('select.dropdown').dropdown().off('change.datepicker')
           .on('change.datepicker', function () {
-            self.currentYear = parseInt($(this).val());
-
-            self.showMonth(self.currentMonth, self.currentYear);
+            var elem = $(this);
+            self.currentYear = parseInt(elem.val());
+            self.showMonth(self.currentMonth, self.currentYear, true);
           });
 
         if (this.yearFist) {
           yearSpan.find('.dropdown-wrapper').css('left', '0');
           monthSpan.find('.dropdown-wrapper').css('left', '10px');
         }
+
       },
 
       // Put the date in the field and select on the calendar
@@ -1257,18 +1294,6 @@
             handlers.splice(newIndex, 0, handlers.pop());
           });
         });
-      },
-
-      // Set focus on (opt: next|prev) focusable element
-      setFocusOnFocusableElement: function(element, opt) {
-        var canfocus = $(':focusable'),
-          index = canfocus.index(element);
-
-        index = (opt === 'next') ?
-          ((index+1) >= canfocus.length ? 0 : (index+1)) :
-          ((index-1) < 0 ? canfocus.length : (index-1));
-
-        canfocus.eq(index).focus();
       },
 
       updated: function() {
