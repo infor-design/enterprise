@@ -10,6 +10,10 @@ $hierarchy-line-width: 1px;
   margin: 0;
   padding: 20px 30px;
 
+  .branch-collapsed > ul * {
+    display: none;
+  }
+
   legend {
     @include font-size(14);
     margin: 20px 40px;
@@ -223,22 +227,38 @@ $hierarchy-line-width: 1px;
       padding: 20px 10px;
       vertical-align: top;
 
-      //Draw Line Up and Left
-      &::before {
+      //Draw Line Up and right
+      &:first-child::before {
         border-left: $hierarchy-line-width solid $hierarchy-line-color;
         border-top: $hierarchy-line-width solid $hierarchy-line-color;
         content: '';
         display: inline-block;
         height: 25px;
-        margin-left: -110px;
-        margin-top: -25px;
-        position: absolute;
-        width: 415px;
-        z-index: -1;
+        width: calc(90% + 20px);
+        margin-left:10%;
       }
 
+      &::before {
+        border-left: none;
+        border-right:none;
+        border-top: $hierarchy-line-width solid $hierarchy-line-color;
+        content: '';
+        display: inline-block;
+        height: 25px;
+        width: 100%;
+      }
+
+      //Draw Line Up and Left
       &:last-child::before {
-        width: 0;
+        border-right: $hierarchy-line-width solid $hierarchy-line-color;
+        border-top: $hierarchy-line-width solid $hierarchy-line-color;
+        border-left: none;
+        content: '';
+        display: inline-block;
+        height: 25px;
+        width: 75%;
+        float: left;
+        margin-left: -20px;
       }
     }
 
@@ -298,39 +318,39 @@ $hierarchy-line-width: 1px;
       margin: 0 0 10px;
 
       &::after {
-        height: 190px;
-        margin-left: -218px;
+        //height: 190px;
+        //margin-left: -218px;
+        background: transparent;
+        height: 0;
+        width: 0;
       }
+    }
+
+    .sub-level {
+      margin-left: 45px;
     }
 
     //Top level attached to root
     .top-level li {
       display: block;
       padding: 10px 0;
+    }
 
-      &::before {
-        border-left: 1px solid $hierarchy-line-color;
-        border-top: 0;
-        height: 60px;
-        margin-left: -149px;
-        margin-top: 75px;
-        width: 50px;
-      }
+    // TODO: borders look weird on mobile view.
+    // Hiding for now
+    .top-level > li:first-child::before,
+    .sub-level > li:first-child::before,
+    .sub-level > li::before,
+    .top-level > li::before,
+    .sub-level > li:last-child::before,
+    .top-level > li:last-child::before {
+      border: none;
     }
 
     //Bottom Nodes
     .sub-level > li {
       display: block;
       padding: 0px;
-
-      &::before {
-        border-left: 1px solid $hierarchy-line-color;
-        border-top: medium none;
-        height: 120px;
-        margin-left: -149px;
-        margin-top: -110px;
-        width: 1px;
-      }
     }
   }
 }
@@ -451,6 +471,8 @@ html[dir='rtl'] {
       > li {
         //Draw Line Up and Left
         &::before {
+          border-left: none;
+          border-bottom: none;
           border-left: 0 solid $hierarchy-line-color;
           border-right: $hierarchy-line-width solid $hierarchy-line-color;
           margin-left: inherit;

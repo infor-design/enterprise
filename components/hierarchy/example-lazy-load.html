@@ -23,7 +23,7 @@
     console.log(event, eventInfo);
     var hierarchyControl = $('#hierarchy').data('hierarchy');
 
-    if (!eventInfo.data.isLoaded) {
+    if (!eventInfo.data.isLoaded && !eventInfo.data.isLeaf) {
       $.getJSON('{{basepath}}api/orgstructure-children', function(data) {
         hierarchyControl.add(eventInfo.data.id, eventInfo.data, data);
       });

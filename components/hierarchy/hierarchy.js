@@ -92,7 +92,10 @@
         }
       },
 
-      // Attach all event handlers
+      /**
+       * Private function
+       * Attach all event handlers
+       */
       handleEvents: function() {
         var self = this;
 
@@ -132,7 +135,10 @@
           }
         });
 
-        // Select
+        /**
+         *  Public,
+         *  Usage: $('#hierarchy').on('selected', function(event, eventInfo) {}
+         */
         self.element.on('mousedown', '.leaf', function(event) {
           var nodeData = $(this).data();
           var targetInfo = {target: event.target, pageX: event.pageX, pageY: event.pageY};
@@ -166,7 +172,15 @@
         });
       },
 
-      // Process data attached through jquery data
+      /**
+       * Public function
+       * Process data attached through jquery data
+       * @param nodeId
+       * @param currentDataObject
+       * @param newDataObject
+       * @param params
+       * @returns {*}
+       */
       data: function(nodeId, currentDataObject, newDataObject, params) {
 
         if (params === undefined) {
@@ -229,8 +243,12 @@
       },
 
       /**
-      *  Add data as children for the given nodeId.
-      */
+       * Public function
+       * Add data as children for the given nodeId.
+       * @param nodeId
+       * @param currentDataObject
+       * @param newDataObject
+       */
       add: function (nodeId, currentDataObject, newDataObject) {
 
         var self            = this;
@@ -264,12 +282,16 @@
       },
 
       /**
-      * Expand the nodes until nodeId is displayed on the page.
-      */
+       * Private function
+       * Expand the nodes until nodeId is displayed on the page.
+       * @param event
+       * @param nodeData
+       * @param domObject
+       */
       expand: function(event, nodeData, domObject) {
         var self = this,
-          node = domObject.leaf,
-          nodeTopLevel  = node.next().not('.line');
+            node = domObject.leaf,
+            nodeTopLevel  = node.next();
 
         nodeTopLevel.animateOpen();
         self.element.trigger('expanded', [nodeData, settings.dataset]);
@@ -284,12 +306,16 @@
       },
 
       /**
-      * Collapse the passed in nodeId.
-      */
+       * Private function
+       * Collapse the passed in nodeId.
+       * @param event
+       * @param nodeData
+       * @param domObject
+       */
       collapse: function(event, nodeData, domObject) {
         var self = this,
-          node = domObject.leaf,
-          nodeTopLevel  = node.next().not('.line');
+            node = domObject.leaf,
+            nodeTopLevel  = node.next();
 
         nodeTopLevel.animateClosed().on('animateclosedcomplete', function () {
           self.element.trigger('collapsed', [nodeData, settings.dataset]);
@@ -304,11 +330,14 @@
         self.updateState(node, false, null, 'collapse');
       },
 
-      //Main render method
+      /**
+       * Private Function
+       * Main render method
+       * @param data
+       */
       render: function (data) {
         var legend       = settings.legend;
         var children     = data.children;
-        var hasTopLevel  = this.checkChildren(children, 'top-level');
         var hasSubLevel  = this.checkChildren(children, 'sub-level');
         var rootNodeHTML = [];
         var structure    = {
@@ -344,10 +373,6 @@
 
           $(rootNodeHTML[0]).addClass('root').appendTo(chart);
           this.updateState($('.leaf.root'), true);
-        }
-
-        if (!hasTopLevel) {
-          $('<div class=\'line\'></div>').insertAfter('.root');
         }
 
         function renderSubChildren(self, subArray, data) {
@@ -409,6 +434,12 @@
 
       },
 
+      /**
+       * Private function
+       * @param children
+       * @param param
+       * @returns {boolean}
+       */
       checkChildren : function(children, param) {
         var n = 0;
         var i = children.length;
@@ -427,8 +458,12 @@
         return n > 0;
       },
 
-      // Add the legend from the Settings
-      createLegend : function(element) {
+      /**
+       * Private function
+       * Add the legend from the Settings
+       * @param element
+       */
+      createLegend: function(element) {
         var mod      = 4;
         var index    = 0;
 
@@ -471,32 +506,19 @@
           }
         }
 
-        function processDataForLeaf(nodeData, isLast) {
+        function processDataForLeaf(nodeData) {
           self.setColor(nodeData);
 
           var leafTemplate = Tmpl.compile('{{#dataset}}' + $('#' + settings.templateId).html() + '{{/dataset}}');
           var leaf = leafTemplate.render({dataset: nodeData});
           var parent       = el.length === 1 ? el : container;
-          var lineHtml     = '';
-
-          parent.children('li').children('.ln').removeClass('last-line');
-
-          if (isLast) {
-            lineHtml += '<span class=\'ln last-line\'></span>';
-          } else {
-            lineHtml += '<span class=\'ln\'></span>';
-          }
-
-          if (elClassName !== 'sub-level' && elClassName !== 'top-level') {
-            $(leaf).append('<span class=\'horizontal-line\'></span>');
-          }
-
           var branchState = nodeData.isExpanded || nodeData.isExpanded === undefined ? 'branch-expanded' : 'branch-collapsed';
+
           if (nodeData.isLeaf) {
             branchState = '';
           }
 
-          parent.append('<li class=' + branchState + '>' + lineHtml + $(leaf)[0].outerHTML + '</li>');
+          parent.append('<li class=' + branchState + '>' + $(leaf)[0].outerHTML + '</li>');
 
           if (nodeData.children) {
             var childrenNodes = '';
@@ -506,13 +528,11 @@
 
               var childLeaf = leafTemplate.render({dataset: nodeData.children[j]});
 
-              $(childLeaf).append('<span class=\'horizontal-line\'></span>');
-
               if (j === nodeData.children.length - 1) {
-                childrenNodes += '<li><span class=\'ln last-line\'></span>' + $(childLeaf)[0].outerHTML + '</li>';
+                childrenNodes += '<li>' + $(childLeaf)[0].outerHTML + '</li>';
               }
               else {
-                childrenNodes += '<li><span class=\'ln\'></span>' + $(childLeaf)[0].outerHTML + '</li>';
+                childrenNodes += '<li>' + $(childLeaf)[0].outerHTML + '</li>';
               }
             }
 
