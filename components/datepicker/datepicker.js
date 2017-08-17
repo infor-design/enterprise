@@ -233,11 +233,13 @@
               focused = $(':focus'),
               focusedlabel = focused.attr('aria-label');
 
+            /*
             // Focus did not auto move from readonly
             if (key === 9 && self.element.is('[readonly]')) { //tab
               self.setFocusOnFocusableElement(self.element, (e.shiftKey ? 'prev' : 'next'));
               return;
             }
+            */
 
             if (focusedlabel) {
               var focusedDate = new Date(focusedlabel);

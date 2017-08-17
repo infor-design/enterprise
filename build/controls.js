@@ -44,7 +44,6 @@ module.exports = [
   'temp/amd/popdown.js',
   'temp/amd/popupmenu.js',
   'temp/amd/progress.js',
-  'temp/amd/mask.js',
   'temp/amd/multiselect.js',
   'temp/amd/message.js',
   'temp/amd/modal.js',
