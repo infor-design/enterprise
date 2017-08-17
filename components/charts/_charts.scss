@@ -794,6 +794,12 @@ html[dir='rtl'] {
     }
   }
 
+  .completion-chart {
+    .icon-error {
+      left: -20px;
+    }
+  }
+
   // Progess Bar Charts
   .chart-completion-target,
   .chart-completion {
