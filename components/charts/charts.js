@@ -1098,7 +1098,7 @@ window.Chart = function(container) {
         charts.hideTooltip();
       })
       .style('fill', function(d, i) {return charts.chartColor(self.isRTL ? chartData.length-i-1 : i, 'pie', d.data); })
-      .transition().duration(settings.animate === false ? 0 : 350)
+      .transition().duration(charts.isAnimate ? 350 : 0)
       .attrTween('d', function(d) {
         var i = d3.interpolate(d.startAngle + 0.1, d.endAngle);
         return function(t) { d.endAngle = i(t); return pieArcs(d); };
@@ -4260,9 +4260,22 @@ window.Chart = function(container) {
   this.initChartType = function (options) {
     //default
     this.options = options;
+    this.isAnimate = true;
     this.redrawOnResize = true;
     this.isRTL = Locale.isRTL();
     this.isIE = $('html').hasClass('ie');
+
+    /**
+    * Set Animation Type
+    * @param {Boolean} animate  &nbsp;-&nbsp; true|false - will do or not do the animation.
+    * @param {String} animate  &nbsp;-&nbsp; 'initial' will do only first time the animation.
+    */
+    if (options.animate !== undefined) {
+      this.isAnimate = (options.animate === 'initial') ?
+        (this._animateIndex === 0) :
+        (!(options.animate === false || options.animate === 'false'));
+      this._animateIndex++;
+    }
 
     if (options.redrawOnResize !== undefined) {
       this.redrawOnResize = options.redrawOnResize;
@@ -4368,6 +4381,7 @@ $.fn.chart = function(options) {
     chartInst = new Chart(this, options);
     instance = $.data(this, 'chart', chartInst);
     instance.settings = options;
+    instance._animateIndex = 0;
     instance.setSelected = function() {};
     instance.toggleSelected = function(o) {
       this.setSelected(o, true);
