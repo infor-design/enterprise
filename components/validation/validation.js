@@ -446,8 +446,7 @@
             self.addError(field, rule.message, field.attr('data-error-type') === 'tooltip' ? false: true, showTooltip);
             errors.push(rule.msg);
             dfd.reject();
-          }
-          else if (errors.length === 0) {
+          }   else if (errors.length === 0) {
             self.removeError(field);
             dfd.resolve();
 
@@ -462,7 +461,9 @@
               self.addPositive(field);
             }
           }
+
           self.setErrorOnParent(field);
+
         };
 
       self.removeError(field);
@@ -724,7 +725,6 @@
           '<p class="message-text">' + message +'</p>' +
           '</div>';
 
-
       if (field.is(':radio')) { // Radio button handler
         this.toggleRadioError(field, message, markup, true);
       } else { // All other components
@@ -734,6 +734,10 @@
 
       //Remove positive errors
       field.parent().find('.icon-confirm').remove();
+
+      // Trigger an event
+      field.trigger('error', {field: field, message: message});
+      field.closest('form').trigger('error', {field: field, message: message});
     },
 
     /**
@@ -821,6 +825,9 @@
       //Stuff for the inline error
       field.closest('.field, .field-short').find('.error-message').remove();
       field.parent('.field, .field-short').find('.formatter-toolbar').removeClass('error');
+      field.trigger('valid', {field: field, message: ''});
+      field.closest('form').trigger('valid', {field: field, message: ''});
+
     },
 
     /**

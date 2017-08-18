@@ -1592,10 +1592,9 @@ $.fn.datagrid = function(options) {
       }
 
       self.table.empty();
+      self.clearHeaderCache();
       self.renderRows();
       self.element.append(self.contentContainer);
-
-      self.clearHeaderCache();
       self.renderHeader();
       self.container = self.element.closest('.datagrid-container');
 
