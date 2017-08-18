@@ -3530,7 +3530,7 @@ $.fn.datagrid = function(options) {
         }
       }
 
-      if (!this.widthPercent && !colWidth) {
+      if (!this.widthPercent && colWidth === undefined) {
         return '';
       }
 
