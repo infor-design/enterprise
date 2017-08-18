@@ -1686,7 +1686,10 @@
                   value: stringContent
                 };
               }
-              option.value = replaceDoubleQuotes(option.value);
+
+              if (option.value !== undefined) {
+                option.value = replaceDoubleQuotes(option.value);
+              }
 
               if (option.id !== undefined) {
                 if (!isNaN(option.id)) {
