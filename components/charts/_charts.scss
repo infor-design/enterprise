@@ -311,7 +311,7 @@
       background-color: $turquoise06;
 
       &.error {
-        background-color: $alert-red;
+        background-color: $error-color;
       }
 
       &::after {
@@ -361,10 +361,42 @@
     }
 
     &.error {
-      background-color: $alert-red;
+      background-color: $error-color;
 
       span {
-        color: $alert-red;
+        color: $error-color;
+      }
+    }
+
+    &.alert {
+      background-color: $alert-orange;
+
+      span {
+        color: $alert-orange;
+      }
+    }
+
+    &.alert-yellow {
+      background-color: $alert-yellow;
+
+      span {
+        color: $alert-yellow;
+      }
+    }
+
+    &.alert-neutral {
+      background-color: $alert-neutral;
+
+      span {
+        color: $alert-neutral;
+      }
+    }
+
+    &.good {
+      background-color: $alert-green;
+
+      span {
+        color: $alert-green;
       }
     }
 
@@ -405,7 +437,6 @@
       @include font-size(12);
       color: $font-color;
       position: absolute;
-      right: -2px;
       text-align: right;
       top: 34px;
 
@@ -464,12 +495,24 @@
         background-color: $error-color;
       }
 
+      &.alert {
+        background-color: $alert-orange;
+      }
+
+      &.alert-yellow {
+        background-color: $alert-yellow;
+      }
+
+      &.alert-neutral {
+        background-color: $alert-neutral;
+      }
+
       &.dark {
         background-color: $chart-progressbar-dark-fill;
       }
 
       &.good {
-        background-color: $confirm-icon-fill;
+        background-color: $alert-green;
       }
 
       &.primary {
@@ -480,7 +523,19 @@
     .text,
     .value {
       &.error {
-        color: $alert-red;
+        color: $error-color;
+      }
+
+      &.alert {
+        color: $alert-orange;
+      }
+
+      &.alert-yellow {
+        color: $alert-yellow;
+      }
+
+      &.alert-neutral {
+        color: $alert-neutral;
       }
 
       &.dark {
@@ -488,7 +543,7 @@
       }
 
       &.good {
-        color: $confirm-icon-fill;
+        color: $alert-green;
       }
 
       &.primary {
@@ -500,13 +555,26 @@
 }
 
 .completion-chart {
+  .remaining,
   .info {
     .value {
       font-weight: bold;
     }
 
     .error {
-      color: $alert-red;
+      color: $error-color;
+    }
+
+    .alert {
+      color: $alert-orange;
+    }
+
+    .alert-yellow {
+      color: $alert-yellow;
+    }
+
+    .alert-neutral {
+      color: $alert-neutral;
     }
 
     .dark {
@@ -514,12 +582,21 @@
     }
 
     .good {
-      color: $confirm-icon-fill;
+      color: $alert-green;
     }
 
     .primary {
       color: $chart-progressbar-primary-fill;
     }
+  }
+
+  .name {
+    position: relative;
+  }
+
+  .icon-error {
+    right: -20px;
+    top: -8px;
   }
 
 }
@@ -581,16 +658,6 @@
     display: none;
   }
 
-  .icon-error {
-    display: inline-block;
-    height: 16px;
-    margin-right: 6px;
-    position: relative;
-    top: -1px;
-    vertical-align: middle;
-    width: 16px;
-  }
-
 }
 
 .colored.label {
@@ -606,11 +673,40 @@
   }
 
   span {
+    background: transparent;
     color: $font-color;
   }
 
   .value {
     color: $turquoise06;
+
+    &.error {
+      color: $error-color;
+    }
+
+    &.alert {
+      color: $alert-orange;
+    }
+
+    &.alert-yellow {
+      color: $alert-yellow;
+    }
+
+    &.alert-neutral {
+      color: $alert-neutral;
+    }
+
+    &.dark {
+      color: $chart-progressbar-dark-fill;
+    }
+
+    &.good {
+      color: $alert-green;
+    }
+
+    &.primary {
+      color: $chart-progressbar-primary-fill;
+    }
   }
 }
 
@@ -695,6 +791,12 @@ html[dir='rtl'] {
       float: right;
       margin-left: 10px;
       margin-right: 0;
+    }
+  }
+
+  .completion-chart {
+    .icon-error {
+      left: -20px;
     }
   }
 

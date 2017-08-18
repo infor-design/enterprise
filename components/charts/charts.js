@@ -3882,7 +3882,30 @@ window.Chart = function(container) {
       };
 
     // Render
-    var html = {body: $('<div class="total bar" />')};
+    var html = {body: $('<div class="total bar" />')},
+      specColor = {};
+
+    if (dataset.info && !isUndefined(dataset.info.color)) {
+      if (dataset.info.color.indexOf('#') === 0) {
+        specColor.info = true;
+      }
+    }
+    if (dataset.completed && !isUndefined(dataset.completed.color)) {
+      if (dataset.completed.color.indexOf('#') === 0) {
+        specColor.completed = true;
+      }
+    }
+    if (dataset.remaining && !isUndefined(dataset.remaining.color)) {
+      if (dataset.remaining.color.indexOf('#') === 0) {
+        specColor.remaining = true;
+      }
+    }
+    if (dataset.targetline && !isUndefined(dataset.targetline.color)) {
+      if (dataset.targetline.color.indexOf('#') === 0) {
+        specColor.targetline = true;
+      }
+    }
+
     if (isTarget || isAchievment) {
       var difference = {};
       html.body.addClass('chart-completion-target' + (isAchievment ? ' chart-targeted-achievement' : ''));
@@ -3898,7 +3921,7 @@ window.Chart = function(container) {
       html.label = ''+
       '<span class="label">'+
         '<span class="name">'+
-        (dataset.completed.color && dataset.completed.color === 'error' ? '<svg class="icon icon-error" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-error"></use></svg>' : '' ) +
+        (dataset.completed.color && dataset.completed.color === 'error' ? $.createIcon({icon:'error', classes:'icon-error'}) : '' ) +
         fixUndefined(dataset.name.text) + '</span>'+
         '<span class="l-pull-right total value">'+ totalText +'</span>'+
       '</span>';
@@ -3906,26 +3929,34 @@ window.Chart = function(container) {
     else {
       html.body.addClass('chart-completion');
       html.label = ''+
-      '<b class="label name ">'+ fixUndefined(dataset.name.text) +'</b>'+
-      '<b class="label info '+ (dataset.info.color ?
-        fixUndefined(dataset.info.color) :
-          fixUndefined(dataset.completed.color) +' colored') +'">'+
-        '<span class="value">'+
+      '<b class="label name">'+ fixUndefined(dataset.name.text) +'</b>'+
+      '<b class="label info'+ (dataset.info.color && !specColor.info ?
+        ' '+ fixUndefined(dataset.info.color) :
+          (!specColor.completed ? ' '+ fixUndefined(dataset.completed.color) : '') +' colored') +'">'+
+        '<span class="value'+ (dataset.info.color && !specColor.info ?
+          ' '+ fixUndefined(dataset.info.color) :
+            (!specColor.completed ? ' '+ fixUndefined(dataset.completed.color) : '')) +'"'+ (dataset.info.color && specColor.info ?
+              ' style="color:'+ (fixUndefined(dataset.info.color) +';"') :
+                (specColor.completed ? ' style="color:'+ (fixUndefined(dataset.completed.color) +';"') : '')) +'>'+
         (dataset.info && !isUndefined(dataset.info.value) ? fixUndefined(dataset.info.value) :
           setFormat(dataset.completed)) +
         '</span> '+
-        '<span class="text">'+ fixUndefined(dataset.info.text) +'</span>'+
+        '<span class="text'+ (dataset.info.color && !specColor.info ?
+          ' '+ fixUndefined(dataset.info.color) :
+            (!specColor.completed ? ' '+ fixUndefined(dataset.completed.color) : '')) +'"'+ (dataset.info.color && specColor.info ?
+              ' style="color:'+ (fixUndefined(dataset.info.color) +';"') :
+                (specColor.completed ? ' style="color:'+ (fixUndefined(dataset.completed.color) +';"') : '')) +'>'+ fixUndefined(dataset.info.text) +'</span>'+
       '</b>';
     }
 
     if (dataset.remaining) {
       html.remaining = ''+
-      '<div class="target remaining bar '+ fixUndefined(dataset.remaining.color) +'">'+
+      '<div class="target remaining bar'+ (!specColor.remaining ? ' '+ fixUndefined(dataset.remaining.color) : '') +'"'+ (specColor.remaining ? (' style="color:'+ dataset.remaining.color +';background-color:'+ dataset.remaining.color +';"') : '') +'">'+
       (isAchievment ? '' : '<span aria-hidden="true"'+ (!isTarget && !isAchievment ? ' class="audible"' : '') +'>'+
-          '<span class="value">'+
+          '<span class="value'+ (!specColor.remaining ? ' '+ fixUndefined(dataset.remaining.color) : '') +'"'+ (specColor.remaining ? (' style="color:'+ dataset.remaining.color +';"') : '') +'">'+
             setFormat(dataset.remaining) +
           '</span><br />'+
-          '<span class="text">'+
+          '<span class="text'+ (!specColor.remaining ? ' '+ fixUndefined(dataset.remaining.color) : '') +'"'+ (specColor.remaining ? (' style="color:'+ dataset.remaining.color +';"') : '') +'">'+
             fixUndefined(dataset.remaining.text) +
           '</span>'+
         '</span>') +
@@ -3936,9 +3967,9 @@ window.Chart = function(container) {
 
     if (dataset.completed && isAchievment) {
       html.completed = ''+
-      '<div class="completed bar '+ fixUndefined(dataset.completed.color) +'"></div>'+
+      '<div class="completed bar'+ (!specColor.completed ? ' '+ fixUndefined(dataset.completed.color) : '') +'"'+ (specColor.completed ? (' style="color:'+ dataset.completed.color +';background-color:'+ dataset.completed.color +';"') : '') +'"></div>'+
         '<span class="completed-label" aria-hidden="true"'+ (!isTarget && !isAchievment ? ' class="audible"' : '') +'>'+
-          '<span class="text">'+
+          '<span class="text'+ (!specColor.completed ? ' '+ fixUndefined(dataset.completed.color) : '') +'"'+ (specColor.completed ? (' style="color:'+ dataset.completed.color +';"') : '') +'">'+
             fixUndefined(dataset.completed.text) +
           '</span>'+
         '</span>';
@@ -3946,10 +3977,10 @@ window.Chart = function(container) {
 
     if (dataset.completed && !isAchievment) {
       html.completed = ''+
-      '<div class="completed bar '+ fixUndefined(dataset.completed.color) +'">'+
+      '<div class="completed bar'+ (!specColor.completed ? ' '+ fixUndefined(dataset.completed.color) : '') +'"'+ (specColor.completed ? (' style="color:'+ dataset.completed.color +';background-color:'+ dataset.completed.color +';"') : '') +'>'+
         '<span aria-hidden="true"'+ (!isTarget && !isAchievment ? ' class="audible"' : '') +'>'+
-          '<span class="value">'+ setFormat(dataset.completed) + '</span><br />'+
-          '<span class="text">'+
+          '<span class="value'+ (!specColor.completed ? ' '+ fixUndefined(dataset.completed.color) : '') +'"'+ (specColor.completed ? (' style="color:'+ dataset.completed.color +';"') : '') +'">'+ setFormat(dataset.completed) +'</span><br />'+
+          '<span class="text'+ (!specColor.completed ? ' '+ fixUndefined(dataset.completed.color) : '') +'"'+ (specColor.completed ? (' style="color:'+ dataset.completed.color +';"') : '') +'">'+
             fixUndefined(dataset.completed.text) +
           '</span>'+
         '</span></div>';
@@ -3957,12 +3988,12 @@ window.Chart = function(container) {
 
     if (dataset.targetline) {
       html.targetline = ''+
-      '<div class="target-line targetline bar">'+
+      '<div class="target-line targetline bar'+ (!specColor.targetline ? ' '+ fixUndefined(dataset.targetline.color) : '') +'"'+ (specColor.targetline ? (' style="color:'+ dataset.targetline.color +';background-color:'+ dataset.targetline.color +';"') : '') +'">'+
         '<span aria-hidden="true"'+ (!isTarget && !isAchievment ? ' class="audible"' : '') +'>'+
-          '<span class="value">'+
+          '<span class="value'+ (!specColor.targetline ? ' '+ fixUndefined(dataset.targetline.color) : '') +'"'+ (specColor.targetline ? (' style="color:'+ dataset.targetline.color +';"') : '') +'">'+
             setFormat(dataset.targetline) +
             '</span><br />'+
-            '<span class="text">'+
+            '<span class="text'+ (!specColor.targetline ? ' '+ fixUndefined(dataset.targetline.color) : '') +'"'+ (specColor.targetline ? (' style="color:'+ dataset.targetline.color +';"') : '') +'">'+
               fixUndefined(dataset.targetline.text) +
             '</span>'+
         '</span>'+
