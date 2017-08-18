@@ -937,6 +937,14 @@
           this.menu.parent()[0].style.zIndex =  '9001';
         }
 
+        //Fix disabled attribute sync issue
+        this.menu.find('.is-disabled').each(function () {
+          var elem = $(this);
+          if (!elem.find('a').attr('disabled')) {
+            elem.removeClass('is-disabled');
+          }
+        });
+
         //Close on Document Click ect..
         setTimeout(function () {
           $(document).on('touchend.popupmenu.' + self.id +' click.popupmenu.' + self.id, function (e) {
