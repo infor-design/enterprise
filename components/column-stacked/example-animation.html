@@ -1,6 +1,6 @@
 <div class="row">
   <div class="two-thirds column">
-    <h2 class="widget-title">Stacked Column Chart &mdash; Set Animation Type</h2>
+    <h2 class="widget-title">Stacked Column Chart &mdash; Set animation speed</h2>
     <p>
       <u>Use api settings "animate"</u><br>
       <strong>true or false</strong> - will do or not do the animation.<br>
@@ -146,6 +146,6 @@ $('body').on('initialized', function () {
   }];
 
   $('#column-bar-stacked-example')
-    .chart({type: 'column-stacked', dataset: dataset, animate: 'initial'});
+    .chart({type: 'column-stacked', dataset: dataset, animate: false});
 });
 </script>

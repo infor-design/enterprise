@@ -10,7 +10,7 @@
 5. Example showing the option to hide the formatter [View Example]( ../components/bar/example-hide-legend)
 6. Example showing an edge case of longer text [View Example]( ../components/bar/example-long-text)
 7. Example showing with negative values [View Example]( ../components/bar/example-negative-values)
-8. Set Animation Type [View Example]( ../components/bar/example-animation)
+8. Set animation speed [View Example]( ../components/bar/example-animation)
 9. Example showing color patterns [View Example]( ../components/bar/example-patterns)
 10. Example showing defaulting a selected value  [View Example]( ../components/bar/example-selected)
 11. Example showing Get Selected value [View Example]( ../components/bar/example-get-selected)

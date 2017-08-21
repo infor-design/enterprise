@@ -5,7 +5,7 @@
 
 1. Area Chart Example [View Example]( ../components/area/example-index)
 2. Make the Tooltip Formatted (Currency) [View Example]( ../components/area/example-formatter)
-3. Set Animation Type [View Example]( ../components/area/example-animation)
+3. Set animation speed [View Example]( ../components/area/example-animation)
 4. Make a slice selected by default [View Example]( ../components/area/example-selected)
 5. Example showing Get Selected value [View Example]( ../components/area/example-get-selected)
 6. Example showing Set Selected value [View Example]( ../components/area/example-set-selected)

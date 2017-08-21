@@ -1,7 +1,7 @@
 
 <div class="row">
   <div class="two-thirds column">
-    <h2 class="widget-title">Pie Chart &mdash; Set Animation Type</h2>
+    <h2 class="widget-title">Pie Chart &mdash; Set animation speed</h2>
     <p>
       <u>Use api settings "animate"</u><br>
       <strong>true or false</strong> - will do or not do the animation.<br>
@@ -60,7 +60,7 @@ $('body').on('initialized', function () {
       }]
     }];
 
-  $('#pie-chart-example').chart({type: 'pie', dataset: pieData, animate: 'initial'})
+  $('#pie-chart-example').chart({type: 'pie', dataset: pieData, animate: false})
 
 });
 </script>

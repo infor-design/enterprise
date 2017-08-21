@@ -12,7 +12,7 @@
 7. Negative Values [View Example]( ../components/column/example-negative-value)
 8. Pattern Colors [View Example]( ../components/column/example-patterns)
 9. Selecting a Section Colors [View Example]( ../components/column/example-selected)
-10. Set Animation Type [View Example]( ../components/column/example-animation)
+10. Set animation speed [View Example]( ../components/column/example-animation)
 11. Testing Date Values [View Test]( ../components/column/test-by-date)
 12. Example showing Get Selected value [View Test]( ../components/column/example-get-selected)
 13. Example showing Set Selected value [View Test]( ../components/column/example-set-selected)
