@@ -1,0 +1,101 @@
+<div class="row">
+  <div class="two-thirds column">
+    <h2 class="widget-title">Positive Negative Column Chart &mdash; Set animation speed</h2>
+    <p>
+      <u>Use api settings "animate"</u><br>
+      <strong>true or false</strong> - will do or not do the animation.<br>
+      <strong>'initial'</strong> - will do only first time the animation.
+    </p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Positive Negative Column Chart</h2>
+        </div>
+        <div class="widget-content">
+          <div id="positive-negative-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+{{={{{ }}}=}}
+
+<script>
+$('body').on('initialized', function () {
+
+var dataset = [{
+    data: [{
+        name: 'Jan',
+        value: 4000,
+        target: 13000
+    }, {
+        name: 'Feb',
+        value: 9000,
+        target: 11000
+    }, {
+        name: 'Mar',
+        value: 2000,
+        target: 7000
+    }, {
+        name: 'Apr',
+        value: 4000,
+        target: 8000
+    }, {
+        name: 'May',
+        value: 2000,
+        target: 14000
+    }, {
+        name: 'Jun',
+        value: 4000,
+        target: 9000
+    }, {
+        name: 'Jul',
+        value: -8000,
+        target: 12000
+    }, {
+        name: 'AUG',
+        value: -6000,
+        target: 5000
+    }, {
+        name: 'SEP',
+        value: -1000,
+        target: 7000
+    }, {
+        name: 'OCT',
+        value: -12000,
+        target: 13000
+    }, {
+        name: 'NOV',
+        value: -7000,
+        target: 6000
+    }, {
+        name: 'DEC',
+        value: -3000,
+        target: 7000
+    }],
+    legends: {
+      target: 'Revenue',
+      positive: 'Profit',
+      negative: 'Loss'
+    },
+    colors: {
+      target: 'neutral',
+      positive: 'good',
+      negative: 'error'
+    }
+  }];
+
+  $('#positive-negative-example').chart({
+    type: 'column-positive-negative',
+    dataset: dataset,
+    formatterString: 's',
+    animate: false
+  })
+
+});
+</script>

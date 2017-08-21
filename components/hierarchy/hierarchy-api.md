@@ -3,10 +3,19 @@
 ### Table of Contents
 
 -   [Hierarchy](#hierarchy)
+    -   [handleEvents](#handleevents)
+    -   [data](#data)
     -   [add](#add)
     -   [expand](#expand)
     -   [collapse](#collapse)
+    -   [render](#render)
+    -   [checkChildren](#checkchildren)
+    -   [createLegend](#createlegend)
+    -   [createLeaf](#createleaf)
+    -   [setColor](#setcolor)
     -   [isLeaf](#isleaf)
+    -   [updateState](#updatestate)
+-   [on](#on)
 
 ## Hierarchy
 
@@ -23,8 +32,28 @@ The displays custimizable hierarchical data such as an org chart.
 -   `mobileView` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true will only show mobile view, by default using device info to determine.
 -   `beforeExpand` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  A callback that fires before node expansion of a node.
 
+### handleEvents
+
+Private function
+Attach all event handlers
+
+### data
+
+Public function
+Process data attached through jquery data
+
+**Parameters**
+
+-   `nodeId`  
+-   `currentDataObject`  
+-   `newDataObject`  
+-   `params`  
+
+Returns **any** 
+
 ### add
 
+Public function
 Add data as children for the given nodeId.
 
 **Parameters**
@@ -35,6 +64,7 @@ Add data as children for the given nodeId.
 
 ### expand
 
+Private function
 Expand the nodes until nodeId is displayed on the page.
 
 **Parameters**
@@ -45,6 +75,7 @@ Expand the nodes until nodeId is displayed on the page.
 
 ### collapse
 
+Private function
 Collapse the passed in nodeId.
 
 **Parameters**
@@ -53,10 +84,77 @@ Collapse the passed in nodeId.
 -   `nodeData`  
 -   `domObject`  
 
+### render
+
+Private Function
+Main render method
+
+**Parameters**
+
+-   `data`  
+
+### checkChildren
+
+Private function
+
+**Parameters**
+
+-   `children`  
+-   `param`  
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### createLegend
+
+Private function
+Add the legend from the Settings
+
+**Parameters**
+
+-   `element`  
+
+### createLeaf
+
+Private function
+ Creates a leaf node under element for nodeData
+
+**Parameters**
+
+-   `nodeData`  
+-   `container`  
+
+### setColor
+
+Private function
+Determine the color from settings
+
+**Parameters**
+
+-   `data`  
+
 ### isLeaf
 
 Return whether or not a particular node is a leaf
+private function
 
 **Parameters**
 
 -   `dataNode`  
+
+### updateState
+
+Handle all leaf state here,
+get the current state via .data() and re-attach the new state
+private function
+
+**Parameters**
+
+-   `leaf`  
+-   `isRoot`  
+-   `nodeData`  
+-   `eventType`  
+
+## on
+
+Public,
+ Usage: $('#hierarchy').on('selected', function(event, eventInfo) {}

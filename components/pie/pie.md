@@ -7,8 +7,9 @@
 2. Hcm Example [View Example]( ../components/pie/example-hcm)
 3. Tooltips [View Example]( ../components/pie/example-tooltip)
 4. Donut Chart [View Example]( ../components/donut/example-index)
-5. Example showing Get Selected value [View Example]( ../components/pie/example-get-selected)
-6. Example showing Set Selected value [View Example]( ../components/pie/example-set-selected)
+5. Set animation speed [View Example]( ../components/pie/example-animation)
+6. Example showing Get Selected value [View Example]( ../components/pie/example-get-selected)
+7. Example showing Set Selected value [View Example]( ../components/pie/example-set-selected)
 
 ## API Details
 
