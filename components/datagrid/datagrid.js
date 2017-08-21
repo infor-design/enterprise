@@ -1415,6 +1415,7 @@ $.fn.datagrid = function(options) {
         editable: false,
         isList: false, // Makes a readonly "list"
         menuId: null,  //Id to the right click context menu
+        menuSelected: null, //Callback for the grid level right click mention
         uniqueId: null, //Unique ID for local storage reference and variable names
         rowHeight: 'normal', //(short, medium or normal)
         selectable: false, //false, 'single' or 'multiple'
@@ -1464,6 +1465,7 @@ $.fn.datagrid = function(options) {
   * @param {Boolean} editable &nbsp;-&nbsp Enable editing in the grid, requires column editors.
   * @param {Boolean} isList  &nbsp;-&nbsp Makes the grid have readonly "list" styling
   * @param {String} menuId  &nbsp;-&nbsp Id to link a right click context menu element
+  * @param {String} menuSelected  &nbsp;-&nbsp Callback for the grid level context menu
   * @param {String} uniqueId &nbsp;-&nbsp Unique ID to use as local storage reference and internal variable names
   * @param {String} rowHeight &nbsp;-&nbsp Controls the height of the rows / number visible rows. May be (short, medium or normal)
   * @param {String} selectable &nbsp;-&nbsp Controls the selection Mode this may be: false, 'single' or 'multiple' or 'mixed'
@@ -1592,10 +1594,9 @@ $.fn.datagrid = function(options) {
       }
 
       self.table.empty();
+      self.clearHeaderCache();
       self.renderRows();
       self.element.append(self.contentContainer);
-
-      self.clearHeaderCache();
       self.renderHeader();
       self.container = self.element.closest('.datagrid-container');
 
@@ -3531,7 +3532,7 @@ $.fn.datagrid = function(options) {
         }
       }
 
-      if (!this.widthPercent && !colWidth) {
+      if (!this.widthPercent && colWidth === undefined) {
         return '';
       }
 
@@ -4583,7 +4584,9 @@ $.fn.datagrid = function(options) {
         e.preventDefault();
 
         if (self.settings.menuId) {
-          $(e.currentTarget).popupmenu({menuId: self.settings.menuId, eventObj: e, trigger: 'immediate'});
+          $(e.currentTarget).popupmenu({menuId: self.settings.menuId, eventObj: e, trigger: 'immediate'}).off('selected').on('selected', function (e, args) {
+            self.settings.menuSelected(e, args);
+          });
         }
 
         return false;

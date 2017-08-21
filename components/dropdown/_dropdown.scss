@@ -96,7 +96,7 @@ div.multiselect {
     }
   }
 
-  &:hover:not([disabled]):not(.is-disabled):not(.is-readonly) {
+  &:hover:not([disabled]):not(.is-disabled):not(.is-readonly):not(.is-open) {
     border-color: $trigger-hover-color;
 
     + .icon {
@@ -446,9 +446,14 @@ div.multiselect {
   background-color: $modal-bg-color;
 }
 
-.is-ontop .dropdown-search {
-  border-bottom: 0;
-  border-top: 1px solid $dropdown-menu-separator-border-color;
+.is-ontop {
+  &.dropdown-list ul {
+    top: -1px;
+  }
+
+  .dropdown-search {
+    border-bottom: 0;
+  }
 }
 
 .dropdown.error {
@@ -600,8 +605,34 @@ div.dropdown-xs,
   }
 }
 
+.ie {
+  .is-ontop {
+    margin-top: 1px;
+  }
+
+  &.ie11 {
+    .is-ontop {
+      margin-top: 2px;
+
+      .dropdown-search {
+        border-top: 1px solid $dropdown-menu-separator-border-color;
+      }
+    }
+  }
+}
+
 // Firefox needs a nudge on the list items
 .is-firefox {
+  .is-ontop {
+    &.dropdown-list ul {
+      margin-top: 1px;
+      top: 0;
+    }
+
+    .dropdown-search {
+      border-top: 1px solid $dropdown-menu-separator-border-color;
+    }
+  }
 
   .dropdown-list {
     &.multiple li {
@@ -657,7 +688,7 @@ html[dir='rtl'] {
 
     // Icon States
     + .icon {
-      left: 6px;
+      left: 8px;
       margin-left: inherit;
       margin-right: -33px;
       // scss-lint:disable ImportantRule

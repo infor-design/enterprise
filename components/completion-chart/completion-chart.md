@@ -5,6 +5,7 @@
 
 1. Simple Completion Chart Example [View Example]( ../components/completion-chart/example-index)
 2. All Completion Chart Examples [View Example]( ../components/completion-chart/example-variations)
+3. Range of colors for Completion Chart [View Example]( ../components/completion-chart/example-colors)
 
 ## API Details
 

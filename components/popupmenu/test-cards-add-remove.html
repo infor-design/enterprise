@@ -1,0 +1,62 @@
+<div class="row">
+	<div class="full column" style="margin-bottom: 20px;">
+		<button type="button" class="btn add-popup">Add</button>
+		<button type="button" class="btn remove-popup">Remove First Card</button>
+		<button type="button" class="btn remove-popup-destroy">Remove First Card + Destroy</button>
+		<button type="button" class="btn remove-wrappers">Remove Empty Wrappers</button>
+	</div>
+</div>
+
+<div class="row widgets-row">
+  <div class="one-third column">
+    <div class="card">
+      <div class="card-header">
+          <h2 class="widget-title">Chart Title</h2>
+          <button class="btn-actions" type="button">
+            <span class="audible">Actions</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-more"></use>
+            </svg>
+          </button>
+          <ul class="popupmenu actions top">
+            <li><a href="#">Action One</a></li>
+            <li><a href="#">Action Two</a></li>
+          </ul>
+      </div>
+      <div class="card-content">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+var addCount = 0;
+$(".add-popup").click(function(){
+	var newCard = $('<div class="one-third column"><div class="card"><div class="card-header"><h2 class="widget-title">Chart Title' + addCount + '</h2>'
+        +	'<button class="btn-actions" type="button"><span class="audible">Actions</span><svg class="icon" focusable="false" aria-hidden="true" role="presentation">'
+        +	'<use xlink:href="#icon-more"></use></svg></button><ul class="popupmenu actions top"><li><a href="#">Action One</a></li><li><a href="#">Action Two</a></li>'
+        +	'</ul></div><div class="card-content"></div></div></div>');
+	$(".widgets-row").append(newCard);
+	newCard.find(".btn-actions").popupmenu();
+	addCount++;
+});
+
+$(".remove-popup").click(function(){
+	var firstCard = $($(".one-third")[0]);
+	firstCard.remove();
+});
+
+$(".remove-popup-destroy").click(function(){
+	var firstCard = $($(".one-third")[0]);
+	var btn = firstCard.find(".btn-actions");
+	var menu = btn.data("popupmenu");
+	if (menu) {
+		menu.destroy();
+	}
+	firstCard.remove();
+});
+
+$(".remove-wrappers").click(function(){
+	$(".popupmenu-wrapper:not(:has(*))").remove();
+});
+</script>

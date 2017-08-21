@@ -1342,8 +1342,8 @@
 
         // use negative height of the pseudoElem to get the Dropdown list to overlap the input.
         var isShort = this.element.closest('.field-short').length > 0;
-        positionOpts.y = isShort ? -26 : -34;
-        positionOpts.x = isShort ? 0 : -1;
+        positionOpts.y = isShort ? -26 : Soho.env.browser.name === 'firefox' ? -32 : -34;
+        positionOpts.x = 0;
         //parseInt(parentElementStyle.height) +  parseInt(parentElementStyle.borderTopWidth) +  parseInt(parentElementStyle.borderBottomWidth) * -1;
 
         this.list.one('afterplace.dropdown', dropdownAfterPlaceCallback).place(positionOpts);
@@ -1536,7 +1536,7 @@
           return;
         }
 
-        if (!li && value) {
+        if (!li && typeof value === 'string') {
           li = this.listUl.find('li[data-val="'+ value.replace('"', '/quot/') +'"]');
         }
 
@@ -1552,7 +1552,7 @@
           clearSelection = false,
           isAdded = true; // Sets to false if the option is being removed from a multi-select instead of added
 
-        if (option.hasClass('clear') || code === '') {
+        if (option.hasClass('clear') || !li) {
           clearSelection = true;
         }
 
@@ -1686,7 +1686,10 @@
                   value: stringContent
                 };
               }
-              option.value = replaceDoubleQuotes(option.value);
+
+              if (option.value !== undefined) {
+                option.value = replaceDoubleQuotes(option.value);
+              }
 
               if (option.id !== undefined) {
                 if (!isNaN(option.id)) {

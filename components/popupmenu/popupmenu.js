@@ -720,11 +720,11 @@
           return;
         }
 
+        // Make the field the same size
         var elemWidth = this.element.outerWidth();
-        if (elemWidth > menuDimensions.width) {
+        if (this.settings.trigger === 'click' && elemWidth > menuDimensions.width) {
           this.menu.width(elemWidth);
         }
-
 
         if (target.is('svg, .icon') && target.closest('.tab').length) {
           target = target.closest('.tab');
@@ -936,6 +936,14 @@
         if (this.element.closest('.header').length > 0) {
           this.menu.parent()[0].style.zIndex =  '9001';
         }
+
+        //Fix disabled attribute sync issue
+        this.menu.find('.is-disabled').each(function () {
+          var elem = $(this);
+          if (!elem.find('a').attr('disabled')) {
+            elem.removeClass('is-disabled');
+          }
+        });
 
         //Close on Document Click ect..
         setTimeout(function () {

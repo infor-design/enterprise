@@ -32,11 +32,11 @@ category or section header, and the second level provides the associated options
 
 **Parameters**
 
+-   `element`  
 -   `rightAligned` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Will always attempt to right-align the contents of the toolbar.
 -   `maxVisibleButtons` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**  -  Total amount of buttons that can be present, not including the More button.
 -   `resizeContainers` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true, uses Javascript to size the Title and Buttonset elements in a way that shows as much of the Title area as possible.
 -   `favorButtonset` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If "resizeContainers" is true, setting this to true will try to display as many buttons as possible while resizing the toolbar.  Setting to false attempts to show the entire title instead.
--   `element`  
 
 ### buildMoreActionsMenuItem
 

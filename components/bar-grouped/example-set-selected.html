@@ -1,0 +1,127 @@
+
+
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Grouped Bar Chart Title</h2>
+        </div>
+        <div class="widget-content">
+          <div id="bar-grouped-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+      <button class="btn-secondary" type="button" id="btn-set-selected">Set selected</button>
+  </div>
+  <div class="one column">&nbsp;</div>
+  <div class="two columns">
+      <button class="btn-secondary" type="button" id="btn-toggle-selecteion">Toggle selecteion</button>
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+
+  var dataset = [{
+    data: [{
+        name: 'Jan',
+        value: 12,
+      }, {
+        name: 'Feb',
+        value: 11
+      }, {
+        name: 'Mar',
+        value: 14
+      }, {
+        name: 'Apr',
+        value: 10
+      }],
+      name: 'Component A'
+    }, {
+      data: [{
+          name: 'Jan',
+          value: 22
+      }, {
+          name: 'Feb',
+          value: 21
+      }, {
+          name: 'Mar',
+          value: 24
+      }, {
+          name: 'Apr',
+          value: 20
+      }],
+      name: 'Component B'
+    }, {
+      data: [{
+          name: 'Jan',
+          value: 32
+      }, {
+          name: 'Feb',
+          value: 31
+      }, {
+          name: 'Mar',
+          value: 34
+      }, {
+          name: 'Apr',
+          value: 30
+      }],
+      name: 'Component C'
+    }];
+
+  var elem = $('#bar-grouped-example');
+
+  elem.chart({type: 'bar-grouped', dataset: dataset})
+  .on('selected', function (e, args) {
+    console.log(args);
+  });
+
+  var options,
+    api = elem.data('chart'),
+    setOptions = function() {
+      // Use group "name" to select
+      options = {
+        groupName: 'name',
+        groupValue: 'Component B'
+      };
+
+      // Use field "name" to select
+      // options = {
+      //   fieldName: 'name',
+      //   fieldValue: 'Feb'
+      // };
+
+      // Use group index to select
+      // options = { groupIndex: 0 };
+
+      // Use bar index to select
+      // options = { index: 0 };
+
+      // Use jQuery object to select
+      // options = { elem: elem.find('[data-group-id="1"]') };
+      // options = { elem: elem.find('[data-group-id="1"] .bar:eq(1)') };
+
+      // Use data to select
+      // options = { data: dataset[1] };
+      // options = { data: dataset[1].data[2] };
+    };
+
+  // Set selected
+  $('#btn-set-selected').on('click', function() {
+    setOptions();
+    api.setSelected(options);
+  });
+
+  // Toggle selecteion
+  $('#btn-toggle-selecteion').on('click', function() {
+    setOptions();
+    api.toggleSelected(options);
+  });
+
+});
+</script>

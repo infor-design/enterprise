@@ -26,6 +26,7 @@
           mode: undefined,
           roundToInterval: undefined,
           dateFormat: 'locale', //or can be a specific format like 'yyyy-MM-dd' iso8601 format
+          firstDayOfWeek: Locale ? Locale.calendar().firstDayofWeek : 0,
           placeholder: false,
           /*  Disabling of dates
           **    dates: 'M/d/yyyy' or
@@ -45,6 +46,8 @@
             'isEnable' : false
           },
           showLegend: false,
+          customValidation: false,
+          showMonthYearPicker: false,
           legend: [
             //Legend Build up example
             //Color in level 6 - http://usmvvwdev53:424/controls/colors
@@ -70,6 +73,8 @@
       'dayOfWeek' : [],
       'isEnable' : false
     }`
+    * @param {Boolean} showMonthYearPicker  &nbsp;-&nbsp; If true the month and year will render as dropdowns.
+    * @param {Boolean} customValidation  &nbsp;-&nbsp; If true the internal validation is disabled.
     * @param {Boolean} showLegend  &nbsp;-&nbsp; If true a legend is show to associate dates.
     * @param {Array} legend  &nbsp;-&nbsp; Legend Build up for example `[{name: 'Public Holiday', color: '#76B051', dates: []}, {name: 'Weekends', color: '#EFA836', dayOfWeek: []}]`
     *
@@ -249,6 +254,11 @@
                 month = parseInt(self.header.find('.month').attr('data-month')),
                 day = parseInt(focused.text());
 
+              if (self.settings.showMonthYearPicker) {
+                month = parseInt(self.header.find('.month select').val());
+                year = parseInt(self.header.find('.year select').val());
+              }
+
               if (focused.hasClass('prev-month')) {
                 if(month === 0) {
                   month = 11;
@@ -355,10 +365,16 @@
         this.element
           .attr({
             'data-mask': mask,
-            'data-validate': validation,
-            'data-validation-events': JSON.stringify(events),
             'data-mask-mode': 'date'
-          }).mask().validate();
+          }).mask();
+
+        if (!this.settings.customValidation) {
+          this.element
+            .attr({
+              'data-validate': validation,
+              'data-validation-events': JSON.stringify(events)
+            }).validate();
+        }
 
         if (this.settings.placeholder && (!this.element.attr('placeholder') ||  this.element.attr('placeholder') === 'M / D / YYYY')) {
           this.element.attr('placeholder', this.pattern);
@@ -552,6 +568,11 @@
               year = parseInt(self.header.find('.year').text()),
               month = parseInt(self.header.find('.month').attr('data-month')),
               day = parseInt(cell.addClass('is-selected').attr('aria-selected', 'true').text());
+
+            if (self.settings.showMonthYearPicker) {
+              year = parseInt(self.header.find('.year select').val());
+              month = parseInt(self.header.find('.month select').val());
+            }
 
             if (cell.hasClass('prev-month')) {
               if(month === 0) {
@@ -846,7 +867,7 @@
         this.currentYear = year;
 
         // Set the Days of the week
-        var firstDayofWeek = (Locale.calendar().firstDayofWeek || 0);
+        var firstDayofWeek = (this.settings.firstDayOfWeek || 0);
         this.dayNames.find('th').each(function (i) {
           $(this).text(days[(i + firstDayofWeek) % 7]);
         });
@@ -863,6 +884,8 @@
           this.header.find('.year').text(justYear + ' ');
           this.header.find('.year').insertBefore(this.header.find('.month'));
         }
+
+        this.appendMonthYearPicker(month, year);
 
         //Adjust days of the week
         //lead days
@@ -943,6 +966,55 @@
 
         //Add Legend
         self.addLegend();
+      },
+
+      appendMonthYearPicker: function (month, year) {
+        var self = this;
+
+        if (!this.settings.showMonthYearPicker) {
+          return;
+        }
+
+        var monthDropdown = '<label for="month-dropdown" class="audible">'+ Locale.translate('Month') +'</label>'+
+          '<select id="month-dropdown" class="dropdown">';
+
+        var wideMonths = Locale.calendar().months.wide;
+        wideMonths.map(function (monthMap, i) {
+          monthDropdown += '<option '+ (i===month ? ' selected ' : '') + ' value="'+ i +'">'+ monthMap +'</option>';
+        });
+        monthDropdown +='</select>';
+
+        var monthSpan = this.header.find('.month').empty().append(monthDropdown);
+        monthSpan.find('select.dropdown').dropdown().off('change.datepicker')
+          .on('change.datepicker', function () {
+            self.currentMonth = parseInt($(this).val());
+
+            self.showMonth(self.currentMonth, self.currentYear);
+          });
+
+        var yearDropdown = '<label for="year-dropdown" class="audible">'+ Locale.translate('Year') +'</label>'+
+          '<select id="year-dropdown" class="dropdown year">';
+
+        var years = [parseInt(year)-5, parseInt(year)-4, parseInt(year)-3, parseInt(year)-2, parseInt(year)-1, parseInt(year),
+          parseInt(year)+1, parseInt(year)+2, parseInt(year)+3, parseInt(year)+4, parseInt(year)+5];
+
+        years.map(function (yearMap) {
+          yearDropdown += '<option '+ (year===yearMap ? ' selected ' : '') + ' value="'+ yearMap +'">'+ yearMap +'</option>';
+        });
+        yearDropdown +='</select>';
+
+        var yearSpan = this.header.find('.year').empty().append(yearDropdown);
+        yearSpan.find('select.dropdown').dropdown().off('change.datepicker')
+          .on('change.datepicker', function () {
+            self.currentYear = parseInt($(this).val());
+
+            self.showMonth(self.currentMonth, self.currentYear);
+          });
+
+        if (this.yearFist) {
+          yearSpan.find('.dropdown-wrapper').css('left', '0');
+          monthSpan.find('.dropdown-wrapper').css('left', '10px');
+        }
       },
 
       // Put the date in the field and select on the calendar

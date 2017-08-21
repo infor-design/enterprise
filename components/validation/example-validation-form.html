@@ -6,7 +6,7 @@
 
        <div class="field">
         <label class="required" for="email-address-ok">Email Address <span class="audible">Required</span></label>
-        <input type="text" id="email-address-ok" name="email-address-ok" data-validate="required customRule" placeholder="someone@someplace.com" value="someone@someplace.com">
+        <input type="text" id="email-address-ok" name="email-address-ok" data-validate="required " placeholder="someone@someplace.com" value="someone@someplace.com">
       </div>
 
       <div class="field">
@@ -59,7 +59,7 @@
         </div>
       </div>
 
-      <button type="submit" id="test1" class="btn-primary">Submit</button>
+      <button type="submit" id="test1" class="btn-primary" disabled>Submit</button>
     </form>
 
     <script>
@@ -85,7 +85,22 @@
 
           // Do some stuff other than highlighting what's required and obviously cancel the submit.
 
+        }).on('error', function (e, args) {
+          console.log('Form Error',args);
+          $('#test1').prop('disabled', true);
+        }).on('valid', function (e, args) {
+          console.log('Form Corrected',args);
+          $('#test1').prop('disabled', false);
         });
+
+        $('input, select, .editor').on('error', function (e, args) {
+          console.log('Field Error', args);
+          $('#test1').prop('disabled', true);
+        }).on('valid', function (e, args) {
+          console.log('Field Corrected', args);
+          $('#test1').prop('disabled', false);
+        });
+
       });
     </script>
   </div>

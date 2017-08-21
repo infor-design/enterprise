@@ -11,7 +11,12 @@
 <ul id="grid-actions-menu" class="popupmenu">
   <li><a href="#">Action One</a></li>
   <li><a href="#">Action Two</a></li>
-  <li><a href="#">Action Three</a></li>
+  <li><a href="#">Action Three</a>
+    <ul class="popupmenu">
+      <li><a href="#">Action Four</a></li>
+      <li><a href="#">Action Five</a></li>
+    </ul>
+  </li>
 </ul>
 
 <script>
@@ -58,10 +63,14 @@
       $('#readonly-datagrid').datagrid({
         columns: columns,
         dataset: data,
-        menuId: 'grid-actions-menu' //NOTE: Commenting this out should produce one context menu event only
+        menuId: 'grid-actions-menu',
+        menuSelected: function (e, args) {
+          console.log('item selected', args);
+        }
       }).on('contextmenu', function (e, args) {
         console.log('contextmenu fired', args);
       });
+
     });
 
 </script>

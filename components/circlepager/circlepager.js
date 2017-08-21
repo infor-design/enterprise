@@ -165,7 +165,9 @@
           previousButton.add(nextButton).remove();
         }
 
-        this.element.append(html);
+        if (numOfButtons > 1) {
+          this.element.append(html);
+        }
       },
 
       // Check if given element is visible in container
