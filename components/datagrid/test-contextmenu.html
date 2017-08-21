@@ -63,14 +63,14 @@
       $('#readonly-datagrid').datagrid({
         columns: columns,
         dataset: data,
-        menuId: 'grid-actions-menu' //NOTE: Commenting this out should produce one context menu event only
+        menuId: 'grid-actions-menu',
+        menuSelected: function (e, args) {
+          console.log('item selected', args);
+        }
       }).on('contextmenu', function (e, args) {
         console.log('contextmenu fired', args);
       });
 
-      $('.popupmenu').on('selected', function(e, args) {
-        console.log('contextmenu item selected', args);
-      })
     });
 
 </script>
