@@ -28,6 +28,7 @@ The Datagrid Component displays and process data in tabular format.
 -   `editable` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Enable editing in the grid, requires column editors.
 -   `isList` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Makes the grid have readonly "list" styling
 -   `menuId` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Id to link a right click context menu element
+-   `menuSelected` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Callback for the grid level context menu
 -   `uniqueId` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Unique ID to use as local storage reference and internal variable names
 -   `rowHeight` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Controls the height of the rows / number visible rows. May be (short, medium or normal)
 -   `selectable` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Controls the selection Mode this may be: false, 'single' or 'multiple' or 'mixed'
