@@ -55,6 +55,10 @@ SohoMaskAPI.prototype = {
    * Configure the API for an incoming mask request - set up patterns, change locale, basically 'pre-render'
    */
   configure: function(options) {
+    if (!this.settings) {
+      this.settings = {};
+    }
+
     if (!options) {
       return this;
     }

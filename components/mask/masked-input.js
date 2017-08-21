@@ -17,6 +17,7 @@
    * Default Masked Input field options
    */
   var DEFAULT_MASKED_INPUT_OPTIONS = {
+    autocorrect: false,
     guide: false,
     maskAPI: window.Soho.Mask,
     keepCharacterPositions: false,
@@ -24,7 +25,9 @@
     patternOptions: undefined,
     placeholderChar: window.Soho.masks.PLACEHOLDER_CHAR,
     pipe: undefined,
-    process: undefined
+    process: undefined,
+    processOnBlur: true,
+    processOnInitialize: true
   };
 
 
@@ -44,54 +47,67 @@
       options = {};
     }
 
-    // Define internal settings
-    if (!this.settings) {
-      this.settings = $.extend({}, DEFAULT_MASKED_INPUT_OPTIONS, options);
-    } else {
-      this.settings = $.extend({}, this.settings, options);
-    }
-    if (!this.settings.patternOptions) {
-      this.settings.patternOptions = {};
-    }
-
-    // TODO: Deprecate legacy settings in v4.4.0, remove in v4.5.0
-    this._replaceLegacySettings();
-
-    var styleClasses = ['is-number-mask'];
-
-    // If the 'process' setting is defined, connect a pre-defined Soho Mask/Pattern
-    if (typeof this.settings.process === 'string') {
-      switch(this.settings.process) {
-        case 'number': {
-          this.settings.pattern = window.Soho.masks.numberMask;
-          this.element.classList.add('is-number-mask');
-          break;
-        }
-        case 'date': {
-          if (this.settings.autocorrect === true) {
-            this.settings.pipe = window.Soho.masks.autocorrectedDatePipe;
-          }
-          break;
-        }
-        default: {
-          this.element.classList.remove(styleClasses.join(' '));
-          break;
-        }
-      }
-    }
-
-    this.mask = new this.settings.maskAPI(this.settings);
-    this.state = {
-      previousMaskResult: ''
-    };
-
-    this.handleEvents();
-
-    return this;
+    return this.init(options);
   }
 
 
   SohoMaskedInput.prototype = {
+
+    /**
+     * Initialization/things that need to be called on `updated()` in addition to initialization
+     * @private
+     */
+    init: function(options) {
+      // Define internal settings
+      if (!this.settings) {
+        this.settings = $.extend({}, DEFAULT_MASKED_INPUT_OPTIONS, options);
+      } else {
+        this.settings = $.extend({}, this.settings, options);
+      }
+      if (!this.settings.patternOptions) {
+        this.settings.patternOptions = {};
+      }
+
+      // TODO: Deprecate legacy settings in v4.4.0, remove in v4.5.0
+      this._replaceLegacySettings();
+
+      var styleClasses = ['is-number-mask'];
+
+      // If the 'process' setting is defined, connect a pre-defined Soho Mask/Pattern
+      if (typeof this.settings.process === 'string') {
+        switch(this.settings.process) {
+          case 'number': {
+            this.settings.pattern = window.Soho.masks.numberMask;
+            this.element.classList.add('is-number-mask');
+            break;
+          }
+          case 'date': {
+            if (this.settings.autocorrect === true) {
+              this.settings.pipe = window.Soho.masks.autocorrectedDatePipe;
+            }
+            break;
+          }
+          default: {
+            this.element.classList.remove(styleClasses.join(' '));
+            break;
+          }
+        }
+      }
+
+      this.mask = new this.settings.maskAPI(this.settings);
+      this.state = {
+        previousMaskResult: ''
+      };
+
+      this.handleEvents();
+
+      if (this.settings.processOnInitialize) {
+        this.process();
+      }
+
+      return this;
+    },
+
 
     /**
      * Sets up events
@@ -99,24 +115,34 @@
     handleEvents: function() {
       var self = this;
 
-      this.element.addEventListener('input', function(e) {
-        return self.handleInput(e);
-      });
+      // Handle all masking on the `input` event
+      this.inputEventHandler = function() {
+        return self.process();
+      };
+      this.element.addEventListener('input', this.inputEventHandler);
 
-    },
+      // Handle processing on blur, if settings allow
+      if (this.settings.processOnBlur) {
+        this.blurEventHandler = function(e) {
+          if (self.element.readOnly) {
+            e.preventDefault();
+            return false;
+          }
 
-    /**
-     * Handler for masked input `input` events
-     * @param {Event} e - input event
-     * @listens module:this~event:input
-     * @returns {boolean}
-     */
-    handleInput: function(e) {
-      if (false) {
-        e.preventDefault();
-        return false;
+          return self.process();
+        };
+        this.element.addEventListener('blur', this.blurEventHandler);
       }
 
+      return this;
+    },
+
+
+    /**
+     * Main Process for conforming a mask against the API.
+     * @returns {boolean}
+     */
+    process: function() {
       // If no pattern's defined, act as if no mask component is present.
       if (!this.settings.pattern) {
         return true;
@@ -198,9 +224,14 @@
       this.element.value = finalValue;
       Soho.utils.safeSetSelection(this.element, processed.caretPos);
 
+      // Fire the 'write' event (backwards compat)
+      // TODO: Deprecate in v4.4.0?
+      $(this.element).trigger('write.mask', [processed.conformedValue]);
+
       // return event handler true/false
       return processed.result;
     },
+
 
     /**
      * Gets the safe raw value of an input field
@@ -223,6 +254,7 @@
       }
     },
 
+
     /**
      * Changes a bunch of "legacy" setting definitions into more apt names.  Additionally handles
      * the old data-attribute system that is still occasionally used.
@@ -232,7 +264,7 @@
       var modes = ['group', 'number', 'date', 'time'];
 
       //======================================
-      // Deprecated as of v4.2.6
+      // Deprecated as of v4.3.2
       //======================================
       // Order of operations when choosing pattern strings:
       // HTML5 'data-mask' attribute > Generic pattern string based on "type" attribute > nothing.
@@ -244,7 +276,15 @@
         this.settings.pattern = html5DataMask;
       }
 
-      // map deprecated "mode" setting to "process"
+      // If a "mode" is defined, special formatting rules may apply to this mask.
+      // Otherwise, the standard single-character pattern match will take place.
+      var html5DataMaskMode = this.element.getAttribute('data-mask-mode') || false;
+      if (html5DataMaskMode && modes.indexOf(html5DataMaskMode) > -1) {
+        this.settings.mode = html5DataMaskMode;
+      }
+
+      // map deprecated "mode" setting to "process".  Triggers additional settings in
+      // some cases.
       if (this.settings.mode) {
         if (modes.indexOf(this.settings.mode) === -1) {
           delete this.settings.mode;
@@ -252,18 +292,14 @@
 
         if (this.settings.mode === 'group') {
           this.settings.process = undefined;
+        } else if (this.settings.mode === 'date') {
+          this.settings.process = 'date';
+          //this.settings.autocorrect = true;
         } else {
           this.settings.process = this.settings.mode;
         }
 
         delete this.settings.mode;
-      }
-
-      // If a "mode" is defined, special formatting rules may apply to this mask.
-      // Otherwise, the standard single-character pattern match will take place.
-      var html5DataMaskMode = this.element.getAttribute('data-mask-mode') || false;
-      if (html5DataMaskMode && modes.indexOf(html5DataMaskMode) > -1) {
-        this.settings.process = html5DataMaskMode;
       }
 
       if (this.settings.process === 'number') {
@@ -346,6 +382,30 @@
       }
     },
 
+    /**
+     * Updates the component instance with new settings.
+     */
+    updated: function(options) {
+      return this
+        .teardown()
+        .init(options);
+    },
+
+    /**
+     * Tears down the current component instance
+     */
+    teardown: function() {
+      this.element.removeEventListener('input', this.inputEventHandler);
+      delete this.inputEventHandler;
+
+      if (this.blurEventHandler) {
+        this.element.removeEventListener('blur', this.blurEventHandler);
+        delete this.blurEventHandler;
+      }
+
+      return this;
+    }
+
   };
 
   /**
@@ -361,10 +421,13 @@
     return this.each(function() {
       var instance = $.data(this, 'maskedinput');
       if (instance) {
-        instance.settings = $.extend({}, instance.settings, options);
-        instance.updated();
+        instance.updated(options);
       } else {
         instance = $.data(this, 'maskedinput', new SohoMaskedInput(this, options));
+        instance.destroy = function() {
+          this.teardown();
+          $.removeData(this.element, 'maskedinput');
+        };
       }
     });
   };

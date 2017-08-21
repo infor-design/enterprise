@@ -170,9 +170,11 @@ window.Soho.masks.numberMask = function sohoNumberMask(rawValue, options) {
 
 /**
  * Generates a pipe function that can be applied to a Mask API that will correct
- * shorthand dates.
+ * shorthand numeric dates.
+ * NOTE: DOES NOT WORK FOR DATES WITH ALPHABETIC CONTENT. Do not use this if your
+ * dates contain "MMM" or the full month name.
  */
-window.Soho.masks.autocorrectedDatePipe = function createAutoCorrectedDatePipe(processResult, options) {
+window.Soho.masks.autocorrectedDatePipe = function autoCorrectedDatePipe(processResult, options) {
   if (!options.dateFormat) {
     options.dateFormat = Locale.calendar().dateFormat.short;
   }
