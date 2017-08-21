@@ -103,6 +103,12 @@
     height: calc(2rem + 38px);
   }
 
+  // Add animation to the page container when Nav is in use
+  + .page-container {
+    left: 0;
+    right: initial;
+  }
+
   .branding {
     padding: 1rem 0 0 1rem;
 
@@ -118,6 +124,24 @@
 html[dir='rtl'] {
 
   .application-menu {
+
+    @include transition(right 300ms cubic-bezier(.17, .04, .03, .94),
+      box-shadow 300ms cubic-bezier(.17, .04, .03, .94));  background-color: $slate08;
+    border-left: 1px solid $application-menu-border-color;
+    border-right: 0;
+    left: initial;
+    right: -$application-menu-width;
+
+    &.is-open {
+      left: initial;
+      right: 0;
+    }
+
+    .accordion {
+      margin-left: 0;
+      margin-right: 1px;
+    }
+
     .branding {
       padding: 1rem 1rem 0 0;
     }
@@ -149,6 +173,13 @@ html[dir='rtl'] {
       }
     }
   }
+
+  html[dir='rtl'] {
+    .application-menu.is-open + .page-container.scrollable {
+      right: initial;
+    }
+  }
+
 }
 
 @include respond-to(phabletdown) {
