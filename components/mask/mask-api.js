@@ -442,6 +442,7 @@ SohoMaskAPI.prototype = {
    * @private
    * @param {Array} mask - contains string "literal" characters and Regex matchers.
    * @param {String} placeholderChar - a character that will be used as the placeholder.
+   * @returns {String}
    */
   _convertMaskToPlaceholder: function(mask, placeholderChar) {
     if (!Array.isArray(mask)) {

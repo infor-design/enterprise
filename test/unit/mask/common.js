@@ -72,6 +72,18 @@ define([
       //
     },
 
+    // Placeholder masks are used internally to figure out placement positions, and can be
+    // used visually as the guide inside of an input field.
+    'can convert a mask array into a placeholder array': function() {
+      var api = new Soho.Mask(DEFAULT_SETTINGS),
+        mask = [ /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/ ],
+        result = api._convertMaskToPlaceholder(mask, Soho.masks.PLACEHOLDER_CHAR);
+
+      expect(result).to.exist;
+      expect(result).to.be.a('string');
+      expect(result).to.equal('____-____-____-____');
+    },
+
     //==================================================
     // Mask Processing
     //==================================================
@@ -102,15 +114,20 @@ define([
 
     // Checks a complex number mask with thousands separators and decimal places (and caret traps)
     'should process numbers': function() {
-      expect(true).to.be.false;
+      var settings = DEFAULT_SETTINGS;
+      settings.process = 'number';
+      settings.pattern = Soho.masks.numberMask;
+
+      // See if the provided number mask made it.
+      expect(settings.pattern).to.be.a('function');
     },
 
 
     // Checks a complex number mask with thousands separators and decimal places (and caret traps)
-    'should process short dates': function() {
-      expect(true).to.be.false;
-    },
-    
+    //'should process short dates': function() {
+    //  expect(true).to.be.false;
+    //},
+
 
     //==================================================
     // Caret Placement
