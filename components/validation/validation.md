@@ -53,8 +53,7 @@ $('#username-field').removeError()
   Email Address <span class="audible">Required</span>
 </label>
 
-
-```html
+```
 
 - Errors will be read audibly by the API using an aria-alert (polite)
 
