@@ -703,7 +703,7 @@ window.Chart = function(container) {
 
     //Animate the Bars In
     svg.selectAll('.bar')
-      .transition().duration(1000)
+      .transition().duration(charts.isAnimate ? 1000 : 0)
       .attr('width', function (d) {
         var scale = xScale(d.x),
           scale0 = xScale(0);
@@ -2347,10 +2347,10 @@ window.Chart = function(container) {
             });
         }
 
-        bars.transition().duration(1000)
+        bars.transition().duration(charts.isAnimate ? 1000 : 0)
           .call(onEndAllTransition, function () {
             svg.selectAll('.target-bartext, .bartext')
-              .transition().duration(300).style('opacity', 1);
+              .transition().duration(charts.isAnimate ? 300 : 0).style('opacity', 1);
           })
           .attr('y', function(d) {
             var r = isStacked ? (height - yScale(d[0].y) - yScale(d[0].y0)) :
@@ -2402,7 +2402,7 @@ window.Chart = function(container) {
             .attr('height', function() {return 0;});
 
         bars
-          .transition().duration(1000)
+          .transition().duration(charts.isAnimate ? 1000 : 0)
           .attr('y', function(d) {
             var r = isStacked ? (height-yScale(d.y)-yScale(d.y0)) : (d.value < 0 ? y(0) : y(d.value));
             return d.value < 0 ? r : (r > (height-3) ? height-2 : r);
@@ -3221,7 +3221,7 @@ window.Chart = function(container) {
         .attr('stroke-dasharray', totalLength + ' ' + totalLength)
         .attr('stroke-dashoffset', totalLength)
         .transition()
-          .duration(750)
+          .duration(charts.isAnimate ? 750 : 0)
           .ease('cubic')
           .attr('stroke-dashoffset', 0);
 
@@ -3333,7 +3333,7 @@ window.Chart = function(container) {
           // Add animation
           lineGroups.selectAll('circle')
             .attr('cy', function (d) { return yScale(d.value.y); })
-            .transition().duration(750).ease('cubic')
+            .transition().duration(charts.isAnimate ? 750 : 0).ease('cubic')
             .attr('r', function (d) { return zScale(d.value.z); });
         }
       }
@@ -3476,7 +3476,7 @@ window.Chart = function(container) {
     }
 
     for (var i = 0; i < dataset[0].data.length; i++) {
-      var duration = 600,
+      var duration = charts.isAnimate ? 600 : 0,
           barHeight = 20,
           rowData = dataset[0].data[i],
           ranges = rowData.ranges.slice().sort(d3.descending),

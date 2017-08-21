@@ -1,0 +1,53 @@
+<div class="row">
+  <div class="two-thirds column">
+    <h2 class="widget-title">Bullet Chart &mdash; Set Animation Type</h2>
+    <p>
+      <u>Use api settings "animate"</u><br>
+      <strong>true or false</strong> - will do or not do the animation.<br>
+      <strong>'initial'</strong> - will do only first time the animation.
+    </p>
+  </div>
+</div>
+
+<div class="row">
+    <div class="full column center" style="height: 110px">
+      <div id="bullet-example1" class="chart-container">
+      </div>
+       <div id="bullet-example2" class="chart-container">
+      </div>
+    </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+
+  //Example 1
+  var dataset1 = [{
+      data: [
+        {'title': 'Revenue','subtitle': 'US$, in thousands','ranges': [150, 225, 300, 400, 600], 'measures': [220,270], 'markers': [250], url: 'http://someplace.com',
+          tooltip: ['<b>Poor</b> 150', '<b>Ok</b> 225', '<b>Good</b> 300', '<b>Excellent</b> 400', '<b>Revenue</b> 600']}
+      ],
+      barColors: ['#C0EDE3', '#8ED1C6', '#69ADA3', '#448D83', '#206B62'], //http://107.170.15.202:4000{{basepath}}controls/colors
+      lineColors: ['#000000', '#000000', '#000000'],
+      markerColors: ['#000000']
+    }];
+
+  $('#bullet-example1').chart({type: 'bullet', dataset: dataset1, animate: 'initial'})
+    .on('selected', function(e, ui, data) {
+      console.log(e, ui, data);
+    });
+
+   //Example 2
+   var dataset2 = [{
+      data: [
+        {'title': 'Profit', 'subtitle': '%', 'ranges': [20,25,30], 'measures': [17,21], 'markers': [26]}
+      ],
+      barColors: ['#ADD8EB', '#69B5DD', '#368AC0'], //http://107.170.15.202:4000{{basepath}}controls/colors
+      lineColors: ['#000000', '#000000', '#000000'],
+      markerColors: ['#000000']
+    }];
+
+   $('#bullet-example2').chart({type: 'bullet', dataset: dataset2, animate: 'initial'});
+
+});
+</script>
