@@ -73,9 +73,10 @@
     Editor.prototype = {
 
       init: function() {
-        this.isIE = Soho.env.browser.name === 'ie';
-        this.isMac = Soho.env.os.name === 'Mac OS X';
+        this.isIe = Soho.env.browser.name === 'ie';
         this.isIeEdge = Soho.env.browser.name === 'edge';
+        this.isIe11 = this.isIe && Soho.env.browser.version === '11';
+        this.isMac = Soho.env.os.name === 'Mac OS X';
         this.isFirefox = Soho.env.browser.name === 'firefox';
 
         this.parentElements = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre'];
@@ -907,9 +908,9 @@
           this.insertTextAreaContent(input.val(), 'anchor');
         }
         else {
-          var sel, range;
+          var sel, range, rangeStr;
 
-          if (!this.selection.isCollapsed) {
+          if (!this.selection.isCollapsed || this.isIe11) {
             //document.execCommand('createLink', false, input.val());
 
             //get example from: http://jsfiddle.net/jwvha/1/
@@ -919,7 +920,10 @@
               sel = window.getSelection();
               if (sel.getRangeAt && sel.rangeCount) {
                 range = sel.getRangeAt(0);
-                alink.html(range + '');
+                rangeStr = range + '';
+                if (rangeStr.trim() !== '') {
+                  alink.html(rangeStr);
+                }
                 range.deleteContents();
 
                 // Range.createContextualFragment() would be useful here but is
@@ -1590,7 +1594,7 @@
           var value = ('#' + item.data('value')).toLowerCase();
           cpBtn.attr('data-value', value).find('.icon').css('fill', value);
 
-          if (self.isIE || action === 'foreColor') {
+          if (self.isIe || action === 'foreColor') {
             document.execCommand(action, false, value);
           }
 
@@ -1654,7 +1658,7 @@
         // blockquote needs to be called as indent
         // http://stackoverflow.com/questions/10741831/execcommand-formatblock-headings-in-ie
         // http://stackoverflow.com/questions/1816223/rich-text-editor-with-blockquote-function/1821777#1821777
-        if (this.isIE) {
+        if (this.isIe) {
           if (el === 'blockquote') {
               return document.execCommand('indent', false, el);
           }
