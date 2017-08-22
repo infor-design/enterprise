@@ -749,6 +749,7 @@
         }
         */
         strategies.push('shrink-y');
+        opts.strategies = strategies;
 
         // If right-click or immediate (with an incoming event object), use coordinates from the event
         if ((this.settings.trigger === 'immediate' && this.settings.eventObj) || this.settings.trigger === 'rightClick') {
@@ -768,8 +769,8 @@
           opts.y = this.settings.offset.y || 0;
           opts.parent = this.element;
           opts.placement = 'bottom';
+          opts.strategies.push('nudge');
         }
-        opts.strategies = strategies;
 
         //=======================================================
         // BEGIN Temporary stuff until we sort out passing these settings from the controls that utilize them

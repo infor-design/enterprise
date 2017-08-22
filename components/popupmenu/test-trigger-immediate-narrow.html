@@ -1,0 +1,96 @@
+<style id="test-styles">
+  .square {
+    border-color: 1px solid #fff;
+    border-radius: 5px;
+    background-color: #941E1E;
+    color: #fff;
+    display: table-cell;
+    font-size: 21px;
+    height: 256px;
+    margin: 0 auto;
+    text-align: center;
+    vertical-align: middle;
+    width: 100px;
+  }
+</style>
+
+<div class="row top-padding">
+  <div class="six columns">
+    <h2>Popupmenu configured to trigger immediately</h2>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="six columns">
+
+    <div class="field">
+      <button id="popup-trigger" class="btn-primary">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-launch"></use>
+        </svg>
+        <span>Open Popupmenu</span>
+      </button>
+    </div>
+
+  <div id="target" class="square">
+    target
+  </div>
+</div>
+
+<ul id="menu" class="hidden" style="min-width: 250px;">
+  <li>
+    <a href="#">
+      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+        <use xlink:href="#icon-filter"></use>
+      </svg>
+      <span>Filtering...</span>
+    </a>
+  </li>
+  <li class="separator"></li>
+  <li>
+    <a href="#">
+      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+        <use xlink:href="#icon-like"></use>
+      </svg>
+      <span>Like</span>
+    </a>
+  </li>
+  <li>
+    <a href="#">
+      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+        <use xlink:href="#icon-like"></use>
+      </svg>
+      <span>Dislike</span>
+    </a>
+  </li>
+  <li>
+    <a href="#">
+      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+        <use xlink:href="#icon-new"></use>
+      </svg>
+      <span>Favorite</span>
+    </a>
+  </li>
+  <li class="separator"></li>
+  <li>
+    <a href="#">
+      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+        <use xlink:href="#icon-settings"></use>
+      </svg>
+      <span>Settings</span>
+    </a>
+  </li>
+</ul>
+
+<script type="text/javascript">
+  var trigger = $('#popup-trigger'),
+    target = $('#target'),
+    menu = $('#menu');
+
+  trigger.on('click.test', function() {
+    target.popupmenu({
+      menu: menu,
+      trigger: 'immediate',
+    });
+  });
+</script>
