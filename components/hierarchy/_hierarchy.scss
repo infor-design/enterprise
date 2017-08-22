@@ -169,18 +169,35 @@ $hierarchy-line-width: 1px;
 
   //The Top Level Node
   .root {
-    margin: 0 auto 20px;
+    margin: 0 auto;
+    position: relative;
 
     //draw a line down
     &::after {
       background: $hierarchy-line-color none repeat scroll 0 0;
       content: '';
-      height: 142px;
-      margin-left: -65px;
-      margin-top: 73px;
+      height: 50%;
+      left: 50%;
+      bottom: 0;
       position: absolute;
       width: $hierarchy-line-width;
       z-index: -1;
+    }
+
+    + .sub-level {
+      padding-top: 40px;
+
+      //draw a line up
+      &::before {
+        background: $hierarchy-line-color none repeat scroll 0 0;
+        content: '';
+        height: 40px;
+        left: 50%;
+        top: 0;
+        position: absolute;
+        width: $hierarchy-line-width;
+        z-index: -1;
+      }
     }
   }
 
@@ -188,23 +205,24 @@ $hierarchy-line-width: 1px;
   .top-level {
     overflow: hidden;
     text-align: center;
+    position: relative;
+    padding: 20px 0;
+
+    //draw a line down
+    &::after {
+      background: $hierarchy-line-color none repeat scroll 0 0;
+      content: '';
+      height: 100%;
+      left: 50%;
+      top: 0;
+      position: absolute;
+      width: $hierarchy-line-width;
+      z-index: -1;
+    }
 
     li {
       display: inline-block;
       padding: $hierarchy-padding;
-
-      //Draw Line Up and Left
-      &::before {
-        border-top: $hierarchy-line-width solid $hierarchy-line-color;
-        content: '';
-        display: inline-block;
-        height: 2px;
-        margin-left: 150px;
-        margin-top: 35px;
-        position: absolute;
-        width: 50px;
-        z-index: -1;
-      }
 
       &:last-child::before {
         border-top: 0;
@@ -219,12 +237,12 @@ $hierarchy-line-width: 1px;
     overflow: hidden;
     text-align: center;
     white-space: nowrap;
+    position: relative;
 
     // Top Level Nodes still follow left to right
     > li {
       display: inline-block;
-      margin-top: 10px;
-      padding: 20px 10px;
+      padding: 0 10px;
       vertical-align: top;
 
       //Draw Line Up and right
@@ -318,8 +336,6 @@ $hierarchy-line-width: 1px;
       margin: 0 0 10px;
 
       &::after {
-        //height: 190px;
-        //margin-left: -218px;
         background: transparent;
         height: 0;
         width: 0;
