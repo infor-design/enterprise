@@ -23,7 +23,7 @@
     keepCharacterPositions: false,
     pattern: undefined,
     patternOptions: undefined,
-    placeholderChar: window.Soho.masks.PLACEHOLDER_CHAR,
+    placeholderChar: '_',
     pipe: undefined,
     process: undefined,
     processOnBlur: true,
@@ -317,13 +317,13 @@
           this.settings.patternOptions.allowThousandsSeparator = (html5DataThousands === 'true');
         }
 
-        // If "negative" is defined, you can type the negative symbol in front of the number.
-        // Will automatically set to "true" if a negative symbol is detected inside the mask.
-        this.settings.patternOptions.allowNegative = this.settings.pattern.indexOf('-') !== -1;
-
-        // The new masking algorithm requires an "integerLimit" defined to function.
-        // This grabs the number of items currently inside this part of the mask, and sets it.
         if (typeof this.settings.pattern === 'string') {
+          // If "negative" is defined, you can type the negative symbol in front of the number.
+          // Will automatically set to "true" if a negative symbol is detected inside the mask.
+          this.settings.patternOptions.allowNegative = this.settings.pattern.indexOf('-') !== -1;
+
+          // The new masking algorithm requires an "integerLimit" defined to function.
+          // This grabs the number of items currently inside this part of the mask, and sets it.
           this.settings.patternOptions.integerLimit = this.settings.pattern.split('.')[0].replace(/[^#0]/g, '').length;
         }
       }

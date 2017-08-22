@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2 style="color: red;">New Mask: Currencies</h2>
+    <p>
+      Jira Tickets: <a class="hyperlink" href="http://jira.infor.com/browse/SOHO-3849" target="_blank">SOHO-3849</a> |
+      <a class="hyperlink" href="http://jira.infor.com/browse/SOHO-4744" target="_blank">SOHO-4744</a>
+    </p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+
+    <div class="field">
+      <label for="american-dollars">American Dollars</label>
+      <input id="american-dollars" class="new-mask" data-options='{ "pattern": "#,###,###.00", "process": "number", "patternOptions": { "allowDecimal": true, "integerLimit": 7, "prefix" : "$" } }' />
+    </div>
+
+    <div class="field">
+      <label for="euro-france">Euro (France)</label>
+      <input id="euro-france" class="new-mask" data-options='{ "pattern": "# ### ###,00", "process": "number", "patternOptions": { "allowDecimal": true, "integerLimit": 7, "suffix" : " €", "symbols": { "decimal": ",", "currency": "€", "thousands": " " } } }' />
+    </div>
+
+    <div class="field">
+      <label for="euro-germany">Euro (Germany)</label>
+      <input id="euro-germany" class="new-mask" data-options='{ "pattern": "#.###.###,00", "process": "number", "patternOptions": { "allowDecimal": true, "integerLimit": 7, "suffix" : " €", "symbols": { "decimal": ",", "currency": "€", "thousands": "." } } }' />
+    </div>
+
+  </div>
+</div>

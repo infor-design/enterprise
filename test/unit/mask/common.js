@@ -24,7 +24,7 @@ define([
 
   registerSuite({
 
-    name: 'Mask',
+    name: 'Mask API',
 
     //============================================
     // Setup/Configuration
@@ -102,9 +102,7 @@ define([
         }
       };
 
-      // process
       var result = api.process(text, opts);
-
       expect(result).to.exist;
       expect(result).to.be.a('object');
       expect(result.conformedValue).to.be.a('string');
@@ -117,16 +115,62 @@ define([
       var settings = DEFAULT_SETTINGS;
       settings.process = 'number';
       settings.pattern = Soho.masks.numberMask;
+      var api = new Soho.Mask(settings);
 
-      // See if the provided number mask made it.
-      expect(settings.pattern).to.be.a('function');
+      // Handle big numbers with thousands separators
+      var textValue = '1111111111';
+      var opts = {
+        selection: {
+          start: 0
+        },
+        patternOptions: {
+          allowThousands: true,
+          integerLimit: 10
+        }
+      };
+      var result = api.process(textValue, opts);
+      expect(result).to.exist;
+      expect(result).to.be.a('object');
+      expect(result.conformedValue).to.be.a('string');
+      expect(result.conformedValue).to.equal('1,111,111,111');
+
+
+      // Handle numbers with a decimal
+      opts.patternOptions.allowDecimal = true;
+      textValue = '2222222222.33';
+      result = api.process(textValue, opts);
+      expect(result.conformedValue).to.equal('2,222,222,222.33');
+
+
+      // Handle Negative numbers
+      opts.patternOptions.allowNegative = true;
+      textValue = '-4444444444.55';
+      result = api.process(textValue, opts);
+      expect(result.conformedValue).to.equal('-4,444,444,444.55');
+
+
+      // Handle Numbers with a prefix (currency)
+      opts.patternOptions.allowNegative = false;
+      opts.patternOptions.integerLimit = 4;
+      opts.patternOptions.prefix = '$';
+      textValue = '2345';
+      result = api.process(textValue, opts);
+      expect(result.conformedValue).to.equal('$2,345');
+
+
+      // Handle Numbers with a suffix (percent)
+      opts.patternOptions.integerLimit = 3;
+      opts.patternOptions.prefix = '';
+      opts.patternOptions.suffix = '%';
+      textValue = '100';
+      result = api.process(textValue, opts);
+      expect(result.conformedValue).to.equal('100%');
     },
 
 
-    // Checks a complex number mask with thousands separators and decimal places (and caret traps)
-    //'should process short dates': function() {
-    //  expect(true).to.be.false;
-    //},
+    'should process short dates': function() {
+      expect(false).to.be.false;
+    },
 
 
     //==================================================
@@ -170,7 +214,8 @@ define([
         placeholder: result.placeholder,
         rawValue: '1',
         caretPos: result.caretPos,
-        placeholderChar: Soho.masks.PLACEHOLDER_CHAR
+        placeholderChar: Soho.masks.PLACEHOLDER_CHAR,
+        caretTrapIndexes: []
       };
 
       var caretPos = api.adjustCaretPosition(adjustCaretOpts);
@@ -215,6 +260,175 @@ define([
       expect(caretPos).to.be.a('number');
       expect(caretPos).to.equal(5);
     },
+
+
+    //============================================
+    // Utility Methods
+    //============================================
+
+    // TODO: SOHO-6294
+    'can translate a string into a mask from an alternate locale': function() {
+      // 1. Grab French currency locale?
+      // 2. run _conformToMask_ directly with mask, etc
+
+
+    },
+
+  });
+
+  var TEST_INPUT,
+    TEST_COMPONENT_API;
+
+  /**
+   * Masked Input Field Tests
+   */
+  registerSuite({
+
+    name: 'Masked Input Field',
+
+    //============================================
+    // Setup/Configuration
+    //============================================
+
+    setup: function() {
+      TEST_INPUT = document.createElement('input');
+      TEST_INPUT.setAttribute('type', 'text');
+      TEST_INPUT.setAttribute('id', 'masked');
+      document.body.appendChild(TEST_INPUT);
+    },
+
+    'can be invoked': function() {
+      TEST_COMPONENT_API = new window.Soho.components.MaskedInput(TEST_INPUT);
+      var api = TEST_COMPONENT_API;
+
+      expect(api).to.exist;
+      expect(api).to.be.instanceof(window.Soho.components.MaskedInput);
+
+      // Check default settings
+      expect(api.settings).to.be.an('object');
+      expect(api.settings.maskAPI).to.exist;
+    },
+
+    'handles translation of deprecated settings': function() {
+      var input = document.createElement('input');
+      input.setAttribute('type', 'text');
+      input.setAttribute('id', 'weird-settings');
+
+      // deprecated date settings
+      input.setAttribute('data-mask-mode', 'date');
+      input.setAttribute('data-must-complete', 'true');
+
+      var inputComponent = new window.Soho.components.MaskedInput(input);
+
+      expect(inputComponent.settings).to.exist;
+      expect(inputComponent.settings).to.be.a('object');
+      expect(inputComponent.settings).to.have.property('process', 'date');
+    },
+
+    //===============================================
+    // Basic Functionality
+    //===============================================
+
+    // TODO: Test `_getSafeRawValue()_`
+    'can safely get a string value from an input field': function() {
+      expect(TEST_COMPONENT_API._getSafeRawValue('straight up text')).to.equal('straight up text');
+      expect(TEST_COMPONENT_API._getSafeRawValue(300)).to.equal('300');
+      expect(TEST_COMPONENT_API._getSafeRawValue(300 + '4545')).to.equal('3004545');
+      expect(TEST_COMPONENT_API._getSafeRawValue(null)).to.equal('');
+      expect(TEST_COMPONENT_API._getSafeRawValue(undefined)).to.equal('');
+    },
+
+    // TODO: SOHO-6293
+    'initializes properly with a value present (SOHO-6293)': function() {
+
+      // `input1/inputComponent1` are a basic pattern-masked input with a value
+      var input1 = document.createElement('input');
+      input1.setAttribute('type', 'text');
+      input1.setAttribute('id', 'preset-text');
+      input1.setAttribute('value', '1234567890');
+
+      var inputComponent1 = new window.Soho.components.MaskedInput(input1, {
+        pattern: '(###) ###-####'
+      });
+      expect(inputComponent1.settings).to.have.property('pattern');
+      expect(input1.value).to.equal('(123) 456-7890');
+
+      // `input2/inputComponent2` is a number mask
+      var input2 = document.createElement('input');
+      input2.setAttribute('type', 'text');
+      input2.setAttribute('id', 'preset-number-dec');
+      input2.setAttribute('value', '1234567890');
+
+      var inputComponent2 = new window.Soho.components.MaskedInput(input2, {
+        process: 'number',
+        pattern: '#,###,###',
+        patternOptions: {
+          allowThousands: true,
+          decimalLimit: 7
+        }
+      });
+      expect(inputComponent2.settings).to.have.property('patternOptions');
+      expect(inputComponent2.settings.patternOptions).to.have.property('decimalLimit', 7);
+      expect(inputComponent2.settings.patternOptions).to.have.property('allowThousands', true);
+      expect(input2.value).to.equal('1,234,567');
+
+      // `input3/inputComponent3` is a number mask with decimals (tests SOHO-6293)
+      var input3 = document.createElement('input');
+      input3.setAttribute('type', 'text');
+      input3.setAttribute('id', 'preset-number-dec');
+      input3.setAttribute('value', '-5555.33');
+
+      var inputComponent3 = new window.Soho.components.MaskedInput(input3, {
+        process: 'number',
+        pattern: '-#,###,###.00',
+        patternOptions: {
+          allowDecimal: true,
+          allowNegative: true,
+          allowThousands: true,
+          decimalLimit: 7
+        }
+      });
+      expect(inputComponent3.settings).to.have.property('patternOptions');
+      expect(inputComponent3.settings.patternOptions).to.have.property('allowNegative', true);
+      expect(inputComponent3.settings.patternOptions).to.have.property('allowDecimal', true);
+      expect(input3.value).to.equal('-5,555.33');
+    },
+
+    // TODO: SOHO-4744
+    // Simulates the french locale (fr-FR)
+    'can have alternate characters for decimal, comma, and currency symbol (SOHO-4744)': function() {
+      var input = document.createElement('input');
+      input.setAttribute('type', 'text');
+      input.setAttribute('id', 'french-text');
+      input.setAttribute('value', '5333,66');
+
+      var inputComponent = new window.Soho.components.MaskedInput(input, {
+        process: 'number',
+        pattern: '# ###,00',
+        patternOptions: {
+          allowDecimal: true,
+          allowThousands: true,
+          decimalLimit: 4,
+          symbols: {
+            decimal: ',',
+            thousands: ' ',
+            currency: '€'
+          },
+          suffix: ' €'
+        }
+      });
+      expect(inputComponent.settings.patternOptions).to.have.property('symbols');
+      expect(inputComponent.settings.patternOptions.symbols).to.have.property('decimal', ',');
+      expect(inputComponent.settings.patternOptions.symbols).to.have.property('thousands', ' ');
+      expect(inputComponent.settings.patternOptions.symbols).to.have.property('currency', '€');
+      expect(input.value).to.equal('5 333,66 €');
+
+    },
+
+    // TODO: SOHO-3259
+    'can display reversed prefix/suffix when in RTL mode (SOHO-3259)': function() {
+      // TODO: figure out if we still need this?
+    }
 
   });
 
