@@ -9,11 +9,11 @@ For guidelines on when and where to use the controls see the [Soho Style Guide](
 
 This project is an open source project. If you have a contribution please [submit a pull request](#pull-requests). However, your code must follow our coding guidelines as mentioned in this page and use designs and behavior approved by Hook and Loop.
 
-The project is a node project using SASS and Grunt with Grunt Watch and Live Reload to stage a series of examples shown on example and documentation pages.
+The sample / demo project is a node project using SASS and Grunt with Grunt Watch and Live Reload to stage a series of examples shown on example and documentation pages.
 
 ## Contacting Us and Updates
 
-Please use the [Jira tracker | http://jira/browse/SOHO] to report all SoHo design questions, icon requests, component bugs, questions and feature requests.
+Please use the [Jira tracker | http://jira/browse/SOHO] to report all requests, bugs, questions and feature requests.
 
 For release updates see our upcoming and past version in our [Releases road map | http://jira/projects/SOHO?selectedItem=com.atlassian.jira.jira-projects-plugin:release-page].
 
@@ -28,13 +28,12 @@ For updates please joining our [mailing list| http://infor.us14.list-manage.com/
 * Responsive
 * Touch Friendly
 * Retina Ready with SVG icons
-* IE11 is not supported
 * Globalization
-* Input Formatting
+* Input Formatting (Mask)
 * Validation
 * Security XSS
 
-## Upgrade Guide (from 3.x)
+## Upgrading from Previous Versions
 https://soho.infor.com/upgrade-guide
 
 ## Browser Support
@@ -139,30 +138,19 @@ The files can then be seen in the folder /node_modules/@infor/sohoxi/dist
 
 Run the following to get a latest and stable version.
 ```bash
-npm install --save @infor/sohoxi@latest
-```
-
-Run the following to get a specific version.
-```bash
-npm install --save @infor/sohoxi@4.X.X
+npm install --save @infor/sohoxi
 ```
 
 Run the following to get the bleeding edge development build with no warranty.
 
 ```bash
-npm install --save @infor/sohoxi@4.X.X
+npm install --save @infor/sohoxi@dev
 ```
 
-Run the following to see the versions
+Run the following to see the available versions
 
 ```bash
 npm info @infor/sohoxi dist-tags
-```
-
-### Tagging develop builds
-To be used by build servers to tag the develop builds before pushing to `npm.infor.com`
-```node
-npm run develop-tag
 ```
 
 # Contributing to Soho XI
