@@ -209,6 +209,7 @@
           trigger: 'immediate',
           attachToBody: true,
           autoFocus: false,
+          returnFocus: false,
           placementOpts: {
             callback: autocompletePlaceCallback,
             parent: this.element
