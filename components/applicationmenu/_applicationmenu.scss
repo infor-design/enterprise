@@ -103,12 +103,6 @@
     height: calc(2rem + 38px);
   }
 
-  // Add animation to the page container when Nav is in use
-  + .page-container {
-    left: 0;
-    right: initial;
-  }
-
   .branding {
     padding: 1rem 0 0 1rem;
 
@@ -145,6 +139,12 @@ html[dir='rtl'] {
     .branding {
       padding: 1rem 1rem 0 0;
     }
+
+    + .page-container {
+      left: 0;
+      right: initial;
+    }
+
   }
 
 }
