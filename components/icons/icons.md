@@ -3,15 +3,16 @@
 ## Configuration Options
 
 1. Basic Icons [View Example]( ../components/icons/example-index)
-2. Icons Indicating Contents [View Example]( ../components/icons/example-full-style)
-3. Extended Icon Set [View Example]( ../components/icons/example-extended)
-4. Caret Icons [View Example]( ../components/icons/example-caret)
-5. Checkmarks [View Example]( ../components/icons/example-checks)
-6. Empty Widget Icons [View Example]( ../components/icons/example-empty-widgets)
+2. Extended Icon Set [View Example]( ../components/icons/example-extended)
+3. Alert Icons [View Example]( ../components/alerts/example-index)
+4. Tree Icons [View Example]( ../components/icons/example-tree)
+5. Empty Widget Icons [View Example]( ../components/icons/example-empty-widgets)
+6. Grid Filter Drop Down Menu Icons [View Example]( ../components/icons/example-filter-dropdown)
 7. Infor / SoHo Logos [View Example]( ../components/icons/example-logos)
 8. Animated Pseudo Elements (Hamburger / Back) / SoHo Logos [View Example]( ../components/icons/example-pseudo-elements)
-9. Tree Icons [View Example]( ../components/icons/example-tree)
-10. Grid Filter Drop Down Menu [View Example]( ../components/icons/example-filter-dropdown)
+9. Icons Indicating Contents [View Example]( ../components/icons/example-full-style)
+10. Caret Icons [View Example]( ../components/icons/example-caret)
+11. Checkmarks [View Example]( ../components/icons/example-checks)
 
 {{api-details}}
 
