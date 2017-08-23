@@ -37,7 +37,9 @@ $('body').on('initialized', function () {
     hideLabels: false
   }
 */
-  $('#pie-donut-example').chart({type: 'donut', dataset: donutData});
+  $('#pie-donut-example').chart({type: 'donut', dataset: donutData}).on('selected', function (e, args) {
+    console.log(args);
+  });
 
 });
 </script>
