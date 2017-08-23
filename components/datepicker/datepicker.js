@@ -1340,6 +1340,10 @@
         });
       },
 
+      /**
+       * Updates the component instance.  Can be used after being passed new settings.
+       * @returns {this}
+       */
       updated: function() {
         return this
           .teardown()
