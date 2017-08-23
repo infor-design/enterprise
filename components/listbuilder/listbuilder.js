@@ -19,7 +19,8 @@
     // Settings and Options
     var pluginName = 'listbuilder',
         defaults = {
-          'dataset': [], // Array of data
+          'dataset': [], // Array of data,
+          'handle': '.handle', // The Class of the handle element
 
           // Action buttons
           // use "data-action" attributes, ie. data-action="add"
@@ -163,6 +164,7 @@
         // Make Draggable
         this.ul = $('.listview ul', this.element);
         this.arrangeApi = this.ul.arrange({
+          handle: s.handle,
           placeholder: s.templateNewItem
         }).data('arrange');
 
