@@ -347,7 +347,7 @@
           hourCounter = is24HourFormat ? 0 : 1,
           maxHourCount = is24HourFormat ? 24 : 13;
 
-        this.hourSelect = $('<select id="timepicker-hours" class="hours dropdown"></select>');
+        this.hourSelect = $('<select id="timepicker-hours" data-options="{\'noSearch\': \'true\'}" class="hours dropdown"></select>');
 
         while(hourCounter < maxHourCount) {
           selected = '';
@@ -363,7 +363,7 @@
 
         // Minutes Picker
         var minuteCounter = 0;
-        this.minuteSelect = $('<select id="timepicker-minutes" class="minutes dropdown"></select>');
+        this.minuteSelect = $('<select id="timepicker-minutes" data-options="{\'noSearch\': \'true\'}" class="minutes dropdown"></select>');
 
         while(minuteCounter <= 59) {
           textValue = minuteCounter < 10 ? '0' + minuteCounter : minuteCounter;
@@ -387,7 +387,7 @@
         // Seconds Picker
         if (hasSeconds) {
           var secondCounter = 0;
-          secondSelect = $('<select id="timepicker-seconds" class="seconds dropdown"></select>');
+          secondSelect = $('<select id="timepicker-seconds" data-options="{\'noSearch\': \'true\'}" class="seconds dropdown"></select>');
 
           while(secondCounter <= 59) {
             textValue = secondCounter < 10 ? '0' + secondCounter : secondCounter;

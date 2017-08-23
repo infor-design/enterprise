@@ -567,7 +567,7 @@ a.btn-menu {
   }
 
   100% {
-    @include css3(transform, scale(50));
+    @include css3(transform, scale(20));
     opacity: 0;
   }
 }
