@@ -11,6 +11,7 @@
     -   [disable](#disable)
     -   [readonly](#readonly)
     -   [setToday](#settoday)
+    -   [updated](#updated)
     -   [destroy](#destroy)
     -   [handleEvents](#handleevents)
 
@@ -76,6 +77,12 @@ Set input to readonly.
 ### setToday
 
 Set to todays date in current format.
+
+### updated
+
+Updates the component instance.  Can be used after being passed new settings.
+
+Returns **this** 
 
 ### destroy
 
