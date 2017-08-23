@@ -214,7 +214,7 @@
         }
 
         // Close the popup/tooltip on orientation changes (but not when keyboard is open)
-        window.addEventListener('orientationchange.tooltip', function() {
+        $(window).on('orientationchange.tooltip', function() {
           // Match every time.
           if (self.tooltip.hasClass('is-hidden')) {
             return;
@@ -649,7 +649,7 @@
         this.element.off('mouseenter.tooltip mouseleave.tooltip mousedown.tooltip click.tooltip mouseup.tooltip updated.tooltip focus.tooltip blur.tooltip');
         this.detachOpenEvents();
 
-        window.removeEventListener('orientationchange.tooltip');
+        $(window).off('orientationchange.tooltip');
 
         return this;
       },

@@ -21,7 +21,7 @@ http://usalvlhlpool1.infor.com/4.3.1/components
 
 
 ### Behavior Changes
--
+- Timepicker - The default of roundToInterval is now true. Since the default options are intervals of 5 we felt this made the most sense since it was reported as a bug twice. If you want to allow entering time out of the dropdown intervals you will now have to set this to false.
 -
 
 ### Improvements
