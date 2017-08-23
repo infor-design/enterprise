@@ -23,7 +23,7 @@
           minuteInterval: 5,
           secondInterval: 5,
           mode: 'standard',
-          roundToInterval: false,
+          roundToInterval: true,
           parentElement: null
         },
         settings = $.extend({}, defaults, options);
@@ -36,7 +36,7 @@
     * @param {Number} minuteInterval  &nbsp;-&nbsp; Integer from 1 to 60.  Multiples of this value are displayed as options in the minutes dropdown.
     * @param {Number} secondInterval  &nbsp;-&nbsp; Integer from 1 to 60.
     * @param {String} mode  &nbsp;-&nbsp; can be set to 'standard', 'range',
-    * @param {boolean} roundToInterval  &nbsp;-&nbsp; if `true`, automatically rounds user-entered values from the pickers to their nearest interval.
+    * @param {boolean} roundToInterval  &nbsp;-&nbsp; if `false`, does not automatically round user-entered values from the pickers to their nearest interval.
     * @param {null|jQuery[]} [parentElement] &nbsp;-&nbsp;  if defined as a jQuery-wrapped element, will be used as the target element.
     */
     function TimePicker(element) {
