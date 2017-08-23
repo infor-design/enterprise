@@ -1,0 +1,74 @@
+<div class="row">
+  <div class="two-thirds column">
+    <h2 class="widget-title">Column Chart &mdash; Set animation speed</h2>
+    <p>
+      <u>Use api settings "animate"</u><br>
+      <strong>true or false</strong> - will do or not do the animation.<br>
+      <strong>'initial'</strong> - will do only first time the animation.
+    </p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Column Chart Example</h2>
+        </div>
+        <div class="widget-content">
+          <div id="column-bar-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+{{={{{ }}}=}}
+
+<script>
+$('body').on('initialized', function () {
+
+    var dataset = [{
+      data: [{
+          name: 'Automotive',
+          shortName: 'Auto',
+          abbrName: 'A',
+          value: 7,
+          tooltip: 'Custom Tooltip - {{value}}'
+      }, {
+          name: 'Distribution',
+          shortName: 'Dist',
+          abbrName: 'D',
+          value: 10
+      }, {
+          name: 'Equipment',
+          shortName: 'Equip',
+          abbrName: 'E',
+          value: 14
+      }, {
+          name: 'Fashion',
+          shortName: 'Fash',
+          abbrName: 'F',
+          value: 10
+      }, {
+          name: 'Food',
+          shortName: 'Food',
+          abbrName: 'F',
+          value: 14
+      }, {
+          name: 'Healthcare',
+          shortName: 'Health',
+          abbrName: 'H',
+          value: 8
+      }, {
+          name: 'Other',
+          shortName: 'Other',
+          abbrName: 'O',
+          value: 7
+      }]
+    }];
+
+  $('#column-bar-example')
+    .chart({type: 'column', dataset: dataset, animate: false});
+});
+</script>

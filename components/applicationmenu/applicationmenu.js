@@ -215,8 +215,12 @@
       testWidth: function() {
         if (this.isOpen()) {
           if (Soho.breakpoints.isAbove(this.settings.breakpoint)) {
+            this.element[0].classList.remove('show-shadow');
             return;
           }
+
+          this.element[0].classList.add('show-shadow');
+
           if (this.element.find(document.activeElement).length || this.isAnimating) {
             return;
           }
@@ -234,7 +238,6 @@
         }
 
         this.openMenu(true);
-
       },
 
       /**
@@ -289,6 +292,10 @@
         // next line forces a repaint
         this.menu[0].offsetHeight; //jshint ignore:line
         this.menu.addClass('is-open');
+
+        if (Soho.breakpoints.isBelow(this.settings.breakpoint)) {
+          this.menu.addClass('show-shadow');
+        }
 
         if (!noFocus || noFocus !== true) {
           this.menu.find('.is-selected > a').focus();
@@ -353,7 +360,7 @@
         this.menu.one(transitionEnd + '.applicationmenu', close);
         this.timeout = setTimeout(close, 300);
 
-        this.menu.removeClass('is-open').find('[tabindex]');
+        this.menu.removeClass('is-open show-shadow').find('[tabindex]');
         $(document).off('click.applicationmenu keydown.applicationmenu');
       },
 

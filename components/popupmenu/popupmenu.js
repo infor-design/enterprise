@@ -26,6 +26,7 @@
         beforeOpen: null,
         ariaListbox: false,
         eventObj: undefined,
+        returnFocus: true,
         placementOpts: {
           containerOffsetX: 10,
           containerOffsetY: 10,
@@ -49,6 +50,7 @@
     * @param {Boolean} attachToBody  &nbsp;-&nbsp; If true the menu will be moved out to the body. To be used in certin overflow situations.
     * @param {String} ariaListbox  &nbsp;-&nbsp;  Switches aria to use listbox construct instead of menu construct (internal)
     * @param {String} eventObj  &nbsp;-&nbsp; Can pass in the event object so you can do a right click with immediate
+    * @param {String} returnFocus  &nbsp;-&nbsp; If set to false, focus will not be returned to the calling element. It usually should be for accessibility purposes.
     * @param {Object} placementOpts  &nbsp;-&nbsp; Gets passed to this control's Place behavior
     * @param {Object} offset  &nbsp;-&nbsp; Can tweak the menu position in the x and y direction. Takes an object of form: `{x: 0, y: 0}`
     *
@@ -720,11 +722,11 @@
           return;
         }
 
+        // Make the field the same size
         var elemWidth = this.element.outerWidth();
-        if (elemWidth > menuDimensions.width) {
+        if (this.settings.trigger === 'click' && elemWidth > menuDimensions.width) {
           this.menu.width(elemWidth);
         }
-
 
         if (target.is('svg, .icon') && target.closest('.tab').length) {
           target = target.closest('.tab');
@@ -747,6 +749,7 @@
         }
         */
         strategies.push('shrink-y');
+        opts.strategies = strategies;
 
         // If right-click or immediate (with an incoming event object), use coordinates from the event
         if ((this.settings.trigger === 'immediate' && this.settings.eventObj) || this.settings.trigger === 'rightClick') {
@@ -766,8 +769,8 @@
           opts.y = this.settings.offset.y || 0;
           opts.parent = this.element;
           opts.placement = 'bottom';
+          opts.strategies.push('nudge');
         }
-        opts.strategies = strategies;
 
         //=======================================================
         // BEGIN Temporary stuff until we sort out passing these settings from the controls that utilize them
@@ -936,6 +939,14 @@
         if (this.element.closest('.header').length > 0) {
           this.menu.parent()[0].style.zIndex =  '9001';
         }
+
+        //Fix disabled attribute sync issue
+        this.menu.find('.is-disabled').each(function () {
+          var elem = $(this);
+          if (!elem.find('a').attr('disabled')) {
+            elem.removeClass('is-disabled');
+          }
+        });
 
         //Close on Document Click ect..
         setTimeout(function () {
@@ -1289,7 +1300,9 @@
           return;
         }
 
-        self.element.removeClass('hide-focus').focus();
+        if (this.settings.returnFocus) {
+          self.element.removeClass('hide-focus').focus();
+        }
       },
 
       teardown: function() {

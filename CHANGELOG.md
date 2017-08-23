@@ -17,6 +17,42 @@ http://usalvlhlpool1.infor.com/4.3.1/components
 - Toolbar / Search - Further stability Enhancements
 
 ### Breaking Changes
+- PopupMenu - To clarify disabled items should be achived by adding either the disabled attribute to the anchor tag or adding both the attribute to the anchor tag and the class is-disabled to the li element. Only adding the class will not work as only one mapping was possible. See examples components/popupmenu/example-disabled-submenus and components/popupmenu/test-toggle-disabled.html
+
+
+### Behavior Changes
+-
+-
+
+### Improvements
+-
+-
+
+### Bug Fixes
+-
+-
+
+(X Jira Issues Solved, Backlog Still X)
+
+## 4.3.1
+Release Date: 2017-08-02
+
+### Download Build Assets:
+Build Server: http://bamboo.infor.com/browse/label/release-431
+Npm: http://npm.infor.com
+Full Jira Release Notes: http://bit.ly/2w6X8Xw
+
+### Demo Site
+http://usalvlhlpool1.infor.com/4.3.1/components
+
+### Key New Features
+- More Angular Wrappers (About, Color Picker, Accordion, Popover)
+- Line Chart - Added options to rotate axis for longer labels
+- Card/List - Added new group action area toolbar
+- 128 Bugs and Enhancements
+- Toolbar / Search - Further stability Enhancements
+
+### Breaking Changes
 - Listview - since it was confusing about `selected` event, now `selected` and `unselected` events will fire when selecting or de-selecting an item in list. It used to be fire only `selected` event when any selection gets changed selecting or de-selecting.
 - Dropdown - Instead of using the clear option as a value, the clear option is done as a class. Change `<option value="clear"></option>` to `<option class="clear"></option>`.
 

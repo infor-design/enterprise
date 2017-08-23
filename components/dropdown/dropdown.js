@@ -1342,7 +1342,7 @@
 
         // use negative height of the pseudoElem to get the Dropdown list to overlap the input.
         var isShort = this.element.closest('.field-short').length > 0;
-        positionOpts.y = isShort ? -26 : Soho.env.browser.name === 'firefox' ? -33.5 : -35;
+        positionOpts.y = isShort ? -26 : Soho.env.browser.name === 'firefox' ? -32 : -34;
         positionOpts.x = 0;
         //parseInt(parentElementStyle.height) +  parseInt(parentElementStyle.borderTopWidth) +  parseInt(parentElementStyle.borderBottomWidth) * -1;
 
@@ -1686,7 +1686,10 @@
                   value: stringContent
                 };
               }
-              option.value = replaceDoubleQuotes(option.value);
+
+              if (option.value !== undefined) {
+                option.value = replaceDoubleQuotes(option.value);
+              }
 
               if (option.id !== undefined) {
                 if (!isNaN(option.id)) {

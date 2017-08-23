@@ -1,0 +1,109 @@
+
+
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Stacked Singular Column Chart</h2>
+        </div>
+        <div class="widget-content">
+          <div id="column-bar-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two columns">
+      <button class="btn-secondary" type="button" id="btn-set-selected">Set selected</button>
+  </div>
+  <div class="one column">&nbsp;</div>
+  <div class="two columns">
+      <button class="btn-secondary" type="button" id="btn-toggle-selecteion">Toggle selecteion</button>
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+
+  var dataset = [{
+    data: [{
+        name: 'Automotive',
+        shortName: 'Auto',
+        abbrName: 'A',
+        value: 7
+    }, {
+        name: 'Distribution',
+        shortName: 'Dist',
+        abbrName: 'D',
+        value: 10
+    }, {
+        name: 'Equipment',
+        shortName: 'Equip',
+        abbrName: 'E',
+        value: 14
+    }, {
+        name: 'Fashion',
+        shortName: 'Fash',
+        abbrName: 'F',
+        value: 10
+    }, {
+        name: 'Food & Beverage',
+        shortName: 'Food',
+        abbrName: 'F&B',
+        value: 14
+    }, {
+        name: 'Healthcare',
+        shortName: 'Health',
+        abbrName: 'H',
+        value: 8
+    }, {
+        name: 'Other',
+        shortName: 'Other',
+        abbrName: 'O',
+        value: 7
+    }]
+  }];
+
+  var elem = $('#column-bar-example');
+
+  elem.chart({type: 'column-stacked', dataset: dataset})
+  .on('selected', function (e, args) {
+    console.log(args);
+  });
+
+  var options,
+    api = elem.data('chart'),
+    setOptions = function() {
+      /// Use field "name" to select
+      options = {
+        fieldName: 'name',
+        fieldValue: 'Automotive'
+      };
+
+      // Use index to select
+      // options = { index: 1 };
+
+      // Use jQuery object to select
+      // options = { elem: elem.find('.bar:eq(2)') };
+
+      // Use data to select
+      // options = { data: dataset[0].data[2] };
+    };
+
+
+  // Set selected
+  $('#btn-set-selected').on('click', function() {
+    setOptions();
+    api.setSelected(options);
+  });
+
+  // Toggle selecteion
+  $('#btn-toggle-selecteion').on('click', function() {
+    setOptions();
+    api.toggleSelected(options);
+  });
+
+});
+</script>

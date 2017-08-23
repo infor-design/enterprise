@@ -18,8 +18,20 @@
 <li><code>beforeExpand</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  A callback that fires before node expansion of a node.</li>
 </ul>
 <h3 id="functions">Functions</h3>
+<h3 id="events">Events</h3>
+<p>Private function<br />Attach all event handlers</p>
+<h4 id="data">data</h4>
+<p>Public function<br />Process data attached through jquery data</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>nodeId</code><br /></li>
+<li><code>currentDataObject</code><br /></li>
+<li><code>newDataObject</code><br /></li>
+<li><code>params</code></li>
+</ul>
+<p>Returns <strong>any</strong></p>
 <h4 id="add">add</h4>
-<p>Add data as children for the given nodeId.</p>
+<p>Public function<br />Add data as children for the given nodeId.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>nodeId</code><br /></li>
@@ -27,7 +39,7 @@
 <li><code>newDataObject</code></li>
 </ul>
 <h4 id="expand">expand</h4>
-<p>Expand the nodes until nodeId is displayed on the page.</p>
+<p>Private function<br />Expand the nodes until nodeId is displayed on the page.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>event</code><br /></li>
@@ -35,19 +47,63 @@
 <li><code>domObject</code></li>
 </ul>
 <h4 id="collapse">collapse</h4>
-<p>Collapse the passed in nodeId.</p>
+<p>Private function<br />Collapse the passed in nodeId.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>event</code><br /></li>
 <li><code>nodeData</code><br /></li>
 <li><code>domObject</code></li>
 </ul>
+<h4 id="render">render</h4>
+<p>Private Function<br />Main render method</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>data</code></li>
+</ul>
+<h4 id="checkchildren">checkChildren</h4>
+<p>Private function</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>children</code><br /></li>
+<li><code>param</code></li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h4 id="createlegend">createLegend</h4>
+<p>Private function<br />Add the legend from the Settings</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>element</code></li>
+</ul>
+<h4 id="createleaf">createLeaf</h4>
+<p>Private function<br /> Creates a leaf node under element for nodeData</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>nodeData</code><br /></li>
+<li><code>container</code></li>
+</ul>
+<h4 id="setcolor">setColor</h4>
+<p>Private function<br />Determine the color from settings</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>data</code></li>
+</ul>
 <h4 id="isleaf">isLeaf</h4>
-<p>Return whether or not a particular node is a leaf</p>
+<p>Return whether or not a particular node is a leaf<br />private function</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>dataNode</code></li>
 </ul>
+<h4 id="updatestate">updateState</h4>
+<p>Handle all leaf state here,<br />get the current state via .data() and re-attach the new state<br />private function</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>leaf</code><br /></li>
+<li><code>isRoot</code><br /></li>
+<li><code>nodeData</code><br /></li>
+<li><code>eventType</code></li>
+</ul>
+<h2 id="on">on</h2>
+<p>Public,<br /> Usage: $('#hierarchy').on('selected', function(event, eventInfo) {}</p>
 <h2 id="code-example">Code Example</h2>
 <p>This example shows how to invoke the hierarchy component passing in data and legend info for matching.</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript">

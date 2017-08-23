@@ -5,8 +5,9 @@
 
 1. Standard Bullet Chart [View Example]( ../components/bullet/example-index)
 2. Shows Grouping a Series of Related Bullet Charts [View Example]( ../components/bullet/example-data-group)
-2. Shows a Bullet Chart with Positive and Negative Values [View Example]( ../components/bullet/example-negative-positive-value)
-2. Shows a bullet with a negative value [View Example]( ../components/bullet/example-negative-value)
+3. Shows a Bullet Chart with Positive and Negative Values [View Example]( ../components/bullet/example-negative-positive-value)
+4. Shows a bullet with a negative value [View Example]( ../components/bullet/example-negative-value)
+5. Set animation speed [View Example]( ../components/bullet/example-animation)
 
 ## Code Example
 

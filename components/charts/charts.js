@@ -703,7 +703,7 @@ window.Chart = function(container) {
 
     //Animate the Bars In
     svg.selectAll('.bar')
-      .transition().duration(1000)
+      .transition().duration(charts.animate ? 1000 : 0)
       .attr('width', function (d) {
         var scale = xScale(d.x),
           scale0 = xScale(0);
@@ -1098,7 +1098,7 @@ window.Chart = function(container) {
         charts.hideTooltip();
       })
       .style('fill', function(d, i) {return charts.chartColor(self.isRTL ? chartData.length-i-1 : i, 'pie', d.data); })
-      .transition().duration(settings.animate === false ? 0 : 350)
+      .transition().duration(charts.animate ? 350 : 0)
       .attrTween('d', function(d) {
         var i = d3.interpolate(d.startAngle + 0.1, d.endAngle);
         return function(t) { d.endAngle = i(t); return pieArcs(d); };
@@ -1543,6 +1543,33 @@ window.Chart = function(container) {
       charts[charts.legendformatter ? 'renderLegend' : 'addLegend'](series, 'donut');
     }
 
+    charts.setSelected = function (o, isToggle) {
+      var selector, arcIndex,
+        selected = 0,
+        equals = window.Soho.utils.equals;
+      arcs.selectAll('.arc').each(function(d, i) {
+        if (!d || !d.data || !d.data.data) {
+          return;
+        }
+        if (selected < 1) {
+          if ((typeof o.fieldName !== 'undefined' &&
+                typeof o.fieldValue !== 'undefined' &&
+                  o.fieldValue === d.data.data[o.fieldName]) ||
+              (typeof o.index !== 'undefined' && o.index === i) ||
+              (o.data && equals(o.data, chartData[i].data)) ||
+              (o.elem && $(this).is(o.elem))) {
+            selected++;
+            selector = d3.select(this);
+            arcIndex = i;
+          }
+        }
+      });
+
+      if (selected > 0 && (isToggle || !selector.classed('is-selected'))) {
+        selector.on('click').call(selector.node(), selector.datum(), arcIndex);
+      }
+    };
+
     // Set initial selected
     (function () {
       var selected = 0,
@@ -1860,21 +1887,71 @@ window.Chart = function(container) {
           charts.selectElement(d3.select(this), svg.selectAll('.point, .connected-line'), data);
         });
 
+    charts.setSelected = function (o, isToggle) {
+      var selected = 0,
+        selector,
+        selectorData,
+        dataset = chartData,
+
+        setSelected = function (d, i, groupIdx) {
+          groupIdx = groupIdx > -1 ? groupIdx : 0;
+          var elem = svg.selectAll('.point:nth-child('+ (i+2) +')'),
+            data = {value: d, index: i, name: dataset[groupIdx].name};
+
+          if (options.isMinMax && max === d) {
+            data.isHighest = true;
+          }
+          if (options.isMinMax && min === d) {
+            data.isLowest = true;
+          }
+          if (options.isPeakDot && max === d) {
+            data.isPeakDot = true;
+          }
+
+          selected++;
+          selector = elem;
+          selectorData = data;
+        };
+
+      dataset.forEach(function(d, i) {
+        if (selected < 1) {
+          if (d && d.data && (typeof o.groupName !== 'undefined' &&
+            typeof o.groupValue !== 'undefined' &&
+            typeof o.index === 'number' &&
+            o.groupValue === d[o.groupName] &&
+            o.index > -1 && d.data[o.index])) {
+              setSelected(d.data[o.index], o.index, i);
+          }
+        }
+        if (selected < 1) {
+          if (d && d.data && (typeof o.groupName === 'undefined' &&
+            typeof o.groupValue === 'undefined' &&
+            typeof o.index === 'number' &&
+            o.index > -1 && d.data[o.index])) {
+              setSelected(d.data[o.index], o.index, i);
+          }
+        }
+      });
+
+      if (selected > 0 && (isToggle || !selector.classed('is-selected'))) {
+        charts.selectElement(selector, svg.selectAll('.point, .connected-line'), selectorData);
+      }
+    };
+
     // Set initial selected
     (function () {
       var selected = 0,
         selector,
         selectorData,
-        d = chartData[0],
+        dataset = chartData,
 
-        setSelected = function (d, i) {
-
+        setSelected = function (d, i, groupIdx) {
+          groupIdx = groupIdx > -1 ? groupIdx : 0;
           var elem = svg.selectAll('.point:nth-child('+ (i+2) +')'),
-            isSelected = elem.node() && elem.classed('is-selected');
+            isSelected = elem.node() && elem.classed('is-selected'),
+            data = {value: d, index: i, name: dataset[groupIdx].name};
 
           if (!isSelected) {
-            var data = {value: d, index: i, name: chartData[0].name};
-
             if (options.isMinMax && max === d) {
               data.isHighest = true;
             }
@@ -1884,18 +1961,21 @@ window.Chart = function(container) {
             if (options.isPeakDot && max === d) {
               data.isPeakDot = true;
             }
-
             selected++;
             selector = elem;
             selectorData = data;
           }
         };
 
-        if (d && d.data && typeof d.selected === 'number' && d.selected > -1) {
-          if (d.data[d.selected]) {
-            setSelected(d.data[d.selected], d.selected);
+      dataset.forEach(function(d, i) {
+        if (selected < 1) {
+          if (d && d.data && typeof d.selected === 'number' && d.selected > -1) {
+            if (d.data[d.selected]) {
+              setSelected(d.data[d.selected], d.selected, i);
+            }
           }
         }
+      });
 
       if (selected > 0) {
         charts.selectElement(selector, svg.selectAll('.point, .connected-line'), selectorData);
@@ -2267,10 +2347,10 @@ window.Chart = function(container) {
             });
         }
 
-        bars.transition().duration(1000)
+        bars.transition().duration(charts.animate ? 1000 : 0)
           .call(onEndAllTransition, function () {
             svg.selectAll('.target-bartext, .bartext')
-              .transition().duration(300).style('opacity', 1);
+              .transition().duration(charts.animate ? 300 : 0).style('opacity', 1);
           })
           .attr('y', function(d) {
             var r = isStacked ? (height - yScale(d[0].y) - yScale(d[0].y0)) :
@@ -2322,7 +2402,7 @@ window.Chart = function(container) {
             .attr('height', function() {return 0;});
 
         bars
-          .transition().duration(1000)
+          .transition().duration(charts.animate ? 1000 : 0)
           .attr('y', function(d) {
             var r = isStacked ? (height-yScale(d.y)-yScale(d.y0)) : (d.value < 0 ? y(0) : y(d.value));
             return d.value < 0 ? r : (r > (height-3) ? height-2 : r);
@@ -2636,6 +2716,93 @@ window.Chart = function(container) {
       }
     }
 
+    charts.setSelected = function (o, isToggle) {
+      var selected = 0,
+        equals = window.Soho.utils.equals,
+        legendsNode = svg.node().parentNode.nextSibling,
+        legends = d3.select(legendsNode),
+        isLegends = legends.node() && legends.classed('chart-legend'),
+        barIndex, selector, isStackedGroup, xGroup,
+
+        setSelectedBar = function (g, gIdx) {
+          var isGroup = !!g;
+          g = isGroup ? d3.select(g) : svg;
+          gIdx = typeof gIdx !== 'undefined' ? gIdx : 0;
+          g.selectAll('.bar').each(function(d, i) {
+            if (!d) {
+              return;
+            }
+            if (selected < 1) {
+              if ((typeof o.fieldName !== 'undefined' &&
+                    typeof o.fieldValue !== 'undefined' &&
+                      o.fieldValue === (isSingular && isStacked ? d[0][o.fieldName] : d[o.fieldName])) ||
+                  (typeof o.index !== 'undefined' && o.index === i) ||
+                  (o.data && equals(o.data, chartData[gIdx].data[i])) ||
+                  (o.elem && $(this).is(o.elem))) {
+                selected++;
+                selector = d3.select(this);
+                barIndex = i;
+                if (isGroup && !isStacked) {
+                  isStackedGroup = true;
+                }
+              }
+            }
+          });
+        },
+
+        setSelectedGroup = function () {
+          var groups = svg.selectAll('.series-group');
+          if (groups[0].length) {
+            groups.each(function(d, i) {
+              setSelectedBar(this, i);
+            });
+          }
+        };
+
+      if (isGrouped || (isStacked && !isSingular && !isGrouped)) {
+        chartData.forEach(function(d, i) {
+          if (selected < 1) {
+            xGroup = $(svg.select('[data-group-id="'+ i +'"]').node());
+            if ((typeof o.groupName !== 'undefined' &&
+                  typeof o.groupValue !== 'undefined' &&
+                    o.groupValue === d[o.groupName]) ||
+                (typeof o.groupIndex !== 'undefined' && o.groupIndex === i) ||
+                (o.data && equals(o.data, d)) ||
+                (o.elem && (xGroup.is(o.elem)))) {
+
+              if (typeof o.fieldName === 'undefined' &&
+                    typeof o.fieldValue === 'undefined' &&
+                      typeof o.index === 'undefined') {
+                selected++;
+                selector = svg.select('[data-group-id="'+ i +'"]').select('.bar');
+                barIndex = i;
+                if (isStacked && !isGrouped) {
+                  isStackedGroup = true;
+                }
+              }
+            }
+          }
+        });
+        if (selected < 1) {
+          setSelectedGroup();
+        }
+      }
+      else {
+        setSelectedBar();
+      }
+
+      if (selected > 0 && (isToggle || !selector.classed('is-selected'))) {
+        if (isStackedGroup) {
+          if (isLegends) {
+            $(legends.selectAll('.chart-legend-item')[0][barIndex]).trigger('click.chart');
+          }
+        }
+        else {
+          selector.on('click').call(selector.node(), selector.datum(), barIndex);
+        }
+      }
+    };
+
     // Set initial selected
     (function () {
       var selected = 0,
@@ -2746,7 +2913,7 @@ window.Chart = function(container) {
     var ticks = selector ? svg.selectAll(selector) : svg.selectAll('.x text');
 
     ticks.each(function(d, i) {
-      var text = dataArray[i][elem];
+      var text = dataArray[i] ? dataArray[i][elem] : '';
 
       text = text || (isNoEclipse ?
         ((d3.select(this).text().substring(0, 1))) : (d3.select(this).text().substring(0, 6) +'...'));
@@ -3054,7 +3221,7 @@ window.Chart = function(container) {
         .attr('stroke-dasharray', totalLength + ' ' + totalLength)
         .attr('stroke-dashoffset', totalLength)
         .transition()
-          .duration(750)
+          .duration(charts.animate ? 750 : 0)
           .ease('cubic')
           .attr('stroke-dashoffset', 0);
 
@@ -3166,7 +3333,7 @@ window.Chart = function(container) {
           // Add animation
           lineGroups.selectAll('circle')
             .attr('cy', function (d) { return yScale(d.value.y); })
-            .transition().duration(750).ease('cubic')
+            .transition().duration(charts.animate ? 750 : 0).ease('cubic')
             .attr('r', function (d) { return zScale(d.value.z); });
         }
       }
@@ -3181,6 +3348,64 @@ window.Chart = function(container) {
       charts.addLegend(series);
     }
     charts.appendTooltip();
+
+    charts.setSelected = function (o, isToggle) {
+      var selected = 0,
+        equals = window.Soho.utils.equals,
+        selector, selectorData, elem,
+
+        setSelected = function(d, i, d2, i2) {
+          if (d2) {
+            elem = svg.select('[data-group-id="'+ i +'"]')
+                      .select('.dot:nth-child('+ (i2+2) +')');
+            if ((typeof o.groupIndex === 'number' &&
+                  typeof o.fieldName !== 'undefined' &&
+                    typeof o.fieldValue !== 'undefined' &&
+                      o.groupIndex === i &&
+                        o.fieldValue === d2[o.fieldName]) ||
+                (typeof o.index !== 'undefined' &&
+                  typeof o.groupIndex === 'number' &&
+                    o.groupIndex === i && o.index === i2) ||
+                (o.elem && $(elem.node()).is(o.elem)) ||
+                (o.data && equals(o.data, d2))) {
+              selected++;
+              selectorData = d2;
+              selector = svg.select('[data-group-id="'+ i +'"]');
+            }
+          }
+          else {
+            elem = svg.select('[data-group-id="'+ i +'"]');
+            if ((typeof o.groupName !== 'undefined' &&
+                  typeof o.groupValue !== 'undefined' &&
+                    o.groupValue === d[o.groupName]) ||
+                (typeof o.groupIndex !== 'undefined' &&
+                  o.groupIndex === i) ||
+                (o.elem && $(elem.node()).is(o.elem)) ||
+                (o.data && equals(o.data, d))) {
+              selected++;
+              selectorData = d;
+              selector = elem;
+            }
+          }
+        };
+
+      dataset.forEach(function(d, i) {
+        if (selected < 1 && d && d.data) {
+          d.data.forEach(function(d2, i2) {
+            if (selected < 1 && d2) {
+              setSelected(d, i, d2, i2);
+            }
+          });
+          if (selected < 1) {
+            setSelected(d, i);
+          }
+        }
+      });
+
+      if (selected > 0 && (isToggle || !selector.classed('is-selected'))) {
+        charts.selectElement(selector, svg.selectAll('.line-group'), selectorData);
+      }
+    };
 
     // Set initial selected
     (function () {
@@ -3251,7 +3476,7 @@ window.Chart = function(container) {
     }
 
     for (var i = 0; i < dataset[0].data.length; i++) {
-      var duration = 600,
+      var duration = charts.animate ? 600 : 0,
           barHeight = 20,
           rowData = dataset[0].data[i],
           ranges = rowData.ranges.slice().sort(d3.descending),
@@ -3657,7 +3882,30 @@ window.Chart = function(container) {
       };
 
     // Render
-    var html = {body: $('<div class="total bar" />')};
+    var html = {body: $('<div class="total bar" />')},
+      specColor = {};
+
+    if (dataset.info && !isUndefined(dataset.info.color)) {
+      if (dataset.info.color.indexOf('#') === 0) {
+        specColor.info = true;
+      }
+    }
+    if (dataset.completed && !isUndefined(dataset.completed.color)) {
+      if (dataset.completed.color.indexOf('#') === 0) {
+        specColor.completed = true;
+      }
+    }
+    if (dataset.remaining && !isUndefined(dataset.remaining.color)) {
+      if (dataset.remaining.color.indexOf('#') === 0) {
+        specColor.remaining = true;
+      }
+    }
+    if (dataset.targetline && !isUndefined(dataset.targetline.color)) {
+      if (dataset.targetline.color.indexOf('#') === 0) {
+        specColor.targetline = true;
+      }
+    }
+
     if (isTarget || isAchievment) {
       var difference = {};
       html.body.addClass('chart-completion-target' + (isAchievment ? ' chart-targeted-achievement' : ''));
@@ -3673,7 +3921,7 @@ window.Chart = function(container) {
       html.label = ''+
       '<span class="label">'+
         '<span class="name">'+
-        (dataset.completed.color && dataset.completed.color === 'error' ? '<svg class="icon icon-error" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-error"></use></svg>' : '' ) +
+        (dataset.completed.color && dataset.completed.color === 'error' ? $.createIcon({icon:'error', classes:'icon-error'}) : '' ) +
         fixUndefined(dataset.name.text) + '</span>'+
         '<span class="l-pull-right total value">'+ totalText +'</span>'+
       '</span>';
@@ -3681,26 +3929,34 @@ window.Chart = function(container) {
     else {
       html.body.addClass('chart-completion');
       html.label = ''+
-      '<b class="label name ">'+ fixUndefined(dataset.name.text) +'</b>'+
-      '<b class="label info '+ (dataset.info.color ?
-        fixUndefined(dataset.info.color) :
-          fixUndefined(dataset.completed.color) +' colored') +'">'+
-        '<span class="value">'+
+      '<b class="label name">'+ fixUndefined(dataset.name.text) +'</b>'+
+      '<b class="label info'+ (dataset.info.color && !specColor.info ?
+        ' '+ fixUndefined(dataset.info.color) :
+          (!specColor.completed ? ' '+ fixUndefined(dataset.completed.color) : '') +' colored') +'">'+
+        '<span class="value'+ (dataset.info.color && !specColor.info ?
+          ' '+ fixUndefined(dataset.info.color) :
+            (!specColor.completed ? ' '+ fixUndefined(dataset.completed.color) : '')) +'"'+ (dataset.info.color && specColor.info ?
+              ' style="color:'+ (fixUndefined(dataset.info.color) +';"') :
+                (specColor.completed ? ' style="color:'+ (fixUndefined(dataset.completed.color) +';"') : '')) +'>'+
         (dataset.info && !isUndefined(dataset.info.value) ? fixUndefined(dataset.info.value) :
           setFormat(dataset.completed)) +
         '</span> '+
-        '<span class="text">'+ fixUndefined(dataset.info.text) +'</span>'+
+        '<span class="text'+ (dataset.info.color && !specColor.info ?
+          ' '+ fixUndefined(dataset.info.color) :
+            (!specColor.completed ? ' '+ fixUndefined(dataset.completed.color) : '')) +'"'+ (dataset.info.color && specColor.info ?
+              ' style="color:'+ (fixUndefined(dataset.info.color) +';"') :
+                (specColor.completed ? ' style="color:'+ (fixUndefined(dataset.completed.color) +';"') : '')) +'>'+ fixUndefined(dataset.info.text) +'</span>'+
       '</b>';
     }
 
     if (dataset.remaining) {
       html.remaining = ''+
-      '<div class="target remaining bar '+ fixUndefined(dataset.remaining.color) +'">'+
+      '<div class="target remaining bar'+ (!specColor.remaining ? ' '+ fixUndefined(dataset.remaining.color) : '') +'"'+ (specColor.remaining ? (' style="color:'+ dataset.remaining.color +';background-color:'+ dataset.remaining.color +';"') : '') +'">'+
       (isAchievment ? '' : '<span aria-hidden="true"'+ (!isTarget && !isAchievment ? ' class="audible"' : '') +'>'+
-          '<span class="value">'+
+          '<span class="value'+ (!specColor.remaining ? ' '+ fixUndefined(dataset.remaining.color) : '') +'"'+ (specColor.remaining ? (' style="color:'+ dataset.remaining.color +';"') : '') +'">'+
             setFormat(dataset.remaining) +
           '</span><br />'+
-          '<span class="text">'+
+          '<span class="text'+ (!specColor.remaining ? ' '+ fixUndefined(dataset.remaining.color) : '') +'"'+ (specColor.remaining ? (' style="color:'+ dataset.remaining.color +';"') : '') +'">'+
             fixUndefined(dataset.remaining.text) +
           '</span>'+
         '</span>') +
@@ -3711,9 +3967,9 @@ window.Chart = function(container) {
 
     if (dataset.completed && isAchievment) {
       html.completed = ''+
-      '<div class="completed bar '+ fixUndefined(dataset.completed.color) +'"></div>'+
+      '<div class="completed bar'+ (!specColor.completed ? ' '+ fixUndefined(dataset.completed.color) : '') +'"'+ (specColor.completed ? (' style="color:'+ dataset.completed.color +';background-color:'+ dataset.completed.color +';"') : '') +'"></div>'+
         '<span class="completed-label" aria-hidden="true"'+ (!isTarget && !isAchievment ? ' class="audible"' : '') +'>'+
-          '<span class="text">'+
+          '<span class="text'+ (!specColor.completed ? ' '+ fixUndefined(dataset.completed.color) : '') +'"'+ (specColor.completed ? (' style="color:'+ dataset.completed.color +';"') : '') +'">'+
             fixUndefined(dataset.completed.text) +
           '</span>'+
         '</span>';
@@ -3721,10 +3977,10 @@ window.Chart = function(container) {
 
     if (dataset.completed && !isAchievment) {
       html.completed = ''+
-      '<div class="completed bar '+ fixUndefined(dataset.completed.color) +'">'+
+      '<div class="completed bar'+ (!specColor.completed ? ' '+ fixUndefined(dataset.completed.color) : '') +'"'+ (specColor.completed ? (' style="color:'+ dataset.completed.color +';background-color:'+ dataset.completed.color +';"') : '') +'>'+
         '<span aria-hidden="true"'+ (!isTarget && !isAchievment ? ' class="audible"' : '') +'>'+
-          '<span class="value">'+ setFormat(dataset.completed) + '</span><br />'+
-          '<span class="text">'+
+          '<span class="value'+ (!specColor.completed ? ' '+ fixUndefined(dataset.completed.color) : '') +'"'+ (specColor.completed ? (' style="color:'+ dataset.completed.color +';"') : '') +'">'+ setFormat(dataset.completed) +'</span><br />'+
+          '<span class="text'+ (!specColor.completed ? ' '+ fixUndefined(dataset.completed.color) : '') +'"'+ (specColor.completed ? (' style="color:'+ dataset.completed.color +';"') : '') +'">'+
             fixUndefined(dataset.completed.text) +
           '</span>'+
         '</span></div>';
@@ -3732,12 +3988,12 @@ window.Chart = function(container) {
 
     if (dataset.targetline) {
       html.targetline = ''+
-      '<div class="target-line targetline bar">'+
+      '<div class="target-line targetline bar'+ (!specColor.targetline ? ' '+ fixUndefined(dataset.targetline.color) : '') +'"'+ (specColor.targetline ? (' style="color:'+ dataset.targetline.color +';background-color:'+ dataset.targetline.color +';"') : '') +'">'+
         '<span aria-hidden="true"'+ (!isTarget && !isAchievment ? ' class="audible"' : '') +'>'+
-          '<span class="value">'+
+          '<span class="value'+ (!specColor.targetline ? ' '+ fixUndefined(dataset.targetline.color) : '') +'"'+ (specColor.targetline ? (' style="color:'+ dataset.targetline.color +';"') : '') +'">'+
             setFormat(dataset.targetline) +
             '</span><br />'+
-            '<span class="text">'+
+            '<span class="text'+ (!specColor.targetline ? ' '+ fixUndefined(dataset.targetline.color) : '') +'"'+ (specColor.targetline ? (' style="color:'+ dataset.targetline.color +';"') : '') +'">'+
               fixUndefined(dataset.targetline.text) +
             '</span>'+
         '</span>'+
@@ -4004,9 +4260,22 @@ window.Chart = function(container) {
   this.initChartType = function (options) {
     //default
     this.options = options;
+    this.animate = true;
     this.redrawOnResize = true;
     this.isRTL = Locale.isRTL();
     this.isIE = $('html').hasClass('ie');
+
+    /**
+    * Set Animation Type
+    * @param {Boolean} animate  &nbsp;-&nbsp; true|false - will do or not do the animation.
+    * @param {String} animate  &nbsp;-&nbsp; 'initial' will do only first time the animation.
+    */
+    if (options.animate !== undefined) {
+      this.animate = (options.animate === 'initial') ?
+        (this._animateIndex === 0) :
+        (!(options.animate === false || options.animate === 'false'));
+      this._animateIndex++;
+    }
 
     if (options.redrawOnResize !== undefined) {
       this.redrawOnResize = options.redrawOnResize;
@@ -4112,6 +4381,7 @@ $.fn.chart = function(options) {
     chartInst = new Chart(this, options);
     instance = $.data(this, 'chart', chartInst);
     instance.settings = options;
+    instance._animateIndex = 0;
     instance.setSelected = function() {};
     instance.toggleSelected = function(o) {
       this.setSelected(o, true);
