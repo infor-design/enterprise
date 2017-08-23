@@ -82,6 +82,10 @@
           this.element.parent().find('label').first().attr('for', orgId);
         }
 
+        if (Soho.env.os.name === 'ios' || Soho.env.os.name === 'android') {
+          this.settings.noSearch = true;
+        }
+
         // convert <select> tag's size css classes for the pseudo element
         var elemClassList = this.element[0].classList;
         if (elemClassList.length === 0) {
