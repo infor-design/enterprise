@@ -34,6 +34,7 @@ A component to support date entry.
     'isEnable' : false
     }`
 -   `showMonthYearPicker` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true the month and year will render as dropdowns.
+-   `hideDays` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true the days portion of the calendar will be hidden. Usefull for Month/Year only formats.
 -   `customValidation` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true the internal validation is disabled.
 -   `advanceMonths` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  The number of months in each direction to show in the dropdown for months (when initially opening)
 -   `showLegend` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true a legend is show to associate dates.

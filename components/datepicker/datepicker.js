@@ -47,6 +47,7 @@
           showLegend: false,
           customValidation: false,
           showMonthYearPicker: false,
+          hideDays: false,
           advanceMonths: 5,
           legend: [
             //Legend Build up example
@@ -74,6 +75,7 @@
       'isEnable' : false
     }`
     * @param {Boolean} showMonthYearPicker  &nbsp;-&nbsp; If true the month and year will render as dropdowns.
+    * @param {Boolean} hideDays  &nbsp;-&nbsp; If true the days portion of the calendar will be hidden. Usefull for Month/Year only formats.
     * @param {Boolean} customValidation  &nbsp;-&nbsp; If true the internal validation is disabled.
     * @param {Boolean} advanceMonths  &nbsp;-&nbsp; The number of months in each direction to show in the dropdown for months (when initially opening)
     * @param {Boolean} showLegend  &nbsp;-&nbsp; If true a legend is show to associate dates.
@@ -129,9 +131,9 @@
 
             //Arrow Down: select same day of the week in the next week
             if (key === 40) {
-                handled = true;
-                self.currentDate.setDate(self.currentDate.getDate() + 7);
-                self.insertDate(self.currentDate);
+              handled = true;
+              self.currentDate.setDate(self.currentDate.getDate() + 7);
+              self.insertDate(self.currentDate);
             }
 
             //Arrow Up: select same day of the week in the previous week
@@ -231,12 +233,11 @@
 
           });
 
-          elem.off('keydown.datepicker-tab').on('keydown.datepicker-tab', 'td, input, button', function (e) {
+          elem.off('keydown.datepicker-tab').on('keydown.datepicker-tab', 'td, input, div.dropdown, button', function (e) {
             var key = e.keyCode || e.charCode || 0;
 
             // Tab closes Date Picker and goes to next field on the modal
             if (key === 9) {
-
               self.containFocus(e);
               e.stopPropagation();
               e.preventDefault();
@@ -315,7 +316,10 @@
 
       },
 
-      // Focus the next prev focusable element on the form
+      /**
+       * Focus the next prev focusable element on the popup
+       * @private
+       */
       containFocus: function (e) {
         var reverse = e.shiftKey;
 
@@ -327,7 +331,16 @@
           ((index+1) >= focusables.length ? 0 : (index+1)) :
           ((index-1) < 0 ? focusables.length : (index-1));
 
-        focusables.eq(index).focus();
+        var elem = focusables.eq(index);
+        elem.focus();
+
+        if (elem.is('td')) {
+          elem.addClass('is-selected');
+          this.currentDate.setDate(elem.text());
+          this.currentDate.setMonth(this.calendar.find('.month').attr('data-month'));
+          this.insertDate(this.currentDate);
+        }
+
       },
 
       //Parse the Date Format Options
@@ -456,6 +469,11 @@
         this.timepickerContainer = $('<div class="datepicker-time-container"></div>');
         this.footer = $('<div class="popup-footer"> <button type="button" class="cancel btn-tertiary">'+ Locale.translate('Clear') +'</button> <button type="button" class="is-today btn-tertiary">'+Locale.translate('Today')+'</button> </div>');
 
+        if (this.settings.hideDays) {
+          this.table = '';
+          this.footer = $('<div class="popup-footer"> <button type="button" class="select-month btn-tertiary">'+ Locale.translate('Select') +'</button></div>');
+        }
+
         // Timepicker options
         if (this.settings.showTime) {
           if (this.settings.timeFormat === undefined) {
@@ -480,7 +498,7 @@
 
         }
 
-        this.calendar = $('<div class="calendar'+ (this.settings.showTime ? ' is-timepicker' : '') +'"></div')
+        this.calendar = $('<div class="calendar'+ (this.settings.showTime ? ' is-timepicker' : '') + (this.settings.hideDays ? ' is-monthyear' : '') +'"></div')
           .append(
             this.header,
             this.table,
@@ -642,6 +660,27 @@
           if (btn.hasClass('cancel')) {
             self.element.val('').trigger('change').trigger('input');
             self.currentDate = null;
+            self.closeCalendar();
+          }
+
+          if (btn.hasClass('select-month')) {
+            var year, month;
+            year = parseInt(self.header.find('.year select').val());
+            month = parseInt(self.header.find('.month select').val());
+
+            self.currentDate = new Date(year, month, 1);
+
+            if (self.isIslamic) {
+              self.currentDateIslamic[0] = year;
+              self.currentDateIslamic[1] = month;
+              self.currentDateIslamic[2] = 1;
+              self.currentYear = self.currentDateIslamic[0];
+              self.currentMonth = self.currentDateIslamic[1];
+              self.currentDay = self.currentDateIslamic[2];
+              self.currentDate = self.conversions.toGregorian(self.currentDateIslamic[0], self.currentDateIslamic[1], self.currentDateIslamic[2]);
+            }
+
+            self.insertDate(self.isIslamic ? self.currentDateIslamic : self.currentDate);
             self.closeCalendar();
           }
 
@@ -853,6 +892,11 @@
           return;
         }
         this.activeTabindex(this.calendar.find('.is-selected'), true);
+
+        if (this.settings.hideDays) {
+          this.calendar.find('div.dropdown:first').focus();
+        }
+
       },
 
       // Update the calendar to show the month (month is zero based)

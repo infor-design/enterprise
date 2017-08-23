@@ -464,6 +464,7 @@
           }).on('hide.timepicker', function() {
             self.element.focus();
           });
+
         }
 
         // Make adjustments to the popup HTML specific to the timepicker
@@ -490,11 +491,46 @@
         }
 
         ui.find('div.dropdown').first().focus();
-        ui.find('.set-time').off('click.timepicker').onTouchClick('timepicker').on('click.timepicker', function(e) {
+        ui.find('.set-time').off('click.timepicker').on('click.timepicker', function(e) {
           e.preventDefault();
           self.setTimeOnField();
           self.closeTimePopup();
         });
+
+        // Handle Tabbing on the dialog
+        if (!this.settings.parentElement) {
+
+          ui.on('keydown.timepicker', 'button, div.dropdown', function (e) {
+            var key = e.keyCode || e.charCode || 0;
+
+            if (key === 9) {
+              self.containFocus(e);
+              e.stopPropagation();
+              e.preventDefault();
+              return false;
+            }
+          });
+
+        }
+
+      },
+
+      /**
+       * Focus the next prev focusable element on the popup
+       * @private
+       */
+      containFocus: function (e) {
+        var reverse = e.shiftKey;
+
+        // Set focus on (opt: next|prev) focusable element
+        var focusables = this.popup.find(':focusable'),
+          index = focusables.index($(':focus'));
+
+        index = (!reverse) ?
+          ((index+1) >= focusables.length ? 0 : (index+1)) :
+          ((index-1) < 0 ? focusables.length : (index-1));
+
+        focusables.eq(index).focus();
       },
 
       /**

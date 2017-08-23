@@ -16,6 +16,7 @@
 12. Islamic Umalqura Calendar [View Example]( ../components/datepicker/example-umalqura.html?locale=ar-SA)
 13. Customizing Validation [View Example]( ../components/datepicker/example-custom-validation.html)
 13. Month/Year Picker [View Example]( ../components/datepicker/example-month-year-picker.html)
+14. Month/Year Only Selection [View Example]( ../components/datepicker/example-month-year-format.html)
 
 {{api-details}}
 

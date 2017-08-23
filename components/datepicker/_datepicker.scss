@@ -104,6 +104,33 @@
   vertical-align: middle;
   width: 100%;
 
+  // Hide Days Option
+  &.is-monthyear {
+    min-height: 0;
+
+    .calendar-header {
+      border-bottom: 0;
+      margin-top: 7px;
+
+      button.prev {
+        right: 35px;
+      }
+
+      button.next {
+        right: 4px;
+      }
+
+    }
+
+    .popup-footer {
+      margin-top: 6px;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+
   tr {
     text-align: center;
   }
