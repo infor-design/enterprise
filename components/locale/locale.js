@@ -117,6 +117,7 @@
       if (locale === 'in-ID') {
         locale = 'id-ID';
       }
+
       if (locale && !this.cultures[locale] && this.currentLocale.name !== locale) {
         this.setCurrentLocale(locale);
 
@@ -131,7 +132,7 @@
           self.setCurrentLocale(locale, self.cultures[locale]);
           self.addCulture(locale, self.currentLocale.data);
 
-          if (locale && locale === 'en-US') {
+          if (locale && (locale === 'en-US' || self.cultures['en-US'])) {
             self.dff.resolve(self.currentLocale.name);
           }
         });
