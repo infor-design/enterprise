@@ -14,8 +14,8 @@
   <div class="six columns">
 
     <div class="field">
-      <label for="american-dollars">American Dollars</label>
-      <input id="american-dollars" class="new-mask" data-options='{ "pattern": "#,###,###.00", "process": "number", "patternOptions": { "allowDecimal": true, "integerLimit": 7, "prefix" : "$" } }' />
+      <label for="dollar-american">Dollar (American)</label>
+      <input id="dollar-american" class="new-mask" data-options='{ "pattern": "#,###,###.00", "process": "number", "patternOptions": { "allowDecimal": true, "integerLimit": 7, "prefix" : "$" } }' />
     </div>
 
     <div class="field">
@@ -27,6 +27,27 @@
       <label for="euro-germany">Euro (Germany)</label>
       <input id="euro-germany" class="new-mask" data-options='{ "pattern": "#.###.###,00", "process": "number", "patternOptions": { "allowDecimal": true, "integerLimit": 7, "suffix" : " €", "symbols": { "decimal": ",", "currency": "€", "thousands": "." } } }' />
     </div>
+
+    <div class="field">
+      <label for="franc-france">Franc (Switzerland/France)</label>
+      <input id="franc-france" class="new-mask" data-init="false" />
+    </div>
+    <script type="text/javascript">
+      $('#franc-france').mask({
+        pattern: "#'###'###,00",
+        process: "number",
+        patternOptions: {
+          allowDecimal: true,
+          integerLimit: 7,
+          prefix: "fr. ",
+          symbols: {
+            currency: "fr. ",
+            thousands: "'",
+            decimal: ","
+          }
+        }
+      });
+    </script>
 
   </div>
 </div>

@@ -82,6 +82,7 @@
             break;
           }
           case 'date': {
+            this.settings.pattern = Soho.masks.shortDateMask;
             if (this.settings.autocorrect === true) {
               this.settings.pipe = window.Soho.masks.autocorrectedDatePipe;
             }
@@ -324,7 +325,10 @@
 
           // The new masking algorithm requires an "integerLimit" defined to function.
           // This grabs the number of items currently inside this part of the mask, and sets it.
-          this.settings.patternOptions.integerLimit = this.settings.pattern.split('.')[0].replace(/[^#0]/g, '').length;
+          var decimal = this.settings.patternOptions && this.settings.patternOptions.symbols && typeof this.settings.patternOptions.symbols.decimal === 'string' ?
+            this.settings.patternOptions.symbols.decimal : '.';
+
+          this.settings.patternOptions.integerLimit = this.settings.pattern.split(decimal)[0].replace(/[^#0]/g, '').length;
         }
       }
 

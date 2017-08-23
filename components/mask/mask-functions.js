@@ -47,6 +47,7 @@ function addThousandsSeparator(n, thousands) {
  * Soho Number Mask Function
  * @param {String} rawValue
  * @param {Object} options
+ * @returns {Array}
  */
 window.Soho.masks.numberMask = function sohoNumberMask(rawValue, options) {
 
@@ -164,6 +165,77 @@ window.Soho.masks.numberMask = function sohoNumberMask(rawValue, options) {
   numberMask.instanceOf = 'createNumberMask';
 
   return numberMask(rawValue);
+};
+
+/**
+ * Default Date Mask Options
+ */
+var DEFAULT_DATE_MASK_OPTIONS = {
+  format: 'M/d/yyyy',
+  symbols: {
+    separator: '/'
+  }
+};
+
+/**
+ * Mask function that properly handles short dates
+ * @param {String} rawValue
+ * @param {Object} options
+ * @returns {Array}
+ */
+window.Soho.masks.shortDateMask = function shortDateMask(rawValue, options) {
+  options = Soho.utils.extend({}, DEFAULT_DATE_MASK_OPTIONS, options);
+
+  var mask = [],
+    digitRegex = Soho.masks.DIGITS_REGEX,
+    rawValueArr = rawValue.split(options.symbols.separator),
+    dateFormatArray = options.format.split(/[^dMy]+/),
+    dateFormatSections = dateFormatArray.length,
+    maxValue = {'d': 31, 'M': 12, 'yy': 99, 'yyyy': 9999};
+
+  dateFormatArray.forEach(function(format, i) {
+    var additionalChars = [],
+      maxValueForPart = maxValue[format],
+      maxFirstDigit = parseInt(maxValue[format].toString().substr(0, 1), 10);
+
+    function getDigitsForPart(part) {
+      var size = part.toString().length,
+        arr = [];
+
+      while (size > 0) {
+        arr.push(digitRegex);
+        size = size - 1;
+      }
+      return arr;
+    }
+
+    // If we don't already have a value here, simply push the longest-possible value
+    if (!rawValueArr[i]) {
+      additionalChars = getDigitsForPart(maxValueForPart);
+    } else {
+
+      // Check the rawValue's content.  If the "maxFirstDigit" for this section
+      // is less than the provided digit's value, cut off the section and make this a "single digit"
+      // section, even though multiple digits are normally allowed.
+      var rawValueFirstDigit = parseInt(rawValueArr[i].toString().substr(0, 1), 10);
+      if (rawValueFirstDigit > maxFirstDigit) {
+        additionalChars.push(digitRegex);
+      } else {
+        additionalChars = getDigitsForPart(maxValueForPart);
+      }
+
+    }
+
+    // Add to the mask
+    mask = mask.concat(additionalChars);
+
+    // Add a section separator if we have another section to go.
+    if (dateFormatSections > (i + 1)) {
+      mask.push(options.symbols.separator);
+    }
+  });
+
+  return mask;
 };
 
 

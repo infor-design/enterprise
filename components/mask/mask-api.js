@@ -139,7 +139,7 @@ SohoMaskAPI.prototype = {
     try {
       processResult = this._conformToMask(rawValue, providedMask, opts);
     } catch (e) {
-      console.error('Couldn\'t complete masking process: "'+ e.message +'"');
+      //console.error('Couldn\'t complete masking process: "'+ e.message +'"');
       return processResult;
     }
 
@@ -151,7 +151,7 @@ SohoMaskAPI.prototype = {
       try {
         pipeResult = opts.pipe(processResult, opts);
       } catch (e) {
-        console.error('Couldn\'t complete mask\'s pipe function: "'+ e.message +'"');
+        //console.error('Couldn\'t complete mask\'s pipe function: "'+ e.message +'"');
         pipeResult = false;
       }
 
