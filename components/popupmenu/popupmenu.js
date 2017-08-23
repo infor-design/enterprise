@@ -26,6 +26,7 @@
         beforeOpen: null,
         ariaListbox: false,
         eventObj: undefined,
+        returnFocus: true,
         placementOpts: {
           containerOffsetX: 10,
           containerOffsetY: 10,
@@ -49,6 +50,7 @@
     * @param {Boolean} attachToBody  &nbsp;-&nbsp; If true the menu will be moved out to the body. To be used in certin overflow situations.
     * @param {String} ariaListbox  &nbsp;-&nbsp;  Switches aria to use listbox construct instead of menu construct (internal)
     * @param {String} eventObj  &nbsp;-&nbsp; Can pass in the event object so you can do a right click with immediate
+    * @param {String} returnFocus  &nbsp;-&nbsp; If set to false, focus will not be returned to the calling element. It usually should be for accessibility purposes.
     * @param {Object} placementOpts  &nbsp;-&nbsp; Gets passed to this control's Place behavior
     * @param {Object} offset  &nbsp;-&nbsp; Can tweak the menu position in the x and y direction. Takes an object of form: `{x: 0, y: 0}`
     *
@@ -747,6 +749,7 @@
         }
         */
         strategies.push('shrink-y');
+        opts.strategies = strategies;
 
         // If right-click or immediate (with an incoming event object), use coordinates from the event
         if ((this.settings.trigger === 'immediate' && this.settings.eventObj) || this.settings.trigger === 'rightClick') {
@@ -766,8 +769,8 @@
           opts.y = this.settings.offset.y || 0;
           opts.parent = this.element;
           opts.placement = 'bottom';
+          opts.strategies.push('nudge');
         }
-        opts.strategies = strategies;
 
         //=======================================================
         // BEGIN Temporary stuff until we sort out passing these settings from the controls that utilize them
@@ -1297,7 +1300,9 @@
           return;
         }
 
-        self.element.removeClass('hide-focus').focus();
+        if (this.settings.returnFocus) {
+          self.element.removeClass('hide-focus').focus();
+        }
       },
 
       teardown: function() {

@@ -369,6 +369,7 @@
 html[dir='rtl'] {
   .popover,
   .tooltip {
+    left: 9999px;
     text-align: right;
   }
 

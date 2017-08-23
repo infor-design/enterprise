@@ -2100,7 +2100,7 @@ $.fn.datagrid = function(options) {
       });
 
       this.headerRow.find('th').each(function () {
-        var col = self.columnById($(this).attr('data-column-id')),
+        var col = self.columnById($(this).attr('data-column-id'))[0],
           elem = $(this);
 
         elem.find('select.dropdown').dropdown(col.editorOptions).on('selected.datagrid', function () {
@@ -2117,6 +2117,11 @@ $.fn.datagrid = function(options) {
 
         elem.find('.datepicker').datepicker(col.editorOptions ? col.editorOptions : {dateFormat: col.dateFormat});
         elem.find('.timepicker').timepicker(col.editorOptions ? col.editorOptions : {timeFormat: col.timeFormat});
+
+        // Attach Mask
+        if (col.mask) {
+          elem.find('input').mask({pattern: col.mask, mode: col.maskMode});
+        }
       });
 
       self.filterRowRendered = true;

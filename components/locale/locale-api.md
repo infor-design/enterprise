@@ -46,6 +46,7 @@ Check if the date is valid using the current locale to do so.
 
 **Parameters**
 
+-   `date`  
 -   `value` **[Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)**  -  The date to show in the current locale.
 
 ### parseDate
