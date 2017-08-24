@@ -140,7 +140,12 @@
         this.addAria();
 
         // Add Mask and Validation plugins for time
-        this.mask();
+        this.mask({
+          process: 'date',
+          patternOptions: {
+            format: this.settings.timeFormat
+          }
+        });
 
         return this;
       },

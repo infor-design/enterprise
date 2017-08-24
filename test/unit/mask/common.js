@@ -68,8 +68,6 @@ define([
       expect(result).to.exist;
       expect(result).to.be.a('array');
       expect(result).to.have.lengthOf(14);
-
-      //
     },
 
     // Placeholder masks are used internally to figure out placement positions, and can be
@@ -94,8 +92,6 @@ define([
       settings.pattern = [ /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/ ]
       var text = 'x0x1x2x3x4x5x6x7x8x9x0x1x2x3x4x5x6x';
       var api = new Soho.Mask(settings);
-
-      // TODO: Make "opts" (different than settings?)
       var opts = {
         selection: {
           start: 0
@@ -110,7 +106,6 @@ define([
     },
 
 
-    // Checks a complex number mask with thousands separators and decimal places (and caret traps)
     'should process numbers': function() {
       var settings = DEFAULT_SETTINGS;
       settings.process = 'number';
@@ -169,6 +164,25 @@ define([
 
 
     'should process short dates': function() {
+      var settings = DEFAULT_SETTINGS;
+      settings.process = 'date';
+      settings.pattern = Soho.masks.shortDateMask;
+      var api = new Soho.Mask(settings);
+
+      var textValue = '1111111111';
+      var opts = {
+        selection: {
+          start: 0
+        },
+        patternOptions: {
+          format: 'M/d/yyyy',
+          symbols: {
+            separator: '/'
+          }
+        }
+      };
+      var result = api.process(textValue, opts);
+
       expect(false).to.be.false;
     },
 
@@ -323,13 +337,16 @@ define([
       expect(inputComponent.settings).to.exist;
       expect(inputComponent.settings).to.be.a('object');
       expect(inputComponent.settings).to.have.property('process', 'date');
+
+      // TODO: Check deprecated time settings
+
     },
 
     //===============================================
     // Basic Functionality
     //===============================================
 
-    // TODO: Test `_getSafeRawValue()_`
+    // Test `_getSafeRawValue()_`
     'can safely get a string value from an input field': function() {
       expect(TEST_COMPONENT_API._getSafeRawValue('straight up text')).to.equal('straight up text');
       expect(TEST_COMPONENT_API._getSafeRawValue(300)).to.equal('300');

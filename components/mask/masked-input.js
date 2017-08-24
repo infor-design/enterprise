@@ -82,10 +82,17 @@
             break;
           }
           case 'date': {
-            this.settings.pattern = Soho.masks.shortDateMask;
-            if (this.settings.autocorrect === true) {
+            // Check for an instance of a Datepicker/Timepicker Component, and grab the date format
+            var datepicker = $(this.element).data('datepicker');
+            if ($.fn.datepicker && $(this.element).data('datepicker')) {
+              this.settings.patternOptions.format = datepicker.settings.format;
+            }
+
+            this.settings.pattern = Soho.masks.dateMask;
+            /*if (this.settings.autocorrect === true) {
               this.settings.pipe = window.Soho.masks.autocorrectedDatePipe;
             }
+            */
             break;
           }
           default: {

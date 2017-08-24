@@ -148,6 +148,7 @@ window.Soho.masks.numberMask = function sohoNumberMask(rawValue, options) {
 
     if (isNegative) {
       // If user is entering a negative number, add a mask placeholder spot to attract the caret to it.
+      // TODO: Allow the negative symbol as the suffix as well (SOHO-3259)
       if (mask.length === prefixLength) {
         mask.push(Soho.masks.DIGITS_REGEX);
       }
@@ -171,10 +172,28 @@ window.Soho.masks.numberMask = function sohoNumberMask(rawValue, options) {
  * Default Date Mask Options
  */
 var DEFAULT_DATE_MASK_OPTIONS = {
+  isDatetime: false,
   format: 'M/d/yyyy',
   symbols: {
     separator: '/'
   }
+};
+
+/**
+ * Maximum Values for various section maps of date strings.
+ */
+var DATE_MAX_VALUES = {
+  'dd': 31,
+  'd': 31,
+  'MM': 12,
+  'M': 12,
+  'yy': 99,
+  'yyyy': 9999,
+  'h': 12,
+  'HH': 24,
+  'mm': 60,
+  'ss': 60,
+  'a': undefined
 };
 
 /**
@@ -191,7 +210,7 @@ window.Soho.masks.shortDateMask = function shortDateMask(rawValue, options) {
     rawValueArr = rawValue.split(options.symbols.separator),
     dateFormatArray = options.format.split(/[^dMy]+/),
     dateFormatSections = dateFormatArray.length,
-    maxValue = {'d': 31, 'M': 12, 'yy': 99, 'yyyy': 9999};
+    maxValue = DATE_MAX_VALUES;
 
   dateFormatArray.forEach(function(format, i) {
     var additionalChars = [],
@@ -213,17 +232,18 @@ window.Soho.masks.shortDateMask = function shortDateMask(rawValue, options) {
     if (!rawValueArr[i]) {
       additionalChars = getDigitsForPart(maxValueForPart);
     } else {
-
       // Check the rawValue's content.  If the "maxFirstDigit" for this section
       // is less than the provided digit's value, cut off the section and make this a "single digit"
       // section, even though multiple digits are normally allowed.
-      var rawValueFirstDigit = parseInt(rawValueArr[i].toString().substr(0, 1), 10);
-      if (rawValueFirstDigit > maxFirstDigit) {
+      // ONLY do this for `d` and `M`, not for `dd` and `MM`
+      var rawValueStr = rawValueArr[i].toString(),
+        rawValueFirstDigit = parseInt(rawValueStr.substr(0, 1), 10);
+
+      if (format.length === 1 && rawValueFirstDigit > maxFirstDigit) {
         additionalChars.push(digitRegex);
       } else {
         additionalChars = getDigitsForPart(maxValueForPart);
       }
-
     }
 
     // Add to the mask
@@ -238,6 +258,97 @@ window.Soho.masks.shortDateMask = function shortDateMask(rawValue, options) {
   return mask;
 };
 
+
+/**
+ * Mask function that takes a custom date-time pattern and only formats the short date.
+ * @param {String} rawValue
+ * @param {Object} options
+ * @returns {Array}
+ */
+window.Soho.masks.dateMask = function dateMask(rawValue, options) {
+  options = Soho.utils.extend({}, DEFAULT_DATE_MASK_OPTIONS, options);
+
+  var mask = [],
+    SHORT_DATE_MARKER = '~',
+    digitRegex = Soho.masks.DIGITS_REGEX,
+    format = options.format.replace(SHORT_DATE_MARKER, ''),
+    formatArray = format.split(/[^dMyHhmsa]+/),
+    maxValue = DATE_MAX_VALUES;
+
+  // Detect the existence of a short date, if applicable.
+  var shortDates = (function(symbols) {
+    var sep = symbols.separator;
+    return [
+      'd' + sep + 'M' + sep + 'yyyy',
+      'dd' + sep + 'M' + sep + 'yyyy',
+      'dd' + sep + 'MM' + sep + 'yyyy',
+      'M' + sep + 'd' + sep + 'yyyy',
+      'MM' + sep + 'd' + sep + 'yyyy',
+      'MM' + sep + 'dd' + sep + 'yyyy',
+      'yyyy' + sep + 'd' + sep + 'M',
+      'yyyy' + sep + 'dd' + sep + 'M',
+      'yyyy' + sep + 'dd' + sep + 'MM',
+      'yyyy' + sep + 'M' + sep + 'd',
+      'yyyy' + sep + 'MM' + sep + 'd',
+      'yyyy' + sep + 'MM' + sep + 'dd'
+    ];
+  })(options.symbols);
+
+  var shortDateMatch, shortDateStartIndex, shortDateMaskResult, nonShortDateParts;
+  for (var i = 0; i < shortDates.length; i++) {
+    shortDateStartIndex = format.indexOf(shortDates[i]);
+    if (shortDateStartIndex !== -1) {
+      shortDateMatch = shortDates[i];
+      break;
+    }
+  }
+
+  if (shortDateMatch) {
+    shortDateMaskResult = Soho.masks.shortDateMask(rawValue.substr(shortDateStartIndex, shortDateMatch.length), {
+      format: shortDateMatch,
+      symbols: options.symbols
+    });
+
+    // Reset everything to account for the removed short date.
+    format = format.replace(shortDateMatch, SHORT_DATE_MARKER);
+    nonShortDateParts = format.split(SHORT_DATE_MARKER);
+    formatArray = format.split(/[^~Hhmsa]+/);
+  }
+
+  formatArray.forEach(function(part, i) {
+    var value = maxValue[part],
+      isShortDate = shortDateMatch && part === SHORT_DATE_MARKER,
+      size;
+
+    if (isShortDate) {
+      // Match the (possibly) pre-existing, rendered short date.
+      mask = mask.concat(shortDateMaskResult);
+    } else if (part === 'a') {
+      // Match the day period
+      mask.push(/[aApP]/, /[Mm]/);
+    } else {
+      size = value.toString().length;
+
+      while(size > 0) {
+        mask.push(digitRegex);
+        size = size - 1;
+      }
+    }
+
+    // If this is not the last part, add whatever literals come after this part, but before the next part.
+    var nextPart = formatArray[i+1];
+    if (nextPart !== undefined) {
+      var thisPartSize = isShortDate ? SHORT_DATE_MARKER.length : part.toString().length,
+        start = format.indexOf(part) + thisPartSize,
+        end = format.indexOf(nextPart),
+        literals = format.substring(start, end).split(Soho.masks.EMPTY_STRING);
+
+      mask = mask.concat(literals);
+    }
+  });
+
+  return mask;
+};
 
 
 /**
