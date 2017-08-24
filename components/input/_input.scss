@@ -111,8 +111,8 @@
   @include font-size(14);
   color: $checkbox-label-color;
   display: inline-block;
-  margin-top: 1px;
   margin-bottom: 0;
+  margin-top: 0;
 }
 
 .field > input,
@@ -135,11 +135,6 @@
     }
   }
 
-  .btn-primary,
-  .btn-secondary {
-    top: 2px;
-  }
-
   > .field {
     vertical-align: baseline;
   }
@@ -147,6 +142,12 @@
   > .field-short {
     margin-right: 10px;
     vertical-align: top;
+  }
+
+  .dropdown-wrapper {
+    margin-bottom: 0;
+    margin-top: -3px;
+    vertical-align: middle;
   }
 }
 
