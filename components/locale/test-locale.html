@@ -14,9 +14,8 @@
 
       setTimeout(function () {
 
-        var dt = Locale.parseDate('000100', 'HHmmss', false);
-        var ft = Locale.formatDate(dt, {pattern: 'HHmmss'});
-			  append(ft);
+
+			  append(Locale.formatNumber(-2.53, {style: 'percent', minimumFractionDigits: 2}));
 
       }, 300);
     </script>
