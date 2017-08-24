@@ -435,8 +435,15 @@ define([
       Locale.set('en-US');
       expect(Locale.formatNumber(12345.129, {style: 'currency'})).to.equal('$12,345.12');
 
+      // Test Overflow SOHO-5487
+      expect(Locale.formatNumber(-2.53, {style: 'percent', minimumFractionDigits: 2})).to.equal('-253.00 %');
+      expect(Locale.formatNumber(-2.53, {style: 'percent'})).to.equal('-253 %');
+
       Locale.set('de-DE');
       expect(Locale.formatNumber(12345.123, {style: 'currency'})).to.equal('12.345,12 €');
+      expect(Locale.formatNumber(-2.53, {style: 'percent', minimumFractionDigits: 2})).to.equal('-253,00 %');
+      expect(Locale.formatNumber(-2.53, {style: 'percent'})).to.equal('-253 %');
+
     },
 
     'should format percent': function() {
