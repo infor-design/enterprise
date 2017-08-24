@@ -1,0 +1,109 @@
+﻿
+<div class="page-container top-padding scrollable" role="main">
+
+<!--This is only needed because it renders first on the server on the first one-->
+{{={{{ }}}=}}
+
+  <script id="swaplist-tmpl" type="text/html">
+      <ul data-swap-handle=".handle">
+        {{#dataset}}
+        {{#text}}
+          <li
+          {{#value}}
+            data-value="{{value}}"
+          {{/value}}
+          {{#selected}}
+            selected="selected"
+          {{/selected}}
+          {{#disabled}}
+            class="is-disabled"
+          {{/disabled}}
+          >
+            <span class="handle" focusable="false" aria-hidden="true" role="presentation">&#8286;</span>
+            <div class="swaplist-item-content">
+              <p>{{text}}</p>
+            </div>
+          </li>
+        {{/text}}
+        {{/dataset}}
+      </ul>
+  </script>
+
+  <div class="row">
+    <div class="columns six">
+
+      <div class="swaplist" data-init="false" id="example-swaplist-1">
+        <div class="card available">
+          <div class="card-header">
+            <h2 class="card-title">Available</h2>
+            <div class="buttons">
+              <button class="btn btn-moveto-selected" type="button">
+                <span class="audible">Select</span>
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use xlink:href="#icon-right-arrow"></use>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="card-content">
+
+            <div class="listview-search">
+              <label class="audible" for="search-available">Search Available</label>
+              <input class="searchfield" placeholder="Search Available" name="searchfield" id="search-available" data-options="{clearable: true}">
+            </div>
+
+            <div class="listview"></div>
+          </div>
+        </div>
+        <div class="card selected">
+          <div class="card-header">
+            <h2 class="card-title">Selected</h2>
+            <div class="buttons">
+              <button class="btn btn-moveto-left" type="button">
+                <span class="audible">Move to left</span>
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use xlink:href="#icon-left-arrow"></use>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="card-content">
+
+            <div class="listview-search">
+              <label class="audible" for="search-selected">Search Selected</label>
+              <input class="searchfield" placeholder="Search Selected" name="searchfield" id="search-selected" data-options="{clearable: true}">
+            </div>
+
+            <div class="listview"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script type="text/javascript">
+  $('body').one('initialized', function () {
+
+    var dataset = [];
+
+    dataset.push({id: 1, value: 'opt-1', text: 'Option A'});
+    dataset.push({id: 2, value: 'opt-2', text: 'Option B'});
+    dataset.push({id: 3, value: 'opt-3', text: 'Option C'});
+    dataset.push({id: 4, value: 'opt-4', text: 'Option D'});
+    dataset.push({id: 5, value: 'opt-5', text: 'Option E', disabled: true});
+    dataset.push({id: 6, value: 'opt-6', text: 'Option F'});
+    dataset.push({id: 7, value: 'opt-7', text: 'Option G', selected: true});
+    dataset.push({id: 8, value: 'opt-8', text: 'Option H', selected: true});
+    dataset.push({id: 9, value: 'opt-9', text: 'Option I'});
+
+    $('#example-swaplist-1').swaplist({
+      available: dataset,
+      searchable: true,
+      template: $('#swaplist-tmpl').html()
+    });
+
+  });
+</script>

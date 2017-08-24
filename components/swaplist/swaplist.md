@@ -2,8 +2,9 @@
 
 ## Configuration options
 
-1. [Main Swaplist Example](../components/swaplist/example-index.html)
-2. [Swaplist with Selected Items](../components/swaplist/example-selected.html)
+1. Main Swaplist Example [View Example](../components/swaplist/example-index.html)
+2. Swaplist with Selected Items [View Example](../components/swaplist/example-selected.html)
+2. Swaplist with Filter/Search [View Example](../components/swaplist/example-search.html)
 
 {{api-details}}
 

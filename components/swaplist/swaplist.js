@@ -19,6 +19,9 @@
     // Settings and Options
     var pluginName = 'swaplist',
         defaults = {
+          // Searchable
+          'searchable': false,
+
           // Datasets
           'available': null,
           'selected': null,
@@ -58,6 +61,7 @@
     * The SwapList Component creates a list of options that can be picked and organized.
     *
     * @class SwapList
+    * @param {Boolean} searchable  &nbsp;-&nbsp; If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
     * @param {Array} available &nbsp;-&nbsp; An array containing items for the available bucket.
     * @param {Array} selected  &nbsp;-&nbsp;  An array containing items for the selected bucket.
     * @param {Array} additional  &nbsp;-&nbsp;  An array containing items for the additional bucket.
@@ -109,6 +113,7 @@
        */
       loadListview: function() {
         var i, l, lv, c,
+          list, options, isSearchable,
           self = this,
           s = self.settings,
           containers = [
@@ -117,14 +122,30 @@
             { dataset: s.additional, class: s.additionalClass }
           ];
 
-        for (i=0,l=containers.length; i<l; i++) {
+        for (i = 0, l = containers.length; i < l; i++) {
           c = containers[i];
           lv = $(c.class +' .listview', self.element);
+          list = lv.data('listview');
+          options = { selectable: 'multiple' };
+          isSearchable = ((s.searchable === true || s.searchable === 'true') && ($(c.class +' .searchfield', self.element).length > 0));
+
+          if (isSearchable) {
+            options.searchable = true;
+          }
+
+          // Remove any previous listview instance
+          if (list) {
+            list.destroy();
+          }
+
+          // Initialize listview
           if (!c.dataset && lv.length && $('li', lv).length) {
-            lv.listview({ selectable: 'multiple' });
+            lv.listview(options);
           }
           else if (lv.length) {
-            lv.listview({ dataset: (c.dataset || []), template: s.template, selectable: 'multiple' });
+            options.template = s.template;
+            options.dataset = c.dataset || [];
+            lv.listview(options);
           }
         }
       },
@@ -218,7 +239,6 @@
             list.select($(this));// Select this item
           });
           this.moveElements(container, this.settings.selectedClass);
-          $(this.settings.selectedClass +' li:last-child', this.element).blur();
         }
       },
 
@@ -260,12 +280,14 @@
 
           $.each(self.selections.items, function(index, val) {
             val = $(val);
-            val.attr({ 'aria-posinset': currentSize + index + 1, 'aria-setsize': size });
+            val.attr({ 'aria-posinset': currentSize + index + 1, 'aria-setsize': size }).find('mark.highlight').contents().unwrap();
             ul.append(val);
-            val.focus();
           });
 
           self.afterUpdate($('.listview', to).data('listview'));
+          $('li:last-child', to).focus()
+            // Fix: not sure why it added selected class and attribute on focus
+            .removeAttr('aria-selected').removeClass('is-selected');
         }
       },
 
@@ -977,6 +999,7 @@
 
           $.each(selections.items, function(index, val) {
             val = $(val);
+            val.find('mark.highlight').contents().unwrap();
             if (currentSize && !$(selections.related).is('ul')) {
               var isLess = (related.index() < selections.draggedIndex),
                 el = isLess ? val : $(selections.items[(selections.items.length-1) - index]),
