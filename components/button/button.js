@@ -146,7 +146,7 @@
             self.animateWithJS(ripple);
           } else {
             var elem = $('svg.ripple-effect', element);
-            elem.attr('class', elem.attr('class') + ' is-animation');
+            elem.addClass('is-animation');
           }
 
           setTimeout(function() {

@@ -3,7 +3,7 @@
 
 ## Configuration Options
 
-1. Simple Number Example [View Example]( ../components/locale/example-index)
+1. Simple Number Example [View Example]( ../components/locale/test-locale)
 
 {{api-details}}
 

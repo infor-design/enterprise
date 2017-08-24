@@ -187,7 +187,15 @@
         });
 
         if (s.showBrowseButton && !s.isDisabled) {
-          var input = self.dropArea.find('.fileupload-adv-browse-lbl input[type="file"]');
+          var label = self.dropArea.find('.fileupload-adv-browse-lbl'),
+            input = label.find('input[type="file"]');
+
+          // Only let open dialog if clicked on link or input
+          label.click(function(e) {
+            if (!$(e.target).is('.hyperlink, input[type="file"]')) {
+              e.preventDefault();
+            }
+          });
 
           input.hideFocus();
           input.on('hidefocusremove.fileuploadadvanced', function (e) {

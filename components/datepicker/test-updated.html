@@ -1,0 +1,31 @@
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <label for="datepicker-updated" class="label">Date Picker</label>
+      <input id="datepicker-updated" data-init="false" class="datepicker" name="datepicker-updated" type="text">
+    </div>
+    <button type="button" class="btn-secondary" id="updated">Call Updated</button>
+  </div>
+</div>
+
+<script>
+    var opts = {dateFormat: 'yyyy-MM-dd'},
+        toggle = false,
+        element = $('#datepicker-updated').datepicker(opts);
+
+    $('#updated').on('click', function () {
+
+      if (toggle) {
+        opts = {dateFormat: 'yyyy-MM-dd'}
+      } else {
+        opts = {dateFormat: 'MM-dd-yyyy'}
+      }
+
+      element.val('').data('datepicker').updated();
+      toggle = !toggle;
+
+    });
+
+</script>

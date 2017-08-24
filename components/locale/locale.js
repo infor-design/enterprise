@@ -110,7 +110,6 @@
     * @param {String} locale  &nbsp;-&nbsp; The locale to fetch and set.
     */
     set: function (locale) {
-
       var self = this;
       this.dff = $.Deferred();
 
@@ -118,6 +117,7 @@
       if (locale === 'in-ID') {
         locale = 'id-ID';
       }
+
       if (locale && !this.cultures[locale] && this.currentLocale.name !== locale) {
         this.setCurrentLocale(locale);
 
@@ -131,7 +131,10 @@
         }).done(function () {
           self.setCurrentLocale(locale, self.cultures[locale]);
           self.addCulture(locale, self.currentLocale.data);
-          self.dff.resolve(self.currentLocale.name);
+
+          if (locale && (locale === 'en-US' || self.cultures['en-US'])) {
+            self.dff.resolve(self.currentLocale.name);
+          }
         });
       }
 
@@ -145,6 +148,7 @@
           }
         }).done(function () {
           self.addCulture(locale, self.currentLocale.data);
+          self.dff.resolve(self.currentLocale.name);
         });
       }
 

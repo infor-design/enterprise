@@ -67,46 +67,6 @@ label.fileupload {
   }
 }
 
-// IE Hack
-.ie9 .fileupload .icon,
-.ie10 .fileupload .icon {
-  background-color: rgba($white, 0);
-}
-
-// Safari Hack
-.is-safari {
-  label.fileupload {
-    position: static;
-  }
-
-  .field-fileupload .icon-dirty {
-    margin-top: 9px;
-  }
-}
-
-//RTL Styles
-html[dir='rtl'] {
-
-  label.fileupload {
-    margin-left: inherit;
-    margin-right: -34px;
-
-    // Make this flow offscreen
-    input[type="file"] {
-      left: auto;
-      right: -1000px;
-    }
-  }
-
-  .field-fileupload {
-    input[type="text"] {
-      padding-left: 40px;
-      padding-right: 10px;
-    }
-  }
-
-}
-
 //Allows fileupload to be readonly without textarea readonly styling
 input.fileupload-background-transparent {
   background-color: transparent;
@@ -118,6 +78,27 @@ input.fileupload-background-transparent {
 //================================================== //
 .fileupload-wrapper {
   min-width: 335px;
+
+  @include respond-to(phone) {
+    min-width: inherit;
+
+    &.standalone {
+      border: 0;
+      padding: 0;
+    }
+
+    .drop-area {
+      text-align: center;
+
+      // scss-lint:disable ImportantRule
+      .icon {
+        display: block;
+        float: none !important;
+        margin: 0 auto !important;
+      }
+      // scss-lint:enable ImportantRule
+    }
+  }
 
   &.standalone {
     padding: 25px 20px;
@@ -213,8 +194,19 @@ input.fileupload-background-transparent {
         }
       }
 
+      .hyperlink {
+        border: 1px solid transparent;
+
+        &:active::after,
+        &:focus::after {
+          border-color: transparent;
+        }
+      }
+
       &.is-focus {
-        border: 1px solid $fileupload-droparea-dd-hover-border-color;
+        .hyperlink {
+          border-color: $fileupload-droparea-dd-hover-border-color;
+        }
       }
 
       .icon {
@@ -405,26 +397,6 @@ input.fileupload-background-transparent {
   em {
     font-style: normal;
   }
-
-  @include respond-to(phone) {
-    min-width: inherit;
-
-    &.standalone {
-      border: 0;
-      padding: 0;
-    }
-
-    .drop-area {
-      text-align: center;
-
-      .icon {
-        display: block;
-        float: none !important;
-        margin: 0 auto !important;
-      }
-    }
-
-  }
 }
 
 @include respond-to(phone) {
@@ -439,4 +411,97 @@ input.fileupload-background-transparent {
   label.fileupload {
     margin-left: -36px;
   }
+}
+
+// OVERWRITES
+//================================================== //
+
+// IE Hack
+.ie9 .fileupload .icon,
+.ie10 .fileupload .icon {
+  background-color: rgba($white, 0);
+}
+
+// Safari Hack
+.is-safari {
+  label.fileupload {
+    position: static;
+  }
+
+  .field-fileupload .icon-dirty {
+    margin-top: 9px;
+  }
+}
+
+// RTL Styles
+html[dir='rtl'] {
+
+  label.fileupload {
+    margin-left: inherit;
+    margin-right: -34px;
+
+    // Make this flow offscreen
+    input[type="file"] {
+      left: auto;
+      right: -1000px;
+    }
+  }
+
+  .field-fileupload {
+    input[type="text"] {
+      padding-left: 40px;
+      padding-right: 10px;
+    }
+  }
+
+  .fileupload-wrapper {
+    .container {
+      &.drop-area {
+        .fileupload-adv-browse-lbl {
+          text-align: center;
+        }
+      }
+
+      &.completed {
+        .file-row,
+        .progress-row {
+          .size {
+            margin-left: 1px;
+            margin-right: inherit;
+          }
+        }
+      }
+
+      .file-row,
+      .progress-row {
+        .progress {
+          margin: 0 33px 7px 0;
+        }
+
+        .size {
+          margin-left: 42px;
+          margin-right: inherit;
+        }
+
+        .status-icon {
+          float: right;
+
+          .btn-icon {
+            left: inherit;
+            right: -1px;
+          }
+
+          .icon {
+            left: inherit;
+            right: 3px;
+          }
+        }
+
+        &.file-row .l-pull-right .action {
+          float: left;
+        }
+      }
+    }
+  }
+
 }

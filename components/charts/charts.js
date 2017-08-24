@@ -3168,6 +3168,16 @@ window.Chart = function(container) {
       .style('text-anchor', 'start');
     }
 
+    if (settings.xAxis.formatText) {
+      svg.selectAll('.x.axis .tick text').each(function(i) {
+        var elem = d3.select(this),
+          text = d3.select(this).text(),
+          markup = settings.xAxis.formatText(text, i);
+
+        elem.html(markup);
+      });
+    }
+
     // Create the line generator
     var line = d3.svg.line()
       .x(function(d, i) {

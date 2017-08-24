@@ -965,6 +965,7 @@
             }
           });
 
+          // in desktop environments, close the list on viewport resize
           if (window.orientation === undefined) {
             $('body').on('resize.popupmenu', function() {
               self.close();

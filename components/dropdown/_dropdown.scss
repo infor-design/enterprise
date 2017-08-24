@@ -404,8 +404,8 @@ div.multiselect {
       }
 
       &.close {
-        right: -2px;
-        top: 3px;
+        right: -6px;
+        top: 0;
         width: 14px;
       }
     }
@@ -482,7 +482,7 @@ input.dropdown.error:focus {
   div.dropdown {
     @include font-size(12);
     margin-bottom: 0;
-    padding: 5px 18px 5px 5px;
+    padding: 5px 21px 5px 5px;
   }
 
   div.dropdown,
@@ -548,8 +548,12 @@ div.dropdown-xs,
     text-indent: 5px;
   }
 
-  li > a {
-    line-height: 25px;
+  li {
+    padding-right: 21px;
+
+    > a {
+      line-height: 25px;
+    }
   }
 
   &.is-ontop {
@@ -564,8 +568,10 @@ div.dropdown-xs,
   }
 
   .trigger .icon {
-    height: 24px;
-    right: -4px;
+    height: 30px;
+    right: 3px;
+    top: -4px;
+    width: 16px;
 
     &.icon.search {
       height: 14px;
@@ -649,7 +655,7 @@ div.dropdown-xs,
     &.dropdown-short {
       input {
         @include font-size(12);
-        padding: 5px 32px 5px 5px;
+        padding: 5px 21px 5px 5px;
       }
     }
   }

@@ -11,6 +11,7 @@
     -   [disable](#disable)
     -   [readonly](#readonly)
     -   [setToday](#settoday)
+    -   [updated](#updated)
     -   [destroy](#destroy)
     -   [handleEvents](#handleevents)
 
@@ -34,7 +35,9 @@ A component to support date entry.
     'isEnable' : false
     }`
 -   `showMonthYearPicker` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true the month and year will render as dropdowns.
+-   `hideDays` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true the days portion of the calendar will be hidden. Usefull for Month/Year only formats.
 -   `customValidation` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true the internal validation is disabled.
+-   `advanceMonths` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  The number of months in each direction to show in the dropdown for months (when initially opening)
 -   `showLegend` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true a legend is show to associate dates.
 -   `legend` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)**  -  Legend Build up for example `[{name: 'Public Holiday', color: '#76B051', dates: []}, {name: 'Weekends', color: '#EFA836', dayOfWeek: []}]`
 
@@ -74,6 +77,12 @@ Set input to readonly.
 ### setToday
 
 Set to todays date in current format.
+
+### updated
+
+Updates the component instance.  Can be used after being passed new settings.
+
+Returns **this** 
 
 ### destroy
 

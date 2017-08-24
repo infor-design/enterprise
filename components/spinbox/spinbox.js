@@ -432,7 +432,7 @@
        * @param {Number|String} newVal
        */
       updateVal: function(newVal) {
-        this.element.val(newVal);
+        this.element.val(newVal).trigger('change');
         this.updateAria(newVal);
         this.element.focus();
       },

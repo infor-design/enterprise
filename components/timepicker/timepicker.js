@@ -23,7 +23,7 @@
           minuteInterval: 5,
           secondInterval: 5,
           mode: 'standard',
-          roundToInterval: false,
+          roundToInterval: true,
           parentElement: null
         },
         settings = $.extend({}, defaults, options);
@@ -36,7 +36,7 @@
     * @param {Number} minuteInterval  &nbsp;-&nbsp; Integer from 1 to 60.  Multiples of this value are displayed as options in the minutes dropdown.
     * @param {Number} secondInterval  &nbsp;-&nbsp; Integer from 1 to 60.
     * @param {String} mode  &nbsp;-&nbsp; can be set to 'standard', 'range',
-    * @param {boolean} roundToInterval  &nbsp;-&nbsp; if `true`, automatically rounds user-entered values from the pickers to their nearest interval.
+    * @param {boolean} roundToInterval  &nbsp;-&nbsp; if `false`, does not automatically round user-entered values from the pickers to their nearest interval.
     * @param {null|jQuery[]} [parentElement] &nbsp;-&nbsp;  if defined as a jQuery-wrapped element, will be used as the target element.
     */
     function TimePicker(element) {
@@ -352,7 +352,7 @@
           hourCounter = is24HourFormat ? 0 : 1,
           maxHourCount = is24HourFormat ? 24 : 13;
 
-        this.hourSelect = $('<select id="timepicker-hours" class="hours dropdown"></select>');
+        this.hourSelect = $('<select id="timepicker-hours" data-options="{\'noSearch\': \'true\'}" class="hours dropdown"></select>');
 
         while(hourCounter < maxHourCount) {
           selected = '';
@@ -368,7 +368,7 @@
 
         // Minutes Picker
         var minuteCounter = 0;
-        this.minuteSelect = $('<select id="timepicker-minutes" class="minutes dropdown"></select>');
+        this.minuteSelect = $('<select id="timepicker-minutes" data-options="{\'noSearch\': \'true\'}" class="minutes dropdown"></select>');
 
         while(minuteCounter <= 59) {
           textValue = minuteCounter < 10 ? '0' + minuteCounter : minuteCounter;
@@ -392,7 +392,7 @@
         // Seconds Picker
         if (hasSeconds) {
           var secondCounter = 0;
-          secondSelect = $('<select id="timepicker-seconds" class="seconds dropdown"></select>');
+          secondSelect = $('<select id="timepicker-seconds" data-options="{\'noSearch\': \'true\'}" class="seconds dropdown"></select>');
 
           while(secondCounter <= 59) {
             textValue = secondCounter < 10 ? '0' + secondCounter : secondCounter;
@@ -469,6 +469,7 @@
           }).on('hide.timepicker', function() {
             self.element.focus();
           });
+
         }
 
         // Make adjustments to the popup HTML specific to the timepicker
@@ -495,11 +496,46 @@
         }
 
         ui.find('div.dropdown').first().focus();
-        ui.find('.set-time').off('click.timepicker').onTouchClick('timepicker').on('click.timepicker', function(e) {
+        ui.find('.set-time').off('click.timepicker').on('click.timepicker', function(e) {
           e.preventDefault();
           self.setTimeOnField();
           self.closeTimePopup();
         });
+
+        // Handle Tabbing on the dialog
+        if (!this.settings.parentElement) {
+
+          ui.on('keydown.timepicker', 'button, div.dropdown', function (e) {
+            var key = e.keyCode || e.charCode || 0;
+
+            if (key === 9) {
+              self.containFocus(e);
+              e.stopPropagation();
+              e.preventDefault();
+              return false;
+            }
+          });
+
+        }
+
+      },
+
+      /**
+       * Focus the next prev focusable element on the popup
+       * @private
+       */
+      containFocus: function (e) {
+        var reverse = e.shiftKey;
+
+        // Set focus on (opt: next|prev) focusable element
+        var focusables = this.popup.find(':focusable'),
+          index = focusables.index($(':focus'));
+
+        index = (!reverse) ?
+          ((index+1) >= focusables.length ? 0 : (index+1)) :
+          ((index-1) < 0 ? focusables.length : (index-1));
+
+        focusables.eq(index).focus();
       },
 
       /**
