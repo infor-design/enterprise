@@ -15,6 +15,7 @@ define([
   //Load the Locales because Ajax doesnt work
   require('components/locale/cultures/en-US.js');
   require('components/locale/cultures/ar-SA.js');
+  require('components/locale/cultures/ar-EG.js');
   require('components/locale/cultures/de-DE.js');
   require('components/locale/cultures/nb-NO.js');
   require('components/locale/cultures/no-NO.js');
@@ -527,7 +528,21 @@ define([
 
     },
 
+    'can format negative numbers': function() {
+
+      Locale.set('en-US');
+      expect(Locale.formatNumber(-1000000, {style: 'currency'})).to.equal('-$1,000,000.00');
+
+      Locale.set('de-DE');
+      expect(Locale.formatNumber(-1000000, {style: 'currency'})).to.equal('-1.000.000,00 €');
+
+      Locale.set('ar-SA');
+      expect(Locale.formatNumber(-1000000, {style: 'currency'})).to.equal('-﷼ 1٬000٬000٫00');
+
+    },
+
     'can round optionally': function() {
+      Locale.set('en-US');
       expect(Locale.formatNumber('3.01999', {maximumFractionDigits: 2, round: true})).to.equal('3.02');
       expect(Locale.formatNumber('4.1', {minimumFractionDigits: 0, maximumFractionDigits: 2})).to.equal('4.1');
       expect(Locale.formatNumber('5.1', {minimumFractionDigits: 2, maximumFractionDigits: 2})).to.equal('5.10');
