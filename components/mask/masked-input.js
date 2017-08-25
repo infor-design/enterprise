@@ -237,7 +237,7 @@
       $(this.element).trigger('write.mask', [processed.conformedValue]);
 
       // return event handler true/false
-      return processed.result;
+      return processed.maskResult;
     },
 
 

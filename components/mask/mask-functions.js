@@ -371,7 +371,7 @@ window.Soho.masks.dateMask = function dateMask(rawValue, options) {
 
   var shortDateMatch, shortDateStartIndex, shortDateMaskResult;
   for (var i = 0; i < shortDates.length; i++) {
-    shortDateStartIndex = format.indexOf(shortDates[i]);
+    shortDateStartIndex = options.format.indexOf(shortDates[i]);
     if (shortDateStartIndex !== -1) {
       shortDateMatch = shortDates[i];
       break;
@@ -386,13 +386,12 @@ window.Soho.masks.dateMask = function dateMask(rawValue, options) {
 
     // Reset everything to account for the removed short date.
     format = format.replace(shortDateMatch, SHORT_DATE_MARKER);
-    //formatArray = format.split(/[^~Hhmsa]+/);
     formatArray = format.split(new RegExp('[^' + SHORT_DATE_MARKER + 'Hhmsa]+'));
   }
 
   var timeMatch, timeStartIndex, timeMaskResult;
   for (var j = 0; j < times.length; j++) {
-    timeStartIndex = format.indexOf(times[j]);
+    timeStartIndex = options.format.indexOf(times[j]);
     if (timeStartIndex !== -1) {
       timeMatch = times[j];
       break;
@@ -407,7 +406,6 @@ window.Soho.masks.dateMask = function dateMask(rawValue, options) {
 
     // Reset everything to account for the removed time.
     format = format.replace(timeMatch, TIME_MARKER);
-    //formatArray = format.split(/[^~@a]+/);
     formatArray = format.split(new RegExp('[^' + SHORT_DATE_MARKER + TIME_MARKER + 'a]+'));
   }
 

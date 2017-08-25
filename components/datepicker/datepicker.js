@@ -368,6 +368,7 @@
           customEvents = this.element.attr('data-validation-events'),
           maskOptions = {
             process: 'date',
+            keepCharacterPositions: true,
             patternOptions: {
               format: this.pattern
             }

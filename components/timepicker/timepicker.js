@@ -140,12 +140,7 @@
         this.addAria();
 
         // Add Mask and Validation plugins for time
-        this.mask({
-          process: 'date',
-          patternOptions: {
-            format: this.settings.timeFormat
-          }
-        });
+        this.addMask();
 
         return this;
       },
@@ -288,16 +283,21 @@
       },
 
       // Add masking with the mask function
-            mask: function () {
+      addMask: function () {
         if (this.element.data('mask') && typeof this.element.data('mask') === 'object') {
           this.element.data('mask').destroy();
         }
         this.element.data('mask', undefined);
 
-        var timeSeparator = this.getTimeSeparator(),
-          mask = '##' + timeSeparator + '##' + (this.hasSeconds() ? timeSeparator + '##' : '') + (!this.is24HourFormat() ? ' am' : ''),
-          maskMode = 'group',
-          validation = 'time',
+        var maskOptions = {
+          keepCharacterPositions: true,
+          process: 'date',
+          patternOptions: {
+            format: this.settings.timeFormat
+          }
+        };
+
+        var validation = 'time',
           events = {'time': 'blur'},
           customValidation = this.element.attr('data-validate'),
           customEvents = this.element.attr('data-validation-events');
@@ -313,7 +313,7 @@
                 validation = customValidation.replace(/no-default-validation/g, '');
                 events = $.fn.parseOptions(this.element, 'data-validation-events');
             }
-                // Keep default validation along custom validation
+            // Keep default validation along custom validation
             else {
                 validation = customValidation + ' ' + validation;
                 $.extend(events, $.fn.parseOptions(this.element, 'data-validation-events'));
@@ -323,10 +323,7 @@
         this.element
           .attr('data-validate', validation)
           .attr('data-validation-events', JSON.stringify(events))
-          .mask({
-            pattern: mask,
-            mode: maskMode
-          })
+          .mask(maskOptions)
           .validate()
           .triggerHandler('updated');
       },
