@@ -171,11 +171,12 @@ window.Soho.masks.numberMask = function sohoNumberMask(rawValue, options) {
 /**
  * Default Date Mask Options
  */
-var DEFAULT_DATE_MASK_OPTIONS = {
-  isDatetime: false,
+var DEFAULT_DATETIME_MASK_OPTIONS = {
   format: 'M/d/yyyy',
   symbols: {
-    separator: '/'
+    timeSeparator: ':',
+    dayPeriodSeparator: ' ',
+    dateSeparator: '/'
   }
 };
 
@@ -196,6 +197,69 @@ var DATE_MAX_VALUES = {
   'a': undefined
 };
 
+
+/**
+ * Mask function that properly handles time formats.
+ * This does NOT deal with AM/PM (day period), which will be handled by a normal pattern match.
+ *
+ */
+window.Soho.masks.timeMask = function timeMask(rawValue, options) {
+  options = Soho.utils.extend({}, DEFAULT_DATETIME_MASK_OPTIONS, options);
+
+  var mask = [],
+    digitRegex = Soho.masks.DIGITS_REGEX,
+    rawValueArr = rawValue.split(options.symbols.timeSeparator),
+    timeFormatArray = options.format.split(/[^Hhms]+/),
+    timeFormatSections = timeFormatArray.length,
+    maxValue = DATE_MAX_VALUES;
+
+  timeFormatArray.forEach(function(format, i) {
+    var additionalChars = [],
+      maxValueForPart = maxValue[format],
+      maxFirstDigit = parseInt(maxValue[format].toString().substr(0, 1), 10);
+
+    function getDigitsForPart(part) {
+      var size = part.toString().length,
+        arr = [];
+
+      while (size > 0) {
+        arr.push(digitRegex);
+        size = size - 1;
+      }
+      return arr;
+    }
+
+    // If we don't already have a value here, simply push the longest-possible value
+    if (!rawValueArr[i]) {
+      additionalChars = getDigitsForPart(maxValueForPart);
+    } else {
+      // Check the rawValue's content.  If the "maxFirstDigit" for this section
+      // is less than the provided digit's value, cut off the section and make this a "single digit"
+      // section, even though multiple digits are normally allowed.
+      // ONLY do this for `d` and `M`, not for `dd` and `MM`
+      var rawValueStr = rawValueArr[i].toString(),
+        rawValueFirstDigit = parseInt(rawValueStr.substr(0, 1), 10);
+
+      if (format.length === 1 && rawValueFirstDigit > maxFirstDigit) {
+        additionalChars.push(digitRegex);
+      } else {
+        additionalChars = getDigitsForPart(maxValueForPart);
+      }
+    }
+
+    // Add to the mask
+    mask = mask.concat(additionalChars);
+
+    // Add a section separator if we have another section to go.
+    if (timeFormatSections > (i + 1)) {
+      mask.push(options.symbols.timeSeparator);
+    }
+  });
+
+  return mask;
+};
+
+
 /**
  * Mask function that properly handles short dates
  * @param {String} rawValue
@@ -203,11 +267,11 @@ var DATE_MAX_VALUES = {
  * @returns {Array}
  */
 window.Soho.masks.shortDateMask = function shortDateMask(rawValue, options) {
-  options = Soho.utils.extend({}, DEFAULT_DATE_MASK_OPTIONS, options);
+  options = Soho.utils.extend({}, DEFAULT_DATETIME_MASK_OPTIONS, options);
 
   var mask = [],
     digitRegex = Soho.masks.DIGITS_REGEX,
-    rawValueArr = rawValue.split(options.symbols.separator),
+    rawValueArr = rawValue.split(options.symbols.dateSeparator),
     dateFormatArray = options.format.split(/[^dMy]+/),
     dateFormatSections = dateFormatArray.length,
     maxValue = DATE_MAX_VALUES;
@@ -251,7 +315,7 @@ window.Soho.masks.shortDateMask = function shortDateMask(rawValue, options) {
 
     // Add a section separator if we have another section to go.
     if (dateFormatSections > (i + 1)) {
-      mask.push(options.symbols.separator);
+      mask.push(options.symbols.dateSeparator);
     }
   });
 
@@ -266,18 +330,19 @@ window.Soho.masks.shortDateMask = function shortDateMask(rawValue, options) {
  * @returns {Array}
  */
 window.Soho.masks.dateMask = function dateMask(rawValue, options) {
-  options = Soho.utils.extend({}, DEFAULT_DATE_MASK_OPTIONS, options);
+  options = Soho.utils.extend({}, DEFAULT_DATETIME_MASK_OPTIONS, options);
 
   var mask = [],
     SHORT_DATE_MARKER = '~',
+    TIME_MARKER = '@',
     digitRegex = Soho.masks.DIGITS_REGEX,
-    format = options.format.replace(SHORT_DATE_MARKER, ''),
+    format = options.format.replace(SHORT_DATE_MARKER, '').replace(TIME_MARKER, ''),
     formatArray = format.split(/[^dMyHhmsa]+/),
     maxValue = DATE_MAX_VALUES;
 
   // Detect the existence of a short date, if applicable.
   var shortDates = (function(symbols) {
-    var sep = symbols.separator;
+    var sep = symbols.dateSeparator;
     return [
       'd' + sep + 'M' + sep + 'yyyy',
       'dd' + sep + 'M' + sep + 'yyyy',
@@ -294,7 +359,17 @@ window.Soho.masks.dateMask = function dateMask(rawValue, options) {
     ];
   })(options.symbols);
 
-  var shortDateMatch, shortDateStartIndex, shortDateMaskResult, nonShortDateParts;
+  var times = (function(symbols) {
+    var sep = symbols.timeSeparator;
+    return [
+      'HH' + sep + 'mm',
+      'HH' + sep + 'mm' + sep + 'ss',
+      'h' + sep + 'mm',
+      'h' + sep + 'mm' + sep + 'ss',
+    ];
+  })(options.symbols);
+
+  var shortDateMatch, shortDateStartIndex, shortDateMaskResult;
   for (var i = 0; i < shortDates.length; i++) {
     shortDateStartIndex = format.indexOf(shortDates[i]);
     if (shortDateStartIndex !== -1) {
@@ -311,18 +386,42 @@ window.Soho.masks.dateMask = function dateMask(rawValue, options) {
 
     // Reset everything to account for the removed short date.
     format = format.replace(shortDateMatch, SHORT_DATE_MARKER);
-    nonShortDateParts = format.split(SHORT_DATE_MARKER);
-    formatArray = format.split(/[^~Hhmsa]+/);
+    //formatArray = format.split(/[^~Hhmsa]+/);
+    formatArray = format.split(new RegExp('[^' + SHORT_DATE_MARKER + 'Hhmsa]+'));
+  }
+
+  var timeMatch, timeStartIndex, timeMaskResult;
+  for (var j = 0; j < times.length; j++) {
+    timeStartIndex = format.indexOf(times[j]);
+    if (timeStartIndex !== -1) {
+      timeMatch = times[j];
+      break;
+    }
+  }
+
+  if (timeMatch) {
+    timeMaskResult = Soho.masks.timeMask(rawValue.substr(timeStartIndex, timeMatch.length), {
+      format: timeMatch,
+      symbols: options.symbols
+    });
+
+    // Reset everything to account for the removed time.
+    format = format.replace(timeMatch, TIME_MARKER);
+    //formatArray = format.split(/[^~@a]+/);
+    formatArray = format.split(new RegExp('[^' + SHORT_DATE_MARKER + TIME_MARKER + 'a]+'));
   }
 
   formatArray.forEach(function(part, i) {
     var value = maxValue[part],
       isShortDate = shortDateMatch && part === SHORT_DATE_MARKER,
+      isTime = timeMatch && part === TIME_MARKER,
       size;
 
     if (isShortDate) {
       // Match the (possibly) pre-existing, rendered short date.
       mask = mask.concat(shortDateMaskResult);
+    } else if (isTime) {
+      mask = mask.concat(timeMaskResult);
     } else if (part === 'a') {
       // Match the day period
       mask.push(/[aApP]/, /[Mm]/);
@@ -338,8 +437,11 @@ window.Soho.masks.dateMask = function dateMask(rawValue, options) {
     // If this is not the last part, add whatever literals come after this part, but before the next part.
     var nextPart = formatArray[i+1];
     if (nextPart !== undefined) {
-      var thisPartSize = isShortDate ? SHORT_DATE_MARKER.length : part.toString().length,
-        start = format.indexOf(part) + thisPartSize,
+      var thisPartSize = isShortDate ? SHORT_DATE_MARKER.length :
+        isTime ? TIME_MARKER.length :
+        part.toString().length;
+
+      var start = format.indexOf(part) + thisPartSize,
         end = format.indexOf(nextPart),
         literals = format.substring(start, end).split(Soho.masks.EMPTY_STRING);
 
