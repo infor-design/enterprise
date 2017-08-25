@@ -686,12 +686,18 @@
       }
 
       if (options && options.style === 'percent') {
+        // the toFixed for maximumFractionDigits + 1 means we won't loose any precision
         number = (number * 100).toFixed(minimumFractionDigits);
       }
 
       var parts = this.truncateDecimals(number, minimumFractionDigits, maximumFractionDigits, options && options.round).split('.');
       parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, group);
       formattedNum = parts.join(decimal);
+
+      // Position the negative at the front - There is no CLDR info for this.
+      var minusSign = this.currentLocale.data.numbers.minusSign,
+        isNegative = (formattedNum.indexOf(minusSign) > -1);
+        formattedNum = formattedNum.replace(minusSign, '');
 
       if (minimumFractionDigits === 0) { //Not default
         formattedNum = formattedNum.replace(/(\.[0-9]*?)0+$/, '$1'); // remove trailing zeros
@@ -718,6 +724,9 @@
         formattedNum = percentFormat.replace('#,##0', formattedNum);
       }
 
+      if (isNegative) {
+        formattedNum = minusSign + formattedNum;
+      }
       return formattedNum;
     },
 
