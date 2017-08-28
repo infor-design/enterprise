@@ -225,7 +225,7 @@
         // If button is part of a header/masthead or a container using the "alternate" UI color, add the "alternate" class.
         if (containerClass !== undefined &&
           (this.element.closest('.masthead').not('.search-results .masthead').length > 0)) {
-          this.menu.parent('.popupmenu-wrapper').addClass('alternate');
+          this.menu.parent('.popupmenu-wrapper').addClass('inverse');
         }
 
         this.element.attr('aria-haspopup', true);
@@ -933,6 +933,10 @@
 
         this.element.addClass('is-open');
         this.menu.addClass('is-open').attr('aria-hidden', 'false');
+
+        if (this.element.hasClass('inverse')) {
+          this.menu.parent('.popupmenu-wrapper').addClass('inverse');
+        }
 
         this.position(e);
 
