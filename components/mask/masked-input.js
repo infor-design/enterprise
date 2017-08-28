@@ -173,22 +173,31 @@
         return false;
       }
 
+      var posBegin = this.element.selectionStart,
+        posEnd = this.element.selectionEnd;
+
+      // On Android, the first character inserted into a field is automatically selected when it shouldn't be.
+      // This snippet fixes that problem.
+      if (Soho.env.os.name === 'android' && this.state.previousMaskResult === '' && posBegin !== posEnd) {
+        Soho.utils.safeSetSelection(rawValue.length, rawValue.length);
+        posBegin = rawValue.length;
+        posEnd = rawValue.length;
+      }
+
       // Attempt to make the raw value safe to use.  If it's not in a viable format this will throw an error.
       rawValue = this._getSafeRawValue(rawValue);
 
-      var posBegin = this.element.selectionStart,
-        posEnd = this.element.selectionEnd,
-        opts = {
-          guide: this.settings.guide,
-          keepCharacterPositions: this.settings.keepCharacterPositions,
-          patternOptions: this.settings.patternOptions,
-          placeholderChar: this.settings.placeholderChar,
-          previousMaskResult: this.state.previousMaskResult,
-          selection: {
-            start: posBegin,
-            end: posEnd
-          }
-        };
+      var opts = {
+        guide: this.settings.guide,
+        keepCharacterPositions: this.settings.keepCharacterPositions,
+        patternOptions: this.settings.patternOptions,
+        placeholderChar: this.settings.placeholderChar,
+        previousMaskResult: this.state.previousMaskResult,
+        selection: {
+          start: posBegin,
+          end: posEnd
+        }
+      };
 
       if (posBegin !== posEnd) {
         opts.selection.contents = rawValue.substring(posBegin, posEnd);
