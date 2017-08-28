@@ -73,65 +73,72 @@
   }
 
   // Alternate Popup-menu Colors (used for UI toolbars, etc)
-  &.alternate {
+  &.inverse {
     .popupmenu {
-      background-color: $popupmenu-alternate-bg-color;
-      border: 1px solid $popupmenu-alternate-border-color;
-      color: $popupmenu-alternate-color;
+      background-color: $popupmenu-dark-bg-color;
+      border: 1px solid $popupmenu-dark-border-color;
+      border-radius: 3px;
+      box-shadow: $popupmenu-dark-box-shadow;
+      color: $popupmenu-dark-color;
 
       a {
-        color: $popupmenu-alternate-color;
+        color: $popupmenu-dark-color;
       }
 
       li {
         &.is-submenu-open,
         &.is-focused {
-          background-color: $popupmenu-alternate-hover-color;
+          background-color: $popupmenu-dark-hover-color;
         }
       }
 
       .icon {
-        fill: $popupmenu-alternate-color;
+        fill: $popupmenu-dark-icon-color;
       }
+
+      .heading {
+        color: $popupmenu-dark-heading-color;
+      }
+
     }
 
     &.top {
       .arrow {
-        border-top-color: $popupmenu-alternate-border-color;
+        border-top-color: $popupmenu-dark-border-color;
       }
 
       .arrow::after {
-        border-top-color: $popupmenu-alternate-bg-color;
+        border-top-color: $popupmenu-dark-bg-color;
       }
     }
 
     &.bottom {
       .arrow {
-        border-bottom-color: $popupmenu-alternate-border-color;
+        border-bottom-color: $popupmenu-dark-border-color;
       }
 
       .arrow::after {
-        border-bottom-color: $popupmenu-alternate-bg-color;
+        border-bottom-color: $popupmenu-dark-bg-color;
       }
     }
 
     &.right {
       .arrow {
-        border-right-color: $popupmenu-alternate-border-color;
+        border-right-color: $popupmenu-dark-border-color;
       }
 
       .arrow::after {
-        border-right-color: $popupmenu-alternate-bg-color;
+        border-right-color: $popupmenu-dark-bg-color;
       }
     }
 
     &.left {
       .arrow {
-        border-left-color: $popupmenu-alternate-border-color;
+        border-left-color: $popupmenu-dark-border-color;
       }
 
       .arrow::after {
-        border-left-color: $popupmenu-alternate-bg-color;
+        border-left-color: $popupmenu-dark-bg-color;
       }
     }
   }
@@ -463,6 +470,7 @@
     }
 
   }
+
 }
 
 //Footer Buttons

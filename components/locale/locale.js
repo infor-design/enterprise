@@ -473,11 +473,23 @@
             }
             dateObj.h = value;
             break;
+          case 'hh':
+            if (numberValue < 0 || numberValue > 12) {
+              return;
+            }
+            dateObj.h = value.length === 1 ? '0'+value : value;
+            break;
+          case 'H':
+            if (numberValue < 0 || numberValue > 12) {
+              return;
+            }
+            dateObj.h = value;
+            break;
           case 'HH':
             if (numberValue < 0 || numberValue > 24) {
               return;
             }
-            dateObj.h = value;
+            dateObj.h = value.length === 1 ? '0'+value : value;
             break;
 
           case 'ss':

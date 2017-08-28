@@ -165,6 +165,10 @@
           previousButton.add(nextButton).remove();
         }
 
+        if (this.activeIndex > 0 && this.activeIndex > (numOfButtons - 1)) {
+          this.activeIndex = numOfButtons - 1;
+        }
+
         if (numOfButtons > 1) {
           this.element.append(html);
         }

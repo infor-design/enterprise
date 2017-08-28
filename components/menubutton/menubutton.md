@@ -7,6 +7,7 @@
 3. Submenus [View Example]( ../components/menubutton/example-submenu.htm)
 4. Submenu With Icons [View Example]( ../components/menubutton/example-submenu-icons.htm)
 5. RTL [View Example]( ../components/menubutton/example-submenu-icons-rtl.html?locale=ar-SA)
+5. Replace Text Content with Selection [View Example]( ../components/menubutton/example-replace-text)
 
 ## Code Example
 

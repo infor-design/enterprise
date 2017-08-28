@@ -14,6 +14,7 @@ Clickable Button Elements.
 
 -   `toggleOnIcon` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The icon to use for on state on toggle buttons
 -   `toggleOffIcon` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The icon to use for off state on toggle buttons
+-   `replaceText` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  If true the selection will be used to replace the content in the button.
 
 ### destroy
 
