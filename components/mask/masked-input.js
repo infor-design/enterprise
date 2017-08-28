@@ -203,6 +203,10 @@
 
       // Perform the mask processing.
       var processed = api.process(rawValue, opts);
+      if (!processed.maskResult) {
+        // Error during masking.  Simply return out and don't mask this field.
+        return processed.maskResult;
+      }
 
       // Use the piped value, if applicable.
       var finalValue = processed.pipedValue ? processed.pipedValue : processed.conformedValue;

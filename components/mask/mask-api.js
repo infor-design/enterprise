@@ -5,21 +5,24 @@ window.Soho.masks = window.Soho.masks || {
   CARET_TRAP: '[]',
   NON_DIGITS_REGEX: /\D+/g,
   DIGITS_REGEX: /\d/,
+  ALPHAS_REGEX: /[\u00C0-\u017Fa-zA-Z]/,
+  ANY_REGEX: /[\u00C0-\u017Fa-zA-Z0-9]/,
   DEFAULT_API_OPTIONS: {
     locale: 'en-US',
     pattern: undefined,
     pipe: undefined
-  },
-  LEGACY_DEFS: {
-    '#': /[0-9]/,
-    '0': /[0-9]/,
-    'x': /[\u00C0-\u017Fa-zA-Z]/,
-    '*': /[\u00C0-\u017Fa-zA-Z0-9]/,
-    '?': /./,
-    '~': /[-0-9]/,
-    'a': /[APap]/,
-    'm': /[Mm]/
   }
+};
+
+window.Soho.masks.LEGACY_DEFS = {
+  '#': /[0-9]/,
+  '0': /[0-9]/,
+  'x': Soho.masks.ALPHAS_REGEX,
+  '*': Soho.masks.ANY_REGEX,
+  '?': /./,
+  '~': /[-0-9]/,
+  'a': /[APap]/,
+  'm': /[Mm]/
 };
 
 /**

@@ -43,6 +43,45 @@ function addThousandsSeparator(n, thousands) {
   return n.replace(/\B(?=(\d{3})+(?!\d))/g, thousands);
 }
 
+
+/**
+ * Gets an array of Regex objects matching the number of digits present in a source string
+ * @param {String} part - string representing the mark part.
+ * @param {String} type - 'any', 'digits', or 'alphas'
+ * @returns {Array}
+ */
+function getRegexForPart(part, type) {
+  var types = {
+    'any': Soho.masks.ANY_REGEX,
+    'digits': Soho.masks.DIGITS_REGEX,
+    'alphas': Soho.masks.ALPHAS_REGEX
+  };
+
+  if (!types[type]) {
+    type = 'any';
+  }
+
+  var size = part.toString().length,
+    arr = [];
+
+  while (size > 0) {
+    arr.push(types[type]);
+    size = size - 1;
+  }
+  return arr;
+}
+
+
+/**
+ * Gets an array of Regex objects matching the number of digits present in a source string
+ * @param {String} part
+ * @returns {Array}
+ */
+function getAlphasForPart(part) {
+
+}
+
+
 /**
  * Soho Number Mask Function
  * @param {String} rawValue
@@ -186,6 +225,7 @@ var DEFAULT_DATETIME_MASK_OPTIONS = {
 var DATE_MAX_VALUES = {
   'dd': 31,
   'd': 31,
+  'MMM': undefined,
   'MM': 12,
   'M': 12,
   'yy': 99,
@@ -218,20 +258,9 @@ window.Soho.masks.timeMask = function timeMask(rawValue, options) {
       maxValueForPart = maxValue[format],
       maxFirstDigit = parseInt(maxValue[format].toString().substr(0, 1), 10);
 
-    function getDigitsForPart(part) {
-      var size = part.toString().length,
-        arr = [];
-
-      while (size > 0) {
-        arr.push(digitRegex);
-        size = size - 1;
-      }
-      return arr;
-    }
-
     // If we don't already have a value here, simply push the longest-possible value
     if (!rawValueArr[i]) {
-      additionalChars = getDigitsForPart(maxValueForPart);
+      additionalChars = getRegexForPart(maxValueForPart, 'digits');
     } else {
       // Check the rawValue's content.  If the "maxFirstDigit" for this section
       // is less than the provided digit's value, cut off the section and make this a "single digit"
@@ -243,7 +272,7 @@ window.Soho.masks.timeMask = function timeMask(rawValue, options) {
       if (format.length === 1 && rawValueFirstDigit > maxFirstDigit) {
         additionalChars.push(digitRegex);
       } else {
-        additionalChars = getDigitsForPart(maxValueForPart);
+        additionalChars = getRegexForPart(maxValueForPart, '');
       }
     }
 
@@ -281,20 +310,9 @@ window.Soho.masks.shortDateMask = function shortDateMask(rawValue, options) {
       maxValueForPart = maxValue[format],
       maxFirstDigit = parseInt(maxValue[format].toString().substr(0, 1), 10);
 
-    function getDigitsForPart(part) {
-      var size = part.toString().length,
-        arr = [];
-
-      while (size > 0) {
-        arr.push(digitRegex);
-        size = size - 1;
-      }
-      return arr;
-    }
-
     // If we don't already have a value here, simply push the longest-possible value
     if (!rawValueArr[i]) {
-      additionalChars = getDigitsForPart(maxValueForPart);
+      additionalChars = getRegexForPart(maxValueForPart, 'digits');
     } else {
       // Check the rawValue's content.  If the "maxFirstDigit" for this section
       // is less than the provided digit's value, cut off the section and make this a "single digit"
@@ -306,7 +324,7 @@ window.Soho.masks.shortDateMask = function shortDateMask(rawValue, options) {
       if (format.length === 1 && rawValueFirstDigit > maxFirstDigit) {
         additionalChars.push(digitRegex);
       } else {
-        additionalChars = getDigitsForPart(maxValueForPart);
+        additionalChars = getRegexForPart(maxValueForPart, 'digits');
       }
     }
 
@@ -406,7 +424,7 @@ window.Soho.masks.dateMask = function dateMask(rawValue, options) {
 
     // Reset everything to account for the removed time.
     format = format.replace(timeMatch, TIME_MARKER);
-    formatArray = format.split(new RegExp('[^' + SHORT_DATE_MARKER + TIME_MARKER + 'a]+'));
+    formatArray = format.split(new RegExp('[^' + SHORT_DATE_MARKER + TIME_MARKER + 'dMya]+'));
   }
 
   formatArray.forEach(function(part, i) {
@@ -423,6 +441,8 @@ window.Soho.masks.dateMask = function dateMask(rawValue, options) {
     } else if (part === 'a') {
       // Match the day period
       mask.push(/[aApP]/, /[Mm]/);
+    } else if (!value) {
+      mask.push(part.split(getRegexForPart(part, 'alphas')));
     } else {
       size = value.toString().length;
 
