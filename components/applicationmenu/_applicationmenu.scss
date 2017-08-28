@@ -61,9 +61,9 @@
 
       &.logout {
         .icon.avatar {
-          border-radius: 32px;
-          height: 64px;
-          width: 64px;
+          border-radius: 24px;
+          height: 48px;
+          width: 48px;
         }
 
         .content {
@@ -84,6 +84,41 @@
         span {
           display: inline-block;
         }
+      }
+    }
+  }
+
+  .accordion-static-panel {
+    background-color: $slate07;
+    border-bottom-color: $slate09 !important;
+    margin: 0 auto;
+    min-height: 85px;
+    padding: 10px 30px;
+
+    .icon.avatar {
+      border-radius: 20px;
+      height: 40px;
+      top: 18px;
+      width: 40px;
+    }
+
+    .name {
+      @include font-size(18);
+      padding: 10px;
+      position: relative;
+      top: -3px;
+    }
+
+    .btn-menu {
+      left: 43px;
+      margin-top: -5px;
+
+      span {
+        color: inherit;
+        display: inline-block;
+        max-width: 168px;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
   }
@@ -143,6 +178,11 @@ html[dir='rtl'] {
     + .page-container {
       left: 0;
       right: initial;
+    }
+
+    .btn-menu {
+      left: inherit;
+      right: 43px;
     }
 
   }

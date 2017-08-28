@@ -7,6 +7,7 @@
 2. Different Header Types Event Demo [View Example]( ../components/applicationmenu/example-different-header-types)
 3. As Shown on the Soho Site [View Example]( ../components/applicationmenu/example-soho-site)
 4. Showing Top Level Buttons [View Example]( ../components/applicationmenu/example-top-level-buttons)
+4. Showing Menubutton as a role switcher [View Example]( ../components/applicationmenu/example-menubutton)
 
 {{api-details}}
 
