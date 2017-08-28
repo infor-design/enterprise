@@ -299,6 +299,7 @@ define([
     'should parse text months': function() {
       Locale.set('en-US');    //year, month, day
       expect(Locale.parseDate('2015 December', 'yyyy MMMM').getTime()).to.equal(new Date(2015, 11, 1, 0, 0, 0).getTime());
+      expect(Locale.parseDate('13 Oct 2017 1:00 PM', 'd MMM yyyy H:mm a').getTime()).to.equal(new Date(2017, 09, 13, 13, 0, 0).getTime());
 
       Locale.set('de-DE');
       expect(Locale.parseDate('Dezember 2015', 'MMMM yyyy').getTime()).to.equal(new Date(2015, 11, 1, 0, 0, 0).getTime());
