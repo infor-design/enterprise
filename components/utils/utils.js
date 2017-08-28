@@ -391,6 +391,35 @@
     return santizedHtml;
   };
 
+
+
+  /**
+   * HideFocus Behavior
+   */
+  function hideFocus(element, options) {
+    return this.init(element, options);
+  };
+
+  hideFocus.prototype = {
+    init: function(element, options) {
+      if (!this.element && (element instanceof HTMLElement || element instanceof SVGElement)) {
+        this.element = element;
+      }
+
+      var previousOptions =
+
+      if (!this.options) {
+
+      }
+    },
+
+    updated: function(options) {
+      opt
+    },
+  };
+
+  window.Soho.behaviors.hideFocus = hideFocus;
+
   //Hide Focus - Only show on key entry
   $.fn.hideFocus = function() {
     var element = $(this),
