@@ -433,14 +433,14 @@
    */
   $.fn.maskedinput = function(options) {
     return this.each(function() {
-      var instance = $.data(this, 'maskedinput');
+      var instance = $.data(this, 'mask');
       if (instance) {
         instance.updated(options);
       } else {
-        instance = $.data(this, 'maskedinput', new SohoMaskedInput(this, options));
+        instance = $.data(this, 'mask', new SohoMaskedInput(this, options));
         instance.destroy = function() {
           this.teardown();
-          $.removeData(this.element, 'maskedinput');
+          $.removeData(this.element, 'mask');
         };
       }
     });
