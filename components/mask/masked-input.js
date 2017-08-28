@@ -87,12 +87,7 @@
             if ($.fn.datepicker && $(this.element).data('datepicker')) {
               this.settings.patternOptions.format = datepicker.settings.format;
             }
-
             this.settings.pattern = Soho.masks.dateMask;
-            /*if (this.settings.autocorrect === true) {
-              this.settings.pipe = window.Soho.masks.autocorrectedDatePipe;
-            }
-            */
             break;
           }
           default: {
@@ -311,7 +306,6 @@
           this.settings.process = undefined;
         } else if (this.settings.mode === 'date') {
           this.settings.process = 'date';
-          //this.settings.autocorrect = true;
         } else {
           this.settings.process = this.settings.mode;
         }
