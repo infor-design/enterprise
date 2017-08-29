@@ -1771,8 +1771,7 @@
        * Get data attributes from passed list of attributes
        * @param {Array} attr - List of all attributes.
        * @param {Array} attrToExclude - List of attributes to be excluded from passed list.
-       *
-       * It will return an object containing two keys
+       * @returns {Object} It will return an object containing two keys
        * str - string of attributes
        * obj - object of attributes
        */

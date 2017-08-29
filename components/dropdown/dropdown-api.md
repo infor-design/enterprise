@@ -69,9 +69,11 @@ Get data attributes from passed list of attributes
 **Parameters**
 
 -   `attr` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of all attributes.
--   `attrToExclude` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of attributes to be excluded from passed list.It will return an object containing two keys
-    str - string of attributes
-    obj - object of attributes
+-   `attrToExclude` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of attributes to be excluded from passed list.
+
+Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** It will return an object containing two keys
+str - string of attributes
+obj - object of attributes
 
 ### setCode
 
