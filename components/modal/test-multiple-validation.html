@@ -1,0 +1,114 @@
+
+<div class="row">
+  <div class="six columns">
+    <h2>Modal Test: Multiple Modals and Validation</h2>
+    <p><a class="hyperlink" href="http://jira.infor.com/browse/SOHO-6722" target="_blank">Related JIRA Ticket</a>
+    </p>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+
+    <button class="btn-secondary" type="button" id="btn1">Modal #1</button>
+    <button class="btn-secondary" type="button" id="btn2">Modal #2</button>
+    <button class="btn-secondary" type="button" id="btnReset">Reset Modals</button>
+
+  	<!-- Modal #1 -->
+  	<div id="divModal1" style="display: none">
+  		<div class="field">
+  			<label id="lblModal1RequiredField1" runat="server" class="required">Please select something. It's required.</label>
+  			<div class="field" data-trackdirty="true">
+  				<select class="dropdown" id="ddlModal1RequiredField1" name="ddlModal1RequiredField1" aria-required="true" data-validate="required">
+  					<option value="" selected></option>
+  					<option value="1">One</option>
+  					<option value="2">Two</option>
+  					<option value="3">Three</option>
+  				</select>
+  			</div>
+  		</div>
+  		<div class="field">
+  			<label id="lblModal1RequiredField2" class="required">Type something in this required box.</label>
+  			<input type="text" id="txtModal1RequiredField2" name="txtModal1RequiredField2" class="required" aria-required="true" data-validate="required" data-trackdirty="true"/>
+  		</div>
+  	</div>
+
+  	<!-- Modal #2 -->
+  	<div id="divModal2" style="display: none">
+  		<div class="field">
+  			<label id="lblModal2RequiredField1" runat="server" class="required">Please select something. It's required.</label>
+  			<div class="field" data-trackdirty="true">
+  				<select class="dropdown" id="ddlModal2Required" name="ddlModal2Required" aria-required="true" data-validate="required">
+  					<option value="" selected></option>
+  					<option value="1">One</option>
+  					<option value="2">Two</option>
+  					<option value="3">Three</option>
+  				</select>
+  			</div>
+  		</div>
+
+  	</div>
+
+  </div>
+
+</div>
+
+<script>
+  // Create dialog content and open modal
+  $('#btn1').on('click', function() {
+  	modal = $('body').modal({
+  		title: 'Modal #1',
+  		content: $('#divModal1'),
+  		buttons: [{
+  			text: 'Cancel',
+  			click: function (e, modal) {
+  				modal.close();
+  			}
+  		}, {
+  			text: 'Submit',
+  			click: function (e, modal) {
+  				modal.close();
+  			},
+  			validate: true,
+  			isDefault: true
+  		}]
+  	}).data('modal').element;
+   });
+
+  $('#btn2').on('click', function() {
+  	modal = $('body').modal({
+  		title: 'Modal #2',
+  		content: $('#divModal2'),
+  		buttons: [{
+  			text: 'Cancel',
+  			click: function (e, modal) {
+  				modal.close();
+  			}
+  		}, {
+  			text: 'Submit',
+  			click: function (e, modal) {
+  				modal.close();
+  			},
+  			validate: true,
+  			isDefault: true
+  		}]
+	}).data('modal').element;
+
+});
+
+	$('#btnReset').on('click',function() {
+
+		$('#ddlModal1RequiredField1').val('').trigger('updated');
+		$('#txtModal1RequiredField2').val('');
+		$('#ddlModal2Required').val('').trigger('updated');
+
+		$('#divModal1').find('.error-message').each(function() {
+			$(this).remove();
+		});
+		$('#divModal2').find('.error-message').each(function() {
+			$(this).remove();
+		});
+	});
+
+
+</script>

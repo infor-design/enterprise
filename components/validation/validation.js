@@ -239,7 +239,7 @@
      */
     setModalPrimaryBtn: function(field, modalBtn, isValid) {
       var modal = field.closest('.modal'),
-        modalFields = modal.find('[data-validate]:visible').add('select[data-validate], :checkbox[data-validate]'),
+        modalFields = modal.find('[data-validate]:visible, select[data-validate], :checkbox[data-validate]'),
         allValid = true;
 
       if (modalFields.length > 0) {
