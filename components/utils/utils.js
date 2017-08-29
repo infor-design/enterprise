@@ -385,8 +385,9 @@
   //Remove Script tags and all onXXX functions
   $.sanitizeHTML = function(html) {
     var santizedHtml = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/g, '');
-     santizedHtml = santizedHtml.replace(/on\w+="[^"]*"/g, '');
-     santizedHtml = santizedHtml.replace(/ on\w+='[^']*'/g, '');
+    santizedHtml = santizedHtml.replace(/<[^>]+/g, function(match) {
+      return match.replace(/(\/|\s)on\w+=(\'|")?[^"]*(\'|")?/g, '');
+    });
 
     return santizedHtml;
   };

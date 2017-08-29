@@ -44,7 +44,7 @@
         placeholder: null,
         pasteAsPlainText: false,
         // anchor > target: 'Same window'|'New window'| any string value
-        anchor: {url: 'http://www.example.com', class: 'hyperlink', target: 'New window'},
+        anchor: {url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false},
         image: {url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}
       },
       settings = $.extend({}, defaults, options);
@@ -57,7 +57,7 @@
     * @param {Boolean} secondHeader  &nbsp;-&nbsp; Allows you to set if the second header inserted is a h3 or h4 element. You should set this to match the structure of the parent page for accessibility
     * @param {String} productName  &nbsp;-&nbsp; Additional product name information to display
     * @param {String} pasteAsPlainText  &nbsp;-&nbsp; If true, when you paste into the editor the element will be unformatted to plain text.
-    * @param {String} anchor  &nbsp;-&nbsp; Info object to populate the link dialog defaulting to `{url: 'http://www.example.com', class: 'hyperlink', target: 'New window'},`
+    * @param {String} anchor  &nbsp;-&nbsp; Info object to populate the link dialog defaulting to `{url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false},`
     * @param {String} image  &nbsp;-&nbsp; Info object to populate the image dialog defaulting to ` {url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}`
     */
     function Editor(element) {
@@ -82,9 +82,14 @@
         this.parentElements = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre'];
         this.id = $('.editor-toolbar').length + 1;
         this.container = this.element.parent('.field, .field-short').addClass('editor-container');
+
+        settings.anchor = $.extend({}, defaults.anchor, settings.anchor);
+        settings.image = $.extend({}, defaults.image, settings.image);
+
         settings.anchor.defaultUrl = settings.anchor.url;
         settings.anchor.defaultClass = settings.anchor.class;
         settings.anchor.defaultTargetText = settings.anchor.target;
+        settings.anchor.defaultIsClickable = settings.anchor.isClickable;
 
         settings.anchor.targets = {
           'Same window': '',
@@ -561,6 +566,11 @@
           if(settings.anchor.target && $.trim(settings.anchor.target).length) {
             alink.attr('target', settings.anchor.target);
           }
+          if(settings.anchor.isClickable) {
+            alink.attr('contenteditable', false);
+          } else {
+            alink.removeAttr('contenteditable');
+          }
 
           finalText = alink[0].outerHTML;
         }
@@ -747,6 +757,7 @@
             $('[name="em-url"]').val(settings.anchor.url);
             $('[name="em-class"]').val(settings.anchor.class);
             $('[name="em-target"]').val(settings.anchor.target).trigger('updated');
+            $('[name="em-isclickable"]').prop('checked', settings.anchor.isClickable);
 
             // $('[id="em-target-shdo"]').val($('[name="em-target"] option:selected').text());
 
@@ -815,6 +826,10 @@
                 '<label for="em-url">' + Locale.translate('Url') + '</label>' +
                 '<input id="em-url" name="em-url" type="text" value="'+ settings.anchor.url +'">' +
               '</div>' +
+              (settings.anchor.showIsClickable ?('<div class="field">' +
+                '<input type="checkbox" class="checkbox" id="em-isclickable" name="em-isclickable" checked="'+ settings.anchor.isClickable +'">' +
+                '<label for="em-isclickable" class="checkbox-label">' + Locale.translate('Clickable') + '</label>' +
+              '</div>') : '') +
               '<div class="field">' +
                 '<label for="em-class">' + Locale.translate('CssClass') + '</label>' +
                 '<input id="em-class" name="em-class" type="text" value="'+ settings.anchor.class +'">' +
@@ -869,10 +884,17 @@
       updateCurrentLink: function (alink) {
         var emUrl = $('[name="em-url"]').val(),
           emClass = $('[name="em-class"]').val(),
-          emTarget = $('[name="em-target"]').val();
+          emTarget = $('[name="em-target"]').val(),
+          emIsClickable = $('[name="em-isclickable"]').is(':checked');
 
         alink.attr('href', (emUrl && $.trim(emUrl).length ? emUrl : settings.anchor.defaultUrl));
         alink.attr('class', (emClass && $.trim(emClass).length ? emClass : settings.anchor.defaultClass));
+
+        if (emIsClickable) {
+          alink.attr('contenteditable', false);
+        } else {
+          alink.removeAttr('contenteditable');
+        }
 
         if (emTarget && $.trim(emTarget).length) {
           alink.attr('target', emTarget);
@@ -890,10 +912,11 @@
         //Fix and Format the Link
         input.val(this.fixLinkFormat(input.val()));
 
-        // Set selection ur/class/target for Link
+        // Set selection url/class/target for Link
         settings.anchor.url = input.val();
         settings.anchor.class = $('[name="em-class"]').val();
         settings.anchor.target = $('[name="em-target"]').val();
+        settings.anchor.isClickable = $('[name="em-isclickable"]').is(':checked');
 
         alink = $('<a href="'+ input.val() +'">' + input.val() + '</a>');
 
@@ -902,6 +925,11 @@
         }
         if(settings.anchor.target && $.trim(settings.anchor.target).length) {
           alink.attr('target', settings.anchor.target);
+        }
+        if(settings.anchor.isClickable) {
+          alink.attr('contenteditable', false);
+        } else {
+          alink.removeAttr('contenteditable');
         }
 
         if (this.sourceViewActive()) {
@@ -1483,16 +1511,22 @@
 
       // Restore if Selection is a Link
       restoreLinkSelection: function () {
-        var currentLink = $(this.findElementInSelection('a', this.element[0]));
+        var currentLink = $(this.findElementInSelection('a', this.element[0])),
+          contenteditable;
 
         settings.anchor.url = settings.anchor.defaultUrl;
         settings.anchor.class = settings.anchor.defaultClass;
         settings.anchor.target = settings.anchor.defaultTarget;
+        settings.anchor.isClickable = settings.anchor.defaultIsClickable;
 
         if (currentLink.length) {
           settings.anchor.url = currentLink.attr('href');
           settings.anchor.class = currentLink.attr('class');
           settings.anchor.target = currentLink.attr('target');
+          contenteditable = currentLink.attr('contenteditable');
+          if (contenteditable === false || contenteditable === 'false') {
+            settings.anchor.isClickable = true;
+          }
 
           // currentLink.removeAttr('class target');
           // document.execCommand('unlink', false, null);
