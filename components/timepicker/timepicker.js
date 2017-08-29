@@ -335,7 +335,6 @@
           popupContent = $('<div class="timepicker-popup-content"></div>'),
           timeSeparator = this.getTimeSeparator(),
           textValue = '',
-          secondSelect,
           selected;
 
         this.initValues = self.getTimeFromField();
@@ -387,7 +386,7 @@
         // Seconds Picker
         if (hasSeconds) {
           var secondCounter = 0;
-          secondSelect = $('<select id="timepicker-seconds" data-options="{\'noSearch\': \'true\'}" class="seconds dropdown"></select>');
+          this.secondSelect = $('<select id="timepicker-seconds" data-options="{\'noSearch\': \'true\'}" class="seconds dropdown"></select>');
 
           while(secondCounter <= 59) {
             textValue = secondCounter < 10 ? '0' + secondCounter : secondCounter;
@@ -396,18 +395,18 @@
             if (parseInt(self.initValues.seconds, 10) === secondCounter || (!self.initValues.seconds && textValue === '00')) {
               selected = ' selected';
             }
-            secondSelect.append($('<option' + selected + '>' + textValue + '</option>'));
+            this.secondSelect.append($('<option' + selected + '>' + textValue + '</option>'));
             secondCounter = secondCounter + self.settings.secondInterval;
           }
 
           // If the value inside the picker doesn't match an interval, add the value as the currently selected option, right at the top
-          if (!secondSelect.find('option[selected]').length) {
-            secondSelect.prepend($('<option selected>' + self.initValues.seconds + '</option>'));
+          if (!this.secondSelect.find('option[selected]').length) {
+            this.secondSelect.prepend($('<option selected>' + self.initValues.seconds + '</option>'));
           }
 
           timeParts.append($('<span class="label colons">'+ timeSeparator +'</span>'));
           timeParts.append($('<label for="timepicker-seconds" class="audible">' + Locale.translate('Seconds') + '</label>'));
-          timeParts.append(secondSelect);
+          timeParts.append(this.secondSelect);
         }
 
         this.periodSelect = $('<select id="timepicker-period" class="period dropdown"></select>');
@@ -484,6 +483,11 @@
         this.hourSelect.data('dropdown').pseudoElem.find('span').text(this.initValues.hours);
         this.minuteSelect.val(this.initValues.minutes);
         this.minuteSelect.data('dropdown').pseudoElem.find('span').text(this.initValues.minutes);
+
+        if (this.secondSelect) {
+          this.secondSelect.val(this.initValues.seconds);
+          this.secondSelect.data('dropdown').pseudoElem.find('span').text(this.initValues.seconds);
+        }
 
         if (!self.is24HourFormat()) {
           this.periodSelect.val(this.initValues.period);

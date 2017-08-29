@@ -3,9 +3,10 @@
 
 ## Configuration Options
 
-1. Default Rick Text Editor Example [View Example]( ../components/editor/example-index)
+1. Default Rich Text Editor Example [View Example]( ../components/editor/example-index)
 2. Customize Buttons [View Example]( ../components/editor/example-customize-buttons)
 3. Back Color Button (Experimental - Limited Browser Support) [View Example]( ../components/editor/example-with-backcolor)
+4. Clickable Links with Rich Text Editor Example [View Example]( ../components/editor/example-clickable-links)
 
 {{api-details}}
 
