@@ -6,6 +6,7 @@
     -   [activate](#activate)
     -   [selectOptions](#selectoptions)
     -   [selectOption](#selectoption)
+    -   [getDataAttributes](#getdataattributes)
     -   [setCode](#setcode)
     -   [disable](#disable)
     -   [isDisabled](#isdisabled)
@@ -60,6 +61,17 @@ Accepts an array or jQuery selector containing valid list options and selects/de
 
 -   `option` **jQuery** the incoming option
 -   `noTrigger` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if true, causes the 'selected' and 'change' events not to fire on the list item.
+
+### getDataAttributes
+
+Get data attributes from passed list of attributes
+
+**Parameters**
+
+-   `attr` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of all attributes.
+-   `attrToExclude` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of attributes to be excluded from passed list.It will return an object containing two keys
+    str - string of attributes
+    obj - object of attributes
 
 ### setCode
 
