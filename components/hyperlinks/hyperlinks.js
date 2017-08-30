@@ -41,6 +41,10 @@
         this.options = Soho.utils.extend({}, previousOptions, options);
       }
 
+      if (!this.focusBehavior) {
+        this.focusBehavior = new Soho.behaviors.hideFocus(this.element);
+      }
+
       return this;
     },
 
@@ -75,7 +79,7 @@
         instance.updated(options);
       } else {
         instance = $.data(this, 'hyperlink', new Hyperlink(this, options));
-        instance.destroy = function() {
+        instance.destroy = function destroy() {
           this.teardown();
           $.removeData(this, 'hyperlink');
         };

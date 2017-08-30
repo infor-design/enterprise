@@ -393,98 +393,6 @@
   };
 
 
-
-  /**
-   * HideFocus Behavior
-   */
-  function hideFocus(element, options) {
-    return this.init(element, options);
-  };
-
-  hideFocus.prototype = {
-    init: function(element, options) {
-      if (!this.element && (element instanceof HTMLElement || element instanceof SVGElement)) {
-        this.element = element;
-      }
-
-      var previousOptions =
-
-      if (!this.options) {
-
-      }
-    },
-
-    updated: function(options) {
-      opt
-    },
-  };
-
-  window.Soho.behaviors.hideFocus = hideFocus;
-
-  //Hide Focus - Only show on key entry
-  $.fn.hideFocus = function() {
-    var element = $(this),
-      label = element.next(),
-      isClick = false,
-      isFocused = false,
-      labelClicked = false;
-
-    // Checkbox, Radio buttons or Switch
-    if (element.is('.checkbox, .radio, .switch')) {
-      if (label.is('[type="hidden"]')) {
-        label = label.next();
-      }
-      element.addClass('hide-focus')
-        .on('focusin.hide-focus', function(e) {
-          if (!isClick && !isFocused && !labelClicked) {
-            element.removeClass('hide-focus');
-            element.triggerHandler('hidefocusremove', [e]);
-          }
-          isClick = false;
-          isFocused = true;
-          labelClicked = false;
-        })
-        .on('focusout.hide-focus', function(e) {
-          element.addClass('hide-focus');
-          labelClicked = label.is(labelClicked);
-          isClick = false;
-          isFocused = false;
-          element.triggerHandler('hidefocusadd', [e]);
-        });
-
-      label.on('mousedown.hide-focus', function(e) {
-        labelClicked = this;
-        isClick = true;
-        element.addClass('hide-focus');
-        element.triggerHandler('hidefocusadd', [e]);
-      });
-    }
-
-    // All other elements (ie. Hyperlinks)
-    else {
-      element.addClass('hide-focus')
-        .on('mousedown.hide-focus touchstart.hide-focus', function(e) {
-          isClick = true;
-          element.addClass('hide-focus');
-          element.triggerHandler('hidefocusadd', [e]);
-        })
-        .on('focusin.hide-focus', function(e) {
-          if (!isClick && !isFocused) {
-            element.removeClass('hide-focus');
-            element.triggerHandler('hidefocusremove', [e]);
-          }
-          isClick = false;
-          isFocused = true;
-        })
-        .on('focusout.hide-focus', function(e) {
-          element.addClass('hide-focus');
-          isClick = false;
-          isFocused = false;
-          element.triggerHandler('hidefocusadd', [e]);
-        });
-    }
-  };
-
   //Clearable (Shows an X to clear)
   $.fn.clearable = function() {
     var self = this;
@@ -888,6 +796,130 @@
   // Simple Behaviors
   //==================================================================
   window.Soho.behaviors = {};
+
+
+  /**
+   * HideFocus Behavior
+   * Only shows the focus state on key entry (tabs or arrows).
+   * @param {HTMLElement|SVGElement} element
+   * @returns {HideFocus}
+   */
+  function HideFocus(element) {
+    return this.init(element);
+  }
+
+  HideFocus.prototype = {
+    init: function(element) {
+      if (!this.element && (element instanceof HTMLElement || element instanceof SVGElement)) {
+        this.element = element;
+      }
+
+      var $el = $(element),
+        isClick = false,
+        isFocused = false,
+        labelClicked = false;
+
+      // Checkbox, Radio buttons or Switch
+      if ($el.is('.checkbox, .radio, .switch')) {
+        var label = $el.next();
+        if (label.is('[type="hidden"]')) {
+          label = label.next();
+        }
+        this.label = label[0];
+
+        $el.addClass('hide-focus')
+          .on('focusin.hide-focus', function(e) {
+            if (!isClick && !isFocused && !labelClicked) {
+              $el.removeClass('hide-focus');
+              $el.triggerHandler('hidefocusremove', [e]);
+            }
+            isClick = false;
+            isFocused = true;
+            labelClicked = false;
+          })
+          .on('focusout.hide-focus', function(e) {
+            $el.addClass('hide-focus');
+            labelClicked = label.is(labelClicked);
+            isClick = false;
+            isFocused = false;
+            $el.triggerHandler('hidefocusadd', [e]);
+          });
+
+        label.on('mousedown.hide-focus', function(e) {
+          labelClicked = this;
+          isClick = true;
+          $el.addClass('hide-focus');
+          $el.triggerHandler('hidefocusadd', [e]);
+        });
+      }
+
+      // All other elements (ie. Hyperlinks)
+      else {
+        $el.addClass('hide-focus')
+          .on('mousedown.hide-focus touchstart.hide-focus', function(e) {
+            isClick = true;
+            $el.addClass('hide-focus');
+            $el.triggerHandler('hidefocusadd', [e]);
+          })
+          .on('focusin.hide-focus', function(e) {
+            if (!isClick && !isFocused) {
+              $el.removeClass('hide-focus');
+              $el.triggerHandler('hidefocusremove', [e]);
+            }
+            isClick = false;
+            isFocused = true;
+          })
+          .on('focusout.hide-focus', function(e) {
+            $el.addClass('hide-focus');
+            isClick = false;
+            isFocused = false;
+            $el.triggerHandler('hidefocusadd', [e]);
+          });
+      }
+
+      return this;
+    },
+
+    updated: function() {
+      return this
+        .teardown()
+        .init();
+    },
+
+    teardown: function() {
+      if (this.label) {
+        $(this.label).off('mousedown.hide-focus');
+      }
+
+      var elemEvents = [
+        'focusin.hide-focus',
+        'focusout.hide-focus',
+        'mousedown.hide-focus',
+        'touchstart.hide-focus'
+      ];
+      $(this.element).off(elemEvents.join(' '));
+
+      return this;
+    }
+  };
+
+  window.Soho.behaviors.hideFocus = HideFocus;
+
+  $.fn.hideFocus = function() {
+    return this.each(function() {
+      var instance = $.data(this, 'hidefocus');
+      if (instance) {
+        instance.updated();
+      } else {
+        instance = $.data(this, 'hidefocus', new HideFocus(this));
+        instance.destroy = function destroy() {
+          this.teardown();
+          $.removeData(this, 'hidefocus');
+        };
+      }
+    });
+  };
+
 
   /**
    * Allows for the smooth scrolling of an element's content area.
