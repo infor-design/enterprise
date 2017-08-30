@@ -17,6 +17,11 @@
 
 Remove the tag from the DOM
 
+**Parameters**
+
+-   `event`  
+-   `el`  
+
 ### destroy
 
 Destroy this component instance and remove the link from its base element.
