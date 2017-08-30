@@ -88,8 +88,21 @@
 
     $('#open-modal').on('click', function() {
       $('body').modal({
-        'title': 'Add Context',
-        'content': $('#modal-add-context')
+        title: 'Add Context',
+        content: $('#modal-add-context'),
+        buttons: [{
+          text: 'OK',
+          click: function(e, modal) {
+            modal.close();
+          },
+          validate: false,
+          isDefault: true
+        }, {
+          text: 'Close',
+          click: function(e, modal) {
+            modal.close();
+          }
+        }]
       });
     });
   });
