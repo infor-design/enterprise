@@ -12,6 +12,7 @@ The Mask Component limits and aids user input.
 
 **Parameters**
 
+-   `element`  
 -   `pattern` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The mask regex pattern to use
 -   `definitions` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)**  -  An extendable array of letters matching regex expressions.
 -   `mode` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Hints for specific types, can be number, group, time
@@ -21,7 +22,6 @@ The Mask Component limits and aids user input.
 -   `processOnBlur` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If set to false, will not mask the value of the input field upon blur.
 -   `thousandsSeparator` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If the mask should use the thousands separator or not.
 -   `showSymbol` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If a non-editable symbol should be inserted can be 'currency', 'percent'
--   `element`  
 
 ### remask
 

@@ -23,11 +23,11 @@ category or section header, and the second level provides the associated options
 
 **Parameters**
 
+-   `element`  
 -   `allowOnePane` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  If set to true, allows only one pane of the Accordion to be open at a time.  If an Accordion pane is open, and that pane contains sub-headers, only one of the pane's sub-headers can be open at a time. (default true)
 -   `displayChevron` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Displays a "Chevron" icon that sits off to the right-most side of a top-level accordion header.  Used in place of an Expander (+/-) if enabled.
 -   `rerouteOnLinkClick` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Can be set to false if routing is externally handled
 -   `source` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  A callback function that when implemented provided a call back for "ajax loading" of tab contents on open.
--   `element`  
 
 ### isDisabled
 

@@ -14,8 +14,8 @@ A trigger field for uploading a single file.
 
 **Parameters**
 
--   `none` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  No options
 -   `element`  
+-   `none` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  No options
 
 ### destroy
 
