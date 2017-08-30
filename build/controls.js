@@ -30,6 +30,7 @@ module.exports = [
   'temp/amd/hierarchy.js',
   'temp/amd/highlight.js',
   'temp/amd/homepage.js',
+  'temp/amd/hyperlinks.js',
   'temp/amd/icons.js',
   'temp/amd/lookup.js',
   'temp/amd/lifecycle.js',

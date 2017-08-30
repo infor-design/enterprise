@@ -38,7 +38,7 @@
 
       if (typeof options === 'object') {
         var previousOptions = this.options || DEFAULT_HYPERLINK_OPTIONS;
-        this.options = Soho.utils.extend({}, previousOptions, options);
+        this.options = $.extend({}, previousOptions, options);
       }
 
       if (!this.focusBehavior) {
@@ -53,7 +53,7 @@
     },
 
     updated: function(options) {
-      Soho.utils.extend({}, this.options, options);
+      $.extend({}, this.options, options);
 
       return this
         .teardown()
