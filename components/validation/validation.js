@@ -463,6 +463,7 @@
           }
 
           self.setErrorOnParent(field);
+          field.triggerHandler('isvalid', [result]);
 
         };
 
@@ -1158,6 +1159,7 @@
       api = field.data('validate'),
       doAction = function(isValid) {
         field.data('isValid', isValid);
+        field.triggerHandler('isvalid', [isValid]);
       };
 
     if (api && api.validate) {
