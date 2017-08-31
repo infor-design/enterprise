@@ -52,28 +52,49 @@
 
     // Plugin Methods
     Accordion.prototype = {
-      init: function() {
-        return this
-          .setup()
-          .build()
-          .handleEvents();
+
+      /**
+       * Initialization kickoff point
+       * @private
+       * @param {jQuery[]} [headers] - if provided, only attempts to build the specified headers and their related anchors/panes
+       * @returns {this}
+       */
+      init: function(headers) {
+        this
+          .build(headers)
+          .handleEvents(headers);
       },
 
-      setup: function() {
-        return this;
-      },
+      /**
+       * Takes a barebones Accordion markup definition and fleshes out any missing parts,
+       * as well as storing references to headers, anchors, and panes.
+       * @private
+       * @param {jQuery[]} [headers] - if provided, only attempts to build the specified headers and their related anchors/panes
+       * @returns {this}
+       */
+      build: function(headers) {
+        var self = this,
+          anchors, panes, isGlobalBuild = true;
 
-      build: function() {
-        var self = this;
+        if (!headers || !(headers instanceof jQuery)) {
+          headers = this.headers = this.element.find('.accordion-header');
+          anchors = this.anchors = headers.children('a');
+          panes = this.panes = headers.next('.accordion-pane');
+        } else {
+          anchors = headers.children('a');
+          panes = headers.next('.accordion-pane');
+          isGlobalBuild = false;
 
-        this.headers = this.element.find('.accordion-header');
-        this.anchors = this.headers.children('a');
-        this.panes = this.headers.next('.accordion-pane');
+          // update internal refs
+          this.headers = this.headers.add(headers);
+          this.anchors = this.anchors.add(anchors);
+          this.panes = this.panes.add(panes);
+        }
 
         var headersHaveIcons = false;
 
         // Accordion Headers that have an expandable pane need to have an expando-button added inside of them
-        this.headers.each(function addExpander() {
+        headers.each(function addExpander() {
           var header = $(this),
             hasIcons = false,
             containerPane = header.parent(),
@@ -189,7 +210,7 @@
         }
 
         // Setup correct ARIA for accordion panes, and auto-collapse them
-        this.panes.each(function addPaneARIA() {
+        panes.each(function addPaneARIA() {
           var pane = $(this),
             header = pane.prev('.accordion-header');
 
@@ -202,8 +223,8 @@
         });
 
         // Expand to the current accordion header if we find one that's selected
-        if (!this.element.data('updating')) {
-          var targetsToExpand = this.headers.filter('.is-selected, .is-expanded');
+        if (isGlobalBuild && !this.element.data('updating')) {
+          var targetsToExpand = headers.filter('.is-selected, .is-expanded');
 
           if (this.settings.allowOnePane) {
             targetsToExpand = targetsToExpand.first();
@@ -601,8 +622,10 @@
         });
       },
 
-      // Uses a function (this.settings.source()) to call out to an external API to fill the
-      // inside of an accordion pane.
+      /**
+       * Uses a function (this.settings.source()) to call out to an external API to fill the
+       * inside of an accordion pane.
+       */
       callSource: function(anchor, animationCallback) {
         if (!this.settings.source || typeof this.settings.source !== 'function') {
           return false;
@@ -629,7 +652,11 @@
         return this.settings.source(ui, response);
       },
 
-      // Prepares a handful of references to a specific
+      /**
+       * Prepares a handful of references for dealing with a specific accordion header
+       * @param {Event.target} eventTarget
+       * @returns {Object}
+       */
       getElements: function(eventTarget) {
         var target = $(eventTarget),
           header, anchor, expander, pane;
@@ -662,9 +689,11 @@
         };
       },
 
-      // Selects an adjacent Accordion Header that sits directly before the currently selected Accordion Header.
-      // @param {Object} element - a jQuery Object containing either an expander button or an anchor tag.
-      // @param {boolean} noDescend - if it's normally possible to descend into a sub-accordion, prevent against descending.
+      /**
+       * Selects an adjacent Accordion Header that sits directly before the currently selected Accordion Header.
+       * @param {Object} element - a jQuery Object containing either an expander button or an anchor tag.
+       * @param {boolean} noDescend - if it's normally possible to descend into a sub-accordion, prevent against descending.
+       */
       prevHeader: function(element, noDescend) {
         var elem = this.getElements(element),
           adjacentHeaders = elem.header.parent().children(),
@@ -711,9 +740,11 @@
         this.focusOriginalType(target);
       },
 
-      // Selects an adjacent Accordion Header that sits directly after the currently selected Accordion Header.
-      // @param {Object} element - a jQuery Object containing either an expander button or an anchor tag.
-      // @param {boolean} noDescend - if it's normally possible to descend into a sub-accordion, prevent against descending.
+      /**
+       * Selects an adjacent Accordion Header that sits directly after the currently selected Accordion Header.
+       * @param {jQuery[]} element - a jQuery Object containing either an expander button or an anchor tag.
+       * @param {boolean} noDescend - if it's normally possible to descend into a sub-accordion, prevent against descending.
+       */
       nextHeader: function(element, noDescend) {
         var elem = this.getElements(element),
           adjacentHeaders = elem.header.parent().children(),
@@ -760,10 +791,12 @@
         this.focusOriginalType(target);
       },
 
-      // Selects the first Accordion Header in the parent container of the current Accordion Pane.
-      // If we're at the top level, jump out of the accordion to the last focusable element.
-      // @param {Object} header - a jQuery Object containing an Accordion header.
-      // @param {integer} direction - if -1, sets the position to be at the end of this set of headers instead of at the beginning.
+      /**
+       * Selects the first Accordion Header in the parent container of the current Accordion Pane.
+       * If we're at the top level, jump out of the accordion to the last focusable element.
+       * @param {jQuery[]} header - a jQuery Object containing an Accordion header.
+       * @param {integer} direction - if -1, sets the position to be at the end of this set of headers instead of at the beginning.
+       */
       ascend: function(header, direction) {
         if (!direction) {
           direction = 0;
@@ -786,9 +819,11 @@
         this.focusOriginalType(target);
       },
 
-      // Selects the first Accordion Header in the child container of the current Accordion Header.
-      // @param {Object} header - a jQuery Object containing an Accordion header.
-      // @param {integer} direction - if -1, sets the position to be at the end of this set of headers instead of at the beginning.
+      /**
+       * Selects the first Accordion Header in the child container of the current Accordion Header.
+       * @param {jQuery[]} header - a jQuery Object containing an Accordion header.
+       * @param {integer} direction - if -1, sets the position to be at the end of this set of headers instead of at the beginning.
+       */
       descend: function(header, direction) {
         if (!direction) {
           direction = 0;
@@ -813,9 +848,11 @@
         this.focusOriginalType(target);
       },
 
-      // Selects an Accordion Header, then focuses either an expander button or an anchor.
-      // Governed by the property "this.originalSelection".
-      // @param {Object} header - a jQuery Object containing an Accordion header.
+      /**
+       * Selects an Accordion Header, then focuses either an expander button or an anchor.
+       * Governed by the property "this.originalSelection".
+       * @param {Object} header - a jQuery Object containing an Accordion header.
+       */
       focusOriginalType: function(header) {
         //this.select(header.children('a'));
 
@@ -846,7 +883,12 @@
         this.anchors.add(this.headers.children('[class^="btn"]')).removeAttr('tabindex');
       },
 
-      updated: function() {
+      /**
+       * Updates an entire accordion, or specific portion(s).
+       * @param {jQuery[]} [headers] - optional jQuery object containing accordion headers whose contents need to be torndown/rebound
+       * @returns {this}
+       */
+      updated: function(headers) {
         this.element.data('updating', true);
 
         var currentFocus = $(document.activeElement);
@@ -854,9 +896,17 @@
           currentFocus = undefined;
         }
 
-        this
-          .teardown()
-          .init();
+        // If accordion headers are passed in, simply teardown/rebind events only for those sections.
+        // Otherwise, re-init the entire accordion.
+        if (headers && (headers instanceof jQuery)) {
+          this
+            .teardown(headers)
+            .init(headers);
+        } else {
+          this
+            .teardown()
+            .init();
+        }
 
         if (currentFocus && currentFocus.length) {
           currentFocus.focus();
@@ -866,8 +916,20 @@
         return this;
       },
 
-      teardown: function() {
-        this.headers
+      /**
+       * Teardown process for accordion elements
+       * @param {jQuery} [headers] -
+       */
+      teardown: function(headers) {
+        var globalEventTeardown = false;
+
+        if (!headers || !(headers instanceof jQuery)) {
+          headers = this.headers;
+          globalEventTeardown = true;
+        }
+        var anchors = headers.find('a');
+
+        headers
           .off('touchend.accordion click.accordion focusin.accordion focusout.accordion keydown.accordion mousedown.accordion mouseup.accordion')
           .each(function() {
             var expander = $(this).data('addedExpander');
@@ -877,12 +939,14 @@
             }
           });
 
-        this.anchors.off('touchend.accordion keydown.accordion click.accordion');
+        anchors.off('touchend.accordion keydown.accordion click.accordion');
 
-        this.headers.children('[class^="btn"]')
+        headers.children('[class^="btn"]')
           .off('touchend.accordion click.accordion keydown.accordion');
 
-        this.element.off('updated.accordion selected.accordion');
+        if (globalEventTeardown) {
+          this.element.off('updated.accordion selected.accordion');
+        }
 
         return this;
       },
@@ -907,9 +971,17 @@
        * @param {Object} aftercollapse  &nbsp;-&nbsp; Fires after a pane is collapsed.
        *
        */
-      handleEvents: function() {
+      handleEvents: function(headers) {
         var self = this,
-          headerWhereMouseDown = null;
+          headerWhereMouseDown = null,
+          globalEventSetup = false;
+
+        // If no header elements are passed in, simply default to ALL headers.
+        if (!headers || !(headers instanceof jQuery)) {
+          headers = this.headers;
+          globalEventSetup = true;
+        }
+        var anchors = headers.find('a');
 
         // Returns "Header", "Anchor", or "Expander" based on the element's tag
         function getElementType(element) {
@@ -930,7 +1002,7 @@
           return self['handle' + type + 'Click'](e, element);
         }
 
-        this.headers.on('click.accordion', function(e) {
+        headers.on('click.accordion', function(e) {
           return clickInterceptor(e, $(this));
         }).on('focusin.accordion', function(e) {
           var target = $(e.target);
@@ -955,25 +1027,27 @@
           headerWhereMouseDown = null;
         });
 
-        this.anchors.on('click.accordion', function(e) {
+        anchors.on('click.accordion', function(e) {
           return clickInterceptor(e, $(this));
         });
 
-        this.headers.children('[class^="btn"]')
+        headers.children('[class^="btn"]')
           .on('click.accordion', function(e) {
             return clickInterceptor(e, $(this));
           }).on('keydown.accordion', function(e) {
             self.handleKeys(e);
           });
 
-        this.element.on('selected.accordion', function(e) {
-          // Don't propagate this event above the accordion element
-          e.stopPropagation();
-        }).on('updated.accordion', function(e) {
-          // Don't propagate just in case this is contained by an Application Menu
-          e.stopPropagation();
-          self.updated();
-        });
+        if (globalEventSetup) {
+          this.element.on('selected.accordion', function(e) {
+            // Don't propagate this event above the accordion element
+            e.stopPropagation();
+          }).on('updated.accordion', function(e) {
+            // Don't propagate just in case this is contained by an Application Menu
+            e.stopPropagation();
+            self.updated();
+          });
+        }
 
         return this;
       }

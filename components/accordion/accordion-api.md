@@ -10,8 +10,17 @@
     -   [expandAll](#expandall)
     -   [collapse](#collapse)
     -   [collapseAll](#collapseall)
+    -   [callSource](#callsource)
+    -   [getElements](#getelements)
+    -   [prevHeader](#prevheader)
+    -   [nextHeader](#nextheader)
+    -   [ascend](#ascend)
+    -   [descend](#descend)
+    -   [focusOriginalType](#focusoriginaltype)
     -   [disable](#disable)
     -   [enable](#enable)
+    -   [updated](#updated)
+    -   [teardown](#teardown)
     -   [destroy](#destroy)
     -   [handleEvents](#handleevents)
 
@@ -81,6 +90,72 @@ Collapse the given Panel on the Accordion.
 
 Collapses all accordion headers.
 
+### callSource
+
+Uses a function (this.settings.source()) to call out to an external API to fill the
+inside of an accordion pane.
+
+**Parameters**
+
+-   `anchor`  
+-   `animationCallback`  
+
+### getElements
+
+Prepares a handful of references for dealing with a specific accordion header
+
+**Parameters**
+
+-   `eventTarget` **Event.target** 
+
+Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+### prevHeader
+
+Selects an adjacent Accordion Header that sits directly before the currently selected Accordion Header.
+
+**Parameters**
+
+-   `element` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** a jQuery Object containing either an expander button or an anchor tag.
+-   `noDescend` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if it's normally possible to descend into a sub-accordion, prevent against descending.
+
+### nextHeader
+
+Selects an adjacent Accordion Header that sits directly after the currently selected Accordion Header.
+
+**Parameters**
+
+-   `element` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** a jQuery Object containing either an expander button or an anchor tag.
+-   `noDescend` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if it's normally possible to descend into a sub-accordion, prevent against descending.
+
+### ascend
+
+Selects the first Accordion Header in the parent container of the current Accordion Pane.
+If we're at the top level, jump out of the accordion to the last focusable element.
+
+**Parameters**
+
+-   `header` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** a jQuery Object containing an Accordion header.
+-   `direction` **integer** if -1, sets the position to be at the end of this set of headers instead of at the beginning.
+
+### descend
+
+Selects the first Accordion Header in the child container of the current Accordion Header.
+
+**Parameters**
+
+-   `header` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** a jQuery Object containing an Accordion header.
+-   `direction` **integer** if -1, sets the position to be at the end of this set of headers instead of at the beginning.
+
+### focusOriginalType
+
+Selects an Accordion Header, then focuses either an expander button or an anchor.
+Governed by the property "this.originalSelection".
+
+**Parameters**
+
+-   `header` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** a jQuery Object containing an Accordion header.
+
 ### disable
 
 Disable an accordion from events
@@ -88,6 +163,24 @@ Disable an accordion from events
 ### enable
 
 Enable a disabled accordion.
+
+### updated
+
+Updates an entire accordion, or specific portion(s).
+
+**Parameters**
+
+-   `headers` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>?** optional jQuery object containing accordion headers whose contents need to be torndown/rebound
+
+Returns **this** 
+
+### teardown
+
+Teardown process for accordion elements
+
+**Parameters**
+
+-   `headers` **jQuery?** \-
 
 ### destroy
 
@@ -99,6 +192,7 @@ This component fires the following events.
 
 **Parameters**
 
+-   `headers`  
 -   `selected` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when a panel is opened.
 -   `followlink` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  If the anchor is a real link, follow the link and die here. This indicates the link has been followed.
 -   `expand` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when expanding a pane is initiated.

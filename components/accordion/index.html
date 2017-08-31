@@ -52,16 +52,78 @@
 </ul>
 <h4 id="collapseall">collapseAll</h4>
 <p>Collapses all accordion headers.</p>
+<h4 id="callsource">callSource</h4>
+<p>Uses a function (this.settings.source()) to call out to an external API to fill the<br />inside of an accordion pane.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>anchor</code><br /></li>
+<li><code>animationCallback</code></li>
+</ul>
+<h4 id="getelements">getElements</h4>
+<p>Prepares a handful of references for dealing with a specific accordion header</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>eventTarget</code> <strong>Event.target</strong></li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong></p>
+<h4 id="prevheader">prevHeader</h4>
+<p>Selects an adjacent Accordion Header that sits directly before the currently selected Accordion Header.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>element</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong> a jQuery Object containing either an expander button or an anchor tag.<br /></li>
+<li><code>noDescend</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong> if it's normally possible to descend into a sub-accordion, prevent against descending.</li>
+</ul>
+<h4 id="nextheader">nextHeader</h4>
+<p>Selects an adjacent Accordion Header that sits directly after the currently selected Accordion Header.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>element</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong> a jQuery Object containing either an expander button or an anchor tag.<br /></li>
+<li><code>noDescend</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong> if it's normally possible to descend into a sub-accordion, prevent against descending.</li>
+</ul>
+<h4 id="ascend">ascend</h4>
+<p>Selects the first Accordion Header in the parent container of the current Accordion Pane.<br />If we're at the top level, jump out of the accordion to the last focusable element.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>header</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong> a jQuery Object containing an Accordion header.<br /></li>
+<li><code>direction</code> <strong>integer</strong> if -1, sets the position to be at the end of this set of headers instead of at the beginning.</li>
+</ul>
+<h4 id="descend">descend</h4>
+<p>Selects the first Accordion Header in the child container of the current Accordion Header.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>header</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong> a jQuery Object containing an Accordion header.<br /></li>
+<li><code>direction</code> <strong>integer</strong> if -1, sets the position to be at the end of this set of headers instead of at the beginning.</li>
+</ul>
+<h4 id="focusoriginaltype">focusOriginalType</h4>
+<p>Selects an Accordion Header, then focuses either an expander button or an anchor.<br />Governed by the property &quot;this.originalSelection&quot;.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>header</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong> a jQuery Object containing an Accordion header.</li>
+</ul>
 <h4 id="disable">disable</h4>
 <p>Disable an accordion from events</p>
 <h4 id="enable">enable</h4>
 <p>Enable a disabled accordion.</p>
+<h4 id="updated">updated</h4>
+<p>Updates an entire accordion, or specific portion(s).</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>headers</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;?</strong> optional jQuery object containing accordion headers whose contents need to be torndown/rebound</li>
+</ul>
+<p>Returns <strong>this</strong></p>
+<h4 id="teardown">teardown</h4>
+<p>Teardown process for accordion elements</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>headers</code> <strong>jQuery?</strong> -</li>
+</ul>
 <h4 id="destroy">destroy</h4>
 <p>Teardown and remove any added markup and events.</p>
 <h3 id="events">Events</h3>
 <p>This component fires the following events.</p>
 <p><strong>Parameters</strong></p>
 <ul>
+<li><code>headers</code><br /></li>
 <li><code>selected</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires when a panel is opened.<br /></li>
 <li><code>followlink</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  If the anchor is a real link, follow the link and die here. This indicates the link has been followed.<br /></li>
 <li><code>expand</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires when expanding a pane is initiated.<br /></li>
