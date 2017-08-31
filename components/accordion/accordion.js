@@ -237,6 +237,12 @@
         return this;
       },
 
+      /**
+       * Header Click Handler
+       * @param {jQuery.Event} e,
+       * @param {jQuery[]} header
+       * @returns {boolean}
+       */
       handleHeaderClick: function(e, header) {
         if (!header || !header.length || this.isDisabled(header) || header.data('is-animating')) {
           e.preventDefault();
@@ -253,6 +259,12 @@
         return this.handleAnchorClick(e, anchor);
       },
 
+      /**
+       * Anchor Click Handler
+       * @param {jQuery.Event} e,
+       * @param {jQuery[]} anchor
+       * @returns {boolean}
+       */
       handleAnchorClick: function(e, anchor) {
         var self = this,
           header = anchor.parent('.accordion-header'),
@@ -315,6 +327,12 @@
         return true;
       },
 
+      /**
+       * Expander-Button Click Handler
+       * @param {jQuery.Event} e,
+       * @param {jQuery[]} expander
+       * @returns {boolean}
+       */
       handleExpanderClick: function(e, expander) {
         var header = expander.parent('.accordion-header');
         if (!header.length || this.isDisabled(header) || header.data('is-animating')) {
@@ -342,6 +360,11 @@
         return this.handleAnchorClick(null, header.children('a'));
       },
 
+      /**
+       * Keypress Event Handler for expanders and anchors
+       * @param {jQuery.Event} e
+       * @returns {boolean}
+       */
       handleKeys: function(e) {
         var self = this,
           key = e.which,
@@ -413,8 +436,10 @@
         }
       },
 
-      // Makes a header "selected" if its expander button or anchor tag is focused.
-      // @param {Object} element - a jQuery Object containing either an expander button or an anchor tag.
+      /**
+       * Makes a header "selected" if its expander button or anchor tag is focused.
+       * @param {Object} element - a jQuery Object containing either an expander button or an anchor tag.
+       */
       select: function(element) {
         if (!element || !element.length) {
           return;
@@ -625,6 +650,9 @@
       /**
        * Uses a function (this.settings.source()) to call out to an external API to fill the
        * inside of an accordion pane.
+       * @param {jQuery[]} anchor
+       * @param {function} animationCallback
+       * @returns {boolean}
        */
       callSource: function(anchor, animationCallback) {
         if (!this.settings.source || typeof this.settings.source !== 'function') {

@@ -3,6 +3,11 @@
 ### Table of Contents
 
 -   [Accordion](#accordion)
+    -   [handleHeaderClick](#handleheaderclick)
+    -   [handleAnchorClick](#handleanchorclick)
+    -   [handleExpanderClick](#handleexpanderclick)
+    -   [handleKeys](#handlekeys)
+    -   [select](#select)
     -   [isDisabled](#isdisabled)
     -   [isExpanded](#isexpanded)
     -   [toggle](#toggle)
@@ -37,6 +42,57 @@ category or section header, and the second level provides the associated options
 -   `displayChevron` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Displays a "Chevron" icon that sits off to the right-most side of a top-level accordion header.  Used in place of an Expander (+/-) if enabled.
 -   `rerouteOnLinkClick` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Can be set to false if routing is externally handled
 -   `source` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  A callback function that when implemented provided a call back for "ajax loading" of tab contents on open.
+
+### handleHeaderClick
+
+Header Click Handler
+
+**Parameters**
+
+-   `e` **jQuery.Event** ,
+-   `header` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** 
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### handleAnchorClick
+
+Anchor Click Handler
+
+**Parameters**
+
+-   `e` **jQuery.Event** ,
+-   `anchor` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** 
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### handleExpanderClick
+
+Expander-Button Click Handler
+
+**Parameters**
+
+-   `e` **jQuery.Event** ,
+-   `expander` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** 
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### handleKeys
+
+Keypress Event Handler for expanders and anchors
+
+**Parameters**
+
+-   `e` **jQuery.Event** 
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### select
+
+Makes a header "selected" if its expander button or anchor tag is focused.
+
+**Parameters**
+
+-   `element` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** a jQuery Object containing either an expander button or an anchor tag.
 
 ### isDisabled
 
@@ -97,8 +153,10 @@ inside of an accordion pane.
 
 **Parameters**
 
--   `anchor`  
--   `animationCallback`  
+-   `anchor` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** 
+-   `animationCallback` **[function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** 
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 ### getElements
 

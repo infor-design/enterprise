@@ -16,6 +16,43 @@
 <li><code>source</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  A callback function that when implemented provided a call back for &quot;ajax loading&quot; of tab contents on open.</li>
 </ul>
 <h3 id="functions">Functions</h3>
+<h4 id="handleheaderclick">handleHeaderClick</h4>
+<p>Header Click Handler</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>e</code> <strong>jQuery.Event</strong> ,<br /></li>
+<li><code>header</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong></li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h4 id="handleanchorclick">handleAnchorClick</h4>
+<p>Anchor Click Handler</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>e</code> <strong>jQuery.Event</strong> ,<br /></li>
+<li><code>anchor</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong></li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h4 id="handleexpanderclick">handleExpanderClick</h4>
+<p>Expander-Button Click Handler</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>e</code> <strong>jQuery.Event</strong> ,<br /></li>
+<li><code>expander</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong></li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h4 id="handlekeys">handleKeys</h4>
+<p>Keypress Event Handler for expanders and anchors</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>e</code> <strong>jQuery.Event</strong></li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
+<h4 id="select">select</h4>
+<p>Makes a header &quot;selected&quot; if its expander button or anchor tag is focused.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>element</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong> a jQuery Object containing either an expander button or an anchor tag.</li>
+</ul>
 <h4 id="isdisabled">isDisabled</h4>
 <p>Checks if a particular header is disabled, or if the entire accordion is disabled..</p>
 <p><strong>Parameters</strong></p>
@@ -56,9 +93,10 @@
 <p>Uses a function (this.settings.source()) to call out to an external API to fill the<br />inside of an accordion pane.</p>
 <p><strong>Parameters</strong></p>
 <ul>
-<li><code>anchor</code><br /></li>
-<li><code>animationCallback</code></li>
+<li><code>anchor</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;jQuery&gt;</strong><br /></li>
+<li><code>animationCallback</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a></strong></li>
 </ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></strong></p>
 <h4 id="getelements">getElements</h4>
 <p>Prepares a handful of references for dealing with a specific accordion header</p>
 <p><strong>Parameters</strong></p>
