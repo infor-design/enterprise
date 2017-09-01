@@ -410,6 +410,12 @@ div.multiselect {
       }
     }
   }
+
+  &.dropdown-short {
+    > .trigger {
+      margin-left: -18px;
+    }
+  }
 }
 
 .dropdown-search {
@@ -537,8 +543,11 @@ div.dropdown-xs,
 }
 
 // Shorter Drop Down Lists
+
+
+
 .dropdown-list.dropdown-short {
-  input {
+  .dropdown-search {
     @include font-size(12);
     padding: 5px 32px 5px 5px;
   }
@@ -653,7 +662,7 @@ div.dropdown-xs,
     }
 
     &.dropdown-short {
-      input {
+      .dropdown-search {
         @include font-size(12);
         padding: 5px 21px 5px 5px;
       }
@@ -750,6 +759,18 @@ html[dir='rtl'] {
 
     &.text-align-center {
       text-align: center;
+    }
+  }
+
+  .dropdown-list.dropdown-short {
+
+    .dropdown-search {
+      padding: 5px 5px 5px 32px;
+    }
+
+    li {
+      padding-left: 21px;
+      padding-right: 4px;
     }
   }
 
