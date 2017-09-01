@@ -247,7 +247,7 @@ define([
       expect(Locale.parseDate('10/28/2015', 'M/d/yyyy').getTime()).to.equal(new Date(2015, 9, 28).getTime());
       expect(Locale.parseDate('10282015', 'Mdyyyy').getTime()).to.equal(new Date(2015, 9, 28).getTime());
       expect(Locale.parseDate('10282015', 'Mdyyyy').getTime()).to.equal(new Date(2015, 9, 28).getTime());
-      expect(Locale.parseDate('10/28/99', 'MM/dd/yy').getTime()).to.equal(new Date(2099, 9, 28).getTime());
+      expect(Locale.parseDate('10/28/99', 'MM/dd/yy').getTime()).to.equal(new Date(1999, 9, 28).getTime());
 
       //We can parse either 4 or 2 digit month day
       expect(Locale.parseDate('10282015', 'Mdyyyy').getTime()).to.equal(new Date(2015, 9, 28).getTime());
