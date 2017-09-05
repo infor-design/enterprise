@@ -108,6 +108,7 @@
       'ClearSelection': {id: 'ClearSelection', value: '(Clear Selection)', comment: 'clear dropdown selection'},
       'Clock': {id: 'Clock', value: 'Clock', comment: 'Clock tooltip'},
       'Close': {id: 'Close', value: 'Close', comment: 'Tooltip for a Close Button Action'},
+      'Clickable': {id: 'Clickable', value: 'Clickable in editor', comment: 'Clickable in editor'},
       'Copy': {id: 'Copy', value: 'Copy', comment: 'Copy tooltip'},
       'Collapse': {id: 'Collapse', value: 'Collapse', comment: 'Collapse / close a tree/submenu'},
       'CollapseAppTray': {id: 'CollapseAppTray', value: 'Collapse App Tray', comment: 'Collapse App Tray tooltip'},

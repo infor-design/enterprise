@@ -239,7 +239,7 @@
      */
     setModalPrimaryBtn: function(field, modalBtn, isValid) {
       var modal = field.closest('.modal'),
-        modalFields = modal.find('[data-validate]:visible').add('select[data-validate], :checkbox[data-validate]'),
+        modalFields = modal.find('[data-validate]:visible, select[data-validate], :checkbox[data-validate]'),
         allValid = true;
 
       if (modalFields.length > 0) {
@@ -463,6 +463,7 @@
           }
 
           self.setErrorOnParent(field);
+          field.triggerHandler('isvalid', [result]);
 
         };
 
@@ -1158,6 +1159,7 @@
       api = field.data('validate'),
       doAction = function(isValid) {
         field.data('isValid', isValid);
+        field.triggerHandler('isvalid', [isValid]);
       };
 
     if (api && api.validate) {

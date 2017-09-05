@@ -11,6 +11,7 @@ The Message Component is used to show warning / error messages.
 
 **Parameters**
 
+-   `element`  
 -   `title` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Title text or content shown in the message
 -   `isError` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true, will show title styled as an error with an error icon
 -   `message` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The message content or text
@@ -18,7 +19,6 @@ The Message Component is used to show warning / error messages.
 -   `buttons` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Array of buttons to add to the message (see modal examples as well)
 -   `cssClass` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Extra Class to add to the dialog for customization.
 -   `returnFocus` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  JQuery Element selector to focus on return
--   `element`  
 
 ### destroy
 

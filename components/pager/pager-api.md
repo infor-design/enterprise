@@ -12,6 +12,7 @@ The Pager Component supports paging on lists.
 
 **Parameters**
 
+-   `element`  
 -   `componentAPI` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  If defined, becomes the definitive way to call methods on parent component.
 -   `type` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Different types of pagers: list, table and more
 -   `position` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Can be on 'bottom' or 'top'.
@@ -22,7 +23,6 @@ The Pager Component supports paging on lists.
 -   `pagesizes` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)**  -  Array of numbers of the page size selector
 -   `showPageSizeSelector` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If false will not show page size selector
 -   `indeterminate` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true will not show anything that lets you go to a specific page
--   `element`  
 
 ### updatePagingInfo
 

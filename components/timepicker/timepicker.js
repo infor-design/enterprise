@@ -337,7 +337,6 @@
           popupContent = $('<div class="timepicker-popup-content"></div>'),
           timeSeparator = this.getTimeSeparator(),
           textValue = '',
-          secondSelect,
           selected;
 
         this.initValues = self.getTimeFromField();

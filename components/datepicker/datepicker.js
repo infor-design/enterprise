@@ -1210,7 +1210,8 @@
 
       //Get the value from the field and set the internal variables or use current date
       setValueFromField: function() {
-        var fieldValue = this.element.val(),
+        var self = this,
+          fieldValue = this.element.val(),
           gregorianValue = fieldValue;
 
         if (this.isIslamic && fieldValue) {
@@ -1238,6 +1239,15 @@
           this.currentMonth = this.currentDateIslamic[1];
           this.currentDay = this.currentDateIslamic[2];
         }
+
+        // Check and fix two digit year for main input element
+        self.element.checkValidation();
+        self.element.one('isvalid.datepicker', function (e, isValid) {
+          if (isValid && self.element.val().trim() !== '') {
+            self.setValue(Locale.parseDate(self.element.val().trim(), this.pattern, false));
+          }
+        });
+
       },
 
       /**
@@ -1358,6 +1368,7 @@
           this.closeCalendar();
         }
 
+        this.element.off('blur.datepicker');
         this.trigger.remove();
         this.element.attr('data-mask', '');
 
@@ -1410,6 +1421,16 @@
 
         self.mask();
         this.handleKeys(this.element);
+
+        // Fix two digit year for main input element
+        self.element.on('blur.datepicker', function () {
+          self.element.one('isvalid.datepicker', function (e, isValid) {
+            if (isValid && self.element.val().trim() !== '') {
+              self.setValueFromField();
+            }
+          });
+        });
+
       }
 
     };

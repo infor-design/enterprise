@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Busy Indicator Test: Inside Tabs</h2>
+    <p>Related JIRA Ticket: <a class="hyperlink" href="https://jira.infor.com/browse/SOHO-4022" target="_blank">SOHO-4022</a></p>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="one-half column">
+    <div id="tabs-normal" class="tab-container">
+      <ul class="tab-list">
+        <li class="tab"><a href="#tabs-normal-contracts">Contracts</a></li>
+      </ul>
+      <div id="tabs-normal-contracts" class="tab-panel">
+        <button class="btn" id="busy-start-trigger" type="button">Fire "start" Event</button><br /><br>
+        <button class="btn" id="busy-complete-trigger" type="button">Fire "complete" Event</button><br>
+        <div id="standalone-busy" class="busy card"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br><br>
+<div style="height: 100px;"></div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+
+    $('#busy-start-trigger').click(function(e) {
+      e.preventDefault();
+      $('#standalone-busy').trigger('start.busyindicator');
+    });
+
+    $('#busy-complete-trigger').click(function(e) {
+      e.preventDefault();
+      $('#standalone-busy').trigger('complete.busyindicator');
+    });
+
+  });
+</script>

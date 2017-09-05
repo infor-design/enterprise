@@ -3168,7 +3168,7 @@ window.Chart = function(container) {
       .style('text-anchor', 'start');
     }
 
-    if (settings.xAxis.formatText) {
+    if (settings.xAxis && settings.xAxis.formatText) {
       svg.selectAll('.x.axis .tick text').each(function(i) {
         var elem = d3.select(this),
           text = d3.select(this).text(),

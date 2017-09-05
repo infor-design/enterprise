@@ -13,6 +13,7 @@ The About Dialog Component is displays information regarding the application.
 
 **Parameters**
 
+-   `element`  
 -   `appName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The Main Application Name to display in the header.
 -   `content` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Additional Text content to display at the top.
 -   `copyrightYear` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The year displayed in the copyright, defaults to current year.
@@ -20,7 +21,6 @@ The About Dialog Component is displays information regarding the application.
 -   `productName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Additional product name information to display.
 -   `useDefaultCopyright` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Add the Legal Approved Infor Copy Right Text.
 -   `version` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Semantic Version Number for example (4.0.0).
--   `element`  
 
 ### getDeviceSpecs
 

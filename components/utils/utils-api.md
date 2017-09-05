@@ -19,6 +19,7 @@
 -   [defer](#defer)
 -   [isAbove](#isabove)
 -   [isBelow](#isbelow)
+-   [HideFocus](#hidefocus)
 
 ## getHiddenSize
 
@@ -117,7 +118,7 @@ Takes an element that is currently hidden by some means (FX: "display: none;") a
 
 -   `el` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** The element being manipulated.
 -   `options` **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** incoming options.
--   `parentElement` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the parent element where a clone of this hidden element will be attached. (optional, default `undefined`)
+-   `parentElement` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>?** the parent element where a clone of this hidden element will be attached. (optional, default `undefined`)
 
 Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
@@ -191,3 +192,14 @@ Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 -   `breakpoint` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** matches one of the entries in the "Soho.breakpoints" object.
 
 Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+## HideFocus
+
+HideFocus Behavior
+Only shows the focus state on key entry (tabs or arrows).
+
+**Parameters**
+
+-   `element` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate))** 
+
+Returns **[HideFocus](#hidefocus)** 
