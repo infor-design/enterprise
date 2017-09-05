@@ -231,6 +231,8 @@ var DATE_MAX_VALUES = {
   'yy': 99,
   'yyyy': 9999,
   'h': 12,
+  'hh': 12,
+  'H': 24,
   'HH': 24,
   'mm': 60,
   'ss': 60,
@@ -380,10 +382,14 @@ window.Soho.masks.dateMask = function dateMask(rawValue, options) {
   var times = (function(symbols) {
     var sep = symbols.timeSeparator;
     return [
-      'HH' + sep + 'mm',
       'HH' + sep + 'mm' + sep + 'ss',
-      'h' + sep + 'mm',
+      'HH' + sep + 'mm',
+      'hh' + sep + 'mm' + sep + 'ss',
+      'hh' + sep + 'mm',
+      'H' + sep + 'mm' + sep + 'ss',
+      'H' + sep + 'mm',
       'h' + sep + 'mm' + sep + 'ss',
+      'h' + sep + 'mm'
     ];
   })(options.symbols);
 
