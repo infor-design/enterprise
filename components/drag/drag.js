@@ -28,6 +28,7 @@
         cloneAppendTo: null,
         containment: false,
         obstacle: false,
+        underElements: false,
         containmentOffset: {left: 0, top: 0}
       },
       settings = $.extend({}, defaults, options);
@@ -43,10 +44,12 @@
     * @param {String} cloneAppendTo  &nbsp;-&nbsp; Selector to append to for the clone ['body'|'parent'|'jquery object'] default:'body'
     * @param {Boolean} containment  &nbsp;-&nbsp; Constrains dragging to within the bounds of the specified element or region. Possible values: "parent", "document", "window".
     * @param {String} obstacle  &nbsp;-&nbsp; jQuery Selector of object(s) that you cannot drag into,
+    * @param {Boolean} underElements  &nbsp;-&nbsp; If set to true will return list of elements that are "underneath" the drag element
     * @param {String} containmentOffset  &nbsp;-&nbsp; How close to the containment object should we be allowed to drag in position form. `{left: 0, top: 0}`
     *
     */
     function Drag(element) {
+      this.settings = $.extend({}, settings);
       this.element = $(element);
       Soho.logTimeStart(pluginName);
       this.init();
@@ -66,6 +69,9 @@
 
         this.element.off('mouseup.draggable');
         $(document).off('mousemove.draggable mouseup.draggable');
+        if (this.settings.underElements) {
+          pos.underElements = this.getElementsFromPoint(pos.left, pos.top);
+        }
 
         this.element.trigger('dragend', pos);
         this.element.removeClass('is-dragging');
@@ -190,7 +196,51 @@
         applyCssStyle((this.clone || this.element), css, 'top');
         applyCssStyle((this.clone || this.element), css, 'left');
 
+        if (this.settings.underElements) {
+          css.underElements = this.getElementsFromPoint(css.left, css.top);
+        }
+
         this.element.trigger('drag', css);
+      },
+
+      /**
+      * Get elements from given point.
+      * @param {number} x &nbsp;-&nbsp; The x-coordinate of the Point.
+      * @param {number} y &nbsp;-&nbsp; The y-coordinate of the Point.
+      * @return {Array} List of all elements at the given point.
+      */
+      getElementsFromPoint: function(x, y) {
+        var elements = [];
+
+        if (document.elementsFromPoint) {
+          elements = document.elementsFromPoint(x, y);
+        }
+        else if (document.msElementsFromPoint) {
+          elements = document.msElementsFromPoint(x, y);
+        }
+        else {
+          var i, l, d, current,
+            max = 999,
+            pointerEvents = [];
+
+          while ((current = document.elementFromPoint(x,y)) && elements.indexOf(current) === -1 && current !== null && max > -1) {
+            max--;
+            // push the element and its current style
+            elements.push(current);
+            pointerEvents.push({
+              value: current.style.getPropertyValue('pointer-events') || '',
+              priority: current.style.getPropertyPriority('pointer-events')
+            });
+            // add "pointer-events: none", to get to the underlying element
+            current.style.setProperty('pointer-events', 'none', 'important');
+          }
+          // restore the previous pointer-events values
+          for (i = 0, l = elements.length; i < l; i++) {
+            d = pointerEvents[i];
+            elements[i].style.setProperty('pointer-events', d.value, d.priority);
+          }
+        }
+        return elements;
       },
 
       /**
