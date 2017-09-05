@@ -3,6 +3,7 @@
 ### Table of Contents
 
 -   [Drag](#drag)
+    -   [getElementsFromPoint](#getelementsfrompoint)
     -   [destroy](#destroy)
     -   [handleEvents](#handleevents)
 
@@ -20,7 +21,19 @@ Drag/Drop functions with touch support.
 -   `cloneAppendTo` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Selector to append to for the clone ['body'|'parent'|'jquery object'] default:'body'
 -   `containment` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Constrains dragging to within the bounds of the specified element or region. Possible values: "parent", "document", "window".
 -   `obstacle` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  jQuery Selector of object(s) that you cannot drag into,
+-   `underElements` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If set to true will return list of elements that are "underneath" the drag element
 -   `containmentOffset` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  How close to the containment object should we be allowed to drag in position form. `{left: 0, top: 0}`
+
+### getElementsFromPoint
+
+Get elements from given point.
+
+**Parameters**
+
+-   `x` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**  -  The x-coordinate of the Point.
+-   `y` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**  -  The y-coordinate of the Point.
+
+Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** List of all elements at the given point.
 
 ### destroy
 
