@@ -7,6 +7,7 @@
 -   [isElement](#iselement)
 -   [getDimensions](#getdimensions)
 -   [splice](#splice)
+-   [removeDuplicates](#removeduplicates)
 -   [extend](#extend)
 -   [fixSVGIcons](#fixsvgicons)
 -   [getViewportSize](#getviewportsize)
@@ -76,6 +77,16 @@ characters and/or adding new characters.
 -   `newSubStr` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The String that is spliced in.
 
 Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** A new string with the spliced substring.
+
+## removeDuplicates
+
+Takes a string with possible duplicate characters and returns a string
+containing ALL unique characters.  Useful for construction of REGEX objects
+with characters from an input field, etc.
+
+**Parameters**
+
+-   `str`  
 
 ## extend
 

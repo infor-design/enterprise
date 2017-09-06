@@ -1,6 +1,7 @@
 <div class="row">
   <div class="six columns">
-    <h2 style="color: red;">New Mask API / Dates (UNSTABLE)</h2>
+    <h2>New Mask API / Dates (UNSTABLE)</h2>
+    <p>JIRA Tickets: <a class="hyperlink" href="http://jira.infor.com/browse/SOHO-3849" target="_blank">SOHO-3849</a></p>
   </div>
 </div>
 
@@ -8,18 +9,28 @@
   <div class="six columns">
 
     <div class="field">
-      <label for="date-1">Short Date</label>
-      <input id="date-1" class="new-mask" data-options='{ "pattern": "##/##/####", "process": "date", "guide": true }' />
+      <label for="date-1">Short Date (U.S.)</label>
+      <input id="date-1" class="new-mask" data-options='{ "patternOptions": { "format": "M/d/yyyy" }, "process": "date", "guide": true }' />
     </div>
 
     <div class="field">
-      <label for="date-2">Short Date (AutoCorrected)</label>
-      <input id="date-2" class="new-mask" data-options='{ "pattern": "##/##/####", "process": "date", "autocorrect": true, "guide": true }' />
+      <label for="date-2">Medium Date (U.S.)</label>
+      <input id="date-2" class="new-mask" data-options='{ "patternOptions": { "format": "d MMM yyyy" }, "process": "date", "guide": true }' />
     </div>
 
     <div class="field">
-      <label for="time-1">Time</label>
-      <input id="time-1" class="new-mask" data-options='{ "pattern": "##:## am", "process": "time", "guide": true }' />
+      <label for="date-3">12-hour Time with Day Periods (U.S.)</label>
+      <input id="date-3" class="new-mask" data-options='{ "patternOptions": { "format": "h:mm a" }, "process": "date", "guide": true }' />
+    </div>
+
+    <div class="field">
+      <label for="date-4">24-hour Time (U.S.)</label>
+      <input id="date-4" class="new-mask" data-options='{ "patternOptions": { "format": "HH:mm" }, "process": "date", "guide": true }' />
+    </div>
+
+    <div class="field">
+      <label for="date-5">Date/Time on the Same Field</label>
+      <input id="date-5" class="new-mask" data-options='{ "patternOptions": { "format": "d MMM yyyy, h:mm a" }, "process": "date", "guide": true }' />
     </div>
 
   </div>

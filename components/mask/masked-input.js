@@ -337,6 +337,18 @@
           // Will automatically set to "true" if a negative symbol is detected inside the mask.
           this.settings.patternOptions.allowNegative = this.settings.pattern.indexOf('-') !== -1;
 
+          // Detect the thousands separator and see if we use it.
+          var thousandsSep = this.settings.patternOptions && this.settings.patternOptions.symbols && this.settings.patternOptions.symbols.thousands ?
+            this.settings.patternOptions.symbols.thousands :
+            Locale.currentLocale.data.numbers.group;
+
+          var hasThousandsInPattern = this.settings.pattern.indexOf(thousandsSep) !== -1;
+          this.settings.patternOptions.allowThousandsSeparator = hasThousandsInPattern;
+          if (hasThousandsInPattern) {
+            this.settings.patternOptions.symbols = this.settings.patternOptions.symbols || {};
+            this.settings.patternOptions.symbols.thousands = thousandsSep;
+          }
+
           // The new masking algorithm requires an "integerLimit" defined to function.
           // This grabs the number of items currently inside this part of the mask, and sets it.
           var decimal = this.settings.patternOptions && this.settings.patternOptions.symbols && typeof this.settings.patternOptions.symbols.decimal === 'string' ?

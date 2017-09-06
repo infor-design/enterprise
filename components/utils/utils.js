@@ -623,6 +623,20 @@
   };
 
 
+  /**
+   * Takes a string with possible duplicate characters and returns a string
+   * containing ALL unique characters.  Useful for construction of REGEX objects
+   * with characters from an input field, etc.
+   */
+  window.Soho.string.removeDuplicates = function removeDuplicates(str) {
+    return str
+      .split('')
+      .filter(function(item, pos, self) {
+        return self.indexOf(item) === pos;
+      })
+      .join('');
+  };
+
 
   /**
    * Object deep copy
