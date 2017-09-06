@@ -4304,7 +4304,8 @@ $.fn.datagrid = function(options) {
         count = totals;
       }
 
-      var countText = '(' + count + ' ' + Locale.translate(count === 1 ? 'Result' : 'Results') + ')';
+      var countText = '(' + Locale.formatNumber(count, {style: 'integer'}) + ' ' + Locale.translate(count === 1 ? 'Result' : 'Results') + ')';
+
       if (self.settings.resultsText) {
         if (typeof self.settings.resultsText === 'function') {
           countText = self.settings.resultsText(self, count);

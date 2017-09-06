@@ -7,7 +7,7 @@ Npm: http://npm.infor.com
 Full Jira Release Notes: http://bit.ly/2w6X8Xw
 
 ### Demo Site
-http://usalvlhlpool1.infor.com/4.3.1/components
+http://usalvlhlpool1.infor.com/4.3.2/components/
 
 ### Key New Features
 - More Angular Wrappers (About, Color Picker, Accordion, Popover)
@@ -43,7 +43,7 @@ Npm: http://npm.infor.com
 Full Jira Release Notes: http://bit.ly/2w6X8Xw
 
 ### Demo Site
-http://usalvlhlpool1.infor.com/4.3.1/components
+http://usalvlhlpool1.infor.com/4.3.1/components/
 
 ### Key New Features
 - More Angular Wrappers (About, Color Picker, Accordion, Popover)
