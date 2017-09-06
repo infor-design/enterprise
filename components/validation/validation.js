@@ -1093,21 +1093,36 @@
         check: function(value, field) {
           value = value.replace(/ /g, '');
           this.message = Locale.translate('InvalidTime');
-          var timepickerSettings = field && field.data('timepicker') ? field.data('timepicker').settings : {},
+          var timepicker = field && field.data('timepicker'),
+		    timepickerSettings = timepicker ? field.data('timepicker').settings : {},
             pattern = timepickerSettings && timepickerSettings.timeFormat ? timepickerSettings.timeFormat : Locale.calendar().timeFormat,
             is24Hour = (pattern.match('HH') || []).length > 0,
             maxHours = is24Hour ? 24 : 12,
-            colon = value.indexOf(Locale.calendar().dateFormat.timeSeparator),
+            sep = value.indexOf(Locale.calendar().dateFormat.timeSeparator),
             valueHours = 0,
-            valueMins,
-            valueM;
+            valueMins = 0,
+			valueSecs = 0,
+			valueM,
+			timeparts;
 
           if (value === '') {
             return true;
           }
 
-          valueHours = parseInt(value.substring(0, colon));
-          valueMins = parseInt(value.substring(colon + 1, colon + 3));
+		  valueHours = parseInt(value.substring(0, sep));
+          valueMins = parseInt(value.substring(sep + 1,sep + 3));
+		  
+		  //getTimeFromField
+		  if (timepicker) {
+			  timeparts = timepicker.getTimeFromField();
+			  
+			  valueHours = timeparts.hours;
+			  valueMins = timeparts.minutes;
+			  
+			  if (timepicker.hasSeconds()) {
+			    valueSecs = timeparts.seconds;
+			  }
+		  }
 
           if (valueHours.toString().length < 1 || isNaN(valueHours) || parseInt(valueHours) < 0 || parseInt(valueHours) > maxHours) {
             return false;
@@ -1115,7 +1130,10 @@
           if (valueMins.toString().length < 1 || isNaN(valueMins) || parseInt(valueMins) < 0 || parseInt(valueMins) > 59) {
             return false;
           }
-
+          if (valueSecs.toString().length < 1 || isNaN(valueSecs) || parseInt(valueSecs) < 0 || parseInt(valueSecs) > 59) {
+            return false;
+          }
+		  
           // AM/PM
           if (!is24Hour) {
             if (parseInt(valueHours) < 1) {
