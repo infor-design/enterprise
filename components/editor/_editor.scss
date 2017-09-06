@@ -185,6 +185,17 @@
   span {
     font-weight: inherit;
   }
+
+  .hyperlink {
+    cursor: auto;
+    position: static;
+    text-decoration: none;
+
+    &[contenteditable="false"] {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
 }
 
 // Toolbar
