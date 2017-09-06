@@ -68,7 +68,6 @@
         this.textInput.on('keypress.fileupload', function (e) {
           if (e.which === 13 || e.which === 32) {
             e.stopPropagation();
-            alert('ok1');
             elem.find('input').trigger('click');
           }
         });
@@ -76,7 +75,6 @@
         if (!hasInlineLabel) {
           svg = elem.parent().find('label.fileupload');
           svg.on('click', function () {
-            alert('ok2');
             elem.parent().find('[type="file"]').trigger('click');
           });
         }
