@@ -625,10 +625,13 @@
         var self = this,
           val = value || this.element.val(),
           sep = this.getTimeSeparator(),
-          parts = val.split(sep),
+          parts,
           endParts,
           timeparts = {};
 
+		val = val.replace(/[T\s:.-]/g, sep).replace(/z/i, '');
+		parts = val.split(sep);
+		
         // Check the last element in the array for a time period, and add it as an array
         // member if necessary
         if (!this.is24HourFormat()) {
