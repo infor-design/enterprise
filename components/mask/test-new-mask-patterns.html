@@ -1,0 +1,62 @@
+<div class="row">
+  <div class="six columns">
+    <h2>New Mask API / Component Tests</h2>
+    <p>JIRA Tickets: <a class="hyperlink" href="http://jira.infor.com/browse/SOHO-3849" target="_blank">SOHO-3849</a></p>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="six columns">
+
+    <div class="field">
+      <label for="credit-card-1">Credit Card Mask</label>
+      <input id="credit-card-1" class="new-mask" data-options='{ "pattern" : "####-####-####-####", "guide": true }' />
+    </div>
+
+    <div class="field">
+      <label for="credit-card-2">Credit Card Mask (keep character positions in-tact)</label>
+      <input id="credit-card-2" class="new-mask" data-options='{ "pattern" : "####-####-####-####", "guide": true, "keepCharacterPositions": true }' />
+    </div>
+
+    <div class="field">
+      <label for="credit-card-3">Credit Card Mask (no guide - legacy)</label>
+      <input id="credit-card-3" class="new-mask" data-options='{ "pattern" : "####-####-####-####", "guide" : false }' />
+    </div>
+
+  </div>
+  <div class="six columns">
+
+    <div class="field">
+      <label for="junk">Junk Input (copy this and paste it)</label>
+      <input id="junk" value="x1x2x3x4x5x6x7x8x9x0x1x2x3x4x5x6" />
+    </div>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="six columns">
+    <h2>Other Pattern Masks</h2>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="six columns">
+
+    <div class="field">
+      <label for="phone-number-1">Phone Number</label>
+      <input id="phone-number-1" class="new-mask" data-options='{ "pattern" : "(###) ###-####", "guide" : true }' />
+    </div>
+
+    <div class="field">
+      <label for="phone-number-2">Phone Number (keep character positions)</label>
+      <input id="phone-number-2" class="new-mask" data-options='{ "pattern" : "(###) ###-####", "guide" : true, "keepCharacterPositions": true }' />
+    </div>
+
+    <div class="field">
+      <label for="phone-number-3">Phone Number (no guide)</label>
+      <input id="phone-number-3" class="new-mask" data-options='{ "pattern" : "(###) ###-####", "guide" : false }' />
+    </div>
+
+  </div>
+</div>

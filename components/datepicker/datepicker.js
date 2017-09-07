@@ -366,6 +366,13 @@
           events = {'date': 'blur', 'availableDate': 'blur'},
           customValidation = this.element.attr('data-validate'),
           customEvents = this.element.attr('data-validation-events'),
+          maskOptions = {
+            process: 'date',
+            keepCharacterPositions: true,
+            patternOptions: {
+              format: this.pattern
+            }
+          },
           mask = this.pattern.toLowerCase()
                    .replace(/yyyy/g,'####')
                    .replace(/mmmm/g,'*********')
@@ -399,11 +406,7 @@
           }
         }
 
-        this.element
-          .attr({
-            'data-mask': mask,
-            'data-mask-mode': 'date'
-          }).mask();
+        this.element.mask(maskOptions);
 
         if (!this.settings.customValidation) {
           this.element

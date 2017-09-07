@@ -434,65 +434,69 @@
 
   // Replacement for String.fromCharCode() that takes meta keys into account when determining which
   // character key was pressed.
+  window.Soho.utils.actualChar = function(e) {
+    var key = e.which,
+      character = '',
+      toAscii = {
+        '188': '44',
+        //'109': '45', // changes "m" to "-" when using keypress
+        '190': '46',
+        '191': '47',
+        '192': '96',
+        '220': '92',
+        '222': '39',
+        '221': '93',
+        '219': '91',
+        '173': '45',
+        '187': '61', //IE Key codes
+        '186': '59', //IE Key codes
+        '189': '45'  //IE Key codes
+      },
+      shiftUps = {
+        '96': '~',
+        '49': '!',
+        '50': '@',
+        '51': '#',
+        '52': '$',
+        '53': '%',
+        '54': '^',
+        '55': '&',
+        '56': '*',
+        '57': '(',
+        '48': ')',
+        '45': '_',
+        '61': '+',
+        '91': '{',
+        '93': '}',
+        '92': '|',
+        '59': ':',
+        '37': '%',
+        '38': '&',
+        '39': '\"',
+        '44': '<',
+        '46': '>',
+        '47': '?'
+      };
+
+    // Normalize weird keycodes
+    if (toAscii.hasOwnProperty(key)) {
+      key = toAscii[key];
+    }
+
+    // Convert Keycode to Character String
+    if (!e.shiftKey && (key >= 65 && key <= 90)) {
+      character = String.fromCharCode(key + 32);
+    } else if (e.shiftKey && shiftUps.hasOwnProperty(key)) { // User was pressing Shift + any key
+      character = shiftUps[key];
+    } else {
+      character = String.fromCharCode(key);
+    }
+
+    return character;
+  };
+
   $.actualChar = function(e) {
-      var key = e.which,
-        character = '',
-        toAscii = {
-          '188': '44',
-          //'109': '45', // changes "m" to "-" when using keypress
-          '190': '46',
-          '191': '47',
-          '192': '96',
-          '220': '92',
-          '222': '39',
-          '221': '93',
-          '219': '91',
-          '173': '45',
-          '187': '61', //IE Key codes
-          '186': '59', //IE Key codes
-          '189': '45'  //IE Key codes
-        },
-        shiftUps = {
-          '96': '~',
-          '49': '!',
-          '50': '@',
-          '51': '#',
-          '52': '$',
-          '53': '%',
-          '54': '^',
-          '55': '&',
-          '56': '*',
-          '57': '(',
-          '48': ')',
-          '45': '_',
-          '61': '+',
-          '91': '{',
-          '93': '}',
-          '92': '|',
-          '59': ':',
-          '37': '%',
-          '38': '&',
-          '39': '\"',
-          '44': '<',
-          '46': '>',
-          '47': '?'
-        };
-
-      // Normalize weird keycodes
-      if (toAscii.hasOwnProperty(key)) {
-        key = toAscii[key];
-      }
-
-      // Convert Keycode to Character String
-      if (!e.shiftKey && (key >= 65 && key <= 90)) {
-        character = String.fromCharCode(key + 32);
-      } else if (e.shiftKey && shiftUps.hasOwnProperty(key)) { // User was pressing Shift + any key
-        character = shiftUps[key];
-      } else {
-        character = String.fromCharCode(key);
-      }
-
-      return character;
+    return Soho.utils.actualChar(e);
   };
 
   window.Soho.utils.equals = function equals(a, b) {
@@ -617,6 +621,30 @@
   window.Soho.string.splice = function splice(str, start, delCount, newSubStr) {
     return str.slice(0, start) + newSubStr + str.slice(start + Math.abs(delCount));
   };
+
+
+  /**
+   * Takes a string with possible duplicate characters and returns a string
+   * containing ALL unique characters.  Useful for construction of REGEX objects
+   * with characters from an input field, etc.
+   */
+  window.Soho.string.removeDuplicates = function removeDuplicates(str) {
+    return str
+      .split('')
+      .filter(function(item, pos, self) {
+        return self.indexOf(item) === pos;
+      })
+      .join('');
+  };
+
+
+  /**
+   * Object deep copy
+   * For now, alias jQuery.extend
+   * Eventually we'll replace this with a non-jQuery extend method.
+   */
+  window.Soho.utils.extend = $.extend;
+
 
   /**
    * Hack for IE11 and SVGs that get moved around/appended at inconvenient times.
@@ -791,6 +819,29 @@
   $.fn.getHiddenSize = function(options) {
     return window.Soho.utils.getHiddenSize(this, options);
   };
+
+
+  /**
+   * Checks if a specific input is a String
+   * @param {?} value
+   * @returns {boolean}
+   */
+  window.Soho.utils.isString = function isString(value) {
+    return typeof value === 'string' || value instanceof String;
+  };
+
+
+  /**
+   * Checks if a specific input is a Number
+   * @param {?} value
+   * @returns {boolean}
+   */
+  window.Soho.utils.isNumber = function isNumber(value) {
+    return typeof value === 'number' && value.length === undefined && !isNaN(value);
+  };
+
+
+
 
   //==================================================================
   // Simple Behaviors
@@ -1027,6 +1078,42 @@
    */
   $.fn.smoothScroll = function(target, duration) {
     return window.Soho.behaviors.smoothScrollTo(this, target, duration);
+  };
+
+
+  /**
+   * Uses 'requestAnimationFrame' or 'setTimeout' to defer a function
+   * @returns {requestAnimationFrame|setTimeout}
+   */
+  window.Soho.behaviors.defer = function defer(callback, timer) {
+    var deferMethod = typeof window.requestAnimationFrame !== 'undefined' ? window.requestAnimationFrame : setTimeout;
+    return deferMethod(callback, timer);
+  };
+
+
+
+  /**
+   * Safely changes the position of a text caret inside of an editable element.
+   * In most cases, will call "setSelectionRange" on an editable element immediately, but in some
+   * cases, will be deferred with `requestAnimationFrame` or `setTimeout`.
+   * @param {HTMLElement} element
+   * @param {Number} startPos
+   * @param {Number} endPos
+   */
+  window.Soho.utils.safeSetSelection = function safeSetSelection(element, startPos, endPos) {
+    if (startPos && endPos === undefined) {
+      endPos = startPos;
+    }
+
+    if (document.activeElement === element) {
+      if (Soho.env.os.name === 'android') {
+        Soho.behaviors.defer(function() {
+          element.setSelectionRange(startPos, endPos, 'none');
+        }, 0);
+      } else {
+        element.setSelectionRange(startPos, endPos, 'none');
+      }
+    }
   };
 
   //==================================================================
