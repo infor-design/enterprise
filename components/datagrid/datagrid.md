@@ -67,6 +67,17 @@ A Read-Only Datagrid uses "Formatters" to render cell content. A number of these
 
 ```
 
+## Column Settings
+-   **Text** Formats the display value as a straight text element in the grid cell.
+-   **Input** Move focus to the adjacent column's cell. There is no wrap at the end or beginning of columns.
+
+
+## Formatters
+
+-   **Text** Formats the display value as a straight text element in the grid cell.
+-   **Input** Move focus to the adjacent column's cell. There is no wrap at the end or beginning of columns.
+
+
 ## Keyboard Shortcuts
 
 -   **Tab  **The initial tab enters the grid with focus on the first cell of the first row, often a header. A second tab moves out of the grid to the next tab stop on the page. Once focus is established in the grid, a TAB into or a Shift Tab into the grid will return to the cell which last had focus.
