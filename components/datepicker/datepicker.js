@@ -366,6 +366,13 @@
           events = {'date': 'blur', 'availableDate': 'blur'},
           customValidation = this.element.attr('data-validate'),
           customEvents = this.element.attr('data-validation-events'),
+          maskOptions = {
+            process: 'date',
+            keepCharacterPositions: true,
+            patternOptions: {
+              format: this.pattern
+            }
+          },
           mask = this.pattern.toLowerCase()
                    .replace(/yyyy/g,'####')
                    .replace(/mmmm/g,'*********')
@@ -399,11 +406,7 @@
           }
         }
 
-        this.element
-          .attr({
-            'data-mask': mask,
-            'data-mask-mode': 'date'
-          }).mask();
+        this.element.mask(maskOptions);
 
         if (!this.settings.customValidation) {
           this.element
@@ -1207,7 +1210,8 @@
 
       //Get the value from the field and set the internal variables or use current date
       setValueFromField: function() {
-        var fieldValue = this.element.val(),
+        var self = this,
+          fieldValue = this.element.val(),
           gregorianValue = fieldValue;
 
         if (this.isIslamic && fieldValue) {
@@ -1235,6 +1239,15 @@
           this.currentMonth = this.currentDateIslamic[1];
           this.currentDay = this.currentDateIslamic[2];
         }
+
+        // Check and fix two digit year for main input element
+        self.element.checkValidation();
+        self.element.one('isvalid.datepicker', function (e, isValid) {
+          if (isValid && self.element.val().trim() !== '') {
+            self.setValue(Locale.parseDate(self.element.val().trim(), self.pattern, false));
+          }
+        });
+
       },
 
       /**
@@ -1355,6 +1368,7 @@
           this.closeCalendar();
         }
 
+        this.element.off('blur.datepicker');
         this.trigger.remove();
         this.element.attr('data-mask', '');
 
@@ -1407,6 +1421,16 @@
 
         self.mask();
         this.handleKeys(this.element);
+
+        // Fix two digit year for main input element
+        self.element.on('blur.datepicker', function () {
+          self.element.one('isvalid.datepicker', function (e, isValid) {
+            if (isValid && self.element.val().trim() !== '') {
+              self.setValueFromField();
+            }
+          });
+        });
+
       }
 
     };

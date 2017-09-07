@@ -328,7 +328,7 @@
         dateStringParts,
         dateObj = {},
         isDateTime = (dateFormat.toLowerCase().indexOf('h') > -1),
-		isUTC = (dateString.toLowerCase().indexOf('z') > -1),
+        isUTC = (dateString.toLowerCase().indexOf('z') > -1),
         i, l;
 
       if (isDateTime) {
@@ -462,12 +462,25 @@
 
             break;
           case 'yy':
-            dateObj.year = parseInt('20'+value, 10);
+            dateObj.year = this.twoToFourDigitYear(value);
             break;
           case 'yyyy':
-            dateObj.year = value;
+            dateObj.year = (value.length === 2) ?
+              this.twoToFourDigitYear(value) : value;
             break;
           case 'h':
+            if (numberValue < 0 || numberValue > 12) {
+              return;
+            }
+            dateObj.h = value;
+            break;
+          case 'hh':
+            if (numberValue < 0 || numberValue > 12) {
+              return;
+            }
+            dateObj.h = value.length === 1 ? '0'+value : value;
+            break;
+          case 'H':
             if (numberValue < 0 || numberValue > 12) {
               return;
             }
@@ -477,7 +490,7 @@
             if (numberValue < 0 || numberValue > 24) {
               return;
             }
-            dateObj.h = value;
+            dateObj.h = value.length === 1 ? '0'+value : value;
             break;
 
           case 'ss':
@@ -624,6 +637,10 @@
 
       return (this.isValidDate(dateObj.return) ? dateObj.return : undefined);
 
+    },
+
+    twoToFourDigitYear: function (twoDigitYear) {
+      return parseInt((twoDigitYear > 39 ? '19' : '20') + twoDigitYear, 10);
     },
 
     getDatePart: function (formatParts, dateStringParts, filter1, filter2, filter3) {

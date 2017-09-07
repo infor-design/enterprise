@@ -19,11 +19,11 @@ The Textarea Component wraps a standard HTML Textarea element and provides addit
 
 **Parameters**
 
+-   `element`  
 -   `characterCounter` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Displays a counter that counts down from the maximum length allowed.
 -   `printable` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Determines whether or not the text area can be displayed on a printed page.
 -   `charRemainingText` **(null | [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))**  -  Text that will be used in place of the "remaining" text.
 -   `charMaxText` **(null | [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))**  -  Text that will be used in place of the "Max" text.
--   `element`  
 
 ### isPrintable
 

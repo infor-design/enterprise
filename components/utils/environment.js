@@ -133,7 +133,8 @@
       // Environment object provides JS-friendly way to figure out our browser support
       window.Soho.env = {
         browser: {},
-        os: {}
+        os: {},
+        rtl: $('html').attr('dir') === 'rtl'
       };
 
       // Get the name of the paste event.  Could be "paste" or "input" based on the browser.
