@@ -73,16 +73,6 @@ function getRegexForPart(part, type) {
 
 
 /**
- * Gets an array of Regex objects matching the number of digits present in a source string
- * @param {String} part
- * @returns {Array}
- */
-function getAlphasForPart(part) {
-
-}
-
-
-/**
  * Soho Number Mask Function
  * @param {String} rawValue
  * @param {Object} options
