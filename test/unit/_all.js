@@ -3,7 +3,7 @@ define([
   'intern/chai!expect',
   //'test/unit/_sanity',
   'test/unit/locale/common',
-  'test/unit/mask/common'
+  //'test/unit/mask/common'
 ], function() {
 
   'use strict';
