@@ -8,7 +8,7 @@ label.fileupload {
   top: 18px;
 
   // Label
-  span:not(.audible):not(.icon-dirty) {
+  span.trigger {
     cursor: pointer;
     display: inline-block;
     height: 34px;
@@ -37,27 +37,31 @@ label.fileupload {
       }
     }
   }
+}
 
-  // Make this flow offscreen
-  input[type="file"] {
-    left: -10000px;
-    position: fixed;
+// Make this flow offscreen
+label.fileupload input[type="file"],
+input.fileupload[type="file"] {
+  left: -10000px;
+  position: fixed;
 
-    &:disabled + span:not(.audible) {
+  &:disabled + span:not(.audible),
+  &:disabled + label.fileupload {
+
+    .trigger {
       cursor: default;
+    }
 
+    svg {
+      fill: $input-disabled-border-color;
+    }
+
+    &:hover {
       svg {
         fill: $input-disabled-border-color;
       }
-
-      &:hover {
-        svg {
-          fill: $input-disabled-border-color;
-        }
-      }
     }
   }
-
 }
 
 .field-fileupload {

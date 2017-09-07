@@ -1267,7 +1267,7 @@
             types = clipboardData.types;
             // jshint undef:false
             if ((types instanceof DOMStringList && types.contains('text/html')) ||
-                (types.indexOf && types.indexOf('text/html') !== -1)) {
+                (types.indexOf && types.indexOf('text/html') !== -1) || self.isIeEdge) {
             // jshint undef:true
               if (self.isIeEdge) {
                 pastedData =  e.originalEvent.clipboardData.getData();

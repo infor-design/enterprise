@@ -113,10 +113,14 @@
       });
 
       //Link on to the current object and perform validation.
-      this.inputs.filter('input, textarea, div').filter(attribs).not('input[type=checkbox], [readonly]').each(function () {
+      this.inputs.filter('input, textarea, div').filter(attribs).not('input[type=checkbox]').each(function () {
         var field = $(this),
         attribs = field.attr('data-validation-events'),
         events = (attribs ? attribs : 'blur.validate change.validate keyup.validate');
+
+        if (field.is('[readonly]') && !field.parent().is('.field-fileupload')) {
+          return;
+        }
 
         events = self.extractEvents(events);
 
@@ -815,6 +819,10 @@
 
       if (field.parent().is('.editor-container')) {
         field.parent().removeClass('is-error');
+      }
+
+      if (field.closest('.field-fileupload').length > -1) {
+        field.closest('.field-fileupload').find('input.error').removeClass('error');
       }
 
       // Enable primary button in modal
