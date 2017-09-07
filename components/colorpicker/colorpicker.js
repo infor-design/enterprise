@@ -162,7 +162,9 @@
           this.swatch = $('<span class="swatch"></span>').prependTo(this.container);
 
           //Add Masking to show the #
-          colorpicker.attr('data-mask', '*******').mask();
+          colorpicker.mask({
+            pattern: ['#', /[0-9a-fA-F]/, /[0-9a-fA-F]/, /[0-9a-fA-F]/, /[0-9a-fA-F]/, /[0-9a-fA-F]/, /[0-9a-fA-F]/ ]
+          });
         }
 
         this.icon = $.createIconElement('dropdown')
