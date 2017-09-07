@@ -1244,7 +1244,7 @@
         self.element.checkValidation();
         self.element.one('isvalid.datepicker', function (e, isValid) {
           if (isValid && self.element.val().trim() !== '') {
-            self.setValue(Locale.parseDate(self.element.val().trim(), this.pattern, false));
+            self.setValue(Locale.parseDate(self.element.val().trim(), self.pattern, false));
           }
         });
 
