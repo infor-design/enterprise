@@ -1,0 +1,243 @@
+
+<div class="row">
+  <div class="twelve columns">
+      <h2 class="fieldset-title">ListView  - Footer Navigation</h2>
+  </div>
+</div>
+
+<div class="row">
+
+  <!-- listview-1 -->
+  <div class="one-third column">
+    <div class="card" >
+      <div class="card-header">
+        <h2 class="card-title">Compressors</h2>
+        <button class="btn-actions" type="button">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">action one</a></li>
+          <li><a href="#">action two</a></li>
+        </ul>
+      </div>
+
+      <div class="card-content">
+        <div class="listview" data-init="false" id="listview-1"></div>
+      </div>
+      <div class="card-footer center-text">
+        <button type="button" class="btn" title="Load More" id="btn-more">
+          <span>LOAD MORE</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- listview-2 -->
+  <div class="one-third column">
+    <div class="card" >
+      <div class="card-header">
+        <h2 class="card-title">Compressors</h2>
+        <button class="btn-actions" type="button">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">action one</a></li>
+          <li><a href="#">action two</a></li>
+        </ul>
+      </div>
+
+      <div class="card-content">
+        <div class="listview" data-init="false" id="listview-2"></div>
+      </div>
+      <div class="card-footer center-text">
+        <div class="busy-sm" id="container-lazy" data-options="{'displayDelay': 10, 'transparentOverlay': true}">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- listview-3 -->
+  <div class="one-third column">
+    <div class="card" >
+      <div class="card-header">
+        <h2 class="card-title">Compressors</h2>
+        <button class="btn-actions" type="button">
+          <span class="audible">Actions</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">action one</a></li>
+          <li><a href="#">action two</a></li>
+        </ul>
+      </div>
+
+      <div class="card-content">
+        <div class="listview" data-init="false" id="listview-3"></div>
+      </div>
+      <div class="card-footer">
+        <button type="button" class="btn" title="View All Accounts" id="btn-view-all">
+          <span>View All Accounts</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+
+    var getUrl = function(pageNum, pageSize) {
+      return '{{basepath}}api/compressors?pageNum='+ pageNum +'&pageSize='+ pageSize;
+    };
+
+    // listview-1 ==============================================================
+    var lv1 = {
+      container: $('#listview-1'),
+      footerBtn: $('#btn-more'),
+      data: [],
+      resData: [],
+      pageNum: 1,
+      pageSize: 5
+    };
+
+    // Initialization
+    lv1.compressors = $.get({url: getUrl(lv1.pageNum, lv1.pageSize)});
+    $.when(lv1.compressors).then(function() {
+      if (lv1.compressors.responseJSON) {
+        lv1.data = lv1.compressors.responseJSON.data;
+      }
+      lv1.container.listview({
+        dataset: lv1.data,
+        template: $('#tmpl-footernav').html()
+      });
+    });
+
+    // Load more button
+    lv1.footerBtn.on('click', function() {
+      lv1.pageNum++;
+      lv1.compressors = $.get({url: getUrl(lv1.pageNum, lv1.pageSize)});
+
+      $.when(lv1.compressors).then(function() {
+        if (lv1.compressors.responseJSON) {
+          lv1.resData = lv1.compressors.responseJSON.data;
+          lv1.data.push.apply(lv1.data, lv1.resData);
+          lv1.container.trigger('updated');
+        }
+      });
+    });
+
+
+
+    // listview-2 ==============================================================
+    var lv2 = {
+      container: $('#listview-2'),
+      containerLazy: $('#container-lazy'),
+      data: [],
+      resData: [],
+      pageNum: 1,
+      pageSize: 5,
+      processScroll: true,
+      threshold: 10
+    };
+
+    // Initialization
+    lv2.compressors = $.get({url: getUrl(lv2.pageNum, lv2.pageSize)});
+    $.when(lv2.compressors).then(function() {
+      if (lv2.compressors.responseJSON) {
+        lv2.data = lv2.compressors.responseJSON.data;
+      }
+      lv2.container.listview({
+        dataset: lv2.data,
+        template: $('#tmpl-footernav').html()
+      });
+    });
+
+    // Loadding more with scroll
+    lv2.container.on('scroll', function(e) {
+      if (lv2.processScroll  && lv2.container.scrollTop() > lv2.container.prop('scrollHeight') - lv2.container.height() - lv2.threshold) {
+        lv2.processScroll = false;
+        lv2.containerLazy.trigger('start.busyindicator');
+        lv2.pageNum++;
+        lv2.compressors = $.get({url: getUrl(lv2.pageNum, lv2.pageSize)});
+        $.when(lv2.compressors).then(function() {
+          if (lv2.compressors.responseJSON) {
+            lv2.resData = lv2.compressors.responseJSON.data;
+            lv2.data.push.apply(lv2.data, lv2.resData);
+            lv2.container.trigger('updated');
+            lv2.containerLazy.trigger('complete.busyindicator');
+          }
+          lv2.processScroll = true;
+        });
+      }
+    });
+
+
+
+    // listview-3 ==============================================================
+    var lv3 = {
+      container: $('#listview-3'),
+      footerBtn: $('#btn-view-all'),
+      pageNum: 1,
+      pageSize: 5
+    };
+
+    // Initialization
+    lv3.compressors = $.get({url: getUrl(lv3.pageNum, lv3.pageSize)});
+    $.when(lv3.compressors).then(function() {
+      if (lv3.compressors.responseJSON) {
+        lv3.container.listview({
+          dataset: lv3.compressors.responseJSON.data,
+          template: $('#tmpl-footernav').html()
+        });
+      }
+    });
+
+    // View all accounts button
+    lv3.footerBtn.on('click', function() {
+      $('body').message({
+        title: 'View All Accounts',
+        message: 'To view all accounts, List all of accounts can bind here.',
+        returnFocus: $(this),
+        buttons: [{
+          text: 'OK',
+          click: function() {
+            $(this).modal('close');
+          },
+          isDefault: true
+        }]
+      });
+    });
+
+
+  });
+</script>
+
+
+
+<!--== Listview template =================================================== -->
+{{={{{ }}}=}}
+<script id="tmpl-footernav" type="text/html">
+  <ul>
+    {{#dataset}}
+      {{#disabled}}
+        <li class="is-disabled" style="position: relative;">
+      {{/disabled}}
+      {{^disabled}}
+        <li style="position: relative;">
+      {{/disabled}}
+        <p class="listview-heading">{{productName}}</p>
+        <p class="listview-subheading">{{activity}}</p>
+      </li>
+    {{/dataset}}
+  </ul>
+</script>
