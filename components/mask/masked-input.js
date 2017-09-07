@@ -279,6 +279,10 @@
     _replaceLegacySettings: function() {
       var modes = ['group', 'number', 'date', 'time'];
 
+      // pre-set a bunch of objects if they don't already exist
+      this.settings.patternOptions = this.settings.patternOptions || {};
+      this.settings.patternOptions.symbols = this.settings.patternOptions.symbols || {};
+
       //======================================
       // Deprecated as of v4.3.2
       //======================================
@@ -335,7 +339,11 @@
         if (typeof this.settings.pattern === 'string') {
           // If "negative" is defined, you can type the negative symbol in front of the number.
           // Will automatically set to "true" if a negative symbol is detected inside the mask.
-          this.settings.patternOptions.allowNegative = this.settings.pattern.indexOf('-') !== -1;
+          var allowNegative = this.settings.pattern.indexOf('-') !== -1;
+          if (allowNegative) {
+            this.settings.patternOptions.allowNegative = allowNegative;
+            this.settings.patternOptions.symbols.negative = '-';
+          }
 
           // Detect the thousands separator and see if we use it.
           var thousandsSep = this.settings.patternOptions && this.settings.patternOptions.symbols && this.settings.patternOptions.symbols.thousands ?
@@ -345,16 +353,24 @@
           var hasThousandsInPattern = this.settings.pattern.indexOf(thousandsSep) !== -1;
           this.settings.patternOptions.allowThousandsSeparator = hasThousandsInPattern;
           if (hasThousandsInPattern) {
-            this.settings.patternOptions.symbols = this.settings.patternOptions.symbols || {};
             this.settings.patternOptions.symbols.thousands = thousandsSep;
           }
 
           // The new masking algorithm requires an "integerLimit" defined to function.
           // This grabs the number of items currently inside this part of the mask, and sets it.
-          var decimal = this.settings.patternOptions && this.settings.patternOptions.symbols && typeof this.settings.patternOptions.symbols.decimal === 'string' ?
+          var decimal = typeof this.settings.patternOptions.symbols.decimal === 'string' ?
             this.settings.patternOptions.symbols.decimal : '.';
+          var decimalParts =  this.settings.pattern.split(decimal);
 
-          this.settings.patternOptions.integerLimit = this.settings.pattern.split(decimal)[0].replace(/[^#0]/g, '').length;
+          this.settings.patternOptions.integerLimit = decimalParts[0].replace(/[^#0]/g, '').length;
+
+          if (decimalParts[1]) {
+            this.settings.patternOptions.allowDecimal = true;
+            this.settings.patternOptions.decimalLimit = decimalParts[1].toString().length;
+            if (!this.settings.patternOptions.symbols.decimal) {
+              this.settings.patternOptions.symbols.decimal = decimal;
+            }
+          }
         }
       }
 
