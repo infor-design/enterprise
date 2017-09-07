@@ -1,8 +1,8 @@
-## 4.3.1
-Release Date: 2017-08-02
+## 4.3.2
+Release Date: 2017-09-14
 
 ### Download Build Assets:
-Build Server: http://bamboo.infor.com/browse/label/release-431
+Build Server: http://bamboo.infor.com/browse/label/release-432
 Npm: http://npm.infor.com
 Full Jira Release Notes: http://bit.ly/2w6X8Xw
 
@@ -10,15 +10,11 @@ Full Jira Release Notes: http://bit.ly/2w6X8Xw
 http://usalvlhlpool1.infor.com/4.3.2/components/
 
 ### Key New Features
-- More Angular Wrappers (About, Color Picker, Accordion, Popover)
-- Line Chart - Added options to rotate axis for longer labels
-- Card/List - Added new group action area toolbar
-- 128 Bugs and Enhancements
-- Toolbar / Search - Further stability Enhancements
+- Big Changes to Mask to support locale and squash all bugs
 
 ### Breaking Changes
-- PopupMenu - To clarify disabled items should be achived by adding either the disabled attribute to the anchor tag or adding both the attribute to the anchor tag and the class is-disabled to the li element. Only adding the class will not work as only one mapping was possible. See examples components/popupmenu/example-disabled-submenus and components/popupmenu/test-toggle-disabled.html
-
+- PopupMenu - To clarify disabled items should be achieved by adding either the disabled attribute to the anchor tag or adding both the attribute to the anchor tag and the class is-disabled to the li element. Only adding the class will not work as only one mapping was possible. See examples components/popupmenu/example-disabled-submenus and components/popupmenu/test-toggle-disabled.html
+- Not entirely breaking but file upload should now be done without an inline label as per components/fileupload/example-index. This wont break but will cause a loop on ie edge due to an ie edge bug if initializing it this way.
 
 ### Behavior Changes
 - Timepicker - The default of roundToInterval is now true. Since the default options are intervals of 5 we felt this made the most sense since it was reported as a bug twice. If you want to allow entering time out of the dropdown intervals you will now have to set this to false.

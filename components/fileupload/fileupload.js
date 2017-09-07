@@ -47,21 +47,30 @@
 
         this.fileInput = hasInlineLabel ? elem.find('input') : elem;
 
-        elem.parent('.field').addClass('field-fileupload');
+        elem.closest('.field').addClass('field-fileupload');
 
         //append markup
-        var id = !hasInlineLabel ? elem.attr('name') : elem.find('input').attr('name'),
+        var id = !hasInlineLabel ? (elem.attr('id') || elem.attr('name')) : elem.find('input').attr('name'),
           elemClass = !hasInlineLabel ? elem.attr('class') : elem.find('input').attr('class'),
           instructions = Locale.translate('FileUpload'),
           label = $('<label for="'+ id +'-filename">'+ elem.text() +' <span class="audible">'+ instructions +'</span></label>'),
           shadowField = $('<input readonly id="'+ id +'-filename" class="fileupload-background-transparent'+ (elemClass ? ' '+ elemClass : '') +'" type="text">'),
           svg = (!hasInlineLabel ? '<label class="fileupload">' : '') + '<span class="trigger" tabindex="-1">' + $.createIcon('folder') + '</span>' + (!hasInlineLabel ? '</label>' : '');
 
-        elem.before(label, shadowField);
-        this.fileInput.after(svg);
-
         if (!hasInlineLabel) {
-          elem.prev().prev('label').hide();
+          var orgLabel = elem.prev('label');
+
+          if (orgLabel.length === 0) {  //Could be wrapped (angular)
+            orgLabel = elem.parent().prev('label');
+          }
+
+          label = $('<label for="'+ (elem.attr('id') || elem.attr('name')) +'-filename">'+ orgLabel.text() +'</label>');
+          elem.before(label, shadowField);
+          this.fileInput.after(svg);
+          orgLabel.addClass('audible').append('<span class="audible">'+ instructions +'</span>');
+        } else {
+          elem.before(label, shadowField);
+          this.fileInput.after(svg);
         }
 
         this.textInput = elem.parent().find('[type="text"]');
@@ -139,6 +148,9 @@
       readonly: function() {
         this.textInput.prop('readonly', true);
         this.fileInput.prop('disabled', true);
+
+        this.textInput.prop('disabled', false);
+        this.textInput.removeClass('fileupload-background-transparent');
       }
 
     };

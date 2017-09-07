@@ -66,7 +66,7 @@ input.fileupload[type="file"] {
 
 .field-fileupload {
   input[type="text"] {
-    padding-right: 40px;
+    padding-right: 30px;
     text-overflow: ellipsis;
   }
 }
@@ -74,8 +74,12 @@ input.fileupload[type="file"] {
 //Allows fileupload to be readonly without textarea readonly styling
 input.fileupload-background-transparent {
   background-color: transparent;
-  padding-right: 40px;
+  padding-right: 30px;
   text-overflow: ellipsis;
+}
+
+input.fileupload-background-transparent.readonly {
+  background-color: $input-readonly-bg-color;
 }
 
 // File Upload Advanced
@@ -453,8 +457,12 @@ html[dir='rtl'] {
 
   .field-fileupload {
     input[type="text"] {
-      padding-left: 40px;
+      padding-left: 30px;
       padding-right: 10px;
+    }
+
+    .trigger .icon {
+      left: 1px;
     }
   }
 
