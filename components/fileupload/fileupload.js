@@ -42,21 +42,27 @@
 
       // Example Method
       build: function() {
-        var elem = this.element;
-        this.fileInput = elem.find('input');
+        var elem = this.element,
+          hasInlineLabel = !elem.is('input.fileupload');
+
+        this.fileInput = hasInlineLabel ? elem.find('input') : elem;
 
         elem.parent('.field').addClass('field-fileupload');
 
         //append markup
-        var id = elem.find('input').attr('name'),
-          elemClass = elem.find('input').attr('class'),
+        var id = !hasInlineLabel ? elem.attr('name') : elem.find('input').attr('name'),
+          elemClass = !hasInlineLabel ? elem.attr('class') : elem.find('input').attr('class'),
           instructions = Locale.translate('FileUpload'),
           label = $('<label for="'+ id +'-filename">'+ elem.text() +' <span class="audible">'+ instructions +'</span></label>'),
           shadowField = $('<input readonly id="'+ id +'-filename" class="fileupload-background-transparent'+ (elemClass ? ' '+ elemClass : '') +'" type="text">'),
-          svg = '<span class="trigger" tabindex="-1">' + $.createIcon('folder') + '</span>';
+          svg = (!hasInlineLabel ? '<label class="fileupload">' : '') + '<span class="trigger" tabindex="-1">' + $.createIcon('folder') + '</span>' + (!hasInlineLabel ? '</label>' : '');
 
         elem.before(label, shadowField);
         this.fileInput.after(svg);
+
+        if (!hasInlineLabel) {
+          elem.prev().prev('label').hide();
+        }
 
         this.textInput = elem.parent().find('[type="text"]');
         this.textInput.on('keypress.fileupload', function (e) {
@@ -66,8 +72,25 @@
           }
         });
 
+        if (!hasInlineLabel) {
+          svg = elem.parent().find('label.fileupload');
+          svg.on('click', function () {
+            elem.parent().find('[type="file"]').trigger('click');
+          });
+        }
+
         if (this.fileInput.is(':disabled')) {
           this.textInput.prop('disabled', true);
+        }
+
+        if (elem.hasClass('required')) {
+          label.addClass('required');
+          elem.removeClass('required');
+        }
+
+        if (this.fileInput.attr('data-validate')) {
+          this.textInput.attr('data-validate', this.fileInput.attr('data-validate'));
+          this.textInput.validate();
         }
 
         if (this.fileInput.attr('readonly')) {
@@ -77,7 +100,7 @@
         }
 
         this.fileInput.attr('tabindex', '-1').on('change.fileupload', function () {
-          elem.prev('input').val(this.files[0].name);
+          elem.prev('input').val(this.files ? this.files[0].name : '');
         });
       },
 
