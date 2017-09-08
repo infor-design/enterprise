@@ -221,7 +221,7 @@
           }
         }
 
-        a.append('<span class="tree-text">' + text + '</span>');
+        a.append($('<span class="tree-text"></span>').text(text));
 
         if (a.is('[class^="icon"]')) {
           //createIconPath
