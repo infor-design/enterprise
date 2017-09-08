@@ -157,17 +157,17 @@
               self.insertDate(self.currentDate);
             }
 
-            //Page Up Selects Same Day Next Month
+            //Page Up Selects Same Day Prev Month
             if (key === 33 && !e.altKey) {
               handled = true;
-              self.currentDate.setMonth(self.currentDate.getMonth() + 1);
+              self.currentDate.setMonth(self.currentDate.getMonth() - 1);
               self.insertDate(self.currentDate);
             }
 
-            //Page Down Selects Same Day Prev Month
+            //Page Down Selects Same Day Next Month
             if (key === 34 && !e.altKey) {
               handled = true;
-              self.currentDate.setMonth(self.currentDate.getMonth() - 1);
+              self.currentDate.setMonth(self.currentDate.getMonth() + 1);
               self.insertDate(self.currentDate);
             }
 
