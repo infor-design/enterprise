@@ -38,6 +38,23 @@
     background-color: $input-readonly-bg-color;
     border-color: $input-readonly-border-color;
 
+    &.is-not-editable {
+      background-color: $input-bg-color;
+      border-color: $input-border-color;
+
+      input[readonly] {
+        background-color: $input-bg-color;
+        border-color: $input-border-color;
+      }
+
+      .icon:not(.icon-error),
+      .icon:hover {
+        cursor: pointer;
+        fill: $trigger-icon-fill-color;
+      }
+
+    }
+
     // scss-lint:disable ImportantRule
     &.is-focused {
       border-color: $input-focus-border-color !important;
@@ -46,7 +63,7 @@
     .icon:not(.icon-error),
     .icon:hover {
       cursor: default;
-      fill: $trigger-disabled-color !important;
+      fill: $trigger-disabled-color;
     }
     // scss-lint:enable ImportantRule
   }
