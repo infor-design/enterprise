@@ -21,7 +21,6 @@ A component to support date entry.
 
 **Parameters**
 
--   `element`  
 -   `showTime` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true the time selector will be shown.
 -   `timeFormat` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The format to use on the time section fx HH:mm, defaults to current locale's settings.
 -   `mode` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Time picker mode: options: 'standard', 'range', this controls the avilable selections in the time picker.
