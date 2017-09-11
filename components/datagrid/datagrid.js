@@ -3987,6 +3987,108 @@ $.fn.datagrid = function(options) {
       this.saveUserSettings();
     },
 
+    // Export To Csv
+    exportToCsv: function (fileName, customDs) {
+      fileName = (fileName ||
+        this.element.closest('.datagrid-container').attr('id') ||
+        'datagrid') +'.csv';
+
+      var csvData,
+        self = this,
+        cleanExtra = function(table) {
+          $('tr, th, td, div, span', table).each(function () {
+            var el = this,
+              elm = $(this);
+
+            if (elm.is('.is-hidden')) {
+              elm.remove();
+              return;
+            }
+
+            $('.is-hidden, .is-draggable-target, .handle, .sort-indicator, .datagrid-filter-wrapper', el).remove();
+            while(el.attributes.length > 0) {
+              el.removeAttribute(el.attributes[0].name);
+            }
+
+            // White Hat Security Violation. Remove Excel formulas
+            // Excel Formulas Start with =SOMETHING
+            var text = elm.text();
+            if (text.substr(0, 1) === '=' && text.substr(1, 1) !== '') {
+              elm.text('\'' + elm.text());
+            }
+          });
+          return table;
+        },
+        appendRows = function(dataset, table) {
+          var tableHtml,
+            body = table.find('tbody').empty();
+
+          for (var i = 0; i < dataset.length; i++) {
+            if (!dataset[i].isFiltered) {
+              tableHtml += self.rowHtml(dataset[i], i, i);
+            }
+          }
+
+          body.append(tableHtml);
+          return table;
+        },
+        base64 = function(s) {
+          if (window.btoa) {
+            return 'data:application/csv;base64,' + window.btoa(unescape(encodeURIComponent(s)));
+          } else {
+            return 'data:application/csv;,' + unescape(encodeURIComponent(s));
+          }
+        },
+        formatCsv = function(table) {
+          var csv = [],
+            rows = table.find('tr'),
+            row, cols;
+
+          for (var i = 0, l = rows.length; i < l; i++) {
+            row = [];
+            cols = $(rows[i]).find('td, th');
+            for (var i2 = 0, l2 = cols.length; i2 < l2; i2++) {
+              row.push(cols[i2].innerText.replace('"', '""'));
+            }
+            csv.push(row.join('","'));
+          }
+          return '"'+ csv.join('"\n"') +'"';
+        },
+        table = self.table.clone();
+
+      table = appendRows(customDs || this.settings.dataset, table);
+      if (!table.find('thead').length) {
+        self.headerRow.clone().insertBefore(table.find('tbody'));
+      }
+
+      table = cleanExtra(table);
+      csvData = formatCsv(table);
+
+      if (this.isIe) {
+        if (this.isIe9) {
+          var IEwindow = window.open();
+          IEwindow.document.write('sep=,\r\n' + csvData);
+          IEwindow.document.close();
+          IEwindow.document.execCommand('SaveAs', true, fileName);
+          IEwindow.close();
+        }
+        else if (window.navigator.msSaveBlob) {
+          var blob = new Blob([csvData], {
+            type: 'application/csv;charset=utf-8;'
+          });
+          navigator.msSaveBlob(blob, fileName);
+        }
+      }
+      else {
+        var link = document.createElement('a');
+        link.href = base64(csvData);
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    },
+
     // Export To Excel
     exportToExcel: function (fileName, worksheetName, customDs) {
       var self = this,
@@ -4863,7 +4965,8 @@ $.fn.datagrid = function(options) {
         }
 
         if (action === 'export-to-excel') {
-          self.exportToExcel();
+          // self.exportToExcel();
+          self.exportToCsv();
         }
 
         //Filter actions
