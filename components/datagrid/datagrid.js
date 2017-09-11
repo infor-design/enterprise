@@ -6098,13 +6098,24 @@ $.fn.datagrid = function(options) {
         validator = $.fn.validation,
         cellValue = this.fieldValue(this.settings.dataset[row], column.field),
         isValid = true,
-        messages = '';
+		messages = '',
+        errorMessages = '',
+		alertMessages = '',
+		infoMessages = '';
 
       for (var i = 0; i < rules.length; i++) {
         var rule = validator.rules[rules[i]],
           gridInfo = {row: row, cell: cell, item: this.settings.dataset[row], column: column, grid: self},
           ruleValid = rule.check(cellValue, $('<input>').val(cellValue), gridInfo);
-
+        
+		if (rule.type === 'error') {
+		  messages = errorMessages;
+		} else if (rule.type === 'alert') {
+		  messages = alertMessages;
+		} else if (rule.type === 'info') {
+		  messages = infoMessages;
+		}
+		
         if (!ruleValid) {
           if (messages) {
             messages = ((/^\u2022/.test(messages)) ? '' : '\u2022 ') + messages;
@@ -6112,47 +6123,68 @@ $.fn.datagrid = function(options) {
           } else {
             messages = rule.message;
           }
+		  
+		  if (rule.type === 'error') {
+		    errorMessages = messages;
+		  } else if (rule.type === 'alert') {
+		    alertMessages = messages;
+		  } else if (rule.type === 'info') {
+		    infoMessages = messages;
+		  }
+		  
           isValid = false;
         }
       }
 
-      if (!isValid) {
-		self.showCellError(row, cell, messages);
-        self.element.trigger('cellerror', {row: row, cell: cell, message: messages, target: this.cellNode(row, cell), value: cellValue, column: column});
+      if (errorMessages !== '') {
+		self.showCellError(row, cell, errorMessages, 'error');
+        self.element.trigger('cellerror', {row: row, cell: cell, message: errorMessages, target: this.cellNode(row, cell), value: cellValue, column: column});
       } else {
-        self.clearCellError(row, cell);
+        self.clearCellError(row, cell, 'error');
+      }
+	  
+	  if (alertMessages !== '') {
+		self.showCellError(row, cell, messages, 'alert');
+        self.element.trigger('cellalert', {row: row, cell: cell, message: alertMessages, target: this.cellNode(row, cell), value: cellValue, column: column});
+      } else {
+        self.clearCellAlert(row, cell, 'alert');
       }
 
+	  if (infoMessages !== '') {
+		self.showCellError(row, cell, messages, 'info');
+        self.element.trigger('cellinfo', {row: row, cell: cell, message: infoMessages, target: this.cellNode(row, cell), value: cellValue, column: column});
+      } else {
+        self.clearCellInfo(row, cell, 'info');
+      }
     },
 
-    showCellError: function (row, cell, errorMessage) {
+    showCellError: function (row, cell, message, type) {
       var node = this.cellNode(row, cell);
 
 	  // clear the table nonVisibleCellErrors for the row and cell
-	  this.clearNonVisibleCellErrors(row, cell);
+	  this.clearNonVisibleCellErrors(row, cell, type);
 
       if (!node.length) {
 		// Store the nonVisibleCellError
-	    this.nonVisibleCellErrors.push({ row: row, cell: cell, errorMessage: errorMessage });
+	    this.nonVisibleCellErrors.push({ row: row, cell: cell, message: message, type: type });
 		this.showNonVisibleCellErrors();
         return;
       }
 
       //Add icon and classes
-      node.addClass('error').attr('data-errormessage', errorMessage);
-      var icon = $($.createIcon({ classes: ['icon-error'], icon: 'error' }));
+      node.addClass(type).attr('data-' + type + 'message', message);
+      var icon = $($.createIcon({ classes: ['icon-' + type], icon: type }));
 
       //Add and show tooltip
-      if (node.find('.icon-error').length === 0) {
+      if (node.find('.icon-' + type).length === 0) {
         node.find('.datagrid-cell-wrapper').append(icon);
-        icon.tooltip({placement: 'bottom', isErrorColor: true, content: errorMessage});
+        icon.tooltip({placement: 'bottom', isErrorColor: true, content: message});
         icon.data('tooltip').show();
       }
 
     },
 
 	showNonVisibleCellErrors: function () {
-      var messages, tableerrors, icon;
 
 	  // Create empty toolbar
 	  if (!this.toolbar) {
@@ -6160,63 +6192,72 @@ $.fn.datagrid = function(options) {
 		this.appendToolbar();
 	  }
 
-	  if (this.toolbar.parent().find('.tableerrors').length === 1) {
+	  // process via type
+	  this.showNonVisibleCellErrorType($.grep(this.nonVisibleCellErrors, function (error) { return error.type === 'error'; }), 'error');
+	  this.showNonVisibleCellErrorType($.grep(this.nonVisibleCellErrors, function (error) { return error.type === 'alert'; }), 'alert');
+	  this.showNonVisibleCellErrorType($.grep(this.nonVisibleCellErrors, function (error) { return error.type === 'info'; }), 'info');
+    },
+	
+	showNonVisibleCellErrorType: function (nonVisibleCellErrors, type) {
+	  var messages, tableerrors, icon;
+	  
+      if (this.toolbar.parent().find('.tableerrors').length === 1) {
         tableerrors = this.element.parent().find('.tableerrors');
       }
-
-	  if (!this.nonVisibleCellErrors.length) {
-		// clear the displayed error
+	  
+	  if (nonVisibleCellErrors.length) {
+		// clear the displayed message
 		if (tableerrors && tableerrors.length) {
-		  icon = tableerrors.find('.icon-error');
+		  icon = tableerrors.find('.icon-' + type);
           var tooltip = icon.data('tooltip');
           if (tooltip) {
             tooltip.hide();
           }
-          tableerrors.find('.icon-error').remove();
+          tableerrors.find('.icon-' + type).remove();
 		}
 		return;
 	  }
 
-	  for (var i = 0; i < this.nonVisibleCellErrors.length; i++) {
-		   messages = (messages ? messages + '<br>' : '') + this.nonVisibleCellErrors[i].errorMessage;
+	  for (var i = 0; i < nonVisibleCellErrors.length; i++) {
+		   messages = (messages ? messages + '<br>' : '') + nonVisibleCellErrors[i].errorMessage;
 	  }
 
 	  if (this.element.parent().find('.tableerrors').length === 0) {
         tableerrors = $('<div class="tableerrors"></div>');
 	  }
-	  icon = tableerrors.find('.icon-error');
+	  icon = tableerrors.find('.icon-' + type);
 	  if (!icon.length) {
-		icon = $($.createIcon({ classes: ['icon-error'], icon: 'error' }));
+		icon = $($.createIcon({ classes: ['icon-' + type], icon: type }));
 		tableerrors.append(icon);
 	  }
 	  if (this.element.hasClass('has-toolbar')) {
 		//Add Error to the Toolbar
 		this.toolbar.append(tableerrors);
 	  }
-      icon.tooltip({placement: 'bottom', isErrorColor: true, content: messages});
+      icon.tooltip({placement: 'bottom', isErrorColor: (type === 'error'), content: messages});
       icon.data('tooltip').show();
 
     },
 
-    clearCellError: function (row, cell) {
-	  this.clearNonVisibleCellErrors(row, cell);
+    clearCellError: function (row, cell, type) {
+	  this.clearNonVisibleCellErrors(row, cell, type);
       var node = this.cellNode(row, cell);
 
       if (!node.length) {
         return;
       }
 
-      this.clearNodeErrors(node);
+      this.clearNodeErrors(node, type);
     },
 
-	clearNonVisibleCellErrors: function (row, cell) {
+	clearNonVisibleCellErrors: function (row, cell, type) {
 
 	  if (!this.nonVisibleCellErrors.length) {
         return;
 	  }
 
 	  this.nonVisibleCellErrors = $.grep(this.nonVisibleCellErrors, function (error) {
-        if (!(error.row === row && error.cell === cell)) {
+        if (!(error.row === row && error.cell === cell && error.type === type)) {
           return error;
         }
       });
@@ -6238,19 +6279,29 @@ $.fn.datagrid = function(options) {
 
       this.tableBody.find('td.error').each(function () {
         var node = $(this);
-        self.clearNodeErrors(node);
+        self.clearNodeErrors(node, 'error');
+      });
+	  
+	  this.tableBody.find('td.alert').each(function () {
+        var node = $(this);
+        self.clearNodeErrors(node, 'alert');
+      });
+	  
+	  this.tableBody.find('td.info').each(function () {
+        var node = $(this);
+        self.clearNodeErrors(node, 'info');
       });
     },
 
-    clearNodeErrors: function (node) {
-      node.removeClass('error').removeAttr('data-errormessage');
+    clearNodeErrors: function (node, type) {
+      node.removeClass(type).removeAttr('data-' + type + 'message');
 
-      var icon = node.find('.icon-error');
+      var icon = node.find('.icon-' + type);
       var tooltip = icon.data('tooltip');
       if (tooltip) {
         tooltip.hide();
       }
-      node.find('.icon-error').remove();
+      node.find('.icon-' + type).remove();
     },
 
     resetRowStatus: function () {
