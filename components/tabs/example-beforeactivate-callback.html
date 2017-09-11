@@ -1,0 +1,126 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Tabs Example: "beforeActivate" callback method</h2>
+    <p><a class="hyperlink" href="https://jira.infor.com/browse/SOHO-5250" target="_blank">Related JIRA Ticket</a>.</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div class="field">
+      <button class="btn-secondary" id="alert-on-switch"><span>Alert on Tab Switch</span></button>
+      <button class="btn-secondary" id="veto-all-tabs"><span>Veto All Tabs</span></button>
+      <button class="btn-secondary" id="allow-all-tabs" disabled><span>Allow All Tabs</span></button>
+    </div>
+
+    <div id="test-tabs" class="tab-container">
+      <div class="tab-list-container">
+        <ul class="tab-list">
+          <li class="tab is-selected"><a href="#tabs-normal-contracts">Contracts</a></li>
+          <li class="tab"><a href="#tabs-normal-opportunities">Opportunites</a></li>
+          <li class="tab"><a href="#tabs-normal-attachments">Attachments</a></li>
+          <li class="tab"><a href="#tabs-normal-contacts">Contacts</a></li>
+          <li class="tab"><a href="#tabs-normal-notes">Notes</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="tab-panel-container">
+      <div id="tabs-normal-contracts" class="tab-panel">
+        <p>Facilitate cultivate monetize, seize e-services peer-to-peer content integrateAJAX-enabled user-centric strategize. Mindshare; repurpose integrate global addelivery leading-edge frictionless, harness real-time plug-and-play standards-compliant 24/7 enterprise strategize robust infomediaries: functionalities back-end. Killer disintermediate web-enabled ubiquitous empower relationships, solutions, metrics architectures.<p>
+      </div>
+      <div id="tabs-normal-opportunities" class="tab-panel">
+        <p>Bricks-and-clicks? Evolve ubiquitous matrix B2B 24/365 vertical 24/365 platforms standards-compliant global leverage dynamic 24/365 intuitive ROI seamless rss-capable. Cutting-edge grow morph web services leverage; ROI, unleash reinvent innovative podcasts citizen-media networking.<p>
+        <div class="field">
+          <label class="required" for="text-normal-opportunities">Text</label>
+          <input type="text" name="text-normal-opportunities" id="text-normal-opportunities" data-validate="required">
+        </div>
+        <div class="field">
+          <label class="required" for="tel-normal-opportunities">Telephone</label>
+          <input type="tel" name="tel-normal-opportunities" id="tel-normal-opportunities" data-validate="required" aria-required="true">
+        </div>
+      </div>
+      <div id="tabs-normal-attachments" class="tab-panel">
+        <p>Frictionless webservices, killer open-source innovate, best-of-breed, whiteboard interactive back-end optimize capture dynamic front-end. Initiatives ubiquitous 24/7 enhance channels B2B drive frictionless web-readiness generate recontextualize widgets applications. Sexy sticky matrix, user-centred, rich user-centric: peer-to-peer podcasting networking addelivery optimize streamline integrated proactive: granular morph.<p>
+      </div>
+      <div id="tabs-normal-contacts" class="tab-panel">
+        <p>Exploit niches; enable A-list web-enabled holistic end-to-end. Exploit experiences value-added tagclouds, open-source cross-platform e-tailers, user-contributed, implement! Convergence, solutions front-end, "synergize markets initiatives integrateAJAX-enabled platforms; wireless, supply-chains reinvent, mindshare, synergies implement, drive evolve!" Post incentivize; rich-clientAPIs customized revolutionize 24/365 killer incentivize integrate intuitive utilize!</p>
+        <br>
+        <div class="field">
+          <label class="required" for="text-normal-contacts">Text</label>
+          <input type="text" name="text-normal-contacts" id="text-normal-contacts" data-validate="required">
+        </div>
+        <div class="field">
+          <label class="required" for="tel-normal-contacts">Telephone</label>
+          <input type="tel" name="tel-normal-contacts" id="tel-normal-contacts" data-validate="required" aria-required="true">
+        </div>
+        <div class="field">
+          <label class="required" for="email-normal-contacts">Email</label>
+          <input type="email" name="email-normal-contacts" id="email-normal-contacts" autocomplete="off" data-validate="required email" aria-required="true">
+        </div>
+      </div>
+      <div id="tabs-normal-notes" class="tab-panel">
+        <p> Post incentivize; rich-clientAPIs customized revolutionize 24/365 killer incentivize integrate intuitive utilize!<p>
+        <div class="field">
+          <label class="required" for="name-normal-notes">Name</label>
+          <input type="text" name="name-normal-notes" id="name-normal-notes" data-validate="required" aria-required="true">
+        </div>
+        <div class="field">
+          <label for="message-normal-notes">Textarea</label>
+          <textarea name="message-normal-notes" id="message-normal-notes" autocomplete="off"></textarea>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  var body = $('body'),
+    alertBtn = $('#alert-on-switch'),
+    vetoBtn = $('#veto-all-tabs'),
+    allowBtn = $('#allow-all-tabs'),
+    tabs = $('#test-tabs'),
+    tabsAPI;
+
+  body.on('initialized', function() {
+    tabsAPI = tabs.data('tabs');
+  });
+
+  alertBtn.on('click.test', function() {
+    alertBtn.disable();
+    vetoBtn.enable();
+    allowBtn.enable();
+
+    tabsAPI.settings.beforeActivate = function(oldTab, targetTab, response) {
+      body.toast({
+        'title': '_beforeActivate()_',
+        'message': 'a beforeActivate callback was triggered. Tabbing is allowed.'
+      });
+      return response(true);
+    };
+  });
+
+  vetoBtn.on('click.test', function() {
+    alertBtn.enable();
+    vetoBtn.disable();
+    allowBtn.enable();
+
+    tabsAPI.settings.beforeActivate = function(oldTab, targetTab, response) {
+      body.toast({
+        'title': '_beforeActivate()_',
+        'message': 'a beforeActivate callback was triggered. Tabbing is <b>NOT</b> allowed.'
+      });
+      return false;
+    };
+  });
+
+  allowBtn.on('click.test', function() {
+    alertBtn.enable();
+    vetoBtn.enable();
+    allowBtn.disable();
+
+    tabsAPI.settings.beforeActivate = undefined;
+  });
+
+</script>

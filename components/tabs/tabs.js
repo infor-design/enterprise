@@ -21,6 +21,7 @@
           addTabButton: false, // If set to true, creates a button at the end of the tab list that can be used to add an empty tab and panel
           addTabButtonCallback: null, // if defined as a function, will be used in-place of the default Tab Adding method
           ajaxOptions: null, // if defined, will be used by any internal Tabs AJAX calls as the desired request settings.
+          beforeActivate: undefined, // If defined as a function, fires this before a tab is activated to allow a possible "veto" of the tab swap (SOHO-5250).
           containerElement: null, // Defines a separate element to be used for containing the tab panels.  Defaults to a `.tab-panel-container` element that is created if it doesn't already exist.
           changeTabOnHashChange: false, // If true, will change the selected tab on invocation based on the URL that exists after the hash
           hashChangeCallback: null, // If defined as a function, provides an external method for adjusting the current page hash used by these tabs
@@ -583,7 +584,10 @@
           li.on('selected.tabs', function(e, anchor) {
             var li = $(this),
               href = $(anchor).attr('href');
-            self.activate(href);
+
+            if (!self.activate(href)) {
+              return false;
+            }
 
             if (self.hasSquareFocusState()) {
               self.positionFocusState(a);
@@ -779,7 +783,9 @@
           return;
         }
 
-        this.activate(href);
+        if (!this.activate(href)) {
+          return;
+        }
         this.changeHash(href);
 
         if (this.hasSquareFocusState()) {
@@ -970,7 +976,10 @@
             self.element.trigger('tab-added', [currentA]);
           }
 
-          self.activate(href);
+          if (!self.activate(href)) {
+            return;
+          }
+
           self.changeHash(href);
           self.focusBar(currentLi);
           checkAngularClick();
@@ -1524,7 +1533,9 @@
 
         var a = target.children('a');
         if (tab.is('.is-selected')) {
-          this.activate(a.attr('href'));
+          if (!this.activate(a.attr('href'))) {
+            return;
+          }
           a.focus();
         }
         this.positionFocusState(a);
@@ -1573,69 +1584,81 @@
           return;
         }
 
-        if (targetPanel.length < 1) {
-          if (this.settings.source) {
-            return this.callSource(href);
-          }
-        } else {
-          oldPanel[0].classList.remove('can-show');
-          oldPanel[0].classList.remove('is-visible');
-          oldPanel.closeChildren();
-          self.element.trigger('activated', [a]);
-
-          targetPanelElem.classList.add('can-show');
-          self.renderVisiblePanel();
-          // trigger reflow as display property is none for animation
-          targetPanelElem.offsetHeight; // jshint ignore:line
-
-          targetPanel.one($.fn.transitionEndName() + '.tabs', function() {
-            self.element.trigger('afteractivated', [a]);
-          });
-
-          // Triggers the CSS Animation
-          targetPanelElem.classList.add('is-visible');
-        }
-
-        // Update the currently-selected tab
-        self.updateAria(a);
-        oldTab.add(this.moreButton).removeClass('is-selected');
-
-        if (targetTab[0].classList.contains('tab')) {
-          selectedStateTarget = targetTab;
-          activeStateTarget = targetTab;
-        }
-
-        var ddMenu = targetTab.parents('.popupmenu'),
-          ddTab;
-
-        if (ddMenu.length) {
-          ddTab = ddMenu.data('trigger');
-          if (ddTab.length) {
-            selectedStateTarget = ddTab;
-            activeStateTarget = ddTab;
-          }
-        }
-
-        if (this.isTabOverflowed(activeStateTarget)) {
-          activeStateTarget = this.moreButton;
-          selectedStateTarget = this.moreButton;
-        }
-        this.focusBar(activeStateTarget);
-
-        selectedStateTarget.addClass('is-selected');
-
-        // Fires a resize on any invoked child toolbars inside the tab panel.
-        // Needed to fix issues with Toolbar alignment, since we can't properly detect
-        // size on hidden elements.
-        var childToolbars = targetPanel.find('.toolbar');
-        if (childToolbars.length) {
-          childToolbars.each(function() {
-            var api = $(this).data('toolbar');
-            if (api && typeof api.handleResize === 'function') {
-              api.handleResize();
+        function completeActivate(vetoResult) {
+          if (targetPanel.length < 1) {
+            if (self.settings.source) {
+              return self.callSource(href);
             }
-          });
+          } else {
+            oldPanel[0].classList.remove('can-show');
+            oldPanel[0].classList.remove('is-visible');
+            oldPanel.closeChildren();
+            self.element.trigger('activated', [a]);
+
+            targetPanelElem.classList.add('can-show');
+            self.renderVisiblePanel();
+            // trigger reflow as display property is none for animation
+            targetPanelElem.offsetHeight; // jshint ignore:line
+
+            targetPanel.one($.fn.transitionEndName() + '.tabs', function() {
+              self.element.trigger('afteractivated', [a]);
+            });
+
+            // Triggers the CSS Animation
+            targetPanelElem.classList.add('is-visible');
+          }
+
+          // Update the currently-selected tab
+          self.updateAria(a);
+          oldTab.add(self.moreButton).removeClass('is-selected');
+
+          if (targetTab[0].classList.contains('tab')) {
+            selectedStateTarget = targetTab;
+            activeStateTarget = targetTab;
+          }
+
+          var ddMenu = targetTab.parents('.popupmenu'),
+            ddTab;
+
+          if (ddMenu.length) {
+            ddTab = ddMenu.data('trigger');
+            if (ddTab.length) {
+              selectedStateTarget = ddTab;
+              activeStateTarget = ddTab;
+            }
+          }
+
+          if (self.isTabOverflowed(activeStateTarget)) {
+            activeStateTarget = self.moreButton;
+            selectedStateTarget = self.moreButton;
+          }
+          self.focusBar(activeStateTarget);
+
+          selectedStateTarget.addClass('is-selected');
+
+          // Fires a resize on any invoked child toolbars inside the tab panel.
+          // Needed to fix issues with Toolbar alignment, since we can't properly detect
+          // size on hidden elements.
+          var childToolbars = targetPanel.find('.toolbar');
+          if (childToolbars.length) {
+            childToolbars.each(function() {
+              var api = $(this).data('toolbar');
+              if (api && typeof api.handleResize === 'function') {
+                api.handleResize();
+              }
+            });
+          }
+
+          return vetoResult || false;
         }
+
+        // Handle an optional, veto-able "beforeActivate" callback.
+        if (this.settings.beforeActivate && typeof this.settings.beforeActivate === 'function') {
+          return this.settings.beforeActivate(oldTab, targetTab, completeActivate);
+        }
+
+        // Otherwise, simply continue
+        return completeActivate(true);
       },
 
       /**
@@ -1972,7 +1995,9 @@
         if (startFromZero) {
           this.positionFocusState(anchorMarkup);
           this.focusBar(tabHeaderMarkup);
-          this.activate(anchorMarkup.attr('href'));
+          if (!this.activate(anchorMarkup.attr('href'))) {
+            return this;
+          }
           anchorMarkup.focus();
         }
 
@@ -2111,7 +2136,9 @@
           if (prevLi.is('.has-popupmenu') && prevLi.data('popupmenu')) {
             activateTargetA = prevLi.data('popupmenu').menu.children().first().children('a');
           }
-          this.activate(activateTargetA.attr('href'));
+          if (!this.activate(activateTargetA.attr('href'))) {
+            return this;
+          }
         }
 
         this.focusBar(prevLi);
@@ -2514,7 +2541,10 @@
 
         this.positionFocusState(undefined, false);
         this.focusBar(anchor.parent());
-        this.activate(anchor.attr('href'));
+
+        if (!this.activate(anchor.attr('href'))) {
+          return this;
+        }
         this.changeHash(modHref);
 
         anchor.focus();
