@@ -2167,8 +2167,12 @@ $.fn.datagrid = function(options) {
 
       if (filterType === 'text') {
         btnMarkup = renderButton('contains') +
-          render('contains', 'Contains', true) +
-          render('does-not-contain', 'DoesNotContain', false);
+          render('contains', 'Contains') +
+          render('does-not-contain', 'DoesNotContain') +
+          render('equals', 'Equals') +
+          render('does-not-equal', 'DoesNotEqual') +
+          render('is-empty', 'IsEmpty') +
+          render('is-not-empty', 'IsNotEmpty');
         btnMarkup = btnMarkup.replace('{{icon}}', 'contains');
       }
 
@@ -2181,7 +2185,7 @@ $.fn.datagrid = function(options) {
       }
 
       if (filterType !== 'checkbox' && filterType !== 'text') {
-        btnMarkup += renderButton('equals')+
+        btnMarkup += renderButton('equals') +
           render('equals', 'Equals', (filterType === 'integer' || filterType === 'date' || filterType === 'time')) +
           render('does-not-equal', 'DoesNotEqual') +
           render('is-empty', 'IsEmpty') +
@@ -2252,7 +2256,7 @@ $.fn.datagrid = function(options) {
           var columnDef = self.columnById(conditions[i].columnId)[0],
             field = columnDef.field,
             rowValue = self.fieldValue(rowData, field),
-            rowValueStr = rowValue.toString().toLowerCase(),
+            rowValueStr = (rowValue === null || rowValue === undefined) ? '' : rowValue.toString().toLowerCase(),
             conditionValue = conditions[i].value.toString().toLowerCase();
 
           //Percent filter type
@@ -2275,7 +2279,7 @@ $.fn.datagrid = function(options) {
             var rex = /(<([^>]+)>)|(&lt;([^>]+)&gt;)/ig;
             rowValue = rowValue.replace(rex , '').toLowerCase();
 
-            rowValueStr = rowValue.toString().toLowerCase();
+            rowValueStr = (rowValue === null || rowValue === undefined) ? '' : rowValue.toString().toLowerCase();
           }
 
           if (columnDef.filterType === 'contents' || columnDef.filterType === 'select') {
