@@ -3695,7 +3695,7 @@ $.fn.datagrid = function(options) {
       if (this.canUseLocalStorage()) {
         localStorage[this.uniqueId('columns')] = JSON.stringify(this.settings.columns);
       }
-      //this.setTreeDepth();
+
     },
 
     // Omit events and save to local storage for supported settings
