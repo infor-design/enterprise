@@ -342,7 +342,7 @@ window.Formatters = {
   // Tree Expand / Collapse Button and Paddings
   Tree: function (row, cell, value, col, item, api) {
     var isOpen = item.expanded,
-      depth = api.settings.treeDepth[row].depth,
+      depth = api.settings.treeDepth[row] ? api.settings.treeDepth[row].depth : 0,
       button = '<button type="button" class="btn-icon datagrid-expand-btn'+ (isOpen ? ' is-expanded' : '') +'" tabindex="-1"'+ (depth ? ' style="margin-left: '+ (depth ? (30* (depth -1)) +'px' : '') +'"' : '') +'>'+
       '<span class="icon plus-minus'+ (isOpen ? ' active' : '') +'"></span>' +
       '<span class="audible">'+ Locale.translate('ExpandCollapse') +'</span>' +
@@ -3695,6 +3695,7 @@ $.fn.datagrid = function(options) {
       if (this.canUseLocalStorage()) {
         localStorage[this.uniqueId('columns')] = JSON.stringify(this.settings.columns);
       }
+      //this.setTreeDepth();
     },
 
     // Omit events and save to local storage for supported settings
