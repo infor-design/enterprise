@@ -6147,14 +6147,14 @@ $.fn.datagrid = function(options) {
 		self.showCellError(row, cell, messages, 'alert');
         self.element.trigger('cellalert', {row: row, cell: cell, message: alertMessages, target: this.cellNode(row, cell), value: cellValue, column: column});
       } else {
-        self.clearCellAlert(row, cell, 'alert');
+        self.clearCellError(row, cell, 'alert');
       }
 
 	  if (infoMessages !== '') {
 		self.showCellError(row, cell, messages, 'info');
         self.element.trigger('cellinfo', {row: row, cell: cell, message: infoMessages, target: this.cellNode(row, cell), value: cellValue, column: column});
       } else {
-        self.clearCellInfo(row, cell, 'info');
+        self.clearCellError(row, cell, 'info');
       }
     },
 
