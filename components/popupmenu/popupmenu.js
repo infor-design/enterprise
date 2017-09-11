@@ -401,7 +401,6 @@
                 break;
             }
           })
-          .off('updated.popupmenu')
           .on('updated.popupmenu', function(e) {
             e.stopPropagation();
             self.updated();
@@ -1445,7 +1444,7 @@
         this.element
           .removeAttr('aria-controls')
           .removeAttr('aria-haspopup')
-          .off('touchend.popupmenu touchcancel.popupmenu click.popupmenu keypress.popupmenu contextmenu.popupmenu');
+          .off('touchend.popupmenu touchcancel.popupmenu click.popupmenu keydown.popupmenu keypress.popupmenu contextmenu.popupmenu updated.popupmenu');
 
         return this;
       },

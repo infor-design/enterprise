@@ -18,6 +18,7 @@ The ColorPicker Component is a trigger field with a listing colors that can be s
 
 **Parameters**
 
+-   `element`  
 -   `colors` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  An array of objects of the form {label: 'Azure', number: '01', value: 'CBEBF4'} that can be used to populate the color grid.
 -   `showLabel` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Show the label if true vs the hex value if false.
 -   `editable` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  If false, the field is readonly and transparent. I.E. The value cannot be typed only editable by selecting.
