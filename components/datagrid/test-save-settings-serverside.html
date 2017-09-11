@@ -1,0 +1,93 @@
+<div class="row">
+        <div class="twelve columns">
+
+          <div class="toolbar" role="toolbar">
+            <div class="title">
+              Compressors
+              <span class="datagrid-result-count">(N Results)</span>
+            </div>
+            <div class="buttonset">
+              <button  type="button" class="btn">
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use xlink:href="#icon-filter"></use>
+                </svg>
+                <span>Filter</span>
+              </button>
+            </div>
+
+            <div class="more">
+              <button  type="button" class="btn-actions">
+                <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use xlink:href="#icon-more"></use>
+                </svg>
+                <span class="audible">More Actions</span>
+              </button>
+              <ul class="popupmenu">
+                <li><a data-option="personalize-columns" href="#">Personalize Columns</a></li>
+                <li><a data-option="reset-layout" href="#">Reset to Default</a></li>
+                <li class="separator"></li>
+                <li><a data-option="export-to-excel" href="#">Export to Excel</a></li>
+                <li class="separator single-selectable-section"></li>
+                <li class="heading">Row Height</li>
+                <li class="is-selectable"><a data-option="row-short" href="#">Short</a></li>
+                <li class="is-selectable"><a data-option="row-medium" href="#">Medium</a></li>
+                <li class="is-selectable is-checked"><a data-option="row-normal" href="#">Normal</a></li>
+              </ul>
+            </div>
+          </div>
+          <div id="datagrid">
+          </div>
+
+        </div>
+      </div>
+
+<script>
+
+  $('body').one('initialized', function () {
+
+    var grid,
+      columns = [];
+
+    //Define Columns for the Grid.
+    columns.push({ id: 'id', name: 'Id', field: 'id', formatter: Formatters.Text, filterType: 'text'});
+    columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, filterType: 'text'});
+    columns.push({ id: 'activity', name: 'Activity', field: 'activity', filterType: 'text'});
+    columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', filterType: 'integer'});
+    columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal, filterType: 'decimal'});
+    columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy', filterType: 'date'});
+
+    //Init and get the api for the grid
+    grid = $('#datagrid').datagrid({
+      columns: columns,
+      columnReorder: true,
+      source: function(req, response) {
+        var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
+
+        if (req.sortId) {
+          url += '&sortId=' + req.sortId + '&sortAsc=' + req.sortAsc;
+        }
+
+        if (req.filterExpr && req.filterExpr[0]) {
+          url += '&filter=' + req.filterExpr[0].value;
+        }
+
+        //Get Page Based on info in Req, return results into response;
+        $.getJSON(url, function(res) {
+          req.total = res.total;
+          response(res.data, req);
+        });
+      },
+      paging: true,
+      pagesize: 10,
+      pagesizes: [5, 10, 15],
+      filterable: true,
+      saveUserSettings: {columns: true,
+         rowHeight: true,
+         sortOrder: true,
+         pagesize: true,
+         activePage: true,
+         filter: true},
+      toolbar: {personalize: true, filterRow: true, results: true, resetLayout: true}
+    });
+  });
+</script>

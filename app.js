@@ -659,9 +659,18 @@ var express = require('express'),
   }
 
   function reDirectSlashRoute(req, res, next) {
+
     if (req.url.substr(-1) === '/' && req.url.length > 1) {
-       res.redirect(301, req.url.slice(0, -1));
-       next();
+       var componentName = stripHtml(req.params.component),
+        exampleName = req.params.example;
+
+      if (exampleName !== undefined) {
+        res.render(301, fullBasePath(req) + componentName + '/' +  exampleName);
+      } else {
+        res.redirect(301, fullBasePath(req) + componentName);
+      }
+
+      next();
     }
   }
 

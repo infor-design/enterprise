@@ -1803,6 +1803,7 @@ $.fn.datagrid = function(options) {
       //Resize and re-render if have a new dataset (since automatic column sizing depends on the dataset)
       if (pagerInfo.type === 'initial') {
         this.clearHeaderCache();
+        this.restoreUserSettings();
         this.renderRows();
         this.renderHeader();
       } else {
