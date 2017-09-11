@@ -1119,14 +1119,14 @@
 
 		  valueHours = parseInt(value.substring(0, sep));
           valueMins = parseInt(value.substring(sep + 1,sep + 3));
-		  
+
 		  //getTimeFromField
 		  if (timepicker) {
 			  timeparts = timepicker.getTimeFromField();
-			  
+
 			  valueHours = timeparts.hours;
 			  valueMins = timeparts.minutes;
-			  
+
 			  if (timepicker.hasSeconds()) {
 			    valueSecs = timeparts.seconds;
 			  }
@@ -1141,7 +1141,7 @@
           if (valueSecs.toString().length < 1 || isNaN(valueSecs) || parseInt(valueSecs) < 0 || parseInt(valueSecs) > 59) {
             return false;
           }
-		  
+
           // AM/PM
           if (!is24Hour) {
             if (parseInt(valueHours) < 1) {
