@@ -265,7 +265,8 @@
         })
         .on('close.colorpicker', function () {
           menu.on('destroy.colorpicker', function () {
-            $(this).off('open.colorpicker selected.colorpicker close.colorpicker destroy.colorpicker').remove();
+            self.element.off('open.colorpicker selected.colorpicker close.colorpicker');
+            $(this).off('destroy.colorpicker').remove();
           });
           self.element.parent().removeClass('is-open');
           self.isPickerOpen = false;
