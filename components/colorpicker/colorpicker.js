@@ -163,33 +163,30 @@
           this.container = colorpicker.parent();
           this.swatch = $('<span class="swatch"></span>').prependTo(this.container);
 
-          //Add Masking to show the #
-          colorpicker.mask({
-            pattern: ['#', /[0-9a-fA-F]/, /[0-9a-fA-F]/, /[0-9a-fA-F]/, /[0-9a-fA-F]/, /[0-9a-fA-F]/, /[0-9a-fA-F]/ ]
-          });
+          // Add Masking to show the #.
+          // Remove the mask if using the "showLabel" setting
+          if (!this.settings.showLabel) {
+            colorpicker.mask({
+              pattern: ['#', /[0-9a-fA-F]/, /[0-9a-fA-F]/, /[0-9a-fA-F]/, /[0-9a-fA-F]/, /[0-9a-fA-F]/, /[0-9a-fA-F]/ ]
+            });
+          } else {
+            var maskAPI = colorpicker.data('mask');
+            if (maskAPI && typeof maskAPI.destroy === 'function') {
+              maskAPI.destroy();
+            }
+          }
         }
 
         this.icon = $.createIconElement('dropdown')
           .appendTo(this.isEditor ? this.element : this.container);
         this.icon.wrap('<span class="trigger"></span>');
 
-        if (initialValue && initialValue.substr(0,1) !== '#' && !this.settings.showLabel) {
-          initialValue = '#' + initialValue;
-          this.element.attr(this.isEditor ? 'data-value' : 'value', initialValue);
-        }
-
-        if (initialValue && this.settings.showLabel) {
-          var hexValue = this.getHexFromLabel(initialValue);
-          this.setColor(hexValue);
-          this.element.attr(this.isEditor ? 'data-value' : 'value', hexValue);
-        }
-
-        if (initialValue && initialValue.length === 7 && !this.settings.showLabel) {
+        // Handle initial values
+        if (initialValue) {
           this.setColor(initialValue);
-          this.element.attr(this.isEditor ? 'data-value' : 'value', initialValue);
         }
 
-         if (this.element.is(':disabled')) {
+        if (this.element.is(':disabled')) {
           this.disable();
         }
 
@@ -268,15 +265,14 @@
         })
         .on('close.colorpicker', function () {
           menu.on('destroy.colorpicker', function () {
-            $(this).off('destroy.colorpicker').remove();
+            $(this).off('open.colorpicker selected.colorpicker close.colorpicker destroy.colorpicker').remove();
           });
           self.element.parent().removeClass('is-open');
           self.isPickerOpen = false;
         })
         .on('selected.colorpicker', function (e, item) {
           if (!self.isEditor) {
-            self.element.val(self.settings.showLabel ? item.data('label') : '#'+item.data('value'));
-            self.swatch[0].style.backgroundColor = '#' + item.data('value');
+            self.setColor(item.data('value'), item.data('label'));
           }
           self.element.focus();
           self.element.trigger('change');
@@ -296,20 +292,35 @@
       * @param {String} text  &nbsp;-&nbsp; The text to display
       */
       setColor: function (hex, text) {
-        // Make sure there is always a hash
-        if (hex.substr(0,1) !== '#') {
-          hex = '#' + hex;
-          this.element.attr(this.isEditor ? 'data-value' : 'value', hex);
+        // check if the hex value is actually a hex value.
+        // if not, use it as a label.
+        if (!/[0-9A-Fa-f]{6}/g.test(hex)) {
+          text = '' + hex;
+          hex = this.getHexFromLabel(text);
         }
 
-        if (hex.length !== 7) {
+        // Simply return out if hex isn't valid
+        if (!hex) {
           return;
         }
 
-        if (!this.isEditor) {
-          this.swatch[0].style.backgroundColor = hex;
+        // Make sure there is always a hash
+        if (hex.substr(0,1) !== '#') {
+          hex = '#' + hex;
         }
-        this.element.attr('aria-describedby', text);
+
+        var targetAttr = this.isEditor ? 'data-value' : 'value';
+
+        if (!text) {
+          text = hex;
+        }
+
+        // Set the value on the field
+        this.element[0].value = this.settings.showLabel ? text : hex;
+        this.element[0].setAttribute(targetAttr, hex);
+        this.swatch[0].style.backgroundColor = hex;
+
+        this.element[0].setAttribute('aria-describedby', text);
       },
 
       // Refresh and Append the Color Menu
