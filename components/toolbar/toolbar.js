@@ -309,8 +309,10 @@
         }
         if (item.is(':disabled')) {
           popupLi.addClass('is-disabled');
+          a.prop('disabled', true);
         } else {
           popupLi.removeClass('is-disabled');
+          a.prop('disabled', false);
         }
 
         // Refresh Text
@@ -440,10 +442,11 @@
 
             if (item.parent().is('.is-disabled') || item.is(':disabled')) { // if it's disabled menu item, OR a disabled menu-button
               li.addClass('is-disabled');
+              a.prop('disabled', true);
               a.attr('tabindex', '-1');
             } else {
               li.removeClass('is-disabled');
-              a.removeAttr('disabled');
+              a.prop('disabled', false);
             }
 
             if (item.is('a')) {
