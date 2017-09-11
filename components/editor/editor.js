@@ -1270,9 +1270,9 @@
                 (types.indexOf && types.indexOf('text/html') !== -1) || self.isIeEdge) {
             // jshint undef:true
               if (self.isIeEdge) {
-                pastedData =  e.originalEvent.clipboardData.getData();
+                pastedData =  e.originalEvent.clipboardData.getData('text/plain');
               } else {
-                pastedData =  e.originalEvent.clipboardData.getData('text/html');
+                pastedData = e.originalEvent.clipboardData.getData('text/html');
               }
             }
           } else {
