@@ -712,7 +712,7 @@
       formattedNum = parts.join(decimal);
 
       // Position the negative at the front - There is no CLDR info for this.
-      var minusSign = this.currentLocale.data.numbers.minusSign,
+      var minusSign = (this.currentLocale.data && this.currentLocale.data.numbers && this.currentLocale.data.numbers.minusSign) ? this.currentLocale.data.numbers.minusSign : '-',
         isNegative = (formattedNum.indexOf(minusSign) > -1);
         formattedNum = formattedNum.replace(minusSign, '');
 
