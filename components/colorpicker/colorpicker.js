@@ -111,7 +111,8 @@
             {label: 'Azure', number: '01', value: 'CBEBF4'}
           ],
           placeIn: null, // null|'editor'
-          showLabel: false
+          showLabel: false,
+          editable: true
         },
         settings = $.extend({}, defaults, options);
 
@@ -121,6 +122,7 @@
     * @class ColorPicker
     * @param {String} colors  &nbsp;-&nbsp; An array of objects of the form {label: 'Azure', number: '01', value: 'CBEBF4'} that can be used to populate the color grid.
     * @param {String} showLabel  &nbsp;-&nbsp; Show the label if true vs the hex value if false.
+    * @param {String} editable  &nbsp;-&nbsp; If false, the field is readonly and transparent. I.E. The value cannot be typed only editable by selecting.
     *
     */
     function ColorPicker(element) {
@@ -194,6 +196,11 @@
         if (this.element.prop('readonly')) {
           this.readonly();
         }
+
+        if (!this.settings.editable) {
+          this.readonly();
+        }
+
         this.addAria();
       },
 
@@ -220,7 +227,7 @@
         var self = this,
           menu =  $('#colorpicker-menu');
 
-        if (self.element.is(':disabled') || this.element.prop('readonly')) {
+        if (self.element.is(':disabled') || (this.element.prop('readonly') && self.settings.editable)) {
           return;
         }
 
@@ -379,6 +386,7 @@
       */
       enable: function() {
         this.element.prop('disabled', false);
+        this.element.prop('readonly', false);
         this.element.parent().removeClass('is-disabled is-readonly');
       },
 
@@ -395,8 +403,13 @@
       */
       readonly: function() {
         this.enable();
-        this.element.attr('readonly', 'readonly');
+        this.element.prop('readonly', true);
         this.element.parent().addClass('is-readonly');
+
+        if (!this.settings.editable) {
+          this.element.parent().addClass('is-not-editable');
+        }
+
       },
 
       /**
@@ -467,14 +480,14 @@
         return this;
       },
 
-    /**
-     *  This component fires the following events.
-     *
-     * @fires About#events
-     * @param {Object} change  &nbsp;-&nbsp; Fires when a color is typed or selected.
-     * @param {Object} blur  &nbsp;-&nbsp; Fires as the input looses focus
-     *
-     */
+      /**
+      *  This component fires the following events.
+      *
+      * @fires About#events
+      * @param {Object} change  &nbsp;-&nbsp; Fires when a color is typed or selected.
+      * @param {Object} blur  &nbsp;-&nbsp; Fires as the input looses focus
+      *
+      */
       handleEvents: function () {
         var self = this;
         this.icon.parent().onTouchClick().on('click.colorpicker', function () {
