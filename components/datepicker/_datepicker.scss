@@ -499,4 +499,20 @@ html[dir='rtl'] {
     }
   }
 
+  .is-monthyear {
+
+    .month,
+    .year {
+      line-height: normal;
+    }
+
+    .calendar-header {
+      margin-bottom: -8px;
+      margin-top: 12px;
+
+      button {
+        top: 4px;
+      }
+    }
+  }
 }
