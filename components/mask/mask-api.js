@@ -80,7 +80,8 @@ SohoMaskAPI.prototype = {
       if (Array.isArray(options.pattern) || typeof options.pattern === 'function') {
         this.pattern = options.pattern;
       } else if (typeof options.pattern === 'string') {
-        this.pattern = this._convertPatternFromString(options.pattern);
+        var defs = Soho.utils.extend({}, Soho.masks.LEGACY_DEFS, (options.definitions || {}));
+        this.pattern = this._convertPatternFromString(options.pattern, defs);
       } else {
         // TODO: fail somehow?
       }
@@ -759,15 +760,15 @@ SohoMaskAPI.prototype = {
    * @param {String} pattern - a legacy Soho Mask Pattern
    * @returns {Array} - contains string "literal" characters and Regex matchers
    */
-  _convertPatternFromString: function(pattern) {
+  _convertPatternFromString: function(pattern, defs) {
     var arr = [],
-      legacyKeys = Object.keys(Soho.masks.LEGACY_DEFS);
+      legacyKeys = Object.keys(defs);
 
     function getRegex(char) {
       var idx = legacyKeys.indexOf(char);
 
       if (idx > -1) {
-        char = Soho.masks.LEGACY_DEFS[legacyKeys[idx]];
+        char = defs[legacyKeys[idx]];
       }
       return char;
     }

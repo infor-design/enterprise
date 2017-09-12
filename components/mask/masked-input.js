@@ -18,6 +18,7 @@
    */
   var DEFAULT_MASKED_INPUT_OPTIONS = {
     autocorrect: false,
+    definitions: undefined,
     guide: false,
     maskAPI: window.Soho.Mask,
     keepCharacterPositions: false,
