@@ -431,7 +431,7 @@
         rule, dfd,
         dfds = [],
         results = [],
-        i, l,
+        i, l, validationType,
         value = self.value(field),
         placeholder = field.attr('placeholder'),
 
@@ -441,27 +441,25 @@
             self.removePositive(field);
           }
 		  
-		  if (!rule.type) {
-		    rule.type = 'error';
-		  }
-
+		  validationType = $.fn.validation.ValidationTypes[rule.type] || $.fn.validation.ValidationTypes.error;
+		  
           if (!result) {
             if (!self.isPlaceholderSupport && (value === placeholder) &&
                (rule.message !== Locale.translate('Required'))) {
               return;
             }
 
-            self.addMessage(field, rule.message, rule.type, field.attr('data-error-type') === 'tooltip' ? false: true, showTooltip);
+            self.addMessage(field, rule.message, rule.type, field.attr('data-' + validationType.type + '-type') === 'tooltip' ? false: true, showTooltip);
             results.push(rule.type);
 			
-			if (rule.type === 'error') {
+			if (validationType.errorsForm) {
               dfd.reject();
 			}
 			else {
 			  dfd.resolve();
 			}
-          }   else if ($.grep(results, function (res) { return res === rule.type; }).length === 0) {
-            self.removeMessage(field, rule.type);
+          }   else if ($.grep(results, function (res) { return res === validationType.type; }).length === 0) {
+            self.removeMessage(field, validationType.type);
             dfd.resolve();
 			
             if (rule.positive) {
@@ -481,13 +479,11 @@
 
         };
 
-      self.removeMessage(field, 'error');
-	  self.removeMessage(field, 'alert');
-	  self.removeMessage(field, 'info');
-	  
-      field.removeData('data-errormessage');
-	  field.removeData('data-alertmessage');
-	  field.removeData('data-infomessage');
+	  for (var props in $.fn.validation.ValidationTypes) {
+		validationType = $.fn.validation.ValidationTypes[props];
+        self.removeMessage(field, (validationType.type));
+		field.removeData('data-' + (validationType.type) + 'message');
+      }
 
       for (i = 0, l = types.length; i < l; i++) {
         rule = $.fn.validation.rules[types[i]];
@@ -547,22 +543,23 @@
     addMessage: function(field, message, type, inline, showTooltip) {
       var loc = this.getField(field).addClass(type),
          dataMsg = loc.data('data-' + type + 'message'),
-         appendedMsg = message;
+         appendedMsg = message,
+		 validationType = $.fn.validation.ValidationTypes[type] || $.fn.validation.ValidationTypes.error;
 
       if (dataMsg) {
         appendedMsg = (/^\u2022/.test(dataMsg)) ? '' : '\u2022 ';
         appendedMsg += dataMsg + '<br>\u2022 ' + message;
       }
 
-      loc.data('data-' + type + 'message', appendedMsg);
+      loc.data('data-' + validationType.type + 'message', appendedMsg);
 
-      //Add Aria Alert
+      //Add Aria
       if ($.fn.toast !== undefined) {
-        $('body').toast({title: Locale.translate(Locale.capitalize(type)), audibleOnly: true, message: appendedMsg});
+        $('body').toast({title: Locale.translate(validationType.label), audibleOnly: true, message: appendedMsg});
       }
 
       if (!inline) {
-        this.showTooltipMessage(field, appendedMsg, type, showTooltip);
+        this.showTooltipMessage(field, appendedMsg, validationType.type, showTooltip);
         return;
       }
 
@@ -572,7 +569,7 @@
         this.setModalPrimaryBtn(field, modalBtn, false);
       }
 
-      this.showInlineMessage(loc, message, type);
+      this.showInlineMessage(loc, message, validationType.type);
     },
 
     /**
@@ -740,26 +737,27 @@
      */
     showInlineMessage: function (field, message, type) {
       var loc = this.getField(field).addClass(type),
-        markup = '<div class="' + type + '-message">' +
-          $.createIcon({ classes: ['icon-' + type], icon: type }) +
-          '<pre class="audible">'+ Locale.translate(Locale.capitalize(type)) +'</pre>' +
+	    validationType = $.fn.validation.ValidationTypes[type] || $.fn.validation.ValidationTypes.error,
+        markup = '<div class="' + validationType.type + '-message">' +
+          $.createIcon({ classes: ['icon-' + validationType.type], icon: validationType.type }) +
+          '<pre class="audible">'+ Locale.translate(validationType.label) +'</pre>' +
           '<p class="message-text">' + message +'</p>' +
           '</div>';
 
       if (field.is(':radio')) { // Radio button handler
-        this.toggleRadioMessage(field, message, type, markup, true);
+        this.toggleRadioMessage(field, message, validationType.type, markup, true);
       } else { // All other components
-        loc.closest('.field, .field-short').find('.formatter-toolbar').addClass(type);
+        loc.closest('.field, .field-short').find('.formatter-toolbar').addClass(validationType.type);
         loc.closest('.field, .field-short').append(markup);
       }
 
       //Remove positive errors
-	  if (type === 'error') {
+	  if (validationType.type === 'error') {
         field.parent().find('.icon-confirm').remove();
       }
       // Trigger an event
-      field.trigger(type, {field: field, message: message});
-      field.closest('form').trigger(type, {field: field, message: message});
+      field.trigger(validationType.type, {field: field, message: message});
+      field.closest('form').trigger(validationType.type, {field: field, message: message});
     },
 
     /**
@@ -936,9 +934,18 @@
     });
   };
 
+  
   //The validation rules object
   var Validation = function () {
     var self = this;
+	
+	// define standard validation types
+    this.ValidationTypes = [];
+    this.ValidationTypes.error = { type: 'error', title: 'Error', errorsForm: true };
+    this.ValidationTypes.alert = { type: 'alert', title: 'Alert', errorsForm: false };
+    this.ValidationTypes.confirm = { type: 'confirm', title: 'Confirm', errorsForm: false };
+    this.ValidationTypes.info = { type: 'info', title: 'Info', errorsForm: false };
+	
     this.rules = {
       required: {
         isNotEmpty: function(value, field) {

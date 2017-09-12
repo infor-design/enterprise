@@ -6088,7 +6088,8 @@ $.fn.datagrid = function(options) {
     validateCell: function (row, cell) {
       var self = this,
         column = this.columnSettings(cell),
-        validate = column.validate;
+        validate = column.validate,
+		validationType;
 
       if (!validate) {
         return;
@@ -6098,63 +6099,46 @@ $.fn.datagrid = function(options) {
         validator = $.fn.validation,
         cellValue = this.fieldValue(this.settings.dataset[row], column.field),
         isValid = true,
-		messages = '',
-        errorMessages = '',
-		alertMessages = '',
-		infoMessages = '';
+		messages = [], 
+		messageText = '', i;
 
-      for (var i = 0; i < rules.length; i++) {
+      for (i = 0; i < rules.length; i++) {
         var rule = validator.rules[rules[i]],
           gridInfo = {row: row, cell: cell, item: this.settings.dataset[row], column: column, grid: self},
           ruleValid = rule.check(cellValue, $('<input>').val(cellValue), gridInfo);
-        
-		if (rule.type === 'error') {
-		  messages = errorMessages;
-		} else if (rule.type === 'alert') {
-		  messages = alertMessages;
-		} else if (rule.type === 'info') {
-		  messages = infoMessages;
+		
+		validationType = $.fn.validation.ValidationTypes[rule.type] || $.fn.validation.ValidationTypes.error;
+		messageText = '';
+		if (messages[validationType.type]) {
+		  messageText = messages[validationType.type];
 		}
 		
         if (!ruleValid) {
-          if (messages) {
-            messages = ((/^\u2022/.test(messages)) ? '' : '\u2022 ') + messages;
-            messages += '<br>' + '\u2022 ' + rule.message;
+          if (messageText) {
+            messageText = ((/^\u2022/.test(messageText)) ? '' : '\u2022 ') + messageText;
+            messageText += '<br>' + '\u2022 ' + rule.message;
           } else {
-            messages = rule.message;
+            messageText = rule.message;
           }
 		  
-		  if (rule.type === 'error') {
-		    errorMessages = messages;
-		  } else if (rule.type === 'alert') {
-		    alertMessages = messages;
-		  } else if (rule.type === 'info') {
-		    infoMessages = messages;
-		  }
+		  messages[validationType.type] = messageText;
 		  
-          isValid = false;
+		  isValid = false;
         }
       }
 
-      if (errorMessages !== '') {
-		self.showCellError(row, cell, errorMessages, 'error');
-        self.element.trigger('cellerror', {row: row, cell: cell, message: errorMessages, target: this.cellNode(row, cell), value: cellValue, column: column});
-      } else {
-        self.clearCellError(row, cell, 'error');
-      }
-	  
-	  if (alertMessages !== '') {
-		self.showCellError(row, cell, messages, 'alert');
-        self.element.trigger('cellalert', {row: row, cell: cell, message: alertMessages, target: this.cellNode(row, cell), value: cellValue, column: column});
-      } else {
-        self.clearCellError(row, cell, 'alert');
-      }
-
-	  if (infoMessages !== '') {
-		self.showCellError(row, cell, messages, 'info');
-        self.element.trigger('cellinfo', {row: row, cell: cell, message: infoMessages, target: this.cellNode(row, cell), value: cellValue, column: column});
-      } else {
-        self.clearCellError(row, cell, 'info');
+	  for (var props in $.fn.validation.ValidationTypes) {
+		messageText = '';
+		validationType = $.fn.validation.ValidationTypes[props];
+		if (messages[validationType.type]) {
+		  messageText = messages[validationType.type];
+		}
+		if (messageText !== '') {
+		  self.showCellError(row, cell, messageText, validationType.type);
+          self.element.trigger('cell' + validationType.type, {row: row, cell: cell, message: messageText, target: this.cellNode(row, cell), value: cellValue, column: column});
+        } else {
+          self.clearCellError(row, cell, validationType.type);
+        }
       }
     },
 
@@ -6193,9 +6177,10 @@ $.fn.datagrid = function(options) {
 	  }
 
 	  // process via type
-	  this.showNonVisibleCellErrorType($.grep(this.nonVisibleCellErrors, function (error) { return error.type === 'error'; }), 'error');
-	  this.showNonVisibleCellErrorType($.grep(this.nonVisibleCellErrors, function (error) { return error.type === 'alert'; }), 'alert');
-	  this.showNonVisibleCellErrorType($.grep(this.nonVisibleCellErrors, function (error) { return error.type === 'info'; }), 'info');
+	  for (var props in $.fn.validation.ValidationTypes) {
+        var validationType = $.fn.validation.ValidationTypes[props];
+        this.showNonVisibleCellErrorType($.grep(this.nonVisibleCellErrors, function (error) { return error.type === validationType.type; }), validationType.type);
+      }
     },
 	
 	showNonVisibleCellErrorType: function (nonVisibleCellErrors, type) {
@@ -6328,7 +6313,7 @@ $.fn.datagrid = function(options) {
       var messageType = type || 'error',
         rowNode = this.dataRowNode(row);
 
-      rowNode.addClass('error');
+      rowNode.addClass(type);
       this.rowStatus(row, messageType, message);
     },
 

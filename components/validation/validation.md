@@ -43,6 +43,27 @@ $('#username-field').removeError()
 
 ```
 
+## Validation Types
+
+There are four standard validation types, and they can be extended or altered if required, error, alert, confirm, info. The type should be defined on the rule, but error is used if it is not defined.  
+
+```javascript
+$.fn.validation.rules.customWarningRule = {
+  check: function (value) {
+
+    return (value !== '');
+  },
+  message: 'Warning the value may be incorrect',
+  type: 'alert'
+};
+```
+
+Each type is style differntly and can be defined if the formValidation passes or errors based on the rules result. This is defined via the errorsForm on the validation type.
+
+```javascript
+$.fn.validation.ValidationTypes.alert = { type: 'alert', title: 'Alert', errorsForm: false };
+```
+
 ## Accessibility
 
 - On required fields always add an audible label for example

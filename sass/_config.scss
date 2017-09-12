@@ -202,7 +202,8 @@ $input-readonly-color: $graphite10;
 
 //States
 $error-color: $alert-red;
-$alert-color: $alert-yellow;
+$alert-color: $alert-orange;
+$confirm-color: $alert-green;
 $info-color: $primary-color;
 $error-bg-color: rgba($alert-red, .1);
 $error-icon-fill: $alert-red;

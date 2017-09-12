@@ -79,6 +79,17 @@
     }
   }
   
+  &.confirm {
+    border-color: $confirm-color;
+
+    &:focus {
+      // Needed for printing
+      // scss-lint:disable ImportantRule
+      border-color: $confirm-color !important;
+      color: $input-color !important;
+    }
+  }
+  
   &.info {
     border-color: $info-color;
 
@@ -468,6 +479,28 @@ label,
   opacity: 1;
 }
 
+// Confirm States
+.confirm,
+.confirm-message,
+.confirm-message p {
+  color: $confirm-color;
+}
+
+.confirm::-webkit-input-placeholder {
+  color: $confirm-color;
+  opacity: 1;
+}
+
+.confirm::-moz-placeholder {
+  color: $confirm-color;
+  opacity: 1;
+}
+
+.confirm:-ms-input-placeholder {
+  color: $confirm-color;
+  opacity: 1;
+}
+
 // Information States
 .info,
 .info-message,
@@ -669,6 +702,36 @@ label,
 
   @include font-size(12);
   color: $alert-color;
+  display: block;
+  line-height: 1.2rem;
+  margin-top: 7px;
+  max-width: 300px;
+  position: relative;
+
+  .icon {
+    height: $icon-width;
+    left: 0;
+    margin-left: 0;
+    margin-top: 0;
+    position: absolute;
+    top: 0;
+    width: $icon-width;
+  }
+
+  .message-text {
+    font-size: inherit;
+    line-height: 15px;
+    max-width: 280px;
+    padding-left: $icon-width + 5;
+  }
+}
+
+// Confirm Field
+.confirm-message {
+  $icon-width: 14px;
+
+  @include font-size(12);
+  color: $confirm-color;
   display: block;
   line-height: 1.2rem;
   margin-top: 7px;
