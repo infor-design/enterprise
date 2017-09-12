@@ -20,7 +20,6 @@ The About Dialog Component is displays information regarding the application.
 
 **Parameters**
 
--   `element`  
 -   `dataset` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)**  -  Array of data to feed the template
 -   `content` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Html Template String
 -   `description` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Audible Label (or use parent title)

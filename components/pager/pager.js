@@ -65,7 +65,7 @@
       init: function() {
         this.setup();
         this.createPagerBar();
-        this.setActivePage(this.settings.activePage); //Get First Page
+        this.setActivePage(this.settings.activePage, true); //Get First Page
         this.renderBar();
         this.renderPages('initial');
         this.handleEvents();
@@ -332,7 +332,7 @@
 
         this.renderBar(pagingInfo);
         this.renderPages(op);
-        if (this.settings.componentAPI) {
+        if (this.settings.componentAPI && this.settings.componentAPI.saveUserSettings) {
           this.settings.componentAPI.saveUserSettings();
         }
         return pageNum;
