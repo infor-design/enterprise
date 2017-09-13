@@ -112,7 +112,8 @@
           ],
           placeIn: null, // null|'editor'
           showLabel: false,
-          editable: true
+          editable: true,
+          uppercase: true
         },
         settings = $.extend({}, defaults, options);
 
@@ -123,6 +124,7 @@
     * @param {String} colors  &nbsp;-&nbsp; An array of objects of the form {label: 'Azure', number: '01', value: 'CBEBF4'} that can be used to populate the color grid.
     * @param {String} showLabel  &nbsp;-&nbsp; Show the label if true vs the hex value if false.
     * @param {String} editable  &nbsp;-&nbsp; If false, the field is readonly and transparent. I.E. The value cannot be typed only editable by selecting.
+    * @param {String} uppercase  &nbsp;-&nbsp; If false, lower case hex is allowed. If true upper case hex is allowed. If showLabel is true this setting is ignored.
     *
     */
     function ColorPicker(element) {
@@ -166,9 +168,14 @@
           // Add Masking to show the #.
           // Remove the mask if using the "showLabel" setting
           if (!this.settings.showLabel) {
+
+            var patternUpper = ['#', /[0-9A-F]/, /[0-9A-F]/, /[0-9A-F]/, /[0-9A-F]/, /[0-9A-F]/, /[0-9A-F]/ ],
+              patternLower = ['#', /[0-9a-f]/, /[0-9a-f]/, /[0-9a-f]/, /[0-9a-f]/, /[0-9a-f]/, /[0-9a-f]/ ];
+
             colorpicker.mask({
-              pattern: ['#', /[0-9a-fA-F]/, /[0-9a-fA-F]/, /[0-9a-fA-F]/, /[0-9a-fA-F]/, /[0-9a-fA-F]/, /[0-9a-fA-F]/ ]
+              pattern: this.settings.uppercase ? patternUpper : patternLower
             });
+
           } else {
             var maskAPI = colorpicker.data('mask');
             if (maskAPI && typeof maskAPI.destroy === 'function') {
@@ -295,9 +302,11 @@
       setColor: function (hex, text) {
         // check if the hex value is actually a hex value.
         // if not, use it as a label.
-        if (!/[0-9A-Fa-f]{6}/g.test(hex)) {
+
+        var testHex = hex.replace('#', '');
+        if (!/[0-9A-Fa-f]{6}/g.test(testHex) || !/[0-9A-Fa-f]{3}/g.test(testHex)) {
           text = '' + hex;
-          hex = this.getHexFromLabel(text);
+          hex = this.settings.showLabel ? this.getHexFromLabel(text) : hex;
         }
 
         // Simply return out if hex isn't valid
@@ -469,7 +478,7 @@
       },
 
       teardown: function() {
-        this.element.off('keypress.colorpicker');
+        this.element.off('keyup.colorpicker blur.colorpicker change.colorpicker paste.colorpicker');
         this.swatch.off('click.colorpicker');
         this.swatch.remove();
         this.container.find('.trigger').remove();
@@ -513,10 +522,9 @@
           $(this).parent().removeClass('is-focused');
         });
 
-        this.element.on('keypress.colorpicker', function () {
-          self.setColor($(this).val());
-        }).on('change.colorpicker', function () {
-          self.setColor($(this).val());
+        this.element.on('keyup.colorpicker blur.colorpicker paste.colorpicker change.colorpicker', function () {
+          var val = $(this).val();
+          self.setColor(val);
         });
 
         //Handle Key Down to open
