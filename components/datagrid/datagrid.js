@@ -3111,7 +3111,7 @@ $.fn.datagrid = function(options) {
         activePage = self.pager ? self.pager.activePage : 1,
         pagesize = self.settings.pagesize,
         rowHtml = '',
-        d = self.settings.treeDepth[dataRowIdx],
+        d = self.settings.treeDepth ? self.settings.treeDepth[dataRowIdx] : 0,
         depth, d2, i, l, isHidden, isSelected;
 
       if (!rowData) {
