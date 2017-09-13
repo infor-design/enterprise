@@ -9,6 +9,36 @@
 <script>
   var gridApi = null;
 
+  $(function() {
+    $.fn.validation.rules.customErrorRule = {
+          check: function (value) {
+
+            return (value !== '');
+          },
+          message: 'Custom Error',
+		  type: 'error'
+    };
+
+	$.fn.validation.rules.customWarningRule = {
+          check: function (value) {
+
+            return (value !== '');
+          },
+          message: 'Custom Warning',
+		  type: 'alert'
+    };
+		
+	$.fn.validation.rules.customInformationRule = {
+          check: function (value) {
+
+            return (value !== '');
+          },
+          message: 'Custom Information',
+		  type: 'info'
+    };
+	      
+  });
+  
   $('body').one('initialized', function () {
          var grid,
           columns = [],
@@ -17,7 +47,7 @@
         //Define Columns for the Grid.
         columns.push({ id: 'id', name: 'Row Id', field: 'id', formatter: Formatters.Readonly, filterType: 'text'});
         columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, validate: 'required', editor: Editors.Input, filterType: 'text'});
-        columns.push({ id: 'activity', name: 'Activity', field: 'activity', editor: Editors.Input, filterType: 'text'});
+        columns.push({ id: 'activity', name: 'Activity', field: 'activity', validate: 'customWarningRule', editor: Editors.Input, filterType: 'text'});
 		
         var url = '{{basepath}}api/compressors?pageNum=1&pageSize=100';
 

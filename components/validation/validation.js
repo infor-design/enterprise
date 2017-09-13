@@ -555,7 +555,7 @@
 
       //Add Aria
       if ($.fn.toast !== undefined) {
-        $('body').toast({title: Locale.translate(validationType.label), audibleOnly: true, message: appendedMsg});
+        $('body').toast({title: Locale.translate(validationType.titleMessageID), audibleOnly: true, message: appendedMsg});
       }
 
       if (!inline) {
@@ -740,7 +740,7 @@
 	    validationType = $.fn.validation.ValidationTypes[type] || $.fn.validation.ValidationTypes.error,
         markup = '<div class="' + validationType.type + '-message">' +
           $.createIcon({ classes: ['icon-' + validationType.type], icon: validationType.type }) +
-          '<pre class="audible">'+ Locale.translate(validationType.label) +'</pre>' +
+          '<pre class="audible">'+ Locale.translate(validationType.titleMessageID) +'</pre>' +
           '<p class="message-text">' + message +'</p>' +
           '</div>';
 
@@ -941,10 +941,10 @@
 	
 	// define standard validation types
     this.ValidationTypes = [];
-    this.ValidationTypes.error = { type: 'error', title: 'Error', errorsForm: true };
-    this.ValidationTypes.alert = { type: 'alert', title: 'Alert', errorsForm: false };
-    this.ValidationTypes.confirm = { type: 'confirm', title: 'Confirm', errorsForm: false };
-    this.ValidationTypes.info = { type: 'info', title: 'Info', errorsForm: false };
+    this.ValidationTypes.error = { type: 'error', titleMessageID: 'Error', pagingMessageID: 'ErrorOnPage', errorsForm: true };
+    this.ValidationTypes.alert = { type: 'alert', titleMessageID: 'Alert', pagingMessageID: 'AlertOnPage', errorsForm: false };
+    this.ValidationTypes.confirm = { type: 'confirm', titleMessageID: 'Confirm', pagingMessageID: 'ComfirmOnPage', errorsForm: false };
+    this.ValidationTypes.info = { type: 'info', titleMessageID: 'Info', pagingMessageID: 'InfoOnPage', errorsForm: false };
 	
     this.rules = {
       required: {

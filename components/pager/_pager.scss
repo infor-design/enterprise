@@ -220,6 +220,11 @@ li + .pager-count {
   }
 }
 
+.pager-errors {
+  float: left;
+  height: 35px;
+}
+
 .ie {
   .pager-count {
     input {
