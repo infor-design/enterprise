@@ -483,6 +483,11 @@
       key = toAscii[key];
     }
 
+    // Handle Numpad keys
+    if (key >= 96 && key <= 105) {
+      key -= 48;
+    }
+
     // Convert Keycode to Character String
     if (!e.shiftKey && (key >= 65 && key <= 90)) {
       character = String.fromCharCode(key + 32);
