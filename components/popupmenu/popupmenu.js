@@ -274,13 +274,14 @@
             var $a = $(a),
               $li = $(li);
 
-            if (a.hasAttribute('disabled') || $li.hasClass('is-disabled')) {
-              Soho.DOM.addClass(li, 'is-disabled');
+            if ($li.hasClass('is-disabled') || a.hasAttribute('disabled')) {
+              $li.addClass('is-disabled');
               a.setAttribute('aria-disabled', 'true');
-              a.disabled = true;
+              a.setAttribute('disabled', true);
             } else {
               $li.removeClass('is-disabled');
-              $a.prop('disabled', false).removeAttr('aria-disabled');
+              $a.removeAttr('aria-disabled');
+              a.setAttribute('disabled', false);
             }
 
             // menu items that contain submenus
@@ -1015,11 +1016,20 @@
           this.menu.parent()[0].style.zIndex =  '9001';
         }
 
-        //Fix disabled attribute sync issue
-        this.menu.find('.is-disabled').each(function () {
-          var elem = $(this);
-          if (elem.find('a').prop('disabled') === false) {
-            elem.removeClass('is-disabled');
+        // Check every anchor tag to see if it should be disabled.
+        // Use the CSS class on its parent to determine whether or not to disable.
+        this.menu.find('a').each(function() {
+          var a = $(this),
+            li = a.parent();
+
+          if (li.hasClass('is-disabled')) {
+            li.addClass('is-disabled');
+            a.attr('aria-disabled', 'true');
+            a.attr('disabled', 'disabled');
+          } else {
+            li.removeClass('is-disabled');
+            a.removeAttr('aria-disabled');
+            a.removeAttr('disabled');
           }
         });
 
