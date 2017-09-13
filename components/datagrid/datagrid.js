@@ -2555,7 +2555,9 @@ $.fn.datagrid = function(options) {
         showTarget = $('.drag-target-arrows', self.element);
 
       if (!showTarget.length) {
-        self.element.prepend('<span class="drag-target-arrows"></span>');
+        var headerHeight = this.settings.rowHeight === 'normal' ? 56 : 48;
+
+        self.element.prepend('<span class="drag-target-arrows" style="height: '+ headerHeight +'px;"></span>');
         showTarget = $('.drag-target-arrows', self.element);
       }
 
@@ -2580,7 +2582,8 @@ $.fn.datagrid = function(options) {
               clone = thisClone;
 
               clone.removeAttr('id').addClass('is-dragging-clone')
-                .css({left: pos.left, top: pos.top});
+                .css({left: pos.left, top: pos.top, height: header.height(), border: 0});
+
               $('.is-draggable-target', clone).remove();
 
               self.setDraggableColumnTargets();
@@ -3800,7 +3803,10 @@ $.fn.datagrid = function(options) {
       return columns;
     },
 
-    // Restore the columns from a saved list or local storage
+    /**
+    * Restore the columns from a provided list or local storage
+    * @param {Array} cols - The columns list to restore, if you saved the settings manually.
+    */
     restoreColumns: function (cols) {
       if (!this.settings.saveColumns || !this.canUseLocalStorage()) {
         return;
@@ -3868,9 +3874,8 @@ $.fn.datagrid = function(options) {
       // Restore Column Width and Order
       if (options.columns) {
         var savedColumns = localStorage[this.uniqueId('usersettings-columns')];
-        this.originalColumns = this.settings.columns;
-
         if (savedColumns) {
+          this.originalColumns = this.settings.columns;
           this.settings.columns = this.columnsFromString(savedColumns);
         }
       }
@@ -3933,7 +3938,6 @@ $.fn.datagrid = function(options) {
     resetColumns: function () {
       if (this.canUseLocalStorage()) {
         localStorage.removeItem(this.uniqueId('columns'));
-        localStorage[this.uniqueId('columns')] = '';
       }
 
       if (this.originalColumns) {

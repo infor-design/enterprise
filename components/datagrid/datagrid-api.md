@@ -7,6 +7,7 @@
     -   [removeRow](#removerow)
     -   [removeSelected](#removeselected)
     -   [clearFilter](#clearfilter)
+    -   [restoreColumns](#restorecolumns)
     -   [hideColumn](#hidecolumn)
 
 ## Datagrid
@@ -79,6 +80,14 @@ Remove all selected rows from the grid and dataset.
 ### clearFilter
 
 Clear the Filter row Conditions and Reset the Data.
+
+### restoreColumns
+
+Restore the columns from a provided list or local storage
+
+**Parameters**
+
+-   `cols` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** The columns list to restore, if you saved the settings manually.
 
 ### hideColumn
 
