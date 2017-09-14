@@ -4,19 +4,6 @@ define([
   'jsdom',
 ], function(registerSuite, expect) {
 
-  var jsdom = require('jsdom').jsdom;
-  document = jsdom('<!DOCTYPE html><html id="html"><head></head><body></body></html>'); // jshint ignore:line
-  window = document.defaultView;  // jshint ignore:line
-
-  Locale = window.Locale = {}; // jshint ignore:line
-  Soho = window.Soho = {}; // jshint ignore:line
-
-  // Load the Mask files we are testing
-  require('components/utils/utils.js');
-  require('components/mask/mask-api.js');
-  require('components/mask/mask-functions.js');
-  require('components/mask/masked-input.js');
-
   var DEFAULT_SETTINGS = {
     process: undefined,
     pipe: undefined
@@ -25,6 +12,23 @@ define([
   registerSuite({
 
     name: 'Mask API',
+
+    setup: function() {
+      var jsdom = require('jsdom').jsdom;
+      document = jsdom('<!DOCTYPE html><html id="html"><head></head><body></body></html>'); // jshint ignore:line
+      window = document.defaultView;  // jshint ignore:line
+
+      require('components/locale/locale.js');
+      //Locale = window.Locale = {}; // jshint ignore:line
+      Soho = window.Soho = {}; // jshint ignore:line
+
+      // Load the Mask files we are testing
+
+      require('components/utils/utils.js');
+      require('components/mask/mask-api.js');
+      require('components/mask/mask-functions.js');
+      require('components/mask/masked-input.js');
+    },
 
     //============================================
     // Setup/Configuration
@@ -55,16 +59,17 @@ define([
 
     // Makes sure that a legacy Soho pattern mask is properly converted to an array.
     'should convert a legacy Soho mask pattern string into a pattern array': function() {
-      var api = new Soho.Mask(DEFAULT_SETTINGS);
+      var api = new Soho.Mask(DEFAULT_SETTINGS),
+        maskDefinitions = Soho.masks.LEGACY_DEFS;
 
       // Credit Cards
-      var result = api._convertPatternFromString('####-####-####-####');
+      var result = api._convertPatternFromString('####-####-####-####', maskDefinitions);
       expect(result).to.exist;
       expect(result).to.be.a('array');
       expect(result).to.have.lengthOf(19);
 
       // U.S. Phone Number
-      result = api._convertPatternFromString('(###) ###-####');
+      result = api._convertPatternFromString('(###) ###-####', maskDefinitions);
       expect(result).to.exist;
       expect(result).to.be.a('array');
       expect(result).to.have.lengthOf(14);
@@ -210,12 +215,16 @@ define([
     },
 
     'Retains text caret locations in simple mask results': function() {
+      var settings = DEFAULT_SETTINGS;
+      settings.pattern = [ /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/ ];
+
       var api = new Soho.Mask(DEFAULT_SETTINGS),
         opts = {
           selection: {
             start: 1
           }
         };
+
 
       // Run the masking process
       var result = api.process('1', opts);
@@ -244,7 +253,7 @@ define([
     'Properly adjusts text caret placement when adding character literals': function() {
       var settings = DEFAULT_SETTINGS;
       settings.pattern = [ /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/ ];
-      var api = new Soho.Mask(DEFAULT_SETTINGS),
+      var api = new Soho.Mask(settings),
         textValue = '1234',
         opts = {
           selection: {
@@ -305,10 +314,17 @@ define([
     //============================================
 
     setup: function() {
+      // Setup the input field used for this test suite
       TEST_INPUT = document.createElement('input');
       TEST_INPUT.setAttribute('type', 'text');
       TEST_INPUT.setAttribute('id', 'masked');
       document.body.appendChild(TEST_INPUT);
+    },
+
+    'sanity test': function() {
+      expect(window.Soho).to.exist;
+      expect(window.Soho.components).to.exist;
+      expect(window.Soho.components.MaskedInput).to.exist;
     },
 
     'can be invoked': function() {
@@ -381,11 +397,17 @@ define([
         pattern: '#,###,###',
         patternOptions: {
           allowThousands: true,
-          decimalLimit: 7
+          integerLimit: 7,
+          decimalLimit: 0,
+          symbols: {
+            thousands: ',',
+            decimal: '.'
+          }
         }
       });
       expect(inputComponent2.settings).to.have.property('patternOptions');
-      expect(inputComponent2.settings.patternOptions).to.have.property('decimalLimit', 7);
+      expect(inputComponent2.settings.patternOptions).to.have.property('integerLimit', 7);
+      expect(inputComponent2.settings.patternOptions).to.have.property('decimalLimit', 0);
       expect(inputComponent2.settings.patternOptions).to.have.property('allowThousands', true);
       expect(input2.value).to.equal('1,234,567');
 
@@ -402,7 +424,13 @@ define([
           allowDecimal: true,
           allowNegative: true,
           allowThousands: true,
-          decimalLimit: 7
+          integerLimit: 7,
+          decimalLimit: 2,
+          symbols: {
+            negative: '-',
+            thousands: ',',
+            decimal: '.'
+          }
         }
       });
       expect(inputComponent3.settings).to.have.property('patternOptions');
@@ -425,7 +453,8 @@ define([
         patternOptions: {
           allowDecimal: true,
           allowThousands: true,
-          decimalLimit: 4,
+          integerLimit: 4,
+          decimalLimit: 2,
           symbols: {
             decimal: ',',
             thousands: ' ',

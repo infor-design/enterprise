@@ -203,7 +203,7 @@ SohoMaskAPI.prototype = {
       rawValueLength = rawValue.length,
       prevMaskResultLength = options.previousMaskResult.length,
       maskLength = this.pattern.length,
-      placeholderLength = options.placeholder.length,
+      placeholderLength = options.placeholder.length || 0,
       placeholderChar = options.placeholderChar,
       caretPos = options.selection.start,
       resultStr = Soho.masks.EMPTY_STRING;
@@ -488,8 +488,8 @@ SohoMaskAPI.prototype = {
     // Store lengths for faster performance?
     var rawValueLength = opts.rawValue.length,
       previousConformedValueLength = opts.previousMaskResult.length,
-      placeholderLength = opts.placeholder.length,
-      conformedValueLength = opts.conformedValue.length;
+      placeholderLength = opts.placeholder ? opts.placeholder.length : 0,
+      conformedValueLength = opts.conformedValue ? opts.conformedValue.length : 0;
 
     // This tells us how long the edit is. If user modified input from `(2__)` to `(243__)`,
     // we know the user in this instance pasted two characters
@@ -684,6 +684,10 @@ SohoMaskAPI.prototype = {
       var lastPlaceholderChar = startingSearchIndex;
 
       for (var j = startingSearchIndex; j <= placeholderLength; j++) {
+        if (!opts.placeholder) {
+          return lastPlaceholderChar;
+        }
+
         if (opts.placeholder[j] === opts.placeholderChar) {
           lastPlaceholderChar = j;
         }
