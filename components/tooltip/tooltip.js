@@ -456,6 +456,7 @@
         }
 
         this.position();
+        Soho.utils.fixSVGIcons(this.tooltip);
         this.element.trigger('show', [this.tooltip]);
 
         setTimeout(function () {
