@@ -472,8 +472,30 @@ define([
     },
 
     // TODO: SOHO-3259
+    // simulates locale 'ar-EG'
     'can display reversed prefix/suffix when in RTL mode (SOHO-3259)': function() {
-      // TODO: figure out if we still need this?
+      var input = document.createElement('input');
+      input.setAttribute('type', 'text');
+      input.setAttribute('id', 'rtl');
+      input.setAttribute('value', '123456789');
+
+      var inputComponent = new window.Soho.components.MaskedInput(input, {
+        process: 'number',
+        pattern: '#٬###٬###-',
+        patternOptions: {
+          allowThousands: true,
+          integerLimit: 7,
+          symbols: {
+            thousands: '٬',
+            negative: '-'
+          },
+          suffix: '-'
+        }
+      });
+      expect(inputComponent.settings.patternOptions).to.have.property('symbols');
+      expect(inputComponent.settings.patternOptions.symbols).to.have.property('thousands', '٬');
+      expect(inputComponent.settings.patternOptions.symbols).to.have.property('negative', '-');
+      expect(input.value).to.equal('1٬234٬567-');
     }
 
   });
