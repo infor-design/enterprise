@@ -174,7 +174,8 @@
 
       // On Android, the first character inserted into a field is automatically selected when it shouldn't be.
       // This snippet fixes that problem.
-      if (Soho.env.os.name === 'android' && this.state.previousMaskResult === '' && posBegin !== posEnd) {
+      var os = Soho.env && Soho.env.os && Soho.env.os.name ? Soho.env.os.name : '';
+      if (os === 'android' && this.state.previousMaskResult === '' && posBegin !== posEnd) {
         Soho.utils.safeSetSelection(rawValue.length, rawValue.length);
         posBegin = rawValue.length;
         posEnd = rawValue.length;
