@@ -16,7 +16,6 @@ Input element that opens a dialog with a list for selection.
 
 **Parameters**
 
--   `element`  
 -   `click` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)**  -  Provide a special function to run when the dialog opens to customize the interaction entirely.
 -   `field` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Field name to return from the dataset or can be a function which returns a string on logic
 -   `title` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -   Dialog title to show, or befault shows  field label + "Lookup"

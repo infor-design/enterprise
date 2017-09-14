@@ -233,6 +233,7 @@
       'Notes': {id: 'Notes', value: 'Notes', comment: 'Notes icon tooltip'},
       'NotSelected': {id: 'NotSelected', value: 'Not Selected', comment: 'Not Selected in icons for filtering'},
       'NumberList': {id: 'NumberList', value: 'Number List', comment: 'Number List tooltip'},
+      'Ok': {id: 'Ok', value: 'Ok', comment: 'Ok button on a dialog'},
       'OpenBackClose': {id: 'OpenBackClose', value: 'Open / Back / Close', comment: 'Open / Back / Close tooltip'},
       'OpenClose': {id: 'OpenClose', value: 'Open / Close', comment: 'Open / Close tooltip'},
       'OrderedList': {id: 'OrderedList', value: 'Insert/Remove Numbered List', comment: 'Insert an Ordered list in the editor'},
