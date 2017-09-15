@@ -15,7 +15,7 @@
         <li><a href="#">Create a form</a></li>
         <li class="separator"></li>
         <li><a href="#">Spelling...</a></li>
-        <li><a id="change" href="#" disabled onclick="alert('Got Clicked')" aria-disabled="true">Solver...</a></li>
+        <li class="is-disabled"><a id="change" href="#" onclick="alert('Got Clicked')">Solver...</a></li>
         <li class="separator"></li>
         <li class="is-checked"><a href="#">Enable Autocomplete</a></li>
         <li><a href="#">Notification Rules</a></li>
@@ -26,12 +26,13 @@
 </div>
 
 <script type="text/javascript">
+  var changeLI = $('#change').parent();
   $('#disabled').on('change', function () {
     var isChecked = $(this).prop('checked');
     if (isChecked) {
-      $('#change').attr('disabled', 'disabled');
+      changeLI.addClass('is-disabled');
     } else {
-      $('#change').removeAttr('disabled');
+      changeLI.removeClass('is-disabled');
     }
   });
 </script>
