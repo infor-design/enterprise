@@ -368,7 +368,7 @@
 
           if (decimalParts[1]) {
             this.settings.patternOptions.allowDecimal = true;
-            this.settings.patternOptions.decimalLimit = decimalParts[1].toString().length;
+            this.settings.patternOptions.decimalLimit = decimalParts[1].toString().replace(/[^#0]/g, '').length;
             if (!this.settings.patternOptions.symbols.decimal) {
               this.settings.patternOptions.symbols.decimal = decimal;
             }
