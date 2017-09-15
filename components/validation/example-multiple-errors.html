@@ -1,7 +1,8 @@
 <div class="row">
   <div class="six columns">
     <h2>Valdiation Test: Multiple Validation Errors</h2>
-    <p><a class="hyperlink" href="http://jira.infor.com/browse/SOHO-6104" target="_blank">Related JIRA Ticket</a>.</p>
+    <p><a class="hyperlink" href="http://jira.infor.com/browse/SOHO-6104" target="_blank">Related JIRA Ticket - SOHO-6104</a>.</p>
+    <p><a class="hyperlink" href="http://jira.infor.com/browse/SOHO-6833" target="_blank">Related JIRA Ticket - SOHO-6833</a>.</p>
   </div>
 </div>
 
@@ -16,6 +17,25 @@
     </div>
 
     <div class="field">
+      <label class="required label" for="states">States</label>
+      <select id="states" data-validate="required" name="states" class="dropdown">
+        <option value="" selected>&nbsp;</option>
+        <option value="AL" >Alabama</option>
+        <option value="DE">Delaware</option>
+        <option value="DC">District Of Columbia</option>
+        <option value="FL">Florida</option>
+        <option value="GA">Georgia</option>
+        <option value="HI">Hawaii</option>
+        <option value="ID">Idaho</option>
+        <option value="OK">Oklahoma</option>
+        <option value="OR">Oregon</option>
+        <option value="PA">Pennsylvania</option>
+        <option value="RI">Rhode Island</option>
+        <option value="SC">South Carolina</option>
+      </select>
+    </div>
+
+    <div class="field">
       <button class="btn-secondary" type="button" id="show">Show Error</button>
       <button class="btn-secondary" type="button" id="hide">Hide Error</button>
     </div>
@@ -24,14 +44,34 @@
 </div>
 
 <script type="text/javascript">
-  $('button').button().on('click', function () {
+  $('#show').button().on('click', function () {
     $('#username-display')
       .removeError()
       .addError({ message: 'I have an Error.', showTooltip: true })
       .addError({ message: 'I have another Error.', showTooltip: true });
+
+    $('#states')
+    .removeError()
+    .addError({ message: 'Dropdown is in Error.', showTooltip: true })
   });
 
   $('#hide').button().on('click', function () {
-    $('#username-display').removeError();
+    console.log(['Username data-errormessage =', $('#username-display').data('data-errormessage') ]);
+    console.log(['States data-errormessage =', $('#states').data('data-errormessage') ]);
+
+    console.log(['Username .getErrorMessage() =', $('#username-display').getErrorMessage() ]);
+    console.log(['States .getErrorMessage() =', $('#states').getErrorMessage() ]);
+
+    // only remove the error if it exists
+    if ($('#username-display').getErrorMessage())
+    {
+      $('#username-display').removeError();
+    }
+
+    // only remove the error if it exists
+    if ($('#states').getErrorMessage())
+    {
+      $('#states').removeError();
+    }
   });
 </script>
