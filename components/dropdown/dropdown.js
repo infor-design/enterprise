@@ -1189,6 +1189,7 @@
         // Triggered when the user scrolls the page.
         // Ignores Scrolling on Mobile, and will not close the list if accessing an item within the list
         function scrollDocument(e) {
+          console.log('t1');
           if (touchPrevented || isDropdownElement($(e.target))) {
             return;
           }
@@ -1250,8 +1251,10 @@
           .on('touchend.dropdown touchcancel.dropdown', touchEndCallback)
           .on('click.dropdown', clickDocument);
 
-        var parentScroll = self.element.closest('.scrollable').length ? self.element.closest('.scrollable') : $(document);
+        var modalScroll = $('.modal.is-visible .modal-body-wrapper'),
+          parentScroll = self.element.closest('.scrollable').length ? self.element.closest('.scrollable') : $(document);
         parentScroll = self.element.closest('.scrollable-y').length ? self.element.closest('.scrollable-y') : parentScroll;
+        parentScroll = modalScroll.length ? modalScroll : parentScroll;
         parentScroll.on('scroll.dropdown', scrollDocument);
 
         $('body').on('resize.dropdown', function() {
