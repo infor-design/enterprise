@@ -1085,7 +1085,7 @@
         this.hideToolbarActions();
       },
 
-      //See if the Editor is Selected and Show Toolbar
+      //Set button states for toolbar buttons
       setToolbarButtonStates: function () {
         var buttons = this.toolbarActions.find('button');
 
@@ -1098,6 +1098,10 @@
         this.checkButtonState('bold');
         this.checkButtonState('italic');
         this.checkButtonState('underline');
+        this.colorpickerButtonState('foreColor');
+        if (this.toolbar.find('.buttonset [data-action="backColor"]').length) {
+          this.colorpickerButtonState('backColor');
+        }
 
         var self = this,
             parentNode = this.getSelectedParentElement();
@@ -1542,7 +1546,6 @@
         if (currentElement === this.element) {
           if (action.indexOf('append-') > -1) {
             this.execFormatBlock(action.replace('append-', ''));
-            this.setToolbarButtonStates();
           } else if (action === 'anchor') {
             this.restoreLinkSelection();
             this.modals.url.data('modal').open();
@@ -1603,8 +1606,8 @@
         this.switchToolbars();
       },
 
-      // Colorpicker actions ['foreColor'|'backColor']
-      colorpickerActions: function(action) {
+      // Set ['foreColor'|'backColor'] button icon color in toolbar
+      colorpickerButtonState: function(action) {
         var self = this,
           cpBtn = $('[data-action="'+ action +'"]', this.toolbar),
           cpApi = cpBtn.data('colorpicker'),
@@ -1623,6 +1626,15 @@
           color = cpApi.rgb2hex(color);
           cpBtn.attr('data-value', color).find('.icon').css('fill', color);
         }
+        return {cpBtn:cpBtn, cpApi:cpApi, color:color};
+      },
+
+      // Colorpicker actions ['foreColor'|'backColor']
+      colorpickerActions: function(action) {
+        var self = this,
+          state = this.colorpickerButtonState(action),
+          cpBtn = state.cpBtn,
+          cpApi = state.cpApi;
 
         cpBtn.on('selected.editor', function (e, item) {
           var value = ('#' + item.data('value')).toLowerCase();
@@ -1670,6 +1682,10 @@
             }, 0);
 
           }
+
+          setTimeout(function() {
+            self.getCurrentElement().focus();
+          }, 0);
         });
 
         // Toggle colorpicker
