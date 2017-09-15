@@ -850,6 +850,14 @@
     }
   };
 
+  $.fn.getErrorMessage = function(options) {
+    var defaults = { },
+      settings = $.extend({}, defaults, options);
+
+    var instance = new Validator(this, settings);
+    return instance.getField($(this)).data('data-errormessage');
+  };
+
   //Add a Message to a Field
   $.fn.addError = function(options) {
     var defaults = {message: '', showTooltip: false, inline: true},
