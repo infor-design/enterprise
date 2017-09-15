@@ -1189,7 +1189,6 @@
         // Triggered when the user scrolls the page.
         // Ignores Scrolling on Mobile, and will not close the list if accessing an item within the list
         function scrollDocument(e) {
-          console.log('t1');
           if (touchPrevented || isDropdownElement($(e.target))) {
             return;
           }
