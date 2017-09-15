@@ -1,133 +1,131 @@
 <body class="no-scroll">
   <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
   {{> includes/svg-inline-refs}}
+
+  <!-- Module Tabs -->
+  <section id="module-tabs-example" class="tab-container module-tabs is-personalizable is-personalizable" data-options="{ containerElement: '#module-tabs-container', 'changeTabOnHashChange': true }">
+    <div class="tab-list-container">
+      <ul class="tab-list">
+        <li class="tab is-selected"><a href="#module-tabs-controls">New Tab Builder</a></li>
+        <li class="tab dismissible"><a href="#order-entry">Order Entry</a></li>
+        <li class="tab dismissible"><a href="#order-123456">Order 123456</a></li>
+      </ul>
+    </div>
+  </section>
+
   {{> includes/applicationmenu}}
 
-  <div class="page-container no-scroll">
+  <!-- Page Container -->
+  <div id="module-tabs-container" class="page-container no-scroll">
 
-    <!-- Module Tabs -->
-    <section id="module-tabs-example" class="tab-container page-container module-tabs is-personalizable is-personalizable" data-options="{ containerElement: '#module-tabs-container', 'changeTabOnHashChange': true }">
-      <div class="tab-list-container">
-        <ul class="tab-list">
-          <li class="tab is-selected"><a href="#module-tabs-controls">New Tab Builder</a></li>
-          <li class="tab dismissible"><a href="#order-entry">Order Entry</a></li>
-          <li class="tab dismissible"><a href="#order-123456">Order 123456</a></li>
-        </ul>
-      </div>
-    </section>
-
-    <div id="module-tabs-container" class="page-container no-scroll">
-
-      <!-- Tab Panels -->
-      <div id="module-tabs-controls" class="tab-panel no-scroll">
-        <header class="header is-personalizable">
-          <div class="toolbar">
-            <div class="title" id="maincontent">
-              <h1>Module Tabs</h1>
-            </div>
-            <div class="buttonset"></div>
-            {{> includes/header-actionbutton}}
+    <!-- Tab Panels -->
+    <div id="module-tabs-controls" class="tab-panel no-scroll">
+      <header class="header is-personalizable">
+        <div class="toolbar">
+          <div class="title" id="maincontent">
+            <h1>Module Tabs Controls</h1>
           </div>
-        </header>
-        <div class="page-container scrollable">
-
-          <div class="row">
-            <div class="twelve columns">
-
-              <form id="add-tab" action="#" method="post">
-                <div class="row">
-                  <div class="six columns">
-                    <div class="field">
-                      <label for="create-tab-name">Tab Name:</label>
-                      <input id="create-tab-name" name="create-tab-name" />
-                    </div>
-
-                    <div class="field">
-                      <label for="create-tab-content">Content:</label>
-                      <textarea id="create-tab-content" name="create-tab-content"></textarea>
-                    </div>
-
-                    <div class="field">
-                      <input type="checkbox" class="checkbox" id="use-garbage" checked>
-                      <label for="use-garbage" class="checkbox-label" >Fill with Garbage</label>
-                    </div>
-
-                    <div class="field">
-                      <button id="reset" class="btn-secondary" type="reset"><span>Clear</span></button>
-                      <button id="submit" class="btn-primary" type="submit"><span>Create New Tab</span></button>
-                    </div>
-                  </div>
-                  <div class="six columns"></div>
-                </div>
-              </form>
-
-            </div>
-          </div>
-
+          <div class="buttonset"></div>
+          {{> includes/header-actionbutton}}
         </div>
-      </div>
+      </header>
+      <div class="page-container scrollable">
 
-      <div id="order-entry" class="tab-panel no-scroll">
-        <header class="header is-personalizable">
-          <div class="toolbar">
-            <div class="title">
-              <span class="head">Order Entry</span><br>
-              <span class="subheader" style="font-size: smaller;">Advanced Line Entry</span>
-            </div>
-            <div class="buttonset"></div>
-          </div>
-        </header>
-        <div class="page-container scrollable">
+        <div class="row">
+          <div class="twelve columns">
 
-          <div class="row">
-            <div class="twelve columns">
-
-              <div class="expandable-area is-expanded">
-                <div class="expandable-header">
-                  <a class="title"><span>Basic</span></a>
-                </div>
-                <div class="expandable-pane">
-                  <div class="content">
-                    TODO: Write Content
+            <form id="add-tab" action="#" method="post">
+              <div class="row">
+                <div class="six columns">
+                  <div class="field">
+                    <label for="create-tab-name">Tab Name:</label>
+                    <input id="create-tab-name" name="create-tab-name" />
                   </div>
+
+                  <div class="field">
+                    <label for="create-tab-content">Content:</label>
+                    <textarea id="create-tab-content" name="create-tab-content"></textarea>
+                  </div>
+
+                  <div class="field">
+                    <input type="checkbox" class="checkbox" id="use-garbage" checked>
+                    <label for="use-garbage" class="checkbox-label" >Fill with Garbage</label>
+                  </div>
+
+                  <div class="field">
+                    <button id="reset" class="btn-secondary" type="reset"><span>Clear</span></button>
+                    <button id="submit" class="btn-primary" type="submit"><span>Create New Tab</span></button>
+                  </div>
+                </div>
+                <div class="six columns"></div>
+              </div>
+            </form>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div id="order-entry" class="tab-panel no-scroll">
+      <header class="header is-personalizable">
+        <div class="toolbar">
+          <div class="title">
+            <span class="head">Order Entry</span><br>
+            <span class="subheader" style="font-size: smaller;">Advanced Line Entry</span>
+          </div>
+          <div class="buttonset"></div>
+        </div>
+      </header>
+      <div class="page-container scrollable">
+
+        <div class="row">
+          <div class="twelve columns">
+
+            <div class="expandable-area is-expanded">
+              <div class="expandable-header">
+                <a class="title"><span>Basic</span></a>
+              </div>
+              <div class="expandable-pane">
+                <div class="content">
+                  TODO: Write Content
                 </div>
               </div>
+            </div>
 
-              <div class="expandable-area is-expanded">
-                <div class="expandable-header">
-                  <a class="title"><span>Extended</span></a>
-                </div>
-                <div class="expandable-pane">
-                  <div class="content">
-                    TODO: Write Content
-                  </div>
+            <div class="expandable-area is-expanded">
+              <div class="expandable-header">
+                <a class="title"><span>Extended</span></a>
+              </div>
+              <div class="expandable-pane">
+                <div class="content">
+                  TODO: Write Content
                 </div>
               </div>
-
             </div>
-          </div>
 
-        </div>
-      </div>
-
-      <div id="order-123456" class="tab-panel">
-        <header class="header is-personalizable">
-          <div class="toolbar">
-            <div class="title">
-              <h1>Order #123456</h1>
-            </div>
-            <div class="buttonset"></div>
-          </div>
-        </header>
-        <div class="page-container scrollable">
-          <div class="row">
-            <div class="six columns">
-              <p>This is Order #123456</p>
-            </div>
           </div>
         </div>
-      </div>
 
+      </div>
+    </div>
+
+    <div id="order-123456" class="tab-panel">
+      <header class="header is-personalizable">
+        <div class="toolbar">
+          <div class="title">
+            <h1>Order #123456</h1>
+          </div>
+          <div class="buttonset"></div>
+        </div>
+      </header>
+      <div class="page-container scrollable">
+        <div class="row">
+          <div class="six columns">
+            <p>This is Order #123456</p>
+          </div>
+        </div>
+      </div>
     </div>
 
   </div>
