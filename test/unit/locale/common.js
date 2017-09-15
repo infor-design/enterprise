@@ -355,15 +355,24 @@ define([
       //expect(Locale.translate('Loading')).to.equal('Wird Geladen');
 
       //Error
-      expect(Locale.translate('XYZ')).to.equal(undefined);
+      expect(Locale.translate('XYZ')).to.equal('[XYZ]');
 
       //Non Existant in locale - use EN
       Locale.set('de-DE');
       expect(Locale.translate('Equals')).to.equal('Gleich');
 
       //Error
-      expect(Locale.translate('XYZ')).to.equal(undefined);
+      expect(Locale.translate('XYZ')).to.equal('[XYZ]');
 
+    },
+    //SOHO-6782
+    'undefined keys show [] around': function() {
+      Locale.set('en-US');
+      expect(Locale.translate('TestLocaleDefaults')).to.equal('Test Locale Defaults');
+      Locale.set('de-DE');
+      expect(Locale.translate('TestLocaleDefaults')).to.equal('Test Locale Defaults');
+      Locale.set('ar-EG');
+      expect(Locale.translate('XYZ')).to.equal('[XYZ]');
     },
 
     'be possible to add translations': function() {

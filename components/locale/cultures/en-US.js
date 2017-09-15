@@ -307,6 +307,7 @@
       'Tack': {id: 'Tack', value: 'Pin', comment: 'Pin an object'},
       'Tall': {id: 'Tall', value: 'Tall', comment: 'Describes a Taller Row Height in a grid/list'},
       'Target': {id: 'Target', value: 'Target', comment: 'Label for an input to enter a Target (Url Attribute)'},
+      'TestLocaleDefaults': {id: 'TestLocaleDefaults', value: 'Test Locale Defaults', comment: 'Do not translate'},
       'TextColor': {id: 'TextColor', value: 'Text color', comment: 'add or edit text color in the editor'},
       'TextDropArea': {id: 'DropArea', value: 'Drag and Drop Files to Upload', comment: 'text for drop area for advanced fileupload'},
       'TextDropAreaWithBrowse': {id: 'TextDropAreaWithBrowse', value: 'Drag and Drop or <span class="hyperlink">Select Files</span> to Upload', comment: 'text for drop area with browse for advanced fileupload'},

@@ -823,13 +823,13 @@
     */
     translate: function(key) {
       if (this.currentLocale.data === undefined || this.currentLocale.data.messages === undefined) {
-        return key;
+        return '[' + key + ']';
       }
 
       if (this.currentLocale.data.messages[key] === undefined) {
         // Substitue English Expression if missing
         if (!this.cultures['en-US'] || this.cultures['en-US'].messages[key] === undefined) {
-          return undefined;
+          return '[' + key + ']';
         }
         return this.cultures['en-US'].messages[key].value;
       }
