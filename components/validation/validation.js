@@ -440,9 +440,9 @@
           if (rule.positive === false) {
             self.removePositive(field);
           }
-		  
-		  validationType = $.fn.validation.ValidationTypes[rule.type] || $.fn.validation.ValidationTypes.error;
-		  
+
+          validationType = $.fn.validation.ValidationTypes[rule.type] || $.fn.validation.ValidationTypes.error;
+
           if (!result) {
             if (!self.isPlaceholderSupport && (value === placeholder) &&
                (rule.message !== Locale.translate('Required'))) {
@@ -451,17 +451,17 @@
 
             self.addMessage(field, rule.message, rule.type, field.attr('data-' + validationType.type + '-type') === 'tooltip' ? false: true, showTooltip);
             results.push(rule.type);
-			
-			if (validationType.errorsForm) {
+
+            if (validationType.errorsForm) {
               dfd.reject();
-			}
-			else {
-			  dfd.resolve();
-			}
+            }
+            else {
+              dfd.resolve();
+            }
           }   else if ($.grep(results, function (res) { return res === validationType.type; }).length === 0) {
             self.removeMessage(field, validationType.type);
             dfd.resolve();
-			
+
             if (rule.positive) {
               // FIX: In Contextual Action Panel control not sure why but need to add error,
               // otherwise "icon-confirm" get misaligned,
@@ -479,10 +479,10 @@
 
         };
 
-	  for (var props in $.fn.validation.ValidationTypes) {
-		validationType = $.fn.validation.ValidationTypes[props];
+      for (var props in $.fn.validation.ValidationTypes) {
+        validationType = $.fn.validation.ValidationTypes[props];
         self.removeMessage(field, (validationType.type));
-		field.removeData('data-' + (validationType.type) + 'message');
+        field.removeData('data-' + (validationType.type) + 'message');
       }
 
       for (i = 0, l = types.length; i < l; i++) {
@@ -536,7 +536,7 @@
      *
      * @param {jQuery[]} field
      * @param {String} message
-	 * @param {String} type
+     * @param {String} type
      * @param {boolean} inline
      * @param {boolean} showTooltip
      */
@@ -544,7 +544,7 @@
       var loc = this.getField(field).addClass(type),
          dataMsg = loc.data('data-' + type + 'message'),
          appendedMsg = message,
-		 validationType = $.fn.validation.ValidationTypes[type] || $.fn.validation.ValidationTypes.error;
+         validationType = $.fn.validation.ValidationTypes[type] || $.fn.validation.ValidationTypes.error;
 
       if (dataMsg) {
         appendedMsg = (/^\u2022/.test(dataMsg)) ? '' : '\u2022 ';
@@ -737,7 +737,7 @@
      */
     showInlineMessage: function (field, message, type) {
       var loc = this.getField(field).addClass(type),
-	    validationType = $.fn.validation.ValidationTypes[type] || $.fn.validation.ValidationTypes.error,
+        validationType = $.fn.validation.ValidationTypes[type] || $.fn.validation.ValidationTypes.error,
         markup = '<div class="' + validationType.type + '-message">' +
           $.createIcon({ classes: ['icon-' + validationType.type], icon: validationType.type }) +
           '<pre class="audible">'+ Locale.translate(validationType.titleMessageID) +'</pre>' +
@@ -752,7 +752,7 @@
       }
 
       //Remove positive errors
-	  if (validationType.type === 'error') {
+      if (validationType.type === 'error') {
         field.parent().find('.icon-confirm').remove();
       }
       // Trigger an event
@@ -849,11 +849,11 @@
       //Stuff for the inline error
       field.closest('.field, .field-short').find('.' + type + '-message').remove();
       field.parent('.field, .field-short').find('.formatter-toolbar').removeClass(type);
-      
-	  if (type === 'error') {
-	    field.trigger('valid', {field: field, message: ''});
+
+      if (type === 'error') {
+        field.trigger('valid', {field: field, message: ''});
         field.closest('form').trigger('valid', {field: field, message: ''});
-	  }
+      }
     },
 
     /**
@@ -877,7 +877,7 @@
       instance.addMessage($(this), settings.message, settings.type, settings.inline, settings.showTooltip);
     });
   };
-  
+
   //Add an error Message to a Field
   $.fn.addError = function(options) {
     var defaults = {message: '', showTooltip: false, inline: true},
@@ -899,7 +899,7 @@
       instance.removeMessage($(this), settings.type);
     });
   };
-  
+
   //Remove an error Message from a Field
   $.fn.removeError = function(options) {
     var defaults = {message: ''},
@@ -934,18 +934,18 @@
     });
   };
 
-  
+
   //The validation rules object
   var Validation = function () {
     var self = this;
-	
-	// define standard validation types
+
+    // define standard validation types
     this.ValidationTypes = [];
     this.ValidationTypes.error = { type: 'error', titleMessageID: 'Error', pagingMessageID: 'ErrorOnPage', errorsForm: true };
     this.ValidationTypes.alert = { type: 'alert', titleMessageID: 'Alert', pagingMessageID: 'AlertOnPage', errorsForm: false };
     this.ValidationTypes.confirm = { type: 'confirm', titleMessageID: 'Confirm', pagingMessageID: 'ComfirmOnPage', errorsForm: false };
     this.ValidationTypes.info = { type: 'info', titleMessageID: 'Info', pagingMessageID: 'InfoOnPage', errorsForm: false };
-	
+
     this.rules = {
       required: {
         isNotEmpty: function(value, field) {
@@ -1003,7 +1003,7 @@
           return field.is(':radio') ? this.isRadioChecked(field) : this.isNotEmpty(value, field);
         },
         message: 'Required',
-		type: 'error'
+        type: 'error'
       },
 
       //date: Validate date, datetime (24hr or 12hr am/pm)
@@ -1026,7 +1026,7 @@
           return ((parsedDate === undefined) && value !== '') ? false : true;
         },
         message: 'Invalid Date',
-		type: 'error'
+        type: 'error'
       },
 
       //Validate date, disable dates
@@ -1075,7 +1075,7 @@
           return check;
         },
         message: 'Unavailable Date',
-		type: 'error'
+        type: 'error'
       },
 
       email: {
@@ -1101,7 +1101,7 @@
           return true;
         },
         message: '',
-		type: 'error'
+        type: 'error'
       },
 
       emailPositive: {
@@ -1123,7 +1123,7 @@
           }
         },
         message: 'EmailValidation',
-		type: 'error'
+        type: 'error'
       },
 
       passwordReq: {
@@ -1138,7 +1138,7 @@
           return (value.length) ? value.match(regex) : true;
         },
         message: 'PasswordValidation',
-		type: 'error'
+        type: 'error'
       },
 
       passwordConfirm: {
@@ -1149,7 +1149,7 @@
           return (value.length) ? check : true;
         },
         message: 'PasswordConfirmValidation',
-		type: 'error'
+        type: 'error'
       },
 
       time: {
@@ -1157,35 +1157,35 @@
           value = value.replace(/ /g, '');
           this.message = Locale.translate('InvalidTime');
           var timepicker = field && field.data('timepicker'),
-		    timepickerSettings = timepicker ? field.data('timepicker').settings : {},
+            timepickerSettings = timepicker ? field.data('timepicker').settings : {},
             pattern = timepickerSettings && timepickerSettings.timeFormat ? timepickerSettings.timeFormat : Locale.calendar().timeFormat,
             is24Hour = (pattern.match('HH') || []).length > 0,
             maxHours = is24Hour ? 24 : 12,
             sep = value.indexOf(Locale.calendar().dateFormat.timeSeparator),
             valueHours = 0,
             valueMins = 0,
-			valueSecs = 0,
-			valueM,
-			timeparts;
+            valueSecs = 0,
+            valueM,
+            timeparts;
 
           if (value === '') {
             return true;
           }
 
-		  valueHours = parseInt(value.substring(0, sep));
+          valueHours = parseInt(value.substring(0, sep));
           valueMins = parseInt(value.substring(sep + 1,sep + 3));
-		  
-		  //getTimeFromField
-		  if (timepicker) {
-			  timeparts = timepicker.getTimeFromField();
-			  
-			  valueHours = timeparts.hours;
-			  valueMins = timeparts.minutes;
-			  
-			  if (timepicker.hasSeconds()) {
-			    valueSecs = timeparts.seconds;
-			  }
-		  }
+
+          //getTimeFromField
+          if (timepicker) {
+              timeparts = timepicker.getTimeFromField();
+
+              valueHours = timeparts.hours;
+              valueMins = timeparts.minutes;
+
+              if (timepicker.hasSeconds()) {
+                valueSecs = timeparts.seconds;
+              }
+          }
 
           if (valueHours.toString().length < 1 || isNaN(valueHours) || parseInt(valueHours) < 0 || parseInt(valueHours) > maxHours) {
             return false;
@@ -1196,7 +1196,7 @@
           if (valueSecs.toString().length < 1 || isNaN(valueSecs) || parseInt(valueSecs) < 0 || parseInt(valueSecs) > 59) {
             return false;
           }
-		  
+
           // AM/PM
           if (!is24Hour) {
             if (parseInt(valueHours) < 1) {
@@ -1214,7 +1214,7 @@
           return true;
         },
         message: 'Invalid Time',
-		type: 'error'
+        type: 'error'
       },
 
       //Test validation function, always returns false
@@ -1225,7 +1225,7 @@
         },
 
         message: 'Value is not valid (test).',
-		type: 'error'
+        type: 'error'
       }
     };
   };
@@ -1271,18 +1271,18 @@
     $(this).find('.icon-confirm').remove();
     $(this).find('.error-message').remove();
 
-	//Clear Warnings
+    //Clear Warnings
     formFields.removeClass('alert');
     $(this).find('.alert').removeClass('alert');
     $(this).find('.icon-alert').remove();
     $(this).find('.alert-message').remove();
-	
-	//Clear Informations
+
+    //Clear Informations
     formFields.removeClass('info');
     $(this).find('.info').removeClass('info');
     $(this).find('.icon-info').remove();
     $(this).find('.info-message').remove();
-	
+
     setTimeout(function () {
       $('#validation-errors').addClass('is-hidden');
     }, 300);
