@@ -6170,6 +6170,11 @@ $.fn.datagrid = function(options) {
 
     showNonVisibleCellErrors: function () {
 
+      // Create empty toolbar
+      if (!this.toolbar) {
+        settings.toolbar = { title: ' ' };
+        this.appendToolbar();
+      }
       // process via type
       for (var props in $.fn.validation.ValidationTypes) {
         var validationType = $.fn.validation.ValidationTypes[props].type;
@@ -6178,23 +6183,23 @@ $.fn.datagrid = function(options) {
     },
 
     showNonVisibleCellErrorType: function (nonVisibleCellErrors, type) {
-      var messages, pagerErrors, icon, i,
+      var messages, tableerrors, icon, i,
         nonVisiblePages = [],
         validationType = $.fn.validation.ValidationTypes[type] || $.fn.validation.ValidationTypes.error;
 
-      if (this.pager.pagerBar.find('.pager-errors').length === 1) {
-        pagerErrors  = this.pager.pagerBar.find('.pager-errors');
+      if (this.toolbar.parent().find('.table-errors').length === 1) {
+        tableerrors  = this.toolbar.parent().find('.table-errors');
       }
 
       if (nonVisibleCellErrors.length === 0) {
         // clear the displayed message
-        if (pagerErrors  && pagerErrors.length) {
-          icon = pagerErrors .find('.icon-' + validationType.type);
+        if (tableerrors  && tableerrors.length) {
+          icon = tableerrors .find('.icon-' + validationType.type);
           var tooltip = icon.data('tooltip');
           if (tooltip) {
             tooltip.hide();
           }
-          pagerErrors.find('.icon-' + validationType.type).remove();
+          tableerrors.find('.icon-' + validationType.type).remove();
         }
         return;
       }
@@ -6211,17 +6216,20 @@ $.fn.datagrid = function(options) {
         messages = (messages ? messages + '<br>' : '') + Locale.translate(validationType.pagingMessageID) + ' ' + nonVisiblePages[i];
       }
 
-      if (this.pager.pagerBar.find('.pager-errors').length === 0) {
-        pagerErrors  = $('<li class="pager-errors"></li>');
+      if (this.toolbar.parent().find('.table-errors').length === 0) {
+        tableerrors  = $('<div class="table-errors"></div>');
       }
-      icon = pagerErrors .find('.icon-' + type);
+      icon = tableerrors .find('.icon-' + type);
       if (!icon.length) {
         icon = $($.createIcon({ classes: ['icon-' + type], icon: type }));
-        pagerErrors .append(icon);
+        tableerrors .append(icon);
       }
 
-      //Add Error to the Pager
-      this.pager.pagerBar.append(pagerErrors);
+
+      if (this.element.hasClass('has-toolbar')) {
+        //Add Error to the Toolbar
+        this.toolbar.children('.title').append(tableerrors);
+      }
 
       icon.tooltip({placement: 'bottom', isErrorColor: (type === 'error'), content: messages});
     },

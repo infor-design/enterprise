@@ -2938,6 +2938,12 @@ html[dir='rtl'] {
   }
 }
 
+.table-errors {
+  float: right;
+  height: 35px;
+  margin-left: 10px;
+}
+
 //Ios Hacks
 .ios .datagrid:not(.short-rowheight):not(.medium-rowheight) {
   .icon-error,
