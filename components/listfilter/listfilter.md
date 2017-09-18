@@ -3,7 +3,7 @@
 
 ## Configuration Options
 
-1. Multiselect Filter Types [View Example]( ../components/multiselect/example-filter-types)
+1. Multiselect Filter Types [View Example]( ../components/multiselect/test-filter-types)
 
 {{api-details}}
 
