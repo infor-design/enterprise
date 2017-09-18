@@ -128,16 +128,74 @@
     <span class="dt">dataset</span>: data <span class="co">//Json Array</span>
   });
 </code></pre>
-<h2 id="column-settings">Column Settings</h2>
+<h2 id="column-settings-general">Column Settings (General)</h2>
 <ul>
-<li><strong>Text</strong> Formats the display value as a straight text element in the grid cell.<br /></li>
-<li><strong>Input</strong> Move focus to the adjacent column's cell. There is no wrap at the end or beginning of columns.</li>
+<li><strong>id</strong> The unique id of the column. Each column in the grid should have some unique id.<br /></li>
+<li><strong>name</strong> The text to appear in the column header.<br /></li>
+<li><strong>field</strong> The name of the field in the dataset to show. This can be nested (fx object.field)<br /></li>
+<li><strong>formatter</strong> The way to format the cell contents (see formatters)<br /></li>
+<li><strong>align</strong> Can be <code>left</code> or <code>right</code> or <code>center</code>. Note that <code>center</code> has limited column type support.<br /></li>
+<li><strong>sortable</strong> If false, the column cannot be sorted.<br /></li>
+<li><strong>width</strong> The column width, this can be an integer for pixel width or a percent fx <code>10%</code>, if left off the columns will be sized to contents and to fit the width of the grid using the internal algorithm.</li>
+</ul>
+<h2 id="column-settings-formatter-specific">Column Settings (Formatter Specific)</h2>
+<ul>
+<li><strong>Input</strong> Move focus to the adjacent column's cell. There is no wrap at the end or beginning of columns.<br /></li>
+<li><strong>inlineEditor</strong> If true the elements (on supported formatters) will be shown inline in the field. For example you could show an input element on each cell. This should only be used with the isList type and sparingly.<br /></li>
+<li><strong>dateFormat</strong> Used with <code>Date</code> formatters and editors. You can use it to specify the display format for date values. fx yyyy-MM-dd. See <a href="../components/locale">locale</a> for date formatting patterns.<br /></li>
+<li><strong>timeFormat</strong> Used with <code>Time</code> and 'Date' + <code>Time</code> formatters and editors. You can use it to specify the display format for date values. fx HH;mm See <a href="../components/locale">locale</a> for time formatting patterns.<br /></li>
+<li><strong>numberFormat</strong> Used Decimal and Integer columns, this is the same number structure that locale uses. See <a href="../components/locale">locale</a> for number formatting patterns.<br /></li>
+<li><strong>href</strong> Used on <code>Hyperlink</code> formatters. This can be a string to pass to the links href attribute. Or can be function which dynamically runs and can return the href using logic.<br /></li>
+<li><strong>target</strong> Used on <code>Hyperlink</code> formatters. This can be a string to pass to the links target attribute. Or can be function which dynamically runs and can return the target with using logic.<br /></li>
+<li><strong>icon</strong> Used on <code>Hyperlink</code> and <code>Button</code> formatters, if provided as a string it will show this icon from the svg icon set added to the page.<br /></li>
+<li><strong>cssClass</strong> Can be used to add a custom css class to some formatters (fx Hyperlink) or the cell itself.<br /></li>
+<li><strong>hyperlinkTooltip</strong> Used on <code>Hyperlink</code> formatter to add a custom tooltip. This should be the text of the tooltip.<br /></li>
+<li><strong>click</strong> Used on <code>Hyperlink</code> and <code>Button</code> formatters to add javascript function logic to run when the item is actioned on.<br /></li>
+<li><strong>singleline</strong> Used on <code>Editor</code> formatter, if true it will reduce the editors contents to one single line.<br /></li>
+<li><strong>expanded</strong> Used on <code>Group</code> and <code>Expander</code> formatter, if true it will make the row expanded. This can be a boolean or a javascript function, that can dynamically be used to return if the row should be expanded.<br /></li>
+<li><strong>groupRowFormatter</strong> Used on the <code>Group</code> formatter, this function will pass in info about the row group and data and allow you to return dynamic html for formatting the group rows appearance.<br /></li>
+<li><strong>ranges</strong> For example <code>[{'min': 151, '(max': 9999, 'classes': 'info'}]</code> for example any value between 151 and 999 will add the info class which formats the color in info blue. Default color is grey. Used on badges and alerts.<br /></li>
+<li><strong>options</strong> Used on the dropdown and multiselect editor/formatters. For example <code>[{'value': 1, 'id': 1, 'label': 'Some Value'}]</code>. This should map to a select elements id, value and text option when populating.<br /></li>
+<li><strong>isChecked</strong> Used on checkbox and favorite columns. This can be a function that returns the checked state based on the dynamic data thats passed in.</li>
 </ul>
 <h2 id="formatters">Formatters</h2>
 <ul>
-<li><strong>Text</strong> Formats the display value as a straight text element in the grid cell.<br /></li>
-<li><strong>Input</strong> Move focus to the adjacent column's cell. There is no wrap at the end or beginning of columns.</li>
+<li><strong>Text</strong> Formats the column value as a direct text element using toString in the grid cell, Undefined or Null values will be shown as empty.<br /></li>
+<li><strong>Input</strong> If inlineEditor is true, will show the text in an inline input field. This should only be used with the isList type and sparingly.<br /></li>
+<li><strong>Ellipsis</strong> Shows the column value as a Text element but if the text is cut off will show ellipsis's and a tooltip. This is a bit expensive so should be used sparingly.<br /></li>
+<li><strong>Password</strong> Shows the text masked with stars. Fx ***. This is generally used on password fields.<br /></li>
+<li><strong>Readonly</strong> Shows a Text Formatter with the readonly background color. This can be used to differentiate between editable and non editable cells. This should not be used along with an Editor.<br /></li>
+<li><strong>Date</strong> Shows a date or string date value formatted to the column's <code>dateFormat</code> settings or otherwise the current locale's date settings.<br /></li>
+<li><strong>Time</strong> Shows a dates time portion or a time string value formatted to the column's <code>timeFormat</code> settings or otherwise the current locale's time settings.<br /></li>
+<li><strong>Autocomplete</strong> Formats the column as direct text like the Text formatter. But added for symmetry with Autocomplete editor.<br /></li>
+<li><strong>Lookup</strong> Formats the column for use with a Lookup editor. It calls the editors field option / function to assist in mapping key value pairs to the columns data element. When a lookup editor is added it shows the icon on hover.<br /></li>
+<li><strong>Decimal</strong> Formats the numeric data in the current columns number format. Or you can use the <code>numberFormat</code> option for customization.See <a href="../components/locale">locale</a> for number formatting patterns.<br /></li>
+<li><strong>Integer</strong> Formats the numeric data in the current columns integer format. Or you can use the <code>numberFormat</code> option for customization. See <a href="../components/locale">locale</a> for number formatting patterns.<br /></li>
+<li><strong>Hyperlink</strong> Formats the current data into a clickable hyperlink. You can use the <code>href</code> value to pass the links href value in the column (this defaults to '#'). You can use the <code>text</code> column value to change the text of the link, in doing so the column value becomes the link contents. <code>hyperlinkTooltip</code> can be added to give tooltip text for the link. The <code>icon</code> option can be added to provide a icon next to the link.<br /></li>
+<li><strong>Drilldown</strong> Formats the cell with a drill down icon button in it. This type of column is used to drill into this records details. Use the <code>click</code> column option to provide the javascript for that logic.<br /></li>
+<li><strong>RowReorder</strong> Formats the cell with a reorder icon button in it. This should be used in conjunction with the row-reorder feature. See <a href="../components/datagrid/example-row-reorder.html">Example</a><br /></li>
+<li><strong>Checkbox</strong> Formats the cell with a checkbox in it. It can made null or undefined to unchecked and handles either 1/0 as checked un/checked or true/false.<br /></li>
+<li><strong>SelectionCheckbox</strong> Formats the cell with a selection checkbox in it. The selection functionality of the grid will populate this with the current rows selection attributes and populate the header with a select all / deselect all checkbox.<br /></li>
+<li><strong>Actions</strong> Formats the cell with a .. actions button icon. You can use the <code>menuId</code> option to pass in an id of a ul item. The menu will be the same structure as the standard popupmenu.<br /></li>
+<li><strong>Textarea</strong> Formats the cell with readonly multi line text area. The column rows will size to the contents of the largest Textarea cell.<br /></li>
+<li><strong>Editor</strong> Formats the cell with readonly Rich Text Editor. See example <a href="../components/datagrid/test-editable-editor-singleline.html">See example</a>. The <code>singleline</code> option if set to true will cut the text to single line and show a tooltip.<br /></li>
+<li><strong>Expander</strong> Formats the cell with an expander chevron. This will act on the <code>click</code> option or toggle the collapsed row, when using the <a href="../components/datagrid/example-expandable-row.html">expandable row option</a><br /></li>
+<li><strong>GroupRow</strong> Formats this cell / column as the group row. If a <code>groupRowFormatter</code> is provided this can be used to return customized html for the group row details. If not it will show the expander icon with the data of the group name. You can pass <code>expanded</code> true in the column to expend the row, this can also be a function that dynamically can determine if the row should be expanded. See the <a href="../components/datagrid/example-grouping.html">grouping examples</a><br /></li>
+<li><strong>GroupFooterRow</strong> Formats this entire row as the last row in a group when using grouping.<br />The option should be a function that returns the <tr> markup for the last group row. See the <a href="../components/datagrid/example-grouping-totals.html">group totals example</a><br /></li>
+<li><strong>SummaryRow</strong> Formats this entire column / row as the summary row. The option should be a function that returns the <tr> markup for the summary (last) row. See the <a href="../components/datagrid/example-summary-row.html">summary row example</a><br /></li>
+<li><strong>Tree</strong> Formats this entire column as the tree row when using the <a href="../components/datagrid/example-tree.html">tree grid example</a>. This interacts with the <code>treeDepth</code>, <code>children</code> and <code>depth</code> options to format into a tree structure.<br /></li>
+<li><strong>Badge</strong> Formats this entire column as a badge element. You can pass in ranges option to format the badge colors for example <code>ranges: [{'min': 151, 'max': 9999, 'classes': 'info'}]</code> for example any value between 151 and 999 will add the info class which formats the color in info blue. Default color is grey.<br /></li>
+<li><strong>Tag</strong> Formats this entire column as a tag element. You can use the ranges element like the tag and badge formatter.<br /></li>
+<li><strong>Alert</strong> Formats this entire column as a alert element with text and an alert icon. You can use the ranges element like the tag and badge formatter.<br /></li>
+<li><strong>Color</strong> Formats the text in a color. It also used the ranges option. Note that this may not pass accessibility and should be used sparingly.<br /></li>
+<li><strong>Button</strong> Formats the cell with a button in it. You can use the <code>icon</code> option to select an icon from the svg set. You can also use the text option to customize the text of the button, if used the column contents will be ignored. Use the <code>click</code> column option to code the click function.<br /></li>
+<li><strong>Dropdown</strong> Formats the cell to go along with a dropdown editor. It will lookup the value in the column <code>options</code> array and display the label for the given key. This can be used to resolve code to label displays. It supports the <code>inlineEditor</code> option as well for list grids.<br /></li>
+<li><strong>Spinbox</strong> Formats the cell as text for use with a Spinbox editor. Also supports the <code>inlineEditor</code> option as well for list grids.<br /></li>
+<li><strong>Favorite</strong> Formats the cell with a favorite star. The star's value (checked or unchecked) is populated like the checkbox column with a boolean or truthy value in the data. The <code>isChecked</code> function or boolean can be used to more dynamically check set state.<br /></li>
+<li><strong>TargetedAchievement</strong> Formats the cell with the a targetted achievement chart. The row value will be diveded by 100 to form a percent and the chart will show the percent value. See the <a href="../components/datagrid/test-targeted-achievement.html">targeted achievement example</a></li>
 </ul>
+<h2 id="editors">Editors</h2>
+<p>TODO</p>
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
 <ul>
 <li><strong>Tab  </strong>The initial tab enters the grid with focus on the first cell of the first row, often a header. A second tab moves out of the grid to the next tab stop on the page. Once focus is established in the grid, a TAB into or a Shift Tab into the grid will return to the cell which last had focus.<br /></li>
@@ -151,9 +209,28 @@
 <li><strong>F2</strong> toggles actionable Mode. Pressing the <strong>Tab</strong> key while in actionable mode moves focus to the next actionable cell. There is no wrap at the end or beginning of columns. While in actionable mode you can do things like type + enter. This will move you down a row when you hit enter. If the cell has a control that uses down arrow (like the dropdowns or lookups that are editable). Then the user needs to hit enter to enable the edit mode on that cell.</li>
 </ul>
 <h2 id="states-and-variations">States and Variations</h2>
+<h3 id="rows">Rows</h3>
 <ul>
 <li>Hover<br /></li>
-<li>Selected</li>
+<li>Selected<br /></li>
+<li>Disabled<br /></li>
+<li>Readonly</li>
+</ul>
+<h3 id="columns">Columns</h3>
+<ul>
+<li>Focus<br /></li>
+<li>Hover<br /></li>
+<li>Sorted<br /></li>
+<li>All Selected or Not<br /></li>
+<li>Disabled<br /></li>
+<li>Filtering</li>
+</ul>
+<h3 id="cells">Cells</h3>
+<ul>
+<li>Hover (sometimes)<br /></li>
+<li>Selected (inherited from row)<br /></li>
+<li>Readonly<br /></li>
+<li>Focus</li>
 </ul>
 <h2 id="responsive-guidelines">Responsive Guidelines</h2>
 <ul>
