@@ -274,7 +274,7 @@
             var $a = $(a),
               $li = $(li);
 
-            if ($li.hasClass('is-disabled') || a.hasAttribute('disabled')) {
+            if ($li.hasClass('is-disabled') || (a.getAttribute('disabled') === 'true' || a.getAttribute('disabled') === 'disabled')) {
               $li.addClass('is-disabled');
               a.setAttribute('aria-disabled', 'true');
               a.setAttribute('disabled', true);
