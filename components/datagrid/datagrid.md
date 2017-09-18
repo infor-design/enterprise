@@ -132,6 +132,28 @@ The option should be a function that returns the <tr> markup for the last group 
 - **Favorite** Formats the cell with a favorite star. The star's value (checked or unchecked) is populated like the checkbox column with a boolean or truthy value in the data. The `isChecked` function or boolean can be used to more dynamically check set state.
 - **TargetedAchievement** Formats the cell with the a targetted achievement chart. The row value will be diveded by 100 to form a percent and the chart will show the percent value. See the [targeted achievement example]( ../components/datagrid/test-targeted-achievement.html)
 
+## Creating Custom Formatters
+
+Its possible to create your own custom formatter. The idea behind the formatter is it takes the cell value and does processing on it to return the correct markup for the element. The simplest custom formatter would be this example.
+
+```javascript
+var myCustom = function (row, cell, value, col) {
+  return '<span class="my-custom"> Custom Formatter <b>' + value + '</b></span>';
+};
+
+
+```
+
+The formatter is then linked to the column on the formatter setting. `columns.push({... formatter: myCustom});`. When the grid cell is rendered the formatter function is called and the following options are passed in.
+
+- **row** The current row number (zero based).
+- **cell** The current cell number (zero based). Note that data may be sorted so generally rowData is more useful.
+- **fieldValue** The current array value to apply to this cell.
+- **column** The columns column object with all of the column settings for this cell.
+- **item** The current row data for this entire row.
+- **api** Access to the entire grid api, in case grid functions are needed.
+
+
 ## Editors
 
 TODO
