@@ -84,6 +84,7 @@ Overridable culture messages
 **Parameters**
 
 -   `key` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The key to search for on the string.
+-   `showAsUndefined`  
 
 ## toUpperCase
 

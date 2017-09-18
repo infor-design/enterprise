@@ -821,15 +821,15 @@
     * @param {String} key  &nbsp;-&nbsp; The key to search for on the string.
     *
     */
-    translate: function(key) {
+    translate: function(key, showAsUndefined) {
       if (this.currentLocale.data === undefined || this.currentLocale.data.messages === undefined) {
-        return '[' + key + ']';
+        return showAsUndefined ? undefined : '[' + key + ']';
       }
 
       if (this.currentLocale.data.messages[key] === undefined) {
         // Substitue English Expression if missing
         if (!this.cultures['en-US'] || this.cultures['en-US'].messages[key] === undefined) {
-          return '[' + key + ']';
+          return showAsUndefined ? undefined : '[' + key + ']';
         }
         return this.cultures['en-US'].messages[key].value;
       }
