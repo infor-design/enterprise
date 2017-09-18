@@ -66,12 +66,20 @@
         this.initTree();
         this.handleKeys();
         this.setupEvents();
-        this.loadData(this.settings.dataset);
-        this.syncDataset(this.element);
-        this.initSelected();
-        this.focusFirst();
-        this.attachMenu(this.settings.menuId);
-        this.createSortable();
+
+        if (this.loadData(this.settings.dataset) === -1) {
+          this.syncDataset(this.element);
+          this.initSelected();
+          this.focusFirst();
+          this.attachMenu(this.settings.menuId);
+          this.createSortable();
+        }
+        // this.loadData(this.settings.dataset);
+        // this.syncDataset(this.element);
+        // this.initSelected();
+        // this.focusFirst();
+        // this.attachMenu(this.settings.menuId);
+        // this.createSortable();
       },
 
       /**
@@ -776,7 +784,7 @@
       loadData: function (dataset) {
         var self = this;
         if (!dataset) {
-          return;
+          return -1;
         }
 
         self.element.empty();
@@ -785,9 +793,13 @@
         for (var i = 0; i < dataset.length; i++) {
           self.addNode(dataset[i], 'bottom');
         }
-
         self.loading = false;
+
         self.syncDataset(self.element);
+        self.initSelected();
+        self.focusFirst();
+        self.attachMenu(self.settings.menuId);
+        self.createSortable();
       },
 
       //Functions to Handle Internal Data Store
