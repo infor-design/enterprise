@@ -2,19 +2,20 @@
 
   <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
   {{> includes/svg-inline-refs}}
-
-  <!-- Module Tabs -->
-  <section id="module-tabs-example" class="tab-container module-tabs">
-    <div class="tab-list-container">
-      <ul class="tab-list">
-      </ul>
-    </div>
-  </section>
-
   {{> includes/applicationmenu}}
 
-  <!-- Page Container -->
-  <div id="module-tabs-container" class="page-container no-scroll"></div>
+  <div class="page-container no-scroll">
+    <!-- Module Tabs -->
+    <section id="module-tabs-example" class="tab-container module-tabs">
+      <div class="tab-list-container">
+        <ul class="tab-list">
+        </ul>
+      </div>
+    </section>
+
+    <!-- Page Container -->
+    <div id="module-tabs-container" class="page-container no-scroll"></div>
+  </div>
 
   <script type="text/javascript">
     $('body').on('initialized', function() {

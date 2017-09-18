@@ -15,6 +15,7 @@ http://usalvlhlpool1.infor.com/4.3.2/components/
 ### Breaking Changes
 - PopupMenu - To clarify disabled items should be achieved by adding either the disabled attribute to the anchor tag or adding both the attribute to the anchor tag and the class is-disabled to the li element. Only adding the class will not work as only one mapping was possible. See examples components/popupmenu/example-disabled-submenus and components/popupmenu/test-toggle-disabled.html
 - Not entirely breaking but file upload should now be done without an inline label as per components/fileupload/example-index. This wont break but will cause a loop on ie edge due to an ie edge bug if initializing it this way.
+- Module Tabs - Also Not entirely breaking but for module tabs, the application menu should slide out at the top level of the tabs. This requires markup changes to work correctly. Move the applictaion menu out to the top level and wrap the module-tabs-container and tab-container (tab list) in a page-container no-scroll. See http://git.infor.com/projects/SOHO/repos/controls/browse/components/tabs-module/example-index.html
 
 ### Behavior Changes
 - Timepicker - The default of roundToInterval is now true. Since the default options are intervals of 5 we felt this made the most sense since it was reported as a bug twice. If you want to allow entering time out of the dropdown intervals you will now have to set this to false.

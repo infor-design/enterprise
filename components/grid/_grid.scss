@@ -38,6 +38,12 @@ $gutter-neg-size: -20px;
     padding-top: 30px;
   }
 
+  &.no-top-padding {
+    // scss-lint:disable ImportantRule
+    padding-top: 0 !important;
+    // scss-lint:enable ImportantRule
+  }
+
   &.bottom-padding {
     padding-bottom: 20px;
   }

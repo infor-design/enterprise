@@ -5,26 +5,27 @@
 
 <!-- Masthead -->
 {{> includes/masthead}}
-
-<!-- Module Tabs -->
-<section id="module-tabs-example" class="tab-container module-tabs"
-         data-options='{ "containerElement": "#module-tabs-container" }'>
-  <div class="tab-list-container">
-    <ul class="tab-list">
-    </ul>
-  </div>
-  <div class="toolbar">
-    <div class="buttonset">
-      <input type="text" id="awb" class="searchfield" spellcheck="false" placeholder="Search..." autofocus/>
-    </div>
-    {{> includes/header-actionbutton}}
-  </div>
-</section>
-
 {{> includes/applicationmenu}}
 
-<!-- Page Container -->
-<div id="module-tabs-container" class="page-container no-scroll"></div>
+<div class="page-container no-scroll">
+  <!-- Module Tabs -->
+  <section id="module-tabs-example" class="tab-container module-tabs"
+           data-options='{ "containerElement": "#module-tabs-container" }'>
+    <div class="tab-list-container">
+      <ul class="tab-list">
+      </ul>
+    </div>
+    <div class="toolbar">
+      <div class="buttonset">
+        <input type="text" id="awb" class="searchfield" spellcheck="false" placeholder="Search..." autofocus/>
+      </div>
+      {{> includes/header-actionbutton}}
+    </div>
+  </section>
+
+  <!-- Page Container -->
+  <div id="module-tabs-container" class="page-container no-scroll"></div>
+</div>
 
 <script type="text/javascript">
 
