@@ -74,12 +74,6 @@
           this.attachMenu(this.settings.menuId);
           this.createSortable();
         }
-        // this.loadData(this.settings.dataset);
-        // this.syncDataset(this.element);
-        // this.initSelected();
-        // this.focusFirst();
-        // this.attachMenu(this.settings.menuId);
-        // this.createSortable();
       },
 
       /**
