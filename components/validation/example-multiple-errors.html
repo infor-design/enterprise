@@ -1,8 +1,10 @@
 <div class="row">
   <div class="six columns">
-    <h2>Valdiation Test: Multiple Validation Errors</h2>
-    <p><a class="hyperlink" href="http://jira.infor.com/browse/SOHO-6104" target="_blank">Related JIRA Ticket - SOHO-6104</a>.</p>
-    <p><a class="hyperlink" href="http://jira.infor.com/browse/SOHO-6833" target="_blank">Related JIRA Ticket - SOHO-6833</a>.</p>
+    <h2>Validation Test: Multiple Validation Errors</h2>
+    <p>Related JIRA Tickets:
+      <a class="hyperlink" href="http://jira.infor.com/browse/SOHO-6104" target="_blank">SOHO-6104</a>
+      <a class="hyperlink" href="http://jira.infor.com/browse/SOHO-6833" target="_blank">SOHO-6833</a>
+      <a class="hyperlink" href="http://jira.infor.com/browse/SOHO-6838" target="_blank">SOHO-6838</a></p>
   </div>
 </div>
 
@@ -73,5 +75,9 @@
     {
       $('#states').removeError();
     }
+  });
+
+  $("#states,#username-display").on('valid error', function (event, validation) {
+    console.log([event.currentTarget.id, event.type, validation.field.prop('tagName') ]);
   });
 </script>

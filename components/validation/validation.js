@@ -556,7 +556,7 @@
         this.setModalPrimaryBtn(field, modalBtn, false);
       }
 
-      this.showInlineError(loc, message);
+      this.showInlineError(field, message);
     },
 
     /**
