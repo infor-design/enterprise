@@ -224,6 +224,8 @@ window.Chart = function(container) {
 
   //Show Tooltip
   this.showTooltip = function(x, y, content, arrow) {
+    var self = this;
+
     //Simple Collision of left side
     if (x < 0) {
       x = 2;
@@ -235,6 +237,15 @@ window.Chart = function(container) {
 
     this.tooltip.removeClass('bottom top left right').addClass(arrow);
     this.tooltip.removeClass('is-hidden');
+
+    // Hide the tooltip when the page scrolls.
+    $('body').off('scroll.chart-tooltip').on('scroll.chart-tooltip', function() {
+      self.hideTooltip();
+    });
+
+    $('.scrollable').off('scroll.chart-tooltip').on('scroll.chart-tooltip', function() {
+      self.hideTooltip();
+    });
   };
 
   this.getTooltipSize = function(content) {
@@ -244,7 +255,18 @@ window.Chart = function(container) {
 
   //Hide Tooltip
   this.hideTooltip = function() {
+    var self = this;
+
     d3.select('#svg-tooltip').classed('is-hidden', true).style('left', '-999px');
+
+    // Remove scroll events
+    $('body').off('scroll.chart-tooltip', function() {
+      self.hideTooltip();
+    });
+
+    $('.scrollable').off('scroll.chart-tooltip', function() {
+      self.hideTooltip();
+    });
   };
 
   //Format Currency
