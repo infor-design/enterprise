@@ -140,7 +140,6 @@
 </ul>
 <h2 id="column-settings-formatter-specific">Column Settings (Formatter Specific)</h2>
 <ul>
-<li><strong>Input</strong> Move focus to the adjacent column's cell. There is no wrap at the end or beginning of columns.<br /></li>
 <li><strong>inlineEditor</strong> If true the elements (on supported formatters) will be shown inline in the field. For example you could show an input element on each cell. This should only be used with the isList type and sparingly.<br /></li>
 <li><strong>dateFormat</strong> Used with <code>Date</code> formatters and editors. You can use it to specify the display format for date values. fx yyyy-MM-dd. See <a href="../components/locale">locale</a> for date formatting patterns.<br /></li>
 <li><strong>timeFormat</strong> Used with <code>Time</code> and 'Date' + <code>Time</code> formatters and editors. You can use it to specify the display format for date values. fx HH;mm See <a href="../components/locale">locale</a> for time formatting patterns.<br /></li>
@@ -195,8 +194,29 @@
 <li><strong>TargetedAchievement</strong> Formats the cell with the a targetted achievement chart. The row value will be diveded by 100 to form a percent and the chart will show the percent value. See the <a href="../components/datagrid/test-targeted-achievement.html">targeted achievement example</a></li>
 </ul>
 <h2 id="creating-custom-formatters">Creating Custom Formatters</h2>
+<p>Its possible to create your own custom formatter. The idea behind the formatter is it takes the cell value and does processing on it to return the correct markup for the element. The simplest custom formatter would be this example.</p>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> myCustom = <span class="kw">function</span> (row, cell, value, col) {
+  <span class="kw">return</span> <span class="st">&#39;&lt;span class=&quot;my-custom&quot;&gt; Custom Formatter &lt;b&gt;&#39;</span> + value + <span class="st">&#39;&lt;/b&gt;&lt;/span&gt;&#39;</span>;
+};
+</code></pre>
+<p>The formatter is then linked to the column on the formatter setting. <code>columns.push({... formatter: myCustom});</code>. When the grid cell is rendered the formatter function is called and the following options are passed in.</p>
+<ul>
+<li><strong>row</strong> The current row number (zero based).<br /></li>
+<li><strong>cell</strong> The current cell number (zero based). Note that data may be sorted so generally rowData is more useful.<br /></li>
+<li><strong>fieldValue</strong> The current array value to apply to this cell.<br /></li>
+<li><strong>column</strong> The columns column object with all of the column settings for this cell.<br /></li>
+<li><strong>item</strong> The current row data for this entire row.<br /></li>
+<li><strong>api</strong> Access to the entire grid api, in case grid functions are needed.</li>
+</ul>
 <h2 id="editors">Editors</h2>
 <p>TODO</p>
+<h2 id="column-settings-formatter-specific-1">Column Settings (Formatter Specific)</h2>
+<ul>
+<li><strong>maxLength</strong> Used for some editors, on some input types to restrict the input to this integer number of characters.<br /></li>
+<li><strong>mask</strong> Used to pass in an input mask for some editors to override or add a custom mask. See <a href="../components/mask">the mask component</a> for details on making a mask.<br /></li>
+<li><strong>maskMode</strong> Used to pass in an input mask maskMode option. See <a href="../components/mask">the mask component</a> for details on making a mask.<br /></li>
+<li>*editorOptions** used to pass in the options to the underlying editor. You would pass the same options whatever editor it is accepts as a component.</li>
+</ul>
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
 <ul>
 <li><strong>Tab  </strong>The initial tab enters the grid with focus on the first cell of the first row, often a header. A second tab moves out of the grid to the next tab stop on the page. Once focus is established in the grid, a TAB into or a Shift Tab into the grid will return to the cell which last had focus.<br /></li>

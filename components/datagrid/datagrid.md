@@ -68,21 +68,25 @@ A Read-Only Datagrid uses "Formatters" to render cell content. A number of these
 ```
 
 ## Column Settings (General)
--   **id** The unique id of the column. Each column in the grid should have some unique id.
--   **name** The text to appear in the column header.
--   **field** The name of the field in the dataset to show. This can be nested (fx object.field)
--   **formatter** The way to format the cell contents (see formatters)
--   **align** Can be `left` or `right` or `center`. Note that `center` has limited column type support.
--   **sortable** If false, the column cannot be sorted.
--   **width** The column width, this can be an integer for pixel width or a percent fx `10%`, if left off the columns will be sized to contents and to fit the width of the grid using the internal algorithm.
+- **id** The unique id of the column. Each column in the grid should have some unique id.
+- **name** The text to appear in the column header.
+- **field** The name of the field in the dataset to show. This can be nested (fx object.field)
+- **formatter** The way to format the cell contents (see formatters)
+- **align** Can be `left` or `right` or `center`. Note that `center` has limited column type support.
+- **sortable** If false, the column cannot be sorted.
+- **width** The column width, this can be an integer for pixel width or a percent fx `10%`, if left off the columns will be sized to contents and to fit the width of the grid using the internal algorithm.
+- **hidden** If true the column will be hidden, but will appear in the personalization dialog and can thus be later shown by the user.
+- **resizable** If false the column will not be resizable, thus is a fixed size and can never be changed by the user by dragging the left and right edge.
+- **headerTooltip* Can be used to set a tooltip specific to the column header.
+- **reorderable* The column cannot be dragged around to have its order in the list changed.
 
 ## Column Settings (Formatter Specific)
--   **Input** Move focus to the adjacent column's cell. There is no wrap at the end or beginning of columns.
--   **inlineEditor** If true the elements (on supported formatters) will be shown inline in the field. For example you could show an input element on each cell. This should only be used with the isList type and sparingly.
--   **dateFormat** Used with `Date` formatters and editors. You can use it to specify the display format for date values. fx yyyy-MM-dd. See [locale]( ../components/locale) for date  formatting patterns.
--   **timeFormat** Used with `Time` and 'Date' + `Time` formatters and editors. You can use it to specify the display format for date values. fx HH;mm See [locale]( ../components/locale) for time formatting patterns.
--   **numberFormat** Used Decimal and Integer columns, this is the same number structure that locale uses. See [locale]( ../components/locale) for number formatting patterns.
--   **href** Used on `Hyperlink` formatters. This can be a string to pass to the links href attribute. Or can be function which dynamically runs and can return the href using logic.
+
+- **inlineEditor** If true the elements (on supported formatters) will be shown inline in the field. For example you could show an input element on each cell. This should only be used with the isList type and sparingly.
+- **dateFormat** Used with `Date` formatters and editors. You can use it to specify the display format for date values. fx yyyy-MM-dd. See [locale]( ../components/locale) for date  formatting patterns.
+- **timeFormat** Used with `Time` and 'Date' + `Time` formatters and editors. You can use it to specify the display format for date values. fx HH;mm See [locale]( ../components/locale) for time formatting patterns.
+- **numberFormat** Used Decimal and Integer columns, this is the same number structure that locale uses. See [locale]( ../components/locale) for number formatting patterns.
+- **href** Used on `Hyperlink` formatters. This can be a string to pass to the links href attribute. Or can be function which dynamically runs and can return the href using logic.
 - **target** Used on `Hyperlink` formatters. This can be a string to pass to the links target attribute. Or can be function which dynamically runs and can return the target with using logic.
 - **icon** Used on `Hyperlink` and `Button` formatters, if provided as a string it will show this icon from the svg icon set added to the page.
 - **cssClass** Can be used to add a custom css class to some formatters (fx Hyperlink) or the cell itself.
@@ -157,6 +161,13 @@ The formatter is then linked to the column on the formatter setting. `columns.pu
 ## Editors
 
 TODO
+
+## Column Settings (Editor Specific)
+- **maxLength** Used for some editors, on some input types to restrict the input to this integer number of characters.
+- **mask** Used to pass in an input mask for some editors to override or add a custom mask. See [the mask component]( ../components/mask) for details on making a mask.
+- **maskMode** Used to pass in an input mask maskMode option. See [the mask component]( ../components/mask) for details on making a mask.
+- **caseInsensitive** Used in the dropdown editor to make it such case is not used to match keys to the key/value pairs in the options.
+- **validate** The validation function(s) to use. See [the validation component]( ../components/validation) for details on validation functions.
 
 ## Keyboard Shortcuts
 
