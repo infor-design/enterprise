@@ -569,7 +569,7 @@
         this.setModalPrimaryBtn(field, modalBtn, false);
       }
 
-      this.showInlineMessage(loc, message, validationType.type);
+      this.showInlineError(field, message, validationType.type);
     },
 
     /**
@@ -865,6 +865,14 @@
     removePositive: function(field) {
       $('.icon-confirm', field.parent('.field, .field-short')).remove();
     }
+  };
+
+  $.fn.getErrorMessage = function(options) {
+    var defaults = { },
+      settings = $.extend({}, defaults, options);
+
+    var instance = new Validator(this, settings);
+    return instance.getField($(this)).data('data-errormessage');
   };
 
   //Add a Message to a Field
