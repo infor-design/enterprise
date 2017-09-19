@@ -112,18 +112,18 @@ http://bamboo.infor.com/browse/SOHO-NGV-16
   * Label the build release-432 for example http://bamboo.infor.com/browse/label/release-432
 
 ## Update version in @infor/sohoxi-angular
-* Clone repo
-```bash
-$ git clone ssh://git@git.infor.com:7999/soho/angular-components.git
-```
-* Bump version in package.json to match new version of `@infor/sohoxi`
-* Bump `@infor/sohoxi's verion` under dependencies to match new version (i.e "^4.2.3-develop")
+* Repeat Git Operations on ssh://git@git.infor.com:7999/soho/angular-components.git
+* Bump version in package.json and publish/package.json
 * Commit, tag and push changes
-* Check the build dependencies **********
+* Update the build to the next release
+* Test
+```bash
+npm info @infor/sohoxi-angular dist-tags
+```
 
 ## Test Out Operations
 * Test Npm packages and rebuild if you got it wrong
-npm info @infor/sohoxi dist-tags
+git chec
 npm view @infor/sohoxi versions
 * Test New and old links for example:
 http://usalvlhlpool1.infor.com/4.3.2/components/
@@ -145,7 +145,7 @@ docker rmi PID
 ```
 
 ## Notify
-- On Slack, Teams, Dev's by Email ect.
+- On Slack, MS Teams, And Dev's by Email ect.
 
 # How To Sync SoHo Staging Site to prod
 
