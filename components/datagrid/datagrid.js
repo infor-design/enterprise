@@ -2323,7 +2323,7 @@ $.fn.datagrid = function(options) {
 
           if (typeof rowValue === 'number') {
             rowValue =  parseFloat(rowValue);
-            conditionValue = parseFloat(conditionValue);
+            conditionValue = Locale.parseNumber(conditionValue);
           }
 
           switch (conditions[i].operator) {
