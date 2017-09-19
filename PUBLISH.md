@@ -109,13 +109,23 @@ http://bamboo.infor.com/browse/SOHO-NGV-16
   * checkout 4.3.3-rc and bump the versions in package.json and publish/package.json
 * Change the current build http://bamboo.infor.com/build/admin/edit/editBuildTasks.action?buildKey=SOHO-R43X-JOB1
   * change the versions in the build config
-  * Label the build release-431 for example http://bamboo.infor.com/browse/label/release-431
+  * Label the build release-432 for example http://bamboo.infor.com/browse/label/release-432
+
+## Update version in @infor/sohoxi-angular
+* Clone repo
+```bash
+$ git clone ssh://git@git.infor.com:7999/soho/angular-components.git
+```
+* Bump version in package.json to match new version of `@infor/sohoxi`
+* Bump `@infor/sohoxi's verion` under dependencies to match new version (i.e "^4.2.3-develop")
+* Commit, tag and push changes
+* Check the build dependencies **********
 
 ## Test Out Operations
 * Test Npm packages and rebuild if you got it wrong
 npm info @infor/sohoxi dist-tags
 npm view @infor/sohoxi versions
-* New and old links for example:
+* Test New and old links for example:
 http://usalvlhlpool1.infor.com/4.3.2/components/
 http://usalvlhlpool1.infor.com/4.3.3-rc/components/
 
@@ -134,17 +144,8 @@ docker images | grep <name>
 docker rmi PID
 ```
 
-## Update version in @infor/sohoxi-angular
-* Clone repo
-```bash
-$ git clone ssh://git@git.infor.com:7999/soho/angular-components.git
-```
-* Bump version in package.json to match new version of `@infor/sohoxi`
-* Bump `@infor/sohoxi's verion` under dependencies to match new version (i.e "^4.2.3-develop")
-* Commit, tag and push changes
-
 ## Notify
-- On Slack, Teams, By Email ect.
+- On Slack, Teams, Dev's by Email ect.
 
 # How To Sync SoHo Staging Site to prod
 
