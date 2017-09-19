@@ -712,7 +712,7 @@
       formattedNum = parts.join(decimal);
 
       // Position the negative at the front - There is no CLDR info for this.
-      var minusSign = this.currentLocale.data.numbers.minusSign,
+      var minusSign = (this.currentLocale.data && this.currentLocale.data.numbers && this.currentLocale.data.numbers.minusSign) ? this.currentLocale.data.numbers.minusSign : '-',
         isNegative = (formattedNum.indexOf(minusSign) > -1);
         formattedNum = formattedNum.replace(minusSign, '');
 
@@ -821,15 +821,15 @@
     * @param {String} key  &nbsp;-&nbsp; The key to search for on the string.
     *
     */
-    translate: function(key) {
+    translate: function(key, showAsUndefined) {
       if (this.currentLocale.data === undefined || this.currentLocale.data.messages === undefined) {
-        return key;
+        return showAsUndefined ? undefined : '[' + key + ']';
       }
 
       if (this.currentLocale.data.messages[key] === undefined) {
         // Substitue English Expression if missing
         if (!this.cultures['en-US'] || this.cultures['en-US'].messages[key] === undefined) {
-          return undefined;
+          return showAsUndefined ? undefined : '[' + key + ']';
         }
         return this.cultures['en-US'].messages[key].value;
       }

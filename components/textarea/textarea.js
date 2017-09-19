@@ -18,29 +18,29 @@
     // Settings and Options
     var pluginName = 'textarea',
         defaults = {
-		  autoGrow: false, 
+		  autoGrow: false,
 		  autoGrowAnimate: true,
 		  autoGrowAnimateSpeed: 200,
           characterCounter: true,
           printable: true,
           charRemainingText: null,
           charMaxText: null
-		  
+
         },
         settings = $.extend({}, defaults, options);
 
     /**
-     * The Textarea Component wraps a standard HTML Textarea element and provides additional features.
-     *
-     * @class Textarea
-	 * @param {boolean} autoGrow &nbsp;-&nbsp; Will automatically expand the text area to fit the contents.
-	 * @param {boolean} autoGrowAnimate &nbsp;-&nbsp; Will animate the text area growing.
-	 * @param {integer} autoGrowAnimateSpeed &nbsp;-&nbsp; The speed of the animation.
-     * @param {boolean} characterCounter &nbsp;-&nbsp; Displays a counter that counts down from the maximum length allowed.
-     * @param {boolean} printable &nbsp;-&nbsp; Determines whether or not the text area can be displayed on a printed page.
-     * @param {null|String} charRemainingText  &nbsp;-&nbsp; Text that will be used in place of the "remaining" text.
-     * @param {null|String} charMaxText  &nbsp;-&nbsp; Text that will be used in place of the "Max" text.
-     */
+    * The Textarea Component wraps a standard HTML Textarea element and provides additional features.
+    *
+    * @class Textarea
+    * @param {boolean} autoGrow &nbsp;-&nbsp; Will automatically expand the text area to fit the contents.
+    * @param {boolean} autoGrowAnimate &nbsp;-&nbsp; Will animate the text area growing.
+    * @param {integer} autoGrowAnimateSpeed &nbsp;-&nbsp; The speed of the animation.
+    * @param {boolean} characterCounter &nbsp;-&nbsp; Displays a counter that counts down from the maximum length allowed.
+    * @param {boolean} printable &nbsp;-&nbsp; Determines whether or not the text area can be displayed on a printed page.
+    * @param {null|String} charRemainingText  &nbsp;-&nbsp; Text that will be used in place of the "remaining" text.
+    * @param {null|String} charMaxText  &nbsp;-&nbsp; Text that will be used in place of the "Max" text.
+    */
     function Textarea(element) {
       this.settings = $.extend({}, settings);
       this.element = $(element);
@@ -73,16 +73,16 @@
         if (this.settings.printable) {
           this.printarea = $('<span class="textarea-print"></span>').insertBefore(this.element);
         }
-		
-		if (this.element.hasClass('autogrow')) {
-			this.settings.autoGrow = true;
-		}
-		
-		if (this.settings.autoGrow && this.element.length) {
-			this.element.css('overflow','hidden');
-			this.handleResize(this);
-		}
-		
+
+        if (this.element.hasClass('autogrow')) {
+          this.settings.autoGrow = true;
+        }
+
+        if (this.settings.autoGrow && this.element.length) {
+          this.element.css('overflow','hidden');
+          this.handleResize(this);
+        }
+
         this.handleEvents();
         this.updateCounter(this);
       },
@@ -95,7 +95,6 @@
         if (typeof input.selectionStart === 'number') {
           return input.selectionStart === 0 && input.selectionEnd === input.value.length;
         } else if (typeof document.selection !== 'undefined') {
-          input.focus();
           return document.selection.createRange().text === input.value;
         }
       },
@@ -115,54 +114,57 @@
         return valid;
       },
 
-	  /**
-       * resizes the texarea based on the content.
-       * @private
-	   * @param {TextArea} self
-       * @param {event} e
-       */
+      /**
+      * resizes the texarea based on the content.
+      * @private
+      * @param {TextArea} self
+      * @param {event} e
+      */
       handleResize: function (self, e) {
         var value = self.element.val(),
           oldHeight = self.element.innerHeight(),
           newHeight = self.element.get(0).scrollHeight,
           minHeight = self.element.data('autogrow-start-height') || 0,
           clone;
-		  
-        if (oldHeight < newHeight) { 
+
+        if (oldHeight < newHeight) {
           self.scrollTop = 0;
+
           if (self.settings.autoGrowAnimate) {
             self.element.stop().animate({height: newHeight}, self.settings.autoGrowAnimateSpeed);
-		  } else {
-            self.element.innerHeight(newHeight);  
-		  }
+    		  } else {
+            self.element.innerHeight(newHeight);
+    		  }
         } else if (!e || e.which === 8 || e.which === 46 || (e.ctrlKey && e.which === 88)) {
-          if (oldHeight > minHeight) { 
+
+          if (oldHeight > minHeight) {
             clone = self.element.clone()
             .addClass('clone')
-            .css({position: 'absolute', zIndex:-10, height: ''}) 
+            .css({position: 'absolute', zIndex:-10, height: ''})
             .val(value);
-			
-            self.element.after(clone); 
-            do { 
+
+            self.element.after(clone);
+            do {
               newHeight = clone[0].scrollHeight - 1;
               clone.innerHeight(newHeight);
             } while (newHeight === clone[0].scrollHeight);
-            newHeight++; 
+
+            newHeight++;
             clone.remove();
-            self.element.focus(); 
-            
+
             if (newHeight < minHeight) {
-			  newHeight = minHeight;
-			}
+              newHeight = minHeight;
+    		    }
+
             if (oldHeight > newHeight && self.settings.autoGrowAnimate) {
-			  self.element.stop().animate({height: newHeight}, self.settings.autoGrowAnimateSpeed);
-			} else {
-			  self.element.innerHeight(newHeight);	
-			}
-          } else { 
+              self.element.stop().animate({height: newHeight}, self.settings.autoGrowAnimateSpeed);
+            } else {
+              self.element.innerHeight(newHeight);
+            }
+          } else {
             self.element.innerHeight(minHeight);
           }
-        } 
+        }
       },
 
       /**
@@ -271,9 +273,10 @@
 
         this.element.on('keyup.textarea', function (e) {
           self.updateCounter(self);
-		  if (self.settings.autoGrow) {
-		    self.handleResize(self, e);
-		  }
+
+    		  if (self.settings.autoGrow) {
+    		    self.handleResize(self, e);
+    		  }
         }).on('focus.textarea', function () {
           if (self.counter) {
             self.counter.addClass('focus');

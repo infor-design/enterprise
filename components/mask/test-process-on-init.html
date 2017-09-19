@@ -11,11 +11,40 @@
 </div>
 
 <div class="row">
-  <div class="twelve columns">
+  <div class="six columns">
 
     <div class="field">
       <label for="phone-number">Phone Number</label>
       <input id="phone-number" name="phone-number" data-mask data-options="{ pattern: '(###) ###-####' }" placeholder="(###) ###-####" value="1234567890"/>
+    </div>
+
+  </div>
+  <div class="six columns">
+
+    <h3>Complex Numbers</h3>
+
+    <div class="field">
+      <label for="pos-number-2dec">Number (100.00)</label>
+      <input id="pos-number-2dec" inputmode="numeric" value="75.00"
+        data-mask data-options="{ pattern: '###.##', mode: 'number' }" placeholder="###.##"/>
+    </div>
+
+    <div class="field">
+      <label for="neg-number-2dec">Number (-100.00)</label>
+      <input id="neg-number-2dec" inputmode="numeric" value="75.00"
+        data-mask data-options="{ pattern: '-###.##', mode: 'number' }" placeholder="-###.##"/>
+    </div>
+
+    <div class="field">
+      <label for="pos-number-3dec">Number (100.000)</label>
+      <input id="pos-number-3dec" inputmode="numeric" value="75.00"
+        data-mask data-options="{ pattern: '###.###', mode: 'number' }" placeholder="###.###"/>
+    </div>
+
+    <div class="field">
+      <label for="neg-number-3dec">Number (-100.000)</label>
+      <input id="neg-number-3dec" inputmode="numeric" value="75.00"
+        data-mask data-options="{ pattern: '-###.###', mode: 'number' }" placeholder="-###.###"/>
     </div>
 
   </div>

@@ -279,7 +279,7 @@
           }
 
           // Could be a translation definition
-          content = Locale.translate(content) || content;
+          content = Locale.translate(content, true) || content;
 
           // Could be an ID attribute
           // If it matches an element already on the page, grab that element's content and store the reference only.
@@ -456,6 +456,7 @@
         }
 
         this.position();
+        Soho.utils.fixSVGIcons(this.tooltip);
         this.element.trigger('show', [this.tooltip]);
 
         setTimeout(function () {

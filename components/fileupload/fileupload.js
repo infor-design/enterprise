@@ -42,7 +42,8 @@
 
       // Example Method
       build: function() {
-        var elem = this.element,
+        var self = this,
+          elem = this.element,
           hasInlineLabel = !elem.is('input.fileupload');
 
         this.fileInput = hasInlineLabel ? elem.find('input') : elem;
@@ -111,6 +112,13 @@
         this.fileInput.attr('tabindex', '-1').on('change.fileupload', function () {
           elem.prev('input').val(this.files ? this.files[0].name : '');
         });
+
+        // Fix: not sure why, but some browser(ie. safari) need to rerender,
+        // some rules were not applying from css file
+        self.fileInput.css({position: 'static', left: 0});
+        setTimeout(function() {
+          self.fileInput.css({position: 'fixed', left: '-10000px'});
+        }, 0);
       },
 
       /**

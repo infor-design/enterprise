@@ -525,7 +525,7 @@ body.no-scroll {
   border-bottom: 1px solid $toolbar-standalone-border-color;
   height: 50px;
   padding-right: 10px;
-  
+
   .title {
     @include font-size(16);
     padding-top: 5px;
@@ -542,7 +542,7 @@ body.no-scroll {
 .is-firefox {
   .panel-header button {
    padding-top: 2.5px;
-  } 
+  }
 }
 
 .masthead {
@@ -603,7 +603,8 @@ body.no-scroll {
 
 .module-tabs {
   + .page-container,
-  + .application-menu + .page-container {
+  + .application-menu + .page-container,
+  + .tab-panel-container {
     height: calc(100% - 36px);
     margin-top: 36px;
   }

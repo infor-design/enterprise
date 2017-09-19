@@ -111,7 +111,9 @@
             {label: 'Azure', number: '01', value: 'CBEBF4'}
           ],
           placeIn: null, // null|'editor'
-          showLabel: false
+          showLabel: false,
+          editable: true,
+          uppercase: true
         },
         settings = $.extend({}, defaults, options);
 
@@ -121,6 +123,8 @@
     * @class ColorPicker
     * @param {String} colors  &nbsp;-&nbsp; An array of objects of the form {label: 'Azure', number: '01', value: 'CBEBF4'} that can be used to populate the color grid.
     * @param {String} showLabel  &nbsp;-&nbsp; Show the label if true vs the hex value if false.
+    * @param {String} editable  &nbsp;-&nbsp; If false, the field is readonly and transparent. I.E. The value cannot be typed only editable by selecting.
+    * @param {String} uppercase  &nbsp;-&nbsp; If false, lower case hex is allowed. If true upper case hex is allowed. If showLabel is true this setting is ignored.
     *
     */
     function ColorPicker(element) {
@@ -161,39 +165,46 @@
           this.container = colorpicker.parent();
           this.swatch = $('<span class="swatch"></span>').prependTo(this.container);
 
-          //Add Masking to show the #
-          colorpicker.mask({
-            pattern: ['#', /[0-9a-fA-F]/, /[0-9a-fA-F]/, /[0-9a-fA-F]/, /[0-9a-fA-F]/, /[0-9a-fA-F]/, /[0-9a-fA-F]/ ]
-          });
+          // Add Masking to show the #.
+          // Remove the mask if using the "showLabel" setting
+          if (!this.settings.showLabel) {
+
+            var patternUpper = ['#', /[0-9A-F]/, /[0-9A-F]/, /[0-9A-F]/, /[0-9A-F]/, /[0-9A-F]/, /[0-9A-F]/ ],
+              patternLower = ['#', /[0-9a-f]/, /[0-9a-f]/, /[0-9a-f]/, /[0-9a-f]/, /[0-9a-f]/, /[0-9a-f]/ ];
+
+            colorpicker.mask({
+              pattern: this.settings.uppercase ? patternUpper : patternLower
+            });
+
+          } else {
+            var maskAPI = colorpicker.data('mask');
+            if (maskAPI && typeof maskAPI.destroy === 'function') {
+              maskAPI.destroy();
+            }
+          }
         }
 
         this.icon = $.createIconElement('dropdown')
           .appendTo(this.isEditor ? this.element : this.container);
         this.icon.wrap('<span class="trigger"></span>');
 
-        if (initialValue && initialValue.substr(0,1) !== '#' && !this.settings.showLabel) {
-          initialValue = '#' + initialValue;
-          this.element.attr(this.isEditor ? 'data-value' : 'value', initialValue);
-        }
-
-        if (initialValue && this.settings.showLabel) {
-          var hexValue = this.getHexFromLabel(initialValue);
-          this.setColor(hexValue);
-          this.element.attr(this.isEditor ? 'data-value' : 'value', hexValue);
-        }
-
-        if (initialValue && initialValue.length === 7 && !this.settings.showLabel) {
+        // Handle initial values
+        if (initialValue) {
           this.setColor(initialValue);
-          this.element.attr(this.isEditor ? 'data-value' : 'value', initialValue);
         }
 
-         if (this.element.is(':disabled')) {
+        if (this.element.is(':disabled')) {
           this.disable();
         }
 
         if (this.element.prop('readonly')) {
           this.readonly();
         }
+
+        if (!this.settings.editable) {
+          this.readonly();
+        }
+
         this.addAria();
       },
 
@@ -220,7 +231,7 @@
         var self = this,
           menu =  $('#colorpicker-menu');
 
-        if (self.element.is(':disabled') || this.element.prop('readonly')) {
+        if (self.element.is(':disabled') || (this.element.prop('readonly') && self.settings.editable)) {
           return;
         }
 
@@ -261,6 +272,7 @@
         })
         .on('close.colorpicker', function () {
           menu.on('destroy.colorpicker', function () {
+            self.element.off('open.colorpicker selected.colorpicker close.colorpicker');
             $(this).off('destroy.colorpicker').remove();
           });
           self.element.parent().removeClass('is-open');
@@ -268,8 +280,7 @@
         })
         .on('selected.colorpicker', function (e, item) {
           if (!self.isEditor) {
-            self.element.val(self.settings.showLabel ? item.data('label') : '#'+item.data('value'));
-            self.swatch[0].style.backgroundColor = '#' + item.data('value');
+            self.setColor(item.data('value'), item.data('label'));
           }
           self.element.focus();
           self.element.trigger('change');
@@ -289,20 +300,37 @@
       * @param {String} text  &nbsp;-&nbsp; The text to display
       */
       setColor: function (hex, text) {
-        // Make sure there is always a hash
-        if (hex.substr(0,1) !== '#') {
-          hex = '#' + hex;
-          this.element.attr(this.isEditor ? 'data-value' : 'value', hex);
+        // check if the hex value is actually a hex value.
+        // if not, use it as a label.
+
+        var testHex = hex.replace('#', '');
+        if (!/[0-9A-Fa-f]{6}/g.test(testHex) || !/[0-9A-Fa-f]{3}/g.test(testHex)) {
+          text = '' + hex;
+          hex = this.settings.showLabel ? this.getHexFromLabel(text) : hex;
         }
 
-        if (hex.length !== 7) {
+        // Simply return out if hex isn't valid
+        if (!hex) {
           return;
         }
 
-        if (!this.isEditor) {
-          this.swatch[0].style.backgroundColor = hex;
+        // Make sure there is always a hash
+        if (hex.substr(0,1) !== '#') {
+          hex = '#' + hex;
         }
-        this.element.attr('aria-describedby', text);
+
+        var targetAttr = this.isEditor ? 'data-value' : 'value';
+
+        if (!text) {
+          text = hex;
+        }
+
+        // Set the value on the field
+        this.element[0].value = this.settings.showLabel ? text : hex;
+        this.element[0].setAttribute(targetAttr, hex);
+        this.swatch[0].style.backgroundColor = hex;
+
+        this.element[0].setAttribute('aria-describedby', text);
       },
 
       // Refresh and Append the Color Menu
@@ -379,6 +407,7 @@
       */
       enable: function() {
         this.element.prop('disabled', false);
+        this.element.prop('readonly', false);
         this.element.parent().removeClass('is-disabled is-readonly');
       },
 
@@ -395,8 +424,13 @@
       */
       readonly: function() {
         this.enable();
-        this.element.attr('readonly', 'readonly');
+        this.element.prop('readonly', true);
         this.element.parent().addClass('is-readonly');
+
+        if (!this.settings.editable) {
+          this.element.parent().addClass('is-not-editable');
+        }
+
       },
 
       /**
@@ -444,7 +478,7 @@
       },
 
       teardown: function() {
-        this.element.off('keypress.colorpicker');
+        this.element.off('keyup.colorpicker blur.colorpicker change.colorpicker paste.colorpicker');
         this.swatch.off('click.colorpicker');
         this.swatch.remove();
         this.container.find('.trigger').remove();
@@ -467,14 +501,14 @@
         return this;
       },
 
-    /**
-     *  This component fires the following events.
-     *
-     * @fires About#events
-     * @param {Object} change  &nbsp;-&nbsp; Fires when a color is typed or selected.
-     * @param {Object} blur  &nbsp;-&nbsp; Fires as the input looses focus
-     *
-     */
+      /**
+      *  This component fires the following events.
+      *
+      * @fires About#events
+      * @param {Object} change  &nbsp;-&nbsp; Fires when a color is typed or selected.
+      * @param {Object} blur  &nbsp;-&nbsp; Fires as the input looses focus
+      *
+      */
       handleEvents: function () {
         var self = this;
         this.icon.parent().onTouchClick().on('click.colorpicker', function () {
@@ -488,10 +522,9 @@
           $(this).parent().removeClass('is-focused');
         });
 
-        this.element.on('keypress.colorpicker', function () {
-          self.setColor($(this).val());
-        }).on('change.colorpicker', function () {
-          self.setColor($(this).val());
+        this.element.on('keyup.colorpicker blur.colorpicker paste.colorpicker change.colorpicker', function () {
+          var val = $(this).val();
+          self.setColor(val);
         });
 
         //Handle Key Down to open

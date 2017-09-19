@@ -33,7 +33,7 @@
      *
      * @class Toolbar
      *
-     * @param {boolean} rightAligned   &nbsp;-&nbsp; Will always attempt to right-align the contents of the toolbar.
+     * @param {boolean} rightAligned   &nbsp;-&nbsp; Will always attempt to right-align the contents of the toolbar. By default if there is no title it will left align. This forces right alignment.
      * @param {Number} maxVisibleButtons   &nbsp;-&nbsp; Total amount of buttons that can be present, not including the More button.
      * @param {boolean} resizeContainers   &nbsp;-&nbsp; If true, uses Javascript to size the Title and Buttonset elements in a way that shows as much of the Title area as possible.
      * @param {boolean} favorButtonset   &nbsp;-&nbsp; If "resizeContainers" is true, setting this to true will try to display as many buttons as possible while resizing the toolbar.  Setting to false attempts to show the entire title instead.
@@ -127,7 +127,7 @@
           }
         }
 
-        this.buttonset[this.settings.rightAligned ? 'addClass' : 'removeClass']('right-aligned');
+        this.element[this.settings.rightAligned ? 'addClass' : 'removeClass']('right-aligned');
 
         // Add and invoke More Button, if it doesn't exist
         this.more = this.element.find('.btn-actions');
@@ -309,8 +309,10 @@
         }
         if (item.is(':disabled')) {
           popupLi.addClass('is-disabled');
+          a.prop('disabled', true);
         } else {
           popupLi.removeClass('is-disabled');
+          a.prop('disabled', false);
         }
 
         // Refresh Text
@@ -440,10 +442,11 @@
 
             if (item.parent().is('.is-disabled') || item.is(':disabled')) { // if it's disabled menu item, OR a disabled menu-button
               li.addClass('is-disabled');
+              a.prop('disabled', true);
               a.attr('tabindex', '-1');
             } else {
               li.removeClass('is-disabled');
-              a.removeAttr('disabled');
+              a.prop('disabled', false);
             }
 
             if (item.is('a')) {

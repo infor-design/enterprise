@@ -255,7 +255,7 @@ $datagrid-short-row-height: 23px;
     }
 
     &.paginated {
-      height: calc(100% - 45px);
+      height: calc(100% - 58px);
     }
 
     //Resize Drag Arrows
@@ -2279,7 +2279,7 @@ td .btn-actions {
 .datagrid-result-count {
   @include font-size(14);
   display: inline-block;
-  margin-top: -4px;
+  margin-top: -1px;
   // scss-lint:disable ImportantRule
   vertical-align: middle !important;
   // scss-lint:enable ImportantRule

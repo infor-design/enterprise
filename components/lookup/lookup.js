@@ -348,6 +348,11 @@
           self.modal.element.find('.toolbar').appendTo(self.modal.element.find('.modal-header'));
         }
 
+        // Reset keyword search from previous loads
+        if (hasKeywordSearch && self.grid) {
+          self.grid.keywordSearch('');
+        }
+
         //Mark selected rows
         lookupGrid.off('selected.lookup');
         var val = self.element.val();

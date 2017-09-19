@@ -1250,8 +1250,10 @@
           .on('touchend.dropdown touchcancel.dropdown', touchEndCallback)
           .on('click.dropdown', clickDocument);
 
-        var parentScroll = self.element.closest('.scrollable').length ? self.element.closest('.scrollable') : $(document);
+        var modalScroll = $('.modal.is-visible .modal-body-wrapper'),
+          parentScroll = self.element.closest('.scrollable').length ? self.element.closest('.scrollable') : $(document);
         parentScroll = self.element.closest('.scrollable-y').length ? self.element.closest('.scrollable-y') : parentScroll;
+        parentScroll = modalScroll.length ? modalScroll : parentScroll;
         parentScroll.on('scroll.dropdown', scrollDocument);
 
         $('body').on('resize.dropdown', function() {
@@ -1335,8 +1337,9 @@
         positionOpts.useParentWidth = useParentWidth;
 
         // use negative height of the pseudoElem to get the Dropdown list to overlap the input.
-        var isNotChrome = Soho.env.browser.name !== 'chrome';
-        positionOpts.y = -(parseInt(parentElement[0].clientHeight) + parseInt(parentElementStyle.borderTopWidth) + parseInt(parentElementStyle.borderBottomWidth) - (isNotChrome ? 1 : 0));
+        var isRetina = window.devicePixelRatio > 1,
+          isChrome = Soho.env.browser.name === 'chrome';
+        positionOpts.y = -(parseInt(parentElement[0].clientHeight) + parseInt(parentElementStyle.borderTopWidth) + parseInt(parentElementStyle.borderBottomWidth) - (!isChrome && isRetina ? 1 : 0));
         positionOpts.x = 0;
 
         this.list.one('afterplace.dropdown', dropdownAfterPlaceCallback).place(positionOpts);

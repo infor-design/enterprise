@@ -7,6 +7,7 @@
     -   [removeRow](#removerow)
     -   [removeSelected](#removeselected)
     -   [clearFilter](#clearfilter)
+    -   [restoreColumns](#restorecolumns)
     -   [hideColumn](#hidecolumn)
 
 ## Datagrid
@@ -15,7 +16,6 @@ The Datagrid Component displays and process data in tabular format.
 
 **Parameters**
 
--   `element`  
 -   `actionableMode` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If actionableMode is "true”, tab and shift tab behave like left and right arrow key, if the cell is editable it goes in and out of edit mode. F2 - toggles actionableMode "true" and "false"
 -   `cellNavigation` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If cellNavigation is "false”, will show border around whole row on focus
 -   `rowNavigation` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If rowNavigation is "false”, will NOT show border around the row
@@ -80,6 +80,14 @@ Remove all selected rows from the grid and dataset.
 ### clearFilter
 
 Clear the Filter row Conditions and Reset the Data.
+
+### restoreColumns
+
+Restore the columns from a provided list or local storage
+
+**Parameters**
+
+-   `cols` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** The columns list to restore, if you saved the settings manually.
 
 ### hideColumn
 

@@ -1,8 +1,13 @@
-# Checboxes  [Learn More](#)
+# Checkboxes  [Learn More](#)
+
+## Configuration Options
+
+1. Default Checkbox Example [View Example]( ../components/checkboxes/example-index)
+2. Checkbox Groups [View Example]( ../components/checkboxes/example-checkbox-groups)
 
 ## API Details
 
-### Attributes and Clases
+### Attributes and Classes
 
 * checked - If added the checkbox will show as checked
 * disabled - If added the checkbox will show as disabled, and have no interaction.

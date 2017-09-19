@@ -1,0 +1,40 @@
+<div class="row top-padding">
+  <div class="six columns">
+    <h2>Mask Test: Convert Legacy Patterns with Integers as Decimals Properly</h2>
+    <p>Related JIRA Tickets: -
+      <a class="hyperlink" href="http://jira/browse/SOHO-3849" target="_blank">SOHO-3849</a> |
+      <a class="hyperlink" href="http://jira/browse/SOHO-6274" target="_blank">SOHO-6274</a>
+    </p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="three columns">
+    <div class="field">
+      <label for="pos-number-2dec">Number (1000.00)</label>
+      <input id="pos-number-2dec" inputmode="numeric"
+        data-mask data-options="{ pattern: '####.##', mode: 'number' }" placeholder="####.##"/>
+    </div>
+  </div>
+  <div class="three columns">
+    <div class="field">
+      <label for="neg-number-2dec">Number (-1000.00)</label>
+      <input id="neg-number-2dec" inputmode="numeric"
+        data-mask data-options="{ pattern: '-####.##', mode: 'number' }" placeholder="-####.##"/>
+    </div>
+  </div>
+  <div class="three columns">
+    <div class="field">
+      <label for="pos-number-3dec">Number (1000.000)</label>
+      <input id="pos-number-3dec" inputmode="numeric"
+        data-mask data-options="{ pattern: '####.###', mode: 'number' }" placeholder="####.###"/>
+    </div>
+  </div>
+  <div class="three columns">
+    <div class="field">
+      <label for="neg-number-3dec">Number (-1000.000)</label>
+      <input id="neg-number-3dec" inputmode="numeric"
+        data-mask data-options="{ pattern: '-####.###', mode: 'number' }" placeholder="-####.###"/>
+    </div>
+  </div>
+</div>

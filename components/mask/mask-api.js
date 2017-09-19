@@ -80,7 +80,8 @@ SohoMaskAPI.prototype = {
       if (Array.isArray(options.pattern) || typeof options.pattern === 'function') {
         this.pattern = options.pattern;
       } else if (typeof options.pattern === 'string') {
-        this.pattern = this._convertPatternFromString(options.pattern);
+        var defs = Soho.utils.extend({}, Soho.masks.LEGACY_DEFS, (options.definitions || {}));
+        this.pattern = this._convertPatternFromString(options.pattern, defs);
       } else {
         // TODO: fail somehow?
       }
@@ -202,7 +203,7 @@ SohoMaskAPI.prototype = {
       rawValueLength = rawValue.length,
       prevMaskResultLength = options.previousMaskResult.length,
       maskLength = this.pattern.length,
-      placeholderLength = options.placeholder.length,
+      placeholderLength = options.placeholder.length || 0,
       placeholderChar = options.placeholderChar,
       caretPos = options.selection.start,
       resultStr = Soho.masks.EMPTY_STRING;
@@ -487,8 +488,8 @@ SohoMaskAPI.prototype = {
     // Store lengths for faster performance?
     var rawValueLength = opts.rawValue.length,
       previousConformedValueLength = opts.previousMaskResult.length,
-      placeholderLength = opts.placeholder.length,
-      conformedValueLength = opts.conformedValue.length;
+      placeholderLength = opts.placeholder ? opts.placeholder.length : 0,
+      conformedValueLength = opts.conformedValue ? opts.conformedValue.length : 0;
 
     // This tells us how long the edit is. If user modified input from `(2__)` to `(243__)`,
     // we know the user in this instance pasted two characters
@@ -683,6 +684,10 @@ SohoMaskAPI.prototype = {
       var lastPlaceholderChar = startingSearchIndex;
 
       for (var j = startingSearchIndex; j <= placeholderLength; j++) {
+        if (!opts.placeholder) {
+          return lastPlaceholderChar;
+        }
+
         if (opts.placeholder[j] === opts.placeholderChar) {
           lastPlaceholderChar = j;
         }
@@ -759,15 +764,15 @@ SohoMaskAPI.prototype = {
    * @param {String} pattern - a legacy Soho Mask Pattern
    * @returns {Array} - contains string "literal" characters and Regex matchers
    */
-  _convertPatternFromString: function(pattern) {
+  _convertPatternFromString: function(pattern, defs) {
     var arr = [],
-      legacyKeys = Object.keys(Soho.masks.LEGACY_DEFS);
+      legacyKeys = Object.keys(defs);
 
     function getRegex(char) {
       var idx = legacyKeys.indexOf(char);
 
       if (idx > -1) {
-        char = Soho.masks.LEGACY_DEFS[legacyKeys[idx]];
+        char = defs[legacyKeys[idx]];
       }
       return char;
     }

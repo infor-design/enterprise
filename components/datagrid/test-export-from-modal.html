@@ -1,0 +1,83 @@
+<div class="row">
+  <div class="one column">
+    <button id="btnExport" class="btn-icon icon-export-spreadsheet" title="Export" type="button">
+    	<svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+    		<use xlink:href="#icon-export-spreadsheet"/>
+    	</svg>
+    </button>
+  </div>
+</div>
+
+<script>
+	$('body').initialize("en-GB");
+	var dlg = null;
+
+ 	$('#btnExport').click(function() {
+		$('<div id="export-modal"><div id="export-grid-test"></div></div>').appendTo('body');
+
+		$('body').modal({
+       title:   "Export",
+       content: $('#export-modal'),
+       buttons: [{
+         text: "Close",
+         click: function(e, modal) { modal.destroy(); }
+       }, {
+        text: "Export",
+        click: function(e, modal) {
+        	$('#export-grid-test').data("datagrid").exportToExcel();
+        	modal.destroy();
+        },
+        validate: false,
+        isDefault: true
+       }]
+		}).on("open", function(e, modal) {
+
+      var columns = [];
+
+      columns.push({ id: "col1", name: "Column 1", field: "col1",
+        formatter: Formatters.Text,
+        focusable: false,
+        align: "left",
+        filterType: "text",
+        hidden: false
+      });
+      columns.push({ id: "col2", name: "Column 2", field: "col2",
+        formatter: Formatters.Text,
+        focusable: false,
+        align: "left",
+        filterType: "text",
+        hidden: false
+      });
+      columns.push({ id: "col3", name: "Column 3", field: "col3",
+        formatter: Formatters.Text,
+        focusable: false,
+        align: "left",
+        filterType: "text",
+        hidden: false
+      });
+      columns.push({ id: "col4", name: "Column 4", field: "col4",
+        formatter: Formatters.Text,
+        focusable: false,
+        align: "left",
+        filterType: "text",
+        hidden: false
+      });
+
+      var data = [{col1: "Data 1.1", col2: "Data 1.2", col3: "Data 1.3", col4: "Data 1.4"},
+      			{col1: "Data 2.1", col2: "Data 2.2", col3: "Data 2.3", col4: "Data 2.4"},
+      			{col1: "Data 3.1", col2: "Data 3.2", col3: "Data 3.3", col4: "Data 3.4"}];
+
+      var grid = $('#export-grid-test').datagrid({
+        columns: 	columns,
+        pagesize: 	10,
+        rowHeight: 	'short',
+        isList: 	true,
+        filterable: true,
+        saveUserSettings: { sortOrder: true, filter: true, columns: true },
+        toolbar:  { title: "Results", results: true, filter: true,
+          actions: true, filterRow: true, personalize: true, resetLayout: true},
+        dataset: 	data
+      });
+		});
+ 	});
+</script>

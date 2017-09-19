@@ -4,38 +4,40 @@ define([
   'jsdom',
 ], function(registerSuite, expect) {
 
-  var jsdom = require('jsdom').jsdom;
-  document = jsdom('<!DOCTYPE html><html id="html"><head></head><body></body></html>'); // jshint ignore:line
-  window = document.defaultView;  // jshint ignore:line
-
-  //Load the Locale.js we are testing
-  require('components/locale/locale.js');
-  Locale = window.Locale; // jshint ignore:line
-
-  //Load the Locales because Ajax doesnt work
-  require('components/locale/cultures/en-US.js');
-  require('components/locale/cultures/ar-SA.js');
-  require('components/locale/cultures/ar-EG.js');
-  require('components/locale/cultures/de-DE.js');
-  require('components/locale/cultures/nb-NO.js');
-  require('components/locale/cultures/no-NO.js');
-  require('components/locale/cultures/es-ES.js');
-  require('components/locale/cultures/bg-BG.js');
-  require('components/locale/cultures/ar-EG.js');
-  require('components/locale/cultures/fi-FI.js');
-  require('components/locale/cultures/lt-LT.js');
-  require('components/locale/cultures/vi-VN.js');
-  require('components/locale/cultures/tr-TR.js');
-  require('components/locale/cultures/it-IT.js');
-  require('components/locale/cultures/sv-SE.js');
-  require('components/locale/cultures/cs-CZ.js');
-  require('components/locale/cultures/hu-HU.js');
-  require('components/locale/cultures/ja-JP.js');
-  require('components/locale/cultures/ru-RU.js');
-
   registerSuite({
 
     name: 'Locale',
+
+    setup: function() {
+      var jsdom = require('jsdom').jsdom;
+      document = jsdom('<!DOCTYPE html><html id="html"><head></head><body></body></html>'); // jshint ignore:line
+      window = document.defaultView;  // jshint ignore:line
+
+      //Load the Locale.js we are testing
+      require('components/locale/locale.js');
+      Locale = window.Locale; // jshint ignore:line
+
+      //Load the Locales because Ajax doesnt work
+      require('components/locale/cultures/en-US.js');
+      require('components/locale/cultures/ar-SA.js');
+      require('components/locale/cultures/ar-EG.js');
+      require('components/locale/cultures/de-DE.js');
+      require('components/locale/cultures/nb-NO.js');
+      require('components/locale/cultures/no-NO.js');
+      require('components/locale/cultures/es-ES.js');
+      require('components/locale/cultures/bg-BG.js');
+      require('components/locale/cultures/ar-EG.js');
+      require('components/locale/cultures/fi-FI.js');
+      require('components/locale/cultures/lt-LT.js');
+      require('components/locale/cultures/vi-VN.js');
+      require('components/locale/cultures/tr-TR.js');
+      require('components/locale/cultures/it-IT.js');
+      require('components/locale/cultures/sv-SE.js');
+      require('components/locale/cultures/cs-CZ.js');
+      require('components/locale/cultures/hu-HU.js');
+      require('components/locale/cultures/ja-JP.js');
+      require('components/locale/cultures/ru-RU.js');
+    },
 
     // Checks the scaffolding we set up to make sure everything works
     'should exist': function() {
@@ -353,15 +355,24 @@ define([
       //expect(Locale.translate('Loading')).to.equal('Wird Geladen');
 
       //Error
-      expect(Locale.translate('XYZ')).to.equal(undefined);
+      expect(Locale.translate('XYZ')).to.equal('[XYZ]');
 
       //Non Existant in locale - use EN
       Locale.set('de-DE');
       expect(Locale.translate('Equals')).to.equal('Gleich');
 
       //Error
-      expect(Locale.translate('XYZ')).to.equal(undefined);
+      expect(Locale.translate('XYZ')).to.equal('[XYZ]');
 
+    },
+    //SOHO-6782
+    'undefined keys show [] around': function() {
+      Locale.set('en-US');
+      expect(Locale.translate('TestLocaleDefaults')).to.equal('Test Locale Defaults');
+      Locale.set('de-DE');
+      expect(Locale.translate('TestLocaleDefaults')).to.equal('Test Locale Defaults');
+      Locale.set('ar-EG');
+      expect(Locale.translate('XYZ')).to.equal('[XYZ]');
     },
 
     'be possible to add translations': function() {

@@ -1,45 +1,58 @@
 <div class="row">
   <div class="twelve columns">
 
-    <div class="toolbar">
+    <div id="test-toolbar" class="toolbar" data-options='{ "favorButtonset": false }'>
       <div class="title">4 Buttons, No Pre-built More Menu</div>
       <div class="buttonset">
-        <button type="button" class="btn">
+        <button id="btn-save" type="button" class="btn">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-save"></use>
           </svg>
           <span>Save</span>
         </button>
 
-        <button type="button" class="btn">
+        <button id="btn-category" type="button" class="btn">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-filter"></use>
           </svg>
           <span>Category</span>
         </button>
 
-        <button type="button" class="btn" disabled>
+        <button id="btn-disabled" type="button" class="btn" disabled>
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-calendar"></use>
           </svg>
           <span>Disabled</span>
         </button>
 
-        <button type="button" class="btn">
+        <button id="btn-share" type="button" class="btn">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-mingle-share"></use>
           </svg>
           <span>Share</span>
         </button>
 
-	      <button type="button" class="btn" disabled>
+	      <button id="btn-disabled-again" type="button" class="btn" disabled>
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-mingle-share"></use>
           </svg>
-          <span>Disabled</span>
+          <span>Disabled Again</span>
         </button>
       </div>
     </div>
 
   </div>
 </div>
+
+<script type="text/javascript">
+  // Event Listener for this code
+  $('#test-toolbar').on('selected.test', function(e, target) {
+    var contents = $(target).text().trim(),
+      id = '#' + $(target).attr('id');
+
+    $('body').toast({
+      title: '<span style="color: #aa1111; font-weight: bold;">' + id + '</span> selected!',
+      message: 'Toolbar Item with ID <b>' + id + '</b> selected!  It\'s contents are:  "' + contents + '".'
+    });
+  });
+</script>

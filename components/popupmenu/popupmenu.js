@@ -274,13 +274,14 @@
             var $a = $(a),
               $li = $(li);
 
-            if (a.hasAttribute('disabled') || $li.hasClass('is-disabled')) {
-              Soho.DOM.addClass(li, 'is-disabled');
+            if ($li.hasClass('is-disabled') || (a.getAttribute('disabled') === 'true' || a.getAttribute('disabled') === 'disabled')) {
+              $li.addClass('is-disabled');
               a.setAttribute('aria-disabled', 'true');
-              a.disabled = true;
+              a.setAttribute('disabled', true);
             } else {
               $li.removeClass('is-disabled');
-              $a.prop('disabled', false).removeAttr('aria-disabled');
+              $a.removeAttr('aria-disabled');
+              a.setAttribute('disabled', false);
             }
 
             // menu items that contain submenus
@@ -401,7 +402,6 @@
                 break;
             }
           })
-          .off('updated.popupmenu')
           .on('updated.popupmenu', function(e) {
             e.stopPropagation();
             self.updated();
@@ -509,6 +509,78 @@
               }
             }
 
+            var getPrev, getNext, getLast, getFirst;
+
+            getPrev = function(a) {
+              var prevs = a.parent().prevAll(excludes),
+                prev;
+
+              prevs.each(function() {
+                if (prev) {
+                  return;
+                }
+
+                var li = $(this),
+                  targetA = li.children('a');
+                if (li.is('.is-disabled') || targetA.prop('disabled') === true) {
+                  return;
+                }
+                prev = targetA;
+              });
+
+              if (!prev) {
+                return getFirst(a);
+              }
+
+              return prev;
+            };
+
+            getFirst = function(a) {
+              var first = a.parent().prevAll(excludes).last(),
+                targetA = first.children('a');
+
+              if (first.is('.is-disabled') || targetA.prop('disabled') === true) {
+                return getNext(targetA);
+              }
+
+              return targetA;
+            };
+
+            getNext = function(a) {
+              var nexts = a.parent().nextAll(excludes),
+                next;
+
+              nexts.each(function() {
+                if (next) {
+                  return;
+                }
+
+                var li = $(this),
+                  targetA = li.children('a');
+                if (li.is('.is-disabled') || targetA.prop('disabled') === true) {
+                  return;
+                }
+                next = targetA;
+              });
+
+              if (!next) {
+                return getFirst(a);
+              }
+
+              return next;
+            };
+
+            getLast = function(a) {
+              var last = a.parent().nextAll(excludes).last(),
+                targetA = last.children('a');
+
+              if (last.is('.is-disabled') || targetA.prop('disabled') === true) {
+                return getPrev(targetA);
+              }
+
+              return targetA;
+            };
+
             //Up on Up
             if ((!isPicker && key === 38) || (isPicker && key === 37)) {
                e.stopPropagation();
@@ -519,11 +591,11 @@
                 if (focus.length === 0) {
                   self.highlight(self.menu.children(excludes).last().find('a'));
                 } else {
-                  self.highlight(focus.closest('.popupmenu').children(excludes).last().find('a'));
+                  self.highlight(getLast(focus));
                 }
                 return;
               }
-              self.highlight(focus.parent().prevAll(excludes).first().find('a'));
+              self.highlight(getPrev(focus));
             }
 
             //Up a square
@@ -532,7 +604,7 @@
               e.preventDefault();
 
               if (focus.parent().prevAll(excludes).length > 0) {
-                self.highlight($(focus.parent().prevAll(excludes)[9]).find('a'));
+                self.highlight($(focus.parent().prevAll(excludes)[0]).find('a'));
               }
             }
 
@@ -557,11 +629,11 @@
                 if (focus.length === 0) {
                   self.highlight(self.menu.children(excludes).first().find('a'));
                 } else {
-                  self.highlight(focus.closest('.popupmenu').children(excludes).first().find('a'));
+                  self.highlight(getFirst(focus));
                 }
                 return;
               }
-              self.highlight(focus.parent().nextAll(excludes).first().find('a'));
+              self.highlight(getNext(focus));
             }
 
             //Down a square
@@ -944,11 +1016,20 @@
           this.menu.parent()[0].style.zIndex =  '9001';
         }
 
-        //Fix disabled attribute sync issue
-        this.menu.find('.is-disabled').each(function () {
-          var elem = $(this);
-          if (!elem.find('a').attr('disabled')) {
-            elem.removeClass('is-disabled');
+        // Check every anchor tag to see if it should be disabled.
+        // Use the CSS class on its parent to determine whether or not to disable.
+        this.menu.find('a').each(function() {
+          var a = $(this),
+            li = a.parent();
+
+          if (li.hasClass('is-disabled')) {
+            li.addClass('is-disabled');
+            a.attr('aria-disabled', 'true');
+            a.attr('disabled', 'disabled');
+          } else {
+            li.removeClass('is-disabled');
+            a.removeAttr('aria-disabled');
+            a.removeAttr('disabled');
           }
         });
 
@@ -1373,7 +1454,7 @@
         this.element
           .removeAttr('aria-controls')
           .removeAttr('aria-haspopup')
-          .off('touchend.popupmenu touchcancel.popupmenu click.popupmenu keypress.popupmenu contextmenu.popupmenu');
+          .off('touchend.popupmenu touchcancel.popupmenu click.popupmenu keydown.popupmenu keypress.popupmenu contextmenu.popupmenu updated.popupmenu');
 
         return this;
       },

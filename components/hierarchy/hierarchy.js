@@ -27,8 +27,6 @@
           newData: [],
           templateId: '',  //Id to the Html Template
           mobileView: false,
-          mouseEnterTarget: '',
-          rightClickTarget: '',
           leafHeight: null,
           leafWidth: null,
           beforeExpand: null
@@ -240,6 +238,25 @@
         }
 
         return nodeData[0];
+      },
+
+      /**
+       * Public function
+       * Reloads hierarchy control with new dataset
+       * @param options -- hierarchy options
+       */
+      reload: function (options) {
+        this.destroy();
+        this.element.hierarchy(options);
+      },
+
+      /**
+       *  Public function
+       *  Removes the component from existence
+       */
+      destroy: function () {
+        this.element.empty();
+        this.element.removeData(pluginName);
       },
 
       /**

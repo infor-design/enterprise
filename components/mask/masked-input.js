@@ -18,6 +18,7 @@
    */
   var DEFAULT_MASKED_INPUT_OPTIONS = {
     autocorrect: false,
+    definitions: undefined,
     guide: false,
     maskAPI: window.Soho.Mask,
     keepCharacterPositions: false,
@@ -173,7 +174,8 @@
 
       // On Android, the first character inserted into a field is automatically selected when it shouldn't be.
       // This snippet fixes that problem.
-      if (Soho.env.os.name === 'android' && this.state.previousMaskResult === '' && posBegin !== posEnd) {
+      var os = Soho.env && Soho.env.os && Soho.env.os.name ? Soho.env.os.name : '';
+      if (os === 'android' && this.state.previousMaskResult === '' && posBegin !== posEnd) {
         Soho.utils.safeSetSelection(rawValue.length, rawValue.length);
         posBegin = rawValue.length;
         posEnd = rawValue.length;
@@ -366,7 +368,7 @@
 
           if (decimalParts[1]) {
             this.settings.patternOptions.allowDecimal = true;
-            this.settings.patternOptions.decimalLimit = decimalParts[1].toString().length;
+            this.settings.patternOptions.decimalLimit = decimalParts[1].toString().replace(/[^#0]/g, '').length;
             if (!this.settings.patternOptions.symbols.decimal) {
               this.settings.patternOptions.symbols.decimal = decimal;
             }
