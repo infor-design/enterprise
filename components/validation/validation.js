@@ -569,7 +569,7 @@
         this.setModalPrimaryBtn(field, modalBtn, false);
       }
 
-      this.showInlineError(field, message, validationType.type);
+      this.showInlineMessage(field, message, validationType.type);
     },
 
     /**
