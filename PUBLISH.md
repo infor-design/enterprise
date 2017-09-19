@@ -87,33 +87,37 @@ http://bamboo.infor.com/browse/SOHO-NGV-16
 * Generate Release Notes http://bit.ly/2w6X8Xw
 
 ## Git Operations
-* Edit version in package.json and publish package.json (from 4.3.1-rc to 4.3.1 as an example)
+* Edit version in package.json and publish package.json (from 4.3.2-rc to 4.3.2 as an example)
 * Push a PR
 * Check for Last PR's http://git.infor.com/projects/SOHO/repos/angular-components/pull-requests and http://git.infor.com/projects/SOHO/repos/controls/pull-requests and make sure all merged
-* Merge  4.3.1-rc (the rc branch) back onto the 4.3.x (masterish branch) - Using a PR or Git Merge
+* Merge  4.3.2-rc (the rc branch) back onto the 4.3.x (masterish branch) - Using a PR or Git Merge
 * Git Tag the release from the 4.3.x branch
 ```bash
- git tag 4.3.1
+ git tag 4.3.2
  git push origin --tags
 ```
-* Delete the 4.2.6-rc branch and all feature/bug fix branches http://git.infor.com/projects/SOHO/repos/controls/branches
-* Make the new branch off 4.3.x for the new version (4.3.2-rc)
-  * In git http://git.infor.com/projects/SOHO/repos/controls/settings set the 4.3.2-rc branch as the default
+* Make the new branch off 4.3.x for the new version (4.3.3-rc)
+  * In git http://git.infor.com/projects/SOHO/repos/controls/settings set the 4.3.3-rc branch as the default
   * set branch permissions
+* Delete the 4.3.2-rc branch and all feature/bug fix branches http://git.infor.com/projects/SOHO/repos/controls/branches
+
 
 ## Build Operations
-* Change the v-Next build http://bamboo.infor.com/build/admin/edit/editBuildTasks.action?buildKey=SOHO-NEXT-JOB1
-  * change the name to 4.3.2 (v next)
+* Change the v-Next build http://bamboo.infor.com/chain/admin/config/editChainDetails.action?buildKey=SOHO-NEXT
+  * change the name to 4.3.3-RC (Version Next)
   * change the repo it points to
+  * checkout 4.3.3-rc and bump the versions in package.json and publish/package.json
 * Change the current build http://bamboo.infor.com/build/admin/edit/editBuildTasks.action?buildKey=SOHO-R43X-JOB1
   * change the versions in the build config
   * Label the build release-431 for example http://bamboo.infor.com/browse/label/release-431
 
 ## Test Out Operations
 * Test Npm packages and rebuild if you got it wrong
+npm info @infor/sohoxi dist-tags
+npm view @infor/sohoxi versions
 * New and old links for example:
-http://usalvlhlpool1.infor.com/4.3.1/components/
-http://usalvlhlpool1.infor.com/4.3.2-rc/components/
+http://usalvlhlpool1.infor.com/4.3.2/components/
+http://usalvlhlpool1.infor.com/4.3.3-rc/components/
 
 ## Deploy Site Operations
 
