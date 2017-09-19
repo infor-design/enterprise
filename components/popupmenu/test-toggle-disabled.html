@@ -1,0 +1,38 @@
+
+<div class="row">
+  <div class="twelve columns">
+
+      <div class="field">
+        <input type="checkbox" class="checkbox" id="disabled" checked>
+        <label for="disabled" class="checkbox-label" >Disabled</label>
+      </div>
+      <br />
+
+      <button type="button" id="test" class="btn-menu">
+        <span>Add Item</span>
+      </button>
+      <ul class="popupmenu has-icons">
+        <li><a href="#">Create a form</a></li>
+        <li class="separator"></li>
+        <li><a href="#">Spelling...</a></li>
+        <li class="is-disabled"><a id="change" href="#" onclick="alert('Got Clicked')">Solver...</a></li>
+        <li class="separator"></li>
+        <li class="is-checked"><a href="#">Enable Autocomplete</a></li>
+        <li><a href="#">Notification Rules</a></li>
+        <li><a href="#">Protect Sheet Rules</a></li>
+      </ul>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  var changeLI = $('#change').parent();
+  $('#disabled').on('change', function () {
+    var isChecked = $(this).prop('checked');
+    if (isChecked) {
+      changeLI.addClass('is-disabled');
+    } else {
+      changeLI.removeClass('is-disabled');
+    }
+  });
+</script>

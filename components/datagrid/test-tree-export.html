@@ -1,0 +1,73 @@
+<div class="full-height full-width">
+  <div class="toolbar" role="toolbar">
+  <div class="title">
+    Compressors
+    <span class="datagrid-result-count">(10 Results)</span>
+  </div>
+  <div class="buttonset">
+    <button type="button" class="btn" id="export">
+      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+        <use xlink:href="#icon-export-spreadsheet"></use>
+      </svg>
+      <span>Export</span>
+    </button>
+  </div>
+
+  <div class="more">
+    <button type="button" class="btn-actions">
+      <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+        <use xlink:href="#icon-more"></use>
+      </svg>
+      <span class="audible">More Actions</span>
+    </button>
+    <ul class="popupmenu">
+      <li><a data-option="personalize-columns" href="#">Personalize Columns</a></li>
+      <li><a data-option="reset-layout" href="#">Reset to Default</a></li>
+      <li class="separator"></li>
+      <li class="heading">Row Height</li>
+      <li class="is-selectable"><a data-option="row-short" href="#">Short</a></li>
+      <li class="is-selectable"><a data-option="row-medium" href="#">Medium</a></li>
+      <li class="is-selectable is-checked"><a data-option="row-normal" href="#">Normal</a></li>
+    </ul>
+  </div>
+</div>
+
+  <div id="datagrid">
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+      var grid,
+        columns = [];
+
+      //Define Columns for the Grid.
+      columns.push({ id: 'taskName', name: 'Task', field: 'taskName', expanded: 'expanded', formatter: Formatters.Tree});
+      columns.push({ id: 'id', name: 'Id', field: 'id'});
+      columns.push({ id: 'desc', name: 'Description', field: 'desc'});
+      columns.push({ id: 'comments', name: 'Comments', field: 'comments',  formatter: Formatters.Hyperlink});
+      columns.push({ id: 'time', name: 'Time', field: 'time'});
+
+      //Get some data via ajax
+      var url = '{{basepath}}api/tree-tasks';
+
+      $.getJSON(url, function(data) {
+
+        grid = $('#datagrid').datagrid({
+          columns: columns,
+          dataset: data,
+          treeGrid: true,
+          toolbar: {title: 'Tasks (Hierarchical)', results: true, personalize: true, actions: true, rowHeight: true, exportToExcel: false}
+          }).on('selected', function (e, args) {
+            console.log(args);
+          });
+
+          $('#export').on('click', function () {
+            grid.data('datagrid').exportToExcel('myExport');
+          });
+
+      });
+
+  });
+</script>

@@ -7,6 +7,7 @@
     -   [removeRow](#removerow)
     -   [removeSelected](#removeselected)
     -   [clearFilter](#clearfilter)
+    -   [restoreColumns](#restorecolumns)
     -   [hideColumn](#hidecolumn)
 
 ## Datagrid
@@ -27,6 +28,7 @@ The Datagrid Component displays and process data in tabular format.
 -   `editable` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Enable editing in the grid, requires column editors.
 -   `isList` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Makes the grid have readonly "list" styling
 -   `menuId` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Id to link a right click context menu element
+-   `menuSelected` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Callback for the grid level context menu
 -   `uniqueId` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Unique ID to use as local storage reference and internal variable names
 -   `rowHeight` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Controls the height of the rows / number visible rows. May be (short, medium or normal)
 -   `selectable` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Controls the selection Mode this may be: false, 'single' or 'multiple' or 'mixed'
@@ -52,7 +54,6 @@ The Datagrid Component displays and process data in tabular format.
 -   `sizeColumnsEqually` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true make all the columns equal width
 -   `expandableRow` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true we append an expandable row area without the rowTemplate feature being needed.
 -   `redrawOnResize` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If set to false we skip redraw logic on the resize of the page.
--   `element`  
 
 ### addRow
 
@@ -79,6 +80,14 @@ Remove all selected rows from the grid and dataset.
 ### clearFilter
 
 Clear the Filter row Conditions and Reset the Data.
+
+### restoreColumns
+
+Restore the columns from a provided list or local storage
+
+**Parameters**
+
+-   `cols` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** The columns list to restore, if you saved the settings manually.
 
 ### hideColumn
 

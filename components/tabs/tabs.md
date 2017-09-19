@@ -8,6 +8,7 @@
 4. [Dropdown Tabs]( ../components/tabs/example-dropdown-tabs)
 5. [`updateCount()` Demo]( ../components/tabs/example-update-count-api)
 6. [`changeTabOnHashChange` Setting with Callback Demo]( ../components/tabs/example-url-hash-change)
+7. [`beforeActivate` Callback example]( ../components/tabs/example-beforeactivate-callback)
 
 {{api-details}}
 

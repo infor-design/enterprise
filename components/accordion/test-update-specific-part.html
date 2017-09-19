@@ -1,0 +1,137 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Accordion Test: Update Specific Part</h2>
+    <p>
+      <a class="hyperlink" href="https://jira.infor.com/browse/SOHO-5940" target="_blank">Related JIRA Ticket</a>. Clicking the button below adds three new accordion headers underneath the "Learning" header, binds events for them, and adds them to the queue of headers.
+    </p>
+
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="six columns">
+
+    <div class="field">
+      <button class="btn-primary" id="add-and-update"><span>Add Sections &amp; Update Accordion</span></button>
+    </div>
+
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="six columns">
+
+    <div id="test-update-accordion" class="accordion panel">
+      <div id="personal" class="accordion-header">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-user"></use>
+        </svg>
+        <a href="#"><span>Personal</span></a>
+      </div>
+      <div class="accordion-pane">
+        <div class="accordion-header">
+          <a href="#"><span>Item 1</span></a>
+        </div>
+        <div class="accordion-header">
+          <a href="#"><span>Item 2</span></a>
+        </div>
+      </div>
+
+      <div id="position" class="accordion-header">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-roles"></use>
+        </svg>
+        <a href="#"><span>Position</span></a>
+      </div>
+      <div class="accordion-pane">
+        <div class="accordion-header">
+          <a href="#"><span>Item 1</span></a>
+        </div>
+        <div class="accordion-header is-disabled">
+          <a href="#"><span>Item 2</span></a>
+        </div>
+        <div class="accordion-header">
+          <a href="#"><span>Item 3</span></a>
+        </div>
+      </div>
+
+      <div id="learning" class="accordion-header">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-quick-reference"></use>
+        </svg>
+        <a href="#"><span>Learning</span></a>
+      </div>
+      <div class="accordion-pane">
+        <div id="education-header" class="accordion-header">
+          <a href="#"><span>Education</span></a>
+        </div>
+        <div id="education-pane" class="accordion-pane">
+          <div class="accordion-header">
+            <a href="#"><span>Undergraduate</span></a>
+          </div>
+          <div class="accordion-header">
+            <a href="#"><span>Graduate</span></a>
+          </div>
+        </div>
+
+        <!-- '#skills', '#certifications', and '#compliance-training' will go here -->
+      </div>
+
+      <div id="financials" class="accordion-header">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-payment-request"></use>
+        </svg>
+        <a href="#"><span>Financials</span></a>
+      </div>
+      <div class="accordion-pane">
+        <div class="accordion-header">
+          <a href="#"><span>Item 1</span></a>
+        </div>
+        <div class="accordion-header">
+          <a href="#"><span>Item 2</span></a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('#add-and-update').on('click.test', function() {
+    // disable the button.
+    $(this).prop('disabled', true);
+
+    // add new pane/header markup.
+    $('<div id="skills" class="accordion-header">' +
+        '<a href="#"><span>Skills</span></a>' +
+      '</div>' +
+      '<div class="accordion-pane">' +
+        '<div class="accordion-content">' +
+          '<p>Need some content here</p>' +
+        '</div>' +
+      '</div>' +
+
+      '<div id="certifications" class="accordion-header">' +
+        '<a href="#"><span>Certifications</span></a>' +
+      '</div>' +
+      '<div class="accordion-pane">' +
+        '<div class="accordion-content">' +
+          '<p>Need some content here</p>' +
+        '</div>' +
+      '</div>' +
+
+      '<div id="compliance-training" class="accordion-header">' +
+        '<a href="#"><span>Compliance Training</span></a>' +
+      '</div>' +
+      '<div class="accordion-pane">' +
+        '<div class="accordion-content">' +
+          '<p>Need some content here</p>' +
+        '</div>' +
+      '</div>').insertAfter('#education-pane');
+
+    // call `_updated()_` with specific references to the new headers.
+    var headers = $('#skills, #certifications, #compliance-training');
+    $('#test-update-accordion').data('accordion').updated(headers);
+  });
+</script>

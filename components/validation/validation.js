@@ -113,10 +113,14 @@
       });
 
       //Link on to the current object and perform validation.
-      this.inputs.filter('input, textarea, div').filter(attribs).not('input[type=checkbox], [readonly]').each(function () {
+      this.inputs.filter('input, textarea, div').filter(attribs).not('input[type=checkbox]').each(function () {
         var field = $(this),
         attribs = field.attr('data-validation-events'),
         events = (attribs ? attribs : 'blur.validate change.validate keyup.validate');
+
+        if (field.is('[readonly]') && !field.parent().is('.field-fileupload')) {
+          return;
+        }
 
         events = self.extractEvents(events);
 
@@ -239,7 +243,7 @@
      */
     setModalPrimaryBtn: function(field, modalBtn, isValid) {
       var modal = field.closest('.modal'),
-        modalFields = modal.find('[data-validate]:visible').add('select[data-validate], :checkbox[data-validate]'),
+        modalFields = modal.find('[data-validate]:visible, select[data-validate], :checkbox[data-validate]'),
         allValid = true;
 
       if (modalFields.length > 0) {
@@ -446,8 +450,7 @@
             self.addError(field, rule.message, field.attr('data-error-type') === 'tooltip' ? false: true, showTooltip);
             errors.push(rule.msg);
             dfd.reject();
-          }
-          else if (errors.length === 0) {
+          }   else if (errors.length === 0) {
             self.removeError(field);
             dfd.resolve();
 
@@ -462,7 +465,10 @@
               self.addPositive(field);
             }
           }
+
           self.setErrorOnParent(field);
+          field.triggerHandler('isvalid', [result]);
+
         };
 
       self.removeError(field);
@@ -550,7 +556,7 @@
         this.setModalPrimaryBtn(field, modalBtn, false);
       }
 
-      this.showInlineError(loc, message);
+      this.showInlineError(field, message);
     },
 
     /**
@@ -724,7 +730,6 @@
           '<p class="message-text">' + message +'</p>' +
           '</div>';
 
-
       if (field.is(':radio')) { // Radio button handler
         this.toggleRadioError(field, message, markup, true);
       } else { // All other components
@@ -734,6 +739,10 @@
 
       //Remove positive errors
       field.parent().find('.icon-confirm').remove();
+
+      // Trigger an event
+      field.trigger('error', {field: field, message: message});
+      field.closest('form').trigger('error', {field: field, message: message});
     },
 
     /**
@@ -812,6 +821,10 @@
         field.parent().removeClass('is-error');
       }
 
+      if (field.closest('.field-fileupload').length > -1) {
+        field.closest('.field-fileupload').find('input.error').removeClass('error');
+      }
+
       // Enable primary button in modal
       var modalBtn = field.closest('.modal').find('.btn-modal-primary').not('.no-validation');
       if (modalBtn.length) {
@@ -821,6 +834,9 @@
       //Stuff for the inline error
       field.closest('.field, .field-short').find('.error-message').remove();
       field.parent('.field, .field-short').find('.formatter-toolbar').removeClass('error');
+      field.trigger('valid', {field: field, message: ''});
+      field.closest('form').trigger('valid', {field: field, message: ''});
+
     },
 
     /**
@@ -832,6 +848,14 @@
     removePositive: function(field) {
       $('.icon-confirm', field.parent('.field, .field-short')).remove();
     }
+  };
+
+  $.fn.getErrorMessage = function(options) {
+    var defaults = { },
+      settings = $.extend({}, defaults, options);
+
+    var instance = new Validator(this, settings);
+    return instance.getField($(this)).data('data-errormessage');
   };
 
   //Add a Message to a Field
@@ -1085,26 +1109,44 @@
         check: function(value, field) {
           value = value.replace(/ /g, '');
           this.message = Locale.translate('InvalidTime');
-          var timepickerSettings = field && field.data('timepicker') ? field.data('timepicker').settings : {},
+          var timepicker = field && field.data('timepicker'),
+		    timepickerSettings = timepicker ? field.data('timepicker').settings : {},
             pattern = timepickerSettings && timepickerSettings.timeFormat ? timepickerSettings.timeFormat : Locale.calendar().timeFormat,
             is24Hour = (pattern.match('HH') || []).length > 0,
             maxHours = is24Hour ? 24 : 12,
-            colon = value.indexOf(Locale.calendar().dateFormat.timeSeparator),
+            sep = value.indexOf(Locale.calendar().dateFormat.timeSeparator),
             valueHours = 0,
-            valueMins,
-            valueM;
+            valueMins = 0,
+			valueSecs = 0,
+			valueM,
+			timeparts;
 
           if (value === '') {
             return true;
           }
 
-          valueHours = parseInt(value.substring(0, colon));
-          valueMins = parseInt(value.substring(colon + 1, colon + 3));
+		  valueHours = parseInt(value.substring(0, sep));
+          valueMins = parseInt(value.substring(sep + 1,sep + 3));
+
+		  //getTimeFromField
+		  if (timepicker) {
+			  timeparts = timepicker.getTimeFromField();
+
+			  valueHours = timeparts.hours;
+			  valueMins = timeparts.minutes;
+
+			  if (timepicker.hasSeconds()) {
+			    valueSecs = timeparts.seconds;
+			  }
+		  }
 
           if (valueHours.toString().length < 1 || isNaN(valueHours) || parseInt(valueHours) < 0 || parseInt(valueHours) > maxHours) {
             return false;
           }
           if (valueMins.toString().length < 1 || isNaN(valueMins) || parseInt(valueMins) < 0 || parseInt(valueMins) > 59) {
+            return false;
+          }
+          if (valueSecs.toString().length < 1 || isNaN(valueSecs) || parseInt(valueSecs) < 0 || parseInt(valueSecs) > 59) {
             return false;
           }
 
@@ -1151,6 +1193,7 @@
       api = field.data('validate'),
       doAction = function(isValid) {
         field.data('isValid', isValid);
+        field.triggerHandler('isvalid', [isValid]);
       };
 
     if (api && api.validate) {

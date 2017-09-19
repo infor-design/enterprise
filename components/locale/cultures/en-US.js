@@ -108,6 +108,7 @@
       'ClearSelection': {id: 'ClearSelection', value: '(Clear Selection)', comment: 'clear dropdown selection'},
       'Clock': {id: 'Clock', value: 'Clock', comment: 'Clock tooltip'},
       'Close': {id: 'Close', value: 'Close', comment: 'Tooltip for a Close Button Action'},
+      'Clickable': {id: 'Clickable', value: 'Clickable in editor', comment: 'Clickable in editor'},
       'Copy': {id: 'Copy', value: 'Copy', comment: 'Copy tooltip'},
       'Collapse': {id: 'Collapse', value: 'Collapse', comment: 'Collapse / close a tree/submenu'},
       'CollapseAppTray': {id: 'CollapseAppTray', value: 'Collapse App Tray', comment: 'Collapse App Tray tooltip'},
@@ -217,6 +218,7 @@
       'Minimize': {id: 'Minimize', value: 'Minimize', comment: 'Minimize tooltip'},
       'Minus': {id: 'Minus', value: 'Minus', comment: 'Minus tooltip'},
       'Mobile': {id: 'Mobile', value: 'Mobile', comment: 'Indicates a mobile device (phone tablet ect)'},
+      'Month': {id: 'Month', value: 'Month', comment: 'As in a date month'},
       'More': {id: 'More', value: 'More...', comment: 'Text Indicating More Buttons or form content'},
       'MoreActions': {id: 'MoreActions', value: 'More Actions', comment: 'Text on the More Actions button indictating hidden functions'},
       'MsgDirty': {id: 'MsgDirty', value: ', Modified', comment: 'for modified form fields'},
@@ -231,6 +233,7 @@
       'Notes': {id: 'Notes', value: 'Notes', comment: 'Notes icon tooltip'},
       'NotSelected': {id: 'NotSelected', value: 'Not Selected', comment: 'Not Selected in icons for filtering'},
       'NumberList': {id: 'NumberList', value: 'Number List', comment: 'Number List tooltip'},
+      'Ok': {id: 'Ok', value: 'Ok', comment: 'Ok button on a dialog'},
       'OpenBackClose': {id: 'OpenBackClose', value: 'Open / Back / Close', comment: 'Open / Back / Close tooltip'},
       'OpenClose': {id: 'OpenClose', value: 'Open / Close', comment: 'Open / Close tooltip'},
       'OrderedList': {id: 'OrderedList', value: 'Insert/Remove Numbered List', comment: 'Insert an Ordered list in the editor'},
@@ -304,8 +307,13 @@
       'Tack': {id: 'Tack', value: 'Pin', comment: 'Pin an object'},
       'Tall': {id: 'Tall', value: 'Tall', comment: 'Describes a Taller Row Height in a grid/list'},
       'Target': {id: 'Target', value: 'Target', comment: 'Label for an input to enter a Target (Url Attribute)'},
+      'TestLocaleDefaults': {id: 'TestLocaleDefaults', value: 'Test Locale Defaults', comment: 'Do not translate'},
       'TextColor': {id: 'TextColor', value: 'Text color', comment: 'add or edit text color in the editor'},
-
+      'TextDropArea': {id: 'DropArea', value: 'Drag and Drop Files to Upload', comment: 'text for drop area for advanced fileupload'},
+      'TextDropAreaWithBrowse': {id: 'TextDropAreaWithBrowse', value: 'Drag and Drop or <span class="hyperlink">Select Files</span> to Upload', comment: 'text for drop area with browse for advanced fileupload'},
+      'TextBtnCancel': {id: 'TextBtnCancel', value: 'Cancel uploading this file', comment: 'text for cancel button for advanced fileupload'},
+      'TextBtnCloseError': {id: 'TextBtnCloseError', value: 'Close this error', comment: 'text for error close button for advanced fileupload'},
+      'TextBtnRemove': {id: 'TextBtnRemove', value: 'Close this error', comment: 'text for remove button for advanced fileupload'},
       'Timer': {id: 'Timer', value: 'Timer', comment: 'Timer tooltip'},
       'Today': {id: 'Today', value: 'Today', comment: 'refering to today on a calendar'},
       'ToggleBold': {id: 'ToggleBold', value: 'Toggle Bold Text', comment: 'turn on and off bold in text editor (like word)'},
@@ -336,6 +344,7 @@
       'VerticalMiddleAlign': {id: 'VerticalMiddleAlign', value: 'Vertical Align Center', comment: 'Vertical Align tooltip'},
       'ViewSource': {id: 'ViewSource', value: 'View Source', comment: 'Toggle the source view in the editor'},
       'ViewVisual': {id: 'ViewVisual', value: 'View Visual', comment: 'Toggle the visual view in the editor'},
+      'Year': {id: 'Year', value: 'Year', comment: 'As in a date year'},
       'Yes': {id: 'Yes', value: 'Yes', comment: 'On a dialog button'}
     }
   });

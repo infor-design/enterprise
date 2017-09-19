@@ -31,6 +31,7 @@
 </div>
 
 <script>
+$('body').on('initialized', function () {
   Locale.set('en-US');
 
   $('#MMMyyyy-date').datepicker({dateFormat: 'MMM yyyy'});
@@ -38,4 +39,5 @@
   $('#yyyy-date').datepicker({dateFormat: 'yyyy'});
   $('#MMMMyyyy-date').datepicker({dateFormat: Locale.calendar().dateFormat.year});
   $('#Mdyyyy-date').datepicker({dateFormat: Locale.calendar().dateFormat.short});
+});
 </script>

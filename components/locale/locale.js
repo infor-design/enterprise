@@ -110,7 +110,6 @@
     * @param {String} locale  &nbsp;-&nbsp; The locale to fetch and set.
     */
     set: function (locale) {
-
       var self = this;
       this.dff = $.Deferred();
 
@@ -118,6 +117,7 @@
       if (locale === 'in-ID') {
         locale = 'id-ID';
       }
+
       if (locale && !this.cultures[locale] && this.currentLocale.name !== locale) {
         this.setCurrentLocale(locale);
 
@@ -131,7 +131,10 @@
         }).done(function () {
           self.setCurrentLocale(locale, self.cultures[locale]);
           self.addCulture(locale, self.currentLocale.data);
-          self.dff.resolve(self.currentLocale.name);
+
+          if (locale && (locale === 'en-US' || self.cultures['en-US'])) {
+            self.dff.resolve(self.currentLocale.name);
+          }
         });
       }
 
@@ -145,6 +148,7 @@
           }
         }).done(function () {
           self.addCulture(locale, self.currentLocale.data);
+          self.dff.resolve(self.currentLocale.name);
         });
       }
 
@@ -324,7 +328,7 @@
         dateStringParts,
         dateObj = {},
         isDateTime = (dateFormat.toLowerCase().indexOf('h') > -1),
-		isUTC = (dateString.toLowerCase().indexOf('z') > -1),
+        isUTC = (dateString.toLowerCase().indexOf('z') > -1),
         i, l;
 
       if (isDateTime) {
@@ -458,12 +462,25 @@
 
             break;
           case 'yy':
-            dateObj.year = parseInt('20'+value, 10);
+            dateObj.year = this.twoToFourDigitYear(value);
             break;
           case 'yyyy':
-            dateObj.year = value;
+            dateObj.year = (value.length === 2) ?
+              this.twoToFourDigitYear(value) : value;
             break;
           case 'h':
+            if (numberValue < 0 || numberValue > 12) {
+              return;
+            }
+            dateObj.h = value;
+            break;
+          case 'hh':
+            if (numberValue < 0 || numberValue > 12) {
+              return;
+            }
+            dateObj.h = value.length === 1 ? '0'+value : value;
+            break;
+          case 'H':
             if (numberValue < 0 || numberValue > 12) {
               return;
             }
@@ -473,7 +490,7 @@
             if (numberValue < 0 || numberValue > 24) {
               return;
             }
-            dateObj.h = value;
+            dateObj.h = value.length === 1 ? '0'+value : value;
             break;
 
           case 'ss':
@@ -622,6 +639,10 @@
 
     },
 
+    twoToFourDigitYear: function (twoDigitYear) {
+      return parseInt((twoDigitYear > 39 ? '19' : '20') + twoDigitYear, 10);
+    },
+
     getDatePart: function (formatParts, dateStringParts, filter1, filter2, filter3) {
       var ret = 0;
 
@@ -682,12 +703,18 @@
       }
 
       if (options && options.style === 'percent') {
+        // the toFixed for maximumFractionDigits + 1 means we won't loose any precision
         number = (number * 100).toFixed(minimumFractionDigits);
       }
 
       var parts = this.truncateDecimals(number, minimumFractionDigits, maximumFractionDigits, options && options.round).split('.');
       parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, group);
       formattedNum = parts.join(decimal);
+
+      // Position the negative at the front - There is no CLDR info for this.
+      var minusSign = (this.currentLocale.data && this.currentLocale.data.numbers && this.currentLocale.data.numbers.minusSign) ? this.currentLocale.data.numbers.minusSign : '-',
+        isNegative = (formattedNum.indexOf(minusSign) > -1);
+        formattedNum = formattedNum.replace(minusSign, '');
 
       if (minimumFractionDigits === 0) { //Not default
         formattedNum = formattedNum.replace(/(\.[0-9]*?)0+$/, '$1'); // remove trailing zeros
@@ -714,6 +741,9 @@
         formattedNum = percentFormat.replace('#,##0', formattedNum);
       }
 
+      if (isNegative) {
+        formattedNum = minusSign + formattedNum;
+      }
       return formattedNum;
     },
 
@@ -791,15 +821,15 @@
     * @param {String} key  &nbsp;-&nbsp; The key to search for on the string.
     *
     */
-    translate: function(key) {
+    translate: function(key, showAsUndefined) {
       if (this.currentLocale.data === undefined || this.currentLocale.data.messages === undefined) {
-        return key;
+        return showAsUndefined ? undefined : '[' + key + ']';
       }
 
       if (this.currentLocale.data.messages[key] === undefined) {
         // Substitue English Expression if missing
         if (!this.cultures['en-US'] || this.cultures['en-US'].messages[key] === undefined) {
-          return undefined;
+          return showAsUndefined ? undefined : '[' + key + ']';
         }
         return this.cultures['en-US'].messages[key].value;
       }

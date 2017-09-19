@@ -17,6 +17,10 @@
   text-align: right;
 }
 
+.height-100 {
+  height: 100%;
+}
+
 .l-vertical-center {
   @include vertical-align();
 }
@@ -519,16 +523,25 @@ body.no-scroll {
 .panel-header {
   background-color: $toolbar-standalone-bg-color;
   border-bottom: 1px solid $toolbar-standalone-border-color;
-  height: 40px;
+  height: 50px;
+  padding-right: 10px;
 
   .title {
     @include font-size(16);
-    padding-left: 20px;
+    padding-top: 5px;
+    padding-left: 13px;
   }
 
   + .splitter {
     height: 100%;
     top: 0;
+  }
+}
+
+// Fix font issue on FF
+.is-firefox {
+  .panel-header button {
+   padding-top: 2.5px;
   }
 }
 
@@ -590,7 +603,8 @@ body.no-scroll {
 
 .module-tabs {
   + .page-container,
-  + .application-menu + .page-container {
+  + .application-menu + .page-container,
+  + .tab-panel-container {
     height: calc(100% - 36px);
     margin-top: 36px;
   }

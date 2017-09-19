@@ -139,6 +139,10 @@
 
           //Array of plugin names and selectors (optional) for no-configuration initializations
           var simplePluginMappings = [
+
+            // Hyperlinks
+            ['hyperlink'],
+
             // Icons
             ['icon'],
 
@@ -184,7 +188,7 @@
             ['progress', '.progress-bar'],
 
             //Format
-            ['mask', 'input[data-mask]'],
+            ['mask', 'input[data-mask], .new-mask'],
 
             //Auto Complete
             ['autocomplete', '.autocomplete:not([data-init])'],
@@ -196,7 +200,7 @@
             ['button', '.btn, .btn-toggle, .btn-secondary, .btn-primary, .btn-modal-primary, .btn-tertiary, .btn-icon, .btn-actions, .btn-menu, .btn-split, .btn-secondary-border'],
 
             //Hide Focus
-            ['hideFocus', 'a.hide-focus, a.tick, a.hyperlink, .checkbox, .radio, .switch'],
+            ['hideFocus', 'a.hide-focus, a.tick, .checkbox, .radio, .switch'],
 
             //Circle Pager
             ['circlepager'],

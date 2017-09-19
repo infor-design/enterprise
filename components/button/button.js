@@ -23,12 +23,14 @@
     *
     * @param {String} toggleOnIcon  &nbsp;-&nbsp; The icon to use for on state on toggle buttons
     * @param {String} toggleOffIcon  &nbsp;-&nbsp; The icon to use for off state on toggle buttons
+    * @param {String} replaceText  &nbsp;-&nbsp; If true the selection will be used to replace the content in the button.
     *
     */
     var pluginName = 'button',
       defaults = {
         toggleOnIcon: null,
-        toggleOffIcon: null
+        toggleOffIcon: null,
+        replaceText: false
       },
       settings = $.extend({}, defaults, options);
 
@@ -68,6 +70,12 @@
 
           if (!ddIcon.hasClass('icon-dropdown')) {
             ddIcon.addClass('icon-dropdown');
+          }
+
+          if (this.settings.replaceText) {
+            this.element.on('selected.content', function (e, a) {
+              $(this).find('span').text(a.text());
+            });
           }
         }
 
@@ -146,7 +154,7 @@
             self.animateWithJS(ripple);
           } else {
             var elem = $('svg.ripple-effect', element);
-            elem.attr('class', elem.attr('class') + ' is-animation');
+            elem.addClass('is-animation');
           }
 
           setTimeout(function() {

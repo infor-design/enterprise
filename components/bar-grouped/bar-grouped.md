@@ -7,6 +7,9 @@
 2. Default a selected Group [View Example]( ../components/bar-grouped/example-selected)
 3. Handle Negative Values [View Example]( ../components/bar-grouped/example-negative)
 4. Adapts to handle a large number of groups [View Example]( ../components/bar-grouped/test-many-groups)
+4. Set animation speed [View Example]( ../components/bar-grouped/example-animation)
+6. Example showing Get Selected value [View Example]( ../components/bar-grouped/example-get-selected)
+7. Example showing Set Selected value [View Example]( ../components/bar-grouped/example-set-selected)
 
 ## Code Example
 

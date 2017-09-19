@@ -45,7 +45,7 @@ div.multiselect {
   color: $dropdown-color;
   cursor: pointer;
   overflow: hidden;
-  padding: 8px 32px 8px 10px;
+  padding: 8px 30px 8px 10px;
   -webkit-text-fill-color: $dropdown-color;
   text-overflow: ellipsis;
   vertical-align: middle;
@@ -96,20 +96,11 @@ div.multiselect {
     }
   }
 
-  &:hover:not([disabled]):not(.is-disabled):not(.is-readonly) {
+  &:hover:not([disabled]):not(.is-disabled):not(.is-readonly):not(.is-open) {
     border-color: $trigger-hover-color;
 
     + .icon {
       fill: $trigger-hover-color;
-    }
-  }
-
-  &.is-open {
-    border-color: transparent;
-    color: transparent;
-
-    + .icon {
-      display: none;
     }
   }
 
@@ -151,6 +142,7 @@ div.multiselect {
   border: 1px solid $dropdown-menu-border-color;
   border-radius: 3px;
   box-shadow: $dropdown-box-shadow;
+  font-size: 1.4rem;
   max-height: 300px;
   min-height: 30px;
   overflow: hidden;
@@ -196,7 +188,7 @@ div.multiselect {
 
   li {
     min-height: 32px;
-    padding-left: 5px;
+    padding-left: 4px;
     padding-right: 5px;
     position: relative;
 
@@ -413,10 +405,16 @@ div.multiselect {
       }
 
       &.close {
-        right: -2px;
-        top: 3px;
+        right: -6px;
+        top: 0;
         width: 14px;
       }
+    }
+  }
+
+  &.dropdown-short {
+    > .trigger {
+      margin-left: -18px;
     }
   }
 }
@@ -427,9 +425,9 @@ div.multiselect {
   border-bottom: 1px solid $dropdown-menu-separator-border-color;
   border-radius: 0;
   color: $dropdown-color;
-  padding: 8px 32px 8px 10px;
+  padding: 8px 30px 8px 10px;
   text-overflow: ellipsis;
-  width: inherit;
+  width: 100%;
 
   &.text-align-reverse {
     text-align: right;
@@ -455,9 +453,14 @@ div.multiselect {
   background-color: $modal-bg-color;
 }
 
-.is-ontop .dropdown-search {
-  border-bottom: 0;
-  border-top: 1px solid $dropdown-menu-separator-border-color;
+.is-ontop {
+  &.dropdown-list ul {
+    top: -1px;
+  }
+
+  .dropdown-search {
+    border-bottom: 0;
+  }
 }
 
 .dropdown.error {
@@ -486,7 +489,7 @@ input.dropdown.error:focus {
   div.dropdown {
     @include font-size(12);
     margin-bottom: 0;
-    padding: 5px 18px 5px 5px;
+    padding: 5px 21px 5px 5px;
   }
 
   div.dropdown,
@@ -541,8 +544,11 @@ div.dropdown-xs,
 }
 
 // Shorter Drop Down Lists
+
+
+
 .dropdown-list.dropdown-short {
-  input {
+  .dropdown-search {
     @include font-size(12);
     padding: 5px 32px 5px 5px;
   }
@@ -552,12 +558,16 @@ div.dropdown-xs,
     text-indent: 5px;
   }
 
-  li > a {
-    line-height: 25px;
+  li {
+    padding-right: 21px;
+
+    > a {
+      line-height: 25px;
+    }
   }
 
   &.is-ontop {
-    margin-top: 7px;
+    margin-top: 8px;
   }
 
   > .icon {
@@ -568,8 +578,10 @@ div.dropdown-xs,
   }
 
   .trigger .icon {
-    height: 24px;
-    right: -4px;
+    height: 30px;
+    right: 3px;
+    top: -4px;
+    width: 16px;
 
     &.icon.search {
       height: 14px;
@@ -609,8 +621,34 @@ div.dropdown-xs,
   }
 }
 
+.ie {
+  .is-ontop {
+    margin-top: 1px;
+  }
+
+  &.ie11 {
+    .is-ontop {
+      margin-top: 2px;
+
+      .dropdown-search {
+        border-top: 1px solid $dropdown-menu-separator-border-color;
+      }
+    }
+  }
+}
+
 // Firefox needs a nudge on the list items
 .is-firefox {
+  .is-ontop {
+    &.dropdown-list ul {
+      margin-top: 1px;
+      top: 0;
+    }
+
+    .dropdown-search {
+      border-top: 1px solid $dropdown-menu-separator-border-color;
+    }
+  }
 
   .dropdown-list {
     &.multiple li {
@@ -625,9 +663,9 @@ div.dropdown-xs,
     }
 
     &.dropdown-short {
-      input {
+      .dropdown-search {
         @include font-size(12);
-        padding: 5px 32px 5px 5px;
+        padding: 5px 21px 5px 5px;
       }
     }
   }
@@ -666,7 +704,7 @@ html[dir='rtl'] {
 
     // Icon States
     + .icon {
-      left: 6px;
+      left: 8px;
       margin-left: inherit;
       margin-right: -33px;
       // scss-lint:disable ImportantRule
@@ -722,6 +760,18 @@ html[dir='rtl'] {
 
     &.text-align-center {
       text-align: center;
+    }
+  }
+
+  .dropdown-list.dropdown-short {
+
+    .dropdown-search {
+      padding: 5px 5px 5px 32px;
+    }
+
+    li {
+      padding-left: 21px;
+      padding-right: 4px;
     }
   }
 

@@ -6,7 +6,7 @@
 2. Popupmenu with multiselect [View Example]( ../components/popupmenu/example-selectable-multiple)
 3. Popupmenu with single select [View Example]( ../components/popupmenu/example-selectable)
 4. Popupmenu with disabled submenus [View Example]( ../components/popupmenu/example-disabled-submenus)
-5. Popupmenu with dicons [View Example]( ../components/popupmenu/example-icons)
+5. Popupmenu with icons [View Example]( ../components/popupmenu/example-icons)
 
 {{api-details}}
 

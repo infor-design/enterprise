@@ -47,6 +47,7 @@ Calls an options-provided source method to fetch content that will be displayed 
 **Parameters**
 
 -   `href` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** string representing the target tab to load content under.
+-   `isURL`  
 -   `callback` **[function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** method that fires after a successful source call.
 
 Returns **([boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean) | $.Deferred)** true if source call was successful, false for failure/ignore, or a promise object that will fire callbacks in either "success" or "failure" scenarios.

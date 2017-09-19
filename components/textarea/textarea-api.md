@@ -19,11 +19,13 @@ The Textarea Component wraps a standard HTML Textarea element and provides addit
 
 **Parameters**
 
+-   `autoGrow` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Will automatically expand the text area to fit the contents.
+-   `autoGrowAnimate` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Will animate the text area growing.
+-   `autoGrowAnimateSpeed` **integer**  -  The speed of the animation.
 -   `characterCounter` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Displays a counter that counts down from the maximum length allowed.
 -   `printable` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Determines whether or not the text area can be displayed on a printed page.
 -   `charRemainingText` **(null | [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))**  -  Text that will be used in place of the "remaining" text.
 -   `charMaxText` **(null | [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))**  -  Text that will be used in place of the "Max" text.
--   `element`  
 
 ### isPrintable
 

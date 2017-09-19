@@ -18,13 +18,13 @@ The Editor Component is displays and edits markdown.
 
 **Parameters**
 
+-   `element`  
 -   `firstHeader` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Allows you to set if the first header inserted is a h3 or h4 element. You should set this to match the structure of the parent page for accessibility
 -   `secondHeader` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Allows you to set if the second header inserted is a h3 or h4 element. You should set this to match the structure of the parent page for accessibility
 -   `productName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Additional product name information to display
 -   `pasteAsPlainText` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  If true, when you paste into the editor the element will be unformatted to plain text.
--   `anchor` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Info object to populate the link dialog defaulting to `{url: 'http://www.example.com', class: 'hyperlink', target: 'New window'},`
+-   `anchor` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Info object to populate the link dialog defaulting to `{url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false},`
 -   `image` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Info object to populate the image dialog defaulting to `{url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}`
--   `element`  
 
 ### switchToolbars
 

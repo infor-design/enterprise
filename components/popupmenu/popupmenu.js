@@ -26,6 +26,7 @@
         beforeOpen: null,
         ariaListbox: false,
         eventObj: undefined,
+        returnFocus: true,
         placementOpts: {
           containerOffsetX: 10,
           containerOffsetY: 10,
@@ -49,6 +50,7 @@
     * @param {Boolean} attachToBody  &nbsp;-&nbsp; If true the menu will be moved out to the body. To be used in certin overflow situations.
     * @param {String} ariaListbox  &nbsp;-&nbsp;  Switches aria to use listbox construct instead of menu construct (internal)
     * @param {String} eventObj  &nbsp;-&nbsp; Can pass in the event object so you can do a right click with immediate
+    * @param {String} returnFocus  &nbsp;-&nbsp; If set to false, focus will not be returned to the calling element. It usually should be for accessibility purposes.
     * @param {Object} placementOpts  &nbsp;-&nbsp; Gets passed to this control's Place behavior
     * @param {Object} offset  &nbsp;-&nbsp; Can tweak the menu position in the x and y direction. Takes an object of form: `{x: 0, y: 0}`
     *
@@ -223,7 +225,7 @@
         // If button is part of a header/masthead or a container using the "alternate" UI color, add the "alternate" class.
         if (containerClass !== undefined &&
           (this.element.closest('.masthead').not('.search-results .masthead').length > 0)) {
-          this.menu.parent('.popupmenu-wrapper').addClass('alternate');
+          this.menu.parent('.popupmenu-wrapper').addClass('inverse');
         }
 
         this.element.attr('aria-haspopup', true);
@@ -272,13 +274,14 @@
             var $a = $(a),
               $li = $(li);
 
-            if (a.hasAttribute('disabled') || $li.hasClass('is-disabled')) {
-              Soho.DOM.addClass(li, 'is-disabled');
+            if ($li.hasClass('is-disabled') || (a.getAttribute('disabled') === 'true' || a.getAttribute('disabled') === 'disabled')) {
+              $li.addClass('is-disabled');
               a.setAttribute('aria-disabled', 'true');
-              a.disabled = true;
+              a.setAttribute('disabled', true);
             } else {
               $li.removeClass('is-disabled');
-              $a.prop('disabled', false).removeAttr('aria-disabled');
+              $a.removeAttr('aria-disabled');
+              a.setAttribute('disabled', false);
             }
 
             // menu items that contain submenus
@@ -399,7 +402,6 @@
                 break;
             }
           })
-          .off('updated.popupmenu')
           .on('updated.popupmenu', function(e) {
             e.stopPropagation();
             self.updated();
@@ -507,6 +509,78 @@
               }
             }
 
+            var getPrev, getNext, getLast, getFirst;
+
+            getPrev = function(a) {
+              var prevs = a.parent().prevAll(excludes),
+                prev;
+
+              prevs.each(function() {
+                if (prev) {
+                  return;
+                }
+
+                var li = $(this),
+                  targetA = li.children('a');
+                if (li.is('.is-disabled') || targetA.prop('disabled') === true) {
+                  return;
+                }
+                prev = targetA;
+              });
+
+              if (!prev) {
+                return getFirst(a);
+              }
+
+              return prev;
+            };
+
+            getFirst = function(a) {
+              var first = a.parent().prevAll(excludes).last(),
+                targetA = first.children('a');
+
+              if (first.is('.is-disabled') || targetA.prop('disabled') === true) {
+                return getNext(targetA);
+              }
+
+              return targetA;
+            };
+
+            getNext = function(a) {
+              var nexts = a.parent().nextAll(excludes),
+                next;
+
+              nexts.each(function() {
+                if (next) {
+                  return;
+                }
+
+                var li = $(this),
+                  targetA = li.children('a');
+                if (li.is('.is-disabled') || targetA.prop('disabled') === true) {
+                  return;
+                }
+                next = targetA;
+              });
+
+              if (!next) {
+                return getFirst(a);
+              }
+
+              return next;
+            };
+
+            getLast = function(a) {
+              var last = a.parent().nextAll(excludes).last(),
+                targetA = last.children('a');
+
+              if (last.is('.is-disabled') || targetA.prop('disabled') === true) {
+                return getPrev(targetA);
+              }
+
+              return targetA;
+            };
+
             //Up on Up
             if ((!isPicker && key === 38) || (isPicker && key === 37)) {
                e.stopPropagation();
@@ -517,11 +591,11 @@
                 if (focus.length === 0) {
                   self.highlight(self.menu.children(excludes).last().find('a'));
                 } else {
-                  self.highlight(focus.closest('.popupmenu').children(excludes).last().find('a'));
+                  self.highlight(getLast(focus));
                 }
                 return;
               }
-              self.highlight(focus.parent().prevAll(excludes).first().find('a'));
+              self.highlight(getPrev(focus));
             }
 
             //Up a square
@@ -530,7 +604,7 @@
               e.preventDefault();
 
               if (focus.parent().prevAll(excludes).length > 0) {
-                self.highlight($(focus.parent().prevAll(excludes)[9]).find('a'));
+                self.highlight($(focus.parent().prevAll(excludes)[0]).find('a'));
               }
             }
 
@@ -555,11 +629,11 @@
                 if (focus.length === 0) {
                   self.highlight(self.menu.children(excludes).first().find('a'));
                 } else {
-                  self.highlight(focus.closest('.popupmenu').children(excludes).first().find('a'));
+                  self.highlight(getFirst(focus));
                 }
                 return;
               }
-              self.highlight(focus.parent().nextAll(excludes).first().find('a'));
+              self.highlight(getNext(focus));
             }
 
             //Down a square
@@ -720,11 +794,11 @@
           return;
         }
 
+        // Make the field the same size
         var elemWidth = this.element.outerWidth();
-        if (elemWidth > menuDimensions.width) {
+        if (this.settings.trigger === 'click' && elemWidth > menuDimensions.width) {
           this.menu.width(elemWidth);
         }
-
 
         if (target.is('svg, .icon') && target.closest('.tab').length) {
           target = target.closest('.tab');
@@ -747,6 +821,7 @@
         }
         */
         strategies.push('shrink-y');
+        opts.strategies = strategies;
 
         // If right-click or immediate (with an incoming event object), use coordinates from the event
         if ((this.settings.trigger === 'immediate' && this.settings.eventObj) || this.settings.trigger === 'rightClick') {
@@ -766,8 +841,8 @@
           opts.y = this.settings.offset.y || 0;
           opts.parent = this.element;
           opts.placement = 'bottom';
+          opts.strategies.push('nudge');
         }
-        opts.strategies = strategies;
 
         //=======================================================
         // BEGIN Temporary stuff until we sort out passing these settings from the controls that utilize them
@@ -931,11 +1006,32 @@
         this.element.addClass('is-open');
         this.menu.addClass('is-open').attr('aria-hidden', 'false');
 
+        if (this.element.hasClass('inverse')) {
+          this.menu.parent('.popupmenu-wrapper').addClass('inverse');
+        }
+
         this.position(e);
 
         if (this.element.closest('.header').length > 0) {
           this.menu.parent()[0].style.zIndex =  '9001';
         }
+
+        // Check every anchor tag to see if it should be disabled.
+        // Use the CSS class on its parent to determine whether or not to disable.
+        this.menu.find('a').each(function() {
+          var a = $(this),
+            li = a.parent();
+
+          if (li.hasClass('is-disabled')) {
+            li.addClass('is-disabled');
+            a.attr('aria-disabled', 'true');
+            a.attr('disabled', 'disabled');
+          } else {
+            li.removeClass('is-disabled');
+            a.removeAttr('aria-disabled');
+            a.removeAttr('disabled');
+          }
+        });
 
         //Close on Document Click ect..
         setTimeout(function () {
@@ -954,6 +1050,7 @@
             }
           });
 
+          // in desktop environments, close the list on viewport resize
           if (window.orientation === undefined) {
             $('body').on('resize.popupmenu', function() {
               self.close();
@@ -1289,7 +1386,9 @@
           return;
         }
 
-        self.element.removeClass('hide-focus').focus();
+        if (this.settings.returnFocus) {
+          self.element.removeClass('hide-focus').focus();
+        }
       },
 
       teardown: function() {
@@ -1355,7 +1454,7 @@
         this.element
           .removeAttr('aria-controls')
           .removeAttr('aria-haspopup')
-          .off('touchend.popupmenu touchcancel.popupmenu click.popupmenu keypress.popupmenu contextmenu.popupmenu');
+          .off('touchend.popupmenu touchcancel.popupmenu click.popupmenu keydown.popupmenu keypress.popupmenu contextmenu.popupmenu updated.popupmenu');
 
         return this;
       },

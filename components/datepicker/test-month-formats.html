@@ -1,0 +1,48 @@
+
+<div class="row">
+  <div class="twelve columns">
+
+    <h2>
+       Examples useing a longer Month (MMM)
+    </h2>
+    <p>
+       Has a few tests with a long month format <a href="https://jira.infor.com/browse/SOHO-6680">SOHO-6680</a>.
+    </p>
+
+    <div class="field">
+      <label for="datetime-field-time" class="label">12 hr time no padding (h:mm a)</label>
+      <input id="datetime-field-time"  class="datepicker datetime" name="datetime-field" type="text" data-validate="required" data-options="{'dateFormat': 'd MMM yyyy', 'showTime': 'true', 'timeFormat': 'h:mm a'}" value="">
+    </div>
+
+    <div class="field">
+      <label for="datetime-field-time2" class="label">12 hr time no padding (h:mm a) value on field</label>
+      <input id="datetime-field-time2"  class="datepicker datetime" name="datetime-field2" type="text" data-validate="required" data-options="{'dateFormat': 'd MMM yyyy', 'showTime': 'true', 'timeFormat': 'h:mm a'}" value="25 Dec 2016 11:55 PM">
+    </div>
+
+    <div class="field">
+      <label for="datetime-field-time3" class="label">24 Hr Time with Padding (HH:mm) </label>
+      <input id="datetime-field-time3"  class="datepicker datetime" name="datetime-field3" type="text" data-validate="required" data-options="{'dateFormat': 'd MMM yyyy', 'showTime': 'true', 'timeFormat': 'HH:mm'}" value="">
+    </div>
+
+    <div class="field">
+      <label for="datetime-field-time4" class="label">24 Hr Time with Padding (HH:mm) value on field</label>
+      <input id="datetime-field-time4"  class="datepicker datetime" name="datetime-field4" type="text" data-validate="required" data-options="{'dateFormat': 'd MMM yyyy', 'showTime': 'true', 'timeFormat': 'HH:mm'}" value="25 Dec 2016 23:45">
+    </div>
+
+    <div class="field">
+      <label for="datetime-field-time5" class="label">24 Hr Time with Padding (HH:mm:aa) with Seconds</label>
+      <input id="datetime-field-time5"  class="datepicker datetime" name="datetime-field5" type="text" data-validate="required" data-options="{'dateFormat': 'd MMM yyyy', 'showTime': 'true', 'timeFormat': 'HH:mm:ss'}" value="">
+    </div>
+
+    <div class="field">
+      <label for="datetime-field-time6" class="label">24 Hr Time with Padding (HH:mm:aa) with Seconds, value in field</label>
+      <input id="datetime-field-time6"  class="datepicker datetime" name="datetime-field6" type="text" data-validate="required" data-options="{'dateFormat': 'd MMM yyyy', 'showTime': 'true', 'timeFormat': 'HH:mm:ss'}" value="23 Dec 2016 23:45:25">
+    </div>
+
+    <div class="field">
+      <label for="datetime-field-time7" class="label">12hr with Seconds (h:mm:ss a)</label>
+      <input id="datetime-field-time7"  class="datepicker datetime" name="datetime-field7" type="text" data-validate="required" data-options="{'dateFormat': 'd MMM yyyy', 'showTime': 'true', 'timeFormat': 'h:mm:ss a'}" value="">
+    </div>
+
+  </div>
+</div>

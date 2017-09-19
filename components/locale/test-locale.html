@@ -14,9 +14,9 @@
 
       setTimeout(function () {
 
-        var dt = Locale.parseDate('000100', 'HHmmss', false);
-        var ft = Locale.formatDate(dt, {pattern: 'HHmmss'});
-			  append(ft);
+//			  append(Locale.formatNumber(-1000000, {style: 'currency'}));
+
+        append(Locale.parseDate('13 Oct 2017 1:00 PM', 'd MMM yyyy H:mm a'));
 
       }, 300);
     </script>

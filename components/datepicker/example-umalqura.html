@@ -12,7 +12,6 @@
 
 <script>
   $('body').on('initialized', function () {
-
     //Change locale to one that supports umalqura calendar (Hijri)
     Locale.set('ar-EG').done(function () {
       $('#islamic-date').datepicker().on('change', function () {

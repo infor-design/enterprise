@@ -1,9 +1,10 @@
 <style>
   .drag-grid-row {
-    background-color: white;
     position: fixed;
-    height: 20px;
-    width: 20px;
+  }
+  #source .datagrid tbody tr td.drag-grid-is-over {
+    background-color: #c8e9f4;
+    border: 1px dashed #2578a9;
   }
 </style>
 
@@ -24,73 +25,135 @@
 <script>
   $('body').one('initialized', function () {
 
-      //Init Fields Grid
-      var grid,
-        columns = [],
-        data = [];
+    var fields, source,
+      fieldsData = [],
+      sourceData = [],
+      fieldsColumns = [],
+      sourceColumns = [];
 
-      data.push({ id: 1, month: 'JAN'});
-      data.push({ id: 2, month: 'FEB'});
-      data.push({ id: 3, month: 'MAR'});
-      data.push({ id: 4, month: 'APR'});
-      data.push({ id: 5, month: 'MARK'});
-      data.push({ id: 6, month: 'JAN'});
+    // Fields Grid
+    fields = $('#fields');
+    fieldsData.push({ id: 1, month: 'JAN'});
+    fieldsData.push({ id: 2, month: 'FEB'});
+    fieldsData.push({ id: 3, month: 'MAR'});
+    fieldsData.push({ id: 4, month: 'APR'});
+    fieldsData.push({ id: 5, month: 'MARK'});
+    fieldsData.push({ id: 6, month: 'JAN'});
 
-      columns.push({ id: 'rowReorder', name: 'Map', field: 'id', align: 'center', sortable: false, formatter: Formatters.RowReorder, width: 85});
-      columns.push({ id: 'month', name: 'Product Name', field: 'month', formatter: Formatters.Text});
+    fieldsColumns.push({ id: 'rowReorder', name: 'Map', field: 'id', align: 'center', sortable: false, formatter: Formatters.RowReorder, width: 85});
+    fieldsColumns.push({ id: 'month', name: 'Product Name', field: 'month', formatter: Formatters.Text});
 
-      $('#fields').datagrid({
-        columns: columns,
-        dataset: data,
-        saveColumns: false,
-        toolbar: {title: 'Fields to Map'}
+    fields.datagrid({
+      columns: fieldsColumns,
+      dataset: fieldsData,
+      saveColumns: false,
+      toolbar: {title: 'Fields to Map'}
+    });
+
+    // Source Grid
+    source = $('#source');
+    sourceData.push({ id: 'Mappings'});
+    sourceData.push({ id: 1, jan: 10, feb: 20, mar: 30, apr: 40});
+    sourceData.push({ id: 2, jan: 10, feb: 20, mar: 30, apr: 40});
+    sourceData.push({ id: 3, jan: 10, feb: 20, mar: 30, apr: 40});
+    sourceData.push({ id: 4, jan: 10, feb: 20, mar: 30, apr: 40});
+
+    sourceColumns.push({ id: 'row', month: 'Id', field: 'id', formatter: Formatters.Text});
+    sourceColumns.push({ id: 'jan', name: 'Jan', field: 'jan', formatter: Formatters.Text});
+    sourceColumns.push({ id: 'feb', name: 'Feb', field: 'feb', formatter: Formatters.Text});
+    sourceColumns.push({ id: 'mar', name: 'Mar', field: 'mar', formatter: Formatters.Text});
+    sourceColumns.push({ id: 'apr', name: 'Apr', field: 'apr', formatter: Formatters.Text});
+
+    source.datagrid({
+      columns: sourceColumns,
+      dataset: sourceData,
+      sizeColumnsEqually: true,
+      saveColumns: false
+    });
+
+    var draggingRow,
+      targets = source.find('tr:first-child td:not(:first-child)'),
+      adjustPos = {left: -20, top: -5};
+
+    // Copy all attributes from/to given element
+    var copyAttributes = function(from, to) {
+      var attributes = from.prop('attributes');
+      $.each(attributes, function() {
+        to.attr(this.name, this.value);
+      });
+    };
+
+    // Get target
+    var getTarget = function (targets, pos) {
+      var td,
+        target = -1,
+        x = pos.left, y = pos.top,
+        underElements = pos.underElements || [];
+
+      targets = targets || [];
+      for (var i = 0, l = targets.length, isContinue = true; i < l && isContinue; i++) {
+        td = $(targets[i]);
+        for (var i2 = 0, l2 = underElements.length; i2 < l2; i2++) {
+          if (td.is(underElements[i2])) {
+            target = td;
+            isContinue = false;
+            break;
+          }
+        }
+      }
+      return target;
+    };
+
+    $('.datagrid-reorder-icon').drag({
+      containment: 'document',
+      clone: 'true',
+      clonePosIsFixed: true,
+      underElements: true,
+      cloneCssClass: 'drag-grid-row'
+    })
+    .on('dragstart', function (e, pos, clone) {
+      var row = $(e.currentTarget).closest('tr').clone(),
+        table = $(e.currentTarget).closest('table'),
+        firstRow = table.find('tr:first-child');
+
+      clone.empty().append('<table>' + row.html() + '</table>');
+      copyAttributes(table, clone.find('table'));
+      clone.removeAttr('id');
+
+      clone.find('tr').find('td').each(function(i) {
+        var td = $(this);
+        td.width(firstRow.find('td').eq(i).width());
       });
 
-      //Source Fields Grid
-      var grid,
-        columns = [],
-        data = [];
-
-      data.push({ id: 'Mappings'});
-      data.push({ id: 1, jan: 10, feb: 20, mar: 30, apr: 40});
-      data.push({ id: 2, jan: 10, feb: 20, mar: 30, apr: 40});
-      data.push({ id: 3, jan: 10, feb: 20, mar: 30, apr: 40});
-      data.push({ id: 4, jan: 10, feb: 20, mar: 30, apr: 40});
-
-      columns.push({ id: 'row', month: 'Id', field: 'id', formatter: Formatters.Text});
-      columns.push({ id: 'jan', name: 'Jan', field: 'jan', formatter: Formatters.Text});
-      columns.push({ id: 'feb', name: 'Feb', field: 'feb', formatter: Formatters.Text});
-      columns.push({ id: 'mar', name: 'Mar', field: 'mar', formatter: Formatters.Text});
-      columns.push({ id: 'apr', name: 'Apr', field: 'apr', formatter: Formatters.Text});
-
-      $('#source').datagrid({
-        columns: columns,
-        dataset: data,
-        sizeColumnsEqually: true,
-        saveColumns: false
+      draggingRow = clone;
+      draggingRow.css({
+        left: pos.left + adjustPos.left,
+        top: pos.top + adjustPos.top
+      });
+    })
+    .on('drag', function (e, pos) {
+      draggingRow.css({
+        left: pos.left + adjustPos.left,
+        top: pos.top + adjustPos.top
       });
 
-      // Meat of this example, make the element draggable and handle it in code.
-      /*$('#fields').find('tbody').arrange({
-          placeholder: '<tr class="datagrid-reorder-placeholder"><td colspan="2"></td></tr>',
-          handle: '.datagrid-reorder-icon'
-        })
-        .on('beforearrange.datagrid', function(e, status) {
+      targets.removeClass('drag-grid-is-over');
+      var target = getTarget(targets, pos);
+      if (target !== -1) {
+        target.addClass('drag-grid-is-over');
+      }
+    })
+    .on('dragend', function (e, pos) {
+      targets.removeClass('drag-grid-is-over');
 
-        })
-        .on('arrangeupdate.datagrid', function(e, status) {
+      var target = getTarget(targets, pos),
+        content = '';
 
-        });*/
+      if (target !== -1) {
+        content = draggingRow.find('td:eq(1) .datagrid-cell-wrapper').html();
+        target.find('.datagrid-cell-wrapper').html(content);
+      }
+    });
 
-      $('.datagrid-reorder-icon').drag({containment: 'document', clone: 'true', clonePosIsFixed: true, cloneCssClass: 'drag-grid-row'})
-        .on('dragstart', function (e, pos, clone) {
-          var row = $(e.currentTarget).closest('tr').clone();
-          clone.empty().append('<table>' + row.html() + '</table>');
-          clone.offset(pos);
-        }).on('drag', function () {
-          console.log('drag')
-        }).on('dragend', function () {
-          console.log('dragend')
-        });
- });
+  });
 </script>

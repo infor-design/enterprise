@@ -4,37 +4,40 @@ define([
   'jsdom',
 ], function(registerSuite, expect) {
 
-  var jsdom = require('jsdom').jsdom;
-  document = jsdom('<!DOCTYPE html><html id="html"><head></head><body></body></html>'); // jshint ignore:line
-  window = document.defaultView;  // jshint ignore:line
-
-  //Load the Locale.js we are testing
-  require('components/locale/locale.js');
-  Locale = window.Locale; // jshint ignore:line
-
-  //Load the Locales because Ajax doesnt work
-  require('components/locale/cultures/en-US.js');
-  require('components/locale/cultures/ar-SA.js');
-  require('components/locale/cultures/de-DE.js');
-  require('components/locale/cultures/nb-NO.js');
-  require('components/locale/cultures/no-NO.js');
-  require('components/locale/cultures/es-ES.js');
-  require('components/locale/cultures/bg-BG.js');
-  require('components/locale/cultures/ar-EG.js');
-  require('components/locale/cultures/fi-FI.js');
-  require('components/locale/cultures/lt-LT.js');
-  require('components/locale/cultures/vi-VN.js');
-  require('components/locale/cultures/tr-TR.js');
-  require('components/locale/cultures/it-IT.js');
-  require('components/locale/cultures/sv-SE.js');
-  require('components/locale/cultures/cs-CZ.js');
-  require('components/locale/cultures/hu-HU.js');
-  require('components/locale/cultures/ja-JP.js');
-  require('components/locale/cultures/ru-RU.js');
-
   registerSuite({
 
     name: 'Locale',
+
+    setup: function() {
+      var jsdom = require('jsdom').jsdom;
+      document = jsdom('<!DOCTYPE html><html id="html"><head></head><body></body></html>'); // jshint ignore:line
+      window = document.defaultView;  // jshint ignore:line
+
+      //Load the Locale.js we are testing
+      require('components/locale/locale.js');
+      Locale = window.Locale; // jshint ignore:line
+
+      //Load the Locales because Ajax doesnt work
+      require('components/locale/cultures/en-US.js');
+      require('components/locale/cultures/ar-SA.js');
+      require('components/locale/cultures/ar-EG.js');
+      require('components/locale/cultures/de-DE.js');
+      require('components/locale/cultures/nb-NO.js');
+      require('components/locale/cultures/no-NO.js');
+      require('components/locale/cultures/es-ES.js');
+      require('components/locale/cultures/bg-BG.js');
+      require('components/locale/cultures/ar-EG.js');
+      require('components/locale/cultures/fi-FI.js');
+      require('components/locale/cultures/lt-LT.js');
+      require('components/locale/cultures/vi-VN.js');
+      require('components/locale/cultures/tr-TR.js');
+      require('components/locale/cultures/it-IT.js');
+      require('components/locale/cultures/sv-SE.js');
+      require('components/locale/cultures/cs-CZ.js');
+      require('components/locale/cultures/hu-HU.js');
+      require('components/locale/cultures/ja-JP.js');
+      require('components/locale/cultures/ru-RU.js');
+    },
 
     // Checks the scaffolding we set up to make sure everything works
     'should exist': function() {
@@ -216,7 +219,7 @@ define([
       expect(Locale.formatDate(new Date(2015, 0, 1, 13, 40), {date: 'long'})).to.equal('1. Januar 2015');
 
       Locale.set('ar-EG');
-      expect(Locale.formatDate(new Date(2015, 0, 1, 13, 40), {date: 'long'})).to.equal('1 محرم، 2015');
+      expect(Locale.formatDate(new Date(2015, 0, 1, 13, 40), {date: 'long'})).to.equal('2015 محرم، 01');
 
       Locale.set('bg-BG');
       expect(Locale.formatDate(new Date(2015, 0, 1, 13, 40), {date: 'long'})).to.equal('1 януари 2015 г.');
@@ -246,7 +249,7 @@ define([
       expect(Locale.parseDate('10/28/2015', 'M/d/yyyy').getTime()).to.equal(new Date(2015, 9, 28).getTime());
       expect(Locale.parseDate('10282015', 'Mdyyyy').getTime()).to.equal(new Date(2015, 9, 28).getTime());
       expect(Locale.parseDate('10282015', 'Mdyyyy').getTime()).to.equal(new Date(2015, 9, 28).getTime());
-      expect(Locale.parseDate('10/28/99', 'MM/dd/yy').getTime()).to.equal(new Date(2099, 9, 28).getTime());
+      expect(Locale.parseDate('10/28/99', 'MM/dd/yy').getTime()).to.equal(new Date(1999, 9, 28).getTime());
 
       //We can parse either 4 or 2 digit month day
       expect(Locale.parseDate('10282015', 'Mdyyyy').getTime()).to.equal(new Date(2015, 9, 28).getTime());
@@ -298,6 +301,7 @@ define([
     'should parse text months': function() {
       Locale.set('en-US');    //year, month, day
       expect(Locale.parseDate('2015 December', 'yyyy MMMM').getTime()).to.equal(new Date(2015, 11, 1, 0, 0, 0).getTime());
+      expect(Locale.parseDate('13 Oct 2017 1:00 PM', 'd MMM yyyy H:mm a').getTime()).to.equal(new Date(2017, 09, 13, 13, 0, 0).getTime());
 
       Locale.set('de-DE');
       expect(Locale.parseDate('Dezember 2015', 'MMMM yyyy').getTime()).to.equal(new Date(2015, 11, 1, 0, 0, 0).getTime());
@@ -351,15 +355,24 @@ define([
       //expect(Locale.translate('Loading')).to.equal('Wird Geladen');
 
       //Error
-      expect(Locale.translate('XYZ')).to.equal(undefined);
+      expect(Locale.translate('XYZ')).to.equal('[XYZ]');
 
       //Non Existant in locale - use EN
       Locale.set('de-DE');
       expect(Locale.translate('Equals')).to.equal('Gleich');
 
       //Error
-      expect(Locale.translate('XYZ')).to.equal(undefined);
+      expect(Locale.translate('XYZ')).to.equal('[XYZ]');
 
+    },
+    //SOHO-6782
+    'undefined keys show [] around': function() {
+      Locale.set('en-US');
+      expect(Locale.translate('TestLocaleDefaults')).to.equal('Test Locale Defaults');
+      Locale.set('de-DE');
+      expect(Locale.translate('TestLocaleDefaults')).to.equal('Test Locale Defaults');
+      Locale.set('ar-EG');
+      expect(Locale.translate('XYZ')).to.equal('[XYZ]');
     },
 
     'be possible to add translations': function() {
@@ -435,8 +448,15 @@ define([
       Locale.set('en-US');
       expect(Locale.formatNumber(12345.129, {style: 'currency'})).to.equal('$12,345.12');
 
+      // Test Overflow SOHO-5487
+      expect(Locale.formatNumber(-2.53, {style: 'percent', minimumFractionDigits: 2})).to.equal('-253.00 %');
+      expect(Locale.formatNumber(-2.53, {style: 'percent'})).to.equal('-253 %');
+
       Locale.set('de-DE');
       expect(Locale.formatNumber(12345.123, {style: 'currency'})).to.equal('12.345,12 €');
+      expect(Locale.formatNumber(-2.53, {style: 'percent', minimumFractionDigits: 2})).to.equal('-253,00 %');
+      expect(Locale.formatNumber(-2.53, {style: 'percent'})).to.equal('-253 %');
+
     },
 
     'should format percent': function() {
@@ -520,7 +540,21 @@ define([
 
     },
 
+    'can format negative numbers': function() {
+
+      Locale.set('en-US');
+      expect(Locale.formatNumber(-1000000, {style: 'currency'})).to.equal('-$1,000,000.00');
+
+      Locale.set('de-DE');
+      expect(Locale.formatNumber(-1000000, {style: 'currency'})).to.equal('-1.000.000,00 €');
+
+      Locale.set('ar-SA');
+      expect(Locale.formatNumber(-1000000, {style: 'currency'})).to.equal('-﷼ 1٬000٬000٫00');
+
+    },
+
     'can round optionally': function() {
+      Locale.set('en-US');
       expect(Locale.formatNumber('3.01999', {maximumFractionDigits: 2, round: true})).to.equal('3.02');
       expect(Locale.formatNumber('4.1', {minimumFractionDigits: 0, maximumFractionDigits: 2})).to.equal('4.1');
       expect(Locale.formatNumber('5.1', {minimumFractionDigits: 2, maximumFractionDigits: 2})).to.equal('5.10');

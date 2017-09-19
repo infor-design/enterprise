@@ -165,7 +165,13 @@
           previousButton.add(nextButton).remove();
         }
 
-        this.element.append(html);
+        if (this.activeIndex > 0 && this.activeIndex > (numOfButtons - 1)) {
+          this.activeIndex = numOfButtons - 1;
+        }
+
+        if (numOfButtons > 1) {
+          this.element.append(html);
+        }
       },
 
       // Check if given element is visible in container

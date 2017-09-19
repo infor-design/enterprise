@@ -23,7 +23,7 @@
           minuteInterval: 5,
           secondInterval: 5,
           mode: 'standard',
-          roundToInterval: false,
+          roundToInterval: true,
           parentElement: null
         },
         settings = $.extend({}, defaults, options);
@@ -36,7 +36,7 @@
     * @param {Number} minuteInterval  &nbsp;-&nbsp; Integer from 1 to 60.  Multiples of this value are displayed as options in the minutes dropdown.
     * @param {Number} secondInterval  &nbsp;-&nbsp; Integer from 1 to 60.
     * @param {String} mode  &nbsp;-&nbsp; can be set to 'standard', 'range',
-    * @param {boolean} roundToInterval  &nbsp;-&nbsp; if `true`, automatically rounds user-entered values from the pickers to their nearest interval.
+    * @param {boolean} roundToInterval  &nbsp;-&nbsp; if `false`, does not automatically round user-entered values from the pickers to their nearest interval.
     * @param {null|jQuery[]} [parentElement] &nbsp;-&nbsp;  if defined as a jQuery-wrapped element, will be used as the target element.
     */
     function TimePicker(element) {
@@ -140,7 +140,7 @@
         this.addAria();
 
         // Add Mask and Validation plugins for time
-        this.mask();
+        this.addMask();
 
         return this;
       },
@@ -283,16 +283,21 @@
       },
 
       // Add masking with the mask function
-            mask: function () {
+      addMask: function () {
         if (this.element.data('mask') && typeof this.element.data('mask') === 'object') {
           this.element.data('mask').destroy();
         }
         this.element.data('mask', undefined);
 
-        var timeSeparator = this.getTimeSeparator(),
-          mask = '##' + timeSeparator + '##' + (this.hasSeconds() ? timeSeparator + '##' : '') + (!this.is24HourFormat() ? ' am' : ''),
-          maskMode = 'group',
-          validation = 'time',
+        var maskOptions = {
+          keepCharacterPositions: true,
+          process: 'date',
+          patternOptions: {
+            format: this.settings.timeFormat
+          }
+        };
+
+        var validation = 'time',
           events = {'time': 'blur'},
           customValidation = this.element.attr('data-validate'),
           customEvents = this.element.attr('data-validation-events');
@@ -308,7 +313,7 @@
                 validation = customValidation.replace(/no-default-validation/g, '');
                 events = $.fn.parseOptions(this.element, 'data-validation-events');
             }
-                // Keep default validation along custom validation
+            // Keep default validation along custom validation
             else {
                 validation = customValidation + ' ' + validation;
                 $.extend(events, $.fn.parseOptions(this.element, 'data-validation-events'));
@@ -318,10 +323,7 @@
         this.element
           .attr('data-validate', validation)
           .attr('data-validation-events', JSON.stringify(events))
-          .mask({
-            pattern: mask,
-            mode: maskMode
-          })
+          .mask(maskOptions)
           .validate()
           .triggerHandler('updated');
       },
@@ -335,7 +337,6 @@
           popupContent = $('<div class="timepicker-popup-content"></div>'),
           timeSeparator = this.getTimeSeparator(),
           textValue = '',
-          secondSelect,
           selected;
 
         this.initValues = self.getTimeFromField();
@@ -347,7 +348,7 @@
           hourCounter = is24HourFormat ? 0 : 1,
           maxHourCount = is24HourFormat ? 24 : 13;
 
-        this.hourSelect = $('<select id="timepicker-hours" class="hours dropdown"></select>');
+        this.hourSelect = $('<select id="timepicker-hours" data-options="{\'noSearch\': \'true\'}" class="hours dropdown"></select>');
 
         while(hourCounter < maxHourCount) {
           selected = '';
@@ -363,7 +364,7 @@
 
         // Minutes Picker
         var minuteCounter = 0;
-        this.minuteSelect = $('<select id="timepicker-minutes" class="minutes dropdown"></select>');
+        this.minuteSelect = $('<select id="timepicker-minutes" data-options="{\'noSearch\': \'true\'}" class="minutes dropdown"></select>');
 
         while(minuteCounter <= 59) {
           textValue = minuteCounter < 10 ? '0' + minuteCounter : minuteCounter;
@@ -387,7 +388,7 @@
         // Seconds Picker
         if (hasSeconds) {
           var secondCounter = 0;
-          secondSelect = $('<select id="timepicker-seconds" class="seconds dropdown"></select>');
+          this.secondSelect = $('<select id="timepicker-seconds" data-options="{\'noSearch\': \'true\'}" class="seconds dropdown"></select>');
 
           while(secondCounter <= 59) {
             textValue = secondCounter < 10 ? '0' + secondCounter : secondCounter;
@@ -396,18 +397,18 @@
             if (parseInt(self.initValues.seconds, 10) === secondCounter || (!self.initValues.seconds && textValue === '00')) {
               selected = ' selected';
             }
-            secondSelect.append($('<option' + selected + '>' + textValue + '</option>'));
+            this.secondSelect.append($('<option' + selected + '>' + textValue + '</option>'));
             secondCounter = secondCounter + self.settings.secondInterval;
           }
 
           // If the value inside the picker doesn't match an interval, add the value as the currently selected option, right at the top
-          if (!secondSelect.find('option[selected]').length) {
-            secondSelect.prepend($('<option selected>' + self.initValues.seconds + '</option>'));
+          if (!this.secondSelect.find('option[selected]').length) {
+            this.secondSelect.prepend($('<option selected>' + self.initValues.seconds + '</option>'));
           }
 
           timeParts.append($('<span class="label colons">'+ timeSeparator +'</span>'));
           timeParts.append($('<label for="timepicker-seconds" class="audible">' + Locale.translate('Seconds') + '</label>'));
-          timeParts.append(secondSelect);
+          timeParts.append(this.secondSelect);
         }
 
         this.periodSelect = $('<select id="timepicker-period" class="period dropdown"></select>');
@@ -464,6 +465,7 @@
           }).on('hide.timepicker', function() {
             self.element.focus();
           });
+
         }
 
         // Make adjustments to the popup HTML specific to the timepicker
@@ -484,17 +486,57 @@
         this.minuteSelect.val(this.initValues.minutes);
         this.minuteSelect.data('dropdown').pseudoElem.find('span').text(this.initValues.minutes);
 
+        if (this.secondSelect) {
+          this.secondSelect.val(this.initValues.seconds);
+          this.secondSelect.data('dropdown').pseudoElem.find('span').text(this.initValues.seconds);
+        }
+
         if (!self.is24HourFormat()) {
           this.periodSelect.val(this.initValues.period);
           this.periodSelect.data('dropdown').pseudoElem.find('span').text(this.initValues.period);
         }
 
         ui.find('div.dropdown').first().focus();
-        ui.find('.set-time').off('click.timepicker').onTouchClick('timepicker').on('click.timepicker', function(e) {
+        ui.find('.set-time').off('click.timepicker').on('click.timepicker', function(e) {
           e.preventDefault();
           self.setTimeOnField();
           self.closeTimePopup();
         });
+
+        // Handle Tabbing on the dialog
+        if (!this.settings.parentElement) {
+
+          ui.on('keydown.timepicker', 'button, div.dropdown', function (e) {
+            var key = e.keyCode || e.charCode || 0;
+
+            if (key === 9) {
+              self.containFocus(e);
+              e.stopPropagation();
+              e.preventDefault();
+              return false;
+            }
+          });
+
+        }
+
+      },
+
+      /**
+       * Focus the next prev focusable element on the popup
+       * @private
+       */
+      containFocus: function (e) {
+        var reverse = e.shiftKey;
+
+        // Set focus on (opt: next|prev) focusable element
+        var focusables = this.popup.find(':focusable'),
+          index = focusables.index($(':focus'));
+
+        index = (!reverse) ?
+          ((index+1) >= focusables.length ? 0 : (index+1)) :
+          ((index-1) < 0 ? focusables.length : (index-1));
+
+        focusables.eq(index).focus();
       },
 
       /**
@@ -585,10 +627,13 @@
         var self = this,
           val = value || this.element.val(),
           sep = this.getTimeSeparator(),
-          parts = val.split(sep),
+          parts,
           endParts,
           timeparts = {};
 
+		val = val.replace(/[T\s:.-]/g, sep).replace(/z/i, '');
+		parts = val.split(sep);
+		
         // Check the last element in the array for a time period, and add it as an array
         // member if necessary
         if (!this.is24HourFormat()) {

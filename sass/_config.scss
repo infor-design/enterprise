@@ -119,20 +119,22 @@ $badge-focus-transparent-shadow: 0 0 0 1px $body-bg-color inset;
 
 // Popup Menu
 $popupmenu-color: $font-color-extrahighcontrast;
-$popupmenu-arrow-color: $graphite06;
 $popupmenu-icon-color: $graphite06;
 $popupmenu-heading-color: $graphite04;
-$popupmenu-color-filtered-text: $font-color-lowcontrast;
 $popupmenu-bg-color: $inverse-color;
 $popupmenu-border-color: $graphite03;
 $popupmenu-box-shadow: 0 2px 5px $drop-shadow-depth;
 $popupmenu-checked-color: $primary-color;
 $popupmenu-hover-color: $graphite02;
-$popupmenu-alternate-bg-color: $slate07;
-$popupmenu-alternate-border-color: $slate05;
-$popupmenu-alternate-color: $white;
-$popupmenu-alternate-filtered-text: $font-color-lowcontrast;
-$popupmenu-alternate-hover-color: $slate06;
+
+// Dark UI Popupmenu
+$popupmenu-dark-color: $white;
+$popupmenu-dark-icon-color: $slate01;
+$popupmenu-dark-heading-color: $slate04;
+$popupmenu-dark-bg-color: $slate07;
+$popupmenu-dark-border-color: $slate05;
+$popupmenu-dark-box-shadow: 0 2px 5px $drop-shadow-depth;
+$popupmenu-dark-hover-color: $slate06;
 
 // Form Buttons
 $primary-btn-bg-color: $primary-color;
@@ -165,6 +167,11 @@ $tertiary-btn-open-color: $primary-color;
 $tertiary-btn-ripple-color: #8dc9e6;
 $tertiary-btn-disabled-color: $graphite06;
 $tertiary-btn-disabled-opacity: .5;
+
+// Tertiary Dark Buttons
+$tertiary-btn-dark-color: $slate03;
+$tertiary-btn-dark-hover-color: $white;
+$tertiary-btn-dark-active-color: $white;
 
 // Secondary with Border
 $secondary-border-btn-color:  $graphite06;
@@ -336,13 +343,23 @@ $fileupload-error-hover-color: darken($alert01, 15%);
 $fileupload-error-border-color: $alert02;
 $fileupload-border-color: $graphite05;
 $fileupload-droparea-color: $graphite05;
-$fileupload-droparea-hover-color: $graphite05;
-$fileupload-droparea-hover-border-color: $primary-color;
-$fileupload-droparea-hover-bg-color: rgba(200, 233, 244, .30);
+$fileupload-droparea-bg-color: rgba($graphite02, .5);
+$fileupload-droparea-hover-color: $graphite10;
+$fileupload-droparea-hover-bg-color: $graphite02;
+$fileupload-droparea-hover-border-color: $graphite06;
+$fileupload-droparea-hover-icon-color: $graphite05;
+$fileupload-droparea-dd-hover-color: $graphite05;
+$fileupload-droparea-dd-hover-border-color: $primary-color;
+$fileupload-droparea-dd-hover-bg-color: rgba(200, 233, 244, .30);
 $fileupload-status-color: $white;
 $fileupload-status-hover-color: $white;
 $fileupload-cancel-bg-color: $graphite06;
 $fileupload-cancel-hover-bg-color: $graphite10;
+$fileupload-disabled-icon-color: $graphite04;
+$fileupload-disabled-border-color: $graphite03;
+$fileupload-disabled-bg-color: $graphite01;
+$fileupload-disabled-color: $graphite03;
+
 
 //Spinbox
 $spinbox-active-color: $font-color-extrahighcontrast;

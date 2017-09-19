@@ -157,9 +157,13 @@
   }
 }
 
+/*
+ don't include `.pane.single` in the responsive section -
+ Since there is only 1 pane no need to do anything differend
+ on different form factors.
+ */
 @include respond-to(phabletdown) {
 
-  .pane.single,
   .pane.top,
   .pane.bottom,
   .pane.left,

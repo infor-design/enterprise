@@ -3,29 +3,18 @@
   <div class="twelve columns">
 
     <div class="field">
-      <label class="fileupload">
-          <span class="audible">Upload a File</span>
-          <input type="file" name="file-input" />
-      </label>
-    </div>
-
-  <!--  <div class="field">
-      <label class="fileupload" for="file-upload">Upload a File</label>
-      <input type="file" name="file-input" id="file-upload"/>
-    </div>-->
-
-    <div class="field">
-      <label class="fileupload">
-          <span class="audible">Upload a File</span>
-          <input type="file"  name="file-name-disabled" disabled/>
-      </label>
+      <label for="fileupload">Upload a File</label>
+      <input type="file" class="fileupload" id="fileupload" name="fileupload">
     </div>
 
     <div class="field">
-      <label class="fileupload">
-          <span class="audible">Upload a File</span>
-          <input type="file"  name="file-name-readonly" readonly/>
-      </label>
+      <label for="fileupload-readonly">Upload a File</label>
+      <input type="file" class="fileupload" id="fileupload-readonly" readonly name="fileupload">
+    </div>
+
+    <div class="field">
+      <label for="fileupload-disabled">Upload a File</label>
+      <input type="file" class="fileupload" id="fileupload-disabled" disabled name="fileupload">
     </div>
 
   </div>

@@ -196,7 +196,8 @@
 
 // Page containers that directly house '.tab-panel' elements will allow them to fill the height of the container
 // Used in vertical/header/module tabs.
-.page-container > .tab-panel {
+.page-container > .tab-panel,
+.page-container > .tab-panel-container > .tab-panel  {
   height: 0;
   padding-top: 0;
   width: 0;
@@ -209,6 +210,7 @@
   > .busy-indicator-container {
     @include font-size(14);
   }
+
 }
 
 // More Button

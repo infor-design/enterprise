@@ -104,16 +104,9 @@
   li {
     @include transition(background-color .15s ease 0s);
     border: 1px solid transparent;
+    border-bottom-color: $listview-border-color;
     color: $listview-color;
     padding: 16px 20px 15px;
-
-    &:not(:first-of-type) {
-      border-top-color: $listview-border-color;
-    }
-
-    &:last-of-type {
-      border-bottom-color: $listview-border-color;
-    }
 
     &::after {
       clear: both;

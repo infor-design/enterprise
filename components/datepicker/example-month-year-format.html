@@ -1,0 +1,82 @@
+
+<div class="row">
+  <div class="four columns">
+
+    <div class="field">
+      <label for="month-year" class="label">Month / Year Together (more clicks)</label>
+      <input id="month-year" class="datepicker" name="month-year" data-options="{'showMonthYearPicker': 'true', 'hideDays': 'true', 'dateFormat': 'MM/yyyy'}" type="text">
+    </div>
+
+    <div class="field">
+      <label for="month-year-long" class="label">Month / Year Together - Long Version (more clicks)</label>
+      <input id="month-year-long" class="datepicker" name="month-year" data-options="{'showMonthYearPicker': 'true', 'hideDays': 'true', 'dateFormat': 'MMM yyyy'}" type="text">
+    </div>
+
+    <div class="field">
+      <label for="month-only" class="label">Just Month</label>
+      <select id="month-only" name="month-only" class="dropdown input-sm">
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="year-only" class="label ">Just Year</label>
+      <select id="year-only" name="year-only" class="dropdown input-sm">
+      </select>
+    </div>
+
+		<div class="compound-field">
+
+      <div class="field">
+        <label for="together-year" class="label ">Month Separate</label>
+        <select id="together-year" name="together-year" class="dropdown input-sm">
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="together-month" class="label ">Year Separate</label>
+        <select id="together-month" name="together-month" class="dropdown input-sm">
+        </select>
+      </div>
+
+    </div>
+
+
+  </div>
+
+</div>
+
+<script>
+  $('body').on('initialized', function () {
+
+    //Dynamically populate the month with current locale data.
+    var wideMonths = Locale.calendar().months.wide,
+      months = '';
+
+    wideMonths.map(function (month, i) {
+      months += '<option value="'+ i +'">'+ month +'</option>';
+    });
+
+    $('#month-only').append(months).trigger('updated');
+    $('#together-month').append(months).trigger('updated');
+
+    //Dynamically populate the month with an advance month range
+    var advanceMonths = 5, years= [], yearDropdown='', year = new Date().getFullYear();
+
+    for (var i = advanceMonths; i >= 1; i--) {
+      years.push(parseInt(year) - i);
+    }
+    years.push(year);
+    for (var j = 1; j <= advanceMonths; j++) {
+      years.push(parseInt(year) + j);
+    }
+
+    years.map(function (yearMap) {
+      yearDropdown += '<option '+ (year===yearMap ? ' selected ' : '') + ' value="'+ yearMap +'">'+ yearMap +'</option>';
+    });
+
+    $('#year-only').append(yearDropdown).trigger('updated');
+    $('#together-year').append(yearDropdown).trigger('updated');
+
+
+  });
+</script>

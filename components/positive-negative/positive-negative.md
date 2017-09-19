@@ -5,6 +5,9 @@
 
 1. Positive / Negative Example [View Example]( ../components/positive-negative/example-index)
 2. Example showing color patterns [View Example]( ../components/positive-negative/example-patterns)
+3. Set animation speed [View Example]( ../components/positive-negative/example-animation)
+4. Example showing Get Selected value [View Example]( ../components/positive-negative/example-get-selected)
+5. Example showing Set Selected value [View Example]( ../components/positive-negative/example-set-selected)
 
 ## API Details
 

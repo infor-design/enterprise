@@ -1,30 +1,135 @@
-## 4.3.1
-Release Date: 2017-08-02
+## <a name="version-4.3.2">4.3.2</a>
+Release Date:* 2017-09-18
+Full Jira Release Notes: http://bit.ly/2fynFq7
 
-### Download Build Assets:
+### <a name="version-4.3.2-download-build-assets">Download Build Assets:</a>
+Build Server: http://bamboo.infor.com/browse/label/release-432
+Npm: http://npm.infor.com
+
+### <a name="version-4.3.2-download-build-assets">Demo Site</a>
+http://usalvlhlpool1.infor.com/4.3.2/components/
+
+### <a name="version-4.3.2-key-new-features">Key New Features</a>
+- Mask - Big changes to support locale and squash all bugs. ([SOHO-3849](https://jira.infor.com/browse/SOHO-3849))
+- Added Search Form Pattern http://bit.ly/2xdaeTV
+
+### <a name="version-4.3.2-breaking-changes">Breaking Changes</a>
+- PopupMenu - To clarify disabled items should be achieved by adding either the disabled attribute to the anchor tag or adding both the attribute to the anchor tag and the class is-disabled to the li element. Only adding the class will not work as only one mapping was possible. See examples components/popupmenu/example-disabled-submenus and components/popupmenu/test-toggle-disabled.html
+- Not entirely breaking but file upload should now be done without an inline label as per components/fileupload/example-index. This wont break but will cause a loop on ie edge due to an ie edge bug if initializing it this way.
+- Module Tabs - Also Not entirely breaking but for module tabs, the application menu should slide out at the top level of the tabs. This requires markup changes to work correctly. Move the applictaion menu out to the top level and wrap the module-tabs-container and tab-container (tab list) in a page-container no-scroll. See http://git.infor.com/projects/SOHO/repos/controls/browse/components/tabs-module/example-index.html
+
+### <a name="version-4.3.2-behavior-changes">Behavior Changes</a>
+- Timepicker - The default of roundToInterval is now true. Since the default options are intervals of 5 we felt this made the most sense since it was reported as a bug twice. If you want to allow entering time out of the dropdown intervals you will now have to set this to false.
+
+### <a name="version-4.3.2-improvements">Improvements</a>
+- Angular - Added Spin Box Wrapper
+- Angular - Added Colorpicker Wrapper
+- Angular - Added Chart Typings
+- Angular - Added toolbar alignRight support
+- Accordion - Added api to update portions of the accordion
+- Advanced File Upload - Added browse button
+- App Menu - Added an optional role dropdown menu.
+- App Menu - Now supports RTL correctly
+- ColorPicker - Added select only mode (editable: false)
+- Line Chart - Added a way to make two line axis labels
+- Datagrid - Huge performance improvement for Datagrid when filter is enabled
+- Datagrid - More docs added for formatters and column types
+- Datagrid - Added csv export mode to get rid of the warning messages
+- Datepicker - Now corrects 2/3 digit dates to a correct 4 digit date.
+- Datepicker - Added option to disable / add a custom validation
+- Datepicker - Now supports changing options while initialized
+- Datepicker - Added dropdown option to select year and month
+- Datepicker - Added examples for selecting just year and month
+- Datepicker - Added support for first day of week (locales that dont start week on Sun)
+- Dropdown - Fixed bug when rendering really long text dropdowns
+- File Upload - Now supports required
+- Listview - Added new 'unselected' event
+- Mask - Support for numeric negative masks
+- Mask - Api refactoring and cleanup
+- Mask - Added better non-US keyboard support
+- Mask - Fixed locale support
+- Mask - Fixed percent support (prefix/suffix percent sign)
+- Module Tabs - Corrected category search
+- Texarea - Added option to grow the input based on what is typed
+- Timepicker - Works better on android
+- Timepicker - Fixed issue with rounding when pasting
+- Timepicker - Fixed issue where dropdowns moved when scrolling
+- Charts - Added getSelected and setSelected method for all charts
+- List Detail - Added additional examples for searching within the pattern as per http://bit.ly/2xLKsct and  http://bit.ly/2wpvPLQ
+- Password / Reset Password - Fixed RTL Support
+- Validation - Now triggers an event
+- Validation - Added a method to return the current error message for a field
+
+### <a name="version-4.3.2-bug-fixes">Bug Fixes</a>
+- Autocomplete - Fixed focus trap issue
+- Datagrid - Search filter only worked on one page
+- Datagrid - Fixed exporting issue when personalization occured.
+- Datagrid - Fixed bug editing cell after filtering
+- Datagrid - Fixed alignment of filter row when using align column option
+- Datagrid - Fixed filter was accepting non-number values on number type columns
+- Datagrid - Fixed icon rendering issue
+- Datagrid - Fixed edge column rendering issue
+- Datagrid - Fixed bug on resize that made selection disappear
+- Datagrid - Fixed bug rendering when toggling filter row
+- Datagrid - Fixed context menu rendering
+- Datagrid - Fixed non-saved filter row on page reload
+- Datagrid - Fixed reset to default not working first time ever
+- Datepicker - Fixed RTL formatting
+- Datepicker - Fixed missing change event on change
+- Datepicker - Fixed mismatched ctrl+arrow direction keys
+- Dropdown - Fixed list pixel jogging opening lists on retina displays
+- Dropdown - Fixed issues using num pad
+- Charts - Fixed bug that tooltip did not close on scroll
+- Circle Pager - Fixed bug where paging dots are shown when just one page.
+- Colorpicker - Added mode to support all or no uppercase, Added support for 3 digit hex
+- Expandable area - Fixes to high contrast theme
+- Editor - Fixes to adding links for edge and on blank text
+- Editor - Fixes to allow pasting on Edge and Safari
+- Editor - Fixed same vs new window option
+- Editor - Fixed error in chrome pasting
+- File Upload - Fixed issue in edge causing the dialog to never close.
+- Icons - A few new icons added
+- Listbuilder - Fixed zindex issues when working with modal
+- Listview - Fixed page size issue, when reloading dataset
+- Locale - Fixed percent formatting
+- Locale - Fixed negative formatting by locale
+- Mask - Fixed misplaced decimal on init
+- Mask - Fixed all Safari and Android issues
+- Mask - Fixed currency symbol support
+- Mask - Fixed negative support
+- Popupmenu - Fixed scrolling issue on longer menus
+- Popupmenu - Fixed rendering on edge cases on immediate mode
+- Timpicker - Fixed validation rule to check seconds
+- Tree - Fixed Xss issue
+
+(106 Jira Issues Solved, Backlog Still 594 including 165 Design)
+
+## <a name="version-4.3.1">4.3.1</a>
+*Release Date:* 2017-08-02
+*JIRA Release Notes:* http://bit.ly/2w6X8Xw
+
+### <a name="version-4.3.1-download-build-assets">Download Build Assets:</a>
 Build Server: http://bamboo.infor.com/browse/label/release-431
 Npm: http://npm.infor.com
-Full Jira Release Notes: http://bit.ly/2w6X8Xw
 
-### Demo Site
-http://usalvlhlpool1.infor.com/4.3.1/components
+### <a name="version-4.3.1-demo-site">Demo Site</a>
+http://usalvlhlpool1.infor.com/4.3.1/components/
 
-### Key New Features
+### <a name="version-4.3.1-key-new-features">Key New Features</a>
 - More Angular Wrappers (About, Color Picker, Accordion, Popover)
 - Line Chart - Added options to rotate axis for longer labels
 - Card/List - Added new group action area toolbar
 - 128 Bugs and Enhancements
 - Toolbar / Search - Further stability Enhancements
 
-### Breaking Changes
+### <a name="version-4.3.1-breaking-changes">Breaking Changes</a>
 - Listview - since it was confusing about `selected` event, now `selected` and `unselected` events will fire when selecting or de-selecting an item in list. It used to be fire only `selected` event when any selection gets changed selecting or de-selecting.
 - Dropdown - Instead of using the clear option as a value, the clear option is done as a class. Change `<option value="clear"></option>` to `<option class="clear"></option>`.
 
-### Behavior Changes
+### <a name="version-4.3.1-behavior-changes">Behavior Changes</a>
 - Datepicker - When using date picker with time, if you open the field blank the time will be 12:00 not current time. Same with selecting today (unless the time is changed)
 
-### Improvements
-
+### <a name="version-4.3.1-improvements">Improvements</a>
 - Accordion - Added expand/collapse all api method
 - Angular - About - Added about wrapper
 - Angular - Color Picker - Added color picker wrapper
@@ -48,7 +153,7 @@ http://usalvlhlpool1.infor.com/4.3.1/components
 - Lookup - Readonly mode will now allow the modal to open for viewing.
 - Pie - Updated pie width and label styling, fixed ios rendering
 
-### Bug Fixes
+### <a name="version-4.3.1-bug-fixes">Bug Fixes</a>
 - Build Mapper - Improved Speed and fixed bug with multiple files open, update to new path structure
 - About - Fixed wrong browser reoported in Edge
 - About - Fixed missing translations (Translations pending for translation team)
@@ -119,18 +224,18 @@ http://usalvlhlpool1.infor.com/4.3.1/components
 
 (128 Jira Issues Solved, Backlog Still 442)
 
-## 4.3.0
-Release Date: 2017-05-09
+## <a name="version-4.3.0">4.3.0</a>
+*Release Date:* 2017-05-09
+*JIRA Release Notes:* http://bit.ly/2tk0hVy
 
-### Download Build Assets:
+### <a name="version-4.3.0-download-build-assets">Download Build Assets:</a>
 Build Server: http://bamboo.infor.com/browse/label/release-430
 Npm: http://npm.infor.com
-Full Jira Release Notes: http://bit.ly/2tk0hVy
 
-### Demo Site
+### <a name="version-4.3.0-demo-site">Demo Site</a>
 http://usalvlhlpool1.infor.com/4.3.0/controls
 
-### Key New Features
+### <a name="version-4.3.0-key-new-features">Key New Features</a>
 - Hijri (Umm Al Qura) - Arabic Calendar Support
 - Arabic RTL Fixes
 - Datagrid - Now Saves all user based settings (by option)
@@ -143,7 +248,7 @@ http://usalvlhlpool1.infor.com/4.3.0/controls
 - New Example Composite Form shows form layout and behaviors [View Example](http://usalvlhlpool1.infor.com/4.3.0/tests/composite-form/index.html)
 - Added Search Form Example [View Example](http://usalvlhlpool1.infor.com/4.3.0/examples/landmark/search-form)
 
-### Improvements
+### <a name="version-4.3.0-improvements">Improvements</a>
 - Badge - Can now format decimals
 - Datagrid - Added am option (allowOneExpanded) to only show one expandable row at a time. It is now the default.
 - Datagrid - Added an optional light background color on the list version by adding class datagrid-alternate-bg-color to the datagrid div. See tests/datagrid/datagrid-expandable-row-one-only.html
@@ -177,7 +282,7 @@ http://usalvlhlpool1.infor.com/4.3.0/controls
 - Vertical Tabs - Fixed height to extend to bottom of the page with scrolling
 - Validation - Allow validation to work on "Anniversay" Dates fx June 2016
 
-### Bug Fixes
+### <a name="version-4.3.0-bug-fixes">Bug Fixes</a>
 - Autocomplete - Fixed bug with many autocompletes in different page areas
 - Autocomplete - Fixed bug typing turkish letters
 - Accordion - Fixed bug that prevented it from appearing on CAP
@@ -224,7 +329,7 @@ http://usalvlhlpool1.infor.com/4.3.0/controls
 - Theming - Improved FOUC issues (FF Only)
 - Swap list - fixed scrolling issues
 
-### Angular 2.0
+### <a name="version-4.3.0-angular-2.0">Angular 2.0</a>
 - Updated CLI
 - New Project Branch Structure
 - Accordion Wrapped and Added
@@ -236,11 +341,11 @@ http://usalvlhlpool1.infor.com/4.3.0/controls
 - Fixed issues where masked input fields do not update the model
 - DatePicker - Fixed error with time and date picker
 
-### Notes
+### <a name="version-4.3.0-notes">Notes</a>
 - Latest bleeding edge build is now available in NPM. Use at your own risk with command:
 `npm install @infor/sohoxi@dev`
 
-### Breaking Changes
+### <a name="version-4.3.0-breaking-changes">Breaking Changes</a>
 - Tag - Revised the spelling of the CSS class for "X" buttons on tags from "is-dismissable" to "is-dismissible".  The original class still works, but is deprecated and will be removed in a future version.
 - Multiselect - `moveSelectedToTop` has been deprecated in favor of `moveSelected`, which is now a text string instead of a boolean.  This defaults to `"all"` on Multiselect but can be defined as `"group"` or `"none"` as well.
 - Removed Search Results Page as it was an example for the site
@@ -248,7 +353,7 @@ http://usalvlhlpool1.infor.com/4.3.0/controls
 - Tabs (Header/Module/Vertical) - it's now necessary to define the `containerElement` setting either through Javascript or via a `data-options` attribute if the element that contains tab panels cannot be directly adjacent to the `.tab-container` element.  Existing tab markup that places tab panels inside of the `.tab-container` element must be changed to contain the panels outside of this element.
 - Lightbox and SideBar are deprecated / removed as this is for the soho site only and its being recreated
 
-### Behavior Changes
+### <a name="version-4.3.0-behavior-changes">Behavior Changes</a>
 - Pie - The Chart now sorts slices in the order of the dataset (was on size from biggest to smallest before).
 - Button - Changed the standard `.btn` style on forms to reflect Tertiary button style instead of Secondary button style (SOHO-6083).
 - Editor - Removed 'bold','italic','underline', 'anchor', 'quote' options from HTML editor.
@@ -258,7 +363,7 @@ http://usalvlhlpool1.infor.com/4.3.0/controls
 - Tabs - In-Page/Header tabs will allow the list of tabs to scroll left/right if using a device with touch capabilities.
 - Tabs - The "Spillover Menu" for In-Page/Header tabs is now a full list of all available tabs.  This menu has been redesigned to be more touch/responsive friendly.
 
-### Ui Changes
+### <a name="version-4.3.0-ui-changes">Ui Changes</a>
 - Added heart and heart-filled icons
 - Text/Typography
   - Removed all font-weight: lighter (effecting components: charts, hierarchy, search results, site)
@@ -271,24 +376,24 @@ http://usalvlhlpool1.infor.com/4.3.0/controls
   - Note that Radios , Switches and Checkboxes should be Sentence case.
 - Minor (Design QA) padding and small adjustments to almost all components
 
-### Whats Next
+### <a name="version-4.3.0-whats-next">What's Next</a>
 - New Documentation Site Structure
 - Many More Bug Fixes - Particularly Mobile Issues and Accessibility
 - Hero Theming
 - App Menu Search
 
-## 4.2.6
-Release Date: 2017-04-02
+## <a name="version-4.2.6">4.2.6</a>
+*Release Date:* 2017-04-02
+*JIRA Release Notes:* http://bit.ly/2mWAmjY
 
-### Download Build Assets:
+### <a name="version-4.2.6-download-build-assets">Download Build Assets:</a>
 Build Server: http://bamboo.infor.com/browse/SOHO-426
 Npm: http://npm.infor.com
-Full Jira Release Notes: http://bit.ly/2mWAmjY
 
-### Demo Site
+### <a name="version-4.2.6-demo-site">Demo Site</a>
 http://usalvlhlpool1.infor.com/4.2.6/controls
 
-### Key New Features
+### <a name="version-4.2.6-key-new-features">Key New Features</a>
 - Datagrid - Added RichText Editor
 - Datagrid - Added Time Editor
 - Datagrid - Added ability to reorder rows
@@ -297,7 +402,7 @@ http://usalvlhlpool1.infor.com/4.2.6/controls
 - Targeted Achievement - (Form Only) New Chart
 - Swaplist - Angular 2.0 Component wrapper added
 
-### Improvements
+### <a name="version-4.2.6-improvements">Improvements</a>
 - Autocomplete - Improved Mobile Support
 - Datagrid - Improved Column Resize Logic
 - Datagrid - Added ability to have two line column header
@@ -319,7 +424,7 @@ http://usalvlhlpool1.infor.com/4.2.6/controls
 - Tabs - Added setting to skip lazy loading for "UI only tabs"
 - Tree - Allow Badges to accept a Hex Value for color
 
-### Bug Fixes
+### <a name="version-4.2.6-bug-fixes">Bug Fixes</a>
 - Autocomplete - Fixed runtime exception when filtering dynamically loaded lists
 - Autocomplete - Fixed bug when list had two items with the same ID
 - Autocomplete - Fixed bug when using mask that prevented tabbing
@@ -375,7 +480,7 @@ http://usalvlhlpool1.infor.com/4.2.6/controls
 - Validation - Fixed issue that caused 0 to appear as "required"
 - Themes - Improved Theme Switching Flashing
 
-### Ui Changes
+### <a name="version-4.2.6-ui-changes">Ui Changes</a>
 - Datagrid - Reduced left and right padding on Small and Medium Row Height so more data can be shown.
 - Datagrid - Fixed missing right border
 - Form Buttons - Improved themes to work when icons are added
@@ -383,7 +488,7 @@ http://usalvlhlpool1.infor.com/4.2.6/controls
 - Searchfield - Added option to work on white background and sync UI designs
 - Wizard - Fixed azure color issue on first wizard tick
 
-### Whats Next
+### <a name="version-4.2.6-whats-next">What's Next</a>
 * Minor (vs patch release) 4.3 up next in approx a month.
 * Design QA - Design updates to fully align to latest soho standards
 * Datagrid Bug Fixes and Enhancements
@@ -408,22 +513,23 @@ http://usalvlhlpool1.infor.com/4.2.6/controls
 * Locale - Numeric Improvements
 * Tree - Have Disabled Tree nodes
 
-## 4.2.5
-Release Date: 2017-02-23
+## <a name="version-4.2.5">4.2.5</a>
+*Release Date:* 2017-02-23
+*JIRA Release Notes:* http://bit.ly/2kQycl2
 
-### Download Build Assets:
-Build Server: http://bamboo.infor.com/browse/SOHO
-Npm: http://npm.infor.com
+### <a name="version-4.2.5-download-build-assets">Download Build Assets:</a>
+* Build Server: http://bamboo.infor.com/browse/SOHO
+* Npm: http://npm.infor.com
 
-### Demo Site
+### <a name="version-4.2.5-demo-site">Demo Site</a>
 http://usmvvwdev53:425/controls
 
-### Key New Features
+### <a name="version-4.2.5-key-new-features">Key New Features</a>
 * Editor - Added color picker
 * jQuery - Updated from 3.1.0 to 3.1.1 (non breaking)
 * Tabs - Ability to lazy load tab content; Other performance improvements
 
-### Improvements
+### <a name="version-4.2.5-improvements">Improvements</a>
 * Datagrid - Performance improvements
 * Datagrid - Column resize independently; Headers remain in sync
 * Datagrid - Scrolling improvements for fixed header and mobile
@@ -442,8 +548,7 @@ http://usmvvwdev53:425/controls
 * Toolbar - Ability to copy title text
 * Toolbar - Better handling for long titles
 
-### Bug Fixes
-
+### <a name="version-4.2.5-bug-fixes">Bug Fixes</a>
 * About Dialog - Fixed the Russian and Ukrainian translation
 * Checkboxes - Fix for .asp alignment issue
 * Color Picker - Fix for bug causing color picker to not open again after initial use
@@ -472,16 +577,16 @@ http://usmvvwdev53:425/controls
 * Tree - Fixed bug in tree reorder logic for dragging
 * Validation - Fix to handle empty data-validate attribute
 
-### Breaking Changes
+### <a name="version-4.2.5-breaking-changes">Breaking Changes</a>
 * Datagrid - No longer forces a minimum width (exact width set is respected); Affects column widths (related to improvements for column resizing)
 * List View - No longer initializes every type of component inside it for performance reasons. Instead, the developer can select which elements to initialize. You can do this manually using the render method.
 * Tabs - Revised to have CSS-based transitions instead of Javascript-based. This change includes a new method of hiding tab panels by default, instead of showing them by default. This caused a breaking change that requires removing any display: none; inline-styles from .tab-panel elements that may have been pre-defined in older versions.
 
-### Ui Changes
+### <a name="version-4.2.5-ui-changes">Ui Changes</a>
 * Icons - The Duplicate Icon has been updated. Make sure to update your SVG
 * Positive-Negative Chart - Added more padding to separate chart from legend; moved minus sign to left of number; added padding between squares and labels on chart legend
 
-### Tips
+### <a name="version-4.2.5-tips">Tips</a>
 * Global - Personalization may cause a Flash of Unstyled Content (FOUC). To prevent this you now have two choices.
 Set the column after loading the soho stylesheet. But before loading the soho stylesheet in the page. The order should be: Set Color, Load Style Sheet (in correct theme), Load Dom, initialize locale and components.
 You can call window.Soho.getColorStyleSheet(color) and get the actually style sheet you would need to append. Then save this and add the stylesheet server side. Some colors are generated so you should use the function to get the right styles.
@@ -490,29 +595,29 @@ rightAligned: false, // Will always attempt to right-align the contents of the t
 maxVisibleButtons: 3, // Total amount of buttons that can be present, not including the More button
 favorButtonset: true // When resizing elements inside the toolbar, setting this to "true" will try to display as many buttons as possible.  Setting to false attempts to show the entire title instead.
 
-### Other
+### <a name="version-4.2.5-other">Other</a>
 * Added section to view performance tests: http://usmvvwdev53:425/performance-tests
-* Full Jira Release Notes: http://bit.ly/2kQycl2
 
-## 4.2.4 - Minor Release
-Release Date: 2017-01-10
+## <a name="version-4.2.4">4.2.4 - Minor Release</a>
+*Release Date:* 2017-01-10
+*JIRA Release Notes:*  http://jira.infor.com/secure/ReleaseNote.jspa?version=27962&styleName=Html&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX%7C7c9b3f18b5f46187205e0d24b1489b80c8b4e1a1%7Clin
 
-### Key New Features
+### <a name="version-4.2.4-key-new-features">Key New Features</a>
 * Datagrid - Reset to Default
 * List Builder
 * Tree Drag and Drop
 * Datepicker Color Coded Legend
 
-### Breaking Changes
-
+### <a name="version-4.2.4-breaking-changes">Breaking Changes</a>
 * 2016-12-28 - Moved the "add tab button" in the Tabs component from being inside the tabset, to a floating button, similar to how the More button already works.  This is largely controlled by the component itself but it's possible to pre-define the markup for the entire Tabs component.  In these cases, this should be considered a breaking change and markup should be modified (SOHO-5436).
 * 2016-12-20 - Removed some code in the Mask control that attempted to automatically detect thousands separators in a number mask.  In some cases explicit disabling of thousands separators was being overridden by this setting, so we removed it (SOHO-5445).
 * 2016-12-14 - Moved all the list view examples into seperate files fx listview-status
 * 2016-12-06 - Changed the name of the `deactivate` event listener on Toolbar Searchfield to `collapse`, as well as the _deactivate()_ method to _collapse()_, to avoid conflicts with the native "deactivate" event propogated in IE.  This was causing some focus issues and visual glitches in the Toolbar Searchfield (SOHO-5297).  Additionally, the `activated` event trigger was renamed to `expanded`, as well as the _activate()_ method to _expand()_, for the purposes of keeping nomenclature consistent.
 
-### Ui Changes
+### <a name="version-4.2.4-ui-changes">Ui Changes</a>
+- None
 
-### Affects
+### <a name="version-4.2.4-affects">Affects</a>
 - Datagrid (Columns)
 - Toolbar Searchfield
 - Toolbar (scroll bar)
@@ -523,13 +628,11 @@ Release Date: 2017-01-10
 - List Builder (New)
 - Mask
 
-Jira Release Notes
-http://jira.infor.com/secure/ReleaseNote.jspa?version=27962&styleName=Html&projectId=10980&Create=Create&atl_token=ATP9-LKKS-XFKU-5RYX%7C7c9b3f18b5f46187205e0d24b1489b80c8b4e1a1%7Clin
+## <a name="version-4.2.3">4.2.3 - Minor Release</a>
+*Release Date: 2016-12-06*
+*JIRA Release Notes:* http://bit.ly/2h1veF3
 
-## 4.2.3 - Minor Release
-Release Date: 2016-12-06
-
-### Key New Features
+### <a name="version-4.2.3-key-new-features">Key New Features</a>
 * Datagrid Grouping and Summary Row
 * Swap List API Improvements
 * Circle Pager
@@ -537,18 +640,17 @@ Release Date: 2016-12-06
 * Ajax Dropdowns in Datagrid
 * Hero Widget on Home Pages
 
-### Breaking Changes
-
+### <a name="version-4.2.3-breaking-changes">Breaking Changes</a>
 * 2016-12-05 - builder-header / subheader should have class header added fx:
 class="builder-header header subheader is-personalizable"
 * 2016-11-29 - Circlepager - Changed api method names **active** to **showCollapsedView** and **unactive** to **showExpandedView**.
 * 2016-11-11 - Swaplist (SOHO-4552) - now returns data arrays instead of jQuery object array, so datasets should be kept in sync with the UI. This will allow for additional data, like the key values, that is not displayed to the user to be used.
 * 2016-11-21 - The Button with id = "masthead-icon" on the mast head was changed to use a class. Use: <button type="button" class="masthead-icon" class="btn">
 
-### Ui Changes
+### <a name="version-4.2.3-ui-changes">Ui Changes</a>
 * 2016-11-17 - Tree - Changed the selection state to only focus the element instead of the longer bar. This is more performant.
 
-### Affects:
+### <a name="version-4.2.3-affects">Affects:</a>
 * Autocomplete
 * Datagrid
 * Popups
@@ -561,18 +663,16 @@ class="builder-header header subheader is-personalizable"
 * Home pages
 * Select/Dropdown
 
-Jira Release Notes
-http://bit.ly/2h1veF3
+## <a name="version-4.2.2">4.2.2 - Minor Release</a>
+*Release Date:* 2016-10-20
+*Jira Release Notes:* http://bit.ly/2cwBELt
 
-## 4.2.2 - Minor Release
-Release Date: 2016-10-20
-
-### Key New Features
+### <a name="version-4.2.2-key-new-features">Key New Features</a>
 * Personalization
 * Improved Positioning logic
 * Improved Filtering and Tree grid
 
-### Breaking Changes
+### <a name="version-4.2.2-breaking-changes">Breaking Changes</a>
 
 * 2016-11-01 - Datagrid Column widths. In 4.2.1 the column widths would not be exact for plain px with eg: width: 125 in the column definition. This should be noted as you may need to adjust this if columns appear to narrow
 * 2016-11-01 - Made Dropdown Component dependent on ListFilter Behavior (SOHO-4936)
@@ -583,35 +683,28 @@ Release Date: 2016-10-20
 * 2016-10-11 - Css File is now called light.scss not grey.css to match Soho Naming standards
 * 2016-10-11 - tab-container module-tabs should have class is-personalizable appended for module tabs to handle personalization - SOHO-4162
 
-### Ui Changes
-* 2016-08-30 -
+### <a name="version-4.2.2-ui-changes">Ui Changes</a>
+- None
 
-Jira Release Notes
-http://bit.ly/2cwBELt
+## <a name="version-4.2.1">4.2.1 - Minor Release</a>
+*Release Date:* 2016-10-06
+*JIRA Release Notes:* http://bit.ly/2cwBELt
 
-## 4.2.1 - Minor Release
-Release Date: 2016-10-06
+### <a name="version-4.2.1-key-new-features">Key New Features</a>
+- None
 
-### Key New Features
-
-* Hello
-
-### Breaking Changes
+### <a name="version-4.2.1-breaking-changes">Breaking Changes</a>
 * 2016-10-05 - Pie and Donut Chart - Changed api option **legendshow** to **showLegend** for consistency.
-
 * 2016-09-16 - Busy Indicator - Changed the **delay** setting to **displayDelay**.  When defining settings inside of the HTML markup using the _data-options_ attribute, using "delay" in some cases would cause settings on different Soho Controls that were named "delay" to conflict, causing them both to be the same number.  Changing the name of property on the more transient Busy Indicator fixed the bug, but it does cause a breaking change.  This was completely changed and there was no deprecation, in order to prevent issues with "delay" from occuring. (see SOHO-2951)
 
-### Ui Changes
-* 2016-08-30 -
+### <a name="version-4.2.1-ui-changes">Ui Changes</a>
+- None
 
-Jira Release Notes
-http://bit.ly/2cwBELt
+## <a name="version-4.2.1-rc1">4.2.1.rc1 - Patch Release</a>
+*Release Date:* 2016-09-16
+*JIRA Release Notes:* http://bit.ly/2cLADk7
 
-## 4.2.1.rc1 - Patch Release
-Release Date: 2016-09-16
-
-### Key New Features
-
+### <a name="version-4.2.1-rc1-key-new-features">Key New Features</a>
 * Datagrid Filter Row
 * Datagrid Tree
 * Bubble Chart
@@ -625,7 +718,7 @@ Release Date: 2016-09-16
 * Splitter - Added keyboard/Aria
 * Record ID styling - Options
 
-### Breaking Changes
+### <a name="version-4.2.1-rc1-breaking-changes">Breaking Changes</a>
 * 2016-09-21 - Reverted Changes for external SVG files. For reasons on SOHO-3932 external svg files cannot be supported. We reverted this change back. Please using inline svg's in the page.
 * 2016-09-16 - tabs afteractive renamed to afteractived for consistency
 * 2016-08-16 - Popupmenu classes were not mutually exclusive now both the is-selectable and has-icons class add extra left padding. It may be needed to remove has-icons if you have a selectable menu and no actual row icons or you might end up with extra space.
@@ -637,7 +730,7 @@ Release Date: 2016-09-16
 * 2016-06-01 - Updated to jQuery 3.0 (not really totally required/breaking)
 * 2016-06-01 - Renamed (not frequently used) .sort plugin to .arrange.
 
-### Ui Changes
+### <a name="version-4.2.1-rc1-ui-changes">Ui Changes</a>
 * 2016-08-30 - http://usmvvwdev53:421/tests/header - Shows a number of header options we added
 * 2016-08-24 - Changed border color from graphite02 to graphite03 (this was a mistake and not matching design comps)
 * 2016-07-13 - Datagrid alternate row colors Changed
@@ -646,13 +739,12 @@ Release Date: 2016-09-16
 * 2016-06-02 - Design of Datagrid Changed to add back the column next to the selection checkboxes.
 * 2016-06-02 - Design of radios/checkboxes changed to reduce size.
 
-Jira Release Notes
-http://bit.ly/2cLADk7
 
-## 4.2.0 - Minor Release
-Release Date: May 26th
+## <a name="version-4.2.0">4.2.0 - Minor Release</a>
+*Release Date:* 2016-05-26
+*JIRA Release Notes:* http://bit.ly/1OCRwLD
 
-### Key New
+### <a name="version-4.2.0-key-new-features">Key New Features</a>
 * Module Tabs
 * Lightbox
 * Datagrid Column Reorder
@@ -663,7 +755,7 @@ Release Date: May 26th
 * Empty States
 * Bullet Chart
 
-### Breaking Changes
+### <a name="version-4.2.0-breaking-changes">Breaking Changes</a>
 * 2016-05-25 - Datepicker
   - If a placeholder is provided it wont be overriden with the date format.
   - isTimepicker changed to showTime - Option value
@@ -672,7 +764,7 @@ Release Date: May 26th
 * 2016-04-26 - Expandable Area - Event Renamed from open-expandablearea, close-expandablearea to expand, collapse
 * 2016-02-23 - Tree - Select Event node ommits {node: elem, data: json}
 
-### Ui Changes
+### <a name="version-4.2.0-ui-changes">Ui Changes</a>
 * 2016-05-20 - Tree - Major UX changes
 * 2016-05-20 - Toolbar - has version with background fill/border
 * 2016-05-20 - New soho.infor.com pages - Added new pages: splitter, popover, pagination, swap list
@@ -687,46 +779,43 @@ Release Date: May 26th
 * 2016-03-30 - Minor changes to the progress indicator
 * 2016-03-31 - Hide Focus Support Added to Links. Note that many links will benefit from adding class hide-focus.
 
-### Dev Server Changes
+### <a name="version-4.2.0-dev-sever-changes">Dev Server Changes</a>
 * 2016-04-08 - The Xi Controls Dev Server has been upgraded to Express 4.x.  Some of its dependancies may have changed.  If you rely on our Dev Server for examples/testing, please stop the server, delete this project's _/node\_modules/_ folder, and rerun npm install and  npm run install-test-deps.
 
-Jira Release Notes
-http://bit.ly/1OCRwLD
 
-## 4.1.1 - Patch Release
-Release Date: March 18th, 2016
+## <a name="version-4.1.1">4.1.1 - Patch Release</a>
+*Release Date:* 2016-03-18
+*JIRA Release Notes:* http://bit.ly/1Upu6WS
 
-### Key New
+### <a name="version-4.1.1-key-new-features">Key New Features</a>
 * Splitter Control
 * File Upload Control
 * Empty States Widget Design
 * Lightbox
 
-### Breaking Changes
+### <a name="version-4.1.1-breaking-changes">Breaking Changes</a>
 * 2016-03-01 - Input Fields - Changed event in datagrid from rowremove, to removerow to match other events.
 * 2016-03-01 - Datagrid Control - Changed event in datagrid from rowremove, to removerow to match other events.
 * 2016-02-09 - Mask Control - Due to the change in how the options are defined for the Mask Control, the "pattern" definiton no longer resides on the `data-mask` attribute.  However, the `data-mask` attribute is still necessary in order for _initialize.js_ to properly invoke a mask on an input field.  This attribute has become a boolean as a result.  Providing `data-mask` on an input element creates a mask, and not providing it will do nothing.
 * 2016-02-09 - Mask Control - Making the move to normalize this Control against the others by setting things up with a `data-options` attribute instead of unqiue HTML5 `data-*` attributes.  In the next version these will no longer work.  Please update your code accordingly.
 
-### Ui Changes
+### <a name="version-4.1.1-ui-changes">Ui Changes</a>
 * 2016-02-16 - Changed Hyperlink, Focus state and colors. Refined all 3 themes.
 * 2016-02-16 - Changed Breadcrumb, Focus state and colors. Refined all 3 themes.
 * 2016-02-16 - Action Button, changed some state colors. Refined all 3 themes.
 * 2016-02-19 - Changed Slate and Graphite 10
 
-Jira Release Notes
-http://bit.ly/1Upu6WS
 
-## 4.1.0 - Minor  Release
-Release Date: 2016-01-26
+## <a name="version-4.1.0">4.1.0 - Minor Release</a>
+*Release Date:* 2016-01-26
+*JIRA Release Notes:* http://bit.ly/1reEaKk
 
-### Key New
+### <a name="version-4.1.0-key-new-features">Key New Features</a>
 * Bullet Chart
 * Datagrid Contextual Toolbar
 * Design Changes for V1.2 of Design Specs
 
-### Breaking Changes
-
+### <a name="version-4.1.0-breaking-changes">Breaking Changes</a>
 * 2016-01-18 - Color Picker: the colors array should get colors in a 10xN grid.
 * 2016-01-18 - "hyperlink back" class now requires use of an SVG element.
 * 2016-01-18 - breadcrumb-arrow class removed use breadcrumb class for header breadcrumbs
@@ -739,7 +828,7 @@ Release Date: 2016-01-26
 * 2015-12-07 - Dropdown/Multiselect, Tabs, Vertical Tabs, Wizard - changed the name of the "activate" event to "activated", to prevent conflicts with the built-in "activate" event in Windows browsers (IE/Edge).  This issue is documented in HFC-3221.
 * 2015-12-04 - Contextual Action Panel - The order in which the close/destroy methods previously worked has been changed to flow a bit more nicely.  The order was changed to accomodate HFC-3212, where a bug was discovered that caused Contextual Action Panels to leave behind markup and events from a Modal control.
 
-### Ui Changes
+### <a name="version-4.1.0-ui-changes">Ui Changes</a>
 * 2016-01-25 - Swap List - Changed fonts down a size, colors.
 * 2016-01-25 - Pager - Color Changes, Handle Changes, Pressed/Focus State
 * 2016-01-25 - Skip Link - Dropped Drop Shadow, reduced font size
@@ -764,31 +853,28 @@ Release Date: 2016-01-26
 * 2015-12-09 - Datepicker - Style various styles and button positions on date picker
 * 2015-11-20 - We did some fine tuning to the color pallette. The following colors have changed: azure05, azure07, amber03, amber06, amber07, amber08, amber09, amber10, emerald09, turquoise04, amethyst01, amethyst04, amethyst05, amethyst06, amethyst07, amethyst08, amethyst09, slate10, alert-orange
 
-Jira Release Notes
-http://bit.ly/1reEaKk
 
-## 4.0.6 - Patch Release
-Release Date: 2015-11-16
+## <a name="version-4.0.6">4.0.6 - Patch Release</a>
+*Release Date:* 2015-11-16
+*JIRA Release Notes:* http://bit.ly/24CCurl
 
-### Breaking Changes
+### <a name="version-4.0.6-breaking-changes">Breaking Changes</a>
 * 2015-11-16 - All events are now lower case for consistency. For example some events were called beforeOpen this is now beforeopen. Ect.. Try to search your project for any events fx .on('beforeOpen') and rename. Such beforeopen, animateopen , afterstart, animateclosedcomplete, afterreset, animateclosedcomplete, afteropen, afterpaste, beforeclose, animateopencomplete, beforeactivate
 * 2015-11-16 - bar-progress type chart was renamed to completion-chart
 * 2015-11-16 - List detail has new markup
 
-### Ui Changes
+### <a name="version-4.0.6-ui-changes">Ui Changes</a>
 * 2015-11-16 - In the High Contrast themes all colors changed from slate to the graphite spectrum
 * 2015-11-16 - List detail has style changes
 
-Jira Release Notes
-http://bit.ly/24CCurl
+## <a name="version-4.0.5">4.0.5 - Patch Release</a>
+*JIRA Release Notes:* http://bit.ly/24CCyY9
 
-## 4.0.5 - Patch Release
-
-### Key New
+### <a name="version-4.0.5-key-new-features">Key New Features</a>
 * Accordion Refactoring ([HFC-2886](http://jira/browse/HFC-2886))
 * Lookup
 
-### Breaking Changes
+### <a name="version-4.0.5-breaking-changes">Breaking Changes</a>
 * 2015-??-?? Accordion Refactoring - Some markup modifications are necessary to retain compatibility with all Accordion controls.  All current examples of Accordions in this repository have been updated to reflect the new Markup (and by proxy, all Application Menus as well).  Markup Changes include:
  `<div class=".accordion-pane"></div>` elements are no longer nested inside of `<div class=".accordion-header"></div>` elements.  Place the Panes immediately following the Headers.
  All Accordion Headers that can expand and show content or subheaders will now contain a trigger button that performs this action.  In cases where the trigger isn't present, it will be created and placed correctly.  If the Accordion Header is at the top-level, the trigger will look like a "chevron" be placed immediately after the `<a>`.  If it's a sub-header, the trigger will be a (+/-) depending on its current state, and will be placed before the `<a>`.
@@ -796,9 +882,5 @@ http://bit.ly/24CCurl
  In order to correctly space out content inside an accordion, a new element type, `<div class="accordion-content"></div>` can be used inside accordion panes to separate the content from other accordion headers in a more semantic way.
 * Datagrid sorting is now matched up via column id - where as before it was field. Should not cause any major issues as most of the time these values are the same , but this was done so that the same field can be used with different id's
 
-
-### Ui Changes
+### <a name="version-4.0.5-ui-changes">Ui Changes</a>
 * The Accordion Control has been redesigned per a new specification ([HFC-2927](http://jira/browse/HFC-2927)).
-
-Jira Release Notes
-http://bit.ly/24CCyY9

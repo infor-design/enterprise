@@ -19,6 +19,10 @@
     });
 
   });
+
+  $('#hierarchy').on('selected', function(event, eventInfo) {
+    console.log(event, eventInfo);
+  });
 </script>
 
 {{={{{ }}}=}}
@@ -38,7 +42,7 @@
         <p class="micro">{{EmploymentType}}</p>
       </div>
 
-      <button class="btn-expand {{displayClass}} btn-icon" type="button">
+      <button class="btn btn-icon" type="button">
         <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
           <use xlink:href="#icon-caret-up"/>
         </svg>

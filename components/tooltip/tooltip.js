@@ -213,16 +213,15 @@
           });
         }
 
-        // Media Query Listener to detect a menu closing on mobile devices that change orientation.
-        this.matchMedia = window.matchMedia('(orientation: landscape)');
-        this.mediaQueryListener = function() {
+        // Close the popup/tooltip on orientation changes (but not when keyboard is open)
+        $(window).on('orientationchange.tooltip', function() {
           // Match every time.
           if (self.tooltip.hasClass('is-hidden')) {
             return;
           }
           self.close();
-        };
-        this.matchMedia.addListener(this.mediaQueryListener);
+        }, false);
+
       },
 
       setContent: function(content, dontRender) {
@@ -280,7 +279,7 @@
           }
 
           // Could be a translation definition
-          content = Locale.translate(content) || content;
+          content = Locale.translate(content, true) || content;
 
           // Could be an ID attribute
           // If it matches an element already on the page, grab that element's content and store the reference only.
@@ -457,6 +456,7 @@
         }
 
         this.position();
+        Soho.utils.fixSVGIcons(this.tooltip);
         this.element.trigger('show', [this.tooltip]);
 
         setTimeout(function () {
@@ -650,9 +650,7 @@
         this.element.off('mouseenter.tooltip mouseleave.tooltip mousedown.tooltip click.tooltip mouseup.tooltip updated.tooltip focus.tooltip blur.tooltip');
         this.detachOpenEvents();
 
-        if (this.matchMedia) {
-          this.matchMedia.removeListener(this.mediaQueryListener);
-        }
+        $(window).off('orientationchange.tooltip');
 
         return this;
       },

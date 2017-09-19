@@ -82,6 +82,10 @@
           this.element.parent().find('label').first().attr('for', orgId);
         }
 
+        if (Soho.env.os.name === 'ios' || Soho.env.os.name === 'android') {
+          this.settings.noSearch = true;
+        }
+
         // convert <select> tag's size css classes for the pseudo element
         var elemClassList = this.element[0].classList;
         if (elemClassList.length === 0) {
@@ -130,12 +134,20 @@
           this.pseudoElem.append($('<span></span>'));
         }
 
-        this.pseudoElem.attr({'role': 'combobox',
-          'aria-autocomplete': 'list',
-          'aria-controls': 'dropdown-list',
-          'aria-readonly': 'true',
-          'aria-expanded': 'false',
-          'aria-label': this.label.text()});
+        var toExclude = ['data-validate'],
+          attributes = Soho.DOM.getAttributes(this.element[0]),
+          attributesToCopy = this.getDataAttributes(attributes, toExclude);
+
+        this.pseudoElem
+          .attr(attributesToCopy.obj)
+          .attr({
+            'role': 'combobox',
+            'aria-autocomplete': 'list',
+            'aria-controls': 'dropdown-list',
+            'aria-readonly': 'true',
+            'aria-expanded': 'false',
+            'aria-label': this.label.text()
+          });
 
         // Pass disabled/readonly from the original element, if applicable
         // "disabled" is a stronger setting than "readonly" - should take precedent.
@@ -334,7 +346,9 @@
             badgeColor = attributes.getNamedItem('data-badge-color'),
             isSelected = option.selected,
             isDisabled = option.disabled,
-            cssClasses = option.className;
+            cssClasses = option.className,
+            toExclude = ['data-badge', 'data-badge-color', 'data-val'],
+            attributesToCopy = self.getDataAttributes(attributes, toExclude);
 
           var trueValue = value && value.value ? value.value : text;
           if (cssClasses.indexOf('clear') > -1) {
@@ -343,30 +357,10 @@
             }
           }
 
-          // Set attributes need to be copy over
-          var attrToCopy = {
-            str: '',
-            isExclude: function(attr) {
-              var toExclude = ['data-badge', 'data-badge-color', 'data-val'];
-              return $.inArray(attr, toExclude) > -1;
-            }
-          };
-          for (var key in attributes) {
-            if (!attributes.hasOwnProperty(key)) {
-              continue;
-            }
-            attrToCopy.name = attributes[key].name + '';
-            attrToCopy.isData = attrToCopy.name.substr(0, 5) === 'data-';
-            if (attrToCopy.isData && !attrToCopy.isExclude(attrToCopy.name)) {
-              attrToCopy.str += ' '+
-                attrToCopy.name +'="'+ attributes[key].value +'"';
-            }
-          }
-
           liMarkup += '<li role="presentation" class="dropdown-option'+ (isSelected ? ' is-selected' : '') +
                         (isDisabled ? ' is-disabled' : '') +
                         (cssClasses ? ' ' + cssClasses.value : '' ) + '"' +
-                        attrToCopy.str +
+                        attributesToCopy.str +
                         ' data-val="' + trueValue.replace('"', '/quot/') + '"' +
                         ' tabindex="' + (index && index === 0 ? 0 : -1) + '">' +
                         (title ? '" title="' + title.value + '"' : '') +
@@ -1256,8 +1250,10 @@
           .on('touchend.dropdown touchcancel.dropdown', touchEndCallback)
           .on('click.dropdown', clickDocument);
 
-        var parentScroll = self.element.closest('.scrollable').length ? self.element.closest('.scrollable') : $(document);
+        var modalScroll = $('.modal.is-visible .modal-body-wrapper'),
+          parentScroll = self.element.closest('.scrollable').length ? self.element.closest('.scrollable') : $(document);
         parentScroll = self.element.closest('.scrollable-y').length ? self.element.closest('.scrollable-y') : parentScroll;
+        parentScroll = modalScroll.length ? modalScroll : parentScroll;
         parentScroll.on('scroll.dropdown', scrollDocument);
 
         $('body').on('resize.dropdown', function() {
@@ -1341,10 +1337,10 @@
         positionOpts.useParentWidth = useParentWidth;
 
         // use negative height of the pseudoElem to get the Dropdown list to overlap the input.
-        positionOpts.y = parseInt(parentElementStyle.height + parentElementStyle.borderTopWidth + parentElementStyle.borderBottomWidth) * -1;
-        if (Soho.env.browser.name === 'ie' && Soho.env.browser.version === '11') {
-          positionOpts.y = (positionOpts.y * 2);
-        }
+        var isRetina = window.devicePixelRatio > 1,
+          isChrome = Soho.env.browser.name === 'chrome';
+        positionOpts.y = -(parseInt(parentElement[0].clientHeight) + parseInt(parentElementStyle.borderTopWidth) + parseInt(parentElementStyle.borderBottomWidth) - (!isChrome && isRetina ? 1 : 0));
+        positionOpts.x = 0;
 
         this.list.one('afterplace.dropdown', dropdownAfterPlaceCallback).place(positionOpts);
         this.list.data('place').place(positionOpts);
@@ -1536,7 +1532,7 @@
           return;
         }
 
-        if (!li && value) {
+        if (!li && typeof value === 'string') {
           li = this.listUl.find('li[data-val="'+ value.replace('"', '/quot/') +'"]');
         }
 
@@ -1552,7 +1548,7 @@
           clearSelection = false,
           isAdded = true; // Sets to false if the option is being removed from a multi-select instead of added
 
-        if (option.hasClass('clear') || code === '') {
+        if (option.hasClass('clear') || !li) {
           clearSelection = true;
         }
 
@@ -1686,7 +1682,10 @@
                   value: stringContent
                 };
               }
-              option.value = replaceDoubleQuotes(option.value);
+
+              if (option.value !== undefined) {
+                option.value = replaceDoubleQuotes(option.value);
+              }
 
               if (option.id !== undefined) {
                 if (!isNaN(option.id)) {
@@ -1768,6 +1767,48 @@
           return true;
         }
         return false;
+      },
+
+      /**
+       * Get data attributes from passed list of attributes
+       * @param {Array} attr - List of all attributes.
+       * @param {Array} attrToExclude - List of attributes to be excluded from passed list.
+       * @returns {Object} It will return an object containing two keys
+       * str - string of attributes
+       * obj - object of attributes
+       */
+      getDataAttributes: function(attr, attrToExclude) {
+        if (!attr) {
+          return;
+        }
+        else if (typeof attr === 'string') {
+          attr = [attr];
+        }
+
+        var toExclude = attrToExclude || [];
+        if (typeof toExclude === 'string') {
+          toExclude = [toExclude];
+        }
+        var attrToCopy = {
+          obj: {},
+          str: '',
+          isExclude: function(attr) {
+            return $.inArray(attr, toExclude) > -1;
+          }
+        };
+        for (var key in attr) {
+          if (!attr.hasOwnProperty(key)) {
+            continue;
+          }
+          attrToCopy.name = attr[key].name + '';
+          attrToCopy.isData = attrToCopy.name.substr(0, 5) === 'data-';
+          if (attrToCopy.isData && !attrToCopy.isExclude(attrToCopy.name)) {
+            attrToCopy.obj[attrToCopy.name] = attr[key].value;
+            attrToCopy.str += ' '+
+              attrToCopy.name +'="'+ attr[key].value +'"';
+          }
+        }
+        return { str: attrToCopy.str, obj: attrToCopy.obj };
       },
 
       /**

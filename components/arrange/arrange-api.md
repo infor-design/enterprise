@@ -13,12 +13,12 @@ The Arrange Component allows touch and drag support to sort UI items.
 
 **Parameters**
 
+-   `element`  
 -   `handle` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The class name of the handle element to connect
 -   `itemsSelector` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The selector to match all the sortable elements.
 -   `connectWith` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The optional element to connect with when using two lists
 -   `placeholder` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The html for the element that appears while dragging
 -   `placeholderCssClass` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The class to add to the ghost element that is being dragged.
--   `element`  
 
 ### updated
 

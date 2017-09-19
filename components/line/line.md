@@ -8,7 +8,11 @@
 3. Ticks Adjustment (Less ticks than data points) [View Example]( ../components/line/example-axis-ticks)
 4. Customize Tooltip [View Example]( ../components/line/example-custom-tooltip)
 5. Customize Dot Size [View Example]( ../components/line/example-custom-dots)
-5. Rotate Bottom Labels [View Example]( ../components/line/test-rotate)
+6. Set animation speed [View Example]( ../components/line/example-animation)
+7. Rotate Bottom Labels [View Example]( ../components/line/test-rotate)
+8. Example showing Get Selected value [View Example]( ../components/line/example-get-selected)
+9. Example showing Set Selected value [View Example]( ../components/line/example-set-selected)
+10. Example showing two line x axis [View Example]( ../components/line/example-two-lines)
 
 ## API Details
 
@@ -27,6 +31,7 @@
 * `xAxis.rotate` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** - Rotate the elements on the x axis. Recommend -65 deg but this can be tweaked depending on look.
 * `yAxis` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** - A series of options for the yAxis
 * `xAxis.ticks` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Data to control the number of ticks and y axis format. Options for example `{number: 5, format: ',.1s'}` would show only 5 yaxis points and format the data to show 1K, 1M, 1G ect.. This uses the d3 formatter.
+* `xAxis.formatText` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)** A function that passes the text element and a counter. You can return a formatted svg markup element to replace the current element. For example you could use tspans to wrap the strings or color them.
 
 ## Code Example
 

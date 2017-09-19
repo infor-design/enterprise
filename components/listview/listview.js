@@ -95,7 +95,7 @@
           }
         }
 
-        this.element.attr({'tabindex': '-1'});
+        this.element.attr({'tabindex': '-1', 'x-ms-format-detection': 'none'});
 
         // Configure Paging
         if (this.element.is('.paginated') || this.settings.paging === true) {
@@ -104,6 +104,8 @@
             pagesize: this.settings.pagesize,
             source: this.settings.source
           });
+
+          this.pager = this.element.data('pager');
         }
 
         var cardWidgetContent =  this.element.parent('.card-content, .widget-content');
@@ -245,12 +247,12 @@
       },
 
       renderPager: function(updatedPagerInfo) {
-        var api = this.element.data('pager');
-        if (!api || !this.settings.pager) {
+        if (!this.pager) {
           return;
         }
 
-        api.updatePagingInfo(updatedPagerInfo);
+        this.pager.updatePagingInfo(updatedPagerInfo);
+        this.pager.setActivePage(1, true);
       },
 
       // Get the Data Source. Can be an array, Object or Url
@@ -782,7 +784,7 @@
         if (this.settings.selectable) {
 
           this.element.addClass('is-selectable');
-          var trigger = $('.list-detail-back-button').find('.app-header'),
+          var trigger = $('.list-detail-back-button, .list-detail-button').find('.app-header'),
             pattern = $(this.element).closest('.list-detail, .builder');
 
           trigger.parent().onTouchClick('listview').on('click.listview', function (e) {

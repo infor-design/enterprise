@@ -26,7 +26,6 @@ Input element that opens a dialog with a list for selection.
 -   `editable` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Can the user type text in the field
 -   `autoApply` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  If set to false the dialog wont apply the value on clicking a value.
 -   `validator` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)**  -  A function that fires to let you validate form items on open and select
--   `element`  
 
 ### enable
 

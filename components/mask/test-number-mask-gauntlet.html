@@ -1,60 +1,38 @@
 <div class="row top-padding">
   <div class="six columns">
     <h2>Mask Test: Number Mask Gauntlet</h2>
-    <p>Related JIRA Tickets: - <a class="hyperlink" href="http://jira.infor.com/browse/SOHO-5006" target="_blank">SOHO-5006</a> | <a class="hyperlink" href="http://jira.infor.com/browse/SOHO-5379" target="_blank">SOHO-5379</a> | <a class="hyperlink" href="http://jira.infor.com/browse/SOHO-5256" target="_blank">SOHO-5256</a></p>
+    <p>Related JIRA Tickets: -
+      <a class="hyperlink" href="http://jira.infor.com/browse/SOHO-5006" target="_blank">SOHO-5006</a> |
+      <a class="hyperlink" href="http://jira.infor.com/browse/SOHO-5379" target="_blank">SOHO-5379</a> |
+      <a class="hyperlink" href="http://jira.infor.com/browse/SOHO-5256" target="_blank">SOHO-5256</a> |
+      <a class="hyperlink" href="http://jira.infor.com/browse/SOHO-3849" target="_blank">SOHO-3849</a>
+    </p>
   </div>
 </div>
 
 <div class="row">
   <div class="three columns">
     <div class="field">
-      <label for="number-dec">Number (1000.00)</label>
-      <input id="number-dec" inputmode="numeric" data-mask data-options="{ pattern: '####.00', mode: 'number' }" placeholder="####.00"/>
+      <label for="number-dec">Number (<span class="number">1000.00</span>)</label>
+      <input id="number-dec" inputmode="numeric" data-init="false" class="new-mask" data-options='{ "patternOptions": { "allowDecimal": true, "integerLimit": 4, "decimalLimit": 2 } }' placeholder="####.00"/>
     </div>
   </div>
   <div class="three columns">
     <div class="field">
-      <label for="neg-number-dec">Negative Number (-1000.00)</label>
-      <input id="neg-number-dec" inputmode="numeric" data-mask data-options="{ pattern: '-####.00', mode: 'number' }" placeholder="-####.00"/>
+      <label for="neg-number-dec">Negative Number (<span class="number">-1000.00</span>)</label>
+      <input id="neg-number-dec" inputmode="numeric" data-init="false" class="new-mask" data-options='{ "patternOptions": { "allowNegative": true, "allowDecimal": true, "integerLimit": 4, "decimalLimit": 2 } }' placeholder="-####.00"/>
     </div>
   </div>
   <div class="three columns">
     <div class="field">
-      <label for="number">Number (1000)</label>
-      <input id="number" inputmode="numeric" data-mask data-options="{ pattern: '####', mode: 'number' }" placeholder="####"/>
+      <label for="number">Number (<span class="number">1000</span>)</label>
+      <input id="number" inputmode="numeric" data-init="false" class="new-mask" data-options='{ "patternOptions": { "allowDecimal": false, "integerLimit": 4 } }' placeholder="####"/>
     </div>
   </div>
   <div class="three columns">
     <div class="field">
-      <label for="neg-number">Negative Number (-1000)</label>
-      <input id="neg-number" inputmode="numeric" data-mask data-options="{ pattern: '-####', mode: 'number' }" placeholder="-####"/>
-    </div>
-  </div>
-</div>
-
-<div class="row">
-  <div class="three columns">
-    <div class="field">
-      <label for="number-dec-thousands">Number (1,000.00)</label>
-      <input id="number-dec-thousands" inputmode="numeric" data-mask data-options="{ pattern: '#,###.00', mode: 'number', thousandsSeparator: true }" placeholder="#,###.00"/>
-    </div>
-  </div>
-  <div class="three columns">
-    <div class="field">
-      <label for="neg-number-dec-thousands">Negative Number (-1,000.00)</label>
-      <input id="neg-number-dec-thousands" inputmode="numeric" data-mask data-options="{ pattern: '-#,###.00', mode: 'number', thousandsSeparator: true }" placeholder="-#,###.00"/>
-    </div>
-  </div>
-  <div class="three columns">
-    <div class="field">
-      <label for="number-thousands">Number (1,000)</label>
-      <input id="number-thousands" inputmode="numeric" data-mask data-options="{ pattern: '#,###', mode: 'number', thousandsSeparator: true }" placeholder="#,###"/>
-    </div>
-  </div>
-  <div class="three columns">
-    <div class="field">
-      <label for="neg-number-thousands">Negative Number (-1,000)</label>
-      <input id="neg-number-thousands" inputmode="numeric" data-mask data-options="{ pattern: '-#,###', mode: 'number', thousandsSeparator: true }" placeholder="-#,###"/>
+      <label for="neg-number">Negative Number (<span class="number">-1000</span>)</label>
+      <input id="neg-number" inputmode="numeric" data-init="false" class="new-mask" data-options='{ "patternOptions": { "allowDecimal": false, "allowNegative": true, "integerLimit": 4 } }' placeholder="-####"/>
     </div>
   </div>
 </div>
@@ -62,26 +40,26 @@
 <div class="row">
   <div class="three columns">
     <div class="field">
-      <label for="longer-number-dec">Longer Number (1000000.00)</label>
-      <input id="longer-number-dec" inputmode="numeric" data-mask data-options="{ pattern: '#######.00', mode: 'number' }" placeholder="#######.00"/>
+      <label for="number-dec-thousands">Number (<span class="number">1,000.00</span>)</label>
+      <input id="number-dec-thousands" inputmode="numeric" data-init="false" class="new-mask" data-options='{ "patternOptions": { "allowThousandsSeparator": true, "allowDecimal": true, "integerLimit": 4, "decimalLimit": 2 } }' placeholder="#,###.00"/>
     </div>
   </div>
   <div class="three columns">
     <div class="field">
-      <label for="neg-longer-number-dec">Negative Longer Number (-1000000.00)</label>
-      <input id="neg-longer-number-dec" inputmode="numeric" data-mask data-options="{ pattern: '-#######.00', mode: 'number' }" placeholder="-#######.00"/>
+      <label for="neg-number-dec-thousands">Negative Number (<span class="number">-1,000.00</span>)</label>
+      <input id="neg-number-dec-thousands" inputmode="numeric" data-init="false" class="new-mask" data-options='{ "patternOptions": { "allowThousandsSeparator": true, "allowDecimal": true, "allowNegative": true, "integerLimit": 4, "decimalLimit": 2 } }' placeholder="-#,###.00"/>
     </div>
   </div>
   <div class="three columns">
     <div class="field">
-      <label for="longer-number">Longer Number (1000000)</label>
-      <input id="longer-number" inputmode="numeric" data-mask data-options="{ pattern: '#######', mode: 'number' }" placeholder="#######"/>
+      <label for="number-thousands">Number (<span class="number">1,000</span>)</label>
+      <input id="number-thousands" inputmode="numeric" data-init="false" class="new-mask" data-options='{ "patternOptions": { "allowDecimal": false, "allowThousandsSeparator": true, "integerLimit": 4 } }'  placeholder="#,###"/>
     </div>
   </div>
   <div class="three columns">
     <div class="field">
-      <label for="neg-longer-number">Negative Longer Number (-1000000)</label>
-      <input id="neg-longer-number" inputmode="numeric" data-mask data-options="{ pattern: '-#######', mode: 'number' }" placeholder="-#######"/>
+      <label for="neg-number-thousands">Negative Number (<span class="number">-1,000</span>)</label>
+      <input id="neg-number-thousands" inputmode="numeric" data-init="false" class="new-mask" data-options='{ "patternOptions": { "allowDecimal": false, "allowThousandsSeparator": true, "allowNegative": true, "integerLimit": 4 } }'  placeholder="-#,###"/>
     </div>
   </div>
 </div>
@@ -89,26 +67,26 @@
 <div class="row">
   <div class="three columns">
     <div class="field">
-      <label for="longer-number-dec-thousands">Longer Number (1,000,000.00)</label>
-      <input id="longer-number-dec-thousands" inputmode="numeric" data-mask data-options="{ pattern: '#,###,###.00', mode: 'number', thousandsSeparator: true }" placeholder="#,###,###.00"/>
+      <label for="longer-number-dec">Longer Number (<span class="number">1000000.00</span>)</label>
+      <input id="longer-number-dec" inputmode="numeric" data-init="false" class="new-mask" data-options='{ "patternOptions": { "allowDecimal": true, "integerLimit": 7, "decimalLimit": 2 } }' placeholder="#######.00"/>
     </div>
   </div>
   <div class="three columns">
     <div class="field">
-      <label for="neg-longer-number-dec-thousands">Negative Longer Number (-1,000,000.00)</label>
-      <input id="neg-longer-number-dec-thousands" inputmode="numeric" data-mask data-options="{ pattern: '-#,###,###.00', mode: 'number', thousandsSeparator: true }" placeholder="-#,###,###.00"/>
+      <label for="neg-longer-number-dec">Negative Longer Number (<span class="number">-1000000.00</span>)</label>
+      <input id="neg-longer-number-dec" inputmode="numeric" data-init="false" class="new-mask" data-options='{ "patternOptions": { "allowDecimal": true, "allowNegative": true, "integerLimit": 7, "decimalLimit": 2 } }' placeholder="-#######.00"/>
     </div>
   </div>
   <div class="three columns">
     <div class="field">
-      <label for="longer-number-thousands">Longer Number (1,000,000)</label>
-      <input id="longer-number-thousands" inputmode="numeric" data-mask data-options="{ pattern: '#,###,###', mode: 'number', thousandsSeparator: true }" placeholder="#,###,###"/>
+      <label for="longer-number">Longer Number (<span class="number">1000000</span>)</label>
+      <input id="longer-number" inputmode="numeric" data-init="false" class="new-mask" data-options='{ "patternOptions": { "allowDecimal": false, "integerLimit": 7 } }' placeholder="#######"/>
     </div>
   </div>
   <div class="three columns">
     <div class="field">
-      <label for="neg-longer-number-thousands">Negative Longer Number (-1,000,000)</label>
-      <input id="neg-longer-number-thousands" inputmode="numeric" data-mask data-options="{ pattern: '-#,###,###', mode: 'number', thousandsSeparator: true }" placeholder="-#,###,###"/>
+      <label for="neg-longer-number">Negative Longer Number (<span class="number">-1000000</span>)</label>
+      <input id="neg-longer-number" inputmode="numeric" data-init="false" class="new-mask" data-options='{ "patternOptions": { "allowDecimal": false, "allowNegative": true, "integerLimit": 7 } }' placeholder="-#######"/>
     </div>
   </div>
 </div>
@@ -116,26 +94,26 @@
 <div class="row">
   <div class="three columns">
     <div class="field">
-      <label for="way-longer-number-dec">Way Longer Number (1000000000.00)</label>
-      <input id="way-longer-number-dec" inputmode="numeric" data-mask data-options="{ pattern: '##########.00', mode: 'number' }" placeholder="##########.00"/>
+      <label for="longer-number-dec-thousands">Longer Number (<span class="number">1,000,000.00</span>)</label>
+      <input id="longer-number-dec-thousands" inputmode="numeric" data-init="false" class="new-mask" data-options='{ "patternOptions": { "allowThousandsSeparator": true, "allowDecimal": true, "integerLimit": 7, "decimalLimit": 2 } }' placeholder="#,###,###.00"/>
     </div>
   </div>
   <div class="three columns">
     <div class="field">
-      <label for="neg-way-longer-number-dec">Way Longer Number (-1000000000.00)</label>
-      <input id="neg-way-longer-number-dec" inputmode="numeric" data-mask data-options="{ pattern: '-##########.00', mode: 'number' }" placeholder="-##########.00"/>
+      <label for="neg-longer-number-dec-thousands">Negative Longer Number (<span class="number">-1,000,000.00</span>)</label>
+      <input id="neg-longer-number-dec-thousands" inputmode="numeric" data-init="false" class="new-mask" data-options='{ "patternOptions": { "allowThousandsSeparator": true, "allowDecimal": true, "allowNegative": true, "integerLimit": 7, "decimalLimit": 2 } }' placeholder="-#,###,###.00"/>
     </div>
   </div>
   <div class="three columns">
     <div class="field">
-      <label for="way-longer-number">Way Longer Number (1000000000)</label>
-      <input id="way-longer-number" inputmode="numeric" data-mask data-options="{ pattern: '##########', mode: 'number' }" placeholder="##########"/>
+      <label for="longer-number-thousands">Longer Number (<span class="number">1,000,000</span>)</label>
+      <input id="longer-number-thousands" inputmode="numeric" data-init="false" class="new-mask" data-options='{ "patternOptions": { "allowDecimal": false, "allowThousandsSeparator": true, "allowNegative": true, "integerLimit": 7 } }' placeholder="#,###,###"/>
     </div>
   </div>
   <div class="three columns">
     <div class="field">
-      <label for="neg-way-longer-number">Way Longer Number (-1000000000)</label>
-      <input id="neg-way-longer-number" inputmode="numeric" data-mask data-options="{ pattern: '-##########', mode: 'number' }" placeholder="-##########"/>
+      <label for="neg-longer-number-thousands">Negative Longer Number (<span class="number">-1,000,000</span>)</label>
+      <input id="neg-longer-number-thousands" inputmode="numeric" data-init="false" class="new-mask" data-options='{ "patternOptions": { "allowDecimal": false, "allowThousandsSeparator": true, "allowNegative": true, "integerLimit": 7 } }' placeholder="-#,###,###"/>
     </div>
   </div>
 </div>
@@ -143,26 +121,101 @@
 <div class="row">
   <div class="three columns">
     <div class="field">
-      <label for="way-longer-number-dec-thousands">Way Longer Number (1,000,000,000.00)</label>
-      <input id="way-longer-number-dec-thousands" inputmode="numeric" data-mask data-options="{ pattern: '#,###,###,###.00', mode: 'number', thousandsSeparator: true }" placeholder="#,###,###,###.00"/>
+      <label for="way-longer-number-dec">Way Longer Number (<span class="number">1000000000.00</span>)</label>
+      <input id="way-longer-number-dec" inputmode="numeric" data-init="false" class="new-mask" data-options='{ "patternOptions": { "allowDecimal": true, "integerLimit": 10, "decimalLimit": 2 } }' placeholder="##########.00"/>
     </div>
   </div>
   <div class="three columns">
     <div class="field">
-      <label for="neg-way-longer-number-dec-thousands">Way Longer Number (-1,000,000,000.00)</label>
-      <input id="neg-way-longer-number-dec-thousands" inputmode="numeric" data-mask data-options="{ pattern: '-#,###,###,###.00', mode: 'number', thousandsSeparator: true }" placeholder="-#,###,###,###.00"/>
+      <label for="neg-way-longer-number-dec">Way Longer Number (<span class="number">-1000000000.00</span>)</label>
+      <input id="neg-way-longer-number-dec" inputmode="numeric" data-init="false" class="new-mask" data-options='{ "patternOptions": { "allowDecimal": true, "allowNegative": true, "integerLimit": 10, "decimalLimit": 2 } }' placeholder="-##########.00"/>
     </div>
   </div>
   <div class="three columns">
     <div class="field">
-      <label for="way-longer-number-thousands">Way Longer Number (1,000,000,000)</label>
-      <input id="way-longer-number-thousands" inputmode="numeric" data-mask data-options="{ pattern: '#,###,###,###', mode: 'number', thousandsSeparator: true }" placeholder="#,###,###,###"/>
+      <label for="way-longer-number">Way Longer Number (<span class="number">1000000000</span>)</label>
+      <input id="way-longer-number" inputmode="numeric" data-init="false" class="new-mask" data-options='{ "patternOptions": { "allowDecimal": false, "integerLimit": 10 } }' placeholder="##########"/>
     </div>
   </div>
   <div class="three columns">
     <div class="field">
-      <label for="neg-way-longer-number-thousands">Way Longer Number (-1,000,000,000)</label>
-      <input id="neg-way-longer-number-thousands" inputmode="numeric" data-mask data-options="{ pattern: '-#,###,###,###', mode: 'number', thousandsSeparator: true }" placeholder="-#,###,###,###"/>
+      <label for="neg-way-longer-number">Way Longer Number (<span class="number">-1000000000</span>)</label>
+      <input id="neg-way-longer-number" inputmode="numeric" data-init="false" class="new-mask" data-options='{ "patternOptions": { "allowDecimal": false, "allowThousandsSeparator": true, "allowNegative": true, "integerLimit": 10 } }' placeholder="-##########"/>
     </div>
   </div>
 </div>
+
+<div class="row">
+  <div class="three columns">
+    <div class="field">
+      <label for="way-longer-number-dec-thousands">Way Longer Number (<span class="number">1,000,000,000.00</span>)</label>
+      <input id="way-longer-number-dec-thousands" inputmode="numeric" data-init="false" class="new-mask" data-options='{ "patternOptions": { "allowThousandsSeparator": true, "allowDecimal": true, "integerLimit": 10, "decimalLimit": 2 } }' placeholder="#,###,###,###.00"/>
+    </div>
+  </div>
+  <div class="three columns">
+    <div class="field">
+      <label for="neg-way-longer-number-dec-thousands">Way Longer Number (<span class="number">-1,000,000,000.00</span>)</label>
+      <input id="neg-way-longer-number-dec-thousands" inputmode="numeric" data-init="false" class="new-mask" data-options='{ "patternOptions": { "allowThousandsSeparator": true, "allowDecimal": true, "allowNegative": true, "integerLimit": 10, "decimalLimit": 2 } }' placeholder="-#,###,###,###.00"/>
+    </div>
+  </div>
+  <div class="three columns">
+    <div class="field">
+      <label for="way-longer-number-thousands">Way Longer Number (<span class="number">1,000,000,000</span>)</label>
+      <input id="way-longer-number-thousands" inputmode="numeric" data-init="false" class="new-mask" data-options='{ "patternOptions": { "allowDecimal": false, "allowThousandsSeparator": true, "integerLimit": 10 } }' placeholder="#,###,###,###"/>
+    </div>
+  </div>
+  <div class="three columns">
+    <div class="field">
+      <label for="neg-way-longer-number-thousands">Way Longer Number (<span class="number">-1,000,000,000</span>)</label>
+      <input id="neg-way-longer-number-thousands" inputmode="numeric" data-init="false" class="new-mask" data-options='{ "patternOptions": { "allowDecimal": false, "allowThousandsSeparator": true, "allowNegative": true, "integerLimit": 10 } }' placeholder="-#,###,###,###"/>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $('body').on('initialized', function() {
+    // Base options that get used by everything
+    var opts = {
+      process: 'number',
+      patternOptions: {
+        symbols: {
+          thousands: Locale.currentLocale.data.numbers.group,
+          decimal: Locale.currentLocale.data.numbers.decimal,
+          negative: Locale.currentLocale.data.numbers.minusSign
+        }
+      }
+    };
+
+    var localeString = Locale.currentLocale.name,
+      isLocalized = localeString !== 'en-US'; // default for the test suite
+
+
+    $('input.new-mask').each(function() {
+      var numberSpan = $(this).prev('label').find('.number');
+
+      var dataOpts = JSON.parse( $(this).attr('data-options') );
+      if (dataOpts.patternOptions) {
+        dataOpts.patternOptions.symbols = opts.patternOptions.symbols;
+      }
+
+      var thisOpts = $.extend({}, opts, dataOpts);
+      $(this).mask(thisOpts);
+
+      // localize the label
+      if (isLocalized) {
+        var number = Locale.parseNumber(numberSpan.text().toString()),
+          localizedLabelOpts = {
+            group: thisOpts.patternOptions.symbols.thousands,
+            decimal: thisOpts.patternOptions.symbols.decimal,
+            minusSign: thisOpts.patternOptions.symbols.negative,
+            minimumFractionDigits: 0
+          };
+        if (thisOpts.patternOptions.decimalLimit) {
+          localizedLabelOpts.maximumFractionDigits = thisOpts.patternOptions.decimalLimit;
+        }
+        numberSpan.text(Locale.formatNumber(number, localizedLabelOpts));
+      }
+    });
+  });
+
+</script>

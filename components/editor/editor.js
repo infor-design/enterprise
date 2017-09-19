@@ -44,7 +44,7 @@
         placeholder: null,
         pasteAsPlainText: false,
         // anchor > target: 'Same window'|'New window'| any string value
-        anchor: {url: 'http://www.example.com', class: 'hyperlink', target: 'New window'},
+        anchor: {url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false},
         image: {url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}
       },
       settings = $.extend({}, defaults, options);
@@ -57,7 +57,7 @@
     * @param {Boolean} secondHeader  &nbsp;-&nbsp; Allows you to set if the second header inserted is a h3 or h4 element. You should set this to match the structure of the parent page for accessibility
     * @param {String} productName  &nbsp;-&nbsp; Additional product name information to display
     * @param {String} pasteAsPlainText  &nbsp;-&nbsp; If true, when you paste into the editor the element will be unformatted to plain text.
-    * @param {String} anchor  &nbsp;-&nbsp; Info object to populate the link dialog defaulting to `{url: 'http://www.example.com', class: 'hyperlink', target: 'New window'},`
+    * @param {String} anchor  &nbsp;-&nbsp; Info object to populate the link dialog defaulting to `{url: 'http://www.example.com', class: 'hyperlink', target: 'New window', isClickable: false, showIsClickable: false},`
     * @param {String} image  &nbsp;-&nbsp; Info object to populate the image dialog defaulting to ` {url: 'http://lorempixel.com/output/cats-q-c-300-200-3.jpg'}`
     */
     function Editor(element) {
@@ -73,16 +73,23 @@
     Editor.prototype = {
 
       init: function() {
-        this.isIE = $('html').is('.ie');
-        this.isMac = $('html').is('.is-mac');
-        this.isIeEdge = $('html').is('.ie-edge');
-        this.isFirefox = $('html').is('.is-firefox');
+        this.isIe = Soho.env.browser.name === 'ie';
+        this.isIeEdge = Soho.env.browser.name === 'edge';
+        this.isIe11 = this.isIe && Soho.env.browser.version === '11';
+        this.isMac = Soho.env.os.name === 'Mac OS X';
+        this.isFirefox = Soho.env.browser.name === 'firefox';
+
         this.parentElements = ['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre'];
         this.id = $('.editor-toolbar').length + 1;
         this.container = this.element.parent('.field, .field-short').addClass('editor-container');
+
+        settings.anchor = $.extend({}, defaults.anchor, settings.anchor);
+        settings.image = $.extend({}, defaults.image, settings.image);
+
         settings.anchor.defaultUrl = settings.anchor.url;
         settings.anchor.defaultClass = settings.anchor.class;
         settings.anchor.defaultTargetText = settings.anchor.target;
+        settings.anchor.defaultIsClickable = settings.anchor.isClickable;
 
         settings.anchor.targets = {
           'Same window': '',
@@ -559,6 +566,11 @@
           if(settings.anchor.target && $.trim(settings.anchor.target).length) {
             alink.attr('target', settings.anchor.target);
           }
+          if(settings.anchor.isClickable) {
+            alink.attr('contenteditable', false);
+          } else {
+            alink.removeAttr('contenteditable');
+          }
 
           finalText = alink[0].outerHTML;
         }
@@ -745,6 +757,7 @@
             $('[name="em-url"]').val(settings.anchor.url);
             $('[name="em-class"]').val(settings.anchor.class);
             $('[name="em-target"]').val(settings.anchor.target).trigger('updated');
+            $('[name="em-isclickable"]').prop('checked', settings.anchor.isClickable);
 
             // $('[id="em-target-shdo"]').val($('[name="em-target"] option:selected').text());
 
@@ -813,6 +826,10 @@
                 '<label for="em-url">' + Locale.translate('Url') + '</label>' +
                 '<input id="em-url" name="em-url" type="text" value="'+ settings.anchor.url +'">' +
               '</div>' +
+              (settings.anchor.showIsClickable ?('<div class="field">' +
+                '<input type="checkbox" class="checkbox" id="em-isclickable" name="em-isclickable" checked="'+ settings.anchor.isClickable +'">' +
+                '<label for="em-isclickable" class="checkbox-label">' + Locale.translate('Clickable') + '</label>' +
+              '</div>') : '') +
               '<div class="field">' +
                 '<label for="em-class">' + Locale.translate('CssClass') + '</label>' +
                 '<input id="em-class" name="em-class" type="text" value="'+ settings.anchor.class +'">' +
@@ -867,10 +884,17 @@
       updateCurrentLink: function (alink) {
         var emUrl = $('[name="em-url"]').val(),
           emClass = $('[name="em-class"]').val(),
-          emTarget = $('[name="em-target"]').val();
+          emTarget = $('[name="em-target"]').val(),
+          emIsClickable = $('[name="em-isclickable"]').is(':checked');
 
         alink.attr('href', (emUrl && $.trim(emUrl).length ? emUrl : settings.anchor.defaultUrl));
         alink.attr('class', (emClass && $.trim(emClass).length ? emClass : settings.anchor.defaultClass));
+
+        if (emIsClickable) {
+          alink.attr('contenteditable', false);
+        } else {
+          alink.removeAttr('contenteditable');
+        }
 
         if (emTarget && $.trim(emTarget).length) {
           alink.attr('target', emTarget);
@@ -888,10 +912,11 @@
         //Fix and Format the Link
         input.val(this.fixLinkFormat(input.val()));
 
-        // Set selection ur/class/target for Link
+        // Set selection url/class/target for Link
         settings.anchor.url = input.val();
         settings.anchor.class = $('[name="em-class"]').val();
         settings.anchor.target = $('[name="em-target"]').val();
+        settings.anchor.isClickable = $('[name="em-isclickable"]').is(':checked');
 
         alink = $('<a href="'+ input.val() +'">' + input.val() + '</a>');
 
@@ -901,14 +926,19 @@
         if(settings.anchor.target && $.trim(settings.anchor.target).length) {
           alink.attr('target', settings.anchor.target);
         }
+        if(settings.anchor.isClickable) {
+          alink.attr('contenteditable', false);
+        } else {
+          alink.removeAttr('contenteditable');
+        }
 
         if (this.sourceViewActive()) {
           this.insertTextAreaContent(input.val(), 'anchor');
         }
         else {
-          var sel, range;
+          var sel, range, rangeStr;
 
-          if (!this.selection.isCollapsed) {
+          if (!this.selection.isCollapsed || this.isIe11) {
             //document.execCommand('createLink', false, input.val());
 
             //get example from: http://jsfiddle.net/jwvha/1/
@@ -918,7 +948,10 @@
               sel = window.getSelection();
               if (sel.getRangeAt && sel.rangeCount) {
                 range = sel.getRangeAt(0);
-                alink.html(range + '');
+                rangeStr = range + '';
+                if (rangeStr.trim() !== '') {
+                  alink.html(rangeStr);
+                }
                 range.deleteContents();
 
                 // Range.createContextualFragment() would be useful here but is
@@ -1052,7 +1085,7 @@
         this.hideToolbarActions();
       },
 
-      //See if the Editor is Selected and Show Toolbar
+      //Set button states for toolbar buttons
       setToolbarButtonStates: function () {
         var buttons = this.toolbarActions.find('button');
 
@@ -1065,6 +1098,10 @@
         this.checkButtonState('bold');
         this.checkButtonState('italic');
         this.checkButtonState('underline');
+        this.colorpickerButtonState('foreColor');
+        if (this.toolbar.find('.buttonset [data-action="backColor"]').length) {
+          this.colorpickerButtonState('backColor');
+        }
 
         var self = this,
             parentNode = this.getSelectedParentElement();
@@ -1234,12 +1271,16 @@
             types = clipboardData.types;
             // jshint undef:false
             if ((types instanceof DOMStringList && types.contains('text/html')) ||
-                (types.indexOf && types.indexOf('text/html') !== -1)) {
+                (types.indexOf && types.indexOf('text/html') !== -1) || self.isIeEdge) {
             // jshint undef:true
-              pastedData =  e.originalEvent.clipboardData.getData('text/html');
+              if (self.isIeEdge) {
+                pastedData =  e.originalEvent.clipboardData.getData('text/plain');
+              } else {
+                pastedData = e.originalEvent.clipboardData.getData('text/html');
+              }
             }
           } else {
-            paste = window.clipboardData.getData('Text');
+            paste = window.clipboardData ? window.clipboardData.getData('Text') : '';
             paragraphs = paste.split(/[\r\n]/g);
             pastedData = '';
             for (p = 0; p < paragraphs.length; p += 1) {
@@ -1474,16 +1515,22 @@
 
       // Restore if Selection is a Link
       restoreLinkSelection: function () {
-        var currentLink = $(this.findElementInSelection('a', this.element[0]));
+        var currentLink = $(this.findElementInSelection('a', this.element[0])),
+          contenteditable;
 
         settings.anchor.url = settings.anchor.defaultUrl;
         settings.anchor.class = settings.anchor.defaultClass;
         settings.anchor.target = settings.anchor.defaultTarget;
+        settings.anchor.isClickable = settings.anchor.defaultIsClickable;
 
         if (currentLink.length) {
           settings.anchor.url = currentLink.attr('href');
           settings.anchor.class = currentLink.attr('class');
           settings.anchor.target = currentLink.attr('target');
+          contenteditable = currentLink.attr('contenteditable');
+          if (contenteditable === false || contenteditable === 'false') {
+            settings.anchor.isClickable = true;
+          }
 
           // currentLink.removeAttr('class target');
           // document.execCommand('unlink', false, null);
@@ -1499,7 +1546,6 @@
         if (currentElement === this.element) {
           if (action.indexOf('append-') > -1) {
             this.execFormatBlock(action.replace('append-', ''));
-            this.setToolbarButtonStates();
           } else if (action === 'anchor') {
             this.restoreLinkSelection();
             this.modals.url.data('modal').open();
@@ -1560,8 +1606,8 @@
         this.switchToolbars();
       },
 
-      // Colorpicker actions ['foreColor'|'backColor']
-      colorpickerActions: function(action) {
+      // Set ['foreColor'|'backColor'] button icon color in toolbar
+      colorpickerButtonState: function(action) {
         var self = this,
           cpBtn = $('[data-action="'+ action +'"]', this.toolbar),
           cpApi = cpBtn.data('colorpicker'),
@@ -1580,12 +1626,21 @@
           color = cpApi.rgb2hex(color);
           cpBtn.attr('data-value', color).find('.icon').css('fill', color);
         }
+        return {cpBtn:cpBtn, cpApi:cpApi, color:color};
+      },
+
+      // Colorpicker actions ['foreColor'|'backColor']
+      colorpickerActions: function(action) {
+        var self = this,
+          state = this.colorpickerButtonState(action),
+          cpBtn = state.cpBtn,
+          cpApi = state.cpApi;
 
         cpBtn.on('selected.editor', function (e, item) {
           var value = ('#' + item.data('value')).toLowerCase();
           cpBtn.attr('data-value', value).find('.icon').css('fill', value);
 
-          if (self.isIE || action === 'foreColor') {
+          if (self.isIe || action === 'foreColor') {
             document.execCommand(action, false, value);
           }
 
@@ -1627,6 +1682,10 @@
             }, 0);
 
           }
+
+          setTimeout(function() {
+            self.getCurrentElement().focus();
+          }, 0);
         });
 
         // Toggle colorpicker
@@ -1649,7 +1708,7 @@
         // blockquote needs to be called as indent
         // http://stackoverflow.com/questions/10741831/execcommand-formatblock-headings-in-ie
         // http://stackoverflow.com/questions/1816223/rich-text-editor-with-blockquote-function/1821777#1821777
-        if (this.isIE) {
+        if (this.isIe) {
           if (el === 'blockquote') {
               return document.execCommand('indent', false, el);
           }

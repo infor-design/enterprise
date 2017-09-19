@@ -8,10 +8,13 @@
 3. Example showing how to set Colors [View Example]( ../components/bar/example-colors)
 4. Example showing the formatter [View Example]( ../components/bar/example-formatter)
 5. Example showing the option to hide the formatter [View Example]( ../components/bar/example-hide-legend)
-4. Example showing an edge case of longer text [View Example]( ../components/bar/example-long-text)
-4. Example showing with negative values [View Example]( ../components/bar/example-negative-values)
-4. Example showing color patterns [View Example]( ../components/bar/example-patterns)
-4. Example showing defaulting a selected value  [View Example]( ../components/bar/example-selected)
+6. Example showing an edge case of longer text [View Example]( ../components/bar/example-long-text)
+7. Example showing with negative values [View Example]( ../components/bar/example-negative-values)
+8. Set animation speed [View Example]( ../components/bar/example-animation)
+9. Example showing color patterns [View Example]( ../components/bar/example-patterns)
+10. Example showing defaulting a selected value  [View Example]( ../components/bar/example-selected)
+11. Example showing Get Selected value [View Example]( ../components/bar/example-get-selected)
+12. Example showing Set Selected value [View Example]( ../components/bar/example-set-selected)
 
 ## API Details
 

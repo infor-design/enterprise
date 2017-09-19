@@ -182,6 +182,7 @@ button {
         fill: $primary-btn-color;
       }
     }
+
   }
 }
 
@@ -390,7 +391,27 @@ a.btn-menu {
 .btn-tertiary,
 .btn-menu {
   padding: 0 10px;
+
+  // Dark Ui on Light UI
+  &.inverse {
+    color: $tertiary-btn-dark-color;
+
+    .icon {
+      fill: $tertiary-btn-dark-color;
+    }
+
+    &:hover,
+    &.is-open {
+      color: $tertiary-btn-dark-hover-color;
+
+      .icon {
+        fill: $tertiary-btn-dark-hover-color;
+      }
+    }
+
+  }
 }
+
 
 // Icon Buttons
 // Also see ./_icons.scss
@@ -567,7 +588,7 @@ a.btn-menu {
   }
 
   100% {
-    @include css3(transform, scale(50));
+    @include css3(transform, scale(20));
     opacity: 0;
   }
 }
@@ -603,7 +624,7 @@ a.btn-menu {
 
       + span:not(.audible) {
         display: inline-block;
-        padding: 1px 4px 0 0;
+        padding: 0 4px 0 0;
       }
     }
   }

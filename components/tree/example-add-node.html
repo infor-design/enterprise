@@ -75,5 +75,8 @@
   api.removeNode({id: 'new6'});
   api.removeNode($('#new6'));
 
-  console.log(api.settings.dataset);
+  //Wrong escape markup
+  api.addNode({text: '<h1>New Item 3</h1>', id: 'new7'});
+  api.updateNode({node: $('#new3'), text: '<h1>Changed Item 2</h1>'});
+
 </script>

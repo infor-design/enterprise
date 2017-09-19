@@ -125,9 +125,7 @@ $badge-focus-transparent-shadow: 0 0 0 1px $body-bg-color inset;
 }
 
 // Popup Menu
-$popupmenu-arrow-color: $font-color-extrahighcontrast;
 $popupmenu-color: $font-color-extrahighcontrast;
-$popupmenu-color-filtered-text: $font-color;
 $popupmenu-icon-color: $graphite06;
 $popupmenu-bg-color: $white;
 $popupmenu-border-color: $graphite06;
@@ -307,6 +305,10 @@ $fileupload-droparea-hover-color: $graphite05;
 $fileupload-droparea-hover-bg-color: $azure02;
 $fileupload-cancel-bg-color: $graphite05;
 $fileupload-cancel-hover-bg-color: darken($graphite05, 15%);
+$fileupload-droparea-bg-color: rgba($graphite01, .5);
+$fileupload-droparea-hover-bg-color: $graphite01;
+$fileupload-droparea-dd-hover-bg-color: rgba(200, 233, 244, .80);
+$fileupload-droparea-dd-hover-border-color: $primary-color;
 
 //Spinbox
 $spinbox-active-color: $font-color-extrahighcontrast;
@@ -591,13 +593,13 @@ $progress-border-color: $graphite06;
 $progress-bar-bg-color: $azure09;
 
 //Chart Progress Bar
-$chart-progressbar-bg-color: $graphite03;
+$chart-progressbar-bg-color: $graphite04;
 $chart-progressbar-bg-color-dark: $graphite05;
 $chart-progressbar-completed-fill: #2f6b0a;
 $chart-progressbar-target-fill: $graphite05;
 $chart-progressbar-primary-fill: $primary-color;
 $chart-progressbar-dark-fill: $graphite08;
-$chart-targeted-achievement-bg-color: $graphite03;
+$chart-targeted-achievement-bg-color: $graphite04;
 
 //Timeline
 $timeline-indicator-color: $graphite05;

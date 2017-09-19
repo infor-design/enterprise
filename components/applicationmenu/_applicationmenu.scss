@@ -61,9 +61,9 @@
 
       &.logout {
         .icon.avatar {
-          border-radius: 32px;
-          height: 64px;
-          width: 64px;
+          border-radius: 24px;
+          height: 48px;
+          width: 48px;
         }
 
         .content {
@@ -84,6 +84,41 @@
         span {
           display: inline-block;
         }
+      }
+    }
+  }
+
+  .accordion-static-panel {
+    background-color: $slate07;
+    border-bottom-color: $slate09 !important;
+    margin: 0 auto;
+    min-height: 85px;
+    padding: 10px 30px;
+
+    .icon.avatar {
+      border-radius: 20px;
+      height: 40px;
+      top: 18px;
+      width: 40px;
+    }
+
+    .name {
+      @include font-size(18);
+      padding: 10px;
+      position: relative;
+      top: -3px;
+    }
+
+    .btn-menu {
+      left: 43px;
+      margin-top: -5px;
+
+      span {
+        color: inherit;
+        display: inline-block;
+        max-width: 168px;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
   }
@@ -118,9 +153,38 @@
 html[dir='rtl'] {
 
   .application-menu {
+
+    @include transition(right 300ms cubic-bezier(.17, .04, .03, .94),
+      box-shadow 300ms cubic-bezier(.17, .04, .03, .94));  background-color: $slate08;
+    border-left: 1px solid $application-menu-border-color;
+    border-right: 0;
+    left: initial;
+    right: -$application-menu-width;
+
+    &.is-open {
+      left: initial;
+      right: 0;
+    }
+
+    .accordion {
+      margin-left: 0;
+      margin-right: 1px;
+    }
+
     .branding {
       padding: 1rem 1rem 0 0;
     }
+
+    + .page-container {
+      left: 0;
+      right: initial;
+    }
+
+    .btn-menu {
+      left: inherit;
+      right: 43px;
+    }
+
   }
 
 }
@@ -149,6 +213,13 @@ html[dir='rtl'] {
       }
     }
   }
+
+  html[dir='rtl'] {
+    .application-menu.is-open + .page-container.scrollable {
+      right: initial;
+    }
+  }
+
 }
 
 @include respond-to(phabletdown) {

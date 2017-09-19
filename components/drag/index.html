@@ -17,9 +17,18 @@
 <li><code>cloneAppendTo</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Selector to append to for the clone ['body'|'parent'|'jquery object'] default:'body'<br /></li>
 <li><code>containment</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  Constrains dragging to within the bounds of the specified element or region. Possible values: &quot;parent&quot;, &quot;document&quot;, &quot;window&quot;.<br /></li>
 <li><code>obstacle</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  jQuery Selector of object(s) that you cannot drag into,<br /></li>
+<li><code>underElements</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  If set to true will return list of elements that are &quot;underneath&quot; the drag element<br /></li>
 <li><code>containmentOffset</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  How close to the containment object should we be allowed to drag in position form. <code>{left: 0, top: 0}</code></li>
 </ul>
 <h3 id="functions">Functions</h3>
+<h4 id="getelementsfrompoint">getElementsFromPoint</h4>
+<p>Get elements from given point.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>x</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></strong>  -  The x-coordinate of the Point.<br /></li>
+<li><code>y</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></strong>  -  The y-coordinate of the Point.</li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></strong> List of all elements at the given point.</p>
 <h4 id="destroy">destroy</h4>
 <p>Detach all functionality and events.</p>
 <h3 id="events">Events</h3>

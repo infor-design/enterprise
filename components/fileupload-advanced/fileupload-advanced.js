@@ -25,12 +25,16 @@
           maxFilesInProcess: 99999, // max files can be upload
           maxFileSize: -1, // max file size in bytes, -1 for unlimited
           fileName: 'myfile', // variable name to read from server
+          isDisabled: false, // Disabled
+          showBrowseButton: true, // Browse files to upload
+          send: null, // Function to send files to server
 
           // Text strings
-          textDropArea: 'Drag and Drop File to Upload',
-          textBtnCancel: 'Cancel uploading this file',
-          textBtnCloseError: 'Close this error',
-          textBtnRemove: 'Remove from server this file',
+          textDropArea: Locale.translate('TextDropArea'),
+          textDropAreaWithBrowse: Locale.translate('TextDropAreaWithBrowse'),
+          textBtnCancel: Locale.translate('TextBtnCancel'),
+          textBtnCloseError: Locale.translate('TextBtnCloseError'),
+          textBtnRemove: Locale.translate('TextBtnRemove'),
 
           // Error strings
           errorAllowedTypes: '<em>'+ Locale.translate('Error') +'</em>: '+ Locale.translate('ErrorAllowedTypes'),
@@ -48,6 +52,14 @@
     * @param {Boolean} maxFilesInProcess  &nbsp;-&nbsp; Max number of files can be uploaded
     * @param {Boolean} maxFileSize  &nbsp;-&nbsp; Max file size in bytes, -1 for unlimited
     * @param {Boolean} fileName  &nbsp;-&nbsp; Variable name to read from server
+    * @param {Boolean} isDisabled  &nbsp;-&nbsp; Make control disabled
+    * @param {Boolean} showBrowseButton  &nbsp;-&nbsp; Add way to browse files to upload
+    * @param {Function} send  &nbsp;-&nbsp; Method for send file to upload
+    * @param {String} textDropArea  &nbsp;-&nbsp; Text to show in drop area
+    * @param {String} textDropAreaWithBrowse  &nbsp;-&nbsp; Text to show in drop area when browse option true
+    * @param {String} textBtnCancel  &nbsp;-&nbsp; Hidden text for cancel button
+    * @param {String} textBtnCloseError  &nbsp;-&nbsp; Hidden text for error close button
+    * @param {String} textBtnRemove  &nbsp;-&nbsp; Hidden text for remove button
     *
     */
     function FileUploadAdvanced(element) {
@@ -68,24 +80,67 @@
 
       //Add any markup
       build: function() {
-        var settings = this.settings,
-          standaloneClass = settings.isStandalone ? settings.standaloneClass : '';
+        var s = this.settings,
+          cssClassList = s.isStandalone ? s.standaloneClass : '',
+          fileExtensions, types, isExtra, id, html;
 
-        this.element.append(
-          '<div class="fileupload-wrapper '+ standaloneClass +'">' +
-            '<div class="container drop-area">' +
-              $.createIcon('upload-adv') +
-              '<p>'+ settings.textDropArea +'</p>' +
-            '</div>' +
-          '</div>');
+        // Disabled
+        if (this.element.is('.is-disabled')) {
+          s.isDisabled = true;
+        }
+        if (s.isDisabled) {
+          cssClassList += ' is-disabled';
+        }
 
+        // Browse files option
+        if (s.showBrowseButton) {
+          types = '';
+          id = $.fn.uniqueId('fileupload-adv-');
+          fileExtensions = s.allowedTypes.split(/[\s|]+/g);
+          isExtra = s.maxFilesInProcess > 1 ? ' multiple' : '';
+          isExtra += s.isDisabled ? ' disabled' : '';
+
+          if (fileExtensions.length === 1) {
+            if (fileExtensions[0] !== '*') {
+              types = '.'+ fileExtensions[0];
+            }
+          } else {
+            for (var i = 0, l = fileExtensions.length; i < l; i++) {
+              types += '.'+ fileExtensions[i] + (i !== (l-1) ? ',' : '');
+            }
+          }
+
+          html = '' +
+            '<div class="fileupload-wrapper '+ cssClassList +'">' +
+              '<div class="container drop-area">' +
+                $.createIcon('upload') +
+                '<label class="fileupload-adv-browse-lbl">' +
+                  '<span>'+ s.textDropAreaWithBrowse +'</span>' +
+                  '<input type="file" name="'+ id +'" accept="'+ types +'"'+ isExtra +' />' +
+                '</label>' +
+              '</div>' +
+            '</div>';
+        }
+
+        // Without browse files option
+        else {
+          html = '' +
+            '<div class="fileupload-wrapper '+ cssClassList +'">' +
+              '<div class="container drop-area">' +
+                $.createIcon('upload') +
+                '<p>'+ s.textDropArea +'</p>' +
+              '</div>' +
+            '</div>';
+        }
+        this.element.append(html);
         this.dropArea = $('.drop-area', this.element);
       },
 
       //Attach Events used by the Control
       handleEvents: function () {
         var self = this,
-          settings = this.settings;
+          s = this.settings;
+
 
         self.dropArea
 
@@ -94,6 +149,10 @@
           self.element.triggerHandler('filesdragenter');
           e.stopPropagation();
           e.preventDefault();
+
+          if (s.isDisabled) {
+            return;
+          }
           $(this).addClass('hover');
         })
 
@@ -107,22 +166,51 @@
         .on('drop.fileuploadadvanced', function (e) {
           var files = e.originalEvent.dataTransfer.files;
           e.preventDefault();
+          if (s.isDisabled) {
+            return;
+          }
 
           self.element.triggerHandler('filesdroped', [files]);
 
-          $(this).removeClass('hover');
+          $(this).removeClass('hover is-focus');
 
           // Clear previous errors in general area
           $('span.msg', this.element).closest('.error').remove();
 
           // Max files can be upload
-          if ((files.length + $('.progress', this.element).length) > settings.maxFilesInProcess) {
-            self.showError(settings.errorMaxFilesInProcess);
+          if ((files.length + $('.progress', this.element).length) > s.maxFilesInProcess) {
+            self.showError(s.errorMaxFilesInProcess);
             return;
           }
 
           self.handleFileUpload(files);
         });
+
+        if (s.showBrowseButton && !s.isDisabled) {
+          var label = self.dropArea.find('.fileupload-adv-browse-lbl'),
+            input = label.find('input[type="file"]');
+
+          // Only let open dialog if clicked on link or input
+          label.click(function(e) {
+            if (!$(e.target).is('.hyperlink, input[type="file"]')) {
+              e.preventDefault();
+            }
+          });
+
+          input.hideFocus();
+          input.on('hidefocusremove.fileuploadadvanced', function (e) {
+              e.stopPropagation();
+              self.dropArea.addClass('is-focus');
+            })
+            .on('hidefocusadd.fileuploadadvanced', function (e) {
+              e.stopPropagation();
+              self.dropArea.removeClass('is-focus');
+            })
+            .on('change.fileuploadadvanced', function (e) {
+              e.stopPropagation();
+              self.handleFileUpload(this.files);
+            });
+        }
 
         // If the files are dropped outside the div, files will open in the browser window.
         // To avoid this prevent 'drop' event on document.
@@ -142,19 +230,20 @@
       * @param {Object} files &nbsp;-&nbsp; File object containing uploaded files.
       */
       handleFileUpload: function (files) {
-        var fileName = this.settings.fileName.replace('[]', '');
+        var s = this.settings,
+          fileName = s.fileName.replace('[]', '');
 
         for (var i = 0, l = files.length; i < l; i++) {
 
           // Check if file type allowed
           if (!this.isFileTypeAllowed(files[i].name)) {
-            this.showError(settings.errorAllowedTypes, files[i]);
+            this.showError(s.errorAllowedTypes, files[i]);
             continue;
           }
 
           // Check for max file size
-          if (settings.maxFileSize !== -1 && files[i].size > settings.maxFileSize) {
-            this.showError(settings.errorMaxFileSize, files[i]);
+          if (s.maxFileSize !== -1 && files[i].size > s.maxFileSize) {
+            this.showError(s.errorMaxFileSize, files[i]);
             continue;
           }
 
@@ -163,23 +252,33 @@
           fd.append(fileName + '[]', files[i]);
 
           var status = this.createStatus(files[i]);
+          status.container.find('.status-icon .action').focus();
           this.element.triggerHandler('aftercreatestatus', [files[i]]);
 
-          this.sendFileToServer(fd, status);
+          if (typeof s.send === 'function') {
+            s.send(fd, status);
+          } else {
+            this.sendFileToServer(fd, status);
+          }
+        }
+
+        if (s.showBrowseButton) {
+          // Clear browse file input
+          this.dropArea.find('.fileupload-adv-browse-lbl input[type="file"]').val('');
         }
       },
 
       // Create status
       createStatus: function (file) {
         var self = this,
-          settings = this.settings,
+          s = this.settings,
           container = $(
             '<div class="container">' +
               '<div class="file-row">' +
                 '<span class="status-icon">' +
                   '<button type="button" class="btn-icon action">' +
                     $.createIcon({ icon: 'close', classes: ['icon-close'] }) +
-                    '<span>'+ settings.textBtnCancel +'</span>' +
+                    '<span>'+ s.textBtnCancel +'</span>' +
                   '</button>' +
                 '</span>' +
                 '<span class="description">'+ file.name +'</span>' +
@@ -212,6 +311,7 @@
             btnCancel.on('click.fileuploadadvanced', function() {
               self.element.triggerHandler('fileaborted', [file]);
               jqxhr.abort();
+              btnCancel.off('click.fileuploadadvanced');
               container.remove();
             });
           },
@@ -227,11 +327,12 @@
             rightSide.append(
               '<button type="button" class="btn-icon action">' +
                 $.createIcon({ classes: ['icon-close'], icon: 'close' }) +
-                '<span>'+ settings.textBtnRemove +'</span>' +
+                '<span>'+ s.textBtnRemove +'</span>' +
               '</button>');
 
             // Set "Remove from server" button action
             $('.action', rightSide).button().on('click.fileuploadadvanced', function() {
+              $(this).off('click.fileuploadadvanced');
               container.remove();
 
               // TODO: server call for removing data
@@ -239,6 +340,7 @@
             });
 
             // Remove Cancel button and progress-bar area
+            btnCancel.off('click.fileuploadadvanced');
             btnCancel.add(progressBar.closest('.progress-row')).remove();
             self.element.triggerHandler('filecompleteuploading', [file]);
           };
@@ -276,49 +378,12 @@
         status.setAbort(jqXHR);
       },
 
-      sendFileToServer2: function (formData, status) {
-        this.element.triggerHandler('beforeuploading', [formData]);
-        var uploadURL = 'http://myserver.com/upload/upload.php', // Upload URL
-          jqXHR = $.ajax({
-            xhr: function() {
-              var xhrobj = $.ajaxSettings.xhr();
-
-              if (xhrobj.upload) {
-                xhrobj.upload.addEventListener('progress', function(e) {
-                  var percent = 0,
-                    position = e.loaded || e.position,
-                    total = e.total;
-
-                  if (e.lengthComputable) {
-                    percent = Math.ceil(position / total * 100);
-                  }
-
-                  // Set progress
-                  status.setProgress(percent);
-                }, false);
-              }
-              return xhrobj;
-            },
-            url: uploadURL,
-            type: 'POST',
-            contentType: false,
-            processData: false,
-            cache: false,
-            data: formData,
-            success: function(data) {
-              // File upload Done
-              status.setCompleted(data);
-            }
-        });
-
-        status.setAbort(jqXHR);
-      },
-
       // Show Errors
       showError: function (error, file) {
-        var container;
+        var container,
+          s = this.settings;
 
-        if (error === this.settings.errorMaxFilesInProcess) {
+        if (error === s.errorMaxFilesInProcess) {
           // This error show without file name or size in general area
           container = $(
             '<div class="container error">' +
@@ -326,7 +391,7 @@
                 '<span class="status-icon">' +
                   '<button type="button" class="btn-icon action">' +
                     $.createIcon({ classes: ['icon-close'], icon: 'close' }) +
-                    '<span>'+ settings.textBtnCloseError +'</span>' +
+                    '<span>'+ s.textBtnCloseError +'</span>' +
                   '</button>' +
                 '</span>' +
                 '<span class="msg">'+ error +'</span>' +
@@ -340,7 +405,7 @@
                 '<span class="status-icon">' +
                   '<button type="button" class="btn-icon action">' +
                     $.createIcon({ classes: ['icon-close'], icon: 'close' }) +
-                    '<span>'+ settings.textBtnCloseError +'</span>' +
+                    '<span>'+ s.textBtnCloseError +'</span>' +
                   '</button>' +
                 '</span>' +
                 '<span class="description">'+ file.name +'</span>' +
@@ -366,11 +431,11 @@
       isFileTypeAllowed: function (fileName) {
         var fileExtensions = this.settings.allowedTypes.toLowerCase().split(/[\s|]+/g),
           ext = fileName.split('.').pop().toLowerCase();
-          if(this.settings.allowedTypes !== '*' && $.inArray(ext, fileExtensions) < 0) {
-            return false;
-          }
-          return true;
-        },
+        if(this.settings.allowedTypes !== '*' && $.inArray(ext, fileExtensions) < 0) {
+          return false;
+        }
+        return true;
+      },
 
       // Helper function that formats the file sizes
       formatFileSize: function (bytes) {
@@ -392,14 +457,46 @@
       },
 
       /**
-      * Teardown - Remove added markup and events
+      * Set input to enabled.
       */
-      destroy: function() {
+      enable: function() {
+        this.settings.isDisabled = false;
+        this.teardown();
+        this.element
+          .find('.fileupload-wrapper').removeClass('is-disabled')
+          .find('.fileupload-adv-browse-lbl input[type="file"]').removeAttr('disabled');
+        this.handleEvents();
+      },
+
+      /**
+      * Set input to disabled.
+      */
+      disable: function() {
+        this.settings.isDisabled = true;
+        this.teardown();
+        this.element
+          .find('.fileupload-wrapper').addClass('is-disabled')
+          .find('.fileupload-adv-browse-lbl input[type="file"]').attr('disabled', 'disabled');
+        this.handleEvents();
+      },
+
+      /**
+      * Teardown - Remove added events
+      */
+      teardown: function() {
+        this.dropArea.find('.fileupload-adv-browse-lbl input[type="file"]').off('hidefocusremove.fileuploadadvanced hidefocusadd.fileuploadadvanced change.fileuploadadvanced');
+
         this.dropArea.off('dragenter.fileuploadadvanced dragover.fileuploadadvanced drop.fileuploadadvanced');
         $(document).off('dragenter.fileuploadadvanced dragover.fileuploadadvanced drop.fileuploadadvanced');
         $('.action', this.element).off('click.fileuploadadvanced');
-        $('.fileupload-wrapper', this.element).remove();
+      },
 
+      /**
+      * Destroy - Remove added markup and events
+      */
+      destroy: function() {
+        this.teardown();
+        $('.fileupload-wrapper', this.element).remove();
         $.removeData(this.element[0], pluginName);
       }
     };

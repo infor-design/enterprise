@@ -67,6 +67,27 @@
     .pager-next {
       right: 10px;
     }
+
+    .expandable-area {
+      border-right: 1px solid $panel-border-color;
+    }
+  }
+
+  .header + .sidebar {
+    height: calc(100% - 60px);
+
+    .listview-search + .listview.paginated {
+      height: calc(100% - 87px);
+    }
+
+    .pager-toolbar {
+      border-right: 1px solid $panel-border-color;
+    }
+
+    .listview.paginated {
+      height: calc(100% - 77px);
+    }
+
   }
 
   .toolbar {

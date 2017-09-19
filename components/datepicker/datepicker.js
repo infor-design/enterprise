@@ -45,6 +45,10 @@
             'isEnable' : false
           },
           showLegend: false,
+          customValidation: false,
+          showMonthYearPicker: false,
+          hideDays: false,
+          advanceMonths: 5,
           legend: [
             //Legend Build up example
             //Color in level 6 - http://usmvvwdev53:424/controls/colors
@@ -70,6 +74,10 @@
       'dayOfWeek' : [],
       'isEnable' : false
     }`
+    * @param {Boolean} showMonthYearPicker  &nbsp;-&nbsp; If true the month and year will render as dropdowns.
+    * @param {Boolean} hideDays  &nbsp;-&nbsp; If true the days portion of the calendar will be hidden. Usefull for Month/Year only formats.
+    * @param {Boolean} customValidation  &nbsp;-&nbsp; If true the internal validation is disabled.
+    * @param {Boolean} advanceMonths  &nbsp;-&nbsp; The number of months in each direction to show in the dropdown for months (when initially opening)
     * @param {Boolean} showLegend  &nbsp;-&nbsp; If true a legend is show to associate dates.
     * @param {Array} legend  &nbsp;-&nbsp; Legend Build up for example `[{name: 'Public Holiday', color: '#76B051', dates: []}, {name: 'Weekends', color: '#EFA836', dayOfWeek: []}]`
     *
@@ -115,6 +123,7 @@
       handleKeys: function (elem) {
         var self = this;
 
+        // Handle Keys while popup is open
         if (elem.is('#calendar-popup')) {
           elem.off('keydown.datepicker').on('keydown.datepicker', '.calendar-table', function (e) {
             var handled = false,
@@ -122,9 +131,9 @@
 
             //Arrow Down: select same day of the week in the next week
             if (key === 40) {
-                handled = true;
-                self.currentDate.setDate(self.currentDate.getDate() + 7);
-                self.insertDate(self.currentDate);
+              handled = true;
+              self.currentDate.setDate(self.currentDate.getDate() + 7);
+              self.insertDate(self.currentDate);
             }
 
             //Arrow Up: select same day of the week in the previous week
@@ -148,17 +157,17 @@
               self.insertDate(self.currentDate);
             }
 
-            //Page Up Selects Same Day Next Month
+            //Page Up Selects Same Day Prev Month
             if (key === 33 && !e.altKey) {
               handled = true;
-              self.currentDate.setMonth(self.currentDate.getMonth() + 1);
+              self.currentDate.setMonth(self.currentDate.getMonth() - 1);
               self.insertDate(self.currentDate);
             }
 
-            //Page Down Selects Same Day Prev Month
+            //Page Down Selects Same Day Next Month
             if (key === 34 && !e.altKey) {
               handled = true;
-              self.currentDate.setMonth(self.currentDate.getMonth() - 1);
+              self.currentDate.setMonth(self.currentDate.getMonth() + 1);
               self.insertDate(self.currentDate);
             }
 
@@ -204,12 +213,10 @@
               handled = true;
             }
 
-            // Tab closes Date Picker and goes to next field
+            // Tab closes Date Picker and goes to next field on the modal
             if (key === 9) {
-              if (!self.settings.showTime) {
-                self.element.focus();
-                self.closeCalendar();
-              }
+              self.containFocus(e);
+              handled = true;
             }
 
             // Esc closes Date Picker and goes back to field
@@ -225,19 +232,30 @@
             }
 
           });
+
+          elem.off('keydown.datepicker-tab').on('keydown.datepicker-tab', 'td, input, div.dropdown, button', function (e) {
+            var key = e.keyCode || e.charCode || 0;
+
+            // Tab closes Date Picker and goes to next field on the modal
+            if (key === 9) {
+              self.containFocus(e);
+              e.stopPropagation();
+              e.preventDefault();
+              return false;
+            }
+          });
+
+          return;
         }
-        else {
-          elem.off('keydown.datepicker').on('keydown.datepicker', function (e) {
+
+        //Handle input keys
+        elem.off('keydown.datepicker').on('keydown.datepicker', function (e) {
             var handled = false,
               key = e.keyCode || e.charCode || 0,
               focused = $(':focus'),
               focusedlabel = focused.attr('aria-label');
 
-            // Focus did not auto move from readonly
-            if (key === 9 && self.element.is('[readonly]')) { //tab
-              self.setFocusOnFocusableElement(self.element, (e.shiftKey ? 'prev' : 'next'));
-              return;
-            }
+            // TODO: With new mask the code around key === 9 should not be needed.
 
             if (focusedlabel) {
               var focusedDate = new Date(focusedlabel);
@@ -246,6 +264,11 @@
                 var year = parseInt(self.header.find('.year').text()),
                 month = parseInt(self.header.find('.month').attr('data-month')),
                 day = parseInt(focused.text());
+
+              if (self.settings.showMonthYearPicker) {
+                month = parseInt(self.header.find('.month select').val());
+                year = parseInt(self.header.find('.year select').val());
+              }
 
               if (focused.hasClass('prev-month')) {
                 if(month === 0) {
@@ -290,6 +313,32 @@
             }
 
           });
+
+      },
+
+      /**
+       * Focus the next prev focusable element on the popup
+       * @private
+       */
+      containFocus: function (e) {
+        var reverse = e.shiftKey;
+
+        // Set focus on (opt: next|prev) focusable element
+        var focusables = this.popup.find(':focusable'),
+          index = focusables.index($(':focus'));
+
+        index = (!reverse) ?
+          ((index+1) >= focusables.length ? 0 : (index+1)) :
+          ((index-1) < 0 ? focusables.length : (index-1));
+
+        var elem = focusables.eq(index);
+        elem.focus();
+
+        if (elem.is('td')) {
+          elem.addClass('is-selected');
+          this.currentDate.setDate(elem.text());
+          this.currentDate.setMonth(this.calendar.find('.month').attr('data-month'));
+          this.insertDate(this.currentDate);
         }
 
       },
@@ -317,6 +366,13 @@
           events = {'date': 'blur', 'availableDate': 'blur'},
           customValidation = this.element.attr('data-validate'),
           customEvents = this.element.attr('data-validation-events'),
+          maskOptions = {
+            process: 'date',
+            keepCharacterPositions: true,
+            patternOptions: {
+              format: this.pattern
+            }
+          },
           mask = this.pattern.toLowerCase()
                    .replace(/yyyy/g,'####')
                    .replace(/mmmm/g,'*********')
@@ -350,13 +406,15 @@
           }
         }
 
-        this.element
-          .attr({
-            'data-mask': mask,
-            'data-validate': validation,
-            'data-validation-events': JSON.stringify(events),
-            'data-mask-mode': 'date'
-          }).mask().validate();
+        this.element.mask(maskOptions);
+
+        if (!this.settings.customValidation) {
+          this.element
+            .attr({
+              'data-validate': validation,
+              'data-validation-events': JSON.stringify(events)
+            }).validate();
+        }
 
         if (this.settings.placeholder && (!this.element.attr('placeholder') ||  this.element.attr('placeholder') === 'M / D / YYYY')) {
           this.element.attr('placeholder', this.pattern);
@@ -414,6 +472,11 @@
         this.timepickerContainer = $('<div class="datepicker-time-container"></div>');
         this.footer = $('<div class="popup-footer"> <button type="button" class="cancel btn-tertiary">'+ Locale.translate('Clear') +'</button> <button type="button" class="is-today btn-tertiary">'+Locale.translate('Today')+'</button> </div>');
 
+        if (this.settings.hideDays) {
+          this.table = '';
+          this.footer = $('<div class="popup-footer"> <button type="button" class="select-month btn-tertiary">'+ Locale.translate('Select') +'</button></div>');
+        }
+
         // Timepicker options
         if (this.settings.showTime) {
           if (this.settings.timeFormat === undefined) {
@@ -438,7 +501,7 @@
 
         }
 
-        this.calendar = $('<div class="calendar'+ (this.settings.showTime ? ' is-timepicker' : '') +'"></div')
+        this.calendar = $('<div class="calendar'+ (this.settings.showTime ? ' is-timepicker' : '') + (this.settings.hideDays ? ' is-monthyear' : '') +'"></div')
           .append(
             this.header,
             this.table,
@@ -551,6 +614,11 @@
               month = parseInt(self.header.find('.month').attr('data-month')),
               day = parseInt(cell.addClass('is-selected').attr('aria-selected', 'true').text());
 
+            if (self.settings.showMonthYearPicker) {
+              year = parseInt(self.header.find('.year select').val());
+              month = parseInt(self.header.find('.month select').val());
+            }
+
             if (cell.hasClass('prev-month')) {
               if(month === 0) {
                 month = 11;
@@ -595,6 +663,27 @@
           if (btn.hasClass('cancel')) {
             self.element.val('').trigger('change').trigger('input');
             self.currentDate = null;
+            self.closeCalendar();
+          }
+
+          if (btn.hasClass('select-month')) {
+            var year, month;
+            year = parseInt(self.header.find('.year select').val());
+            month = parseInt(self.header.find('.month select').val());
+
+            self.currentDate = new Date(year, month, 1);
+
+            if (self.isIslamic) {
+              self.currentDateIslamic[0] = year;
+              self.currentDateIslamic[1] = month;
+              self.currentDateIslamic[2] = 1;
+              self.currentYear = self.currentDateIslamic[0];
+              self.currentMonth = self.currentDateIslamic[1];
+              self.currentDay = self.currentDateIslamic[2];
+              self.currentDate = self.conversions.toGregorian(self.currentDateIslamic[0], self.currentDateIslamic[1], self.currentDateIslamic[2]);
+            }
+
+            self.insertDate(self.isIslamic ? self.currentDateIslamic : self.currentDate);
             self.closeCalendar();
           }
 
@@ -806,10 +895,15 @@
           return;
         }
         this.activeTabindex(this.calendar.find('.is-selected'), true);
+
+        if (this.settings.hideDays) {
+          this.calendar.find('div.dropdown:first').focus();
+        }
+
       },
 
       // Update the calendar to show the month (month is zero based)
-      showMonth: function (month, year) {
+      showMonth: function (month, year, skipYear) {
         var self = this;
 
         var elementDate = this.currentDate.getDate() ?
@@ -837,29 +931,33 @@
           this.header.find('.year').text(' ' + year);
         }
 
-        var days = Locale.calendar().days.narrow || Locale.calendar().days.narrow || Locale.calendar().days.abbreviated,
-          monthName = Locale.calendar().months.wide[month];
+        if (!skipYear) {
+          var days = Locale.calendar().days.narrow || Locale.calendar().days.narrow || Locale.calendar().days.abbreviated,
+            monthName = Locale.calendar().months.wide[month];
 
-        this.currentMonth = month;
-        this.currentYear = year;
+          this.currentMonth = month;
+          this.currentYear = year;
 
-        // Set the Days of the week
-        var firstDayofWeek = (Locale.calendar().firstDayofWeek || 0);
-        this.dayNames.find('th').each(function (i) {
-          $(this).text(days[(i + firstDayofWeek) % 7]);
-        });
+          // Set the Days of the week
+          var firstDayofWeek = (Locale.calendar().firstDayofWeek || 0);
+          this.dayNames.find('th').each(function (i) {
+            $(this).text(days[(i + firstDayofWeek) % 7]);
+          });
 
-        //Localize Month Name
-        this.yearFist = Locale.calendar().dateFormat.year && Locale.calendar().dateFormat.year.substr(1, 1) === 'y';
-        this.header.find('.month').attr('data-month', month).text(monthName + ' ');
-        this.header.find('.year').text(' ' + year);
+          //Localize Month Name
+          this.yearFist = Locale.calendar().dateFormat.year && Locale.calendar().dateFormat.year.substr(1, 1) === 'y';
+          this.header.find('.month').attr('data-month', month).text(monthName + ' ');
+          this.header.find('.year').text(' ' + year);
 
-        if (this.yearFist) {
-          var translation = Locale.formatDate(elementDate, {date: 'year'}),
-            justYear = translation.split(' ')[0];
+          if (this.yearFist) {
+            var translation = Locale.formatDate(elementDate, {date: 'year'}),
+              justYear = translation.split(' ')[0];
 
-          this.header.find('.year').text(justYear + ' ');
-          this.header.find('.year').insertBefore(this.header.find('.month'));
+            this.header.find('.year').text(justYear + ' ');
+            this.header.find('.year').insertBefore(this.header.find('.month'));
+          }
+
+          this.appendMonthYearPicker(month, year);
         }
 
         //Adjust days of the week
@@ -941,6 +1039,63 @@
 
         //Add Legend
         self.addLegend();
+      },
+
+      appendMonthYearPicker: function (month, year) {
+        var self = this;
+
+        if (!this.settings.showMonthYearPicker) {
+          return;
+        }
+
+        var monthDropdown = '<label for="month-dropdown" class="audible">'+ Locale.translate('Month') +'</label>'+
+          '<select id="month-dropdown" class="dropdown">';
+
+        var wideMonths = Locale.calendar().months.wide;
+        wideMonths.map(function (monthMap, i) {
+          monthDropdown += '<option '+ (i===month ? ' selected ' : '') + ' value="'+ i +'">'+ monthMap +'</option>';
+        });
+        monthDropdown +='</select>';
+
+        var monthSpan = this.header.find('.month').empty().append(monthDropdown);
+        monthSpan.find('select.dropdown').dropdown().off('change.datepicker')
+          .on('change.datepicker', function () {
+            var elem = $(this);
+            self.currentMonth = parseInt(elem.val());
+            self.showMonth(self.currentMonth, self.currentYear, true);
+          });
+
+        var yearDropdown = '<label for="year-dropdown" class="audible">'+ Locale.translate('Year') +'</label>'+
+          '<select id="year-dropdown" class="dropdown year">';
+
+        var years = [];
+
+        for (var i = this.settings.advanceMonths; i >= 1; i--) {
+          years.push(parseInt(year) - i);
+        }
+        years.push(year);
+        for (var j = 1; j <= this.settings.advanceMonths; j++) {
+          years.push(parseInt(year) + j);
+        }
+
+        years.map(function (yearMap) {
+          yearDropdown += '<option '+ (year===yearMap ? ' selected ' : '') + ' value="'+ yearMap +'">'+ yearMap +'</option>';
+        });
+        yearDropdown +='</select>';
+
+        var yearSpan = this.header.find('.year').empty().append(yearDropdown);
+        yearSpan.find('select.dropdown').dropdown().off('change.datepicker')
+          .on('change.datepicker', function () {
+            var elem = $(this);
+            self.currentYear = parseInt(elem.val());
+            self.showMonth(self.currentMonth, self.currentYear, true);
+          });
+
+        if (this.yearFist) {
+          yearSpan.find('.dropdown-wrapper').css('left', '0');
+          monthSpan.find('.dropdown-wrapper').css('left', '10px');
+        }
+
       },
 
       // Put the date in the field and select on the calendar
@@ -1055,7 +1210,8 @@
 
       //Get the value from the field and set the internal variables or use current date
       setValueFromField: function() {
-        var fieldValue = this.element.val(),
+        var self = this,
+          fieldValue = this.element.val(),
           gregorianValue = fieldValue;
 
         if (this.isIslamic && fieldValue) {
@@ -1083,6 +1239,15 @@
           this.currentMonth = this.currentDateIslamic[1];
           this.currentDay = this.currentDateIslamic[2];
         }
+
+        // Check and fix two digit year for main input element
+        self.element.checkValidation();
+        self.element.one('isvalid.datepicker', function (e, isValid) {
+          if (isValid && self.element.val().trim() !== '') {
+            self.setValue(Locale.parseDate(self.element.val().trim(), self.pattern, false));
+          }
+        });
+
       },
 
       /**
@@ -1188,18 +1353,10 @@
         });
       },
 
-      // Set focus on (opt: next|prev) focusable element
-      setFocusOnFocusableElement: function(element, opt) {
-        var canfocus = $(':focusable'),
-          index = canfocus.index(element);
-
-        index = (opt === 'next') ?
-          ((index+1) >= canfocus.length ? 0 : (index+1)) :
-          ((index-1) < 0 ? canfocus.length : (index-1));
-
-        canfocus.eq(index).focus();
-      },
-
+      /**
+       * Updates the component instance.  Can be used after being passed new settings.
+       * @returns {this}
+       */
       updated: function() {
         return this
           .teardown()
@@ -1211,6 +1368,7 @@
           this.closeCalendar();
         }
 
+        this.element.off('blur.datepicker');
         this.trigger.remove();
         this.element.attr('data-mask', '');
 
@@ -1263,6 +1421,16 @@
 
         self.mask();
         this.handleKeys(this.element);
+
+        // Fix two digit year for main input element
+        self.element.on('blur.datepicker', function () {
+          self.element.one('isvalid.datepicker', function (e, isValid) {
+            if (isValid && self.element.val().trim() !== '') {
+              self.setValueFromField();
+            }
+          });
+        });
+
       }
 
     };

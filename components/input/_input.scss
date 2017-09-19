@@ -111,8 +111,8 @@
   @include font-size(14);
   color: $checkbox-label-color;
   display: inline-block;
-  margin-top: 1px;
   margin-bottom: 0;
+  margin-top: 0;
 }
 
 .field > input,
@@ -133,6 +133,10 @@
       line-height: 20px;
       margin-bottom: -1px;
     }
+
+    .error-message .message-text {
+      float: left;
+    }
   }
 
   > .field {
@@ -142,6 +146,12 @@
   > .field-short {
     margin-right: 10px;
     vertical-align: top;
+  }
+
+  .dropdown-wrapper {
+    margin-bottom: 0;
+    margin-top: -3px;
+    vertical-align: middle;
   }
 }
 
@@ -773,6 +783,16 @@ html[dir='rtl'] {
     &::after {
       margin-left: inherit;
       margin-right: -40px;
+    }
+  }
+
+  .compound-field {
+
+    > .field,
+    > .field-short {
+      .error-message .message-text {
+        float: right;
+      }
     }
   }
 }

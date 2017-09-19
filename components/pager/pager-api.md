@@ -22,7 +22,6 @@ The Pager Component supports paging on lists.
 -   `pagesizes` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)**  -  Array of numbers of the page size selector
 -   `showPageSizeSelector` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If false will not show page size selector
 -   `indeterminate` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true will not show anything that lets you go to a specific page
--   `element`  
 
 ### updatePagingInfo
 
@@ -34,9 +33,9 @@ Updates this instance of pager with externally-provided settings.
     -   `pagingInfo.pagesize` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** the number of items visible per page
     -   `pagingInfo.total` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** the total number of pages
     -   `pagingInfo.activePage` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** the currently visible page
-    -   `pagingInfo.firstPage` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** passed if the currently visible page is the first one (optional, default `false`)
-    -   `pagingInfo.lastPage` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** passed if the currently visible page is the last one (optional, default `false`)
-    -   `pagingInfo.hideDisabledPagers` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)?** causes the pager to become completely hidden if all buttons are disabled (optional, default `false`)
+    -   `pagingInfo.firstPage` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** passed if the currently visible page is the first one (optional, default `false`)
+    -   `pagingInfo.lastPage` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** passed if the currently visible page is the last one (optional, default `false`)
+    -   `pagingInfo.hideDisabledPagers` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** causes the pager to become completely hidden if all buttons are disabled (optional, default `false`)
 
 ### destroy
 
