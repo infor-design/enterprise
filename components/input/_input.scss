@@ -133,6 +133,10 @@
       line-height: 20px;
       margin-bottom: -1px;
     }
+
+    .error-message .message-text {
+      float: left;
+    }
   }
 
   > .field {
@@ -779,6 +783,16 @@ html[dir='rtl'] {
     &::after {
       margin-left: inherit;
       margin-right: -40px;
+    }
+  }
+
+  .compound-field {
+
+    > .field,
+    > .field-short {
+      .error-message .message-text {
+        float: right;
+      }
     }
   }
 }
