@@ -183,8 +183,9 @@
         function toggleTooltipDisplay() {
           if (!self.tooltip.hasClass('is-hidden')) {
             self.hide();
+          } else {
+            self.show();
           }
-          self.show();
         }
 
         if (this.settings.trigger === 'click') {
