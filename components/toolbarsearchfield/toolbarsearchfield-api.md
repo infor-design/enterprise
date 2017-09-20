@@ -5,6 +5,8 @@
 -   [ToolbarSearchfield](#toolbarsearchfield)
     -   [build](#build)
     -   [hasFocus](#hasfocus)
+    -   [hasCategories](#hascategories)
+    -   [hasGoButton](#hasgobutton)
     -   [handleFocus](#handlefocus)
     -   [handleFakeBlur](#handlefakeblur)
     -   [handleOutsideClick](#handleoutsideclick)
@@ -44,6 +46,18 @@ Returns **this**
 ### hasFocus
 
 Detects whether or not the Toolbar Searchfield has focus.
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### hasCategories
+
+Detects the existence of a "Categories" button added to the searchfield
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### hasGoButton
+
+Detects the existence of a "Go" button added to the main searchfield API
 
 Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 

@@ -271,13 +271,15 @@
   }
 
   //Call to action button
-  + .btn.go-button,
-  + .btn-secondary.go-button {
+  .go-button {
     margin-left: 10px;
     margin-top: 0;
     min-width: 0;
+    padding: 0 5px;
     position: absolute;
+    width: 40px;
   }
+
 }
 
 .inline.searchfield-wrapper:not(.toolbar-searchfield-wrapper) {

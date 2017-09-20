@@ -98,7 +98,7 @@
         this.inputWrapper.addClass('toolbar-searchfield-wrapper');
 
         if (sfSettings.categories) {
-          this.button = this.inputWrapper.find('.searchfield-category-button');
+          this.categoryButton = this.inputWrapper.find('.searchfield-category-button');
         }
 
         // Add/remove the collapsible setting
@@ -160,11 +160,41 @@
       },
 
       /**
+       * Detects the existence of a "Categories" button added to the searchfield
+       * @returns {boolean}
+       */
+      hasCategories: function() {
+        var searchfieldAPI = this.input.data('searchfield');
+        if (!searchfieldAPI || typeof searchfieldAPI.hasCategories === 'function') {
+          return false;
+        }
+
+        return searchfieldAPI.hasCatgories();
+      },
+
+      /**
+       * Detects the existence of a "Go" button added to the main searchfield API
+       * @returns {boolean}
+       */
+      hasGoButton: function() {
+        var searchfieldAPI = this.input.data('searchfield');
+        if (!searchfieldAPI || !searchfieldAPI.goButton || !searchfieldAPI.goButton.length) {
+          return false;
+        }
+
+        return searchfieldAPI.goButton.length > 0;
+      },
+
+      /**
        * Handles the focus of the searchfield, expanding it on time delay.
        */
       handleFocus: function() {
         var self = this;
         clearTimeout(this.focusTimer);
+
+        if (this.isExpanded) {
+          return;
+        }
 
         this.inputWrapper.addClass('has-focus');
 
@@ -186,6 +216,10 @@
       handleFakeBlur: function() {
         var self = this;
         clearTimeout(this.focusTimer);
+
+        if (this.hasFocus()) {
+          return;
+        }
 
         function searchfieldCollapseTimer() {
           self.collapse();
@@ -248,7 +282,7 @@
         }
 
         if (!this.inputWrapper.is('.is-open')) {
-          this.button.focus();
+          this.categoryButton.focus();
           return false;
         }
 
@@ -356,8 +390,8 @@
         // If the searchfield category button exists, change the width of the
         // input field on the inside to provide space for the (variable) size of the currently-selected
         // category (or categories)
-        if ((this.button instanceof $) && this.button.length) {
-          var buttonStyle = window.getComputedStyle(this.button[0]),
+        if ((this.categoryButton instanceof $) && this.categoryButton.length) {
+          var buttonStyle = window.getComputedStyle(this.categoryButton[0]),
             buttonWidth = parseInt(buttonStyle.width),
             buttonPadding = parseInt(buttonStyle.paddingLeft) + parseInt(buttonStyle.paddingRight);
 
@@ -371,6 +405,8 @@
        * @private
        */
       setOpenWidth: function() {
+        var subtractWidth = 0;
+
         if (this.inputWrapper[0]) {
           this.inputWrapper[0].style.width = this.openWidth;
         }
@@ -378,14 +414,27 @@
         // If the searchfield category button exists, change the width of the
         // input field on the inside to provide space for the (variable) size of the currently-selected
         // category (or categories)
-        if ((this.button instanceof $) && this.button.length) {
-          var buttonStyle = window.getComputedStyle(this.button[0]),
-            buttonWidth = parseInt(buttonStyle.width),
-            buttonPadding = parseInt(buttonStyle.paddingLeft) + parseInt(buttonStyle.paddingRight),
-            buttonBorder = (parseInt(buttonStyle.borderWidth) * 2),
-            inputWidth = 'calc(100% - ' + (buttonWidth + buttonPadding + buttonBorder - 2) + 'px)';
+        if (this.hasCategories()) {
+          var categoryButtonStyle = window.getComputedStyle(this.categoryButton[0]),
+            categoryButtonWidth = parseInt(categoryButtonStyle.width),
+            categoryButtonPadding = parseInt(categoryButtonStyle.paddingLeft) + parseInt(categoryButtonStyle.paddingRight),
+            categoryButtonBorder = (parseInt(categoryButtonStyle.borderWidth) * 2);
 
-          this.input[0].style.width = inputWidth;
+          subtractWidth = subtractWidth + (categoryButtonWidth + categoryButtonPadding + categoryButtonBorder + 4);
+        }
+
+        if (this.hasGoButton()) {
+          var goButton = this.element.data('searchfield').goButton,
+            goButtonStyle = window.getComputedStyle(goButton[0]),
+            goButtonWidth = parseInt(goButtonStyle.width),
+            goButtonPadding = parseInt(goButtonStyle.paddingLeft) + parseInt(goButtonStyle.paddingRight),
+            goButtonBorder = (parseInt(goButtonStyle.borderWidth) * 2);
+
+          subtractWidth = subtractWidth + (goButtonWidth + goButtonPadding + goButtonBorder + 4);
+        }
+
+        if (subtractWidth > 0) {
+          this.input[0].style.width = 'calc(100% - ' + subtractWidth + 'px)';
         }
       },
 
@@ -544,8 +593,7 @@
             self.setOpenWidth();
           }
 
-          var iOS = /(iPad|iPhone|iPod)/g.test( navigator.userAgent );
-          if (!noFocus || iOS) {
+          if (!noFocus || Soho.env.os.name === 'ios') {
             self.input.focus();
           }
 
@@ -619,7 +667,7 @@
           textMethod = 'removeClass';
 
         function closeWidth() {
-          if (self.button instanceof $ && self.button.length) {
+          if (self.categoryButton instanceof $ && self.categoryButton.length) {
             self.setClosedWidth();
           } else {
             self.inputWrapper.removeAttr('style');
@@ -631,8 +679,8 @@
 
           closeWidth();
 
-          if (self.button && self.button.length) {
-            self.button.data('popupmenu').close(false, true);
+          if (self.categoryButton && self.categoryButton.length) {
+            self.categoryButton.data('popupmenu').close(false, true);
           }
 
           self.inputWrapper
@@ -875,8 +923,8 @@
           self.collapse();
         });
 
-        if (this.button && this.button.length) {
-          this.button.on('beforeopen.toolbarsearchfield', function(e, menu) {
+        if (this.categoryButton && this.categoryButton.length) {
+          this.categoryButton.on('beforeopen.toolbarsearchfield', function(e, menu) {
             return self.handlePopupBeforeOpen(e, menu);
           });
         }
