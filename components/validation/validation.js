@@ -735,6 +735,7 @@
       } else { // All other components
         loc.closest('.field, .field-short').find('.formatter-toolbar').addClass('error');
         loc.closest('.field, .field-short').append(markup);
+        loc.closest('.field, .field-short').find('.colorpicker-container').addClass('error');
       }
 
       //Remove positive errors
@@ -820,6 +821,7 @@
       if (field.parent().is('.editor-container')) {
         field.parent().removeClass('is-error');
       }
+      field.parent('.colorpicker-container').removeClass('error');
 
       if (field.closest('.field-fileupload').length > -1) {
         field.closest('.field-fileupload').find('input.error').removeClass('error');
