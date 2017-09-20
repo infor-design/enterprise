@@ -3424,13 +3424,9 @@ $.fn.datagrid = function(options) {
     //Calculate the width for a column (upfront with no rendering)
     //https://www.w3.org/TR/CSS21/tables.html#width-layout
     calculateColumnWidth: function (col, index) {
-      var visibleColumns, colPercWidth;
-      visibleColumns = this.visibleColumns(true);
-
-      var lastColumn = (index === this.lastColumnIdx());
-      if (lastColumn && col.isStretched) {
-        col.width = null;
-      }
+      var colPercWidth,
+        visibleColumns = this.visibleColumns(true),
+        lastColumn = (index === this.lastColumnIdx());
 
       if (!this.elemWidth) {
         this.elemWidth = this.element.outerWidth();
@@ -3529,12 +3525,9 @@ $.fn.datagrid = function(options) {
       if (lastColumn) {
         var diff = this.elemWidth - this.totalWidth;
 
-        if ((diff > 0) && (diff  > colWidth) && !this.widthPercent) {
+        if ((diff > 0) && (diff  > colWidth) && !this.widthPercent && !col.width) {
           colWidth = diff - 2;
-
           this.headerWidths[index] = {id: col.id, width: colWidth, widthPercent: this.widthPercent};
-          col.width = colWidth;
-          col.isStretched = true;
           this.totalWidth =  this.elemWidth - 2;
         }
 
