@@ -136,7 +136,11 @@
 <li><strong>formatter</strong> The way to format the cell contents (see formatters)<br /></li>
 <li><strong>align</strong> Can be <code>left</code> or <code>right</code> or <code>center</code>. Note that <code>center</code> has limited column type support.<br /></li>
 <li><strong>sortable</strong> If false, the column cannot be sorted.<br /></li>
-<li><strong>width</strong> The column width, this can be an integer for pixel width or a percent fx <code>10%</code>, if left off the columns will be sized to contents and to fit the width of the grid using the internal algorithm.</li>
+<li><strong>width</strong> The column width, this can be an integer for pixel width or a percent fx <code>10%</code>, if left off the columns will be sized to contents and to fit the width of the grid using the internal algorithm.<br /></li>
+<li><strong>hidden</strong> If true the column will be hidden, but will appear in the personalization dialog and can thus be later shown by the user.<br /></li>
+<li><strong>resizable</strong> If false the column will not be resizable, thus is a fixed size and can never be changed by the user by dragging the left and right edge.<br /></li>
+<li>**headerTooltip* Can be used to set a tooltip specific to the column header.<br /></li>
+<li>**reorderable* The column cannot be dragged around to have its order in the list changed.</li>
 </ul>
 <h2 id="column-settings-formatter-specific">Column Settings (Formatter Specific)</h2>
 <ul>
@@ -210,12 +214,13 @@
 </ul>
 <h2 id="editors">Editors</h2>
 <p>TODO</p>
-<h2 id="column-settings-formatter-specific-1">Column Settings (Formatter Specific)</h2>
+<h2 id="column-settings-editor-specific">Column Settings (Editor Specific)</h2>
 <ul>
 <li><strong>maxLength</strong> Used for some editors, on some input types to restrict the input to this integer number of characters.<br /></li>
 <li><strong>mask</strong> Used to pass in an input mask for some editors to override or add a custom mask. See <a href="../components/mask">the mask component</a> for details on making a mask.<br /></li>
 <li><strong>maskMode</strong> Used to pass in an input mask maskMode option. See <a href="../components/mask">the mask component</a> for details on making a mask.<br /></li>
-<li>*editorOptions** used to pass in the options to the underlying editor. You would pass the same options whatever editor it is accepts as a component.</li>
+<li><strong>caseInsensitive</strong> Used in the dropdown editor to make it such case is not used to match keys to the key/value pairs in the options.<br /></li>
+<li><strong>validate</strong> The validation function(s) to use. See <a href="../components/validation">the validation component</a> for details on validation functions.</li>
 </ul>
 <h2 id="keyboard-shortcuts">Keyboard Shortcuts</h2>
 <ul>
