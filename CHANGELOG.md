@@ -1,9 +1,13 @@
 ## <a name="version-4.3.2">4.3.2</a>
-Release Date:* 2017-09-18
+
+Release Date: 2017-09-18
+
 Full Jira Release Notes: http://bit.ly/2fynFq7
 
 ### <a name="version-4.3.2-download-build-assets">Download Build Assets:</a>
+
 Build Server: http://bamboo.infor.com/browse/label/release-432
+
 Npm: http://npm.infor.com
 
 ### <a name="version-4.3.2-download-build-assets">Demo Site</a>

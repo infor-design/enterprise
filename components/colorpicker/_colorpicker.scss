@@ -17,6 +17,10 @@
     border-color: $input-hover-border-color;
   }
 
+  &.error {
+    border-color: $error-color;
+  }
+
   &.is-disabled {
     background-color: $input-disabled-bg-color;
     border-color: $input-disabled-border-color;
@@ -32,6 +36,19 @@
       fill: $trigger-disabled-color !important;
     }
     // scss-lint:enable ImportantRule
+  }
+
+  &.color-only {
+    width: 70px;
+
+    input {
+      width: 0;
+    }
+
+    .trigger {
+      margin-left: -15px;
+    }
+
   }
 
   &.is-readonly {
