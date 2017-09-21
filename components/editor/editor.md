@@ -7,6 +7,7 @@
 2. Customize Buttons [View Example]( ../components/editor/example-customize-buttons)
 3. Back Color Button (Experimental - Limited Browser Support) [View Example]( ../components/editor/example-with-backcolor)
 4. Clickable Links with Rich Text Editor Example [View Example]( ../components/editor/example-clickable-links)
+4. Rich Text Editor with Event Checking [View Example]( ../components/editor/example-with-events)
 
 {{api-details}}
 

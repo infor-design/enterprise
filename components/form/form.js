@@ -110,6 +110,10 @@
             el = label.prev('input');
           }
 
+          if (field.is('.editor-container')) {
+            el = field.closest('textarea');
+          }
+
           // Used element without .field wrapper
           if (!label[0]) {
             label = input.next('label');
@@ -151,8 +155,16 @@
             d.msg = label.find('.msg-dirty');
           }
 
-          //Handle reseting value back
-          if (valMethod(input) === input.data('original')) {
+          //Handle resetting value back
+          var original = input.data('original');
+          var current = valMethod(input);
+          if(field.is('.editor-container')) {
+            // editors values are further down it's tree in a textarea, so get the elements with the value
+            var textArea = field.find('textarea');
+            original = textArea[0].defaultValue;
+            current = valMethod(textArea);
+          }
+          if (current === original) {
             input.removeClass('dirty');
             $('.icon-dirty, .msg-dirty', field).add(d.icon).add(d.msg).remove();
             input.trigger(e.type === 'doresetdirty' ? 'afterresetdirty' : 'pristine');

@@ -346,9 +346,11 @@
         // fill the text area with any content that may already exist within the editor DIV
         this.textarea.text(this.element.html().toString());
 
-        this.element.on('input.editor keyup.editor', function() {
+        this.element.on('input.editor keyup.editor', Soho.utils.debounce( function(){
           self.textarea.val(self.element.html().toString());
-        });
+          // setting the value via .val doesn't trigger the change event
+          $(this).trigger('change');
+        }, 500 ));
 
         this.setupTextareaEvents();
         return this.textarea;
