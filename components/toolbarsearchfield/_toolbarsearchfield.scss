@@ -61,6 +61,12 @@ $toolbarsearchfield-category-empty-width: 54px;
     .searchfield {
       width: calc(100% - 40px);
     }
+
+    > .icon {
+      &.close {
+        right: 55px;
+      }
+    }
   }
 
   label {
@@ -169,7 +175,6 @@ $toolbarsearchfield-category-empty-width: 54px;
 
       &.close {
         fill: rgba($searchfield-text-color, 0);
-        right: 5px;
         @include transition(fill 300ms cubic-bezier(.17, .04, .03, .94));
       }
     }

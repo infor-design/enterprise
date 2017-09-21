@@ -309,7 +309,7 @@
 
             self.element.trigger('selected', [a, ret]);
             self.element.data('popupmenu').close();
-            e.preventDefault();
+            //e.preventDefault();
             return false;
           });
 
@@ -352,12 +352,12 @@
        * @returns {undefined}
        */
       setAsActive: function(force, doFocus) {
-        if (!force && this.element.hasClass('active')) {
+        if (!force && this.wrapper.hasClass('active')) {
           return;
         }
 
         // Activate
-        this.element.addClass('active');
+        this.wrapper.addClass('active');
         var toolbar = this.element.closest('.toolbar, [class$="-toolbar"]');
         if (toolbar.length) {
           toolbar.addClass('searchfield-active');
@@ -518,6 +518,13 @@
        * @returns {undefined}
        */
       handleCategorySelected: function(e, anchor) {
+
+
+        // Only change the text and searchfield size if we can
+        if (!this.settings.showCategoryText) {
+          return;
+        }
+
         this.setCategoryButtonText(e, anchor.text().trim());
 
         // If this is a toolbar searchfield, run the size check that fixes the
@@ -541,7 +548,7 @@
         }
 
         this.wrapper
-          //.removeClass('active')
+          .addClass('active')
           .addClass('has-focus');
       },
 
