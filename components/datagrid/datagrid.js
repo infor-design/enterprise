@@ -1902,7 +1902,8 @@ $.fn.datagrid = function(options) {
         headerRow = '',
         headerColGroup = '<colgroup>',
         cols= '',
-        uniqueId;
+        uniqueId,
+        skipNext = 0;
 
       var colGroups = this.settings.columnGroups;
 
@@ -1936,7 +1937,13 @@ $.fn.datagrid = function(options) {
           isSelection = column.id === 'selectionCheckbox',
           alignmentClass = (column.align === 'center' ? ' l-'+ column.align +'-text' : '');// Disable right align for now as this was acting wierd
 
-        headerRow += '<th scope="col" role="columnheader" class="' + (isSortable ? 'is-sortable' : '') + (isResizable ? ' is-resizable' : '') + (column.hidden ? ' is-hidden' : '') + (column.filterType ? ' is-filterable' : '') + (alignmentClass ? alignmentClass : '') + '"' +
+        if (skipNext > 0) {
+          skipNext --;
+        }
+
+        headerRow += '<th scope="col" role="columnheader" class="' + (isSortable ? 'is-sortable' : '') + (isResizable ? ' is-resizable' : '') +
+          (column.hidden ? ' is-hidden' : '') + (column.filterType ? ' is-filterable' : '') +
+          (alignmentClass ? alignmentClass : '') + '"' + (column.colspan ? ' colspan="' + column.colspan + '"' : '') +
          ' id="' + id + '" data-column-id="'+ column.id + '"' + (column.field ? ' data-field="'+ column.field +'"' : '') +
          (column.headerTooltip ? 'title="' + column.headerTooltip + '"' : '') +
          (column.reorderable === false ? ' data-reorder="false"' : '') +
@@ -1954,6 +1961,11 @@ $.fn.datagrid = function(options) {
             '<span class="sort-asc">' + $.createIcon({ icon: 'dropdown' }) + '</span>' +
             '<span class="sort-desc">' + $.createIcon({ icon: 'dropdown' }) + '</div>';
         }
+
+        if (column.colspan) {
+          skipNext = column.colspan - 1;
+        }
+
         headerRow += '</div>' + self.filterRowHtml(column, j) + '</th>';
       }
       headerRow += '</tr>';

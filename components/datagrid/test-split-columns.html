@@ -1,0 +1,48 @@
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div id="datagrid">
+    </div>
+
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+    //Locale.set('en-US').done(function () {
+      var grid,
+        columns = [],
+        data = [];
+
+      // Some Sample Data
+      data.push({ id: 1, productId: 2445201, productName: 'Compressor', price1: 100, price2: 200, salesPrice: 300, tax: 400, fees: 500});
+      data.push({ id: 2, productId: 2445202, productName: 'Different Compressor', price2: 200, salesPrice: 300, tax: 400, fees: 500});
+      data.push({ id: 3, productId: 2445203, productName: 'Compressor', price1: 100, price2: 200, salesPrice: 300, tax: 400, fees: 500});
+      data.push({ id: 4, productId: 2445204, productName: 'Another Compressor', price1: 100, price2: 200, salesPrice: 300, tax: 400, fees: 500});
+      data.push({ id: 4, productId: 2445205, productName: 'Another Compressor', price1: 100, price2: 200, salesPrice: 300, tax: 400, fees: 500});
+      data.push({ id: 5, productId: 2542206, productName: 'I Love Compressors', price1: 100, price2: 200, salesPrice: 300, tax: 400, fees: 500});
+      data.push({ id: 5, productId: 2642207, productName: 'Air Compressors', price1: 100, price2: 200, salesPrice: 300, tax: 400, fees: 500});
+      data.push({ id: 6, productId: 2642208, productName: 'Some Compressor', price1: 100, price2: 200, salesPrice: 300, tax: 400, fees: 500});
+
+      //Define Columns for the Grid.
+      columns.push({ id: 'productId', name: 'Id', field: 'productId', formatter: Formatters.Text,});
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink});
+      columns.push({ id: 'price1', colspan: 2, name: 'Price 1', field: 'price1', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+      columns.push({ id: 'price2', name: 'Price 2', field: 'price2', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+      columns.push({ id: 'salesPrice', name: 'Sales Price', field: 'salesPrice', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+      columns.push({ id: 'tax', name: 'Tax', align: 'right', field: 'tax', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+      columns.push({ id: 'fees', name: 'Fees', field: 'fees', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+      columns.push({ id: 'space', name: '', field: ''});
+
+      //Init and get the api for the grid
+      $('#datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        saveColumns: false,
+        toolbar: {title: 'Compressors', actions: true, rowHeight: true, personalize: true}
+      });
+
+ });
+</script>
