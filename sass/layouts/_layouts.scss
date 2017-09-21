@@ -722,7 +722,9 @@ body.no-scroll {
 // Banner Detail Pattern
 .page-container {
   .banner-detail {
-    margin-top: -40px;
+    min-height: 100%;
+    position: relative;
+    top: 0;
   }
 }
 
@@ -731,7 +733,7 @@ body.no-scroll {
     background-color: $panel-bg-color;
     border-bottom: 1px solid $panel-border-color;
     height: auto;
-    padding: 40px 0;
+    padding: 0;
   }
 
   .detail {
@@ -742,9 +744,18 @@ body.no-scroll {
       position: relative;
       top: -40px;
 
-      + .tab-panel.alternate {
+      + .tab-panel-container {
+        margin-bottom: 0;
         position: relative;
-        top: -40px;
+
+        .tab-panel.alternate {
+          margin-top: -30px;
+        }
+
+        .card {
+          margin: 0 10px;
+          width: calc(100% - 20px);
+        }
       }
 
       .tab-list-container {

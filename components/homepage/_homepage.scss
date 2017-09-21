@@ -63,6 +63,11 @@
   }
 }
 
+.card.full-height,
+.widget.full-height {
+  height: 100%;
+}
+
 .card.double-width.to-single,
 .widget.double-width.to-single,
 .card.triple-width.to-single,
