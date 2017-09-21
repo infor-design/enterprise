@@ -852,12 +852,36 @@
     }
   };
 
+  /**
+   * Returns the errormessage data object for a Field
+   *
+   * @param options (object) optional
+   */
   $.fn.getErrorMessage = function(options) {
     var defaults = { },
       settings = $.extend({}, defaults, options);
 
     var instance = new Validator(this, settings);
     return instance.getField($(this)).data('data-errormessage');
+  };
+
+  /**
+   * ScrollIntoView and sets focus on an element
+   *
+   * @param alignToTop (boolean) optional - true (default) element will be aligned to the top of the visible area of the scrollable ancestor
+   * @param options (object) optional
+   */
+  $.fn.scrollIntoView = function(alignToTop, options) {
+    if (typeof alignToTop !== 'boolean') {
+      alignToTop = undefined;
+    }
+    var defaults = { },
+      settings = $.extend({}, defaults, options);
+
+    var instance = new Validator(this, settings);
+    var elem = instance.getField($(this));
+    elem[0].scrollIntoView(alignToTop);
+    elem.focus();
   };
 
   //Add a Message to a Field
