@@ -109,6 +109,12 @@
 
         this.adjustOnBreakpoint();
 
+        if (!this.settings.collapsible || !this.settings.collapsibleOnMobile) {
+          this.inputWrapper.addClass('is-open');
+        } else {
+          this.inputWrapper.removeClass('is-open');
+        }
+
         return this;
       },
 
@@ -206,22 +212,6 @@
         if (this.isFocused) {
           return;
         }
-
-        /*
-        if (!this.hasFocus() || (this.isFocused && this.hasFocus())) {
-          console.log(':focus - ' + $('*:focus'));
-          console.log('document.activeElement - ' + document.activeElement);
-          return;
-        }
-        */
-
-        /*
-        if (this.isFocused) {
-          if (this.hasFocus()) {
-            return;
-          }
-        }
-        */
 
         this.collapse();
       },
@@ -440,7 +430,7 @@
             categoryButtonPadding = parseInt(categoryButtonStyle.paddingLeft) + parseInt(categoryButtonStyle.paddingRight),
             categoryButtonBorder = (parseInt(categoryButtonStyle.borderWidth) * 2);
 
-          subtractWidth = subtractWidth + (categoryButtonWidth + categoryButtonPadding + categoryButtonBorder + 4);
+          subtractWidth = subtractWidth + (categoryButtonWidth + categoryButtonPadding + categoryButtonBorder);
         }
 
         if (this.hasGoButton()) {
@@ -450,7 +440,7 @@
             goButtonPadding = parseInt(goButtonStyle.paddingLeft) + parseInt(goButtonStyle.paddingRight),
             goButtonBorder = (parseInt(goButtonStyle.borderWidth) * 2);
 
-          subtractWidth = subtractWidth + (goButtonWidth + goButtonPadding + goButtonBorder + 4);
+          subtractWidth = subtractWidth + (goButtonWidth + goButtonPadding + goButtonBorder);
         }
 
         if (subtractWidth > 0) {
@@ -597,10 +587,6 @@
            toolbarSettings = this.toolbarParent.data('toolbar').settings;
         }
 
-        if (this.animationTimer) {
-          clearTimeout(this.animationTimer);
-        }
-
         if (this.buttonsetElem === undefined) {
           this.getToolbarElements();
         }
@@ -689,14 +675,6 @@
         var self = this,
           textMethod = 'removeClass';
 
-        function closeWidth() {
-          if (self.categoryButton instanceof $ && self.categoryButton.length) {
-            self.setClosedWidth();
-          } else {
-            self.inputWrapper.removeAttr('style');
-          }
-        }
-
         // Puts the input wrapper back where it should be if it's been moved due to small form factors.
         this.appendToButtonset();
 
@@ -704,10 +682,6 @@
           textMethod = 'addClass';
         }
         this.inputWrapper[textMethod]('has-text');
-
-        if (this.animationTimer) {
-          clearTimeout(this.animationTimer);
-        }
 
         self.inputWrapper.removeClass('active');
         if (!self.hasFocus()) {
@@ -727,7 +701,8 @@
           return;
         }
 
-        closeWidth();
+        this.inputWrapper.removeAttr('style');
+        this.input.removeAttr('style');
 
         if (self.categoryButton && self.categoryButton.length) {
           self.categoryButton.data('popupmenu').close(false, true);

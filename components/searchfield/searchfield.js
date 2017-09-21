@@ -172,7 +172,15 @@
           this.setCategoryButtonText();
         }
 
-        // Add a "Go" Button
+        // Pull a Go Button from markup, if applicable.
+        var goButton = this.wrapper.next('button.go-button');
+        if (goButton.length) {
+          this.settings.showGoButton = true;
+          this.goButton = goButton;
+          this.element.after(this.goButton);
+        }
+
+        // Add a "Go" Button from scratch if we enable the setting
         if (this.settings.showGoButton && (!this.goButton || !this.goButton.length)) {
           this.goButton = $('<button id="'+ this.element.uniqueId('searchfield-go-button') +'" class="btn-secondary go-button"><span>'+ this.settings.goButtonCopy +'</span></button>');
           this.wrapper.addClass('has-go-button');
