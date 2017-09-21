@@ -2695,7 +2695,7 @@ window.Chart = function(container) {
 
     //Add Legend
     if (isSingular && chartData[0].name) {
-      charts.addLegend([{name: chartData[0].name}]);
+      charts.addLegend(chartData);
     } else if (isPositiveNegative) {
       charts.addLegend(pnSeries);
     } else if (isStacked && isSingular) {
