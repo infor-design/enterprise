@@ -4,7 +4,9 @@
     <p>Related JIRA Tickets:
       <a class="hyperlink" href="http://jira.infor.com/browse/SOHO-6104" target="_blank">SOHO-6104</a>
       <a class="hyperlink" href="http://jira.infor.com/browse/SOHO-6833" target="_blank">SOHO-6833</a>
-      <a class="hyperlink" href="http://jira.infor.com/browse/SOHO-6838" target="_blank">SOHO-6838</a></p>
+      <a class="hyperlink" href="http://jira.infor.com/browse/SOHO-6838" target="_blank">SOHO-6838</a>
+      <a class="hyperlink" href="http://jira.infor.com/browse/SOHO-6860" target="_blank">SOHO-6860</a>
+    </p>
   </div>
 </div>
 
@@ -14,7 +16,11 @@
     <h2 class="fieldset-title">Some Form</h2>
 
     <div class="field">
-      <label for="username-display">Username</label>
+      <button class="btn-secondary" type="button" id="goToError">Go to Error</button>
+    </div>
+
+    <div class="field">
+      <label class="required label" for="username-display">Username</label>
       <input class="lookup" name="username-display" id="username-display" autocomplete="off" data-validate="required"  />
     </div>
 
@@ -38,6 +44,11 @@
     </div>
 
     <div class="field">
+      <label class="required label" for="text">Text Field</label>
+      <input type="text" id="text" name=text" data-validate="required" >
+    </div>
+
+    <div class="field">
       <button class="btn-secondary" type="button" id="show">Show Error</button>
       <button class="btn-secondary" type="button" id="hide">Hide Error</button>
     </div>
@@ -48,9 +59,9 @@
 <script type="text/javascript">
   $('#show').button().on('click', function () {
     $('#username-display')
-      .removeError()
-      .addError({ message: 'I have an Error.', showTooltip: true })
-      .addError({ message: 'I have another Error.', showTooltip: true });
+    .removeError()
+    .addError({ message: 'I have an Error.', showTooltip: true })
+    .addError({ message: 'I have another Error.', showTooltip: true });
 
     $('#states')
     .removeError()
@@ -76,6 +87,23 @@
       $('#states').removeError();
     }
   });
+
+  $('#goToError').button().on('click', function () {
+    if ($('#username-display').getErrorMessage())
+    {
+      // should scroll the element into view at the bottom of the view port
+      $('#username-display').scrollIntoView(false);
+    }
+    else if ($('#states').getErrorMessage()) {
+      // should scroll the element into view at the top of the view port
+      $('#states').scrollIntoView(true);
+    }
+    else if ($('#text').getErrorMessage()) {
+      // since the parameter is not boolean, the default of true should occur
+      $('#text').scrollIntoView('stringvalue');
+    }
+  });
+
 
   $("#states,#username-display").on('valid error', function (event, validation) {
     console.log([event.currentTarget.id, event.type, validation.field.prop('tagName') ]);
