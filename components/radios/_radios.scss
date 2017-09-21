@@ -188,6 +188,7 @@
 // Radio Section
 //================================================== //
 .radio-section {
+  margin-bottom: 10px !important;
   margin-top: 30px;
 
   .option {
@@ -225,7 +226,6 @@
     }
 
     &:first-child {
-      margin-bottom: 30px;
       margin-left: 0;
       position: relative;
 
