@@ -3961,6 +3961,7 @@ window.Chart = function(container) {
       }
 
       this.update = function(o) {
+        //$(container).triggerHandler('selected', [d3.select(this)[0], {}, i]);
         if (isAchievment) {
           var ds = $.extend(true, {}, dataset, o),
             parent, child;
@@ -4061,6 +4062,8 @@ window.Chart = function(container) {
               }
             }
           }
+          dataset = ds;
+          $(container).triggerHandler('updated');
           return;
         }
 
@@ -4157,6 +4160,7 @@ window.Chart = function(container) {
             setOverlap();
           }
         });
+        $(container).triggerHandler('updated');
       };
 
     // Render
