@@ -1966,7 +1966,10 @@
           }
           self.handleAutoComplete(e);
         }).on('click.dropdown', function(e) {
-          e.stopPropagation();
+          // landmark would like the click event to bubble up if ctrl and shift are pressed
+          if (!(e.originalEvent.ctrlKey && e.originalEvent.shiftKey)) {
+            e.stopPropagation();
+          }
         }).on('mouseup.dropdown', function(e) {
           if (e.button === 2) {
             return;
