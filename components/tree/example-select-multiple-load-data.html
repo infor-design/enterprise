@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="twelve columns">
+    <ul role="tree" aria-label="Asset Types" class="tree" data-init="false" id="json-tree">
+    </ul>
+    <pre id="dataset">
+    </pre>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+
+  /* jshint ignore:start */
+  var sampleData = [{
+		"id": "3",
+		"text": "Node 3",
+		"open": "true",
+		"children" : [{
+			"id": "sub1",
+			"text": "SubNode1"
+			},{
+			"id":"sub2",
+			"text": "SubNode2",
+			"selected": true
+			}]
+	},{
+		"id": "4",
+		"text": "Node 4",
+		"open": "true",
+		"selected": false
+	},{
+		"id": "5",
+		"text": "Node 5",
+		"children" : [{
+			"id": "sub5.1",
+			"text": "SubNode5.1"
+			},{
+			"id":"sub5.2",
+			"text": "SubNode5.2",
+			"selected": true
+			}]
+	}];
+  /* jshint ignore:end */
+
+  //Can refer to the data set here
+  $('#json-tree').tree({'selectable':'multiple', hideCheckboxes: false}).data('tree').loadData(sampleData);
+
+</script>

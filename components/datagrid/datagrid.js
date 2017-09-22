@@ -2323,7 +2323,7 @@ $.fn.datagrid = function(options) {
 
           if (typeof rowValue === 'number') {
             rowValue =  parseFloat(rowValue);
-            conditionValue = parseFloat(conditionValue);
+            conditionValue = Locale.parseNumber(conditionValue);
           }
 
           switch (conditions[i].operator) {
@@ -3375,8 +3375,23 @@ $.fn.datagrid = function(options) {
       this.canvas = this.canvas || (this.canvas = document.createElement('canvas'));
       var context = this.canvas.getContext('2d');
       context.font = '14px arial';
-      var metrics = context.measureText(maxText);
-      return Math.round(metrics.width + (chooseHeader ? 60 : 52));  //Add padding and borders
+      var metrics = context.measureText(maxText),
+        hasImages = columnDef.formatter ?
+          columnDef.formatter.toString().indexOf('datagrid-alert-icon') > -1 : false,
+        padding = (chooseHeader ? 60 + (hasImages ? 36 : 0) : 40 + (hasImages ? 36 : 0));
+
+      if (columnDef.filterType) {
+        var minWidth = columnDef.filterType === 'date' ? 170 : 100;
+
+        if (columnDef.filterType === 'checkbox') {
+          minWidth = 40;
+          padding = 40;
+        }
+
+        return Math.round(Math.max(metrics.width + padding, minWidth));
+      }
+
+      return Math.round(metrics.width + padding);  //Add padding and borders
     },
 
     headerWidths: [], //Cache
@@ -3424,13 +3439,9 @@ $.fn.datagrid = function(options) {
     //Calculate the width for a column (upfront with no rendering)
     //https://www.w3.org/TR/CSS21/tables.html#width-layout
     calculateColumnWidth: function (col, index) {
-      var visibleColumns, colPercWidth;
-      visibleColumns = this.visibleColumns(true);
-
-      var lastColumn = (index === this.lastColumnIdx());
-      if (lastColumn && col.isStretched) {
-        col.width = null;
-      }
+      var colPercWidth,
+        visibleColumns = this.visibleColumns(true),
+        lastColumn = (index === this.lastColumnIdx());
 
       if (!this.elemWidth) {
         this.elemWidth = this.element.outerWidth();
@@ -3529,12 +3540,9 @@ $.fn.datagrid = function(options) {
       if (lastColumn) {
         var diff = this.elemWidth - this.totalWidth;
 
-        if ((diff > 0) && (diff  > colWidth) && !this.widthPercent) {
+        if ((diff > 0) && (diff  > colWidth) && !this.widthPercent && !col.width) {
           colWidth = diff - 2;
-
           this.headerWidths[index] = {id: col.id, width: colWidth, widthPercent: this.widthPercent};
-          col.width = colWidth;
-          col.isStretched = true;
           this.totalWidth =  this.elemWidth - 2;
         }
 

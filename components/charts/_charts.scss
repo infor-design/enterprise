@@ -335,6 +335,47 @@
     }
   }
 
+  .chart-percent-text {
+    @include font-size(14);
+    cursor: default;
+    height: 25px;
+    margin-top: -25px;
+    position: relative;
+    text-align: center;
+
+    &.error {
+      color: $error-color;
+    }
+
+    &.alert {
+      color: $alert-orange;
+    }
+
+    &.alert-yellow {
+      color: $alert-yellow;
+    }
+
+    &.alert-neutral {
+      color: $alert-neutral;
+    }
+
+    &.dark {
+      color: $chart-progressbar-dark-fill;
+    }
+
+    &.good {
+      color: $alert-green;
+    }
+
+    &.primary {
+      color: $chart-progressbar-primary-fill;
+    }
+
+    &.inverse {
+      color: $inverse-color;
+    }
+  }
+
   .chart-targeted-text {
     left: 50%;
     margin-top: -38px;
@@ -488,6 +529,7 @@
   .total,
   .remaining,
   .completed,
+  .completed-label,
   .target-line {
 
     &.bar {
@@ -658,6 +700,16 @@
     display: none;
   }
 
+  .icon-error {
+    display: inline-block;
+    height: 16px;
+    margin-bottom: 1px;
+    margin-right: 6px;
+    right: inherit;
+    top: 0;
+    width: 16px;
+  }
+
 }
 
 .colored.label {
@@ -755,6 +807,19 @@
   .measure.s2 {fill: $azure06;};
   .measure.s3 {fill: $azure08;};
   .measure.s4 {fill: $azure10;};
+}
+
+// Firefox
+.is-firefox {
+  .chart-percent-text {
+    margin-top: -26px;
+  }
+
+  &.is-mac {
+    .chart-percent-text {
+      margin-top: -23px;
+    }
+  }
 }
 
 // Temporary fix for SVG Tooltips

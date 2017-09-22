@@ -1,9 +1,13 @@
 ## <a name="version-4.3.2">4.3.2</a>
-*Release Date:* 2017-09-18
-*JIRA Release Notes:* http://bit.ly/2w6X8Xw
+
+Release Date: 2017-09-18
+
+Full Jira Release Notes: http://bit.ly/2fynFq7
 
 ### <a name="version-4.3.2-download-build-assets">Download Build Assets:</a>
+
 Build Server: http://bamboo.infor.com/browse/label/release-432
+
 Npm: http://npm.infor.com
 
 ### <a name="version-4.3.2-download-build-assets">Demo Site</a>
@@ -11,6 +15,7 @@ http://usalvlhlpool1.infor.com/4.3.2/components/
 
 ### <a name="version-4.3.2-key-new-features">Key New Features</a>
 - Mask - Big changes to support locale and squash all bugs. ([SOHO-3849](https://jira.infor.com/browse/SOHO-3849))
+- Added Search Form Pattern http://bit.ly/2xdaeTV
 
 ### <a name="version-4.3.2-breaking-changes">Breaking Changes</a>
 - PopupMenu - To clarify disabled items should be achieved by adding either the disabled attribute to the anchor tag or adding both the attribute to the anchor tag and the class is-disabled to the li element. Only adding the class will not work as only one mapping was possible. See examples components/popupmenu/example-disabled-submenus and components/popupmenu/test-toggle-disabled.html
@@ -19,18 +24,89 @@ http://usalvlhlpool1.infor.com/4.3.2/components/
 
 ### <a name="version-4.3.2-behavior-changes">Behavior Changes</a>
 - Timepicker - The default of roundToInterval is now true. Since the default options are intervals of 5 we felt this made the most sense since it was reported as a bug twice. If you want to allow entering time out of the dropdown intervals you will now have to set this to false.
-- Mask - The process of masking is no longer tied to keystroke events (`keydown`/`keypress`), and is now handled by the modern `input` event.  This doesn't change anything internally to the Mask component, but it may change user implementations if they depended on keystroke events.  The Mask's custom `write` event that fires on any change to a masked input field is still present and can be relied on for change detection.
 
 ### <a name="version-4.3.2-improvements">Improvements</a>
-- Mask - better support for complex numbers, dates, and times.
-- Mask - has support for prefixes/suffixes that don't affect the "masked" portion of a value (makes it possible for things like currency and percentages to be added to the complete value, but not factored in as part of the masking).
+- Angular - Added Spin Box Wrapper
+- Angular - Added Colorpicker Wrapper
+- Angular - Added Chart Typings
+- Angular - Added toolbar alignRight support
+- Accordion - Added api to update portions of the accordion
+- Advanced File Upload - Added browse button
+- App Menu - Added an optional role dropdown menu.
+- App Menu - Now supports RTL correctly
+- ColorPicker - Added select only mode (editable: false)
+- Line Chart - Added a way to make two line axis labels
+- Datagrid - Huge performance improvement for Datagrid when filter is enabled
+- Datagrid - More docs added for formatters and column types
+- Datagrid - Added csv export mode to get rid of the warning messages
+- Datepicker - Now corrects 2/3 digit dates to a correct 4 digit date.
+- Datepicker - Added option to disable / add a custom validation
+- Datepicker - Now supports changing options while initialized
+- Datepicker - Added dropdown option to select year and month
+- Datepicker - Added examples for selecting just year and month
+- Datepicker - Added support for first day of week (locales that dont start week on Sun)
+- Dropdown - Fixed bug when rendering really long text dropdowns
+- File Upload - Now supports required
+- Listview - Added new 'unselected' event
+- Mask - Support for numeric negative masks
+- Mask - Api refactoring and cleanup
+- Mask - Added better non-US keyboard support
+- Mask - Fixed locale support
+- Mask - Fixed percent support (prefix/suffix percent sign)
+- Module Tabs - Corrected category search
+- Texarea - Added option to grow the input based on what is typed
+- Timepicker - Works better on android
+- Timepicker - Fixed issue with rounding when pasting
+- Timepicker - Fixed issue where dropdowns moved when scrolling
+- Charts - Added getSelected and setSelected method for all charts
+- List Detail - Added additional examples for searching within the pattern as per http://bit.ly/2xLKsct and  http://bit.ly/2wpvPLQ
+- Password / Reset Password - Fixed RTL Support
+- Validation - Now triggers an event
+- Validation - Added a method to return the current error message for a field
 
 ### <a name="version-4.3.2-bug-fixes">Bug Fixes</a>
-- Mask - now works 100% on android devices.
-- Mask - now properly handles negative numbers in all locales (negative symbol at the end).
+- Autocomplete - Fixed focus trap issue
+- Datagrid - Search filter only worked on one page
+- Datagrid - Fixed exporting issue when personalization occured.
+- Datagrid - Fixed bug editing cell after filtering
+- Datagrid - Fixed alignment of filter row when using align column option
+- Datagrid - Fixed filter was accepting non-number values on number type columns
+- Datagrid - Fixed icon rendering issue
+- Datagrid - Fixed edge column rendering issue
+- Datagrid - Fixed bug on resize that made selection disappear
+- Datagrid - Fixed bug rendering when toggling filter row
+- Datagrid - Fixed context menu rendering
+- Datagrid - Fixed non-saved filter row on page reload
+- Datagrid - Fixed reset to default not working first time ever
+- Datepicker - Fixed RTL formatting
+- Datepicker - Fixed missing change event on change
+- Datepicker - Fixed mismatched ctrl+arrow direction keys
+- Dropdown - Fixed list pixel jogging opening lists on retina displays
+- Dropdown - Fixed issues using num pad
+- Charts - Fixed bug that tooltip did not close on scroll
+- Circle Pager - Fixed bug where paging dots are shown when just one page.
+- Colorpicker - Added mode to support all or no uppercase, Added support for 3 digit hex
+- Expandable area - Fixes to high contrast theme
+- Editor - Fixes to adding links for edge and on blank text
+- Editor - Fixes to allow pasting on Edge and Safari
+- Editor - Fixed same vs new window option
+- Editor - Fixed error in chrome pasting
+- File Upload - Fixed issue in edge causing the dialog to never close.
+- Icons - A few new icons added
+- Listbuilder - Fixed zindex issues when working with modal
+- Listview - Fixed page size issue, when reloading dataset
+- Locale - Fixed percent formatting
+- Locale - Fixed negative formatting by locale
+- Mask - Fixed misplaced decimal on init
+- Mask - Fixed all Safari and Android issues
+- Mask - Fixed currency symbol support
+- Mask - Fixed negative support
+- Popupmenu - Fixed scrolling issue on longer menus
+- Popupmenu - Fixed rendering on edge cases on immediate mode
+- Timpicker - Fixed validation rule to check seconds
+- Tree - Fixed Xss issue
 
-
-(X Jira Issues Solved, Backlog Still X)
+(106 Jira Issues Solved, Backlog Still 594 including 165 Design)
 
 ## <a name="version-4.3.1">4.3.1</a>
 *Release Date:* 2017-08-02

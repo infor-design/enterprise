@@ -384,6 +384,11 @@
           }
         }
 
+        // Disable dragging text to a new browser tab
+        this.menu.off('dragstart.popupmenu').on('dragstart.popupmenu', 'a', function () {
+          return false;
+        });
+
         // Setup these next events no matter what trigger type is
         this.element.not('.autocomplete')
           .on('keydown.popupmenu', function (e) {
@@ -1402,6 +1407,8 @@
         if (this.element.hasClass('btn-actions')) {
           this.menu.parent().removeClass('bottom').find('.arrow').remove();
         }
+
+        this.menu.off('dragstart.popupmenu');
 
         if (this.originalParent) {
           this.menu.appendTo(this.originalParent);

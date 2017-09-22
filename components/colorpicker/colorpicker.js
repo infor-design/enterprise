@@ -113,7 +113,8 @@
           placeIn: null, // null|'editor'
           showLabel: false,
           editable: true,
-          uppercase: true
+          uppercase: true,
+          colorOnly: false
         },
         settings = $.extend({}, defaults, options);
 
@@ -125,6 +126,7 @@
     * @param {String} showLabel  &nbsp;-&nbsp; Show the label if true vs the hex value if false.
     * @param {String} editable  &nbsp;-&nbsp; If false, the field is readonly and transparent. I.E. The value cannot be typed only editable by selecting.
     * @param {String} uppercase  &nbsp;-&nbsp; If false, lower case hex is allowed. If true upper case hex is allowed. If showLabel is true this setting is ignored.
+    * @param {String} colorOnly  &nbsp;-&nbsp; If true the field will be shrunk to only show the color portion.
     *
     */
     function ColorPicker(element) {
@@ -205,22 +207,59 @@
           this.readonly();
         }
 
+        if (this.settings.colorOnly) {
+          this.element.parent().addClass('color-only');
+        }
+
         this.addAria();
       },
 
+      /**
+      * Get the hex value based on a label. Does not handle duplicates.
+      * @param {String} label  &nbsp;-&nbsp; The label to search for in the color labels.
+      */
       getHexFromLabel: function(label) {
         for (var i = 0; i < this.settings.colors.length; i++) {
           var data = this.settings.colors[i];
 
           if (label === data.label + data.number) {
-            return data.value;
+
+            var hex = data.value;
+            if (hex.substr(0,1) !== '#') {
+              hex = '#' + hex;
+            }
+
+            return hex;
           }
         }
       },
 
-      // Add/Update Aria
+      /**
+      * Get the label value based on a hex. Does not handle duplicates.
+      * Can pass with or without the #
+      *
+      * @param {String} hex  &nbsp;-&nbsp; The hex to search for in the color set.
+      */
+      getLabelFromHex: function(hex) {
+        for (var i = 0; i < this.settings.colors.length; i++) {
+          var data = this.settings.colors[i];
+
+          if (hex.replace('#', '') === data.value.replace('#', '')) {
+            return data.label + data.number;
+          }
+        }
+      },
+
+      /**
+      * Add the necessary aria for accessibility.
+      *
+      * @private
+      */
       addAria: function () {
-        this.element.attr('role', 'combobox').attr('aria-autocomplete', 'list');
+        this.element.attr({
+          'role': 'combobox',
+          'aria-autocomplete': 'list'
+        });
 
         $('label[for="'+ this.element.attr('id') + '"]')
           .append('<span class="audible">' + Locale.translate('UseArrow') + '</span>');
@@ -299,38 +338,37 @@
       * @param {String} hex  &nbsp;-&nbsp; The hex value to use (can have the # or not).
       * @param {String} text  &nbsp;-&nbsp; The text to display
       */
-      setColor: function (hex, text) {
-        // check if the hex value is actually a hex value.
-        // if not, use it as a label.
-
-        var testHex = hex.replace('#', '');
-        if (!/[0-9A-Fa-f]{6}/g.test(testHex) || !/[0-9A-Fa-f]{3}/g.test(testHex)) {
-          text = '' + hex;
-          hex = this.settings.showLabel ? this.getHexFromLabel(text) : hex;
-        }
-
-        // Simply return out if hex isn't valid
-        if (!hex) {
-          return;
-        }
+      setColor: function (hex, label) {
 
         // Make sure there is always a hash
         if (hex.substr(0,1) !== '#') {
           hex = '#' + hex;
         }
 
+        var isValidHex = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(hex);
+
+        // Simply return out if hex isn't valid
+        if (!isValidHex) {
+
+          if (!this.settings.showLabel) {
+            return;
+          }
+          label = hex.replace('#','');
+          hex = this.getHexFromLabel(label);
+        }
+
         var targetAttr = this.isEditor ? 'data-value' : 'value';
 
-        if (!text) {
-          text = hex;
+        if (!label) {
+          label = this.getLabelFromHex(hex);
         }
 
         // Set the value on the field
-        this.element[0].value = this.settings.showLabel ? text : hex;
+        this.element[0].value = this.settings.showLabel ? label : hex;
         this.element[0].setAttribute(targetAttr, hex);
         this.swatch[0].style.backgroundColor = hex;
 
-        this.element[0].setAttribute('aria-describedby', text);
+        this.element[0].setAttribute('aria-describedby', label);
       },
 
       // Refresh and Append the Color Menu
@@ -349,7 +387,7 @@
             a = $('<a href="#"><span class="swatch"></span></a>').appendTo(li),
             number = self.settings.colors[i].number,
             num = parseInt(number, 10),
-            text = (Locale.translate(self.settings.colors[i].label) || self.settings.colors[i].label) + (settings.colors[i].number || ''),
+            text = (Locale.translate(self.settings.colors[i].label, true) || self.settings.colors[i].label) + (settings.colors[i].number || ''),
             value = self.settings.colors[i].value,
             isBorder = false,
             regexp = new RegExp('\\b'+ currentTheme +'\\b'),

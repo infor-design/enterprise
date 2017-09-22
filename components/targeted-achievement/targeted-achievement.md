@@ -5,6 +5,7 @@
 
 1. Main Target to Achievement Example showing 3 examples [View Example]( ../components/targeted-achievement/example-index)
 2. Grid Example, this chart is available as a formatter.  [View Example]( ../components/datagrid/test-targeted-achievement.html)
+3. Example showing Percent Text [View Example]( ../components/targeted-achievement/example-percent-text)
 
 ## API Details
 
