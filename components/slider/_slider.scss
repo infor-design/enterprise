@@ -210,7 +210,7 @@ input[type="range"] {
   display: inline-block;
   height: 16px;
   line-height: 16px;
-  position: absolute;
+  position: relative;
   width: 16px;
   @include css3(touch-callout, none);
   z-index: 20;
@@ -352,6 +352,14 @@ html[dir='rtl'] {
       > .tick {
         &:after {
           background-color: transparent;
+        }
+      }
+    }
+
+    &:not(.vertical) {
+      > .tick {
+        > .label {
+          left: auto !important;
         }
       }
     }
