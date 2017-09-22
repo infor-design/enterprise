@@ -2524,9 +2524,14 @@ $.fn.datagrid = function(options) {
           return;
         }
 
+        var value = input.val() ? input.val() : '';
+        if (input.attr('data-mask-mode') && input.attr('data-mask-mode') === 'number') {
+          value = Locale.parseNumber(value);
+        }
+
         var condition = {columnId: rowElem.attr('data-column-id'),
           operator: op,
-          value: input.val() ? input.val() : ''};
+          value: value};
 
         if (input.data('datepicker')) {
           format = input.data('datepicker').settings.dateFormat;
