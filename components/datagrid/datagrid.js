@@ -1903,7 +1903,7 @@ $.fn.datagrid = function(options) {
         headerColGroup = '<colgroup>',
         cols= '',
         uniqueId,
-        skipNext = 0;
+        hideNext = 0;
 
       var colGroups = this.settings.columnGroups;
 
@@ -1937,17 +1937,14 @@ $.fn.datagrid = function(options) {
           isSelection = column.id === 'selectionCheckbox',
           alignmentClass = (column.align === 'center' ? ' l-'+ column.align +'-text' : '');// Disable right align for now as this was acting wierd
 
-        if (skipNext > 0) {
-          skipNext --;
-        }
-
         headerRow += '<th scope="col" role="columnheader" class="' + (isSortable ? 'is-sortable' : '') + (isResizable ? ' is-resizable' : '') +
           (column.hidden ? ' is-hidden' : '') + (column.filterType ? ' is-filterable' : '') +
           (alignmentClass ? alignmentClass : '') + '"' + (column.colspan ? ' colspan="' + column.colspan + '"' : '') +
          ' id="' + id + '" data-column-id="'+ column.id + '"' + (column.field ? ' data-field="'+ column.field +'"' : '') +
          (column.headerTooltip ? 'title="' + column.headerTooltip + '"' : '') +
          (column.reorderable === false ? ' data-reorder="false"' : '') +
-         (colGroups ? ' headers="' + self.getColumnGroup(j) + '"' : '') + '>';
+         (colGroups ? ' headers="' + self.getColumnGroup(j) + '"' : '') +
+         (hideNext > 0 ? ' style="display: none;" ' : '') + '>';
 
         headerRow += '<div class="' + (isSelection ? 'datagrid-checkbox-wrapper ': 'datagrid-column-wrapper') + (column.align === undefined ? '' : ' l-'+ column.align +'-text') + '"><span class="datagrid-header-text'+ (column.required ? ' required': '') + '">' + self.headerText(settings.columns[j]) + '</span>';
         cols += '<col' + this.calculateColumnWidth(column, j) + (column.hidden ? ' class="is-hidden"' : '') + '>';
@@ -1962,10 +1959,12 @@ $.fn.datagrid = function(options) {
             '<span class="sort-desc">' + $.createIcon({ icon: 'dropdown' }) + '</div>';
         }
 
-        if (column.colspan) {
-          skipNext = column.colspan - 1;
+        if (hideNext > 0) {
+          hideNext --;
         }
-
+        if (column.colspan) {
+          hideNext = column.colspan - 1;
+        }
         headerRow += '</div>' + self.filterRowHtml(column, j) + '</th>';
       }
       headerRow += '</tr>';
@@ -3387,23 +3386,8 @@ $.fn.datagrid = function(options) {
       this.canvas = this.canvas || (this.canvas = document.createElement('canvas'));
       var context = this.canvas.getContext('2d');
       context.font = '14px arial';
-      var metrics = context.measureText(maxText),
-        hasImages = columnDef.formatter ?
-          columnDef.formatter.toString().indexOf('datagrid-alert-icon') > -1 : false,
-        padding = (chooseHeader ? 60 + (hasImages ? 36 : 0) : 40 + (hasImages ? 36 : 0));
-
-      if (columnDef.filterType) {
-        var minWidth = columnDef.filterType === 'date' ? 170 : 100;
-
-        if (columnDef.filterType === 'checkbox') {
-          minWidth = 40;
-          padding = 40;
-        }
-
-        return Math.round(Math.max(metrics.width + padding, minWidth));
-      }
-
-      return Math.round(metrics.width + padding);  //Add padding and borders
+      var metrics = context.measureText(maxText);
+      return Math.round(metrics.width + (chooseHeader ? 60 : 52));  //Add padding and borders
     },
 
     headerWidths: [], //Cache
