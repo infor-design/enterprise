@@ -117,6 +117,14 @@ $toolbarsearchfield-category-empty-width: 54px;
       border-bottom-color: rgba($searchfield-border-color, 0);
     }
 
+    .go-button {
+      color: rgba($searchfield-text-color, .7);
+
+      .icon {
+        fill: rgba($searchfield-text-color, .7);
+      }
+    }
+
     &.active,
     &.is-open {
       .searchfield {
@@ -413,6 +421,73 @@ $toolbarsearchfield-category-empty-width: 54px;
       color: $searchfield-header-text-color;
     }
 
+    .go-button {
+      background-color: $btn-bg-color;
+      border-color: $btn-bg-color;
+      color: $btn-color;
+
+      .icon {
+        fill: $btn-color;
+      }
+
+      &:hover {
+        background-color: $btn-hover-bg-color;
+        border: 1px solid $btn-hover-bg-color;
+      }
+
+      &:active {
+        background-color: $btn-active-bg-color;
+        border: 1px solid $btn-active-bg-color;
+      }
+
+      &:focus {
+        &:active {
+          background-color: $btn-active-bg-color;
+          box-shadow: none;
+        }
+      }
+
+      &[disabled],
+      &[disabled]:hover {
+        background-color: $btn-disabled-bg-color;
+        border: 1px solid $btn-disabled-border-color;
+        box-shadow: none;
+        color: $btn-disabled-color;
+        cursor: default;
+        opacity: $btn-disabled-opacity;
+      }
+
+      .ripple-effect {
+        background: $graphite02;
+      }
+    }
+
+    .searchfield-category-button,
+    .go-button {
+
+      &:focus {
+        border: 1px solid transparent;
+
+        &:not(.hide-focus) {
+          box-shadow: none;
+          color: $btn-color;
+
+          &::after {
+            border: 1px solid $header-button-focus-color;
+            border-radius: 2px;
+            content: '';
+            display: inline-block;
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+          }
+        }
+      }
+
+    }
+
     &:hover {
       input:not([disabled]):not(:focus) {
         + svg {
@@ -422,15 +497,27 @@ $toolbarsearchfield-category-empty-width: 54px;
       }
     }
 
+    &.is-hovered {
+      .btn {
+        color: rgba($searchfield-header-text-color, .7);
+      }
+
+      .icon {
+        fill: rgba($searchfield-header-icon-color, .7);
+      }
+    }
+
     &.is-open {
-      .searchfield {
+      .searchfield,
+      .btn {
         background-color: rgba($searchfield-header-bg-color, .5);
         border-bottom-color: rgba($searchfield-header-border-color, .7);
       }
     }
 
     &.active {
-      .searchfield {
+      .searchfield,
+      .btn {
         background-color: rgba($searchfield-header-bg-color, .5);
         border-bottom-color: rgba($searchfield-header-border-color, .7);
         color: transparent;
@@ -453,7 +540,8 @@ $toolbarsearchfield-category-empty-width: 54px;
       }
 
       &.is-open {
-        .searchfield {
+        .searchfield,
+        .btn {
           color: $searchfield-header-text-color;
 
           &::-webkit-input-placeholder {
@@ -492,13 +580,6 @@ $toolbarsearchfield-category-empty-width: 54px;
   .toolbar > .toolbar-searchfield-wrapper {
     left: 20px;
     top: 12px;
-  }
-}
-
-
-.is-firefox.is-mac {
-  .toolbar-searchfield-wrapper.searchfield-wrapper .btn {
-    height: 32px;
   }
 }
 

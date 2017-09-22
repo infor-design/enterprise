@@ -14,7 +14,7 @@
 /* end-amd-strip-block */
 
   //NOTE: Just this part will show up in SoHo Xi Builds.
-  var TOOLBARSEARCHFIELD_EXPAND_SIZE = 230,
+  var TOOLBARSEARCHFIELD_EXPAND_SIZE = 260,
     MAX_TOOLBARSEARCHFIELD_EXPAND_SIZE = 450;
 
   $.fn.toolbarsearchfield = function(options) {
@@ -209,7 +209,7 @@
        * Handles the "focusout" event
        */
       handleFocusOut: function() {
-        if (this.isFocused) {
+        if (this.isFocused || !this.settings.collapsible) {
           return;
         }
 
@@ -400,7 +400,7 @@
         if ((this.categoryButton instanceof $) && this.categoryButton.length) {
           var buttonStyle = window.getComputedStyle(this.categoryButton[0]),
             buttonWidth = this.categoryButton.width(),
-            buttonBorder = parseInt(buttonStyle.borderLeft) * 2,
+            buttonBorder = parseInt(buttonStyle.borderLeftWidth) * 2,
             buttonPadding = parseInt(buttonStyle.paddingLeft) + parseInt(buttonStyle.paddingRight);
 
             closedWidth = closedWidth + (buttonWidth + buttonBorder + buttonPadding + 4);
@@ -428,7 +428,7 @@
           var categoryButtonStyle = window.getComputedStyle(this.categoryButton[0]),
             categoryButtonWidth = this.categoryButton.width(),//parseInt(categoryButtonStyle.width),
             categoryButtonPadding = parseInt(categoryButtonStyle.paddingLeft) + parseInt(categoryButtonStyle.paddingRight),
-            categoryButtonBorder = (parseInt(categoryButtonStyle.borderWidth) * 2);
+            categoryButtonBorder = (parseInt(categoryButtonStyle.borderLeftWidth) * 2);
 
           subtractWidth = subtractWidth + (categoryButtonWidth + categoryButtonPadding + categoryButtonBorder);
         }
@@ -438,7 +438,7 @@
             goButtonStyle = window.getComputedStyle(goButton[0]),
             goButtonWidth = goButton.width(),
             goButtonPadding = parseInt(goButtonStyle.paddingLeft) + parseInt(goButtonStyle.paddingRight),
-            goButtonBorder = (parseInt(goButtonStyle.borderWidth) * 2);
+            goButtonBorder = (parseInt(goButtonStyle.borderLeftWidth) * 2);
 
           subtractWidth = subtractWidth + (goButtonWidth + goButtonPadding + goButtonBorder);
         }
@@ -491,7 +491,7 @@
         }
 
         width = this.getFillSize(leftBoundary, rightBoundary);
-        this.openWidth = (width - 1) + 'px';
+        this.openWidth = (width - 6) + 'px';
       },
 
       /**
