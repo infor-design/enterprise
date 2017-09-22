@@ -29,6 +29,7 @@
 26. Selection (Mixed)  [View Example]( ../components/datagrid/example-mixed-selection.html)
 27. Summary Row  [View Example]( ../components/datagrid/example-summary-row.html)
 28. Export to Excel [View Example]( ../components/datagrid/example-export-from-button.html)
+28. Export with trailing negative signs moved in front [View Example]( ../components/datagrid/example-export-convert-negative.html)
 
 {{api-details}}
 

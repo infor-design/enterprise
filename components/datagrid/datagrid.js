@@ -1445,7 +1445,8 @@ $.fn.datagrid = function(options) {
         disableRowDeactivation: false, // If a row is activated the user should not be able to deactivate it by clicking on the activated row
         sizeColumnsEqually: false, //If true make all the columns equal width
         expandableRow: false, // Supply an empty expandable row template
-        redrawOnResize: true //Run column redraw logic on resize
+        redrawOnResize: true, //Run column redraw logic on resize
+        exportConvertNegative: false // Export data with trailing negative signs moved in front
       },
       settings = $.extend({}, defaults, options);
 
@@ -1491,6 +1492,7 @@ $.fn.datagrid = function(options) {
   * @param {Boolean} sizeColumnsEqually &nbsp;-&nbsp If true make all the columns equal width
   * @param {Boolean} expandableRow &nbsp;-&nbsp If true we append an expandable row area without the rowTemplate feature being needed.
   * @param {Boolean} redrawOnResize &nbsp;-&nbsp If set to false we skip redraw logic on the resize of the page.
+  * @param {Boolean} exportConvertNegative &nbsp;-&nbsp If set to true export data with trailing negative signs moved in front.
   */
   function Datagrid(element) {
     this.element = $(element);
@@ -4026,7 +4028,7 @@ $.fn.datagrid = function(options) {
             // Excel Formulas Start with =SOMETHING
             var text = elm.text();
             if (text.substr(0, 1) === '=' && text.substr(1, 1) !== '') {
-              elm.text('\'' + elm.text());
+              elm.text('\'' + text);
             }
           });
           return table;
@@ -4054,13 +4056,18 @@ $.fn.datagrid = function(options) {
         formatCsv = function(table) {
           var csv = [],
             rows = table.find('tr'),
-            row, cols;
+            row, cols, content;
 
           for (var i = 0, l = rows.length; i < l; i++) {
             row = [];
             cols = $(rows[i]).find('td, th');
             for (var i2 = 0, l2 = cols.length; i2 < l2; i2++) {
-              row.push(cols[i2].innerText.replace('"', '""'));
+              content = cols[i2].innerText.replace('"', '""');
+              // Exporting data with trailing negative signs moved in front
+              if (self.settings.exportConvertNegative) {
+                content = content.replace(/^(.+)(\-$)/, '$2$1');
+              }
+              row.push(content);
             }
             csv.push(row.join('","'));
           }
@@ -4148,7 +4155,7 @@ $.fn.datagrid = function(options) {
             // Excel Formulas Start with =SOMETHING
             var text = elm.text();
             if (text.substr(0, 1) === '=' && text.substr(1, 1) !== '') {
-              elm.text('\'' + elm.text());
+              elm.text('\'' + text);
             }
           });
           return table;
@@ -4190,6 +4197,16 @@ $.fn.datagrid = function(options) {
       }
 
       table = cleanExtra(table);
+
+      // Exporting data with trailing negative signs moved in front
+      if (self.settings.exportConvertNegative) {
+        table.find('td').each(function() {
+          var td = $(this),
+            content = td.text();
+          td.text(content.replace(/^(.+)(\-$)/, '$2$1'));
+        });
+      }
+
       var ctx = { worksheet: (worksheetName || 'Worksheet'), table: table.html() };
 
       fileName = (fileName ||
