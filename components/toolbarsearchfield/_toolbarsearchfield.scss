@@ -106,6 +106,30 @@ $toolbarsearchfield-category-empty-width: 54px;
     border-top-right-radius: 0;
   }
 
+  .searchfield-category-button,
+  .go-button {
+    &:focus {
+      border: 1px solid transparent;
+
+      &:not(.hide-focus) {
+        box-shadow: none;
+        color: $btn-color;
+
+        &::after {
+          border: 1px solid $button-focus-color;
+          border-radius: 2px;
+          content: '';
+          display: inline-block;
+          position: absolute;
+          left: 0;
+          top: 0;
+          right: 0;
+          bottom: 0;
+        }
+      }
+    }
+  }
+
   &.is-hovered {
     .searchfield {
       border-color: transparent;
@@ -464,7 +488,6 @@ $toolbarsearchfield-category-empty-width: 54px;
 
     .searchfield-category-button,
     .go-button {
-
       &:focus {
         border: 1px solid transparent;
 
@@ -485,7 +508,6 @@ $toolbarsearchfield-category-empty-width: 54px;
           }
         }
       }
-
     }
 
     &:hover {
