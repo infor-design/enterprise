@@ -9,16 +9,47 @@
 <script>
   var gridApi = null;
 
+  $(function() {
+    $.fn.validation.rules.customErrorRule = {
+          check: function (value) {
+
+            return (value !== '');
+          },
+          message: 'Custom Error',
+          type: 'error'
+    };
+
+    $.fn.validation.rules.customWarningRule = {
+          check: function (value) {
+
+            return (value !== '');
+          },
+          message: 'Custom Warning',
+          type: 'alert'
+    };
+
+    $.fn.validation.rules.customInformationRule = {
+          check: function (value) {
+
+            return (value !== '');
+          },
+          message: 'Custom Information',
+          type: 'info'
+    };
+
+  });
+
   $('body').one('initialized', function () {
          var grid,
           columns = [],
           data = [];
 
         //Define Columns for the Grid.
+        columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
         columns.push({ id: 'id', name: 'Row Id', field: 'id', formatter: Formatters.Readonly, filterType: 'text'});
-        columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, validate: 'required', editor: Editors.Input, filterType: 'text'});
-        columns.push({ id: 'activity', name: 'Activity', field: 'activity', editor: Editors.Input, filterType: 'text'});
-		
+        columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink, required: true, validate: 'required', editor: Editors.Input, filterType: 'text'});
+        columns.push({ id: 'activity', name: 'Activity', field: 'activity', validate: 'customWarningRule', editor: Editors.Input, filterType: 'text'});
+
         var url = '{{basepath}}api/compressors?pageNum=1&pageSize=100';
 
         $.getJSON(url, function(res) {
@@ -28,20 +59,26 @@
               dataset: res.data,
               columns: columns,
               editable: true,
-			  filterable: true,
-			  toolbar: {title: 'Filterable Datagrid', filterRow: true, results: true, dateFilter: false ,keywordFilter: false, actions: true, views: false, rowHeight: true, collapsibleFilter: false},
               clickToSelect: false,
+              actionableMode: true,
+              filterable: true,
+              rowHeight: 'normal',
               selectable: 'multiple',
+              columnReorder: true,
+              cellNavigation: false,
+              saveColumns: false,
+              toolbar: { title: 'Filterable Datagrid', results: true, dateFilter: false ,filterRow: true, keywordFilter: false, advancedFilter: false, actions: true, views: false, rowHeight: true, collapsibleFilter: true},
               paging: true,
               pagesize: 10,
               pagesizes: [5, 10, 25, 50]
+
             });
-			
-			$('#datagrid').on('afterpaging', function() {
+
+            $('#datagrid').on('afterpaging', function() {
               var gridApi = $(this).data('datagrid');
               gridApi.validateAll();
             });
-			
+
         });
 
   });
