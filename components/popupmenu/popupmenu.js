@@ -1066,7 +1066,7 @@
             self.close();
           });
 
-          $('.scrollable').on('scroll.popupmenu', function () {
+          $('.scrollable, .modal.is-visible .modal-body-wrapper').on('scroll.popupmenu', function () {
             self.close();
           });
 
