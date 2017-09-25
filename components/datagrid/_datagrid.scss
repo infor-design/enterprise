@@ -567,6 +567,36 @@ $datagrid-short-row-height: 23px;
           }
         }
 
+        &.alert {
+          &.datagrid-trigger-cell .icon-alert {
+            margin-top: auto;
+          }
+
+          .datagrid-cell-wrapper .icon-alert {
+            top: 10px;
+          }
+        }
+
+        &.confirm {
+          &.datagrid-trigger-cell .icon-confirm {
+            margin-top: auto;
+          }
+
+          .datagrid-cell-wrapper .icon-confirm {
+            top: 10px;
+          }
+        }
+
+        &.info {
+          &.datagrid-trigger-cell .icon-info {
+            margin-top: auto;
+          }
+
+          .datagrid-cell-wrapper .icon-info {
+            top: 10px;
+          }
+        }
+
       }
     }
 
@@ -816,6 +846,39 @@ $datagrid-short-row-height: 23px;
           }
         }
 
+        &.alert {
+          &.datagrid-trigger-cell .icon-alert {
+            margin-top: auto;
+          }
+
+          .datagrid-cell-wrapper .icon-alert {
+            height: 16px;
+            top: 6px;
+          }
+        }
+
+        &.confirm {
+          &.datagrid-trigger-cell .icon-confirm {
+            margin-top: auto;
+          }
+
+          .datagrid-cell-wrapper .icon-confirm {
+            height: 16px;
+            top: 6px;
+          }
+        }
+
+        &.info {
+          &.datagrid-trigger-cell .icon-info {
+            margin-top: auto;
+          }
+
+          .datagrid-cell-wrapper .icon-info {
+            height: 16px;
+            top: 6px;
+          }
+        }
+
       }
     }
 
@@ -829,7 +892,7 @@ $datagrid-short-row-height: 23px;
       // scss-lint:enable ImportantRule
     }
 
-    .icon-error {
+    .icon-error, .icon-alert, .icon-confirm, .icon-info {
       // scss-lint:disable ImportantRule
       margin-left: -29px !important;
       // scss-lint:enable ImportantRule
@@ -859,9 +922,24 @@ $datagrid-short-row-height: 23px;
       }
     }
 
-    //Error validation
+    //Validation
     &.error td {
-      background-color: $alert-bg-color;
+      background-color: $alert-bg-red;
+      //border-color: $alert-red; - Use for focus state
+    }
+
+    &.alert td {
+      background-color: $alert-bg-orange;
+      //border-color: $alert-red; - Use for focus state
+    }
+
+    &.confirm td {
+      background-color: $alert-bg-green;
+      //border-color: $alert-red; - Use for focus state
+    }
+
+    &.info td {
+      background-color: $alert-bg-info;
       //border-color: $alert-red; - Use for focus state
     }
 
@@ -1160,7 +1238,7 @@ $datagrid-short-row-height: 23px;
 
     // Validation Cell Styles
     &.error {
-      background-color: $alert-bg-color;
+      background-color: $alert-bg-red;
 
       .datagrid-cell-wrapper {
         position: relative;
@@ -1180,6 +1258,90 @@ $datagrid-short-row-height: 23px;
 
       &.l-right-text {
         .datagrid-cell-wrapper .icon-error {
+          left: 0;
+          margin-left: 0;
+          margin-right: -15px;
+        }
+      }
+    }
+
+    &.alert {
+      background-color: $alert-bg-orange;
+
+      .datagrid-cell-wrapper {
+        position: relative;
+
+        .icon-alert {
+          left: 100%;
+          margin-left: -30px;
+          position: absolute;
+          top: 15px;
+          visibility: visible;
+        }
+      }
+
+      &:focus .datagrid-cell-wrapper {
+        border-color: $alert-orange;
+      }
+
+      &.l-right-text {
+        .datagrid-cell-wrapper .icon-alert {
+          left: 0;
+          margin-left: 0;
+          margin-right: -15px;
+        }
+      }
+    }
+
+    &.confirm {
+      background-color: $alert-bg-green;
+
+      .datagrid-cell-wrapper {
+        position: relative;
+
+        .icon-confirm {
+          left: 100%;
+          margin-left: -30px;
+          position: absolute;
+          top: 15px;
+          visibility: visible;
+        }
+      }
+
+      &:focus .datagrid-cell-wrapper {
+        border-color: $alert-green;
+      }
+
+      &.l-right-text {
+        .datagrid-cell-wrapper .icon-confirm {
+          left: 0;
+          margin-left: 0;
+          margin-right: -15px;
+        }
+      }
+    }
+
+    &.info {
+      background-color: $alert-bg-info;
+
+      .datagrid-cell-wrapper {
+        position: relative;
+
+        .icon-info {
+          left: 100%;
+          margin-left: -30px;
+          position: absolute;
+          top: 15px;
+          visibility: visible;
+        }
+      }
+
+      &:focus .datagrid-cell-wrapper {
+        border-color: $alert-info;
+      }
+
+      &.l-right-text {
+        .datagrid-cell-wrapper .icon-info {
           left: 0;
           margin-left: 0;
           margin-right: -15px;
@@ -2774,6 +2936,12 @@ html[dir='rtl'] {
       }
     }
   }
+}
+
+.table-errors {
+  float: right;
+  height: 35px;
+  margin-left: 10px;
 }
 
 //Ios Hacks

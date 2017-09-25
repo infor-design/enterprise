@@ -330,13 +330,13 @@
     },
 
     /**
-     * Set Error icon on parent tabs/expandable
+     * Set icon on parent tabs/expandable
      * @private
      * @param {jQuery[]} field
      * @returns {undefined}
      */
-    setErrorOnParent: function (field) {
-      var errorIcon = $.createIcon({ classes: ['icon-error'], icon: 'error' }),
+    setIconOnParent: function (field, type) {
+      var errorIcon = $.createIcon({ classes: ['icon-' + type], icon: type }),
         parent = field.closest('.tab-panel, .expandable-pane'),
         parentContainer = field.closest('.tab-container, .tab-panel-container, .expandable-area'),
         iconTarget = parent.attr('id'),
@@ -386,34 +386,34 @@
       }
       menuitem = $('a[href="#'+ parent.attr('id') +'"]', '#'+ iconTarget);
 
-      //Add Error icon
-      if ((!!parent && $('.error', parent).length) ||
-          (!!dropdownParent && $('.error', dropdownParent).length)) {
+      //Add icon
+      if ((!!parent && $('.' + type, parent).length) ||
+          (!!dropdownParent && $('.' + type, dropdownParent).length)) {
 
         //if Dropdown Tabs and current menu item has no error remove icon
-        if (!$('.error', parent).length) {
-          menuitem.removeClass('is-error');
-          $('.icon-error', menuitem).remove();
+        if (!$('.' + type, parent).length) {
+          menuitem.removeClass('is-' + type);
+          $('.icon-' + type, menuitem).remove();
         }
 
         //if Dropdown Tabs and current menu item has error add icon
-        if ($('.error', parent).length &&
-            $('.error', dropdownParent).length &&
-            !$('.icon-error', menuitem).length) {
-            menuitem.addClass('is-error').append(errorIcon);
+        if ($('.' + type, parent).length &&
+            $('.' + type, dropdownParent).length &&
+            !$('.icon-' + type, menuitem).length) {
+            menuitem.addClass('is-' + type).append(errorIcon);
         }
 
         //Add icon to main tab area
-        if (!($('.icon-error', iconContainer).length)) {
-          iconContainer.addClass('is-error').append(errorIcon);
+        if (!($('.icon-' + type, iconContainer).length)) {
+          iconContainer.addClass('is-' + type).append(errorIcon);
         }
       }
 
-      //Remove Error icon
+      //Remove icon
       else {
         iconContainer = iconContainer.add(menuitem);
-        iconContainer.removeClass('is-error');
-        $('.icon-error', iconContainer).remove();
+        iconContainer.removeClass('is-' + type);
+        $('.icon-' + type, iconContainer).remove();
       }
     },
 
@@ -430,8 +430,8 @@
         types = self.getTypes(field, e) || [],
         rule, dfd,
         dfds = [],
-        errors = [],
-        i, l,
+        results = [],
+        i, l, validationType,
         value = self.value(field),
         placeholder = field.attr('placeholder'),
 
@@ -441,38 +441,49 @@
             self.removePositive(field);
           }
 
+          validationType = $.fn.validation.ValidationTypes[rule.type] || $.fn.validation.ValidationTypes.error;
+
           if (!result) {
             if (!self.isPlaceholderSupport && (value === placeholder) &&
                (rule.message !== Locale.translate('Required'))) {
               return;
             }
 
-            self.addError(field, rule.message, field.attr('data-error-type') === 'tooltip' ? false: true, showTooltip);
-            errors.push(rule.msg);
-            dfd.reject();
-          }   else if (errors.length === 0) {
-            self.removeError(field);
+            self.addMessage(field, rule.message, rule.type, field.attr('data-' + validationType.type + '-type') === 'tooltip' ? false: true, showTooltip);
+            results.push(rule.type);
+
+            if (validationType.errorsForm) {
+              dfd.reject();
+            }
+            else {
+              dfd.resolve();
+            }
+          }   else if ($.grep(results, function (res) { return res === validationType.type; }).length === 0) {
+            self.removeMessage(field, validationType.type);
             dfd.resolve();
 
             if (rule.positive) {
               // FIX: In Contextual Action Panel control not sure why but need to add error,
               // otherwise "icon-confirm" get misaligned,
               // so for this fix adding and then removing error here
-              self.addError(field, rule.message, rule.inline, showTooltip);
-              self.removeError(field);
+              self.addMessage(field, rule.message, rule.type, rule.inline, showTooltip);
+              self.removeMessage(field, rule.type);
               dfd.resolve();
 
               self.addPositive(field);
             }
           }
 
-          self.setErrorOnParent(field);
+          self.setIconOnParent(field, rule.type);
           field.triggerHandler('isvalid', [result]);
 
         };
 
-      self.removeError(field);
-      field.removeData('data-errormessage');
+      for (var props in $.fn.validation.ValidationTypes) {
+        validationType = $.fn.validation.ValidationTypes[props];
+        self.removeMessage(field, (validationType.type));
+        field.removeData('data-' + (validationType.type) + 'message');
+      }
 
       for (i = 0, l = types.length; i < l; i++) {
         rule = $.fn.validation.rules[types[i]];
@@ -521,32 +532,34 @@
     },
 
     /**
-     * Adds an error message/icon to a form field.
+     * Adds a message/icon to a form field.
      *
      * @param {jQuery[]} field
      * @param {String} message
+     * @param {String} type
      * @param {boolean} inline
      * @param {boolean} showTooltip
      */
-    addError: function(field, message, inline, showTooltip) {
-      var loc = this.getField(field).addClass('error'),
-         dataMsg = loc.data('data-errormessage'),
-         appendedMsg = message;
+    addMessage: function(field, message, type, inline, showTooltip) {
+      var loc = this.getField(field).addClass(type),
+         dataMsg = loc.data('data-' + type + 'message'),
+         appendedMsg = message,
+         validationType = $.fn.validation.ValidationTypes[type] || $.fn.validation.ValidationTypes.error;
 
       if (dataMsg) {
         appendedMsg = (/^\u2022/.test(dataMsg)) ? '' : '\u2022 ';
         appendedMsg += dataMsg + '<br>\u2022 ' + message;
       }
 
-      loc.data('data-errormessage', appendedMsg);
+      loc.data('data-' + validationType.type + 'message', appendedMsg);
 
-      //Add Aria Alert
+      //Add Aria
       if ($.fn.toast !== undefined) {
-        $('body').toast({title: Locale.translate('Error'), audibleOnly: true, message: appendedMsg});
+        $('body').toast({title: Locale.translate(validationType.titleMessageID), audibleOnly: true, message: appendedMsg});
       }
 
       if (!inline) {
-        this.showTooltipError(field, appendedMsg, showTooltip);
+        this.showTooltipMessage(field, appendedMsg, validationType.type, showTooltip);
         return;
       }
 
@@ -556,7 +569,7 @@
         this.setModalPrimaryBtn(field, modalBtn, false);
       }
 
-      this.showInlineError(field, message);
+      this.showInlineMessage(field, message, validationType.type);
     },
 
     /**
@@ -566,11 +579,11 @@
      * @param {jQuery[]} field
      * @returns {jQuery[]}
      */
-    showErrorIcon: function(field) {
-      var loc = this.getField(field).addClass('error'),
-        svg = $.createIconElement({ classes: ['icon-error'], icon: 'error' });
+    showIcon: function(field, type) {
+      var loc = this.getField(field).addClass(type),
+        svg = $.createIconElement({ classes: ['icon-' + type], icon: type });
 
-      if (loc.parent('.field, .field-short').find('svg.icon-error').length === 0) {
+      if (loc.parent('.field, .field-short').find('svg.icon-' + type).length === 0) {
 
         if (field.parent().is('.editor-container')) {
           field.parent().addClass('is-error');
@@ -610,19 +623,19 @@
      * @param {string} message
      * @param {boolean} showTooltip
      */
-    showTooltipError: function(field, message, showTooltip) {
+    showTooltipMessage: function(field, message, type, showTooltip) {
       if (field.is(':radio')) {
         return;
       }
 
-      var icon = this.showErrorIcon(field);
+      var icon = this.showIcon(field, type);
       var representationField = field;
 
       //Add error classes to pseudo-markup for certain controls
       if (field.is('.dropdown, .multiselect') && field.data('dropdown') !== undefined) {
         var input = field.data('dropdown').pseudoElem;
         representationField = input;
-        input.addClass('error');
+        input.addClass(type);
       }
 
       var tooltipAPI = icon.data('tooltip');
@@ -694,7 +707,7 @@
      * @param {HTMLElement} markup
      * @param {boolean} isShow
      */
-    toggleRadioError:  function (field, message, markup, isShow) {
+    toggleRadioMessage:  function (field, message, type, markup, isShow) {
       var all, loc,
         name = field.attr('name');
 
@@ -705,12 +718,12 @@
           $(':radio[name="'+ name +'"]:last + label');
 
         if (isShow) {
-          all.addClass('error');
-          $(markup).addClass('radio-group-error').insertAfter(loc);
+          all.addClass(type);
+          $(markup).addClass('radio-group-' + type).insertAfter(loc);
         }
         else {
-          all.removeClass('error');
-          loc.next('.radio-group-error').remove();
+          all.removeClass(type);
+          loc.next('.radio-group-' + type).remove();
         }
       }
     },
@@ -722,28 +735,30 @@
      * @param {jQuery[]} field
      * @param {string} message
      */
-    showInlineError: function (field, message) {
-      var loc = this.getField(field).addClass('error'),
-        markup = '<div class="error-message">' +
-          $.createIcon({ classes: ['icon-error'], icon: 'error' }) +
-          '<pre class="audible">'+ Locale.translate('Error') +'</pre>' +
+    showInlineMessage: function (field, message, type) {
+      var loc = this.getField(field).addClass(type),
+        validationType = $.fn.validation.ValidationTypes[type] || $.fn.validation.ValidationTypes.error,
+        markup = '<div class="' + validationType.type + '-message">' +
+          $.createIcon({ classes: ['icon-' + validationType.type], icon: validationType.type }) +
+          '<pre class="audible">'+ Locale.translate(validationType.titleMessageID) +'</pre>' +
           '<p class="message-text">' + message +'</p>' +
           '</div>';
 
       if (field.is(':radio')) { // Radio button handler
-        this.toggleRadioError(field, message, markup, true);
+        this.toggleRadioMessage(field, message, validationType.type, markup, true);
       } else { // All other components
-        loc.closest('.field, .field-short').find('.formatter-toolbar').addClass('error');
+        loc.closest('.field, .field-short').find('.formatter-toolbar').addClass(validationType.type);
         loc.closest('.field, .field-short').append(markup);
         loc.closest('.field, .field-short').find('.colorpicker-container').addClass('error');
       }
 
       //Remove positive errors
-      field.parent().find('.icon-confirm').remove();
-
+      if (validationType.type === 'error') {
+        field.parent().find('.icon-confirm').remove();
+      }
       // Trigger an event
-      field.trigger('error', {field: field, message: message});
-      field.closest('form').trigger('error', {field: field, message: message});
+      field.trigger(validationType.type, {field: field, message: message});
+      field.closest('form').trigger(validationType.type, {field: field, message: message});
     },
 
     /**
@@ -761,22 +776,22 @@
     },
 
     /**
-     * Shows an inline error message on a field
+     * remove the message form the field
      *
      * @private
      * @param {jQuery[]} field
      */
-    removeError: function(field) {
+    removeMessage: function(field, type) {
       var loc = this.getField(field),
         isRadio = field.is(':radio'),
-        hasTooltip = field.attr('data-error-type');
+        hasTooltip = field.attr('data-' + type + '-type');
 
       this.inputs.filter('input, textarea').off('focus.validate');
-      field.removeClass('error');
-      field.removeData('data-errormessage');
+      field.removeClass(type);
+      field.removeData(type +'-errormessage');
 
       if (hasTooltip) {
-        var tooltipAPI = field.find('.icon.error').data('tooltip');
+        var tooltipAPI = field.find('.icon.' + type).data('tooltip');
 
         if (tooltipAPI) {
           tooltipAPI.destroy();
@@ -788,23 +803,23 @@
       }
 
       if (isRadio) {
-        this.toggleRadioError(field);
+        this.toggleRadioMessage(field, '', type);
       }
       else {
-        field.next('.icon-error').off('click.validate').remove();
+        field.next('.icon-' + type).off('click.validate').remove();
       }
 
       if (field.hasClass('dropdown') || field.hasClass('multiselect')) {
-        field.next().next().removeClass('error'); // #shdo
-        field.next().find('div.dropdown').removeClass('error').removeData('data-errormessage');
-        field.parent().find('.dropdown-wrapper > .icon-error').off('click.validate').remove(); // SVG Error Icon
+        field.next().next().removeClass(type); // #shdo
+        field.next().find('div.dropdown').removeClass(type).removeData('data-' + type + 'message');
+        field.parent().find('.dropdown-wrapper > .icon-' + type).off('click.validate').remove(); // SVG Error Icon
       }
 
       if (!isRadio) {
-        field.next().next('.icon-error').remove();
-        field.next('.inforCheckboxLabel').next('.icon-error').remove();
-        field.parent('.field, .field-short').find('span.error').remove();
-        field.parent().find('.icon-error').remove();
+        field.next().next('.icon-' + type).remove();
+        field.next('.inforCheckboxLabel').next('.icon-' + type).remove();
+        field.parent('.field, .field-short').find('span.' + type).remove();
+        field.parent().find('.icon-' + type).remove();
         field.off('focus.validate focus.tooltip');
       }
 
@@ -815,16 +830,16 @@
 
       //Remove error classes from pseudo-markup for certain controls
       if (field.is('.dropdown, .multiselect')) {
-        field.data('dropdown').pseudoElem.removeClass('error').removeAttr('placeholder');
+        field.data('dropdown').pseudoElem.removeClass(type).removeAttr('placeholder');
       }
 
       if (field.parent().is('.editor-container')) {
-        field.parent().removeClass('is-error');
+        field.parent().removeClass('is-' + type);
       }
       field.parent('.colorpicker-container').removeClass('error');
 
       if (field.closest('.field-fileupload').length > -1) {
-        field.closest('.field-fileupload').find('input.error').removeClass('error');
+        field.closest('.field-fileupload').find('input.' + type).removeClass(type);
       }
 
       // Enable primary button in modal
@@ -834,11 +849,13 @@
       }
 
       //Stuff for the inline error
-      field.closest('.field, .field-short').find('.error-message').remove();
-      field.parent('.field, .field-short').find('.formatter-toolbar').removeClass('error');
-      field.trigger('valid', {field: field, message: ''});
-      field.closest('form').trigger('valid', {field: field, message: ''});
+      field.closest('.field, .field-short').find('.' + type + '-message').remove();
+      field.parent('.field, .field-short').find('.formatter-toolbar').removeClass(type);
 
+      if (type === 'error') {
+        field.trigger('valid', {field: field, message: ''});
+        field.closest('form').trigger('valid', {field: field, message: ''});
+      }
     },
 
     /**
@@ -885,24 +902,46 @@
   };
 
   //Add a Message to a Field
+  $.fn.addMessage = function(options) {
+    var defaults = {message: '', type: 'error', showTooltip: false, inline: true},
+      settings = $.extend({}, defaults, options);
+
+    return this.each(function() {
+      var instance = new Validator(this, settings);
+      instance.addMessage($(this), settings.message, settings.type, settings.inline, settings.showTooltip);
+    });
+  };
+
+  //Add an error Message to a Field
   $.fn.addError = function(options) {
     var defaults = {message: '', showTooltip: false, inline: true},
       settings = $.extend({}, defaults, options);
 
     return this.each(function() {
       var instance = new Validator(this, settings);
-      instance.addError($(this), settings.message, settings.inline, settings.showTooltip);
+      instance.addMessage($(this), settings.message, 'error', settings.inline, settings.showTooltip);
     });
   };
 
   //Remove a Message from a Field
+  $.fn.removeMessage = function(options) {
+    var defaults = {message: '', type: 'error'},
+      settings = $.extend({}, defaults, options);
+
+    return this.each(function() {
+      var instance = new Validator(this, settings);
+      instance.removeMessage($(this), settings.type);
+    });
+  };
+
+  //Remove an error Message from a Field
   $.fn.removeError = function(options) {
     var defaults = {message: ''},
       settings = $.extend({}, defaults, options);
 
     return this.each(function() {
       var instance = new Validator(this, settings);
-      instance.removeError($(this));
+      instance.removeMessage($(this), 'error');
     });
   };
 
@@ -929,9 +968,18 @@
     });
   };
 
+
   //The validation rules object
   var Validation = function () {
     var self = this;
+
+    // define standard validation types
+    this.ValidationTypes = [];
+    this.ValidationTypes.error = { type: 'error', titleMessageID: 'Error', pagingMessageID: 'ErrorOnPage', errorsForm: true };
+    this.ValidationTypes.alert = { type: 'alert', titleMessageID: 'Alert', pagingMessageID: 'AlertOnPage', errorsForm: false };
+    this.ValidationTypes.confirm = { type: 'confirm', titleMessageID: 'Confirm', pagingMessageID: 'ComfirmOnPage', errorsForm: false };
+    this.ValidationTypes.info = { type: 'info', titleMessageID: 'Info', pagingMessageID: 'InfoOnPage', errorsForm: false };
+
     this.rules = {
       required: {
         isNotEmpty: function(value, field) {
@@ -988,7 +1036,8 @@
           this.message = Locale.translate('Required');
           return field.is(':radio') ? this.isRadioChecked(field) : this.isNotEmpty(value, field);
         },
-        message: 'Required'
+        message: 'Required',
+        type: 'error'
       },
 
       //date: Validate date, datetime (24hr or 12hr am/pm)
@@ -1010,7 +1059,8 @@
             parsedDate = Locale.parseDate(value, dateFormat, isStrict);
           return ((parsedDate === undefined) && value !== '') ? false : true;
         },
-        message: 'Invalid Date'
+        message: 'Invalid Date',
+        type: 'error'
       },
 
       //Validate date, disable dates
@@ -1058,7 +1108,8 @@
 
           return check;
         },
-        message: 'Unavailable Date'
+        message: 'Unavailable Date',
+        type: 'error'
       },
 
       email: {
@@ -1083,7 +1134,8 @@
           }
           return true;
         },
-        message: ''
+        message: '',
+        type: 'error'
       },
 
       emailPositive: {
@@ -1104,7 +1156,8 @@
             return true;
           }
         },
-        message: 'EmailValidation'
+        message: 'EmailValidation',
+        type: 'error'
       },
 
       passwordReq: {
@@ -1118,7 +1171,8 @@
           var regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{10,}$/;
           return (value.length) ? value.match(regex) : true;
         },
-        message: 'PasswordValidation'
+        message: 'PasswordValidation',
+        type: 'error'
       },
 
       passwordConfirm: {
@@ -1128,7 +1182,8 @@
             check = ((value === passwordValue) && (self.rules.passwordReq.check(passwordValue)));
           return (value.length) ? check : true;
         },
-        message: 'PasswordConfirmValidation'
+        message: 'PasswordConfirmValidation',
+        type: 'error'
       },
 
       time: {
@@ -1136,35 +1191,35 @@
           value = value.replace(/ /g, '');
           this.message = Locale.translate('InvalidTime');
           var timepicker = field && field.data('timepicker'),
-		    timepickerSettings = timepicker ? field.data('timepicker').settings : {},
+            timepickerSettings = timepicker ? field.data('timepicker').settings : {},
             pattern = timepickerSettings && timepickerSettings.timeFormat ? timepickerSettings.timeFormat : Locale.calendar().timeFormat,
             is24Hour = (pattern.match('HH') || []).length > 0,
             maxHours = is24Hour ? 24 : 12,
             sep = value.indexOf(Locale.calendar().dateFormat.timeSeparator),
             valueHours = 0,
             valueMins = 0,
-			valueSecs = 0,
-			valueM,
-			timeparts;
+            valueSecs = 0,
+            valueM,
+            timeparts;
 
           if (value === '') {
             return true;
           }
 
-		  valueHours = parseInt(value.substring(0, sep));
+          valueHours = parseInt(value.substring(0, sep));
           valueMins = parseInt(value.substring(sep + 1,sep + 3));
 
-		  //getTimeFromField
-		  if (timepicker) {
-			  timeparts = timepicker.getTimeFromField();
+          //getTimeFromField
+          if (timepicker) {
+              timeparts = timepicker.getTimeFromField();
 
-			  valueHours = timeparts.hours;
-			  valueMins = timeparts.minutes;
+              valueHours = timeparts.hours;
+              valueMins = timeparts.minutes;
 
-			  if (timepicker.hasSeconds()) {
-			    valueSecs = timeparts.seconds;
-			  }
-		  }
+              if (timepicker.hasSeconds()) {
+                valueSecs = timeparts.seconds;
+              }
+          }
 
           if (valueHours.toString().length < 1 || isNaN(valueHours) || parseInt(valueHours) < 0 || parseInt(valueHours) > maxHours) {
             return false;
@@ -1192,7 +1247,8 @@
 
           return true;
         },
-        message: 'Invalid Time'
+        message: 'Invalid Time',
+        type: 'error'
       },
 
       //Test validation function, always returns false
@@ -1202,7 +1258,8 @@
           return value === '1' ? true : false;
         },
 
-        message: 'Value is not valid (test).'
+        message: 'Value is not valid (test).',
+        type: 'error'
       }
     };
   };
@@ -1247,6 +1304,18 @@
     $(this).find('.icon-error').remove();
     $(this).find('.icon-confirm').remove();
     $(this).find('.error-message').remove();
+
+    //Clear Warnings
+    formFields.removeClass('alert');
+    $(this).find('.alert').removeClass('alert');
+    $(this).find('.icon-alert').remove();
+    $(this).find('.alert-message').remove();
+
+    //Clear Informations
+    formFields.removeClass('info');
+    $(this).find('.info').removeClass('info');
+    $(this).find('.icon-info').remove();
+    $(this).find('.info-message').remove();
 
     setTimeout(function () {
       $('#validation-errors').addClass('is-hidden');
