@@ -3755,7 +3755,7 @@ window.Chart = function(container) {
   //Completion chart
   this.Completion = function(chartData) {
 
-    // Set dataset
+    // Set vars
     var dataset = chartData[0].data[0],
       isTarget = charts.settings.type === 'completion-target',
       isAchievment = charts.settings.type === 'targeted-achievement';
@@ -3772,36 +3772,39 @@ window.Chart = function(container) {
       fixUndefined = function(value, isNumber) {
         return !isUndefined(value) ? value : (isNumber ? 0 : '');
       },
-      toValue = function(percent) {
-        return percent /100 * fixUndefined(dataset.total.value, true);
+      toValue = function(percent, ds) {
+        ds = ds || dataset;
+        return percent /100 * fixUndefined(ds.total.value, true);
       },
-      toPercent = function(value) {
-        return d3.round(100 * (value / fixUndefined(dataset.total.value, true)));
+      toPercent = function(value, ds) {
+        ds = ds || dataset;
+        return d3.round(100 * (value / fixUndefined(ds.total.value, true)));
       },
-      format = function (value, formatterString) {
+      format = function (value, formatterString, ds) {
         if (formatterString === '.0%') {
-          return toPercent(value) +'%';
+          return toPercent(value, ds) +'%';
         }
         return d3.format(formatterString || '')(value);
       },
-      fixPercent = function(value) {
+      fixPercent = function(value, ds) {
         var s = value.toString();
         if (s.indexOf('%') !== -1) {
-          return toValue(s.replace(/%/g, ''));
+          return toValue(s.replace(/%/g, ''), ds);
         }
         return value;
       },
-      updateWidth = function(elem, value) {
-        var w = toPercent(value) > 100 ? 100 : (toPercent(value) < 0 ? 0 : toPercent(value));
+      updateWidth = function(elem, value, ds) {
+        var percent = toPercent(value, ds),
+          w = percent > 100 ? 100 : (percent < 0 ? 0 : percent);
         elem[0].style.width = w + '%';
       },
       updateTargetline = function(elem, value) {
         var w = value > 100 ? 100 : (value < 0 ? 0 : value);
         elem[0].style.left = w + '%';
       },
-      setFormat = function(obj) {
+      setFormat = function(obj, ds) {
         return (obj && !isUndefined(obj.value) && obj.format) ?
-          format(fixPercent(obj.value), obj.format) : (obj ? fixPercent(obj.value) : 0);
+          format(fixPercent(obj.value, ds), obj.format, ds) : (obj ? fixPercent(obj.value, ds) : 0);
       },
       setOverlap = function() {
         if (isTarget && !isAchievment) {
@@ -3815,9 +3818,255 @@ window.Chart = function(container) {
               [(rect1.right > rect2.left-20) ? 'addClass' : 'removeClass']('overlap');
           }, 500);
         }
+      },
+      getSpecColor = function(ds) {
+        var specColor = {};
+        ds = ds || dataset;
+
+        if (ds.info && !isUndefined(ds.info.color)) {
+          if (dataset.info.color.indexOf('#') === 0) {
+            specColor.info = true;
+          }
+        }
+        if (ds.completed && !isUndefined(ds.completed.color)) {
+          if (ds.completed.color.indexOf('#') === 0) {
+            specColor.completed = true;
+          }
+        }
+        if (ds.remaining && !isUndefined(ds.remaining.color)) {
+          if (ds.remaining.color.indexOf('#') === 0) {
+            specColor.remaining = true;
+          }
+        }
+        if (ds.targetline && !isUndefined(ds.targetline.color)) {
+          if (ds.targetline.color.indexOf('#') === 0) {
+            specColor.targetline = true;
+          }
+        }
+        return specColor;
+      },
+      getTotalText = function(ds) {
+        var totalText,
+          difference = {};
+
+        ds = ds || dataset;
+
+        if (ds.total.difference) {
+          difference.value = (ds.total.value - ds.completed.value);
+          difference.format = dataset.total.format;
+        }
+
+        totalText = (!ds.total.textOnly ? setFormat(ds.total.difference ? difference : ds.total) : '') + (ds.total.text || '');
+
+        totalText = isAchievment && ds.remaining ?
+          (!ds.remaining.textOnly ? setFormat(ds.remaining) : '') + (ds.remaining.text || ''): totalText;
+
+        return totalText;
+      },
+      resetColor = function(node, color) {
+        color = color || '';
+        if (color.indexOf('#') === 0) {
+          node.css({color: ''});
+        } else {
+          node.removeClass(color);
+        }
+      },
+      updateColor = function(node, color) {
+        color = color || '';
+        var specColor = color.indexOf('#') === 0;
+        if (specColor) {
+          node.css({color: color});
+        } else if (color !== '') {
+          node.addClass(color);
+        }
+      },
+      percentTextDefault = {show: false, color1: '', color2: 'inverse'},
+      percentText = $.extend({}, percentTextDefault, dataset.percentText),
+      setPercentText = function (ds) {
+        ds = ds || dataset;
+        percentText.value = ds.completed ? ds.completed.value : 0;
+        percentText.percent = toPercent(fixUndefined(percentText.value, true), ds);
+        percentText.format = '.0%';
+        percentText.text = setFormat(percentText, ds);
+        percentText.color = percentText[percentText.percent > 55 ? 'color2': 'color1'];
+      },
+      c,// Cache will after created
+      cacheElements = function () {
+        c = {
+          name: $('.name', container),
+          info: {
+            value: $('.info .value', container),
+            text: $('.info .text', container)
+          },
+          completed: {
+            bar: $('.completed.bar', container),
+            value: $('.completed .value', container),
+            text: $('.completed .text, .completed-label .text', container)
+          },
+          remaining: {
+            bar: $('.remaining.bar', container),
+            value: $('.remaining .value', container),
+            text: $('.remaining .text', container)
+          },
+          targetline: {
+            bar: $('.targetline', container),
+            value: $('.targetline .value', container),
+            text: $('.targetline .text', container)
+          },
+          total: {
+            bar: $('.total.bar', container),
+            value: $('.total.value', container),
+          },
+          percentText: $('.chart-percent-text', container)
+        };
+      },
+      setJsonData = function(ds) {
+        ds = ds || dataset;
+        c.name.data('jsonData', {name: ds.name});
+        c.info.value.add(c.info.text).data('jsonData', {info: ds.info});
+        c.completed.bar.add(c.completed.value).add(c.completed.text)
+          .data('jsonData', {completed: ds.completed});
+        c.remaining.bar.add(c.remaining.value).add(c.remaining.text)
+          .data('jsonData', {remaining: ds.remaining});
+        c.targetline.bar.add(c.targetline.value).add(c.targetline.text)
+          .data('jsonData', {targetline: ds.targetline});
+        c.total.bar.add(c.total.value).data('jsonData', {total: ds.total});
+        c.percentText.data('jsonData', {percentText: ds.percentText});
+      },
+      updateBars = function(ds) {
+        var w;
+        ds = ds || dataset;
+        // Update completed bar width
+        if (ds.completed) {
+          w = fixPercent(ds.completed.value, ds);
+          updateWidth(c.completed.bar, w, ds);
+        }
+
+        // Update remaining bar width
+        if (ds.remaining) {
+          w = fixPercent(ds.completed.value, ds) + fixPercent(ds.remaining.value, ds);
+          updateWidth(c.remaining.bar, w, ds);
+          setOverlap();
+        }
+
+        // Update target line bar position
+        if (ds.targetline) {
+          w = fixPercent(ds.targetline.value, ds);
+          updateTargetline(c.targetline.bar, w, ds);
+        }
       };
 
+      if (!isUndefined(percentText.color) && percentText.color1 === '') {
+        percentText.color1 = percentText.color;
+      }
+
       this.update = function(o) {
+        //$(container).triggerHandler('selected', [d3.select(this)[0], {}, i]);
+        if (isAchievment) {
+          var ds = $.extend(true, {}, dataset, o),
+            parent, child;
+
+          for (var key in o) {
+            if (o.hasOwnProperty(key)) {
+              parent = key;
+              child = o[key];
+              if(child instanceof Object) {
+                for (var k in child) {
+                  if (child.hasOwnProperty(k)) {
+
+                    if (parent === 'completed') {
+                      if (k === 'text') {
+                        c.completed.text.html(child[k]);
+                      }
+                      if (k === 'color') {
+                        resetColor(c.completed.bar.add(c.completed.value).add(c.completed.text), dataset.completed.color);
+                        updateColor(c.completed.bar.add(c.completed.value).add(c.completed.text), child[k]);
+                      }
+                      if (k === 'value') {
+                        if (dataset.remaining && dataset.remaining.value &&
+                            dataset.completed && dataset.completed.value &&
+                            (!o.remaining || (o.remaining && !o.remaining.value))) {
+                          ds.remaining.value = (dataset.completed.value + dataset.remaining.value) - ds.completed.value;
+                        }
+                        c.total.value.html(getTotalText(ds));
+                        updateBars(ds);
+                        resetColor(c.percentText, percentText.color);
+                        setPercentText(ds);
+                        updateColor(c.percentText, percentText.color);
+                        c.percentText.html(percentText.text);
+                      }
+                      c.completed.bar.add(c.completed.value).add(c.completed.text)
+                        .data('jsonData', {completed: ds.completed});
+                    }
+
+                    if (parent === 'remaining') {
+                      if (k === 'text') {
+                        c.total.value.html(getTotalText(ds));
+                      }
+                      if (k === 'color') {
+                        resetColor(c.total.value, dataset.remaining.color);
+                        updateColor(c.total.value, child[k]);
+                      }
+                      if (k === 'value') {
+                        c.total.value.html(getTotalText(ds));
+                        updateBars(ds);
+                        resetColor(c.percentText, percentText.color);
+                        setPercentText(ds);
+                        updateColor(c.percentText, percentText.color);
+                        c.percentText.html(percentText.text);
+                      }
+                      c.remaining.bar.add(c.remaining.value).add(c.remaining.text)
+                        .data('jsonData', {remaining: ds.remaining});
+                    }
+
+                    if (parent === 'total') {
+                      if (k === 'text') {
+                        c.total.value.html(getTotalText(ds));
+                      }
+                      if (k === 'color') {
+                        resetColor(c.total.value, dataset.total.color);
+                        updateColor(c.total.value, child[k]);
+                      }
+                      if (k === 'value' || k === 'difference') {
+                        c.total.value.html(getTotalText(ds));
+                        updateBars(ds);
+                        resetColor(c.percentText, percentText.color);
+                        setPercentText(ds);
+                        updateColor(c.percentText, percentText.color);
+                        c.percentText.html(percentText.text);
+                      }
+                      c.total.bar.add(c.total.value).data('jsonData', {total: ds.total});
+                    }
+
+                    if (parent === 'percentText') {
+                      if (k === 'show') {
+                        c.percentText[child[k] ? 'show' : 'hide']();
+                      }
+                      if (k === 'color' || k === 'color1' || k === 'color2') {
+                        resetColor(c.percentText, percentText.color);
+                        setPercentText(ds);
+                        updateColor(c.percentText, child[k]);
+                        c.percentText.html(percentText.text);
+                      }
+                      c.percentText.data('jsonData', {percentText: ds.percentText});
+                    }
+
+                    if (parent === 'name') {
+                      if (k === 'text') {
+                        c.name.html(child[k]).data('jsonData', {name: ds.name});
+                      }
+                    }
+
+                  }
+                }
+              }
+            }
+          }
+          dataset = ds;
+          $(container).triggerHandler('updated');
+          return;
+        }
+
         var type, bar, nodes, jsonData;
         if (!o.data) {
           return;
@@ -3911,44 +4160,17 @@ window.Chart = function(container) {
             setOverlap();
           }
         });
+        $(container).triggerHandler('updated');
       };
 
     // Render
     var html = {body: $('<div class="total bar" />')},
-      specColor = {};
-
-    if (dataset.info && !isUndefined(dataset.info.color)) {
-      if (dataset.info.color.indexOf('#') === 0) {
-        specColor.info = true;
-      }
-    }
-    if (dataset.completed && !isUndefined(dataset.completed.color)) {
-      if (dataset.completed.color.indexOf('#') === 0) {
-        specColor.completed = true;
-      }
-    }
-    if (dataset.remaining && !isUndefined(dataset.remaining.color)) {
-      if (dataset.remaining.color.indexOf('#') === 0) {
-        specColor.remaining = true;
-      }
-    }
-    if (dataset.targetline && !isUndefined(dataset.targetline.color)) {
-      if (dataset.targetline.color.indexOf('#') === 0) {
-        specColor.targetline = true;
-      }
-    }
+      specColor = getSpecColor();
 
     if (isTarget || isAchievment) {
-      var difference = {};
+      var totalText = getTotalText();
+
       html.body.addClass('chart-completion-target' + (isAchievment ? ' chart-targeted-achievement' : ''));
-
-      if (dataset.total.difference) {
-        difference.value = (dataset.total.value - dataset.completed.value);
-        difference.format = dataset.total.format;
-      }
-
-      var totalText = setFormat(dataset.total.difference ? difference : dataset.total) + (dataset.total.text ? dataset.total.text : '');
-      totalText = isAchievment && dataset.remaining ? setFormat(dataset.remaining) + (dataset.remaining.text ? dataset.remaining.text : ''): totalText;
 
       html.label = ''+
       '<span class="label">'+
@@ -3998,10 +4220,14 @@ window.Chart = function(container) {
     }
 
     if (dataset.completed && isAchievment) {
+      setPercentText();
+      specColor.percentText = percentText.color.indexOf('#') === 0;
+
       html.completed = ''+
       '<div class="completed bar'+ (!specColor.completed ? ' '+ fixUndefined(dataset.completed.color) : '') +'"'+ (specColor.completed ? (' style="color:'+ dataset.completed.color +';background-color:'+ dataset.completed.color +';"') : '') +'"></div>'+
+      (percentText.show ? '<div class="chart-percent-text'+ (!specColor.percentText && percentText.color !== '' ? ' '+ percentText.color : '') +'"'+ (specColor.percentText ? (' style="color:'+ percentText.color +';"') : '') +'>'+ percentText.text +'</div>' : '')+
         '<span class="completed-label" aria-hidden="true"'+ (!isTarget && !isAchievment ? ' class="audible"' : '') +'>'+
-          '<span class="text'+ (!specColor.completed ? ' '+ fixUndefined(dataset.completed.color) : '') +'"'+ (specColor.completed ? (' style="color:'+ dataset.completed.color +';"') : '') +'">'+
+          '<span class="text">'+
             fixUndefined(dataset.completed.text) +
           '</span>'+
         '</span>';
@@ -4035,64 +4261,9 @@ window.Chart = function(container) {
     html.body.append(html.remaining, html.completed, html.targetline);
     $(container).append(html.label, html.body);
 
-    // Caching elements
-    var c = {
-      name: $('.name', container),
-      info: {
-        value: $('.info .value', container),
-        text: $('.info .text', container)
-      },
-      completed: {
-        bar: $('.completed.bar', container),
-        value: $('.completed .value', container),
-        text: $('.completed .text', container)
-      },
-      remaining: {
-        bar: $('.remaining.bar', container),
-        value: $('.remaining .value', container),
-        text: $('.remaining .text', container)
-      },
-      targetline: {
-        bar: $('.targetline', container),
-        value: $('.targetline .value', container),
-        text: $('.targetline .text', container)
-      },
-      total: {
-        bar: $('.total.bar', container),
-        value: $('.total.value', container),
-      }
-    };
-
-    // Set jsonData
-    c.name.data('jsonData', {name: dataset.name});
-    c.info.value.add(c.info.text).data('jsonData', {info: dataset.info});
-    c.completed.bar.add(c.completed.value).add(c.completed.text)
-      .data('jsonData', {completed: dataset.completed});
-    c.remaining.bar.add(c.remaining.value).add(c.remaining.text)
-      .data('jsonData', {remaining: dataset.remaining});
-    c.targetline.bar.add(c.targetline.value).add(c.targetline.text)
-      .data('jsonData', {targetline: dataset.targetline});
-    c.total.bar.add(c.total.value).data('jsonData', {total: dataset.total});
-
-    var w;
-    // Update completed bar width
-    if (dataset.completed) {
-      w = fixPercent(dataset.completed.value);
-      updateWidth(c.completed.bar, w);
-    }
-
-    // Update remaining bar width
-    if (dataset.remaining) {
-      w = fixPercent(dataset.completed.value) + fixPercent(dataset.remaining.value);
-      updateWidth(c.remaining.bar, w);
-      setOverlap();
-    }
-
-    // Update target line bar position
-    if (dataset.targetline) {
-      w = fixPercent(dataset.targetline.value);
-      updateTargetline(c.targetline.bar, w);
-    }
+    cacheElements();
+    setJsonData();
+    updateBars();
   };
 
   //Select the element and fire the event, make the inverse selector opace
