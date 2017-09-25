@@ -116,7 +116,7 @@ $toolbarsearchfield-category-empty-width: 54px;
         color: $btn-color;
 
         &::after {
-          border: 1px solid $button-focus-color;
+          border: 1px solid $btn-focus-bg-color;
           border-radius: 2px;
           content: '';
           display: inline-block;
