@@ -25,7 +25,7 @@
           side: 'left', // or right
           resize: 'immediate',
           containment: null, //document or parent
-          save: false
+          save: true
         },
         settings = $.extend({}, defaults, options);
 
@@ -73,8 +73,6 @@
 
         if (this.isSplitterRightSide) {
           var thisPrev = thisSide.prev();
-          // this.leftSide = thisSide.prev().is('.main') ? thisSide.prev() : thisSide;
-          // w = thisSide.parent().outerWidth() - w;
           if (thisPrev.is('.main')) {
             this.leftSide = thisPrev;
             w = thisSide.parent().outerWidth() - w;
@@ -86,8 +84,6 @@
           thisSide.addClass('is-right-side')
             .next().addClass('flex-grow-shrink is-right-side')
             .parent().addClass('splitter-container');
-
-          // splitter.addClass('splitter-right');
 
           if (s.collapseButton) {
             var savedOffset = 0;
