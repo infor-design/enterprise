@@ -221,7 +221,7 @@
       'NextMonth': {id: 'NextMonth', value: 'Следующий месяц', comment: 'the label for the button that moves calendar to next/prev'},
       'No': {id: 'No', value: 'Нет', comment: 'On a dialog button'},
       'NoResults': {id: 'NoResults', value: 'Результатов не найдено', comment: 'Search Results Text'},
-      'Normal': {id: 'Normal', value: 'Обычный', comment: 'Normal row height'},
+      'Normal': {id: 'Normal', value: 'Обычная', comment: 'Normal row height'},
       'Notes': {id: 'Notes', value: 'Примечания', comment: 'Notes icon tooltip'},
       'NotSelected': {id: 'NotSelected', value: 'Не выбрано', comment: 'Not Selected in icons for filtering'},
       'NumberList': {id: 'NumberList', value: 'Нумерованный список', comment: 'Number List tooltip'},
@@ -293,7 +293,6 @@
       'Tall': {id: 'Tall', value: 'Длинная', comment: 'Describes a Taller Row Height in a grid/list'},
       'Target': {id: 'Target', value: 'Цель', comment: 'Label for an input to enter a Target (Url Attribute)'},
       'TextColor': {id: 'TextColor', value: 'Цвет текста', comment: 'add or edit text color in the editor'},
-
       'Timer': {id: 'Timer', value: 'Таймер', comment: 'Timer tooltip'},
       'Today': {id: 'Today', value: 'Сегодня', comment: 'refering to today on a calendar'},
       'ToggleBold': {id: 'ToggleBold', value: 'Включить/выключить полужирный текст', comment: 'turn on and off bold in text editor (like word)'},
