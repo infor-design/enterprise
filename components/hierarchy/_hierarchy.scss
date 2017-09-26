@@ -6,6 +6,15 @@ $hierarchy-node-height: 75px;
 $hierarchy-node-width: 275px;
 $hierarchy-line-width: 1px;
 
+// placeholder
+.vertical-line {
+  content: '';
+  background: $hierarchy-line-color none repeat scroll 0 0;
+  position: absolute;
+  width: $hierarchy-line-width;
+  z-index: -1;
+}
+
 .hierarchy {
   margin: 0;
   padding: 20px 30px;
@@ -43,6 +52,57 @@ $hierarchy-line-width: 1px;
     li {
       @include transition(all 200ms cubic-bezier(.17, .04, .03, .94));
     }
+
+    .chart {
+      position: relative;
+      &.display-for-paging {
+        &:after {
+          @extend .vertical-line;
+          height: calc(100% - 120px);
+          left: 0;
+          top: 40px;
+        }
+      }
+      &.has-back {
+        &:after {
+          height: calc(100% - 170px);
+          left: 0;
+          top: 95px;
+        }
+      }
+      &.display-for-paging .back  {
+        padding-bottom: 20px;
+        button {
+          margin: 0 auto;
+          max-width: 36px;
+          display: block;
+          background: $azure05;
+          color: white;
+        }
+        &:after {
+          @extend .vertical-line;
+          left: 50%;
+          top: 0;
+          height: 55px;
+        }
+      }
+
+      &.display-for-paging .root {
+        position: relative;
+        overflow: visible;
+        &::after {
+          content:'';
+          position:absolute;
+          z-index: -1;
+          width:50%;
+          top:50%;
+          left:-25px;
+          display:block;
+          height: 1px;
+        }
+      }
+    }
+
   }
 
   // A node in the tree
@@ -174,14 +234,10 @@ $hierarchy-line-width: 1px;
 
     //draw a line down
     &::after {
-      background: $hierarchy-line-color none repeat scroll 0 0;
-      content: '';
+      @extend .vertical-line;
       height: 50%;
       left: 50%;
       bottom: 0;
-      position: absolute;
-      width: $hierarchy-line-width;
-      z-index: -1;
     }
 
     + .sub-level {
@@ -189,14 +245,10 @@ $hierarchy-line-width: 1px;
 
       //draw a line up
       &::before {
-        background: $hierarchy-line-color none repeat scroll 0 0;
-        content: '';
+        @extend .vertical-line;
         height: 40px;
         left: 50%;
         top: 0;
-        position: absolute;
-        width: $hierarchy-line-width;
-        z-index: -1;
       }
     }
   }
@@ -210,14 +262,10 @@ $hierarchy-line-width: 1px;
 
     //draw a line down
     &::after {
-      background: $hierarchy-line-color none repeat scroll 0 0;
-      content: '';
+      @extend .vertical-line;
       height: 100%;
       left: 50%;
       top: 0;
-      position: absolute;
-      width: $hierarchy-line-width;
-      z-index: -1;
     }
 
     li {
@@ -229,7 +277,28 @@ $hierarchy-line-width: 1px;
       }
 
     }
+  }
 
+  // Single level, paging display
+  .child-nodes {
+    padding: 20px 0;
+    position: relative;
+
+    > li .leaf {
+      margin: 0 0 20px 40px;
+      position: relative;
+      overflow: visible;
+      &::after {
+        content:'';
+        position:absolute;
+        z-index: -1;
+        border-top: $hierarchy-line-width solid $hierarchy-line-color;
+        width:50%;
+        top:50%;
+        left:-45px;
+        display:block;
+      }
+    }
   }
 
   //The Bottom Levels - Flow Down and Up
@@ -303,7 +372,6 @@ $hierarchy-line-width: 1px;
           z-index: -1;
         }
       }
-
     }
   }
 
@@ -370,9 +438,6 @@ $hierarchy-line-width: 1px;
     }
   }
 }
-
-
-
 
 //RTL Styles
 html[dir='rtl'] {

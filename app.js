@@ -1505,7 +1505,9 @@ router.get('/api/orgstructure-large', function(req, res, next) {
               { id: '1_5_2', Name: 'Emily Johnson',  Position: 'Senior Software Engineer',    EmploymentType: 'FT', Picture: womenPath +'9.jpg',  isLeaf:true},
               { id: '1_5_3', Name: 'Kari Anderson',  Position: 'Principle Software Engineer', EmploymentType: 'FT', Picture: womenPath +'10.jpg', isLeaf:true},
             ]
-          }
+          },
+          { id: '1_1-e', Name: 'Sarah Smith', Position: 'Administration', EmploymentType: 'FT', Picture: womenPath +'4.jpg', isLeaf:true},
+          { id: '1_2-f', Name: 'Greg Peterson', Position: 'Assistant Director', EmploymentType: 'FT', Picture: menPath + '5.jpg', isLeaf:true},
         ]
       }];
 
@@ -1513,6 +1515,26 @@ router.get('/api/orgstructure-large', function(req, res, next) {
     res.end(JSON.stringify(orgdata));
     next();
   });
+
+router.get('/api/orgstructure-paging', function(req, res, next) {
+  var
+    menPath = 'https://randomuser.me/api/portraits/med/men/',
+    womenPath = 'https://randomuser.me/api/portraits/med/women/' ,
+    orgdata = [{
+      id: '1', Name: 'Jonathan Cargill', Position: 'Director', EmploymentType: 'FT', Picture: menPath +'2.jpg',
+      children:[
+        { id: '1_3', Name: 'Kaylee Edwards',  Position: 'Records Manager', EmploymentType: 'FT', Picture: womenPath +'11.jpg', children: []},
+        { id: '1_4', Name: 'Jason Ayers', Position: 'HR Manager', EmploymentType: 'FT', Picture: menPath + '12.jpg', children: []},
+        { id: '1_5', Name: 'Daniel Calhoun',  Position: 'Manager', EmploymentType: 'FT', Picture: menPath + '4.jpg', children: []},
+        { id: '1_1-e', Name: 'Sarah Smith', Position: 'Administration', EmploymentType: 'FT', Picture: womenPath +'4.jpg', isLeaf:true},
+        { id: '1_2-f', Name: 'Greg Peterson', Position: 'Assistant Director', EmploymentType: 'FT', Picture: menPath + '5.jpg', isLeaf:true},
+      ]
+    }];
+
+  res.setHeader('Content-Type', 'application/json');
+  res.end(JSON.stringify(orgdata));
+  next();
+});
 
   router.get('/api/orgstructure-children', function(req, res, next) {
     var

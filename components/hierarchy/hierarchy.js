@@ -29,7 +29,8 @@
           mobileView: false,
           leafHeight: null,
           leafWidth: null,
-          beforeExpand: null
+          beforeExpand: null,
+          paging: false
         },
         settings = $.extend({}, defaults, options);
 
@@ -137,22 +138,31 @@
          *  Public,
          *  Usage: $('#hierarchy').on('selected', function(event, eventInfo) {}
          */
-        self.element.on('mousedown', '.leaf', function(event) {
+        self.element.on('mousedown', '.leaf, .back button', function(event) {
           var nodeData = $(this).data();
           var targetInfo = {target: event.target, pageX: event.pageX, pageY: event.pageY};
           var eventType = 'selected';
+          var isButton = $(event.target).is('button');
+          var isNotBack = !$(event.target).hasClass('btn-back');
+          var isBack = $(event.target).is('.btn-back');
+          var isCollapseButton = $(event.target).find('use').prop('href').baseVal === '#icon-caret-up';
+          var isExpandButton = $(event.target).find('use').prop('href').baseVal === '#icon-caret-down';
 
           $('.is-selected').removeClass('is-selected');
           $('#' + nodeData.id).addClass('is-selected');
 
           // Is collapse event
-          if ( $(event.target).is('button') && $(event.target).find('use').prop('href').baseVal === '#icon-caret-up') {
+          if (isButton && isCollapseButton && isNotBack) {
             eventType = 'collapse';
           }
 
           // Is expand event
-          if ( $(event.target).is('button') && $(event.target).find('use').prop('href').baseVal === '#icon-caret-down') {
+          if ( isButton && isExpandButton && isNotBack) {
             eventType = 'expand';
+          }
+
+          if (isBack) {
+            eventType = 'back';
           }
 
           // Is right click event
@@ -355,13 +365,12 @@
       render: function (data) {
         var legend       = settings.legend;
         var children     = data.children;
-        var hasSubLevel  = this.checkChildren(children, 'sub-level');
         var rootNodeHTML = [];
         var structure    = {
           legend    : '<legend><ul></ul></legend>',
-          chart     : '<ul class=\'container\'><li class=\'chart\'></li></ul>',
-          toplevel  : '<ul class=\'top-level\'></ul>',
-          sublevel  : '<ul class=\'sub-level\'></ul>'
+          chart     : settings.paging ? '<ul class=\'container\'><li class=\'chart display-for-paging\'></li></ul>' : '<ul class=\'container\'><li class=\'chart\'></li></ul>',
+          toplevel  : settings.paging ? '<ul class=\'child-nodes\'></ul>' : '<ul class=\'top-level\'></ul>',
+          sublevel  : settings.paging ? '' : '<ul class=\'sub-level\'></ul>'
         };
 
         var chartContainer  = this.element.append(structure.chart);
@@ -375,6 +384,27 @@
 
         // Create root node
         this.setColor(data);
+
+        if (settings.paging && data.parentDataSet) {
+          var backMarkup = '' +
+            '<div class=\'back\'>' +
+              '<button type="button" class="btn-icon hide-focus btn-back">' +
+                '<svg class="icon" focusable="false" aria-hidden="true" role="presentation">' +
+                  '<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-caret-up"></use>' +
+                '</svg>' +
+                '<span>Back</span>' +
+              '</button>' +
+            '</div>';
+
+          // Append back button to chart to go back to view previous level
+          var backButton = $(backMarkup).appendTo(chart);
+
+          // Attach data reference to back button
+          backButton.children('button').data(data);
+
+          // Class used to adjust heights and account for back button
+          $(chart).addClass('has-back');
+        }
 
         if (data.isMultiRoot) {
           var multiRootHTML = '<div class=\'leaf multiRoot\'><div><h2>' + data.multiRootText +'</h2></div></div>';
@@ -407,7 +437,12 @@
 
             var childObject = data.children[i].children;
 
-            if (this.isLeaf(children[i])) {
+            // If child has no children then render the element in the top level
+            // If paging then render all children in the top level
+            // If not paging and child has children then render in the sub level
+            if (this.isLeaf(children[i]) && !settings.paging) {
+              this.createLeaf(data.children[i], $(structure.toplevel));
+            } else if (settings.paging) {
               this.createLeaf(data.children[i], $(structure.toplevel));
             }
             else {
@@ -440,39 +475,11 @@
           }
         }
 
-        if (!hasSubLevel) {
-          $('.top-level').addClass('no-sublevel');
-        }
-
         var containerWidth = this.element.find('.container').outerWidth();
         var windowWidth = $(window).width();
         var center = (containerWidth - windowWidth) / 2;
         this.element.scrollLeft(center);
 
-      },
-
-      /**
-       * Private function
-       * @param children
-       * @param param
-       * @returns {boolean}
-       */
-      checkChildren : function(children, param) {
-        var n = 0;
-        var i = children.length;
-        while(i--) {
-          if (param === 'top-level') {
-            if (children[i].isLeaf) {
-              n += 1;
-            }
-          }
-          if (param === 'subLevel') {
-            if (children[i].children) {
-              n += 1;
-            }
-          }
-        }
-        return n > 0;
       },
 
       /**
@@ -635,14 +642,16 @@
 
         // set data if it has not been set already
         if ($.isEmptyObject($(leaf).data()) && nodeData) {
-          $(leaf).data(nodeData);
+          var d = nodeData === undefined ? {} : nodeData;
+          $(leaf).data(d);
         }
 
         var btn = $(leaf).find('.btn');
         var data = $(leaf).data();
+        var expandCaret = settings.paging ? 'caret-right' : 'caret-up';
 
         // data has been loaded if it has children
-        if (data.children || eventType === 'add') {
+        if ((data.children && data.children.length !== 0) || eventType === 'add') {
           data.isLoaded = true;
         }
 
@@ -661,7 +670,7 @@
         }
 
         if (data.isExpanded) {
-          btn.find('svg.icon').changeIcon('caret-up');
+          btn.find('svg.icon').changeIcon(expandCaret);
           btn.addClass('btn-expand').removeClass('btn-collapse');
         } else {
           btn.find('svg.icon').changeIcon('caret-down');
@@ -676,6 +685,9 @@
           data.isLoaded = false;
           data.isExpanded = false;
         }
+
+        // Keep reference of the parent dataset for paging
+        data.parentDataSet = settings.dataset;
 
         // Reset data
         $(leaf).data(data);
