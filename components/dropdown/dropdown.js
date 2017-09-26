@@ -1061,7 +1061,7 @@
           this.initialFilter = false;
         } else {
           // Change the values of both inputs and swap out the active descendant
-          this.searchInput.val(this.pseudoElem.find('span').text());
+          this.searchInput.val(this.pseudoElem.find('span').text().trim());
         }
 
         var noScroll = this.settings.multiple;
