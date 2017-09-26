@@ -4,7 +4,7 @@
 
 -   [Validator](#validator)
     -   [hasError](#haserror)
-    -   [addError](#adderror)
+    -   [addMessage](#addmessage)
 -   [getErrorMessage](#geterrormessage)
 -   [scrollIntoView](#scrollintoview)
 
@@ -24,14 +24,15 @@ Returns true if the given object has an error
 
 Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
-### addError
+### addMessage
 
-Adds an error message/icon to a form field.
+Adds a message/icon to a form field.
 
 **Parameters**
 
 -   `field` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** 
 -   `message` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `type` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `inline` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 -   `showTooltip` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
