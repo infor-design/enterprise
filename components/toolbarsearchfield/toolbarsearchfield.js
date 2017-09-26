@@ -14,7 +14,7 @@
 /* end-amd-strip-block */
 
   //NOTE: Just this part will show up in SoHo Xi Builds.
-  var TOOLBARSEARCHFIELD_EXPAND_SIZE = 260,
+  var TOOLBARSEARCHFIELD_EXPAND_SIZE = 280,
     MAX_TOOLBARSEARCHFIELD_EXPAND_SIZE = 450;
 
   $.fn.toolbarsearchfield = function(options) {
@@ -518,6 +518,9 @@
         // On smaller form-factor (tablet/phone)
         if (this.shouldBeFullWidth()) {
 
+          this.inputWrapper.removeAttr('style');
+          this.input.removeAttr('style');
+
           if (this.hasFocus()) {
             this.appendToParent();
 
@@ -530,6 +533,7 @@
 
             this.expand(true);
           } else {
+
             if (this.settings.collapsibleOnMobile === true && this.isExpanded) {
               this.collapse();
             }
@@ -637,6 +641,8 @@
 
         // Don't continue if we shouldn't expand in a mobile setting.
         if (this.shouldExpandOnMobile()) {
+          self.calculateOpenWidth();
+          self.setOpenWidth();
           return;
         }
 

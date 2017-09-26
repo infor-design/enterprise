@@ -378,20 +378,38 @@ $toolbarsearchfield-category-empty-width: 54px;
   position: absolute;
   right: 100%;
   top: 5px;
-  //width: 100%;
+  width: calc(100% - 40px);
   z-index: 10;
 
   &.active {
     right: 0;
-    //width: 100%;
+    width: calc(100% - 40px);
   }
 
   &.has-text {
-    //width: 100%;
+    width: calc(100% - 40px);
 
     &.active {
-      //width: 100%;
+      width: calc(100% - 40px);
     }
+  }
+
+  &.has-go-button {
+    .searchfield {
+      width: calc(100% - 39px);
+    }
+  }
+
+  &.has-categories {
+    &.has-go-button {
+      .searchfield {
+        width: calc(100% - 75px);
+      }
+    }
+  }
+
+  .icon.close {
+    right: 35px;
   }
 }
 

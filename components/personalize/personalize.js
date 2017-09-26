@@ -179,6 +179,7 @@
         ' .module-tabs.is-personalizable .tab-more.is-open { background-color: '+ Soho.colors.hover +' !important}' +
         ' .module-tabs.is-personalizable .tab-more.is-selected { background-color: '+ Soho.colors.header +' !important}' +
         ' .header .toolbar > .toolbar-searchfield-wrapper.active .searchfield { background-color: '+ Soho.colors.hover +' !important; border-bottom-color: ' + Soho.colors.hover  +' !important}' +
+        ' .header .toolbar > .toolbar-searchfield-wrapper.active .searchfield-category-button { background-color: '+ Soho.colors.hover +' !important; border-bottom-color: ' + Soho.colors.hover  +' !important}' +
         ' .subheader.is-personalizable { background-color: '+ Soho.colors.subheader +' !important}' +
         ' .builder .sidebar .header {border-right: 1px solid '+ Soho.colors.hover +' !important}' +
         ' .module-tabs.is-personalizable .tab:hover { background-color: '+ Soho.colors.hover +' !important}' +
