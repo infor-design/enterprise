@@ -400,17 +400,6 @@ $toolbarsearchfield-category-empty-width: 54px;
     }
   }
 
-  &.has-categories {
-    &.has-go-button {
-      .searchfield {
-        width: calc(100% - 75px);
-      }
-    }
-  }
-
-  .icon.close {
-    right: 35px;
-  }
 }
 
 // Inside of Listviews

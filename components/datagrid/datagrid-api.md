@@ -16,6 +16,7 @@ The Datagrid Component displays and process data in tabular format.
 
 **Parameters**
 
+-   `element`  
 -   `actionableMode` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If actionableMode is "true”, tab and shift tab behave like left and right arrow key, if the cell is editable it goes in and out of edit mode. F2 - toggles actionableMode "true" and "false"
 -   `cellNavigation` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If cellNavigation is "false”, will show border around whole row on focus
 -   `rowNavigation` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If rowNavigation is "false”, will NOT show border around the row
@@ -54,6 +55,7 @@ The Datagrid Component displays and process data in tabular format.
 -   `sizeColumnsEqually` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true make all the columns equal width
 -   `expandableRow` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true we append an expandable row area without the rowTemplate feature being needed.
 -   `redrawOnResize` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If set to false we skip redraw logic on the resize of the page.
+-   `exportConvertNegative` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If set to true export data with trailing negative signs moved in front.
 
 ### addRow
 
