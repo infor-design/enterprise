@@ -13,8 +13,9 @@ $toolbarsearchfield-category-empty-width: 54px;
     right 300ms cubic-bezier(.17, .04, .03, .94));
   cursor: pointer;
   display: inline-block;
-  margin-bottom: 0 !important;
+  margin-bottom: 0;
   overflow: hidden;
+  text-align: left;
   white-space: nowrap;
   width: $toolbarsearchfield-empty-width;
 
@@ -56,6 +57,18 @@ $toolbarsearchfield-category-empty-width: 54px;
     }
   }
 
+  &.has-go-button {
+    .searchfield {
+      width: calc(100% - 39px);
+    }
+
+    > .icon {
+      &.close {
+        right: 45px;
+      }
+    }
+  }
+
   label {
     display: none;
   }
@@ -93,6 +106,30 @@ $toolbarsearchfield-category-empty-width: 54px;
     border-top-right-radius: 0;
   }
 
+  .searchfield-category-button,
+  .go-button {
+    &:focus {
+      border: 1px solid transparent;
+
+      &:not(.hide-focus) {
+        box-shadow: none;
+        color: $btn-color;
+
+        &::after {
+          border: 1px solid $btn-focus-bg-color;
+          border-radius: 2px;
+          content: '';
+          display: inline-block;
+          position: absolute;
+          left: 0;
+          top: 0;
+          right: 0;
+          bottom: 0;
+        }
+      }
+    }
+  }
+
   &.is-hovered {
     .searchfield {
       border-color: transparent;
@@ -104,7 +141,16 @@ $toolbarsearchfield-category-empty-width: 54px;
       border-bottom-color: rgba($searchfield-border-color, 0);
     }
 
-    &.active {
+    .go-button {
+      color: rgba($searchfield-text-color, .7);
+
+      .icon {
+        fill: rgba($searchfield-text-color, .7);
+      }
+    }
+
+    &.active,
+    &.is-open {
       .searchfield {
         border-bottom-color: rgba($searchfield-border-color, 1);
       }
@@ -119,6 +165,22 @@ $toolbarsearchfield-category-empty-width: 54px;
     .icon:not(.close) {
       height: 14px;
       top: 10px;
+    }
+  }
+
+  &.is-open {
+    .searchfield,
+    .btn {
+      background-color: rgba($searchfield-bg-color, 1);
+      border-bottom-color: rgba($searchfield-border-color, 1);
+    }
+
+    &.alternate {
+      .searchfield,
+      .btn {
+        background-color: rgba($searchfield-alt-bg-color, 1);
+        border-bottom-color: rgba($searchfield-alt-border-color, 1);
+      }
     }
   }
 
@@ -162,7 +224,6 @@ $toolbarsearchfield-category-empty-width: 54px;
 
       &.close {
         fill: rgba($searchfield-text-color, 0);
-        right: 5px;
         @include transition(fill 300ms cubic-bezier(.17, .04, .03, .94));
       }
     }
@@ -249,6 +310,10 @@ $toolbarsearchfield-category-empty-width: 54px;
     &.active {
       width: $toolbarsearchfield-max-width;
     }
+
+    .searchfield {
+      padding-right: 0;
+    }
   }
 
   &.has-categories {
@@ -269,7 +334,7 @@ $toolbarsearchfield-category-empty-width: 54px;
     .searchfield {
       border: 1px solid transparent;
       padding-right: 0;
-      width: calc(100% - 40px);
+      width: calc(100% - 39px);
     }
 
     .btn {
@@ -313,21 +378,28 @@ $toolbarsearchfield-category-empty-width: 54px;
   position: absolute;
   right: 100%;
   top: 5px;
-  //width: 100%;
+  width: calc(100% - 40px);
   z-index: 10;
 
   &.active {
     right: 0;
-    //width: 100%;
+    width: calc(100% - 40px);
   }
 
   &.has-text {
-    //width: 100%;
+    width: calc(100% - 40px);
 
     &.active {
-      //width: 100%;
+      width: calc(100% - 40px);
     }
   }
+
+  &.has-go-button {
+    .searchfield {
+      width: calc(100% - 39px);
+    }
+  }
+
 }
 
 // Inside of Listviews
@@ -339,7 +411,7 @@ $toolbarsearchfield-category-empty-width: 54px;
       border-color: rgba($searchfield-card-border-color, 0);
     }
 
-    &.active {
+    &.is-open {
       .searchfield {
         background-color: rgba($searchfield-card-bg-color, 1);
         border-bottom-color: rgba($searchfield-card-border-color, 1);
@@ -380,6 +452,71 @@ $toolbarsearchfield-category-empty-width: 54px;
       color: $searchfield-header-text-color;
     }
 
+    .go-button {
+      background-color: $btn-bg-color;
+      border-color: $btn-bg-color;
+      color: $btn-color;
+
+      .icon {
+        fill: $btn-color;
+      }
+
+      &:hover {
+        background-color: $btn-hover-bg-color;
+        border: 1px solid $btn-hover-bg-color;
+      }
+
+      &:active {
+        background-color: $btn-active-bg-color;
+        border: 1px solid $btn-active-bg-color;
+      }
+
+      &:focus {
+        &:active {
+          background-color: $btn-active-bg-color;
+          box-shadow: none;
+        }
+      }
+
+      &[disabled],
+      &[disabled]:hover {
+        background-color: $btn-disabled-bg-color;
+        border: 1px solid $btn-disabled-border-color;
+        box-shadow: none;
+        color: $btn-disabled-color;
+        cursor: default;
+        opacity: $btn-disabled-opacity;
+      }
+
+      .ripple-effect {
+        background: $graphite02;
+      }
+    }
+
+    .searchfield-category-button,
+    .go-button {
+      &:focus {
+        border: 1px solid transparent;
+
+        &:not(.hide-focus) {
+          box-shadow: none;
+          color: $btn-color;
+
+          &::after {
+            border: 1px solid $header-button-focus-color;
+            border-radius: 2px;
+            content: '';
+            display: inline-block;
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+          }
+        }
+      }
+    }
+
     &:hover {
       input:not([disabled]):not(:focus) {
         + svg {
@@ -389,8 +526,27 @@ $toolbarsearchfield-category-empty-width: 54px;
       }
     }
 
+    &.is-hovered {
+      .btn {
+        color: rgba($searchfield-header-text-color, .7);
+      }
+
+      .icon {
+        fill: rgba($searchfield-header-icon-color, .7);
+      }
+    }
+
+    &.is-open {
+      .searchfield,
+      .btn {
+        background-color: rgba($searchfield-header-bg-color, .5);
+        border-bottom-color: rgba($searchfield-header-border-color, .7);
+      }
+    }
+
     &.active {
-      .searchfield {
+      .searchfield,
+      .btn {
         background-color: rgba($searchfield-header-bg-color, .5);
         border-bottom-color: rgba($searchfield-header-border-color, .7);
         color: transparent;
@@ -413,7 +569,8 @@ $toolbarsearchfield-category-empty-width: 54px;
       }
 
       &.is-open {
-        .searchfield {
+        .searchfield,
+        .btn {
           color: $searchfield-header-text-color;
 
           &::-webkit-input-placeholder {
@@ -440,8 +597,6 @@ $toolbarsearchfield-category-empty-width: 54px;
 
   // Small adjustments for being the full-width toolbar searchfield
   .toolbar > .toolbar-searchfield-wrapper.active {
-    //width: calc(100% - 40px);
-
     .searchfield {
       // Don't be semi-transparent in this mode, since it sits over top of other things
       background-color: rgba($searchfield-header-bg-color, 1);
@@ -454,13 +609,6 @@ $toolbarsearchfield-category-empty-width: 54px;
   .toolbar > .toolbar-searchfield-wrapper {
     left: 20px;
     top: 12px;
-  }
-}
-
-
-.is-firefox.is-mac {
-  .toolbar-searchfield-wrapper.searchfield-wrapper .btn {
-    height: 32px;
   }
 }
 
@@ -593,4 +741,15 @@ $toolbarsearchfield-category-empty-width: 54px;
     }
   }
 
+}
+
+html[dir='rtl'] {
+  .toolbarsearchfield-wrapper {
+    &.has-text {
+      .searchfield {
+        padding-right: auto;
+        padding-left: 0;
+      }
+    }
+  }
 }
