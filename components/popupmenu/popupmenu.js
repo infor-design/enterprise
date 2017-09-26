@@ -911,7 +911,7 @@
 
         // If inside a "page-container" element, constrain the popupmenu to that element
         // (fixes SOHO-6223)
-        var container = this.element.parents('.page-container');
+        var container = this.element.parents('.page-container:not(.tab-container)');
         if (container.length) {
           opts.container = container.first();
         }
