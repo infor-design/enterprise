@@ -1,0 +1,48 @@
+<body class="no-scroll">
+
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+  {{> includes/svg-inline-refs}}
+  {{> includes/applicationmenu}}
+
+  <div class="page-container">
+    <header class="header is-personalizable">
+      <div class="toolbar">
+        <div class="title">
+          <h1><span>Menu</span></h1>
+        </div>
+        <div class="buttonset">
+          <label for="searchfield-category-go">Searchfield</label>
+          <input id="searchfield-category-go" class="searchfield is-personalizable" data-options='{ "collapsible": false, "showGoButton": true, "categories": [ "Books", "Movies", "Music", "Video Games" ], "showCategoryText": true }'/>
+        </div>
+      </div>
+    </header>
+    <div class="page-container">
+      <section class="tab-container module-tabs" data-options='{ "containerElement": "#module-tab-panel-container" }'>
+        <div class="tab-list-container">
+          <ul class="tab-list">
+            <li class="tab is-selected"><a href="#tab-one">Tab One</a></li>
+            <li class="tab"><a href="#tab-two">Tab Two</a></li>
+            <li class="tab"><a href="#tab-three">Tab Three</a></li>
+          </ul>
+        </div>
+      </section>
+      <section id="module-tab-panel-container" class="tab-panel-container">
+        <div class="tab-panel" id="tab-one">
+          <div class="row">
+            <div class="twelve columns">
+              <h3>Module Tabs Test: Header + Category Searchfield + Go Button</h3>
+              <p>
+                <a class="hyperlink" href="https://jira.infor.com/browse/SOHO-6711" target="_blank">SOHO-6711</a>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="tab-panel" id="tab-two">
+
+        </div>
+        <div class="tab-panel" id="tab-three">
+
+        </div>
+      </section>
+    </div>
+  </div>

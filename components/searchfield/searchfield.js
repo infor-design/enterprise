@@ -21,10 +21,12 @@
     }
 
     // Settings and Options
-    var pluginName = 'searchfield',
+    var pluginName  = 'searchfield',
         defaults = {
           allResultsCallback: undefined,
           showAllResults: true,
+          showGoButton: false,
+          goButtonCopy: Locale.translate('Go'),
           categories: undefined, // If defined as an array, displays a dropdown containing categories that can be used to filter results.
           categoryMultiselect: false, // If true, creates a multiselectable Categories list
           showCategoryText: false, // If true, will show any available categories that are selected to the left of the Dropdown field.
@@ -118,14 +120,14 @@
         if (this.hasCategories()) {
           this.wrapper.addClass('has-categories');
 
-          this.button = this.wrapper.find('.btn, .searchfield-category-button');
-          if (!this.button.length) {
-            this.button = $('<button type="button" class="btn searchfield-category-button"></button>');
+          this.categoryButton = this.wrapper.find('.btn, .searchfield-category-button');
+          if (!this.categoryButton.length) {
+            this.categoryButton = $('<button type="button" class="btn searchfield-category-button"></button>');
           }
-          icon.appendTo(this.button);
-          icon = this.button;
+          icon.appendTo(this.categoryButton);
+          icon = this.categoryButton;
 
-          this.button.insertBefore(this.element);
+          this.categoryButton.insertBefore(this.element);
 
           if (this.settings.showCategoryText) {
             this.wrapper.addClass('show-category');
@@ -137,7 +139,7 @@
           }
           ddIcon.appendTo(icon);
 
-          var popupAPI = this.button.data('popupmenu');
+          var popupAPI = this.categoryButton.data('popupmenu');
           if (!popupAPI) {
             this.list = this.wrapper.find('ul.popupmenu');
             if (!this.list || !this.list.length) {
@@ -156,7 +158,7 @@
             this.setCategories(this.settings.categories);
 
             this.list.insertAfter(this.element);
-            this.button.popupmenu({
+            this.categoryButton.popupmenu({
               menu: this.list,
               offset: {
                 y: 10
@@ -168,6 +170,23 @@
           }
 
           this.setCategoryButtonText();
+        }
+
+        // Pull a Go Button from markup, if applicable.
+        var goButton = this.wrapper.next('button.go-button');
+        if (goButton.length) {
+          this.settings.showGoButton = true;
+          this.goButton = goButton;
+          this.element.after(this.goButton);
+        }
+
+        // Add a "Go" Button from scratch if we enable the setting
+        if (this.settings.showGoButton && (!this.goButton || !this.goButton.length)) {
+          this.goButton = $('<button id="'+ this.element.uniqueId('searchfield-go-button') +'" class="btn-secondary go-button"><span>'+ this.settings.goButtonCopy +'</span></button>');
+          this.wrapper.addClass('has-go-button');
+          this.element.after(this.goButton);
+        } else {
+          this.wrapper.removeClass('has-go-button');
         }
 
         // Hoist the 'alternate' CSS class to the wrapper, if applicable
@@ -239,7 +258,7 @@
         });
 
         if (this.hasCategories()) {
-          this.button.on('selected.searchfield', function(e, anchor) {
+          this.categoryButton.on('selected.searchfield', function(e, anchor) {
             self.handleCategorySelected(e, anchor);
           }).on('focus.searchfield', function(e) {
             self.handleCategoryFocus(e);
@@ -298,7 +317,7 @@
 
             self.element.trigger('selected', [a, ret]);
             self.element.data('popupmenu').close();
-            e.preventDefault();
+            //e.preventDefault();
             return false;
           });
 
@@ -341,12 +360,12 @@
        * @returns {undefined}
        */
       setAsActive: function(force, doFocus) {
-        if (!force && this.element.hasClass('active')) {
+        if (!force && this.wrapper.hasClass('active')) {
           return;
         }
 
         // Activate
-        this.element.addClass('active');
+        this.wrapper.addClass('active');
         var toolbar = this.element.closest('.toolbar, [class$="-toolbar"]');
         if (toolbar.length) {
           toolbar.addClass('searchfield-active');
@@ -376,8 +395,8 @@
         }
 
         // Don't close if a category is being selected from a category menu
-        if (this.button && this.button.length) {
-          var menu = this.button.data('popupmenu').menu;
+        if (this.categoryButton && this.categoryButton.length) {
+          var menu = this.categoryButton.data('popupmenu').menu;
           if (menu.has(active).length) {
             return true;
           }
@@ -507,6 +526,13 @@
        * @returns {undefined}
        */
       handleCategorySelected: function(e, anchor) {
+
+
+        // Only change the text and searchfield size if we can
+        if (!this.settings.showCategoryText) {
+          return;
+        }
+
         this.setCategoryButtonText(e, anchor.text().trim());
 
         // If this is a toolbar searchfield, run the size check that fixes the
@@ -530,7 +556,7 @@
         }
 
         this.wrapper
-          .removeClass('active')
+          .addClass('active')
           .addClass('has-focus');
       },
 
@@ -671,7 +697,7 @@
           self.list.append('<li'+ selected + id + value + '><a href="#">' + val.name + '</a></li>');
         });
 
-        var api = this.button.data('popupmenu');
+        var api = this.categoryButton.data('popupmenu');
         if (api && typeof api.updated === 'function') {
           api.updated();
         }

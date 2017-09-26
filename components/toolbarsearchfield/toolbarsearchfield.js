@@ -14,7 +14,7 @@
 /* end-amd-strip-block */
 
   //NOTE: Just this part will show up in SoHo Xi Builds.
-  var TOOLBARSEARCHFIELD_EXPAND_SIZE = 230,
+  var TOOLBARSEARCHFIELD_EXPAND_SIZE = 280,
     MAX_TOOLBARSEARCHFIELD_EXPAND_SIZE = 450;
 
   $.fn.toolbarsearchfield = function(options) {
@@ -98,7 +98,7 @@
         this.inputWrapper.addClass('toolbar-searchfield-wrapper');
 
         if (sfSettings.categories) {
-          this.button = this.inputWrapper.find('.searchfield-category-button');
+          this.categoryButton = this.inputWrapper.find('.searchfield-category-button');
         }
 
         // Add/remove the collapsible setting
@@ -108,6 +108,12 @@
         this.xButton = this.inputWrapper.children('.icon.close');
 
         this.adjustOnBreakpoint();
+
+        if (!this.settings.collapsible || !this.settings.collapsibleOnMobile) {
+          this.inputWrapper.addClass('is-open');
+        } else {
+          this.inputWrapper.removeClass('is-open');
+        }
 
         return this;
       },
@@ -128,16 +134,13 @@
       addDocumentDeactivationEvents: function() {
         var self = this;
 
-        if (!this.handleOutsideStr) {
-          var arr = ['click'].map(function(v) {
-            return v +'.'+ self.id;
+        $(document)
+          .on('click.' + this.id, function(e) {
+            self.handleOutsideClick(e);
+          })
+          .on('keydown.' + this.id, function(e) {
+            self.handleOutsideKeydown(e);
           });
-          this.handleOutsideStr = arr.join(' ');
-        }
-
-        $(document).on(self.handleOutsideStr, function(e) {
-          self.handleOutsideClick(e);
-        });
       },
 
       /**
@@ -145,10 +148,7 @@
        * Removes global (document) level event handlers.
        */
       removeDocumentDeactivationEvents: function() {
-        var self = this;
-        $(document).off(this.handleOutsideStr, function(e) {
-          self.handleOutsideClick(e);
-        });
+        $(document).off('click.' + this.id + ' keydown.' + this.id);
       },
 
       /**
@@ -160,45 +160,89 @@
       },
 
       /**
-       * Handles the focus of the searchfield, expanding it on time delay.
+       * Detects the existence of a "Categories" button added to the searchfield
+       * @returns {boolean}
        */
-      handleFocus: function() {
-        var self = this;
-        clearTimeout(this.focusTimer);
-
-        this.inputWrapper.addClass('has-focus');
-
-        function searchfieldActivationTimer() {
-          self.expand();
+      hasCategories: function() {
+        var searchfieldAPI = this.input.data('searchfield');
+        if (searchfieldAPI === undefined || typeof searchfieldAPI.hasCategories !== 'function') {
+          return false;
         }
 
-        if (this.fastExpand) {
-          searchfieldActivationTimer();
+        return searchfieldAPI.hasCategories();
+      },
+
+      /**
+       * Detects the existence of a "Go" button added to the main searchfield API
+       * @returns {boolean}
+       */
+      hasGoButton: function() {
+        var searchfieldAPI = this.input.data('searchfield');
+        if (!searchfieldAPI || !searchfieldAPI.goButton || !searchfieldAPI.goButton.length) {
+          return false;
+        }
+
+        return searchfieldAPI.goButton.length > 0;
+      },
+
+      /**
+       * Handles the focus of the searchfield.
+       */
+      handleFocus: function() {
+        if (this.isExpanded) {
           return;
         }
 
-        this.focusTimer = setTimeout(searchfieldActivationTimer, 0);
+        this.inputWrapper.addClass('has-focus');
+        this.expand(true);
       },
 
       /**
        * Triggers an artificial "blur" of the searchfield, resulting in a time-delayed collapse.
+       * TODO: Deprecate in 4.4.0
        */
-      handleFakeBlur: function() {
-        var self = this;
-        clearTimeout(this.focusTimer);
+      handleFakeBlur: function(e) {
+        return this.handleFocusOut(e);
+      },
 
-        function searchfieldCollapseTimer() {
-          self.collapse();
+      /**
+       * Handles the "focusout" event
+       */
+      handleFocusOut: function() {
+        if (this.isFocused || !this.settings.collapsible) {
+          return;
         }
 
-        this.focusTimer = setTimeout(searchfieldCollapseTimer, 100);
+        this.collapse();
+      },
+
+      /**
+       * Detects whether or not an element is part of this instance of the Searchfield component
+       * @param {HTMLElement} element
+       * @returns {boolean}
+       */
+      isSearchfieldElement: function(element) {
+        if ($.contains(this.inputWrapper[0], element)) {
+          return true;
+        }
+
+        // Don't close if a category is being selected from a category menu
+        if (this.categoryButton && this.categoryButton.length) {
+          var menu = this.categoryButton.data('popupmenu').menu;
+          if (menu.has(element).length) {
+            return true;
+          }
+        }
+
+        return false;
       },
 
       /**
        * Event Handler for dealing with global (document) level clicks.
        */
-      handleOutsideClick: function() {
-        if (this.hasFocus()) {
+      handleOutsideClick: function(e) {
+        var target = e.target;
+        if (this.isSearchfieldElement(target)) {
           return;
         }
 
@@ -214,7 +258,7 @@
         var key = e.which;
 
         if (key === 9) { // Tab
-          return this.handleFakeBlur();
+          return this.handleFocusOut(e);
         }
       },
 
@@ -224,17 +268,12 @@
        * @param {jQuery.Event} e - jQuery-wrapped Keydown event
        */
       handleOutsideKeydown: function(e) {
-        var key = e.which;
+        var key = e.which,
+          target = e.target;
 
-        this.fastExpand = false;
-        if (key === 9) { // Tab
-          this.fastExpand = true;
-          return this.handleFakeBlur();
-        }
-
-        var wasInputTheTarget = ($(e.target).is(this.input) || $(e.target).is(this.inputWrapper));
-        if (wasInputTheTarget && (key === 37 || key === 38 || key === 39 || key === 40)) {
-          return this.handleFakeBlur();
+        if (key === 9 && !this.isSearchfieldElement(target)) {
+          this.isFocused = false;
+          return this.handleFocusOut(e);
         }
       },
 
@@ -247,8 +286,8 @@
           return false;
         }
 
-        if (!this.inputWrapper.is('.is-open')) {
-          this.button.focus();
+        if (!this.isOpen()) {
+          this.categoryButton.focus();
           return false;
         }
 
@@ -353,17 +392,22 @@
        * @private
        */
       setClosedWidth: function() {
+        var closedWidth = 0;
+
         // If the searchfield category button exists, change the width of the
         // input field on the inside to provide space for the (variable) size of the currently-selected
         // category (or categories)
-        if ((this.button instanceof $) && this.button.length) {
-          var buttonStyle = window.getComputedStyle(this.button[0]),
-            buttonWidth = parseInt(buttonStyle.width),
+        if ((this.categoryButton instanceof $) && this.categoryButton.length) {
+          var buttonStyle = window.getComputedStyle(this.categoryButton[0]),
+            buttonWidth = this.categoryButton.width(),
+            buttonBorder = parseInt(buttonStyle.borderLeftWidth) * 2,
             buttonPadding = parseInt(buttonStyle.paddingLeft) + parseInt(buttonStyle.paddingRight);
 
-          if (this.inputWrapper[0]) {
-            this.inputWrapper[0].style.width = (buttonWidth + buttonPadding) + 'px';
-          }
+            closedWidth = closedWidth + (buttonWidth + buttonBorder + buttonPadding + 4);
+        }
+
+        if (this.inputWrapper[0]) {
+          this.inputWrapper[0].style.width = closedWidth + 'px';
         }
       },
 
@@ -371,6 +415,8 @@
        * @private
        */
       setOpenWidth: function() {
+        var subtractWidth = 0;
+
         if (this.inputWrapper[0]) {
           this.inputWrapper[0].style.width = this.openWidth;
         }
@@ -378,14 +424,27 @@
         // If the searchfield category button exists, change the width of the
         // input field on the inside to provide space for the (variable) size of the currently-selected
         // category (or categories)
-        if ((this.button instanceof $) && this.button.length) {
-          var buttonStyle = window.getComputedStyle(this.button[0]),
-            buttonWidth = parseInt(buttonStyle.width),
-            buttonPadding = parseInt(buttonStyle.paddingLeft) + parseInt(buttonStyle.paddingRight),
-            buttonBorder = (parseInt(buttonStyle.borderWidth) * 2),
-            inputWidth = 'calc(100% - ' + (buttonWidth + buttonPadding + buttonBorder - 2) + 'px)';
+        if (this.hasCategories()) {
+          var categoryButtonStyle = window.getComputedStyle(this.categoryButton[0]),
+            categoryButtonWidth = this.categoryButton.width(),//parseInt(categoryButtonStyle.width),
+            categoryButtonPadding = parseInt(categoryButtonStyle.paddingLeft) + parseInt(categoryButtonStyle.paddingRight),
+            categoryButtonBorder = (parseInt(categoryButtonStyle.borderLeftWidth) * 2);
 
-          this.input[0].style.width = inputWidth;
+          subtractWidth = subtractWidth + (categoryButtonWidth + categoryButtonPadding + categoryButtonBorder);
+        }
+
+        if (this.hasGoButton()) {
+          var goButton = this.element.data('searchfield').goButton,
+            goButtonStyle = window.getComputedStyle(goButton[0]),
+            goButtonWidth = goButton.width(),
+            goButtonPadding = parseInt(goButtonStyle.paddingLeft) + parseInt(goButtonStyle.paddingRight),
+            goButtonBorder = (parseInt(goButtonStyle.borderLeftWidth) * 2);
+
+          subtractWidth = subtractWidth + (goButtonWidth + goButtonPadding + goButtonBorder);
+        }
+
+        if (subtractWidth > 0) {
+          this.input[0].style.width = 'calc(100% - ' + subtractWidth + 'px)';
         }
       },
 
@@ -432,7 +491,7 @@
         }
 
         width = this.getFillSize(leftBoundary, rightBoundary);
-        this.openWidth = (width - 1) + 'px';
+        this.openWidth = (width - 6) + 'px';
       },
 
       /**
@@ -459,6 +518,9 @@
         // On smaller form-factor (tablet/phone)
         if (this.shouldBeFullWidth()) {
 
+          this.inputWrapper.removeAttr('style');
+          this.input.removeAttr('style');
+
           if (this.hasFocus()) {
             this.appendToParent();
 
@@ -469,8 +531,9 @@
               return;
             }
 
-            this.expand();
+            this.expand(true);
           } else {
+
             if (this.settings.collapsibleOnMobile === true && this.isExpanded) {
               this.collapse();
             }
@@ -528,35 +591,8 @@
            toolbarSettings = this.toolbarParent.data('toolbar').settings;
         }
 
-        if (this.animationTimer) {
-          clearTimeout(this.animationTimer);
-        }
-
         if (this.buttonsetElem === undefined) {
           this.getToolbarElements();
-        }
-
-        function expandCallback() {
-
-          if (!self.isOpen()) {
-            self.inputWrapper.addClass('is-open');
-            self.calculateOpenWidth();
-            self.setOpenWidth();
-          }
-
-          var iOS = /(iPad|iPhone|iPod)/g.test( navigator.userAgent );
-          if (!noFocus || iOS) {
-            self.input.focus();
-          }
-
-          var eventArgs = [];
-          if (containerSizeSetters) {
-            eventArgs.push(containerSizeSetters);
-          }
-
-          self.toolbarParent.triggerHandler('recalculate-buttons', eventArgs);
-          self.inputWrapper.triggerHandler('expanded');
-          self.isExpanded = true;
         }
 
         // Places the input wrapper into the toolbar on smaller breakpoints
@@ -603,12 +639,39 @@
         this.inputWrapper.addClass('active');
         this.addDocumentDeactivationEvents();
 
+        // Don't continue if we shouldn't expand in a mobile setting.
         if (this.shouldExpandOnMobile()) {
-          expandCallback();
+          self.calculateOpenWidth();
+          self.setOpenWidth();
           return;
         }
 
-        this.animationTimer = setTimeout(expandCallback, 0);
+        if (!self.isOpen()) {
+          self.inputWrapper.addClass('is-open');
+          self.calculateOpenWidth();
+          self.setOpenWidth();
+        }
+
+        if (!noFocus || Soho.env.os.name === 'ios') {
+          self.input.focus();
+        }
+
+        var eventArgs = [];
+        if (containerSizeSetters) {
+          eventArgs.push(containerSizeSetters);
+        }
+
+        self.inputWrapper.one($.fn.transitionEndName(), function() {
+          if (!self.isFocused && self.hasFocus() && document.activeElement !== self.input[0]) {
+            self.isFocused = true;
+            self.input.focus();
+          }
+
+          self.toolbarParent.triggerHandler('recalculate-buttons', eventArgs);
+          self.inputWrapper.triggerHandler('expanded');
+          self.isExpanded = true;
+        });
+
       },
 
       /**
@@ -618,42 +681,6 @@
         var self = this,
           textMethod = 'removeClass';
 
-        function closeWidth() {
-          if (self.button instanceof $ && self.button.length) {
-            self.setClosedWidth();
-          } else {
-            self.inputWrapper.removeAttr('style');
-          }
-        }
-
-        function collapseCallback() {
-          self.fastExpand = false;
-
-          closeWidth();
-
-          if (self.button && self.button.length) {
-            self.button.data('popupmenu').close(false, true);
-          }
-
-          self.inputWrapper
-            .removeClass('is-open')
-            .triggerHandler('collapsed');
-
-          self.removeDocumentDeactivationEvents();
-
-          self.isExpanded = false;
-
-          if (Soho.env.os.name === 'ios') {
-            $('head').triggerHandler('enable-zoom');
-          }
-
-          // TODO: Make this process more solid, without FOUC/jumpiness and better focus handling (EPC)
-          // See http://jira/browse/SOHO-6347
-          self.inputWrapper.one($.fn.transitionEndName(), function() {
-            self.toolbarParent.triggerHandler('recalculate-buttons');
-          });
-        }
-
         // Puts the input wrapper back where it should be if it's been moved due to small form factors.
         this.appendToButtonset();
 
@@ -662,13 +689,10 @@
         }
         this.inputWrapper[textMethod]('has-text');
 
-        if (this.animationTimer) {
-          clearTimeout(this.animationTimer);
-        }
-
         self.inputWrapper.removeClass('active');
         if (!self.hasFocus()) {
           self.inputWrapper.removeClass('has-focus');
+          self.isFocused = false;
         }
 
         // Return out without collapsing or handling callbacks for the `collapse` event if:
@@ -679,12 +703,35 @@
           return;
         }
 
-        if (this.fastExpand || !this.shouldExpandOnMobile()) {
-          collapseCallback();
+        if (this.shouldExpandOnMobile()) {
           return;
         }
 
-        this.animationTimer = setTimeout(collapseCallback, 310);
+        this.inputWrapper.removeAttr('style');
+        this.input.removeAttr('style');
+
+        if (self.categoryButton && self.categoryButton.length) {
+          self.categoryButton.data('popupmenu').close(false, true);
+        }
+
+        self.inputWrapper
+          .removeClass('is-open')
+          .triggerHandler('collapsed');
+
+        self.removeDocumentDeactivationEvents();
+
+        self.isExpanded = false;
+
+        if (Soho.env.os.name === 'ios') {
+          $('head').triggerHandler('enable-zoom');
+        }
+
+        // TODO: Make this process more solid, without FOUC/jumpiness and better focus handling (EPC)
+        // See http://jira/browse/SOHO-6347
+        self.inputWrapper.one($.fn.transitionEndName(), function() {
+          self.toolbarParent.triggerHandler('recalculate-buttons');
+        });
+
       },
 
       /**
@@ -820,9 +867,8 @@
        * @returns {this}
        */
       teardown: function() {
-        this.inputWrapper.off('mousedown.toolbarsearchfield focusin.toolbarsearchfield keydown.toolbarsearchfield collapse.toolbarsearchfield');
+        this.inputWrapper.off('mousedown.toolbarsearchfield focusin.toolbarsearchfield focusout.toolbarsearchfield keydown.toolbarsearchfield collapse.toolbarsearchfield');
         this.inputWrapper.find('.icon').remove();
-        $(document).off(this.outsideEventStr);
 
         this.toolbarParent.off('navigate.toolbarsearchfield');
         this.element.off('blur.toolbarsearchfield');
@@ -832,7 +878,7 @@
         }
 
         // Used to determine if the "Tab" key was involved in switching focus to the searchfield.
-        $(document).off('keydown.' + this.id);
+        this.removeDocumentDeactivationEvents();
         $('body').off('resize.' + this.id);
 
         return this;
@@ -871,12 +917,14 @@
           self.handleFocus(e);
         }).on('keydown.toolbarsearchfield', function(e) {
           self.handleKeydown(e);
+        }).on('focusout.toolbarsearchfield', function(e) {
+          self.handleFocusOut(e);
         }).on('collapse.toolbarsearchfield', function() {
           self.collapse();
         });
 
-        if (this.button && this.button.length) {
-          this.button.on('beforeopen.toolbarsearchfield', function(e, menu) {
+        if (this.categoryButton && this.categoryButton.length) {
+          this.categoryButton.on('beforeopen.toolbarsearchfield', function(e, menu) {
             return self.handlePopupBeforeOpen(e, menu);
           });
         }
@@ -885,11 +933,6 @@
           if (!self.hasFocus()) {
             self.collapse();
           }
-        });
-
-        // Used to determine if the "Tab" key was involved in switching focus to the searchfield.
-        $(document).on('keydown.' + this.id, function(e) {
-          self.handleOutsideKeydown(e);
         });
 
         $('body').on('resize.' + this.id, function() {

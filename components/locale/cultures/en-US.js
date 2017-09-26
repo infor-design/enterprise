@@ -167,6 +167,7 @@
       'GoBack': {id: 'GoBack', value: 'Go Back', comment: 'Move Page / object this directionp'},
       'GoDown': {id: 'GoDown', value: 'Go Down', comment: 'Move Page / object this directionp'},
       'GoUp': {id: 'GoUp', value: 'Go Up', comment: 'Move Page / object this direction'},
+      'Go': {id: 'Go', 'value': 'Go', comment: 'Go, perform a movement, start a search, move to the next "thing" in a workflow.'},
       'Graphite': {id: 'Graphite', value: 'Graphite', comment: 'Color in our color pallette'},
       'GreaterOrEquals': {id: 'GreaterOrEquals', value: 'Greater Than Or Equals', comment: 'Greater Than Or Equals in icons for filtering'},
       'GreaterThan': {id: 'GreaterThan', value: 'Greater Than', comment: 'Greater Than in icons for filtering'},
