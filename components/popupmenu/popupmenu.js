@@ -959,6 +959,11 @@
           if (self.ajaxContent instanceof $) {
             self.ajaxContent.off().remove();
           }
+
+          if (content === false) {
+            return false;
+          }
+
           self.ajaxContent = $(content);
           self.menu.append(self.ajaxContent);
 
@@ -968,6 +973,7 @@
           if (doOpen) {
             self.open(e, true);
           }
+          return true;
         };
 
         if (typeof this.settings.beforeOpen === 'string') {
@@ -989,7 +995,8 @@
 
         // Check external AJAX source, if applicable
         if (!ajaxReturn) {
-          this.callSource(e, true);
+          canOpen = this.callSource(e, true);
+          return;
         }
 
         var otherMenus = $('.popupmenu.is-open').filter(function() {

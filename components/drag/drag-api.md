@@ -13,7 +13,6 @@ Drag/Drop functions with touch support.
 
 **Parameters**
 
--   `element`  
 -   `axis` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Constrains dragging to either axis. Possible values: null, 'x', 'y'
 -   `clone` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -   Set to true to clone the object to drag. In many situations this is needed to break out of layout.
 -   `cloneCssClass` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Css class added to clone element (defaults to is-clone)

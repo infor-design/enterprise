@@ -16,7 +16,6 @@ A trigger field for uploading a single file.
 
 **Parameters**
 
--   `element`  
 -   `isStandalone` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  On page(true) -or- on modal (false) , this is used for some visual style only.
 -   `allowedTypes` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Restrict file types(ie. 'jpg|png|gif') ['*' all types]
 -   `maxFilesInProcess` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Max number of files can be uploaded

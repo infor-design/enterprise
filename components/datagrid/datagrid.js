@@ -1,4 +1,7 @@
-
+/**
+* A object containing all the supported UI formatters.
+* @private
+*/
 window.Formatters = {
 
   Text: function(row, cell, value) {
@@ -534,6 +537,10 @@ window.Formatters = {
   // Color Picker (Low)
 };
 
+/**
+*  A object containing all the supported Editors
+* @private
+*/
 window.Editors = {
 
   //Supports, Text, Numeric, Integer via mask
@@ -1237,6 +1244,10 @@ window.Editors = {
   }
 };
 
+/**
+* An api for grouping data by a given field (s)
+* @private
+*/
 window.GroupBy = (function() {
 
   //Can also use in isEquals: function(obj1, obj2)  in datagrid.js
@@ -1316,7 +1327,10 @@ window.GroupBy = (function() {
   return group;
 }());
 
-//Register built in aggregators
+/**
+* Register built in aggregators
+* @private
+*/
 GroupBy.register('sum', function(item) {
   var extra = this.extra;
   return $.extend({}, item.key, {values: item.values}, {sum: item.values.reduce(function(memo, node) {
@@ -1347,7 +1361,10 @@ GroupBy.register('list', function(item) {
   })});
 });
 
-//Simple Summary Row Accumlator
+/**
+* Simple Summary Row Accumlator
+* @private
+*/
 window.Aggregators = {};
 window.Aggregators.aggregate = function (items, columns) {
     var totals = {}, self = this;
@@ -1395,6 +1412,10 @@ window.Aggregators.aggregate = function (items, columns) {
     return totals;
 };
 
+/**
+* Actual Datagrid jQuery Plugin
+* @private
+*/
 $.fn.datagrid = function(options) {
 
   // Settings and Options
@@ -1415,7 +1436,11 @@ $.fn.datagrid = function(options) {
         editable: false,
         isList: false, // Makes a readonly "list"
         menuId: null,  //Id to the right click context menu
-        menuSelected: null, //Callback for the grid level right click mention
+        headerMenuId: null,  //Id to the right click context menu to use for the header
+        menuSelected: null, //Callback for the grid level right click menu
+        menuBeforeOpen: null, //Call back for the grid level before open menu event
+        headerMenuSelected: null, //Callback for the header level right click menu
+        headerMenuBeforeOpen: null, //Call back for the header level before open menu event
         uniqueId: null, //Unique ID for local storage reference and variable names
         rowHeight: 'normal', //(short, medium or normal)
         selectable: false, //false, 'single' or 'multiple'
@@ -1465,8 +1490,12 @@ $.fn.datagrid = function(options) {
   * @param {Object} saveUserSettings  &nbsp;-&nbsp Save one or all of the following to local storage : columns: true, rowHeight: true, sortOrder: true, pagesize: true, activePage: true, filter: true
   * @param {Boolean} editable &nbsp;-&nbsp Enable editing in the grid, requires column editors.
   * @param {Boolean} isList  &nbsp;-&nbsp Makes the grid have readonly "list" styling
-  * @param {String} menuId  &nbsp;-&nbsp Id to link a right click context menu element
+  * @param {String} menuId  &nbsp;-&nbspId of the menu to use for a row level right click context menu
   * @param {String} menuSelected  &nbsp;-&nbsp Callback for the grid level context menu
+  * @param {String} menuBeforeOpen  &nbsp;-&nbsp Callback for the grid level beforeopen menu event
+  * @param {String} headerMenuId  &nbsp;-&nbsp Id of the menu to use for a header right click context menu
+  * @param {String} headerMenuSelected  &nbsp;-&nbsp Callback for the header level context menu
+  * @param {String} headerMenuBeforeOpen  &nbsp;-&nbsp Callback for the header level beforeopen menu event
   * @param {String} uniqueId &nbsp;-&nbsp Unique ID to use as local storage reference and internal variable names
   * @param {String} rowHeight &nbsp;-&nbsp Controls the height of the rows / number visible rows. May be (short, medium or normal)
   * @param {String} selectable &nbsp;-&nbsp Controls the selection Mode this may be: false, 'single' or 'multiple' or 'mixed'
@@ -1501,9 +1530,16 @@ $.fn.datagrid = function(options) {
     Soho.logTimeEnd(pluginName);
   }
 
-  // Actual Plugin Code
+  /**
+  * Actual Datagrid prototype
+  * @private
+  */
   Datagrid.prototype = {
 
+    /**
+    * Init the datagrid from its uninitialized state.
+    * @private
+    */
     init: function() {
       var self = this, html = $('html');
 
@@ -1535,6 +1571,10 @@ $.fn.datagrid = function(options) {
       }, 0);
     },
 
+    /**
+    * Initialize internal variables and states.
+    * @private
+    */
     initSettings: function () {
 
       this.sortColumn = {sortField: null, sortAsc: true};
@@ -1545,12 +1585,17 @@ $.fn.datagrid = function(options) {
       this.contextualToolbar.addClass('datagrid-contextual-toolbar');
     },
 
-    //Re render both header and rows
+    /**
+    * Render or render both header and row area.
+    */
     render: function () {
       this.loadData(this.settings.dataset);
     },
 
-    //Run First Render the Header and Rows
+    /**
+    * Run the first render on the Header and Rows.
+    * @private
+    */
     firstRender: function () {
       var self = this;
 
@@ -1606,6 +1651,10 @@ $.fn.datagrid = function(options) {
       $(self.settings.buttonSelector, self.table).button();
     },
 
+    /**
+    * If the datagrid is a html table, convert that table to an internal dataset to use.
+    * @private
+    */
     htmlToDataset: function () {
       var rows = $(this.element).find('tbody tr'),
         self = this,
@@ -1710,6 +1759,10 @@ $.fn.datagrid = function(options) {
       }, 10);
     },
 
+    /**
+    * Refresh the pager based on the current page and dataset.
+    * @param {Object} location &nbsp;-&nbsp Deprecated - Can be set to 'top' or left off for bottom pager.
+    */
     pagerRefresh: function (location) {
       if (this.pager) {
         var activePage = this.pager.activePage;
@@ -1761,10 +1814,21 @@ $.fn.datagrid = function(options) {
       this.syncSelectedUI();
     },
 
+    /**
+    * Send in a new data set to display in the datagrid.
+    *
+    * @param {Object} dataset &nbsp;-&nbsp The array of objects to show in the grid. Should match the column definitions.
+    * @param {Object} pagerInfo &nbsp;-&nbsp The pager info object with information like activePage ect.
+    */
     updateDataset: function (dataset, pagerInfo) {
       this.loadData(dataset, pagerInfo);
     },
 
+    /**
+    * Trigger the source method to call to the backend on demand.
+    *
+    * @param {Object} pagerInfo &nbsp;-&nbsp The pager info object with information like activePage ect.
+    */
     triggerSource: function(pagerType) {
 
       this.pager.pagerInfo = this.pager.pagerInfo || {};
@@ -1907,8 +1971,8 @@ $.fn.datagrid = function(options) {
         uniqueId,
         hideNext = 0;
 
+      // Handle Nested Headers
       var colGroups = this.settings.columnGroups;
-
       if (colGroups) {
 
         var total = 0;
@@ -1939,17 +2003,18 @@ $.fn.datagrid = function(options) {
           isSelection = column.id === 'selectionCheckbox',
           alignmentClass = (column.align === 'center' ? ' l-'+ column.align +'-text' : '');// Disable right align for now as this was acting wierd
 
-        headerRow += '<th scope="col" role="columnheader" class="' + (isSortable ? 'is-sortable' : '') + (isResizable ? ' is-resizable' : '') +
-          (column.hidden ? ' is-hidden' : '') + (column.filterType ? ' is-filterable' : '') +
-          (alignmentClass ? alignmentClass : '') + '"' + (column.colspan ? ' colspan="' + column.colspan + '"' : '') +
-         ' id="' + id + '" data-column-id="'+ column.id + '"' + (column.field ? ' data-field="'+ column.field +'"' : '') +
-         (column.headerTooltip ? 'title="' + column.headerTooltip + '"' : '') +
-         (column.reorderable === false ? ' data-reorder="false"' : '') +
-         (colGroups ? ' headers="' + self.getColumnGroup(j) + '"' : '') +
-         (hideNext > 0 ? ' style="display: none;" ' : '') + '>';
+        if (hideNext <= 0) {
+          headerRow += '<th scope="col" role="columnheader" class="' + (isSortable ? 'is-sortable' : '') + (isResizable ? ' is-resizable' : '') +
+            (column.hidden ? ' is-hidden' : '') + (column.filterType ? ' is-filterable' : '') +
+            (alignmentClass ? alignmentClass : '') + '"' + (column.colspan ? ' colspan="' + column.colspan + '"' : '') +
+           ' id="' + id + '" data-column-id="'+ column.id + '"' + (column.field ? ' data-field="'+ column.field +'"' : '') +
+           (column.headerTooltip ? 'title="' + column.headerTooltip + '"' : '') +
+           (column.reorderable === false ? ' data-reorder="false"' : '') +
+           (colGroups ? ' headers="' + self.getColumnGroup(j) + '"' : '') + '>';
 
-        headerRow += '<div class="' + (isSelection ? 'datagrid-checkbox-wrapper ': 'datagrid-column-wrapper') + (column.align === undefined ? '' : ' l-'+ column.align +'-text') + '"><span class="datagrid-header-text'+ (column.required ? ' required': '') + '">' + self.headerText(settings.columns[j]) + '</span>';
-        cols += '<col' + this.calculateColumnWidth(column, j) + (column.hidden ? ' class="is-hidden"' : '') + '>';
+          headerRow += '<div class="' + (isSelection ? 'datagrid-checkbox-wrapper ': 'datagrid-column-wrapper') + (column.align === undefined ? '' : ' l-'+ column.align +'-text') + '"><span class="datagrid-header-text'+ (column.required ? ' required': '') + '">' + self.headerText(settings.columns[j]) + '</span>';
+          cols += '<col' + this.calculateColumnWidth(column, j) + (column.colspan ? ' span="' + column.colspan + '"' : '') + (column.hidden ? ' class="is-hidden"' : '') + '>';
+        }
 
         if (isSelection) {
           headerRow += '<span aria-checked="false" class="datagrid-checkbox" aria-label="Selection" role="checkbox"></span>';
@@ -1961,9 +2026,11 @@ $.fn.datagrid = function(options) {
             '<span class="sort-desc">' + $.createIcon({ icon: 'dropdown' }) + '</div>';
         }
 
+        // Skip the next column when using colspan
         if (hideNext > 0) {
           hideNext --;
         }
+
         if (column.colspan) {
           hideNext = column.colspan - 1;
         }
@@ -2498,7 +2565,9 @@ $.fn.datagrid = function(options) {
       }
     },
 
-    //Get filter conditions in array form from the UI
+    /**
+    * Get filter conditions in array from whats set in the UI.
+    */
     filterConditions: function () {
       // Do not modify keyword search filter expr
       if (this.filterExpr && this.filterExpr.length === 1 && this.filterExpr[0].keywordSearch) {
@@ -2851,7 +2920,10 @@ $.fn.datagrid = function(options) {
       this.settings.dataset = window.GroupBy(this.settings.dataset , groupSettings.fields);
     },
 
-    //Render the Rows
+    /**
+    * Clear the table body and rows.
+    * @private
+    */
     renderRows: function() {
       var tableHtml = '',
         self = this, i,
@@ -2954,6 +3026,7 @@ $.fn.datagrid = function(options) {
         }
 
         tableHtml += self.rowHtml(dataset[i], s.treeGrid ? this.recordCount : i, i);
+
         this.recordCount++;
       }
 
@@ -3136,6 +3209,7 @@ $.fn.datagrid = function(options) {
         activePage = self.pager ? self.pager.activePage : 1,
         pagesize = self.settings.pagesize,
         rowHtml = '',
+        spanNext = 0,
         d = self.settings.treeDepth ? self.settings.treeDepth[dataRowIdx] : 0,
         depth, d2, i, l, isHidden, isSelected;
 
@@ -3290,7 +3364,16 @@ $.fn.datagrid = function(options) {
         var colWidth = '';
         if (this.recordCount === 0 || this.recordCount - ((activePage-1) * pagesize) === 0) {
           colWidth = this.calculateColumnWidth(col, j);
-          self.bodyColGroupHtml += '<col' + colWidth + (col.hidden ? ' class="is-hidden"' : '') + '></col>';
+
+          self.bodyColGroupHtml += spanNext > 0 ? '' :'<col' + colWidth + (col.hidden ? ' class="is-hidden"' : '') + (col.colspan ? ' span="' + col.colspan + '"' : '') + '></col>';
+
+          if (spanNext > 0 ) {
+            spanNext--;
+          }
+          if (col.colspan) {
+            this.hasColSpans = true;
+            spanNext = col.colspan-1;
+          }
         }
 
         rowHtml += '<td role="gridcell" ' + ariaReadonly + ' aria-colindex="' + (j+1) + '" '+
@@ -3544,7 +3627,7 @@ $.fn.datagrid = function(options) {
         var diff = this.elemWidth - this.totalWidth;
 
         if ((diff > 0) && (diff  > colWidth) && !this.widthPercent && !col.width) {
-          colWidth = diff - 2;
+          colWidth = diff - 2 - 10; //borders and last edge padding
           this.headerWidths[index] = {id: col.id, width: colWidth, widthPercent: this.widthPercent};
           this.totalWidth =  this.elemWidth - 2;
         }
@@ -3976,12 +4059,28 @@ $.fn.datagrid = function(options) {
         this.bodyColGroup.find('col').eq(idx).addClass('is-hidden');
       }
 
+      // Handle colSpans if present on the column
+      if (this.hasColSpans) {
+        var colSpan = this.headerRow.find('th').eq(idx).attr('colspan');
+
+        if (colSpan && colSpan > 0) {
+          colSpan = colSpan - 1;
+          for (var i = 0; i < colSpan; i++) {
+            idx += colSpan;
+            this.tableBody.find('td:nth-child('+ (idx+1) +')').addClass('is-hidden');
+          }
+        }
+      }
+
       this.element.trigger('columnchange', [{type: 'hidecolumn', index: idx, columns: this.settings.columns}]);
       this.saveColumns();
       this.saveUserSettings();
     },
 
-    //Show a hidden column
+    /**
+    * Show a hidden column.
+    * @param {String} id &nbsp;-&nbsp The id of the column to show.
+    */
     showColumn: function(id) {
       var idx = this.columnIdxById(id);
 
@@ -3997,12 +4096,29 @@ $.fn.datagrid = function(options) {
         this.bodyColGroup.find('col').eq(idx).removeClass('is-hidden');
       }
 
+      // Handle colSpans if present on the column
+      if (this.hasColSpans) {
+        var colSpan = this.headerRow.find('th').eq(idx).attr('colspan');
+
+        if (colSpan && colSpan > 0) {
+          colSpan = colSpan - 1;
+          for (var i = 0; i < colSpan; i++) {
+            idx += colSpan;
+            this.tableBody.find('td:nth-child('+ (idx+1) +')').removeClass('is-hidden');
+          }
+        }
+      }
+
       this.element.trigger('columnchange', [{type: 'showcolumn', index: idx, columns: this.settings.columns}]);
       this.saveColumns();
       this.saveUserSettings();
     },
 
-    // Export To Csv
+    /**
+    * Export the grid contents to csv
+    * @param {String} fileName &nbsp;-&nbsp The desired export filename in the download.
+    * @param {String} customDs &nbsp;-&nbsp An optional customized version of the data to use.
+    */
     exportToCsv: function (fileName, customDs) {
       fileName = (fileName ||
         this.element.closest('.datagrid-container').attr('id') ||
@@ -4109,7 +4225,12 @@ $.fn.datagrid = function(options) {
       }
     },
 
-    // Export To Excel
+    /**
+    * Export the grid contents to xls format. This may give a warning when opening the file. exportToCsv may be prefered.
+    * @param {String} fileName &nbsp;-&nbsp The desired export filename in the download.
+    * @param {String} worksheetName &nbsp;-&nbsp A name to give the excel worksheet tab.
+    * @param {String} customDs &nbsp;-&nbsp An optional customized version of the data to use.
+    */
     exportToExcel: function (fileName, worksheetName, customDs) {
       var self = this,
         template = ''+
@@ -4239,21 +4360,33 @@ $.fn.datagrid = function(options) {
       }
     },
 
-    //Open Column Personalization Dialog
+    /**
+    * Open the personalization dialog.
+    * @private
+    */
     personalizeColumns: function () {
       var self = this,
+        spanNext = 0,
         markup = '<div class="listview-search alternate-bg"><label class="audible" for="gridfilter">Search</label><input class="searchfield" placeholder="'+ Locale.translate('SearchColumnName') +'" name="searchfield" id="gridfilter"></div>';
-
         markup += '<div class="listview alternate-bg" id="search-listview"><ul>';
 
         for (var i = 0; i < this.settings.columns.length; i++) {
           var col = this.settings.columns[i],
             name = col.name;
 
-          if (name) {
+          if (name && spanNext <= 0) {
             name = name.replace('<br>', ' ').replace('<br/>', ' ').replace('<br />', ' ');
             markup += '<li><a href="#" target="_self" tabindex="-1"> <label class="inline"><input tabindex="-1" ' + (col.hideable ===false ? 'disabled' : '') + ' type="checkbox" class="checkbox" '+ (col.hidden ? '' : ' checked') +' data-column-id="'+ (col.id || i) +'"><span class="label-text">' + name + '</span></label></a></li>';
           }
+
+          if (spanNext > 0) {
+            spanNext--;
+          }
+
+          if (col.colspan) {
+            spanNext = col.colspan-1;
+          }
+
         }
         markup += '</ul></div>';
 
@@ -4306,7 +4439,7 @@ $.fn.datagrid = function(options) {
       var self = this,
         percent = parseFloat(width),
         columnNode = idOrNode,
-        columnSettings = this.columnById(typeof idOrNode === 'string' ? idOrNode : idOrNode.attr('data-column-id'));
+        columnSettings = this.columnById(typeof idOrNode === 'string' ? idOrNode : idOrNode.attr('data-column-id'))[0];
 
       if (!percent) {
         return;
@@ -4334,13 +4467,18 @@ $.fn.datagrid = function(options) {
       }
 
       //Prevent Sub Pixel Thrashing
-      if (Math.abs(width - columnSettings[0].width) < 2) {
+      if (Math.abs(width - columnSettings.width) < 2) {
         return;
       }
 
+      //Handle Col Span - as the width is calculated on the total
+      if (columnSettings.colspan) {
+        width = width / columnSettings.colspan;
+      }
+
       // Save the column back in settings for later
-      if (columnSettings[0]) {
-        columnSettings[0].width = width;
+      if (columnSettings) {
+        columnSettings.width = width;
       }
 
       var idx = columnNode.index();
@@ -4361,7 +4499,11 @@ $.fn.datagrid = function(options) {
       this.clearHeaderCache();
     },
 
-    //Generate Resize Handles
+    /**
+    * Generate the ui handles used to resize columns.
+    *
+    * @private
+    */
     createResizeHandle: function() {
       var self = this;
       if (this.resizeHandle) {
@@ -4395,7 +4537,6 @@ $.fn.datagrid = function(options) {
           startingLeft = self.currentHeader.position().left + self.table.scrollLeft() - 10;
           self.tableWidth = self.table[0].offsetWidth;
           columnStartWidth = self.currentHeader[0].offsetWidth;
-
         })
         .on('drag.datagrid', function (e, ui) {
           if (!self.currentHeader) {
@@ -4412,6 +4553,7 @@ $.fn.datagrid = function(options) {
           }
 
           width = Math.round(width);
+
           self.setColumnWidth(self.currentHeader, width, width - columnStartWidth);
         })
         .on('dragend.datagrid', function () {
@@ -4507,6 +4649,7 @@ $.fn.datagrid = function(options) {
 
     scrollLeft: 0,
     scrollTop: 0,
+
     handleScroll: function() {
       var left = this.contentContainer[0].scrollLeft;
 
@@ -4728,7 +4871,12 @@ $.fn.datagrid = function(options) {
         e.preventDefault();
 
         if (self.settings.menuId) {
-          $(e.currentTarget).popupmenu({menuId: self.settings.menuId, eventObj: e, trigger: 'immediate'}).off('selected').on('selected', function (e, args) {
+          $(e.currentTarget).popupmenu({
+            menuId: self.settings.menuId,
+            eventObj: e,
+            beforeOpen: self.settings.menuBeforeOpen,
+            trigger: 'immediate'})
+          .off('selected').on('selected', function (e, args) {
             self.settings.menuSelected(e, args);
           });
         }
@@ -4766,7 +4914,7 @@ $.fn.datagrid = function(options) {
           }
 
           if (!alignToLeft) {
-            self.currentHeader = self.currentHeader.prevAll().not('.is-hidden').first();
+            self.currentHeader = self.currentHeader.prevAll(':visible').not('.is-hidden').first();
           }
 
           if (!self.currentHeader.hasClass('is-resizable')) {
@@ -4776,6 +4924,28 @@ $.fn.datagrid = function(options) {
           self.createResizeHandle();
           self.resizeHandle[0].style.left = leftPos +'px';
           self.resizeHandle[0].style.cursor = '';
+        }).off('contextmenu.datagrid').on('contextmenu.datagrid', 'th', function (e) {
+
+          // Add Header Context Menu Support
+          e.preventDefault();
+
+          if (self.settings.headerMenuId) {
+
+            $(e.currentTarget)
+            .popupmenu({
+              menuId: self.settings.headerMenuId,
+              eventObj: e,
+              attachToBody: true,
+              beforeOpen: self.settings.headerMenuBeforeOpen,
+              trigger: 'immediate'})
+              .off('selected.gridpopup')
+              .on('selected.gridpopup', function (e, args) {
+                self.settings.headerMenuSelected(e, args);
+              });
+
+          }
+
+          return false;
         });
 
       // Handle Clicking Header Checkbox
@@ -4874,7 +5044,7 @@ $.fn.datagrid = function(options) {
 
     },
 
-     appendToolbar: function () {
+    appendToolbar: function () {
       var toolbar, title = '', more, self = this;
 
       if (!settings.toolbar) {
@@ -6416,12 +6586,12 @@ $.fn.datagrid = function(options) {
         self.clearNodeErrors(node, 'error');
       });
 
-    this.tableBody.find('td.alert').each(function () {
+      this.tableBody.find('td.alert').each(function () {
         var node = $(this);
         self.clearNodeErrors(node, 'alert');
       });
 
-    this.tableBody.find('td.info').each(function () {
+      this.tableBody.find('td.info').each(function () {
         var node = $(this);
         self.clearNodeErrors(node, 'info');
       });
@@ -6430,8 +6600,9 @@ $.fn.datagrid = function(options) {
     clearNodeErrors: function (node, type) {
       node.removeClass(type).removeAttr('data-' + type + 'message');
 
-      var icon = node.find('.icon-' + type);
-      var tooltip = icon.data('tooltip');
+      var icon = node.find('.icon-' + type),
+        tooltip = icon.data('tooltip');
+
       if (tooltip) {
         tooltip.hide();
       }
@@ -6588,10 +6759,10 @@ $.fn.datagrid = function(options) {
         cellNode.find('.datagrid-cell-wrapper').html(formatted);
       }
 
-    if (!fromApiCall) {
-      //Validate the cell
-        this.validateCell(row, cell);
-    }
+      if (!fromApiCall) {
+        //Validate the cell
+          this.validateCell(row, cell);
+      }
 
       if (coercedVal !== oldVal && !fromApiCall) {
         var args = {row: row, cell: cell, target: cellNode, value: coercedVal, oldValue: oldVal, column: col};
@@ -6732,7 +6903,21 @@ $.fn.datagrid = function(options) {
       }
 
       if (this.settings.cellNavigation) {
-        var headers = self.headerNodes();
+        var headers = self.headerNodes(),
+          prevSpans = 0;
+
+        //Check if any previous rows are spanned
+        if (this.hasColSpans) {
+            prevSpans = 0;
+
+            headers.eq(cell).prevAll('[colspan]').each(function (i, elem) {
+              var span = $(elem).attr('colspan')-1;
+              prevSpans += span;
+            });
+
+          cell = cell - prevSpans;
+        }
+
         headers.removeClass('is-active');
         headers.eq(cell).addClass('is-active');
       }
@@ -7027,7 +7212,11 @@ $.fn.datagrid = function(options) {
         .attr('aria-sort', ascending ? 'ascending' : 'descending');
     },
 
-    //Overridable function to conduct sorting
+    /**
+    * Overridable function to conduct array sorting
+    * @param {String} id &nbsp;-&nbsp The matching field/id in the array to sort on
+    * @param {Boolean} ascending &nbsp;-&nbsp Determines direction of the sort.
+    */
     sortFunction: function(id, ascending) {
       var column = this.columnById(id),
         field = column.length === 0 ? id : column[0].field; //Assume the field and id match if no column found
@@ -7064,7 +7253,10 @@ $.fn.datagrid = function(options) {
       };
     },
 
-    // Update Selection
+    /**
+    * Sync selection between the _selectedRows array and the table rows.
+    * @private
+    */
     updateSelected: function() {
       var self = this,
         s = self.settings;
@@ -7090,7 +7282,10 @@ $.fn.datagrid = function(options) {
       });
     },
 
-    // Determine equality for two JavaScript objects
+    /**
+    * Determine equality for two deeply nested JavaScript objects
+    * @private
+    */
     isEquals: function(obj1, obj2) {
       function _equals(obj1, obj2) {
         return JSON.stringify(obj1) === JSON.stringify($.extend(true, {}, obj1, obj2));
@@ -7098,12 +7293,18 @@ $.fn.datagrid = function(options) {
       return _equals(obj1, obj2) && _equals(obj2, obj1);
     },
 
-    //Default formatter just plain text style
+    /**
+    * The default formatter to use (just plain text). When no formatter is specified.
+    * @private
+    */
     defaultFormatter: function(row, cell, value) {
       return ((value === null || value === undefined || value === '') ? '' : value.toString());
     },
 
-    //Handle Adding Paging
+    /**
+    * Add the pager and paging functionality.
+    * @private
+    */
     handlePaging: function () {
       var self = this;
 
@@ -7155,6 +7356,11 @@ $.fn.datagrid = function(options) {
 
     },
 
+    /**
+    * Add the pager and paging functionality.
+    * @param {String} pagingInfo &nbsp;-&nbsp The paging object with activePage ect used by pager.js
+    * @param {Boolean} isResponse &nbsp;-&nbsp Internal flag used to prevent callbacks from rexecuting.
+    */
     renderPager: function (pagingInfo, isResponse) {
       var api = this.pager;
 
@@ -7173,7 +7379,10 @@ $.fn.datagrid = function(options) {
       this.syncSelectedUI();
     },
 
-    //Reset the pager to page 1
+    /**
+    * Reset the pager to the first page.
+    * @param {String} type &nbsp;-&nbsp The action type, which gets sent to the source callback.
+    */
     resetPager: function(type) {
       if (!this.pager) {
         return;
@@ -7188,6 +7397,9 @@ $.fn.datagrid = function(options) {
       this.renderPager(this.pager.pagingInfo);
     },
 
+    /**
+    * Unwrap the grid back to a simple div, and destory all events and pointers.
+    */
     destroy: function() {
       //Remove the toolbar, clean the div out and remove the pager
       this.element.off().empty().removeClass('datagrid-container');

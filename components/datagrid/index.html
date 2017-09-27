@@ -46,8 +46,12 @@
 <li><code>saveUserSettings</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Save one or all of the following to local storage : columns: true, rowHeight: true, sortOrder: true, pagesize: true, activePage: true, filter: true<br /></li>
 <li><code>editable</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  Enable editing in the grid, requires column editors.<br /></li>
 <li><code>isList</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  Makes the grid have readonly &quot;list&quot; styling<br /></li>
-<li><code>menuId</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Id to link a right click context menu element<br /></li>
+<li><code>menuId</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  - Id of the menu to use for a row level right click context menu<br /></li>
 <li><code>menuSelected</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Callback for the grid level context menu<br /></li>
+<li><code>menuBeforeOpen</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Callback for the grid level beforeopen menu event<br /></li>
+<li><code>headerMenuId</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Id of the menu to use for a header right click context menu<br /></li>
+<li><code>headerMenuSelected</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Callback for the header level context menu<br /></li>
+<li><code>headerMenuBeforeOpen</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Callback for the header level beforeopen menu event<br /></li>
 <li><code>uniqueId</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Unique ID to use as local storage reference and internal variable names<br /></li>
 <li><code>rowHeight</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Controls the height of the rows / number visible rows. May be (short, medium or normal)<br /></li>
 <li><code>selectable</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Controls the selection Mode this may be: false, 'single' or 'multiple' or 'mixed'<br /></li>
@@ -76,12 +80,20 @@
 <li><code>exportConvertNegative</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  If set to true export data with trailing negative signs moved in front.</li>
 </ul>
 <h3 id="functions">Functions</h3>
+<h4 id="render">render</h4>
+<p>Render or render both header and row area.</p>
 <h4 id="addrow">addRow</h4>
 <p>Add a row of data to the grid and dataset.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>data</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  An data row object<br /></li>
 <li><code>location</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Where to add the row. This can be 'top' or leave off for 'bottom'</li>
+</ul>
+<h4 id="pagerrefresh">pagerRefresh</h4>
+<p>Refresh the pager based on the current page and dataset.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>location</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Deprecated - Can be set to 'top' or left off for bottom pager.</li>
 </ul>
 <h4 id="removerow">removeRow</h4>
 <p>Remove a row of data to the grid and dataset.</p>
@@ -92,8 +104,24 @@
 </ul>
 <h4 id="removeselected">removeSelected</h4>
 <p>Remove all selected rows from the grid and dataset.</p>
+<h4 id="updatedataset">updateDataset</h4>
+<p>Send in a new data set to display in the datagrid.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>dataset</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  The array of objects to show in the grid. Should match the column definitions.<br /></li>
+<li><code>pagerInfo</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  The pager info object with information like activePage ect.</li>
+</ul>
+<h4 id="triggersource">triggerSource</h4>
+<p>Trigger the source method to call to the backend on demand.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>pagerType</code><br /></li>
+<li><code>pagerInfo</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  The pager info object with information like activePage ect.</li>
+</ul>
 <h4 id="clearfilter">clearFilter</h4>
 <p>Clear the Filter row Conditions and Reset the Data.</p>
+<h4 id="filterconditions">filterConditions</h4>
+<p>Get filter conditions in array from whats set in the UI.</p>
 <h4 id="restorecolumns">restoreColumns</h4>
 <p>Restore the columns from a provided list or local storage</p>
 <p><strong>Parameters</strong></p>
@@ -106,6 +134,49 @@
 <ul>
 <li><code>id</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The id of the column to hide.</li>
 </ul>
+<h4 id="showcolumn">showColumn</h4>
+<p>Show a hidden column.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>id</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The id of the column to show.</li>
+</ul>
+<h4 id="exporttocsv">exportToCsv</h4>
+<p>Export the grid contents to csv</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>fileName</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The desired export filename in the download.<br /></li>
+<li><code>customDs</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  An optional customized version of the data to use.</li>
+</ul>
+<h4 id="exporttoexcel">exportToExcel</h4>
+<p>Export the grid contents to xls format. This may give a warning when opening the file. exportToCsv may be prefered.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>fileName</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The desired export filename in the download.<br /></li>
+<li><code>worksheetName</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  A name to give the excel worksheet tab.<br /></li>
+<li><code>customDs</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  An optional customized version of the data to use.</li>
+</ul>
+<h4 id="sortfunction">sortFunction</h4>
+<p>Overridable function to conduct array sorting</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>id</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The matching field/id in the array to sort on<br /></li>
+<li><code>ascending</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  Determines direction of the sort.</li>
+</ul>
+<h4 id="renderpager">renderPager</h4>
+<p>Add the pager and paging functionality.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>pagingInfo</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The paging object with activePage ect used by pager.js<br /></li>
+<li><code>isResponse</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  Internal flag used to prevent callbacks from rexecuting.</li>
+</ul>
+<h4 id="resetpager">resetPager</h4>
+<p>Reset the pager to the first page.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>type</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The action type, which gets sent to the source callback.</li>
+</ul>
+<h4 id="destroy">destroy</h4>
+<p>Unwrap the grid back to a simple div, and destory all events and pointers.</p>
 <h2 id="code-example">Code Example</h2>
 <p>The Datagrid is created via JS or via direct html markup (css table styling). You should pass an array of objects in to the grid on the dataset object. Also pass the columns array for the column information. There are a number of events described in the events and api section, as well as the column settings.</p>
 <p>A Read-Only Datagrid uses &quot;Formatters&quot; to render cell content. A number of these are listed in the api section, and it is possible to create your own.</p>
@@ -142,7 +213,8 @@
 <li><strong>hidden</strong> If true the column will be hidden, but will appear in the personalization dialog and can thus be later shown by the user.<br /></li>
 <li><strong>resizable</strong> If false the column will not be resizable, thus is a fixed size and can never be changed by the user by dragging the left and right edge.<br /></li>
 <li>**headerTooltip* Can be used to set a tooltip specific to the column header.<br /></li>
-<li>**reorderable* The column cannot be dragged around to have its order in the list changed.</li>
+<li>**reorderable* The column cannot be dragged around to have its order in the list changed.<br /></li>
+<li>**colSpan* The cells can be split over a header. When set to an integer &gt; 1 this next number of columns will be split over this header.</li>
 </ul>
 <h2 id="column-settings-formatter-specific">Column Settings (Formatter Specific)</h2>
 <ul>

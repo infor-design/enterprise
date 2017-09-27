@@ -259,7 +259,7 @@
       'PreviousPage': {id: 'PreviousPage', value: 'Previous Page', comment: 'Previous Page tooltip'},
       'Print': {id: 'Print', value: 'Print', comment: 'Print tooltip'},
       'Range': {id: 'Range', value: 'Range', comment: 'Range for tooltip'},
-      'RecordsPerPage': {id: 'RecordsPerPage', value: '{0} Records per page', comment: 'Dropd own allows the user to select how many visible records {} shows select value.'},
+      'RecordsPerPage': {id: 'RecordsPerPage', value: '{0} Records per page', comment: 'Dropdown allows the user to select how many visible records {} shows select value.'},
       'Redo': {id: 'Redo', value: 'Redo', comment: 'Redo tooltip'},
       'ReorderRows': {id: 'ReorderRows', value: 'Reorder Rows', comment: 'Drag and Reorder Grid Rows'},
       'Refresh': {id: 'Refresh', value: 'Refresh', comment: 'Refresh tooltip'},

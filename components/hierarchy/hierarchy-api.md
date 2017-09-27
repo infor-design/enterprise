@@ -5,11 +5,12 @@
 -   [Hierarchy](#hierarchy)
     -   [handleEvents](#handleevents)
     -   [data](#data)
+    -   [reload](#reload)
+    -   [destroy](#destroy)
     -   [add](#add)
     -   [expand](#expand)
     -   [collapse](#collapse)
     -   [render](#render)
-    -   [checkChildren](#checkchildren)
     -   [createLegend](#createlegend)
     -   [createLeaf](#createleaf)
     -   [setColor](#setcolor)
@@ -23,7 +24,6 @@ The displays custimizable hierarchical data such as an org chart.
 
 **Parameters**
 
--   `element`  
 -   `legend` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Pass in custom markdown for the legend structure.
 -   `legendKey` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Key to use for the legend matching
 -   `dataset` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Hierarchical Data to display
@@ -50,6 +50,20 @@ Process data attached through jquery data
 -   `params`  
 
 Returns **any** 
+
+### reload
+
+Public function
+Reloads hierarchy control with new dataset
+
+**Parameters**
+
+-   `options`  \-- hierarchy options
+
+### destroy
+
+Public function
+ Removes the component from existence
 
 ### add
 
@@ -92,17 +106,6 @@ Main render method
 **Parameters**
 
 -   `data`  
-
-### checkChildren
-
-Private function
-
-**Parameters**
-
--   `children`  
--   `param`  
-
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 ### createLegend
 

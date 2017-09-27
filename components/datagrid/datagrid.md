@@ -80,6 +80,7 @@ A Read-Only Datagrid uses "Formatters" to render cell content. A number of these
 - **resizable** If false the column will not be resizable, thus is a fixed size and can never be changed by the user by dragging the left and right edge.
 - **headerTooltip* Can be used to set a tooltip specific to the column header.
 - **reorderable* The column cannot be dragged around to have its order in the list changed.
+- **colSpan* The cells can be split over a header. When set to an integer > 1 this next number of columns will be split over this header.
 
 ## Column Settings (Formatter Specific)
 
