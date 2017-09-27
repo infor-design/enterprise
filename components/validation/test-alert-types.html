@@ -6,66 +6,66 @@
       <input type="text" id="test-error" name="test-error" data-validate="customErrorRule">
     </div>
 
-	<div class="field">
+	  <div class="field">
       <label for="test-alert">Test Alert (Warning)</label>
-      <input type="text" id="test-error" name="test-alert" data-validate="customWarningRule">
+      <input type="text" id="test-alert" name="test-alert" data-validate="customWarningRule">
     </div>
 
-	<div class="field">
+	  <div class="field">
       <label for="test-confirm">Test Confirmation</label>
-      <input type="text" id="test-confirm" name="test-alert" data-validate="customConfirmationRule">
+      <input type="text" id="test-confirm" name="test-confirm" data-validate="customConfirmationRule">
     </div>
 
-	<div class="field">
+	  <div class="field">
       <label for="test-info">Test Information</label>
-      <input type="text" id="test-error" name="test-info" data-validate="customInformationRule">
+      <input type="text" id="test-info" name="test-info" data-validate="customInformationRule">
     </div>
 
-    <script>
-      $(function() {
-        $.fn.validation.rules.customErrorRule = {
-          check: function (value) {
-
-            return (value !== '');
-          },
-          message: 'Something is wrong do not continue',
-		  type: 'error'
-        };
-
-		$.fn.validation.rules.customWarningRule = {
-          check: function (value) {
-
-            return (value !== '');
-          },
-          message: 'Warning the value may be incorrect',
-		      type: 'alert'
-        };
-
-		$.fn.validation.rules.customConfirmationRule = {
-          check: function (value) {
-
-            return (value !== '');
-          },
-          message: 'This value is correct',
-		      type: 'confirm'
-        };
-
-
-		$.fn.validation.rules.customInformationRule = {
-          check: function (value) {
-
-            return (value !== '');
-          },
-          message: 'This value is allowed to be empty'
-		      type: 'info'
-        };
-
-      });
-
-	  $(document).ready(function () {
-	    // force inputs to validate on load
-		$('input').blur();
-	  });
-    </script>
   </div>
 </div>
+
+<script>
+  $(function() {
+    $.fn.validation.rules.customErrorRule = {
+      check: function (value) {
+        return (value !== '');
+      },
+      message: 'Something is wrong do not continue',
+      type: 'error'
+    };
+
+    $.fn.validation.rules.customWarningRule = {
+      check: function (value) {
+        return (value !== '');
+      },
+      message: 'Warning the value may be incorrect',
+      type: 'alert'
+    };
+
+    $.fn.validation.rules.customConfirmationRule = {
+      check: function (value) {
+        return (value !== '');
+      },
+      message: 'This value is correct',
+      type: 'confirm'
+    };
+
+    $.fn.validation.rules.customInformationRule = {
+      check: function (value) {
+        return (value !== '');
+      },
+      message: 'This value is allowed to be empty',
+      type: 'info'
+    };
+
+  });
+
+
+  // force inputs to validate on load
+  $(document).ready(function () {
+    setTimeout(function() {
+      $('input').blur();
+    }, 0);
+  });
+
+</script>
