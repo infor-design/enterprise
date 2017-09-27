@@ -19,6 +19,12 @@
   </li>
 </ul>
 
+<ul id="grid-header-menu" class="popupmenu">
+  <li><a href="#">Split</a></li>
+  <li><a href="#">Sort</a></li>
+  <li><a href="#">Hide</a></li>
+</ul>
+
 <script>
     $('body').on('initialized', function () {
      //Locale.set('en-US').done(function () {
@@ -64,8 +70,12 @@
         columns: columns,
         dataset: data,
         menuId: 'grid-actions-menu',
+        headerMenuId: 'grid-header-menu',
         menuSelected: function (e, args) {
-          console.log('item selected', args);
+          console.log('header item selected', args);
+        },
+        headerMenuSelected: function (e, args) {
+          console.log('header item selected', args);
         }
       }).on('contextmenu', function (e, args) {
         console.log('contextmenu fired', args);

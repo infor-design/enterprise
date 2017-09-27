@@ -3,12 +3,24 @@
 ### Table of Contents
 
 -   [Datagrid](#datagrid)
+    -   [render](#render)
     -   [addRow](#addrow)
+    -   [pagerRefresh](#pagerrefresh)
     -   [removeRow](#removerow)
     -   [removeSelected](#removeselected)
+    -   [updateDataset](#updatedataset)
+    -   [triggerSource](#triggersource)
     -   [clearFilter](#clearfilter)
+    -   [filterConditions](#filterconditions)
     -   [restoreColumns](#restorecolumns)
     -   [hideColumn](#hidecolumn)
+    -   [showColumn](#showcolumn)
+    -   [exportToCsv](#exporttocsv)
+    -   [exportToExcel](#exporttoexcel)
+    -   [sortFunction](#sortfunction)
+    -   [renderPager](#renderpager)
+    -   [resetPager](#resetpager)
+    -   [destroy](#destroy)
 
 ## Datagrid
 
@@ -16,7 +28,6 @@ The Datagrid Component displays and process data in tabular format.
 
 **Parameters**
 
--   `element`  
 -   `actionableMode` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If actionableMode is "true”, tab and shift tab behave like left and right arrow key, if the cell is editable it goes in and out of edit mode. F2 - toggles actionableMode "true" and "false"
 -   `cellNavigation` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If cellNavigation is "false”, will show border around whole row on focus
 -   `rowNavigation` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If rowNavigation is "false”, will NOT show border around the row
@@ -28,8 +39,12 @@ The Datagrid Component displays and process data in tabular format.
 -   `saveUserSettings` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Save one or all of the following to local storage : columns: true, rowHeight: true, sortOrder: true, pagesize: true, activePage: true, filter: true
 -   `editable` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Enable editing in the grid, requires column editors.
 -   `isList` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Makes the grid have readonly "list" styling
--   `menuId` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Id to link a right click context menu element
+-   `menuId` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  - Id of the menu to use for a row level right click context menu
 -   `menuSelected` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Callback for the grid level context menu
+-   `menuBeforeOpen` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Callback for the grid level beforeopen menu event
+-   `headerMenuId` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Id of the menu to use for a header right click context menu
+-   `headerMenuSelected` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Callback for the header level context menu
+-   `headerMenuBeforeOpen` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Callback for the header level beforeopen menu event
 -   `uniqueId` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Unique ID to use as local storage reference and internal variable names
 -   `rowHeight` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Controls the height of the rows / number visible rows. May be (short, medium or normal)
 -   `selectable` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Controls the selection Mode this may be: false, 'single' or 'multiple' or 'mixed'
@@ -57,6 +72,10 @@ The Datagrid Component displays and process data in tabular format.
 -   `redrawOnResize` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If set to false we skip redraw logic on the resize of the page.
 -   `exportConvertNegative` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If set to true export data with trailing negative signs moved in front.
 
+### render
+
+Render or render both header and row area.
+
 ### addRow
 
 Add a row of data to the grid and dataset.
@@ -65,6 +84,14 @@ Add a row of data to the grid and dataset.
 
 -   `data` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  An data row object
 -   `location` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Where to add the row. This can be 'top' or leave off for 'bottom'
+
+### pagerRefresh
+
+Refresh the pager based on the current page and dataset.
+
+**Parameters**
+
+-   `location` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Deprecated - Can be set to 'top' or left off for bottom pager.
 
 ### removeRow
 
@@ -79,9 +106,31 @@ Remove a row of data to the grid and dataset.
 
 Remove all selected rows from the grid and dataset.
 
+### updateDataset
+
+Send in a new data set to display in the datagrid.
+
+**Parameters**
+
+-   `dataset` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  The array of objects to show in the grid. Should match the column definitions.
+-   `pagerInfo` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  The pager info object with information like activePage ect.
+
+### triggerSource
+
+Trigger the source method to call to the backend on demand.
+
+**Parameters**
+
+-   `pagerType`  
+-   `pagerInfo` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  The pager info object with information like activePage ect.
+
 ### clearFilter
 
 Clear the Filter row Conditions and Reset the Data.
+
+### filterConditions
+
+Get filter conditions in array from whats set in the UI.
 
 ### restoreColumns
 
@@ -98,3 +147,60 @@ Hide a column.
 **Parameters**
 
 -   `id` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The id of the column to hide.
+
+### showColumn
+
+Show a hidden column.
+
+**Parameters**
+
+-   `id` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The id of the column to show.
+
+### exportToCsv
+
+Export the grid contents to csv
+
+**Parameters**
+
+-   `fileName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The desired export filename in the download.
+-   `customDs` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  An optional customized version of the data to use.
+
+### exportToExcel
+
+Export the grid contents to xls format. This may give a warning when opening the file. exportToCsv may be prefered.
+
+**Parameters**
+
+-   `fileName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The desired export filename in the download.
+-   `worksheetName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  A name to give the excel worksheet tab.
+-   `customDs` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  An optional customized version of the data to use.
+
+### sortFunction
+
+Overridable function to conduct array sorting
+
+**Parameters**
+
+-   `id` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The matching field/id in the array to sort on
+-   `ascending` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Determines direction of the sort.
+
+### renderPager
+
+Add the pager and paging functionality.
+
+**Parameters**
+
+-   `pagingInfo` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The paging object with activePage ect used by pager.js
+-   `isResponse` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Internal flag used to prevent callbacks from rexecuting.
+
+### resetPager
+
+Reset the pager to the first page.
+
+**Parameters**
+
+-   `type` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The action type, which gets sent to the source callback.
+
+### destroy
+
+Unwrap the grid back to a simple div, and destory all events and pointers.

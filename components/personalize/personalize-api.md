@@ -13,7 +13,6 @@ The personalization routines for setting custom company colors.
 
 **Parameters**
 
--   `element`  
 -   `colors` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The list of colors
 -   `theme` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The theme name (light, dark or high-contrast)
 

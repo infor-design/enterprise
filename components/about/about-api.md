@@ -6,6 +6,9 @@
     -   [getDeviceSpecs](#getdevicespecs)
     -   [close](#close)
     -   [destroy](#destroy)
+-   [beforeclose](#beforeclose)
+-   [close](#close-1)
+-   [afterclose](#afterclose)
 
 ## About
 
@@ -13,7 +16,6 @@ The About Dialog Component is displays information regarding the application.
 
 **Parameters**
 
--   `element`  
 -   `appName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The Main Application Name to display in the header.
 -   `content` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** Additional Text content to display at the top.
 -   `copyrightYear` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The year displayed in the copyright, defaults to current year.
@@ -35,3 +37,30 @@ Progamatically Close the About Dialog.
 ### destroy
 
 Teardown and remove any added markup and events.
+
+## beforeclose
+
+Fires before the dialog is closing. You can return false syncronously to delay closing.
+
+**Properties**
+
+-   `event` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object.
+-   `ui` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** The dialog object
+
+## close
+
+Fires as the dialog is closing
+
+**Properties**
+
+-   `event` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object.
+-   `ui` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** The dialog object
+
+## afterclose
+
+Fires after the dialog has closed in the DOM entirely.
+
+**Properties**
+
+-   `event` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** The jquery event object.
+-   `ui` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** The dialog object

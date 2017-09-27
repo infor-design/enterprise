@@ -14,7 +14,6 @@ The MultiSelect Component allows selecting multiple items from a list
 
 **Parameters**
 
--   `element`  
 -   `filterMode` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The search mode to use, can be 'contains' or 'startsWith'
 -   `maxSelected` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**  -  The max number of items which can be selected
 -   `moveSelected` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -   Move selected options in each group to just underneath their corresponding group headers.

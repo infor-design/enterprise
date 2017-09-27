@@ -1,0 +1,81 @@
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div id="datagrid">
+    </div>
+
+    <ul id="grid-header-menu" class="popupmenu">
+    </ul>
+
+  </div>
+</div>
+
+<script>
+  $('body').one('initialized', function () {
+
+    //Locale.set('en-US').done(function () {
+      var grid,
+        columns = [],
+        data = [];
+
+      // Some Sample Data
+      data.push({ id: 1, productId: 2445201, productName: 'Compressor', price1: 101, price2: 201, salesPrice: 301, tax: 401, fees: 501});
+      data.push({ id: 2, productId: 2445202, productName: 'Different Compressor', price2: 202, salesPrice: 302, tax: 402, fees: 502});
+      data.push({ id: 3, productId: 2445203, productName: 'Compressor', price1: 103, price2: 203, salesPrice: 303, tax: 403, fees: 503});
+      data.push({ id: 4, productId: 2445204, productName: 'Another Compressor', price1: 104, price2: 204, salesPrice: 304, tax: 404, fees: 504});
+      data.push({ id: 4, productId: 2445205, productName: 'Another Compressor', price1: 105, price2: 205, salesPrice: 305, tax: 405, fees: 505});
+      data.push({ id: 5, productId: 2542206, productName: 'I Love Compressors', price1: 106, price2: 206, salesPrice: 306, tax: 406, fees: 506});
+      data.push({ id: 5, productId: 2642207, productName: 'Air Compressors', price1: 107, price2: 207, salesPrice: 307, tax: 407, fees: 507});
+      data.push({ id: 6, productId: 2642208, productName: 'Some Compressor', price1: 108, price2: 208, salesPrice: 308, tax: 407, fees: 508});
+
+      //Define Columns for the Grid.
+      columns.push({ id: 'productId', name: 'Id', field: 'productId', formatter: Formatters.Text,});
+      columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink});
+      columns.push({ id: 'price1', colspan: 2, name: 'Price (s)', field: 'price1', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+      columns.push({ id: 'price2', name: 'Price 2', field: 'price2', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+      columns.push({ id: 'salesPrice', name: 'Sales Price', field: 'salesPrice', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+      columns.push({ id: 'tax', /*colspan: 2,*/ name: 'Tax', field: 'tax', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+      columns.push({ id: 'fees', name: 'Fees', field: 'fees', formatter: Formatters.Decimal, numberFormat: {minimumFractionDigits: 0, maximumFractionDigits: 0, style: 'currency', currencySign: '$'}});
+      columns.push({ id: 'space', sortable: false, name: '', field: ''});
+
+      // Init the grid with options
+      var grid = $('#datagrid').datagrid({
+        columns: columns,
+        dataset: data,
+        toolbar: {title: 'Compressors', actions: true, rowHeight: true, personalize: true},
+        headerMenuId: 'grid-header-menu',
+        headerMenuBeforeOpen: function(response) {
+          var target = $(this.eventObj.currentTarget),
+            colspan = target.attr('colspan'),
+            content = '';
+
+          // Only Show for splittable columns (price 1 example)
+          if (target.attr('data-column-id') !== 'price1') {
+            return response(false);
+          }
+
+          var isSplit = target.attr('colspan') > 0;
+
+          // Toggle disabled on the menu
+          content = $('<li><a href="#" data-action="split">Split</a></li><li><a href="#" data-action="un-split">UnSplit</a></li>');
+          $(content[isSplit ? 0 : 1]).addClass('is-disabled');
+
+          return response(content);
+        },
+        headerMenuSelected: function (e, args) {
+          // Show manually toggline the split as a contrived example
+          var action = args.attr('data-action');
+
+          if (action == 'un-split') {
+            delete columns[2].colspan;
+          } else {
+            columns[2].colspan = 2;
+          }
+
+          grid.updateColumns(columns);
+        }
+      }).data('datagrid');
+
+ });
+</script>

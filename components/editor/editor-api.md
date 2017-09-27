@@ -18,7 +18,6 @@ The Editor Component is displays and edits markdown.
 
 **Parameters**
 
--   `element`  
 -   `firstHeader` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Allows you to set if the first header inserted is a h3 or h4 element. You should set this to match the structure of the parent page for accessibility
 -   `secondHeader` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Allows you to set if the second header inserted is a h3 or h4 element. You should set this to match the structure of the parent page for accessibility
 -   `productName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Additional product name information to display
@@ -60,7 +59,5 @@ This component fires the following events.
 
 **Parameters**
 
--   `input` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires after the value in the input is changed by user interaction. This fires after each character is changed.
+-   `input` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires after the value in the input is changed by user interaction.
 -   `keydown` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires after as keys are pressed.
--   `change` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires after the user finishes modifying the text.
-

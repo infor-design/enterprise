@@ -13,7 +13,6 @@ Special Toolbar at the top of the page used to faciliate SoHo Xi Nav Patterns
 
 **Parameters**
 
--   `element`  
 -   `demoOptions` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Used to enable/disable default SoHo Xi options for demo purposes
 -   `useBackButton` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true, displays a back button next to the title in the header toolbar
 -   `useBreadcrumb` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true, displays a breadcrumb on drilldown
