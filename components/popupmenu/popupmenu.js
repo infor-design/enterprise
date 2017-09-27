@@ -996,7 +996,10 @@
         // Check external AJAX source, if applicable
         if (!ajaxReturn) {
           canOpen = this.callSource(e, true);
-          return;
+
+          if (this.settings.beforeOpen) {
+            return;
+          }
         }
 
         var otherMenus = $('.popupmenu.is-open').filter(function() {
