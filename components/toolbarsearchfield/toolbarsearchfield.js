@@ -661,13 +661,13 @@
           eventArgs.push(containerSizeSetters);
         }
 
+        self.toolbarParent.triggerHandler('recalculate-buttons', eventArgs);
         self.inputWrapper.one($.fn.transitionEndName(), function() {
           if (!self.isFocused && self.hasFocus() && document.activeElement !== self.input[0]) {
             self.isFocused = true;
             self.input.focus();
           }
 
-          self.toolbarParent.triggerHandler('recalculate-buttons', eventArgs);
           self.inputWrapper.triggerHandler('expanded');
           self.isExpanded = true;
         });
@@ -726,12 +726,7 @@
           $('head').triggerHandler('enable-zoom');
         }
 
-        // TODO: Make this process more solid, without FOUC/jumpiness and better focus handling (EPC)
-        // See http://jira/browse/SOHO-6347
-        self.inputWrapper.one($.fn.transitionEndName(), function() {
-          self.toolbarParent.triggerHandler('recalculate-buttons');
-        });
-
+        self.toolbarParent.triggerHandler('recalculate-buttons');
       },
 
       /**

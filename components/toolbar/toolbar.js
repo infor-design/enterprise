@@ -814,7 +814,7 @@
           targetTitleWidth = parseInt(titleSize);
           targetButtonsetWidth = parseInt(buttonsetSize);
         } else {
-          if ((buttonsetDims.scrollWidth + titleDims.scrollWidth + moreDims.width + toolbarPadding) > toolbarDims.width) {
+          //if ((buttonsetDims.scrollWidth + titleDims.scrollWidth + moreDims.width + toolbarPadding) > toolbarDims.width) {
             if (this.settings.favorButtonset) {
               targetButtonsetWidth = buttonsetDims.width;
               targetTitleWidth = toolbarDims.width - (toolbarPadding + buttonsetDims.width + moreDims.width);
@@ -822,7 +822,7 @@
               targetTitleWidth = titleDims.scrollWidth;
               targetButtonsetWidth = toolbarDims.width - (toolbarPadding + titleDims.scrollWidth + moreDims.width);
             }
-          }
+          //}
         }
 
         if (this.settings.favorButtonset) {
