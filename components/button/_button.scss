@@ -372,6 +372,20 @@ a.btn-menu {
 
 }
 
+.btn,
+.btn-primary,
+.btn-secondary,
+.btn-tertiary,
+.btn-icon,
+.btn-actions,
+.btn-menu {
+  span {
+    &:before, &:after {
+      content: ' ';
+    }
+  }
+}
+
 // Menu Buttons have a special state that shows up when their menus are visible.
 .btn-menu,
 .btn-actions {
