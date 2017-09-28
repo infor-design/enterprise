@@ -307,6 +307,7 @@
 
               obj.popover({
                 content: $('#' + obj.attr('data-popover')),
+                popover: true,
                 trigger: trigger ? trigger : 'click',
                 title: title ? title : undefined,
                 placement: placement || 'right'

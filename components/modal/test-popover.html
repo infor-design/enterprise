@@ -8,8 +8,7 @@
 			<!-- Conents Popover -->
 			a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />
 			a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />
-			<button class="btn-tertiary" data-popover="popover-contents-click" data-title="ABC Engine Company" data-trigger="click" type="button"
-				data-closebutton="true" data-extra-class="alternate">Open Popover</button>
+			<button class="btn-tertiary" id="open-popover" type="button" >Open Popover</button>
 				<br />
       a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />
 			a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />
@@ -77,5 +76,18 @@ var modals = {
   $('#add-comment').on('click', function () {
     setModal(modals[this.id]);
   });
+
+  $('#open-popover').popover(
+    {closebutton: true,
+    content: $('#popover-contents-click'),
+    extraClass: 'alternate',
+    placement: 'right',
+    popover: true,
+    offset: {
+      y: 10
+    },
+    title: 'ABC Engine Company',
+    trigger: 'click'}
+  );
 
 </script>
