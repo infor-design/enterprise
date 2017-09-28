@@ -185,13 +185,13 @@
         var value = self.element.val(),
           isExtraLinebreaks = this.isChrome || this.isSafari,
           length = value.length + (isExtraLinebreaks ? this.countLinebreaks(value) : 0),
-          max = self.element.attr('maxlength'),
+          max = parseInt(self.element.attr('maxlength')),
           remaining = (parseInt(max)-length),
           text = (self.settings.charRemainingText ? self.settings.charRemainingText : (Locale.translate('CharactersLeft') === 'CharactersLeft' ? 'Characters Left' : Locale.translate('CharactersLeft'))).replace('{0}', remaining.toString());
 
         if (self.counter) {
-          if (length === 0) {
-            text = (self.settings.charMaxText ? self.settings.charMaxText : Locale.translate('CharactersMax')) + max;
+          if (length === max) {
+            text = (self.settings.charMaxText ? self.settings.charMaxText.replace('{0}', max) : Locale.translate('CharactersMax')+ max) ;
             self.counter.text(text);
             self.counter.removeClass('almost-empty');
           } else {
