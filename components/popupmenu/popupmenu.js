@@ -1180,16 +1180,19 @@
 
         var menu = wrapper.children('.popupmenu'),
           mainWrapperOffset = li.parents('.popupmenu-wrapper:first').offset().top,
-          wrapperLeft = li.position().left + li.outerWidth();
+          wrapperLeft = li.position().left + li.outerWidth(),
+          wrapperWidth = 0;
+
         li.parent().find('.popupmenu').removeClass('is-open').removeAttr('style');
 
+        wrapper.children('.popupmenu').addClass('is-open');
+        wrapperWidth = wrapper.outerWidth();
+
         if (isRTL) {
-          wrapperLeft = li.position().left - li.outerWidth() + rtlPadding;
+          wrapperLeft = li.position().left - wrapperWidth;
         }
         wrapper[0].style.left = wrapperLeft + 'px';
         wrapper[0].style.top = (parseInt(li.position().top) - 5) + 'px';
-
-        wrapper.children('.popupmenu').addClass('is-open');
 
         //Handle Case where the menu is off to the right
         var menuWidth = menu.outerWidth();
@@ -1197,20 +1200,24 @@
           wrapper[0].style.left = '-9999px';
           menuWidth = menu.outerWidth();
           wrapperLeft = li.position().left - menuWidth;
+
           if (isRTL) {
-            wrapperLeft = li.position().left + menuWidth + rtlPadding;
+            var parentMenuWidth = wrapper.closest('.popupmenu').outerWidth();
+            wrapperLeft = parentMenuWidth - 4; // Move back across the parent menu
           }
           wrapper[0].style.left = wrapperLeft + 'px';
-          //Did it fit?
+
+          // Did it fit?
           if (wrapper.offset().left < 0 || (isRTL && (wrapper.offset().left + menuWidth) > ($(window).width() + $(document).scrollLeft()))) {
-            //No. Push the menu's left offset onto the screen.
+            // No. Push the menu's left offset onto the screen.
             wrapperLeft = li.position().left - menuWidth + Math.abs(wrapper.offset().left) + 40;
             if (isRTL) {
-              wrapperLeft = li.position().left - menuWidth - rtlPadding - 40;
+              wrapperLeft = li.position().left - menuWidth - rtlPadding;
             }
             wrapper[0].style.left = wrapperLeft + 'px';
             menuWidth = menu.outerWidth();
           }
+
           // Do one more check to see if the right edge bleeds off the screen.
           // If it does, shrink the menu's X size.
           if ((wrapper.offset().left + menuWidth) > ($(window).width() + $(document).scrollLeft()) || (isRTL && wrapper.offset().left < 0)) {

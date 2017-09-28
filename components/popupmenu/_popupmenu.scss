@@ -524,7 +524,6 @@
   }
 }
 
-
 //RTL Styles
 html[dir='rtl'] {
 
@@ -532,7 +531,7 @@ html[dir='rtl'] {
     text-align: right;
 
     a {
-      padding: 0 10px;
+      padding: 0 10px 0 30px;
     }
 
     &.has-icons,
@@ -547,21 +546,18 @@ html[dir='rtl'] {
         right: 1px;
 
         &:not(.arrow) {
-          margin-right: -13px;
           margin-right: 8px;
         }
       }
     }
 
     .submenu > a {
-      padding-left: 40px !important;
-      padding-right: 10px;
 
       > .icon.icon-dropdown {
-        @include css3(transform, rotate(90deg));
-        left: 0;
+        left: 5px;
         right: auto;
         top: 5px;
+        transform: rotate(90deg);
       }
     }
 
@@ -587,6 +583,12 @@ html[dir='rtl'] {
   .popup-footer {
     button {
       margin-left: inherit;
+    }
+  }
+
+  &.ie {
+    .submenu > a > .icon.icon-dropdown {
+      transform: rotate(270deg);
     }
   }
 }
