@@ -2510,11 +2510,13 @@ $.fn.datagrid = function(options) {
           }
         }
       }
+
       this.renderRows();
-      this.resetPager('filtered');
       this.setSearchActivePage();
       this.element.trigger('filtered', {op: 'apply', conditions: conditions});
+      this.resetPager('filtered');
       this.saveUserSettings();
+
     },
 
     /**
