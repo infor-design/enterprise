@@ -360,6 +360,10 @@ a.btn-menu {
 
   span {
     color: inherit;
+
+    &:before, &:after {
+      content: ' ';
+    }
   }
 
   .icon {
