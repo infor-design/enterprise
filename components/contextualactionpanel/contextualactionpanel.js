@@ -127,7 +127,9 @@
           if (!this.toolbar.length) {
             this.toolbar = $('<div class="toolbar"></div>');
           }
-
+		  
+		  this.toolbar.searchField = this.toolbar.find('.searchfield');
+		  
           this.toolbar.appendTo(this.header);
           var toolbarTitle = this.toolbar.find('.title');
           if (!toolbarTitle.length) {
@@ -222,6 +224,19 @@
             .onTouchClick('contextualactionpanel').on('click.contextualactionpanel', function() {
             self.handleToolbarSelected();
           });
+		  
+		  this.ctrlPressed = false;
+		  this.toolbar.searchField.on('keydown', function(event) {
+			 if (event.key === 'Control') {
+				this.ctrlPressed = true;
+			 }
+		  });
+		  this.toolbar.searchField.on('click', function() {
+			  if (this.ctrlPressed) {
+				document.getElementById("toolbar-example-searchfield").select();
+				this.ctrlPressed = false;
+			  }
+		  });
         }
 
         return this;
