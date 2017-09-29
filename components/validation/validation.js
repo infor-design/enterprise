@@ -1050,10 +1050,6 @@
           }
 
           var dateFormat = (value.indexOf(':') > -1) ? Locale.calendar().dateFormat.datetime: Locale.calendar().dateFormat.short;
-          if(value.length === 4) {
-            // value came in as a year only, so set format to 'yyyy'
-            dateFormat = 'yyyy';
-          }
 
           if (field && field.data('datepicker')) {
             dateFormat = field.data('datepicker').pattern;
@@ -1078,7 +1074,7 @@
             return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()));
           }
 
-          if(value !== '' && self.rules.date.check(value)) { //if valid date
+          if(value !== '' && self.rules.date.check(value, field)) { //if valid date
             var d, i, l, min, max,
               d2 = createDateAsUTC(new Date(value)),
               options = field.data('datepicker').settings;
