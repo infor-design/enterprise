@@ -1069,15 +1069,20 @@
           this.message = Locale.translate('UnavailableDate');
           var check = true;
 
-          if(value !== '' && self.rules.date.check(value)) { //if valid date
+          // To avoid running into issues of Dates happening in different timezones, create the date as UTC
+          function createDateAsUTC(date) {
+            return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate(), date.getHours(), date.getMinutes(), date.getSeconds()));
+          }
+
+          if(value !== '' && self.rules.date.check(value, field)) { //if valid date
             var d, i, l, min, max,
-              d2 = new Date(value),
+              d2 = createDateAsUTC(new Date(value)),
               options = field.data('datepicker').settings;
 
             if (options) {
 
-              min = (new Date(options.disable.minDate)).setHours(0,0,0,0);
-              max = (new Date(options.disable.maxDate)).setHours(0,0,0,0);
+              min = (createDateAsUTC(new Date(options.disable.minDate))).setHours(0,0,0,0);
+              max = (createDateAsUTC(new Date(options.disable.maxDate))).setHours(0,0,0,0);
 
               //dayOfWeek
               if(options.disable.dayOfWeek.indexOf(d2.getDay()) !== -1) {
