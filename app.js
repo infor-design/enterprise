@@ -652,6 +652,11 @@ var express = require('express'),
       }
     }
 
+    // Override any of these changes to layouts if the "No Frills" option was set by the user.
+    if (res.opts.nofrillslayout) {
+      opts.layout = 'tests/layout-noheader';
+    }
+
     if (req.params.example !== undefined) {
       res.render('' + componentName + '/' +  req.params.example, opts);
     }
