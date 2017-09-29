@@ -1,5 +1,34 @@
 // Select (DropDown)
 //================================================== //
+@mixin list-icon-colors {
+  &.error {
+    fill: $error-color;
+  }
+
+  &.alert {
+    fill: $alert-orange;
+  }
+
+  &.alert-yellow {
+    fill: $alert-yellow;
+  }
+
+  &.neutral {
+    fill: $alert-neutral;
+  }
+
+  &.good {
+    fill: $alert-green;
+  }
+
+  &.info {
+    fill: $alert-info;
+  }
+
+  &.white {
+    fill: $white;
+  }
+}
 
 select.dropdown,
 select.multiselect,
@@ -66,6 +95,19 @@ div.multiselect {
     text-overflow: ellipsis;
     vertical-align: top;
     width: inhert;
+  }
+
+  > .listoption-icon {
+    @include list-icon-colors();
+    fill: $popupmenu-icon-color;
+    height: 16px;
+    left: 16px;
+    position: absolute;
+    top: 9px;
+
+    + span {
+      padding-left: 33px;
+    }
   }
 
   &:empty {
@@ -246,10 +288,29 @@ div.multiselect {
           color: $inverse-color;
         }
       }
+
+      .listoption-icon {
+        fill: $inverse-color;
+      }
+
+      .badge {
+        border-color: $inverse-color;
+      }
+    }
+
+    .listoption-icon {
+      @include list-icon-colors();
+      fill: $popupmenu-icon-color;
+      height: 16px;
+      left: 0;
+      margin-right: 7px;
+      pointer-events: none;
+      top: 3px;
     }
 
     // Badge Support
     .badge {
+      border: 1px solid transparent;
       display: inline-block;
       float: right;
       margin-left: -40px;
@@ -258,10 +319,24 @@ div.multiselect {
       right: 8px;
       text-indent: 0;
     }
+  }
 
-    &.is-focused .badge.info {
-      background-color: $inverse-color;
-      color: $primary-color;
+  > .listoption-icon {
+    @include list-icon-colors();
+    fill: $popupmenu-icon-color;
+    height: 16px;
+    left: 15px;
+    position: absolute;
+    top: 8px;
+
+    + span {
+      padding-left: 43px;
+    }
+  }
+
+  &.has-icons {
+    .dropdown-search {
+      padding-left: 43px;
     }
   }
 
@@ -490,6 +565,16 @@ input.dropdown.error:focus {
     @include font-size(12);
     margin-bottom: 0;
     padding: 5px 21px 5px 5px;
+
+    > .listoption-icon {
+      height: 14px;
+      left: 3px;
+      top: 6px;
+
+      + span {
+        padding-left: 20px;
+      }
+    }
   }
 
   div.dropdown,
@@ -553,6 +638,12 @@ div.dropdown-xs,
     padding: 5px 32px 5px 5px;
   }
 
+  &.has-icons {
+    .dropdown-search {
+      padding-left: 25px;
+    }
+  }
+
   ul {
     @include font-size(12);
     text-indent: 5px;
@@ -563,6 +654,12 @@ div.dropdown-xs,
 
     > a {
       line-height: 25px;
+    }
+
+    .listoption-icon {
+      height: 14px;
+      left: -7px;
+      margin-right: -5px;
     }
   }
 
@@ -575,6 +672,12 @@ div.dropdown-xs,
     margin-left: -21px;
     margin-top: 0;
     width: 16px;
+  }
+
+  > .listoption-icon {
+    height: 14px;
+    left: 26px;
+    top: 5px;
   }
 
   .trigger .icon {
@@ -713,6 +816,18 @@ html[dir='rtl'] {
     }
   }
 
+  div.dropdown {
+    > .listoption-icon {
+      left: auto;
+      right: 16px;
+
+      + span {
+        padding-left: inherit;
+        padding-right: 33px;
+      }
+    }
+  }
+
   // The List
   .dropdown-list {
 
@@ -749,6 +864,32 @@ html[dir='rtl'] {
         margin-right: -15px;
       }
     }
+
+    li {
+      .listoption-icon {
+        left: auto;
+        margin-left: 7px;
+        margin-right: inherit;
+        right: 0;
+      }
+    }
+
+    > .listoption-icon {
+      left: auto;
+      right: 41px;
+
+      + span {
+        padding-left: inherit;
+        padding-right: 43px;
+      }
+    }
+
+    &.has-icons {
+      .dropdown-search {
+        padding-left: inherit;
+        padding-right: 43px;
+      }
+    }
   }
 
   .dropdown-search {
@@ -772,6 +913,25 @@ html[dir='rtl'] {
     li {
       padding-left: 21px;
       padding-right: 4px;
+
+      .listoption-icon {
+        left: auto;
+        margin-left: -5px;
+        margin-right: inherit;
+        right: -7px;
+      }
+    }
+
+    &.has-icons {
+      .dropdown-search {
+        padding-left: inherit;
+        padding-right: 25px;
+      }
+    }
+
+    > .listoption-icon {
+      left: auto;
+      right: 31px;
     }
   }
 
@@ -798,6 +958,18 @@ html[dir='rtl'] {
         // scss-lint:disable ImportantRule
         margin-right: -38px !important;
         // scss-lint:enable ImportantRule
+      }
+    }
+
+    div.dropdown {
+      > .listoption-icon {
+        left: auto;
+        right: 3px;
+
+        + span {
+          padding-left: inherit;
+          padding-right: 20px;
+        }
       }
     }
   }

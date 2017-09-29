@@ -247,6 +247,7 @@
           filterMode: this.settings.filterMode
         });
 
+        this.setListIcon();
         this.setValue();
         this.setInitial();
         this.setWidth();
@@ -286,6 +287,185 @@
           this.pseudoElem[0].style.top = style.top;
           this.pseudoElem[0].style.bottom = style.bottom;
           this.pseudoElem[0].style.right = style.right;
+        }
+      },
+
+      // Set list item icon
+      setItemIcon: function(listIconItem) {
+        var self = this;
+        if (self.listIcon.hasIcons) {
+          var specColor = null;
+
+          if (listIconItem.icon) {
+
+            // Set icon properties
+            if (typeof listIconItem.icon === 'object') {
+              listIconItem.obj = listIconItem.icon;
+              listIconItem.icon = listIconItem.icon.icon;
+
+              // Color
+              if (listIconItem.obj.color) {
+                specColor = listIconItem.obj.color.indexOf('#') === 0;
+                if (specColor) {
+                  listIconItem.specColor = listIconItem.obj.color;
+                } else {
+                  listIconItem.classList = ' '+ listIconItem.obj.color;
+                }
+              }
+              // Class
+              else if (listIconItem.obj.class) {
+                specColor = listIconItem.obj.class.indexOf('#') === 0;
+                if (specColor) {
+                  listIconItem.specColor = listIconItem.obj.class;
+                } else {
+                  listIconItem.classList = ' '+ listIconItem.obj.class;
+                }
+              }
+
+              // Color Over
+              if (listIconItem.obj.colorOver) {
+                specColor = listIconItem.obj.colorOver.indexOf('#') === 0;
+                if (specColor) {
+                  listIconItem.specColorOver = listIconItem.obj.colorOver;
+                } else {
+                  listIconItem.classListOver = ' '+ listIconItem.obj.colorOver;
+                }
+              }
+              // Class Over
+              else if (listIconItem.obj.classOver) {
+                specColor = listIconItem.obj.classOver.indexOf('#') === 0;
+                if (specColor) {
+                  listIconItem.specColorOver = listIconItem.obj.classOver;
+                } else {
+                  listIconItem.classListOver = ' '+ listIconItem.obj.classOver;
+                }
+              }
+
+            }
+
+            // Set flags
+            if (listIconItem.icon && listIconItem.icon.length) {
+              listIconItem.isIcon = true;
+            }
+            if (listIconItem.specColor && listIconItem.specColor.length) {
+              listIconItem.isSpecColor = true;
+            }
+            if (listIconItem.classList && listIconItem.classList.length) {
+              listIconItem.isClassList = true;
+            }
+            if (listIconItem.specColorOver && listIconItem.specColorOver.length) {
+              listIconItem.isSpecColorOver = true;
+            }
+            if (listIconItem.classListOver && listIconItem.classListOver.length) {
+              listIconItem.isClassListOver = true;
+            }
+          }
+
+          // Build icon
+          listIconItem.html = $.createIcon({
+            icon: listIconItem.isIcon ? listIconItem.icon : '',
+            class: 'listoption-icon' + (listIconItem.isClassList ? ' '+ listIconItem.classList : '')
+          });
+          if (listIconItem.isSpecColor) {
+            listIconItem.html = listIconItem.html.replace('<svg', ('<svg '+ 'style="fill:'+ listIconItem.specColor +';"'));
+          }
+        }
+        self.listIcon.items.push(listIconItem);
+      },
+
+      // Set list icon
+      setListIcon: function() {
+        var self = this,
+          hasIcons = self.settings.multiple ? false : self.element.find('[data-icon]').length > 0,
+          opts = hasIcons ? this.element.find('option') : [];
+
+        self.listIcon = {hasIcons: hasIcons, items: []};
+
+        if (hasIcons) {
+          var count = 0;
+
+          opts.each(function(i) {
+            var icon = $.fn.parseOptions(this, 'data-icon');
+            self.setItemIcon({html: '', icon: icon});
+
+            if (self.listIcon.items[i].isIcon) {
+              count++;
+            }
+          });
+
+          hasIcons = count > 0;
+        }
+
+        if (hasIcons) {
+          self.pseudoElem.prepend($.createIcon({icon:'', class:'listoption-icon'}));
+          self.listIcon.pseudoElemIcon = self.pseudoElem.find('> .listoption-icon');
+          self.listIcon.idx = -1;
+        }
+
+        self.listIcon.hasIcons = hasIcons;
+      },
+
+      // Set over color for list item icon,
+      // if run without pram {target}, it will make on only
+      setItemIconOverColor: function(target) {
+        var self = this;
+        if (self.listIcon.hasIcons) {
+          var targetIcon = target ? target.find('.listoption-icon') : null;
+          self.list.find('li').each(function(i) {
+            var li = $(this),
+              icon = li.find('.listoption-icon');
+
+            // make it on
+            if (li.is('.is-focused')) {
+              if (self.listIcon.items[i].isClassListOver) {
+                icon.removeClass(self.listIcon.items[i].classListOver)
+                    .addClass(self.listIcon.items[i].classList);
+              }
+              if (self.listIcon.items[i].isSpecColorOver) {
+                icon.css({fill: self.listIcon.items[i].specColor});
+              }
+            }
+            // make it over
+            if (targetIcon && li.is(target)) {
+              if (self.listIcon.items[i].isClassListOver) {
+                targetIcon.removeClass(self.listIcon.items[i].classList);
+                targetIcon.addClass(self.listIcon.items[i].classListOver);
+              }
+              if (self.listIcon.items[i].isSpecColorOver) {
+                targetIcon.css({fill: self.listIcon.items[i].specColorOver});
+              }
+            }
+          });
+        }
+      },
+
+      // Update list item icon
+      updateItemIcon: function(opt) {
+        var self = this;
+        if (self.listIcon.hasIcons) {
+          var target = self.listIcon.pseudoElemIcon,
+            i = opt.index(),
+            idx = self.listIcon.idx,
+            icon = self.listIcon.items[i].isIcon ? self.listIcon.items[i].icon : '';
+
+          // Reset class and color
+          if (idx > -1) {
+            target.removeClass(
+              self.listIcon.items[idx].classList +' '+
+              self.listIcon.items[idx].classListOver
+            );
+            target[0].style.fill = '';
+          }
+
+          // Update new stuff
+          self.listIcon.idx = i;
+          target.changeIcon(icon);
+          if (self.listIcon.items[i].isClassList) {
+            target.addClass(self.listIcon.items[i].classList);
+          }
+          if (self.listIcon.items[i].isSpecColor) {
+            target.css({fill: self.listIcon.items[i].specColor});
+          }
         }
       },
 
@@ -347,30 +527,36 @@
             isSelected = option.selected,
             isDisabled = option.disabled,
             cssClasses = option.className,
-            toExclude = ['data-badge', 'data-badge-color', 'data-val'],
-            attributesToCopy = self.getDataAttributes(attributes, toExclude);
+            toExclude = ['data-badge', 'data-badge-color', 'data-val', 'data-icon'],
+            attributesToCopy = self.getDataAttributes(attributes, toExclude),
+            trueValue = value && value.value ? value.value : text,
+            iconHtml = self.listIcon.hasIcons ? self.listIcon.items[index].html : '';
 
-          var trueValue = value && value.value ? value.value : text;
           if (cssClasses.indexOf('clear') > -1) {
             if (text === '') {
               text = Locale.translate('ClearSelection');
             }
           }
 
-          liMarkup += '<li role="presentation" class="dropdown-option'+ (isSelected ? ' is-selected' : '') +
-                        (isDisabled ? ' is-disabled' : '') +
-                        (cssClasses ? ' ' + cssClasses.value : '' ) + '"' +
-                        attributesToCopy.str +
-                        ' data-val="' + trueValue.replace('"', '/quot/') + '"' +
-                        ' tabindex="' + (index && index === 0 ? 0 : -1) + '">' +
-                        (title ? '" title="' + title.value + '"' : '') +
-                        '<a role="option" href="#" class="' +
-                        (cssClasses.indexOf('clear') > -1 ? ' clear-selection' : '' ) + '"' +
-                        'id="list-option'+ index +'">' +
-                          text +
-                        '</a>' +
-                        (badge ? '<span class="badge "' + (badgeColor ? badgeColor.value : 'azure07') + '"> '+ badge.value + '</span>' : '') +
-                      '</li>';
+          liMarkup += '' +
+            '<li role="presentation" class="dropdown-option' +
+              (isSelected ? ' is-selected' : '') +
+              (isDisabled ? ' is-disabled' : '') +
+              (cssClasses ? ' '+ cssClasses.value : '' ) + '"' +
+              attributesToCopy.str +
+              ' data-val="'+ trueValue.replace('"', '/quot/') + '"' +
+              (title ? '" title="' + title.value + '"' : '') +
+              ' tabindex="' + (index && index === 0 ? 0 : -1) + '">' +
+                '<a role="option" href="#" class="' +
+                  (cssClasses.indexOf('clear') > -1 ?
+                    ' clear-selection' : '' ) + '"' +
+                  'id="list-option'+ index +'">' +
+                    iconHtml + text +
+                '</a>' +
+                (badge ? '<span class="badge ' +
+                  (badgeColor ? badgeColor.value : 'azure07') +
+                '"> '+ badge.value + '</span>' : '') +
+            '</li>';
 
           return liMarkup;
         }
@@ -477,6 +663,11 @@
         } else {
           this.listUl.html(ulContents);
         }
+
+        if (this.listIcon.hasIcons) {
+          this.list.addClass('has-icons');
+          this.listIcon.pseudoElemIcon.clone().appendTo(this.list);
+        }
       },
 
       // Set the value based on selected options
@@ -502,6 +693,7 @@
         //Set the "previousActiveDescendant" to the first of the items
         this.previousActiveDescendant = opts.first().val();
 
+        this.updateItemIcon(opts);
         this.setBadge(opts);
       },
 
@@ -799,6 +991,7 @@
             if (selectedIndex > 0) {
               next = $(options[selectedIndex - 1]);
               this.highlightOption(next);
+              self.setItemIconOverColor(next);
               // NOTE: Do not also remove the ".is-selected" class here!  It's not the same as ".is-focused"!
               // Talk to ed.coyle@infor.com if you need to know why.
               next.parent().find
@@ -819,6 +1012,7 @@
             if (selectedIndex < options.length - 1) {
               next = $(options[selectedIndex + 1]);
               this.highlightOption(next);
+              self.setItemIconOverColor(next);
               // NOTE: Do not also remove the ".is-selected" class here!  It's not the same as ".is-focused"!
               // Talk to ed.coyle@infor.com if you need to know why.
               next.parent().find('.is-focused').removeClass('is-focused');
@@ -1168,6 +1362,7 @@
               return;
             }
 
+            self.setItemIconOverColor(target);
             self.list.find('li').removeClass('is-focused');
             target.addClass('is-focused');
           });
@@ -1454,8 +1649,10 @@
         }
 
         if (this.isOpen()) {
+          this.setItemIconOverColor();
           this.list.find('.is-focused').removeClass('is-focused').attr({'tabindex':'-1'});
           if (!option.hasClass('clear')) {
+            this.setItemIconOverColor(listOption);
             listOption.addClass('is-focused').attr({'tabindex': '0'});
           }
 
@@ -1475,7 +1672,7 @@
         if (!listOptions || !listOptions.length) {
           listOptions = this.list.find('.is-selected');
         }
-
+        this.setItemIconOverColor();
         listOptions.removeClass('is-focused').attr({'tabindex': '-1'});
 
         this.searchInput.removeAttr('aria-activedescendant');
@@ -1620,6 +1817,7 @@
 
         // Set the new value on the <select>
         this.element.val(val);
+        this.updateItemIcon(option);
 
         // Fire the change event with the new value if the noTrigger flag isn't set
         if (!noTrigger) {
