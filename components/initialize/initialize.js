@@ -300,18 +300,32 @@
           //Popovers
           if ($.fn.popover) {
             matchedItems('[data-popover]:not('+ noinitExcludes +')').each(function () {
-              var obj = $(this),
+              var options = $.fn.parseOptions(this),
+                obj = $(this),
                 trigger = obj.attr('data-trigger'),
                 title = obj.attr('data-title'),
                 placement = obj.attr('data-placement');
 
-              obj.popover({
-                content: $('#' + obj.attr('data-popover')),
-                popover: true,
-                trigger: trigger ? trigger : 'click',
-                title: title ? title : undefined,
-                placement: placement || 'right'
-              });
+              if (!$.isEmptyObject(options)) {
+                obj.popover({
+                  content: $(options.content),
+                  popover: true,
+                  trigger: options.trigger || 'click',
+                  title: options.title || undefined,
+                  placement:  options.placement || 'right',
+                  extraClass: options.extraClass || undefined
+                });
+              } else {
+                obj.popover({
+                  content: $('#' + obj.attr('data-popover')),
+                  popover: true,
+                  trigger: trigger || 'click',
+                  title: title || undefined,
+                  placement: placement || 'right',
+                  extraClass: options.extraClass || undefined
+                });
+              }
+
             });
           }
 
