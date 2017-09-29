@@ -363,7 +363,7 @@
         this.setFormat();
 
         var validation = 'date availableDate',
-          events = {'date': 'blur', 'availableDate': 'blur'},
+          events = {'date': 'blur', 'availableDate': 'change blur'},
           customValidation = this.element.attr('data-validate'),
           customEvents = this.element.attr('data-validation-events'),
           maskOptions = {
@@ -501,7 +501,7 @@
 
         }
 
-        this.calendar = $('<div class="calendar'+ (this.settings.showTime ? ' is-timepicker' : '') + (this.settings.hideDays ? ' is-monthyear' : '') +'"></div')
+        this.calendar = $('<div class="calendar'+ (this.settings.showTime ? ' is-timepicker' : '') + (this.settings.hideDays ? ' is-monthyear' : '') +'"></div>')
           .append(
             this.header,
             this.table,
