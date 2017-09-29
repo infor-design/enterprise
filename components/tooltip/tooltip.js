@@ -648,6 +648,10 @@
           this.hide();
         }
 
+        if (this.tooltip) {
+          this.tooltip.data('place').destroy();
+        }
+
         this.element.off('mouseenter.tooltip mouseleave.tooltip mousedown.tooltip click.tooltip mouseup.tooltip updated.tooltip focus.tooltip blur.tooltip');
         this.detachOpenEvents();
 
