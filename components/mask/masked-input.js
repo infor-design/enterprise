@@ -133,6 +133,13 @@
             return false;
           }
 
+          // in Windows 7 IE11, change event doesn't fire for some unknown reason.
+          // Added this for backwards compatility with this OS/Browser combo.
+          // See http://jira.infor.com/browse/SOHO-6895
+          if (Soho.env.browser.name === 'ie' && Soho.env.browser.version === '11') {
+            $(self.element).trigger('change');
+          }
+
           return self.process();
         };
         this.element.addEventListener('blur', this.blurEventHandler);
