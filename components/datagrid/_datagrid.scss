@@ -1683,7 +1683,7 @@ $datagrid-short-row-height: 23px;
       background-color: $datagrid-header-focus-bg-color;
       color: $datagrid-header-color;
       outline: 1px solid $datagrid-header-focus-border-color;
-      outline-offset: -1px;
+      outline-offset: -2px;
 
       .icon {
         fill: $datagrid-sort-icon-color;
@@ -2077,6 +2077,7 @@ td .btn-actions {
 
 //Grid Checkboxes
 .datagrid-checkbox {
+  @include font-size(12);
   cursor: pointer;
   display: inline-block;
   left: -7px;
@@ -2185,6 +2186,7 @@ td .btn-actions {
 }
 
 .datagrid-checkbox-wrapper {
+  @include font-size(12);
   position: relative;
 }
 

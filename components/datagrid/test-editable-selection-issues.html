@@ -25,7 +25,7 @@
     <div class="contextual-toolbar toolbar is-hidden">
       <div class="title selection-count">1 Selected</div>
       <div class="buttonset">
-        <button class="btn" type="button" id='remove-btn'>
+        <button class="btn" type="button" id="remove-btn">
           <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
             <use xlink:href="#icon-delete"></use>
           </svg>
@@ -46,11 +46,11 @@
   $('body').one('initialized', function () {
 
     var grid, columns = [];
-    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, width: 50, formatter: Formatters.SelectionCheckbox, align: 'center' });
-    columns.push({ id: 'cdecnanacp', name: 'Activity Priority', field: 'cdecnanacp', filterType: 'text', sortable: false, maxLength:'8', width: 125, align: 'left', editor: Editors.Input,    formatter: Formatters.Text });
+    columns.push({ id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center' });
+    columns.push({ id: 'cdecnanacp', name: 'Activity Priority', field: 'cdecnanacp', filterType: 'text', sortable: false, maxLength:'8', align: 'left', editor: Editors.Input,    formatter: Formatters.Text });
     columns.push({ id: 'descr', name: 'Description', field: 'descr', filterType: 'text', sortable: false, maxLength:'50', width: 125, align: 'left', editor: Editors.Input,    formatter: Formatters.Text });
-    columns.push({ id: 'defaultpty', name: 'Default Priority', field: 'defaultpty', filterType: 'checkbox', sortable: false,  width: 60, align: 'center', editor: Editors.Checkbox,    formatter: Formatters.Checkbox });
-    columns.push({ id: 'active', name: 'Active', field: 'active', filterType: 'checkbox', sortable: false,  width: 60, align: 'center', editor: Editors.Checkbox,    formatter: Formatters.Checkbox });
+    columns.push({ id: 'defaultpty', name: 'Default Priority', field: 'defaultpty', filterType: 'checkbox', sortable: false,  align: 'center', editor: Editors.Checkbox,    formatter: Formatters.Checkbox });
+    columns.push({ id: 'active', name: 'Active', field: 'active', filterType: 'checkbox', sortable: false, align: 'center', editor: Editors.Checkbox,    formatter: Formatters.Checkbox });
 
     var model = {"cnanacps":{"cnanacp":[{"@status":"est","@crc":"00000043","@id":"BBJDMzI=","tpkcnanacp":32,"cdecnanacp":"H","descr":"High","displayseq":30.0,"defaultpty":false,"active":true},{"@status":"est","@crc":"0000003C","@id":"BBJDNDQ=","tpkcnanacp":44,"cdecnanacp":"VH","descr":"Very High","displayseq":40.0,"defaultpty":false,"active":true},{"@status":"est","@crc":"00000069","@id":"BBJDMzM=","tpkcnanacp":33,"cdecnanacp":"M","descr":"Meduim","displayseq":50.0,"defaultpty":true,"active":true},{"@status":"est","@crc":"00000050","@id":"BBJDMzQ=","tpkcnanacp":34,"cdecnanacp":"L","descr":"Low","displayseq":60.0,"defaultpty":false,"active":true},{"@status":"est","@crc":"0000003B","@id":"BBJDNDU=","tpkcnanacp":45,"cdecnanacp":"VL","descr":"Very Low","displayseq":79.0,"defaultpty":false,"active":true},{"@status":"est","@crc":"0000002A","@id":"BBJDNTI=","tpkcnanacp":52,"cdecnanacp":"INACTIVE","descr":"Inactive","displayseq":80.0,"defaultpty":false,"active":false}],"readCommand":{"FilterFields":null,"OrderFields":[{"FieldName":"displayseq","Order":0}],"ReturnFields":["tpkcnanacp","cdecnanacp","descr","displayseq","defaultpty","active"]},"more":false}};
     var data = [];
