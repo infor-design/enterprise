@@ -119,15 +119,24 @@
     handleEvents: function() {
       var self = this;
 
+      // Store an initial value on focus
+      this.focusEventHandler = function() {
+        self.state.initialValue = self.element.value;
+      };
+      this.element.addEventListener('focus', this.focusEventHandler);
+
+
       // Handle all masking on the `input` event
       this.inputEventHandler = function() {
         return self.process();
       };
       this.element.addEventListener('input', this.inputEventHandler);
 
-      // Handle processing on blur, if settings allow
-      if (this.settings.processOnBlur) {
-        this.blurEventHandler = function(e) {
+
+      // Remove an initial value from the state object on blur
+      this.blurEventHandler = function(e) {
+        // Handle mask processing on blur, if settings allow.  Otherwise, return out.
+        if (self.settings.processOnBlur) {
           if (self.element.readOnly) {
             e.preventDefault();
             return false;
@@ -136,14 +145,15 @@
           // in Windows 7 IE11, change event doesn't fire for some unknown reason.
           // Added this for backwards compatility with this OS/Browser combo.
           // See http://jira.infor.com/browse/SOHO-6895
-          if (Soho.env.browser.name === 'ie' && Soho.env.browser.version === '11') {
+          if (self._hasChangedValue() && self._isWin7IE11()) {
             $(self.element).trigger('change');
           }
+        }
 
-          return self.process();
-        };
-        this.element.addEventListener('blur', this.blurEventHandler);
-      }
+        delete self.state.initialValue;
+        return self.process();
+      };
+      this.element.addEventListener('blur', this.blurEventHandler);
 
       return this;
     },
@@ -181,8 +191,8 @@
 
       // On Android, the first character inserted into a field is automatically selected when it shouldn't be.
       // This snippet fixes that problem.
-      var os = Soho.env && Soho.env.os && Soho.env.os.name ? Soho.env.os.name : '';
-      if (os === 'android' && this.state.previousMaskResult === '' && posBegin !== posEnd) {
+
+      if (this._isAndroid() && this.state.previousMaskResult === '' && posBegin !== posEnd) {
         Soho.utils.safeSetSelection(rawValue.length, rawValue.length);
         posBegin = rawValue.length;
         posEnd = rawValue.length;
@@ -255,6 +265,48 @@
 
       // return event handler true/false
       return processed.maskResult;
+    },
+
+
+    /**
+     * Obfuscates the operating system/browser check from Soho.env into internal methods
+     * NOTE: Helps compartmentalize us from using calls to global "Soho" object until we can
+     * properly setup import/export for unit tests.
+     * TODO: deprecate eventually (v4.4.0?)
+     * @private
+     * @returns {boolean}
+     */
+    _isAndroid: function() {
+      var os = Soho.env && Soho.env.os && Soho.env.os.name ? Soho.env.os.name : '';
+      return os === 'android';
+    },
+
+
+    /**
+     * Same as the Android method, but for IE 11 on Windows 7
+     * TODO: deprecate eventually (v4.4.0?)
+     * @private
+     * @returns {boolean}
+     */
+    _isWin7IE11: function() {
+      var browser = Soho.env && Soho.env.browser && Soho.env.browser.name ? Soho.env.browser.name : '',
+        version = Soho.env.browser.version ? Soho.env.browser.version : '';
+
+      return browser === 'ie' && version === '11';
+    },
+
+
+    /**
+     * Checks the current value of this masked input against it's stored "previousMaskResult" state to see if the value changed.
+     * @private
+     * @returns {boolean}
+     */
+    _hasChangedValue: function() {
+      if (!this.state || !this.state.previousMaskResult) {
+        return true;
+      }
+
+      return this.state.previousMaskResult !== this.state.initialValue;
     },
 
 
@@ -450,6 +502,9 @@
      * Tears down the current component instance
      */
     teardown: function() {
+      this.element.removeEventListener('focus', this.focusEventHandler);
+      delete this.focusEventHandler;
+
       this.element.removeEventListener('input', this.inputEventHandler);
       delete this.inputEventHandler;
 
