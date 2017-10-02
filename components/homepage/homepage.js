@@ -198,9 +198,9 @@
         });
 
         // Max sized columns brings to top
-        for (var i=0, j=0, w=0, l=self.blocks.length; i<l; i++) {
-          if (self.settings.columns > 1) {
-            if (self.blocks[i].w >= self.settings.columns && i) {
+        if (self.settings.columns > 1) {
+          for (var i=0, j=0, w=0, l=self.blocks.length; i<l; i++) {
+            if (self.blocks[i].w >= self.settings.columns && i && w) {
               self.arrayIndexMove(self.blocks, i, j);
             }
             w += self.blocks[i].w;
