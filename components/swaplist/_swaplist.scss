@@ -108,7 +108,10 @@
 
       .icon {
         fill: $swaplist-icon-svg-color;
-        margin: 0 3px;
+        left: 13px;
+        margin: 0;
+        position: absolute;
+        top: 8px;
         width: 10px;
       }
     }
