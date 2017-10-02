@@ -657,9 +657,9 @@
         });
         self.handleResize(true);
 
-        $('input').on('isvalid', function() {          
-            currentLi = $('li.is-selected');
-            self.focusBar(currentLi);          
+        $('input').on('isvalid', function() {
+            var currentLi = $('li.is-selected');
+            self.focusBar(currentLi);
         });
 
         return this;
