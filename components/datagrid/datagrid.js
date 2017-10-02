@@ -241,7 +241,7 @@ window.Formatters = {
   SelectionCheckbox: function (row, cell, value, col, item, api) {
     var isChecked = (value==undefined ? false : value == true); // jshint ignore:line
     if (!value) {
-      isChecked = api.isNodeSelected(row);
+      isChecked = api.isNodeSelected(item);
     }
     return '<div class="datagrid-checkbox-wrapper"><span role="checkbox" aria-label="'+ (col.name ? col.name : Locale.translate('Select'))  +'" class="datagrid-checkbox datagrid-selection-checkbox' +
      (isChecked ? ' is-checked no-animate' : '') +'" aria-checked="'+isChecked+'"></span></div>';
@@ -1250,7 +1250,7 @@ window.Editors = {
 */
 window.GroupBy = (function() {
 
-  //Can also use in isEquals: function(obj1, obj2)  in datagrid.js
+  //Can also use in isEquivalent: function(obj1, obj2)  in datagrid.js
   var equals = window.Soho.utils.equals;
 
   //See if the object has these proprties or not
@@ -1744,7 +1744,6 @@ $.fn.datagrid = function(options) {
 
       // Sync with others
       self.syncSelectedUI();
-      self.updateSelected();
 
       // Set active and fire handler
       setTimeout(function () {
@@ -1792,7 +1791,7 @@ $.fn.datagrid = function(options) {
       var rowNode = this.tableBody.find('tr[aria-rowindex="'+ (row + 1) +'"]'),
         rowData = this.settings.dataset[row];
 
-      this.unselectRow(row, nosync);
+      this.unselectRow(row, 0, nosync);
       this.settings.dataset.splice(row, 1);
       this.renderRows();
       this.element.trigger('rowremove', {row: row, cell: null, target: rowNode, value: [], oldValue: rowData});
@@ -1808,7 +1807,6 @@ $.fn.datagrid = function(options) {
 
       for (var i = selectedRows.length-1; i >= 0; i--) {
         self.removeRow(selectedRows[i].idx, true);
-        this.updateSelected();
       }
       this.pagerRefresh();
       this.syncSelectedUI();
@@ -1866,6 +1864,10 @@ $.fn.datagrid = function(options) {
       this.setRowGrouping();
       this.setTreeRootNodes();
 
+      if (pagerInfo && !pagerInfo.preserveSelected) {
+        this.unSelectAllRows();
+      }
+
       //Resize and re-render if have a new dataset (since automatic column sizing depends on the dataset)
       if (pagerInfo.type === 'initial') {
         this.clearHeaderCache();
@@ -1877,13 +1879,8 @@ $.fn.datagrid = function(options) {
       }
 
       this.renderPager(pagerInfo, isResponse);
+      this.syncSelectedUI();
 
-      if (pagerInfo && pagerInfo.preserveSelected) {
-        this.updateSelected();
-        this.syncSelectedUI();
-      } else {
-        this.unSelectAllRows();
-      }
     },
 
     uniqueId: function (suffix) {
@@ -3094,7 +3091,6 @@ $.fn.datagrid = function(options) {
 
         //Update Selected Rows Across Page
         if (self.settings.paging && self.settings.source) {
-          self.updateSelected();
           self.syncSelectedUI();
         }
 
@@ -3213,7 +3209,7 @@ $.fn.datagrid = function(options) {
         rowHtml = '',
         spanNext = 0,
         d = self.settings.treeDepth ? self.settings.treeDepth[dataRowIdx] : 0,
-        depth, d2, i, l, isHidden, isSelected;
+        depth, d2, i, l, isHidden, isSelected, isActivated;
 
       if (!rowData) {
         return '';
@@ -3259,7 +3255,8 @@ $.fn.datagrid = function(options) {
       var ariaRowindex = ((dataRowIdx + 1) + (self.settings.source  ? ((activePage-1) * pagesize) : 0));
 
       isEven = (this.recordCount % 2 === 0);
-      isSelected = this.isNodeSelected(actualIndex);
+      isSelected = this.isNodeSelected(rowData);
+      isActivated = rowData._rowactivated;
 
       rowHtml = '<tr role="row" aria-rowindex="' + ariaRowindex + '"' +
                 ' data-index="' + actualIndex + '"' +
@@ -3268,7 +3265,8 @@ $.fn.datagrid = function(options) {
                 (isSelected ? ' aria-selected= "true"' : '') +
                 ' class="datagrid-row'+
                 (isHidden ? ' is-hidden' : '') +
-                (isSelected ? ' is-selected' : '') +
+                (isActivated ? ' is-rowactivated' : '') +
+                (isSelected ? this.settings.selectable === 'mixed' ? ' is-selected hide-selected-color' : ' is-selected' : '') +
                 (self.settings.alternateRowShading && !isEven ? ' alt-shading' : '') +
                 (isSummaryRow ? ' datagrid-summary-row' : '') +
                 (!self.settings.cellNavigation ? ' is-clickable' : '' ) +
@@ -4575,7 +4573,7 @@ $.fn.datagrid = function(options) {
 
       //Update Selected
       if (self.contextualToolbar && self.contextualToolbar.length) {
-        self.contextualToolbar.find('.selection-count').text(self._selectedRows.length + ' ' + Locale.translate('Selected'));
+        self.contextualToolbar.find('.selection-count').text(self.selectedRows().length + ' ' + Locale.translate('Selected'));
       }
 
       if (self.settings.source && !totals) {
@@ -5393,9 +5391,6 @@ $.fn.datagrid = function(options) {
 
     },
 
-    //Get or Set Selected Rows
-    _selectedRows: [],
-
     selectAllRows: function () {
       var rows = [],
         self = this,
@@ -5416,7 +5411,7 @@ $.fn.datagrid = function(options) {
       this.selectedRows(rows, true, true);
       this.dontSyncUi = false;
       this.syncSelectedUI();
-      this.element.triggerHandler('selected', [this._selectedRows , 'selectall']);
+      this.element.triggerHandler('selected', [this.selectedRows(), 'selectall']);
     },
 
     unSelectAllRows: function () {
@@ -5424,25 +5419,15 @@ $.fn.datagrid = function(options) {
       this.selectedRows([], true, true);
       this.dontSyncUi = false;
       this.syncSelectedUI();
-      this.element.triggerHandler('selected', [this._selectedRows, 'deselectall']);
+      this.element.triggerHandler('selected', [this.selectedRows(), 'deselectall']);
     },
 
-    //Check if exists in array of objects with callback
-    inArrayObjects: function (arr, fn) {
-      for(var i = 0, l = arr.length; i < l; i++) {
-        if (fn(arr[i])) {
-          return i;
-        }
-      }
-      return -1;
-    },
-
-    //Check if node index is exists in selected nodes
-    isNodeSelected: function (index) {
-      var isSelection = this.inArrayObjects(this._selectedRows, function (v) {
-        return v.idx === index;
-      });
-      return isSelection !== -1;
+    /**
+    * Check if node index is exists in selected nodes
+    * @private
+    */
+    isNodeSelected: function (node) {
+      return node._selected === true ? true : false;
     },
 
     //Toggle selection on a single row
@@ -5467,8 +5452,9 @@ $.fn.datagrid = function(options) {
         return;
       }
 
-      if (s.selectable === 'single' && this._selectedRows.length > 0) {
-        this.unselectRow(this._selectedRows[0].idx);
+      var selectedRows = this.selectedRows();
+      if (s.selectable === 'single' && selectedRows.length > 0) {
+        this.unselectRow(selectedRows[0].idx, selectedRows[0].data.depth);
       }
 
       if (!rowNode.hasClass('is-selected')) {
@@ -5476,7 +5462,7 @@ $.fn.datagrid = function(options) {
           // Select it
           selectNode = function(elem, index, data) {
             // do not add if already exists in selected
-            if (self.isNodeSelected(index)) {
+            if (self.isNodeSelected(data)) {
               return;
             }
             checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox'));
@@ -5484,7 +5470,8 @@ $.fn.datagrid = function(options) {
               .find('td').attr('aria-selected', 'true');
             checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
               .addClass('is-checked').attr('aria-checked', 'true');
-            self._selectedRows.push({idx: index, data: data, elem: elem});
+
+            data._selected = true;
           };
 
         if (s.treeGrid) {
@@ -5515,7 +5502,7 @@ $.fn.datagrid = function(options) {
       this.syncSelectedUI();
 
       if (!selectAll) {
-        this.element.triggerHandler('selected', [this._selectedRows, 'select']);
+        this.element.triggerHandler('selected', [this.selectedRows(), 'select']);
       }
     },
 
@@ -5530,17 +5517,19 @@ $.fn.datagrid = function(options) {
     },
 
     syncHeaderCheckbox: function (rows) {
-      var headerCheckbox = this.headerRow.find('.datagrid-checkbox');
+      var headerCheckbox = this.headerRow.find('.datagrid-checkbox'),
+        selectedRows = this.selectedRows();
+
       //Sync the header checkbox
-      if (this._selectedRows.length > 0) {
+      if (selectedRows.length > 0) {
         headerCheckbox.addClass('is-checked is-partial');
       }
 
-      if (this._selectedRows.length === rows.length) {
+      if (selectedRows.length === rows.length) {
         headerCheckbox.addClass('is-checked').removeClass('is-partial');
       }
 
-      if (this._selectedRows.length === 0) {
+      if (selectedRows.length === 0) {
         headerCheckbox.removeClass('is-checked is-partial');
       }
     },
@@ -5567,11 +5556,13 @@ $.fn.datagrid = function(options) {
         return;
       }
 
-      if (this._selectedRows.length === 0) {
+      var selectedRows = this.selectedRows();
+
+      if (selectedRows.length === 0) {
         this.contextualToolbar.animateClosed();
       }
 
-      if (this._selectedRows.length > 0 && this.contextualToolbar.height() === 0) {
+      if (selectedRows.length > 0 && this.contextualToolbar.height() === 0) {
         this.contextualToolbar.css('display', 'block').one('animateopencomplete.datagrid', function() {
           $(this).triggerHandler('recalculate-buttons');
         }).animateOpen();
@@ -5593,6 +5584,10 @@ $.fn.datagrid = function(options) {
 
     // Gets the currently activated row
     activatedRow: function() {
+      if (!this.tableBody) {
+        return [{ row: -1, item: undefined, elem: undefined }];
+      }
+
       var activatedRow = this.tableBody.find('tr.is-rowactivated');
 
       if (activatedRow.length) {
@@ -5611,6 +5606,7 @@ $.fn.datagrid = function(options) {
       if (isActivated) {
         if (!this.settings.disableRowDeactivation) {
           row.removeClass('is-rowactivated');
+          delete this.settings.dataset[rowIndex]._rowactivated;
           this.element.triggerHandler('rowdeactivated', [{row: rowIndex, item: this.settings.dataset[rowIndex]}]);
         }
       } else {
@@ -5620,9 +5616,11 @@ $.fn.datagrid = function(options) {
           oldActivated.removeClass('is-rowactivated');
 
           var oldIdx = this.dataRowIndex(oldActivated);
+          delete this.settings.dataset[oldIdx]._rowactivated;
           this.element.triggerHandler('rowdeactivated', [{row: oldIdx, item: this.settings.dataset[oldIdx]}]);
         }
         row.addClass('is-rowactivated');
+        this.settings.dataset[rowIndex]._rowactivated = true;
         this.element.triggerHandler('rowactivated', [{row: rowIndex, item: this.settings.dataset[rowIndex]}]);
       }
 
@@ -5642,10 +5640,10 @@ $.fn.datagrid = function(options) {
       }
 
       if (isSingle && row.hasClass('is-selected')) {
-        this.unselectRow(rowIndex);
-        this._selectedRows = [];
+        this.unselectRow(this.actualArrayIndex(row), row.attr('aria-level'));
+        this.unSelectAllRows();
         this.displayCounts();
-        return this._selectedRows;
+        return this.selectedRows();
       }
 
       if (row.hasClass('is-selected')) {
@@ -5656,43 +5654,31 @@ $.fn.datagrid = function(options) {
 
       this.displayCounts();
 
-      return this._selectedRows;
+      return this.selectedRows();
     },
 
-    unselectRow: function (idx, nosync, selectAll) {
+    unselectRow: function (idx, depth, nosync, selectAll) {
       var self = this,
         s = self.settings,
         rowNode = self.visualRowNode(idx),
-        checkbox = null,
-        selIdx;
+        checkbox = null;
 
       if (!rowNode || idx === undefined) {
         return;
       }
 
-      selIdx = undefined;
-      for (var i = 0; i < self._selectedRows.length; i++) {
-        if (self._selectedRows[i].idx === idx) {
-          selIdx = idx;
-        }
-      }
-
       // Unselect it
-      var unselectNode = function(elem, index) {
+      var unselectNode = function(elem) {
         checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox'));
         elem.removeClass('is-selected hide-selected-color').removeAttr('aria-selected')
           .find('td').removeAttr('aria-selected');
         checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
           .removeClass('is-checked no-animate').attr('aria-checked', 'false');
 
-        var selIdx;
-        for (var i = 0; i < self._selectedRows.length; i++) {
-          if (self._selectedRows[i].idx === index) {
-            selIdx = i;
-          }
-        }
+        var selIdx = elem.attr('data-index');
         if (selIdx !== undefined) {
-          self._selectedRows.splice(selIdx, 1);
+          delete self.settings.dataset[selIdx]._selected;
+          self.selectedRowCount --;
         }
       };
 
@@ -5700,19 +5686,27 @@ $.fn.datagrid = function(options) {
         if (rowNode.is('.datagrid-tree-parent') && s.selectable === 'multiple') {
           // Select node and node-children
           rowNode.add(rowNode.nextUntil('[aria-level="1"]')).each(function() {
-            var elem = $(this),
-              index = elem.attr('aria-rowindex') -1;
-            unselectNode(elem, index);
+            var elem = $(this);
+            unselectNode(elem);
           });
         }
         // Single element unselection
         else {
-          unselectNode(rowNode, selIdx);
+
+
+          if (this.settings.treeDepth) {
+            var treeDepth = this.settings.treeDepth.filter(function(obj) {
+              return obj.idx === idx;
+            });
+            rowNode = this.tableBody.find('tr[data-index="'+ (treeDepth[0].idx) +'"][aria-level="'+ (depth) +'"]');
+          }
+
+          unselectNode(rowNode);
         }
         self.setNodeStatus(rowNode);
       }
       else {
-        unselectNode(rowNode, selIdx);
+        unselectNode(rowNode);
       }
 
       if (!nosync) {
@@ -5720,7 +5714,7 @@ $.fn.datagrid = function(options) {
       }
 
       if (!selectAll) {
-        self.element.triggerHandler('selected', [self._selectedRows, 'deselect']);
+        self.element.triggerHandler('selected', [self.selectedRows(), 'deselect']);
       }
     },
 
@@ -5802,18 +5796,37 @@ $.fn.datagrid = function(options) {
           dataset = this.settings.treeGrid ?
             this.settings.treeDepth : this.settings.dataset;
 
-      if (!row) {
-        return this._selectedRows;
+      // As of 4.3.3, return the rows that have _selected = true
+      var selectedRows = [];
+
+      for (var n = 0; n < this.settings.dataset.length; n++) {
+        if (this.settings.dataset[n]._selected) {
+          var rowNode = this.tableBody.find('tr[data-index="' + n +'"]');
+          selectedRows.push({idx: n, data: this.settings.dataset[n], elem: rowNode});
+        }
       }
 
-      if (row.length === 0 && this._selectedRows.length === 0) {
-        return;
+      if (!row) {
+        return selectedRows;
+      }
+
+      if (row.length === 0 && selectedRows.length === 0) {
+        return [];
+      }
+
+      if (row.length === 0 && selectedRows.length > 0) {
+
+        for (var m = 0; m < this.settings.dataset.length; m++) {
+          this.unselectRow(m, this.settings.dataset[m].depth);
+        }
+
+        return [];
       }
 
       if (isSingle) {
         //Unselect
-        if (this._selectedRows[0]) {
-          this.unselectRow(this._selectedRows[0].idx, nosync, selectAll);
+        if (this.selectedRows[0]) {
+          this.unselectRow(this.selectedRows[0].idx, this.selectedRows[0].depth, nosync, selectAll);
         }
 
         //Select - may be passed array or int
@@ -5829,9 +5842,8 @@ $.fn.datagrid = function(options) {
 
           if (row.length === 0) {
             for (var j=0, l=dataset.length; j < l; j++) {
-              this.unselectRow(j, nosync, selectAll);
+              this.unselectRow(j, 0, nosync, selectAll);
             }
-            this._selectedRows = [];
           }
 
         } else {
@@ -5841,7 +5853,7 @@ $.fn.datagrid = function(options) {
 
       this.displayCounts();
 
-      return this._selectedRows;
+      return this.selectedRows();
     },
 
     //Set the row status
@@ -7178,7 +7190,6 @@ $.fn.datagrid = function(options) {
       this.setTreeRootNodes();
       this.renderRows();
       // Update selected and Sync header checkbox
-      this.updateSelected();
       this.syncSelectedUI();
 
       if (wasFocused && this.activeCell.node.length === 1) {
@@ -7256,39 +7267,10 @@ $.fn.datagrid = function(options) {
     },
 
     /**
-    * Sync selection between the _selectedRows array and the table rows.
-    * @private
-    */
-    updateSelected: function() {
-      var self = this,
-        s = self.settings;
-
-      $('tr[role="row"]', self.tableBody).each(function() {
-        var row = $(this),
-          newIdx = self.dataRowIndex(row),
-          checkbox = self.cellNode(row, self.columnIdxById('selectionCheckbox'));
-
-        if (s.paging && s.source && self.pager) {
-          newIdx = (newIdx - ((self.pager.activePage - 1) * s.pagesize));
-        }
-
-        $.each(self._selectedRows, function(index, val) {
-          if (self.isEquals(val.data, s.dataset[newIdx])) {
-            val.idx = newIdx;
-            val.elem = row;
-            checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox').addClass('is-checked').attr('aria-checked', 'true');
-            row.addClass('is-selected' + (s.selectable === 'mixed' ? ' hide-selected-color' : '')).attr('aria-selected', 'true').find('td').attr('aria-selected', 'true');
-            return false;
-          }
-        });
-      });
-    },
-
-    /**
     * Determine equality for two deeply nested JavaScript objects
     * @private
     */
-    isEquals: function(obj1, obj2) {
+    isEquivalent: function(obj1, obj2) {
       function _equals(obj1, obj2) {
         return JSON.stringify(obj1) === JSON.stringify($.extend(true, {}, obj1, obj2));
       }
@@ -7337,19 +7319,12 @@ $.fn.datagrid = function(options) {
       this.pager = pagerElem.data('pager');
 
       pagerElem
-      .on('beforepaging', function () {
-        // Selection support only for current page
-        if (self.pager && self.settings.source) {
-          self._selectedRows = [];
-        }
-      })
       .on('afterpaging', function (e, args) {
 
         self.displayCounts(args.total);
 
         //Handle row selection across pages
-        self.updateSelected();
-        self.syncSelectedUI();
+      self.syncSelectedUI();
 
         if (self.filterExpr && self.filterExpr[0] && self.filterExpr[0].column === 'all') {
           self.highlightSearchRows(self.filterExpr[0].value);
@@ -7377,7 +7352,6 @@ $.fn.datagrid = function(options) {
       }
 
       // Update selected and Sync header checkbox
-      this.updateSelected();
       this.syncSelectedUI();
     },
 

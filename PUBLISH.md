@@ -146,6 +146,7 @@ docker rmi PID
 
 ## Notify
 - On Slack, MS Teams, And Dev's by Email ect.
+- Partners: Jeff Shoneman (PMA) <jeff@projectmanagementassociates.com>
 
 # How To Sync SoHo Staging Site to prod
 
