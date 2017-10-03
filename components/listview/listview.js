@@ -45,10 +45,10 @@
     * @param {Boolean} paging  &nbsp;-&nbsp; If true, activates paging
     * @param {Number} pagesize  &nbsp;-&nbsp; If paging is activated, sets the number of listview items available per page
     * @param {Boolean} searchable  &nbsp;-&nbsp; If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
-    * @param {String|Boolean} selectable  &nbsp;-&nbsp;  //Can be false, 'single' or 'multiple'
-    * @param {Boolean} selectOnFocus  &nbsp;-&nbsp;  //Can be false, 'single' or 'multiple'
-    * @param {Boolean} hoverable  &nbsp;-&nbsp;  //Can be false, 'single' or 'multiple'
-    * @param {Function|String} source  &nbsp;-&nbsp; //If it is a string then it serves as the url for an ajax call that returns the dataset. If its a function it is a call back for getting the data asyncronously.
+    * @param {String|Boolean} selectable  &nbsp;-&nbsp;  selection mode, can be false, 'single' or 'multiple' or 'mixed'
+    * @param {Boolean} selectOnFocus  &nbsp;-&nbsp;  If true the first item in the list will be selected as it is focused.
+    * @param {Boolean} hoverable  &nbsp;-&nbsp;  If true the list element will show a hover action to indicate its actionable.
+    * @param {Function|String} source  &nbsp;-&nbsp; If source is a string then it serves as the url for an ajax call that returns the dataset. If its a function it is a call back for getting the data asyncronously.
     *
     */
     function ListView(element) {
@@ -201,7 +201,7 @@
         // Add Checkboxes
         var first = this.element.find('li, tbody > tr').first(),
           items = this.element.find('li, tr'),
-          isMultiselect = (this.settings.selectable === 'multiple');
+          isMultiselect = (this.settings.selectable === 'multiple' || this.settings.selectable === 'mixed');
 
         //Set Initial Tab Index
         first.attr('tabindex', 0);
@@ -225,6 +225,9 @@
             if (selectedToolbar.length && selectedToolbar.data('toolbar')) {
               selectedToolbar.data('toolbar').toggleMoreMenu();
             }
+
+            //For mixed selection mode primarily append a checkbox object
+            row.prepend('<label class="listview-selection-checkbox l-vertical-center"><input type="checkbox" class="checkbox"><span class="label-text">&nbsp;</span></label>');
           }
 
           // Add Aria
@@ -434,7 +437,9 @@
           item.removeAttr('tabindex');
         }
 
-        if (this.settings.selectOnFocus && (this.settings.selectable !== 'multiple')) {
+        if (this.settings.selectOnFocus &&
+          this.settings.selectable !== 'multiple' &&
+          this.settings.selectable !== 'mixed') {
           this.select(item);
         }
       },
@@ -599,7 +604,7 @@
         }
 
         //Select
-        if (this.settings.selectable !== 'multiple') {
+        if (this.settings.selectable !== 'multiple' && this.settings.selectable !== 'mixed') {
           li.parent().children().removeAttr('aria-selected');
           li.parent().find('.is-selected').removeClass('is-selected');
           self.selectedItems[0] = $(this);
@@ -620,6 +625,8 @@
         });
 
         li.attr('aria-selected', !isChecked);
+        li.find('.listview-selection-checkbox input').prop('checked', !isChecked);
+
         if (!noTrigger) {
           var triggerStr = isChecked ? 'unselected' : 'selected';
           this.element.triggerHandler(triggerStr, {selectedItems: this.selectedItems, elem: li});
@@ -699,7 +706,7 @@
         var self = this,
           isSelect = false,
           isFocused = false,
-          isMultiple = self.settings.selectable === 'multiple';
+          isMultiple = self.settings.selectable === 'multiple' || self.settings.selectable === 'mixed';
 
         this.element.on('focus.listview', 'li, tbody tr', function () {
           var item = $(this);
@@ -716,7 +723,8 @@
           if ((!isSelect) &&
               (!item.hasClass('is-disabled')) &&
               (self.settings.selectOnFocus) &&
-              (self.settings.selectable !== 'multiple')) {
+              (self.settings.selectable !== 'multiple')&&
+              (self.settings.selectable !== 'mixed')) {
 
             self.select(item);
             isSelect = true;
@@ -762,7 +770,7 @@
 
           if (key === 32) { // Space to toggle selection
             if ($(e.target).is(item)) {
-              if(isMultiple && e.shiftKey) {
+              if (isMultiple && e.shiftKey) {
                 self.selectRowsBetweenIndexes([self.lastSelectedRow, item.index()]);
               } else {
                 self.select(item);
@@ -784,6 +792,7 @@
         if (this.settings.selectable) {
 
           this.element.addClass('is-selectable');
+
           var trigger = $('.list-detail-back-button, .list-detail-button').find('.app-header'),
             pattern = $(this.element).closest('.list-detail, .builder');
 
@@ -799,14 +808,16 @@
           });
 
           this.element
-          .off('click.listview', 'li, tr')
-          .on('click.listview', 'li, tr', function (e) {
-            var item = $(this);
+          .off('click.listview', 'li, tr, input[checkbox]')
+          .on('click.listview', 'li, tr, input[checkbox]', function (e) {
+            var item = $(this),
+              isCheckbox = $(e.target).closest('.listview-selection-checkbox').length > 0,
+              isMixed = self.settings.selectable === 'mixed';
 
-            if (!isFocused && !item.hasClass('is-disabled')) {
+            if (!isFocused && !item.hasClass('is-disabled') && (!isMixed || isCheckbox)) {
               isSelect = true;
 
-              if(isMultiple && e.shiftKey) {
+              if (isMultiple && e.shiftKey) {
                 self.selectRowsBetweenIndexes([self.lastSelectedRow, item.index()]);
                 e.preventDefault();
               } else {
@@ -821,6 +832,34 @@
             }
 
             isFocused = false;
+
+            e.preventDefault();
+            e.stopPropagation();
+
+            self.element.trigger('click', [{elem: item, data: self.settings.dataset[item.attr('aria-posinset')], row: item.index(), originalEvent: e}]);
+            return false;
+          });
+
+          this.element
+          .off('dblclick.listview', 'li, tr')
+          .on('dblclick.listview', 'li, tr', function (e) {
+            var item = $(this);
+
+            e.preventDefault();
+            e.stopPropagation();
+            self.element.trigger('dblclick', [{elem: $(this), data: self.settings.dataset[item.attr('aria-posinset')], row: item.index(), originalEvent: e}]);
+            return false;
+          });
+
+          this.element
+          .off('contextmenu.listview', 'li, tr')
+          .on('contextmenu.listview', 'li, tr', function (e) {
+            var item = $(this);
+
+            e.preventDefault();
+            e.stopPropagation();
+            self.element.trigger('contextmenu', [{elem: $(this), data: self.settings.dataset[item.attr('aria-posinset')], row: item.index(), originalEvent: e}]);
+            return false;
           });
         }
 
@@ -834,7 +873,7 @@
           this.element.addClass('disable-hover');
         }
 
-        if (this.settings.selectable === 'multiple') {
+        if (this.settings.selectable === 'multiple' || this.settings.selectable === 'mixed') {
           this.element.on('change.selectable-listview', '.listview-checkbox input', function (e) {
            $(this).parent().trigger('click');
            e.stopPropagation();

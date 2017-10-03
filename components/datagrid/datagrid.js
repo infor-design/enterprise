@@ -2097,26 +2097,15 @@ $.fn.datagrid = function(options) {
             case 'date':
               filterMarkup += '<input ' + (col.filterDisabled ? ' disabled' : '') + ' type="text" class="datepicker" id="'+ filterId +'"/>';
               break;
-            case 'integer':
-              col.maskOptions = col.maskOptions || {
-                patternOptions: {allowNegative: true, allowThousandsSeparator: false,
-                  allowDecimal: false, integerLimit: 4,
-                  symbols: {
-                    thousands: Locale.currentLocale.data.numbers.group,
-                    decimal: Locale.currentLocale.data.numbers.decimal,
-                    negative: Locale.currentLocale.data.numbers.minusSign
-                  }},
-                process: 'number'
-              };
-              filterMarkup += '<input' + (col.filterDisabled ? ' disabled' : '') + ' type="text" id="'+ filterId +'" />';
+            case 'decimal':
+              filterMarkup += '<input ' + (col.filterDisabled ? ' disabled' : '') + ' type="text" id="'+ filterId +'" data-mask-mode="number" data-mask="'+ (col.mask ? col.mask : '####.00') + '">';
               break;
             case 'percent':
-            case 'decimal':
-              col.maskOptions = col.maskOptions || {
-                patternOptions: {allowNegative: true, allowDecimal: true, integerLimit: 4, decimalLimit: 2 },
-                process: 'number'
+              col.maskOptions = {
+                showSymbol: 'percent',
+                pattern: col.mask || (((col.name + '').toLowerCase() === 'decimal') ? '####.00' : '')
               };
-              filterMarkup += '<input' + (col.filterDisabled ? ' disabled' : '') + ' type="text" id="'+ filterId +'" />';
+              filterMarkup += '<input' + (col.filterDisabled ? ' disabled' : '') + ' type="text" id="'+ filterId +'" data-mask-mode="number" data-mask="'+ col.maskOptions.pattern +'"/>';
               break;
             case 'contents':
             case 'select':
@@ -2136,7 +2125,7 @@ $.fn.datagrid = function(options) {
               filterMarkup += '</select><div class="dropdown-wrapper"><div class="dropdown"><span></span></div><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></use></svg></div>';
 
               break;
-                  case 'time':
+            case 'time':
               filterMarkup += '<input ' + (col.filterDisabled ? ' disabled' : '') + ' type="text" class="timepicker" id="'+ filterId +'"/>';
               break;
             default:
@@ -2201,7 +2190,7 @@ $.fn.datagrid = function(options) {
         });
 
         if (col.maskOptions) {
-          elem.find('input').mask(col.maskOptions);
+          elem.find('[data-mask]').mask(col.maskOptions);
         }
 
         elem.find('.datepicker').datepicker(col.editorOptions ? col.editorOptions : {dateFormat: col.dateFormat});
@@ -5530,6 +5519,10 @@ $.fn.datagrid = function(options) {
     syncHeaderCheckbox: function (rows) {
       var headerCheckbox = this.headerRow.find('.datagrid-checkbox'),
         selectedRows = this.selectedRows();
+
+      if (this.headerRow) {
+        return;
+      }
 
       //Sync the header checkbox
       if (selectedRows.length > 0) {
