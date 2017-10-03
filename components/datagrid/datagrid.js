@@ -2097,15 +2097,26 @@ $.fn.datagrid = function(options) {
             case 'date':
               filterMarkup += '<input ' + (col.filterDisabled ? ' disabled' : '') + ' type="text" class="datepicker" id="'+ filterId +'"/>';
               break;
-            case 'decimal':
-              filterMarkup += '<input ' + (col.filterDisabled ? ' disabled' : '') + ' type="text" id="'+ filterId +'" data-mask-mode="number" data-mask="'+ (col.mask ? col.mask : '####.00') + '">';
+            case 'integer':
+              col.maskOptions = col.maskOptions || {
+                patternOptions: {allowNegative: true, allowThousandsSeparator: false,
+                  allowDecimal: false, integerLimit: 4,
+                  symbols: {
+                    thousands: Locale.currentLocale.data.numbers.group,
+                    decimal: Locale.currentLocale.data.numbers.decimal,
+                    negative: Locale.currentLocale.data.numbers.minusSign
+                  }},
+                process: 'number'
+              };
+              filterMarkup += '<input' + (col.filterDisabled ? ' disabled' : '') + ' type="text" id="'+ filterId +'" />';
               break;
             case 'percent':
-              col.maskOptions = {
-                showSymbol: 'percent',
-                pattern: col.mask || (((col.name + '').toLowerCase() === 'decimal') ? '####.00' : '')
+            case 'decimal':
+              col.maskOptions = col.maskOptions || {
+                patternOptions: {allowNegative: true, allowDecimal: true, integerLimit: 4, decimalLimit: 2 },
+                process: 'number'
               };
-              filterMarkup += '<input' + (col.filterDisabled ? ' disabled' : '') + ' type="text" id="'+ filterId +'" data-mask-mode="number" data-mask="'+ col.maskOptions.pattern +'"/>';
+              filterMarkup += '<input' + (col.filterDisabled ? ' disabled' : '') + ' type="text" id="'+ filterId +'" />';
               break;
             case 'contents':
             case 'select':
@@ -2190,7 +2201,7 @@ $.fn.datagrid = function(options) {
         });
 
         if (col.maskOptions) {
-          elem.find('[data-mask]').mask(col.maskOptions);
+          elem.find('input').mask(col.maskOptions);
         }
 
         elem.find('.datepicker').datepicker(col.editorOptions ? col.editorOptions : {dateFormat: col.dateFormat});
