@@ -306,7 +306,6 @@ $datagrid-short-row-height: 23px;
     .is-filterable {
       .datagrid-column-wrapper {
         top: 0;
-
       }
 
       .datagrid-filter-wrapper {
@@ -1765,7 +1764,7 @@ $datagrid-short-row-height: 23px;
         color: $datagrid-filter-color;
         height: 24px;
         left: 12px;
-        padding: 3px 0 2px 5px;
+        padding: 3px 5px 2px;
         position: relative;
         vertical-align: top;
         width: calc(100% - 46px);
