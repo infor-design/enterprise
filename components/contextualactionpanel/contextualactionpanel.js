@@ -215,6 +215,15 @@
           // Focus the first focusable element inside the Contextual Panel's Body
           self.panel.find('.modal-body-wrapper').find(':focusable').first().focus();
           Soho.utils.fixSVGIcons(self.panel);
+        }).on('click.contextualactionpanel', function() {
+          if (self.ctrlPressed) {
+            document.getElementById("toolbar-example-searchfield").select();
+            self.ctrlPressed = false;
+          }
+        }).on('keydown.contextualactionpanel', function(event) {
+          if (event.key === 'Control') {
+            self.ctrlPressed = true;
+          }
         }).on('beforedestroy.contextualactionpanel', function() {
           self.teardown();
         });
@@ -225,18 +234,9 @@
             self.handleToolbarSelected();
           });
 		  
-		  this.ctrlPressed = false;
-		  this.toolbar.searchField.on('keydown', function(event) {
-			 if (event.key === 'Control') {
-				this.ctrlPressed = true;
-			 }
-		  });
-		  this.toolbar.searchField.on('click', function() {
-			  if (this.ctrlPressed) {
-				document.getElementById("toolbar-example-searchfield").select();
-				this.ctrlPressed = false;
-			  }
-		  });
+          this.ctrlPressed = false;
+          this.toolbar.searchField.on('keydown.contextualactionpanel');
+          this.toolbar.searchField.on('click.contextualactionpanel');
         }
 
         return this;
@@ -266,6 +266,9 @@
 
         //self.panel.detach().insertAfter(self.element);
         var toolbar = self.toolbar.data('toolbar');
+        this.toolbar.searchField.off('keydown.contextualactionpanel');
+        this.toolbar.searchField.off('click.contextualactionpanel');
+
         if (toolbar) {
           toolbar.destroy();
         }
