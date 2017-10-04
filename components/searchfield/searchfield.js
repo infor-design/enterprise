@@ -173,7 +173,11 @@
         }
 
         // Pull a Go Button from markup, if applicable.
-        var goButton = this.wrapper.next('button.go-button');
+        var goButton = this.wrapper.next('.go-button');
+        if (!goButton.length) {
+          goButton = this.wrapper.find('.go-button');
+        }
+
         if (goButton.length) {
           this.settings.showGoButton = true;
           this.goButton = goButton;
