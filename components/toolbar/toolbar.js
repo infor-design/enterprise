@@ -778,7 +778,7 @@
 
         var WHITE_SPACE = 30,
           MIN_TITLE_SIZE = 44 + WHITE_SPACE,
-          MIN_BUTTONSET_SIZE = 0;
+          MIN_BUTTONSET_SIZE = 280;
 
         buttonsetElem.style.width = '';
         titleElem.style.width = '';

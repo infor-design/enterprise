@@ -551,6 +551,7 @@
 
           if (!this.isExpanded) {
             this.expand();
+            return;
           }
         }
 
@@ -582,8 +583,7 @@
           return;
         }
 
-        var dontRecalculateButtons = false,
-          toolbarAPI = this.toolbarParent.data('toolbar'),
+        var toolbarAPI = this.toolbarParent.data('toolbar'),
           toolbarSettings,
           containerSizeSetters;
 
@@ -632,8 +632,6 @@
               containerSizeSetters.title = (titleElemWidth - d);
             }
           }
-
-          dontRecalculateButtons = true;
         }
 
         this.inputWrapper.addClass('active');
@@ -656,12 +654,13 @@
           self.input.focus();
         }
 
+        // Recalculate the Toolbar Buttonset/Title sizes.
         var eventArgs = [];
         if (containerSizeSetters) {
           eventArgs.push(containerSizeSetters);
         }
-
         self.toolbarParent.triggerHandler('recalculate-buttons', eventArgs);
+
         self.inputWrapper.one($.fn.transitionEndName(), function() {
           if (!self.isFocused && self.hasFocus() && document.activeElement !== self.input[0]) {
             self.isFocused = true;
