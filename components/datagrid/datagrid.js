@@ -2200,7 +2200,7 @@ $.fn.datagrid = function(options) {
         });
 
         if (col.maskOptions) {
-          elem.find('[data-mask]').mask(col.maskOptions);
+          elem.find('input').mask(col.maskOptions);
         }
 
         elem.find('.datepicker').datepicker(col.editorOptions ? col.editorOptions : {dateFormat: col.dateFormat});
