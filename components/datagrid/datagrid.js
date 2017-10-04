@@ -2101,9 +2101,9 @@ $.fn.datagrid = function(options) {
                 patternOptions: {allowNegative: true, allowThousandsSeparator: false,
                   allowDecimal: false, integerLimit: 4,
                   symbols: {
-                    thousands: Locale.currentLocale.data.numbers.group,
-                    decimal: Locale.currentLocale.data.numbers.decimal,
-                    negative: Locale.currentLocale.data.numbers.minusSign
+                    thousands: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.group : ',',
+                    decimal: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.decimal  : '.',
+                    negative: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.minusSign  : '-'
                   }},
                 process: 'number'
               };
@@ -2135,7 +2135,7 @@ $.fn.datagrid = function(options) {
               filterMarkup += '</select><div class="dropdown-wrapper"><div class="dropdown"><span></span></div><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-dropdown"></use></svg></div>';
 
               break;
-                  case 'time':
+            case 'time':
               filterMarkup += '<input ' + (col.filterDisabled ? ' disabled' : '') + ' type="text" class="timepicker" id="'+ filterId +'"/>';
               break;
             default:
@@ -5534,6 +5534,10 @@ $.fn.datagrid = function(options) {
     syncHeaderCheckbox: function (rows) {
       var headerCheckbox = this.headerRow.find('.datagrid-checkbox'),
         selectedRows = this.selectedRows();
+
+      if (this.headerRow) {
+        return;
+      }
 
       //Sync the header checkbox
       if (selectedRows.length > 0) {

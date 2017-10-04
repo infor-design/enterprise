@@ -30,8 +30,11 @@
      console.log('selected: ', args);
    })
    .on('unselected', function (e, args) {
-     console.log('unselected: ', args);
-    });
+     console.log('unselected: (deprecated) ', args);
+    })
+    .on('deselected', function (e, args) {
+      console.log('deselected: ', args);
+     });
   });
 </script>
 
