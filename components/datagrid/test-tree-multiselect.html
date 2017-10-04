@@ -29,8 +29,8 @@
         treeGrid: true,
         toolbar: {title: 'Tasks (Hierarchical)', results: true, personalize: true}
       })
-      .on('selected', function (e, args) {
-        console.log(args);
+      .on('selected', function (e, args, action) {
+        console.log(args, action);
       });
 
     });

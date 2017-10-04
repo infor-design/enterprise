@@ -1790,8 +1790,7 @@ $.fn.datagrid = function(options) {
     removeRow: function (row, nosync) {
       var rowNode = this.tableBody.find('tr[aria-rowindex="'+ (row + 1) +'"]'),
         rowData = this.settings.dataset[row];
-
-      this.unselectRow(row, 0, nosync);
+      this.unselectRow(row, nosync);
       this.settings.dataset.splice(row, 1);
       this.renderRows();
       this.element.trigger('rowremove', {row: row, cell: null, target: rowNode, value: [], oldValue: rowData});
@@ -5393,14 +5392,13 @@ $.fn.datagrid = function(options) {
 
     selectAllRows: function () {
       var rows = [],
-        self = this,
-        dataset = this.settings.treeGrid ?
-          this.settings.treeDepth : this.settings.dataset;
+        s = this.settings,
+        dataset = s.treeGrid ? s.treeDepth : s.dataset;
 
       for (var i = 0, l = dataset.length; i < l; i++) {
         if (this.filterRowRendered) {
           if (!dataset[i].isFiltered) {
-            rows.push(self.settings.paging && self.settings.source ? i  : i);
+            rows.push(i);
           }
         } else {
           rows.push(i);
@@ -5408,15 +5406,18 @@ $.fn.datagrid = function(options) {
       }
 
       this.dontSyncUi = true;
-      this.selectedRows(rows, true, true);
+      this.selectRows(rows, true, true);
       this.dontSyncUi = false;
       this.syncSelectedUI();
       this.element.triggerHandler('selected', [this.selectedRows(), 'selectall']);
     },
 
     unSelectAllRows: function () {
+      var selectedRows = this.selectedRows();
       this.dontSyncUi = true;
-      this.selectedRows([], true, true);
+      for (var i = 0, l = selectedRows.length; i < l; i++) {
+        this.unselectRow(selectedRows[i].idx, true, true);
+      }
       this.dontSyncUi = false;
       this.syncSelectedUI();
       this.element.triggerHandler('selected', [this.selectedRows(), 'deselectall']);
@@ -5427,11 +5428,12 @@ $.fn.datagrid = function(options) {
     * @private
     */
     isNodeSelected: function (node) {
-      return node._selected === true ? true : false;
+      // As of 4.3.3, return the rows that have _selected = true
+      return node._selected === true;
     },
 
     //Toggle selection on a single row
-    selectRow: function (idx, selectAll) {
+    selectRow: function (idx, nosync, noTrigger) {
       var rowNode, dataRowIndex,
         self = this,
         checkbox = null,
@@ -5454,7 +5456,7 @@ $.fn.datagrid = function(options) {
 
       var selectedRows = this.selectedRows();
       if (s.selectable === 'single' && selectedRows.length > 0) {
-        this.unselectRow(selectedRows[0].idx, selectedRows[0].data.depth);
+        this.unselectRow(selectedRows[0].idx, true, true);
       }
 
       if (!rowNode.hasClass('is-selected')) {
@@ -5499,9 +5501,11 @@ $.fn.datagrid = function(options) {
         }
       }
 
-      this.syncSelectedUI();
+      if (!nosync) {
+        self.syncSelectedUI();
+      }
 
-      if (!selectAll) {
+      if (!noTrigger) {
         this.element.triggerHandler('selected', [this.selectedRows(), 'select']);
       }
     },
@@ -5644,8 +5648,7 @@ $.fn.datagrid = function(options) {
       }
 
       if (isSingle && row.hasClass('is-selected')) {
-        this.unselectRow(this.actualArrayIndex(row), row.attr('aria-level'));
-        this.unSelectAllRows();
+        this.unselectRow(rowIndex);
         this.displayCounts();
         return this.selectedRows();
       }
@@ -5661,7 +5664,7 @@ $.fn.datagrid = function(options) {
       return this.selectedRows();
     },
 
-    unselectRow: function (idx, depth, nosync, selectAll) {
+    unselectRow: function (idx, nosync, noTrigger) {
       var self = this,
         s = self.settings,
         rowNode = self.visualRowNode(idx),
@@ -5672,17 +5675,34 @@ $.fn.datagrid = function(options) {
       }
 
       // Unselect it
-      var unselectNode = function(elem) {
+      var unselectNode = function(elem, index) {
+        var removeSelected = function (node) {
+          delete node._selected;
+          self.selectedRowCount--;
+        };
         checkbox = self.cellNode(elem, self.columnIdxById('selectionCheckbox'));
         elem.removeClass('is-selected hide-selected-color').removeAttr('aria-selected')
           .find('td').removeAttr('aria-selected');
         checkbox.find('.datagrid-cell-wrapper .datagrid-checkbox')
           .removeClass('is-checked no-animate').attr('aria-checked', 'false');
 
-        var selIdx = elem.attr('data-index');
-        if (selIdx !== undefined) {
-          delete self.settings.dataset[selIdx]._selected;
-          self.selectedRowCount --;
+        if (s.treeGrid) {
+          for (var i = 0; i < s.treeDepth.length; i++) {
+            if (self.isNodeSelected(s.treeDepth[i].node)) {
+              if (typeof index !== 'undefined') {
+                if (index === s.treeDepth[i].idx -1) {
+                  removeSelected(s.treeDepth[i].node);
+                }
+              } else {
+                removeSelected(s.treeDepth[i].node);
+              }
+            }
+          }
+        } else {
+          var selIdx = elem.attr('data-index');
+          if (selIdx !== undefined) {
+            removeSelected(self.settings.dataset[selIdx]);
+          }
         }
       };
 
@@ -5690,22 +5710,14 @@ $.fn.datagrid = function(options) {
         if (rowNode.is('.datagrid-tree-parent') && s.selectable === 'multiple') {
           // Select node and node-children
           rowNode.add(rowNode.nextUntil('[aria-level="1"]')).each(function() {
-            var elem = $(this);
-            unselectNode(elem);
+            var elem = $(this),
+              index = elem.attr('aria-rowindex') -1;
+            unselectNode(elem, index);
           });
         }
         // Single element unselection
         else {
-
-
-          if (this.settings.treeDepth) {
-            var treeDepth = this.settings.treeDepth.filter(function(obj) {
-              return obj.idx === idx;
-            });
-            rowNode = this.tableBody.find('tr[data-index="'+ (treeDepth[0].idx) +'"][aria-level="'+ (depth) +'"]');
-          }
-
-          unselectNode(rowNode);
+          unselectNode(rowNode, idx);
         }
         self.setNodeStatus(rowNode);
       }
@@ -5717,7 +5729,7 @@ $.fn.datagrid = function(options) {
         self.syncSelectedUI();
       }
 
-      if (!selectAll) {
+      if (!noTrigger) {
         self.element.triggerHandler('selected', [self.selectedRows(), 'deselect']);
       }
     },
@@ -5793,71 +5805,75 @@ $.fn.datagrid = function(options) {
     },
 
     //Set the selected rows by passing the row index or an array of row indexes
-    selectedRows: function (row, nosync, selectAll) {
+    selectedRows: function () {
+      var self = this,
+        s = self.settings,
+        dataset = s.treeGrid ? s.treeDepth : s.dataset,
+        selectedRows = [];
+
+      for (var i = 0, data; i < dataset.length; i++) {
+        data = s.treeGrid ? dataset[i].node : dataset[i];
+        if (self.isNodeSelected(data)) {
+          selectedRows.push({idx: i, data: data, elem: self.visualRowNode(i)});
+        }
+      }
+      return selectedRows;
+    },
+
+    //Set the selected rows by passing the row index or an array of row indexes
+    selectRows: function (row, nosync, selectAll) {
       var idx = -1,
-          isSingle = this.settings.selectable === 'single',
-          isMultiple = this.settings.selectable === 'multiple' || this.settings.selectable === 'mixed',
-          dataset = this.settings.treeGrid ?
-            this.settings.treeDepth : this.settings.dataset;
+          s = this.settings,
+          isSingle = s.selectable === 'single',
+          isMultiple = s.selectable === 'multiple' || s.selectable === 'mixed',
+          dataset = s.treeGrid ? s.treeDepth : s.dataset;
 
       // As of 4.3.3, return the rows that have _selected = true
-      var selectedRows = [];
+      var selectedRows = this.selectedRows();
 
-      for (var n = 0; n < this.settings.dataset.length; n++) {
-        if (this.settings.dataset[n]._selected) {
-          var rowNode = this.tableBody.find('tr[data-index="' + n +'"]');
-          selectedRows.push({idx: n, data: this.settings.dataset[n], elem: rowNode});
-        }
-      }
-
-      if (!row) {
+      if (!row || row.length === 0) {
         return selectedRows;
-      }
-
-      if (row.length === 0 && selectedRows.length === 0) {
-        return [];
-      }
-
-      if (row.length === 0 && selectedRows.length > 0) {
-
-        for (var m = 0; m < this.settings.dataset.length; m++) {
-          this.unselectRow(m, this.settings.dataset[m].depth);
-        }
-
-        return [];
       }
 
       if (isSingle) {
         //Unselect
-        if (this.selectedRows[0]) {
-          this.unselectRow(this.selectedRows[0].idx, this.selectedRows[0].depth, nosync, selectAll);
+        if (selectedRows.length) {
+          this.unselectRow(selectedRows[0].idx, true, true);
         }
 
         //Select - may be passed array or int
         idx = ((Object.prototype.toString.call(row) === '[object Array]' ) ? row[0] : row.index());
-        this.selectRow(idx, selectAll);
+        this.selectRow(idx, true, true);
       }
 
       if (isMultiple) {
         if (Object.prototype.toString.call(row) === '[object Array]' ) {
           for (var i = 0; i < row.length; i++) {
-            this.selectRow(row[i], selectAll);
+            this.selectRow(row[i], true, true);
           }
 
           if (row.length === 0) {
             for (var j=0, l=dataset.length; j < l; j++) {
-              this.unselectRow(j, 0, nosync, selectAll);
+              this.unselectRow(j, true, true);
             }
           }
 
         } else {
-          this.selectRow(row.index(), selectAll);
+          this.selectRow(row.index(), true, true);
         }
       }
 
+      selectedRows = this.selectedRows();
       this.displayCounts();
 
-      return this.selectedRows();
+      if (!nosync) {
+        this.syncSelectedUI();
+      }
+      if (!selectAll) {
+        this.element.triggerHandler('selected', [selectedRows, 'select']);
+      }
+
+      return selectedRows;
     },
 
     //Set the row status
