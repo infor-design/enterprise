@@ -389,7 +389,12 @@
             titleFrag.appendChild(title);
             this.tooltip[0].insertBefore(titleFrag, this.tooltip[0].firstChild);
           } else {
+            title.style.display = '';
             title.childNodes[0].nodeValue = this.settings.title;
+          }
+        } else {
+          if(title) {
+            title.style.display = 'none';
           }
         }
 
@@ -646,6 +651,10 @@
         this.element.removeAttr('aria-describedby').removeAttr('aria-haspopup');
         if (!this.tooltip.hasClass('is-hidden')) {
           this.hide();
+        }
+
+        if (this.tooltip) {
+          this.tooltip.data('place').destroy();
         }
 
         this.element.off('mouseenter.tooltip mouseleave.tooltip mousedown.tooltip click.tooltip mouseup.tooltip updated.tooltip focus.tooltip blur.tooltip');

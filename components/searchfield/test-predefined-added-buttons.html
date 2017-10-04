@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="six columns">
+
+    <h2>Searchfield Test: Predefined Added Buttons</h2>
+    <p>
+      Pre-defined Category Buttons and Go Buttons inside of the Searchfield Markup should be automatically picked up when the component is initialized.
+    </p>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <label for="test-searchfield">Test Searchfield</label>
+    <div class="searchfield-wrapper">
+      <button id="pre-def-categories" class="btn searchfield-category-button">
+        <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+          <use xlink:href="#icon-search"></use>
+        </svg>
+        <span class="audible">Categories</span>
+      </button>
+
+      <input id="test-searchfield" class="searchfield" data-options='{ "categories": ["Category 1", "Category 2", "Category 3"], "showGoButton": true }' />
+
+      <button id="pre-def-go" class="btn-secondary go-button">
+        <span>Go</span>
+      </button>
+    </div>
+
+  </div>
+</div>
