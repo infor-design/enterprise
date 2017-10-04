@@ -20,6 +20,7 @@
         defaults = {
           addTabButton: false, // If set to true, creates a button at the end of the tab list that can be used to add an empty tab and panel
           addTabButtonCallback: null, // if defined as a function, will be used in-place of the default Tab Adding method
+          appMenuTrigger: false, // If set to true, will force an App Menu trigger to be present on Non-Vertical Tabs implementatations.
           ajaxOptions: null, // if defined, will be used by any internal Tabs AJAX calls as the desired request settings.
           beforeActivate: undefined, // If defined as a function, fires this before a tab is activated to allow a possible "veto" of the tab swap (SOHO-5250).
           containerElement: null, // Defines a separate element to be used for containing the tab panels.  Defaults to a `.tab-panel-container` element that is created if it doesn't already exist.
@@ -441,17 +442,30 @@
 
         // Add the application menu Module Tab, if applicable
         var appMenuTrigger = this.tablist.find('.application-menu-trigger');
-        if (this.isModuleTabs()) {
-          if (!appMenuTrigger.length) {
-            appMenuTrigger = $('<li class="tab application-menu-trigger"><a href="#">' +
-              '<span class="icon app-header"><span class="one"></span><span class="two"></span><span class="three"></span></span>' +
-              '<span>Menu</span>' +
-              '</a></tab>');
-            this.tablist.prepend(appMenuTrigger);
+        if (this.settings.appMenuTrigger === true) {
+          // Backwards Compatibility for the original Application Menu codepath.
+          if (this.isModuleTabs()) {
+            if (!appMenuTrigger.length) {
+              appMenuTrigger = $('<li class="tab application-menu-trigger"><a href="#">' +
+                '<span class="icon app-header"><span class="one"></span><span class="two"></span><span class="three"></span></span>' +
+                '<span>Menu</span>' +
+                '</a></tab>');
+              this.tablist.prepend(appMenuTrigger);
+            }
+          } else {
+            if (this.isVerticalTabs() && appMenuTrigger.length) {
+              appMenuTrigger.off().remove();
+            }
           }
         } else {
-          if (this.isVerticalTabs() && appMenuTrigger.length) {
-            appMenuTrigger.off().remove();
+          // New Codepath for the "non-forced" App Menu trigger.
+          // If no App Menu Trigger is manually defined, it doesn't get added.
+          if (appMenuTrigger.length) {
+            if (this.isVerticalTabs()) {
+              appMenuTrigger.off().remove();
+            } else {
+              this.tablist.prepend(appMenuTrigger);
+            }
           }
         }
 
