@@ -32,11 +32,28 @@
 <p>Render the template against the dataset.</p>
 <p><strong>Parameters</strong></p>
 <ul>
-<li><code>dataset</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></strong>  -  The data to use<br /></li>
+<li><code>dataset</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></strong>  -  The dataset to use<br /></li>
 <li><code>pagerInfo</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Pager instructions</li>
 </ul>
+<h4 id="refresh">refresh</h4>
+<p>Get the Data Source. Can be an array, Object or Url and render the list.</p>
+<h4 id="loaddata">loadData</h4>
+<p>Load Data from an external API</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>ds</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  The dataset to use or will use settings.dataset.<br /></li>
+<li><code>pagerInfo</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  The pager settings to use (see pager api)</li>
+</ul>
 <h4 id="toggleall">toggleAll</h4>
-<p>Toggle all rows from selected to unselected. (Multiselect)</p>
+<p>Toggle all items from selected to deselected, useful for multi/mixed selection</p>
+<h4 id="resetsearch">resetSearch</h4>
+<p>Reset the current search parameters and highlight.</p>
+<h4 id="focus">focus</h4>
+<p>Focus the provided list item with the keyboard</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>item</code> <strong>jQuery</strong>  -  The list item (as jQuery) to focus</li>
+</ul>
 <h4 id="remove">remove</h4>
 <p>Remove the given list item.</p>
 <p><strong>Parameters</strong></p>
@@ -46,30 +63,71 @@
 <h4 id="clear">clear</h4>
 <p>Remove all list items.</p>
 <h4 id="removeallselected">removeAllSelected</h4>
-<p>Remove all selected rows entirely from the list..</p>
+<p>Remove all selected items entirely from the list..</p>
 <h4 id="clearallselected">clearAllSelected</h4>
-<p>Deselect all selected rows.</p>
-<h4 id="unselect">unselect</h4>
+<p>Deselect all selected items.</p>
+<h4 id="sortfunction">sortFunction</h4>
+<p>Overridable function to conduct sorting</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>field</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The field in the dataset to sort on.<br /></li>
+<li><code>reverse</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  If true sort descending.<br /></li>
+<li><code>primer</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a></strong>  -  A sorting primer function.</li>
+</ul>
+<h4 id="deselect">deselect</h4>
 <p>Deselect the given list item.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>li</code> <strong>(jQuery | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</strong>  -  Either the actually jQuery list element or a zero based index</li>
 </ul>
+<h4 id="unselect">unselect</h4>
+<p>Deprivated - use deselect</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>li</code></li>
+</ul>
+<p><strong>Meta</strong></p>
+<ul>
+<li><strong>deprecated</strong>: This is deprecated.</li>
+</ul>
 <h4 id="select">select</h4>
-<p>Deselect the given list item.</p>
+<p>Select the given list item.</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>li</code> <strong>(jQuery | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</strong>  -  Either the actually jQuery list element or a zero based index<br /></li>
 <li><code>noTrigger</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  Do not trigger the selected event.</li>
 </ul>
+<h4 id="toggleactivation">toggleActivation</h4>
+<p>Toggle acivation state on the list item</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>li</code> <strong>jQuery</strong>  -  The jQuery list element.</li>
+</ul>
+<h4 id="activate">activate</h4>
+<p>Set item to activated, unactivate others and fire an event.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>li</code> <strong>jQuery</strong>  -  The jQuery list element.</li>
+</ul>
+<h4 id="deactivate">deactivate</h4>
+<p>Set item to deactivated, uand fire an event.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>li</code> <strong>jQuery</strong>  -  The jQuery list element.</li>
+</ul>
+<h4 id="updated">updated</h4>
+<p>Refresh the list with any optioned options that might have been set.</p>
+<h4 id="teardown">teardown</h4>
+<p>Detatch all bound events.</p>
 <h4 id="destroy">destroy</h4>
-<p>Detatch all events and tear down.</p>
+<p>Detatch all events and tear down data object</p>
 <h3 id="events">Events</h3>
 <p>This component fires the following events.</p>
 <p><strong>Parameters</strong></p>
 <ul>
-<li><code>selected</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires when a row is selected<br /></li>
-<li><code>unselected</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires when a row is deselected<br /></li>
+<li><code>selected</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires when a item is selected<br /></li>
+<li><code>unselected</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires when a item is deselected (deprecated)<br /></li>
+<li><code>deselected</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires when a item is deselected<br /></li>
 <li><code>rendered</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  Fires after the listbox is fully rendered</li>
 </ul>
 <h2 id="behavior-guidelines">Behavior Guidelines</h2>

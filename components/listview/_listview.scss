@@ -166,14 +166,20 @@
 
     &.alert {
       // scss-lint:disable ImportantRule
-      border-left-color: $alert-yellow !important;
+      border-left-color: $alert-orange !important;
       // scss-lint:enable ImportantRule
 
       .days,
       .hours,
       .day-sign,
       .hour-sign {
-        color: $alert-yellow;
+        color: $alert-orange;
+      }
+
+      .icon-alert {
+        // scss-lint:disable ImportantRule
+        fill: $alert-orange !important;
+        // scss-lint:enable ImportantRule
       }
     }
 
@@ -351,8 +357,17 @@
     }
   }
 
-  li.is-selected,
-  tr.is-selected {
+  li.is-selected:not(.hide-selected-color),
+  tr.is-selected:not(.hide-selected-color) {
+    background-color: $selected-bg-color;
+
+    &:hover {
+      background-color: $selected-bg-color;
+    }
+  }
+
+  li.is-activated,
+  tr.is-activated {
     background-color: $selected-bg-color;
 
     &:hover {

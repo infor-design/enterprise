@@ -14,11 +14,7 @@
 /* end-amd-strip-block */
 
   $.fn.listview = function(options) {
-    // TODOs: edit and/or alt template
-    // navigatable
-    // template (as id or string)
-    // Methods: add, remove (X), clear (X), destroy, refresh (rebind) (X), select (get or set) (X)
-    // Events: rendered, add, select
+
     // Settings and Options
     var pluginName = 'listview',
       defaults = {
@@ -61,17 +57,26 @@
 
     // Plugin Object
     ListView.prototype = {
+
+      /**
+      * Initialize this component.
+      * @private
+      */
       init: function() {
         this.setup();
         this.refresh();
         this.selectedItems = [];
-        this.lastSelectedRow = 0; // Rember index to use shift key
+        this.lastSelectedItem = 0; // Rember index to use shift key
         this.isSelectedAll = false; // Rember if all selected or not
         this.sortInit('listview', 'click.listview', 'data-sortlist');
         this.handleEvents();
         this.handleResize();
       },
 
+      /**
+      * Do initial dom and settings setup.
+      * @private
+      */
       setup: function() {
         var self = this,
           card = this.element.closest('.card, .widget'),
@@ -142,6 +147,11 @@
         }
       },
 
+      /**
+      * Calculate the totals for totalling examples. This is done by template {{totals}}.
+      *
+      * @private
+      */
       getTotals: function(dataset) {
         var totals = { count: dataset.length },
           property;
@@ -165,7 +175,7 @@
       /**
       * Render the template against the dataset.
       *
-      * @param {Array} dataset  &nbsp;-&nbsp; The data to use
+      * @param {Array} dataset  &nbsp;-&nbsp; The dataset to use
       * @param {Object} pagerInfo  &nbsp;-&nbsp; Pager instructions
       */
       render: function(dataset, pagerInfo) {
@@ -212,9 +222,9 @@
         }
 
         items.each(function (i) {
-          var row = $(this);
+          var item = $(this);
 
-          row.attr('role', 'option');
+          item.attr('role', 'option');
 
           if (isMultiselect) {
             // Add Selection Checkboxes
@@ -227,15 +237,16 @@
             }
 
             //For mixed selection mode primarily append a checkbox object
-            row.prepend('<label class="listview-selection-checkbox l-vertical-center"><input type="checkbox" class="checkbox"><span class="label-text">&nbsp;</span></label>');
+            item.prepend('<label class="listview-selection-checkbox l-vertical-center inline inline-checkbox"><input tabindex="-1" type="checkbox" class="checkbox"><span class="label-text">&nbsp;</span></label>');
+            //TODO: item.find('.checkbox').attr('tabindex', '-1');
           }
 
           // Add Aria
-          row.attr({'aria-posinset': i+1, 'aria-setsize': items.length});
+          item.attr({'aria-posinset': i+1, 'aria-setsize': items.length});
 
           // Add Aria disabled
-          if (row.hasClass('is-disabled')) {
-            row.attr('aria-disabled','true');
+          if (item.hasClass('is-disabled')) {
+            item.attr('aria-disabled','true');
           }
         });
 
@@ -249,6 +260,10 @@
         });
       },
 
+      /**
+      * Add and update the pager (if used)
+      * @private
+      */
       renderPager: function(updatedPagerInfo) {
         if (!this.pager) {
           return;
@@ -258,7 +273,9 @@
         this.pager.setActivePage(1, true);
       },
 
-      // Get the Data Source. Can be an array, Object or Url
+      /**
+      * Get the Data Source. Can be an array, Object or Url and render the list.
+      */
       refresh: function () {
         this.loadData();
 
@@ -267,7 +284,11 @@
         }
       },
 
-      // Load Data from an external API
+      /**
+      * Load Data from an external API
+      * @param {Object} ds  &nbsp;-&nbsp; The dataset to use or will use settings.dataset.
+      * @param {Object} pagerInfo  &nbsp;-&nbsp; The pager settings to use (see pager api)
+      */
       loadData: function (ds, pagerInfo) {
         var ajaxDs = false, self = this;
 
@@ -320,17 +341,20 @@
       },
 
       /**
-      * Toggle all rows from selected to unselected. (Multiselect)
+      * Toggle all items from selected to deselected, useful for multi/mixed selection
       */
       toggleAll: function() {
         this[this.isSelectedAll ?
-          'unselectRowsBetweenIndexes' :
-          'selectRowsBetweenIndexes']([0, $('li, tbody tr', this.element).length-1]);
+          'deselectItemsBetweenIndexes' :
+          'selectItemsBetweenIndexes']([0, $('li, tbody tr', this.element).length-1]);
         this.isSelectedAll = !this.isSelectedAll;
       },
 
-      // Select rows between indexes
-      selectRowsBetweenIndexes: function(indexes) {
+      /**
+      * Select Items between a set of indexes. Used for shift selection.
+      * @private
+      */
+      selectItemsBetweenIndexes: function(indexes) {
         this.clearSelection();
         indexes.sort(function(a, b) { return a-b; });
         for (var i = indexes[0]; i <= indexes[1]; i++) {
@@ -342,8 +366,11 @@
         }
       },
 
-      // Unselect rows between indexes
-      unselectRowsBetweenIndexes: function(indexes) {
+      /**
+      * De-Select Items between a set of indexes. Used for shift selection.
+      * @private
+      */
+      deselectItemsBetweenIndexes: function(indexes) {
         indexes.sort(function(a, b) { return a-b; });
         for (var i = indexes[0]; i <= indexes[1]; i++) {
           var item = $('li, tbody tr', this.element).eq(i);
@@ -353,6 +380,10 @@
         }
       },
 
+      /**
+      * Clear all currently selected list items.
+      * @private
+      */
       clearSelection: function() {
         if (window.getSelection) {
           window.getSelection().removeAllRanges();
@@ -361,7 +392,10 @@
         }
       },
 
-      // Handle Resize
+      /**
+      * Handle page/form resize
+      * @private
+      */
       handleResize: function () {
         var items = $('li .listview-heading, tr .listview-heading', this.element),
           item1 = items.eq(1),
@@ -371,21 +405,23 @@
           items[0].style.width = item1W + 'px';
         }
 
-        this.setChildIconsValign();
-
         if (this.element.data('pager')) {
           this.element.data('pager').renderBar();
         }
       },
 
-      // For instances of Listview that are paired with a Searchfield
-      // NOTE: Search functionality is called from "js/listfilter.js"
+      /**
+      * For instances of Listview that are paired with a Searchfield
+      * NOTE: Search functionality is called from "js/listfilter.js"
+      *
+      * @private
+      */
       handleSearch: function(e, searchfield) {
         var list = this.element.find('li, tbody > tr'),
             term = searchfield.val(),
             results;
 
-        this.resetSearch(list);
+        this.resetSearch();
 
         if (term && term.length) {
           results = this.listfilter.filter(list, term);
@@ -405,25 +441,21 @@
         this.renderPager();
       },
 
-      resetSearch: function(list) {
+      /**
+      * Reset the current search parameters and highlight.
+      */
+      resetSearch: function() {
+        var list = this.element.find('li, tbody > tr');
+
         list.removeClass('hidden').each(function() {
           $(this).unhighlight();
         });
       },
 
-      // Fix: for vertical-align to icons and buttons
-      setChildIconsValign: function() {
-        $('li > .icon, li > button', this.element).each(function() {
-          var item = $(this),
-          itemHeihgt = item.is('button') ? 42 : 22,
-          row = item.closest('li'),
-          padding = parseInt(row[0].style.paddingTop, 10) + parseInt(row[0].style.paddingBottom, 10),
-          rowHeight = row.outerHeight() - padding;
-
-          this.style.top = ((rowHeight - itemHeihgt)/2) +'px';
-        });
-      },
-
+      /**
+      * Focus the provided list item with the keyboard
+      * @param {jQuery} item  &nbsp;-&nbsp; The list item (as jQuery) to focus
+      */
       focus: function (item) {
         if (item.is(':hidden') || item.is('.is-disabled')) {
           return;
@@ -446,7 +478,6 @@
 
       /**
       * Remove the given list item.
-      *
       * @param {jQuery|Number} li  &nbsp;-&nbsp; Either the actually jQuery list element or a zero based index
       */
       remove: function (li) {
@@ -470,7 +501,7 @@
       },
 
       /**
-      * Remove all selected rows entirely from the list..
+      * Remove all selected items entirely from the list..
       */
       removeAllSelected: function () {
         var self = this;
@@ -480,7 +511,7 @@
       },
 
       /**
-      * Deselect all selected rows.
+      * Deselect all selected items.
       */
       clearAllSelected: function () {
         var self = this;
@@ -490,7 +521,10 @@
         });
       },
 
-      // Initialize sortlist
+      /**
+      * Initialize the sorted list
+      * @private
+      */
       sortInit: function(control, onEvent, attr){
         if(!attr || $.trim(attr) === '') {
           return;
@@ -506,7 +540,10 @@
         });
       },
 
-      // Consider this deprecated
+      /**
+      * Sort the list with the given options.
+      * @private
+      */
       setSortColumn: function(options) {
         var sort,
         field = options.orderBy || this.list.sort.field,
@@ -541,7 +578,13 @@
         this.element.trigger('sorted', [this.element, this.list.sort]);
       },
 
-      //Overridable function to conduct sorting
+      /**
+      * Overridable function to conduct sorting
+      * @param {String} field  &nbsp;-&nbsp; The field in the dataset to sort on.
+      * @param {String} reverse  &nbsp;-&nbsp; If true sort descending.
+      * @param {Function} primer  &nbsp;-&nbsp; A sorting primer function.
+      *
+      */
       sortFunction: function(field, reverse, primer) {
         var key;
         if (!primer) {
@@ -568,7 +611,7 @@
       * Deselect the given list item.
       * @param {jQuery|Number} li  &nbsp;-&nbsp; Either the actually jQuery list element or a zero based index
       */
-      unselect: function (li) {
+      deselect: function (li) {
         if (typeof li === 'number') {
           li = $(this.element.children()[0]).children().eq(li);
         }
@@ -578,13 +621,22 @@
       },
 
       /**
-      * Deselect the given list item.
+      * Deprivated - use deselect
+      * @deprecated
+      */
+      unselect: function (li) {
+        this.deselect(li);
+      },
+
+      /**
+      * Select the given list item.
       * @param {jQuery|Number} li &nbsp;-&nbsp; Either the actually jQuery list element or a zero based index
       * @param {Boolean} noTrigger &nbsp;-&nbsp; Do not trigger the selected event.
       */
       select: function (li, noTrigger) {
         var self = this,
-          isChecked = false;
+          isChecked = false,
+          isMixed = self.settings.selectable === 'mixed';
 
         self.selectedItems = [];
         if (typeof li === 'number') {
@@ -612,11 +664,11 @@
 
         if (isChecked) {
           self.selectedItems = [];
-          li.removeClass('is-selected');
+          li.removeClass('is-selected hide-selected-color');
         } else {
           if (this.settings.selectable) {
-            li.addClass('is-selected');
-            self.lastSelectedRow = li.index();// Rember index to use shift key
+            li.addClass('is-selected' + (isMixed ? ' hide-selected-color' : ''));
+            self.lastSelectedItem = li.index();// Rember index to use shift key
           }
         }
 
@@ -630,6 +682,10 @@
         if (!noTrigger) {
           var triggerStr = isChecked ? 'unselected' : 'selected';
           this.element.triggerHandler(triggerStr, {selectedItems: this.selectedItems, elem: li});
+
+          if (triggerStr === 'unselected') {
+            this.element.triggerHandler('deselected', {selectedItems: this.selectedItems, elem: li});
+          }
         }
 
         var toolbar, toolbarControl,
@@ -674,11 +730,61 @@
         }
       },
 
+      /**
+      * Toggle acivation state on the list item
+      * @param {jQuery} li &nbsp;-&nbsp; The jQuery list element.
+      */
+      toggleActivation: function(li) {
+        var isActivated = li.hasClass('is-activated');
+
+        if (isActivated) {
+          this.deactivate(li);
+          return;
+        }
+
+        this.activate(li);
+      },
+
+      /**
+      * Set item to activated, unactivate others and fire an event.
+      * @param {jQuery} li &nbsp;-&nbsp; The jQuery list element.
+      */
+      activate: function(li) {
+        var active = this.element.find('li.is-activated');
+        this.deactivate(active);
+
+        li.addClass('is-activated');
+
+        var idx = li.index();
+        this.element.triggerHandler('itemactivated', [{index: idx, elem: li, data: this.settings.dataset[idx]}]);
+      },
+
+      /**
+      * Set item to deactivated, uand fire an event.
+      * @param {jQuery} li &nbsp;-&nbsp; The jQuery list element.
+      */
+      deactivate: function(li) {
+        li.removeClass('is-activated');
+        var idx = li.index();
+
+        if (idx < 0) {
+          return;
+        }
+
+        this.element.triggerHandler('itemdeactivated', [{index: idx, elem: li, data: this.settings.dataset[idx]}]);
+      },
+
+      /**
+      * Refresh the list with any optioned options that might have been set.
+      */
       updated: function() {
         this.refresh();
         return this;
       },
 
+      /**
+      * Detatch all bound events.
+      */
       teardown: function() {
         $('body').off('resize.listview');
         this.element.off('focus.listview click.listview touchend.listview keydown.listview change.selectable-listview afterpaging.listview').empty();
@@ -686,7 +792,7 @@
       },
 
       /**
-      * Detatch all events and tear down.
+      * Detatch all events and tear down data object
       */
       destroy: function() {
         this.teardown();
@@ -697,8 +803,9 @@
        *  This component fires the following events.
        *
        * @fires ListBox#events
-       * @param {Object} selected  &nbsp;-&nbsp; Fires when a row is selected
-       * @param {Object} unselected  &nbsp;-&nbsp; Fires when a row is deselected
+       * @param {Object} selected  &nbsp;-&nbsp; Fires when a item is selected
+       * @param {Object} unselected  &nbsp;-&nbsp; Fires when a item is deselected (deprecated)
+       * @param {Object} deselected  &nbsp;-&nbsp; Fires when a item is deselected
        * @param {Object} rendered  &nbsp;-&nbsp; Fires after the listbox is fully rendered
        *
        */
@@ -771,7 +878,7 @@
           if (key === 32) { // Space to toggle selection
             if ($(e.target).is(item)) {
               if (isMultiple && e.shiftKey) {
-                self.selectRowsBetweenIndexes([self.lastSelectedRow, item.index()]);
+                self.selectItemsBetweenIndexes([self.lastSelectedItem, item.index()]);
               } else {
                 self.select(item);
               }
@@ -779,7 +886,7 @@
             }
           }
 
-          // If multiSelect is enabled, press Control+A to toggle select all rows
+          // If multiSelect is enabled, press Control+A to toggle select all items
           if (isMultiple && ((e.ctrlKey || e.metaKey) && key === 65)) {
             self.toggleAll();
             self.focus(item);
@@ -818,12 +925,17 @@
               isSelect = true;
 
               if (isMultiple && e.shiftKey) {
-                self.selectRowsBetweenIndexes([self.lastSelectedRow, item.index()]);
+                self.selectItemsBetweenIndexes([self.lastSelectedItem, item.index()]);
                 e.preventDefault();
               } else {
                 self.select(item);
               }
               item.focus();
+            }
+
+            if (!item.hasClass('is-disabled') && isMixed && !isCheckbox) {
+              item.focus();
+              self.toggleActivation(item);
             }
 
             if (pattern.length > 0 && $(window).outerWidth() < 767 && !item.hasClass('is-disabled')) {
@@ -836,7 +948,7 @@
             e.preventDefault();
             e.stopPropagation();
 
-            self.element.trigger('click', [{elem: item, data: self.settings.dataset[item.attr('aria-posinset')], row: item.index(), originalEvent: e}]);
+            self.element.trigger('click', [{elem: item, data: self.settings.dataset[item.attr('aria-posinset')], index: item.index(), originalEvent: e}]);
             return false;
           });
 
@@ -847,7 +959,7 @@
 
             e.preventDefault();
             e.stopPropagation();
-            self.element.trigger('dblclick', [{elem: $(this), data: self.settings.dataset[item.attr('aria-posinset')], row: item.index(), originalEvent: e}]);
+            self.element.trigger('dblclick', [{elem: $(this), data: self.settings.dataset[item.attr('aria-posinset')], index: item.index(), originalEvent: e}]);
             return false;
           });
 
@@ -858,7 +970,7 @@
 
             e.preventDefault();
             e.stopPropagation();
-            self.element.trigger('contextmenu', [{elem: $(this), data: self.settings.dataset[item.attr('aria-posinset')], row: item.index(), originalEvent: e}]);
+            self.element.trigger('contextmenu', [{elem: $(this), data: self.settings.dataset[item.attr('aria-posinset')], index: item.index(), originalEvent: e}]);
             return false;
           });
         }
