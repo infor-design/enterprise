@@ -264,6 +264,7 @@
 
           self.isAnimating = false;
           self.element.trigger('applicationmenuopen');
+          $('body').triggerHandler('resize');
 
           if (userOpened) {
             self.userOpened = true;
@@ -347,6 +348,7 @@
           }
 
           self.element.trigger('applicationmenuclose');
+          $('body').triggerHandler('resize');
         }
 
         this.triggers.each(function() {
