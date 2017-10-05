@@ -128,7 +128,7 @@
             this.toolbar = $('<div class="toolbar"></div>');
           }
 		  
-		  this.toolbar.searchField = this.toolbar.find('.searchfield');
+		      this.toolbar.searchField = this.toolbar.find('.searchfield');
 		  
           this.toolbar.appendTo(this.header);
           var toolbarTitle = this.toolbar.find('.title');
@@ -217,7 +217,10 @@
           Soho.utils.fixSVGIcons(self.panel);
         }).on('click.contextualactionpanel', function() {
           if (self.ctrlPressed) {
-            document.getElementById("toolbar-example-searchfield").select();
+            var searchfield = self.toolbar.find('.searchfield');
+            if (searchfield.length) {
+              searchfield[0].select();
+            }
             self.ctrlPressed = false;
           }
         }).on('keydown.contextualactionpanel', function(event) {
