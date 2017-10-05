@@ -1,0 +1,86 @@
+<div class="row">
+  <div class="two-thirds column">
+    <div class="card">
+      <div class="card-header">
+          <h2 class="widget-title">Target to Achievement</h2>
+          <button class="btn-actions" type="button" id="menu-button">
+            <span class="audible">Actions</span>
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-more"></use>
+            </svg>
+          </button>
+          <ul class="popupmenu actions top is-selectable">
+            <li><a href="#">One</a></li>
+            <li><a href="#">Two</a></li>
+            <li><a href="#">Three</a></li>
+          </ul>
+      </div>
+      <div class="card-content">
+        <div id="example-1" class="chart-container"></div>
+        <div id="example-2" class="chart-container"></div>
+        <div id="example-3" class="chart-container"></div>
+        <div id="example-4" class="chart-container"></div>
+        <!-- <div id="example-5" class="chart-container"></div>
+        <div id="example-6" class="chart-container"></div>
+        <div id="example-7" class="chart-container"></div> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+$('body').on('initialized', function () {
+
+  var btnUpdate = $('#btn-update'),
+    elm1 = $('#example-1'),
+    elm2 = $('#example-2'),
+    elm3 = $('#example-3'),
+    elm4 = $('#example-4'),
+
+    // Some data
+    dataset1 = [{
+      data: [{
+        name: { text: 'Meter 100%' },
+        info: { value: '10 %' },
+        completed: { value: '10', color: 'alert' },
+        total: { value: 100 },
+        percentText: { show: true }
+      }]
+    }],
+    dataset2 = [{
+      data: [{
+        name: { text: 'Meter 100%' },
+        info: { value: '10 %' },
+        completed: { value: '10', color: 'alert', text: '10%' },
+        total: { value: 100 }
+      }]
+    }],
+    dataset3 = [{
+      data: [{
+        name: { text: 'Meter 200%' },
+        info: { value: '10 %' },
+        completed: { value: '10', color: 'alert' },
+        total: { value: 200 },
+        percentText: { show: true, value: 10 }
+      }]
+    }],
+    dataset4 = [{
+      data: [{
+        name: { text: 'Meter 200%' },
+        info: { value: '10 %' },
+        completed: { value: '10', color: 'alert', text: '10%' },
+        total: { value: 200 }
+      }]
+    }],
+
+    // Initialize and cached api
+    api1 = elm1.chart({dataset: dataset1, type: 'targeted-achievement'}).data('chart'),
+    api2 = elm2.chart({dataset: dataset2, type: 'targeted-achievement'}).data('chart'),
+    api3 = elm3.chart({dataset: dataset3, type: 'targeted-achievement'}).data('chart'),
+    api4 = elm4.chart({dataset: dataset4, type: 'targeted-achievement'}).data('chart');
+
+
+});
+</script>

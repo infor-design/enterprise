@@ -3802,9 +3802,11 @@ window.Chart = function(container) {
         var w = value > 100 ? 100 : (value < 0 ? 0 : value);
         elem[0].style.left = w + '%';
       },
-      setFormat = function(obj, ds) {
-        return (obj && !isUndefined(obj.value) && obj.format) ?
-          format(fixPercent(obj.value, ds), obj.format, ds) : (obj ? fixPercent(obj.value, ds) : 0);
+      setFormat = function(obj, ds, isPrivate) {
+        var value = isPrivate ? obj._value : obj.value;
+        return (obj && !isUndefined(value) && obj.format) ?
+          format(fixPercent(value, ds), obj.format, ds) :
+          (obj ? fixPercent(value, ds) : 0);
       },
       setOverlap = function() {
         if (isTarget && !isAchievment) {
@@ -3884,10 +3886,12 @@ window.Chart = function(container) {
       percentText = $.extend({}, percentTextDefault, dataset.percentText),
       setPercentText = function (ds) {
         ds = ds || dataset;
-        percentText.value = ds.completed ? ds.completed.value : 0;
-        percentText.percent = toPercent(fixUndefined(percentText.value, true), ds);
+        percentText._value = ds.completed ? ds.completed.value : 0;
+        percentText.percent = toPercent(fixUndefined(percentText._value, true), ds);
         percentText.format = '.0%';
-        percentText.text = setFormat(percentText, ds);
+        percentText._text = (typeof percentText.text !== 'undefined' ?
+          percentText.text : (typeof percentText.value !== 'undefined' ?
+            (percentText.value +'%') : setFormat(percentText, ds, true)));
         percentText.color = percentText[percentText.percent > 55 ? 'color2': 'color1'];
       },
       c,// Cache will after created
@@ -3993,7 +3997,7 @@ window.Chart = function(container) {
                         resetColor(c.percentText, percentText.color);
                         setPercentText(ds);
                         updateColor(c.percentText, percentText.color);
-                        c.percentText.html(percentText.text);
+                        c.percentText.html(percentText._text);
                       }
                       c.completed.bar.add(c.completed.value).add(c.completed.text)
                         .data('jsonData', {completed: ds.completed});
@@ -4013,7 +4017,7 @@ window.Chart = function(container) {
                         resetColor(c.percentText, percentText.color);
                         setPercentText(ds);
                         updateColor(c.percentText, percentText.color);
-                        c.percentText.html(percentText.text);
+                        c.percentText.html(percentText._text);
                       }
                       c.remaining.bar.add(c.remaining.value).add(c.remaining.text)
                         .data('jsonData', {remaining: ds.remaining});
@@ -4033,7 +4037,7 @@ window.Chart = function(container) {
                         resetColor(c.percentText, percentText.color);
                         setPercentText(ds);
                         updateColor(c.percentText, percentText.color);
-                        c.percentText.html(percentText.text);
+                        c.percentText.html(percentText._text);
                       }
                       c.total.bar.add(c.total.value).data('jsonData', {total: ds.total});
                     }
@@ -4046,7 +4050,7 @@ window.Chart = function(container) {
                         resetColor(c.percentText, percentText.color);
                         setPercentText(ds);
                         updateColor(c.percentText, child[k]);
-                        c.percentText.html(percentText.text);
+                        c.percentText.html(percentText._text);
                       }
                       c.percentText.data('jsonData', {percentText: ds.percentText});
                     }
@@ -4225,7 +4229,7 @@ window.Chart = function(container) {
 
       html.completed = ''+
       '<div class="completed bar'+ (!specColor.completed ? ' '+ fixUndefined(dataset.completed.color) : '') +'"'+ (specColor.completed ? (' style="color:'+ dataset.completed.color +';background-color:'+ dataset.completed.color +';"') : '') +'"></div>'+
-      (percentText.show ? '<div class="chart-percent-text'+ (!specColor.percentText && percentText.color !== '' ? ' '+ percentText.color : '') +'"'+ (specColor.percentText ? (' style="color:'+ percentText.color +';"') : '') +'>'+ percentText.text +'</div>' : '')+
+      (percentText.show ? '<div class="chart-percent-text'+ (!specColor.percentText && percentText.color !== '' ? ' '+ percentText.color : '') +'"'+ (specColor.percentText ? (' style="color:'+ percentText.color +';"') : '') +'>'+ percentText._text +'</div>' : '')+
         '<span class="completed-label" aria-hidden="true"'+ (!isTarget && !isAchievment ? ' class="audible"' : '') +'>'+
           '<span class="text">'+
             fixUndefined(dataset.completed.text) +
