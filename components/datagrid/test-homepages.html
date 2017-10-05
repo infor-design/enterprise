@@ -1,0 +1,70 @@
+<div class="page-container">
+  <div id="maincontent" class="homepage page-container scrollable" data-columns="3" role="main">
+      <div class="content">
+        <div class="widget">
+          <div class="widget-header">
+            <h2 class="widget-title">Business Insight</h2>
+            <button class="btn-actions" type="button">
+              <span class="audible">Actions</span>
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-more"></use>
+              </svg>
+            </button>
+            <ul class="popupmenu actions top">
+              <li><a href="#">Action One</a></li>
+              <li><a href="#">Action Two</a></li>
+            </ul>
+          </div>
+
+          <div class="widget-content">
+            <div id="datagrid">
+          </div>
+        </div>
+        <script>
+          $('body').one('initialized', function () {
+
+            var grid,
+              columns = [],
+              data = [];
+
+            columns.push({ id: 'productId', name: 'Product Id', field: 'productId', percent: .30});
+            columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', percent: .40, formatter: Formatters.Hyperlink, editor: Editors.Input});
+            columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity',  percent: .30 });
+
+            //Init and get the api for the grid
+            grid = $('#datagrid').datagrid({
+              columns: columns,
+              selectable: 'multiple',
+              editable: true,
+              rowHeight: 'medium',
+              isList: true,
+              indeterminate: true,
+              showPageSizeSelector: false,
+              paging: true,
+              pagesize: 10,
+              source: function(req, response) {
+                var url = '{{basepath}}api/compressors?pageNum='+ req.activePage +'&pageSize='+ req.pagesize;
+
+                if (req.sortId) {
+                  url += '&sortId=' + req.sortId + '&sortAsc=' + req.sortAsc;
+                }
+
+                if (req.filterExpr && req.filterExpr[0]) {
+                  url += '&filter=' + req.filterExpr[0].value;
+                }
+
+                //Get Page Based on info in Req, return results into response;
+                $.getJSON(url, function(res) {
+                  req.total = res.total;
+                  response(res.data, req);
+                });
+              },
+            }).on('selected', function (e, args) {
+              console.log(args.row, args.item);
+            });
+
+          });
+        </script>
+      </div>
+  </div>
+</div>
