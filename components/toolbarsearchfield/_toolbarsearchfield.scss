@@ -342,6 +342,12 @@ $toolbarsearchfield-category-empty-width: 54px;
       height: 34px;
     }
 
+    &.has-go-button {
+      .searchfield {
+        width: calc(100% - 75px);
+      }
+    }
+
     &.searchfield-wrapper.show-category {
       .searchfield {
         border-left-color: transparent;
@@ -441,7 +447,7 @@ $toolbarsearchfield-category-empty-width: 54px;
 .header,
 .masthead {
   .toolbar-searchfield-wrapper {
-    .icon {
+    .icon:not(.close) {
       fill: $searchfield-header-icon-color;
       opacity: .7;
     }
@@ -597,10 +603,17 @@ $toolbarsearchfield-category-empty-width: 54px;
 
   // Small adjustments for being the full-width toolbar searchfield
   .toolbar > .toolbar-searchfield-wrapper.active {
-    .searchfield {
+    .searchfield,
+    .btn {
       // Don't be semi-transparent in this mode, since it sits over top of other things
       background-color: rgba($searchfield-header-bg-color, 1);
       border-bottom-color: rgba($searchfield-header-border-color, 1);
+    }
+
+    &.has-go-button {
+      .icon.close {
+        right: 35px;
+      }
     }
   }
 }
@@ -733,16 +746,6 @@ $toolbarsearchfield-category-empty-width: 54px;
 
 }
 
-@include respond-to(phone) {
-
-  .toolbar-searchfield-wrapper:not(.is-open) {
-    .searchfield.alternate {
-      background-color: transparent !important;
-    }
-  }
-
-}
-
 html[dir='rtl'] {
   .toolbarsearchfield-wrapper {
     &.has-text {
@@ -750,6 +753,40 @@ html[dir='rtl'] {
         padding-right: auto;
         padding-left: 0;
       }
+    }
+  }
+
+  .header,
+  .masthead {
+    .toolbar > .toolbar-searchfield-wrapper.active {
+        &.has-go-button {
+        .icon.close {
+          left: 35px;
+          right: auto;
+        }
+      }
+    }
+  }
+}
+
+@include respond-to(phabletdown) {
+  .toolbar-searchfield-wrapper.has-go-button > .icon.close {
+    right: 35px;
+  }
+
+  html[dir='rtl'] {
+    .toolbar-searchfield-wrapper.has-go-button > .icon.close {
+      left: 35px;
+      right: auto;
+    }
+  }
+}
+
+
+@include respond-to(phone) {
+  .toolbar-searchfield-wrapper:not(.is-open) {
+    .searchfield.alternate {
+      background-color: transparent !important;
     }
   }
 }

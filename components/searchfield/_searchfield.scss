@@ -300,6 +300,37 @@
   }
 }
 
+//RTL Styles
+html[dir='rtl'] {
+  .searchfield-wrapper {
+    > .icon {
+      &:not(.close) {
+        left: auto;
+        right: 8px;
+      }
+
+      &.close {
+        left: 5px;
+        right: auto;
+      }
+    }
+
+    &.has-categories {
+      &.show-category {
+        .btn {
+          padding-left: 5px;
+          padding-right: 10px;
+        }
+
+        .searchfield {
+          border-left: none;
+          border-right: 1px solid $input-border-color;
+        }
+      }
+    }
+  }
+}
+
 @include respond-to(phablet) {
   .toolbar .searchfield {
     text-overflow: clip;
@@ -325,22 +356,5 @@
 
   .searchfield-wrapper.context .btn {
     height: 32px;
-  }
-}
-
-//RTL Styles
-html[dir='rtl'] {
-  .searchfield-wrapper {
-    > .icon {
-      &:not(.close) {
-        left: auto;
-        right: 8px;
-      }
-
-      &.close {
-        left: 5px;
-        right: auto;
-      }
-    }
   }
 }
