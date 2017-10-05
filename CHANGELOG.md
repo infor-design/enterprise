@@ -1,3 +1,31 @@
+## <a name="version-4.3.3">4.3.3</a>
+
+Release Date: 2017-11-09
+Full Jira Release Notes: TBD
+
+### <a name="version-4.3.3-download-build-assets">Download Build Assets:</a>
+
+Build Server: http://bamboo.infor.com/browse/label/release-433
+Npm: http://npm.infor.com
+
+### <a name="version-4.3.3-download-build-assets">Demo Site</a>
+http://usalvlhlpool1.infor.com/4.3.3/components/
+
+### <a name="version-4.3.3-key-new-features">Key New Features</a>
+-
+
+### <a name="version-4.3.3-breaking-changes">Breaking Changes</a>
+- Tabs - changed custom event `beforeactivate` to `beforeactivated` to prevent clashing with a Microsoft IE11/Edge-specific event by the same name (SOHO-5994).
+
+### <a name="version-4.3.3-behavior-changes">Behavior Changes</a>
+-
+
+### <a name="version-4.3.3-improvements">Improvements</a>
+-
+
+### <a name="version-4.3.3-bug-fixes">Bug Fixes</a>
+-
+
 ## <a name="version-4.3.2">4.3.2</a>
 
 Release Date: 2017-09-18
