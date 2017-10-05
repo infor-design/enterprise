@@ -278,6 +278,7 @@
     float: left;
     font-weight: bold;
     height: 46px;// [50px-4px] Keep smaller 4px for border to show around on focus
+    line-height: 46px; // Used same value as height to get accurate measurement of vertical height 
     margin-right: 0;
     overflow: hidden;
     position: relative;
