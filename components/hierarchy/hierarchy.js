@@ -382,6 +382,11 @@
           this.createLegend(element);
         }
 
+        // check to see how many children are not leafs and have children
+        if (this.isSingleChildWithChildren()) {
+          $(chart).addClass('has-single-child');
+        }
+
         // Create root node
         this.setColor(data);
 
@@ -480,6 +485,28 @@
         var center = (containerWidth - windowWidth) / 2;
         this.element.scrollLeft(center);
 
+      },
+
+      /**
+       *  Private function:
+       *  Checks to see if children have children
+       *  used to set a class if there is only a single child with children
+       */
+      isSingleChildWithChildren: function() {
+        if (settings.dataset && settings.dataset[0].children) {
+          var i = settings.dataset[0].children.length;
+          var count = 0;
+
+          while (i--) {
+            if (!settings.dataset[0].children[i].isLeaf) {
+              count++;
+            }
+          }
+
+          return count === 1;
+        } else {
+          return false;
+        }
       },
 
       /**
