@@ -1,0 +1,56 @@
+// Step Chart
+//================================================== //
+
+.step-chart {
+  display: block;
+  margin: 20px;
+  width: calc(100% - 40px);
+
+  .step-chart-label {
+    @include font-size(14);
+    display: inline-block;
+    line-height: 25px;
+    width: 100%;
+  }
+
+  .step-chart-label-small {
+    @include font-size(11);
+    float: right;
+    line-height: 23px;
+    vertical-align: middle;
+  }
+
+  .icon {
+    display: inline-block;
+    float: right;
+    margin: 0 0 0 5px;
+    position: relative;
+    top: 2px;
+  }
+
+  .step-chart-steps {
+    display: flex;
+    justify-content: space-between;
+
+    &.is-complete .step-chart-step {
+      background-color: $step-chart-totally-completed-bg-color;
+    }
+  }
+
+  .step-chart-step {
+    background-color: $step-chart-bg-color;
+    border: 1px solid $step-chart-border-color;
+    flex-basis: 100%;
+    height: 15px;
+
+    &.is-inprogress {
+      background-color: $step-chart-inprogress-bg-color;
+    }
+
+    &.is-complete {
+      background-color: $step-chart-completed-bg-color;
+    }
+
+  }
+
+}
