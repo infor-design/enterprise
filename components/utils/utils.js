@@ -414,7 +414,6 @@
     };
 
     //Add the button to field parent
-    //self.element.parent().append(this.xButton);
     this.xButton.insertAfter(self.element);
 
     //Handle Events
