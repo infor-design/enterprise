@@ -258,7 +258,9 @@
 
             ['wizard'],
 
-            ['popdown', '[data-popdown]']
+            ['popdown', '[data-popdown]'],
+
+            ['stepchart', '.step-chart']
           ];
 
           //Do initialization for all the simple controls
