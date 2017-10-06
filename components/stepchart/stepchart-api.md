@@ -24,7 +24,7 @@ The Step Chart Component is displays visual info on step completion.
 
 ### updated
 
-Update the chart with the current settings.
+Update the chart with the current options.
 
 ### destroy
 
