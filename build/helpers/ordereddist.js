@@ -1,5 +1,18 @@
 module.exports = function(dist, excludeControls) {
-  const orderedDeps = [ 'personalize', 'initialize', 'base', 'utils', 'animations', 'locale', 'listfilter'];
+  const orderedDeps = [
+    'personalize',
+    'initialize',
+    'base',
+    'utils',
+    'animations',
+    'locale',
+    'listfilter',
+    'mask-api',
+    'mask-functions',
+    'masked-input',
+    'listfilter'
+  ];
+
   let foundOrderedDeps = new Set(),
     selectControls,
     mergedDist;
