@@ -4,13 +4,24 @@
 
 -   [ListView](#listview)
     -   [render](#render)
+    -   [refresh](#refresh)
+    -   [loadData](#loaddata)
     -   [toggleAll](#toggleall)
+    -   [resetSearch](#resetsearch)
+    -   [focus](#focus)
     -   [remove](#remove)
     -   [clear](#clear)
     -   [removeAllSelected](#removeallselected)
     -   [clearAllSelected](#clearallselected)
+    -   [sortFunction](#sortfunction)
+    -   [deselect](#deselect)
     -   [unselect](#unselect)
     -   [select](#select)
+    -   [toggleActivation](#toggleactivation)
+    -   [activate](#activate)
+    -   [deactivate](#deactivate)
+    -   [updated](#updated)
+    -   [teardown](#teardown)
     -   [destroy](#destroy)
     -   [handleEvents](#handleevents)
 
@@ -26,10 +37,10 @@ The About Dialog Component is displays information regarding the application.
 -   `paging` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true, activates paging
 -   `pagesize` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**  -  If paging is activated, sets the number of listview items available per page
 -   `searchable` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
--   `selectable` **([String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean))**  -   //Can be false, 'single' or 'multiple'
--   `selectOnFocus` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -   //Can be false, 'single' or 'multiple'
--   `hoverable` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -   //Can be false, 'single' or 'multiple'
--   `source` **([Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function) \| [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))**  -  //If it is a string then it serves as the url for an ajax call that returns the dataset. If its a function it is a call back for getting the data asyncronously.
+-   `selectable` **([String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean))**  -   selection mode, can be false, 'single' or 'multiple' or 'mixed'
+-   `selectOnFocus` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -   If true the first item in the list will be selected as it is focused.
+-   `hoverable` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -   If true the list element will show a hover action to indicate its actionable.
+-   `source` **([Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function) \| [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))**  -  If source is a string then it serves as the url for an ajax call that returns the dataset. If its a function it is a call back for getting the data asyncronously.
 
 ### render
 
@@ -37,12 +48,37 @@ Render the template against the dataset.
 
 **Parameters**
 
--   `dataset` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)**  -  The data to use
+-   `dataset` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)**  -  The dataset to use
 -   `pagerInfo` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Pager instructions
+
+### refresh
+
+Get the Data Source. Can be an array, Object or Url and render the list.
+
+### loadData
+
+Load Data from an external API
+
+**Parameters**
+
+-   `ds` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  The dataset to use or will use settings.dataset.
+-   `pagerInfo` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  The pager settings to use (see pager api)
 
 ### toggleAll
 
-Toggle all rows from selected to unselected. (Multiselect)
+Toggle all items from selected to deselected, useful for multi/mixed selection
+
+### resetSearch
+
+Reset the current search parameters and highlight.
+
+### focus
+
+Focus the provided list item with the keyboard
+
+**Parameters**
+
+-   `item` **jQuery**  -  The list item (as jQuery) to focus
 
 ### remove
 
@@ -58,13 +94,23 @@ Remove all list items.
 
 ### removeAllSelected
 
-Remove all selected rows entirely from the list..
+Remove all selected items entirely from the list..
 
 ### clearAllSelected
 
-Deselect all selected rows.
+Deselect all selected items.
 
-### unselect
+### sortFunction
+
+Overridable function to conduct sorting
+
+**Parameters**
+
+-   `field` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The field in the dataset to sort on.
+-   `reverse` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  If true sort descending.
+-   `primer` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)**  -  A sorting primer function.
+
+### deselect
 
 Deselect the given list item.
 
@@ -72,18 +118,63 @@ Deselect the given list item.
 
 -   `li` **(jQuery | [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))**  -  Either the actually jQuery list element or a zero based index
 
+### unselect
+
+Deprivated - use deselect
+
+**Parameters**
+
+-   `li`  
+
+**Meta**
+
+-   **deprecated**: This is deprecated.
+
+
 ### select
 
-Deselect the given list item.
+Select the given list item.
 
 **Parameters**
 
 -   `li` **(jQuery | [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))**  -  Either the actually jQuery list element or a zero based index
 -   `noTrigger` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Do not trigger the selected event.
 
+### toggleActivation
+
+Toggle acivation state on the list item
+
+**Parameters**
+
+-   `li` **jQuery**  -  The jQuery list element.
+
+### activate
+
+Set item to activated, unactivate others and fire an event.
+
+**Parameters**
+
+-   `li` **jQuery**  -  The jQuery list element.
+
+### deactivate
+
+Set item to deactivated, uand fire an event.
+
+**Parameters**
+
+-   `li` **jQuery**  -  The jQuery list element.
+
+### updated
+
+Refresh the list with any optioned options that might have been set.
+
+### teardown
+
+Detatch all bound events.
+
 ### destroy
 
-Detatch all events and tear down.
+Detatch all events and tear down data object
 
 ### handleEvents
 
@@ -91,6 +182,7 @@ This component fires the following events.
 
 **Parameters**
 
--   `selected` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when a row is selected
--   `unselected` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when a row is deselected
+-   `selected` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when a item is selected
+-   `unselected` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when a item is deselected (deprecated)
+-   `deselected` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires when a item is deselected
 -   `rendered` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  Fires after the listbox is fully rendered

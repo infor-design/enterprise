@@ -2836,6 +2836,25 @@ html[dir='rtl'] {
   }
 
   &.has-datagrid {
+    .datagrid-container.paginated {
+      height: 100%;
+    }
+
+    .widget-content,
+    .card-content {
+      height: 278px;
+      min-height: 278px;
+    }
+
+    .widget-footer {
+      padding: 3px;
+    }
+
+    .card-footer {
+      border-top: 0;
+      padding-left: 0;
+      padding-right: 0;
+    }
 
     .pager-prev,
     .pager-next {
@@ -2844,12 +2863,6 @@ html[dir='rtl'] {
 
     .pager-count {
       vertical-align: middle;
-    }
-
-    .card-footer {
-      border-top: 0;
-      padding-left: 0;
-      padding-right: 0;
     }
   }
 

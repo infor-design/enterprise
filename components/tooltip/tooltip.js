@@ -653,7 +653,7 @@
           this.hide();
         }
 
-        if (this.tooltip) {
+        if (this.tooltip && this.tooltip.data('place')) {
           this.tooltip.data('place').destroy();
         }
 
