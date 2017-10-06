@@ -2374,6 +2374,11 @@ $.fn.datagrid = function(options) {
             rowValue = rowValue.toLowerCase();
           }
 
+          if (typeof rowValue === 'number') {
+            rowValue =  parseFloat(rowValue);
+            conditionValue = Locale.parseNumber(conditionValue);
+          }
+
           if (columnDef.filterType === 'date' || columnDef.filterType === 'time') {
             conditionValue = Locale.parseDate(conditions[i].value, conditions[i].format);
             if (conditionValue) {
@@ -2406,11 +2411,6 @@ $.fn.datagrid = function(options) {
                 rowValue = rowValue.getTime();
               }
             }
-          }
-
-          if (typeof rowValue === 'number') {
-            rowValue =  parseFloat(rowValue);
-            conditionValue = Locale.parseNumber(conditionValue);
           }
 
           switch (conditions[i].operator) {
