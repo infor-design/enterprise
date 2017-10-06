@@ -72,10 +72,12 @@
 
         this.handleEvents();
 
+        // Safety check, check for data
         if (settings.dataset) {
-          if (settings.dataset[0].children.length > 0) {
-            var data = settings.dataset[0] === undefined ? settings.dataset : settings.dataset[0];
-            this.render(data);
+          if (settings.dataset[0] && settings.dataset[0].children.length > 0) {
+            this.render(settings.dataset[0]);
+          } else if (settings.dataset && settings.dataset.children.length > 0) {
+            this.render(settings.dataset);
           } else {
             $(this.element).append('<p style=\'padding:10px;\'>No data available</p>');
           }
@@ -382,6 +384,11 @@
           this.createLegend(element);
         }
 
+        // check to see how many children are not leafs and have children
+        if (this.isSingleChildWithChildren()) {
+          $(chart).addClass('has-single-child');
+        }
+
         // Create root node
         this.setColor(data);
 
@@ -480,6 +487,28 @@
         var center = (containerWidth - windowWidth) / 2;
         this.element.scrollLeft(center);
 
+      },
+
+      /**
+       *  Private function:
+       *  Checks to see if children have children
+       *  used to set a class if there is only a single child with children
+       */
+      isSingleChildWithChildren: function() {
+        if (settings.dataset && settings.dataset[0].children) {
+          var i = settings.dataset[0].children.length;
+          var count = 0;
+
+          while (i--) {
+            if (!settings.dataset[0].children[i].isLeaf) {
+              count++;
+            }
+          }
+
+          return count === 1;
+        } else {
+          return false;
+        }
       },
 
       /**
