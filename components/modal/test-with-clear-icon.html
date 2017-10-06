@@ -1,0 +1,101 @@
+<div class="row">
+	<div class="twelve columns">
+    <h2>Modal</h2>
+    <p>This example is based from the actual filed JIRA ticket (SOHO-6005)
+      <a class="hyperlink hide-focus" href="https://jira.infor.com/browse/SOHO-6005" target="_blank">Related JIRA Ticket</a>.
+    </p>
+    
+    <h4>Fixes: </h4>
+    <p>1. Misalign clear button icon<br> 2. Provide a padding for long texts not to overlaps with clear button icon<br> 3. RTL ready</p> 
+    <br>
+
+		<button class="btn-secondary" type="button" id="add-context">Add Context</button><br><br>
+
+
+		<!-- "Context" Example -->
+		<div id="modal-add-context" style="display: none;">
+
+      <div class="row">
+        <div class="six columns">
+          <div class="field">
+            <label for="clearable01">Clearable Input</label>
+            <input type="text" id="clearable01" name="clearable01" data-clearable="true"/>
+          </div>
+          <div class="field">
+            <label for="clearable02">Clearable Input</label>
+            <input type="text" id="clearable02" name="clearable02" data-clearable="true"/>
+          </div>
+        </div>
+        <div class="six columns">
+          <div class="field">
+            <label for="clearable03">Clearable Input</label>
+            <input type="text" id="clearable03" name="clearable03" data-clearable="true"/>
+          </div>
+          <div class="field">
+            <label for="clearable04">Clearable Input</label>
+            <input type="text" id="clearable04" name="clearable04" data-clearable="true"/>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="six columns">
+          <div class="field">
+            <label for="clearable">Clearable Input</label>
+              <input type="text" id="clearable" name="clearable" data-clearable="true"/>
+          </div>
+          <div class="field">
+            <label for="searchfield-clearable">Clearable Searchfield</label>
+            <input data-autocomplete="/api/states?term=" data-options="{clearable: true}" id="searchfield-clearable" type="text" class="searchfield"/>
+          </div>
+        </div>
+        <div class="six columns">
+          <div class="field">
+            <label for="clearable">Clearable Input</label>
+              <input type="text" id="clearable03" name="clearable03" data-clearable="true" />
+          </div>
+          <div class="field">
+            <label for="searchfield-clearable">Clearable Searchfield</label>
+            <input data-autocomplete="/api/states?term=" data-options="{clearable: true}" id="searchfield-clearable03" type="text" class="searchfield"/>
+          </div>
+        </div>
+      </div>	
+		</div>
+
+  </div>
+</div>
+
+
+<script>
+var modals = {
+    'add-context': {
+      'title': 'Add Context',
+      'content': $('#modal-add-context')
+    }
+  },
+
+  setModal = function (opt) {
+    opt = $.extend({
+      buttons: [{
+        text: 'Cancel',
+        click: function(e, modal) {
+          modal.close();
+        }
+      }, {
+        text: 'Save',
+        click: function(e, modal) {
+          modal.close();
+        },
+        validate: false,
+        isDefault: true
+      }]
+    }, opt);
+
+    $('body').modal(opt);
+  };
+
+  $('#add-context').on('click', function () {
+    setModal(modals[this.id]);
+  });
+
+</script>

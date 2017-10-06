@@ -300,6 +300,19 @@
   }
 }
 
+[data-clearable="true"] {
+  padding-right: 32px;
+
+  & + .icon.close {
+    right: auto;
+    margin-left: -30px;
+  
+    &:hover {
+      fill: $trigger-hover-color;
+    }
+  }
+}
+
 .is-disabled {
   .icon.close {
     cursor: default;
@@ -948,6 +961,16 @@ html[dir='rtl'] {
 
   [data-mask-mode="number"].spinbox {
     text-align: center;
+  }
+
+  [data-clearable="true"] {
+    padding-right: 10px;
+    padding-left: 32px;
+  
+    & + .icon.close {
+      right: auto;
+      margin-right: -30px;
+    }
   }
 
   .field-short {
