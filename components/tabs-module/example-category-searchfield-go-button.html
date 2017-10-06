@@ -21,11 +21,18 @@
         <div class="buttonset">
           <label for="searchfield-category-go">Searchfield</label>
           <input id="searchfield-category-go" class="searchfield is-personalizable" data-options='{ "collapsible": false, "showGoButton": true, "categories": [ "Books", "Movies", "Music", "Video Games" ], "showCategoryText": true }'/>
+
+          <button id="home-button" class="btn">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-home"></use>
+            </svg>
+            <span class="audible">Home</span>
+          </button>
         </div>
       </div>
     </header>
     <div class="page-container">
-      <section class="tab-container module-tabs" data-options='{ "containerElement": "#module-tab-panel-container" }'>
+      <section class="tab-container module-tabs is-personalizable" data-options='{ "containerElement": "#module-tab-panel-container" }'>
         <div class="tab-list-container">
           <ul class="tab-list">
             <li class="tab is-selected"><a href="#tab-one">Tab One</a></li>
