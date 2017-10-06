@@ -1598,7 +1598,9 @@
           oldPanel = self.panels;
         }
 
-        var isCancelled = self.element.trigger('beforeactivate', [a]);
+        // NOTE: Breaking Change as of 4.3.3 - `beforeactivate` to `beforeactivated`
+        // See SOHO-5994 for more details
+        var isCancelled = self.element.trigger('beforeactivated', [a]);
         if (!isCancelled) {
           return;
         }
