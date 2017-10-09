@@ -570,8 +570,11 @@ $vertical-tab-sidebar-border-color: $graphite02;
 
 //Charts
 $chart-line-color: $graphite02;
-$chart-font-color: $graphite07;
+$chart-line-color-axis: $graphite04;
+$chart-font-color: $graphite06;
 $chart-font-color-inverse: $graphite08;
+$chart-bar-stroke: $white;
+$chart-arc-stroke: $white;
 
 // DataGrid
 $datagrid-border-color: $graphite02;

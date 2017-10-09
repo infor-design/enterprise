@@ -20,15 +20,22 @@
   }
 
   // Line Colors - and Visibility
-  .axis path,
-  .axis line {
-    fill: none;
-    shape-rendering: crispEdges;
-    stroke: $chart-line-color;
-  }
+  .axis {
+    path,
+    line {
+      fill: none;
+      shape-rendering: crispEdges;
+      stroke: $chart-line-color;
+    }
 
-  .axis.x .domain {
-    stroke: transparent;
+    .tick:first-child line {
+      stroke: $chart-line-color-axis;
+    }
+
+    &.x .domain,
+    &.y .domain {
+      stroke: transparent;
+    }
   }
 
   // Text Color
@@ -61,12 +68,12 @@
   }
 
   .arc {
-    stroke: $inverse-color;
+    stroke: $chart-arc-stroke;
   }
 
   .bar {
     cursor: pointer;
-    stroke: $inverse-color;
+    stroke: transparent;
     stroke-width: 1px;
   }
 
@@ -79,6 +86,12 @@
     .tick {
       line {
         stroke: $chart-line-color;
+      }
+
+      &:first-child {
+        line {
+          stroke: $chart-line-color-axis;
+        }
       }
 
       &.is-selected {
@@ -103,7 +116,7 @@
 
     .dot {
       cursor: pointer;
-      stroke: $white;
+      stroke: transparent;
     }
 
     .line-group .line {
