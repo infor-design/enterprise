@@ -27,7 +27,8 @@
         selectable: 'single',
         selectOnFocus: true,
         hoverable: true,
-        source: null
+        source: null,
+        disableItemDeactivation: false
       },
       settings = $.extend({}, defaults, options);
 
@@ -45,6 +46,7 @@
     * @param {Boolean} selectOnFocus  &nbsp;-&nbsp;  If true the first item in the list will be selected as it is focused.
     * @param {Boolean} hoverable  &nbsp;-&nbsp;  If true the list element will show a hover action to indicate its actionable.
     * @param {Function|String} source  &nbsp;-&nbsp; If source is a string then it serves as the url for an ajax call that returns the dataset. If its a function it is a call back for getting the data asyncronously.
+    * @param {Boolean} disableItemDeactivation  &nbsp;-&nbsp; If true when an item is activated the user should not be able to deactivate it by clicking on the activated item. They can only select another row.
     *
     */
     function ListView(element) {
@@ -734,25 +736,30 @@
       * Toggle acivation state on the list item
       * @param {jQuery} li &nbsp;-&nbsp; The jQuery list element.
       */
-      toggleActivation: function(li) {
+      toggleItemActivation: function(li) {
         var isActivated = li.hasClass('is-activated');
 
         if (isActivated) {
-          this.deactivate(li);
+          if (!this.settings.disableItemDeactivation) {
+            this.deactivateItem(li);
+          }
           return;
         }
 
-        this.activate(li);
+        this.activateItem(li);
       },
 
       /**
       * Set item to activated, unactivate others and fire an event.
-      * @param {jQuery} li &nbsp;-&nbsp; The jQuery list element.
+      * @param {jQuery|Number} li &nbsp;-&nbsp; The jQuery list element or the index.
       */
-      activate: function(li) {
+      activateItem: function(li) {
         var active = this.element.find('li.is-activated');
-        this.deactivate(active);
+        this.deactivateItem(active);
 
+        if (typeof li === 'number') {
+          li = this.element.find('ul').children().eq(li);
+        }
         li.addClass('is-activated');
 
         var idx = li.index();
@@ -760,10 +767,30 @@
       },
 
       /**
-      * Set item to deactivated, uand fire an event.
-      * @param {jQuery} li &nbsp;-&nbsp; The jQuery list element.
+      * Return the index of the activated row.
+      * @returns {Object} An object containing the active row's index, dom element and data.
       */
-      deactivate: function(li) {
+      activatedItem: function() {
+        var active = this.element.find('li.is-activated'),
+          idx = active.index();
+
+        return {index: idx, elem: active, data: this.settings.dataset[idx]};
+      },
+
+      /**
+      * Set item to deactivated, uand fire an event.
+      * @param {jQuery|Number} li &nbsp;-&nbsp; The jQuery list element. The li element or the index. If null the currently activated one will be deactivated.
+      */
+      deactivateItem: function(li) {
+
+        if (typeof li === 'number') {
+          li = this.element.find('ul').children().eq(li);
+        }
+
+        if (li === undefined) {
+          li = this.element.find('li.is-activated');
+        }
+
         li.removeClass('is-activated');
         var idx = li.index();
 
@@ -935,7 +962,7 @@
 
             if (!item.hasClass('is-disabled') && isMixed && !isCheckbox) {
               item.focus();
-              self.toggleActivation(item);
+              self.toggleItemActivation(item);
             }
 
             if (pattern.length > 0 && $(window).outerWidth() < 767 && !item.hasClass('is-disabled')) {
