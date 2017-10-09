@@ -767,7 +767,7 @@
       },
 
       /**
-      * Return an object containing infor about the currenly actived item.
+      * Return an object containing info about the currenly actived item.
       * @returns {Object} An object containing the active row's index, dom element and data.
       */
       activatedItem: function() {

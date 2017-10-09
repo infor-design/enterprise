@@ -160,7 +160,7 @@ Set item to activated, unactivate others and fire an event.
 
 ### activatedItem
 
-Return the an object containing the active row's index, dom element and data for the activated row.
+Return an object containing info about the currenly actived item.
 
 Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** An object containing the active row's index, dom element and data.
 
