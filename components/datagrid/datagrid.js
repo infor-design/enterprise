@@ -1826,20 +1826,18 @@ $.fn.datagrid = function(options) {
     *
     * @param {Object} pagerInfo &nbsp;-&nbsp The pager info object with information like activePage ect.
     */
-    triggerSource: function(pagerType) {
-      var self = this;
+    triggerSource: function(pagerType, callback) {
+      this.pager.pagerInfo = this.pager.pagerInfo || {};
+      this.pager.pagerInfo.type = pagerType;
 
-      return new Promise(function (resolve, reject) {
-        self.pager.pagerInfo = self.pager.pagerInfo || {};
-        self.pager.pagerInfo.type = pagerType;
+      if (pagerType !== 'refresh') {
+        this.pager.pagerInfo.activePage = 1;
+      }
 
-        if (pagerType !== 'refresh') {
-          self.pager.pagerInfo.activePage = 1;
+      this.renderPager(this.pager.pagerInfo, false, function() {
+        if (callback && typeof callback === 'function') {
+          callback();
         }
-
-        self.renderPager(self.pager.pagerInfo, false, function rendered(completed) {
-          resolve(completed);
-        });
       });
     },
 
