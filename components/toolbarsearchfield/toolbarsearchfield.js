@@ -880,9 +880,17 @@
 
       /**
        * Removes the entire control from the DOM and from this element's internal data
+       * @param {boolean} dontDestroySearchfield - if true, will not pass through and destroy a linked instance of the Searchfield component.
        */
-      destroy: function() {
+      destroy: function(dontDestroySearchfield) {
         this.teardown();
+
+        // Destroy the linked Searchfield instance
+        var sf = this.element.data('searchfield');
+        if (!dontDestroySearchfield && sf && typeof sf.destroy === 'function') {
+          sf.destroy(true);
+        }
+
         $.removeData(this.element[0], pluginName);
       },
 

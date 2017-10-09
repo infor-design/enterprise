@@ -827,10 +827,18 @@
 
       /**
        * Destroys the Searchfield and removes all jQuery component instancing.
+       * @param {boolean} dontDestroyToolbarSearchfield - if true, will not pass through and destroy a linked instance of the Toolbar Searchfield component.
        * @returns {undefined}
        */
-      destroy: function() {
+      destroy: function(dontDestroyToolbarSearchfield) {
         this.teardown();
+
+        // Destroy the linked Toolbar Searchfield instance
+        var tbsf = this.element.data('toolbarsearchfield');
+        if (!dontDestroyToolbarSearchfield && tbsf && typeof tbsf.destroy === 'function') {
+          tbsf.destroy(true);
+        }
+
         $.removeData(this.element[0], pluginName);
       }
     };

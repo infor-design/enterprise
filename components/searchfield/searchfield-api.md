@@ -155,4 +155,8 @@ Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Re
 
 Destroys the Searchfield and removes all jQuery component instancing.
 
+**Parameters**
+
+-   `dontDestroyToolbarSearchfield` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if true, will not pass through and destroy a linked instance of the Toolbar Searchfield component.
+
 Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 

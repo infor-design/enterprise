@@ -190,6 +190,10 @@ Returns **this**
 
 Removes the entire control from the DOM and from this element's internal data
 
+**Parameters**
+
+-   `dontDestroySearchfield` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if true, will not pass through and destroy a linked instance of the Searchfield component.
+
 ### handleEvents
 
 This component fires the following events.
