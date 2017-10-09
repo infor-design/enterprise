@@ -26,7 +26,8 @@
 <li><code>selectable</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a>)</strong>  -  selection mode, can be false, 'single' or 'multiple' or 'mixed'<br /></li>
 <li><code>selectOnFocus</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  If true the first item in the list will be selected as it is focused.<br /></li>
 <li><code>hoverable</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  If true the list element will show a hover action to indicate its actionable.<br /></li>
-<li><code>source</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</strong>  -  If source is a string then it serves as the url for an ajax call that returns the dataset. If its a function it is a call back for getting the data asyncronously.</li>
+<li><code>source</code> <strong>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">Function</a> \| <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>)</strong>  -  If source is a string then it serves as the url for an ajax call that returns the dataset. If its a function it is a call back for getting the data asyncronously.<br /></li>
+<li><code>disableItemDeactivation</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  If true when an item is activated the user should not be able to deactivate it by clicking on the activated item. They can only select another row.</li>
 </ul>
 <h3 id="functions">Functions</h3>
 <h4 id="render">render</h4>
@@ -98,23 +99,26 @@
 <li><code>li</code> <strong>(jQuery | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</strong>  -  Either the actually jQuery list element or a zero based index<br /></li>
 <li><code>noTrigger</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  Do not trigger the selected event.</li>
 </ul>
-<h4 id="toggleactivation">toggleActivation</h4>
+<h4 id="toggleitemactivation">toggleItemActivation</h4>
 <p>Toggle acivation state on the list item</p>
 <p><strong>Parameters</strong></p>
 <ul>
 <li><code>li</code> <strong>jQuery</strong>  -  The jQuery list element.</li>
 </ul>
-<h4 id="activate">activate</h4>
+<h4 id="activateitem">activateItem</h4>
 <p>Set item to activated, unactivate others and fire an event.</p>
 <p><strong>Parameters</strong></p>
 <ul>
-<li><code>li</code> <strong>jQuery</strong>  -  The jQuery list element.</li>
+<li><code>li</code> <strong>(jQuery | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</strong>  -  The jQuery list element or the index.</li>
 </ul>
-<h4 id="deactivate">deactivate</h4>
+<h4 id="activateditem">activatedItem</h4>
+<p>Return the index of the activated row.</p>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong> An object containing the active row's index, dom element and data.</p>
+<h4 id="deactivateitem">deactivateItem</h4>
 <p>Set item to deactivated, uand fire an event.</p>
 <p><strong>Parameters</strong></p>
 <ul>
-<li><code>li</code> <strong>jQuery</strong>  -  The jQuery list element.</li>
+<li><code>li</code> <strong>(jQuery | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a>)</strong>  -  The jQuery list element. The li element or the index. If null the currently activated one will be deactivated.</li>
 </ul>
 <h4 id="updated">updated</h4>
 <p>Refresh the list with any optioned options that might have been set.</p>

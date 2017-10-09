@@ -54,3 +54,19 @@
   }
 
 }
+
+html[dir='rtl'] {
+
+  .step-chart {
+    .step-chart-label-small {
+      float: left;
+    }
+
+    .icon {
+      float: left;
+      margin: 0 5px 0 0;
+    }
+
+  }
+
+}
