@@ -1,0 +1,59 @@
+<div class="row">
+	<div class="full column">
+			<div id="datagrid"></div>
+	</div>
+</div>
+
+<script>
+
+ 	var grid, columns = [];
+
+	function populateGrid() {
+
+		columns.push({id: 'selectionCheckbox', sortable: false, resizable: false, formatter: Formatters.SelectionCheckbox, align: 'center'});
+		columns.push({id: 'col0', name: 'col0', field: 'col0',  selectable: false });
+		columns.push({id: 'col1', name: 'col1', field: 'col1',  selectable: false });
+		columns.push({id: 'col2', name: 'col2', field: 'col2',  selectable: false });
+		columns.push({id: 'col3', name: 'col3', field: 'col3',  selectable: false });
+		columns.push({id: 'col4', name: 'col4', field: 'col4',  selectable: false });
+
+
+		var data = [];
+
+		data.push({id: 0, col0: 'data0', col1: 'data1', col2: 'data2', col3: 'data3', col4: 'data4'});
+		data.push({id: 1, col0: 'data1', col1: 'data1', col2: 'data2', col3: 'data3', col4: 'data4'});
+		data.push({id: 2, col0: 'data0', col1: 'data1', col2: 'data2', col3: 'data3', col4: 'data4'});
+		data.push({id: 3, col0: 'data2', col1: 'data1', col2: 'data2', col3: 'data3', col4: 'data4'});
+		data.push({id: 4, col0: 'data0', col1: 'data1', col2: 'data2', col3: 'data3', col4: 'data4'});
+		data.push({id: 5, col0: 'data1', col1: 'data1', col2: 'data2', col3: 'data3', col4: 'data4'});
+
+
+	  var options = {
+			columns: columns,
+			idProperty: 'id',
+			dataset: data,
+			editable: true,
+			clickToSelect: false,
+			paging: true,
+			pagesize: 25,
+			alternateRowShading: true,
+			rowHeight: 'short',
+			cellNavigation: false,
+			selectable: 'multiple',
+			groupable: {
+        fields: ['col0'],
+        expanded: true,
+        aggregator: 'sum'
+      },
+			toolbar: {title: 'Title', results: true, dateFilter: false,
+				keywordFilter: true, advancedFilter: false, actions: true, views: false,
+				rowHeight: true, collapsibleFilter: true, exportToExcel: true}
+			};
+
+		grid = $('#datagrid').datagrid(options).data('datagrid');
+	}
+
+  $('body').on('initialized', function() {
+  	populateGrid();
+  });
+</script>
