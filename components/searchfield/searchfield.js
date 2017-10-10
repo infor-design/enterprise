@@ -383,8 +383,6 @@
         if (doFocus === true) {
           this.element.focus();
         }
-
-        this.recalculateParent();
       },
 
       /**
@@ -424,13 +422,9 @@
        * @returns {undefined}
        */
       handleBlur: function() {
-        this.recalculateParent();
-
         if (!this.hasFocus()) {
           this.wrapper.removeClass('has-focus active');
-          return;
         }
-
       },
 
       /**

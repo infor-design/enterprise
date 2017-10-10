@@ -34,6 +34,7 @@ Searchfield Component Wrapper that extends normal Searchfield functionality and 
 
 **Parameters**
 
+-   `element`  
 -   `clearable` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -   If "true", provides an "x" button on the right edge that clears the field
 -   `collapsible` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -   If "true", allows the field to expand/collapse on larger breakpoints when focused/blurred respectively
 -   `collapsibleOnMobile` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -   If true, overrides `collapsible` only on mobile settings.
@@ -188,10 +189,6 @@ Returns **this**
 ### destroy
 
 Removes the entire control from the DOM and from this element's internal data
-
-**Parameters**
-
--   `dontDestroySearchfield` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if true, will not pass through and destroy a linked instance of the Searchfield component.
 
 ### handleEvents
 
