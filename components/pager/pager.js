@@ -621,7 +621,7 @@
               self.settings.componentAPI.loadData(data, pagingInfo, true);
 
               if (callback && typeof callback === 'function') {
-                callback(true)
+                callback(true);
               }
 
               setTimeout(function () {
