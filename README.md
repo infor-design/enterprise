@@ -125,6 +125,31 @@ grunt
 cd ../../../
 ```
 
+## Getting from S3 CDN
+
+You can now refer to the scripts and css from a cdn (AWS) the paths would be...
+
+https://dx6yfd7aurvg3.cloudfront.net/4.3.3/dist/js/sohoxi.js
+https://dx6yfd7aurvg3.cloudfront.net/4.3.3/dist/js/sohoxi.min.js
+
+https://dx6yfd7aurvg3.cloudfront.net/4.3.3/dist/css/dark-theme.css
+https://dx6yfd7aurvg3.cloudfront.net/4.3.3/dist/css/dark-theme.min.css
+
+https://dx6yfd7aurvg3.cloudfront.net/4.3.3/dist/css/dark-theme.css
+https://dx6yfd7aurvg3.cloudfront.net/4.3.3/dist/css/dark-theme.min.css
+
+https://dx6yfd7aurvg3.cloudfront.net/4.3.3/dist/css/light-theme.css
+https://dx6yfd7aurvg3.cloudfront.net/4.3.3/dist/css/light-theme.min.css
+
+https://dx6yfd7aurvg3.cloudfront.net/4.3.3/dist/svg/svg.html
+https://dx6yfd7aurvg3.cloudfront.net/4.3.3/dist/svg/svg-extended.html
+
+Todo:
+- Be aware there may be a cost involved to using this with Infor's amazon s3 account
+so use should be limited at this point.
+- Add Version https://dx6yfd7aurvg3.cloudfront.net/4.3.2
+- We will have a dns name for this soon.
+
 ### Installation
 Run the following
 
