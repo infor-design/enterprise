@@ -97,6 +97,11 @@
         this.inputWrapper = this.input.parent();
         this.inputWrapper.addClass('toolbar-searchfield-wrapper');
 
+        // Disable animation/transitions initially
+        // For searchfields in "non-collapsible" mode, this helps with sizing algorithms.
+        this.element.addClass('no-transition no-animation');
+        this.inputWrapper.addClass('no-transition no-animation');
+
         if (sfSettings.categories) {
           this.categoryButton = this.inputWrapper.find('.searchfield-category-button');
         }
@@ -114,6 +119,13 @@
         } else {
           this.inputWrapper.removeClass('is-open');
         }
+
+        // When the Toolbar component is rendered, re-enable transitions/animation
+        var self = this;
+        this.toolbarParent.one('rendered.toolbarsearchfield', function() {
+          self.element.removeClass('no-transition no-animation');
+          self.inputWrapper.removeClass('no-transition no-animation');
+        });
 
         return this;
       },
