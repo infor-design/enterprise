@@ -691,6 +691,13 @@ $splitter-active-bg-color: $slate07;
 $splitter-active-grip-bg-color: $white;
 $splitter-box-shadow-color: rgba(54, 138, 192, .75);
 
+// Step Chart
+$step-chart-bg-color: $slate07;
+$step-chart-border-color: $slate05;
+$step-chart-inprogress-bg-color: $ruby02;
+$step-chart-completed-bg-color: $primary-color;
+$step-chart-totally-completed-bg-color: $alert-green;
+
 //Multi Select
 .dropdown-list.multiple li:hover:not(.group-label)::before {
   border: 1px solid $slate04;

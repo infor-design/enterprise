@@ -101,6 +101,12 @@ $hierarchy-line-width: 1px;
           height: 1px;
         }
       }
+
+      &.has-single-child .sub-level > li:last-child::before,
+      &.has-single-child .sub-level > li:first-child::before,
+      &.has-single-child .sub-level > li::before {
+        display: none;
+      }
     }
 
   }

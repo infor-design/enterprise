@@ -82,7 +82,9 @@
       grid.triggerSource('initial');
 
       $('#refresh').on('click', function () {
-        grid.triggerSource('refresh');
+        grid.triggerSource('refresh').then(function(refreshComplete) {
+          console.log('refresh complete');
+        });
       });
 
   });

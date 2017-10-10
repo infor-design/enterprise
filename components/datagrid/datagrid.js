@@ -1827,14 +1827,20 @@ $.fn.datagrid = function(options) {
     * @param {Object} pagerInfo &nbsp;-&nbsp The pager info object with information like activePage ect.
     */
     triggerSource: function(pagerType) {
+      var self = this;
 
-      this.pager.pagerInfo = this.pager.pagerInfo || {};
-      this.pager.pagerInfo.type = pagerType;
+      return new Promise(function (resolve, reject) {
+        self.pager.pagerInfo = self.pager.pagerInfo || {};
+        self.pager.pagerInfo.type = pagerType;
 
-      if (pagerType !== 'refresh') {
-        this.pager.pagerInfo.activePage = 1;
-      }
-      this.renderPager(this.pager.pagerInfo);
+        if (pagerType !== 'refresh') {
+          self.pager.pagerInfo.activePage = 1;
+        }
+
+        self.renderPager(self.pager.pagerInfo, false, function rendered(completed) {
+          resolve(completed);
+        });
+      });
     },
 
     loadData: function (dataset, pagerInfo, isResponse) {
@@ -2374,6 +2380,11 @@ $.fn.datagrid = function(options) {
             rowValue = rowValue.toLowerCase();
           }
 
+          if (typeof rowValue === 'number') {
+            rowValue =  parseFloat(rowValue);
+            conditionValue = Locale.parseNumber(conditionValue);
+          }
+
           if (columnDef.filterType === 'date' || columnDef.filterType === 'time') {
             conditionValue = Locale.parseDate(conditions[i].value, conditions[i].format);
             if (conditionValue) {
@@ -2406,11 +2417,6 @@ $.fn.datagrid = function(options) {
                 rowValue = rowValue.getTime();
               }
             }
-          }
-
-          if (typeof rowValue === 'number') {
-            rowValue =  parseFloat(rowValue);
-            conditionValue = Locale.parseNumber(conditionValue);
           }
 
           switch (conditions[i].operator) {
@@ -7369,7 +7375,7 @@ $.fn.datagrid = function(options) {
     * @param {String} pagingInfo &nbsp;-&nbsp The paging object with activePage ect used by pager.js
     * @param {Boolean} isResponse &nbsp;-&nbsp Internal flag used to prevent callbacks from rexecuting.
     */
-    renderPager: function (pagingInfo, isResponse) {
+    renderPager: function (pagingInfo, isResponse, callback) {
       var api = this.pager;
 
       if (!api) {
@@ -7379,7 +7385,7 @@ $.fn.datagrid = function(options) {
       api.updatePagingInfo(pagingInfo);
 
       if (!isResponse) {
-        api.renderPages(pagingInfo.type);
+        api.renderPages(pagingInfo.type, callback);
       }
 
       // Update selected and Sync header checkbox

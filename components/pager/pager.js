@@ -586,7 +586,7 @@
       },
 
       // Render Paged Items
-      renderPages: function(op) {
+      renderPages: function(op, callback) {
         var expr,
           self = this,
           request = {
@@ -619,6 +619,10 @@
               // Call out to the component's API to pull in dataset information.
               // This method should also tell the Pager how to re-render itself.
               self.settings.componentAPI.loadData(data, pagingInfo, true);
+
+              if (callback && typeof callback === 'function') {
+                callback(true)
+              }
 
               setTimeout(function () {
                 self.element.trigger('afterpaging', pagingInfo);
