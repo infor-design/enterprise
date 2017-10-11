@@ -588,6 +588,8 @@
               setTimeout(function () {
                 self.close();
               }, 0);
+
+              e.stopPropagation();
             }
 
             if (keyCode === 9) {

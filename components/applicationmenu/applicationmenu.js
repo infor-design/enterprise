@@ -133,17 +133,28 @@
         if (this.triggers.length) {
           this.triggers.off('click.applicationmenu').on('click.applicationmenu', triggerClickHandler);
         }
+
+        $(document).on('keydown.applicationmenu', function(e) {
+          self.handleKeyDown(e);
+        });
+
       },
 
       handleKeyDown: function(e) {
         var key = e.which;
 
-        if (key === 27) { // Escape
+        if (key === 121) { // F10
           e.preventDefault();
-          this.closeMenu();
-          if (this.triggers.length) {
-            this.triggers.eq(0).focus();
+
+          if (this.isOpen()) {
+            this.closeMenu();
+            if (this.triggers.length) {
+              this.triggers.eq(0).focus();
+            }
+          } else {
+            this.openMenu();
           }
+
           return false;
         }
       },
@@ -312,8 +323,6 @@
             if ($(e.target).parents('.application-menu').length < 1 && !self.isLargerThanBreakpoint()) {
               self.closeMenu(true);
             }
-          }).on('keydown.applicationmenu', function(e) {
-            self.handleKeyDown(e);
           });
         }, 0);
       },
@@ -363,7 +372,7 @@
         this.timeout = setTimeout(close, 300);
 
         this.menu.removeClass('is-open show-shadow').find('[tabindex]');
-        $(document).off('click.applicationmenu keydown.applicationmenu');
+        $(document).off('click.applicationmenu');
       },
 
       /**
@@ -410,7 +419,7 @@
         this.menu.off('animateopencomplete animateclosedcomplete');
         $(window).off('scroll.applicationmenu');
         $('body').off('resize.applicationmenu');
-        $(document).off('click.applicationmenu open-applicationmenu close-applicationmenu');
+        $(document).off('click.applicationmenu open-applicationmenu close-applicationmenu keydown.applicationmenu');
 
         api = this.accordion ? this.accordion.data('accordion') : null;
         if (api && api.destroy) {
