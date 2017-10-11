@@ -20,7 +20,6 @@ The Application Menu provides access to all the functions, pages, and forms in a
 
 **Parameters**
 
--   `element`  
 -   `breakpoint` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Can be 'tablet' (+720), 'phablet (+968), ' 'desktop' +(1024), or 'large' (+1280). Default is phablet (968)
 -   `openOnLarge` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  If true, will automatically open the Application Menu when a large screen-width breakpoint is met.
 -   `triggers` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  An Array of jQuery-wrapped elements that are able to open/close this nav menu.
