@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="two-thirds column">
+    <h2 class="widget-title">Line Chart &mdash; Format y-axis to be shortened</h2>
+    <p>For example: the value 1000 is displayed as 1K.</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Line Chart Title</h2>
+        </div>
+        <div class="widget-content">
+          <div id="line-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+
+  var  dataset = [{
+    "name": "Mingle",
+    "data": [
+      {"name": "D1", "value":0, "tooltip": "D1, 0"},
+      {"name": "D2", "value":1, "tooltip": "D2, 1"},
+      {"name": "D3", "value":1051, "tooltip": "D3, 1051"},
+      {"name": "D4", "value":2050, "tooltip": "D4, 2050"}
+    ]
+  }];
+
+  $('#line-example').chart({
+    type: 'line',
+    dataset: dataset,
+    yAxis: {
+      ticks: {
+        number: 5,
+        format: 's'
+      }
+    }
+  });
+
+});
+</script>
