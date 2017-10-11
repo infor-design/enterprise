@@ -26,7 +26,8 @@
           allResultsCallback: undefined,
           showAllResults: true,
           showGoButton: false,
-          goButtonCopy: Locale.translate('Go'),
+          goButtonCopy: Locale.translate('Go') || 'Go',
+          goButtonAction: undefined, // if defined as a function, will fire this callback on the Go Button "click"
           categories: undefined, // If defined as an array, displays a dropdown containing categories that can be used to filter results.
           categoryMultiselect: false, // If true, creates a multiselectable Categories list
           showCategoryText: false, // If true, will show any available categories that are selected to the left of the Dropdown field.
@@ -186,7 +187,8 @@
 
         // Add a "Go" Button from scratch if we enable the setting
         if (this.settings.showGoButton && (!this.goButton || !this.goButton.length)) {
-          this.goButton = $('<button id="'+ this.element.uniqueId('searchfield-go-button') +'" class="btn-secondary go-button"><span>'+ this.settings.goButtonCopy +'</span></button>');
+          this.goButton = $('<button class="btn-secondary go-button"><span>'+ this.settings.goButtonCopy +'</span></button>');
+          this.goButton.attr('id', this.goButton.uniqueId('searchfield-go-button-'));
           this.wrapper.addClass('has-go-button');
           this.element.after(this.goButton);
         } else {
@@ -231,6 +233,14 @@
       },
 
       /**
+       * Detects the existence of a "Go" button added to the main searchfield API
+       * @returns {boolean}
+       */
+      hasGoButton: function() {
+        return this.settings.showGoButton && this.goButton && this.goButton.length;
+      },
+
+      /**
        * Sets up the event-listening structure for this component instance.
        * @private
        * @returns {this}
@@ -270,6 +280,12 @@
             self.handleCategoryBlur(e);
           }).on('close.searchfield', function(e) { // Popupmenu Close
             self.handlePopupClose(e);
+          });
+        }
+
+        if (this.hasGoButton()) {
+          this.goButton.on('click.searchfield', function(e) {
+            return self.handleGoButtonClick(e);
           });
         }
 
@@ -467,6 +483,28 @@
 
         return true;
       },
+
+
+      /**
+       * @param {jQuery.Event} e
+       */
+      handleGoButtonClick: function(e) {
+        var action = this.settings.goButtonAction;
+        if (typeof action !== 'function') {
+          return;
+        }
+
+        var searchfieldValue = this.element.val(),
+          categorySelection;
+
+        if (this.hasCategories()) {
+          categorySelection =this.getCategoryData();
+        }
+
+        // gives access to the current searchfield value, and category data if applicable.
+        return action(e, searchfieldValue, categorySelection);
+      },
+
 
       /**
        * Sets the text content on the category button.  Will either display a single category name, or a translated "[x] Selected." string.

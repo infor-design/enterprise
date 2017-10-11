@@ -20,7 +20,7 @@
         </div>
         <div class="buttonset">
           <label for="searchfield-category-go">Searchfield</label>
-          <input id="searchfield-category-go" class="searchfield is-personalizable" data-options='{ "collapsible": false, "showGoButton": true, "categories": [ "Books", "Movies", "Music", "Video Games" ], "showCategoryText": true }'/>
+          <input id="searchfield-category-go" class="searchfield is-personalizable"/>
 
           <button id="home-button" class="btn">
             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
@@ -61,3 +61,28 @@
       </section>
     </div>
   </div>
+
+  <script type="text/javascript">
+    var body = $('body'),
+      sf = $('#searchfield-category-go');
+
+    // Go Button Action
+    function goButtonAction(e, value, categoryData) {
+      var msg = '<p><b>Searchfield Value: </b>'+ value +'</p>' +
+        '<p><b>Category Data</b>'+  JSON.stringify(categoryData) +'</p>';
+
+      body.toast({
+        'title': 'Go Button Clicked',
+        'message': msg
+      });
+    }
+
+    sf.toolbarsearchfield({
+      'collapsible': false,
+      'goButtonAction': goButtonAction,
+      'showGoButton': true,
+      'categories': [ 'Books', 'Movies', 'Music', 'Video Games' ],
+      'showCategoryText': true
+    });
+
+  </script>

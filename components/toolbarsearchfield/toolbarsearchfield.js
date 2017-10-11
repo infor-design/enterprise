@@ -194,7 +194,7 @@
           return false;
         }
 
-        return searchfieldAPI.goButton.length > 0;
+        return searchfieldAPI.hasGoButton();
       },
 
       /**
