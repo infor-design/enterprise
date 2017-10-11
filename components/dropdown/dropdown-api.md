@@ -4,8 +4,7 @@
 
 -   [Dropdown](#dropdown)
     -   [activate](#activate)
-    -   [selectOptions](#selectoptions)
-    -   [selectOption](#selectoption)
+    -   [selectValue](#selectvalue)
     -   [getDataAttributes](#getdataattributes)
     -   [setCode](#setcode)
     -   [disable](#disable)
@@ -41,25 +40,14 @@ Focus the input Element
 
 -   `useSearchInput`  
 
-### selectOptions
+### selectValue
 
-Convenience method for running _selectOption()_ on a set of list options.
-Accepts an array or jQuery selector containing valid list options and selects/deselects them.
-
-**Parameters**
-
--   `options`  
--   `noTrigger` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if true, causes the 'selected' and 'change' events not to fire on each list item.
-
-### selectOption
-
-Select an option and conditionally trigger events.
-Accepts an array or jQuery selector containing valid list options and selects/deselects them.
+Select an option by the value.
 
 **Parameters**
 
--   `option` **jQuery** the incoming option
--   `noTrigger` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if true, causes the 'selected' and 'change' events not to fire on the list item.
+-   `value`  
+-   `option` **value** A string containing the value to look for. (Case insensitive)
 
 ### getDataAttributes
 
