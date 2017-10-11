@@ -39,6 +39,44 @@ label.fileupload {
   }
 }
 
+label.fileclose {
+  display: inline-block;
+  margin-left: -56px;
+  position: absolute;
+  top: 19px;
+
+  // Label
+  span.trigger {
+    cursor: pointer;
+    display: inline-block;
+    height: 34px;
+    outline: 0;
+    padding-top: 14px;
+    position: relative;
+    text-align: center;
+    width: 36px;
+
+    &.trigger {
+
+      .icon {
+        fill: $trigger-icon-fill-color;
+        height: 14px;
+        width: 14px;
+      }
+
+      &:hover {
+        .icon {
+          fill: $trigger-hover-color;
+        }
+      }
+
+      &:active .icon {
+        fill: $trigger-active-color;
+      }
+    }
+  }
+}
+
 // Make this flow offscreen
 label.fileupload input[type="file"],
 input.fileupload[type="file"] {
@@ -61,6 +99,13 @@ input.fileupload[type="file"] {
         fill: $input-disabled-border-color;
       }
     }
+  }
+}
+
+input.fileupload[type="file"] {
+   & ~ .icon.close {
+    right: 50px;
+    top: 2px;
   }
 }
 
@@ -410,13 +455,13 @@ input.fileupload-background-transparent.readonly {
 @include respond-to(phone) {
   .is-safari {
     .modal {
-      label.fileupload {
+      label.fileupload, label.fileclose {
         position: absolute;
       }
     }
   }
 
-  label.fileupload {
+  label.fileupload, label.fileclose {
     margin-left: -36px;
   }
 }
@@ -432,7 +477,7 @@ input.fileupload-background-transparent.readonly {
 
 // Safari Hack
 .is-safari {
-  label.fileupload {
+  label.fileupload, label.fileclose {
     position: static;
   }
 
@@ -444,7 +489,7 @@ input.fileupload-background-transparent.readonly {
 // RTL Styles
 html[dir='rtl'] {
 
-  label.fileupload {
+  label.fileupload, label.fileclose {
     margin-left: inherit;
     margin-right: -34px;
 
