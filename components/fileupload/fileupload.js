@@ -47,7 +47,7 @@
           hasInlineLabel = !elem.is('input.fileupload');
 
         this.fileInput = hasInlineLabel ? elem.find('input') : elem;
-        
+
         elem.closest('.field').addClass('field-fileupload');
 
         //append markup
@@ -123,7 +123,7 @@
           this.fileInput.attr('disabled', 'disabled');
         }
 
-        /* 
+        /*
         * New Event for File Upload Change
         */
         this.fileInput.on('change.fileupload', function() {
@@ -158,10 +158,11 @@
       * Teardown - Remove added markup and events
       */
       destroy: function() {
-        svgClose = elem.parent().find('label.fileclose');
-        svgClose.off('click.fileclose');
+        this.element.parent().find('label.fileclose').off('click.fileclose');
+
         this.fileInput.off('change.fileupload');
         this.textInput.off('keydown.fileupload');
+
         this.element.closest('.field-fileupload')
           .removeClass('field-fileupload')
           .find('>label:first, >[type="text"]:first, .trigger, .icon-dirty, .msg-dirty').remove();
