@@ -52,7 +52,7 @@
       //ca-gregorian/main/dates/calendars/gregorian/timeFormats/short
       timeFormat: 'H:mm',
       //ca-gregorian/main/dates/calendars/gregorian/dayPeriods/wide
-      dayPeriods: ['正午', '午後']
+      dayPeriods: ['午前', '午後']
     }],
     //numbers/currencyFormats-numberSystem-latn/standard (Replace Sign http://www.currencysymbols.in ?)
     currencySign: '¥', //(Replace Sign http://www.currencysymbols.in ?)
