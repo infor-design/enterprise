@@ -3082,19 +3082,27 @@ window.Chart = function(container) {
     }
 
     var entries = d3.max(dataset.map(function(d){ return d.data.length; })) -1,
-      xScale = x.domain(!!settings.xAxis && !!settings.xAxis.domain ? (settings.xAxis.domain) : ([0, isBubble ? d3.max(maxes.x) : entries])).nice(),
+      xScale = x.domain(!!settings.xAxis && !!settings.xAxis.domain ? (settings.xAxis.domain) : ([0, isBubble ? d3.max(maxes.x) : entries])),
       yScale = y.domain([0, d3.max(isBubble ? maxes.y : maxes)]).nice(),
       zScale = z.domain([0, d3.max(isBubble ? maxes.z : maxes)]).nice();
 
     var xAxis = d3.svg.axis()
       .scale(xScale)
       .orient('bottom')
-      .ticks((!!settings.xAxis && !!settings.xAxis.ticks) ? (settings.xAxis.ticks) : (isBubble && isViewSmall ? Math.round(entries/2) : entries))
+      .ticks((!!settings.xAxis && !!settings.xAxis.ticks) ?
+        (settings.xAxis.ticks === 'auto' ?
+          Math.max(width/55, 2) : settings.xAxis.ticks) :
+            (isBubble && isViewSmall ? Math.round(entries/2) : entries))
       .tickPadding(10)
       .tickSize(isBubble ? -(height + 10) : 0)
       .tickFormat(function (d, i) {
-        if (!!settings.xAxis && !!settings.xAxis.formatter) {
-          return settings.xAxis.formatter(d, i);
+        if (!!settings.xAxis) {
+          if (!!settings.xAxis.formatter) {
+            return settings.xAxis.formatter(d, i);
+          }
+          if (settings.xAxis.ticks === 'auto') {
+            return names[d];
+          }
         }
         return isBubble ? d : names[i];
       });
