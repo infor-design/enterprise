@@ -65,8 +65,16 @@ $toolbarsearchfield-category-empty-width: 54px;
   }
 
   &.has-go-button {
+
     .searchfield {
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 0;
       width: calc(100% - 39px);
+    }
+
+    .go-button {
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
     }
 
     > .icon {
@@ -351,7 +359,14 @@ $toolbarsearchfield-category-empty-width: 54px;
 
     &.has-go-button {
       .searchfield {
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
         width: calc(100% - 85px);
+      }
+
+      .go-button {
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
       }
     }
 
@@ -754,11 +769,42 @@ $toolbarsearchfield-category-empty-width: 54px;
 }
 
 html[dir='rtl'] {
-  .toolbarsearchfield-wrapper {
+  .toolbar-searchfield-wrapper {
+    text-align: right;
+
+    .icon.close {
+      left: 45px;
+    }
+
+    &.active.is-open {
+      .searchfield {
+        padding-left: 34px;
+        padding-right: 10px;
+      }
+    }
+
     &.has-text {
       .searchfield {
-        padding-right: auto;
         padding-left: 0;
+        padding-right: 10px;
+      }
+    }
+
+    &.has-categories {
+      .searchfield-category-button {
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 2px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 2px;
+      }
+    }
+
+    &.has-go-button {
+      .go-button {
+        border-bottom-left-radius: 2px;
+        border-bottom-right-radius: 0;
+        border-top-left-radius: 2px;
+        border-top-right-radius: 0;
       }
     }
   }
