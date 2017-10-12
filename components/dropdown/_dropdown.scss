@@ -344,7 +344,12 @@ div.multiselect {
     @include css3(touch-callout, none);
     @include css3(user-select, none);
     color: $popupmenu-color;
+    display: block;
+    overflow: hidden;
     text-decoration: none;
+    text-overflow: ellipsis;
+    width: inherit;
+    white-space: nowrap;
   }
 
   // Added to the dropdown list when doing a search
