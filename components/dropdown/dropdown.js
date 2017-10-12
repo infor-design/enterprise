@@ -668,6 +668,8 @@
           this.list.addClass('has-icons');
           this.listIcon.pseudoElemIcon.clone().appendTo(this.list);
         }
+
+        this.listUl.find('[title]').tooltip();
       },
 
       // Set the value based on selected options
