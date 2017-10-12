@@ -2,12 +2,10 @@
 
 ### Table of Contents
 
+-   [parseOptions](#parseoptions)
 -   [getHiddenSize](#gethiddensize)
 -   [smoothScroll](#smoothscroll)
--   [isElement](#iselement)
--   [getDimensions](#getdimensions)
--   [splice](#splice)
--   [removeDuplicates](#removeduplicates)
+-   [parseOptions](#parseoptions-1)
 -   [extend](#extend)
 -   [fixSVGIcons](#fixsvgicons)
 -   [getViewportSize](#getviewportsize)
@@ -16,11 +14,31 @@
 -   [isString](#isstring)
 -   [isNumber](#isnumber)
 -   [safeSetSelection](#safesetselection)
+-   [isElement](#iselement)
+-   [getDimensions](#getdimensions)
+-   [splice](#splice)
+-   [removeDuplicates](#removeduplicates)
 -   [smoothScrollTo](#smoothscrollto)
 -   [defer](#defer)
 -   [isAbove](#isabove)
 -   [isBelow](#isbelow)
 -   [HideFocus](#hidefocus)
+
+## parseOptions
+
+jQuery Behavior Wrapper for `Soho.utils.parseOptions`.
+
+**Parameters**
+
+-   `attr`  
+-   `attrName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
+
+Returns **([Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)>)** 
+
+**Meta**
+
+-   **deprecated**: This is deprecated.
+
 
 ## getHiddenSize
 
@@ -43,50 +61,16 @@ Binds the Soho Behavior _smoothScrollTo()_ to a jQuery selector
 
 Returns **$.Deferred** 
 
-## isElement
+## parseOptions
 
-Checks if an element is valid
-
-**Parameters**
-
--   `el` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** The element being checked
-
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** represents all values normally contained by a DOMRect or ClientRect
-
-## getDimensions
-
-Runs the generic _getBoundingClientRect()_ method on an element, but returns its results
-as a plain object instead of a ClientRect
+Grabs an attribute from an HTMLElement containing stringified JSON syntax, and interprets it into options.
 
 **Parameters**
 
--   `el` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** The element being manipulated
+-   `element` **[HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)** 
+-   `attr` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
 
-Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** represents all values normally contained by a DOMRect or ClientRect
-
-## splice
-
-The splice() method changes the content of a string by removing a range of
-characters and/or adding new characters.
-
-**Parameters**
-
--   `str` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The string that will be manipulated.
--   `start` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** Index at which to start changing the string.
--   `delCount` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** An integer indicating the number of old chars to remove.
--   `newSubStr` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The String that is spliced in.
-
-Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** A new string with the spliced substring.
-
-## removeDuplicates
-
-Takes a string with possible duplicate characters and returns a string
-containing ALL unique characters.  Useful for construction of REGEX objects
-with characters from an input field, etc.
-
-**Parameters**
-
--   `str`  
+Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
 ## extend
 
@@ -164,6 +148,51 @@ cases, will be deferred with `requestAnimationFrame` or `setTimeout`.
 -   `element` **[HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)** 
 -   `startPos` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
 -   `endPos` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+
+## isElement
+
+Checks if an element is valid
+
+**Parameters**
+
+-   `el` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** The element being checked
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** represents all values normally contained by a DOMRect or ClientRect
+
+## getDimensions
+
+Runs the generic _getBoundingClientRect()_ method on an element, but returns its results
+as a plain object instead of a ClientRect
+
+**Parameters**
+
+-   `el` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>)** The element being manipulated
+
+Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** represents all values normally contained by a DOMRect or ClientRect
+
+## splice
+
+The splice() method changes the content of a string by removing a range of
+characters and/or adding new characters.
+
+**Parameters**
+
+-   `str` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The string that will be manipulated.
+-   `start` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** Index at which to start changing the string.
+-   `delCount` **[number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** An integer indicating the number of old chars to remove.
+-   `newSubStr` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** The String that is spliced in.
+
+Returns **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** A new string with the spliced substring.
+
+## removeDuplicates
+
+Takes a string with possible duplicate characters and returns a string
+containing ALL unique characters.  Useful for construction of REGEX objects
+with characters from an input field, etc.
+
+**Parameters**
+
+-   `str`  
 
 ## smoothScrollTo
 
