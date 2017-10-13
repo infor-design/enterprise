@@ -719,7 +719,8 @@ html[dir='rtl'] {
     }
 
     .l-pull-right {
-      .icon-error {
+      .icon-error,
+      .icon-alert {
         left: auto;
         right: -10px;
       }
