@@ -250,9 +250,12 @@
           buttonset.empty();
         }
 
-        $.each(buttons, function (name, props) {
+        for (var cnt = 0; cnt < buttons.length; cnt++) {
+          var props = buttons[cnt];
+
           var btn = $('<button type="button"></button>');
           btn.text(props.text);
+          btn.attr('type', props.type || 'button');
 
           if (props.cssClass === 'separator') {
             btn = $('<div class="separator"></div>');
@@ -275,9 +278,9 @@
           var attrs = {},
             attrTypes = ['id', 'name', 'text'];
 
-          for (var i = 0; i < attrTypes.length; i++) {
-            if (props[attrTypes[i]]) {
-              attrs[attrTypes[i]] = props[attrTypes[i]];
+          for (var k = 0; k < attrTypes.length; k++) {
+            if (props[attrTypes[k]]) {
+              attrs[attrTypes[k]] = props[attrTypes[k]];
             }
           }
 
@@ -297,9 +300,7 @@
             }).prependTo(btn);
           }
 
-          if (props.id) {
-            btn.attr('id', props.id);
-          }
+          btn.attr('id', props.id || Soho.utils.uniqueId('modal', btn[0], cnt+1));
 
           btn.on('click.modal', function(e) {
             if (props.click) {
@@ -316,7 +317,7 @@
           btn.button();
           buttonset.append(btn);
 
-        });
+        }
 
       },
 
