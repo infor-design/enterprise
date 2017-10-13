@@ -39,7 +39,7 @@
    */
   function Accordion(element, options) {
     this.element = $(element);
-    this.settings = $.extend({}, DEFAULT_ACCORDION_OPTIONS, Soho.utils.parseOptions(element[0]), options);
+    this.settings = $.extend({}, DEFAULT_ACCORDION_OPTIONS, this.getInlineOptions(element[0]), options);
 
     this.init();
   }
@@ -57,6 +57,15 @@
       this
         .build(headers)
         .handleEvents(headers);
+    },
+
+    /**
+     * Handles the access of HTML-inlined `data-options`
+     * @private
+     * @returns {Object}
+     */
+    getInlineOptions: function() {
+      return Soho.utils.parseOptions(this.element[0]);
     },
 
     /**

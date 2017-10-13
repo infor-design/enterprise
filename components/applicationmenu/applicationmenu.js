@@ -18,6 +18,7 @@
 
   var DEFAULT_APPLICATIONMENU_OPTIONS = {
     breakpoint: 'phone-to-tablet',
+    filterable: false,
     openOnLarge: false,
     triggers: []
   };
@@ -32,7 +33,7 @@
   */
   function ApplicationMenu(element, options) {
     this.element = $(element);
-    this.settings = $.extend({}, DEFAULT_APPLICATIONMENU_OPTIONS, Soho.utils.parseOptions(element[0]), options);
+    this.settings = $.extend({}, DEFAULT_APPLICATIONMENU_OPTIONS, this.getInlineOptions(element[0]), options);
 
     return this.init();
   }
@@ -55,7 +56,7 @@
      * @private
      * @returns {Object}
      */
-    handleInlineOptions: function() {
+    getInlineOptions: function() {
       return Soho.utils.parseOptions(this.element[0]);
     },
 
@@ -101,7 +102,7 @@
       // Check to make sure that the internal Accordion Control is invoked
       var accordion = this.accordion.data('accordion');
       if (!accordion) {
-        var accOpts = $.fn.parseOptions(this.accordion[0]);
+        var accOpts = this.accordion.parseOptions();
         this.accordion.accordion(accOpts);
       }
 
