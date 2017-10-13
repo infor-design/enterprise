@@ -1,0 +1,125 @@
+<body class="no-scroll">
+  
+    <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+    {{> includes/svg-inline-refs}}
+    {{> includes/applicationmenu}}
+
+<div class="page-container no-scroll">
+  <!-- Module Tabs -->
+  <section id="module-tabs-example" class="tab-container module-tabs is-personalizable" data-options="{ containerElement: '#module-tabs-container', 'changeTabOnHashChange': true, 'addTabButton': true }">
+    <div class="tab-list-container">
+      <ul class="tab-list">
+        <li class="tab is-selected"><a href="#first-tab">First Tab</a></li>
+        <li class="tab"><a href="#second-tab">Second Tab</a></li>
+      </ul>
+    </div>
+  </section>
+  <!-- Page Container -->
+  <div id="module-tabs-container" class="page-container no-scroll">
+    <!-- Tab Panels -->
+    <div id="first-tab" class="tab-panel no-scroll">
+      <header class="header is-personalizable">
+        <div class="toolbar" data-options="{maxVisibleButtons: 4}">
+          <div class="title">
+            <h1>Header of first tab</h1>
+          </div>
+
+          <div class="buttonset">
+            <button type="button" id="category-button" class="btn">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-filter"></use>
+              </svg>
+              <span>Category</span>
+            </button>
+                
+            <button type="button" id="settings-button" class="btn-menu">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-settings"></use>
+              </svg>
+              <span>Settings</span>
+            </button>
+            <ul class="popupmenu">
+              <li><a id="setting-1" href="#">Setting 1</a>
+              <li><a id="setting-2" href="#">Setting 2</a>
+              <li><a id="setting-3" href="#">Setting 3</a>
+              <li class="submenu">
+                <a id="more-options" href="#">More Settings</a>
+                <ul class="popupmenu">
+                  <li><a id="sub-setting-1" href="#">Sub-Setting 1</a>
+                  <li><a id="sub-setting-2" href="#">Sub-Setting 2</a>
+                  <li><a id="sub-setting-3" href="#">Sub-Setting 3</a>
+                </ul>
+              </li>
+            </ul>
+
+            <div class="separator"></div>
+                
+            <button type="button" id="date-button" class="btn">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-calendar"></use>
+              </svg>
+              <span>Date</span>
+            </button>
+                
+            <button type="button" id="share-button" class="btn">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-mingle-share"></use>
+              </svg>
+              <span>Share</span>
+            </button>
+                
+            <button type="button" id="options-button" class="btn-menu">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-star-filled"></use>
+              </svg>
+              <span>Options</span>
+            </button>
+            <ul class="popupmenu">
+              <li><a id="option-1" href="#">Option 1</a>
+              <li><a id="option-2" href="#">Option 2</a>
+              <li><a id="option-3" href="#">Option 3</a>
+              <li class="submenu">
+                <a id="more-options" href="#">More Options</a>
+                <ul class="popupmenu">
+                  <li><a id="sub-option-1" href="#">Sub-Option 1</a>
+                  <li><a id="sub-option-2" href="#">Sub-Option 2</a>
+                  <li><a id="sub-option-3" href="#">Sub-Option 3</a>
+                </ul>
+              </li>
+            </ul>
+                      
+          </div>
+          {{> includes/header-actionbutton}}
+        </div>
+      </header>
+      <div class="page-container scrollable">
+        <div class="row">
+          <div class="six columns">
+            <h2>Header Test: Toolbar separator class</h2>
+            <p><a class="hyperlink" href="http://jira.infor.com/browse/SOHO-6784" target="_blank">Related JIRA Ticket</a>
+            </p>
+          </div>
+        </div>
+    
+      </div>
+    </div>
+    <div id="second-tab" class="tab-panel">
+      <header class="header is-personalizable">
+        <div class="toolbar">
+          <div class="title">
+            <h1>Header of second tab</h1>
+          </div>
+          <div class="buttonset"></div>
+        </div>
+      </header>
+      <div class="page-container scrollable">
+        <div class="row">
+          <div class="six columns">
+            <p>Second tab with content</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
