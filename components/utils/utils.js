@@ -273,13 +273,15 @@
    * @returns {Object}
    */
   window.Soho.utils.parseOptions = function parseOptions(element, attr) {
+    var options = {};
+    if (!element || !(element instanceof HTMLElement)) {
+      return options;
+    }
 
     // Use `data-options` as a default.
     attr = attr || 'data-options';
 
-    var str = element.getAttribute(attr),
-      options = {};
-
+    var str = element.getAttribute(attr);
     if (!str || typeof str !== 'string' || str.indexOf('{') === -1) {
       return options;
     }
