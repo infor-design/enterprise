@@ -170,7 +170,7 @@
             ['editor'],
 
             //Tooltips
-            ['tooltip', '[title]'],
+            ['tooltip', 'button[title], span[title], .hyperlink[title]'],
 
             //Tree
             ['tree'],
