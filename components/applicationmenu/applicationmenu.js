@@ -99,6 +99,18 @@
       this.accordion = this.menu.find('.accordion');
       this.accordion.addClass('panel').addClass('inverse');
 
+      // if Filterable,
+      if (this.settings.filterable && typeof $.fn.searchfield === 'function' && typeof window.ListFilter === 'function') {
+        this.searchfield = this.element.children('.searchfield, .searchfield-wrapper');
+        if (this.searchfield.length) {
+          if (this.searchfield.is('.searchfield-wrapper')) {
+            this.searchfield = this.searchfield.children('.searchfield');
+          }
+        }
+
+        this.listFilter = new ListFilter();
+      }
+
       // Check to make sure that the internal Accordion Control is invoked
       var accordion = this.accordion.data('accordion');
       if (!accordion) {

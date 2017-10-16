@@ -37,6 +37,11 @@
       width 300ms cubic-bezier(.17, .04, .03, .94));
   }
 
+  .searchfield + .accoridon,
+  .searchfield-wrapper + .accordion {
+    min-height: calc(100% - 34px);
+  }
+
   .accordion {
     border-left: none !important;
     border-right: none !important;
@@ -85,6 +90,69 @@
           display: inline-block;
         }
       }
+    }
+  }
+
+  .searchfield-wrapper {
+    margin-bottom: 0;
+
+    .icon {
+      @include transition(fill 300ms cubic-bezier(.17, .04, .03, .94));
+
+      &:not(.close) {
+        left: 18px;
+      }
+    }
+
+    &.is-hovered {
+      .searchfield {
+        border-color: transparent;
+      }
+
+      .icon:not(.close) {
+        fill: $application-menu-searchfield-icon-color;
+      }
+    }
+
+    &.active,
+    &.is-hovered.active {
+      .searchfield {
+        border-color: transparent;
+        color: $application-menu-searchfield-text-active-color;
+      }
+
+      .icon:not(.close) {
+        fill: $application-menu-searchfield-icon-active-color;
+      }
+    }
+  }
+
+  .searchfield {
+    @include transition(
+      color 300ms cubic-bezier(.17, .04, .03, .94),
+      background-color 300ms cubic-bezier(.17, .04, .03, .94)
+    );
+    background-color: $accordion-inverse-pane-bg-color;
+    border-color: transparent;
+    color: $application-menu-searchfield-text-color;
+
+    padding-left: 53px;
+
+    &::placeholder {
+      color: $application-menu-searchfield-placeholder-color;
+    }
+
+    &::-webkit-input-placeholder {
+      color: $application-menu-searchfield-placeholder-color;
+    }
+
+    &::-moz-placeholder {
+      color: $application-menu-searchfield-placeholder-color;
+      opacity: 1;
+    }
+
+    &:-ms-input-placeholder {
+      color: $application-menu-searchfield-placeholder-color;
     }
   }
 
@@ -164,6 +232,18 @@ html[dir='rtl'] {
     &.is-open {
       left: initial;
       right: 0;
+    }
+
+    .searchfield-wrapper {
+      .icon:not(.close) {
+        left: auto;
+        right: 18px;
+      }
+    }
+
+    .searchfield {
+      padding-left: 34px;
+      padding-right: 53px;
     }
 
     .accordion {
