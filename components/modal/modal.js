@@ -250,8 +250,7 @@
           buttonset.empty();
         }
 
-        for (var cnt = 0; cnt < buttons.length; cnt++) {
-          var props = buttons[cnt];
+        var decorateButtons = function(props, cnt) {
 
           var btn = $('<button type="button"></button>');
           btn.text(props.text);
@@ -302,9 +301,11 @@
 
           btn.attr('id', props.id || Soho.utils.uniqueId('modal', btn[0], cnt+1));
 
+          var func = buttons[cnt].click;
+
           btn.on('click.modal', function(e) {
-            if (props.click) {
-              props.click.apply(self.element[0], [e, self]);
+            if (func) {
+              func.apply(self.element[0], [e, self]);
               return;
             }
             self.close();
@@ -317,6 +318,10 @@
           btn.button();
           buttonset.append(btn);
 
+        };
+
+        for (var cnt = 0; cnt < buttons.length; cnt++) {
+          decorateButtons(buttons[cnt], cnt);
         }
 
       },
