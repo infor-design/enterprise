@@ -94,7 +94,9 @@
   }
 
   .searchfield-wrapper {
+    background-color: $accordion-inverse-pane-bg-color;
     margin-bottom: 0;
+    width: 100%;
 
     .icon {
       @include transition(fill 300ms cubic-bezier(.17, .04, .03, .94));
@@ -102,41 +104,79 @@
       &:not(.close) {
         left: 18px;
       }
+
+      &.close {
+        right: 45px;
+      }
     }
 
     &.is-hovered {
       .searchfield {
+        border-left-color: transparent;
+      }
+
+      .searchfield-category-button {
         border-color: transparent;
       }
 
-      .icon:not(.close) {
+      .icon {
         fill: $application-menu-searchfield-icon-color;
+
+        &.close {
+          display: none;
+        }
       }
     }
 
     &.active,
     &.is-hovered.active {
-      .searchfield {
+      .searchfield,
+      .searchfield-category-button {
         border-color: transparent;
         color: $application-menu-searchfield-text-active-color;
       }
 
-      .icon:not(.close) {
+      .icon {
         fill: $application-menu-searchfield-icon-active-color;
+
+        &.close {
+          display: inline-block;
+        }
       }
     }
+
+    &.has-categories.show-category {
+      .searchfield {
+        border-left-color: $application-menu-border-color;
+      }
+
+      &.is-hovered {
+        .searchfield {
+          border-left-color: $application-menu-border-color;
+        }
+      }
+    }
+
   }
 
-  .searchfield {
+  .searchfield,
+  .searchfield-category-button {
     @include transition(
       color 300ms cubic-bezier(.17, .04, .03, .94),
       background-color 300ms cubic-bezier(.17, .04, .03, .94)
     );
-    background-color: $accordion-inverse-pane-bg-color;
+    background-color: transparent;
     border-color: transparent;
-    color: $application-menu-searchfield-text-color;
+  }
 
+  .go-button {
+    margin: 0;
+  }
+
+  .searchfield {
+    color: $application-menu-searchfield-text-color;
     padding-left: 53px;
+    width: auto;
 
     &::placeholder {
       color: $application-menu-searchfield-placeholder-color;
@@ -235,9 +275,16 @@ html[dir='rtl'] {
     }
 
     .searchfield-wrapper {
-      .icon:not(.close) {
-        left: auto;
-        right: 18px;
+      .icon {
+        &:not(.close) {
+          left: auto;
+          right: 18px;
+        }
+
+        &.close {
+          left: 45px;
+          right: auto;
+        }
       }
     }
 

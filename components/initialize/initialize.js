@@ -64,7 +64,7 @@
             noinitExcludes = '.no-init, [data-init]';
 
           function invokeWithInlineOptions(elem, plugin) {
-            var options = $.fn.parseOptions(elem);
+            var options = Soho.utils.parseOptions(elem);
             $(elem)[plugin](options);
           }
 
@@ -275,7 +275,7 @@
             //Context Menus
             matchedItems('[data-popupmenu]:not('+ noinitExcludes + btnExcludes + ')').each(function () {
               var triggerButton = $(this),
-                options = $.extend({}, $.fn.parseOptions(this)),
+                options = $.extend({}, Soho.utils.parseOptions(this)),
                 popupData = triggerButton.attr('data-popupmenu');
 
               if (popupData) {
@@ -302,7 +302,7 @@
           //Popovers
           if ($.fn.popover) {
             matchedItems('[data-popover]:not('+ noinitExcludes +')').each(function () {
-              var options = $.fn.parseOptions(this),
+              var options = Soho.utils.parseOptions(this),
                 obj = $(this),
                 trigger = obj.attr('data-trigger'),
                 title = obj.attr('data-title'),
@@ -337,7 +337,7 @@
               var cs = $(this),
                 attr = cs.attr('data-dataset'),
                 tmpl = cs.attr('data-tmpl'),
-                options = $.fn.parseOptions(this) || {};
+                options = Soho.utils.parseOptions(this) || {};
 
               options.dataset = options.dataset || attr;
               options.template = options.template || tmpl;
