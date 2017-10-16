@@ -134,7 +134,7 @@
           this.addButtons(this.settings.buttons);
         }
 
-        Soho.utils.fixSVGIcons(this.element.find('.modal-body'));
+        Soho.utils.fixSVGIcons(this.element);
       },
 
       reStructure: function() {
