@@ -110,11 +110,7 @@
             isAppended = true;
             this.element = this.settings.content.closest('.modal');
           } else {
-            var self = this,
-              body = self.element.find('.modal-body');
-
-            body.append(self.settings.content);
-            Soho.utils.fixSVGIcons(body);
+            this.element.find('.modal-body').append(this.settings.content);
           }
 
           if (this.settings.content instanceof jQuery){
@@ -137,6 +133,8 @@
         if (!isAppended) {
           this.addButtons(this.settings.buttons);
         }
+
+        Soho.utils.fixSVGIcons(this.element.find('.modal-body'));
       },
 
       reStructure: function() {
