@@ -1119,27 +1119,6 @@
     }
   };
 
-  /**
-  * Generates a unique id of meaning based on the url, type of object,
-  * count of those objects and a suffix.
-  *
-  * @param {String} suffix
-  * @param {HTMLElement} element
-  */
-  window.Soho.utils.uniqueId = function uniqueId(suffix, element, count) {
-    var elem = !element ?  Math.random().toString(16).slice(-4) :
-              (element.getAttribute('id') || element.tagName).toLowerCase(),
-        uniqueid = (window.location.pathname.split('/').pop()
-          .replace(/\.xhtml|\.shtml|\.html|\.htm|\.aspx|\.asp|\.jspx|\.jsp|\.php/g, '')
-          .replace(/[^-\w]+/g, '')
-          .replace(/\./g, '-')
-          .replace(/ /g, '-')
-          .replace(/%20/g, '-') + '-' +
-        elem + (count||'') + ('-' + suffix || ''));
-
-    return uniqueid.replace(/--/g, '-');
-  };
-
   //==================================================================
   // JS-level Breakpoint Access
   // NOTE: these should match whatever the breakpoints are in "/sass/_config.scss"

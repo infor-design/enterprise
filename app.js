@@ -1731,6 +1731,16 @@ router.get('/api/orgstructure-paging', function(req, res, next) {
     sendJSONFile('companies', req, res, next);
   });
 
+  router.get('/api/colleagues', function(req, res, next) {
+
+    if (req.query.favorites) {
+      sendJSONFile('favorite-colleagues', req, res, next);
+      return;
+    }
+
+    sendJSONFile('colleagues', req, res, next);
+  });
+
   router.get('/api/construction', function(req, res, next) {
     sendJSONFile('construction', req, res, next);
   });

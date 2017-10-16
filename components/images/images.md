@@ -5,6 +5,7 @@
 
 1. Image Sizes and Placeholders [View Example]( ../components/images/example-index)
 2. A Pattern showing a toolbar over a list of Images [View Example]( ../components/images/example-image-list)
+2. People Photos and initials [View Example]( ../components/images/example-photos)
 
 ## API Details
 

@@ -1,0 +1,132 @@
+[
+  {
+    "id": 3,
+    "photo": "https://randomuser.me/api/portraits/med/men/11.jpg",
+    "firstName": "Andy",
+    "lastName": "Gabbett",
+    "favorite": false,
+    "phone": "856-982-1507",
+    "country": "UA",
+    "manager": "Andy Gabbett",
+    "reports": 66,
+    "email": "agabbett2@infoseek.co.jp"
+  },
+  {
+    "id": 4,
+    "firstName": "Sally",
+    "lastName": "Molian",
+    "favorite": false,
+    "phone": "859-800-2849",
+    "country": "ID",
+    "manager": "Bertine Molian",
+    "reports": 50,
+    "email": "bmolian3@upenn.edu"
+  },
+  {
+    "id": 7,
+    "firstName": "Agneta",
+    "lastName": "Bernardeau",
+    "favorite": false,
+    "phone": "319-734-9395",
+    "country": "RU",
+    "manager": "Agneta Bernardeau",
+    "reports": 95,
+    "email": "abernardeau6@chronoengine.com"
+  },
+  {
+    "id": 10,
+    "photo": "https://randomuser.me/api/portraits/med/men/12.jpg",
+    "firstName": "Nickolai",
+    "lastName": "Yellowlees",
+    "favorite": false,
+    "phone": "412-858-0184",
+    "country": "GB",
+    "manager": "Nickolai Yellowlees",
+    "reports": 28,
+    "email": "nyellowlees9@mapquest.com"
+  },
+  {
+    "id": 12,
+    "photo": "https://randomuser.me/api/portraits/med/women/16.jpg",
+    "firstName": "Megyn",
+    "lastName": "Till",
+    "favorite": false,
+    "phone": "425-764-3291",
+    "country": "SE",
+    "manager": "Myrtie Till",
+    "reports": 80,
+    "email": "mtillb@multiply.com"
+  },
+  {
+    "id": 13,
+    "photo": "https://randomuser.me/api/portraits/med/women/17.jpg",
+    "firstName": "Madalena",
+    "lastName": "Shears",
+    "favorite": false,
+    "phone": "865-534-1815",
+    "country": "CN",
+    "manager": "Madalena Shears",
+    "reports": 58,
+    "email": "mshearsc@spotify.com"
+  },
+  {
+    "id": 16,
+    "photo": "https://randomuser.me/api/portraits/med/women/15.jpg",
+    "firstName": "Morgan",
+    "lastName": "Carrell",
+    "favorite": false,
+    "phone": "969-540-9547",
+    "country": "PE",
+    "manager": "Morey Carrell",
+    "reports": 96,
+    "email": "mcarrellf@dedecms.com"
+  },
+  {
+    "id": 17,
+    "photo": "https://randomuser.me/api/portraits/med/women/16.jpg",
+    "firstName": "Robin",
+    "lastName": "Bending",
+    "favorite": false,
+    "phone": "969-338-7793",
+    "country": "SE",
+    "manager": "Robina Bending",
+    "reports": 78,
+    "email": "rbendingg@baidu.com"
+  },
+  {
+    "id": 21,
+    "photo": "https://randomuser.me/api/portraits/med/men/15.jpg",
+    "firstName": "Kort",
+    "lastName": "Altamirano",
+    "favorite": false,
+    "phone": "167-262-7920",
+    "country": "PL",
+    "manager": "Kort Altamirano",
+    "reports": 72,
+    "email": "kaltamiranok@tamu.edu"
+  },
+  {
+    "id": 23,
+    "photo": "https://randomuser.me/api/portraits/med/men/17.jpg",
+    "firstName": "Malchy",
+    "lastName": "Arington",
+    "favorite": false,
+    "phone": "518-256-5449",
+    "country": "PL",
+    "manager": "Malchy Arington",
+    "reports": 74,
+    "email": "maringtonm@rediff.com"
+  },
+  {
+    "id": 24,
+    "photo": "https://randomuser.me/api/portraits/med/men/18.jpg",
+    "firstName": "Jon",
+    "lastName": "Domm",
+    "favorite": false,
+    "phone": "344-100-5828",
+    "country": "YE",
+    "manager": "Hortense Domm",
+    "reports": 30,
+    "email": "hdommn@tmall.com"
+  }
+]

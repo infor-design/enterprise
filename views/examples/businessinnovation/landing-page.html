@@ -1,0 +1,104 @@
+<body class="no-scroll">
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+  {{> includes/applicationmenu}}
+
+  <div class="page-container no-scroll">
+    <header class="header is-sticky">
+      <div class="toolbar">
+        <div class="title">
+          <button class="btn-icon application-menu-trigger" type="button">
+            <span class="audible">Application Menu</span>
+            <span class="icon app-header">
+              <span class="one"></span>
+              <span class="two"></span>
+              <span class="three"></span>
+            </span>
+          </button>
+
+          <h1>Infor Organizational Chart</h1>
+        </div>
+
+        <div class="buttonset">
+          <label class="audible">Search</label>
+          <input class="searchfield " data-options="{collapsible: false}"/>
+        </div>
+
+      </div>
+    </header>
+
+    <div id="maincontent" class="page-container scrollable" role="main">
+
+      <div class="row half-width">
+        <div class="twelve columns">
+
+          <div class="toolbar" role="toolbar">
+            <div class="title">
+              Favorites
+            </div>
+            <div class="buttonset">
+
+              <button class="btn btn-link" type="button">
+                <span>See All</span>
+              </button>
+
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="listview" id="colleagues-listview"
+              data-options="{'selectable': false, 'source': '{{basepath}}api/colleagues?favorites=true', 'template': 'colleagues-tmpl'}">
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+{{={{{ }}}=}}
+<script id="colleagues-tmpl" type="text/html">
+  <ul>
+    {{#dataset}}
+      {{disabled}}
+      <li class="flex-table-row">
+        <div class="flex-table-cell">
+          <img class="listview-image-round" src="{{photo}}" alt="Photo of {{firstName}}"></span>
+          <span class="listview-heading">{{firstName}} {{lastName}}</span>
+
+          <button type="button" class="btn-icon icon-favorite" title="Favorite">
+             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              {{#favorite}}
+              <use xlink:href="#icon-star-filled"></use>
+              {{/favorite}}
+              {{^favorite}}
+              <use xlink:href="#icon-star-outlined"></use>
+              {{/favorite}}
+             </svg>
+             <span>Favorite</span>
+          </button>
+
+        </div>
+        <div class="flex-table-cell">
+          <span class="listview-heading">{{phone}}</span>
+        </div>
+        <div class="flex-table-cell">
+          <span class="listview-subheading">{{country}}</span>
+        </div>
+        <div class="flex-table-cell">
+          <span class="listview-subheading">{{manager}}</span>
+        </div>
+        <div class="flex-table-cell">
+          <span class="listview-subheading">{{reports}}</span>
+        </div>
+      </li>
+    {{/dataset}}
+  </ul>
+</script>
+
+<script>
+  $('body').on('initialized', function () {
+
+  });
+</script>

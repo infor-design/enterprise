@@ -37,3 +37,26 @@ $images-size: (
     }
   }
 }
+
+.image-round {
+  border-radius: 50%;
+  display: inline-block;
+  float: left;
+  height: 50px;
+  margin-right: 20px;
+  width: 50px;
+}
+
+.image-initials {
+  background: $amethyst05;
+  border-radius: 50%;
+  color: $white;
+  display: inline-block;
+  font-size: 1.8rem;
+  height: 4.8rem;
+  line-height: 4.8rem;
+  margin-right: 1rem;
+  text-align: center;
+  vertical-align: middle;
+  width: 4.8rem;
+}
