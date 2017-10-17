@@ -69,6 +69,17 @@
           this.settings.source = data;
         }
 
+        if (!this.listFilter) {
+          this.listFilter = new ListFilter({
+            filterMode: this.settings.filterMode,
+            highlightMatchedText: true,
+            searchableTextCallback: function(item) {
+              var isString = typeof item === 'string';
+              return (isString ? item : item.label);
+            }
+          });
+        }
+
         this.addMarkup();
         this.handleEvents();
       },
@@ -119,6 +130,64 @@
           typeof this.settings.template === 'string' ? this.settings.template :
           resultTemplate;
 
+        // Send item list to the ListFilter
+        var filterResult = this.listFilter.filter(items, term);
+
+        function highlightMatch(item) {
+          // Easy match for 'contains'-style filterMode.
+          if (self.settings.filterMode === 'contains') {
+            return item.replace(new RegExp('(' + term + ')', 'ig'), '<i>$1</i>');
+          }
+
+          // Handle "startsWith" filterMode highlighting a bit differently.
+          var originalItem = item,
+            pos = Locale.toLowerCase(originalItem).indexOf(term);
+
+          if (pos > 0) {
+            item = originalItem.substr(0, pos) + '<i>' + originalItem.substr(pos, term.length) + '</i>' + originalItem.substr(term.length + pos);
+          } else if (pos === 0) {
+            item = '<i>' + originalItem.substr(0, term.length) + '</i>' + originalItem.substr(term.length);
+          }
+          return item;
+        }
+
+        function resultIterator(item, i) {
+          matchingOptions.push(item);
+
+          // Build the dataset that will be submitted to the template
+          var isString = typeof item === 'string',
+            dataset = {
+              index: i,
+              label: highlightMatch(isString ? items[i] : items[i].label),
+              listItemId: 'ac-list-option' + i
+            };
+
+          dataset.hasValue = items[i].value !== undefined;
+          if (dataset.hasValue) {
+            dataset.value = items[i].value;
+          }
+
+          if (typeof Tmpl !== 'undefined') {
+            var compiledTmpl = Tmpl.compile(self.tmpl),
+              renderedTmpl = compiledTmpl.render(dataset);
+
+            self.list.append($.sanitizeHTML(renderedTmpl));
+          } else {
+            var listItem = $('<li role="listitem"></li>');
+            listItem.attr('id', dataset.listItemId);
+            listItem.attr('data-index', dataset.index);
+            listItem.attr('data-value', dataset.value);
+            listItem.append('<a href="#" tabindex="-1"><span>' + dataset.label + '</span></a>');
+            self.list.append($.sanitizeHTML(listItem));
+          }
+        }
+
+        // Iterate through filterResults
+        for (var i = 0; i < filterResult.length; i++) {
+          resultIterator(filterResult[i], i);
+        }
+
+        /*
         for (var i = 0; i < items.length; i++) {
           var isString = typeof items[i] === 'string',
             option = (isString ? items[i] : items[i].label),
@@ -155,44 +224,45 @@
           }
 
           if (containsTerm) {
-            matchingOptions.push(option);
+          matchingOptions.push(option);
 
-            // Build the dataset that will be submitted to the template
-            dataset.listItemId = 'ac-list-option' + i;
-            dataset.index = i;
+          // Build the dataset that will be submitted to the template
+          dataset.listItemId = 'ac-list-option' + i;
+          dataset.index = i;
 
-            if (this.settings.filterMode === 'contains') {
-              dataset.label = dataset.label.replace(new RegExp('(' + term + ')', 'ig'), '<i>$1</i>');
-            } else {
-              dataset.label = Locale.toLowerCase(option).indexOf(term)===0 ? '<i>' + option.substr(0,term.length) + '</i>' + option.substr(term.length) : option;
+          if (this.settings.filterMode === 'contains') {
+            dataset.label = dataset.label.replace(new RegExp('(' + term + ')', 'ig'), '<i>$1</i>');
+          } else {
+            dataset.label = Locale.toLowerCase(option).indexOf(term)===0 ? '<i>' + option.substr(0,term.length) + '</i>' + option.substr(term.length) : option;
 
-              var pos = Locale.toLowerCase(option).indexOf(term);
-              if (pos > 0) {
-                dataset.label = option.substr(0, pos) + '<i>' + option.substr(pos, term.length) + '</i>' + option.substr(term.length + pos);
-              }
-            }
-
-            dataset.hasValue = !isString && items[i].value !== undefined;
-
-            if (dataset.hasValue) {
-              dataset.value = items[i].value;
-            }
-
-            if (typeof Tmpl !== 'undefined') {
-              var compiledTmpl = Tmpl.compile(this.tmpl),
-                renderedTmpl = compiledTmpl.render(dataset);
-
-              self.list.append($.sanitizeHTML(renderedTmpl));
-            } else {
-              var listItem = $('<li role="listitem"></li>');
-              listItem.attr('id', dataset.listItemId);
-              listItem.attr('data-index', dataset.index);
-              listItem.attr('data-value', dataset.value);
-              listItem.append('<a href="#" tabindex="-1"><span>' + dataset.label + '</span></a>');
-              self.list.append($.sanitizeHTML(listItem));
+            var pos = Locale.toLowerCase(option).indexOf(term);
+            if (pos > 0) {
+              dataset.label = option.substr(0, pos) + '<i>' + option.substr(pos, term.length) + '</i>' + option.substr(term.length + pos);
             }
           }
+
+          dataset.hasValue = !isString && items[i].value !== undefined;
+
+          if (dataset.hasValue) {
+            dataset.value = items[i].value;
+          }
+
+          if (typeof Tmpl !== 'undefined') {
+            var compiledTmpl = Tmpl.compile(this.tmpl),
+              renderedTmpl = compiledTmpl.render(dataset);
+
+            self.list.append($.sanitizeHTML(renderedTmpl));
+          } else {
+            var listItem = $('<li role="listitem"></li>');
+            listItem.attr('id', dataset.listItemId);
+            listItem.attr('data-index', dataset.index);
+            listItem.attr('data-value', dataset.value);
+            listItem.append('<a href="#" tabindex="-1"><span>' + dataset.label + '</span></a>');
+            self.list.append($.sanitizeHTML(listItem));
+          }
+          }
         }
+        */
 
         function autocompletePlaceCallback(placementObj) {
           // Nudge the autocomplete to the right by 1px in Chrome
