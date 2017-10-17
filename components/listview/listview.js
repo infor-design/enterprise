@@ -26,6 +26,7 @@
         searchable: false,
         selectable: 'single',
         selectOnFocus: true,
+        showCheckboxes: true,
         hoverable: true,
         source: null,
         disableItemDeactivation: false
@@ -44,6 +45,7 @@
     * @param {Boolean} searchable  &nbsp;-&nbsp; If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
     * @param {String|Boolean} selectable  &nbsp;-&nbsp;  selection mode, can be false, 'single' or 'multiple' or 'mixed'
     * @param {Boolean} selectOnFocus  &nbsp;-&nbsp;  If true the first item in the list will be selected as it is focused.
+    * @param {Boolean} showCheckboxes  &nbsp;-&nbsp;  If false will not show checkboxes used with multiple selection mode only
     * @param {Boolean} hoverable  &nbsp;-&nbsp;  If true the list element will show a hover action to indicate its actionable.
     * @param {Function|String} source  &nbsp;-&nbsp; If source is a string then it serves as the url for an ajax call that returns the dataset. If its a function it is a call back for getting the data asyncronously.
     * @param {Boolean} disableItemDeactivation  &nbsp;-&nbsp; If true when an item is activated the user should not be able to deactivate it by clicking on the activated item. They can only select another row.
@@ -238,9 +240,11 @@
               selectedToolbar.data('toolbar').toggleMoreMenu();
             }
 
-            //For mixed selection mode primarily append a checkbox object
-            item.prepend('<label class="listview-selection-checkbox l-vertical-center inline inline-checkbox"><input tabindex="-1" type="checkbox" class="checkbox"><span class="label-text">&nbsp;</span></label>');
-            //TODO: item.find('.checkbox').attr('tabindex', '-1');
+            if (self.settings.showCheckboxes) {
+              //For mixed selection mode primarily append a checkbox object
+              item.prepend('<label class="listview-selection-checkbox l-vertical-center inline inline-checkbox"><input tabindex="-1" type="checkbox" class="checkbox"><span class="label-text">&nbsp;</span></label>');
+              //TODO: item.find('.checkbox').attr('tabindex', '-1');
+            }
           }
 
           // Add Aria
