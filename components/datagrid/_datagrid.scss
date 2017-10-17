@@ -651,6 +651,17 @@ $datagrid-short-row-height: 23px;
         height: $datagrid-short-row-height + 1;
       }
 
+      &.datagrid-rowgroup-header {
+        .datagrid-expand-btn {
+          left: -10px;
+
+          .icon.plus-minus::before,
+          .icon.plus-minus::after {
+            left: 6px;
+          }
+        }
+      }
+
       td {
 
         span {
@@ -891,7 +902,10 @@ $datagrid-short-row-height: 23px;
       // scss-lint:enable ImportantRule
     }
 
-    .icon-error, .icon-alert, .icon-confirm, .icon-info {
+    .icon-error,
+    .icon-alert,
+    .icon-confirm,
+    .icon-info {
       // scss-lint:disable ImportantRule
       margin-left: -29px !important;
       // scss-lint:enable ImportantRule
@@ -1977,6 +1991,15 @@ $datagrid-short-row-height: 23px;
       fill: $datagrid-rowgroup-color;
     }
   }
+
+  .datagrid-expand-btn {
+    left: -14px;
+
+    .icon.plus-minus::before,
+    .icon.plus-minus::after {
+      left: 8px;
+    }
+  }
 }
 
 // Sorting
@@ -2194,11 +2217,11 @@ td .btn-actions {
   background-color: transparent;
   height: 32px;
   left: -10px;
+  margin-top: -4px;
   min-height: 32px;
   min-width: 32px;
   vertical-align: middle;
   width: 32px;
-  margin-top: -4px;
 
   span:not(.icon) {
     color: transparent;
@@ -2309,7 +2332,7 @@ td .btn-actions {
     top: -2px;
   }
   // scss-lint:enable ImportantRule
-  //
+
   .datagrid {
     td.is-editing {
 
@@ -2482,6 +2505,39 @@ html[dir='rtl'] {
     .sort-indicator {
       margin: 6px 3px 0;
     }
+
+    .datagrid-rowgroup-header {
+      .datagrid-expand-btn {
+        left: auto;
+        right: -14px;
+
+        .icon.plus-minus::before,
+        .icon.plus-minus::after {
+          left: auto;
+          right: 8px;
+        }
+      }
+    }
+
+    // scss-lint:disable NestingDepth
+    &.short-rowheight {
+      tbody {
+        .datagrid-rowgroup-header {
+          .datagrid-expand-btn {
+            left: auto;
+            right: -10px;
+
+            .icon.plus-minus::before,
+            .icon.plus-minus::after {
+              left: auto;
+              right: -4px;
+            }
+          }
+        }
+      }
+    }
+    // scss-lint:enable NestingDepth
+
   }
 
   //Datagrid Dropdown Formatter
