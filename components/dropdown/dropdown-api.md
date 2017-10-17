@@ -31,6 +31,7 @@ The Dropdown allows users to select from a list. Like an Html Select.
 -   `reloadSourceOnOpen` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If set to true, will always perform an ajax call whenever the list is opened.  If false, the first AJAX call's results are cached.
 -   `empty` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Initialize Empty Value
 -   `delay` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Typing Buffer Delay in ms
+-   `maxWidth` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**  -  If set the width of the dropdown is limited to this pixel width. Fx 300 for the 300 px size fields. Default is size of the largest data.
 
 ### activate
 

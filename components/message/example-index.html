@@ -21,7 +21,8 @@
         buttons: [{
             text: 'Restart Now',
             click: function() {
-                $(this).modal('close');
+              console.log('Restart Now');
+              $(this).modal('close');
             },
             isDefault: true
         }]
@@ -36,7 +37,8 @@
         buttons: [{
           text: 'Done',
           click: function() {
-              $(this).modal('close');
+            console.log('Done');
+            $(this).modal('close');
           },
           isDefault: true
         }]
@@ -51,11 +53,13 @@
         buttons: [{
           text: 'Yes',
           click: function(e, modal) {
+            console.log('Yes');
             modal.close();
           }
         }, {
           text: 'No',
           click: function(e, modal) {
+            console.log('No');
             modal.close();
           },
           isDefault: true

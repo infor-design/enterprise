@@ -15,7 +15,8 @@
 }(function($) {
   /* end-amd-strip-block */
 
-  var environment = {
+  var version = '4.3.3',
+    environment = {
 
     // Setup a global resize event trigger for controls to listen to
     addGlobalResize: function() {
@@ -111,7 +112,7 @@
       }
 
       html.addClass(cssClasses);
-
+      html.attr('data-sohoxi-version', version);
       return this;
     },
 

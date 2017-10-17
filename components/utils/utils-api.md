@@ -14,6 +14,7 @@
 -   [isString](#isstring)
 -   [isNumber](#isnumber)
 -   [safeSetSelection](#safesetselection)
+-   [uniqueId](#uniqueid)
 -   [isElement](#iselement)
 -   [getDimensions](#getdimensions)
 -   [splice](#splice)
@@ -148,6 +149,17 @@ cases, will be deferred with `requestAnimationFrame` or `setTimeout`.
 -   `element` **[HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)** 
 -   `startPos` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
 -   `endPos` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+
+## uniqueId
+
+Generates a unique id of meaning based on the url, type of object,
+count of those objects and a suffix.
+
+**Parameters**
+
+-   `suffix` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
+-   `element` **[HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)** 
+-   `count`  
 
 ## isElement
 

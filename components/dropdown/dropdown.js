@@ -34,7 +34,8 @@
           sourceArguments: {},
           reloadSourceOnOpen: false,
           empty: false,
-          delay: 300
+          delay: 300,
+          maxWidth: null
         },
         moveSelectedOpts = ['none', 'all', 'group'],
         settings = $.extend({}, defaults, options);
@@ -54,6 +55,7 @@
     * @param {Boolean} reloadSourceOnOpen  &nbsp;-&nbsp; If set to true, will always perform an ajax call whenever the list is opened.  If false, the first AJAX call's results are cached.
     * @param {Boolean} empty  &nbsp;-&nbsp; Initialize Empty Value
     * @param {Boolean} delay  &nbsp;-&nbsp; Typing Buffer Delay in ms
+    * @param {Number} maxWidth &nbsp;-&nbsp; If set the width of the dropdown is limited to this pixel width. Fx 300 for the 300 px size fields. Default is size of the largest data.
     *
     */
     function Dropdown(element) {
@@ -668,6 +670,8 @@
           this.list.addClass('has-icons');
           this.listIcon.pseudoElemIcon.clone().appendTo(this.list);
         }
+
+        this.listUl.find('[title]').addClass('has-tooltip').tooltip();
       },
 
       // Set the value based on selected options
@@ -1247,6 +1251,11 @@
 
         this.position();
 
+        // Limit the width
+        if (this.settings.maxWidth) {
+          this.list.css('max-width', this.settings.maxWidth + 'px');
+        }
+
         if (!this.settings.multiple && this.initialFilter) {
           setTimeout(function () {
             self.searchInput.val(self.filterTerm);
@@ -1562,6 +1571,14 @@
 
         this.filterTerm = '';
         this.searchInput.off('keydown.dropdown keypress.dropdown keypress.dropdown');
+
+        //Destroy any tooltip items
+        this.listUl.find('.has-tooltip').each(function () {
+          var api = $(this).data('tooltip');
+          if (api) {
+            api.destroy();
+          }
+        });
 
         this.list
           .off('click.list touchmove.list touchend.list touchcancel.list mousewheel.list mouseenter.list')

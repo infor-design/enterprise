@@ -165,7 +165,7 @@
         e.preventDefault();
 
         if (this.isOpen()) {
-          this.closeMenu();
+          this.closeMenu(true);
           if (this.triggers.length) {
             this.triggers.eq(0).focus();
           }
