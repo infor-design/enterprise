@@ -1,0 +1,75 @@
+
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Donut Chart Title</h2>
+        </div>
+        <div class="widget-content">
+          <div id="donut-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two-thirds column">
+      <button class="btn-secondary" type="button" id="btn-show-tooltip">Show Tooltip</button>
+      <button class="btn-secondary" type="button" id="btn-invoke">Invoke</button>
+      <button class="btn-secondary" type="button" id="btn-destroy">Destroy</button>
+  </div>
+</div>
+
+
+<script>
+$('body').on('initialized', function () {
+
+  // Dataset
+  var donutData = [{
+    data: [
+      {name: 'Component A', value: 30, tooltip: 'Component A'},
+      {name: 'Component B', value: 40, tooltip: 'Component B'}
+    ],
+    centerLabel: 'Donut Chart'
+  }];
+
+  // Vars
+  var elem = $('#donut-example'),
+    btnShowTooltip = $('#btn-show-tooltip'),
+    btnInvoke = $('#btn-invoke'),
+    btnDestroy = $('#btn-destroy');
+
+  // Click to show tooltip (just for Test)
+  btnShowTooltip.on('click', function() {
+    var api = elem.data('chart');
+    if (api) {
+      var arc = api.container.find('.arc:first'),
+        rect = arc[0].getBoundingClientRect()
+        x = rect.x,
+        y = rect.y + 20,
+        content = 'Test tooltip content',
+        arrow = 'top';
+
+      api.showTooltip(x, y, content, arrow);
+    }
+  });
+
+  // Click to Invoke Donut
+  btnInvoke.on('click', function() {
+    elem.chart({type: 'donut', dataset: donutData});
+  });
+
+  // Click to Destroy Donut
+  btnDestroy.on('click', function() {
+    var api = elem.data('chart');
+    if (api && api.destroy) {
+      api.destroy();
+    }
+  });
+
+  // Initialize Donut
+  btnInvoke.trigger('click');
+
+});
+</script>
