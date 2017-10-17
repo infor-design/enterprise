@@ -376,9 +376,18 @@
         } else {
           contentArea.html(content);
         }
-
+        
         content[0].classList.remove('hidden');
         contentArea[0].firstElementChild.classList.remove('hidden');
+
+        var popoverWidth = this.settings.content.width();
+        var parentWidth = this.settings.placementOpts.parent.width();
+
+        if (Locale.isRTL()) {
+          this.settings.placementOpts.parentXAlignment = parentWidth > popoverWidth ? 'left' : 'right';
+        } else {
+          this.settings.placementOpts.parentXAlignment = parentWidth > popoverWidth ? 'right' : 'left';
+        }        
 
         if (this.settings.title !== null) {
           if (!title) {
