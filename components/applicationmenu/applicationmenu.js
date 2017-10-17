@@ -99,7 +99,7 @@
       this.accordion = this.menu.find('.accordion');
       this.accordion.addClass('panel').addClass('inverse');
 
-      // if Filterable,
+      // Setup filtering, if applicable.
       if (this.settings.filterable && typeof $.fn.searchfield === 'function' && typeof window.ListFilter === 'function') {
         this.searchfield = this.element.children('.searchfield, .searchfield-wrapper');
         if (this.searchfield.length) {
@@ -108,7 +108,8 @@
           }
         }
 
-        this.listFilter = new ListFilter();
+        // TODO: Invoke/store an instance of Listfilter?
+        // SOHO-4816
       }
 
       // Check to make sure that the internal Accordion Control is invoked
