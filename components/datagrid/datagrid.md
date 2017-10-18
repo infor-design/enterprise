@@ -81,6 +81,7 @@ A Read-Only Datagrid uses "Formatters" to render cell content. A number of these
 - **headerTooltip* Can be used to set a tooltip specific to the column header.
 - **reorderable* The column cannot be dragged around to have its order in the list changed.
 - **colSpan* The cells can be split over a header. When set to an integer > 1 this next number of columns will be split over this header.
+- **uppercase* If true the text will be transformed to upper case in readonly view. Also in edit mode uppercase will be enforced.
 
 ## Column Settings (Formatter Specific)
 
