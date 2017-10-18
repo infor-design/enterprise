@@ -28,7 +28,7 @@
 
     <div id="maincontent" class="page-container scrollable" role="main">
 
-      <div class="row half-width">
+      <div class="row reduced">
         <div class="twelve columns">
 
           <div class="toolbar" role="toolbar">
@@ -57,48 +57,81 @@
 
   </div>
 
-{{={{{ }}}=}}
-<script id="colleagues-tmpl" type="text/html">
-  <ul>
-    {{#dataset}}
-      {{disabled}}
-      <li class="flex-table-row">
-        <div class="flex-table-cell">
-          <img class="listview-image-round" src="{{photo}}" alt="Photo of {{firstName}}"></span>
-          <span class="listview-heading">{{firstName}} {{lastName}}</span>
+  {{={{{ }}}=}}
+  <script id="colleagues-tmpl" type="text/html">
+    <table role="grid" class="listview-table show-headers">
 
-          <button type="button" class="btn-icon icon-favorite" title="Favorite">
-             <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-              {{#favorite}}
-              <use xlink:href="#icon-star-filled"></use>
-              {{/favorite}}
-              {{^favorite}}
-              <use xlink:href="#icon-star-outlined"></use>
-              {{/favorite}}
-             </svg>
-             <span>Favorite</span>
-          </button>
+      <!-- Controls the column widths -->
+      <colgroup>
+        <col style="width: 30%">
+        <col style="width: 17.5%">
+        <col style="width: 17.5%">
+        <col style="width: 17.5%">
+        <col style="width: 17.5%">
+      </colgroup>
 
-        </div>
-        <div class="flex-table-cell">
-          <span class="listview-heading">{{phone}}</span>
-        </div>
-        <div class="flex-table-cell">
-          <span class="listview-subheading">{{country}}</span>
-        </div>
-        <div class="flex-table-cell">
-          <span class="listview-subheading">{{manager}}</span>
-        </div>
-        <div class="flex-table-cell">
-          <span class="listview-subheading">{{reports}}</span>
-        </div>
-      </li>
-    {{/dataset}}
-  </ul>
-</script>
+      <tbody>
+      {{#dataset}}
+        <tr>
+          <td>
+            {{#photo}}
+            <div class="image-user-status">
+              <img class="image-round" src="{{photo}}" alt="Photo of {{firstName}}">
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-user-status-{{status}}"></use>
+              </svg>
+            </div>
+            {{/photo}}
+            {{^photo}}
+            <div class="image-user-status">
+              <div class="image-initials">{{initials}}</div>
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  <use xlink:href="#icon-user-status-{{status}}"></use>
+              </svg>
+            </div>
+            {{/photo}}
 
-<script>
-  $('body').on('initialized', function () {
+            <span class="listview-heading-lg">{{firstName}} {{lastName}}
 
-  });
-</script>
+              <button type="button" class="btn-icon icon-favorite" title="Favorite">
+                 <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                  {{#favorite}}
+                  <use xlink:href="#icon-star-filled"></use>
+                  {{/favorite}}
+                  {{^favorite}}
+                  <use xlink:href="#icon-star-outlined"></use>
+                  {{/favorite}}
+                 </svg>
+                 <span>Favorite</span>
+              </button>
+            </span>
+            <span class="listview-heading">{{title}}</span>
+          </td>
+          <td>
+            <p class="listview-data-label">Phone</p>
+            <p class="listview-data">{{phone}}</p>
+          </td>
+          <td>
+            <p class="listview-data-label">Country</p>
+            <p class="listview-data">{{country}}</p>
+          </td>
+          <td>
+            <p class="listview-data-label">Manager</p>
+            <p class="listview-data">{{manager}}</p>
+          </td>
+          <td>
+            <p class="listview-data-label">Direct Reports</p>
+            <p class="listview-data">{{reports}}</p>
+          </td>
+        </tr>
+      {{/dataset}}
+      </tbody>
+
+    </table>
+  </script>
+
+  <script>
+    $('body').on('initialized', function () {
+
+    });
+  </script>

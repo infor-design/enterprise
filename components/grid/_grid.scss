@@ -21,8 +21,9 @@ $gutter-neg-size: -20px;
     max-width: 100%;
   }
 
-  &.half-width {
-    max-width: $breakpoint-tablet-to-desktop / 2;
+  &.reduced {
+    max-width: $breakpoint-tablet-reduced;
+    padding-right: 0;
 
     .columns:first-child,
     .column:first-child {

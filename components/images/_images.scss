@@ -9,20 +9,19 @@ $images-size: (
   'lg': (300px, 350px)
 );
 
-
 // Image Placeholder
 @mixin image-placeholder($width, $height, $icon-height) {
-    background: $white;
-    border: 1px solid $image-border-color;
-    height: $height;
-    max-height: $height;
-    max-width: $width;
-    text-align: center;
-    width: $width;
+  background: $white;
+  border: 1px solid $image-border-color;
+  height: $height;
+  max-height: $height;
+  max-width: $width;
+  text-align: center;
+  width: $width;
 
-    .icon {
-      margin-top: ($height - $icon-height) / 2;
-    }
+  .icon {
+    margin-top: ($height - $icon-height) / 2;
+  }
 }
 
 @each $key, $value in $images-size {
@@ -41,12 +40,23 @@ $images-size: (
 .image-round {
   border-radius: 50%;
   display: inline-block;
-  float: left;
   height: 50px;
-  margin-right: 20px;
   width: 50px;
 }
 
+// Photo with svg status
+.image-user-status {
+  display: inline-block;
+
+  .icon {
+    left: 3px;
+    margin-left: -22px;
+    position: relative;
+    top: 6px;
+  }
+}
+
+// Initials for when photo is absent
 .image-initials {
   background: $amethyst05;
   border-radius: 50%;
@@ -55,8 +65,13 @@ $images-size: (
   font-size: 1.8rem;
   height: 4.8rem;
   line-height: 4.8rem;
-  margin-right: 1rem;
   text-align: center;
   vertical-align: middle;
   width: 4.8rem;
+
+  + .icon {
+    left: 6px;
+    position: relative;
+    top: 22px;
+  }
 }

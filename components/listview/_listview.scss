@@ -20,7 +20,8 @@
     outline: none;
   }
 
-  .listview-heading {
+  .listview-heading,
+  .listview-data {
     @include ellipsis();
     @include font-size(14);
     color: $listview-color;
@@ -32,11 +33,31 @@
     }
   }
 
+  .image-user-status {
+    float: left;
+    padding-right: 10px;
+  }
+
+  .listview-heading-lg {
+    @include font-size(18);
+    display: block;
+    margin: 8px 0 5px;
+    vertical-align: top;
+
+    .icon-favorite {
+      display: inline;
+      margin-top: -10px;
+      position: absolute;
+      vertical-align: top;
+    }
+  }
+
   .listview-image-column {
     width: 100px;
   }
 
-  .listview-subheading {
+  .listview-subheading,
+  .listview-data-label {
     @include font-size(12);
     color: $listview-secondary-color;
     overflow-wrap: break-word;

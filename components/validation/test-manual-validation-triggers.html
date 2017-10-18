@@ -25,7 +25,7 @@
 
 <script type="text/javascript">
   $('button').button().on('click', function () {
-    $('#username-display').removeError().addError({message: 'I have an Error.', showTooltip: true}).addError({message: 'I have another Error.', showTooltip: true});
+    $('#username-display').removeError().addError({inline: false, message: 'I have an Error.', showTooltip: true}).addError({message: 'I have another Error.', showTooltip: true});
   });
 
   $('#hide').button().on('click', function () {
