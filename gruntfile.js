@@ -21,11 +21,11 @@ module.exports = function(grunt) {
     run = require('./build/configs/run.js');
 
   let selectedControls = dependencyBuilder(grunt),
-    bannerText = `/**\n* Soho XI Controls v<%= pkg.version %>\n* Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %>\n* Revision: <%= meta.revision %>\n*/\n`;
+    bannerText = `/**\n* Soho XI Controls v<%= pkg.version %>\n* Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %>\n* Revision: <%= meta.revision %>\n* <%= meta.copyright %>\n*/\n`;
 
   if (selectedControls) {
     let bannerList = strBanner(selectedControls);
-    bannerText = `/**\n* Soho XI Controls v<%= pkg.version %>\n* ${bannerList}\n* Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %>\n* Revision: <%= meta.revision %>\n*/ \n`;
+    bannerText = `/**\n* Soho XI Controls v<%= pkg.version %>\n* ${bannerList}\n* Date: <%= grunt.template.today("dd/mm/yyyy h:MM:ss TT") %>\n* Revision: <%= meta.revision %>\n* <%= meta.copyright %>\n*/ \n`;
   } else {
     selectedControls = controls;
   }
@@ -118,13 +118,19 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('publish', [
+    'clean:dist',
+    'clean:public',
     'revision',
+    'jshint',
     'sass',
     'copy:amd',
     'strip_code',
     'concat',
     'clean:amd',
+    'uglify',
+    'cssmin',
     'copy:main',
+    'compress',
     'usebanner',
     'clean:publish',
     'copy:publish'

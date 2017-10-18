@@ -4,8 +4,7 @@
 
 -   [Dropdown](#dropdown)
     -   [activate](#activate)
-    -   [selectOptions](#selectoptions)
-    -   [selectOption](#selectoption)
+    -   [selectValue](#selectvalue)
     -   [getDataAttributes](#getdataattributes)
     -   [setCode](#setcode)
     -   [disable](#disable)
@@ -32,6 +31,7 @@ The Dropdown allows users to select from a list. Like an Html Select.
 -   `reloadSourceOnOpen` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If set to true, will always perform an ajax call whenever the list is opened.  If false, the first AJAX call's results are cached.
 -   `empty` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Initialize Empty Value
 -   `delay` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Typing Buffer Delay in ms
+-   `maxWidth` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**  -  If set the width of the dropdown is limited to this pixel width. Fx 300 for the 300 px size fields. Default is size of the largest data.
 
 ### activate
 
@@ -41,25 +41,14 @@ Focus the input Element
 
 -   `useSearchInput`  
 
-### selectOptions
+### selectValue
 
-Convenience method for running _selectOption()_ on a set of list options.
-Accepts an array or jQuery selector containing valid list options and selects/deselects them.
-
-**Parameters**
-
--   `options`  
--   `noTrigger` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if true, causes the 'selected' and 'change' events not to fire on each list item.
-
-### selectOption
-
-Select an option and conditionally trigger events.
-Accepts an array or jQuery selector containing valid list options and selects/deselects them.
+Select an option by the value.
 
 **Parameters**
 
--   `option` **jQuery** the incoming option
--   `noTrigger` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if true, causes the 'selected' and 'change' events not to fire on the list item.
+-   `value`  
+-   `option` **value** A string containing the value to look for. (Case insensitive)
 
 ### getDataAttributes
 

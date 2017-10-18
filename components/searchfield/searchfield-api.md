@@ -5,7 +5,9 @@
 -   [SearchField](#searchfield)
     -   [init](#init)
     -   [hasCategories](#hascategories)
+    -   [hasGoButton](#hasgobutton)
     -   [hasFocus](#hasfocus)
+    -   [handleGoButtonClick](#handlegobuttonclick)
     -   [setCategoryButtonText](#setcategorybuttontext)
     -   [isToolbarSearchfield](#istoolbarsearchfield)
     -   [getCategories](#getcategories)
@@ -40,11 +42,23 @@ Reveals whether or not categories are active on this searchfield
 
 Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
+### hasGoButton
+
+Detects the existence of a "Go" button added to the main searchfield API
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
 ### hasFocus
 
 Detects whether or not the Searchfield has focus.
 
 Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### handleGoButtonClick
+
+**Parameters**
+
+-   `e` **jQuery.Event** 
 
 ### setCategoryButtonText
 
@@ -154,5 +168,9 @@ Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Re
 ### destroy
 
 Destroys the Searchfield and removes all jQuery component instancing.
+
+**Parameters**
+
+-   `dontDestroyToolbarSearchfield` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if true, will not pass through and destroy a linked instance of the Toolbar Searchfield component.
 
 Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 

@@ -79,6 +79,15 @@ http://bamboo.infor.com/browse/SOHO-NGV-16
 - Update dev53
 - add label to successful build
 
+# How To Publish to AWS
+
+Only needed for debugging/publishing versions.
+
+- Setup now so you can run `grunt publish` and then `npm run publish-aws`. For some reason the && doesnt work here so need to run both commands.
+- Also install AWS for testing and configuring http://docs.aws.amazon.com/cli/latest/userguide/installing.html
+- Once installed run aws configure to enter the keys in the right spot http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html
+
+
 # How To Make Release (4.3.2)
 
 ## Info

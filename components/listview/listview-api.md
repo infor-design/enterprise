@@ -17,9 +17,10 @@
     -   [deselect](#deselect)
     -   [unselect](#unselect)
     -   [select](#select)
-    -   [toggleActivation](#toggleactivation)
-    -   [activate](#activate)
-    -   [deactivate](#deactivate)
+    -   [toggleItemActivation](#toggleitemactivation)
+    -   [activateItem](#activateitem)
+    -   [activatedItem](#activateditem)
+    -   [deactivateItem](#deactivateitem)
     -   [updated](#updated)
     -   [teardown](#teardown)
     -   [destroy](#destroy)
@@ -39,8 +40,10 @@ The About Dialog Component is displays information regarding the application.
 -   `searchable` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true, associates itself with a Searchfield/Autocomplete and allows itself to be filtered
 -   `selectable` **([String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String) \| [Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean))**  -   selection mode, can be false, 'single' or 'multiple' or 'mixed'
 -   `selectOnFocus` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -   If true the first item in the list will be selected as it is focused.
+-   `showCheckboxes` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -   If false will not show checkboxes used with multiple selection mode only
 -   `hoverable` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -   If true the list element will show a hover action to indicate its actionable.
 -   `source` **([Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function) \| [String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String))**  -  If source is a string then it serves as the url for an ajax call that returns the dataset. If its a function it is a call back for getting the data asyncronously.
+-   `disableItemDeactivation` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true when an item is activated the user should not be able to deactivate it by clicking on the activated item. They can only select another row.
 
 ### render
 
@@ -140,7 +143,7 @@ Select the given list item.
 -   `li` **(jQuery | [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))**  -  Either the actually jQuery list element or a zero based index
 -   `noTrigger` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Do not trigger the selected event.
 
-### toggleActivation
+### toggleItemActivation
 
 Toggle acivation state on the list item
 
@@ -148,21 +151,27 @@ Toggle acivation state on the list item
 
 -   `li` **jQuery**  -  The jQuery list element.
 
-### activate
+### activateItem
 
 Set item to activated, unactivate others and fire an event.
 
 **Parameters**
 
--   `li` **jQuery**  -  The jQuery list element.
+-   `li` **(jQuery | [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))**  -  The jQuery list element or the index.
 
-### deactivate
+### activatedItem
+
+Return an object containing info about the currently activated item.
+
+Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** An object containing the active row's index, dom element and data.
+
+### deactivateItem
 
 Set item to deactivated, uand fire an event.
 
 **Parameters**
 
--   `li` **jQuery**  -  The jQuery list element.
+-   `li` **(jQuery | [Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number))**  -  The jQuery list element. The li element or the index. If null the currently activated one will be deactivated.
 
 ### updated
 

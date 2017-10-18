@@ -711,6 +711,13 @@ $splitter-active-bg-color: $graphite04;
 $splitter-active-grip-bg-color: $black;
 $splitter-box-shadow-color: rgba(37, 120, 169, .75);
 
+// Step Chart
+$step-chart-bg-color: $graphite02;
+$step-chart-border-color: $graphite01;
+$step-chart-inprogress-bg-color: $ruby02;
+$step-chart-completed-bg-color: $primary-color;
+$step-chart-totally-completed-bg-color: #80ce4d;
+
 //Swaplist
 $swaplist-bg-color-hover: $graphite04;
 $swaplist-bg-color-selected: $primary-color;
@@ -730,27 +737,6 @@ $swaplist-title-text-color: $black;
   .audible {
     background-color: $graphite07;
   }
-}
-
-//Input has double border
-// input:not(:focus):not(:disabled):hover:not(.colorpicker):hover,
-// textarea:not(:focus):not(:disabled):hover {
-//   box-shadow: 0 0 0 1px $black;
-// }
-
-//Add a line on links..
-.hyperlink {
-  border-bottom-color: $hyperlink-color;
-
-  &[disabled] {
-    border-bottom-color: $hyperlink-disabled-color;
-  }
-}
-
-//But not these
-.breadcrumb .hyperlink,
-.hyperlink.back {
-  border-bottom-color: transparent;
 }
 
 // Tree - add a line

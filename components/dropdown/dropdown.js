@@ -34,7 +34,8 @@
           sourceArguments: {},
           reloadSourceOnOpen: false,
           empty: false,
-          delay: 300
+          delay: 300,
+          maxWidth: null
         },
         moveSelectedOpts = ['none', 'all', 'group'],
         settings = $.extend({}, defaults, options);
@@ -54,6 +55,7 @@
     * @param {Boolean} reloadSourceOnOpen  &nbsp;-&nbsp; If set to true, will always perform an ajax call whenever the list is opened.  If false, the first AJAX call's results are cached.
     * @param {Boolean} empty  &nbsp;-&nbsp; Initialize Empty Value
     * @param {Boolean} delay  &nbsp;-&nbsp; Typing Buffer Delay in ms
+    * @param {Number} maxWidth &nbsp;-&nbsp; If set the width of the dropdown is limited to this pixel width. Fx 300 for the 300 px size fields. Default is size of the largest data.
     *
     */
     function Dropdown(element) {
@@ -668,6 +670,8 @@
           this.list.addClass('has-icons');
           this.listIcon.pseudoElemIcon.clone().appendTo(this.list);
         }
+
+        this.listUl.find('[title]').addClass('has-tooltip').tooltip();
       },
 
       // Set the value based on selected options
@@ -1247,6 +1251,11 @@
 
         this.position();
 
+        // Limit the width
+        if (this.settings.maxWidth) {
+          this.list.css('max-width', this.settings.maxWidth + 'px');
+        }
+
         if (!this.settings.multiple && this.initialFilter) {
           setTimeout(function () {
             self.searchInput.val(self.filterTerm);
@@ -1563,6 +1572,14 @@
         this.filterTerm = '';
         this.searchInput.off('keydown.dropdown keypress.dropdown keypress.dropdown');
 
+        //Destroy any tooltip items
+        this.listUl.find('.has-tooltip').each(function () {
+          var api = $(this).data('tooltip');
+          if (api) {
+            api.destroy();
+          }
+        });
+
         this.list
           .off('click.list touchmove.list touchend.list touchcancel.list mousewheel.list mouseenter.list')
           .remove();
@@ -1685,6 +1702,7 @@
       /**
        * Convenience method for running _selectOption()_ on a set of list options.
        * Accepts an array or jQuery selector containing valid list options and selects/deselects them.
+       * @private
        * @param {Array / jQuery[]} options - incoming options
        * @param {Boolean} noTrigger - if true, causes the 'selected' and 'change' events not to fire on each list item.
        */
@@ -1703,7 +1721,8 @@
       /**
        * Select an option and conditionally trigger events.
        * Accepts an array or jQuery selector containing valid list options and selects/deselects them.
-       * @param {jQuery} option - the incoming option
+       * @private
+       * @param {jQuery} option - the incoming li option
        * @param {boolean} noTrigger - if true, causes the 'selected' and 'change' events not to fire on the list item.
        */
       selectOption: function(option, noTrigger) {
@@ -1711,6 +1730,7 @@
           return option;
         }
         var li;
+
         if (option.is('li')) {
           li = option;
           option = this.element.find('option[value="' + option.attr('data-val') + '"]');
@@ -1833,6 +1853,22 @@
         }
 
         this.setBadge(option);
+      },
+
+      /**
+       * Select an option by the value.
+       *
+       * @param {value} option - A string containing the value to look for. (Case insensitive)
+       */
+      selectValue: function(value) {
+
+        if (typeof value === 'string') {
+          var option = this.element.find('option[value="' + value + '"]');
+          this.element.find('option:selected').removeAttr('selected');
+          option.attr('selected', 'true');
+          this.updated();
+        }
+
       },
 
       setBadge: function (option) {

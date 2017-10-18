@@ -110,11 +110,7 @@
             isAppended = true;
             this.element = this.settings.content.closest('.modal');
           } else {
-            var self = this,
-              body = self.element.find('.modal-body');
-
-            body.append(self.settings.content);
-            Soho.utils.fixSVGIcons(body);
+            this.element.find('.modal-body').append(this.settings.content);
           }
 
           if (this.settings.content instanceof jQuery){
@@ -137,6 +133,8 @@
         if (!isAppended) {
           this.addButtons(this.settings.buttons);
         }
+
+        Soho.utils.fixSVGIcons(this.element);
       },
 
       reStructure: function() {
@@ -250,9 +248,11 @@
           buttonset.empty();
         }
 
-        $.each(buttons, function (name, props) {
+        var decorateButtons = function(props, cnt) {
+
           var btn = $('<button type="button"></button>');
           btn.text(props.text);
+          btn.attr('type', props.type || 'button');
 
           if (props.cssClass === 'separator') {
             btn = $('<div class="separator"></div>');
@@ -275,9 +275,9 @@
           var attrs = {},
             attrTypes = ['id', 'name', 'text'];
 
-          for (var i = 0; i < attrTypes.length; i++) {
-            if (props[attrTypes[i]]) {
-              attrs[attrTypes[i]] = props[attrTypes[i]];
+          for (var k = 0; k < attrTypes.length; k++) {
+            if (props[attrTypes[k]]) {
+              attrs[attrTypes[k]] = props[attrTypes[k]];
             }
           }
 
@@ -297,13 +297,13 @@
             }).prependTo(btn);
           }
 
-          if (props.id) {
-            btn.attr('id', props.id);
-          }
+          btn.attr('id', props.id || Soho.utils.uniqueId('modal', btn[0], cnt+1));
+
+          var func = buttons[cnt].click;
 
           btn.on('click.modal', function(e) {
-            if (props.click) {
-              props.click.apply(self.element[0], [e, self]);
+            if (func) {
+              func.apply(self.element[0], [e, self]);
               return;
             }
             self.close();
@@ -316,7 +316,11 @@
           btn.button();
           buttonset.append(btn);
 
-        });
+        };
+
+        for (var cnt = 0; cnt < buttons.length; cnt++) {
+          decorateButtons(buttons[cnt], cnt);
+        }
 
       },
 
@@ -588,6 +592,8 @@
               setTimeout(function () {
                 self.close();
               }, 0);
+
+              e.stopPropagation();
             }
 
             if (keyCode === 9) {

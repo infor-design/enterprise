@@ -126,16 +126,11 @@
           c = containers[i];
           lv = $(c.class +' .listview', self.element);
           list = lv.data('listview');
-          options = { selectable: 'multiple' };
+          options = { selectable: 'multiple', showCheckboxes: false };
           isSearchable = ((s.searchable === true || s.searchable === 'true') && ($(c.class +' .searchfield', self.element).length > 0));
 
           if (isSearchable) {
             options.searchable = true;
-          }
-
-          // Remove any previous listview instance
-          if (list) {
-            list.destroy();
           }
 
           // Initialize listview
@@ -143,6 +138,10 @@
             lv.listview(options);
           }
           else if (lv.length) {
+            // Remove any previous listview instance
+            if (list) {
+              list.destroy();
+            }
             options.template = s.template;
             options.dataset = c.dataset || [];
             lv.listview(options);
@@ -701,7 +700,7 @@
           api = lv.data('listview');
 
           if (api) {
-            api.unselectRowsBetweenIndexes([0, $('li', lv).length - 1]);
+            api.deselectItemsBetweenIndexes([0, $('li', lv).length - 1]);
             s[c.type] = c.dataset || [];
             api.loadData(s[c.type]);
           }

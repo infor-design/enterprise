@@ -570,8 +570,11 @@ $vertical-tab-sidebar-border-color: $graphite02;
 
 //Charts
 $chart-line-color: $graphite02;
-$chart-font-color: $graphite07;
+$chart-line-color-axis: $graphite04;
+$chart-font-color: $graphite06;
 $chart-font-color-inverse: $graphite08;
+$chart-bar-stroke: $white;
+$chart-arc-stroke: $white;
 
 // DataGrid
 $datagrid-border-color: $graphite02;
@@ -788,6 +791,13 @@ $splitter-grip-bg-color: $graphite06;
 $splitter-active-bg-color: $graphite02;
 $splitter-active-grip-bg-color: $graphite10;
 $splitter-box-shadow-color: rgba(54, 138, 192, .75);
+
+// Step Chart
+$step-chart-bg-color: $graphite02;
+$step-chart-border-color: $white;
+$step-chart-inprogress-bg-color: $ruby02;
+$step-chart-completed-bg-color: $primary-color;
+$step-chart-totally-completed-bg-color: $alert-green;
 
 //Breakpoint sizes - Grid
 $breakpoint-phone: 320px;

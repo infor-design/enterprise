@@ -1,0 +1,59 @@
+<div class="row">
+  <div class="two-thirds column">
+    <h2 class="widget-title">Line Chart &mdash; Format y-axis to be integer only</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="two-thirds column">
+      <div class="widget">
+        <div class="widget-header">
+          <h2 class="widget-title">Line Chart Title</h2>
+        </div>
+        <div class="widget-content">
+          <div id="line-example" class="chart-container">
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<script>
+$('body').on('initialized', function () {
+  var dataset = [{
+    "name": "EAM",
+    "data":[
+      {"name": "11:30 pm", "value": 1, "tooltip": "11:30 pm, 1"},
+      {"name": "12:30 am", "value": 4, "tooltip": "12:30 am, 4"},
+      {"name": "1:30 am",  "value": 1, "tooltip": "1:30 am, 1"},
+      {"name": "2:30 am",  "value": 1, "tooltip": "2:30 am, 1"},
+      {"name": "3:30 am",  "value": 0, "tooltip": "3:30 am, 0"},
+      {"name": "4:30 am",  "value": 2, "tooltip": "4:30 am, 2"},
+      {"name": "5:30 am",  "value": 3, "tooltip": "5:30 am, 3"},
+      {"name": "6:30 am",  "value": 5, "tooltip": "6:30 am, 5"},
+      {"name": "7:30 am",  "value": 0, "tooltip": "7:30 am, 0"},
+      {"name": "8:30 am",  "value": 0, "tooltip": "8:30 am, 0"},
+      {"name": "9:30 am",  "value": 3, "tooltip": "9:30 am, 3"},
+      {"name": "10:30 am", "value": 2, "tooltip": "10:30 am, 2"},
+      {"name": "11:30 am", "value": 0, "tooltip": "11:30 am, 0"},
+      {"name": "12:30 pm", "value": 1, "tooltip": "12:30 pm, 1"},
+      {"name": "1:30 pm",  "value": 0, "tooltip": "1:30 pm, 0"}
+    ]
+  }];
+
+  $('#line-example').chart({
+    type: 'line',
+    dataset: dataset,
+    yAxis: {
+      ticks: {
+        number: 5,
+        format: 'd'
+      }
+    },
+    xAxis: {
+      ticks: 'auto'
+    }
+  });
+
+});
+</script>

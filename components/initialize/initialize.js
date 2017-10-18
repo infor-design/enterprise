@@ -170,7 +170,7 @@
             ['editor'],
 
             //Tooltips
-            ['tooltip', '[title]'],
+            ['tooltip', 'button[title], span[title], .hyperlink[title]'],
 
             //Tree
             ['tree'],
@@ -258,7 +258,9 @@
 
             ['wizard'],
 
-            ['popdown', '[data-popdown]']
+            ['popdown', '[data-popdown]'],
+
+            ['stepchart', '.step-chart']
           ];
 
           //Do initialization for all the simple controls

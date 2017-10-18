@@ -603,8 +603,7 @@ body.no-scroll {
 
 .module-tabs {
   + .page-container,
-  + .application-menu + .page-container,
-  + .tab-panel-container {
+  + .application-menu + .page-container {
     height: calc(100% - 36px);
     margin-top: 36px;
   }

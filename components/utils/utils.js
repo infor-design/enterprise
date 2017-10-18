@@ -414,7 +414,7 @@
     };
 
     //Add the button to field parent
-    self.element.parent().append(this.xButton);
+    this.xButton.insertAfter(self.element);
 
     //Handle Events
     this.xButton.offTouchClick('clearable').off()
@@ -1095,8 +1095,6 @@
     return deferMethod(callback, timer);
   };
 
-
-
   /**
    * Safely changes the position of a text caret inside of an editable element.
    * In most cases, will call "setSelectionRange" on an editable element immediately, but in some
@@ -1119,6 +1117,27 @@
         element.setSelectionRange(startPos, endPos, 'none');
       }
     }
+  };
+
+  /**
+  * Generates a unique id of meaning based on the url, type of object,
+  * count of those objects and a suffix.
+  *
+  * @param {String} suffix
+  * @param {HTMLElement} element
+  */
+  window.Soho.utils.uniqueId = function uniqueId(suffix, element, count) {
+    var elem = !element ?  Math.random().toString(16).slice(-4) :
+              (element.getAttribute('id') || element.tagName).toLowerCase(),
+        uniqueid = (window.location.pathname.split('/').pop()
+          .replace(/\.xhtml|\.shtml|\.html|\.htm|\.aspx|\.asp|\.jspx|\.jsp|\.php/g, '')
+          .replace(/[^-\w]+/g, '')
+          .replace(/\./g, '-')
+          .replace(/ /g, '-')
+          .replace(/%20/g, '-') + '-' +
+        elem + (count||'') + ('-' + suffix || ''));
+
+    return uniqueid.replace(/--/g, '-');
   };
 
   //==================================================================

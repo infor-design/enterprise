@@ -1331,6 +1331,10 @@ window.GroupBy = (function() {
 * Register built in aggregators
 * @private
 */
+GroupBy.register('none', function(item) {
+  return $.extend({}, item.key, {values: item.values});
+});
+
 GroupBy.register('sum', function(item) {
   var extra = this.extra;
   return $.extend({}, item.key, {values: item.values}, {sum: item.values.reduce(function(memo, node) {
@@ -1826,15 +1830,19 @@ $.fn.datagrid = function(options) {
     *
     * @param {Object} pagerInfo &nbsp;-&nbsp The pager info object with information like activePage ect.
     */
-    triggerSource: function(pagerType) {
-
+    triggerSource: function(pagerType, callback) {
       this.pager.pagerInfo = this.pager.pagerInfo || {};
       this.pager.pagerInfo.type = pagerType;
 
       if (pagerType !== 'refresh') {
         this.pager.pagerInfo.activePage = 1;
       }
-      this.renderPager(this.pager.pagerInfo);
+
+      this.renderPager(this.pager.pagerInfo, false, function() {
+        if (callback && typeof callback === 'function') {
+          callback();
+        }
+      });
     },
 
     loadData: function (dataset, pagerInfo, isResponse) {
@@ -2374,6 +2382,11 @@ $.fn.datagrid = function(options) {
             rowValue = rowValue.toLowerCase();
           }
 
+          if (typeof rowValue === 'number') {
+            rowValue =  parseFloat(rowValue);
+            conditionValue = Locale.parseNumber(conditionValue);
+          }
+
           if (columnDef.filterType === 'date' || columnDef.filterType === 'time') {
             conditionValue = Locale.parseDate(conditions[i].value, conditions[i].format);
             if (conditionValue) {
@@ -2406,11 +2419,6 @@ $.fn.datagrid = function(options) {
                 rowValue = rowValue.getTime();
               }
             }
-          }
-
-          if (typeof rowValue === 'number') {
-            rowValue =  parseFloat(rowValue);
-            conditionValue = Locale.parseNumber(conditionValue);
           }
 
           switch (conditions[i].operator) {
@@ -2911,22 +2919,27 @@ $.fn.datagrid = function(options) {
 
       this.originalDataset = this.settings.dataset.slice();
 
+      if (!groupSettings.aggregator || groupSettings.aggregator === 'none') {
+        this.settings.dataset = GroupBy.none(this.settings.dataset, groupSettings.fields);
+        return;
+      }
+
       if (groupSettings.aggregator === 'sum') {
-        this.settings.dataset = GroupBy.sum(this.settings.dataset , groupSettings.fields, groupSettings.aggregate);
+        this.settings.dataset = GroupBy.sum(this.settings.dataset, groupSettings.fields, groupSettings.aggregate);
         return;
       }
 
       if (groupSettings.aggregator === 'max') {
-        this.settings.dataset = GroupBy.max(this.settings.dataset , groupSettings.fields, groupSettings.aggregate);
+        this.settings.dataset = GroupBy.max(this.settings.dataset, groupSettings.fields, groupSettings.aggregate);
         return;
       }
 
       if (groupSettings.aggregator === 'list') {
-        this.settings.dataset = GroupBy.list(this.settings.dataset , groupSettings.fields, groupSettings.aggregatorOptions);
+        this.settings.dataset = GroupBy.list(this.settings.dataset, groupSettings.fields, groupSettings.aggregatorOptions);
         return;
       }
 
-      this.settings.dataset = window.GroupBy(this.settings.dataset , groupSettings.fields);
+      this.settings.dataset = window.GroupBy(this.settings.dataset, groupSettings.fields);
     },
 
     /**
@@ -2948,6 +2961,8 @@ $.fn.datagrid = function(options) {
         self.tableBody = $('<tbody></tbody>');
         self.table.append(self.tableBody);
       }
+
+      self.groupArray = [];
 
       self.recordCount = 0;
       self.filteredCount = 0;
@@ -3017,6 +3032,7 @@ $.fn.datagrid = function(options) {
 
             tableHtml += self.rowHtml(rowData, this.recordCount, i);
             this.recordCount++;
+            self.groupArray.push({group: i, node: 0});
             continue;
           }
 
@@ -3024,6 +3040,7 @@ $.fn.datagrid = function(options) {
           for (var k = 0; k < dataset[i].values.length; k++) {
             tableHtml += self.rowHtml(dataset[i].values[k], this.recordCount, i);
             this.recordCount++;
+            self.groupArray.push({group: i, node: k});
           }
 
           // Now Push summary rowHtml
@@ -5507,6 +5524,10 @@ $.fn.datagrid = function(options) {
         else {
           dataRowIndex = self.pager && s.source ? rowNode.index() : dataRowIndex;
           rowData = s.dataset[dataRowIndex];
+          if (s.groupable) {
+            var gData = self.groupArray[dataRowIndex];
+            rowData = s.dataset[gData.group].values[gData.node];
+          }
           selectNode(rowNode, dataRowIndex, rowData);
           self.lastSelectedRow = idx;// Rememeber index to use shift key
         }
@@ -5648,7 +5669,9 @@ $.fn.datagrid = function(options) {
     toggleRowSelection: function (idx) {
       var row = (typeof idx === 'number' ? this.tableBody.find('tr[aria-rowindex="'+ (idx + 1) +'"]') : idx),
         isSingle = this.settings.selectable === 'single',
-        rowIndex = (typeof idx === 'number' ? idx : this.settings.treeGrid ? this.dataRowIndex(row) : this.actualArrayIndex(row));
+        rowIndex = (typeof idx === 'number' ? idx :
+        (this.settings.treeGrid || this.settings.groupable) ?
+        this.dataRowIndex(row) : this.actualArrayIndex(row));
 
       if (this.settings.selectable === false) {
         return;
@@ -5710,9 +5733,18 @@ $.fn.datagrid = function(options) {
             }
           }
         } else {
-          var selIdx = elem.attr('data-index');
-          if (selIdx !== undefined) {
-            removeSelected(self.settings.dataset[selIdx]);
+          var selIdx = self.actualArrayIndex(elem),
+            rowData;
+
+          if (rowData !== undefined) {
+            rowData = self.settings.dataset[selIdx];
+          }
+          if (s.groupable) {
+            var gData = self.groupArray[idx];
+            rowData = s.dataset[gData.group].values[gData.node];
+          }
+          if (rowData !== undefined) {
+            removeSelected(rowData);
           }
         }
       };
@@ -5820,13 +5852,32 @@ $.fn.datagrid = function(options) {
       var self = this,
         s = self.settings,
         dataset = s.treeGrid ? s.treeDepth : s.dataset,
-        selectedRows = [];
+        selectedRows = [],
+        idx = -1;
 
       for (var i = 0, data; i < dataset.length; i++) {
-        data = s.treeGrid ? dataset[i].node : dataset[i];
-        if (self.isNodeSelected(data)) {
-          selectedRows.push({idx: i, data: data, elem: self.visualRowNode(i)});
+
+        if (s.groupable) {
+          for (var k = 0; k < dataset[i].values.length; k++) {
+            idx++;
+            data = dataset[i].values[k];
+            if (self.isNodeSelected(data)) {
+              selectedRows.push({
+                idx: idx,
+                data: data,
+                elem: self.dataRowNode(idx),
+                group: dataset[i]
+              });
+            }
+          }
         }
+        else {
+          data = s.treeGrid ? dataset[i].node : dataset[i];
+          if (self.isNodeSelected(data)) {
+            selectedRows.push({idx: i, data: data, elem: self.visualRowNode(i)});
+          }
+        }
+
       }
       return selectedRows;
     },
@@ -5837,7 +5888,8 @@ $.fn.datagrid = function(options) {
           s = this.settings,
           isSingle = s.selectable === 'single',
           isMultiple = s.selectable === 'multiple' || s.selectable === 'mixed',
-          dataset = s.treeGrid ? s.treeDepth : s.dataset;
+          dataset = s.treeGrid ? s.treeDepth : s.dataset,
+          gIdx = idx;
 
       // As of 4.3.3, return the rows that have _selected = true
       var selectedRows = this.selectedRows();
@@ -5860,7 +5912,15 @@ $.fn.datagrid = function(options) {
       if (isMultiple) {
         if (Object.prototype.toString.call(row) === '[object Array]' ) {
           for (var i = 0; i < row.length; i++) {
-            this.selectRow(row[i], true, true);
+            if (s.groupable) {
+              for (var k = 0; k < dataset[i].values.length; k++) {
+                gIdx++;
+                this.selectRow(gIdx, true, true);
+              }
+            }
+            else {
+              this.selectRow(row[i], true, true);
+            }
           }
 
           if (row.length === 0) {
@@ -7369,7 +7429,7 @@ $.fn.datagrid = function(options) {
     * @param {String} pagingInfo &nbsp;-&nbsp The paging object with activePage ect used by pager.js
     * @param {Boolean} isResponse &nbsp;-&nbsp Internal flag used to prevent callbacks from rexecuting.
     */
-    renderPager: function (pagingInfo, isResponse) {
+    renderPager: function (pagingInfo, isResponse, callback) {
       var api = this.pager;
 
       if (!api) {
@@ -7379,7 +7439,7 @@ $.fn.datagrid = function(options) {
       api.updatePagingInfo(pagingInfo);
 
       if (!isResponse) {
-        api.renderPages(pagingInfo.type);
+        api.renderPages(pagingInfo.type, callback);
       }
 
       // Update selected and Sync header checkbox

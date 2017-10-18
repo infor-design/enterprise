@@ -6,6 +6,7 @@ window.Chart = function(container) {
   'use strict';
 
   var charts = this;
+  this.container = $(container);
 
   //IE8 and Below Message
   if (typeof d3 === 'undefined') {
@@ -260,11 +261,7 @@ window.Chart = function(container) {
     d3.select('#svg-tooltip').classed('is-hidden', true).style('left', '-999px');
 
     // Remove scroll events
-    $('body').off('scroll.chart-tooltip', function() {
-      self.hideTooltip();
-    });
-
-    $('.scrollable').off('scroll.chart-tooltip', function() {
+    $('body, .scrollable').off('scroll.chart-tooltip', function() {
       self.hideTooltip();
     });
   };
@@ -952,6 +949,7 @@ window.Chart = function(container) {
       tooltipData = charts.options.tooltip;
 
     charts.appendTooltip();
+    charts.hideTooltip();
 
     var showLegend = charts.showLegend || false;
 
@@ -3082,19 +3080,27 @@ window.Chart = function(container) {
     }
 
     var entries = d3.max(dataset.map(function(d){ return d.data.length; })) -1,
-      xScale = x.domain(!!settings.xAxis && !!settings.xAxis.domain ? (settings.xAxis.domain) : ([0, isBubble ? d3.max(maxes.x) : entries])).nice(),
+      xScale = x.domain(!!settings.xAxis && !!settings.xAxis.domain ? (settings.xAxis.domain) : ([0, isBubble ? d3.max(maxes.x) : entries])),
       yScale = y.domain([0, d3.max(isBubble ? maxes.y : maxes)]).nice(),
       zScale = z.domain([0, d3.max(isBubble ? maxes.z : maxes)]).nice();
 
     var xAxis = d3.svg.axis()
       .scale(xScale)
       .orient('bottom')
-      .ticks((!!settings.xAxis && !!settings.xAxis.ticks) ? (settings.xAxis.ticks) : (isBubble && isViewSmall ? Math.round(entries/2) : entries))
+      .ticks((!!settings.xAxis && !!settings.xAxis.ticks) ?
+        (settings.xAxis.ticks === 'auto' ?
+          Math.max(width/55, 2) : settings.xAxis.ticks) :
+            (isBubble && isViewSmall ? Math.round(entries/2) : entries))
       .tickPadding(10)
       .tickSize(isBubble ? -(height + 10) : 0)
       .tickFormat(function (d, i) {
-        if (!!settings.xAxis && !!settings.xAxis.formatter) {
-          return settings.xAxis.formatter(d, i);
+        if (!!settings.xAxis) {
+          if (!!settings.xAxis.formatter) {
+            return settings.xAxis.formatter(d, i);
+          }
+          if (settings.xAxis.ticks === 'auto') {
+            return names[d];
+          }
         }
         return isBubble ? d : names[i];
       });
@@ -4589,6 +4595,12 @@ $.fn.chart = function(options) {
     instance = $.data(this, 'chart', chartInst);
     instance.settings = options;
     instance._animateIndex = 0;
+    instance.destroy = function() {
+      instance.tooltip.remove();
+      instance.container.find('*').off();
+      instance.container.removeClass('chart-vertical-bar chart-pie column-chart line-chart bubble bullet-chart completion-chart chart-targeted-achievement chart-completion-target chart-targeted-achievement chart-completion').empty();
+      $.removeData(instance.container[0], 'chart');
+    };
     instance.setSelected = function() {};
     instance.toggleSelected = function(o) {
       this.setSelected(o, true);
