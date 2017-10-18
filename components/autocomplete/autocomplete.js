@@ -53,7 +53,7 @@
     }
 
     // Default Autocomplete Result Item Template
-    var resultTemplate = '<li id="{{listItemId}}" data-index="{{index}}" {{#hasValue}}data-value="{{value}}"{{/hasValue}} role="listitem">' + '\n\n' +
+    var DEFAULT_AUTOCOMPLETE_TEMPLATE = '<li id="{{listItemId}}" data-index="{{index}}" {{#hasValue}}data-value="{{value}}"{{/hasValue}} role="listitem">' + '\n\n' +
       '<a href="#" tabindex="-1">' + '\n\n' +
         '<span>{{{label}}}</span>' + '\n\n' +
       '</a>' + '\n\n' +
@@ -128,7 +128,7 @@
           typeof templateAttr === 'string' ? templateAttr :
           $(this.settings.template).length ? $(this.settings.template).text() :
           typeof this.settings.template === 'string' ? this.settings.template :
-          resultTemplate;
+          DEFAULT_AUTOCOMPLETE_TEMPLATE;
 
         // Send item list to the ListFilter
         var filterResult = this.listFilter.filter(items, term);
@@ -158,13 +158,20 @@
           var isString = typeof item === 'string',
             dataset = {
               index: i,
-              label: highlightMatch(isString ? items[i] : items[i].label),
               listItemId: 'ac-list-option' + i
             };
 
-          dataset.hasValue = items[i].value !== undefined;
+          if (!isString) {
+            dataset = Soho.utils.extend({}, dataset, item);
+          } else {
+            dataset.label = item;
+          }
+
+          dataset.label = highlightMatch(item.label);
+
+          dataset.hasValue = item.value !== undefined;
           if (dataset.hasValue) {
-            dataset.value = items[i].value;
+            dataset.value = item.value;
           }
 
           if (typeof Tmpl !== 'undefined') {
@@ -186,83 +193,6 @@
         for (var i = 0; i < filterResult.length; i++) {
           resultIterator(filterResult[i], i);
         }
-
-        /*
-        for (var i = 0; i < items.length; i++) {
-          var isString = typeof items[i] === 'string',
-            option = (isString ? items[i] : items[i].label),
-            baseData = {
-              label: option
-            },
-            dataset = isString ? baseData : $.extend(baseData, items[i]),
-            parts = option.split(' '),
-            containsTerm = !this.settings.filterMode ? true : false;
-
-          if (this.settings.filterMode === 'startsWith') {
-              for (var a = 0; a < parts.length; a++) {
-                if (Locale.toLowerCase(parts[a]).indexOf(term) === 0) {
-                  containsTerm = true;
-                }
-              }
-
-              //Direct Match
-              if (Locale.toLowerCase(option).indexOf(term) === 0) {
-                containsTerm = true;
-              }
-
-              if (term.indexOf(' ') > 0 && Locale.toLowerCase(option).indexOf(term) > 0) {
-                //Partial dual word match
-                containsTerm = true;
-              }
-
-          }
-
-          if (this.settings.filterMode === 'contains') {
-            if (Locale.toLowerCase(option).indexOf(term) >= 0) {
-              containsTerm = true;
-            }
-          }
-
-          if (containsTerm) {
-          matchingOptions.push(option);
-
-          // Build the dataset that will be submitted to the template
-          dataset.listItemId = 'ac-list-option' + i;
-          dataset.index = i;
-
-          if (this.settings.filterMode === 'contains') {
-            dataset.label = dataset.label.replace(new RegExp('(' + term + ')', 'ig'), '<i>$1</i>');
-          } else {
-            dataset.label = Locale.toLowerCase(option).indexOf(term)===0 ? '<i>' + option.substr(0,term.length) + '</i>' + option.substr(term.length) : option;
-
-            var pos = Locale.toLowerCase(option).indexOf(term);
-            if (pos > 0) {
-              dataset.label = option.substr(0, pos) + '<i>' + option.substr(pos, term.length) + '</i>' + option.substr(term.length + pos);
-            }
-          }
-
-          dataset.hasValue = !isString && items[i].value !== undefined;
-
-          if (dataset.hasValue) {
-            dataset.value = items[i].value;
-          }
-
-          if (typeof Tmpl !== 'undefined') {
-            var compiledTmpl = Tmpl.compile(this.tmpl),
-              renderedTmpl = compiledTmpl.render(dataset);
-
-            self.list.append($.sanitizeHTML(renderedTmpl));
-          } else {
-            var listItem = $('<li role="listitem"></li>');
-            listItem.attr('id', dataset.listItemId);
-            listItem.attr('data-index', dataset.index);
-            listItem.attr('data-value', dataset.value);
-            listItem.append('<a href="#" tabindex="-1"><span>' + dataset.label + '</span></a>');
-            self.list.append($.sanitizeHTML(listItem));
-          }
-          }
-        }
-        */
 
         function autocompletePlaceCallback(placementObj) {
           // Nudge the autocomplete to the right by 1px in Chrome
@@ -337,7 +267,7 @@
           '</span>');
 
         this.noSelect = true;
-        this.element.trigger('listopen', [items]);
+        this.element.trigger('listopen', [filterResult]);
       },
 
       closeList: function(dontClosePopup) {
