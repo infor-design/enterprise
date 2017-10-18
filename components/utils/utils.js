@@ -265,33 +265,72 @@
    return this;
   };
 
-  // Parse options from attribute and return obj
-  $.fn.parseOptions = function(element, attr) {
-    var options;
 
-    attr = attr || 'data-options'; //default
-    options = $(element).attr(attr);
-
-    if (options && options.length) {
-      if (options.indexOf('{') > -1) {
-        try {
-          options = JSON.parse(options.replace(/'/g, '"'));
-        } catch(err) {
-          // Attempt a manual parse
-          var regex = /({|,)(?:\s*)(?:')?([A-Za-z_$\.][A-Za-z0-9_ \-\.$]*)(?:')?(?:\s*):/g; //get keys
-          options = options.replace(regex, '$1\"$2\":'); //add double quotes to keys
-          regex = /:(?:\s*)(?!(true|false|null|undefined))([A-Za-z_$\.#][A-Za-z0-9_ \-\.$]*)/g; //get strings in values
-          options = options.replace(regex, ':\"$2\"'); //add double quotes to strings in values
-          options = JSON.parse(options.replace(/'/g, '"')); //replace single to double quotes
-        }
-      }
+  /**
+   * Grabs an attribute from an HTMLElement containing stringified JSON syntax, and interprets it into options.
+   * @param {HTMLElement} element
+   * @param {String} [attr]
+   * @returns {Object}
+   */
+  window.Soho.utils.parseOptions = function parseOptions(element, attr) {
+    var options = {};
+    if (!element || !(element instanceof HTMLElement)) {
+      return options;
     }
 
-    if (!options) {
-      options = {};
+    // Use `data-options` as a default.
+    attr = attr || 'data-options';
+
+    var str = element.getAttribute(attr);
+    if (!str || typeof str !== 'string' || str.indexOf('{') === -1) {
+      return options;
+    }
+
+    // replace single to double quotes, since single-quotes may be necessary
+    // due to entry in markup.
+    function replaceDoubleQuotes(str) {
+      return str.replace(/'/g, '"');
+    }
+
+    // Manually parse a string more in-depth
+    function manualParse(str) {
+      var regex = /({|,)(?:\s*)(?:')?([A-Za-z_$\.][A-Za-z0-9_ \-\.$]*)(?:')?(?:\s*):/g; //get keys
+      str = str.replace(regex, '$1\"$2\":'); //add double quotes to keys
+      regex = /:(?:\s*)(?!(true|false|null|undefined))([A-Za-z_$\.#][A-Za-z0-9_ \-\.$]*)/g; //get strings in values
+      str = str.replace(regex, ':\"$2\"'); //add double quotes to strings in values
+      str = replaceDoubleQuotes(str);
+      return str;
+    }
+
+    try {
+      options = JSON.parse(replaceDoubleQuotes(str));
+    } catch(err) {
+      options = JSON.parse(manualParse(str));
     }
 
     return options;
+  };
+
+  /**
+   * jQuery Behavior Wrapper for `Soho.utils.parseOptions`.
+   * @deprecated
+   * @param {String} [attrName]
+   * @return {Object|Object[]}
+   */
+  $.fn.parseOptions = function(attr) {
+    var results = [];
+
+    this.each(function() {
+      results.push({
+        element: this,
+        options: Soho.utils.parseOptions(this, attr)
+      });
+    });
+
+    if (results.length === 1) {
+      return results[0].options;
+    }
+    return results;
   };
 
   // Timer - can be use for play/pause or stop for given time

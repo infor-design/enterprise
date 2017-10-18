@@ -10,6 +10,7 @@
 <h2 id="api-details">API Details</h2>
 <h3 id="settings">Settings</h3>
 <ul>
+<li><code>options</code><br /></li>
 <li><code>allowOnePane</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  If set to true, allows only one pane of the Accordion to be open at a time. If an Accordion pane is open, and that pane contains sub-headers, only one of the pane's sub-headers can be open at a time. (default true)<br /></li>
 <li><code>displayChevron</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Displays a &quot;Chevron&quot; icon that sits off to the right-most side of a top-level accordion header. Used in place of an Expander (+/-) if enabled.<br /></li>
 <li><code>rerouteOnLinkClick</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Can be set to false if routing is externally handled<br /></li>
@@ -50,7 +51,9 @@
 <h4 id="select">select</h4>
 <p>Makes a header &quot;selected&quot; if its expander button or anchor tag is focused.</p>
 <p><strong>Parameters</strong></p>
-<p><strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong> a jQuery Object containing either an expander button or an anchor tag.</p>
+<ul>
+<li><code>element</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong> a jQuery Object containing either an expander button or an anchor tag.</li>
+</ul>
 <h4 id="isdisabled">isDisabled</h4>
 <p>Checks if a particular header is disabled, or if the entire accordion is disabled..</p>
 <p><strong>Parameters</strong></p>
