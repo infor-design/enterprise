@@ -566,6 +566,10 @@ window.Editors = {
         this.input.attr('maxlength', column.maxLength);
       }
 
+      if (column.uppercase) {
+        this.input.addClass('uppercase-text');
+      }
+
       if (column.mask && typeof column.mask === 'function') {
         var mask = column.mask(row, cell, value, column, item);
         this.input.mask({pattern: mask, mode: column.maskMode});
@@ -614,6 +618,10 @@ window.Editors = {
 
       if (column.maxLength) {
         this.input.attr('maxlength', column.maxLength);
+      }
+
+      if (column.uppercase) {
+        this.input.addClass('uppercase-text');
       }
 
     };
@@ -1039,6 +1047,10 @@ window.Editors = {
         this.input.attr('maxlength', column.maxLength);
       }
 
+      if (column.uppercase) {
+        this.input.addClass('uppercase-text');
+      }
+
       this.input.lookup(column.editorOptions);
     };
 
@@ -1118,6 +1130,10 @@ window.Editors = {
 
       if (column.maxLength) {
         this.input.attr('maxlength', column.maxLength);
+      }
+
+      if (column.uppercase) {
+        this.input.addClass('uppercase-text');
       }
 
       this.input.autocomplete(column.editorOptions);
@@ -3337,6 +3353,10 @@ $.fn.datagrid = function(options) {
 
         if (col.textOverflow === 'ellipsis') {
           cssClass += ' text-ellipsis';
+        }
+
+        if (col.uppercase) {
+          cssClass += ' uppercase-text';
         }
 
         // Add Column Css Classes
