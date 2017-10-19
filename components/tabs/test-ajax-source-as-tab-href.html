@@ -33,7 +33,17 @@
     // size of paragraphs
     var s = Math.floor(Math.random() * (75 - 25 + 1)) + 25;
 
-    return 'http://' + host + ':' + port + '/api/garbage?return=html&paragraphs='+ p +'&size='+ s;
+    // Vars for modification of URL
+    var URLfront = '',
+      indexOfAppRoute = window.location.href.indexOf('components/tabs/');
+
+    if (host === 'localhost') {
+      URLfront = 'http://' + host + (port !== '' ? ':' + port : '') + '/';
+    } else if (indexOfAppRoute !== -1) {
+      URLfront = window.location.href.substring(0, indexOfAppRoute);
+    }
+
+    return URLfront + 'api/garbage?return=html&paragraphs='+ p +'&size='+ s;
   }
 
   $('body').on('initialized', function() {
