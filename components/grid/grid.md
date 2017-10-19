@@ -43,13 +43,31 @@ You can also add class `one-half-mobile` and at the lowest breakpoint the grid w
 
 ```
 
+## Breakpoints
+
+- Normally two breakpoints are used max width 1280px and then folds to mobile under 767 px
+- For some minor tweaks in the application outside the responsive grid we have the following sass Breakpoints
+
+```
+
+$breakpoint-phone: 320px;
+$breakpoint-slim: 400px;
+$breakpoint-phablet: 610px;
+$breakpoint-phone-to-tablet: 767px;
+$breakpoint-wide-tablet: 968px;
+$breakpoint-tablet-to-desktop: 1280px;
+$breakpoint-desktop-to-extralarge: 1600px;
+
+
+```
+
 ## Accessibility
 
--   No special requirements. But watch for tab order.
+-   No special requirements. But watch that tab order is respected.
 
 ## Code Tips
 
--   Uses form guidelines
+-  Not again that fields inputs can be used within the grid as per this [this example.]( ../components/form/example-inputs)
 
 ## Upgrading from 3.X
 

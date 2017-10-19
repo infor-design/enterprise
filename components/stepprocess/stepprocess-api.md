@@ -13,19 +13,16 @@ A Stepprocess/wizard control
 
 **Parameters**
 
--   `element` **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
--   `options` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)>?** 
-    -   `options.linearProgression` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Whether to prevent clicking and allow only prev/next navigation of steps (optional, default `false`)
-    -   `options.folderIconOpen` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** A specific folder open icon (optional, default `"caret-up"`)
-    -   `options.folderIconClosed` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** A specific folder close icon (optional, default `"caret-down"`)
-    -   `options.stepList` **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** The ID of the stepList (optional, default `"#step-list"`)
-    -   `options.stepLi` **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** jQuery selector for the step elements (optional, default `".js-step"`)
-    -   `options.stepLink` **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** jQuery selector for the step link elements (optional, default `".js-step-link"`)
-    -   `options.stepFolder` **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** jQuery selector for the step folder elements (optional, default `".js-step-folder"`)
-    -   `options.btnPrev` **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** jQuery selector for the previous step button (optional, default `".js-step-link-prev"`)
-    -   `options.btnNext` **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** jQuery selector for the next step button (optional, default `".js-step-link-next"`)
-    -   `options.beforeSelectStep` **(function ([event](https://developer.mozilla.org/en-US/docs/Web/API/Event), args) | [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise))** A callback (function or promise) that gives
-               args.stepLink (the step link element) and args.isStepping (whether we are prev/next'ing or not) (optional, default `null`)
+-   `linearProgression` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** The Main Application Name to display in the header. (Defaults to false)
+-   `folderIconOpen` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** A specific folder open icon. (Defaults to 'caret-up')
+-   `folderIconClosed` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** A specific folder close icon. (Defaults to 'caret-down')
+-   `stepList` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** Determines whether or not to display device information (Browser, Platform, Locale, Cookies Enabled).
+-   `stepLi` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** jQuery selector for the step elements.
+-   `stepLink` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** jQuery selector for the step link elements.
+-   `stepFolder` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** jQuery selector for the step folder elements.
+-   `btnPrev` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** jQuery selector for the previous step button.
+-   `btnNext` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** jQuery selector for the next step button.
+-   `beforeSelectStep` **[Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)** A callback (function or promise) that gives args: stepLink (the step link element) and isStepping (whether we are prev/next'ing or not).
 
 ### goToNextStep
 
