@@ -7,6 +7,8 @@
     -   [handleAnchorClick](#handleanchorclick)
     -   [handleExpanderClick](#handleexpanderclick)
     -   [handleKeys](#handlekeys)
+    -   [toData](#todata)
+    -   [toMarkup](#tomarkup)
     -   [select](#select)
     -   [isDisabled](#isdisabled)
     -   [isExpanded](#isexpanded)
@@ -86,6 +88,22 @@ Keypress Event Handler for expanders and anchors
 -   `e` **jQuery.Event** 
 
 Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### toData
+
+Translates all existing markup inside the accordion to a JSON object structure
+
+Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+### toMarkup
+
+Translates an incoming JSON object structure to Accordion markup
+
+**Parameters**
+
+-   `data`  
+
+Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
 ### select
 

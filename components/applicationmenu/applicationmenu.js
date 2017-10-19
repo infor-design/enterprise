@@ -28,6 +28,7 @@
   *
   * @class ApplicationMenu
   * @param {String} breakpoint  &nbsp;-&nbsp; Can be 'tablet' (+720), 'phablet (+968), ' 'desktop' +(1024), or 'large' (+1280). Default is phablet (968)
+  * @param {String} filterable
   * @param {String} openOnLarge  &nbsp;-&nbsp; If true, will automatically open the Application Menu when a large screen-width breakpoint is met.
   * @param {String} triggers  &nbsp;-&nbsp; An Array of jQuery-wrapped elements that are able to open/close this nav menu.
   */
@@ -99,24 +100,60 @@
       this.accordion = this.menu.find('.accordion');
       this.accordion.addClass('panel').addClass('inverse');
 
-      // Setup filtering, if applicable.
-      if (this.settings.filterable && typeof $.fn.searchfield === 'function' && typeof window.ListFilter === 'function') {
-        this.searchfield = this.element.children('.searchfield, .searchfield-wrapper');
-        if (this.searchfield.length) {
-          if (this.searchfield.is('.searchfield-wrapper')) {
-            this.searchfield = this.searchfield.children('.searchfield');
-          }
-        }
-
-        // TODO: Invoke/store an instance of Listfilter?
-        // SOHO-4816
-      }
-
       // Check to make sure that the internal Accordion Control is invoked
       var accordion = this.accordion.data('accordion');
       if (!accordion) {
         var accOpts = this.accordion.parseOptions();
         this.accordion.accordion(accOpts);
+      }
+
+      // detect the presence of a searchfield
+      this.searchfield = this.element.children('.searchfield, .searchfield-wrapper');
+
+      // Setup filtering, if applicable.
+      if (this.settings.filterable && typeof $.fn.searchfield === 'function') {
+        if (this.searchfield.length) {
+          if (this.searchfield.is('.searchfield-wrapper')) {
+            this.searchfield = this.searchfield.children('.searchfield');
+          }
+        } else {
+          this.searchfield = $('<div class="searchfield-wrapper">' +
+            '<label for="application-menu-searchfield">'+ Locale.translate('Search') +'</label>' +
+            '<input id="application-menu-searchfield" class="searchfield" /></div>').prependTo(this.element);
+        }
+
+        this.searchfield.searchfield({
+          source: this.accordion.data('accordion').toData(),
+          searchableTextCallback: function(item) {
+            return item.text || '';
+          },
+          resultIteratorCallback: function(item) {
+            item._highlightTarget = 'text';
+            return item;
+          },
+          displayResultsCallback: function(results, done) {
+
+            // TEMP - SOHO-4816
+            $('body').toast({
+              title: 'Filter Results',
+              message: (function() {
+                var str = '';
+                for (var i = 0; i < results.length; i++) {
+                  str += '<p>'+ results[i].text +'</p>';
+                }
+                return str;
+              })()
+            });
+
+            done();
+          }
+        });
+      } else {
+        if (this.searchfield.length) {
+          this.searchfield.off();
+          this.searchfield.parent('.searchfield-wrapper').remove();
+          delete this.searchfield;
+        }
       }
 
       this.adjustHeight();

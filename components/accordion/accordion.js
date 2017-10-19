@@ -440,6 +440,75 @@
     },
 
     /**
+     * Translates all existing markup inside the accordion to a JSON object structure
+     * @returns {Object}
+     */
+    toData: function() {
+      var data = [],
+        topHeaders = this.element.children('.accordion-header');
+
+      function buildHeaderJSON(el, index, parentArr) {
+        var $el = $(el),
+          pane = $(el).next('.accordion-pane'),
+          headerData = {
+            text: $(el).children('a, span').text().trim(),
+            index: index
+          };
+
+        if (el.getAttribute('id')) {
+          headerData.id = el.getAttribute('id');
+        }
+
+        var icon = $el.children('.icon');
+        if (icon.length) {
+          headerData.icon = icon[0].tagName.toLowerCase() === 'svg' ?
+            icon[0].getElementsByTagName('use')[0].getAttribute('xlink:href') :
+            '';
+        }
+
+        if ($el.hasClass('is-disabled')) {
+          headerData.disabled = true;
+        }
+
+        if (pane.length) {
+          var content = pane.children('.accordion-content'),
+            subheaders = pane.children('.accordion-header'),
+            subheaderData = [];
+
+          if (content.length) {
+            headerData.content = '' + content.html();
+          }
+
+          if (subheaders.length) {
+            subheaders.each(function(j, subitem) {
+              buildHeaderJSON(subitem, j, subheaderData);
+            });
+            headerData.children = subheaderData;
+          }
+        }
+
+        parentArr.push(headerData);
+      }
+
+      // Start traversing the accordion
+      topHeaders.each(function(i, item) {
+        buildHeaderJSON(item, i, data);
+      });
+
+      return data;
+    },
+
+    /**
+     * Translates an incoming JSON object structure to Accordion markup
+     * @returns {String}
+     */
+    toMarkup: function(data) {
+      var markup = '';
+
+      return markup;
+    },
+
+    /**
      * Makes a header "selected" if its expander button or anchor tag is focused.
      * @param {Object} element - a jQuery Object containing either an expander button or an anchor tag.
      */
