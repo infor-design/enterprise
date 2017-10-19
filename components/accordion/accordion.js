@@ -247,7 +247,7 @@
      * @returns {boolean}
      */
     handleHeaderClick: function(e, header) {
-      if (!header || !header.length || this.isDisabled(header) || header.data('is-animating')) {
+      if (!header || !header.length || this.isDisabled(header) || this.isFiltered(header) || header.data('is-animating')) {
         e.preventDefault();
         return;
       }
@@ -278,7 +278,7 @@
         e.preventDefault();
       }
 
-      if (!header.length || this.isDisabled(header)) {
+      if (!header.length || this.isDisabled(header) || this.isFiltered(header)) {
         return false;
       }
 
@@ -338,7 +338,7 @@
      */
     handleExpanderClick: function(e, expander) {
       var header = expander.parent('.accordion-header');
-      if (!header.length || this.isDisabled(header) || header.data('is-animating')) {
+      if (!header.length || this.isDisabled(header) || this.isFiltered(header) || header.data('is-animating')) {
         return;
       }
 
@@ -440,19 +440,21 @@
     },
 
     /**
-     * Translates all existing markup inside the accordion to a JSON object structure
+     * Translates all existing markup inside the accordion to a JSON-compatible object structure.
+     * @param {boolean} flatten - if true, places all accordion headers in the root array.
+     * @param {boolean} addElementReference - if true, includes a reference to the original header element inside the structure (NOT valid JSON).
      * @returns {Object}
      */
-    toData: function() {
+    toData: function(flatten, addElementReference) {
       var data = [],
         topHeaders = this.element.children('.accordion-header');
 
-      function buildHeaderJSON(el, index, parentArr) {
+      function buildHeaderJSON(el, index, parentNesting, parentArr) {
         var $el = $(el),
           pane = $(el).next('.accordion-pane'),
           headerData = {
             text: $(el).children('a, span').text().trim(),
-            index: index
+            index: '' + (parentNesting !== undefined ? parentNesting + '.' : '') + index
           };
 
         if (el.getAttribute('id')) {
@@ -464,6 +466,10 @@
           headerData.icon = icon[0].tagName.toLowerCase() === 'svg' ?
             icon[0].getElementsByTagName('use')[0].getAttribute('xlink:href') :
             '';
+        }
+
+        if (addElementReference) {
+          headerData.element = el;
         }
 
         if ($el.hasClass('is-disabled')) {
@@ -480,9 +486,17 @@
           }
 
           if (subheaders.length) {
+            // Normally this will nest.  If "flatten" is true, don't nest and add straight to the parent array.
+            var targetArray = subheaderData;
+            if (flatten) {
+              targetArray = parentArr;
+            }
+
             subheaders.each(function(j, subitem) {
-              buildHeaderJSON(subitem, j, subheaderData);
+              buildHeaderJSON(subitem, j, headerData.index, targetArray);
             });
+
+
             headerData.children = subheaderData;
           }
         }
@@ -492,7 +506,7 @@
 
       // Start traversing the accordion
       topHeaders.each(function(i, item) {
-        buildHeaderJSON(item, i, data);
+        buildHeaderJSON(item, i, undefined, data);
       });
 
       return data;
@@ -502,9 +516,8 @@
      * Translates an incoming JSON object structure to Accordion markup
      * @returns {String}
      */
-    toMarkup: function(data) {
+    toMarkup: function() {
       var markup = '';
-
       return markup;
     },
 
@@ -530,7 +543,7 @@
         anchor = element.next('a');
       }
 
-      if (this.isDisabled(header)) {
+      if (this.isDisabled(header) || this.isFiltered(header)) {
         return;
       }
 
@@ -562,6 +575,18 @@
     },
 
     /**
+     * @param {Object} header
+     * @returns {boolean}
+     */
+    isFiltered: function(header) {
+      if (!header) {
+        return false;
+      }
+
+      return header.hasClass('filtered');
+    },
+
+    /**
     * Checks if an Accordion Section is currently expanded
     * @param {Object} header &nbsp;-&nbsp; the jquery header element
     * @returns {Boolean}
@@ -579,7 +604,7 @@
     * @param {Object} header &nbsp;-&nbsp; the jquery header element
     */
     toggle: function(header) {
-      if (!header || !header.length || this.isDisabled(header)) {
+      if (!header || !header.length || this.isDisabled(header) || this.isFiltered(header)) {
         return;
       }
 
@@ -807,7 +832,7 @@
         target = adjacentHeaders.last();
       }
 
-      while (target.is('.accordion-content') || this.isDisabled(target)) {
+      while (target.is('.accordion-content') || this.isDisabled(target) || this.isFiltered(target)) {
         if (target.is(':only-child') || target.is(':first-child')) {
           return this.ascend(elem.header);
         }
@@ -831,7 +856,7 @@
           }
 
           target = adjacentHeaders.last();
-          while (target.is('.accordion-content') || this.isDisabled(target)) {
+          while (target.is('.accordion-content') || this.isDisabled(target) || this.isFiltered(target)) {
             target = target.prev();
           }
         }
@@ -858,7 +883,7 @@
         target = adjacentHeaders.first();
       }
 
-      while (target.is('.accordion-content') || this.isDisabled(target)) {
+      while (target.is('.accordion-content') || this.isDisabled(target) || this.isFiltered(target)) {
         if (target.is(':only-child') || target.is(':last-child')) {
           return this.ascend(elem.header);
         }
@@ -882,7 +907,7 @@
           }
 
           target = adjacentHeaders.first();
-          while (target.is('.accordion-content') || this.isDisabled(target)) {
+          while (target.is('.accordion-content') || this.isDisabled(target) || this.isFiltered(target)) {
             target = target.next();
           }
         }

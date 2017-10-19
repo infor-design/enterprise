@@ -105,7 +105,9 @@
       if (!accordion) {
         var accOpts = this.accordion.parseOptions();
         this.accordion.accordion(accOpts);
+        accordion = this.accordion.data('accordion');
       }
+      this.accordionAPI = accordion;
 
       // detect the presence of a searchfield
       this.searchfield = this.element.children('.searchfield, .searchfield-wrapper');
@@ -122,8 +124,11 @@
             '<input id="application-menu-searchfield" class="searchfield" /></div>').prependTo(this.element);
         }
 
+        var self = this;
         this.searchfield.searchfield({
-          source: this.accordion.data('accordion').toData(),
+          source: function(term, done, args) {
+            done(term, self.accordion.data('accordion').toData(true, true), args);
+          },
           searchableTextCallback: function(item) {
             return item.text || '';
           },
@@ -132,20 +137,7 @@
             return item;
           },
           displayResultsCallback: function(results, done) {
-
-            // TEMP - SOHO-4816
-            $('body').toast({
-              title: 'Filter Results',
-              message: (function() {
-                var str = '';
-                for (var i = 0; i < results.length; i++) {
-                  str += '<p>'+ results[i].text +'</p>';
-                }
-                return str;
-              })()
-            });
-
-            done();
+            return self.filterResultsCallback(results, done);
           }
         });
       } else {
@@ -465,20 +457,96 @@
     },
 
     /**
+     * @param {Array} results
+     * @param {function} done
+     */
+    filterResultsCallback: function(results, done) {
+      var self = this,
+        filteredParentHeaders = this.accordion.find('.has-filtered-children');
+
+      this.accordionAPI.headers.removeClass('filtered has-filtered-children');
+
+      if (!results || !results.length) {
+        this.accordionAPI.collapse(filteredParentHeaders);
+        this.accordionAPI.updated();
+        this.isFiltered = false;
+        done();
+        return;
+      }
+
+      var matchedHeaders = $();
+      results.map(function(item) {
+        matchedHeaders = matchedHeaders.add(item.element);
+
+        var parentPanes = $(item.element).parents('.accordion-pane');
+        parentPanes.each(function() {
+          var parentHeaders = $(this).prev('.accordion-header').addClass('has-filtered-children');
+          filteredParentHeaders = filteredParentHeaders.not(parentHeaders);
+          self.accordionAPI.expand(parentHeaders);
+        });
+      });
+
+      this.isFiltered = true;
+      this.accordionAPI.headers.not(matchedHeaders).addClass('filtered');
+      this.accordionAPI.collapse(filteredParentHeaders);
+      this.accordionAPI.updated(matchedHeaders);
+
+      // TEMP - SOHO-4816
+      $('body').toast({
+        title: 'Filter Results',
+        message: (function() {
+          var str = '';
+          for (var i = 0; i < results.length; i++) {
+            str += '<p>'+ results[i].text +'</p>';
+          }
+          return str;
+        })()
+      });
+
+      done();
+    },
+
+    /**
+     * handles the Searchfield Input event
+     * @param {jQuery.Event} e
+     */
+    handleSearchfieldInputEvent: function() {
+      if (!this.searchfield || !this.searchfield.length) {
+        return;
+      }
+
+      var val = this.searchfield.val();
+
+      if (!val || val === '') {
+        var filteredParentHeaders = this.accordion.find('.has-filtered-children');
+        this.accordionAPI.headers.removeClass('filtered has-filtered-children');
+        this.accordionAPI.collapse(filteredParentHeaders);
+        this.accordionAPI.updated();
+        return;
+      }
+    },
+
+    /**
      * Unbinds event listeners and removes extraneous markup from the Application Menu.
      * @returns {this}
      */
     teardown: function() {
-      var api;
       this.accordion.off('blur.applicationmenu');
       this.menu.off('animateopencomplete animateclosedcomplete');
       $(window).off('scroll.applicationmenu');
       $('body').off('resize.applicationmenu');
       $(document).off('click.applicationmenu open-applicationmenu close-applicationmenu keydown.applicationmenu');
 
-      api = this.accordion ? this.accordion.data('accordion') : null;
-      if (api && api.destroy) {
-        api.destroy();
+      if (this.accordionAPI && typeof this.accordionAPI.destroy === 'function') {
+        if (this.isFiltered) {
+          this.accordionAPI.collapse();
+        }
+
+        this.accordionAPI.destroy();
+      }
+
+      if (this.searchfield && this.searchfield.length) {
+        this.searchfield.off('input.applicationmenu');
       }
 
       if (this.hasTriggers()) {
@@ -548,6 +616,12 @@
       $('body').on('resize.applicationmenu', function() {
         self.testWidth();
       });
+
+      if (this.settings.filterable === true && this.searchfield && this.searchfield.length) {
+        this.searchfield.on('input.applicationmenu', function(e) {
+          self.handleSearchfieldInputEvent(e);
+        });
+      }
 
       if (this.settings.openOnLarge && this.isLargerThanBreakpoint()) {
         this.menu.addClass('no-transition');

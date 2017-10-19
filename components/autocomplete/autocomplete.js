@@ -61,11 +61,6 @@
      * @returns {String}
      */
     var DEFAULT_AUTOCOMPLETE_HIGHLIGHT_CALLBACK = function highlightMatch(item, options) {
-      // Easy match for 'contains'-style filterMode.
-      if (options.filterMode === 'contains') {
-        return item.replace(new RegExp('(' + options.term + ')', 'ig'), '<i>$1</i>');
-      }
-
       var targetProp = item,
         hasAlias = false;
 
@@ -76,14 +71,19 @@
         targetProp = item[options.alias];
       }
 
-      // Handle "startsWith" filterMode highlighting a bit differently.
-      var originalItem = targetProp,
-        pos = Locale.toLowerCase(originalItem).indexOf(options.term);
+      // Easy match for 'contains'-style filterMode.
+      if (options.filterMode === 'contains') {
+        targetProp = targetProp.replace(new RegExp('(' + options.term + ')', 'ig'), '<i>$1</i>');
+      } else {
+        // Handle "startsWith" filterMode highlighting a bit differently.
+        var originalItem = targetProp,
+          pos = Locale.toLowerCase(originalItem).indexOf(options.term);
 
-      if (pos > 0) {
-        targetProp = originalItem.substr(0, pos) + '<i>' + originalItem.substr(pos, options.term.length) + '</i>' + originalItem.substr(options.term.length + pos);
-      } else if (pos === 0) {
-        targetProp = '<i>' + originalItem.substr(0, options.term.length) + '</i>' + originalItem.substr(options.term.length);
+        if (pos > 0) {
+          targetProp = originalItem.substr(0, pos) + '<i>' + originalItem.substr(pos, options.term.length) + '</i>' + originalItem.substr(options.term.length + pos);
+        } else if (pos === 0) {
+          targetProp = '<i>' + originalItem.substr(0, options.term.length) + '</i>' + originalItem.substr(options.term.length);
+        }
       }
 
       // place result back
@@ -417,9 +417,12 @@
           }
         }
 
+        // Removed for SOHO-4816 due to double event called on backspace press
+        /*
         if (e.keyCode === 8 && this.listIsOpen()) {
           self.element.trigger('input');
         }
+        */
       },
 
       // Handles the Autocomplete's "input" event
