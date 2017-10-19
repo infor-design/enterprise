@@ -1,24 +1,21 @@
 <div class="row">
-    <div class="twelve columns">
+  <div class="twelve columns">
+    <button class="btn-secondary" type="button" id="add-context">Add Context</button><br><br>
 
-        <button class="btn-secondary" type="button" id="add-context">Add Context</button><br><br>
-
-        <!-- "Context" Example -->
-        <div id="modal-content" style="display: none">
-            <div id="datagrid">
-            </div>
-        </div>        
-
+    <!-- "Context" Example -->
+    <div id="modal-content" style="display: none">
+      <div id="datagrid">
+      </div>
     </div>
+  </div>
 </div>
 
 <script>
-$('body').one('initialized', function () {
-
+  $('body').one('initialized', function () {
     //Locale.set('en-US').done(function () {
     var grid,
-        columns = [],
-        data = [];
+    columns = [],
+    data = [];
 
     // Some Sample Data
     data.push({ id: 1, productId: 'T100', productName: 'Compressor', phone: '191/2004', activity:  'Assemble Paint', quantity: 1, price: '800.9905673502324', percent: .10, status: 'OK', orderDate: '00000000', action: 'Action'});
@@ -42,46 +39,45 @@ $('body').one('initialized', function () {
 
     //Init and get the api for the grid
     $('#datagrid').datagrid({
-        columns: columns,
-        dataset: data,
-        saveColumns: false,
-        paging: true,
-        pagesize: 5,
-        // toolbar: {title: 'Compressors', actions: true, rowHeight: true, personalize: true}
-    }); 
+      columns: columns,
+      dataset: data,
+      saveColumns: false,
+      paging: true,
+      pagesize: 5
+      // toolbar: {title: 'Compressors', actions: true, rowHeight: true, personalize: true}
+    });
 
     var modals = {
-        'add-context': {
+      'add-context': {
         'title': 'Add Context',
         'content': $('#modal-content')
-        }
+      }
     },
 
     setModal = function (opt) {
-        opt = $.extend({
+      opt = $.extend({
         buttons: [{
-            text: 'Cancel',
-            id: 'modal-button-1',
-            click: function(e, modal) {
+          text: 'Cancel',
+          id: 'modal-button-1',
+          click: function(e, modal) {
             modal.close();
-            }
+          }
         }, {
-            text: 'Save',
-            id: 'modal-button-2',
-            click: function(e, modal) {
+          text: 'Save',
+          id: 'modal-button-2',
+          click: function(e, modal) {
             modal.close();
-            },
-            validate: false,
-            isDefault: true
+          },
+          validate: false,
+          isDefault: true
         }]
-        }, opt);
+      }, opt);
 
-        $('body').modal(opt);
+      $('body').modal(opt);
     };
 
     $('#add-context').on('click', function () {
-        setModal(modals[this.id]);
+      setModal(modals[this.id]);
     });
-
-});
+  });
 </script>
