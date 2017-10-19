@@ -29,13 +29,28 @@
   <span class="kw">&lt;/div&gt;</span>
 <span class="kw">&lt;/div&gt;</span>
 </code></pre>
+<h2 id="breakpoints">Breakpoints</h2>
+<ul>
+<li>Normally two breakpoints are used max width 1280px and then folds to mobile under 767 px<br /></li>
+<li>For some minor tweaks in the application outside the responsive grid we have the following sass Breakpoints</li>
+</ul>
+<pre><code>
+$breakpoint-phone: 320px;
+$breakpoint-slim: 400px;
+$breakpoint-phablet: 610px;
+$breakpoint-phone-to-tablet: 767px;
+$breakpoint-wide-tablet: 968px;
+$breakpoint-tablet-to-desktop: 1280px;
+$breakpoint-desktop-to-extralarge: 1600px;
+
+</code></pre>
 <h2 id="accessibility">Accessibility</h2>
 <ul>
-<li>No special requirements. But watch for tab order.</li>
+<li>No special requirements. But watch that tab order is respected.</li>
 </ul>
 <h2 id="code-tips">Code Tips</h2>
 <ul>
-<li>Uses form guidelines</li>
+<li>Not again that fields inputs can be used within the grid as per this <a href="../components/form/example-inputs">this example.</a></li>
 </ul>
 <h2 id="upgrading-from-3.x">Upgrading from 3.X</h2>
 <ul>

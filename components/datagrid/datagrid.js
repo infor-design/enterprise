@@ -4623,10 +4623,6 @@ $.fn.datagrid = function(options) {
         self.contextualToolbar.find('.selection-count').text(self.selectedRows().length + ' ' + Locale.translate('Selected'));
       }
 
-      if (self.settings.source && !totals) {
-        return;
-      }
-
       if (totals && totals !== -1) {
         count = totals;
       }

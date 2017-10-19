@@ -889,7 +889,7 @@
           this.updateList();
         }
 
-        lis.removeClass("hidden");
+        lis.removeClass('hidden');
         this.position();
       },
 
