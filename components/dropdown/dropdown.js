@@ -888,6 +888,9 @@
         if (this.settings.multiple) {
           this.updateList();
         }
+
+        lis.removeClass("hidden");
+        this.position();
       },
 
       selectBlank: function() {
