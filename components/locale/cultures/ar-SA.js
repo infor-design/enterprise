@@ -27,8 +27,6 @@
     calendars: [{
       name: 'islamic-umalqura',
       // Note the format here is sort of dd/MM/yyyy
-      //
-      // 'separator': '/', //Infered
       // but this file is ltr and we display this in rtl so its inverted
       dateFormat: {'separator': '/', //Infered
                   'timeSeparator': ':',
