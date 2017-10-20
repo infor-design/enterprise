@@ -20,6 +20,7 @@ The Dropdown allows users to select from a list. Like an Html Select.
 
 **Parameters**
 
+-   `element`  
 -   `closeOnSelect` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  When an option is selected, the list will close if set to "true".  List stays open if "false".
 -   `cssClass` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Append an optional css class to dropdown-list
 -   `filterMode` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Search mode to use between 'startsWith' and 'contains', false will not allow client side filter
