@@ -77,8 +77,8 @@ define([
 
     'should format arabic month format': function() {
       Locale.set('ar-SA');    //year, month, day
-      expect(Locale.formatDate('1117', { pattern: Locale.calendar().dateFormat.month })).to.equal('31 ذو الحجة');
-      expect(Locale.formatDate('1010', { pattern: Locale.calendar().dateFormat.month })).to.equal('31 ذو الحجة');
+      expect(Locale.formatDate(new Date(2000, 12, 1), { pattern: Locale.calendar().dateFormat.month })).to.equal('01 محرم');
+      expect(Locale.formatDate(new Date(2017, 10, 8), { pattern: Locale.calendar().dateFormat.month })).to.equal('08 ذو القعدة');
     },
 
     'should format timestamp': function() {
@@ -465,6 +465,14 @@ define([
       expect(Locale.formatNumber(-2.53, {style: 'percent', minimumFractionDigits: 2})).to.equal('-253,00 %');
       expect(Locale.formatNumber(-2.53, {style: 'percent'})).to.equal('-253 %');
 
+    },
+
+    'allow currency override': function() {
+      Locale.set('es-ES');
+      expect(Locale.formatNumber(12345.12, {style: 'currency', currencySign: '$'})).to.equal('12.345,12 $');
+      Locale.set('de-DE');
+      expect(Locale.formatNumber(12345.12, {style: 'currency', decimal: '.', group: ',',
+              currencyFormat: '¤ #,##0.00' ,currencySign: '$'})).to.equal('$ 12,345.12');
     },
 
     'should format percent': function() {
