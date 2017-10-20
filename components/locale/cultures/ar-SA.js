@@ -27,13 +27,19 @@
     calendars: [{
       name: 'islamic-umalqura',
       // Note the format here is sort of dd/MM/yyyy
+      //
+      // 'separator': '/', //Infered
       // but this file is ltr and we display this in rtl so its inverted
       dateFormat: {'separator': '/', //Infered
-                     'short': 'yyyy/MM/dd', //use four digit year
-                     'medium': 'y MMM، dd',
-                     'long': 'yyyy MMMM، dd',
-                     'full': 'EEEE، yyyy MMMM، dd',
-                     'datetime': 'yyyy/MM/dd h:mm a'}, //Infered short + short gregorian/dateTimeFormats
+                  'timeSeparator': ':',
+                  'short': 'yyyy/MM/dd', //use four digit year
+                  'medium': 'y MMM، dd',
+                  'long': 'yyyy MMMM، dd',
+                  'full': 'EEEE، yyyy MMMM، dd',
+                  'month': 'dd MMMM',
+                  'year': 'MMMM yyyy',
+                  'timestamp': 'h:mm:ss a',
+                  'datetime': 'yyyy/MM/dd h:mm a'}, //Infered short + short gregorian/dateTimeFormats
       days: {
          wide: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],
          abbreviated: ['ح', 'ن', 'ث', 'ر', 'خ', 'ج', 'س']

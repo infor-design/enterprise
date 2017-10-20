@@ -28,12 +28,17 @@
     calendars: [{
       name: 'islamic-umalqura',
       // Note the format here is sort of dd/MM/yyyy
+      // 'separator': '/', //Infered
       // but this file is ltr and we display this in rtl so its inverted
       dateFormat: {'separator': '/', //Infered
+                   'timeSeparator': ':',
                    'short': 'yyyy/MM/dd', //use four digit year
                    'medium': 'y MMM، dd',
                    'long': 'yyyy MMMM، dd',
                    'full': 'EEEE، yyyy MMMM، dd',
+                   'month': 'MMMM، dd',
+                   'year': 'yyyy MMMM،',
+                   'timestamp': 'h:mm a',
                    'datetime': 'yyyy/MM/dd h:mm a'}, //Infered short + short gregorian/dateTimeFormats
       days: {
          wide: ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'],
