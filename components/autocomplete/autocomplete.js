@@ -475,9 +475,12 @@
           return;
         }
 
-        //select all
+        //select all text (after a delay since works better across browsers), but only if element is still focused
+        //to avoid flashing cursor focus trap (since select causes focus event to fire if no longer focused)
         setTimeout(function () {
-          self.element.select();
+          if (self.element.is(':focus')) {
+            self.element.select();
+          }
         }, 10);
       },
 
