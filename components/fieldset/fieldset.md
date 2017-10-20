@@ -4,10 +4,11 @@
 
 1. Default Fieldset Example [View Example]( ../components/fieldset/example-index)
 2. 50/50 Fieldset Example [View Example]( ../components/fieldset/example-50-50)
+2. Example Showing Input Fields [View Example]( ../components/fieldset/example-fields)
 
 ## Code Example
 
-A field set uses the standard html field set and legend element and simply adds css to style the legend element text. A field set is not expandable but you could use an expandable area element as well.
+A field set uses the standard html field set and legend element and simply adds css to style the legend element text. A field set is not expandable for that you could use the [expandable area component]( ../components/expandablearea). Here is an example showing a few input fields in a field set. Anything can go inside a field set but its usually something like input fields or data input fields.
 
 ```html
 
