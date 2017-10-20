@@ -513,15 +513,6 @@
     },
 
     /**
-     * Translates an incoming JSON object structure to Accordion markup
-     * @returns {String}
-     */
-    toMarkup: function() {
-      var markup = '';
-      return markup;
-    },
-
-    /**
      * Makes a header "selected" if its expander button or anchor tag is focused.
      * @param {Object} element - a jQuery Object containing either an expander button or an anchor tag.
      */
@@ -1137,7 +1128,7 @@
         }
 
         if (target.is(':not(.btn)')) {
-          $(this).addClass('is-focused');
+          $(this).addClass('is-focused').removeClass('hide-focus');
         }
       }).on('focusout.accordion', function() {
         if (!$.contains(this, headerWhereMouseDown) || $(this).is($(headerWhereMouseDown))) {
@@ -1146,7 +1137,7 @@
       }).on('keydown.accordion', function(e) {
         self.handleKeys(e);
       }).on('mousedown.accordion', function(e) {
-        $(this).addClass('is-focused');
+        $(this).addClass('is-focused').removeClass('hide-focus');
         headerWhereMouseDown = e.target;
       }).on('mouseup.accordion', function() {
         headerWhereMouseDown = null;

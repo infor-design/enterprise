@@ -417,12 +417,6 @@
           }
         }
 
-        // Removed for SOHO-4816 due to double event called on backspace press
-        /*
-        if (e.keyCode === 8 && this.listIsOpen()) {
-          self.element.trigger('input');
-        }
-        */
       },
 
       // Handles the Autocomplete's "input" event

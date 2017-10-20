@@ -8,7 +8,6 @@
     -   [handleExpanderClick](#handleexpanderclick)
     -   [handleKeys](#handlekeys)
     -   [toData](#todata)
-    -   [toMarkup](#tomarkup)
     -   [select](#select)
     -   [isDisabled](#isdisabled)
     -   [isFiltered](#isfiltered)
@@ -100,12 +99,6 @@ Translates all existing markup inside the accordion to a JSON-compatible object 
 -   `addElementReference` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if true, includes a reference to the original header element inside the structure (NOT valid JSON).
 
 Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
-
-### toMarkup
-
-Translates an incoming JSON object structure to Accordion markup
-
-Returns **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 
 ### select
 
