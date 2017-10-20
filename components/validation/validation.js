@@ -581,35 +581,37 @@
      */
     showIcon: function(field, type) {
       var loc = this.getField(field).addClass(type),
-        svg = $.createIconElement({ classes: ['icon-' + type], icon: type });
+        svg = $.createIconElement({ classes: ['icon-' + type], icon: type }),
+        closestField = loc.closest('.field, .field-short'),
+        parent = field.parent();
 
-      if (loc.parent('.field, .field-short').find('svg.icon-' + type).length === 0) {
+      if (closestField.find('svg.icon-' + type).length === 0) {
 
-        if (field.parent().is('.editor-container')) {
+        if (parent.is('.editor-container')) {
           field.parent().addClass('is-error');
         }
 
         if (field.parent(':not(.editor-container)').find('.btn-actions').length ===1) {
-          field.parent().find('.btn-actions').before(svg);
-        } else if (field.parent().find('.data-description').length ===1) {
-          field.parent().find('.data-description').before(svg);
-        } else if (field.parent().find('.field-info').length ===1) {
-          field.parent().find('.field-info').before(svg);
+          parent.find('.btn-actions').before(svg);
+        } else if (parent.find('.data-description').length ===1) {
+          parent.find('.data-description').before(svg);
+        } else if (parent.find('.field-info').length ===1) {
+          parent.find('.field-info').before(svg);
         } else if (field.is('textarea')) {
           field.after(svg);
         } else if (field.is('.dropdown, .multiselect')) {
-          field.parent().find('.dropdown-wrapper').append(svg);
+          parent.find('.dropdown-wrapper').append(svg);
         } else if (field.is('.spinbox')) {
-          field.parent().append(svg);
+          parent.append(svg);
         } else if (field.is('.lookup')) {
-          field.parent().append(svg);
+          parent.append(svg);
         } else {
-          field.parent().append(svg);
+          parent.append(svg);
         }
 
-        $('.icon-confirm', loc.parent('.field, .field-short')).remove();
+        $('.icon-confirm', closestField).remove();
       } else {
-        svg = loc.parent('.field, .field-short').find('svg.icon-error');
+        svg = closestField.find('svg.icon-error');
       }
 
       return svg;
@@ -784,14 +786,16 @@
     removeMessage: function(field, type) {
       var loc = this.getField(field),
         isRadio = field.is(':radio'),
-        hasTooltip = field.attr('data-' + type + '-type');
+        errorIcon = field.closest('.field, .field-short').find('.icon-error'),
+        tooltipAPI = errorIcon.data('tooltip'),
+        hasTooltip = field.attr('data-' + type + '-type') || !!tooltipAPI;
 
       this.inputs.filter('input, textarea').off('focus.validate');
       field.removeClass(type);
-      field.removeData(type +'-errormessage');
+      field.removeData(type +'-errormessage dataErrormessage');
 
       if (hasTooltip) {
-        var tooltipAPI = field.find('.icon.' + type).data('tooltip');
+        tooltipAPI = field.find('.icon.' + type).data('tooltip') || tooltipAPI;
 
         if (tooltipAPI) {
           tooltipAPI.destroy();
