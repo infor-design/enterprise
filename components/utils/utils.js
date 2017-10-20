@@ -317,13 +317,22 @@
    * @param {String} [attrName]
    * @return {Object|Object[]}
    */
-  $.fn.parseOptions = function(attr) {
-    var results = [];
+  $.fn.parseOptions = function(element, attr) {
+    var results = [],
+      isCalledDirectly = (element instanceof HTMLElement || element instanceof SVGElement || element instanceof $),
+      targets = this;
 
-    this.each(function() {
+    if (isCalledDirectly) {
+      targets = $(element);
+    } else {
+      attr = element;
+      element = undefined;
+    }
+
+    targets.each(function(i, item) {
       results.push({
         element: this,
-        options: Soho.utils.parseOptions(this, attr)
+        options: Soho.utils.parseOptions(item, attr)
       });
     });
 
