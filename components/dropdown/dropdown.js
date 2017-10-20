@@ -671,6 +671,10 @@
           this.listIcon.pseudoElemIcon.clone().appendTo(this.list);
         }
 
+        if (hasOptGroups) {
+          this.listUl.addClass('has-groups');
+        }
+
         this.listUl.find('[title]').addClass('has-tooltip').tooltip();
       },
 
