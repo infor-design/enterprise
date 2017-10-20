@@ -41,5 +41,27 @@
   </div>
 
   {{> includes/footer}}
+
+  <script type="text/javascript">
+    $('#application-menu').on('filtered.test', function(e, results) {
+      var msg = (function() {
+        var str = '';
+        if (!results.length) {
+          return 'No filter results!';
+        } else {
+          for (var i = 0; i < results.length; i++) {
+            str += '<p>'+ results[i].text +'</p>';
+          }
+        }
+        return str;
+      })();
+
+      // TEMP - SOHO-4816
+      $('body').toast({
+        title: 'Filter Results',
+        message: msg
+      });
+    });
+  </script>
 </body>
 </html>

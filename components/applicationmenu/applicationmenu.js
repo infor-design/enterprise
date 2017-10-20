@@ -470,6 +470,7 @@
         this.accordionAPI.collapse(filteredParentHeaders);
         this.accordionAPI.updated();
         this.isFiltered = false;
+        this.element.triggerHandler('filtered', [results]);
         done();
         return;
       }
@@ -491,18 +492,7 @@
       this.accordionAPI.collapse(filteredParentHeaders);
       this.accordionAPI.updated(matchedHeaders);
 
-      // TEMP - SOHO-4816
-      $('body').toast({
-        title: 'Filter Results',
-        message: (function() {
-          var str = '';
-          for (var i = 0; i < results.length; i++) {
-            str += '<p>'+ results[i].text +'</p>';
-          }
-          return str;
-        })()
-      });
-
+      this.element.triggerHandler('filtered', [results]);
       done();
     },
 
@@ -522,6 +512,7 @@
         this.accordionAPI.headers.removeClass('filtered has-filtered-children');
         this.accordionAPI.collapse(filteredParentHeaders);
         this.accordionAPI.updated();
+        this.element.triggerHandler('filtered', [[]]);
         return;
       }
     },
