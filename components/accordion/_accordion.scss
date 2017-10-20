@@ -233,6 +233,16 @@
         }
       }
 
+      &.has-filtered-children,
+      &.has-filtered-children.is-focused,
+      &.has-filtered-children.is-selected {
+        > a {
+          color: $accordion-disabled-text-color !important;
+        }
+        > .icon {
+          fill: $accordion-disabled-text-color !important;
+        }
+      }
 
       &:last-child {
         border-bottom-color: transparent;
@@ -592,6 +602,18 @@
           }
         }
       }
+    }
+  }
+
+  &.filtered {
+    color: $accordion-disabled-text-color;
+
+    &.icon {
+      fill: $accordion-disabled-text-color;
+    }
+
+    &:not(.has-filtered-children) {
+      display: none;
     }
   }
 }

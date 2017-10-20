@@ -104,9 +104,13 @@
       &:not(.close) {
         left: 18px;
       }
+    }
 
-      &.close {
-        right: 45px;
+    &.has-go-button {
+      .icon {
+        &.close {
+          right: 45px;
+        }
       }
     }
 

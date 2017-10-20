@@ -7,8 +7,10 @@
     -   [handleAnchorClick](#handleanchorclick)
     -   [handleExpanderClick](#handleexpanderclick)
     -   [handleKeys](#handlekeys)
+    -   [toData](#todata)
     -   [select](#select)
     -   [isDisabled](#isdisabled)
+    -   [isFiltered](#isfiltered)
     -   [isExpanded](#isexpanded)
     -   [toggle](#toggle)
     -   [expand](#expand)
@@ -87,6 +89,17 @@ Keypress Event Handler for expanders and anchors
 
 Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
+### toData
+
+Translates all existing markup inside the accordion to a JSON-compatible object structure.
+
+**Parameters**
+
+-   `flatten` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if true, places all accordion headers in the root array.
+-   `addElementReference` **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** if true, includes a reference to the original header element inside the structure (NOT valid JSON).
+
+Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
 ### select
 
 Makes a header "selected" if its expander button or anchor tag is focused.
@@ -104,6 +117,14 @@ Checks if a particular header is disabled, or if the entire accordion is disable
 -   `header` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  the jquery header element
 
 Returns **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
+
+### isFiltered
+
+**Parameters**
+
+-   `header` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
+
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 ### isExpanded
 

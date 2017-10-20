@@ -23,6 +23,7 @@
     // Settings and Options
     var pluginName  = 'searchfield',
         defaults = {
+          resultsCallback: undefined,
           allResultsCallback: undefined,
           showAllResults: true,
           showGoButton: false,

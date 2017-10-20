@@ -15,6 +15,7 @@
 <ul>
 <li><code>options</code><br /></li>
 <li><code>breakpoint</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Can be 'tablet' (+720), 'phablet (+968), ' 'desktop' +(1024), or 'large' (+1280). Default is phablet (968)<br /></li>
+<li><code>filterable</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong><br /></li>
 <li><code>openOnLarge</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  If true, will automatically open the Application Menu when a large screen-width breakpoint is met.<br /></li>
 <li><code>triggers</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  An Array of jQuery-wrapped elements that are able to open/close this nav menu.</li>
 </ul>
@@ -47,6 +48,18 @@
 <li><code>triggers</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&lt;<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&gt;</strong> an array of HTMLElements or jQuery-wrapped elements that will be used as triggers.<br /></li>
 <li><code>remove</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>?</strong> if defined, triggers that are defined will be removed internally instead of added.<br /></li>
 <li><code>norebuild</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>?</strong> if defined, this control's events won't automatically be rebound to include the new triggers.</li>
+</ul>
+<h4 id="filterresultscallback">filterResultsCallback</h4>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>results</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></strong><br /></li>
+<li><code>done</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a></strong></li>
+</ul>
+<h4 id="handlesearchfieldinputevent">handleSearchfieldInputEvent</h4>
+<p>handles the Searchfield Input event</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>e</code> <strong>jQuery.Event</strong></li>
 </ul>
 <h4 id="teardown">teardown</h4>
 <p>Unbinds event listeners and removes extraneous markup from the Application Menu.</p>

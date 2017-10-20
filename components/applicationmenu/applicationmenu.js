@@ -28,6 +28,7 @@
   *
   * @class ApplicationMenu
   * @param {String} breakpoint  &nbsp;-&nbsp; Can be 'tablet' (+720), 'phablet (+968), ' 'desktop' +(1024), or 'large' (+1280). Default is phablet (968)
+  * @param {String} filterable
   * @param {String} openOnLarge  &nbsp;-&nbsp; If true, will automatically open the Application Menu when a large screen-width breakpoint is met.
   * @param {String} triggers  &nbsp;-&nbsp; An Array of jQuery-wrapped elements that are able to open/close this nav menu.
   */
@@ -99,24 +100,52 @@
       this.accordion = this.menu.find('.accordion');
       this.accordion.addClass('panel').addClass('inverse');
 
-      // Setup filtering, if applicable.
-      if (this.settings.filterable && typeof $.fn.searchfield === 'function' && typeof window.ListFilter === 'function') {
-        this.searchfield = this.element.children('.searchfield, .searchfield-wrapper');
-        if (this.searchfield.length) {
-          if (this.searchfield.is('.searchfield-wrapper')) {
-            this.searchfield = this.searchfield.children('.searchfield');
-          }
-        }
-
-        // TODO: Invoke/store an instance of Listfilter?
-        // SOHO-4816
-      }
-
       // Check to make sure that the internal Accordion Control is invoked
       var accordion = this.accordion.data('accordion');
       if (!accordion) {
         var accOpts = this.accordion.parseOptions();
         this.accordion.accordion(accOpts);
+        accordion = this.accordion.data('accordion');
+      }
+      this.accordionAPI = accordion;
+
+      // detect the presence of a searchfield
+      this.searchfield = this.element.children('.searchfield, .searchfield-wrapper');
+
+      // Setup filtering, if applicable.
+      if (this.settings.filterable && typeof $.fn.searchfield === 'function') {
+        if (this.searchfield.length) {
+          if (this.searchfield.is('.searchfield-wrapper')) {
+            this.searchfield = this.searchfield.children('.searchfield');
+          }
+        } else {
+          this.searchfield = $('<div class="searchfield-wrapper">' +
+            '<label for="application-menu-searchfield">'+ Locale.translate('Search') +'</label>' +
+            '<input id="application-menu-searchfield" class="searchfield" /></div>').prependTo(this.element);
+        }
+
+        var self = this;
+        this.searchfield.searchfield({
+          source: function(term, done, args) {
+            done(term, self.accordion.data('accordion').toData(true, true), args);
+          },
+          searchableTextCallback: function(item) {
+            return item.text || '';
+          },
+          resultIteratorCallback: function(item) {
+            item._highlightTarget = 'text';
+            return item;
+          },
+          displayResultsCallback: function(results, done) {
+            return self.filterResultsCallback(results, done);
+          }
+        });
+      } else {
+        if (this.searchfield.length) {
+          this.searchfield.off();
+          this.searchfield.parent('.searchfield-wrapper').remove();
+          delete this.searchfield;
+        }
       }
 
       this.adjustHeight();
@@ -428,20 +457,87 @@
     },
 
     /**
+     * @param {Array} results
+     * @param {function} done
+     */
+    filterResultsCallback: function(results, done) {
+      var self = this,
+        filteredParentHeaders = this.accordion.find('.has-filtered-children');
+
+      this.accordionAPI.headers.removeClass('filtered has-filtered-children');
+
+      if (!results || !results.length) {
+        this.accordionAPI.collapse(filteredParentHeaders);
+        this.accordionAPI.updated();
+        this.isFiltered = false;
+        this.element.triggerHandler('filtered', [results]);
+        done();
+        return;
+      }
+
+      var matchedHeaders = $();
+      results.map(function(item) {
+        matchedHeaders = matchedHeaders.add(item.element);
+
+        var parentPanes = $(item.element).parents('.accordion-pane');
+        parentPanes.each(function() {
+          var parentHeaders = $(this).prev('.accordion-header').addClass('has-filtered-children');
+          filteredParentHeaders = filteredParentHeaders.not(parentHeaders);
+          self.accordionAPI.expand(parentHeaders);
+        });
+      });
+
+      this.isFiltered = true;
+      this.accordionAPI.headers.not(matchedHeaders).addClass('filtered');
+      this.accordionAPI.collapse(filteredParentHeaders);
+      this.accordionAPI.updated(matchedHeaders);
+
+      this.element.triggerHandler('filtered', [results]);
+      done();
+    },
+
+    /**
+     * handles the Searchfield Input event
+     * @param {jQuery.Event} e
+     */
+    handleSearchfieldInputEvent: function() {
+      if (!this.searchfield || !this.searchfield.length) {
+        return;
+      }
+
+      var val = this.searchfield.val();
+
+      if (!val || val === '') {
+        var filteredParentHeaders = this.accordion.find('.has-filtered-children');
+        this.accordionAPI.headers.removeClass('filtered has-filtered-children');
+        this.accordionAPI.collapse(filteredParentHeaders);
+        this.accordionAPI.updated();
+        this.element.triggerHandler('filtered', [[]]);
+        return;
+      }
+    },
+
+    /**
      * Unbinds event listeners and removes extraneous markup from the Application Menu.
      * @returns {this}
      */
     teardown: function() {
-      var api;
       this.accordion.off('blur.applicationmenu');
       this.menu.off('animateopencomplete animateclosedcomplete');
       $(window).off('scroll.applicationmenu');
       $('body').off('resize.applicationmenu');
       $(document).off('click.applicationmenu open-applicationmenu close-applicationmenu keydown.applicationmenu');
 
-      api = this.accordion ? this.accordion.data('accordion') : null;
-      if (api && api.destroy) {
-        api.destroy();
+      if (this.accordionAPI && typeof this.accordionAPI.destroy === 'function') {
+        if (this.isFiltered) {
+          this.accordionAPI.collapse();
+        }
+
+        this.accordionAPI.destroy();
+      }
+
+      if (this.searchfield && this.searchfield.length) {
+        this.searchfield.off('input.applicationmenu');
       }
 
       if (this.hasTriggers()) {
@@ -511,6 +607,12 @@
       $('body').on('resize.applicationmenu', function() {
         self.testWidth();
       });
+
+      if (this.settings.filterable === true && this.searchfield && this.searchfield.length) {
+        this.searchfield.on('input.applicationmenu', function(e) {
+          self.handleSearchfieldInputEvent(e);
+        });
+      }
 
       if (this.settings.openOnLarge && this.isLargerThanBreakpoint()) {
         this.menu.addClass('no-transition');
