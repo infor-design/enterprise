@@ -75,7 +75,14 @@ define([
       expect(Locale.formatDate()).to.equal(undefined);
     },
 
+    'should format arabic month format': function() {
+      Locale.set('ar-SA');    //year, month, day
+      expect(Locale.formatDate('1117', { pattern: Locale.calendar().dateFormat.month })).to.equal('31 ذو الحجة');
+      expect(Locale.formatDate('1010', { pattern: Locale.calendar().dateFormat.month })).to.equal('31 ذو الحجة');
+    },
+
     'should format timestamp': function() {
+      Locale.set('en-US');
       expect(Locale.formatDate(new Date(2015, 10, 5, 10, 20, 5), {date: 'timestamp'})).to.equal('10:20:05 AM');
       expect(Locale.formatDate(new Date(2015, 10, 5, 10, 20, 5), {pattern: 'hhmmss'})).to.equal('102005');
 
@@ -92,6 +99,7 @@ define([
     },
 
     'should format millis': function() {
+      Locale.set('en-US');    //year, month, day
       expect(Locale.formatDate(new Date(2016, 2, 15, 12, 30, 36, 142), {pattern: 'd/M/yyyy h:mm:ss.SSS a '})).to.equal('15/3/2016 12:30:36.142 PM');
       expect(Locale.formatDate(new Date(2016, 2, 15, 12, 30, 36, 142), {pattern: 'd/M/yyyy h:mm:ss.SSS '})).to.equal('15/3/2016 12:30:36.142');
     },
