@@ -263,7 +263,7 @@
           self.arrangeApi.updated();
           self.editItem(true);
 
-          data = self.dataset[index];
+          data = {index: index, data: self.dataset[index]};
           self.element.triggerHandler('afteradd', [data]);
         });
       },
