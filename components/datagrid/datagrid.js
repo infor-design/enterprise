@@ -2136,7 +2136,13 @@ $.fn.datagrid = function(options) {
             case 'percent':
             case 'decimal':
               col.maskOptions = col.maskOptions || {
-                patternOptions: {allowNegative: true, allowDecimal: true, integerLimit: 4, decimalLimit: 2 },
+                patternOptions: {allowNegative: true, allowDecimal: true,
+                integerLimit: 4, decimalLimit: 2,
+                symbols: {
+                  thousands: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.group : ',',
+                  decimal: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.decimal  : '.',
+                  negative: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.minusSign  : '-'
+                }},
                 process: 'number'
               };
               filterMarkup += '<input' + (col.filterDisabled ? ' disabled' : '') + ' type="text" id="'+ filterId +'" />';
