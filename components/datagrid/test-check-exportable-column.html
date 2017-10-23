@@ -68,15 +68,15 @@
             data.push({ id: 6, productId: 2642206, productName: 'Some Compressor', activity:  'inspect and Repair', quantity: 41, price: '123.99', status: 'OK', orderDate: null, action: 'On Hold'});
       
             //Define Columns for the Grid.
-            columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly, exportable: false});
+            columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly});
             columns.push({ id: 'productName', name: 'Product Name', field: 'productName', formatter: Formatters.Hyperlink});
-            columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', exportable: false});
-            columns.push({ id: 'quantity', name: 'Quantity', width: 75, field: 'quantity', exportable: false});
-            columns.push({ id: 'price', name: 'Price', field: 'price', width: 75, formatter: Formatters.Decimal, exportable: false});
-            columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy', exportable: false});
-            columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Text, exportable: false});
-            columns.push({ id: 'action', name: 'Action Item', field: 'action', exportable: false});
-            columns.push({ id: 'ex', name: 'Extra', field: 'ex', width: 100, exportable: false});
+            columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity'});
+            columns.push({ id: 'quantity', name: 'Quantity', width: 75, field: 'quantity'});
+            columns.push({ id: 'price', name: 'Price', field: 'price', width: 75, formatter: Formatters.Decimal});
+            columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+            columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Text});
+            columns.push({ id: 'action', name: 'Action Item', field: 'action'});
+            columns.push({ id: 'ex', name: 'Extra', field: 'ex', width: 100});
       
             //Init and get the api for the grid
             grid = $('#datagrid').datagrid({

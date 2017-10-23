@@ -2031,7 +2031,7 @@ $.fn.datagrid = function(options) {
            ' id="' + id + '" data-column-id="'+ column.id + '"' + (column.field ? ' data-field="'+ column.field +'"' : '') +
            (column.headerTooltip ? 'title="' + column.headerTooltip + '"' : '') +
            (column.reorderable === false ? ' data-reorder="false"' : '') +
-           (colGroups ? ' headers="' + self.getColumnGroup(j) + '"' : '') + (isExportable ? 'exportable="yes"' : 'exportable="no"') + '>';
+           (colGroups ? ' headers="' + self.getColumnGroup(j) + '"' : '') + (isExportable ? 'data-exportable="yes"' : 'data-exportable="no"') + '>';
 
           headerRow += '<div class="' + (isSelection ? 'datagrid-checkbox-wrapper ': 'datagrid-column-wrapper') + (column.align === undefined ? '' : ' l-'+ column.align +'-text') + '"><span class="datagrid-header-text'+ (column.required ? ' required': '') + '">' + self.headerText(settings.columns[j]) + '</span>';
           cols += '<col' + this.calculateColumnWidth(column, j) + (column.colspan ? ' span="' + column.colspan + '"' : '') + (column.hidden ? ' class="is-hidden"' : '') + '>';
@@ -4223,13 +4223,13 @@ $.fn.datagrid = function(options) {
             rows = table.find('tr'),
             row, cols, content;
 
-            //CHECK EXPORTABLE
-            var nonExportables = [];
-            $.each($('th'), function(index, item) {
-              if ($(item)[0].attributes.exportable && $(item)[0].attributes.exportable.value === 'no') {
-                nonExportables.push(index);
-              }
-            });
+          //CHECK EXPORTABLE
+          var nonExportables = [];
+          $.each($('th'), function(index, item) {
+            if ($(item)[0].getAttribute("data-exportable") && $(item)[0].getAttribute("data-exportable") === 'no') {
+              nonExportables.push(index);
+            }
+          });
 
           for (var i = 0, l = rows.length; i < l; i++) {
             row = [];
