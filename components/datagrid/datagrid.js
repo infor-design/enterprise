@@ -5645,14 +5645,17 @@ $.fn.datagrid = function(options) {
 
     // activate a row when in mixed selection mode
     activateRow: function(idx) {
-      if (this.activatedRow().length === 0 || this.activatedRow()[0].row !== idx) {
+      if (this.activatedRow()[0].row !== idx) {
         this.toggleRowActivation(idx);
       }
     },
 
     // deactivate the currently activated row
     deactivateRow: function() {
-      this.toggleRowActivation(this.activatedRow()[0].row);
+      var idx = this.activatedRow()[0].row;
+      if (idx >= 0) {
+        this.toggleRowActivation(idx);
+      }
     },
 
     // Gets the currently activated row
@@ -5667,6 +5670,13 @@ $.fn.datagrid = function(options) {
         var rowIndex = this.dataRowIndex(activatedRow);
         return [{ row: rowIndex, item: this.settings.dataset[rowIndex], elem: activatedRow }];
       } else {
+        //Activated row may be filtered or on another page, so check all until find it
+        for (var i = 0; i < this.settings.dataset.length; i++) {
+          if (this.settings.dataset[i]._rowactivated) {
+            return [{ row: i, item: this.settings.dataset[i], elem: undefined }];
+          }
+        }
+
         return [{ row: -1, item: undefined, elem: activatedRow }];
       }
     },
@@ -5674,7 +5684,8 @@ $.fn.datagrid = function(options) {
     toggleRowActivation: function (idx) {
       var row = (typeof idx === 'number' ? this.tableBody.find('tr[aria-rowindex="'+ (idx + 1) +'"]') : idx),
         rowIndex = (typeof idx === 'number' ? idx : ((this.pager && this.settings.source) ? this.actualArrayIndex(row) : this.dataRowIndex(row))),
-        isActivated = row.hasClass('is-rowactivated');
+        item = this.settings.dataset[rowIndex],
+        isActivated = item ? item._rowactivated : false;
 
       if (isActivated) {
         if (!this.settings.disableRowDeactivation) {
@@ -5691,7 +5702,18 @@ $.fn.datagrid = function(options) {
           var oldIdx = this.dataRowIndex(oldActivated);
           delete this.settings.dataset[oldIdx]._rowactivated;
           this.element.triggerHandler('rowdeactivated', [{row: oldIdx, item: this.settings.dataset[oldIdx]}]);
+        } else {
+          //Old active row may be filtered or on another page, so check all until find it
+          for (var i = 0; i < this.settings.dataset.length; i++) {
+            if (this.settings.dataset[i]._rowactivated) {
+              delete this.settings.dataset[i]._rowactivated;
+              this.element.triggerHandler('rowdeactivated', [{row: i, item: this.settings.dataset[i]}]);
+              break;
+            }
+          }
         }
+
+        //Activate new row
         row.addClass('is-rowactivated');
         this.settings.dataset[rowIndex]._rowactivated = true;
         this.element.triggerHandler('rowactivated', [{row: rowIndex, item: this.settings.dataset[rowIndex]}]);
