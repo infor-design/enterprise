@@ -1048,6 +1048,8 @@
           return;
         }
 
+        this.header.addClass('is-monthyear');
+
         var monthDropdown = '<label for="month-dropdown" class="audible">'+ Locale.translate('Month') +'</label>'+
           '<select id="month-dropdown" class="dropdown">';
 
