@@ -1169,12 +1169,19 @@ $datagrid-short-row-height: 23px;
       padding: 4px 20px 0;
 
       .colorpicker-container {
-        border: none;
+        border: 0;
         display: block;
 
         .colorpicker {
-          width: 90px;
           padding: 9px 10px 8px;
+          position: relative;
+          top: 2px;
+          width: 90px;
+
+          + .icon {
+            left: -10px;
+            top: 7px;
+          }
         }
       }
     }

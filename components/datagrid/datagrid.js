@@ -427,7 +427,8 @@ window.Formatters = {
     if (col.inlineEditor) {
       return html;
     }
-    html = '<span class="colorpicker-container"><span class="swatch" style="background-color: ' + value + '"></span><input class="colorpicker" id="colorpicker-' + cell + '" name="colorpicker-' + cell + '" type="text" role="combobox" aria-autocomplete="list" value="' + value + '" aria-describedby=""></span>';
+    html = '<span class="colorpicker-container trigger dropdown-trigger"><span class="swatch" style="background-color: ' + value + '"></span><input class="colorpicker" id="colorpicker-' + cell + '" name="colorpicker-' + cell + '" type="text" role="combobox" aria-autocomplete="list" value="' + value + '" aria-describedby="">';
+    html += $.createIcon({ icon: 'dropdown' }) + '</span>';
 
     return html;
   },
@@ -805,20 +806,23 @@ window.Editors = {
     };
 
     this.focus = function () {
-      grid.quickEditMode = true;
+
+      var self = this;
+
+      this.input.trigger('openlist');
       this.input.focus().select();
+
+      this.input.off('listclosed').on('listclosed', function () {
+        grid.commitCellEdit(self.input);
+
+        container.parent('td').focus();
+        return;
+      });
+
     };
 
     this.destroy = function () {
-      if (column.inlineEditor) {
-        return;
-      }
-
-      var self = this;
-      setTimeout(function() {
-        grid.quickEditMode = false;
-        self.input.remove();
-      }, 0);
+      //We dont need to destroy since it will when the list is closed
     };
 
     this.init();
