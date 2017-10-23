@@ -1048,7 +1048,22 @@
       headers
         .off('touchend.accordion click.accordion focusin.accordion focusout.accordion keydown.accordion mousedown.accordion mouseup.accordion')
         .each(function() {
-          var expander = $(this).data('addedExpander');
+          var header = $(this),
+            icon = header.children('.icon');
+
+          var hideFocus = header.data('hidefocus');
+          if (hideFocus) {
+            hideFocus.destroy();
+          }
+
+          if (icon.length) {
+            var iconAPI = icon.data('icon');
+            if (iconAPI) {
+              iconAPI.destroy();
+            }
+          }
+
+          var expander = header.data('addedExpander');
           if (expander) {
             expander.remove();
             $.removeData(this, 'addedExpander');

@@ -1,0 +1,80 @@
+{{> includes/head}}
+
+<body class="no-scroll">
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+  {{> includes/svg-inline-refs}}
+
+  {{> includes/applicationmenu-with-searchfield}}
+  <div class="page-container no-scroll">
+    <header class="header is-personalizable">
+      <div class="toolbar no-actions-button" role="toolbar" aria-label="Lms Toolbar">
+        <div class="title">
+           <button class="btn-icon application-menu-trigger" type="button">
+            <span class="audible">Show navigation</span>
+            <span class="icon app-header">
+              <span class="one"></span>
+              <span class="two"></span>
+              <span class="three"></span>
+            </span>
+          </button>
+
+          <span>Application Menu Test: Destroy</span>
+        </div>
+        <div class="buttonset">
+          <button id="destroy-button" type="button" class="btn">
+            <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+              <use xlink:href="#icon-trash"></use>
+            </svg>
+            <span>Destroy App Menu</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div id="maincontent" class="page-container scrollable" role="main">
+      <div class="row top-padding">
+        <div class="twelve columns">
+          <p>Related JIRA Ticket: <a class="hyperlink" href="https://jira.infor.com/browse/SOHO-5319" target="_blank">SOHO-5319</a></p>
+          <p>
+            Test the destroy/invoke lifecycle of the application menu.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script type="text/javascript">
+  var triggerBtn = $('#destroy-button'),
+    api,
+    DESTROY_TEXT = 'Destroy App Menu',
+    INVOKE_TEXT = 'Invoke App Menu';
+
+  $('body').on('initialized', function(){
+    api = $('#application-menu').data('applicationmenu');
+
+    $('#destroy-button').on('click.test', function() {
+      if (this.disabled) {
+        return;
+      }
+
+      if (api && typeof api.destroy === 'function') {
+        $(this).prop('disabled', true);
+        api.destroy();
+        api = undefined;
+        $(this).children('span').text(INVOKE_TEXT);
+        $(this).prop('disabled', false);
+        return;
+      }
+
+      $(this).prop('disabled', true);
+      $('#application-menu').applicationmenu();
+      api = $('#application-menu').data('applicationmenu');
+      $(this).children('span').text(DESTROY_TEXT);
+      $(this).prop('disabled', false);
+    });
+  });
+</script>
+
+{{> includes/footer}}
+</body>
+</html>
