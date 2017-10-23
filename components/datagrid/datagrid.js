@@ -2020,6 +2020,7 @@ $.fn.datagrid = function(options) {
           id = self.uniqueId('-header-' + j),
           isSortable = (column.sortable === undefined ? true : column.sortable),
           isResizable = (column.resizable === undefined ? true : column.resizable),
+          isExportable = (column.exportable === undefined ? true : column.exportable),
           isSelection = column.id === 'selectionCheckbox',
           alignmentClass = (column.align === 'center' ? ' l-'+ column.align +'-text' : '');// Disable right align for now as this was acting wierd
 
@@ -2030,7 +2031,7 @@ $.fn.datagrid = function(options) {
            ' id="' + id + '" data-column-id="'+ column.id + '"' + (column.field ? ' data-field="'+ column.field +'"' : '') +
            (column.headerTooltip ? 'title="' + column.headerTooltip + '"' : '') +
            (column.reorderable === false ? ' data-reorder="false"' : '') +
-           (colGroups ? ' headers="' + self.getColumnGroup(j) + '"' : '') + '>';
+           (colGroups ? ' headers="' + self.getColumnGroup(j) + '"' : '') + (isExportable ? 'data-exportable="yes"' : 'data-exportable="no"') + '>';
 
           headerRow += '<div class="' + (isSelection ? 'datagrid-checkbox-wrapper ': 'datagrid-column-wrapper') + (column.align === undefined ? '' : ' l-'+ column.align +'-text') + '"><span class="datagrid-header-text'+ (column.required ? ' required': '') + '">' + self.headerText(settings.columns[j]) + '</span>';
           cols += '<col' + this.calculateColumnWidth(column, j) + (column.colspan ? ' span="' + column.colspan + '"' : '') + (column.hidden ? ' class="is-hidden"' : '') + '>';
@@ -4228,16 +4229,26 @@ $.fn.datagrid = function(options) {
             rows = table.find('tr'),
             row, cols, content;
 
+          //CHECK EXPORTABLE
+          var nonExportables = [];
+          $.each($('th'), function(index, item) {
+            if ($(item)[0].getAttribute("data-exportable") && $(item)[0].getAttribute("data-exportable") === 'no') {
+              nonExportables.push(index);
+            }
+          });
+
           for (var i = 0, l = rows.length; i < l; i++) {
             row = [];
             cols = $(rows[i]).find('td, th');
             for (var i2 = 0, l2 = cols.length; i2 < l2; i2++) {
-              content = cols[i2].innerText.replace('"', '""');
-              // Exporting data with trailing negative signs moved in front
-              if (self.settings.exportConvertNegative) {
-                content = content.replace(/^(.+)(\-$)/, '$2$1');
+              if (nonExportables.indexOf(i2) <= -1) {
+                content = cols[i2].innerText.replace('"', '""');
+                // Exporting data with trailing negative signs moved in front
+                if (self.settings.exportConvertNegative) {
+                  content = content.replace(/^(.+)(\-$)/, '$2$1');
+                }
+                row.push(content);
               }
-              row.push(content);
             }
             csv.push(row.join('","'));
           }
