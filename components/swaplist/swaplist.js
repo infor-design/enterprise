@@ -90,7 +90,7 @@
           s = self.settings;
         self.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         self.isAdditional = $(s.additionalClass +' .listview', self.element).length > 0;
-
+        
         if (self.isTouch) {
           self.element.addClass('is-touch');
         }
@@ -249,44 +249,50 @@
        */
       moveElements: function(from, to) {
         var ul, size, currentSize,
-          self = this, list;
+          self = this, list, fromPermission, toPermission;
 
         from = (typeof from !== 'string') ? from : $(from, self.element);
         to = (typeof to !== 'string') ? to : $(to, self.element);
+        fromPermission =  $('ul', from)[0].offsetParent.attributes.permission ? $('ul', from)[0].offsetParent.attributes.permission.value : 'basic';
+        toPermission =  $('ul', to)[0].offsetParent.attributes.permission ? $('ul', to)[0].offsetParent.attributes.permission.value : 'basic';
+
         list = $('.listview', from).data('listview');
 
-        self.clearSelections();
-        self.selections.owner = from;
-        self.selections.droptarget = to;
-
-        if (self.isTouch) {
-          $.each(list.selectedItems, function(index, val) {
-            self.selections.items[index] = val.closest('li');
-          });
-        } else {
-          self.selections.items = list.selectedItems;
-        }
-
-        self.setSelectionsItems(self.selections.owner);
-        self.unselectElements(list);
-
-        if (self.selections.items.length) {
-          self.element.triggerHandler('beforeswap', [self.selections.itemsData]);
-
-          ul = $('ul', to);
-          currentSize = $('li', ul).length;
-          size = self.selections.items.length + currentSize;
-
-          $.each(self.selections.items, function(index, val) {
-            val = $(val);
-            val.attr({ 'aria-posinset': currentSize + index + 1, 'aria-setsize': size }).find('mark.highlight').contents().unwrap();
-            ul.append(val);
-          });
-
-          self.afterUpdate($('.listview', to).data('listview'));
-          $('li:last-child', to).focus()
-            // Fix: not sure why it added selected class and attribute on focus
-            .removeAttr('aria-selected').removeClass('is-selected');
+        if ((fromPermission === 'moderate' && toPermission === 'basic') || (fromPermission === 'basic' && toPermission === 'moderate') || (fromPermission === 'basic' && toPermission === 'basic')) {
+          self.clearSelections();
+          self.selections.owner = from;
+          self.selections.droptarget = to;
+  
+          if (self.isTouch) {
+            $.each(list.selectedItems, function(index, val) {
+              self.selections.items[index] = val.closest('li');
+            });
+          } else {
+            self.selections.items = list.selectedItems;
+          }
+  
+          self.setSelectionsItems(self.selections.owner);
+          self.unselectElements(list);
+  
+          if (self.selections.items.length) {
+            self.element.triggerHandler('beforeswap', [self.selections.itemsData]);
+  
+            ul = $('ul', to);
+  
+            currentSize = $('li', ul).length;
+            size = self.selections.items.length + currentSize;
+  
+            $.each(self.selections.items, function(index, val) {
+              val = $(val);
+              val.attr({ 'aria-posinset': currentSize + index + 1, 'aria-setsize': size }).find('mark.highlight').contents().unwrap();
+              ul.append(val);
+            });
+  
+            self.afterUpdate($('.listview', to).data('listview'));
+            $('li:last-child', to).focus()
+              // Fix: not sure why it added selected class and attribute on focus
+              .removeAttr('aria-selected').removeClass('is-selected');
+          }
         }
       },
 
@@ -840,6 +846,7 @@
 
         // Dragstart - initiate dragging
         .on(self.dragStart, self.dragElements, function(e) {
+          self.dragFromPermission = $(e.target).parent('ul')[0].offsetParent.attributes.permission ? $(e.target).parent('ul')[0].offsetParent.attributes.permission.value : 'basic';
           e.stopImmediatePropagation();
           if (self.handle && !selections.isHandle) {
             e.stopPropagation();
@@ -926,7 +933,7 @@
           self.element.triggerHandler('draggingswap', [selections.itemsData]);
           selections.related = e.target;
           $('ul, li', self.element).removeClass('over');
-          $(e.target).closest('ul, li').addClass('over');
+          $(e.target).closest('ul').addClass('over');
           selections.droptarget = $(selections.related).closest('.card');
           $('[aria-grabbed="true"]', self.element).not(selections.dragged).slideUp();
           e.stopPropagation();
@@ -986,6 +993,7 @@
 
         // Dragend - implement items being validly dropped into targets
         .on(self.dragEnd, self.dragElements, function(e) {
+          
           if (!selections.dragged) {
             return;
           }
@@ -993,45 +1001,52 @@
           ul = $('ul', selections.droptarget),
           currentSize = $('li', ul).length,
           size = selections.items.length + currentSize;
+          
+          var fromPermission = self.dragFromPermission;
+          var toPermission = ul[0].offsetParent.attributes.permission ? ul[0].offsetParent.attributes.permission.value : 'basic';
 
-          self.unselectElements($('.listview', selections.owner).data('listview'));
-
-          $.each(selections.items, function(index, val) {
-            val = $(val);
-            val.find('mark.highlight').contents().unwrap();
-            if (currentSize && !$(selections.related).is('ul')) {
-              var isLess = (related.index() < selections.draggedIndex),
-                el = isLess ? val : $(selections.items[(selections.items.length-1) - index]),
-                posinset = related.index()+(isLess ? index+1 : index+2);
-
-              val.attr({ 'aria-posinset': posinset, 'aria-setsize': size });
-              related[isLess ? 'before' : 'after'](el);
-
-            } else {
-              val.attr({ 'aria-posinset': currentSize+index+1, 'aria-setsize': size });
-              ul.append(val);
+          if ((fromPermission === 'moderate' && toPermission === 'basic') || (fromPermission === 'basic' && toPermission === 'moderate') || (fromPermission === 'basic' && toPermission === 'basic')) {
+            self.unselectElements($('.listview', selections.owner).data('listview'));
+            $.each(selections.items, function(index, val) {
+              
+              val = $(val);
+              val.find('mark.highlight').contents().unwrap();
+              if (currentSize && !$(selections.related).is('ul')) {
+                var isLess = (related.index() < selections.draggedIndex),
+                  el = isLess ? val : $(selections.items[(selections.items.length-1) - index]),
+                  posinset = related.index()+(isLess ? index+1 : index+2);
+  
+                val.attr({ 'aria-posinset': posinset, 'aria-setsize': size });
+                related[isLess ? 'before' : 'after'](el);
+  
+              } else {
+                val.attr({ 'aria-posinset': currentSize+index+1, 'aria-setsize': size });
+                ul.append(val);
+              }
+              val.focus();
+              
+            });
+  
+            if (selections.items.length > 1) {
+              $('.'+ settings.itemContentClass, selections.dragged).html(
+                $('.'+ settings.itemContentClass, selections.placeholder).html()
+              );
+              if (self.isTouch) {
+                selections.dragged.show();
+              }
             }
-            val.focus();
-          });
-
-          if (selections.items.length > 1) {
-            $('.'+ settings.itemContentClass, selections.dragged).html(
-              $('.'+ settings.itemContentClass, selections.placeholder).html()
-            );
+            
             if (self.isTouch) {
-              selections.dragged.show();
+              for (var i = 0, l = self.containers.length; i < l; i++) {
+                self.containers[i].style.zIndex = '';
+              }
             }
+            
+            selections.isHandle = null;
           }
-
-          if (self.isTouch) {
-            for (var i = 0, l = self.containers.length; i < l; i++) {
-              self.containers[i].style.zIndex = '';
-            }
-          }
-
-          selections.isHandle = null;
           $('[aria-grabbed="true"]', self.element).show();
           self.afterUpdate($('.listview', selections.droptarget).data('listview'));
+          selections.dragged.removeClass('is-dragging');
           e.preventDefault();
           e.stopPropagation();
         });
