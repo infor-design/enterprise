@@ -1167,6 +1167,16 @@ $datagrid-short-row-height: 23px;
       min-height: inherit;
       overflow: hidden;
       padding: 4px 20px 0;
+
+      .colorpicker-container {
+        border: none;
+        display: block;
+
+        .colorpicker {
+          width: 90px;
+          padding: 9px 10px 8px;
+        }
+      }
     }
 
     .icon-favorite {
