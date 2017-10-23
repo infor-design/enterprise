@@ -4232,7 +4232,7 @@ $.fn.datagrid = function(options) {
           //CHECK EXPORTABLE
           var nonExportables = [];
           $.each($('th'), function(index, item) {
-            if ($(item)[0].getAttribute("data-exportable") && $(item)[0].getAttribute("data-exportable") === 'no') {
+            if ($(item)[0].getAttribute('data-exportable') && $(item)[0].getAttribute('data-exportable') === 'no') {
               nonExportables.push(index);
             }
           });
