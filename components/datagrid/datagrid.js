@@ -4667,7 +4667,7 @@ $.fn.datagrid = function(options) {
     triggerRowEvent: function (eventName, e, stopPropagation) {
       var self = this,
           cell = $(e.target).closest('td').index(),
-          row = $(e.target).closest('tr').index(),
+          row = self.dataRowIndex($(e.target).closest('tr')),
           item = self.settings.dataset[row];
 
       if ($(e.target).is('a')) {
