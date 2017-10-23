@@ -249,16 +249,16 @@
        */
       moveElements: function(from, to) {
         var ul, size, currentSize,
-          self = this, list, fPrmsn, tPrmsn;
+          self = this, list, fromPermission, toPermission;
 
         from = (typeof from !== 'string') ? from : $(from, self.element);
         to = (typeof to !== 'string') ? to : $(to, self.element);
-        fPrmsn =  $('ul', from)[0].offsetParent.attributes.permission ? $('ul', from)[0].offsetParent.attributes.permission.value : 'basic';
-        tPrmsn =  $('ul', to)[0].offsetParent.attributes.permission ? $('ul', to)[0].offsetParent.attributes.permission.value : 'basic';
+        fromPermission =  $('ul', from)[0].offsetParent.attributes.permission ? $('ul', from)[0].offsetParent.attributes.permission.value : 'basic';
+        toPermission =  $('ul', to)[0].offsetParent.attributes.permission ? $('ul', to)[0].offsetParent.attributes.permission.value : 'basic';
 
         list = $('.listview', from).data('listview');
 
-        if ((fPrmsn === 'moderate' && tPrmsn === 'basic') || (fPrmsn === 'basic' && tPrmsn === 'moderate') || (fPrmsn === 'basic' && tPrmsn === 'basic')) {
+        if ((fromPermission === 'moderate' && toPermission === 'basic') || (fromPermission === 'basic' && toPermission === 'moderate') || (fromPermission === 'basic' && toPermission === 'basic')) {
           self.clearSelections();
           self.selections.owner = from;
           self.selections.droptarget = to;
@@ -1002,10 +1002,10 @@
           currentSize = $('li', ul).length,
           size = selections.items.length + currentSize;
           
-          var fPrmsn = self.dragFromPermission;
-          var tPrmsn = ul[0].offsetParent.attributes.permission ? ul[0].offsetParent.attributes.permission.value : 'basic';
+          var fromPermission = self.dragFromPermission;
+          var toPermission = ul[0].offsetParent.attributes.permission ? ul[0].offsetParent.attributes.permission.value : 'basic';
 
-          if ((fPrmsn === 'moderate' && tPrmsn === 'basic') || (fPrmsn === 'basic' && tPrmsn === 'moderate') || (fPrmsn === 'basic' && tPrmsn === 'basic')) {
+          if ((fromPermission === 'moderate' && toPermission === 'basic') || (fromPermission === 'basic' && toPermission === 'moderate') || (fromPermission === 'basic' && toPermission === 'basic')) {
             self.unselectElements($('.listview', selections.owner).data('listview'));
             $.each(selections.items, function(index, val) {
               
