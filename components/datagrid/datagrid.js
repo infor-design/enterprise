@@ -5043,7 +5043,7 @@ $.fn.datagrid = function(options) {
         // Keep icon clickable in edit mode
         var target = e.target;
 
-        if ($(target).is('input.lookup, input.timepicker, input.datepicker, input.spinbox, .colorpicker')) {
+        if ($(target).is('input.lookup, input.timepicker, input.datepicker, input.spinbox, input.colorpicker')) {
           // Wait for modal popup, if did not found modal popup means
           // icon was not clicked, then commit cell edit
           setTimeout(function() {
