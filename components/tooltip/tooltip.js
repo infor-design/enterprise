@@ -376,7 +376,7 @@
         } else {
           contentArea.html(content);
         }
-        
+
         content[0].classList.remove('hidden');
         contentArea[0].firstElementChild.classList.remove('hidden');
 
@@ -387,7 +387,7 @@
           this.settings.placementOpts.parentXAlignment = parentWidth > popoverWidth ? 'left' : 'right';
         } else {
           this.settings.placementOpts.parentXAlignment = parentWidth > popoverWidth ? 'right' : 'left';
-        }        
+        }
 
         if (this.settings.title !== null) {
           if (!title) {
@@ -501,7 +501,9 @@
             }
           });
 
-          if (self.settings.isError && !self.element.is(':visible') && !self.element.is('.dropdown')) {
+          if (self.settings.isError &&
+              !self.element.is(':visible, .dropdown') &&
+              self.element.is('[aria-describedby]')) {
             self.hide();
           }
 
@@ -534,7 +536,6 @@
               self.hide();
             });
           }
-
           self.element.trigger('aftershow', [self.tooltip]);
         }, 400);
 

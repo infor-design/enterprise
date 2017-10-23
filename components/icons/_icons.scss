@@ -57,6 +57,31 @@ svg.icon-dirty,
     width: 18px;
   }
 
+  [data-error-type="tooltip"] ~ .icon-error,
+  [data-error-type="tooltip"] ~ .icon-confirm {
+    position: relative;
+    right: auto;
+    top: auto;
+  }
+
+  .dropdown-wrapper {
+    [data-error-type="tooltip"] ~ .icon-error,
+    [data-error-type="tooltip"] ~ .icon-confirm {
+      position: absolute;
+      right: 25px;
+      top: 1px;
+    }
+  }
+
+  &.editor-container {
+    [data-error-type="tooltip"] ~ .icon-error,
+    [data-error-type="tooltip"] ~ .icon-confirm {
+      position: absolute;
+      right: 10px;
+      top: 55px;
+    }
+  }
+
   .lookup-wrapper {
     .icon-error,
     .icon-confirm {

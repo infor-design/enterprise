@@ -171,7 +171,13 @@
 
         }).on('listclosed.validate', function() {
           var field = $(this),
-            tooltip = field.data('tooltip');
+            tooltip = field.data('tooltip'),
+            dropdownApi = field.data('dropdown');
+
+            if (dropdownApi && dropdownApi.wrapper) {
+              tooltip = dropdownApi.wrapper
+                .find('.icon-error').data('tooltip');
+            }
 
           field.next('.dropdown-wrapper').next('.error-message').show();
           if (tooltip && document.activeElement !== field.data('dropdown').searchInput[0]) {
