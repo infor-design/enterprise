@@ -110,11 +110,7 @@
             isAppended = true;
             this.element = this.settings.content.closest('.modal');
           } else {
-            var self = this,
-              body = self.element.find('.modal-body');
-
-            body.append(self.settings.content);
-            Soho.utils.fixSVGIcons(body);
+            this.element.find('.modal-body').append(this.settings.content);
           }
 
           if (this.settings.content instanceof jQuery){
@@ -137,6 +133,8 @@
         if (!isAppended) {
           this.addButtons(this.settings.buttons);
         }
+
+        Soho.utils.fixSVGIcons(this.element);
       },
 
       reStructure: function() {
@@ -250,8 +248,7 @@
           buttonset.empty();
         }
 
-        for (var cnt = 0; cnt < buttons.length; cnt++) {
-          var props = buttons[cnt];
+        var decorateButtons = function(props, cnt) {
 
           var btn = $('<button type="button"></button>');
           btn.text(props.text);
@@ -302,9 +299,11 @@
 
           btn.attr('id', props.id || $.fn.uniqueId('button', 'modal'));
 
+          var func = buttons[cnt].click;
+
           btn.on('click.modal', function(e) {
-            if (props.click) {
-              props.click.apply(self.element[0], [e, self]);
+            if (func) {
+              func.apply(self.element[0], [e, self]);
               return;
             }
             self.close();
@@ -317,6 +316,10 @@
           btn.button();
           buttonset.append(btn);
 
+        };
+
+        for (var cnt = 0; cnt < buttons.length; cnt++) {
+          decorateButtons(buttons[cnt], cnt);
         }
 
       },

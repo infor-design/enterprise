@@ -2,7 +2,7 @@
 
 ## Configuration Options
 
-1. [Main Example](/patterns/step-process)
-2. [Markup-driven Example](/patterns/step-process-markup)
+1. [Main Example]( ../components/stepprocess/example-index)
+2. [Markup-driven Example]( ../components/stepprocess/example-markup)
 
 {{api-details}}

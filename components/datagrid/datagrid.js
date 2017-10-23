@@ -566,6 +566,10 @@ window.Editors = {
         this.input.attr('maxlength', column.maxLength);
       }
 
+      if (column.uppercase) {
+        this.input.addClass('uppercase-text');
+      }
+
       if (column.mask && typeof column.mask === 'function') {
         var mask = column.mask(row, cell, value, column, item);
         this.input.mask({pattern: mask, mode: column.maskMode});
@@ -614,6 +618,10 @@ window.Editors = {
 
       if (column.maxLength) {
         this.input.attr('maxlength', column.maxLength);
+      }
+
+      if (column.uppercase) {
+        this.input.addClass('uppercase-text');
       }
 
     };
@@ -1039,6 +1047,10 @@ window.Editors = {
         this.input.attr('maxlength', column.maxLength);
       }
 
+      if (column.uppercase) {
+        this.input.addClass('uppercase-text');
+      }
+
       this.input.lookup(column.editorOptions);
     };
 
@@ -1118,6 +1130,10 @@ window.Editors = {
 
       if (column.maxLength) {
         this.input.attr('maxlength', column.maxLength);
+      }
+
+      if (column.uppercase) {
+        this.input.addClass('uppercase-text');
       }
 
       this.input.autocomplete(column.editorOptions);
@@ -1331,6 +1347,10 @@ window.GroupBy = (function() {
 * Register built in aggregators
 * @private
 */
+GroupBy.register('none', function(item) {
+  return $.extend({}, item.key, {values: item.values});
+});
+
 GroupBy.register('sum', function(item) {
   var extra = this.extra;
   return $.extend({}, item.key, {values: item.values}, {sum: item.values.reduce(function(memo, node) {
@@ -2000,6 +2020,7 @@ $.fn.datagrid = function(options) {
           id = self.uniqueId('-header-' + j),
           isSortable = (column.sortable === undefined ? true : column.sortable),
           isResizable = (column.resizable === undefined ? true : column.resizable),
+          isExportable = (column.exportable === undefined ? true : column.exportable),
           isSelection = column.id === 'selectionCheckbox',
           alignmentClass = (column.align === 'center' ? ' l-'+ column.align +'-text' : '');// Disable right align for now as this was acting wierd
 
@@ -2010,7 +2031,7 @@ $.fn.datagrid = function(options) {
            ' id="' + id + '" data-column-id="'+ column.id + '"' + (column.field ? ' data-field="'+ column.field +'"' : '') +
            (column.headerTooltip ? 'title="' + column.headerTooltip + '"' : '') +
            (column.reorderable === false ? ' data-reorder="false"' : '') +
-           (colGroups ? ' headers="' + self.getColumnGroup(j) + '"' : '') + '>';
+           (colGroups ? ' headers="' + self.getColumnGroup(j) + '"' : '') + (isExportable ? 'data-exportable="yes"' : 'data-exportable="no"') + '>';
 
           headerRow += '<div class="' + (isSelection ? 'datagrid-checkbox-wrapper ': 'datagrid-column-wrapper') + (column.align === undefined ? '' : ' l-'+ column.align +'-text') + '"><span class="datagrid-header-text'+ (column.required ? ' required': '') + '">' + self.headerText(settings.columns[j]) + '</span>';
           cols += '<col' + this.calculateColumnWidth(column, j) + (column.colspan ? ' span="' + column.colspan + '"' : '') + (column.hidden ? ' class="is-hidden"' : '') + '>';
@@ -2116,7 +2137,13 @@ $.fn.datagrid = function(options) {
             case 'percent':
             case 'decimal':
               col.maskOptions = col.maskOptions || {
-                patternOptions: {allowNegative: true, allowDecimal: true, integerLimit: 4, decimalLimit: 2 },
+                patternOptions: {allowNegative: true, allowDecimal: true,
+                integerLimit: 4, decimalLimit: 2,
+                symbols: {
+                  thousands: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.group : ',',
+                  decimal: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.decimal  : '.',
+                  negative: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.minusSign  : '-'
+                }},
                 process: 'number'
               };
               filterMarkup += '<input' + (col.filterDisabled ? ' disabled' : '') + ' type="text" id="'+ filterId +'" />';
@@ -2915,22 +2942,27 @@ $.fn.datagrid = function(options) {
 
       this.originalDataset = this.settings.dataset.slice();
 
+      if (!groupSettings.aggregator || groupSettings.aggregator === 'none') {
+        this.settings.dataset = GroupBy.none(this.settings.dataset, groupSettings.fields);
+        return;
+      }
+
       if (groupSettings.aggregator === 'sum') {
-        this.settings.dataset = GroupBy.sum(this.settings.dataset , groupSettings.fields, groupSettings.aggregate);
+        this.settings.dataset = GroupBy.sum(this.settings.dataset, groupSettings.fields, groupSettings.aggregate);
         return;
       }
 
       if (groupSettings.aggregator === 'max') {
-        this.settings.dataset = GroupBy.max(this.settings.dataset , groupSettings.fields, groupSettings.aggregate);
+        this.settings.dataset = GroupBy.max(this.settings.dataset, groupSettings.fields, groupSettings.aggregate);
         return;
       }
 
       if (groupSettings.aggregator === 'list') {
-        this.settings.dataset = GroupBy.list(this.settings.dataset , groupSettings.fields, groupSettings.aggregatorOptions);
+        this.settings.dataset = GroupBy.list(this.settings.dataset, groupSettings.fields, groupSettings.aggregatorOptions);
         return;
       }
 
-      this.settings.dataset = window.GroupBy(this.settings.dataset , groupSettings.fields);
+      this.settings.dataset = window.GroupBy(this.settings.dataset, groupSettings.fields);
     },
 
     /**
@@ -2952,6 +2984,8 @@ $.fn.datagrid = function(options) {
         self.tableBody = $('<tbody></tbody>');
         self.table.append(self.tableBody);
       }
+
+      self.groupArray = [];
 
       self.recordCount = 0;
       self.filteredCount = 0;
@@ -3021,6 +3055,7 @@ $.fn.datagrid = function(options) {
 
             tableHtml += self.rowHtml(rowData, this.recordCount, i);
             this.recordCount++;
+            self.groupArray.push({group: i, node: 0});
             continue;
           }
 
@@ -3028,6 +3063,7 @@ $.fn.datagrid = function(options) {
           for (var k = 0; k < dataset[i].values.length; k++) {
             tableHtml += self.rowHtml(dataset[i].values[k], this.recordCount, i);
             this.recordCount++;
+            self.groupArray.push({group: i, node: k});
           }
 
           // Now Push summary rowHtml
@@ -3324,6 +3360,10 @@ $.fn.datagrid = function(options) {
 
         if (col.textOverflow === 'ellipsis') {
           cssClass += ' text-ellipsis';
+        }
+
+        if (col.uppercase) {
+          cssClass += ' uppercase-text';
         }
 
         // Add Column Css Classes
@@ -4189,16 +4229,26 @@ $.fn.datagrid = function(options) {
             rows = table.find('tr'),
             row, cols, content;
 
+          //CHECK EXPORTABLE
+          var nonExportables = [];
+          $.each($('th'), function(index, item) {
+            if ($(item)[0].getAttribute('data-exportable') && $(item)[0].getAttribute('data-exportable') === 'no') {
+              nonExportables.push(index);
+            }
+          });
+
           for (var i = 0, l = rows.length; i < l; i++) {
             row = [];
             cols = $(rows[i]).find('td, th');
             for (var i2 = 0, l2 = cols.length; i2 < l2; i2++) {
-              content = cols[i2].innerText.replace('"', '""');
-              // Exporting data with trailing negative signs moved in front
-              if (self.settings.exportConvertNegative) {
-                content = content.replace(/^(.+)(\-$)/, '$2$1');
+              if (nonExportables.indexOf(i2) <= -1) {
+                content = cols[i2].innerText.replace('"', '""');
+                // Exporting data with trailing negative signs moved in front
+                if (self.settings.exportConvertNegative) {
+                  content = content.replace(/^(.+)(\-$)/, '$2$1');
+                }
+                row.push(content);
               }
-              row.push(content);
             }
             csv.push(row.join('","'));
           }
@@ -4590,10 +4640,6 @@ $.fn.datagrid = function(options) {
         self.contextualToolbar.find('.selection-count').text(self.selectedRows().length + ' ' + Locale.translate('Selected'));
       }
 
-      if (self.settings.source && !totals) {
-        return;
-      }
-
       if (totals && totals !== -1) {
         count = totals;
       }
@@ -4621,7 +4667,7 @@ $.fn.datagrid = function(options) {
     triggerRowEvent: function (eventName, e, stopPropagation) {
       var self = this,
           cell = $(e.target).closest('td').index(),
-          row = $(e.target).closest('tr').index(),
+          row = self.dataRowIndex($(e.target).closest('tr')),
           item = self.settings.dataset[row];
 
       if ($(e.target).is('a')) {
@@ -5511,6 +5557,10 @@ $.fn.datagrid = function(options) {
         else {
           dataRowIndex = self.pager && s.source ? rowNode.index() : dataRowIndex;
           rowData = s.dataset[dataRowIndex];
+          if (s.groupable) {
+            var gData = self.groupArray[dataRowIndex];
+            rowData = s.dataset[gData.group].values[gData.node];
+          }
           selectNode(rowNode, dataRowIndex, rowData);
           self.lastSelectedRow = idx;// Rememeber index to use shift key
         }
@@ -5652,7 +5702,9 @@ $.fn.datagrid = function(options) {
     toggleRowSelection: function (idx) {
       var row = (typeof idx === 'number' ? this.tableBody.find('tr[aria-rowindex="'+ (idx + 1) +'"]') : idx),
         isSingle = this.settings.selectable === 'single',
-        rowIndex = (typeof idx === 'number' ? idx : this.settings.treeGrid ? this.dataRowIndex(row) : this.actualArrayIndex(row));
+        rowIndex = (typeof idx === 'number' ? idx :
+        (this.settings.treeGrid || this.settings.groupable) ?
+        this.dataRowIndex(row) : this.actualArrayIndex(row));
 
       if (this.settings.selectable === false) {
         return;
@@ -5714,9 +5766,18 @@ $.fn.datagrid = function(options) {
             }
           }
         } else {
-          var selIdx = elem.attr('data-index');
-          if (selIdx !== undefined) {
-            removeSelected(self.settings.dataset[selIdx]);
+          var selIdx = self.actualArrayIndex(elem),
+            rowData;
+
+          if (rowData !== undefined) {
+            rowData = self.settings.dataset[selIdx];
+          }
+          if (s.groupable) {
+            var gData = self.groupArray[idx];
+            rowData = s.dataset[gData.group].values[gData.node];
+          }
+          if (rowData !== undefined) {
+            removeSelected(rowData);
           }
         }
       };
@@ -5824,13 +5885,32 @@ $.fn.datagrid = function(options) {
       var self = this,
         s = self.settings,
         dataset = s.treeGrid ? s.treeDepth : s.dataset,
-        selectedRows = [];
+        selectedRows = [],
+        idx = -1;
 
       for (var i = 0, data; i < dataset.length; i++) {
-        data = s.treeGrid ? dataset[i].node : dataset[i];
-        if (self.isNodeSelected(data)) {
-          selectedRows.push({idx: i, data: data, elem: self.visualRowNode(i)});
+
+        if (s.groupable) {
+          for (var k = 0; k < dataset[i].values.length; k++) {
+            idx++;
+            data = dataset[i].values[k];
+            if (self.isNodeSelected(data)) {
+              selectedRows.push({
+                idx: idx,
+                data: data,
+                elem: self.dataRowNode(idx),
+                group: dataset[i]
+              });
+            }
+          }
         }
+        else {
+          data = s.treeGrid ? dataset[i].node : dataset[i];
+          if (self.isNodeSelected(data)) {
+            selectedRows.push({idx: i, data: data, elem: self.visualRowNode(i)});
+          }
+        }
+
       }
       return selectedRows;
     },
@@ -5841,7 +5921,8 @@ $.fn.datagrid = function(options) {
           s = this.settings,
           isSingle = s.selectable === 'single',
           isMultiple = s.selectable === 'multiple' || s.selectable === 'mixed',
-          dataset = s.treeGrid ? s.treeDepth : s.dataset;
+          dataset = s.treeGrid ? s.treeDepth : s.dataset,
+          gIdx = idx;
 
       // As of 4.3.3, return the rows that have _selected = true
       var selectedRows = this.selectedRows();
@@ -5864,7 +5945,15 @@ $.fn.datagrid = function(options) {
       if (isMultiple) {
         if (Object.prototype.toString.call(row) === '[object Array]' ) {
           for (var i = 0; i < row.length; i++) {
-            this.selectRow(row[i], true, true);
+            if (s.groupable) {
+              for (var k = 0; k < dataset[i].values.length; k++) {
+                gIdx++;
+                this.selectRow(gIdx, true, true);
+              }
+            }
+            else {
+              this.selectRow(row[i], true, true);
+            }
           }
 
           if (row.length === 0) {

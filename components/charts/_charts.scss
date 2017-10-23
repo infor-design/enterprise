@@ -876,6 +876,13 @@ html[dir='rtl'] {
     .icon-error {
       left: -20px;
     }
+
+    &.chart-targeted-achievement {
+      .icon-error {
+        left: auto;
+        right: -5px;
+      }
+    }
   }
 
   // Progess Bar Charts

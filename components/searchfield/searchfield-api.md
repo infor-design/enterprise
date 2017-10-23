@@ -9,6 +9,7 @@
     -   [hasFocus](#hasfocus)
     -   [handleGoButtonClick](#handlegobuttonclick)
     -   [setCategoryButtonText](#setcategorybuttontext)
+    -   [calculateSearchfieldWidth](#calculatesearchfieldwidth)
     -   [isToolbarSearchfield](#istoolbarsearchfield)
     -   [getCategories](#getcategories)
     -   [getSelectedCategories](#getselectedcategories)
@@ -69,6 +70,12 @@ Sets the text content on the category button.  Will either display a single cate
 -   `textContent` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** Optional incoming text that will be subtituted for the selected element count.
 
 Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
+
+### calculateSearchfieldWidth
+
+Ensures that the size of the Searchfield Wrapper does not change whenever a category
+is chosen from a category searchfield.
+NOTE: this method must be run AFTER changes to DOM elements (text/size changes) have been made.
 
 ### isToolbarSearchfield
 

@@ -24,11 +24,22 @@
 </div>
 
 <script type="text/javascript">
-  $('button').button().on('click', function () {
-    $('#username-display').removeError().addError({inline: false, message: 'I have an Error.', showTooltip: true}).addError({message: 'I have another Error.', showTooltip: true});
+  var input = $('#email-address');
+  $('#show').on('click', function () {
+    input
+    .addError({
+        inline: false,
+        message: 'I have an Error.',
+        showTooltip: true
+      })
+      .addError({
+        inline: false,
+        message: 'I have another Error.',
+        showTooltip: true
+      });
   });
 
-  $('#hide').button().on('click', function () {
-    $('#username-display').removeError();
+  $('#hide').on('click', function () {
+    input.removeError();
   });
 </script>

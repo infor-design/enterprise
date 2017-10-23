@@ -401,6 +401,9 @@
           }).on('keydown', function (e) {
             if (e.which === 13) {
               self.setActivePage(parseInt($(this).val()), false, 'page');
+              
+              e.stopPropagation();
+              e.preventDefault();
             }
           });
         }

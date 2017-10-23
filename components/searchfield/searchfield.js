@@ -23,6 +23,7 @@
     // Settings and Options
     var pluginName  = 'searchfield',
         defaults = {
+          resultsCallback: undefined,
           allResultsCallback: undefined,
           showAllResults: true,
           showGoButton: false,
@@ -202,6 +203,8 @@
         if (this.settings.clearable) {
           this.element.clearable();
         }
+
+        this.calculateSearchfieldWidth();
 
         return this;
       },
@@ -549,6 +552,41 @@
       },
 
       /**
+       * Ensures that the size of the Searchfield Wrapper does not change whenever a category
+       * is chosen from a category searchfield.
+       * NOTE: this method must be run AFTER changes to DOM elements (text/size changes) have been made.
+       */
+      calculateSearchfieldWidth: function() {
+        if (this.isToolbarSearchfield()) {
+          // If this is a toolbar searchfield, run its internal size check that fixes the
+          // trigger button and input field size.
+          var tsAPI = this.element.data('toolbarsearchfield');
+          if (tsAPI && typeof tsAPI.setOpenWidth === 'function') {
+            tsAPI.calculateOpenWidth();
+            tsAPI.setOpenWidth();
+          }
+          return;
+        }
+
+        var subtractWidth = 0,
+          targetWidthProp = '100%';
+
+        if (this.hasCategories()) {
+          subtractWidth = subtractWidth + this.categoryButton.outerWidth(true);
+        }
+        if (this.hasGoButton()) {
+          subtractWidth = subtractWidth + this.goButton.outerWidth(true);
+        }
+
+        // NOTE: final width can only be 100% if no value is subtracted for other elements
+        if (subtractWidth > 0) {
+          targetWidthProp = 'calc(100% - '+ subtractWidth +'px)';
+        }
+
+        this.element[0].style.width = targetWidthProp;
+      },
+
+      /**
        * Detects whether or not this component is a Toolbar Searchfield
        * @returns {boolean}
        */
@@ -562,22 +600,13 @@
        * @returns {undefined}
        */
       handleCategorySelected: function(e, anchor) {
-
-
         // Only change the text and searchfield size if we can
         if (!this.settings.showCategoryText) {
           return;
         }
 
         this.setCategoryButtonText(e, anchor.text().trim());
-
-        // If this is a toolbar searchfield, run the size check that fixes the
-        // trigger button and input field size.
-        var tsAPI = this.element.data('toolbarsearchfield');
-        if (tsAPI && typeof tsAPI.setOpenWidth === 'function') {
-          tsAPI.calculateOpenWidth();
-          tsAPI.setOpenWidth();
-        }
+        this.calculateSearchfieldWidth();
       },
 
       /**

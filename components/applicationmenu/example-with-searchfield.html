@@ -1,0 +1,67 @@
+{{> includes/head}}
+
+<body class="no-scroll">
+  <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+  {{> includes/svg-inline-refs}}
+  {{> includes/applicationmenu-with-searchfield}}
+
+  <div id="maincontent" class="page-container scrollable" role="main">
+
+      <header class="header is-personalizable">
+        <a href="#maincontent" class="skip-link" data-translate="text">SkipToMain</a>
+
+        <div class="toolbar">
+          <div class="title">
+            <button class="btn-icon application-menu-trigger" type="button">
+              <span class="audible">Show navigation</span>
+              <span class="icon app-header">
+                <span class="one"></span>
+                <span class="two"></span>
+                <span class="three"></span>
+              </span>
+            </button>
+
+            {{> includes/page-title}}
+          </div>
+
+          <div class="buttonset">
+            <button class="btn-icon header-search" type="button">
+              <span class="audible">Search</span>
+              <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                <use xlink:href="#icon-search"></use>
+              </svg>
+            </button>
+          </div>
+
+          {{> includes/header-actionbutton}}
+        </div>
+
+      </header>
+
+  </div>
+
+  {{> includes/footer}}
+
+  <script type="text/javascript">
+    $('#application-menu').on('filtered.test', function(e, results) {
+      var msg = (function() {
+        var str = '';
+        if (!results.length) {
+          return 'No filter results!';
+        } else {
+          for (var i = 0; i < results.length; i++) {
+            str += '<p>'+ results[i].text +'</p>';
+          }
+        }
+        return str;
+      })();
+
+      // TEMP - SOHO-4816
+      $('body').toast({
+        title: 'Filter Results',
+        message: msg
+      });
+    });
+  </script>
+</body>
+</html>

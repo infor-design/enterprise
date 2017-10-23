@@ -277,6 +277,10 @@ small,
   text-align: center;
 }
 
+.uppercase-text {
+  text-transform: uppercase;
+}
+
 .alert-text {
   color: $alert-red;
   padding-left: 15px;

@@ -321,6 +321,11 @@ div.multiselect {
     }
   }
 
+  .has-groups li.dropdown-option {
+    padding-left: 9px;
+    padding-right: 9px;
+  }
+
   > .listoption-icon {
     @include list-icon-colors();
     fill: $popupmenu-icon-color;

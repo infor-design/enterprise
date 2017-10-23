@@ -152,6 +152,11 @@ docker rm 6410bbcfd5e2
 docker images | grep <name>
 docker rmi PID
 ```
+* Deploy to AWS
+
+```bash
+AWS_PROFILE=sohoxi directory-to-s3 -d publish infor-devops-core-soho-us-east-1/sohoxi/4.3.3 -v
+```
 
 ## Notify
 - On Slack, MS Teams, And Dev's by Email ect.

@@ -679,12 +679,11 @@
         minimumFractionDigits = 0;
       }
 
-      //TODO: Doc Note: Uses Truncation
       if (options && options.style === 'currency') {
-        var sign = this.currentLocale.data.currencySign;
+        var sign = options && options.currencySign ? options.currencySign : this.currentLocale.data.currencySign,
+          format = options && options.currencyFormat ? options.currencyFormat : this.currentLocale.data.currencyFormat;
 
-        curFormat = this.currentLocale.data.currencyFormat;
-        curFormat = curFormat.replace('¤', sign);
+        curFormat = format.replace('¤', sign);
       }
 
       if (options && options.style === 'percent') {
@@ -735,10 +734,12 @@
       //Confirm Logic After All Locales are added.
       if (options && options.style === 'currency') {
         formattedNum = curFormat.replace('#,##0.00', formattedNum);
+        formattedNum = formattedNum.replace('#,##0.00', formattedNum);
       }
 
       if (options && options.style === 'percent') {
         formattedNum = percentFormat.replace('#,##0', formattedNum);
+        formattedNum = formattedNum.replace('#.##0', formattedNum);
       }
 
       if (isNegative) {

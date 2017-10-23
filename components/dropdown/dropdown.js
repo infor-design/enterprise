@@ -387,7 +387,18 @@
           var count = 0;
 
           opts.each(function(i) {
-            var icon = $.fn.parseOptions(this, 'data-icon');
+            var iconAttr = $(this).attr('data-icon'),
+              icon;
+
+            if (typeof iconAttr !== 'string') {
+              return;
+            }
+
+            if (iconAttr.indexOf('{') !== 0) {
+              icon = iconAttr;
+            } else {
+              icon = $.fn.parseOptions(this, 'data-icon');
+            }
             self.setItemIcon({html: '', icon: icon});
 
             if (self.listIcon.items[i].isIcon) {
@@ -671,6 +682,10 @@
           this.listIcon.pseudoElemIcon.clone().appendTo(this.list);
         }
 
+        if (hasOptGroups) {
+          this.listUl.addClass('has-groups');
+        }
+
         this.listUl.find('[title]').addClass('has-tooltip').tooltip();
       },
 
@@ -888,6 +903,9 @@
         if (this.settings.multiple) {
           this.updateList();
         }
+
+        lis.removeClass('hidden');
+        this.position();
       },
 
       selectBlank: function() {

@@ -30,22 +30,21 @@
       settings = $.extend({}, defaults, options);
 
     /**
-     * A Stepprocess/wizard control
-     *
-     * @param {object} element
-     * @param {object[]} [options]
-     * @param {boolean} [options.linearProgression=false]                     - Whether to prevent clicking and allow only prev/next navigation of steps
-     * @param {string} [options.folderIconOpen="caret-up"]                    - A specific folder open icon
-     * @param {string} [options.folderIconClosed="caret-down"]                - A specific folder close icon
-     * @param {object} [options.stepList="#step-list"]                        - The ID of the stepList
-     * @param {object} [options.stepLi=".js-step"]                            - jQuery selector for the step elements
-     * @param {object} [options.stepLink=".js-step-link"]                     - jQuery selector for the step link elements
-     * @param {object} [options.stepFolder=".js-step-folder"]                 - jQuery selector for the step folder elements
-     * @param {object} [options.btnPrev=".js-step-link-prev"]                 - jQuery selector for the previous step button
-     * @param {object} [options.btnNext=".js-step-link-next"]                 - jQuery selector for the next step button
-     * @param {function(event, args)|Promise} [options.beforeSelectStep=null] - A callback (function or promise) that gives
-     *        args.stepLink (the step link element) and args.isStepping (whether we are prev/next'ing or not)
-     */
+    * A Stepprocess/wizard control
+    *
+    * @class Stepprocess
+    * @param {Boolean} linearProgression The Main Application Name to display in the header. (Defaults to false)
+    * @param {String} folderIconOpen A specific folder open icon. (Defaults to 'caret-up')
+    * @param {String} folderIconClosed A specific folder close icon. (Defaults to 'caret-down')
+    * @param {Boolean} stepList Determines whether or not to display device information (Browser, Platform, Locale, Cookies Enabled).
+    * @param {String} stepLi jQuery selector for the step elements.
+    * @param {Boolean} stepLink jQuery selector for the step link elements.
+    * @param {String} stepFolder jQuery selector for the step folder elements.
+    * @param {String} btnPrev jQuery selector for the previous step button.
+    * @param {String} btnNext jQuery selector for the next step button.
+    * @param {Function} beforeSelectStep  A callback (function or promise) that gives args: stepLink (the step link element) and isStepping (whether we are prev/next'ing or not).
+    *
+    */
     function Stepprocess(element) {
       this.element = $(element);
       this.init();
