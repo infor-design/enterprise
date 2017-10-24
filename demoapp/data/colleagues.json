@@ -1,0 +1,70 @@
+[
+  {
+    "id": 3,
+    "photo": "https://randomuser.me/api/portraits/med/men/11.jpg",
+    "firstName": "Andy",
+    "lastName": "Gabbett",
+    "title": "Senior Manager",
+    "initials": "AG",
+    "favorite": false,
+    "phone": "856-982-1507",
+    "country": "UA",
+    "manager": "Andy Gabbett",
+    "reports": 66,
+    "email": "agabbett2@infoseek.co.jp"
+  },
+  {
+    "id": 4,
+    "firstName": "Sally",
+    "lastName": "Molian",
+    "title": "Senior Developer",
+    "initials": "SM",
+    "favorite": false,
+    "phone": "859-800-2849",
+    "country": "ID",
+    "manager": "Bertine Molian",
+    "reports": 50,
+    "email": "bmolian3@upenn.edu"
+  },
+  {
+    "id": 7,
+    "firstName": "Agneta",
+    "lastName": "Bernardeau",
+    "title": "Admin",
+    "initials": "AB",
+    "favorite": false,
+    "phone": "319-734-9395",
+    "country": "RU",
+    "manager": "Agneta Bernardeau",
+    "reports": 95,
+    "email": "abernardeau6@chronoengine.com"
+  },
+  {
+    "id": 10,
+    "photo": "https://randomuser.me/api/portraits/med/men/12.jpg",
+    "firstName": "Nickolai",
+    "lastName": "Yellowlees",
+    "title": "Temp",
+    "initials": "NY",
+    "favorite": false,
+    "phone": "412-858-0184",
+    "country": "GB",
+    "manager": "Nickolai Yellowlees",
+    "reports": 28,
+    "email": "nyellowlees9@mapquest.com"
+  },
+  {
+    "id": 12,
+    "photo": "https://randomuser.me/api/portraits/med/women/16.jpg",
+    "firstName": "Megyn",
+    "lastName": "Till",
+    "title": "Senior Developer",
+    "initials": "MT",
+    "favorite": false,
+    "phone": "425-764-3291",
+    "country": "SE",
+    "manager": "Myrtie Till",
+    "reports": 80,
+    "email": "mtillb@multiply.com"
+  }
+]

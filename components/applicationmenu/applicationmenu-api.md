@@ -23,8 +23,6 @@ The Application Menu provides access to all the functions, pages, and forms in a
 
 **Parameters**
 
--   `element`  
--   `options`  
 -   `breakpoint` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  Can be 'tablet' (+720), 'phablet (+968), ' 'desktop' +(1024), or 'large' (+1280). Default is phablet (968)
 -   `filterable` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** 
 -   `openOnLarge` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  If true, will automatically open the Application Menu when a large screen-width breakpoint is met.
