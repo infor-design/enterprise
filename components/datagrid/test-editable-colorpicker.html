@@ -27,7 +27,8 @@
     $grid = $('#datagrid').datagrid({
       columns: columns,
       dataset: data,
-      editable: true
+      editable: true,
+      toolbar: {title: 'Colorpickers', results: true, actions: true, rowHeight: true}
     });
 
     $grid.on('click', function(event, data) {

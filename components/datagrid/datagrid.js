@@ -428,7 +428,7 @@ window.Formatters = {
       return html;
     }
     html = '<span class="colorpicker-container trigger dropdown-trigger"><span class="swatch" style="background-color: ' + value + '"></span><input class="colorpicker" id="colorpicker-' + cell + '" name="colorpicker-' + cell + '" type="text" role="combobox" aria-autocomplete="list" value="' + value + '" aria-describedby="">';
-    html += $.createIcon({ icon: 'dropdown' }) + '</span>';
+    html += '<span class="trigger">' + $.createIcon({ icon: 'dropdown' }) + '</span></span>';
 
     return html;
   },
