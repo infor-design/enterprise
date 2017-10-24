@@ -218,13 +218,6 @@ $subheader-height: 60px;
     height: inherit;
     margin-bottom: 0;
   }
-
-  .full-searchfield-container {
-    margin: 0 auto;
-    max-width: $breakpoint-tablet-to-desktop;
-    padding: 1.4rem 4rem 0;
-    vertical-align: middle;
-  }
 }
 
 .header,
@@ -300,6 +293,25 @@ $subheader-height: 60px;
       }
       .ripple-effect {
         background-color: $header-text-color;
+      }
+
+    }
+  }
+
+  .full-searchfield-container {
+    margin: 0 auto;
+    max-width: $breakpoint-tablet-to-desktop;
+    padding: 1.4rem 4rem 0;
+    vertical-align: middle;
+
+    .hyperlink {
+      @include font-size(14);
+      color: $white;
+      float: right;
+
+      &:focus:not(.hide-focus)::after,
+      &:active::after {
+        border-color: $white;
       }
 
     }

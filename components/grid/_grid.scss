@@ -23,12 +23,6 @@ $gutter-neg-size: -20px;
 
   &.reduced {
     max-width: $breakpoint-tablet-reduced;
-    padding-right: 0;
-
-    .columns:first-child,
-    .column:first-child {
-      margin-left: 0;
-    }
   }
 
   &:last-child {

@@ -3,7 +3,7 @@
   {{> includes/applicationmenu}}
 
   <div class="page-container no-scroll">
-    <header class="header is-sticky">
+    <header class="header is-sticky is-personalizable has-searchfield-xl">
       <div class="toolbar">
         <div class="title">
           <button class="btn-icon application-menu-trigger" type="button">
@@ -19,12 +19,24 @@
         </div>
 
         <div class="buttonset">
-          <label class="audible">Search</label>
-          <input class="searchfield " data-options="{collapsible: false}"/>
         </div>
 
+        {{> includes/header-actionbutton}}
       </div>
+
+      <div class="full-searchfield-container">
+        <label class="audible" for="maincontent">Search for a Customer</label>
+        <span class="searchfield-wrapper context">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-search"></use>
+          </svg>
+          <input id="maincontent" class="searchfield" placeholder="Search for a customer" autocomplete="off" style="width: 100%;">
+        </span>
+        <a href="#" class="hyperlink">Advanced Search</a>
+      </div>
+
     </header>
+
 
     <div id="maincontent" class="page-container scrollable" role="main">
 
@@ -46,7 +58,27 @@
 
           <div class="card">
             <div class="listview" id="colleagues-listview"
-              data-options="{'selectable': false, 'source': '{{basepath}}api/colleagues?favorites=true', 'template': 'colleagues-tmpl'}">
+              data-options="{'selectable': 'single', 'source': '{{basepath}}api/colleagues?favorites=true', 'template': 'colleagues-tmpl'}">
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="row reduced top-padding">
+        <div class="twelve columns">
+
+          <div class="toolbar" role="toolbar">
+            <div class="title">
+              Recently Viewed
+            </div>
+            <div class="buttonset">
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="listview" id="colleagues-recent-listview"
+              data-options="{'selectable': 'single',  'source': '{{basepath}}api/colleagues', 'template': 'colleagues-tmpl'}">
             </div>
           </div>
 
@@ -62,12 +94,17 @@
     <table role="grid" class="listview-table show-headers">
 
       <!-- Controls the column widths -->
-      <colgroup>
+      <colgroup class="hidden-sm">
         <col style="width: 30%">
         <col style="width: 17.5%">
         <col style="width: 17.5%">
         <col style="width: 17.5%">
         <col style="width: 17.5%">
+      </colgroup>
+
+      <colgroup>
+        <col style="width: 90%">
+        <col style="width: 10%">
       </colgroup>
 
       <tbody>
@@ -93,45 +130,52 @@
 
             <span class="listview-heading-lg">{{firstName}} {{lastName}}
 
-              <button type="button" class="btn-icon icon-favorite" title="Favorite">
-                 <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
-                  {{#favorite}}
-                  <use xlink:href="#icon-star-filled"></use>
-                  {{/favorite}}
-                  {{^favorite}}
-                  <use xlink:href="#icon-star-outlined"></use>
-                  {{/favorite}}
-                 </svg>
-                 <span>Favorite</span>
-              </button>
+            <button type="button" class="btn-icon icon-favorite hidden-sm" title="Favorite">
+               <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                {{#favorite}}
+                <use xlink:href="#icon-star-filled"></use>
+                {{/favorite}}
+                {{^favorite}}
+                <use xlink:href="#icon-star-outlined"></use>
+                {{/favorite}}
+               </svg>
+               <span>Favorite</span>
+            </button>
             </span>
             <span class="listview-heading">{{title}}</span>
           </td>
-          <td>
+          <td class="hidden-sm">
             <p class="listview-data-label">Phone</p>
             <p class="listview-data">{{phone}}</p>
           </td>
-          <td>
+          <td class="hidden-sm">
             <p class="listview-data-label">Country</p>
             <p class="listview-data">{{country}}</p>
           </td>
-          <td>
+          <td class="hidden-xs">
             <p class="listview-data-label">Manager</p>
             <p class="listview-data">{{manager}}</p>
           </td>
-          <td>
+          <td class="hidden-sm">
             <p class="listview-data-label">Direct Reports</p>
             <p class="listview-data">{{reports}}</p>
+          </td>
+          <td class="visible-sm-block">
+            <button type="button" class="btn-icon icon-favorite" title="Favorite">
+               <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+                {{#favorite}}
+                <use xlink:href="#icon-star-filled"></use>
+                {{/favorite}}
+                {{^favorite}}
+                <use xlink:href="#icon-star-outlined"></use>
+                {{/favorite}}
+               </svg>
+               <span>Favorite</span>
+            </button>
           </td>
         </tr>
       {{/dataset}}
       </tbody>
 
     </table>
-  </script>
-
-  <script>
-    $('body').on('initialized', function () {
-
-    });
   </script>

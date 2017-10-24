@@ -80,7 +80,13 @@
       &.is-open {
         @include context-searchfield-boxshadow();
       }
+
+      &.input-xl {
+        height: 60px;
+      }
+
     }
+
 
     > .icon {
       fill: $searchfield-context-icon-color;
