@@ -422,6 +422,17 @@ window.Formatters = {
     return '<span class="' + ranges.classes + '">' + text + '</span>';
   },
 
+  Colorpicker: function(row, cell, value, col) {
+    var html = ((value === null || value === undefined || value === '') ? '' : value.toString());
+    if (col.inlineEditor) {
+      return html;
+    }
+    html = '<span class="colorpicker-container trigger dropdown-trigger"><span class="swatch" style="background-color: ' + value + '"></span><input class="colorpicker" id="colorpicker-' + cell + '" name="colorpicker-' + cell + '" type="text" role="combobox" aria-autocomplete="list" value="' + value + '" aria-describedby="">';
+    html += '<span class="trigger">' + $.createIcon({ icon: 'dropdown' }) + '</span></span>';
+
+    return html;
+  },
+
   Button: function (row, cell, value, col, item, api) {
     var text = col.text ? col.text : ((value === null || value === undefined || value === '') ? '' : value.toString()),
       markup ='<button type="button" class="'+ ( col.icon ? 'btn-icon': 'btn-secondary') + ' row-btn ' + (col.cssClass ? col.cssClass : '') + '"' + (!api.settings.rowNavigation ? '' : ' tabindex="-1"') +' >';
@@ -783,6 +794,43 @@ window.Editors = {
         self.input.next('.checkbox-label').remove();
         self.input.remove();
       }, 0);
+    };
+
+    this.init();
+  },
+
+  Colorpicker: function(row, cell, value, container, column, event, grid) {
+    this.name = 'colorpicker';
+    this.originalValue = value;
+    this.useValue = true; //use the data set value not cell value
+
+    this.init = function () {
+      this.input = $('<input id="colorpicker-' + cell + '" name="colorpicker-' + cell + '" class="colorpicker" value="' + value + '" type="text" />').appendTo(container);
+      this.input.colorpicker(column.editorOptions);
+    };
+
+    this.val = function (value) {
+      return value ? this.input.val(value) : this.input.val();
+    };
+
+    this.focus = function () {
+
+      var self = this;
+
+      this.input.trigger('openlist');
+      this.input.focus().select();
+
+      this.input.off('listclosed').on('listclosed', function () {
+        grid.commitCellEdit(self.input);
+
+        container.parent('td').focus();
+        return;
+      });
+
+    };
+
+    this.destroy = function () {
+      //We dont need to destroy since it will when the list is closed
     };
 
     this.init();
@@ -5032,11 +5080,11 @@ $.fn.datagrid = function(options) {
         // Keep icon clickable in edit mode
         var target = e.target;
 
-        if ($(target).is('input.lookup, input.timepicker, input.datepicker, input.spinbox')) {
+        if ($(target).is('input.lookup, input.timepicker, input.datepicker, input.spinbox, input.colorpicker')) {
           // Wait for modal popup, if did not found modal popup means
           // icon was not clicked, then commit cell edit
           setTimeout(function() {
-            if (!$('.lookup-modal.is-visible, #timepicker-popup, #calendar-popup').length &&
+            if (!$('.lookup-modal.is-visible, #timepicker-popup, #calendar-popup, #colorpicker-menu').length &&
                 !!self.editor && self.editor.input.is(target)) {
 
               if ($('*:focus').is('.spinbox')) {
@@ -6439,7 +6487,7 @@ $.fn.datagrid = function(options) {
       }
 
       if (this.editor && this.editor.input) {
-        if (this.editor.input.is('.timepicker, .datepicker, .lookup, .spinbox') && !$(event.target).prev().is(this.editor.input)) {
+        if (this.editor.input.is('.timepicker, .datepicker, .lookup, .spinbox, #colorpicker-menu') && !$(event.target).prev().is(this.editor.input)) {
           this.commitCellEdit(this.editor.input);
         }
       }
@@ -6511,7 +6559,7 @@ $.fn.datagrid = function(options) {
     commitCellEdit: function(input) {
       var newValue, cellNode,
         isEditor = input.is('.editor'),
-        isUseActiveRow = !(input.is('.timepicker, .datepicker, .lookup, .spinbox'));
+        isUseActiveRow = !(input.is('.timepicker, .datepicker, .lookup, .spinbox .colorpicker'));
 
       if (!this.editor) {
         return;

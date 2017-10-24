@@ -316,6 +316,8 @@
           });
           self.element.parent().removeClass('is-open');
           self.isPickerOpen = false;
+
+          self.element.trigger('listclosed', 'select');
         })
         .on('selected.colorpicker', function (e, item) {
           if (!self.isEditor) {
@@ -516,7 +518,7 @@
       },
 
       teardown: function() {
-        this.element.off('keyup.colorpicker blur.colorpicker change.colorpicker paste.colorpicker');
+        this.element.off('keyup.colorpicker blur.colorpicker openlist.colorpicker change.colorpicker paste.colorpicker');
         this.swatch.off('click.colorpicker');
         this.swatch.remove();
         this.container.find('.trigger').remove();
@@ -558,6 +560,9 @@
         })
         .on('blur.colorpicker', function () {
           $(this).parent().removeClass('is-focused');
+        })
+        .on('openlist.colorpicker', function() {
+          self.toggleList();
         });
 
         this.element.on('keyup.colorpicker blur.colorpicker paste.colorpicker change.colorpicker', function () {
