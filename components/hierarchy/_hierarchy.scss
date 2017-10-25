@@ -167,6 +167,16 @@ $hierarchy-line-width: 1px;
       width: 55px;
     }
 
+    .image-initials {
+      display: inline-block;
+      float: left;
+      height: 55px;
+      line-height: 5.5rem;
+      margin-left: 14px;
+      margin-top: 8px;
+      width: 55px;
+    }
+
     .image-placeholder {
       border: 2px solid $graphite04;
     }
