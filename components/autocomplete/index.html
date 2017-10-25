@@ -14,6 +14,19 @@
 <h2 id="api-details">API Details</h2>
 <h3 id="settings">Settings</h3>
 <ul>
+<li><code>item</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong><br /></li>
+<li><p><code>options</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong></p>
+<ul>
+<li><code>options.alias</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>?</strong><br /></li>
+<li><code>options.filterMode</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong><br /></li>
+<li><code>options.term</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong></li>
+</ul></li>
+</ul>
+<p>Returns <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong></p>
+<h2 id="autocomplete">Autocomplete</h2>
+<p>The Autocomplete control provides an easier means of searching through a large amount of data by filtering down the results based on keyboard input from the user.</p>
+<p><strong>Parameters</strong></p>
+<ul>
 <li><code>source</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Defines the data to use, must be specified.<br /></li>
 <li><code>sourceArguments</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  If a source method is defined, this flexible object can be passed into the source method, and augmented with parameters specific to the implementation.<br /></li>
 <li><code>template</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  If defined, use this to draw the contents of each search result instead of the default draw routine.<br /></li>
@@ -21,7 +34,8 @@
 <li><code>delay</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  The delay between key strokes on the keypad before it thinks you stopped typing<br /></li>
 <li><code>width</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Width of the open auto complete menu<br /></li>
 <li><code>offset</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  For the open menu, the left or top offset<br /></li>
-<li><code>autoSelectFirstItem</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Whether or not to select he first item in the list to be selected</li>
+<li><code>autoSelectFirstItem</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  Whether or not to select he first item in the list to be selected<br /></li>
+<li><code>resultsCallback</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a></strong>  -  If defined, does not produce the results of the Autocomplete inside a popupmenu, instead piping them to a process defined inside this callback function.</li>
 </ul>
 <h3 id="functions">Functions</h3>
 <h4 id="enable">enable</h4>

@@ -21,7 +21,7 @@
 });
 </code></pre>
 <h2 id="code-example---numbers">Code Example - Numbers</h2>
-<p>You can use the formatNumber to display a numeric type in a localized format. You can use parseNumber to convert that number back to the numeric type.</p>
+<p>You can use the formatNumber to display a numeric type in a localized format. You can use parseNumber to convert that number back to the numeric type. Not that by default the formatNumber function uses truncation (.129 becomes .12). To use rounding add the <code>round: true</code> option.</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript">
 <span class="ot">Locale</span>.<span class="fu">formatNumber</span>(<span class="fl">20.1</span>, {<span class="dt">style</span>: <span class="st">&#39;decimal&#39;</span>, <span class="dt">round</span>: <span class="kw">true</span>, <span class="dt">minimumFractionDigits</span>: <span class="dv">2</span>}));
 <span class="co">// Returns 20.10</span>

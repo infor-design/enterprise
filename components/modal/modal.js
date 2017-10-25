@@ -297,7 +297,7 @@
             }).prependTo(btn);
           }
 
-          btn.attr('id', props.id || Soho.utils.uniqueId('modal', btn[0], cnt+1));
+          btn.attr('id', props.id || $.fn.uniqueId('button', 'modal'));
 
           var func = buttons[cnt].click;
 

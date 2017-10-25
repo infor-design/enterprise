@@ -6,6 +6,7 @@ window.Chart = function(container) {
   'use strict';
 
   var charts = this;
+  this.container = $(container);
 
   //IE8 and Below Message
   if (typeof d3 === 'undefined') {
@@ -260,11 +261,7 @@ window.Chart = function(container) {
     d3.select('#svg-tooltip').classed('is-hidden', true).style('left', '-999px');
 
     // Remove scroll events
-    $('body').off('scroll.chart-tooltip', function() {
-      self.hideTooltip();
-    });
-
-    $('.scrollable').off('scroll.chart-tooltip', function() {
+    $('body, .scrollable').off('scroll.chart-tooltip', function() {
       self.hideTooltip();
     });
   };
@@ -952,6 +949,7 @@ window.Chart = function(container) {
       tooltipData = charts.options.tooltip;
 
     charts.appendTooltip();
+    charts.hideTooltip();
 
     var showLegend = charts.showLegend || false;
 
@@ -3788,9 +3786,12 @@ window.Chart = function(container) {
         ds = ds || dataset;
         return d3.round(100 * (value / fixUndefined(ds.total.value, true)));
       },
+      localePercent = function (value) {
+        return Locale.formatNumber(value/100, {style: 'percent', maximumFractionDigits: 0});
+      },
       format = function (value, formatterString, ds) {
         if (formatterString === '.0%') {
-          return toPercent(value, ds) +'%';
+          return localePercent(toPercent(value, ds));
         }
         return d3.format(formatterString || '')(value);
       },
@@ -3899,7 +3900,7 @@ window.Chart = function(container) {
         percentText.format = '.0%';
         percentText._text = (typeof percentText.text !== 'undefined' ?
           percentText.text : (typeof percentText.value !== 'undefined' ?
-            (percentText.value +'%') : setFormat(percentText, ds, true)));
+            localePercent(percentText.value) : setFormat(percentText, ds, true)));
         percentText.color = percentText[percentText.percent > 55 ? 'color2': 'color1'];
       },
       c,// Cache will after created
@@ -4597,6 +4598,12 @@ $.fn.chart = function(options) {
     instance = $.data(this, 'chart', chartInst);
     instance.settings = options;
     instance._animateIndex = 0;
+    instance.destroy = function() {
+      instance.tooltip.remove();
+      instance.container.find('*').off();
+      instance.container.removeClass('chart-vertical-bar chart-pie column-chart line-chart bubble bullet-chart completion-chart chart-targeted-achievement chart-completion-target chart-targeted-achievement chart-completion').empty();
+      $.removeData(instance.container[0], 'chart');
+    };
     instance.setSelected = function() {};
     instance.toggleSelected = function(o) {
       this.setSelected(o, true);

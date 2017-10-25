@@ -122,6 +122,7 @@ Trigger the source method to call to the backend on demand.
 **Parameters**
 
 -   `pagerType`  
+-   `callback`  
 -   `pagerInfo` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  The pager info object with information like activePage ect.
 
 ### clearFilter
@@ -192,6 +193,7 @@ Add the pager and paging functionality.
 
 -   `pagingInfo` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The paging object with activePage ect used by pager.js
 -   `isResponse` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  Internal flag used to prevent callbacks from rexecuting.
+-   `callback`  
 
 ### resetPager
 
