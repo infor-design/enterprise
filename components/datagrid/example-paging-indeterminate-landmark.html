@@ -26,28 +26,14 @@
         var indexString = "";
         for (var i = 0; i < args.length; i++) {
           indexString += args[i].data.id + (i < args.length - 1 ? ', ' : '');
-          // indexString += args[i].idx + (i < args.length - 1 ? ', ' : '');
         }
         console.log('selected row indexes', indexString);
       } else if (args && args.length > 0) {
         console.log('selected row index', args[0].data.id);
-        // console.log('selected row index', args[0].idx);
       }
     })
     .on('rowactivated', function(e, args) {
       console.log('activated row index', args.row);
-    })
-    .on('contextmenu', function(e, args) {
-      console.log('context menu event', e, args);
-      grid.unSelectAllRows();
-      grid.selectRow(args.row);
-      console.log('getSelectedRow', grid.selectedRows()[0].idx)
-    })
-    .on("dblclick", function(e, args) {
-      console.log("dblclick", e, args);
-      grid.unSelectAllRows();
-      grid.selectRow(args.row);
-      console.log('getSelectedRow', grid.selectedRows()[0].idx)
     })
     .data('datagrid');
 
@@ -57,6 +43,19 @@
       // -------------------------------------------------------------------------------------------------
       getDataPage(request).then(function(result) {
         var selectedRow = grid.selectedRows()[0];
+        var activatedRow = grid.activatedRow();
+
+        if (selectedRow) {
+          grid.unSelectAllRows();
+        }
+
+        var activatedRowIndex = -1;
+        if (activatedRow
+          &&  activatedRow.length === 1
+          &&  activatedRow[0].row > -1) {
+          activateRowIndex = activatedRow[0].row;
+          grid.deactivateRow();
+        }
 
         // -------------------------------------------------------------------------------------------------
         // activePage of -1 means only using firstPage, lastPage for the pager button enable/disable state.
@@ -75,6 +74,12 @@
         // put the new page of data back into the datagrid
         // -------------------------------------------------------------------------------------------------
         response(result.data, request);
+
+        if (activatedRow
+        &&  activatedRow.length === 1
+        &&  activatedRow[0].row > -1) {
+          grid.activateRow(activateRowIndex);
+        }
 
         if (selectedRow) {
           grid.selectRow(selectedRow.idx);
