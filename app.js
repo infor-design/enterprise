@@ -1410,7 +1410,8 @@ var express = require('express'),
           children:[
             { id: '1_7_1', Name: 'Katie Olland',  Position: 'Workers’ Compensation Specialist', EmploymentType: 'FT', Picture: womenPath +'12.jpg', isLeaf:true},
             { id: '1_7_2', Name: 'Tanya Wright',  Position: 'Workers’ Compensation Specialist', EmploymentType: 'FT', Picture: womenPath +'13.jpg', isLeaf:true},
-            { id: '1_7_3', Name: 'OPEN', Position: 'Workers’ Compensation Specialist', EmploymentType: 'O', isLeaf:true}
+            { id: '1_7_3', Name: 'OPEN', Position: 'Workers’ Compensation Specialist', EmploymentType: 'O', isLeaf:true},
+            { id: '1_7_4', Name: 'John Johnson', Position: 'Workers’ Compensation Specialist', Initials: 'JJ', EmploymentType: 'FT', isLeaf:true}
           ]
         }
       ]
