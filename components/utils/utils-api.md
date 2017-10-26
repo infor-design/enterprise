@@ -30,11 +30,11 @@ jQuery Behavior Wrapper for `Soho.utils.parseOptions`.
 
 **Parameters**
 
--   `element`
--   `attr`
--   `attrName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?**
+-   `element`  
+-   `attr`  
+-   `attrName` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
 
-Returns **([Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)>)**
+Returns **([Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object) \| [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)>)** 
 
 **Meta**
 
@@ -49,7 +49,7 @@ Binds the Soho Util _getHiddenSize()_ to a jQuery selector
 
 -   `options` **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** incoming options
 
-Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**
+Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
 ## smoothScroll
 
@@ -60,7 +60,7 @@ Binds the Soho Behavior _smoothScrollTo()_ to a jQuery selector
 -   `target` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** target distance to scroll the element
 -   `duration` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** the time that will be needed for the scrolling to complete.
 
-Returns **$.Deferred**
+Returns **$.Deferred** 
 
 ## parseOptions
 
@@ -68,10 +68,10 @@ Grabs an attribute from an HTMLElement containing stringified JSON syntax, and i
 
 **Parameters**
 
--   `element` **[HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)**
--   `attr` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?**
+-   `element` **[HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)** 
+-   `attr` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)?** 
 
-Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**
+Returns **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
 ## extend
 
@@ -86,15 +86,15 @@ The action of changing the xlink:href attribute to something else and back will 
 
 **Parameters**
 
--   `rootElement`
+-   `rootElement`  
 
-Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)**
+Returns **[undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** 
 
 ## getViewportSize
 
 Gets the current size of the viewport
 
-Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**
+Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
 ## getContainerScrollDistance
 
@@ -102,9 +102,9 @@ Gets the various scrollable containers that an element is nested inside of, and 
 
 **Parameters**
 
--   `element`
+-   `element`  
 
-Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)>**
+Returns **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)>** 
 
 ## getHiddenSize
 
@@ -116,7 +116,7 @@ Takes an element that is currently hidden by some means (FX: "display: none;") a
 -   `options` **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** incoming options.
 -   `parentElement` **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)&lt;jQuery>** the parent element where a clone of this hidden element will be attached. (optional, default `undefined`)
 
-Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**
+Returns **[object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** 
 
 ## isString
 
@@ -124,9 +124,9 @@ Checks if a specific input is a String
 
 **Parameters**
 
--   `value` **?**
+-   `value` **?** 
 
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 ## isNumber
 
@@ -134,9 +134,9 @@ Checks if a specific input is a Number
 
 **Parameters**
 
--   `value` **?**
+-   `value` **?** 
 
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 ## safeSetSelection
 
@@ -146,9 +146,9 @@ cases, will be deferred with `requestAnimationFrame` or `setTimeout`.
 
 **Parameters**
 
--   `element` **[HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)**
--   `startPos` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**
--   `endPos` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**
+-   `element` **[HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element)** 
+-   `startPos` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
+-   `endPos` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** 
 
 ## isElement
 
@@ -193,7 +193,7 @@ with characters from an input field, etc.
 
 **Parameters**
 
--   `str`
+-   `str`  
 
 ## smoothScrollTo
 
@@ -205,7 +205,7 @@ Allows for the smooth scrolling of an element's content area.
 -   `target` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** target distance.
 -   `duration` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** the time that will be needed for the scrolling to complete.
 
-Returns **$.Deferred**
+Returns **$.Deferred** 
 
 ## defer
 
@@ -213,10 +213,10 @@ Uses 'requestAnimationFrame' or 'setTimeout' to defer a function
 
 **Parameters**
 
--   `callback`
--   `timer`
+-   `callback`  
+-   `timer`  
 
-Returns **([requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) \| [setTimeout](https://developer.mozilla.org/en-US/docs/Web/API/WindowTimers/setTimeout))**
+Returns **([requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) \| [setTimeout](https://developer.mozilla.org/en-US/docs/Web/API/WindowTimers/setTimeout))** 
 
 ## isAbove
 
@@ -224,7 +224,7 @@ Returns **([requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/
 
 -   `breakpoint` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** matches one of the entries in the "Soho.breakpoints" object.
 
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 ## isBelow
 
@@ -232,7 +232,7 @@ Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refe
 
 -   `breakpoint` **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** matches one of the entries in the "Soho.breakpoints" object.
 
-Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**
+Returns **[boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** 
 
 ## HideFocus
 
@@ -241,6 +241,6 @@ Only shows the focus state on key entry (tabs or arrows).
 
 **Parameters**
 
--   `element` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate))**
+-   `element` **([HTMLElement](https://developer.mozilla.org/en-US/docs/Web/HTML/Element) \| [SVGElement](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/animate))** 
 
-Returns **[HideFocus](#hidefocus)**
+Returns **[HideFocus](#hidefocus)** 

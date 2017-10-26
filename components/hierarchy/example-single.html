@@ -1,0 +1,90 @@
+﻿<div class="twelve columns">
+  <figure class="hierarchy" id="hierarchy"></figure>
+</div>
+
+<script>
+
+  var
+    menPath = 'https://randomuser.me/api/portraits/med/men/',
+    womenPath = 'https://randomuser.me/api/portraits/med/women/',
+    orgdata = [{
+      id: '1', Name: 'Raj', Position: 'Director', EmploymentType: 'FT', Picture: '',
+      children: [
+        {
+          id: '1_3', Name: 'Sujit', Position: 'Records Manager', EmploymentType: 'FT', Picture: '',
+          children: [
+            { id: '1_3_1', Name: 'Tony Cleveland', Position: 'Records Clerk', EmploymentType: 'C', Picture: '', isLeaf: true, children: [] },
+            { id: '1_3_2', Name: 'Julie Dawes', Position: 'Records Clerk', EmploymentType: 'PT', Picture: '', isLeaf: true },
+            { id: '1_3_3', Name: 'Richard Fairbanks', Position: 'Records Clerk', EmploymentType: 'FT', Picture: '' }
+          ]
+        }
+      ]
+    }];
+
+
+  $(function () {
+
+
+    var legendData = [
+      { 'value': 'FT', 'label': 'Full Time' },
+      { 'value': 'PT', 'label': 'Part Time' },
+      { 'value': 'C', 'label': 'Contractor' },
+      { 'value': 'O', 'label': 'Open Position' }
+    ];
+
+
+    $('#hierarchy').hierarchy({
+      templateId: 'hierarchyChartTemplate',
+      legendKey: 'EmploymentType',
+      legend: legendData,
+      dataset: orgdata
+    });
+
+    var hierarchyControl = $('#hierarchy').data('hierarchy');
+
+
+    $('#hierarchy').on('selected', function (event, eventInfo) {
+      console.log(event, eventInfo);
+      var hierarchyControl = $('#hierarchy').data('hierarchy');
+      var orgdatachildren = [
+          { id: 'AA' + (Math.floor(Math.random() * 1000)), Name: 'Sujit Edwards', Position: 'Records Manager', EmploymentType: 'FT', Picture: '' },
+          { id: 'BB' + (Math.floor(Math.random() * 1000)), Name: 'Raji  Johnson', Position: 'Senior Software Engineer', EmploymentType: 'FT', Picture: '', isLeaf: true },
+          { id: 'CC' + (Math.floor(Math.random() * 1000)), Name: 'Mallory Anderson', Position: 'Principle Software Engineer', EmploymentType: 'FT', Picture: '', isLeaf: true }
+        ];
+
+
+      if (!eventInfo.data.isLoaded && !eventInfo.data.isLeaf) {
+
+        hierarchyControl.add(eventInfo.data.id, eventInfo.data, orgdatachildren);
+
+      }
+    });
+  });
+</script>
+
+
+{{={{{ }}}=}}
+<script type="text/html" id="hierarchyChartTemplate">
+  <div class="leaf {{colorClass}}" id="{{id}}">
+
+    {{#Picture}}
+    <img src="{{Picture}}" class="image" alt="Image of {{Name}}" />
+    {{/Picture}}
+    {{^Picture}}
+    <span class="image-placeholder"></span>
+    {{/Picture}}
+
+    <div class="detail">
+      <p class="heading">{{Name}}</p>
+      <p class="subheading">{{Position}}</p>
+      <p class="micro">{{EmploymentType}}</p>
+    </div>
+
+    <button class="btn btn-icon" type="button">
+      <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+        <use xlink:href="#icon-caret-up" />
+      </svg>
+      <span class="audible">Expand/Collapse</span>
+    </button>
+  </div>
+</script>

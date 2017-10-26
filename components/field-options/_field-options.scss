@@ -1,0 +1,128 @@
+// FieldOptions
+//==============================================================================
+.field-options {
+  max-width: $field-md;
+  width: calc(100% - 40px);
+
+  &.input-xs {
+    max-width: $field-xs;
+  }
+
+  &.input-sm {
+    max-width: $field-sm;
+  }
+
+  &.input-lg {
+    max-width: $field-lg;
+  }
+
+  &.input-full {
+    max-width: calc(100% - 40px);
+  }
+
+  ~ .icon-confirm {
+    right: 40px;
+  }
+
+  // Trigger button ============================================================
+  ~ .btn-actions {
+    @include rotate(90);
+    left: -11px;
+    min-width: 30px;
+    visibility: hidden;
+    width: 30px;
+
+    &.is-active {
+      visibility: visible;
+    }
+  }
+
+  ~ a.btn-actions {
+    display: inline;
+    padding: 0 5px;
+  }
+
+  &.is-active {
+    ~ .btn-actions {
+      visibility: visible;
+    }
+  }
+
+  // Textarea ==================================================================
+  &.textarea {
+    max-width: 362px;
+
+    ~ .btn-actions {
+      left: auto;
+      margin-left: -8px;
+      position: absolute;
+      top: calc(50% - 6px);
+    }
+  }
+
+  // Timepicker & Datepicker ===================================================
+  &.timepicker,
+  &.datepicker {
+    width: $datepicker-default-width;
+
+    &.input-xs {
+      max-width: $field-xs;
+      width: calc(100% - 40px);
+    }
+
+    &.input-sm {
+      max-width: $field-sm;
+      width: calc(100% - 40px);
+    }
+
+    &.input-mm {
+      max-width: $field-mm;
+      width: calc(100% - 40px);
+    }
+
+    &.input-md {
+      max-width: $field-md;
+      width: calc(100% - 40px);
+    }
+
+    &.input-lg {
+      max-width: $field-lg;
+      width: calc(100% - 40px);
+    }
+
+    &.input-full {
+      max-width: calc(100% - 40px);
+      width: calc(100% - 40px);
+    }
+
+    ~ a.btn-actions {
+      display: inline;
+      padding: 0 5px;
+    }
+  }
+}
+
+// RTL Styles ******************************************************************
+html[dir='rtl'] {
+
+  .field-options {
+    ~ .icon-confirm {
+      left: 40px;
+      right: auto;
+    }
+
+    ~ .btn-actions {
+      left: auto;
+      right: -11px;
+    }
+
+    &.textarea {
+      ~ .btn-actions {
+        margin-left: inherit;
+        margin-right: -8px;
+        right: auto;
+      }
+    }
+  }
+
+}
