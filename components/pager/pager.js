@@ -210,8 +210,7 @@
         });
 
         //Attach button click and touch
-        this.pagerBar.onTouchClick('pager', 'a').on('click.pager', 'a', function (e) {
-        // this.pagerBar.onclick(function(e) {
+        this.pagerBar.on('click.pager', 'a', function (e) {
           var li = $(this).parent();
           e.preventDefault();
 
