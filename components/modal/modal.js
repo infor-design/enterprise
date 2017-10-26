@@ -69,6 +69,12 @@
 
         self.isCancelled = false;
 
+        if (window.history && window.history.pushState) {
+          $(window).on('popstate', function() {
+            self.destroy();
+          });
+        }
+
         //ensure is appended to body for new dom tree
         if (this.settings.content) {
 
@@ -701,6 +707,8 @@
 
           self.element.closest('.modal-page-container').remove();
           $.removeData(self.element[0], 'modal');
+
+          $(window).off('popstate', '**');
         }
 
         if (!this.isOpen()) {
