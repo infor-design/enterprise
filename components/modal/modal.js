@@ -70,6 +70,8 @@
         self.isCancelled = false;
 
         if (window.history && window.history.pushState) {
+          $(window).off('popstate');
+
           $(window).on('popstate', function() {
             self.destroy();
           });
@@ -708,7 +710,7 @@
           self.element.closest('.modal-page-container').remove();
           $.removeData(self.element[0], 'modal');
 
-          $(window).off('popstate', '**');
+          $(window).off('popstate');
         }
 
         if (!this.isOpen()) {
