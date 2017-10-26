@@ -2,7 +2,7 @@
 //================================================== *
 
 .datepicker {
-  width: 150px;
+  width: $datepicker-default-width;
 
   &.input-xs {
     width: $field-xs;

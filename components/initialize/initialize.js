@@ -244,6 +244,8 @@
 
             ['fileuploadadvanced', '.fileupload-advanced'],
 
+            ['fieldoptions', '.field-options'],
+
             ['about'],
 
             ['contextualactionpanel', '.contextual-action-panel-trigger'],
