@@ -2266,7 +2266,7 @@ $.fn.datagrid = function(options) {
         self.applyFilter();
       });
 
-      this.headerRow.find('th').each(function () {
+      this.headerRow.find('tr:last th').each(function () {
         var col = self.columnById($(this).attr('data-column-id'))[0],
           elem = $(this);
 
