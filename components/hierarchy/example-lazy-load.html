@@ -34,27 +34,27 @@
 {{={{{ }}}=}}
 <script type="text/html" id="hierarchyChartTemplate">
   <div class="leaf {{colorClass}}" id="{{id}}">
+    <div class="content">
+      {{#Picture}}
+      <img src="{{Picture}}" class="image" alt="Image of {{Name}}"/>
+      {{/Picture}}
+      {{^Picture}}
+      <span class="image-placeholder"></span>
+      {{/Picture}}
 
-    {{#Picture}}
-    <img src="{{Picture}}" class="image" alt="Image of {{Name}}"/>
-    {{/Picture}}
-    {{^Picture}}
-    <span class="image-placeholder"></span>
-    {{/Picture}}
+      <div class="detail">
+        <p class="heading">{{Name}}</p>
+        <p class="subheading">{{Position}}</p>
+        <p class="micro">{{EmploymentType}}</p>
+      </div>
 
-    <div class="detail">
-      <p class="heading">{{Name}}</p>
-      <p class="subheading">{{Position}}</p>
-      <p class="micro">{{EmploymentType}}</p>
+      <button class="btn btn-icon" type="button">
+        <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+          <use xlink:href="#icon-caret-up"/>
+        </svg>
+        <span class="audible">Expand/Collapse</span>
+      </button>
+     </div>
     </div>
-
-    <button class="btn btn-icon" type="button">
-      <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
-        <use xlink:href="#icon-caret-up"/>
-      </svg>
-      <span class="audible">Expand/Collapse</span>
-    </button>
-  </div>
-
   </div>
 </script>

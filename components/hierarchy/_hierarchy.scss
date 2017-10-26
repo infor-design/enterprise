@@ -19,6 +19,10 @@ $hierarchy-line-width: 1px;
   margin: 0;
   padding: 20px 30px;
 
+  .branch-collapsed {
+    padding-bottom: 20px;
+  }
+
   .branch-collapsed > ul * {
     display: none;
   }
@@ -107,6 +111,56 @@ $hierarchy-line-width: 1px;
       &.has-single-child .sub-level > li::before {
         display: none;
       }
+
+      // Single child
+      &.has-single-child .root {
+        margin: 0;
+
+        + .sub-level::before {
+          left: 20px;
+          height: 78px;
+        }
+
+        + .sub-level > li .leaf::before {
+          content: '';
+          display: block;
+          height: 105px;
+          width: 50%;
+          border-left: 1px solid $hierarchy-line-color;
+          border-bottom: 1px solid $hierarchy-line-color;
+          position: absolute;
+          z-index: -1;
+          top: -65px;
+          left: -30px;
+        }
+      }
+
+      &.has-single-child .sub-level {
+        padding-left: 35px;
+      }
+    }
+
+    .sub-level > li > ul .leaf::before {
+      content: '';
+      display: block;
+      height: 105px;
+      width: 50%;
+      border-left: 1px solid $hierarchy-line-color;
+      border-bottom: 1px solid $hierarchy-line-color;
+      position: absolute;
+      z-index: -1;
+      top: -65px;
+      left: -30px;
+    }
+
+    .sub-level > li ul {
+      position:relative;
+    }
+
+    .sub-level .sublist::before {
+      @extend .vertical-line;
+      height: calc(100% - 50px);
+      left:20px;
     }
 
   }
@@ -119,9 +173,13 @@ $hierarchy-line-width: 1px;
     border-radius: 2px;
     cursor: pointer;
     height: $hierarchy-node-height;
-    overflow: hidden;
+    position: relative;
 
     width: $hierarchy-node-width;
+
+    .content {
+      overflow: hidden;
+    }
 
     &.azure08 {
       border-left-color: $azure08;
@@ -337,8 +395,8 @@ $hierarchy-line-width: 1px;
         content: '';
         display: inline-block;
         height: 25px;
-        width: calc(90% + 20px);
-        margin-left:10%;
+        width: 55%;
+        margin-left:51%;
       }
 
       &::before {
@@ -348,7 +406,7 @@ $hierarchy-line-width: 1px;
         content: '';
         display: inline-block;
         height: 25px;
-        width: 105%;
+        width: 120%;
       }
 
       //Draw Line Up and Left
@@ -359,17 +417,15 @@ $hierarchy-line-width: 1px;
         content: '';
         display: inline-block;
         height: 25px;
-        width: 75%;
-        float: left;
-        margin-left: -20px;
+        width: 50%;
+        margin-left: -51%
       }
     }
 
     // Child Nodes - 4th level down
     li ul {
-      margin-left: 45px;
+      padding-left: 45px;
       overflow: hidden;
-      padding-left: 31px;
       padding-right: 5px;
 
       li {
@@ -413,11 +469,17 @@ $hierarchy-line-width: 1px;
     .container {
       display: inline-block;
       margin: 0;
+
+      .chart {
+        &.has-single-child .sub-level {
+          padding-left: 45px;
+        }
+      }
     }
 
     // Top of the Chain
     .root {
-      margin: 0 0 10px;
+      margin: 0;
 
       &::after {
         background: transparent;
@@ -427,10 +489,14 @@ $hierarchy-line-width: 1px;
     }
 
     .sub-level {
-      margin-left: 45px;
+      margin-left: 0px;
     }
 
     //Top level attached to root
+    .top-level::after {
+      left: 158px;
+    }
+
     .top-level li {
       display: block;
       padding: 10px 0;
@@ -444,13 +510,17 @@ $hierarchy-line-width: 1px;
     .top-level > li::before,
     .sub-level > li:last-child::before,
     .top-level > li:last-child::before {
-      border: none;
+      display: none;
     }
 
     //Bottom Nodes
     .sub-level > li {
       display: block;
       padding: 0px;
+    }
+
+    .sub-level > li.branch-collapsed {
+      padding-bottom: 30px;
     }
   }
 }
