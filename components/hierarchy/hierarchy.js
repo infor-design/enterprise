@@ -141,14 +141,16 @@
          *  Usage: $('#hierarchy').on('selected', function(event, eventInfo) {}
          */
         self.element.on('mousedown', '.leaf, .back button', function(event) {
+          var hierarchy = $(this).closest('.hierarchy').data('hierarchy');
           var nodeData = $(this).data();
           var targetInfo = {target: event.target, pageX: event.pageX, pageY: event.pageY};
           var eventType = 'selected';
           var isButton = $(event.target).is('button');
           var isNotBack = !$(event.target).hasClass('btn-back');
           var isBack = $(event.target).is('.btn-back');
-          var isCollapseButton = $(event.target).find('use').prop('href').baseVal === '#icon-caret-up';
-          var isExpandButton = $(event.target).find('use').prop('href').baseVal === '#icon-caret-down';
+          var svgHref = $(event.target).find('use').prop('href');
+          var isCollapseButton = svgHref ? svgHref.baseVal === '#icon-caret-up' : false;
+          var isExpandButton = svgHref ? svgHref.baseVal === '#icon-caret-down' : false;
 
           $('.is-selected').removeClass('is-selected');
           $('#' + nodeData.id).addClass('is-selected');
@@ -175,11 +177,81 @@
           var eventInfo = {
             data: nodeData,
             targetInfo: targetInfo,
-            eventType: eventType
+            eventType: eventType,
+            isAddEvent: hierarchy.isAddEvent(eventType),
+            isExpandEvent: hierarchy.isExpandEvent(),
+            isCollapseEvent: hierarchy.isCollapseEvent(),
+            isSelectedEvent: hierarchy.isSelectedEvent(),
+            allowLazyLoad: hierarchy.allowLazyLoad(nodeData, eventType)
           };
 
           $(this).trigger('selected', eventInfo);
         });
+      },
+
+      /**
+       * Private function
+       * check if event is add
+       */
+      isAddEvent: function(eventType) {
+
+        if (eventType === undefined) {
+          return false;
+        }
+
+        return eventType === 'add';
+      },
+
+      /**
+       * Private function
+       * check if event is expand
+       */
+      isExpandEvent: function(eventType) {
+
+        if (eventType === undefined) {
+          return false;
+        }
+
+        return eventType === 'expand';
+      },
+
+      /**
+       * Private function
+       * check if event is collapse
+       */
+      isCollapseEvent: function(eventType) {
+
+        if (eventType === undefined) {
+          return false;
+        }
+
+        return eventType === 'collapse';
+      },
+
+      /**
+       * Private function
+       * check if event is select
+       */
+      isSelectedEvent: function(eventType) {
+
+        if (eventType === undefined) {
+          return false;
+        }
+
+        return eventType === 'select';
+      },
+
+      /**
+       * Private function
+       * Check to see if lazy load is allowed
+       */
+      allowLazyLoad: function (data, eventType) {
+
+        if(data === undefined || eventType === undefined) {
+          return false;
+        }
+
+        return !data.isLoaded && !data.isLeaf && eventType === 'expand';
       },
 
       /**
