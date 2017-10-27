@@ -90,6 +90,9 @@
         columns: columnsHeader,
         editable: false,
         selectable: 'mixed',
+        paging: true,
+        pagesize: 4,
+        pagesizes: [4, 8, 15]
       }).on('rowactivated', function (e, args) {
         console.log('Row ' + args.row + ' Was Activated');
         syncDetail(args.row);

@@ -1,0 +1,105 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Menu Button Example: Split Button</h2>
+    <p><a class="hyperlink" href="http://jira.infor.com/browse/SOHO-5922" target="_blank">Related JIRA Ticket</a>.</p>
+    <p>Split buttons are not officially supported. This is a non-official way you could implement them.</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+
+    <div id="example-toolbar" class="toolbar" role="toolbar">
+      <div class="title">
+        Toolbar Title
+      </div>
+
+      <div class="buttonset">
+
+      <!--  <button id="unhelpful" class="btn">
+          <span>Unhelpful Button</span>
+        </button>
+
+        <button id="add-row-button" type="button" class="btn">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-add"></use>
+          </svg>
+          <span>Add Row</span>
+        </button>-->
+
+        <button id="split-button-action" type="button" class="btn-split-menu btn">
+          <span>Add</span>
+        </button>
+        <div class="separator"></div>
+        <button id="split-button-menu-trigger" type="button" class="btn-split-menu btn-menu">
+          <span class="audible">Change Default</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-dropdown"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu is-selectable">
+          <li class="is-checked"><a href="#">Add</a></li>
+          <li><a href="#">Change</a></li>
+          <li><a href="#">Delete</a></li>
+          <li><a href="#">Previous</a></li>
+          <li><a href="#">Inquire</a></li>
+          <li><a href="#">Next</a></li>
+        </ul>
+
+        <button id="split-button-sort-action" type="button" class="btn-split-menu btn btn-icon">
+          <span class="audible">Sort Descending</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-sort-up"></use>
+          </svg>
+        </button>
+        <div class="separator"></div>
+        <button id="split-button-sort-menu-trigger" type="button" class="btn-split-menu btn-menu">
+          <span class="audible">Change Sort Order</span>
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-dropdown"></use>
+          </svg>
+        </button>
+        <ul class="popupmenu is-selectable">
+          <li class="is-checked"><a href="#">Sort By ID</a></li>
+          <li><a href="#">Sort By Name</a></li>
+          <li><a href="#">sort By Status</a></li>
+        </ul>
+
+        <button type="button" id="btn-settings" class="btn">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-settings"></use>
+          </svg>
+          <span>Settings</span>
+        </button>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  var SPLIT_BUTTON_ACTION = $('#split-button-action'),
+    SPLIT_BUTTON_MENU_TRIGGER = $('#split-button-menu-trigger');
+
+    // Action Button fires the action
+    SPLIT_BUTTON_ACTION.on('click', function (e) {
+      alert('Do ' + $(this).find('span').text() + ' Action');
+    });
+
+    // MenuButton selection changes the default action
+    SPLIT_BUTTON_MENU_TRIGGER.on('selected', function (e, args) {
+
+      SPLIT_BUTTON_ACTION.find('span').text(args.text());
+      $(this).trigger('updated');
+
+      //Sync the selected items in the two menus...
+      var ul = $(args).closest('ul');
+      ul.find('.is-checked').removeClass('is-checked');
+      args.parent().addClass('is-checked');
+
+      var otherMenu = $('.popupmenu[data-original-menu="'+ ul.attr('id') +'"]');
+      ul.find('.is-checked').removeClass('is-checked');
+      ul.find('li:contains('+ args.text() +')').addClass('is-checked');
+    });
+</script>

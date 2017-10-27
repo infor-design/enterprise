@@ -758,3 +758,19 @@ html[lang^='fr-'] {
     }
   }
 }
+
+.btn-link {
+  color: $hyperlink-color;
+
+  .icon {
+    fill: $hyperlink-color;
+  }
+
+  &:hover {
+    color: $hyperlink-hover-color;
+
+    .icon {
+      fill: $hyperlink-hover-color;
+    }
+  }
+}

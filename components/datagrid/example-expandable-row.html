@@ -26,15 +26,15 @@
 
       //Define Columns for the Grid.
 
-      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Expander, textOverflow: 'ellipsis', width: 140});
-      columns.push({ id: 'drilldown', name: '', field: '', formatter: Formatters.Drilldown, sortable: false, resizable: false, click: function(a, b) {console.log(b[0].item, b[0].row);}, align: 'center'});
-      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', width: 165, formatter: Formatters.Hyperlink});
-      columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 160});
-      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 100});
-      columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal, width: 80});
-      columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', width: 100, formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
-      columns.push({ id: 'status', name: 'Status', field: 'status', width: 200, formatter: Formatters.Text});
-      columns.push({ id: 'action', name: 'Action Item', field: 'action', width: 200});
+      columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Expander, filterType: 'text', textOverflow: 'ellipsis', width: 300});
+      //columns.push({ id: 'drilldown', name: '', field: '', formatter: Formatters.Drilldown, sortable: false, resizable: false, click: function(a, b) {console.log(b[0].item, b[0].row);}, align: 'center'});
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', filterType: 'text', formatter: Formatters.Hyperlink});
+      columns.push({ id: 'activity', name: 'Activity', field: 'activity', filterType: 'text'});
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
+      //columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal, width: 80});
+      //columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', width: 100, formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
+      //columns.push({ id: 'status', name: 'Status', field: 'status', width: 200, formatter: Formatters.Text});
+      //columns.push({ id: 'action', name: 'Action Item', field: 'action', width: 200});
 
       var rowTemplate = '<div class="datagrid-cell-layout"><div class="img-placeholder"><svg class="icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-camera"></use></svg></div></div>'+
                         '<div class="datagrid-cell-layout"><p class="datagrid-row-heading">Expandable Content Area</p>' +
@@ -47,6 +47,7 @@
         columns: columns,
         idProperty:'officeId',
         dataset: data,
+        filterable: true,
         rowTemplate: rowTemplate,
         toolbar: {title: 'Data Grid Header Title', results: true, dateFilter: true ,keywordFilter: true, advancedFilter: true, actions: true, views: true, rowHeight: true}
       });

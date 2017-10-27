@@ -422,6 +422,17 @@ window.Formatters = {
     return '<span class="' + ranges.classes + '">' + text + '</span>';
   },
 
+  Colorpicker: function(row, cell, value, col) {
+    var html = ((value === null || value === undefined || value === '') ? '' : value.toString());
+    if (col.inlineEditor) {
+      return html;
+    }
+    html = '<span class="colorpicker-container trigger dropdown-trigger"><span class="swatch" style="background-color: ' + value + '"></span><input class="colorpicker" id="colorpicker-' + cell + '" name="colorpicker-' + cell + '" type="text" role="combobox" aria-autocomplete="list" value="' + value + '" aria-describedby="">';
+    html += '<span class="trigger">' + $.createIcon({ icon: 'dropdown' }) + '</span></span>';
+
+    return html;
+  },
+
   Button: function (row, cell, value, col, item, api) {
     var text = col.text ? col.text : ((value === null || value === undefined || value === '') ? '' : value.toString()),
       markup ='<button type="button" class="'+ ( col.icon ? 'btn-icon': 'btn-secondary') + ' row-btn ' + (col.cssClass ? col.cssClass : '') + '"' + (!api.settings.rowNavigation ? '' : ' tabindex="-1"') +' >';
@@ -788,6 +799,43 @@ window.Editors = {
     this.init();
   },
 
+  Colorpicker: function(row, cell, value, container, column, event, grid) {
+    this.name = 'colorpicker';
+    this.originalValue = value;
+    this.useValue = true; //use the data set value not cell value
+
+    this.init = function () {
+      this.input = $('<input id="colorpicker-' + cell + '" name="colorpicker-' + cell + '" class="colorpicker" value="' + value + '" type="text" />').appendTo(container);
+      this.input.colorpicker(column.editorOptions);
+    };
+
+    this.val = function (value) {
+      return value ? this.input.val(value) : this.input.val();
+    };
+
+    this.focus = function () {
+
+      var self = this;
+
+      this.input.trigger('openlist');
+      this.input.focus().select();
+
+      this.input.off('listclosed').on('listclosed', function () {
+        grid.commitCellEdit(self.input);
+
+        container.parent('td').focus();
+        return;
+      });
+
+    };
+
+    this.destroy = function () {
+      //We dont need to destroy since it will when the list is closed
+    };
+
+    this.init();
+  },
+
   Dropdown: function(row, cell, value, container, column, event, grid, rowData) {
 
     this.name = 'dropdown';
@@ -810,7 +858,7 @@ window.Editors = {
         var compareValue = column.caseInsensitive && typeof value === 'string' ? value.toLowerCase() : value;
 
         for (var i = 0; i < column.options.length; i++) {
-          html = $('<option></<option>');
+          html = $('<option></option>');
           opt = column.options[i];
           optionValue = column.caseInsensitive && typeof opt.value === 'string' ? opt.value.toLowerCase() : opt.value;
 
@@ -2218,7 +2266,7 @@ $.fn.datagrid = function(options) {
         self.applyFilter();
       });
 
-      this.headerRow.find('th').each(function () {
+      this.headerRow.find('tr:last th').each(function () {
         var col = self.columnById($(this).attr('data-column-id'))[0],
           elem = $(this);
 
@@ -2396,7 +2444,7 @@ $.fn.datagrid = function(options) {
 
             //Strip any html markup that might be in the formatters
             var rex = /(<([^>]+)>)|(&lt;([^>]+)&gt;)/ig;
-            rowValue = rowValue.replace(rex , '').toLowerCase();
+            rowValue = rowValue.replace(rex , '').trim().toLowerCase();
 
             rowValueStr = (rowValue === null || rowValue === undefined) ? '' : rowValue.toString().toLowerCase();
           }
@@ -4667,7 +4715,7 @@ $.fn.datagrid = function(options) {
     triggerRowEvent: function (eventName, e, stopPropagation) {
       var self = this,
           cell = $(e.target).closest('td').index(),
-          row = $(e.target).closest('tr').index(),
+          row = self.dataRowIndex($(e.target).closest('tr')),
           item = self.settings.dataset[row];
 
       if ($(e.target).is('a')) {
@@ -5032,11 +5080,11 @@ $.fn.datagrid = function(options) {
         // Keep icon clickable in edit mode
         var target = e.target;
 
-        if ($(target).is('input.lookup, input.timepicker, input.datepicker, input.spinbox')) {
+        if ($(target).is('input.lookup, input.timepicker, input.datepicker, input.spinbox, input.colorpicker')) {
           // Wait for modal popup, if did not found modal popup means
           // icon was not clicked, then commit cell edit
           setTimeout(function() {
-            if (!$('.lookup-modal.is-visible, #timepicker-popup, #calendar-popup').length &&
+            if (!$('.lookup-modal.is-visible, #timepicker-popup, #calendar-popup, #colorpicker-menu').length &&
                 !!self.editor && self.editor.input.is(target)) {
 
               if ($('*:focus').is('.spinbox')) {
@@ -5645,14 +5693,17 @@ $.fn.datagrid = function(options) {
 
     // activate a row when in mixed selection mode
     activateRow: function(idx) {
-      if (this.activatedRow().length === 0 || this.activatedRow()[0].row !== idx) {
+      if (this.activatedRow()[0].row !== idx) {
         this.toggleRowActivation(idx);
       }
     },
 
     // deactivate the currently activated row
     deactivateRow: function() {
-      this.toggleRowActivation(this.activatedRow()[0].row);
+      var idx = this.activatedRow()[0].row;
+      if (idx >= 0) {
+        this.toggleRowActivation(idx);
+      }
     },
 
     // Gets the currently activated row
@@ -5665,8 +5716,20 @@ $.fn.datagrid = function(options) {
 
       if (activatedRow.length) {
         var rowIndex = this.dataRowIndex(activatedRow);
+
+        if (this.settings.indeterminate) {
+          rowIndex = this.actualArrayIndex(activatedRow);
+        }
+
         return [{ row: rowIndex, item: this.settings.dataset[rowIndex], elem: activatedRow }];
       } else {
+        //Activated row may be filtered or on another page, so check all until find it
+        for (var i = 0; i < this.settings.dataset.length; i++) {
+          if (this.settings.dataset[i]._rowactivated) {
+            return [{ row: i, item: this.settings.dataset[i], elem: undefined }];
+          }
+        }
+
         return [{ row: -1, item: undefined, elem: activatedRow }];
       }
     },
@@ -5674,7 +5737,14 @@ $.fn.datagrid = function(options) {
     toggleRowActivation: function (idx) {
       var row = (typeof idx === 'number' ? this.tableBody.find('tr[aria-rowindex="'+ (idx + 1) +'"]') : idx),
         rowIndex = (typeof idx === 'number' ? idx : ((this.pager && this.settings.source) ? this.actualArrayIndex(row) : this.dataRowIndex(row))),
-        isActivated = row.hasClass('is-rowactivated');
+        item = this.settings.dataset[rowIndex],
+        isActivated = item ? item._rowactivated : false;
+
+      if (typeof idx === 'number' && this.pager && this.settings.source && this.settings.indeterminate) {
+        var rowIdx = idx + ((this.pager.activePage -1) * this.settings.pagesize);
+        row = this.tableBody.find('tr[aria-rowindex="'+ (rowIdx + 1) +'"]');
+        rowIndex = idx;
+      }
 
       if (isActivated) {
         if (!this.settings.disableRowDeactivation) {
@@ -5689,12 +5759,27 @@ $.fn.datagrid = function(options) {
           oldActivated.removeClass('is-rowactivated');
 
           var oldIdx = this.dataRowIndex(oldActivated);
-          delete this.settings.dataset[oldIdx]._rowactivated;
+          if (this.settings.dataset[oldIdx]) { // May have changed page
+            delete this.settings.dataset[oldIdx]._rowactivated;
+          }
           this.element.triggerHandler('rowdeactivated', [{row: oldIdx, item: this.settings.dataset[oldIdx]}]);
+        } else {
+          // Old active row may be filtered or on another page, so check all until find it
+          for (var i = 0; i < this.settings.dataset.length; i++) {
+            if (this.settings.dataset[i]._rowactivated) {
+              delete this.settings.dataset[i]._rowactivated;
+              this.element.triggerHandler('rowdeactivated', [{row: i, item: this.settings.dataset[i]}]);
+              break;
+            }
+          }
         }
+
+        //Activate new row
         row.addClass('is-rowactivated');
-        this.settings.dataset[rowIndex]._rowactivated = true;
-        this.element.triggerHandler('rowactivated', [{row: rowIndex, item: this.settings.dataset[rowIndex]}]);
+        if (this.settings.dataset[rowIndex]) { // May have changed page
+          this.settings.dataset[rowIndex]._rowactivated = true;
+          this.element.triggerHandler('rowactivated', [{row: rowIndex, item: this.settings.dataset[rowIndex]}]);
+        }
       }
 
     },
@@ -5769,7 +5854,7 @@ $.fn.datagrid = function(options) {
           var selIdx = self.actualArrayIndex(elem),
             rowData;
 
-          if (rowData !== undefined) {
+          if (rowData === undefined) {
             rowData = self.settings.dataset[selIdx];
           }
           if (s.groupable) {
@@ -6417,7 +6502,7 @@ $.fn.datagrid = function(options) {
       }
 
       if (this.editor && this.editor.input) {
-        if (this.editor.input.is('.timepicker, .datepicker, .lookup, .spinbox') && !$(event.target).prev().is(this.editor.input)) {
+        if (this.editor.input.is('.timepicker, .datepicker, .lookup, .spinbox, #colorpicker-menu') && !$(event.target).prev().is(this.editor.input)) {
           this.commitCellEdit(this.editor.input);
         }
       }
@@ -6489,7 +6574,7 @@ $.fn.datagrid = function(options) {
     commitCellEdit: function(input) {
       var newValue, cellNode,
         isEditor = input.is('.editor'),
-        isUseActiveRow = !(input.is('.timepicker, .datepicker, .lookup, .spinbox'));
+        isUseActiveRow = !(input.is('.timepicker, .datepicker, .lookup, .spinbox .colorpicker'));
 
       if (!this.editor) {
         return;

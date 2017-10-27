@@ -165,7 +165,7 @@
   }
 
   //Make this color target specifically header
-  .header .searchfield-wrapper input {
+  .header .searchfield-wrapper:not(.context) input {
     color: $header-text-color;
   }
 }

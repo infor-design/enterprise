@@ -13,6 +13,7 @@
 9. Icons Indicating Contents [View Example]( ../components/icons/example-full-style)
 10. Caret Icons [View Example]( ../components/icons/example-caret)
 11. Checkmarks [View Example]( ../components/icons/example-checks)
+12. User Status [View Example]( ../components/icons/example-user-status)
 
 {{api-details}}
 

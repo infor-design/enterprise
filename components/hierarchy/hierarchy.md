@@ -30,6 +30,18 @@ This example shows how to invoke the hierarchy component passing in data and leg
 
 ```
 
+Required template HTML markup
+
+```HTML
+  <script type="text/html" id="<YOUR_TEMPLATE_ID>">
+    <div class="leaf">
+      <div class="content">
+        ... your content
+      </div>
+    </div>
+  </script>
+```
+
 ## Accessibility
 
 - This component is lacking accessibility at the moment.

@@ -10,6 +10,8 @@
 5. No Title Button [View Example]( ../components/header/example-no-title-button)
 6. Non Collapsible Search Field [View Example]( ../components/header/example-non-collapsible-searchfield)
 7. Record ID [View Example]( ../components/header/example-record-id)
+8. Expanded Search Field (Compact) [View Example]( ../components/header/example-searchfield-expanded)
+9. Expanded Search Field (Large) [View Example]( ../components/header/example-searchfield-large)
 
 {{api-details}}
 

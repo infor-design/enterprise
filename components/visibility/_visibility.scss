@@ -68,6 +68,12 @@
   display: none !important;
 }
 
+@include respond-to(phonedown) {
+  .hidden-xs {
+    display: none !important;
+  }
+}
+
 @include respond-to(phone) {
   .visible-sm-block {
     display: block !important;

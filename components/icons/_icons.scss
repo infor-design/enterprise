@@ -57,6 +57,7 @@ svg.icon-dirty,
     width: 18px;
   }
 
+  .icon-confirm,
   [data-error-type="tooltip"] ~ .icon-error,
   [data-error-type="tooltip"] ~ .icon-confirm {
     position: relative;

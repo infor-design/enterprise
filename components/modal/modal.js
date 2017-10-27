@@ -69,6 +69,14 @@
 
         self.isCancelled = false;
 
+        if (window.history && window.history.pushState) {
+          $(window).off('popstate.modal');
+
+          $(window).on('popstate.modal', function() {
+            self.destroy();
+          });
+        }
+
         //ensure is appended to body for new dom tree
         if (this.settings.content) {
 
@@ -297,7 +305,7 @@
             }).prependTo(btn);
           }
 
-          btn.attr('id', props.id || Soho.utils.uniqueId('modal', btn[0], cnt+1));
+          btn.attr('id', props.id || $.fn.uniqueId('button', 'modal'));
 
           var func = buttons[cnt].click;
 
@@ -701,6 +709,8 @@
 
           self.element.closest('.modal-page-container').remove();
           $.removeData(self.element[0], 'modal');
+
+          $(window).off('popstate.modal');
         }
 
         if (!this.isOpen()) {
