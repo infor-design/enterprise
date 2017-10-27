@@ -2444,7 +2444,7 @@ $.fn.datagrid = function(options) {
 
             //Strip any html markup that might be in the formatters
             var rex = /(<([^>]+)>)|(&lt;([^>]+)&gt;)/ig;
-            rowValue = rowValue.replace(rex , '').toLowerCase();
+            rowValue = rowValue.replace(rex , '').trim().toLowerCase();
 
             rowValueStr = (rowValue === null || rowValue === undefined) ? '' : rowValue.toString().toLowerCase();
           }
