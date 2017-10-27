@@ -69,6 +69,14 @@
 
         self.isCancelled = false;
 
+        if (window.history && window.history.pushState) {
+          $(window).off('popstate.modal');
+
+          $(window).on('popstate.modal', function() {
+            self.destroy();
+          });
+        }
+
         //ensure is appended to body for new dom tree
         if (this.settings.content) {
 
@@ -701,6 +709,8 @@
 
           self.element.closest('.modal-page-container').remove();
           $.removeData(self.element[0], 'modal');
+
+          $(window).off('popstate.modal');
         }
 
         if (!this.isOpen()) {
