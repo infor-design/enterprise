@@ -5854,7 +5854,7 @@ $.fn.datagrid = function(options) {
           var selIdx = self.actualArrayIndex(elem),
             rowData;
 
-          if (rowData !== undefined) {
+          if (rowData === undefined) {
             rowData = self.settings.dataset[selIdx];
           }
           if (s.groupable) {
