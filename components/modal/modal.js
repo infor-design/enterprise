@@ -70,9 +70,9 @@
         self.isCancelled = false;
 
         if (window.history && window.history.pushState) {
-          $(window).off('popstate');
+          $(window).off('popstate.modal');
 
-          $(window).on('popstate', function() {
+          $(window).on('popstate.modal', function() {
             self.destroy();
           });
         }
@@ -710,7 +710,7 @@
           self.element.closest('.modal-page-container').remove();
           $.removeData(self.element[0], 'modal');
 
-          $(window).off('popstate');
+          $(window).off('popstate.modal');
         }
 
         if (!this.isOpen()) {
