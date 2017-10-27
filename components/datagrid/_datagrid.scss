@@ -2262,6 +2262,13 @@ td .btn-actions {
     display: inline-block;
     text-align: left;
     width: calc(100% - 10px);
+
+    &.dropdown-trigger {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      vertical-align: middle;
+    }
   }
 
   &:not(.is-readonly):not(.error):hover,
