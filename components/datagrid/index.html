@@ -77,7 +77,8 @@
 <li><code>sizeColumnsEqually</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  If true make all the columns equal width<br /></li>
 <li><code>expandableRow</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  If true we append an expandable row area without the rowTemplate feature being needed.<br /></li>
 <li><code>redrawOnResize</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  If set to false we skip redraw logic on the resize of the page.<br /></li>
-<li><code>exportConvertNegative</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  If set to true export data with trailing negative signs moved in front.</li>
+<li><code>exportConvertNegative</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  If set to true export data with trailing negative signs moved in front.<br /></li>
+<li><code>postColumnRender</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  If set to true the grid will attemp to look for postRender functions on columns and call them post render.</li>
 </ul>
 <h3 id="functions">Functions</h3>
 <h4 id="render">render</h4>
@@ -236,7 +237,8 @@
 <li><strong>groupRowFormatter</strong> Used on the <code>Group</code> formatter, this function will pass in info about the row group and data and allow you to return dynamic html for formatting the group rows appearance.<br /></li>
 <li><strong>ranges</strong> For example <code>[{'min': 151, '(max': 9999, 'classes': 'info'}]</code> for example any value between 151 and 999 will add the info class which formats the color in info blue. Default color is grey. Used on badges and alerts.<br /></li>
 <li><strong>options</strong> Used on the dropdown and multiselect editor/formatters. For example <code>[{'value': 1, 'id': 1, 'label': 'Some Value'}]</code>. This should map to a select elements id, value and text option when populating.<br /></li>
-<li><strong>isChecked</strong> Used on checkbox and favorite columns. This can be a function that returns the checked state based on the dynamic data thats passed in.</li>
+<li><strong>isChecked</strong> Used on checkbox and favorite columns. This can be a function that returns the checked state based on the dynamic data thats passed in.<br /></li>
+<li><strong>postRender</strong> If postColumnRender is set to true on the grid. This will be called for each cell in that column passing you a container and args similar to the formatter. This can be used for more complicated render logic at the cost of performance.</li>
 </ul>
 <h2 id="formatters">Formatters</h2>
 <ul>

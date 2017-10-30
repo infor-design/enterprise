@@ -1539,7 +1539,8 @@ $.fn.datagrid = function(options) {
         sizeColumnsEqually: false, //If true make all the columns equal width
         expandableRow: false, // Supply an empty expandable row template
         redrawOnResize: true, //Run column redraw logic on resize
-        exportConvertNegative: false // Export data with trailing negative signs moved in front
+        exportConvertNegative: false, // Export data with trailing negative signs moved in front
+        postColumnRender: false // Run the post render logic at expense of performance
       },
       settings = $.extend({}, defaults, options);
 
@@ -1590,6 +1591,7 @@ $.fn.datagrid = function(options) {
   * @param {Boolean} expandableRow &nbsp;-&nbsp If true we append an expandable row area without the rowTemplate feature being needed.
   * @param {Boolean} redrawOnResize &nbsp;-&nbsp If set to false we skip redraw logic on the resize of the page.
   * @param {Boolean} exportConvertNegative &nbsp;-&nbsp If set to true export data with trailing negative signs moved in front.
+  * @param {Boolean} postColumnRender &nbsp;-&nbsp If set to true the grid will attemp to look for postRender functions on columns and call them post render.
   */
   function Datagrid(element) {
     this.element = $(element);
@@ -3164,6 +3166,30 @@ $.fn.datagrid = function(options) {
 
     afterRender: function() {
       var self = this;
+
+      // Column column postRender functions
+      if (this.settings.postColumnRender) {
+        for (var i = 0; i < this.settings.columns.length; i++) {
+          var col = this.settings.columns[i];
+
+          if (col.postRender) {
+            self.tableBody.find('tr').each(function () {
+              var row = $(this),
+                rowIdx = row.index(),
+                colIdx = self.columnIdxById(col.id),
+                args = {
+                  row: row.index(),
+                  cell: colIdx,
+                  value: self.settings.dataset[rowIdx],
+                  col: col,
+                  api: self
+                };
+
+                col.postRender(row.find('td').eq(colIdx).find('.datagrid-cell-wrapper')[0], args);
+            });
+          }
+        }
+      }
 
       //Init Inline Elements
       self.tableBody.find('select.dropdown').dropdown();
