@@ -28,12 +28,19 @@
   ~ .btn-actions {
     @include rotate(90);
     left: -11px;
+    line-height: normal;
     min-width: 30px;
     visibility: hidden;
     width: 30px;
 
     &.is-active {
       visibility: visible;
+    }
+
+    &:focus,
+    &:active {
+      color: transparent;
+      text-shadow: 0 0 0 $black;
     }
   }
 
@@ -98,6 +105,35 @@
     ~ a.btn-actions {
       display: inline;
       padding: 0 5px;
+    }
+  }
+}
+
+// Overwrites ******************************************************************
+.is-firefox {
+  .field-options {
+    ~ .btn-actions {
+      color: transparent;
+      text-shadow: 0 0 0 $black;
+    }
+  }
+}
+
+.is-mac.is-firefox {
+  .field-options {
+    ~ .btn-actions {
+      line-height: normal;
+    }
+  }
+}
+
+.is-safari {
+  .field-options {
+    &.timepicker,
+    &.datepicker {
+      ~ .btn-actions {
+        left: -8px;
+      }
     }
   }
 }

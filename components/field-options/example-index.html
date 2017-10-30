@@ -19,6 +19,26 @@
     </div>
 
     <div class="field">
+      <label for="states" class="label">States</label>
+      <select id="states" name="states" class="dropdown field-options">
+        <option value="AL">Alabama</option>
+        <option value="AK">Alaska</option>
+        <option value="AZ">Arizona</option>
+      </select>
+
+      <button class="btn-actions btn-tertiary btn-menu" type="button">
+        <span class="audible">Actions for Item Description</span>
+        <svg role="presentation" aria-hidden="true" focusable="false" class="icon">
+          <use xlink:href="#icon-more"/>
+        </svg>
+      </button>
+      <ul class="popupmenu">
+        <li><a href="#">Show History</a></li>
+        <li><a href="#">Edit Record</a></li>
+      </ul>
+    </div>
+
+    <div class="field">
       <label for="item-date" class="label">Item Date</label>
       <input id="item-date" class="datepicker field-options" name="item-date" type="text" >
 
