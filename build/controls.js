@@ -4,6 +4,7 @@ module.exports = [
   'temp/amd/base.js',
   'temp/amd/utils.js',
   'temp/amd/environment.js',
+  'temp/amd/renderloop.js',
   'temp/amd/animations.js',
   'temp/amd/locale.js',
   'temp/amd/mask-api.js',
