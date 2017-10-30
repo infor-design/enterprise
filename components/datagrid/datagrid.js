@@ -587,6 +587,38 @@ window.Editors = {
       } else if (column.mask) {
         this.input.mask({pattern: column.mask, mode: column.maskMode});
       }
+
+      var defaults = {
+        patternOptions: {allowNegative: true, allowDecimal: true,
+        integerLimit: 4, decimalLimit: 2,
+        symbols: {
+          thousands: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.group : ',',
+          decimal: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.decimal  : '.',
+          negative: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.minusSign  : '-'
+        }},
+        process: 'number'
+      };
+
+      var useMask = false;
+
+      if (column.maskOptions) {
+        useMask = true;
+      }
+
+      if (column.numberFormat) {
+        useMask = true;
+        defaults = {patternOptions : {decimalLimit: column.numberFormat.maximumFractionDigits }};
+      }
+
+      if (useMask) {
+        column.maskOptions = Soho.utils.extend(true, {}, defaults, column.maskOptions);
+        this.input.mask(column.maskOptions);
+      }
+
+      if (!column.align || column.align !== 'right') {
+        this.input.removeClass('is-number-mask');
+      }
+
     };
 
     this.val = function (value) {
@@ -6905,6 +6937,8 @@ $.fn.datagrid = function(options) {
       if (col.serialize) {
         newVal = col.serialize(value, oldVal, col, row, cell, this.settings.dataset[row]);
         return newVal;
+      } else if (typeof oldVal === 'number') {
+        newVal = Locale.parseNumber(value); //remove thousands sep , keep a number a number
       }
 
       return newVal;
