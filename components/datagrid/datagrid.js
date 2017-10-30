@@ -2170,9 +2170,9 @@ $.fn.datagrid = function(options) {
               filterMarkup += '<input ' + (col.filterDisabled ? ' disabled' : '') + ' type="text" class="datepicker" id="'+ filterId +'"/>';
               break;
             case 'integer':
-              col.maskOptions = col.maskOptions || {
+              var integerDefaults = {
                 patternOptions: {allowNegative: true, allowThousandsSeparator: false,
-                  allowDecimal: false, integerLimit: 4,
+                  allowDecimal: false,
                   symbols: {
                     thousands: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.group : ',',
                     decimal: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.decimal  : '.',
@@ -2180,13 +2180,14 @@ $.fn.datagrid = function(options) {
                   }},
                 process: 'number'
               };
+
+              col.maskOptions = Soho.utils.extend(true, {}, integerDefaults, col.maskOptions);
               filterMarkup += '<input' + (col.filterDisabled ? ' disabled' : '') + ' type="text" id="'+ filterId +'" />';
               break;
             case 'percent':
             case 'decimal':
-              col.maskOptions = col.maskOptions || {
+              var decimalDefaults = {
                 patternOptions: {allowNegative: true, allowDecimal: true,
-                integerLimit: 4, decimalLimit: 2,
                 symbols: {
                   thousands: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.group : ',',
                   decimal: Locale.currentLocale.data.numbers ? Locale.currentLocale.data.numbers.decimal  : '.',
@@ -2194,6 +2195,12 @@ $.fn.datagrid = function(options) {
                 }},
                 process: 'number'
               };
+
+              if (col.numberFormat) {
+                integerDefaults = {patternOptions : {decimalLimit: col.numberFormat.maximumFractionDigits }};
+              }
+
+              col.maskOptions = Soho.utils.extend(true, {}, decimalDefaults, col.maskOptions);
               filterMarkup += '<input' + (col.filterDisabled ? ' disabled' : '') + ' type="text" id="'+ filterId +'" />';
               break;
             case 'contents':
@@ -2280,6 +2287,10 @@ $.fn.datagrid = function(options) {
 
         if (col.maskOptions) {
           elem.find('input').mask(col.maskOptions);
+        }
+
+        if (col.mask) {
+          elem.find('input').mask(col.mask);
         }
 
         elem.find('.datepicker').datepicker(col.editorOptions ? col.editorOptions : {dateFormat: col.dateFormat});
@@ -2453,7 +2464,7 @@ $.fn.datagrid = function(options) {
             rowValue = rowValue.toLowerCase();
           }
 
-          if (typeof rowValue === 'number') {
+          if (typeof rowValue === 'number' || !isNaN(rowValue)) {
             rowValue =  parseFloat(rowValue);
             conditionValue = Locale.parseNumber(conditionValue);
           }
