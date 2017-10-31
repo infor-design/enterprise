@@ -3185,7 +3185,7 @@ $.fn.datagrid = function(options) {
                   api: self
                 };
 
-                col.postRender(row.find('td').eq(colIdx).find('.datagrid-cell-wrapper')[0], args);
+                col.postRender(row.find('td').eq(colIdx).find('.datagrid-cell-wrapper .content')[0], args);
             });
           }
         }
@@ -3530,6 +3530,11 @@ $.fn.datagrid = function(options) {
           if (!canShow) {
             formatted = '';
           }
+        }
+
+        if (self.settings.postColumnRender && col.postRender) {
+          rowHtml += '<div class="content"></div>';
+          formatted = '';
         }
 
         rowHtml += formatted + '</div></td>';
