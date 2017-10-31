@@ -49,7 +49,8 @@
         self.isSafari = Soho.env.browser.name === 'safari';
 
         self.targetElem = self.element;
-        self.trigger = self.element.closest('.field').find('.btn-actions');
+        self.field = self.element.closest('.field');
+        self.trigger = self.field.find('.btn-actions');
 
         // Fix: Some reason firfox "event.relatedTarget" not working
         // with un-focusable elements(ie.. div) on focusout, use "contentEditable"
@@ -72,7 +73,7 @@
             self.popupmenuApi.settings.returnFocus = false;
             self.popupmenuApi.settings.offset.y = 10;
           }
-        }, 0);
+        }, 100);
 
         return this;
       },
@@ -83,6 +84,7 @@
           datepicker = self.element.data('datepicker'),
           timepicker = self.element.data('timepicker'),
           dropdown = self.element.data('dropdown'),
+          lookup = self.element.data('lookup'),
 
           // Helper functions
           isFocus = function(elem) {
@@ -101,6 +103,7 @@
             r = datepicker && datepicker.isOpen() ? false : r;
             r = timepicker && timepicker.isOpen() ? false : r;
             r = dropdown && dropdown.isOpen() ? false : r;
+            r = lookup && lookup.modal && lookup.modal.isOpen() ? false : r;
             return r;
           };
 
@@ -117,6 +120,17 @@
         // Adjust return focus for timepicker
         if (timepicker) {
           timepicker.settings.returnFocus = false;
+        }
+        // Move trigger(action-button) in to lookup-wrapper
+        if (lookup) {
+          self.field.addClass('is-fieldoptions');
+          self.trigger.add(self.trigger.next('.popupmenu'))
+            .appendTo(self.element.closest('.lookup-wrapper'));
+          if (lookup.icon) {
+            lookup.icon.on('click.' + pluginName, function() {
+              doActive();
+            });
+          }
         }
 
         // Element events
@@ -135,7 +149,7 @@
 
         // Trigger(action button) events
         self.trigger
-          .on('focusin.' + pluginName, function() {
+          .on('focusin.' + pluginName +' click.' + pluginName, function() {
             doActive();
           })
           .on('focusout.' + pluginName, function(e) {
@@ -172,10 +186,6 @@
             .on('listclosed.' + pluginName, function() {
               doUnactive();
             });
-
-          self.trigger.on('click.' + pluginName, function() {
-            doActive();
-          });
         }
 
         return this;
@@ -210,6 +220,12 @@
           ' close.' + pluginName +
           ' click.' + pluginName
         );
+
+        var lookup = this.element.data('lookup');
+        if (lookup && lookup.icon) {
+          lookup.icon.off('click.' + pluginName);
+        }
+
         return this;
       },
 
