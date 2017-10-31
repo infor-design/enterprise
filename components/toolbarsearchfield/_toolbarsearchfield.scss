@@ -30,6 +30,8 @@ $toolbarsearchfield-category-empty-width: 54px;
     font-weight: 700;
     height: 34px;
     outline: 0 !important;
+    padding-left: 34px;
+    padding-right: 34px;
     text-overflow: ellipsis;
     width: 100%;
 
@@ -249,7 +251,6 @@ $toolbarsearchfield-category-empty-width: 54px;
         color: $searchfield-text-color;
         @include font-size(14);
         font-weight: normal;
-        padding-right: 34px;
         text-transform: none;
 
         &::-webkit-input-placeholder {
@@ -326,8 +327,10 @@ $toolbarsearchfield-category-empty-width: 54px;
       width: $toolbarsearchfield-max-width;
     }
 
-    .searchfield {
-      padding-right: 0;
+    &:not(.is-open) {
+      .searchfield {
+        padding-right: 0;
+      }
     }
   }
 
@@ -772,21 +775,17 @@ html[dir='rtl'] {
   .toolbar-searchfield-wrapper {
     text-align: right;
 
-    .icon.close {
-      left: 45px;
-    }
-
-    &.active.is-open {
-      .searchfield {
-        padding-left: 34px;
-        padding-right: 10px;
-      }
-    }
-
     &.has-text {
-      .searchfield {
-        padding-left: 0;
-        padding-right: 10px;
+      &:not(.is-open) {
+        .searchfield {
+          padding-left: 0;
+        }
+
+        &:not(.has-categories) {
+          .searchfield {
+            padding-right: 34px;
+          }
+        }
       }
     }
 
@@ -797,6 +796,16 @@ html[dir='rtl'] {
         border-top-left-radius: 0;
         border-top-right-radius: 2px;
       }
+
+      .searchfield {
+        padding-right: 0;
+      }
+
+      &.show-category {
+        .searchfield {
+          padding-right: 10px;
+        }
+      }
     }
 
     &.has-go-button {
@@ -806,17 +815,9 @@ html[dir='rtl'] {
         border-top-left-radius: 2px;
         border-top-right-radius: 0;
       }
-    }
-  }
 
-  .header,
-  .masthead {
-    .toolbar > .toolbar-searchfield-wrapper.active {
-        &.has-go-button {
-        .icon.close {
-          left: 35px;
-          right: auto;
-        }
+      .icon.close {
+        left: 45px;
       }
     }
   }
