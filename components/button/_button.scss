@@ -677,7 +677,7 @@ html[dir='rtl'] {
   [class^="btn"] {
     > .icon {
 
-      + span:not(.audible) {
+      + span:not(.audible):not(:empty) {
         padding-right: 10px;
       }
 

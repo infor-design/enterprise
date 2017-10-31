@@ -5,7 +5,7 @@ $toolbarsearchfield-max-width: 225px;
 $toolbarsearchfield-filled-out-width: 100px;
 $toolbarsearchfield-empty-width: 34px;
 
-$toolbarsearchfield-category-empty-width: 54px;
+$toolbarsearchfield-category-empty-width: 51px;
 
 .toolbar-searchfield-wrapper {
   cursor: pointer;
@@ -355,6 +355,12 @@ $toolbarsearchfield-category-empty-width: 54px;
       width: calc(100% - 39px);
     }
 
+    &.show-category {
+      &.has-text {
+
+      }
+    }
+
     .btn {
       border: 1px solid transparent;
       height: 34px;
@@ -367,6 +373,12 @@ $toolbarsearchfield-category-empty-width: 54px;
         width: calc(100% - 85px);
       }
 
+      &.has-text {
+        .searchfield {
+          width: calc(100% - 39px);
+        }
+      }
+
       .go-button {
         border-bottom-left-radius: 0;
         border-top-left-radius: 0;
@@ -376,6 +388,14 @@ $toolbarsearchfield-category-empty-width: 54px;
     &.searchfield-wrapper.show-category {
       .searchfield {
         border-left-color: transparent;
+      }
+    }
+  }
+
+  &.has-go-button {
+    &.has-text {
+      .searchfield {
+        width: 100%;
       }
     }
   }
