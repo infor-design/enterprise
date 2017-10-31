@@ -20,26 +20,32 @@
     var pluginName = 'swaplist',
         defaults = {
           // Searchable
-          'searchable': false,
+          searchable: false,
 
           // Datasets
-          'available': null,
-          'selected': null,
-          'additional': null,
+          available: null,
+          selected: null,
+          additional: null,
 
           // Main containers
-          'availableClass': '.available',
-          'selectedClass': '.selected',
-          'additionalClass': '.full-access',
+          availableClass: '.available',
+          selectedClass: '.selected',
+          additionalClass: '.full-access',
 
           // Action buttons
-          'availableBtn': '.btn-moveto-selected',
-          'selectedBtnLeft': '.btn-moveto-left',
-          'selectedBtnRight': '.btn-moveto-right',
-          'additionalBtn': '.btn-moveto-selected',
+          availableBtn: '.btn-moveto-selected',
+          selectedBtnLeft: '.btn-moveto-left',
+          selectedBtnRight: '.btn-moveto-right',
+          additionalBtn: '.btn-moveto-selected',
+
+          draggable: {
+            available: true,
+            selected: true,
+            additional: true
+          },
 
           // Template HTML
-          'template': ''+
+          template: ''+
             '<ul data-swap-handle=".handle">'+
               '{{#dataset}}'+
                 '{{#text}}'+
@@ -73,6 +79,7 @@
     * @param {String} selectedBtnRight &nbsp;-&nbsp;  A class name linking the move right button element.
     * @param {String} additionalBtn &nbsp;-&nbsp;  A class name linking the additional button element.
     * @param {String} template &nbsp;-&nbsp; An Html String with the mustache template for the view.
+    * @param {Object} draggable &nbsp;-&nbsp; An object containing boolean key/value to make container/s disable for dragging and moving items. Supported keys with draggable are "available", "selected", "additional".
     */
     function SwapList(element) {
       this.settings = $.extend({}, settings);
@@ -88,9 +95,10 @@
       init: function() {
         var self = this,
           s = self.settings;
+        s.draggable = $.extend(true, defaults.draggable, s.draggable);
         self.isTouch = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         self.isAdditional = $(s.additionalClass +' .listview', self.element).length > 0;
-        
+
         if (self.isTouch) {
           self.element.addClass('is-touch');
         }
@@ -117,9 +125,9 @@
           self = this,
           s = self.settings,
           containers = [
-            { dataset: s.available, class: s.availableClass },
-            { dataset: s.selected, class: s.selectedClass },
-            { dataset: s.additional, class: s.additionalClass }
+            { dataset: s.available, class: s.availableClass, draggable: s.draggable.available },
+            { dataset: s.selected, class: s.selectedClass, draggable: s.draggable.selected },
+            { dataset: s.additional, class: s.additionalClass, draggable: s.draggable.additional }
           ];
 
         for (i = 0, l = containers.length; i < l; i++) {
@@ -146,6 +154,11 @@
             options.dataset = c.dataset || [];
             lv.listview(options);
           }
+
+          // Add css class('is-not-droppable') to ul in this container
+          if (!c.draggable) {
+            $('ul', lv).addClass('is-not-droppable');
+          }
         }
       },
 
@@ -155,30 +168,32 @@
        * @private
        */
       setElements: function() {
+        var s = this.settings,
+          disabledBtnStr = '';
         this.offset = null;
 
         this.containers = $(
-          this.settings.availableClass +','+
-          this.settings.selectedClass +','+
-          this.settings.additionalClass, this.element);
+          s.availableClass +','+
+          s.selectedClass +','+
+          s.additionalClass, this.element);
 
         this.actionButtons = $(
-          this.settings.availableBtn +','+
-          this.settings.additionalBtn +','+
-          this.settings.selectedBtnLeft +','+
-          this.settings.selectedBtnRight, this.element);
+          s.availableBtn +','+
+          s.additionalBtn +','+
+          s.selectedBtnLeft +','+
+          s.selectedBtnRight, this.element);
 
         this.selectedButtons = $(
-          this.settings.selectedBtnLeft +','+
-          this.settings.selectedBtnRight, this.element);
+          s.selectedBtnLeft +','+
+          s.selectedBtnRight, this.element);
 
         this.tabButtonsStr = ''+
-          this.settings.availableBtn +' '+
-          this.settings.additionalBtn +' '+
+          s.availableBtn +' '+
+          s.additionalBtn +' '+
           (this.selectedButtons.length > 1 ?
-            this.settings.selectedBtnRight : this.settings.selectedBtnLeft);
+            s.selectedBtnRight : s.selectedBtnLeft);
 
-        this.dragElements = 'ul, li:not(.is-disabled)';
+        this.dragElements = 'ul:not(.is-not-droppable), ul:not(.is-not-droppable) li:not(.is-disabled)';
         this.dragStart = 'dragstart.swaplist touchstart.swaplist gesturestart.swaplist';
         this.dragEnterWhileDragging = 'dragenter.swaplist';
         this.dragOverWhileDragging = 'dragover.swaplist touchmove.swaplist gesturechange.swaplist';
@@ -198,12 +213,33 @@
         };
 
         // Dragging time placeholder
-        this.settings.numOfSelectionsClass = 'num-of-selections';
-        this.settings.itemContentClass = 'swaplist-item-content';
-        this.settings.itemContentTempl = $(
-          '<div><p><span class="'+ this.settings.numOfSelectionsClass +'">###</span> '+
+        s.numOfSelectionsClass = 'num-of-selections';
+        s.itemContentClass = 'swaplist-item-content';
+        s.itemContentTempl = $(
+          '<div><p><span class="'+ s.numOfSelectionsClass +'">###</span> '+
             Locale.translate('ItemsSelected') +'</p><div/>'
         );
+
+        // Make top buttons disable if not draggable
+        if (!s.draggable.available) {
+          disabledBtnStr = s.availableClass +' '+ s.availableBtn +','+ s.selectedBtnLeft;
+          $(disabledBtnStr, this.element).prop('disabled', true);
+        }
+        if (!s.draggable.selected) {
+          disabledBtnStr = s.selectedBtnLeft +','+ s.selectedBtnRight;
+          if (!s.draggable.available) {
+            disabledBtnStr += ','+ s.additionalClass +' '+ s.additionalBtn;
+          }
+          if (!this.isAdditional || !s.draggable.additional) {
+            disabledBtnStr += ','+ s.availableClass +' '+ s.availableBtn;
+          }
+          $(disabledBtnStr, this.element).prop('disabled', true);
+          $(s.additionalClass +' '+ s.additionalBtn, this.element).addClass('is-rotate');
+        }
+        if (!s.draggable.additional) {
+          $(s.additionalClass +' '+ s.additionalBtn +','+
+            s.selectedBtnRight, this.element).prop('disabled', true);
+        }
       },
 
       /**
@@ -248,51 +284,48 @@
        * @param {jQuery[]|HTMLElement} to
        */
       moveElements: function(from, to) {
+        if (to === null) {
+          return;
+        }
         var ul, size, currentSize,
-          self = this, list, fromPermission, toPermission;
+          self = this, list;
 
         from = (typeof from !== 'string') ? from : $(from, self.element);
         to = (typeof to !== 'string') ? to : $(to, self.element);
-        fromPermission =  $('ul', from)[0].offsetParent.attributes.permission ? $('ul', from)[0].offsetParent.attributes.permission.value : 'basic';
-        toPermission =  $('ul', to)[0].offsetParent.attributes.permission ? $('ul', to)[0].offsetParent.attributes.permission.value : 'basic';
-
         list = $('.listview', from).data('listview');
 
-        if ((fromPermission === 'moderate' && toPermission === 'basic') || (fromPermission === 'basic' && toPermission === 'moderate') || (fromPermission === 'basic' && toPermission === 'basic')) {
-          self.clearSelections();
-          self.selections.owner = from;
-          self.selections.droptarget = to;
-  
-          if (self.isTouch) {
-            $.each(list.selectedItems, function(index, val) {
-              self.selections.items[index] = val.closest('li');
-            });
-          } else {
-            self.selections.items = list.selectedItems;
-          }
-  
-          self.setSelectionsItems(self.selections.owner);
-          self.unselectElements(list);
-  
-          if (self.selections.items.length) {
-            self.element.triggerHandler('beforeswap', [self.selections.itemsData]);
-  
-            ul = $('ul', to);
-  
-            currentSize = $('li', ul).length;
-            size = self.selections.items.length + currentSize;
-  
-            $.each(self.selections.items, function(index, val) {
-              val = $(val);
-              val.attr({ 'aria-posinset': currentSize + index + 1, 'aria-setsize': size }).find('mark.highlight').contents().unwrap();
-              ul.append(val);
-            });
-  
-            self.afterUpdate($('.listview', to).data('listview'));
-            $('li:last-child', to).focus()
-              // Fix: not sure why it added selected class and attribute on focus
-              .removeAttr('aria-selected').removeClass('is-selected');
-          }
+        self.clearSelections();
+        self.selections.owner = from;
+        self.selections.droptarget = to;
+
+        if (self.isTouch) {
+          $.each(list.selectedItems, function(index, val) {
+            self.selections.items[index] = val.closest('li');
+          });
+        } else {
+          self.selections.items = list.selectedItems;
+        }
+
+        self.setSelectionsItems(self.selections.owner);
+        self.unselectElements(list);
+
+        if (self.selections.items.length) {
+          self.element.triggerHandler('beforeswap', [self.selections.itemsData]);
+
+          ul = $('ul', to);
+          currentSize = $('li', ul).length;
+          size = self.selections.items.length + currentSize;
+
+          $.each(self.selections.items, function(index, val) {
+            val = $(val);
+            val.attr({ 'aria-posinset': currentSize + index + 1, 'aria-setsize': size }).find('mark.highlight').contents().unwrap();
+            ul.append(val);
+          });
+
+          self.afterUpdate($('.listview', to).data('listview'));
+          $('li:last-child', to).focus()
+            // Fix: not sure why it added selected class and attribute on focus
+            .removeAttr('aria-selected').removeClass('is-selected');
         }
       },
 
@@ -766,14 +799,19 @@
         // TOP BUTTONS =============================================================================
         self.actionButtons.off('click.swaplist').on('click.swaplist', function () {
           var actionButton = $(this),
-            container = actionButton.closest('.card'); // Current list clicked from
+            container = actionButton.closest('.card'), // Current list clicked from
+            moveTo = null;
 
-          if (container.is(settings.availableClass)) { // Move from Available to Selected
-            self.moveElements(settings.availableClass, settings.selectedClass);
+          if (container.is(settings.availableClass)) { // Move from Available to Selected or Additional
+            moveTo = settings.draggable.selected ? settings.selectedClass :
+              (self.isAdditional && settings.draggable.additional ? settings.additionalClass : null);
+            self.moveElements(settings.availableClass, moveTo);
           }
 
-          else if (container.is(settings.additionalClass)) { // Move from Additional to Selected
-            self.moveElements(settings.additionalClass, settings.selectedClass);
+          else if (container.is(settings.additionalClass)) { // Move from Additional to Selected or Available
+            moveTo = settings.draggable.selected ? settings.selectedClass :
+              (settings.draggable.available ? settings.availableClass : null);
+            self.moveElements(settings.additionalClass, moveTo);
           }
 
           // Move from Selected
@@ -846,7 +884,6 @@
 
         // Dragstart - initiate dragging
         .on(self.dragStart, self.dragElements, function(e) {
-          self.dragFromPermission = $(e.target).parent('ul')[0].offsetParent.attributes.permission ? $(e.target).parent('ul')[0].offsetParent.attributes.permission.value : 'basic';
           e.stopImmediatePropagation();
           if (self.handle && !selections.isHandle) {
             e.stopPropagation();
@@ -933,7 +970,7 @@
           self.element.triggerHandler('draggingswap', [selections.itemsData]);
           selections.related = e.target;
           $('ul, li', self.element).removeClass('over');
-          $(e.target).closest('ul').addClass('over');
+          $(e.target).closest('ul, li').addClass('over');
           selections.droptarget = $(selections.related).closest('.card');
           $('[aria-grabbed="true"]', self.element).not(selections.dragged).slideUp();
           e.stopPropagation();
@@ -993,7 +1030,6 @@
 
         // Dragend - implement items being validly dropped into targets
         .on(self.dragEnd, self.dragElements, function(e) {
-          
           if (!selections.dragged) {
             return;
           }
@@ -1001,52 +1037,45 @@
           ul = $('ul', selections.droptarget),
           currentSize = $('li', ul).length,
           size = selections.items.length + currentSize;
-          
-          var fromPermission = self.dragFromPermission;
-          var toPermission = ul[0].offsetParent.attributes.permission ? ul[0].offsetParent.attributes.permission.value : 'basic';
 
-          if ((fromPermission === 'moderate' && toPermission === 'basic') || (fromPermission === 'basic' && toPermission === 'moderate') || (fromPermission === 'basic' && toPermission === 'basic')) {
-            self.unselectElements($('.listview', selections.owner).data('listview'));
-            $.each(selections.items, function(index, val) {
-              
-              val = $(val);
-              val.find('mark.highlight').contents().unwrap();
-              if (currentSize && !$(selections.related).is('ul')) {
-                var isLess = (related.index() < selections.draggedIndex),
-                  el = isLess ? val : $(selections.items[(selections.items.length-1) - index]),
-                  posinset = related.index()+(isLess ? index+1 : index+2);
-  
-                val.attr({ 'aria-posinset': posinset, 'aria-setsize': size });
-                related[isLess ? 'before' : 'after'](el);
-  
-              } else {
-                val.attr({ 'aria-posinset': currentSize+index+1, 'aria-setsize': size });
-                ul.append(val);
-              }
-              val.focus();
-              
-            });
-  
-            if (selections.items.length > 1) {
-              $('.'+ settings.itemContentClass, selections.dragged).html(
-                $('.'+ settings.itemContentClass, selections.placeholder).html()
-              );
-              if (self.isTouch) {
-                selections.dragged.show();
-              }
+          self.unselectElements($('.listview', selections.owner).data('listview'));
+
+          $.each(selections.items, function(index, val) {
+            val = $(val);
+            val.find('mark.highlight').contents().unwrap();
+            if (currentSize && !$(selections.related).is('ul')) {
+              var isLess = (related.index() < selections.draggedIndex),
+                el = isLess ? val : $(selections.items[(selections.items.length-1) - index]),
+                posinset = related.index()+(isLess ? index+1 : index+2);
+
+              val.attr({ 'aria-posinset': posinset, 'aria-setsize': size });
+              related[isLess ? 'before' : 'after'](el);
+
+            } else {
+              val.attr({ 'aria-posinset': currentSize+index+1, 'aria-setsize': size });
+              ul.append(val);
             }
-            
+            val.focus();
+          });
+
+          if (selections.items.length > 1) {
+            $('.'+ settings.itemContentClass, selections.dragged).html(
+              $('.'+ settings.itemContentClass, selections.placeholder).html()
+            );
             if (self.isTouch) {
-              for (var i = 0, l = self.containers.length; i < l; i++) {
-                self.containers[i].style.zIndex = '';
-              }
+              selections.dragged.show();
             }
-            
-            selections.isHandle = null;
           }
+
+          if (self.isTouch) {
+            for (var i = 0, l = self.containers.length; i < l; i++) {
+              self.containers[i].style.zIndex = '';
+            }
+          }
+
+          selections.isHandle = null;
           $('[aria-grabbed="true"]', self.element).show();
           self.afterUpdate($('.listview', selections.droptarget).data('listview'));
-          selections.dragged.removeClass('is-dragging');
           e.preventDefault();
           e.stopPropagation();
         });

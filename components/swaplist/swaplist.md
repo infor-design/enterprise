@@ -4,7 +4,8 @@
 
 1. Main Swaplist Example [View Example](../components/swaplist/example-index.html)
 2. Swaplist with Selected Items [View Example](../components/swaplist/example-selected.html)
-2. Swaplist with Filter/Search [View Example](../components/swaplist/example-search.html)
+3. Swaplist with Filter/Search [View Example](../components/swaplist/example-search.html)
+4. Swaplist with Disable Dragging [View Example](../components/swaplist/example-disable-dragging.html)
 
 {{api-details}}
 
