@@ -32,7 +32,6 @@ The Timepicker Component provides a click/touch user interface for setting a tim
 
 **Parameters**
 
--   `element`  
 -   `timeFormat` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The time format
 -   `minuteInterval` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**  -  Integer from 1 to 60.  Multiples of this value are displayed as options in the minutes dropdown.
 -   `secondInterval` **[Number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)**  -  Integer from 1 to 60.
