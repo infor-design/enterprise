@@ -469,7 +469,7 @@
             '<div class=\'back\'>' +
               '<button type="button" class="btn-icon hide-focus btn-back">' +
                 '<svg class="icon" focusable="false" aria-hidden="true" role="presentation">' +
-                  '<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-caret-up"></use>' +
+                  '<use xlink:href="#icon-caret-up"></use>' +
                 '</svg>' +
                 '<span>Back</span>' +
               '</button>' +
