@@ -71,7 +71,7 @@ The Datagrid Component displays and process data in tabular format.
 -   `expandableRow` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true we append an expandable row area without the rowTemplate feature being needed.
 -   `redrawOnResize` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If set to false we skip redraw logic on the resize of the page.
 -   `exportConvertNegative` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If set to true export data with trailing negative signs moved in front.
--   `postColumnRender` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If set to true the grid will attemp to look for postRender functions on columns and call them post render.
+-   `onPostRenderCell` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  A call back function that will fire and send you the cell container and related information for any cells with postRender: true.
 
 ### render
 
