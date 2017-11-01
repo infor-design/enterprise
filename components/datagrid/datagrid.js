@@ -2366,7 +2366,7 @@ $.fn.datagrid = function(options) {
         },
         renderButton = function(defaultValue) {
           return '<button type="button" class="btn-menu btn-filter" data-init="false" ' + (isDisabled ? ' disabled' : '') + (defaultValue ? ' data-default="' + defaultValue+ '"' : '') + ' type="button"><span class="audible">Filter</span>' +
-          '<svg class="icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-filter-{{icon}}"></use></svg>' +
+          '<svg class="icon-dropdown icon" focusable="false" aria-hidden="true" role="presentation"><use xlink:href="#icon-filter-{{icon}}"></use></svg>' +
           $.createIcon({icon: 'dropdown' , classes: 'icon-dropdown'}) +
           '</button>' + '<ul class="popupmenu has-icons is-translatable is-selectable">';
         }, btnMarkup = '';
