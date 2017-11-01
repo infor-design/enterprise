@@ -11,12 +11,6 @@
       var columns = [],
         data = [];
 
-      // Note that this is the least least performant way we could ever do this
-      var renderFunction = function (container, args) {
-        console.log(container);
-        container.innerHTML = '<span>Custom</span>';
-      };
-
       // Some Sample Data
       data.push({ id: 1, productId: 2142201, productName: 'Compressor', activity:  'Assemble Paint', quantity: 1, price: 210.99, status: 'OK', orderDate: new Date(2014, 12, 8), action: 'Action'});
       data.push({ id: 2, productId: 2241202, productName: 'Different Compressor', activity:  'Inspect and Repair', quantity: 2, price: 210.99, status: '', orderDate: new Date(2015, 7, 3), action: 'On Hold', ordered: true});
@@ -31,14 +25,17 @@
       columns.push({ id: 'productDesc', name: 'Product Desc', sortable: false, field: 'productName', width: 240, formatter: Formatters.Hyperlink});
       columns.push({ id: 'activity', name: 'Activity', field: 'activity', width: 160});
       columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', width: 200});
-      columns.push({ id: 'custom', name: 'Custom', field: 'quantity', postRender: renderFunction});
+      columns.push({ id: 'custom', name: 'Custom', field: 'quantity', postRender: true});
 
       //Init and get the api for the grid
       $('#readonly-datagrid').datagrid({
         columns: columns,
         dataset: data,
         columnReorder: true,
-        postColumnRender: true
+        onPostRenderCell: function (container, args) {
+          console.log(container);
+          container.innerHTML = '<span>Custom</span>';
+        }
       });
     });
 

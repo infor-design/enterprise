@@ -1540,7 +1540,7 @@ $.fn.datagrid = function(options) {
         expandableRow: false, // Supply an empty expandable row template
         redrawOnResize: true, //Run column redraw logic on resize
         exportConvertNegative: false, // Export data with trailing negative signs moved in front
-        postColumnRender: false // Run the post render logic at expense of performance
+        onPostRenderCell: null //A call back function that will fire and send you the cell container and related information for any cells with postRender: true.
       },
       settings = $.extend({}, defaults, options);
 
@@ -1591,7 +1591,7 @@ $.fn.datagrid = function(options) {
   * @param {Boolean} expandableRow &nbsp;-&nbsp If true we append an expandable row area without the rowTemplate feature being needed.
   * @param {Boolean} redrawOnResize &nbsp;-&nbsp If set to false we skip redraw logic on the resize of the page.
   * @param {Boolean} exportConvertNegative &nbsp;-&nbsp If set to true export data with trailing negative signs moved in front.
-  * @param {Boolean} postColumnRender &nbsp;-&nbsp If set to true the grid will attemp to look for postRender functions on columns and call them post render.
+  * @param {Boolean} onPostRenderCell &nbsp;-&nbsp A call back function that will fire and send you the cell container and related information for any cells with postRender: true.
   */
   function Datagrid(element) {
     this.element = $(element);
@@ -3168,7 +3168,7 @@ $.fn.datagrid = function(options) {
       var self = this;
 
       // Column column postRender functions
-      if (this.settings.postColumnRender) {
+      if (this.settings.onPostRenderCell) {
         for (var i = 0; i < this.settings.columns.length; i++) {
           var col = this.settings.columns[i];
 
@@ -3185,7 +3185,7 @@ $.fn.datagrid = function(options) {
                   api: self
                 };
 
-                col.postRender(row.find('td').eq(colIdx).find('.datagrid-cell-wrapper .content')[0], args);
+                self.settings.onPostRenderCell(row.find('td').eq(colIdx).find('.datagrid-cell-wrapper .content')[0], args);
             });
           }
         }
@@ -3532,7 +3532,7 @@ $.fn.datagrid = function(options) {
           }
         }
 
-        if (self.settings.postColumnRender && col.postRender) {
+        if (col.postRender) {
           rowHtml += '<div class="content"></div>';
           formatted = '';
         }
