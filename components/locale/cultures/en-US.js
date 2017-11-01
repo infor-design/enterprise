@@ -185,7 +185,7 @@
       'Image': {id: 'Image', value: 'Image', comment: 'Image of something'},
       'Import': {id: 'Import', value: 'Import', comment: 'Import tooltip'},
       'Info': {id: 'Info', value: 'Info', comment: 'Info tooltip'},
-    'InfoOnPage': {id: 'InfoOnPage', value: 'Information message(s) on page', comment: 'Information message(s) on page n'},
+      'InfoOnPage': {id: 'InfoOnPage', value: 'Information message(s) on page', comment: 'Information message(s) on page n'},
       'InProgress': {id: 'In Progress', value: 'In Progress', comment: 'Info tooltip that an action is in progress'},
       'Insert': {id: 'Insert', value: 'Insert', comment: 'Insert Modal Dialog Button'},
       'InsertAnchor': {id: 'InsertAnchor', value: 'Insert Anchor', comment: 'Insert Acnhor (link) in an editor'},
