@@ -15,6 +15,7 @@ When you get the file back.
 - copy the messages section of each file into the respective file
 - add any \ in front of ' in the file. This happens on fr and ru uk locales, but can be tested with a linter
 - ensure the spacing is kept in tact.
+- no-NO and nb-NO are copies of each other so copy no-NO to both
 
 ## Translations
 
