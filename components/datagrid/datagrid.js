@@ -4904,7 +4904,7 @@ $.fn.datagrid = function(options) {
 
       // Handle Resize - Re do the columns
       if (self.settings.redrawOnResize) {
-        var oldWidth = 0;
+        var oldWidth = $('body')[0].offsetWidth;
 
         $('body').on('resize.datagrid', function () {
           var width = this.offsetWidth;
