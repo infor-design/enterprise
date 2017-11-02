@@ -147,10 +147,10 @@
             d.msg = '<span class="audible msg-dirty">'+ d.msg +'</span>';
 
             // Add icon and msg
-            var firstInput = $($(el[0].parentElement).find("input")[0]);
+            var firstInput = $($(el[0].parentElement).find('input')[0]);
             el = input.is('[type="radio"]') ? firstInput : el;
 
-            if ($(el[0].parentElement).find(".icon-dirty").length === 0) {
+            if ($(el[0].parentElement).find('.icon-dirty').length === 0) {
               el.before(d.icon);
               label.append(d.msg);
             }
