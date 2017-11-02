@@ -5710,23 +5710,30 @@ $.fn.datagrid = function(options) {
 
     syncHeaderCheckbox: function (rows) {
       var headerCheckbox = this.headerRow.find('.datagrid-checkbox'),
-        selectedRows = this.selectedRows();
+        selectedRows = this.selectedRows(),
+        status = headerCheckbox.data('selected');
 
-      if (this.headerRow) {
+      // Do not run if checkbox in same state
+      if ((selectedRows.length > 0 && status === 'partial') ||
+        (selectedRows.length === rows.length && status === 'all') ||
+        (selectedRows.length === 0 && status === 'none')) {
         return;
       }
 
       //Sync the header checkbox
       if (selectedRows.length > 0) {
-        headerCheckbox.addClass('is-checked is-partial');
+        headerCheckbox.data('selected', 'partial')
+          .addClass('is-checked is-partial');
       }
 
       if (selectedRows.length === rows.length) {
-        headerCheckbox.addClass('is-checked').removeClass('is-partial');
+        headerCheckbox.data('selected', 'all')
+          .addClass('is-checked').removeClass('is-partial');
       }
 
       if (selectedRows.length === 0) {
-        headerCheckbox.removeClass('is-checked is-partial');
+        headerCheckbox.data('selected', 'none')
+          .removeClass('is-checked is-partial');
       }
     },
 
@@ -5926,10 +5933,10 @@ $.fn.datagrid = function(options) {
             }
           }
         } else {
-          var selIdx = self.actualArrayIndex(elem),
+          var selIdx = elem.length ? self.actualArrayIndex(elem) : index,
             rowData;
 
-          if (rowData === undefined) {
+          if (selIdx !== undefined && selIdx > -1) {
             rowData = self.settings.dataset[selIdx];
           }
           if (s.groupable) {
@@ -5958,7 +5965,7 @@ $.fn.datagrid = function(options) {
         self.setNodeStatus(rowNode);
       }
       else {
-        unselectNode(rowNode);
+        unselectNode(rowNode, idx);
       }
 
       if (!nosync) {
