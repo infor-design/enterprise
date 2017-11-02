@@ -647,7 +647,7 @@
         func.apply(obj, args);
       }
 
-      timeout = setTimeout(delayed, threshold || 100);
+      timeout = setTimeout(delayed, threshold || 250);
     };
   };
 

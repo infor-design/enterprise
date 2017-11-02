@@ -23,8 +23,8 @@
   <script>
 
     $('#button1').button().on('click', function (e) {
-      window.location.href= '.';
-
+      var lastSlash = window.location.href.lastIndexOf('/')
+      window.location.href = window.location.href.substr(0, lastSlash);
       e.preventDefault();
     });
 

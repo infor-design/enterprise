@@ -684,7 +684,7 @@
 
             self.updatePagingInfo(request);
 
-            if (self.settings.componentAPI && typeof self.settings.componentAPI.renderRows === 'function') {
+            if (self.settings.componentAPI && typeof self.settings.componentAPI.renderRows === 'function' && request.type && request.type !=='initial') {
               self.settings.componentAPI.renderRows();
             }
 

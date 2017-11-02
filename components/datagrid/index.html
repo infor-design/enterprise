@@ -78,7 +78,8 @@
 <li><code>expandableRow</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  If true we append an expandable row area without the rowTemplate feature being needed.<br /></li>
 <li><code>redrawOnResize</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  If set to false we skip redraw logic on the resize of the page.<br /></li>
 <li><code>exportConvertNegative</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  If set to true export data with trailing negative signs moved in front.<br /></li>
-<li><code>onPostRenderCell</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  A call back function that will fire and send you the cell container and related information for any cells with postRender: true.</li>
+<li><code>onPostRenderCell</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  A call back function that will fire and send you the cell container and related information for any cells with postRender: true.<br /></li>
+<li><code>onDestroyCell</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></strong>  -  A call back that goes along with onPostRenderCell and will fire when this cell is destroyed and you need noification of that.</li>
 </ul>
 <h3 id="functions">Functions</h3>
 <h4 id="render">render</h4>
@@ -120,10 +121,45 @@
 <li><code>callback</code><br /></li>
 <li><code>pagerInfo</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  The pager info object with information like activePage ect.</li>
 </ul>
+<h4 id="visiblecolumns">visibleColumns</h4>
+<p>Returns an array with all visible columns.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>skipBuiltIn</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  If true then built in columns like selectionCheckbox are skipped.</li>
+</ul>
+<h4 id="getcolumngroup">getColumnGroup</h4>
+<p>Gets an If for the column group used for grouped headers.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>idx</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  The index of the column group</li>
+</ul>
+<h4 id="filterrowrendered">filterRowRendered</h4>
+<p>Flag used to determine if the header is rendered or not.</p>
+<h4 id="togglefilterrow">toggleFilterRow</h4>
+<p>Toggle the visibility of the filter row.</p>
+<h4 id="applyfilter">applyFilter</h4>
+<p>Apply the Filter with the currently selected conditions, or the ones passed in.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>conditions</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  An array of objects with the filter conditions.</li>
+</ul>
 <h4 id="clearfilter">clearFilter</h4>
 <p>Clear the Filter row Conditions and Reset the Data.</p>
+<h4 id="setfilterconditions">setFilterConditions</h4>
+<p>Set the Filter Conditions on the UI Only.</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>conditions</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  An array of objects with the filter conditions.</li>
+</ul>
 <h4 id="filterconditions">filterConditions</h4>
 <p>Get filter conditions in array from whats set in the UI.</p>
+<h4 id="fieldvalue">fieldValue</h4>
+<p>Return the value in a field, taking into account nested objects. Fx obj.field.id</p>
+<p><strong>Parameters</strong></p>
+<ul>
+<li><code>obj</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></strong>  -  The object to use<br /></li>
+<li><code>field</code> <strong><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></strong>  -  The field as a string fx 'field' or 'obj.field.id'</li>
+</ul>
 <h4 id="restorecolumns">restoreColumns</h4>
 <p>Restore the columns from a provided list or local storage</p>
 <p><strong>Parameters</strong></p>
