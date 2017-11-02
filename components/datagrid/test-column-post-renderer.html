@@ -30,11 +30,15 @@
           paging: true,
           pagesize: 8,
           onPostRenderCell: function (container, args) {
-            console.log(args.row);
+            console.log('Post Render Row', args.row);
             if (args.row !== 1) { //Simulate some logic around the buttons you might need
               container.innerHTML = '<button onclick="alert(\'Great Click!\')" type="button" class="btn-icon"><svg role="presentation" aria-hidden="true" focusable="false" class="icon"><use xlink:href="#icon-settings"/></svg><span>Date</span></button>';
             }
+          },
+          onDestroyCell: function (container, args) {
+            console.log('Destroy Row', $(container).find('button'), args.row);
           }
+
         });
 
       });
