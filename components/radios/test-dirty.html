@@ -1,0 +1,78 @@
+<div class="row">
+  <h2 class="fieldset-title">Radio button - Test Dirty </h2>
+</div>
+<div class="row">
+
+  <div class="six columns">
+    <fieldset class="radio-group">
+      <label>Vertical with fieldset</label>
+      <input type="radio" class="radio" name="optionsVA" id="optionVA1" value="option1" checked data-trackdirty="true"/>
+      <label for="optionVA1" class="radio-label">Option One</label>
+      <br>
+      <input type="radio" class="radio" name="optionsVA" id="optionVA2" value="option2" data-trackdirty="true"/>
+      <label for="optionVA2"  class="radio-label">Option Two</label>
+      <br>
+      <input type="radio" class="radio" name="optionsVA" id="optionVA3" value="option3" data-trackdirty="true"/>
+      <label for="optionVA3" class="radio-label">Option Three</label>
+      <br>
+      <input type="radio" class="radio" name="optionsVA" id="optionVA4" value="delivery" data-trackdirty="true" />
+      <label for="optionVA4" class="radio-label">Option Four</label>
+    </fieldset>
+  </div>
+
+  <div class="six columns">
+    <div class="field">
+      <label>Vertical without fieldset</label>
+      <input type="radio" class="radio" name="optionsVB" id="optionVB1" value="option1" checked data-trackdirty="true"/>
+      <label for="optionVB1" class="radio-label">Option One</label>
+      <br>
+      <input type="radio" class="radio" name="optionsVB" id="optionVB2" value="option2" data-trackdirty="true"/>
+      <label for="optionVB2"  class="radio-label">Option Two</label>
+      <br>
+      <input type="radio" class="radio" name="optionsVB" id="optionVB3" value="option3" data-trackdirty="true"/>
+      <label for="optionVB3" class="radio-label">Option Three</label>
+      <br>
+      <input type="radio" class="radio" name="optionsVB" id="optionVB4" value="delivery" data-trackdirty="true" />
+      <label for="optionVB4" class="radio-label">Option Four</label>
+    </div>
+  </div>
+
+</div>
+
+<div class="row">
+
+  <div class="six columns">
+    <fieldset class="radio-group">
+      <label>Horizontal with fieldset</label>
+      <input type="radio" class="radio" name="optionsHA" id="optionHA1" value="option1" checked data-trackdirty="true"/>
+      <label for="optionHA1" class="radio-label">Option One</label>
+      <input type="radio" class="radio" name="optionsHA" id="optionHA2" value="option2" data-trackdirty="true"/>
+      <label for="optionHA2"  class="radio-label">Option Two</label>
+      <input type="radio" class="radio" name="optionsHA" id="optionHA3" value="option3" data-trackdirty="true"/>
+      <label for="optionHA3" class="radio-label">Option Three</label>
+      <input type="radio" class="radio" name="optionsHA" id="optionHA4" value="delivery" data-trackdirty="true" />
+      <label for="optionHA4" class="radio-label">Option Four</label>
+    </fieldset>
+  </div>
+
+  <div class="six columns">
+    <div class="field">
+      <label>Horizontal without fieldset</label>
+      <input type="radio" class="radio" name="optionsHB" id="optionHB1" value="option1" checked data-trackdirty="true"/>
+      <label for="optionHB1" class="radio-label">Option One</label>
+      <input type="radio" class="radio" name="optionsHB" id="optionHB2" value="option2" data-trackdirty="true"/>
+      <label for="optionHB2"  class="radio-label">Option Two</label>
+      <input type="radio" class="radio" name="optionsHB" id="optionHB3" value="option3" data-trackdirty="true"/>
+      <label for="optionHB3" class="radio-label">Option Three</label>
+      <input type="radio" class="radio" name="optionsHB" id="optionHB4" value="delivery" data-trackdirty="true" />
+      <label for="optionHB4" class="radio-label">Option Four</label>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  $(function() {
+    $('.radio').trackdirty();
+  });
+</script>

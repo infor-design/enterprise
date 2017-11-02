@@ -235,6 +235,10 @@
 
   &.field-radio {
     margin-bottom: 10px;
+
+    .icon-dirty {
+      left: -2px;
+    }
   }
 
   &.field-checkbox {
