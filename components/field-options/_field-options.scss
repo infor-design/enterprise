@@ -55,6 +55,42 @@
     }
   }
 
+  // Searchfield =================================================================
+  // scss-lint:disable ImportantRule
+  &.searchfield {
+    width: calc(100% - 40px) !important;
+
+    ~ .icon.close {
+      right: 44px;
+      visibility: visible;
+
+      &.is-empty {
+        display: block;
+        visibility: hidden;
+      }
+    }
+
+    ~ .btn-actions {
+      left: -8px;
+    }
+
+  }
+  // scss-lint:enable ImportantRule
+
+
+  // Clearable =================================================================
+  &[data-clearable="true"] {
+    ~ .btn-actions {
+      left: -3px;
+    }
+
+    ~ .is-empty {
+      ~ .btn-actions {
+        left: -11px;
+      }
+    }
+  }
+
   // Textarea ==================================================================
   &.textarea {
     max-width: 362px;
@@ -168,6 +204,39 @@ html[dir='rtl'] {
         margin-right: -8px;
         right: auto;
       }
+    }
+
+    &.searchfield {
+      ~ .icon.close {
+        left: 44px;
+        right: auto;
+      }
+
+      ~ .btn-actions {
+        left: auto;
+        right: -8px;
+      }
+    }
+
+    &[data-clearable="true"] {
+      ~ .btn-actions {
+        left: auto;
+        right: 27px;
+      }
+
+      ~ .is-empty {
+        ~ .btn-actions {
+          left: auto;
+          right: -11px;
+        }
+      }
+    }
+  }
+
+  .is-fieldoptions {
+    .btn-actions {
+      left: auto;
+      right: -8px;
     }
   }
 
