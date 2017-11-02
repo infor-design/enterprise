@@ -75,8 +75,8 @@
             columns.push({ id: 'price', name: 'Price', field: 'price', width: 75, formatter: Formatters.Decimal});
             columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
             columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Text});
-            columns.push({ id: 'action', name: 'Action Item', field: 'action'});
-            columns.push({ id: 'ex', name: 'Extra', field: 'ex', width: 100});
+            columns.push({ id: 'action', name: 'Action Item', field: 'action', exportable: false});
+            columns.push({ id: 'ex', name: 'Extra', field: 'ex', width: 100, exportable: false});
       
             //Init and get the api for the grid
             grid = $('#datagrid').datagrid({
