@@ -1,10 +1,24 @@
 {{={{{ }}}=}}
+<div class="row">
+  <div class="twelve columns">
 
-<button class="btn-primary" type="button" onclick='resetDisplaySettings_onclick();'>Action</button><br><br><br>
-<div id="travelSectionDiv">
-	<div id="travelSectionList" class="listview" data-init="false" data-tmpl="ts-list-template"></div>
+    <div class="toolbar" role="toolbar">
+      <div class="title"></div>
+      <div class="buttonset">
+        <button type="button" class="btn" onclick="resetDisplaySettings_onclick();">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-refresh"></use>
+          </svg>
+          <span>Refresh</span>
+        </button>
+      </div>
+    </div>
+    <div id="travelSectionDiv">
+      <div id="travelSectionList" class="listview" data-init="false" data-tmpl="ts-list-template"></div>
+    </div>
+
+  </div>
 </div>
-
 
 <script id="ts-list-template" type="text/html">
   <ul>
@@ -33,17 +47,17 @@
 
   // button click (after about 14 clicks my browser locks up)
   function resetDisplaySettings_onclick() {
-	var tsdata;
-	if (odd) {
-		tsdata = getTSodd();
-	} else {
-		tsdata = getTSeven();
-	}
-	odd = !odd;
+    var tsdata;
+    if (odd) {
+      tsdata = getTSodd();
+    } else {
+      tsdata = getTSeven();
+    }
+    odd = !odd;
 
-	// update the listview
-	$('#travelSectionList').listview({dataset: tsdata, template: $('#ts-list-template').html()}).trigger('updated');
-};
+    // update the listview
+    $('#travelSectionList').listview({dataset: tsdata, template: $('#ts-list-template').html()}).trigger('updated');
+  };
 
 // dummy data from app...
 function getTSeven() {
@@ -147,6 +161,5 @@ function getTSodd() {
   ];
   return data;
 }
-
 
 </script>
