@@ -101,6 +101,7 @@ A Read-Only Datagrid uses "Formatters" to render cell content. A number of these
 - **ranges** For example `[{'min': 151, '(max': 9999, 'classes': 'info'}]` for example any value between 151 and 999 will add the info class which formats the color in info blue. Default color is grey. Used on badges and alerts.
 - **options** Used on the dropdown and multiselect editor/formatters. For example `[{'value': 1, 'id': 1, 'label': 'Some Value'}]`. This should map to a select elements id, value and text option when populating.
 - **isChecked** Used on checkbox and favorite columns. This can be a function that returns the checked state based on the dynamic data thats passed in.
+- **postRender** If postColumnRender is set to true on the grid. This will be called for each cell in that column passing you a container and args similar to the formatter. This can be used for more complicated render logic at the cost of performance.
 
 ## Formatters
 

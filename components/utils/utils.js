@@ -317,13 +317,22 @@
    * @param {String} [attrName]
    * @return {Object|Object[]}
    */
-  $.fn.parseOptions = function(attr) {
-    var results = [];
+  $.fn.parseOptions = function(element, attr) {
+    var results = [],
+      isCalledDirectly = (element instanceof HTMLElement || element instanceof SVGElement || element instanceof $),
+      targets = this;
 
-    this.each(function() {
+    if (isCalledDirectly) {
+      targets = $(element);
+    } else {
+      attr = element;
+      element = undefined;
+    }
+
+    targets.each(function(i, item) {
       results.push({
         element: this,
-        options: Soho.utils.parseOptions(this, attr)
+        options: Soho.utils.parseOptions(item, attr)
       });
     });
 
@@ -638,7 +647,7 @@
         func.apply(obj, args);
       }
 
-      timeout = setTimeout(delayed, threshold || 100);
+      timeout = setTimeout(delayed, threshold || 250);
     };
   };
 
@@ -1156,27 +1165,6 @@
         element.setSelectionRange(startPos, endPos, 'none');
       }
     }
-  };
-
-  /**
-  * Generates a unique id of meaning based on the url, type of object,
-  * count of those objects and a suffix.
-  *
-  * @param {String} suffix
-  * @param {HTMLElement} element
-  */
-  window.Soho.utils.uniqueId = function uniqueId(suffix, element, count) {
-    var elem = !element ?  Math.random().toString(16).slice(-4) :
-              (element.getAttribute('id') || element.tagName).toLowerCase(),
-        uniqueid = (window.location.pathname.split('/').pop()
-          .replace(/\.xhtml|\.shtml|\.html|\.htm|\.aspx|\.asp|\.jspx|\.jsp|\.php/g, '')
-          .replace(/[^-\w]+/g, '')
-          .replace(/\./g, '-')
-          .replace(/ /g, '-')
-          .replace(/%20/g, '-') + '-' +
-        elem + (count||'') + ('-' + suffix || ''));
-
-    return uniqueid.replace(/--/g, '-');
   };
 
   //==================================================================

@@ -40,7 +40,7 @@ Locale.set('es-ES').done(function () {
 
 ## Code Example - Numbers
 
-You can use the formatNumber to display a numeric type in a localized format. You can use parseNumber to convert that number back to the numeric type.
+You can use the formatNumber to display a numeric type in a localized format. You can use parseNumber to convert that number back to the numeric type. Not that by default the formatNumber function uses truncation (.129 becomes .12). To use rounding add the `round: true` option.
 
 ```javascript
 

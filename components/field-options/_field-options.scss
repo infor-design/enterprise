@@ -1,0 +1,243 @@
+// FieldOptions
+//==============================================================================
+.field-options {
+  max-width: $field-md;
+  width: calc(100% - 40px);
+
+  &.input-xs {
+    max-width: $field-xs;
+  }
+
+  &.input-sm {
+    max-width: $field-sm;
+  }
+
+  &.input-lg {
+    max-width: $field-lg;
+  }
+
+  &.input-full {
+    max-width: calc(100% - 40px);
+  }
+
+  ~ .icon-confirm {
+    right: 40px;
+  }
+
+  // Trigger button ============================================================
+  ~ .btn-actions {
+    @include rotate(90);
+    left: -11px;
+    line-height: normal;
+    min-width: 30px;
+    visibility: hidden;
+    width: 30px;
+
+    &.is-active {
+      visibility: visible;
+    }
+
+    &:focus,
+    &:active {
+      color: transparent;
+      text-shadow: 0 0 0 $black;
+    }
+  }
+
+  ~ a.btn-actions {
+    display: inline;
+    padding: 0 5px;
+  }
+
+  &.is-active {
+    ~ .btn-actions {
+      visibility: visible;
+    }
+  }
+
+  // Searchfield =================================================================
+  // scss-lint:disable ImportantRule
+  &.searchfield {
+    width: calc(100% - 40px) !important;
+
+    ~ .icon.close {
+      right: 44px;
+      visibility: visible;
+
+      &.is-empty {
+        display: block;
+        visibility: hidden;
+      }
+    }
+
+    ~ .btn-actions {
+      left: -8px;
+    }
+
+  }
+  // scss-lint:enable ImportantRule
+
+
+  // Clearable =================================================================
+  &[data-clearable="true"] {
+    ~ .btn-actions {
+      left: -3px;
+    }
+
+    ~ .is-empty {
+      ~ .btn-actions {
+        left: -11px;
+      }
+    }
+  }
+
+  // Textarea ==================================================================
+  &.textarea {
+    max-width: 362px;
+
+    ~ .btn-actions {
+      left: auto;
+      margin-left: -8px;
+      position: absolute;
+      top: calc(50% - 6px);
+    }
+  }
+
+  // Timepicker & Datepicker ===================================================
+  &.timepicker,
+  &.datepicker {
+    width: $datepicker-default-width;
+
+    &.input-xs {
+      max-width: $field-xs;
+      width: calc(100% - 40px);
+    }
+
+    &.input-sm {
+      max-width: $field-sm;
+      width: calc(100% - 40px);
+    }
+
+    &.input-mm {
+      max-width: $field-mm;
+      width: calc(100% - 40px);
+    }
+
+    &.input-md {
+      max-width: $field-md;
+      width: calc(100% - 40px);
+    }
+
+    &.input-lg {
+      max-width: $field-lg;
+      width: calc(100% - 40px);
+    }
+
+    &.input-full {
+      max-width: calc(100% - 40px);
+      width: calc(100% - 40px);
+    }
+
+    ~ a.btn-actions {
+      display: inline;
+      padding: 0 5px;
+    }
+  }
+}
+
+.is-fieldoptions {
+  .lookup-wrapper {
+    width: 100%;
+  }
+
+  .btn-actions {
+    left: -8px;
+  }
+}
+
+// Overwrites ******************************************************************
+.is-firefox {
+  .field-options {
+    ~ .btn-actions {
+      color: transparent;
+      text-shadow: 0 0 0 $black;
+    }
+  }
+}
+
+.is-mac.is-firefox {
+  .field-options {
+    ~ .btn-actions {
+      line-height: normal;
+    }
+  }
+}
+
+.is-safari {
+  .field-options {
+    &.timepicker,
+    &.datepicker {
+      ~ .btn-actions {
+        left: -8px;
+      }
+    }
+  }
+}
+
+// RTL Styles ******************************************************************
+html[dir='rtl'] {
+
+  .field-options {
+    ~ .icon-confirm {
+      left: 40px;
+      right: auto;
+    }
+
+    ~ .btn-actions {
+      left: auto;
+      right: -11px;
+    }
+
+    &.textarea {
+      ~ .btn-actions {
+        margin-left: inherit;
+        margin-right: -8px;
+        right: auto;
+      }
+    }
+
+    &.searchfield {
+      ~ .icon.close {
+        left: 44px;
+        right: auto;
+      }
+
+      ~ .btn-actions {
+        left: auto;
+        right: -8px;
+      }
+    }
+
+    &[data-clearable="true"] {
+      ~ .btn-actions {
+        left: auto;
+        right: 27px;
+      }
+
+      ~ .is-empty {
+        ~ .btn-actions {
+          left: auto;
+          right: -11px;
+        }
+      }
+    }
+  }
+
+  .is-fieldoptions {
+    .btn-actions {
+      left: auto;
+      right: -8px;
+    }
+  }
+
+}

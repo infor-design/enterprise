@@ -16,6 +16,11 @@ http://usalvlhlpool1.infor.com/4.3.3/components/
 
 ### <a name="version-4.3.3-breaking-changes">Breaking Changes</a>
 - Tabs - changed custom event `beforeactivate` to `beforeactivated` to prevent clashing with a Microsoft IE11/Edge-specific event by the same name (SOHO-5994).
+-
+
+### <a name="version-4.3.3-breaking-changes">Corrections to Your Code</a>
+- Svgs -> Search and replace ` xmlns:xlink="http://www.w3.org/1999/xlink"` with nothing. This fixes a security scan issue.
+-
 
 ### <a name="version-4.3.3-behavior-changes">Behavior Changes</a>
 -

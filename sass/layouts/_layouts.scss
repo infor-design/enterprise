@@ -427,6 +427,48 @@ body.no-scroll {
     margin-top: 60px;
   }
 
+
+  // Searchfield primary action (Large)
+  &.has-searchfield-xl {
+    height: 200px;
+
+    .searchfield-wrapper {
+      input {
+        @include font-size(20);
+        height: 60px;
+        padding: 20px 40px;
+
+        &::-webkit-input-placeholder {
+          @include font-size(16);
+          font-weight: normal;
+        }
+
+        // scss-lint:disable VendorPrefix
+        &::-moz-placeholder {
+          @include font-size(16);
+          line-height: 25px;
+        }
+
+        &:-ms-input-placeholder {
+          @include font-size(16);
+        }
+      }
+
+      .icon {
+        height: 18px;
+        left: 10px !important;
+        top: 21px;
+        width: 20px;
+      }
+    }
+
+    + .page-container,
+    + .application-menu + .page-container {
+      height: calc(100% - 200px);
+    }
+  }
+
+
   + .subheader + .page-container,
   + .subheader + .application-menu + .page-container {
     height: calc(100% - 120px);
@@ -875,7 +917,6 @@ body.no-scroll {
     }
   }
 }
-
 
 //RTL Styles
 html[dir='rtl'] {

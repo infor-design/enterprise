@@ -677,7 +677,7 @@ html[dir='rtl'] {
   [class^="btn"] {
     > .icon {
 
-      + span:not(.audible) {
+      + span:not(.audible):not(:empty) {
         padding-right: 10px;
       }
 
@@ -755,6 +755,22 @@ html[lang^='fr-'] {
   .field-short {
     [class^="btn"] {
       line-height: 25px;
+    }
+  }
+}
+
+.btn-link {
+  color: $hyperlink-color;
+
+  .icon {
+    fill: $hyperlink-color;
+  }
+
+  &:hover {
+    color: $hyperlink-hover-color;
+
+    .icon {
+      fill: $hyperlink-hover-color;
     }
   }
 }

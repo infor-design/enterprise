@@ -24,14 +24,13 @@
 
       //Define Columns for the Grid.
       columns.push({ id: 'productId', name: 'Product Id', field: 'productId', formatter: Formatters.Readonly});
-      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', formatter: Formatters.Hyperlink});
-      columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity'});
-      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity'});
+      columns.push({ id: 'productName', name: 'Product Name', sortable: false, field: 'productName', filterType: 'text', formatter: Formatters.Hyperlink});
+      columns.push({ id: 'activity', hidden: true, name: 'Activity', field: 'activity', filterType: 'text'});
+      columns.push({ id: 'quantity', name: 'Quantity', field: 'quantity', filterType: 'text'});
       columns.push({ id: 'price', name: 'Price', field: 'price', formatter: Formatters.Decimal});
       columns.push({ id: 'orderDate', name: 'Order Date', field: 'orderDate', formatter: Formatters.Date, dateFormat: 'M/d/yyyy'});
       columns.push({ id: 'status', name: 'Status', field: 'status', formatter: Formatters.Text});
       columns.push({ id: 'action', name: 'Action Item', field: 'action'});
-
 
       //Init and get the api for the grid
       grid = $('#datagrid').datagrid({
@@ -40,6 +39,7 @@
         dataset: data,
         columnReorder: true,
         saveColumns: false,
+        filterable: true,
         toolbar: {title: 'Groups', actions: true, personalize: true, results: true, resetLayout: true}
       }).data('datagrid');
 

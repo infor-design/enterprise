@@ -184,10 +184,16 @@
         if (!popupMenuInstance) {
           this.moreMenu = $('#' + moreAriaAttr);
           if (!this.moreMenu.length) {
-            this.moreMenu = this.more.next('.popupmenu');
+            this.moreMenu = this.more.next('.popupmenu, .popupmenu-wrapper');
           }
           if (!this.moreMenu.length) {
             this.moreMenu = $('<ul id="popupmenu-toolbar-'+ this.id +'" class="popupmenu"></ul>').insertAfter(this.more);
+          }
+
+          // Allow toolbar to understand pre-wrapped popupmenus
+          // Angular Support -- See SOHO-7008
+          if (this.moreMenu.is('.popupmenu-wrapper')) {
+            this.moreMenu = this.moreMenu.children('.popupmenu');
           }
         } else {
           this.moreMenu = popupMenuInstance.menu;

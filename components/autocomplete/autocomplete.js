@@ -16,6 +16,86 @@
   $.fn.autocomplete = function(options) {
     'use strict';
 
+    // Default Autocomplete Result Item Template
+    var DEFAULT_AUTOCOMPLETE_TEMPLATE = '<li id="{{listItemId}}" data-index="{{index}}" {{#hasValue}}data-value="{{value}}"{{/hasValue}} role="listitem">' + '\n\n' +
+      '<a href="#" tabindex="-1">' + '\n\n' +
+        '<span>{{{label}}}</span>' + '\n\n' +
+      '</a>' + '\n\n' +
+    '</li>';
+
+    var DEFAULT_AUTOCOMPLETE_SEARCHABLE_TEXT_CALLBACK = function(item) {
+      var isString = typeof item === 'string';
+      return (isString ? item : item.label);
+    };
+
+    var DEFAULT_AUTOCOMPLETE_RESULT_ITERATOR_CALLBACK = function resultIterator(item, index) {
+      // For standard autocompletes with a popupmenu, build the dataset that
+      // will be submitted to the template.
+      var isString = typeof item === 'string',
+        dataset = {
+          _highlightTarget: 'label',
+          index: index,
+          listItemId: 'ac-list-option' + index
+        };
+
+      if (!isString) {
+        dataset = Soho.utils.extend({}, dataset, item);
+      } else {
+        dataset.label = item;
+      }
+
+      dataset.hasValue = item.value !== undefined;
+      if (dataset.hasValue) {
+        dataset.value = item.value;
+      }
+
+      return dataset;
+    };
+
+    /**
+     * @param {String} item
+     * @param {Object} options
+     * @param {String} [options.alias]
+     * @param {String} options.filterMode
+     * @param {String} options.term
+     * @returns {String}
+     */
+    var DEFAULT_AUTOCOMPLETE_HIGHLIGHT_CALLBACK = function highlightMatch(item, options) {
+      var targetProp = item,
+        hasAlias = false;
+
+      // If this is an object and we need to replace text within a specific property, look for an "alias"
+      // property to use instead of the item itself.
+      if (typeof options.alias === 'string' && item[options.alias] !== undefined) {
+        hasAlias = true;
+        targetProp = item[options.alias];
+      }
+
+      // Easy match for 'contains'-style filterMode.
+      if (options.filterMode === 'contains') {
+        targetProp = targetProp.replace(new RegExp('(' + options.term + ')', 'ig'), '<i>$1</i>');
+      } else {
+        // Handle "startsWith" filterMode highlighting a bit differently.
+        var originalItem = targetProp,
+          pos = Locale.toLowerCase(originalItem).indexOf(options.term);
+
+        if (pos > 0) {
+          targetProp = originalItem.substr(0, pos) + '<i>' + originalItem.substr(pos, options.term.length) + '</i>' + originalItem.substr(options.term.length + pos);
+        } else if (pos === 0) {
+          targetProp = '<i>' + originalItem.substr(0, options.term.length) + '</i>' + originalItem.substr(options.term.length);
+        }
+      }
+
+      // place result back
+      if (hasAlias) {
+        item[options.alias] = targetProp;
+      } else {
+        item = targetProp;
+      }
+
+      return item;
+    };
+
     /**
     * The Autocomplete control provides an easier means of searching through a large amount of data by filtering down the results based on keyboard input from the user.
     *
@@ -29,7 +109,7 @@
     * @param {String} width  &nbsp;-&nbsp; Width of the open auto complete menu
     * @param {String} offset  &nbsp;-&nbsp; For the open menu, the left or top offset
     * @param {String} autoSelectFirstItem  &nbsp;-&nbsp; Whether or not to select he first item in the list to be selected
-    *
+    * @param {function} resultsCallback  &nbsp;-&nbsp; If defined, does not produce the results of the Autocomplete inside a popupmenu, instead piping them to a process defined inside this callback function.
     */
     var pluginName = 'autocomplete',
       defaults = {
@@ -40,7 +120,12 @@
         delay: 300,
         width: null,
         offset: null,
-        autoSelectFirstItem: false
+        autoSelectFirstItem: false,
+        highlightMatchedText: true,
+        highlightCallback: DEFAULT_AUTOCOMPLETE_HIGHLIGHT_CALLBACK,
+        resultIteratorCallback: DEFAULT_AUTOCOMPLETE_RESULT_ITERATOR_CALLBACK,
+        displayResultsCallback: undefined,
+        searchableTextCallback: DEFAULT_AUTOCOMPLETE_SEARCHABLE_TEXT_CALLBACK
       },
       settings = $.extend({}, defaults, options);
 
@@ -52,13 +137,6 @@
       Soho.logTimeEnd(pluginName);
     }
 
-    // Default Autocomplete Result Item Template
-    var resultTemplate = '<li id="{{listItemId}}" data-index="{{index}}" {{#hasValue}}data-value="{{value}}"{{/hasValue}} role="listitem">' + '\n\n' +
-      '<a href="#" tabindex="-1">' + '\n\n' +
-        '<span>{{{label}}}</span>' + '\n\n' +
-      '</a>' + '\n\n' +
-    '</li>';
-
     // Plugin Object
     Autocomplete.prototype = {
 
@@ -67,6 +145,14 @@
         var data = this.element.attr('data-autocomplete');
         if (data && data !== 'source') {
           this.settings.source = data;
+        }
+
+        if (!this.listFilter) {
+          this.listFilter = new ListFilter({
+            filterMode: this.settings.filterMode,
+            highlightMatchedText: this.settings.highlightMatchedText,
+            searchableTextCallback: this.settings.searchableTextCallback
+          });
         }
 
         this.addMarkup();
@@ -89,9 +175,7 @@
           return;
         }
 
-        var self = this,
-          matchingOptions = [];
-
+        var self = this;
         term = Locale.toLowerCase(term);
 
         //append the list
@@ -117,82 +201,45 @@
           typeof templateAttr === 'string' ? templateAttr :
           $(this.settings.template).length ? $(this.settings.template).text() :
           typeof this.settings.template === 'string' ? this.settings.template :
-          resultTemplate;
+          DEFAULT_AUTOCOMPLETE_TEMPLATE;
 
-        for (var i = 0; i < items.length; i++) {
-          var isString = typeof items[i] === 'string',
-            option = (isString ? items[i] : items[i].label),
-            baseData = {
-              label: option
-            },
-            dataset = isString ? baseData : $.extend(baseData, items[i]),
-            parts = option.split(' '),
-            containsTerm = !this.settings.filterMode ? true : false;
+        // Send full item list to the ListFilter for filtering.
+        var filterResult = this.listFilter.filter(items, term),
+          modifiedFilterResults = [];
 
-          if (this.settings.filterMode === 'startsWith') {
-              for (var a = 0; a < parts.length; a++) {
-                if (Locale.toLowerCase(parts[a]).indexOf(term) === 0) {
-                  containsTerm = true;
-                }
-              }
+        // Modify filtered results for a specific template with a `resultIteratorCallback`, if applicable.
+        // Each of these results is deep-copied.
+        filterResult.forEach(function(val, index) {
+          var result = Soho.utils.extend(true, {}, val);
+          result = self.settings.resultIteratorCallback(result, index);
 
-              //Direct Match
-              if (Locale.toLowerCase(option).indexOf(term) === 0) {
-                containsTerm = true;
-              }
-
-              if (term.indexOf(' ') > 0 && Locale.toLowerCase(option).indexOf(term) > 0) {
-                //Partial dual word match
-                containsTerm = true;
-              }
-
+          if (self.settings.highlightMatchedText) {
+            var filterOpts = {
+              filterMode: self.settings.filterMode,
+              term: term
+            };
+            if (result._highlightTarget) {
+              filterOpts.alias = result._highlightTarget;
+            }
+            result = self.settings.highlightCallback(result, filterOpts);
           }
 
-          if (this.settings.filterMode === 'contains') {
-            if (Locale.toLowerCase(option).indexOf(term) >= 0) {
-              containsTerm = true;
-            }
-          }
+          modifiedFilterResults.push(result);
+        });
 
-          if (containsTerm) {
-            matchingOptions.push(option);
-
-            // Build the dataset that will be submitted to the template
-            dataset.listItemId = 'ac-list-option' + i;
-            dataset.index = i;
-
-            if (this.settings.filterMode === 'contains') {
-              dataset.label = dataset.label.replace(new RegExp('(' + term + ')', 'ig'), '<i>$1</i>');
-            } else {
-              dataset.label = Locale.toLowerCase(option).indexOf(term)===0 ? '<i>' + option.substr(0,term.length) + '</i>' + option.substr(term.length) : option;
-
-              var pos = Locale.toLowerCase(option).indexOf(term);
-              if (pos > 0) {
-                dataset.label = option.substr(0, pos) + '<i>' + option.substr(pos, term.length) + '</i>' + option.substr(term.length + pos);
-              }
-            }
-
-            dataset.hasValue = !isString && items[i].value !== undefined;
-
-            if (dataset.hasValue) {
-              dataset.value = items[i].value;
-            }
-
-            if (typeof Tmpl !== 'undefined') {
-              var compiledTmpl = Tmpl.compile(this.tmpl),
-                renderedTmpl = compiledTmpl.render(dataset);
-
-              self.list.append($.sanitizeHTML(renderedTmpl));
-            } else {
-              var listItem = $('<li role="listitem"></li>');
-              listItem.attr('id', dataset.listItemId);
-              listItem.attr('data-index', dataset.index);
-              listItem.attr('data-value', dataset.value);
-              listItem.append('<a href="#" tabindex="-1"><span>' + dataset.label + '</span></a>');
-              self.list.append($.sanitizeHTML(listItem));
-            }
-          }
+        // If a "resultsCallback" method is defined, pipe the filtered items to that method and skip
+        // building a popupmenu.
+        if (typeof this.settings.displayResultsCallback === 'function') {
+          return this.settings.displayResultsCallback(modifiedFilterResults, function() {
+            self.element.trigger('listopen', [modifiedFilterResults]);
+          });
         }
+
+        this.handleListResults(term, items, modifiedFilterResults);
+      },
+
+      handleListResults: function(term, items, filterResult) {
+        var self = this;
 
         function autocompletePlaceCallback(placementObj) {
           // Nudge the autocomplete to the right by 1px in Chrome
@@ -216,6 +263,22 @@
           }
         };
 
+        filterResult.forEach(function(dataset) {
+          if (typeof Tmpl !== 'undefined') {
+            var compiledTmpl = Tmpl.compile(self.tmpl),
+              renderedTmpl = compiledTmpl.render(dataset);
+
+            self.list.append($.sanitizeHTML(renderedTmpl));
+          } else {
+            var listItem = $('<li role="listitem"></li>');
+            listItem.attr('id', dataset.listItemId);
+            listItem.attr('data-index', dataset.index);
+            listItem.attr('data-value', dataset.value);
+            listItem.append('<a href="#" tabindex="-1"><span>' + dataset.label + '</span></a>');
+            self.list.append($.sanitizeHTML(listItem));
+          }
+        });
+
         this.element.addClass('is-open')
           .popupmenu(popupOpts)
           .on('close.autocomplete', function () {
@@ -229,7 +292,7 @@
         }
 
         this.noSelect = true;
-        this.element.trigger('populated', [matchingOptions]).focus();
+        this.element.trigger('populated', [filterResult]).focus();
 
         // Overrides the 'click' listener attached by the Popupmenu plugin
         self.list.off('click touchend')
@@ -267,7 +330,7 @@
           '</span>');
 
         this.noSelect = true;
-        this.element.trigger('listopen', [items]);
+        this.element.trigger('listopen', [filterResult]);
       },
 
       closeList: function(dontClosePopup) {
@@ -354,9 +417,6 @@
           }
         }
 
-        if (e.keyCode === 8 && this.listIsOpen()) {
-          self.element.trigger('input');
-        }
       },
 
       // Handles the Autocomplete's "input" event
@@ -475,9 +535,12 @@
           return;
         }
 
-        //select all
+        //select all text (after a delay since works better across browsers), but only if element is still focused
+        //to avoid flashing cursor focus trap (since select causes focus event to fire if no longer focused)
         setTimeout(function () {
-          self.element.select();
+          if (self.element.is(':focus')) {
+            self.element.select();
+          }
         }, 10);
       },
 

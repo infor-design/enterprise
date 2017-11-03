@@ -10,8 +10,15 @@
     -   [removeSelected](#removeselected)
     -   [updateDataset](#updatedataset)
     -   [triggerSource](#triggersource)
+    -   [visibleColumns](#visiblecolumns)
+    -   [getColumnGroup](#getcolumngroup)
+    -   [filterRowRendered](#filterrowrendered)
+    -   [toggleFilterRow](#togglefilterrow)
+    -   [applyFilter](#applyfilter)
     -   [clearFilter](#clearfilter)
+    -   [setFilterConditions](#setfilterconditions)
     -   [filterConditions](#filterconditions)
+    -   [fieldValue](#fieldvalue)
     -   [restoreColumns](#restorecolumns)
     -   [hideColumn](#hidecolumn)
     -   [showColumn](#showcolumn)
@@ -71,6 +78,8 @@ The Datagrid Component displays and process data in tabular format.
 -   `expandableRow` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If true we append an expandable row area without the rowTemplate feature being needed.
 -   `redrawOnResize` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If set to false we skip redraw logic on the resize of the page.
 -   `exportConvertNegative` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  If set to true export data with trailing negative signs moved in front.
+-   `onPostRenderCell` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  A call back function that will fire and send you the cell container and related information for any cells with postRender: true.
+-   `onDestroyCell` **[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)**  -  A call back that goes along with onPostRenderCell and will fire when this cell is destroyed and you need noification of that.
 
 ### render
 
@@ -125,13 +134,62 @@ Trigger the source method to call to the backend on demand.
 -   `callback`  
 -   `pagerInfo` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  The pager info object with information like activePage ect.
 
+### visibleColumns
+
+Returns an array with all visible columns.
+
+**Parameters**
+
+-   `skipBuiltIn` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  If true then built in columns like selectionCheckbox are skipped.
+
+### getColumnGroup
+
+Gets an If for the column group used for grouped headers.
+
+**Parameters**
+
+-   `idx` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  The index of the column group
+
+### filterRowRendered
+
+Flag used to determine if the header is rendered or not.
+
+### toggleFilterRow
+
+Toggle the visibility of the filter row.
+
+### applyFilter
+
+Apply the Filter with the currently selected conditions, or the ones passed in.
+
+**Parameters**
+
+-   `conditions` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  An array of objects with the filter conditions.
+
 ### clearFilter
 
 Clear the Filter row Conditions and Reset the Data.
 
+### setFilterConditions
+
+Set the Filter Conditions on the UI Only.
+
+**Parameters**
+
+-   `conditions` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  An array of objects with the filter conditions.
+
 ### filterConditions
 
 Get filter conditions in array from whats set in the UI.
+
+### fieldValue
+
+Return the value in a field, taking into account nested objects. Fx obj.field.id
+
+**Parameters**
+
+-   `obj` **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)**  -  The object to use
+-   `field` **[String](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)**  -  The field as a string fx 'field' or 'obj.field.id'
 
 ### restoreColumns
 

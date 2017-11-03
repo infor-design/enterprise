@@ -210,7 +210,7 @@
         });
 
         //Attach button click and touch
-        this.pagerBar.onTouchClick('pager', 'a').on('click.pager', 'a', function (e) {
+        this.pagerBar.on('click.pager', 'a', function (e) {
           var li = $(this).parent();
           e.preventDefault();
 
@@ -233,7 +233,7 @@
             return false;
           }
 
-         if (li.is('.pager-last')) {
+          if (li.is('.pager-last')) {
             self.setActivePage(self.pageCount(), false, 'last');  //TODO Calculate Last Page?
             return false;
           }
@@ -265,7 +265,36 @@
             setTimeout(function () {
               parent.attr('tabindex', '0');
             }, 0);
+          // Handle pressing Enter on arrow icons and prevent pagerBar.onTouchClick from being triggered
+          } else if (key === 13) {
+            var li = $(this).parent();
+            e.preventDefault();
+
+            if ($(this).attr('disabled')) {
+              return;
+            }
+
+            if (li.is('.pager-prev')) {
+              self.setActivePage(self.activePage - 1, false, 'prev');
+              return false;
+            }
+
+            if (li.is('.pager-next')) {
+              self.setActivePage((self.activePage === -1 ? 0 : self.activePage)  + 1, false, 'next');
+              return false;
+            }
+
+            if (li.is('.pager-first')) {
+              self.setActivePage(1, false, 'first');
+              return false;
+            }
+
+            if (li.is('.pager-last')) {
+              self.setActivePage(self.pageCount(), false, 'last');  //TODO Calculate Last Page?
+              return false;
+            }
           }
+
           btn = $('a', btn).length ? btn : $(':text', btn);
           if (btn.length && !btn.is('[disabled]')) {
             btn.focus();
@@ -401,6 +430,9 @@
           }).on('keydown', function (e) {
             if (e.which === 13) {
               self.setActivePage(parseInt($(this).val()), false, 'page');
+
+              e.stopPropagation();
+              e.preventDefault();
             }
           });
         }
@@ -652,7 +684,7 @@
 
             self.updatePagingInfo(request);
 
-            if (self.settings.componentAPI && typeof self.settings.componentAPI.renderRows === 'function') {
+            if (self.settings.componentAPI && typeof self.settings.componentAPI.renderRows === 'function' && request.type && request.type !=='initial') {
               self.settings.componentAPI.renderRows();
             }
 

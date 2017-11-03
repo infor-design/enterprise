@@ -1,0 +1,76 @@
+<div class="row">
+  <div class="six columns">
+    <h2>Toolbar Test: Predefined "More Actions" Menu</h2>
+    <p>
+      Related JIRA Tickets: <a class="hyperlink" href="http://jira.infor.com/browse/SOHO-7008" target="_blank">SOHO-7008</a>
+    </p>
+  </div>
+</div>
+
+<div class="row top-padding">
+  <div class="twelve columns">
+    <div id="regular-toolbar-more" class="toolbar">
+      <div class="title">
+        Toolbar with Pre-defined "More Actions" Menu
+      </div>
+      <div class="buttonset"></div>
+      <div class="more">
+        <button class="btn-actions">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+          <span class="audible">More Actions</span>
+        </button>
+        <ul class="popupmenu">
+          <li><a href="#">Option #1</a></li>
+          <li><a href="#">Option #2</a></li>
+          <li class="submenu">
+            <a href="#">Option #3</a>
+            <ul class="popupmenu">
+              <li><a href="#">Sub-option #1</a></li>
+              <li><a href="#">Sub-option #2</a></li>
+              <li><a href="#">Sub-option #3</a></li>
+            </ul>
+          </li>
+          <li><a href="#">Option #4</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="twelve columns">
+    <div id="regular-toolbar-more" class="toolbar">
+      <div class="title">
+        Toolbar with Pre-defined "More Actions" Menu (pre-wrapped popupmenu)
+      </div>
+      <div class="buttonset"></div>
+      <div class="more">
+        <button class="btn-actions">
+          <svg class="icon" focusable="false" aria-hidden="true" role="presentation">
+            <use xlink:href="#icon-more"></use>
+          </svg>
+          <span class="audible">More Actions</span>
+        </button>
+        <div class="popupmenu-wrapper">
+          <ul class="popupmenu">
+            <li><a href="#">Option #1</a></li>
+            <li><a href="#">Option #2</a></li>
+            <li class="submenu">
+              <a href="#">Option #3</a>
+              <div class="wrapper">
+                <ul class="popupmenu">
+                  <li><a href="#">Sub-option #1</a></li>
+                  <li><a href="#">Sub-option #2</a></li>
+                  <li><a href="#">Sub-option #3</a></li>
+                </ul>
+              </div>
+            </li>
+            <li><a href="#">Option #4</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

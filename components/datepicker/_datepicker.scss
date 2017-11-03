@@ -2,7 +2,7 @@
 //================================================== *
 
 .datepicker {
-  width: 150px;
+  width: $datepicker-default-width;
 
   &.input-xs {
     width: $field-xs;
@@ -495,7 +495,12 @@ html[dir='rtl'] {
 
     .month,
     .year {
-      line-height: 50px;
+      position: relative;
+      top: 15px;
+    }
+
+    .btn-icon {
+      top: 11px;
     }
   }
 
@@ -504,6 +509,8 @@ html[dir='rtl'] {
     .month,
     .year {
       line-height: normal;
+      position: relative;
+      top: 7px;
     }
 
     .calendar-header {

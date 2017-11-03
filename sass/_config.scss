@@ -321,6 +321,7 @@ $datepicker-disabled-icon-color: $graphite04;
 $datepicker-disabled-border-color: $graphite03;
 $datepicker-disabled-bg-color: $graphite01;
 $datepicker-disabled-color: $graphite03;
+$datepicker-default-width: 150px;
 
 //Time Picker
 $timepicker-disabled-icon-color: $graphite04;
@@ -524,6 +525,10 @@ $accordion-disabled-border-color: $slate03;
 $accordion-disabled-text-color: $graphite04;
 $accordion-disabled-pane-bg-color: transparent;
 $accordion-disabled-pane-text-color: $graphite04;
+
+$accordion-header-filtered-children-background-color: $graphite09;
+$accordion-filtered-background-color: transparent;
+$accordion-filtered-text-color: $graphite06;
 
 // Application Menu (extends Accoridon)
 $application-menu-width: 300px;
@@ -808,9 +813,11 @@ $step-chart-totally-completed-bg-color: $alert-green;
 //Breakpoint sizes - Grid
 $breakpoint-phone: 320px;
 $breakpoint-slim: 400px;
+$breakpoint-big-phone: 480px;
 $breakpoint-phablet: 610px;
 $breakpoint-phone-to-tablet: 767px;
 $breakpoint-wide-tablet: 968px;
+$breakpoint-tablet-reduced: 1040px;
 $breakpoint-tablet-to-desktop: 1280px;
 $breakpoint-desktop-to-extralarge: 1600px;
 

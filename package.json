@@ -4,7 +4,7 @@
   "shortName": "sohoxi",
   "description": "Hook & Loop - SoHo XI Controls",
   "author": "Hook & Loop",
-  "license": "UNLICENSED",
+  "license": "Runtime License",
   "repository": {
     "type": "git",
     "url": "git://git.infor.com/scm/soho/controls.git"
@@ -32,7 +32,7 @@
     "publish-prod": "grunt publish && npm publish publish --force",
     "install-global": "npm install -g pandoc-bin grunt-cli documentation",
     "documentation": "./build/generate-documentation.js",
-    "publish-aws": "AWS_PROFILE=sohoxi directory-to-s3 -d publish infor-devops-core-soho-us-east-1/4.3.3 -v"
+    "publish-aws": "AWS_PROFILE=sohoxi directory-to-s3 -d publish infor-devops-core-soho-us-east-1/sohoxi/4.3.3 -v"
   },
   "dependencies": {
     "d3": "^3.4.6",

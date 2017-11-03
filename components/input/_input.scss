@@ -43,15 +43,15 @@
     &.error {
       color: $error-color;
     }
-	
-	&.alert {
+
+    &.alert {
       color: $alert-color;
     }
-	
-	&.info {
+
+    &.info {
       color: $info-color;
     }
-  }
+    }
 
   &:focus {
     @include focus-state();
@@ -67,7 +67,7 @@
       color: $input-color !important;
     }
   }
-  
+
   &.alert {
     border-color: $alert-color;
 
@@ -78,7 +78,7 @@
       color: $input-color !important;
     }
   }
-  
+
   &.confirm {
     border-color: $confirm-color;
 
@@ -89,7 +89,7 @@
       color: $input-color !important;
     }
   }
-  
+
   &.info {
     border-color: $info-color;
 
@@ -235,6 +235,10 @@
 
   &.field-radio {
     margin-bottom: 10px;
+
+    .icon-dirty {
+      left: -2px;
+    }
   }
 
   &.field-checkbox {
@@ -306,7 +310,7 @@
   & + .icon.close {
     right: auto;
     margin-left: -30px;
-  
+
     &:hover {
       fill: $trigger-hover-color;
     }
@@ -966,7 +970,7 @@ html[dir='rtl'] {
   [data-clearable="true"] {
     padding-right: 10px;
     padding-left: 32px;
-  
+
     & + .icon.close {
       right: auto;
       margin-right: -30px;
