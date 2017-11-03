@@ -84,7 +84,7 @@
           datepicker = self.element.data('datepicker'),
           timepicker = self.element.data('timepicker'),
           dropdown = self.element.data('dropdown'),
-          lookup = self.element.data('lookup'),
+          lookup = self.element.data('lookup') || self.element.hasClass('lookup'),
           isFileupload = self.element.is('.fileupload'),
           isSearchfield = self.element.is('.searchfield'),
 
