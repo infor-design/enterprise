@@ -6782,7 +6782,7 @@ $.fn.datagrid = function(options) {
         if (isEditor) {
           cellNode.css({'position': 'static', 'height': cellNode.outerHeight()});
         }
-        //Editor.init
+        // initialis Editor
         cellParent
           .addClass('is-editing')
           .css({'max-width': cellWidth, 'min-width': cellWidth, 'width': cellWidth});
@@ -6793,6 +6793,10 @@ $.fn.datagrid = function(options) {
       }
 
       this.editor = new col.editor(dataRowIndex, cell, cellValue, cellNode, col, event, this, rowData);
+
+      if (this.settings.onEditCell) {
+        this.settings.onEditCell(this.editor);
+      }
 
       if (this.editor.useValue) {
         cellValue = this.fieldValue(rowData, col.field);
@@ -7127,7 +7131,7 @@ $.fn.datagrid = function(options) {
       if (col.serialize) {
         newVal = col.serialize(value, oldVal, col, row, cell, this.settings.dataset[row]);
         return newVal;
-      } else if (typeof oldVal === 'number') {
+      } else if (typeof oldVal === 'number' && value) {
         newVal = Locale.parseNumber(value); //remove thousands sep , keep a number a number
       }
 
