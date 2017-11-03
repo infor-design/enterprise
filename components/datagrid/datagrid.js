@@ -1571,7 +1571,7 @@ $.fn.datagrid = function(options) {
         sizeColumnsEqually: false, //If true make all the columns equal width
         expandableRow: false, // Supply an empty expandable row template
         redrawOnResize: true, //Run column redraw logic on resize
-        exportConvertNegative: false // Export data with trailing negative signs moved in front
+        exportConvertNegative: false, // Export data with trailing negative signs moved in front
         onPostRenderCell: null, //A call back function that will fire and send you the cell container and related information for any cells with postRender: true.
         onDestroyCell: null //A call back that goes along with onPostRenderCell and will fire when this cell is destroyed and you need noification of that.
       },
