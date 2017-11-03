@@ -4504,7 +4504,7 @@ $.fn.datagrid = function(options) {
 
           //CHECK EXPORTABLE
           var nonExportables = [];
-          $.each($('th'), function(index, item) {
+          $.each($('th').not('.is-hidden'), function(index, item) {
             if ($(item)[0].getAttribute('data-exportable') && $(item)[0].getAttribute('data-exportable') === 'no') {
               nonExportables.push(index);
             }
@@ -4513,9 +4513,10 @@ $.fn.datagrid = function(options) {
           for (var i = 0, l = rows.length; i < l; i++) {
             row = [];
             cols = $(rows[i]).find('td, th');
-            for (var i2 = 0, l2 = cols.length; i2 < l2; i2++) {
+            for (var i2 = 0; i2 < cols.length; i2++) {
               if (nonExportables.indexOf(i2) <= -1) {
                 content = cols[i2].innerText.replace('"', '""');
+
                 // Exporting data with trailing negative signs moved in front
                 if (self.settings.exportConvertNegative) {
                   content = content.replace(/^(.+)(\-$)/, '$2$1');
