@@ -3315,10 +3315,10 @@ $.fn.datagrid = function(options) {
           if (col.postRender) {
             self.tableBody.find('tr').each(function () {
               var row = $(this),
-                rowIdx = row.index(),
+                rowIdx = row.attr('data-index'),
                 colIdx = self.columnIdxById(col.id),
                 args = {
-                  row: row.index(),
+                  row: rowIdx,
                   cell: colIdx,
                   value: self.settings.dataset[rowIdx],
                   col: col,
